@@ -252,7 +252,7 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 		mServerPort = (TextView) findViewById(R.id.port);
 		mClientCert = (FileSelectLayout) findViewById(R.id.certselect);
 		mClientKey = (FileSelectLayout) findViewById(R.id.keyselect);
-		mCaCert = (FileSelectLayout) findViewById(R.id.certselect);
+		mCaCert = (FileSelectLayout) findViewById(R.id.caselect);
 		mpkcs12 = (FileSelectLayout) findViewById(R.id.pkcs12select);
 		mUseLzo = (CheckBox) findViewById(R.id.lzo);
 		mTcpUdp = (ToggleButton) findViewById(id.tcpudp);

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/relativeLayout01"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<LinearLayout android:id="@+id/fdLinearLayoutList"
+		android:orientation="vertical" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_alignParentBottom="true">
+
+		<LinearLayout android:id="@+id/fdLinearLayoutSelect"
+			android:orientation="vertical" android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true" android:paddingLeft="10dp"
+			android:paddingRight="10dp" android:paddingBottom="5dp">
+
+			<LinearLayout android:orientation="horizontal"
+				android:layout_width="fill_parent" android:layout_height="fill_parent">
+				<Button android:id="@+id/fdButtonNew" android:layout_height="wrap_content"
+					android:layout_width="0dip" android:layout_weight=".3"
+					android:text="@string/nnew"></Button>
+				<Button android:id="@+id/fdButtonSelect" android:layout_height="wrap_content"
+					android:layout_width="0dip" android:layout_weight=".7"
+					android:text="@string/select"></Button>
+			</LinearLayout>
+		</LinearLayout>
+
+		<LinearLayout android:id="@+id/fdLinearLayoutCreate"
+			android:orientation="vertical" android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true" android:paddingLeft="10dp"
+			android:paddingRight="10dp" android:paddingBottom="5dp">
+			<TextView android:id="@+id/textViewFilename" android:text="@string/file_name"
+				android:layout_width="fill_parent" android:layout_height="wrap_content" />
+			<EditText android:text="" android:id="@+id/fdEditTextFile"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"></EditText>
+
+			<LinearLayout android:orientation="horizontal"
+				android:layout_width="fill_parent" android:layout_height="fill_parent">
+				<Button android:id="@+id/fdButtonCancel" android:layout_height="wrap_content"
+					android:layout_width="0dip" android:layout_weight=".3"
+					android:text="@string/cancel"></Button>
+				<Button android:id="@+id/fdButtonCreate" android:layout_height="wrap_content"
+					android:layout_width="0dip" android:layout_weight=".7"
+					android:text="@string/create"></Button>
+			</LinearLayout>
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_above="@+id/fdLinearLayoutList">
+		<TextView android:id="@+id/path" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" />
+		<ListView android:id="@android:id/list" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" />
+		<TextView android:id="@android:id/empty"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:text="@string/no_data" />
+	</LinearLayout>
+
+
+
+
+</RelativeLayout>

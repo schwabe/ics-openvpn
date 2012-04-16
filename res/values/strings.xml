@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2011 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ -->
+
+<resources>
+    <string name="app">OpenVPN for Android</string>
+
+    <string name="address">Server Address:</string>
+    <string name="port">Server Port:</string>
+    <string name="secret">Shared Secret:</string>
+    <string name="connect">Connect!</string>
+
+    <string name="connecting">OpenVPN is connecting…</string>
+    <string name="connected">OpenVPN is connected!</string>
+    <string name="disconnected">OpenVPN is disconnected!</string>
+        
+    <string name="defaultserver">openvpn.uni-paderborn.de</string>
+    <string name="defaultport">1194</string>
+
+    
+        <string name="app_name">File dialog</string>
+    <string name="location">Location</string>
+    <string name="cant_read_folder">folder can\'t be read!</string>
+    <string name="nnew">New</string>
+    <string name="select">Select</string>
+    <string name="file_name">File name:</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Save</string>
+    <string name="no_data">No Data</string>
+    <color name="gray">#ffff0000</color>
+    <string name="err">Error</string>
+    <string name="usercert">User Certificate</string>
+    <string name="useLZO">LZO Compression</string>
+    <string name="client_no_certificate">No Certificate</string>
+    <string name="client_certificate_title">Client Certificate</string>
+    <string name="client_key_title">Client Certificate Key</string>
+    <string name="client_pkcs12_title">PKCS12 File</string>
+    <string name="ca_title">CA Certificate</string>
+    <string name="select_certificate">Select</string>
+    <string name="no_certificate">Nothing selected</string>
+    <string name="openvpn_logo_descr">Openvpn Logo</string>
+    <string name="opevpn_copyright">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net&gt;\n
+
+	  "OpenVPN" is a trademark of OpenVPN Technologies, Inc.\n</string>
+    <string name="copyright_blinktgui">Copyright 2012 Arne Schwabe</string>
+    <string name="copyright_others">The program uses the following components. See the source for full details on the licenses</string>
+    <string name="copyright_file_dialog">File Dialog for the Android\nAlexander Ponomarev"</string>
+    <string name="lzo_copyright">Copyright © 1996 – 2011 Markus Franz Xaver Johannes Oberhumer</string>
+    <string name="copyright_openssl">
+        This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit\n
+        Copyright © 1998-2008 The OpenSSL Project. All rights reserved.\n\n
+        This product includes cryptographic software written by Eric Young (eay@cryptsoft.com)\n
+        Copyright © 1995-1998 Eric Young (eay@cryptsoft.com) All rights reserved.</string>
+    <string name="openvpn">OpenVPN</string>
+    <string name="file_dialog">File Dialog</string>
+    <string name="lzo">LZO</string>
+    <string name="openssl">OpenSSL</string>
+    <string name="about">About</string>
+    
+    <string name="vpn_type">Type</string>
+    <string name="pkcs12pwquery">PKCS12 Password</string>
+    <string name="filetypeicon">FileTypeIcon</string>
+    <string name="select_keystore">Select…</string>
+    <string name="file_select">Select…</string>
+    <string name="file_nothing_selected">Nothing Selected</string>
+    <string name="tlsauth">TLS Auth</string>
+    <string name="show_advanced">Show advanced settings</string>
+    <string name="useTLSAuth">Use TLS Authentication</string>
+    <string name="tls_direction">TLS Direction</string>
+    
+    
+    
+    
+</resources>

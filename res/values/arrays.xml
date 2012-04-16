@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="vpn_types">
+    		<item>Certificates</item>
+    		<item>PKCS12 File</item>
+    		<item>Android Certficate</item>
+    </string-array>
+   
+    <string-array name="tls_directions">
+        <item>0</item>
+        <item>1</item>
+        <item>Unspecified</item>        
+    </string-array>
+    
+    
+</resources>

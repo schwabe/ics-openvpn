@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Obscure Settings" >
+
+    <CheckBoxPreference
+        android:key="useRandomHostname"
+        android:summary="adds 6 random chars in front of hostname"
+        android:title="Random Host Prefix" />
+    <CheckBoxPreference
+        android:key="useFloat"
+        android:summary="Allows authenticated packets from any IP" />
+
+    <CheckBoxPreference android:key="setmtu" android:title="Set custom MTU" />
+    <EditTextPreference
+        android:dependency="setmtu"
+        android:defaultValue="1500"
+        android:title="MTU" />
+
+    <CheckBoxPreference
+        android:key="useBWShaping"
+        android:title="Use bandwidth shaping" />
+
+    <EditTextPreference
+        android:key="shaperLimit"
+        android:title="Bandwidth in byte/s" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="enableReplayProtection"
+        android:title="Replay Protection" />
+    <CheckBoxPreference
+        android:summary="Specify custom options. Use with care!"
+        android:title="Enable Custom Options" 
+        android:key="enableCustomOptions"/>
+
+    <EditTextPreference
+        android:dependency="enableCustomOptions"
+        android:dialogMessage="@string/custom_option_warning" />
+        android:key="customOptions"
+        android:title="Custom Options" />
+
+</PreferenceScreen>

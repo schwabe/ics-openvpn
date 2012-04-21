@@ -152,12 +152,50 @@
                 android:inputType="textPassword" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/commonsecret"
+                <LinearLayout
+            android:id="@+id/userpassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone" >
+            
+          <TextView
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:text="@string/auth_username"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                       
+            <EditText
+                android:id="@+id/auth_username"
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:inputType="textNoSuggestions" />            
+                        <TextView
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:text="@string/auth_pwquery"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                       
+            <EditText
+                android:id="@+id/auth_password"
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:inputType="textPassword" />
+</LinearLayout>
+        <LinearLayout
+            android:id="@+id/statickeys"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+            <TextView android:text="@string/static_keys_info" 
+                style="@style/item"/>
         </LinearLayout>
 
         <CheckBox

@@ -117,13 +117,34 @@ public class OpenVpnService extends VpnService implements Handler.Callback, Runn
 			}
         	
         }
+        if(intent.hasExtra(prefix +".USERNAME"))
+        {
+        	try {
+        		String user = managmentEscape(intent.getStringExtra(prefix +".USERNAME"));
+        		String pw = managmentEscape(intent.getStringExtra(prefix +".PASSWORD"));
+				Thread.sleep(3000);
+				
+				
+				managmentCommand("username 'Auth' " + user+ "\n" + 
+						"password 'Auth' " + pw + "\n");
+			} catch (InterruptedException e) {
+			}
         
+        }
         
         
         return START_STICKY;
     }
 
-    @Override
+    private String managmentEscape(String unescape) {
+    	String escapedString = unescape.replace("\\", "\\\\");
+    	escapedString = escapedString.replace("\"","\\\"");
+    	escapedString = escapedString.replace("\n","\\n");
+    	return '"' + escapedString + '"';
+	}
+
+
+	@Override
     public void onDestroy() {
         if (mThread != null) {
         	managmentCommand("signal SIGINT\n");

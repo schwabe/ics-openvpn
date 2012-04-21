@@ -4,6 +4,8 @@
     		<item>Certificates</item>
     		<item>PKCS12 File</item>
     		<item>Android Certficate</item>
+    		<item>Username/Password</item>
+    		<item>Static Keys</item>
     </string-array>
    
     <string-array name="tls_directions">

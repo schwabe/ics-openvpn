@@ -80,6 +80,19 @@
     <string name="show_advanced">Show advanced settings</string>
     <string name="useTLSAuth">Use TLS Authentication</string>
     <string name="tls_direction">TLS Direction</string>
+    <string name="vpn_settings_activity_title">VPN List</string>
+    <string name="new_vpn">Add OpenVPN Config</string>
+    <string name="vpn">Saved VPN Configs</string>
+    
+    <string name="ipv6_dialog_tile">Enter IPv6 Address/Netmask in CIDR Format (e.g. 2000:dd::23/64)</string>
+    <string name="ipv4_dialog_title">Enter IPv4 Address/Netmask in CIDR Format (e.g. 1.2.3.4/24)</string>
+    <string name="ipv4_address">IPv4 Address</string>
+    <string name="ipv6_address">IPv6 Address</string>
+    <string name="custom_option_warning">Enter custom OpenVPN. Use with great care. Also note that many of the tun related Openvpn settings cannot be supported by design of the VPNSettings. If you think an important option is missing contact the author</string>
+    <string name="auth_username">Username</string>
+    <string name="auth_pwquery">Password</string>
+    <string name="static_keys_info">For the static configuration the TLS Auth Keys will be used as static keys.</string>
+    <string name="configure_the_vpn">Configure the VPN</string>
     
     
     

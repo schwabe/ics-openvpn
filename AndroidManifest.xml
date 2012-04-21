@@ -17,8 +17,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.blinkt.openvpn"
-    android:versionCode="6"
-    android:versionName="0.0.3" >
+    android:versionCode="8"
+    android:versionName="0.0.4" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -34,6 +34,7 @@
 
         <activity android:name="com.lamerman.FileDialog" />
         <activity android:name=".AboutActivity" />
+        <activity android:name=".VPNPreferences" />
         <activity android:name=".LogWindow" />
         <activity
             android:name=".OpenVPNClient"

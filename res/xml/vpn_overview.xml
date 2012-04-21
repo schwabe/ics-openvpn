@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/vpn_settings_activity_title" >
+
+    <PreferenceScreen
+        android:key="new_vpn"
+        android:title="@string/new_vpn" />
+
+    <PreferenceCategory
+        android:fragment="de.blinkt.openvpn.VPNList$ListFragment"
+        android:key="vpn_list"
+        android:title="@string/vpn" >
+    </PreferenceCategory>
+
+</PreferenceScreen>

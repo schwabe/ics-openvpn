@@ -52,6 +52,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -102,6 +103,12 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 
 
 	private Spinner mTLSDirection;
+
+
+	private EditText mUserName;
+
+
+	private EditText mPassword;
 
 	@Override
 	protected void onStop(){
@@ -264,7 +271,8 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 
 		mShowAdvanced = (CheckBox) findViewById(R.id.show_advanced);
 		mTlsFile = (FileSelectLayout) findViewById(R.id.tlsAuth);		
-		
+		mUserName = (EditText) findViewById(R.id.auth_username);
+		mPassword = (EditText) findViewById(R.id.auth_password);
 		
 
 		addFileSelectLayout(mCaCert);
@@ -304,7 +312,7 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 		// hide everything
 		findViewById(R.id.pkcs12).setVisibility(View.GONE);
 		findViewById(R.id.certs).setVisibility(View.GONE);
-		findViewById(R.id.commonsecret).setVisibility(View.GONE);
+		findViewById(R.id.statickeys).setVisibility(View.GONE);
 		findViewById(R.id.keystore).setVisibility(View.GONE);
 
 		switch(type) {
@@ -314,12 +322,15 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 		case VpnProfile.TYPE_PKCS12:
 			findViewById(R.id.pkcs12).setVisibility(View.VISIBLE);
 			break;
-		case VpnProfile.COMMON_SECRET:
-			findViewById(R.id.commonsecret).setVisibility(View.VISIBLE);
+		case VpnProfile.TYPE_STATICKEYS:
+			findViewById(R.id.statickeys).setVisibility(View.VISIBLE);
 			break;
 		case VpnProfile.TYPE_KEYSTORE:
 			findViewById(R.id.keystore).setVisibility(View.VISIBLE);
 			break;
+			
+		case VpnProfile.TYPE_USERPASS:
+			findViewById(R.id.userpassword).setVisibility(View.VISIBLE);
 		}
 
 
@@ -477,7 +488,8 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 				onActivityResult(START_OPENVPN, RESULT_OK, null);
 			}
 		} else if (v == findViewById(R.id.about)) {
-			Intent intent = new Intent(getBaseContext(),AboutActivity.class);
+			//Intent intent = new Intent(getBaseContext(),AboutActivity.class);
+			Intent intent = new Intent(getBaseContext(),VPNPreferences.class);
 			startActivity(intent);
 		} else if (v == findViewById(R.id.select_keystore_button)) {
 			showCertDialog();
@@ -500,7 +512,11 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 			String pkcs12pw = savePKCS12();
 			intent.putExtra(prefix + ".PKCS12PASS", pkcs12pw);
 		}
-
+		
+		if(mType.getSelectedItemPosition() == VpnProfile.TYPE_USERPASS) {
+			intent.putExtra(prefix + ".USERNAME", mUserName.getText().toString());
+			intent.putExtra(prefix + ".PASSWORD", mPassword.getText().toString());
+		}
 
 		startService(intent);
 		Intent startLW = new Intent(getBaseContext(),LogWindow.class);

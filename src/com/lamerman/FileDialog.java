@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
-import de.blinkt.openvpn.R;
-
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -22,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import de.blinkt.openvpn.R;
 
 /**
  * Activity para escolha de arquivos/diretorios.

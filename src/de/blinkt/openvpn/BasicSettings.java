@@ -16,37 +16,15 @@
 
 package de.blinkt.openvpn;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.HashMap;
-import java.util.Random;
-import java.util.Vector;
 
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
-
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
-import android.security.KeyChainException;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,9 +37,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
-import com.lamerman.FileDialog;
-
 import de.blinkt.openvpn.R.id;
 
 public class BasicSettings extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback, OnCheckedChangeListener {

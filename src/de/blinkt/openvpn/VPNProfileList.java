@@ -1,6 +1,5 @@
 package de.blinkt.openvpn;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -10,11 +9,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.blinkt.openvpn.VPNConfigPreference.OnQuickSettingsClickListener;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,7 +18,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.preference.DialogPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
@@ -32,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+import de.blinkt.openvpn.VPNConfigPreference.OnQuickSettingsClickListener;
 
 public class VPNProfileList extends PreferenceFragment implements OnPreferenceClickListener, OnQuickSettingsClickListener {
 	private static final String PREFS_NAME =  "VPNList";

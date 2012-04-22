@@ -1,19 +1,18 @@
 package de.blinkt.openvpn;
 
-import com.lamerman.FileDialog;
-import com.lamerman.SelectionMode;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import android.view.View;
-import android.view.View.OnClickListener;
+import com.lamerman.FileDialog;
+import com.lamerman.SelectionMode;
 
 public class FileSelectLayout extends LinearLayout implements OnClickListener {
 

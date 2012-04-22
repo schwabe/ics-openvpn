@@ -250,7 +250,7 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.config);
+		setContentView(R.layout.basic_settings);
 
 		// Forces early JNI Load
 		OpenVPN.foo();
@@ -490,6 +490,7 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 		} else if (v == findViewById(R.id.about)) {
 			//Intent intent = new Intent(getBaseContext(),AboutActivity.class);
 			Intent intent = new Intent(getBaseContext(),VPNPreferences.class);
+			intent.putExtra("foo","der bar war hier!");
 			startActivity(intent);
 		} else if (v == findViewById(R.id.select_keystore_button)) {
 			showCertDialog();

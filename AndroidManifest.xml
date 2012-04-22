@@ -24,26 +24,26 @@
 
     <uses-sdk android:minSdkVersion="14" />
 
-    <!--  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
-
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
 
     <application
-	  android:debuggable="true" 
+        android:debuggable="true"
         android:icon="@drawable/icon"
         android:label="@string/app" >
-
         <activity android:name="com.lamerman.FileDialog" />
-        <activity android:name=".AboutActivity" />
+        <activity android:name=".AboutFragment" />
         <activity android:name=".VPNPreferences" />
         <activity android:name=".LogWindow" />
-        <activity
-            android:name=".OpenVPNClient"
-            android:configChanges="orientation|keyboardHidden" >
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".OpenVPNClient"
+            android:configChanges="orientation|keyboardHidden" >
         </activity>
 
         <service

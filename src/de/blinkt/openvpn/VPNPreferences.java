@@ -2,7 +2,9 @@ package de.blinkt.openvpn;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
@@ -16,6 +18,7 @@ import android.widget.Button;
 
 public class VPNPreferences extends PreferenceActivity {
 
+	private VpnProfile mProfile;
 	public VPNPreferences() {
 		super();
 	}
@@ -23,6 +26,8 @@ public class VPNPreferences extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		mProfile = getIntent().getParcelableExtra("VpnProfile");
+				
 		if (hasHeaders()) {
 			Button button = new Button(this);
 			button.setText("Some action");
@@ -47,12 +52,13 @@ public class VPNPreferences extends PreferenceActivity {
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 
+			
 			// Make sure default values are applied.  In a real app, you would
 			// want this in a shared function that is used to retrieve the
 			// SharedPreferences wherever they are needed.
 			PreferenceManager.setDefaultValues(getActivity(),
 					R.xml.vpn_ipsettings, false);
-
+			
 			// Load the preferences from an XML resource
 			addPreferencesFromResource(R.xml.vpn_ipsettings);
 			mIPv4 = (EditTextPreference) findPreference("ipv4_address");
@@ -69,8 +75,14 @@ public class VPNPreferences extends PreferenceActivity {
 			mDNS2.setOnPreferenceChangeListener(this);
 			mUsePull.setOnPreferenceChangeListener(this);
 			mOverrideDNS.setOnPreferenceChangeListener(this);
+			
+			
+			VpnProfile vp = ((VPNPreferences) getActivity()).getVPNProfile();
+			
+			
 			setDNSState();
 
+			
 		}
 
 		@Override
@@ -133,6 +145,9 @@ public class VPNPreferences extends PreferenceActivity {
 			// Load the preferences from an XML resource
 			addPreferencesFromResource(R.xml.vpn_obscure);
 		}
+	}
+	public VpnProfile getVPNProfile() {
+		return mProfile;
 	}
 }
 

@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <header android:summary="Server, port and authentication method. Normally you should only settings specified here." >
-	    android:title="Basic Setting"
-        <intent
-            android:targetClass="de.blinkt.openvpn.OpenVPNClient"
-            android:targetPackage="de.binkt.openvpn" />
-    </header>
+    <header
+        android:fragment="de.blinkt.openvpn.BasicSettings"
+        android:summary="Server, port and authentication method. Normally you should only settings specified here."
+        android:title="Basic Settings" />
     <!-- android:icon="@drawable/ic_settings_applications" -->
+
     <header
         android:fragment="de.blinkt.openvpn.VPNPreferences$IP_Settings"
         android:summary="IP Address and Routing"
         android:title="IP Settings" />
-    
-        <header
+    <header
         android:fragment="de.blinkt.openvpn.VPNPreferences$Authentication"
         android:summary="Authentication"
         android:title="Authentication" />
-    
 
     <!-- android:icon="@drawable/ic_settings_display" -->
     <header
@@ -33,14 +30,9 @@
             android:name="someKey"
             android:value="someHeaderValue" />
     </header>
-
-    <!-- android:icon="@drawable/ic_settings_display" -->
     <header
-        android:summary="Launches an Intent."
-        android:title="Intent" >
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:data="http://www.android.com" />
-    </header>
+        android:fragment="de.blinkt.openvpn.ShowConfigFragment"
+        android:summary="Shows the generated openvpn Configuration File"
+        android:title="Generated Config" />
 
 </preference-headers>

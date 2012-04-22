@@ -93,8 +93,9 @@
     <string name="auth_pwquery">Password</string>
     <string name="static_keys_info">For the static configuration the TLS Auth Keys will be used as static keys.</string>
     <string name="configure_the_vpn">Configure the VPN</string>
-    
-    
+    <string name="menu_add_profile">Add Profile</string>
+    <string name="add_profile_name_prompt">Enter a name identifying the new Profile</string>
+    <string name="duplicate_profile_name">Duplicate Profile Name</string>
     
     
 </resources>

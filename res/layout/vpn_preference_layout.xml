@@ -79,7 +79,7 @@
         android:background="@android:drawable/divider_horizontal_dark" />
 
     <ImageView
-        android:id="@+id/vpn_edit_settings"
+        android:id="@+id/quickedit_settings"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_gravity="center"

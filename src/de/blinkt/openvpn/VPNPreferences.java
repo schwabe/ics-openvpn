@@ -2,9 +2,7 @@ package de.blinkt.openvpn;
 
 import java.util.List;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;

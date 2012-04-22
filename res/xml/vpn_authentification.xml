@@ -3,9 +3,9 @@
 
     <CheckBoxPreference
         android:key="remoteServerTLS"
-        android:summary="Checks whether the server use a TLS Server Certificate"
+        android:summary="Checks whether the server uses a TLS Server Certificate"
         android:title="Except TLS Server" />
 
-    <de.blinkt.openvpn.VPNConfigPreference
-        android:title="Whaaaaats UUUUuuuuup?" />
+    
+    <CheckBoxPreference android:key="useTLSAuth"/>
 </PreferenceScreen>

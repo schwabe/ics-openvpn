@@ -5,7 +5,15 @@
         android:key="remoteServerTLS"
         android:summary="Checks whether the server uses a TLS Server Certificate"
         android:title="Except TLS Server" />
+    <CheckBoxPreference
+        android:key="checkRemoteCN"
+        android:summary="Checks the Remote Server Certificate CN against a String"
+        android:title="Certificate Hostname Check" />
 
-    
-    <CheckBoxPreference android:key="useTLSAuth"/>
+    <EditTextPreference
+        android:dependency="checkRemoteCN"
+        android:dialogMessage="Enter the String against which the remote Server is checked. Openvpn will use prefix matching. &quot;Server&quot; matches &quot;Server-1&quot; and &quot;Server-2&quot;"
+        android:title="Remote Hostname(CN)"
+        android:key="remotecn"/>
+
 </PreferenceScreen>

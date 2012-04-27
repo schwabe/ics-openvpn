@@ -16,25 +16,16 @@
 
 package de.blinkt.openvpn;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
-import java.util.Random;
-import java.util.Vector;
 
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.VpnService;
@@ -44,7 +35,6 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
-import android.security.KeyChainException;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -71,8 +61,6 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 
 	private static final String PREFS_NAME = "OVPN_SERVER";
 
-	private static final String OVPNCONFIGFILE = "android.conf";
-	private static final String OVPNCONFIGPKCS12 = "android.pkcs12";
 
 
 	private TextView mServerAddress;
@@ -117,133 +105,14 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 	}
 
 
-	public void writeConfigFile()
-	{
-
-		try {
-			FileWriter cfg = new FileWriter(getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE);
-
-
-
-			// TODO  "--remote-cert-eku", "TLS Web Server Authentication"
-
-
-			// The stoned way of java to return an array from a vector
-			// brought to you by eclipse auto complete
-
-			cfg.write("client\n");
-			cfg.write("verb 2\n");
-
-
-			// /tmp does not exist on Android
-			cfg.write("tmp-dir ");
-			cfg.write(getCacheDir().getAbsolutePath());
-			cfg.write("\n");
-
-			// quit after 5 tries
-			cfg.write("--connect-retry-max 5\n");
-			cfg.write("--resolv-retry 5\n");
-
-
-
-			// We cannot use anything else than tun
-			cfg.write("dev tun\n");
-
-			// Server Address
-			cfg.write("remote ");
-			cfg.write(mServerAddress.getText().toString());
-			cfg.write(" ");
-			cfg.write(mServerPort.getText().toString());
-			if(mTcpUdp.isChecked())
-				cfg.write(" udp\n");
-			else
-				cfg.write(" tcp\n");
-
-
-
-			switch(mType.getSelectedItemPosition()) {
-			case VpnProfile.TYPE_CERTIFICATES:
-				// Ca
-				cfg.write("ca ");
-				cfg.write(mCaCert.getData());
-				cfg.write("\n");
-
-				// Client Cert + Key
-				cfg.write("key ");
-				cfg.write(mClientKey.getData());
-				cfg.write("\n");
-				cfg.write("cert ");
-				cfg.write(mClientCert.getData());
-				cfg.write("\n");
-				break;
-			case VpnProfile.TYPE_PKCS12:
-				cfg.write("pkcs12 ");
-				cfg.write(mpkcs12.getData());
-				cfg.write("\n");
-				cfg.write("management-query-passwords\n");
-				break;
-
-			case VpnProfile.TYPE_KEYSTORE:
-				cfg.write("pkcs12 ");
-				cfg.write(getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGPKCS12);
-				cfg.write("\n");
-				cfg.write("management-query-passwords\n");
-				break;
-
-			}
-
-			if(mUseLzo.isChecked()) {
-				cfg.write("comp-lzo\n");
-			}
-			
-			if(mUseTlsAuth.isChecked()) {
-				cfg.write("tls-auth ");
-				cfg.write(mTlsFile.getData());
-				int tlsdir= mTLSDirection.getSelectedItemPosition();
-				// 2 is unspecified
-				if(tlsdir == 1 || tlsdir==2) {
-					cfg.write(" ");
-					cfg.write(new Integer(tlsdir).toString());
-				}
-				cfg.write("\n");
-			}
-			cfg.flush();
-			cfg.close();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
+	
 	private void addFileSelectLayout (FileSelectLayout fsl) {
 		int i = fileselects.size() + CHOOSE_FILE_OFFSET;
 		fileselects.put(i, fsl);
 		fsl.setActivity(this,i);
 	}
 
-	public String[] buildOpenvpnArgv()
-	{
-		Vector<String> args = new Vector<String>();
 
-		// Add fixed paramenters
-		args.add("openvpn");
-
-		// Enable managment interface to 
-		// stop openvpn
-		args.add("--management");
-
-		args.add(getCacheDir().getAbsolutePath() + "/" +  "mgmtsocket");
-		args.add("unix");
-		//args.add("--management-hold");
-
-		args.add("--config");
-		args.add(getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE);
-
-
-		return  (String[]) args.toArray(new String[args.size()]);
-	}
 
 
 
@@ -415,52 +284,7 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 		null);                       // alias to preselect, null if unavailable
 	}
 
-	private String getRandomPW() {
-		String pw= "";
-		// Put enough digits togher to make a password :)
-		Random r = new Random();
-		for(int i=0;i < 4;i++) {
-			pw += new Integer(r.nextInt(1000)).toString();
-		}
-
-		return pw;
-
-	}
-
-	private String savePKCS12()  {
-		Context context = getBaseContext();
-		PrivateKey privateKey = null;
-		X509Certificate[] cachain=null;
-		try {
-			privateKey = KeyChain.getPrivateKey(context,certalias);
-			cachain = KeyChain.getCertificateChain(context, certalias);
-
-			KeyStore ks = KeyStore.getInstance("PKCS12");
-			ks.load(null, null);
-			ks.setKeyEntry("usercert", privateKey, null, cachain);
-			String mypw = getRandomPW();
-			FileOutputStream fout = new FileOutputStream(getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGPKCS12);
-			ks.store(fout,mypw.toCharArray());
-			fout.flush(); fout.close();
-			return mypw;
-		} catch (KeyChainException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (KeyStoreException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (CertificateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "ERROR";
-
-	}
+	
 
 	public void testGetallCerts() throws NoSuchAlgorithmException, KeyStoreException {
 		TrustManagerFactory tmf = TrustManagerFactory
@@ -497,32 +321,7 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 		}
 	}
 
-	void startOpenVpn() {
-		String prefix = getPackageName();
-		writeConfigFile();
 
-		Intent intent = new Intent(this, OpenVpnService.class)
-		.putExtra(prefix + ".ARGV" , buildOpenvpnArgv());
-
-		if(mType.getSelectedItemPosition()== VpnProfile.TYPE_PKCS12){
-			intent.putExtra(prefix + ".PKCS12PASS",
-					mPKCS12Password.getText().toString());
-		}
-
-		if(mType.getSelectedItemPosition() == VpnProfile.TYPE_KEYSTORE) {
-			String pkcs12pw = savePKCS12();
-			intent.putExtra(prefix + ".PKCS12PASS", pkcs12pw);
-		}
-		
-		if(mType.getSelectedItemPosition() == VpnProfile.TYPE_USERPASS) {
-			intent.putExtra(prefix + ".USERNAME", mUserName.getText().toString());
-			intent.putExtra(prefix + ".PASSWORD", mPassword.getText().toString());
-		}
-
-		startService(intent);
-		Intent startLW = new Intent(getBaseContext(),LogWindow.class);
-		startActivity(startLW);
-	}
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
@@ -550,7 +349,7 @@ public class OpenVPNClient extends Activity implements View.OnClickListener, OnI
 
 		@Override
 		public void run() {
-			startOpenVpn();
+		//	startOpenVpn();
 		}
 
 	}

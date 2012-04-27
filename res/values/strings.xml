@@ -96,6 +96,7 @@
     <string name="menu_add_profile">Add Profile</string>
     <string name="add_profile_name_prompt">Enter a name identifying the new Profile</string>
     <string name="duplicate_profile_name">Duplicate Profile Name</string>
+    <string name="profilename">Profile Name</string>
     
     
 </resources>

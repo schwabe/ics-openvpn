@@ -7,28 +7,48 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 public class VPNConfigPreference extends Preference implements OnClickListener {
+	class startClickListener implements OnClickListener{
+		private VPNConfigPreference mvp;
 
+		public startClickListener(VPNConfigPreference vp) {
+			mvp = vp;
+		}
 
-	private OnQuickSettingsClickListener mOnQuickSettingsListener;
+		@Override
+		public void onClick(View v) {
+			mOnQuickSettingsListener.onStartVPNClick(mvp);
+		}
+		
+	}
+	
+	private VpnPreferencesClickListener mOnQuickSettingsListener;
 	private ImageView mQuickPrefButton;
 
 
 	public VPNConfigPreference(VPNProfileList vpnProfileList, Bundle args) {
-
 		super(vpnProfileList.getActivity());
-		setWidgetLayoutResource(R.layout.vpn_preference_layout);
-
-
+		setLayoutResource(R.layout.vpn_preference_layout);
+	
 	}
+	
+		private View mProfilesPref;
 
 	@Override
 	protected void onBindView(View view) {
 		super.onBindView(view);
+		mProfilesPref = view.findViewById(R.id.vpnconfig_pref);
+        mProfilesPref.setOnClickListener(new startClickListener(this));
+        mProfilesPref.setClickable(true);
+		
 		mQuickPrefButton = (ImageView) view.findViewById(R.id.quickedit_settings);
 		mQuickPrefButton.setOnClickListener(this);
+		
+		// Quick Fix, until I know what really goes wrong here :(
+		//view.findViewById(android.R.id.widget_frame).setOnClickListener(this);
 	}
+	
 
-	public interface OnQuickSettingsClickListener {
+	public interface VpnPreferencesClickListener {
 		/**
 		 * Called when a Preference has been clicked.
 		 *
@@ -36,19 +56,19 @@ public class VPNConfigPreference extends Preference implements OnClickListener {
 		 * @return True if the click was handled.
 		 */
 		boolean onQuickSettingsClick(Preference preference);
+
+		void onStartVPNClick(VPNConfigPreference vpnConfigPreference);
 	}
 
+	
 
-	public void setOnQuickSettingsClickListener(OnQuickSettingsClickListener onQuickSettingsListener) {
+	public void setOnQuickSettingsClickListener(VpnPreferencesClickListener onQuickSettingsListener) {
 		mOnQuickSettingsListener = onQuickSettingsListener;
 	}
 
 	@Override
 	public void onClick(View v) {
-		if (mOnQuickSettingsListener != null) {
-			mOnQuickSettingsListener.onQuickSettingsClick(this);
-		}
-
+		mOnQuickSettingsListener.onQuickSettingsClick(this);
 	}
 
 

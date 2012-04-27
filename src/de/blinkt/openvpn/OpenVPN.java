@@ -72,6 +72,9 @@ public class OpenVPN {
 	public static void foo() {	}
 	
 	synchronized public static String[] getlogbuffer() {
+		
+		// The stoned way of java to return an array from a vector
+		// brought to you by eclipse auto complete
 		return (String[]) logbuffer.toArray(new String[logbuffer.size()]);
 
 	}

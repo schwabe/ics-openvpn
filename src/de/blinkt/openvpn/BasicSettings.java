@@ -40,18 +40,10 @@ import android.widget.ToggleButton;
 import de.blinkt.openvpn.R.id;
 
 public class BasicSettings extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback, OnCheckedChangeListener {
-	private static final String TAG = "OpenVpnClient";
-
-
-	private static final int START_OPENVPN = 0;
 	private static final int CHOOSE_FILE_OFFSET = 1000;
 	private static final int UPDATE_ALIAS = 20;
 
-	private static final String PREFS_NAME = "OVPN_SERVER";
-
-	private static final String OVPNCONFIGFILE = "android.conf";
-	private static final String OVPNCONFIGPKCS12 = "android.pkcs12";
-
+	
 
 	private TextView mServerAddress;
 	private TextView mServerPort;
@@ -92,6 +84,7 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 
 
 	private VpnProfile mProfile;
+	private EditText mProfileName;
 
 
 
@@ -100,17 +93,22 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 		fileselects.put(i, fsl);
 		fsl.setActivity(getActivity(),i);
 	}
-
+   
+	
 	public void onCreate(Bundle savedInstanceState) {
+		Bundle foo = getArguments();
+		String profileuuid =getArguments().getString(getActivity().getPackageName() + ".profileUUID");
+		mProfile=ProfileManager.get(profileuuid);
 		super.onCreate(savedInstanceState);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
+		
 		mView = inflater.inflate(R.layout.basic_settings,container,false);
-
-
+		
+		mProfileName = (EditText) mView.findViewById(R.id.profilename);
 		mServerAddress = (TextView) mView.findViewById(R.id.address);
 		mServerPort = (TextView) mView.findViewById(R.id.port);
 		mClientCert = (FileSelectLayout) mView.findViewById(R.id.certselect);
@@ -129,6 +127,8 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 		mTlsFile = (FileSelectLayout) mView.findViewById(R.id.tlsAuth);		
 		mUserName = (EditText) mView.findViewById(R.id.auth_username);
 		mPassword = (EditText) mView.findViewById(R.id.auth_password);
+		
+		
 		
 
 		addFileSelectLayout(mCaCert);
@@ -152,9 +152,15 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 		if (mHandler == null) {
 			mHandler = new Handler(this);
 		}
+		
 		return mView;
 	}
 
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		((VPNPreferences) getActivity()).setmBS(this);
+	}
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -194,8 +200,7 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 	}
 
 	private void loadPreferences() {
-		mProfile = ((VPNPreferences)getActivity()).getVPNProfile();
-		
+		mProfileName.setText(mProfile.mName);
 		mClientCert.setData(mProfile.mClientCertFilename);
 		mClientKey.setData(mProfile.mClientKeyFilename);
 		mCaCert.setData(mProfile.mCaFilename);
@@ -217,11 +222,11 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 
 	}
 
-	private void savePreferences() {
+	void savePreferences() {
 		// We need an Editor object to make preference changes.
 		// All objects are from android.context.Context
 
-		
+		mProfile.mName = mProfileName.getText().toString();
 		mProfile.mCaFilename = mCaCert.getData();
 		mProfile.mClientCertFilename = mClientCert.getData();
 		mProfile.mClientKeyFilename = mClientKey.getData();
@@ -303,5 +308,6 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 		} else if (buttonView == mUseTlsAuth) {
 			mView.findViewById(R.id.tlsauth_options).setVisibility(visibility);
 		}
+		
 	}
 }

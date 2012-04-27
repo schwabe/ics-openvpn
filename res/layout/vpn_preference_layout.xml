@@ -22,7 +22,7 @@
     android:minHeight="?android:attr/listPreferredItemHeight" >
 
     <LinearLayout
-        android:id="@+id/inputmethod_pref"
+        android:id="@+id/vpnconfig_pref"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"

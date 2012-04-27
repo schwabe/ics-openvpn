@@ -27,6 +27,20 @@
 
         <TextView
             style="@style/item"
+            android:text="@string/profilename"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <EditText
+            android:id="@+id/profilename"
+            style="@style/item"
+            android:inputType="text"
+            />
+
+        
+        
+
+        <TextView
+            style="@style/item"
             android:text="@string/address"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -38,7 +52,7 @@
 
             <!-- <requestFocus /> -->
         </EditText>
-
+        
         <TextView
             style="@style/item"
             android:text="@string/port"

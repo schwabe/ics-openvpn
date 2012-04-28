@@ -1,6 +1,7 @@
 package de.blinkt.openvpn;
 
 import java.util.LinkedList;
+import java.util.Vector;
 
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
@@ -17,6 +18,11 @@ public class OpenVPN {
 	public static LinkedList<String> logbuffer = new LinkedList<String>();
 	private static int counter=0;
 
+	private static Vector<LogListener> logListener=new Vector<OpenVPN.LogListener>();
+	
+	public interface LogListener {
+		void newLog(String logmessage);
+	}
 
 	 static {
 		 System.loadLibrary("crypto");
@@ -40,6 +46,19 @@ public class OpenVPN {
 		 // Force GC how and then to kill loose ends
 		 if(counter++ % 50==0)
 			 System.gc();
+		 
+		 for (LogListener ll : logListener) {
+			ll.newLog(prefix + "  "  + message);
+		}
+		 
+	 }
+	 
+	 synchronized static void addLogListener(LogListener ll){
+		 logListener.add(ll);
+	 }
+	 
+	 synchronized static void removeLogListener(LogListener ll) {
+		 logListener.remove(ll);
 	 }
 	 
 	 
@@ -48,6 +67,18 @@ public class OpenVPN {
 		 Log.i("openvpn","Got interface info M"  + mtu + " L: " + local + "R: " + remote);
 		 localip=local;
 	 }
+	 
+	 static void addDns(String dns) {
+		 Log.i("openvpn","Got DNS Server: " + dns);
+		 mOpenVpnService.addDNS(dns);
+	 }
+	 
+	 
+	 static void addDomain(String domain) {
+		 Log.i("openvpn","Got DNS Domain: " + domain);
+		 mOpenVpnService.setDomain(domain);
+	 }
+
 
 	public static void setCallback(OpenVpnService openVpnService) {
 		mOpenVpnService = openVpnService;

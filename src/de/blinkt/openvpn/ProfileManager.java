@@ -3,6 +3,7 @@ package de.blinkt.openvpn;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -66,6 +67,28 @@ public class ProfileManager {
 		profiles.put(profile.getUUID().toString(),profile);
 		
 	}
+	
+	
+	public void saveProfile(Context context,VpnProfile profile) {
+		// First let basic settings save its state
+		
+		ObjectOutputStream vpnfile;
+		try {
+			vpnfile = new ObjectOutputStream(context.openFileOutput((profile.getUUID().toString() + ".vp"),Activity.MODE_PRIVATE));
+
+			vpnfile.writeObject(profile);
+			vpnfile.flush();
+			vpnfile.close();
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+	}
+	
+	
 	void loadVPNList(Context context) {
 		profiles = new HashMap<String, VpnProfile>();
 		SharedPreferences settings =context.getSharedPreferences(PREFS_NAME,Activity.MODE_PRIVATE);

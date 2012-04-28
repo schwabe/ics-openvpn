@@ -1,12 +1,7 @@
 package de.blinkt.openvpn;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.List;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.widget.Button;
@@ -14,7 +9,7 @@ import android.widget.Button;
 
 public class VPNPreferences extends PreferenceActivity {
 
-	private VpnProfile mProfile;
+	private String mProfileUUID;
 	private BasicSettings mBS;
 	public void setmBS(BasicSettings mBS) {
 		this.mBS = mBS;
@@ -28,7 +23,8 @@ public class VPNPreferences extends PreferenceActivity {
 
 	protected void onPause() {
 		super.onPause();
-		saveSettings();
+		if(mBS!=null)
+			mBS.savePreferences();
 
 	}
 	
@@ -39,43 +35,11 @@ public class VPNPreferences extends PreferenceActivity {
 	};
 	
 	
-	private void saveSettings() {
-		// First let basic settings save its state
-		if(mBS!=null)
-			mBS.savePreferences();
-		
-		ObjectOutputStream vpnfile;
-		try {
-			vpnfile = new ObjectOutputStream(openFileOutput((mProfile.getUUID().toString() + ".vp"),Activity.MODE_PRIVATE));
-
-			vpnfile.writeObject(mProfile);
-			vpnfile.flush();
-			vpnfile.close();
-		} catch (FileNotFoundException e) {
-
-			e.printStackTrace();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-	}
-	
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putSerializable(getPackageName() + ".VpnProfile",mProfile);
-	}
-	
-	@Override
-	protected void onRestoreInstanceState(Bundle state) {
-		super.onRestoreInstanceState(state);
-		mProfile = (VpnProfile) state.getSerializable(getPackageName() + ".VpnProfile");
-	}
-
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		mProfile = (VpnProfile) getIntent().getSerializableExtra(getPackageName() + ".VpnProfile");
+		//                                                          profileUUID
+		mProfileUUID = getIntent().getStringExtra(getPackageName() + ".profileUUID");
 		super.onCreate(savedInstanceState);
 
 	
@@ -94,11 +58,14 @@ public class VPNPreferences extends PreferenceActivity {
 		for (Header header : target) {
 			if(header.fragmentArguments==null)
 				header.fragmentArguments = new Bundle();
-			header.fragmentArguments.putString(getPackageName() + ".profileUUID",mProfile.getUUID().toString());
-			if(header.extras==null)
-				header.extras = new Bundle();
-			header.extras.putString(getPackageName() + ".profileUUID",mProfile.getUUID().toString());
+			header.fragmentArguments.putString(getPackageName() + ".profileUUID",mProfileUUID);
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		setResult(RESULT_OK, getIntent());
+		super.onBackPressed();
 	}
 }
 

@@ -97,6 +97,8 @@
     <string name="add_profile_name_prompt">Enter a name identifying the new Profile</string>
     <string name="duplicate_profile_name">Duplicate Profile Name</string>
     <string name="profilename">Profile Name</string>
-    
-    
+    <string name="no_keystore_cert_selected">No User certificate selected.</string>
+    <string name="no_error_found">No error found</string>
+    <string name="config_error_found">Error in Configuration</string>
+    <string name="config_error_message">An error has been found in your VPN configuration:</string>
 </resources>

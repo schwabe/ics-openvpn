@@ -143,6 +143,24 @@ int android_open_tun () {
 
 }
 
+void android_set_dns(const char* dns) {
+    jmethodID aMethodID = (*openvpnjenv)->GetStaticMethodID(openvpnjenv, openvpnclass, "addDns", 
+                                                            "(Ljava/lang/String;)V");
+    jstring jdns = (*openvpnjenv)->NewStringUTF(openvpnjenv,dns);
+    (*openvpnjenv)->CallStaticVoidMethod(openvpnjenv,openvpnclass,aMethodID,jdns);
+    
+    
+}
+
+void android_set_domain(const char* domain) {
+    jmethodID aMethodID = (*openvpnjenv)->GetStaticMethodID(openvpnjenv, openvpnclass, "addDomain", 
+                                                            "(Ljava/lang/String;)V");
+    jstring jdomain = (*openvpnjenv)->NewStringUTF(openvpnjenv,domain);
+    (*openvpnjenv)->CallStaticVoidMethod(openvpnjenv,openvpnclass,aMethodID,jdomain);
+    
+    
+}
+
 void addRouteInformation(const char* dest, const char* mask, const char* gw) {
     
     jstring jmask =  (*openvpnjenv)->NewStringUTF(openvpnjenv, mask);

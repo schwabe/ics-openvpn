@@ -1,9 +1,5 @@
 package de.blinkt.openvpn;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -24,7 +20,8 @@ import de.blinkt.openvpn.VPNConfigPreference.VpnPreferencesClickListener;
 public class VPNProfileList extends PreferenceFragment implements  VpnPreferencesClickListener {
 	private static final int MENU_ADD_PROFILE = Menu.FIRST;
 
-	private static final int START_VPN_PROFILECONFIG = 70;
+	private static final int START_VPN_PROFILE= 70;
+	private static final int START_VPN_CONFIG = 92;
 
 
 	private VpnProfile mSelectedVPN;
@@ -34,16 +31,11 @@ public class VPNProfileList extends PreferenceFragment implements  VpnPreference
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.vpn_profile_list);
 		setHasOptionsMenu(true);
-
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
 		refreshList();
-
-
+		// Debug load JNI
+		OpenVPN.foo();
 	}
+
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -109,27 +101,11 @@ public class VPNProfileList extends PreferenceFragment implements  VpnPreference
 	private void addProfile(VpnProfile profile) {
 		getPM().addProfile(profile);
 		getPM().saveProfileList(getActivity());
-		saveProfile(profile);
+		getPM().saveProfile(getActivity(),profile);
 
 	}
 
 
-	private void saveProfile(VpnProfile profile) {
-		ObjectOutputStream vpnfile;
-		try {
-			vpnfile = new ObjectOutputStream(getActivity().openFileOutput((profile.getUUID().toString() + ".vp"),Activity.MODE_PRIVATE));
-
-			vpnfile.writeObject(profile);
-			vpnfile.flush();
-			vpnfile.close();
-		} catch (FileNotFoundException e) {
-
-			e.printStackTrace();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-	}
 
 	
 
@@ -140,19 +116,14 @@ public class VPNProfileList extends PreferenceFragment implements  VpnPreference
 			getPM().loadVPNList(getActivity());
 
 			for (VpnProfile vpnprofile: getPM().getProfiles()) {
-				Bundle args = new Bundle();
-				//TODO
 
 				String profileuuid = vpnprofile.getUUID().toString();
 
 
-				args.putSerializable(getActivity().getPackageName() + ".VpnProfile", vpnprofile);
-				//args.putString("name", vpnentry);
-				VPNConfigPreference vpref = new VPNConfigPreference(this, args);
+				VPNConfigPreference vpref = new VPNConfigPreference(this);
 				vpref.setKey(profileuuid);
 				vpref.setTitle(vpnprofile.getName());
 				vpref.setPersistent(false);
-				//				vpref.setSelectable(true);
 				vpref.setOnQuickSettingsClickListener(this);
 				plist.addPreference(vpref);
 			}
@@ -174,9 +145,9 @@ public class VPNProfileList extends PreferenceFragment implements  VpnPreference
 		VpnProfile vprofile = ProfileManager.get(key);
 
 		Intent vprefintent = new Intent(getActivity(),VPNPreferences.class)
-		.putExtra(getActivity().getPackageName() + ".VpnProfile", vprofile);
+		.putExtra(getActivity().getPackageName() + ".profileUUID", vprofile.getUUID().toString());
 
-		startActivityForResult(vprefintent,START_VPN_PROFILECONFIG);
+		startActivityForResult(vprefintent,START_VPN_CONFIG);
 		return true;
 	}
 
@@ -187,9 +158,16 @@ public class VPNProfileList extends PreferenceFragment implements  VpnPreference
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode==START_VPN_PROFILECONFIG) {
-			new startOpenVpnThread().start();;
+		if(requestCode==START_VPN_PROFILE && resultCode == Activity.RESULT_OK) {
+			new startOpenVpnThread().start();
 
+		} else if (requestCode == START_VPN_CONFIG && resultCode == Activity.RESULT_OK) {
+			String configuredVPN = data.getStringExtra(getActivity().getPackageName() + ".profileUUID");
+
+			VpnProfile profile = ProfileManager.get(configuredVPN);
+			getPM().saveProfile(getActivity(), profile);
+			// Name could be modified
+			refreshList();
 		}
 
 	}
@@ -202,27 +180,56 @@ public class VPNProfileList extends PreferenceFragment implements  VpnPreference
 		}
 
 		void startOpenVpn() {
-			Intent startVPN = mSelectedVPN.prepareIntent(getActivity());
-		
-			getActivity().startService(startVPN);
 			Intent startLW = new Intent(getActivity().getBaseContext(),LogWindow.class);
 			startActivity(startLW);
+
+			
+			OpenVPN.logMessage(0, "", "Building confugration...");
+			
+			Intent startVPN = mSelectedVPN.prepareIntent(getActivity());
+			
+			getActivity().startService(startVPN);
 			getActivity().finish();
+		
 		}
+	}
+
+	void showConfigErrorDialog(int vpnok) {
+		
+		AlertDialog.Builder d = new AlertDialog.Builder(getActivity());
+
+		d.setTitle(R.string.config_error_found);
+		
+		d.setMessage(vpnok);
+		
+		
+		d.setPositiveButton("Ok", null);
+		
+		d.show();
 	}
 	
 	@Override
 	public void onStartVPNClick(VPNConfigPreference preference) {
+		getPM();
 		// Query the System for permission 
-		mSelectedVPN = getPM().get(preference.getKey());
+		mSelectedVPN = ProfileManager.get(preference.getKey());
+		
+		int vpnok = mSelectedVPN.checkProfile();
+		if(vpnok!= R.string.no_error_found) {
+			showConfigErrorDialog(vpnok);
+			return;
+		}
+				
+		
+		getPM().saveProfile(getActivity(), mSelectedVPN);
 		Intent intent = VpnService.prepare(getActivity());
 
 		if (intent != null) {
 			// Start the query
 			intent.putExtra("FOO", "WAR BIER");
-			startActivityForResult(intent, 0);
+			startActivityForResult(intent, START_VPN_PROFILE);
 		} else {
-			onActivityResult(START_VPN_PROFILECONFIG, Activity.RESULT_OK, null);
+			onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
 		}
 
 	}

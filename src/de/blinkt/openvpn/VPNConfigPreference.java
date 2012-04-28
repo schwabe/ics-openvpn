@@ -1,6 +1,5 @@
 package de.blinkt.openvpn;
 
-import android.os.Bundle;
 import android.preference.Preference;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,7 +24,7 @@ public class VPNConfigPreference extends Preference implements OnClickListener {
 	private ImageView mQuickPrefButton;
 
 
-	public VPNConfigPreference(VPNProfileList vpnProfileList, Bundle args) {
+	public VPNConfigPreference(VPNProfileList vpnProfileList) {
 		super(vpnProfileList.getActivity());
 		setLayoutResource(R.layout.vpn_preference_layout);
 	
@@ -43,8 +42,6 @@ public class VPNConfigPreference extends Preference implements OnClickListener {
 		mQuickPrefButton = (ImageView) view.findViewById(R.id.quickedit_settings);
 		mQuickPrefButton.setOnClickListener(this);
 		
-		// Quick Fix, until I know what really goes wrong here :(
-		//view.findViewById(android.R.id.widget_frame).setOnClickListener(this);
 	}
 	
 
@@ -70,6 +67,6 @@ public class VPNConfigPreference extends Preference implements OnClickListener {
 	public void onClick(View v) {
 		mOnQuickSettingsListener.onQuickSettingsClick(this);
 	}
-
+	
 
 }

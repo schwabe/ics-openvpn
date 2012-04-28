@@ -38,7 +38,7 @@
 #include "proto.h"
 #include "misc.h"
 
-#ifdef WIN32
+#if defined(WIN32) || defined(TARGET_ANDROID)
 
 #define TUN_ADAPTER_INDEX_INVALID ((DWORD)-1)
 
@@ -75,6 +75,7 @@ struct tuntap_options {
   const char *netbios_scope; /* NBS (47) */
 
   int netbios_node_type;     /* NBT 1,2,4,8 (46) */
+
 
 #define N_DHCP_ADDR 4        /* Max # of addresses allowed for
 			        DNS, WINS, etc. */

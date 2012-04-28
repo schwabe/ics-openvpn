@@ -19,6 +19,7 @@ package de.blinkt.openvpn;
 import java.util.HashMap;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
@@ -31,15 +32,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import com.lamerman.FileDialog;
+
 import de.blinkt.openvpn.R.id;
 
-public class BasicSettings extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback, OnCheckedChangeListener {
+public class BasicSettings extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback {
 	private static final int CHOOSE_FILE_OFFSET = 1000;
 	private static final int UPDATE_ALIAS = 20;
 
@@ -60,18 +62,10 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 	private Handler mHandler;
 
 
-	private CheckBox mUseTlsAuth;
 
-
-	private CheckBox mShowAdvanced;
-
-
-	private FileSelectLayout mTlsFile;
+	
 
 	private HashMap<Integer, FileSelectLayout> fileselects = new HashMap<Integer, FileSelectLayout>();
-
-
-	private Spinner mTLSDirection;
 
 
 	private EditText mUserName;
@@ -91,7 +85,7 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 	private void addFileSelectLayout (FileSelectLayout fsl) {
 		int i = fileselects.size() + CHOOSE_FILE_OFFSET;
 		fileselects.put(i, fsl);
-		fsl.setActivity(getActivity(),i);
+		fsl.setFragment(this,i);
 	}
    
 	
@@ -120,11 +114,7 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 		mType = (Spinner) mView.findViewById(R.id.type);
 		mPKCS12Password = (TextView) mView.findViewById(R.id.pkcs12password);
 		mAliasName = (TextView) mView.findViewById(R.id.aliasname);
-		mUseTlsAuth = (CheckBox) mView.findViewById(R.id.useTLSAuth);
-		mTLSDirection = (Spinner) mView.findViewById(R.id.tls_direction);
 
-		mShowAdvanced = (CheckBox) mView.findViewById(R.id.show_advanced);
-		mTlsFile = (FileSelectLayout) mView.findViewById(R.id.tlsAuth);		
 		mUserName = (EditText) mView.findViewById(R.id.auth_username);
 		mPassword = (EditText) mView.findViewById(R.id.auth_password);
 		
@@ -134,20 +124,14 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 		addFileSelectLayout(mCaCert);
 		addFileSelectLayout(mClientCert);
 		addFileSelectLayout(mClientKey);
-		addFileSelectLayout(mTlsFile);
 		addFileSelectLayout(mpkcs12);
 
 		loadPreferences();
 
 		mType.setOnItemSelectedListener(this);
 
-		mShowAdvanced.setOnCheckedChangeListener(this);
-		mUseTlsAuth.setOnCheckedChangeListener(this);
-
-
 		mView.findViewById(R.id.select_keystore_button).setOnClickListener(this);
-		mView.findViewById(R.id.about).setOnClickListener(this);
-		mView.findViewById(R.id.connect).setOnClickListener(this);		
+	
 
 		if (mHandler == null) {
 			mHandler = new Handler(this);
@@ -155,6 +139,18 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 		
 		return mView;
 	}
+	
+	
+	 @Override
+	public void onActivityResult(int request, int result, Intent data) {
+            if (request >= CHOOSE_FILE_OFFSET) {
+                     String filepath = data.getStringExtra(FileDialog.RESULT_PATH);
+                     FileSelectLayout fsl = fileselects.get(request);
+                     fsl.setData(filepath);
+             }
+             savePreferences();
+     }
+	
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -213,18 +209,11 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 		mpkcs12.setData(mProfile.mPKCS12Filename);
 		mPKCS12Password.setText(mProfile.mPKCS12Password);
 
-		mUseTlsAuth.setChecked(mProfile.mUseTLSAuth);
-		onCheckedChanged(mUseTlsAuth,mUseTlsAuth.isChecked());
-		
-		mTlsFile.setData(mProfile.mTLSAuthFilename);
-		mTLSDirection.setSelection(mProfile.mTLSAuthDirection);
 		setAlias();
 
 	}
 
 	void savePreferences() {
-		// We need an Editor object to make preference changes.
-		// All objects are from android.context.Context
 
 		mProfile.mName = mProfileName.getText().toString();
 		mProfile.mCaFilename = mCaCert.getData();
@@ -239,10 +228,7 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 		mProfile.mAuthenticationType = mType.getSelectedItemPosition();
 		mProfile.mPKCS12Filename = mpkcs12.getData();
 		mProfile.mPKCS12Password = mPKCS12Password.getText().toString();
-		mProfile.mUseTLSAuth =mUseTlsAuth.isChecked();
-		mProfile.mTLSAuthFilename= mTlsFile.getData();
-		mProfile.mTLSAuthDirection =mTLSDirection.getSelectedItemPosition();
-		// Commit the edits!
+
 
 	}
 
@@ -295,19 +281,4 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 	}
 
 
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		int visibility;
-		if(isChecked) 
-			visibility =View.VISIBLE;
-		else 
-			visibility =View.GONE;
-
-		if(buttonView==mShowAdvanced) {
-			mView.findViewById(R.id.advanced_options).setVisibility(visibility);
-		} else if (buttonView == mUseTlsAuth) {
-			mView.findViewById(R.id.tlsauth_options).setVisibility(visibility);
-		}
-		
-	}
 }

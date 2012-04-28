@@ -14,6 +14,7 @@ void addRouteInformation(const char* dest, const char* mask, const char* gw);
 void addInterfaceInformation(int mtu,const char* ifconfig_local, const char* ifconfig_remote);
 void android_openvpn_log(int level,const char* prefix,const char* prefix_sep,const char* m1);
 void android_openvpn_exit(int status);
-
+void android_set_dns(const char* dns);
+void android_set_domain(const char* domain);
 
 #endif

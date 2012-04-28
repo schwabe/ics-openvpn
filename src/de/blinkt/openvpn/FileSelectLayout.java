@@ -1,6 +1,6 @@
 package de.blinkt.openvpn;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -17,7 +17,7 @@ import com.lamerman.SelectionMode;
 public class FileSelectLayout extends LinearLayout implements OnClickListener {
 
 	private TextView mData;
-	private Activity mActivity;
+	private Fragment mFragment;
 	private int mTaskId;
 	private Button mSelectButton;
 
@@ -38,10 +38,10 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 
 	}
 
-	public void setActivity(Activity a, int i)
+	public void setFragment(Fragment fragment, int i)
 	{
 		mTaskId = i;
-		mActivity = a;
+		mFragment = fragment;
 	}
 	
 	public void getCertificateFileDialog() {
@@ -49,7 +49,7 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 		startFC.putExtra(FileDialog.START_PATH, "/sdcard");
 		startFC.putExtra(FileDialog.SELECTION_MODE, SelectionMode.MODE_OPEN);
 		
-		mActivity.startActivityForResult(startFC,mTaskId);
+		mFragment.startActivityForResult(startFC,mTaskId);
 	}
 
 	
@@ -70,5 +70,4 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 	}
 
 	
-
 }

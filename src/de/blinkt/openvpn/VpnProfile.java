@@ -46,7 +46,7 @@ public class VpnProfile implements  Serializable{
 	public String mName;
 	public String mAlias;
 	public String mClientCertFilename;
-	public int mTLSAuthDirection=2;
+	public String mTLSAuthDirection="";
 	public String mTLSAuthFilename;
 	public String mClientKeyFilename;
 	public String mCaFilename;
@@ -84,7 +84,7 @@ public class VpnProfile implements  Serializable{
 		out.writeString(mName);
 		out.writeString(mAlias);
 		out.writeString(mClientCertFilename);
-		out.writeInt(mTLSAuthDirection);
+		out.writeString(mTLSAuthDirection);
 		out.writeString(mTLSAuthFilename);
 		out.writeString(mClientKeyFilename);
 		out.writeString(mCaFilename);
@@ -103,7 +103,7 @@ public class VpnProfile implements  Serializable{
 		mName = in.readString();
 		mAlias = in.readString();
 		mClientCertFilename = in.readString();
-		mTLSAuthDirection = in.readInt(); 
+		mTLSAuthDirection = in.readString(); 
 		mTLSAuthFilename = in.readString();
 		mClientKeyFilename = in.readString();
 		mCaFilename = in.readString();
@@ -156,7 +156,16 @@ public class VpnProfile implements  Serializable{
 
 
 		
-		cfg+="client\n";
+		boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
+	
+		if(useTLSClient && mUsePull)
+			cfg+="client\n";
+		else if (mUsePull)
+			cfg+="pull\n";
+		else if(useTLSClient)
+			cfg+="tls-client";
+			
+		
 		cfg+="verb 2\n";
 
 
@@ -224,14 +233,35 @@ public class VpnProfile implements  Serializable{
 		if(mUseTLSAuth) {
 			cfg+="tls-auth ";
 			cfg+=mTLSAuthFilename;
-			int tlsdir= mTLSAuthDirection;
-			// 2 is unspecified
-			if(tlsdir == 0 || tlsdir==1) {
-				cfg+=" ";
-				cfg+=new Integer(tlsdir).toString();
-			}
+			cfg+=" ";
+			cfg+= mTLSAuthDirection;
 			cfg+="\n";
 		}
+
+		// Basic Settings
+		if(!mUsePull ) {
+			cfg +="ifconfig " + mIPv4Address + " 255.255.255.255\n";
+		}
+		
+		if(mOverrideDNS || !mUsePull) {
+			if(!mDNS1.equals("") && mDNS1!=null)
+				cfg+="dhcp-option DNS " + mDNS1 + "\n";
+			if(!mDNS2.equals("") && mDNS2!=null)
+				cfg+="dhcp-option DNS " + mDNS2 + "\n";
+			
+		}
+		
+
+		
+		// Authentication
+		if(mCheckRemoteCN) {
+			if(mRemoteCN == null || mRemoteCN.equals("") )
+				cfg+="tls-remote " + mServerName + "\n";
+			else
+				cfg += "tls-remote " + mRemoteCN + "\n";
+		}
+		if(mExpectTLSCert)
+			cfg += "remote-cert-tls server\n";
 		
 		return cfg;
 	}
@@ -279,6 +309,8 @@ public class VpnProfile implements  Serializable{
 			intent.putExtra(prefix + ".USERNAME", mUsername);
 			intent.putExtra(prefix + ".PASSWORD", mPassword);
 		}
+		
+		intent.putExtra(prefix + ".profileUUID", mUuid.toString());
 		
 		try {
 			FileWriter cfg = new FileWriter(activity.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE);
@@ -336,6 +368,16 @@ public class VpnProfile implements  Serializable{
 		}
 		return "ERROR";
 
+	}
+	//! Return an error if somethign is wrong
+	int checkProfile() {
+		if(mAuthenticationType==TYPE_KEYSTORE && mAlias==null) 
+			return R.string.no_keystore_cert_selected;
+		
+		
+		// Everything okay
+		return R.string.no_error_found;
+		
 	}
 
 

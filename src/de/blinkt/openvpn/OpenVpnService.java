@@ -19,6 +19,7 @@ package de.blinkt.openvpn;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.Vector;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -40,6 +41,12 @@ public class OpenVpnService extends VpnService implements Handler.Callback, Runn
     private Thread mThread;
 
     private ParcelFileDescriptor mInterface;
+
+	private Vector<String> mDnslist=new Vector<String>();
+
+	private VpnProfile mProfile;
+
+	private String mDomain=null;
 
     @Override
     public void onRevoke() {
@@ -105,6 +112,9 @@ public class OpenVpnService extends VpnService implements Handler.Callback, Runn
         // Start a new session by creating a new thread.
         mThread = new Thread(this, "OpenVPNThread");
         mThread.start();
+        
+        String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
+        mProfile = ProfileManager.get(profileUUID);
         
         if(intent.hasExtra(prefix +".PKCS12PASS"))
         {
@@ -211,14 +221,31 @@ public class OpenVpnService extends VpnService implements Handler.Callback, Runn
         Builder builder = new Builder();
         builder.addRoute("0.0.0.0", 0);
         builder.addAddress(localip, 24 );
-        builder.addDnsServer("131.234.137.23");
-        builder.addSearchDomain("blinkt.de");
-        builder.setSession("OpenVPN - " + localip);
+        for (String dns : mDnslist ) {
+            builder.addDnsServer(dns);
+		}
+
+        if(mDomain!=null)
+        	builder.addSearchDomain(mDomain);
+        
+        builder.setSession(mProfile.mName + " - " + localip);
         Intent intent = new Intent(getBaseContext(),LogWindow.class);
         PendingIntent startLW = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
         builder.setConfigureIntent(startLW);
         mInterface = builder.establish();
         return mInterface;
 
+	}
+
+
+	public void addDNS(String dns) {
+		mDnslist.add(dns);		
+	}
+
+
+	public void setDomain(String domain) {
+		if(mDomain==null) {
+			mDomain=domain;
+		}
 	}
 }

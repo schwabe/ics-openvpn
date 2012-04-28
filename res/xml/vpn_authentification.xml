@@ -12,8 +12,29 @@
 
     <EditTextPreference
         android:dependency="checkRemoteCN"
-        android:dialogMessage="Enter the String against which the remote Server is checked. Openvpn will use prefix matching. &quot;Server&quot; matches &quot;Server-1&quot; and &quot;Server-2&quot;"
-        android:title="Remote Hostname(CN)"
-        android:key="remotecn"/>
+        android:dialogMessage="Enter the String against which the remote Server is checked. Openvpn will use prefix matching. &quot;Server&quot; matches &quot;Server-1&quot; and &quot;Server-2&quot;\nLeave empty to check the CN against the server hostname."
+        android:key="remotecn"
+        android:title="Remote Hostname(CN)" />
+
+    <PreferenceCategory android:title="TLS Authentication" >
+        <SwitchPreference
+            android:key="useTLSAuth"
+            android:summary="Enables the TLS Key Authentication"
+            android:title="@string/useTLSAuth" />
+
+        <Preference
+            android:dependency="useTLSAuth"
+            android:key="tlsAuthFile"
+            android:title="Title Auth File" />
+
+        <ListPreference
+            android:dependency="useTLSAuth"
+            android:dialogMessage="Select the direction for TLS Auth."
+            android:entries="@array/tls_directions"
+            android:entryValues="@array/tls_directions_entries"
+            android:key="tls_direction"
+            android:title="TLS Direction" 
+            android:persistent="false"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

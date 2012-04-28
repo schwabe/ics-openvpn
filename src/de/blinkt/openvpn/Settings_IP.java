@@ -120,6 +120,10 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 				preference.setSummary((String)newValue);
 
 			if(preference== mUsePull || preference == mOverrideDNS)
+				if(preference==mOverrideDNS) 
+					// Set so the function gets the right value
+					mOverrideDNS.setChecked((Boolean) newValue);
+				
 				setDNSState();
 			
 			saveSettings();

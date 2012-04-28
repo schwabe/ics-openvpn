@@ -212,60 +212,10 @@
                 style="@style/item"/>
         </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/show_advanced"
-            style="@style/item"
-            android:text="@string/show_advanced" />
+       
 
-        <LinearLayout
-            android:id="@+id/advanced_options"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" >
-
-            <CheckBox
-                android:id="@+id/useTLSAuth"
-                style="@style/item"
-                android:text="@string/useTLSAuth" />
-
-            <LinearLayout
-                android:id="@+id/tlsauth_options"
-	android:orientation="vertical"
-	        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginLeft="20sp" >
-
-                <de.blinkt.openvpn.FileSelectLayout
-                    android:id="@+id/tlsAuth"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    blinkt:title="@string/tlsauth" />
-
-                <TextView
-                    style="@style/item"
-                    android:text="@string/tls_direction"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                
-                <Spinner
-                    android:id="@+id/tls_direction"
-                    style="@style/item"
-                    android:entries="@array/tls_directions"
-                    android:prompt="@string/tls_direction" /> 
-            </LinearLayout>
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/connect"
-            style="@style/item"
-            android:text="@string/connect" />
-
-        <Button
-            android:id="@+id/about"
-            style="@style/item"
-            android:text="@string/about" />
+  
+      
     </LinearLayout>
 
 </ScrollView>

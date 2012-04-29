@@ -70,8 +70,8 @@ public class VpnProfile implements  Serializable{
 	public boolean mCheckRemoteCN=false;
 	public boolean mExpectTLSCert=true;
 	public String mRemoteCN="";
-	private String mPassword;
-	private String mUsername;
+	public String mPassword="";
+	public String mUsername="";
 	public boolean mRoutenopull=false;
 
 
@@ -225,6 +225,13 @@ public class VpnProfile implements  Serializable{
 			cfg+="\n";
 			cfg+="management-query-passwords\n";
 			break;
+		case VpnProfile.TYPE_USERPASS:
+			cfg+="ca " + mCaFilename + "\n";
+			cfg+="auth-user-pass\n";
+			cfg+="management-query-passwords\n";
+			break;
+			
+
 
 		}
 
@@ -233,7 +240,10 @@ public class VpnProfile implements  Serializable{
 		}
 
 		if(mUseTLSAuth) {
-			cfg+="tls-auth ";
+			if(mAuthenticationType==TYPE_STATICKEYS)
+				cfg+="static ";
+			else
+				cfg+="tls-auth ";
 			cfg+=mTLSAuthFilename;
 			cfg+=" ";
 			cfg+= mTLSAuthDirection;

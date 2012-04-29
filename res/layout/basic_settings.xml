@@ -33,11 +33,7 @@
         <EditText
             android:id="@+id/profilename"
             style="@style/item"
-            android:inputType="text"
-            />
-
-        
-        
+            android:inputType="text" />
 
         <TextView
             style="@style/item"
@@ -52,7 +48,7 @@
 
             <!-- <requestFocus /> -->
         </EditText>
-        
+
         <TextView
             style="@style/item"
             android:text="@string/port"
@@ -113,7 +109,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/certs"
+            android:id="@+id/cacert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -124,6 +120,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 blinkt:title="@string/ca_title" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/certs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <de.blinkt.openvpn.FileSelectLayout
                 android:id="@+id/certselect"
@@ -166,56 +170,55 @@
                 android:inputType="textPassword" />
         </LinearLayout>
 
-                <LinearLayout
+        <LinearLayout
             android:id="@+id/userpassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone" >
-            
-          <TextView
+
+            <TextView
                 style="@style/item"
                 android:layout_marginLeft="8dip"
                 android:layout_marginRight="8dip"
                 android:text="@string/auth_username"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                       
             <EditText
                 android:id="@+id/auth_username"
                 style="@style/item"
                 android:layout_marginLeft="8dip"
                 android:layout_marginRight="8dip"
-                android:inputType="textNoSuggestions" />            
-                        <TextView
+                android:inputType="textNoSuggestions" />
+
+            <TextView
                 style="@style/item"
                 android:layout_marginLeft="8dip"
                 android:layout_marginRight="8dip"
                 android:text="@string/auth_pwquery"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                       
             <EditText
                 android:id="@+id/auth_password"
                 style="@style/item"
                 android:layout_marginLeft="8dip"
                 android:layout_marginRight="8dip"
                 android:inputType="textPassword" />
-</LinearLayout>
+            <!-- android:hint="@string/pw_query_hint" -->
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/statickeys"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone" >
-            <TextView android:text="@string/static_keys_info" 
-                style="@style/item"/>
+
+            <TextView
+                style="@style/item"
+                android:singleLine="false"
+                android:text="@string/static_keys_info" />
         </LinearLayout>
-
-       
-
-  
-      
     </LinearLayout>
 
 </ScrollView>

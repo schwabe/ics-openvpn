@@ -18,11 +18,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.blinkt.openvpn"
     android:versionCode="8"
-    android:versionName="0.0.4" >
+    android:versionName="0.0.4a" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-sdk android:minSdkVersion="14" />
+    <uses-sdk android:minSdkVersion="15" />
 
     <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
 

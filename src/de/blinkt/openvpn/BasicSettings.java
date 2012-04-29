@@ -173,10 +173,12 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 		mView.findViewById(R.id.certs).setVisibility(View.GONE);
 		mView.findViewById(R.id.statickeys).setVisibility(View.GONE);
 		mView.findViewById(R.id.keystore).setVisibility(View.GONE);
+		mView.findViewById(R.id.cacert).setVisibility(View.GONE);
 
 		switch(type) {
 		case VpnProfile.TYPE_CERTIFICATES:
 			mView.findViewById(R.id.certs).setVisibility(View.VISIBLE);
+			mView.findViewById(R.id.cacert).setVisibility(View.VISIBLE);
 			break;
 		case VpnProfile.TYPE_PKCS12:
 			mView.findViewById(R.id.pkcs12).setVisibility(View.VISIBLE);
@@ -190,6 +192,8 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 			
 		case VpnProfile.TYPE_USERPASS:
 			mView.findViewById(R.id.userpassword).setVisibility(View.VISIBLE);
+			mView.findViewById(R.id.cacert).setVisibility(View.VISIBLE);
+			break;
 		}
 
 
@@ -208,7 +212,9 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 		mType.setSelection(mProfile.mAuthenticationType);
 		mpkcs12.setData(mProfile.mPKCS12Filename);
 		mPKCS12Password.setText(mProfile.mPKCS12Password);
-
+		mUserName.setText(mProfile.mUsername);
+		mPassword.setText(mProfile.mPassword);
+		
 		setAlias();
 
 	}
@@ -229,6 +235,8 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
 		mProfile.mPKCS12Filename = mpkcs12.getData();
 		mProfile.mPKCS12Password = mPKCS12Password.getText().toString();
 
+		mProfile.mPassword = mPassword.getText().toString();
+		mProfile.mUsername = mUserName.getText().toString();
 
 	}
 

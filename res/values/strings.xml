@@ -103,4 +103,5 @@
     <string name="config_error_message">An error has been found in your VPN configuration:</string>
     <string name="ipv4_format_error">Cannot parse the IPv4 address</string>
     <string name="custom_route_format_error">Cannot parse the custom routes</string>
+    <string name="pw_query_hint">Leave empty to query on demand</string>
 </resources>

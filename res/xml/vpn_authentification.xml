@@ -25,16 +25,17 @@
         <Preference
             android:dependency="useTLSAuth"
             android:key="tlsAuthFile"
-            android:title="Title Auth File" />
+            android:title="TLS Auth File" />
 
         <ListPreference
-            android:dependency="useTLSAuth"
-            android:dialogMessage="Select the direction for TLS Auth."
-            android:entries="@array/tls_directions"
-            android:entryValues="@array/tls_directions_entries"
+            android:entries="@array/tls_directions_entries"
+                    android:dependency="useTLSAuth"
+            
+            android:entryValues="@array/tls_directions_values"
             android:key="tls_direction"
-            android:title="TLS Direction" 
-            android:persistent="false"/>
+            android:persistent="false"
+            android:title="TLS Direction" />
     </PreferenceCategory>
+/>
 
 </PreferenceScreen>

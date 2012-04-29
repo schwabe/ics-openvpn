@@ -2,3 +2,5 @@ obj
 bin
 libs
 gen
+syntax: regexp
+^openvpn/xcopenvpn$

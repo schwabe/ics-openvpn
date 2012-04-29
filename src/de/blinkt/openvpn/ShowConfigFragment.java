@@ -13,10 +13,18 @@ public class ShowConfigFragment extends Fragment {
 	{
 		String profileUUID = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
 		VpnProfile vp = ProfileManager.get(profileUUID);
-		String cfg=vp.getConfigFile(getActivity().getCacheDir());
 		View v=inflater.inflate(R.layout.viewconfig, container,false);
 		TextView cv = (TextView) v.findViewById(R.id.configview);
-		cv.setText(cfg);
+		
+		int check=vp.checkProfile();
+		if(check!=R.string.no_error_found) {
+			cv.setText(check);
+		}
+		else { 
+			String cfg=vp.getConfigFile(getActivity().getCacheDir());
+
+			cv.setText(cfg);
+		}
 		return v;
 	};
 }

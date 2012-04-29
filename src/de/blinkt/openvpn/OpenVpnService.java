@@ -21,6 +21,8 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Vector;
 
+import de.blinkt.openvpn.OpenVpnService.CIDRIP;
+
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.LocalSocket;
@@ -38,7 +40,8 @@ public class OpenVpnService extends VpnService implements Handler.Callback, Runn
     private String[] mArgv;
 
     private Handler mHandler;
-    private Thread mThread;
+    // Only one VPN, make this thread shared between all instances
+    private static Thread mThread;
 
     private ParcelFileDescriptor mInterface;
 
@@ -48,6 +51,36 @@ public class OpenVpnService extends VpnService implements Handler.Callback, Runn
 
 	private String mDomain=null;
 
+	private Vector<CIDRIP> mRoutes=new Vector<CIDRIP>();
+
+	private CIDRIP mLocalIP;
+
+	
+	class CIDRIP{
+		String mIp;
+		int len;
+		public CIDRIP(String ip, String mask){
+			mIp=ip;
+			String[] ipt = mask.split("\\.");
+			long netmask=0;
+			
+			netmask += Integer.parseInt(ipt[0]);
+			netmask += Integer.parseInt(ipt[1])<< 8;
+			netmask += Integer.parseInt(ipt[2])<< 16;
+			netmask += Integer.parseInt(ipt[3])<< 24;
+			
+			len =0;
+			while((netmask & 0x1) == 1) {
+				len++;
+				netmask = netmask >> 1;
+			}
+		}
+		@Override
+		public String toString() {
+			return String.format("%s/%d",mIp,len);
+		}
+	}
+	
     @Override
     public void onRevoke() {
     	managmentCommand("signal SIGINT\n");
@@ -216,19 +249,31 @@ public class OpenVpnService extends VpnService implements Handler.Callback, Runn
     }
 
 
-	public ParcelFileDescriptor openTun(String localip) {
-		// FIXME: hardcoded assumptions
+	public ParcelFileDescriptor openTun() {
         Builder builder = new Builder();
-        builder.addRoute("0.0.0.0", 0);
-        builder.addAddress(localip, 24 );
+        
+        builder.addAddress(mLocalIP.mIp, mLocalIP.len);
+        
         for (String dns : mDnslist ) {
             builder.addDnsServer(dns);
 		}
-
+     
+        
+        for (CIDRIP route:mRoutes) {
+        	builder.addRoute(route.mIp, route.len);
+        }
+        
         if(mDomain!=null)
         	builder.addSearchDomain(mDomain);
         
-        builder.setSession(mProfile.mName + " - " + localip);
+
+        mDnslist.clear();
+        mRoutes.clear();
+
+        
+        builder.setSession(mProfile.mName + " - " + mLocalIP);
+        
+        // Let the configure Button show the Log
         Intent intent = new Intent(getBaseContext(),LogWindow.class);
         PendingIntent startLW = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
         builder.setConfigureIntent(startLW);
@@ -247,5 +292,15 @@ public class OpenVpnService extends VpnService implements Handler.Callback, Runn
 		if(mDomain==null) {
 			mDomain=domain;
 		}
+	}
+
+
+	public void addRoute(String dest, String mask) {
+		mRoutes.add(new CIDRIP(dest, mask));
+	}
+
+
+	public void setLocalIP(String local, String netmask) {
+		mLocalIP = new CIDRIP(local, netmask);
 	}
 }

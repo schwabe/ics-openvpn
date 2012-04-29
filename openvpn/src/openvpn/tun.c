@@ -1383,6 +1383,7 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
     for (i = 0; i < tt->options.dns_len; ++i) {
         android_set_dns(print_in_addr_t(tt->options.dns[i], 0, &gc));
     }
+
     if(tt->options.domain)
         android_set_domain(tt->options.domain);
     tt->fd = android_open_tun();

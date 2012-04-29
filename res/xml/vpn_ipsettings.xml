@@ -40,8 +40,12 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="Routing" >
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:dependency="usePull"
+			android:title="Ignore pushed routes"
+			android:key="routenopull"
+			android:summary="Ignore routed pushed by the server."
+
+            />
+        <CheckBoxPreference
             android:disableDependentsState="true"
             android:key="useDefaultRoute"
             android:summary="Redirects all Traffic over the VPN"

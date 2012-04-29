@@ -8,7 +8,6 @@ import android.util.Log;
 
 public class OpenVPN {
 	private static OpenVpnService mOpenVpnService;
-	private static String localip;
 	private static final int MAXLOGENTRIES = 500;
 	public static native int startOpenVPNThread();
 	public static native int startOpenVPNThreadArgs(String argv[]);
@@ -32,14 +31,15 @@ public class OpenVPN {
 	    }
 
 	 static void addRoute(String dest,String mask, String gw) {
-	        Log.i("openvpn" ,"Got Routing information " + dest + " " + mask + "  " + gw  );		 
+	        Log.i("openvpn" ,"Got Routing information " + dest + " " + mask + "  " + gw  );	
+	        mOpenVpnService.addRoute(dest,mask);
 	 }
 	 
 	 synchronized static void logMessage(int level,String prefix, String message)
 	 {
-		 logbuffer.addFirst(prefix + " " + message);
+		 logbuffer.addLast(prefix + " " + message);
 		 if(logbuffer.size()>MAXLOGENTRIES)
-			 logbuffer.removeLast();
+			 logbuffer.removeFirst();
 		 
 		 // The garbage collector does not collect the String from native
 		 // but kills me for logging 100 messages with too many references :(
@@ -62,10 +62,10 @@ public class OpenVPN {
 	 }
 	 
 	 
-	 static void addInterfaceInfo(int mtu, String local, String remote)
+	 static void addInterfaceInfo(int mtu, String local, String netmask)
 	 {
-		 Log.i("openvpn","Got interface info M"  + mtu + " L: " + local + "R: " + remote);
-		 localip=local;
+		 Log.i("openvpn","Got interface info M"  + mtu + " L: " + local + "NM: " + netmask);
+		 mOpenVpnService.setLocalIP(local,netmask);
 	 }
 	 
 	 static void addDns(String dns) {
@@ -96,7 +96,7 @@ public class OpenVPN {
 	
 	public static int openTunDevice() {
 		Log.d(TAG,"Opening tun device");
-		ParcelFileDescriptor pfd = mOpenVpnService.openTun(localip);
+		ParcelFileDescriptor pfd = mOpenVpnService.openTun();
 		return pfd.detachFd();
 	}
 	//! Dummy method being called to force loading of JNI Libraries

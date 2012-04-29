@@ -19,6 +19,7 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 		private EditTextPreference mCustomRoutes;
 		private CheckBoxPreference mUseDefaultRoute;
 		private VpnProfile mProfile;
+		private CheckBoxPreference mRouteNoPull;
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 			mDNS2 = (EditTextPreference) findPreference("dns2");
 			mCustomRoutes = (EditTextPreference) findPreference("customRoutes");
 			mUseDefaultRoute = (CheckBoxPreference) findPreference("useDefaultRoute");
+			mRouteNoPull = (CheckBoxPreference) findPreference("routenopull");
 
 			mIPv4.setOnPreferenceChangeListener(this);
 			mIPv6.setOnPreferenceChangeListener(this);
@@ -72,6 +74,7 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 			mSearchdomain.setText(mProfile.mSearchDomain);
 			mUseDefaultRoute.setChecked(mProfile.mUseDefaultRoute);
 			mCustomRoutes.setText(mProfile.mCustomRoutes);
+			mRouteNoPull.setChecked(mProfile.mRoutenopull);
 			
 			// Sets Summary
 			onPreferenceChange(mIPv4, mIPv4.getText());
@@ -105,7 +108,7 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 			mProfile.mSearchDomain = mSearchdomain.getText();
 			mProfile.mUseDefaultRoute = mUseDefaultRoute.isChecked();
 			mProfile.mCustomRoutes = mCustomRoutes.getText();
-			
+			mProfile.mRoutenopull = mRouteNoPull.isChecked();
 			
 		}
 		
@@ -120,10 +123,10 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 				preference.setSummary((String)newValue);
 
 			if(preference== mUsePull || preference == mOverrideDNS)
-				if(preference==mOverrideDNS) 
+				if(preference==mOverrideDNS) { 
 					// Set so the function gets the right value
 					mOverrideDNS.setChecked((Boolean) newValue);
-				
+				}
 				setDNSState();
 			
 			saveSettings();
@@ -133,6 +136,7 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 		private void setDNSState() {
 			boolean enabled;
 			mOverrideDNS.setEnabled(mUsePull.isChecked());
+			mRouteNoPull.setEnabled(mUsePull.isChecked());
 			if(!mUsePull.isChecked())
 				enabled =true;
 			else if (mOverrideDNS.isChecked())
@@ -143,6 +147,7 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 			mDNS1.setEnabled(enabled);
 			mDNS2.setEnabled(enabled);
 			mSearchdomain.setEnabled(enabled);
+			
 
 		}
 

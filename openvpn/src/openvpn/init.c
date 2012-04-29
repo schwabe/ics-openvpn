@@ -1477,6 +1477,13 @@ do_open_tun (struct context *c)
 						&gc);
 	  do_ifconfig (c->c1.tuntap, guess, TUN_MTU_SIZE (&c->c2.frame), c->c2.es);
 	}
+        
+        /* possibly add routes */
+        if(ifconfig_order() == ROUTE_BEFORE_TUN) {
+            if (!c->options.route_delay_defined)
+                do_route (&c->options, c->c1.route_list, c->c1.route_ipv6_list,
+                          c->c1.tuntap, c->plugins, c->c2.es);
+        }
 
       /* open the tun device */
       open_tun (c->options.dev, c->options.dev_type, c->options.dev_node,
@@ -1509,10 +1516,11 @@ do_open_tun (struct context *c)
 		   c->c2.es);
 
       /* possibly add routes */
+        if(ifconfig_order() == ROUTE_AFTER_TUN) {
       if (!c->options.route_delay_defined)
 	do_route (&c->options, c->c1.route_list, c->c1.route_ipv6_list,
 		  c->c1.tuntap, c->plugins, c->c2.es);
-
+        }
       /*
        * Did tun/tap driver give us an MTU?
        */

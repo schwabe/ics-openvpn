@@ -44,11 +44,11 @@ public class VPNPreferences extends PreferenceActivity {
 
 	
 				
-		if (hasHeaders()) {
+		/* if (hasHeaders()) {
 			Button button = new Button(this);
 			button.setText("Save");
 			setListFooter(button);
-		}
+		} */
 	}
 	
 	

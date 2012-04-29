@@ -12,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Collection;
 import java.util.Random;
 import java.util.UUID;
 import java.util.Vector;
@@ -35,7 +36,7 @@ public class VpnProfile implements  Serializable{
 	static final int TYPE_KEYSTORE=2;
 	public static final int TYPE_USERPASS = 3;
 	public static final int TYPE_STATICKEYS = 4;
-	
+
 	private static final String OVPNCONFIGFILE = "android.conf";
 
 	// Keep in order of parceling
@@ -71,6 +72,7 @@ public class VpnProfile implements  Serializable{
 	public String mRemoteCN="";
 	private String mPassword;
 	private String mUsername;
+	public boolean mRoutenopull=false;
 
 
 	public int describeContents() {
@@ -145,27 +147,27 @@ public class VpnProfile implements  Serializable{
 		return mName;
 	}
 
-	
+
 	public String getConfigFile(File cacheDir)
 	{
 
 		String cfg="";
-		
-		
+
+
 		// TODO  "--remote-cert-eku", "TLS Web Server Authentication"
 
 
-		
+
 		boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
-	
+
 		if(useTLSClient && mUsePull)
 			cfg+="client\n";
 		else if (mUsePull)
 			cfg+="pull\n";
 		else if(useTLSClient)
-			cfg+="tls-client";
-			
-		
+			cfg+="tls-client\n";
+
+
 		cfg+="verb 2\n";
 
 
@@ -240,19 +242,30 @@ public class VpnProfile implements  Serializable{
 
 		// Basic Settings
 		if(!mUsePull ) {
-			cfg +="ifconfig " + mIPv4Address + " 255.255.255.255\n";
+			cfg +="ifconfig " + cidrToIPAndNetmask(mIPv4Address) + "\n";
 		}
-		
+
+		if(mUsePull && mRoutenopull)
+			cfg += "route-nopull\n";
+
+		if(mUseDefaultRoute)
+			cfg += "route 0.0.0.0 0.0.0.0\n";
+		else
+			for(String route:getCustomRoutes()) {
+				cfg += "route " + route + "\n";
+			}
+
+
 		if(mOverrideDNS || !mUsePull) {
 			if(!mDNS1.equals("") && mDNS1!=null)
 				cfg+="dhcp-option DNS " + mDNS1 + "\n";
 			if(!mDNS2.equals("") && mDNS2!=null)
 				cfg+="dhcp-option DNS " + mDNS2 + "\n";
-			
-		}
-		
 
-		
+		}
+
+
+
 		// Authentication
 		if(mCheckRemoteCN) {
 			if(mRemoteCN == null || mRemoteCN.equals("") )
@@ -262,9 +275,52 @@ public class VpnProfile implements  Serializable{
 		}
 		if(mExpectTLSCert)
 			cfg += "remote-cert-tls server\n";
-		
+
 		return cfg;
 	}
+
+	private Collection<String> getCustomRoutes() {
+		Vector<String> cidrRoutes=new Vector<String>();
+		for(String route:mCustomRoutes.split("[\n \t]")) {
+			if(!route.equals("")) {
+				String cidrroute = cidrToIPAndNetmask(route);
+				if(cidrRoutes == null)
+					return null;
+				
+				cidrRoutes.add(cidrroute);
+			}
+		}
+		
+		return cidrRoutes;
+	}
+
+	private String cidrToIPAndNetmask(String route) {
+		String[] parts = route.split("/");
+
+		// No /xx, return verbatim
+		if (parts.length ==1)
+			return route;
+
+		if (parts.length!=2)
+			return null;
+		int len;
+		try { 
+			len = Integer.parseInt(parts[1]);
+		}	catch(NumberFormatException ne) {
+			return null;
+		}
+		if (len <0 || len >32)
+			return null;
+
+
+		long nm = 0xffffffffl;
+		nm = (nm << len) & 0xffffffffl;
+
+		String netmask =String.format("%d.%d.%d.%d", (nm & 0xff000000) >> 24,(nm & 0xff0000) >> 16, (nm & 0xff00) >> 8 ,nm & 0xff  );	
+		return parts[0] + "  " + netmask;
+	}
+
+
 	
 	private String[] buildOpenvpnArgv(File cacheDir)
 	{
@@ -290,8 +346,8 @@ public class VpnProfile implements  Serializable{
 
 	public Intent prepareIntent(Activity activity) {
 		String prefix = activity.getPackageName();
-		
-		 Intent intent = new Intent(activity,OpenVpnService.class);
+
+		Intent intent = new Intent(activity,OpenVpnService.class);
 
 		intent.putExtra(prefix + ".ARGV" , buildOpenvpnArgv(activity.getCacheDir()));
 
@@ -304,14 +360,14 @@ public class VpnProfile implements  Serializable{
 			String pkcs12pw = savePKCS12(activity);
 			intent.putExtra(prefix + ".PKCS12PASS", pkcs12pw);
 		}
-		
+
 		if(mAuthenticationType == VpnProfile.TYPE_USERPASS) {
 			intent.putExtra(prefix + ".USERNAME", mUsername);
 			intent.putExtra(prefix + ".PASSWORD", mPassword);
 		}
-		
+
 		intent.putExtra(prefix + ".profileUUID", mUuid.toString());
-		
+
 		try {
 			FileWriter cfg = new FileWriter(activity.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE);
 			cfg.write(getConfigFile(activity.getCacheDir()));
@@ -320,10 +376,10 @@ public class VpnProfile implements  Serializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return intent;
 	}
-	
+
 	private String getRandomPW() {
 		String pw= "";
 		// Put enough digits togher to make a password :)
@@ -373,11 +429,18 @@ public class VpnProfile implements  Serializable{
 	int checkProfile() {
 		if(mAuthenticationType==TYPE_KEYSTORE && mAlias==null) 
 			return R.string.no_keystore_cert_selected;
-		
-		
+
+		if(!mUsePull) {
+			if(mIPv4Address == null || cidrToIPAndNetmask(mIPv4Address) == null)
+				return R.string.ipv4_format_error;
+			
+		}
+		if(!mUseDefaultRoute && getCustomRoutes()==null)
+			return R.string.custom_route_format_error;
+
 		// Everything okay
 		return R.string.no_error_found;
-		
+
 	}
 
 

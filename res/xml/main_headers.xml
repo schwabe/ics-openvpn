@@ -3,7 +3,7 @@
 
     <header
         android:fragment="de.blinkt.openvpn.VPNProfileList"
-        android:summary="List of all VPN, confusing to be here :)"
+        android:summary="List of all configured VPNs"
         android:title="All your precious VPNs" />
     <header
         android:fragment="de.blinkt.openvpn.AboutFragment"

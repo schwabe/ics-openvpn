@@ -184,7 +184,7 @@ public class VPNProfileList extends PreferenceFragment implements  VpnPreference
 			startActivity(startLW);
 
 			
-			OpenVPN.logMessage(0, "", "Building confugration...");
+			OpenVPN.logMessage(0, "", "Building configration...");
 			
 			Intent startVPN = mSelectedVPN.prepareIntent(getActivity());
 			

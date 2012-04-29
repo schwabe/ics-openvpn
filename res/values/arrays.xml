@@ -17,18 +17,16 @@
     </string-array>
    
     
-    <string-array name="tls_directions">
+    <string-array name="tls_directions_entries">
         <item>0</item>
         <item>1</item>
         <item>Unspecified</item>        
     </string-array>
     
-    <string-array name="tls_directions_entries">
+    <string-array name="tls_directions_values">
         <item>0</item>
         <item>1</item>
-        <item>GNA</item>        
+        <item></item>        
     </string-array>
-    
-    
-    
+        
 </resources>

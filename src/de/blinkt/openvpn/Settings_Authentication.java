@@ -58,7 +58,7 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 		
 		mUseTLSAuth.setChecked(mProfile.mUseTLSAuth);
 		mTLSAuthFile.setSummary(mProfile.mTLSAuthFilename);
-		//mTLSAuthDirection.setValue(mProfile.mTLSAuthDirection);
+		mTLSAuthDirection.setValue(mProfile.mTLSAuthDirection);
 	}
 	
 	private void saveSettings() {
@@ -72,10 +72,10 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 		else
 			mProfile.mTLSAuthFilename = mTLSAuthFile.getSummary().toString();
 		
-		if(mTLSAuthDirection.getEntry()==null)
+		if(mTLSAuthDirection.getValue()==null)
 			mProfile.mTLSAuthDirection=null;
 		else
-			mProfile.mTLSAuthDirection = mTLSAuthDirection.getEntry().toString();
+			mProfile.mTLSAuthDirection = mTLSAuthDirection.getValue().toString();
 	}
 	
 	@Override

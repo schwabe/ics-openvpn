@@ -241,7 +241,7 @@ public class VpnProfile implements  Serializable{
 
 		if(mUseTLSAuth) {
 			if(mAuthenticationType==TYPE_STATICKEYS)
-				cfg+="static ";
+				cfg+="secret ";
 			else
 				cfg+="tls-auth ";
 			cfg+=mTLSAuthFilename;

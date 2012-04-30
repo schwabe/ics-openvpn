@@ -113,4 +113,8 @@
     <string name="custom_config_summary">Specify custom options. Use with care!</string>
     <string name="route_rejected">Route rejected by Android</string>
     <string formatted="false" name="ip_not_cidr">Cannot make sense of %s and %s as IP and CIDR netmask, assuming P2P for local address (/32)</string>
+    <string name="cancel_connection">cancel</string>
+    <string name="clear_log">clear log</string>
+    <string name="title_cancel">Cancel Confirmation</string>
+    <string name="cancel_connection_query">Disconnect the connected VPN/cancel the connection attempt?</string>
 </resources>

@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-<item android:id="@+id/clearlog"
-    android:icon="@android:drawable/ic_menu_crop"
-    android:title="clear log"
-    android:showAsAction="ifRoom"
-    />
+
+    <item
+        android:id="@+id/clearlog"
+        android:icon="@drawable/ic_menu_trash_holo_light"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/clear_log"/>
+    
+    <item android:id="@+id/cancel"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/cancel_connection"
+        />
+    
 
 </menu>

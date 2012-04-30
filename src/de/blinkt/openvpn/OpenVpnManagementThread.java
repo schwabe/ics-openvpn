@@ -2,6 +2,7 @@ package de.blinkt.openvpn;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Vector;
 
 import android.net.LocalSocket;
 import android.util.Log;
@@ -11,7 +12,8 @@ public class OpenVpnManagementThread implements Runnable {
 	private static final String TAG = "openvpn";
 	private LocalSocket mSocket;
 	private VpnProfile mProfile;
-
+private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
+	
 	public OpenVpnManagementThread(VpnProfile profile, LocalSocket mgmtsocket) {
 		mProfile = profile;
 		mSocket = mgmtsocket;
@@ -48,6 +50,7 @@ public class OpenVpnManagementThread implements Runnable {
 			e.printStackTrace();
 		}
 		String pendingInput="";
+		active.add(this);
 		
 		try {
 
@@ -68,6 +71,7 @@ public class OpenVpnManagementThread implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		active.remove(this);
 	}
 
 
@@ -133,8 +137,14 @@ public class OpenVpnManagementThread implements Runnable {
 
 
 	private void logStatusMessage(String command) {
-		// TODO Auto-generated method stub
-		
+		OpenVPN.logMessage(0,"MGMT:", command);
+	}
+
+
+	public static void stopOpenVPN() {
+		for (OpenVpnManagementThread mt: active){
+			mt.managmentCommand("signal SIGINT\n");
+		}		
 	}
 
 }

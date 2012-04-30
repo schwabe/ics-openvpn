@@ -255,7 +255,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		AlertDialog.Builder d = new AlertDialog.Builder(this);
 		d.setTitle(R.string.config_error_found);
 		d.setMessage(vpnok);
-		d.setPositiveButton("Ok", null);
+		d.setPositiveButton(android.R.string.ok, null);
 		d.show();
 	}
 	

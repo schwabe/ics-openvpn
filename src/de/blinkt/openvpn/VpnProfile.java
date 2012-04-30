@@ -300,6 +300,10 @@ public class VpnProfile implements  Serializable{
 
 	private Collection<String> getCustomRoutes() {
 		Vector<String> cidrRoutes=new Vector<String>();
+		if(mCustomRoutes==null) {
+			// No routes set, return empty vector
+			return cidrRoutes;
+		}
 		for(String route:mCustomRoutes.split("[\n \t]")) {
 			if(!route.equals("")) {
 				String cidrroute = cidrToIPAndNetmask(route);

@@ -4,14 +4,13 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.widget.Button;
 
 
 public class VPNPreferences extends PreferenceActivity {
 
 	private String mProfileUUID;
-	private BasicSettings mBS;
-	public void setmBS(BasicSettings mBS) {
+	private Settings_Basic mBS;
+	public void setmBS(Settings_Basic mBS) {
 		this.mBS = mBS;
 	}
 

@@ -1,8 +1,5 @@
 package de.blinkt.openvpn;
 
-import com.lamerman.FileDialog;
-import com.lamerman.SelectionMode;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +11,9 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
+
+import com.lamerman.FileDialog;
+import com.lamerman.SelectionMode;
 
 public class Settings_Authentication extends PreferenceFragment implements OnPreferenceChangeListener, OnPreferenceClickListener {
 	private static final int SELECT_TLS_FILE = 23223232;

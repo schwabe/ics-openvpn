@@ -33,6 +33,7 @@ public class Settings_Obscure extends PreferenceFragment implements OnPreference
 		mLogverbosity = (ListPreference) findPreference("verblevel");
 		
 		mLogverbosity.setOnPreferenceChangeListener(this);
+		mLogverbosity.setSummary("%s");
 		
 		loadSettings();
 

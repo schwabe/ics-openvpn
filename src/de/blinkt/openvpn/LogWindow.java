@@ -21,8 +21,6 @@ public class LogWindow extends ListActivity  {
 	
 	class LogWindowListAdapter implements ListAdapter,LogListener, Callback {
 
-		private static final int LIST_CHANGED = 0;
-
 		private Vector<String> myEntries=new Vector<String>();
 		
 		private Handler mHandler;

@@ -116,4 +116,8 @@ public class ProfileManager {
 		}
 	}
 
+	public int getNumberOfProfiles() {
+		return profiles.size();
+	}
+
 }

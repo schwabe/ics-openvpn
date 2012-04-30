@@ -2,7 +2,11 @@ package de.blinkt.openvpn;
 
 import java.util.Vector;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ListActivity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.Handler;
@@ -143,12 +147,14 @@ public class LogWindow extends ListActivity  {
 				for (DataSetObserver observer : observers) {
 					observer.onInvalidated();
 				}
-			}
+			} 
 
 			return true;
 		}
 
 		void clearLog() {
+			// Actually is probably called from GUI Thread as result of the user 
+			// pressing a button. But better safe than sorry
 			OpenVPN.clearLog();
 			OpenVPN.logMessage(0,"","Log cleared.");
 			mHandler.sendEmptyMessage(MESSAGE_CLEARLOG);
@@ -164,6 +170,20 @@ public class LogWindow extends ListActivity  {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId()==R.id.clearlog) {
 			ladapter.clearLog();
+			return true;
+		} else if(item.getItemId()==R.id.cancel){
+			Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle(R.string.title_cancel);
+			builder.setMessage(R.string.cancel_connection_query);
+			builder.setPositiveButton(android.R.string.yes, new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					OpenVpnManagementThread.stopOpenVPN();		
+				}
+			});
+			builder.setNegativeButton(android.R.string.no, null);
+			builder.show();
 			return true;
 		}
 

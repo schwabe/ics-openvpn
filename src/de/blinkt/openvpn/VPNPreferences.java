@@ -37,11 +37,10 @@ public class VPNPreferences extends PreferenceActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//                                                          profileUUID
 		mProfileUUID = getIntent().getStringExtra(getPackageName() + ".profileUUID");
 		super.onCreate(savedInstanceState);
 
-	
+
 				
 		/* if (hasHeaders()) {
 			Button button = new Button(this);

@@ -37,13 +37,8 @@
         <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".OpenVPNClient"
-            android:configChanges="orientation|keyboardHidden" >
         </activity>
 
         <service
@@ -53,5 +48,26 @@
                 <action android:name="android.net.VpnService" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".LaunchVPN"
+            android:label="@string/vpn_launch_title" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity-alias
+            android:name=".app.CreateShortcuts"
+            android:label="@string/vpn_shortcut"
+            android:targetActivity=".LaunchVPN" >
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity-alias>
     </application>
+
 </manifest>

@@ -19,9 +19,7 @@ package de.blinkt.openvpn;
 import java.io.IOException;
 import java.util.Vector;
 
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
@@ -32,8 +30,6 @@ import android.os.ParcelFileDescriptor;
 import android.widget.Toast;
 
 public class OpenVpnService extends VpnService implements Handler.Callback {
-	private static final String TAG = "OpenVpnService";
-
 	Handler mHandler;
 	private Thread mServiceThread;
 
@@ -52,8 +48,6 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 	private OpenVpnManagementThread mSocketManager;
 
 	private Thread mSocketManagerThread;
-
-	private NotificationManager mNotificationManager;
 
 
 
@@ -134,9 +128,6 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		if (mHandler == null) {
 			mHandler = new Handler(this);
 		}
-
-		mNotificationManager=(NotificationManager) getSystemService( Context.NOTIFICATION_SERVICE);
-
 
 		// Stop the previous session by interrupting the thread.
 		if (mSocketManager != null) {

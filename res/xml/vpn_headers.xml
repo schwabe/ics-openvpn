@@ -19,13 +19,12 @@
         android:title="Authentication" />
 
     <!-- android:icon="@drawable/ic_settings_display" -->
-    <!--
      <header
         android:fragment="de.blinkt.openvpn.Settings_Obscure"
-        android:summary="Obscure OpenVPN Settings. Normaly not needed."
+        android:summary="Obscure OpenVPN Settings. Normally not needed."
         android:title="Obscure" >
     </header>
-    -->
+
     <header
         android:fragment="de.blinkt.openvpn.ShowConfigFragment"
         android:summary="Shows the generated openvpn Configuration File"

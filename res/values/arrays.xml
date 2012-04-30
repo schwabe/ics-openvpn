@@ -1,32 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string-array name="vpn_types">
-    		<item>Certificates</item>
-    		<item>PKCS12 File</item>
-    		<item>Android Certficate</item>
-    		<item>Username/Password</item>
-    		<item>Static Keys</item>
+        <item>Certificates</item>
+        <item>PKCS12 File</item>
+        <item>Android Certficate</item>
+        <item>Username/Password</item>
+        <item>Static Keys</item>
     </string-array>
-   
-        <string-array name="vpn_entry_types">
-    		<item>certs</item>
-    		<item>pkcs12</item>
-    		<item>keystore</item>
-    		<item>userpw</item>
-    		<item>statickeys</item>
+    <string-array name="vpn_entry_types">
+        <item>certs</item>
+        <item>pkcs12</item>
+        <item>keystore</item>
+        <item>userpw</item>
+        <item>statickeys</item>
     </string-array>
-   
-    
     <string-array name="tls_directions_entries">
         <item>0</item>
         <item>1</item>
-        <item>Unspecified</item>        
+        <item>Unspecified</item>
     </string-array>
-    
     <string-array name="tls_directions_values">
         <item>0</item>
         <item>1</item>
-        <item></item>        
+        <item></item>
     </string-array>
-        
+    <string-array name="verb_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="verb_entries">
+        <item>0 - No Logging</item>
+        <item>1 - Default logging</item>
+        <item>2 - More verbose logging</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5 - Debug logging</item>
+    </string-array>
+
 </resources>

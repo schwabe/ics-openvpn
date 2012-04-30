@@ -53,6 +53,10 @@ public class OpenVPN {
 		 
 	 }
 	 
+	 synchronized static void clearLog() {
+		 logbuffer.clear();
+	 }
+	 
 	 synchronized static void addLogListener(LogListener ll){
 		 logListener.add(ll);
 	 }

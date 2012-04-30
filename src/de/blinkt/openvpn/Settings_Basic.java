@@ -41,7 +41,7 @@ import com.lamerman.FileDialog;
 
 import de.blinkt.openvpn.R.id;
 
-public class BasicSettings extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback {
+public class Settings_Basic extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback {
 	private static final int CHOOSE_FILE_OFFSET = 1000;
 	private static final int UPDATE_ALIAS = 20;
 
@@ -90,7 +90,6 @@ public class BasicSettings extends Fragment implements View.OnClickListener, OnI
    
 	
 	public void onCreate(Bundle savedInstanceState) {
-		Bundle foo = getArguments();
 		String profileuuid =getArguments().getString(getActivity().getPackageName() + ".profileUUID");
 		mProfile=ProfileManager.get(profileuuid);
 		super.onCreate(savedInstanceState);

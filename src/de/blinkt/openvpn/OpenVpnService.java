@@ -17,13 +17,11 @@
 package de.blinkt.openvpn;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.Arrays;
 import java.util.Vector;
 
-import de.blinkt.openvpn.OpenVpnService.CIDRIP;
-
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
@@ -31,19 +29,15 @@ import android.net.VpnService;
 import android.os.Handler;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
-import android.util.Log;
 import android.widget.Toast;
 
-public class OpenVpnService extends VpnService implements Handler.Callback, Runnable {
-    private static final String TAG = "OpenVpnService";
+public class OpenVpnService extends VpnService implements Handler.Callback {
+	private static final String TAG = "OpenVpnService";
 
-    private String[] mArgv;
+	Handler mHandler;
+	private Thread mServiceThread;
 
-    private Handler mHandler;
-    // Only one VPN, make this thread shared between all instances
-    private static Thread mThread;
-
-    private ParcelFileDescriptor mInterface;
+	private ParcelFileDescriptor mInterface;
 
 	private Vector<String> mDnslist=new Vector<String>();
 
@@ -55,7 +49,14 @@ public class OpenVpnService extends VpnService implements Handler.Callback, Runn
 
 	private CIDRIP mLocalIP;
 
-	
+	private OpenVpnManagementThread mSocketManager;
+
+	private Thread mSocketManagerThread;
+
+	private NotificationManager mNotificationManager;
+
+
+
 	class CIDRIP{
 		String mIp;
 		int len;
@@ -63,12 +64,12 @@ public class OpenVpnService extends VpnService implements Handler.Callback, Runn
 			mIp=ip;
 			String[] ipt = mask.split("\\.");
 			long netmask=0;
-			
+
 			netmask += Integer.parseInt(ipt[0]);
 			netmask += Integer.parseInt(ipt[1])<< 8;
 			netmask += Integer.parseInt(ipt[2])<< 16;
 			netmask += Integer.parseInt(ipt[3])<< 24;
-			
+
 			len =0;
 			while((netmask & 0x1) == 1) {
 				len++;
@@ -80,208 +81,146 @@ public class OpenVpnService extends VpnService implements Handler.Callback, Runn
 			return String.format("%s/%d",mIp,len);
 		}
 	}
-	
-    @Override
-    public void onRevoke() {
-    	managmentCommand("signal SIGINT\n");
-    	mThread=null;
-    	stopSelf();
-    };
-    
-	
-	public void managmentCommand(String cmd) {
-		LocalSocket mgmtsocket;
-		try {
-			byte[] buffer = new byte[400];
-			mgmtsocket = new LocalSocket();
-					
-			mgmtsocket.connect(new LocalSocketAddress(getCacheDir().getAbsolutePath() + "/" +  "mgmtsocket", 
-					LocalSocketAddress.Namespace.FILESYSTEM)); 
-			//mgmtsocket  = new Dat("127.0.0.1",OpenVPNClient.MANAGMENTPORT));
-			
-			//OutputStreamWriter outw = new OutputStreamWriter(mgmtsocket.getOutputStream());
-			mgmtsocket.getInputStream().read(buffer);
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			}
-			//outw.write(cmd);
-			mgmtsocket.getOutputStream().write(cmd.getBytes());
-			//outw.flush();
-			try {
-				Thread.sleep(400);
-			} catch (InterruptedException e) {
-			}
 
-			mgmtsocket.close();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+	@Override
+	public void onRevoke() {
+		mSocketManager.managmentCommand("signal SIGINT\n");
+		mServiceThread=null;
+		stopSelf();
+	};
+
+
+
+
+
+
+	private LocalSocket openManagmentInterface() {
+		// Could take a while to open connection
+		String socketname = (getCacheDir().getAbsolutePath() + "/" +  "mgmtsocket");
+		LocalSocket sock = new LocalSocket();
+		int tries = 8;
+
+		while(tries > 0 && !sock.isConnected()) {
+			try {
+				sock.connect(new LocalSocketAddress(socketname,
+						LocalSocketAddress.Namespace.FILESYSTEM));
+			} catch (IOException e) {
+				// wait 300 ms before retrying
+				try { Thread.sleep(300);
+				} catch (InterruptedException e1) {}
+
+			} 
+			tries--;
 		}
-	}
-    
-    
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        // The handler is only used to show messages.
-        if (mHandler == null) {
-            mHandler = new Handler(this);
-        }
+		return sock;
 
-        // Stop the previous session by interrupting the thread.
-        if (mThread != null) {
-        	managmentCommand("signal SIGINT\n");
-            mThread.interrupt();
-        }
-
-        // Thread already running, reuse existing,  
-        
-        // Extract information from the intent.
-        String prefix = getPackageName();
-        mArgv = intent.getStringArrayExtra(prefix + ".ARGV");
-        
-
-        // Start a new session by creating a new thread.
-        mThread = new Thread(this, "OpenVPNThread");
-        mThread.start();
-        
-        String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
-        mProfile = ProfileManager.get(profileUUID);
-        
-        if(intent.hasExtra(prefix +".PKCS12PASS"))
-        {
-        	try {
-        		String pkcs12password = intent.getStringExtra(prefix +".PKCS12PASS");
-				Thread.sleep(3000);
-				
-				managmentCommand("password 'Private Key' " + pkcs12password + "\n");
-			} catch (InterruptedException e) {
-			}
-        	
-        }
-        if(intent.hasExtra(prefix +".USERNAME"))
-        {
-        	try {
-        		String user = managmentEscape(intent.getStringExtra(prefix +".USERNAME"));
-        		String pw = managmentEscape(intent.getStringExtra(prefix +".PASSWORD"));
-				Thread.sleep(3000);
-				
-				
-				managmentCommand("username 'Auth' " + user+ "\n" + 
-						"password 'Auth' " + pw + "\n");
-			} catch (InterruptedException e) {
-			}
-        
-        }
-        
-        
-        return START_STICKY;
-    }
-
-    private String managmentEscape(String unescape) {
-    	String escapedString = unescape.replace("\\", "\\\\");
-    	escapedString = escapedString.replace("\"","\\\"");
-    	escapedString = escapedString.replace("\n","\\n");
-    	return '"' + escapedString + '"';
 	}
 
 
 	@Override
-    public void onDestroy() {
-        if (mThread != null) {
-        	managmentCommand("signal SIGINT\n");
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		// The handler is only used to show messages.
+		if (mHandler == null) {
+			mHandler = new Handler(this);
+		}
 
-            mThread.interrupt();
-        }
-    }
-
-    @Override
-    public boolean handleMessage(Message message) {
-        if (message != null) {
-            Toast.makeText(this, message.what, Toast.LENGTH_SHORT).show();
-        }
-        return true;
-    }
-
-    @Override
-    public synchronized void run() {
-        try {
-            Log.i(TAG, "Starting o");
-
-            
-            OpenVPN.setCallback(this);
+		mNotificationManager=(NotificationManager) getSystemService( Context.NOTIFICATION_SERVICE);
 
 
-            // We try to create the tunnel for several times. The better way
-            // is to work with ConnectivityManager, such as trying only when
-            // the network is avaiable. Here we just use a counter to keep
-            // things simple.
-            //for (int attempt = 0; attempt < 10; ++attempt) {
-                mHandler.sendEmptyMessage(R.string.connecting);
+		// Stop the previous session by interrupting the thread.
+		if (mSocketManager != null) {
+			mSocketManager.managmentCommand("signal SIGINT\n");
+		}
 
-                // Log argv
-                
-                OpenVPN.logMessage(0, "argv:" , Arrays.toString(mArgv));
-                
-                OpenVPN.startOpenVPNThreadArgs(mArgv);
-                
-                
-                
-                // Sleep for a while. This also checks if we got interrupted.
-                Thread.sleep(3000);
-            //}
-            Log.i(TAG, "Giving up");
-        } catch (Exception e) {
-            Log.e(TAG, "Got " + e.toString());
-        } finally {
-            try {
-                mInterface.close();
-            } catch (Exception e) {
-                // ignore	
-            }
-            mInterface = null;
-            
+		if (mServiceThread!=null) {
+			mServiceThread.interrupt();
+		}
 
-            mHandler.sendEmptyMessage(R.string.disconnected);
-            Log.i(TAG, "Exiting");
-        }
-    }
+
+		// Extract information from the intent.
+		String prefix = getPackageName();
+		String[] argv = intent.getStringArrayExtra(prefix + ".ARGV");
+
+		String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
+		mProfile = ProfileManager.get(profileUUID);
+
+		// Start a new session by creating a new thread.
+
+		OpenVPNThread serviceThread = new OpenVPNThread(this, argv);
+
+		mServiceThread = new Thread(serviceThread, "OpenVPNServiceThread");
+		mServiceThread.start();
+
+
+		// Open the Management Interface
+		LocalSocket mgmtsocket =  openManagmentInterface();
+
+		if(mgmtsocket!=null) {
+			// start a Thread that handles incoming messages of the managment socket
+			mSocketManager = new OpenVpnManagementThread(mProfile,mgmtsocket);
+			mSocketManagerThread = new Thread(mSocketManager,"OpenVPNMgmtThread");
+			mSocketManagerThread.start();
+		}
+
+		return START_STICKY;
+	}
+
+
+
+
+
+	@Override
+	public void onDestroy() {
+		if (mServiceThread != null) {
+			mSocketManager.managmentCommand("signal SIGINT\n");
+
+			mServiceThread.interrupt();
+		}
+	}
+
+	@Override
+	public boolean handleMessage(Message message) {
+		if (message != null) {
+			Toast.makeText(this, message.what, Toast.LENGTH_SHORT).show();
+		}
+		return true;
+	}
+
+
 
 
 	public ParcelFileDescriptor openTun() {
-        Builder builder = new Builder();
-        
-        builder.addAddress(mLocalIP.mIp, mLocalIP.len);
-        
-        for (String dns : mDnslist ) {
-            builder.addDnsServer(dns);
+		Builder builder = new Builder();
+
+		builder.addAddress(mLocalIP.mIp, mLocalIP.len);
+
+		for (String dns : mDnslist ) {
+			builder.addDnsServer(dns);
 		}
-     
-        
-        for (CIDRIP route:mRoutes) {
-        	builder.addRoute(route.mIp, route.len);
-        }
-        
-        if(mDomain!=null)
-        	builder.addSearchDomain(mDomain);
-        
 
-        mDnslist.clear();
-        mRoutes.clear();
 
-        
-        builder.setSession(mProfile.mName + " - " + mLocalIP);
-        
-        // Let the configure Button show the Log
-        Intent intent = new Intent(getBaseContext(),LogWindow.class);
-        PendingIntent startLW = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-        builder.setConfigureIntent(startLW);
-        mInterface = builder.establish();
-        return mInterface;
+		for (CIDRIP route:mRoutes) {
+			builder.addRoute(route.mIp, route.len);
+		}
+
+		if(mDomain!=null)
+			builder.addSearchDomain(mDomain);
+
+
+		mDnslist.clear();
+		mRoutes.clear();
+
+
+		builder.setSession(mProfile.mName + " - " + mLocalIP);
+
+		// Let the configure Button show the Log
+		Intent intent = new Intent(getBaseContext(),LogWindow.class);
+		PendingIntent startLW = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+		builder.setConfigureIntent(startLW);
+		mInterface = builder.establish();
+		return mInterface;
 
 	}
-
 
 	public void addDNS(String dns) {
 		mDnslist.add(dns);		
@@ -302,5 +241,10 @@ public class OpenVpnService extends VpnService implements Handler.Callback, Runn
 
 	public void setLocalIP(String local, String netmask) {
 		mLocalIP = new CIDRIP(local, netmask);
+	}
+
+
+	public Handler getHandler() {
+		return mHandler;
 	}
 }

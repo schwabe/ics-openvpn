@@ -8,11 +8,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import de.blinkt.openvpn.OpenVPN.LogListener;
 
@@ -45,7 +46,7 @@ public class LogWindow extends ListActivity  {
 			observers.add(observer);
 			
 		}
-
+		
 		@Override
 		public void unregisterDataSetObserver(DataSetObserver observer) {
 			observers.remove(observer);
@@ -133,6 +134,14 @@ public class LogWindow extends ListActivity  {
 		
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.logmenu, menu);
+	    return true;
+	}
+
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

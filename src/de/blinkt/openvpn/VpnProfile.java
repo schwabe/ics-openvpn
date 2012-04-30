@@ -38,6 +38,7 @@ public class VpnProfile implements  Serializable{
 	public static final int TYPE_STATICKEYS = 4;
 
 	private static final String OVPNCONFIGFILE = "android.conf";
+	
 
 	// Keep in order of parceling
 	// Public attributes, since I got mad with getter/setter
@@ -73,6 +74,10 @@ public class VpnProfile implements  Serializable{
 	public String mPassword="";
 	public String mUsername="";
 	public boolean mRoutenopull=false;
+
+	
+	protected transient String mTransientPW=null;
+	private static transient String mTempPKCS12Password;
 
 
 	public int describeContents() {
@@ -153,10 +158,17 @@ public class VpnProfile implements  Serializable{
 
 		String cfg="";
 
+		// Enable managment interface 
+		cfg += "management ";
 
-		// TODO  "--remote-cert-eku", "TLS Web Server Authentication"
-
-
+		cfg +=cacheDir.getAbsolutePath() + "/" +  "mgmtsocket";
+		cfg += " unix\n";
+		cfg += "management-hold\n\n";
+		
+		cfg+="# tmp does not exist on Android\n";
+		cfg+="tmp-dir ";
+		cfg+=cacheDir.getAbsolutePath();
+		cfg+="\n\n";
 
 		boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
 
@@ -171,10 +183,7 @@ public class VpnProfile implements  Serializable{
 		cfg+="verb 2\n";
 
 
-		// /tmp does not exist on Android
-		cfg+="tmp-dir ";
-		cfg+=cacheDir.getAbsolutePath();
-		cfg+="\n";
+	
 
 		// quit after 5 tries
 		cfg+="connect-retry-max 5\n";
@@ -339,14 +348,6 @@ public class VpnProfile implements  Serializable{
 		// Add fixed paramenters
 		args.add("openvpn");
 
-		// Enable managment interface to 
-		// stop openvpn
-		args.add("--management");
-
-		args.add(cacheDir.getAbsolutePath() + "/" +  "mgmtsocket");
-		args.add("unix");
-		//args.add("--management-hold");
-
 		args.add("--config");
 		args.add(cacheDir.getAbsolutePath() + "/" + OVPNCONFIGFILE);
 
@@ -358,24 +359,12 @@ public class VpnProfile implements  Serializable{
 		String prefix = activity.getPackageName();
 
 		Intent intent = new Intent(activity,OpenVpnService.class);
+		
+		   if(mAuthenticationType == VpnProfile.TYPE_KEYSTORE) {
+            savePKCS12(activity);
+		   }
 
 		intent.putExtra(prefix + ".ARGV" , buildOpenvpnArgv(activity.getCacheDir()));
-
-		if(mAuthenticationType == TYPE_PKCS12){
-			intent.putExtra(prefix + ".PKCS12PASS",
-					mPKCS12Password);
-		}
-
-		if(mAuthenticationType == VpnProfile.TYPE_KEYSTORE) {
-			String pkcs12pw = savePKCS12(activity);
-			intent.putExtra(prefix + ".PKCS12PASS", pkcs12pw);
-		}
-
-		if(mAuthenticationType == VpnProfile.TYPE_USERPASS) {
-			intent.putExtra(prefix + ".USERNAME", mUsername);
-			intent.putExtra(prefix + ".PASSWORD", mPassword);
-		}
-
 		intent.putExtra(prefix + ".profileUUID", mUuid.toString());
 
 		try {
@@ -390,7 +379,10 @@ public class VpnProfile implements  Serializable{
 		return intent;
 	}
 
-	private String getRandomPW() {
+	public String getTemporaryPKCS12Password() {
+		if(mTempPKCS12Password!=null)
+			return mTempPKCS12Password;
+		
 		String pw= "";
 		// Put enough digits togher to make a password :)
 		Random r = new Random();
@@ -398,11 +390,12 @@ public class VpnProfile implements  Serializable{
 			pw += new Integer(r.nextInt(1000)).toString();
 		}
 
-		return pw;
+		mTempPKCS12Password=pw;
+		return mTempPKCS12Password;
 
 	}
 
-	private String savePKCS12(Context context) {
+	private void savePKCS12(Context context) {
 		PrivateKey privateKey = null;
 		X509Certificate[] cachain=null;
 		try {
@@ -412,11 +405,11 @@ public class VpnProfile implements  Serializable{
 			KeyStore ks = KeyStore.getInstance("PKCS12");
 			ks.load(null, null);
 			ks.setKeyEntry("usercert", privateKey, null, cachain);
-			String mypw = getRandomPW();
+			String mypw = getTemporaryPKCS12Password();
 			FileOutputStream fout = new FileOutputStream(context.getCacheDir().getAbsolutePath() + "/" + VpnProfile.OVPNCONFIGPKCS12);
 			ks.store(fout,mypw.toCharArray());
 			fout.flush(); fout.close();
-			return mypw;
+			return;
 		} catch (KeyChainException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
@@ -432,7 +425,6 @@ public class VpnProfile implements  Serializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "ERROR";
 
 	}
 	//! Return an error if somethign is wrong
@@ -453,6 +445,49 @@ public class VpnProfile implements  Serializable{
 
 	}
 
+	//! Openvpn asks for a "Private Key", this can be pkcs12 pw or private key pw
+	//
+	public String getPasswordPrivateKey() {
+		if(mTransientPW!=null) {
+			return mTransientPW;
+		}
+		switch (mAuthenticationType) {
+		case TYPE_KEYSTORE:
+			return getTemporaryPKCS12Password();
+			
+		case TYPE_PKCS12:
+			return mPKCS12Password;
+			
+		case TYPE_USERPASS:
+		case TYPE_STATICKEYS:
+		case TYPE_CERTIFICATES:
+		default:
+			return null;
+		}
+	}
+
+	public String needUserPWInput() {
+		if(mTransientPW!=null)
+			return null;
+		if(mAuthenticationType == TYPE_PKCS12 &&
+				(mPKCS12Password.equals("") || mPKCS12Password == null)) {
+			return "PKCS12 File Password";
+		}
+		if(mAuthenticationType == TYPE_USERPASS &&
+				(mPassword.equals("") || mPassword == null)) {
+			return "Password";
+		}
+		return null;
+	}
+
+	public String getPasswordAuth() {
+		if(mTransientPW!=null)
+			return mTransientPW;
+		else
+			return mPassword;
+	}
+
+	
 
 }
 

@@ -202,7 +202,11 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 
 		for (CIDRIP route:mRoutes) {
-			builder.addRoute(route.mIp, route.len);
+			try {
+				builder.addRoute(route.mIp, route.len);
+			} catch (IllegalArgumentException ia) {
+				OpenVPN.logMessage(0, "", getString(R.string.route_rejected) + route + " " + ia.getLocalizedMessage());
+			}
 		}
 
 		if(mDomain!=null)
@@ -243,6 +247,9 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 	public void setLocalIP(String local, String netmask) {
 		mLocalIP = new CIDRIP(local, netmask);
+		if(mLocalIP.len == 32 && !netmask.equals("255.255.255.255")) {
+			OpenVPN.logMessage(0, "", String.format(getString(R.string.ip_not_cidr, local,netmask)));
+		}
 	}
 
 

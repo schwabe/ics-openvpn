@@ -67,6 +67,8 @@ public class Settings_Obscure extends PreferenceFragment implements OnPreference
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if(preference==mLogverbosity) {
 			mLogverbosity.setDefaultValue(newValue);
+			// Does not refresh otherwise
+			mLogverbosity.setSummary("%s");
 		}
 			
 		return true;

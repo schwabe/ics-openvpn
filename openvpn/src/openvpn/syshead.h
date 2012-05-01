@@ -26,6 +26,7 @@
 #define SYSHEAD_H
 
 #include "compat.h"
+#include "compat-stdbool.h"
 
 /* branch prediction hints */
 #if defined(__GNUC__)
@@ -537,6 +538,11 @@ socket_defined (const socket_descriptor_t sd)
 #if defined(ENABLE_MANAGEMENT) && defined(ENABLE_SSL) && !defined(ENABLE_CRYPTO_POLARSSL)
 #define MANAGMENT_EXTERNAL_KEY
 #endif
+
+/* Enable PolarSSL RNG prediction resistance support */
+#ifdef ENABLE_CRYPTO_POLARSSL
+#define ENABLE_PREDICTION_RESISTANCE
+#endif /* ENABLE_CRYPTO_POLARSSL */
 
 /*
  * MANAGEMENT_IN_EXTRA allows the management interface to

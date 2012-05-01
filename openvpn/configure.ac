@@ -168,6 +168,7 @@ AC_ARG_ENABLE(
 AC_ARG_ENABLE(
 	[password-save],
 	[AS_HELP_STRING([--enable-password-save], [allow --askpass and --auth-user-pass passwords to be read from a file @<:@default=yes@:>@])],
+	,
 	[enable_password_save="no"]
 )
 
@@ -354,7 +355,7 @@ AX_EMPTY_ARRAY
 AC_CHECK_SIZEOF([unsigned int])
 AC_CHECK_SIZEOF([unsigned long])
 AC_CHECK_HEADERS([ \
-	stdio.h stdarg.h limits.h \
+	stdio.h stdarg.h stdbool.h limits.h \
 	time.h errno.h fcntl.h io.h direct.h \
 	ctype.h sys/types.h sys/socket.h \
 	signal.h unistd.h dlfcn.h \
@@ -363,7 +364,7 @@ AC_CHECK_HEADERS([ \
 	windows.h winsock2.h ws2tcpip.h \
 ])
 AC_CHECK_HEADERS([ \
-	sys/time.h sys/un.h sys/ioctl.h sys/stat.h \
+	sys/time.h sys/ioctl.h sys/stat.h \
 	sys/mman.h sys/file.h \
 	unistd.h signal.h libgen.h stropts.h \
 	syslog.h pwd.h grp.h \
@@ -396,10 +397,13 @@ SOCKET_INCLUDES="
 #ifdef HAVE_NETINET_IN_SYSTM_H
 #include <netinet/in_systm.h>
 #endif
+#ifdef HAVE_NETINET_IP_H
+#include <netinet/ip.h>
+#endif
 "
 
 AC_CHECK_HEADERS(
-	[net/if.h netinet/ip.h netinet/if_ether.h resolv.h],
+	[net/if.h netinet/ip.h netinet/if_ether.h resolv.h sys/un.h],
 	,
 	,
 	[[${SOCKET_INCLUDES}]]
@@ -412,38 +416,32 @@ AC_CHECK_TYPES(
 	[[${SOCKET_INCLUDES}]]
 )
 AC_CHECK_TYPE(
-	[struct tun_pi],
-	[AC_DEFINE(HAVE_TUN_PI, 1, [struct tun_pi needed for IPv6 support])],
-	,
-	[[${SOCKET_INCLUDES}]]
-)
-AC_CHECK_TYPE(
 	[struct iphdr],
-	[AC_DEFINE(HAVE_IPHDR, 1, [struct iphdr needed for IPv6 support])],
+	[AC_DEFINE([HAVE_IPHDR], [1], [struct iphdr needed for IPv6 support])],
 	,
 	[[${SOCKET_INCLUDES}]]
 )
 AC_CHECK_TYPE(
 	[struct sock_extended_err],
-	[AC_DEFINE(HAVE_SOCK_EXTENDED_ERR, 1, [struct sock_extended_err needed for extended socket error support])],
+	[AC_DEFINE([HAVE_SOCK_EXTENDED_ERR], [1], [struct sock_extended_err needed for extended socket error support])],
 	,
 	[[${SOCKET_INCLUDES}]]
 )
 AC_CHECK_TYPE(
 	[struct msghdr],
-	[AC_DEFINE(HAVE_MSGHDR, 1, [struct msghdr needed for extended socket error support])],
+	[AC_DEFINE([HAVE_MSGHDR], [1], [struct msghdr needed for extended socket error support])],
 	,
 	[[${SOCKET_INCLUDES}]]
 )
 AC_CHECK_TYPE(
 	[struct cmsghdr],
-	[AC_DEFINE(HAVE_CMSGHDR, 1, [struct cmsghdr needed for extended socket error support])],
+	[AC_DEFINE([HAVE_CMSGHDR], [1], [struct cmsghdr needed for extended socket error support])],
 	,
 	[[${SOCKET_INCLUDES}]]
 )
 AC_CHECK_TYPE(
 	[struct in_pktinfo],
-	[AC_DEFINE(HAVE_IN_PKTINFO, 1, [struct in_pktinfo needed for IP_PKTINFO support])],
+	[AC_DEFINE([HAVE_IN_PKTINFO], [1], [struct in_pktinfo needed for IP_PKTINFO support])],
 	,
 	[[${SOCKET_INCLUDES}]]
 )
@@ -594,6 +592,16 @@ AC_CHECK_HEADERS(
 		tap-windows.h \
 	],
 	[have_tap_header="yes"]
+)
+AC_CHECK_DECLS(
+	[TUNSETPERSIST],
+	[AC_DEFINE([ENABLE_FEATURE_TUN_PERSIST], [1], [We have persist tun capability])],
+	,
+	[[
+		#ifdef HAVE_LINUX_IF_TUN_H
+		#include <linux/if_tun.h>
+		#endif
+	]]
 )
 CFLAGS="${old_CFLAGS}"
 test "${have_tap_header}" = "yes" || AC_MSG_ERROR([no tap header could be found])
@@ -821,7 +829,7 @@ case "${with_crypto_library}" in
 	polarssl)
 		have_crypto_crypto="${have_polarssl_crypto}"
 		have_crypto_ssl="${have_polarssl_ssl}"
-		CRYPTO_CRYPTO_CFLAGS="${POLARSSL_CRYPTO_CFLAGS}"
+		CRYPTO_CRYPTO_CFLAGS="${POLARSSL_CFLAGS}"
 		CRYPTO_CRYPTO_LIBS="${POLARSSL_LIBS}"
 		AC_DEFINE([ENABLE_CRYPTO_POLARSSL], [1], [Use PolarSSL library])
 		;;

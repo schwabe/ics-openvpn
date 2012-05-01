@@ -203,7 +203,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		 
 	}
 	
-	private void askForPW(String type) {
+	private void askForPW(final String type) {
 
 		final EditText entry = new EditText(this);
 		entry.setSingleLine();
@@ -219,7 +219,11 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				String pw = entry.getText().toString();
-				mSelectedProfile.mTransientPW = pw;
+				if(type.equals("Password")) {
+					mSelectedProfile.mTransientPW = pw;
+				} else {
+					mSelectedProfile.mTransientPCKS12PW = pw;
+				}
 				onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
 
 			}

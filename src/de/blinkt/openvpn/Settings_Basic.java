@@ -173,18 +173,26 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mView.findViewById(R.id.statickeys).setVisibility(View.GONE);
 		mView.findViewById(R.id.keystore).setVisibility(View.GONE);
 		mView.findViewById(R.id.cacert).setVisibility(View.GONE);
+		mView.findViewById(R.id.userpassword).setVisibility(View.GONE);
 
+		// Fallthroughs are by desing
 		switch(type) {
+		case VpnProfile.TYPE_USERPASS_CERTIFICATES:
+			mView.findViewById(R.id.userpassword).setVisibility(View.VISIBLE);
 		case VpnProfile.TYPE_CERTIFICATES:
 			mView.findViewById(R.id.certs).setVisibility(View.VISIBLE);
 			mView.findViewById(R.id.cacert).setVisibility(View.VISIBLE);
 			break;
+		case VpnProfile.TYPE_USERPASS_PKCS12:
+			mView.findViewById(R.id.userpassword).setVisibility(View.VISIBLE);
 		case VpnProfile.TYPE_PKCS12:
 			mView.findViewById(R.id.pkcs12).setVisibility(View.VISIBLE);
 			break;
 		case VpnProfile.TYPE_STATICKEYS:
 			mView.findViewById(R.id.statickeys).setVisibility(View.VISIBLE);
 			break;
+		case VpnProfile.TYPE_USERPASS_KEYSTORE:
+			mView.findViewById(R.id.userpassword).setVisibility(View.VISIBLE);
 		case VpnProfile.TYPE_KEYSTORE:
 			mView.findViewById(R.id.keystore).setVisibility(View.VISIBLE);
 			break;

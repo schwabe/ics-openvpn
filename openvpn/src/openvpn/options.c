@@ -545,6 +545,10 @@ static const char usage_message[] =
   "                  using file.\n"
   "--test-crypto   : Run a self-test of crypto features enabled.\n"
   "                  For debugging only.\n"
+#ifdef ENABLE_PREDICTION_RESISTANCE
+  "--use-prediction-resistance: Enable prediction resistance on the random\n"
+  "                             number generator.\n"
+#endif
 #ifdef ENABLE_SSL
   "\n"
   "TLS Key Negotiation Options:\n"
@@ -560,7 +564,6 @@ static const char usage_message[] =
 #if OPENSSL_VERSION_NUMBER >= 0x00907000L
   " and CRLs).\n"
 #else /* OPENSSL_VERSION_NUMBER >= 0x00907000L */
-#error WTF!
   ").\n"
   "                  WARNING: no support of CRL available with this version.\n"
 #endif /* OPENSSL_VERSION_NUMBER >= 0x00907000L */
@@ -726,7 +729,7 @@ static const char usage_message[] =
   "                  for use with the --secret option.\n"
   "--secret file   : Write key to file.\n"
 #endif				/* ENABLE_CRYPTO */
-#ifdef TUNSETPERSIST
+#ifdef ENABLE_FEATURE_TUN_PERSIST
   "\n"
   "Tun/tap config mode (available with linux 2.4+):\n"
   "--mktun         : Create a persistent tunnel.\n"
@@ -792,7 +795,7 @@ init_options (struct options *o, const bool init_gc)
   o->management_echo_buffer_size = 100;
   o->management_state_buffer_size = 100;
 #endif
-#ifdef TUNSETPERSIST
+#ifdef ENABLE_FEATURE_TUN_PERSIST
   o->persist_mode = 1;
 #endif
 #ifndef WIN32
@@ -838,6 +841,9 @@ init_options (struct options *o, const bool init_gc)
   o->replay_time = DEFAULT_TIME_BACKTRACK;
   o->use_iv = true;
   o->key_direction = KEY_DIRECTION_BIDIRECTIONAL;
+#ifdef ENABLE_PREDICTION_RESISTANCE
+  o->use_prediction_resistance = false;
+#endif
 #ifdef ENABLE_SSL
   o->key_method = 2;
   o->tls_timeout = 2;
@@ -1423,7 +1429,7 @@ show_settings (const struct options *o)
   
   SHOW_INT (mode);
 
-#ifdef TUNSETPERSIST
+#ifdef ENABLE_FEATURE_TUN_PERSIST
   SHOW_BOOL (persist_config);
   SHOW_INT (persist_mode);
 #endif
@@ -1584,6 +1590,9 @@ show_settings (const struct options *o)
   SHOW_STR (packet_id_file);
   SHOW_BOOL (use_iv);
   SHOW_BOOL (test_crypto);
+#ifdef ENABLE_PREDICTION_RESISTANCE
+  SHOW_BOOL (use_prediction_resistance);
+#endif
 
 #ifdef ENABLE_SSL
   SHOW_BOOL (tls_server);
@@ -3021,6 +3030,11 @@ options_string (const struct options *o,
 	  buf_printf (&out, ",no-replay");
 	if (!o->use_iv)
 	  buf_printf (&out, ",no-iv");
+
+#ifdef ENABLE_PREDICTION_RESISTANCE
+        if (o->use_prediction_resistance)
+          buf_printf (&out, ",use-prediction-resistance");
+#endif
       }
 
 #ifdef ENABLE_SSL
@@ -6423,6 +6437,13 @@ add_option (struct options *options,
       options->keysize = keysize;
     }
 #endif
+#ifdef ENABLE_PREDICTION_RESISTANCE
+  else if (streq (p[0], "use-prediction-resistance"))
+    {
+      VERIFY_PERMISSION (OPT_P_GENERAL);
+      options->use_prediction_resistance = true;
+    }
+#endif
 #ifdef ENABLE_SSL
   else if (streq (p[0], "show-tls"))
     {
@@ -6795,7 +6816,7 @@ add_option (struct options *options,
       options->pkcs11_id_management = true;
     }
 #endif
-#ifdef TUNSETPERSIST
+#ifdef ENABLE_FEATURE_TUN_PERSIST
   else if (streq (p[0], "rmtun"))
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);

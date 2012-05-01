@@ -1397,28 +1397,12 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
 #error header file linux/sockios.h required
 #endif
 
-
-#if defined(HAVE_TUN_PI) && defined(HAVE_IPHDR) && defined(HAVE_IOVEC) && defined(ETH_P_IPV6) && defined(ETH_P_IP) && defined(HAVE_READV) && defined(HAVE_WRITEV)
-#define LINUX_IPV6 1
-/* #warning IPv6 ON */
-#else
-#define LINUX_IPV6 0
-/* #warning IPv6 OFF */
-#endif
-
 #if !PEDANTIC
 
 void
 open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tuntap *tt)
 {
   struct ifreq ifr;
-
-  /* warn if a very old linux version is used & --tun-ipv6 set
-   */
-#if LINUX_IPV6 == 0
-  if ( tt->ipv6 )
-    msg (M_WARN, "NOTE: explicit support for IPv6 tun devices is not provided for this OS");
-#endif
 
   /*
    * We handle --dev null specially, we do not open /dev/null for this.
@@ -1543,7 +1527,7 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
 #endif /* HAVE_LINUX_IF_TUN_H */
 #endif /* TARGET_ANDROID */
 
-#ifdef TUNSETPERSIST
+#ifdef ENABLE_FEATURE_TUN_PERSIST
 
 /*
  * This can be removed in future
@@ -1593,7 +1577,7 @@ tuncfg (const char *dev, const char *dev_type, const char *dev_node, int persist
   msg (M_INFO, "Persist state set to: %s", (persist_mode ? "ON" : "OFF"));
 }
 
-#endif /* TUNSETPERSIST */
+#endif /* ENABLE_FEATURE_TUN_PERSIST */
 
 void
 close_tun (struct tuntap *tt)
@@ -1649,7 +1633,6 @@ close_tun (struct tuntap *tt)
 int
 write_tun (struct tuntap* tt, uint8_t *buf, int len)
 {
-#if LINUX_IPV6
   if (tt->ipv6)
     {
       struct tun_pi pi;
@@ -1675,14 +1658,12 @@ write_tun (struct tuntap* tt, uint8_t *buf, int len)
       return(ret - sizeof(pi));
     }
   else
-#endif
     return write (tt->fd, buf, len);
 }
 
 int
 read_tun (struct tuntap* tt, uint8_t *buf, int len)
 {
-#if LINUX_IPV6
   if (tt->ipv6)
     {
       struct iovec vect[2];
@@ -1698,7 +1679,6 @@ read_tun (struct tuntap* tt, uint8_t *buf, int len)
       return(ret - sizeof(pi));
     }
   else
-#endif
     return read (tt->fd, buf, len);
 }
 

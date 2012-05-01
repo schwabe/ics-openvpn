@@ -1479,14 +1479,13 @@ man_new_connection_post (struct management *man, const char *description)
 #if UNIX_SOCK_SUPPORT
   if (man->settings.flags & MF_UNIX_SOCK)
     {
-        msg (D_MANAGEMENT, "MANAGEMENT(unix): %s %s",
-             description,
-             sockaddr_unix_name (&man->settings.local_unix, "NULL"));
- 
+      msg (D_MANAGEMENT, "MANAGEMENT: %s %s",
+	   description,
+	   sockaddr_unix_name (&man->settings.local_unix, "NULL"));
     }
   else
 #endif
-    msg (D_MANAGEMENT, "MANAGEMENT(tcp): %s %s",
+    msg (D_MANAGEMENT, "MANAGEMENT: %s %s",
 	 description,
 	 print_sockaddr (&man->settings.local, &gc));
 
@@ -2691,7 +2690,6 @@ management_socket_set (struct management *man,
 void
 management_io (struct management *man)
 {
-    msg(D_MANAGEMENT,"M I/O State %d in",man->connection.state);
   switch (man->connection.state)
     {
     case MS_LISTEN:
@@ -2708,7 +2706,6 @@ management_io (struct management *man)
     default:
       ASSERT (0);
     }
-    msg(D_MANAGEMENT,"M I/O State %d out",man->connection.state);
 }
 
 #endif

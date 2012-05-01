@@ -450,13 +450,13 @@
 #define PACKAGE_NAME "OpenVPN"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "OpenVPN 2.1.4"
+#define PACKAGE_STRING "OpenVPN 2.3_alpha1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "openvpn"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.1.4"
+#define PACKAGE_VERSION "2.3_alpha1"
 
 /* Define to the necessary symbol if this constant uses a non-standard name on
    your system. */
@@ -490,7 +490,7 @@
 #define TAP_WIN32_MIN_MINOR 1
 
 /* A string representing our target */
-#define TARGET_ALIAS "i686-pc-linux-gnu"
+#define TARGET_ALIAS "arm-linux-androideabi"
 
 /* Are we running on Mac OS X? */
 /* #undef TARGET_DARWIN */

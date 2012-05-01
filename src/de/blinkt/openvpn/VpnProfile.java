@@ -35,10 +35,20 @@ public class VpnProfile implements  Serializable{
 	static final int TYPE_KEYSTORE=2;
 	public static final int TYPE_USERPASS = 3;
 	public static final int TYPE_STATICKEYS = 4;
+	public static final int TYPE_USERPASS_CERTIFICATES = 5;
+	public static final int TYPE_USERPASS_PKCS12 = 6;
+	public static final int TYPE_USERPASS_KEYSTORE = 7;
+	
+	
+	
+	
+
 
 	private static final String OVPNCONFIGFILE = "android.conf";
 
 	protected transient String mTransientPW=null;
+	protected transient String mTransientPCKS12PW=null;
+
 	private static transient String mTempPKCS12Password;
 
 
@@ -141,6 +151,7 @@ public class VpnProfile implements  Serializable{
 
 	static final String OVPNCONFIGPKCS12 = "android.pkcs12";
 
+
 	public VpnProfile(String name) {
 		mUuid = UUID.randomUUID();
 		mName = name;
@@ -210,7 +221,11 @@ public class VpnProfile implements  Serializable{
 
 
 
+
 		switch(mAuthenticationType) {
+		case VpnProfile.TYPE_USERPASS_CERTIFICATES:
+			cfg+="auth-user-pass\n";
+			cfg+="management-query-passwords\n";
 		case VpnProfile.TYPE_CERTIFICATES:
 			// Ca
 			cfg+="ca ";
@@ -225,6 +240,8 @@ public class VpnProfile implements  Serializable{
 			cfg+=mClientCertFilename;
 			cfg+="\n";
 			break;
+		case VpnProfile.TYPE_USERPASS_PKCS12:
+			cfg+="auth-user-pass\n";
 		case VpnProfile.TYPE_PKCS12:
 			cfg+="pkcs12 ";
 			cfg+=mPKCS12Filename;
@@ -232,6 +249,8 @@ public class VpnProfile implements  Serializable{
 			cfg+="management-query-passwords\n";
 			break;
 
+		case VpnProfile.TYPE_USERPASS_KEYSTORE:
+			cfg+="auth-user-pass\n";
 		case VpnProfile.TYPE_KEYSTORE:
 			cfg+="pkcs12 ";
 			cfg+=cacheDir.getAbsolutePath() + "/" + OVPNCONFIGPKCS12;
@@ -239,13 +258,9 @@ public class VpnProfile implements  Serializable{
 			cfg+="management-query-passwords\n";
 			break;
 		case VpnProfile.TYPE_USERPASS:
-			cfg+="ca " + mCaFilename + "\n";
 			cfg+="auth-user-pass\n";
 			cfg+="management-query-passwords\n";
-			break;
-
-
-
+			cfg+="ca " + mCaFilename +"\n";
 		}
 
 		if(mUseLzo) {
@@ -298,26 +313,26 @@ public class VpnProfile implements  Serializable{
 		}
 		if(mExpectTLSCert)
 			cfg += "remote-cert-tls server\n";
-		
-		
-		
-		
+
+
+
+
 		// Obscure Settings dialog
 		if(mUseRandomHostname)
 			cfg += "#my favorite options :)\nremote-random-hostname\n";
-		
+
 		if(mUseFloat)
 			cfg+= "float\n";
-		
+
 		if(mUseCustomConfig) {
 			cfg += "# Custom configuration options\n";
 			cfg += "# You are on your on own here :)\n";
 			cfg += mCustomConfigOptions;
 			cfg += "\n";
-					
+
 		}
-			
-		
+
+
 
 		return cfg;
 	}
@@ -388,7 +403,7 @@ public class VpnProfile implements  Serializable{
 
 		Intent intent = new Intent(context,OpenVpnService.class);
 
-		if(mAuthenticationType == VpnProfile.TYPE_KEYSTORE) {
+		if(mAuthenticationType == VpnProfile.TYPE_KEYSTORE || mAuthenticationType == VpnProfile.TYPE_USERPASS_KEYSTORE) {
 			savePKCS12(context);
 		}
 
@@ -457,7 +472,7 @@ public class VpnProfile implements  Serializable{
 	}
 	//! Return an error if somethign is wrong
 	int checkProfile() {
-		if(mAuthenticationType==TYPE_KEYSTORE && mAlias==null) 
+		if((mAuthenticationType==TYPE_KEYSTORE || mAuthenticationType==TYPE_USERPASS_KEYSTORE) && mAlias==null) 
 			return R.string.no_keystore_cert_selected;
 
 		if(!mUsePull) {
@@ -473,39 +488,55 @@ public class VpnProfile implements  Serializable{
 
 	}
 
-	//! Openvpn asks for a "Private Key", this can be pkcs12 pw or private key pw
+	//! Openvpn asks for a "Private Key", this should be pkcs12 key
 	//
 	public String getPasswordPrivateKey() {
-		if(mTransientPW!=null) {
-			String pwcopy = mTransientPW;
-			mTransientPW=null;
+		if(mTransientPCKS12PW!=null) {
+			String pwcopy = mTransientPCKS12PW;
+			mTransientPCKS12PW=null;
 			return pwcopy;
 		}
 		switch (mAuthenticationType) {
 		case TYPE_KEYSTORE:
+		case TYPE_USERPASS_KEYSTORE:
 			return getTemporaryPKCS12Password();
 
 		case TYPE_PKCS12:
+		case TYPE_USERPASS_PKCS12:
 			return mPKCS12Password;
+
 
 		case TYPE_USERPASS:
 		case TYPE_STATICKEYS:
 		case TYPE_CERTIFICATES:
+		case TYPE_USERPASS_CERTIFICATES:
 		default:
 			return null;
 		}
 	}
+	private boolean isUserPWAuth() {
+		switch(mAuthenticationType) {
+		case TYPE_USERPASS:
+		case TYPE_USERPASS_CERTIFICATES:
+		case TYPE_USERPASS_KEYSTORE:
+		case TYPE_USERPASS_PKCS12:
+			return true;
+		default:
+			return false;
+
+		}
+	}
 
 	public String needUserPWInput() {
-		if(mTransientPW!=null)
-			return null;
-		if(mAuthenticationType == TYPE_PKCS12 &&
+		if((mAuthenticationType == TYPE_PKCS12 || mAuthenticationType == TYPE_USERPASS_PKCS12)&&
 				(mPKCS12Password.equals("") || mPKCS12Password == null)) {
-			return "PKCS12 File Password";
+			if(mTransientPCKS12PW==null)
+				return "PKCS12 File Encryption Key";
 		}
-		if(mAuthenticationType == TYPE_USERPASS &&
-				(mPassword.equals("") || mPassword == null)) {
-			return "Password";
+		if(isUserPWAuth() && (mPassword.equals("") || mPassword == null)) {
+			if(mTransientPW==null)
+				return "Password";
+			
 		}
 		return null;
 	}

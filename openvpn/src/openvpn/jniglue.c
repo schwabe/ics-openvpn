@@ -129,13 +129,6 @@ void android_openvpn_log(int level,const char* prefix,const char* prefix_sep,con
     
 }
 
-
-unsigned char android_protect_socket(int sockfd) {
-    jmethodID aMethodID = (*openvpnjenv)->GetStaticMethodID(openvpnjenv, openvpnclass, "protectSocket", 
-                                                            "(I)Z");
-    return (*openvpnjenv)->CallStaticBooleanMethod(openvpnjenv,openvpnclass,aMethodID,sockfd);
-
-}
 int android_open_tun () {
     jmethodID aMethodID = (*openvpnjenv)->GetStaticMethodID(openvpnjenv, openvpnclass, "openTunDevice", 
                                                             "()I");

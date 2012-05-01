@@ -117,4 +117,5 @@
     <string name="clear_log">clear log</string>
     <string name="title_cancel">Cancel Confirmation</string>
     <string name="cancel_connection_query">Disconnect the connected VPN/cancel the connection attempt?</string>
+    <string name="remove_vpn">Remove VPN</string>
 </resources>

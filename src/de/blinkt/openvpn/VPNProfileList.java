@@ -31,7 +31,7 @@ public class VPNProfileList extends PreferenceFragment implements  VpnPreference
 		setHasOptionsMenu(true);
 		refreshList();
 		// Debug load JNI
-		OpenVPN.foo();
+		//OpenVPN.foo();
 	}
 
 

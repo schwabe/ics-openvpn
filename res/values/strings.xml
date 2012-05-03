@@ -69,6 +69,9 @@
     <string name="lzo">LZO</string>
     <string name="openssl">OpenSSL</string>
     <string name="about">About</string>
+    <string name="about_summary">About Openvpn for Android</string>
+    <string name="vpn_list_summary">List of all configured VPNs</string>
+    <string name="vpn_list_title">All your precious VPNs</string>
     
     <string name="vpn_type">Type</string>
     <string name="pkcs12pwquery">PKCS12 Password</string>
@@ -112,10 +115,40 @@
     <string name="custom_config_title">Enable Custom Options</string>
     <string name="custom_config_summary">Specify custom options. Use with care!</string>
     <string name="route_rejected">Route rejected by Android</string>
-    <string formatted="false" name="ip_not_cidr">Cannot make sense of %s and %s as IP and CIDR netmask, assuming P2P for local address (/32)</string>
+    <string formatted="false" name="ip_not_cidr">Cannot make sense of %s and %s as IP and CIDR netmask, assuming second address is peer address of remote. Using /32 netmask for local IP.</string>
     <string name="cancel_connection">cancel</string>
     <string name="clear_log">clear log</string>
     <string name="title_cancel">Cancel Confirmation</string>
     <string name="cancel_connection_query">Disconnect the connected VPN/cancel the connection attempt?</string>
     <string name="remove_vpn">Remove VPN</string>
+    <string name="check_remote_tlscert">Checks whether the server uses a TLS Server Certificate</string>
+    <string name="check_remote_tlscert_title">Except TLS Server</string>
+    <string name="remote_tlscn_check_summary">Checks the Remote Server Certificate CN against a String</string>
+    <string name="remote_tlscn_check_title">Certificate Hostname Check</string>
+    <string name="enter_tlscn_dialog">Enter the String against which the remote Server is checked. Openvpn will use prefix matching. &amp;quot;Server&amp;quot; matches &amp;quot;Server-1&amp;quot; and &amp;quot;Server-2&amp;quot;\\nLeave empty to check the CN against the server hostname.</string>
+    <string name="enter_tlscn_title">Remote Hostname(CN)</string>
+    <string name="tls_key_auth">Enables the TLS Key Authentication</string>
+    <string name="tls_auth_file">TLS Auth File</string>
+    <string name="pull_on_summary">Requests IP addresses, routes and timing options from the server.</string>
+    <string name="pull_off_summary">No information is requested from the server. Settings need to be specified below.</string>
+    <string name="use_pull">Pull Settings</string>
+    <string name="dns">DNS</string>
+    <string name="override_dns">Override DNS Settings by Server</string>
+    <string name="dns_override_summary">Use your own DNS Servers</string>
+    <string name="searchdomain">searchDomain</string>
+    <string name="dns1_title">DNS Server to be used.</string>
+    <string name="dns1_summary">DNS Server to be used.</string>
+    <string name="dns_server">DNS Server</string>
+    <string name="secondary_dns_message">Secondary DNS Server used if the normal DNS Server cannot be reached.</string>
+    <string name="backup_dns">Backup DNS Server</string>
+    <string name="ignored_pushed_routes">Ignore pushed routes</string>
+    <string name="ignore_routes_summary">Ignore routed pushed by the server.</string>
+    <string name="default_route_summary">Redirects all Traffic over the VPN</string>
+    <string name="use_default_title">Use default Route</string>
+    <string name="custom_route_message">Enter custom routes. Only enter destination in CIDR format. &amp;quot;10.0.0.0/8 2002::/16&amp;quot; would direct the networks 10.0.0.0/8 and 2002::/16 over the VPN.</string>
+    <string name="custom_routes_title">Custom Routes</string>
+    <string name="log_verbosity_level">Log verbosity level</string>
+    <string name="float_summary">Allows authenticated packets from any IP</string>
+    <string name="float_title">Allow floating server</string>
+    <string name="custom_options_title">Custom Options</string>
 </resources>

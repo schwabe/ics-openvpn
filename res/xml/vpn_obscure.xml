@@ -7,7 +7,7 @@
         android:entryValues="@array/verb_values"
         android:key="verblevel"
         android:persistent="false"
-        android:title="Log verbosity level" />
+        android:title="@string/log_verbosity_level" />
 
     <CheckBoxPreference
         android:key="useRandomHostname"
@@ -17,8 +17,8 @@
     <CheckBoxPreference
         android:key="useFloat"
         android:persistent="false"
-        android:summary="Allows authenticated packets from any IP"
-        android:title="Allow floating server" />
+        android:summary="@string/float_summary"
+        android:title="@string/float_title" />
 
     <!--
     <CheckBoxPreference android:key="setmtu" android:title="Set custom MTU" />
@@ -62,7 +62,7 @@
             android:dialogMessage="@string/custom_option_warning"
             android:key="customOptions"
             android:persistent="false"
-            android:title="Custom Options" />
+            android:title="@string/custom_options_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

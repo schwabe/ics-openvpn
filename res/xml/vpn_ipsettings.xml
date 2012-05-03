@@ -4,9 +4,9 @@
     <SwitchPreference
         android:disableDependentsState="true"
         android:key="usePull"
-        android:title="Pull Settings" 
-        android:summaryOn="Requests IP addresses, routes and timing options from the server."
-    	android:summaryOff="No information is requested from the server. Settings need to be specified below." />
+        android:title="@string/use_pull" 
+        android:summaryOn="@string/pull_on_summary"
+    	android:summaryOff="@string/pull_off_summary" />
 
     <PreferenceCategory android:title="IP" >
         <EditTextPreference
@@ -20,42 +20,42 @@
             android:key="ipv6_address"
             android:title="@string/ipv6_address" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="DNS" >
+    <PreferenceCategory android:title="@string/dns" >
         <CheckBoxPreference
             android:key="overrideDNS"
-            android:summary="Override DNS Settings by Server"
-            android:title="Override DNS Settings" />
+            android:summary="@string/dns_override_summary"
+            android:title="@string/override_dns" />
 
         <EditTextPreference
             android:key="searchdomain"
-            android:title="searchDomain" />
+            android:title="@string/searchdomain" />
         <EditTextPreference
             android:key="dns1"
-            android:dialogMessage="DNS Server to be used."
-            android:title="DNS Server" />
+            android:dialogMessage="@string/dns1_summary"
+            android:title="@string/dns_server" />
         <EditTextPreference
             android:key="dns2"
-            android:dialogMessage="Secondary DNS Server used if the normal DNS Server cannot be reached."
-            android:title="Backup DNS Server" />
+            android:dialogMessage="@string/secondary_dns_message"
+            android:title="@string/backup_dns" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Routing" >
         <CheckBoxPreference
-			android:title="Ignore pushed routes"
+			android:title="@string/ignored_pushed_routes"
 			android:key="routenopull"
-			android:summary="Ignore routed pushed by the server."
+			android:summary="@string/ignore_routes_summary"
 
             />
         <CheckBoxPreference
             android:disableDependentsState="true"
             android:key="useDefaultRoute"
-            android:summary="Redirects all Traffic over the VPN"
-            android:title="Use default Route" />
+            android:summary="@string/default_route_summary"
+            android:title="@string/use_default_title" />
 
         <EditTextPreference
             android:dependency="useDefaultRoute"
-            android:dialogMessage="Enter custom routes. Only enter destination in CIDR format. &quot;10.0.0.0/8 2002::/16&quot; would direct the networks 10.0.0.0/8 and 2002::/16 over the VPN."
+            android:dialogMessage="@string/custom_route_message"
             android:key="customRoutes"
-            android:title="Custom Routes" />
+            android:title="@string/custom_routes_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

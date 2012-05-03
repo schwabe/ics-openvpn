@@ -22,7 +22,6 @@ public class ShowConfigFragment extends Fragment {
 		}
 		else { 
 			String cfg=vp.getConfigFile(getActivity().getCacheDir());
-
 			cv.setText(cfg);
 		}
 		return v;

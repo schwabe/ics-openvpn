@@ -33,8 +33,6 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 	Handler mHandler;
 	private Thread mServiceThread;
 
-	private ParcelFileDescriptor mInterface;
-
 	private Vector<String> mDnslist=new Vector<String>();
 
 	private VpnProfile mProfile;
@@ -159,12 +157,12 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 		if(mgmtsocket!=null) {
 			// start a Thread that handles incoming messages of the managment socket
-			mSocketManager = new OpenVpnManagementThread(mProfile,mgmtsocket);
+			mSocketManager = new OpenVpnManagementThread(mProfile,mgmtsocket,this);
 			mSocketManagerThread = new Thread(mSocketManager,"OpenVPNMgmtThread");
 			mSocketManagerThread.start();
 		}
 
-		return START_STICKY;
+		return START_NOT_STICKY;
 	}
 
 
@@ -191,7 +189,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 
 
-	public ParcelFileDescriptor openTun() {
+	public int openTun() {
 		Builder builder = new Builder();
 
 		builder.addAddress(mLocalIP.mIp, mLocalIP.len);
@@ -223,8 +221,15 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		Intent intent = new Intent(getBaseContext(),LogWindow.class);
 		PendingIntent startLW = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 		builder.setConfigureIntent(startLW);
-		mInterface = builder.establish();
-		return mInterface;
+		try {
+			ParcelFileDescriptor pfd = builder.establish();
+			return pfd.detachFd();
+		} catch (Exception e) {
+			OpenVPN.logMessage(0, "", getString(R.string.tun_open_error));
+			OpenVPN.logMessage(0, "", getString(R.string.error) + e.getLocalizedMessage());
+			OpenVPN.logMessage(0, "", getString(R.string.tun_error_helpful));
+			return -1;
+		}
 
 	}
 

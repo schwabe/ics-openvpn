@@ -100,8 +100,7 @@ public class OpenVPN {
 	
 	public static int openTunDevice() {
 		Log.d(TAG,"Opening tun device");
-		ParcelFileDescriptor pfd = mOpenVpnService.openTun();
-		return pfd.detachFd();
+		return mOpenVpnService.openTun();
 	}
 	//! Dummy method being called to force loading of JNI Libraries
 	public static void foo() {	}

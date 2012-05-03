@@ -1,10 +1,13 @@
 package de.blinkt.openvpn;
 
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.DatagramSocket;
 import java.util.Vector;
 
 import android.net.LocalSocket;
+import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 public class OpenVpnManagementThread implements Runnable {
@@ -12,11 +15,14 @@ public class OpenVpnManagementThread implements Runnable {
 	private static final String TAG = "openvpn";
 	private LocalSocket mSocket;
 	private VpnProfile mProfile;
+	private OpenVpnService mOpenVPNService;
+	
 private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
 	
-	public OpenVpnManagementThread(VpnProfile profile, LocalSocket mgmtsocket) {
+	public OpenVpnManagementThread(VpnProfile profile, LocalSocket mgmtsocket, OpenVpnService openVpnService) {
 		mProfile = profile;
 		mSocket = mgmtsocket;
+		mOpenVPNService = openVpnService;
 	}
 
 
@@ -102,9 +108,22 @@ private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManageme
 				processPWCommand(argument);
 			} else if (cmd.equals("HOLD")) {
 				managmentCommand("hold release\n");
+			} else if (cmd.equals("PROTECT-FD")) {
+				protectFD(argument);
 			}
 		}
         Log.i(TAG, "Got unrecognized command" + command);
+
+	}
+
+
+	private void protectFD(String argument) {
+		try {
+			FileDescriptor[] fds = mSocket.getAncillaryFileDescriptors();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 

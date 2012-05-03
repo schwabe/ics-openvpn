@@ -376,7 +376,7 @@ public class VpnProfile implements  Serializable{
 
 
 		long nm = 0xffffffffl;
-		nm = (nm << len) & 0xffffffffl;
+		nm = (nm << (32-len)) & 0xffffffffl;
 
 		String netmask =String.format("%d.%d.%d.%d", (nm & 0xff000000) >> 24,(nm & 0xff0000) >> 16, (nm & 0xff00) >> 8 ,nm & 0xff  );	
 		return parts[0] + "  " + netmask;

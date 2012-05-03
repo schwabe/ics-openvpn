@@ -22,6 +22,7 @@ import java.util.Vector;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.VpnService;
@@ -70,27 +71,27 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 	private ProfileManager mPM;
 	private VpnProfile mSelectedProfile;
 
-    @Override
-    public void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
+	@Override
+	public void onCreate(Bundle icicle) {
+		super.onCreate(icicle);
 
-        // Resolve the intent
+		// Resolve the intent
 
-        final Intent intent = getIntent();
-        final String action = intent.getAction();
-        
-        mPM =ProfileManager.getInstance();
-        if(mPM.getNumberOfProfiles() == 0) {
-        	mPM.loadVPNList(this);
-        }
-        
+		final Intent intent = getIntent();
+		final String action = intent.getAction();
 
-        // If the intent is a request to create a shortcut, we'll do that and exit
+		mPM =ProfileManager.getInstance();
+		if(mPM.getNumberOfProfiles() == 0) {
+			mPM.loadVPNList(this);
+		}
+
+
+		// If the intent is a request to create a shortcut, we'll do that and exit
 
 		if(Intent.ACTION_MAIN.equals(action)) {
 			// we got called to be the starting point, most likely a shortcut
 			String shortcutUUID = intent.getStringExtra( EXTRA_KEY);
-			
+
 			VpnProfile profileToConnect = ProfileManager.get(shortcutUUID);
 			if(profileToConnect ==null) {
 				Toast notfound = Toast.makeText(this, R.string.shortcut_profile_notfound, Toast.LENGTH_SHORT);
@@ -98,111 +99,111 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 				finish();
 				return;
 			}
-			
+
 			mSelectedProfile = profileToConnect;
 			launchVPN();
-			
-			
-			
+
+
+
 		} else if (Intent.ACTION_CREATE_SHORTCUT.equals(action)) {
 			createListView();
 		}
-		
-          
-        
-        
-		  
-		  
 
-    }
 
-    private void createListView() {
-        ListView lv = getListView();
-		  //lv.setTextFilterEnabled(true);
-        
-        Collection<VpnProfile> vpnlist = mPM.getProfiles();
-        
-        Vector<String> vpnnames=new Vector<String>();
-        for (VpnProfile vpnProfile : vpnlist) {
-        	vpnnames.add(vpnProfile.mName);
+
+
+
+
+
+	}
+
+	private void createListView() {
+		ListView lv = getListView();
+		//lv.setTextFilterEnabled(true);
+
+		Collection<VpnProfile> vpnlist = mPM.getProfiles();
+
+		Vector<String> vpnnames=new Vector<String>();
+		for (VpnProfile vpnProfile : vpnlist) {
+			vpnnames.add(vpnProfile.mName);
 		}
-        
-        
-        
-		  ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,vpnnames);
-		  lv.setAdapter(adapter);
-        
-		  lv.setOnItemClickListener(this);
+
+
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,vpnnames);
+		lv.setAdapter(adapter);
+
+		lv.setOnItemClickListener(this);
 	}
 
 	/**
-     * This function creates a shortcut and returns it to the caller.  There are actually two 
-     * intents that you will send back.
-     * 
-     * The first intent serves as a container for the shortcut and is returned to the launcher by 
-     * setResult().  This intent must contain three fields:
-     * 
-     * <ul>
-     * <li>{@link android.content.Intent#EXTRA_SHORTCUT_INTENT} The shortcut intent.</li>
-     * <li>{@link android.content.Intent#EXTRA_SHORTCUT_NAME} The text that will be displayed with
-     * the shortcut.</li>
-     * <li>{@link android.content.Intent#EXTRA_SHORTCUT_ICON} The shortcut's icon, if provided as a
-     * bitmap, <i>or</i> {@link android.content.Intent#EXTRA_SHORTCUT_ICON_RESOURCE} if provided as
-     * a drawable resource.</li>
-     * </ul>
-     * 
-     * If you use a simple drawable resource, note that you must wrapper it using
-     * {@link android.content.Intent.ShortcutIconResource}, as shown below.  This is required so
-     * that the launcher can access resources that are stored in your application's .apk file.  If 
-     * you return a bitmap, such as a thumbnail, you can simply put the bitmap into the extras 
-     * bundle using {@link android.content.Intent#EXTRA_SHORTCUT_ICON}.
-     * 
-     * The shortcut intent can be any intent that you wish the launcher to send, when the user 
-     * clicks on the shortcut.  Typically this will be {@link android.content.Intent#ACTION_VIEW} 
-     * with an appropriate Uri for your content, but any Intent will work here as long as it 
-     * triggers the desired action within your Activity.
-     * @param profile 
-     */
-    private void setupShortcut(VpnProfile profile) {
-        // First, set up the shortcut intent.  For this example, we simply create an intent that
-        // will bring us directly back to this activity.  A more typical implementation would use a 
-        // data Uri in order to display a more specific result, or a custom action in order to 
-        // launch a specific operation.
+	 * This function creates a shortcut and returns it to the caller.  There are actually two 
+	 * intents that you will send back.
+	 * 
+	 * The first intent serves as a container for the shortcut and is returned to the launcher by 
+	 * setResult().  This intent must contain three fields:
+	 * 
+	 * <ul>
+	 * <li>{@link android.content.Intent#EXTRA_SHORTCUT_INTENT} The shortcut intent.</li>
+	 * <li>{@link android.content.Intent#EXTRA_SHORTCUT_NAME} The text that will be displayed with
+	 * the shortcut.</li>
+	 * <li>{@link android.content.Intent#EXTRA_SHORTCUT_ICON} The shortcut's icon, if provided as a
+	 * bitmap, <i>or</i> {@link android.content.Intent#EXTRA_SHORTCUT_ICON_RESOURCE} if provided as
+	 * a drawable resource.</li>
+	 * </ul>
+	 * 
+	 * If you use a simple drawable resource, note that you must wrapper it using
+	 * {@link android.content.Intent.ShortcutIconResource}, as shown below.  This is required so
+	 * that the launcher can access resources that are stored in your application's .apk file.  If 
+	 * you return a bitmap, such as a thumbnail, you can simply put the bitmap into the extras 
+	 * bundle using {@link android.content.Intent#EXTRA_SHORTCUT_ICON}.
+	 * 
+	 * The shortcut intent can be any intent that you wish the launcher to send, when the user 
+	 * clicks on the shortcut.  Typically this will be {@link android.content.Intent#ACTION_VIEW} 
+	 * with an appropriate Uri for your content, but any Intent will work here as long as it 
+	 * triggers the desired action within your Activity.
+	 * @param profile 
+	 */
+	private void setupShortcut(VpnProfile profile) {
+		// First, set up the shortcut intent.  For this example, we simply create an intent that
+		// will bring us directly back to this activity.  A more typical implementation would use a 
+		// data Uri in order to display a more specific result, or a custom action in order to 
+		// launch a specific operation.
 
-        Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
-        shortcutIntent.setClass(this, LaunchVPN.class);
-        shortcutIntent.putExtra(EXTRA_KEY,profile.getUUID().toString());
+		Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
+		shortcutIntent.setClass(this, LaunchVPN.class);
+		shortcutIntent.putExtra(EXTRA_KEY,profile.getUUID().toString());
 
-        // Then, set up the container intent (the response to the caller)
+		// Then, set up the container intent (the response to the caller)
 
-        Intent intent = new Intent();
-        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, profile.getName());
-        Parcelable iconResource = Intent.ShortcutIconResource.fromContext(
-                this,  R.drawable.icon);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
+		Intent intent = new Intent();
+		intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+		intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, profile.getName());
+		Parcelable iconResource = Intent.ShortcutIconResource.fromContext(
+				this,  R.drawable.icon);
+		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
-        // Now, return the result to the launcher
+		// Now, return the result to the launcher
 
-        setResult(RESULT_OK, intent);
-    }
-    
+		setResult(RESULT_OK, intent);
+	}
+
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		 String profilename = ((TextView) view).getText().toString();
-		 
-		 VpnProfile profile = mPM.getProfileByName(profilename);
+		String profilename = ((TextView) view).getText().toString();
 
-	      // if (Intent.ACTION_CREATE_SHORTCUT.equals(action)) {	
-	            setupShortcut(profile);
-	            finish();
-	            return;
-	    //    }
-		 
+		VpnProfile profile = mPM.getProfileByName(profilename);
+
+		// if (Intent.ACTION_CREATE_SHORTCUT.equals(action)) {	
+		setupShortcut(profile);
+		finish();
+		return;
+		//    }
+
 	}
-	
+
 	private void askForPW(final String type) {
 
 		final EditText entry = new EditText(this);
@@ -243,16 +244,21 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		
-		if(requestCode==START_VPN_PROFILE && resultCode == Activity.RESULT_OK) {
-			
-			if(mSelectedProfile.needUserPWInput()!=null) {
-				askForPW(mSelectedProfile.needUserPWInput());
-			} else {
-				new startOpenVpnThread().start();
-			}
 
-		} 
+		if(requestCode==START_VPN_PROFILE) {
+			if(resultCode == Activity.RESULT_OK) {
+
+				if(mSelectedProfile.needUserPWInput()!=null) {
+					askForPW(mSelectedProfile.needUserPWInput());
+				} else {
+					new startOpenVpnThread().start();
+				}
+
+			} else if (resultCode == Activity.RESULT_CANCELED) {
+				// User does want us to start, so we just vanish
+				finish();
+			}
+		}
 	}
 
 	void showConfigErrorDialog(int vpnok) {
@@ -262,10 +268,10 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		d.setPositiveButton(android.R.string.ok, null);
 		d.show();
 	}
-	
+
 	void launchVPN () {
-		
-		
+
+
 		int vpnok = mSelectedProfile.checkProfile();
 		if(vpnok!= R.string.no_error_found) {
 			showConfigErrorDialog(vpnok);
@@ -276,13 +282,17 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 		if (intent != null) {
 			// Start the query
-			startActivityForResult(intent, START_VPN_PROFILE);
+			try {
+				startActivityForResult(intent, START_VPN_PROFILE);
+			} catch (ActivityNotFoundException ane){
+				Toast.makeText(this, "Your image does not support the VPNService API,sorry :(", Toast.LENGTH_LONG);
+			}
 		} else {
 			onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
 		}
-		
+
 	}
-	
+
 	private class startOpenVpnThread extends Thread {
 
 		@Override
@@ -305,5 +315,5 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		}
 	}
 
-	
+
 }

@@ -422,7 +422,7 @@ public class VpnProfile implements  Serializable{
 		return intent;
 	}
 
-	public String getTemporaryPKCS12Password() {
+	private String getTemporaryPKCS12Password() {
 		if(mTempPKCS12Password!=null)
 			return mTempPKCS12Password;
 
@@ -549,6 +549,13 @@ public class VpnProfile implements  Serializable{
 		} else {
 			return mPassword;
 		}
+	}
+	
+	
+	// Used by the Array Adapter
+	@Override
+	public String toString() {
+		return mName;
 	}
 
 

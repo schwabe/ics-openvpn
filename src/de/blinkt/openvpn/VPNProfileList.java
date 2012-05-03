@@ -21,10 +21,21 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class VPNProfileList extends ListFragment {
+	class VPNArrayAdapter extends ArrayAdapter<VpnProfile> {
+
+		public VPNArrayAdapter(Context context, int resource,
+				int textViewResourceId) {
+			super(context, resource, textViewResourceId);
+
+		}
+		
+	}
+	
+	
+	
 	private static final int MENU_ADD_PROFILE = Menu.FIRST;
 
 	private static final int START_VPN_CONFIG = 92;
-
 
 	private ArrayAdapter<VpnProfile> mArrayadapter;
 
@@ -78,12 +89,10 @@ public class VPNProfileList extends ListFragment {
 		});
 		
 
-        if(getPM().getNumberOfProfiles() == 0) {
-        	getPM().loadVPNList(getActivity());
-        }
-		
+//		mArrayadapter = new ArrayAdapter<VpnProfile>(getActivity(),R.layout.vpn_list_item,R.id.vpn_item_title);
 		mArrayadapter = new ArrayAdapter<VpnProfile>(getActivity(),android.R.layout.simple_list_item_activated_1);
 		mArrayadapter.addAll(getPM().getProfiles());
+		
 		setListAdapter(mArrayadapter);
 	}
 
@@ -127,7 +136,7 @@ public class VPNProfileList extends ListFragment {
 
 	protected void removeProfile(VpnProfile profile) {
 		mArrayadapter.remove(profile);
-		
+		getPM().removeProfile(getActivity(),profile);
 	}
 
 	private void onAddProfileClicked() {
@@ -181,7 +190,7 @@ public class VPNProfileList extends ListFragment {
 
 
 	private ProfileManager getPM() {
-		return ProfileManager.getInstance();
+		return ProfileManager.getInstance(getActivity());
 	}
 
 
@@ -240,10 +249,10 @@ public class VPNProfileList extends ListFragment {
 	                askProfileRemoval();
 	                mode.finish(); // Action picked, so close the CAB
 	                return true;
-	            case R.id.connect_vpn:
+/*	            case R.id.connect_vpn:
 	            	startVPN(mEditProfile);
 	            	mode.finish();
-	            	return true;
+	            	return true; */ 
 	            case R.id.edit_vpn:
 	            	editVPN(mEditProfile);
 	            	mode.finish();

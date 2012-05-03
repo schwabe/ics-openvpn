@@ -136,6 +136,15 @@ int android_open_tun () {
 
 }
 
+
+unsigned char android_protect_socket(int sockfd) {
+    jmethodID aMethodID = (*openvpnjenv)->GetStaticMethodID(openvpnjenv, openvpnclass, "protectSocket", 
+                                                            "(I)Z");
+    return (*openvpnjenv)->CallStaticBooleanMethod(openvpnjenv,openvpnclass,aMethodID,sockfd);
+    
+}
+
+
 void android_set_dns(const char* dns) {
     jmethodID aMethodID = (*openvpnjenv)->GetStaticMethodID(openvpnjenv, openvpnclass, "addDns", 
                                                             "(Ljava/lang/String;)V");

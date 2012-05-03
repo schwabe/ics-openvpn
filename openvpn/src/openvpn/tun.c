@@ -1386,7 +1386,8 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
 
     if(tt->options.domain)
         android_set_domain(tt->options.domain);
-    if((tt->fd = android_open_tun()< 0){
+
+    if((tt->fd = android_open_tun())< 0){
         msg (M_ERR, "ERROR: Cannot open TUN");
     }
 }

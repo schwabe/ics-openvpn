@@ -24,7 +24,7 @@
 #define EMPTY_ARRAY_SIZE 0
 
 /* Enable client capability only */
-/* #undef ENABLE_CLIENT_ONLY */
+#define ENABLE_CLIENT_ONLY 1
 
 /* Enable client/server capability */
 #define ENABLE_CLIENT_SERVER 1
@@ -42,7 +42,7 @@
 #define ENABLE_MANAGEMENT 1
 
 /* Enable multi-homed UDP server capability */
-#define ENABLE_MULTIHOME 1
+#define ENABLE_MULTIHOME 0
 
 /* Allow --askpass and --auth-user-pass passwords to be read from a file */
 #define ENABLE_PASSWORD_SAVE 1

@@ -24,20 +24,25 @@ public class ProfileManager {
 	private HashMap<String,VpnProfile> profiles=new HashMap<String, VpnProfile>();
 
 	public static VpnProfile get(String key) {
-		checkInstance();
+		if(instance==null)
+			return null;
 		return instance.profiles.get(key);
 		
 	}
 
+
+	
 	private ProfileManager() { }
 	
-	private static void checkInstance() {
-		if(instance == null) 
+	private static void checkInstance(Context context) {
+		if(instance == null) {
 			instance = new ProfileManager();
+			instance.loadVPNList(context);
+		}
 	}
 
-	public static ProfileManager getInstance() {
-		checkInstance();
+	public static ProfileManager getInstance(Context context) {
+		checkInstance(context);
 		return instance;
 	}
 	
@@ -56,8 +61,8 @@ public class ProfileManager {
 		return null;			
 	}
 
-	public void saveProfileList(Activity activity) {
-		SharedPreferences sharedprefs = activity.getSharedPreferences(PREFS_NAME,Activity.MODE_PRIVATE);
+	public void saveProfileList(Context context) {
+		SharedPreferences sharedprefs = context.getSharedPreferences(PREFS_NAME,Activity.MODE_PRIVATE);
 		Editor editor = sharedprefs.edit();
 		editor.putStringSet("vpnlist", profiles.keySet());
 		editor.commit();
@@ -89,7 +94,7 @@ public class ProfileManager {
 	}
 	
 	
-	void loadVPNList(Context context) {
+	private void loadVPNList(Context context) {
 		profiles = new HashMap<String, VpnProfile>();
 		SharedPreferences settings =context.getSharedPreferences(PREFS_NAME,Activity.MODE_PRIVATE);
 		Set<String> vlist = settings.getStringSet("vpnlist", null);
@@ -118,6 +123,16 @@ public class ProfileManager {
 
 	public int getNumberOfProfiles() {
 		return profiles.size();
+	}
+
+
+
+	public void removeProfile(Context context,VpnProfile profile) {
+		String vpnentry = profile.getUUID().toString();
+		profiles.remove(vpnentry);
+		saveProfileList(context);
+		context.deleteFile(vpnentry + ".vp");
+		
 	}
 
 }

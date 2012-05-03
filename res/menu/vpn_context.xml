@@ -3,18 +3,24 @@
 
     <item
         android:id="@+id/edit_vpn"
+        android:alphabeticShortcut="e"
         android:icon="@android:drawable/ic_menu_edit"
         android:showAsAction="withText|ifRoom"
         android:title="@string/edit_vpn"/>
     <item
         android:id="@+id/remove_vpn"
+        android:alphabeticShortcut="d"
         android:icon="@android:drawable/ic_menu_delete"
         android:showAsAction="withText|ifRoom"
         android:title="@string/remove_vpn"/>
-    <item
+    
+    <!--  does not look good on phone portrait with 3 items :( -->
+    <!--  <item
         android:id="@+id/connect_vpn"
+        android:alphabeticShortcut="c"
+        android:
         android:icon="@android:drawable/ic_media_play"
         android:showAsAction="withText|ifRoom"
         android:title="@string/connect"/>
-
+	-->
 </menu>

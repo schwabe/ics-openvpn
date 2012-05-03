@@ -67,6 +67,10 @@ public class Settings_Obscure extends PreferenceFragment implements OnPreference
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if(preference==mLogverbosity) {
+			// Catch old version problem
+			if(newValue==null){
+				newValue=1;
+			}
 			mLogverbosity.setDefaultValue(newValue);
 			//This is idiotic. 
 			int i =Integer.parseInt((String) newValue);

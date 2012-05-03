@@ -80,10 +80,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		final Intent intent = getIntent();
 		final String action = intent.getAction();
 
-		mPM =ProfileManager.getInstance();
-		if(mPM.getNumberOfProfiles() == 0) {
-			mPM.loadVPNList(this);
-		}
+		mPM =ProfileManager.getInstance(this);
+
 
 
 		// If the intent is a request to create a shortcut, we'll do that and exit

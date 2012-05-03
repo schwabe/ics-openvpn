@@ -2,38 +2,90 @@ package de.blinkt.openvpn;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
-import de.blinkt.openvpn.VPNConfigPreference.VpnPreferencesClickListener;
 
-public class VPNProfileList extends PreferenceFragment implements  VpnPreferencesClickListener {
+public class VPNProfileList extends ListFragment {
 	private static final int MENU_ADD_PROFILE = Menu.FIRST;
 
 	private static final int START_VPN_CONFIG = 92;
 
 
-	private VpnProfile mSelectedVPN;
+	private ArrayAdapter<VpnProfile> mArrayadapter;
 
+	protected Object mActionMode;
+
+	protected VpnProfile mEditProfile=null;
+
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addPreferencesFromResource(R.xml.vpn_profile_list);
 		setHasOptionsMenu(true);
-		refreshList();
 		// Debug load JNI
 		OpenVPN.foo();
 	}
 
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		ListView lv = getListView();
+		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			// Called when the user long-clicks on someView
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+		        if (mActionMode != null) {
+		            return false;
+		        }
+
+		        // Start the CAB using the ActionMode.Callback defined above
+		        mActionMode = getActivity().startActionMode(mActionModeCallback);
+				mEditProfile =(VpnProfile) getListAdapter().getItem(position);
+
+				//getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		        //getListView().setSelection(position);
+		        return true;
+			}
+		});
+		
+		lv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				VpnProfile profile =(VpnProfile) getListAdapter().getItem(position);
+				startVPN(profile);
+			}
+		});
+		
+
+        if(getPM().getNumberOfProfiles() == 0) {
+        	getPM().loadVPNList(getActivity());
+        }
+		
+		mArrayadapter = new ArrayAdapter<VpnProfile>(getActivity(),android.R.layout.simple_list_item_activated_1);
+		mArrayadapter.addAll(getPM().getProfiles());
+		setListAdapter(mArrayadapter);
+	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -56,7 +108,27 @@ public class VPNProfileList extends PreferenceFragment implements  VpnPreference
 		}
 	}
 
+	private void askProfileRemoval() {
+		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+		dialog.setTitle("Confirm deletion");
+		dialog.setMessage(getString(R.string.remove_vpn_query, mEditProfile.mName));
 
+		dialog.setPositiveButton(android.R.string.yes,
+				new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				removeProfile(mEditProfile);
+			}
+
+		});
+		dialog.setNegativeButton(android.R.string.no,null);
+		dialog.create().show();
+	}
+
+	protected void removeProfile(VpnProfile profile) {
+		mArrayadapter.remove(profile);
+		
+	}
 
 	private void onAddProfileClicked() {
 		Context context = getActivity();
@@ -78,7 +150,6 @@ public class VPNProfileList extends PreferenceFragment implements  VpnPreference
 					if (getPM().getProfileByName(name)==null) {
 						VpnProfile profile = new VpnProfile(name);
 						addProfile(profile);
-						refreshList();
 					} else {
 						Toast.makeText(getActivity(), R.string.duplicate_profile_name, Toast.LENGTH_LONG).show();
 					}
@@ -102,57 +173,16 @@ public class VPNProfileList extends PreferenceFragment implements  VpnPreference
 		getPM().addProfile(profile);
 		getPM().saveProfileList(getActivity());
 		getPM().saveProfile(getActivity(),profile);
-
+		mArrayadapter.add(profile);
 	}
 
 
-
-
-
-	public void refreshList() {
-		PreferenceScreen plist = getPreferenceScreen();
-		if (plist != null) {
-			plist.removeAll(); 
-			getPM().loadVPNList(getActivity());
-
-			for (VpnProfile vpnprofile: getPM().getProfiles()) {
-
-				String profileuuid = vpnprofile.getUUID().toString();
-
-
-				VPNConfigPreference vpref = new VPNConfigPreference(this);
-				vpref.setKey(profileuuid);
-				vpref.setTitle(vpnprofile.getName());
-				vpref.setPersistent(false);
-				vpref.setOnQuickSettingsClickListener(this);
-				plist.addPreference(vpref);
-			}
-
-
-		}
-	}
 
 
 
 	private ProfileManager getPM() {
 		return ProfileManager.getInstance();
 	}
-
-	@Override
-	public boolean onQuickSettingsClick(Preference preference) {
-		String key = preference.getKey();
-
-		VpnProfile vprofile = ProfileManager.get(key);
-
-		Intent vprefintent = new Intent(getActivity(),VPNPreferences.class)
-		.putExtra(getActivity().getPackageName() + ".profileUUID", vprofile.getUUID().toString());
-
-		startActivityForResult(vprefintent,START_VPN_CONFIG);
-		return true;
-	}
-
-
-
 
 
 	@Override
@@ -164,26 +194,69 @@ public class VPNProfileList extends PreferenceFragment implements  VpnPreference
 			VpnProfile profile = ProfileManager.get(configuredVPN);
 			getPM().saveProfile(getActivity(), profile);
 			// Name could be modified
-			refreshList();
+
 		}
 
 	}
 
 
+	private void editVPN(VpnProfile profile) {
 
-	@Override
-	public void onStartVPNClick(VPNConfigPreference preference) {
-		getPM();
-		// Query the System for permission 
-		mSelectedVPN = ProfileManager.get(preference.getKey());
+		Intent vprefintent = new Intent(getActivity(),VPNPreferences.class)
+		.putExtra(getActivity().getPackageName() + ".profileUUID", profile.getUUID().toString());
 
-		getPM().saveProfile(getActivity(), mSelectedVPN);
+		startActivityForResult(vprefintent,START_VPN_CONFIG);
+	}
+
+	private void startVPN(VpnProfile profile) {
+
+		getPM().saveProfile(getActivity(), profile);
 
 		Intent intent = new Intent(getActivity(),LaunchVPN.class);
-		intent.putExtra(LaunchVPN.EXTRA_KEY, mSelectedVPN.getUUID().toString());
+		intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
 		intent.setAction(Intent.ACTION_MAIN);
 		startActivity(intent);
 		
 		getActivity().finish();
 	}
+
+	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+		@Override
+		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+			MenuInflater inflater = mode.getMenuInflater();
+			inflater.inflate(R.menu.vpn_context, menu);
+			return true;
+		}
+
+		@Override
+		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+			return false;// Return false if nothing is done
+		}
+
+		@Override
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+		      switch (item.getItemId()) {
+	            case R.id.remove_vpn:
+	                askProfileRemoval();
+	                mode.finish(); // Action picked, so close the CAB
+	                return true;
+	            case R.id.connect_vpn:
+	            	startVPN(mEditProfile);
+	            	mode.finish();
+	            	return true;
+	            case R.id.edit_vpn:
+	            	editVPN(mEditProfile);
+	            	mode.finish();
+	            	return true;
+	            default:
+	                return false;
+	        }		}
+
+		@Override
+		public void onDestroyActionMode(ActionMode mode) {
+	        mActionMode = null;
+	        getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
+		}
+	};
+
 }

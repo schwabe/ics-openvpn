@@ -63,12 +63,14 @@ public class Settings_Obscure extends PreferenceFragment implements OnPreference
 		mProfile.mVerb = mLogverbosity.getValue();
 	}
 
+	
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if(preference==mLogverbosity) {
 			mLogverbosity.setDefaultValue(newValue);
-			// Does not refresh otherwise
-			mLogverbosity.setSummary("%s");
+			//This is idiotic. 
+			int i =Integer.parseInt((String) newValue);
+			mLogverbosity.setSummary(mLogverbosity.getEntries()[i]);
 		}
 			
 		return true;

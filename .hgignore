@@ -2,5 +2,12 @@ obj
 bin
 libs
 gen
+openvpn/.git
+openvpn/autom4te.cache
+openvpn/aclocal.m4
+openvpn/config.log
+openvpn/config.h.in
+openvpn/configure
+open
 syntax: regexp
 ^openvpn/xcopenvpn$

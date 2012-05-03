@@ -3,12 +3,13 @@
 
     <header
         android:fragment="de.blinkt.openvpn.VPNProfileList"
-        android:summary="List of all configured VPNs"
-        android:title="All your precious VPNs" />
+        android:summary="@string/vpn_list_summary"
+        android:title="@string/vpn_list_title" />
     <header
         android:fragment="de.blinkt.openvpn.AboutFragment"
-        android:summary="About Openvpn for Android"
-        android:title="About" />
+        android:summary="@string/about_summary"
+        android:title="@string/about" />
+    
     
 
 </preference-headers>

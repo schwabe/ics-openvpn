@@ -3,29 +3,29 @@
 
     <CheckBoxPreference
         android:key="remoteServerTLS"
-        android:summary="Checks whether the server uses a TLS Server Certificate"
-        android:title="Except TLS Server" />
+        android:summary="@string/check_remote_tlscert"
+        android:title="@string/check_remote_tlscert_title" />
     <CheckBoxPreference
         android:key="checkRemoteCN"
-        android:summary="Checks the Remote Server Certificate CN against a String"
-        android:title="Certificate Hostname Check" />
+        android:summary="@string/remote_tlscn_check_summary"
+        android:title="@string/remote_tlscn_check_title" />
 
     <EditTextPreference
         android:dependency="checkRemoteCN"
-        android:dialogMessage="Enter the String against which the remote Server is checked. Openvpn will use prefix matching. &quot;Server&quot; matches &quot;Server-1&quot; and &quot;Server-2&quot;\nLeave empty to check the CN against the server hostname."
+        android:dialogMessage="@string/enter_tlscn_dialog"
         android:key="remotecn"
-        android:title="Remote Hostname(CN)" />
+        android:title="@string/enter_tlscn_title" />
 
     <PreferenceCategory android:title="TLS Authentication" >
         <SwitchPreference
             android:key="useTLSAuth"
-            android:summary="Enables the TLS Key Authentication"
+            android:summary="@string/tls_key_auth"
             android:title="@string/useTLSAuth" />
 
         <Preference
             android:dependency="useTLSAuth"
             android:key="tlsAuthFile"
-            android:title="TLS Auth File" />
+            android:title="@string/tls_auth_file" />
 
         <ListPreference
             android:entries="@array/tls_directions_entries"
@@ -34,7 +34,7 @@
             android:entryValues="@array/tls_directions_values"
             android:key="tls_direction"
             android:persistent="false"
-            android:title="TLS Direction" />
+            android:title="@string/tls_direction" />
     </PreferenceCategory>
 />
 

@@ -39,7 +39,7 @@ public class VPNProfileList extends ListFragment {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		// Debug load JNI
-		OpenVPN.foo();
+		//OpenVPN.foo();
 	}
 
 	@Override

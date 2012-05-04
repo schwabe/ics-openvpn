@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.VpnService;
 import android.os.Bundle;
@@ -263,13 +264,18 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		AlertDialog.Builder d = new AlertDialog.Builder(this);
 		d.setTitle(R.string.config_error_found);
 		d.setMessage(vpnok);
-		d.setPositiveButton(android.R.string.ok, null);
+		d.setPositiveButton(android.R.string.ok, new OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				finish();
+				
+			}
+		});
 		d.show();
 	}
 
 	void launchVPN () {
-
-
 		int vpnok = mSelectedProfile.checkProfile();
 		if(vpnok!= R.string.no_error_found) {
 			showConfigErrorDialog(vpnok);

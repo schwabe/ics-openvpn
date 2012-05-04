@@ -19,11 +19,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:focusable="false"
     android:minHeight="?android:attr/listPreferredItemHeight" >
 
     <LinearLayout
-        android:id="@+id/vpnconfig_pref"
+        android:id="@+id/vpn_list_item_left"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -52,6 +51,7 @@
         android:layout_width="2dip"
         android:layout_height="match_parent"
         android:layout_marginBottom="5dip"
+        android:focusable="false"
         android:layout_marginTop="5dip"
         android:background="@android:drawable/divider_horizontal_dark" />
 
@@ -60,7 +60,6 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        android:focusable="true"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/configure_the_vpn"
         android:paddingLeft="15dip"

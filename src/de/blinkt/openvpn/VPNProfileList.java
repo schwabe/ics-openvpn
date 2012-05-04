@@ -12,9 +12,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -26,8 +25,41 @@ public class VPNProfileList extends ListFragment {
 		public VPNArrayAdapter(Context context, int resource,
 				int textViewResourceId) {
 			super(context, resource, textViewResourceId);
-
 		}
+			
+		@Override
+		public View getView(final int position, View convertView, ViewGroup parent) {
+			View v = super.getView(position, convertView, parent);
+			
+			View titleview = v.findViewById(R.id.vpn_list_item_left);
+			titleview.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					VpnProfile profile =(VpnProfile) getListAdapter().getItem(position);
+					startVPN(profile);
+				}
+			});
+			
+			View settingsview = v.findViewById(R.id.quickedit_settings);
+			settingsview.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+				    if (mActionMode != null) {
+			            return;
+			        }
+
+			        // Start the CAB using the ActionMode.Callback defined above
+			        mActionMode = getActivity().startActionMode(mActionModeCallback);
+					mEditProfile =(VpnProfile) getListAdapter().getItem(position);
+					
+				}
+			});
+				
+			
+			return v;
+		}
+		
 		
 	}
 	
@@ -56,45 +88,14 @@ public class VPNProfileList extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		ListView lv = getListView();
-		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			// Called when the user long-clicks on someView
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-		        if (mActionMode != null) {
-		            return false;
-		        }
-
-		        // Start the CAB using the ActionMode.Callback defined above
-		        mActionMode = getActivity().startActionMode(mActionModeCallback);
-				mEditProfile =(VpnProfile) getListAdapter().getItem(position);
-
-				//getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		        //getListView().setSelection(position);
-		        return true;
-			}
-		});
 		
-		lv.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				VpnProfile profile =(VpnProfile) getListAdapter().getItem(position);
-				startVPN(profile);
-			}
-		});
-		
-
-//		mArrayadapter = new ArrayAdapter<VpnProfile>(getActivity(),R.layout.vpn_list_item,R.id.vpn_item_title);
-		mArrayadapter = new ArrayAdapter<VpnProfile>(getActivity(),android.R.layout.simple_list_item_activated_1);
+		mArrayadapter = new VPNArrayAdapter(getActivity(),R.layout.vpn_list_item,R.id.vpn_item_title);
 		mArrayadapter.addAll(getPM().getProfiles());
 		
 		setListAdapter(mArrayadapter);
 	}
+
+
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

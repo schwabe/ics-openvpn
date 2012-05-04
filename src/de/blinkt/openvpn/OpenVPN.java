@@ -3,7 +3,6 @@ package de.blinkt.openvpn;
 import java.util.LinkedList;
 import java.util.Vector;
 
-import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 public class OpenVPN {

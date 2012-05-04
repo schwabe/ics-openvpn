@@ -281,8 +281,12 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 			showCertDialog();
 		}
 	}
-
-
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString(getActivity().getPackageName() + "profileUUID", mProfile.getUUID().toString());
+	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {

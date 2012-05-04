@@ -3,11 +3,9 @@ package de.blinkt.openvpn;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.DatagramSocket;
 import java.util.Vector;
 
 import android.net.LocalSocket;
-import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 public class OpenVpnManagementThread implements Runnable {

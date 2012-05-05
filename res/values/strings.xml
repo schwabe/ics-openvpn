@@ -165,5 +165,6 @@
     <string name="routes_info">Routes: %s</string>
     <string name="ip_not_cidr">Cannot make sense of %1$s and %2$s as local IP with CIDR netmask, assuming second address is peer address of remote. Using /32 netmask for local IP.</string>
     <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
-    <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>  
+    <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>
+    <string name="keychain_access">Cannot accces the Android Keychain Certificates. If you restored a backup of the app reselect the certificate</string>  
 </resources>

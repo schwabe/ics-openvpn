@@ -166,7 +166,7 @@ static const char usage_message[] =
   "                  Set n=\"infinite\" to retry indefinitely.\n"
   "--float         : Allow remote to change its IP address/port, such as through\n"
   "                  DHCP (this is the default if --remote is not used).\n"
-  "--ipchange cmd  : Execute shell command cmd on remote ip address initial\n"
+  "--ipchange cmd  : Run command cmd on remote ip address initial\n"
   "                  setting or change -- execute as: cmd ip-address port#\n"
   "--port port     : TCP/UDP port # for both local and remote.\n"
   "--lport port    : TCP/UDP port # for local (default=%d). Implies --bind.\n"
@@ -223,8 +223,8 @@ static const char usage_message[] =
   "                  adding routes (may be 0).  If not specified, routes will\n"
   "                  be added immediately after tun/tap open.  On Windows, wait\n"
   "                  up to w seconds for TUN/TAP adapter to come up.\n"
-  "--route-up cmd  : Execute shell cmd after routes are added.\n"
-  "--route-pre-down cmd  : Execute shell cmd before routes are removed.\n"
+  "--route-up cmd  : Run command cmd after routes are added.\n"
+  "--route-pre-down cmd : Run command cmd before routes are removed.\n"
   "--route-noexec  : Don't add routes automatically.  Instead pass routes to\n"
   "                  --route-up script using environmental variables.\n"
   "--route-nopull  : When used with --client or --pull, accept options pushed\n"
@@ -311,17 +311,17 @@ static const char usage_message[] =
 #endif
   "--mlock         : Disable Paging -- ensures key material and tunnel\n"
   "                  data will never be written to disk.\n"
-  "--up cmd        : Shell cmd to execute after successful tun device open.\n"
+  "--up cmd        : Run command cmd after successful tun device open.\n"
   "                  Execute as: cmd tun/tap-dev tun-mtu link-mtu \\\n"
   "                              ifconfig-local-ip ifconfig-remote-ip\n"
   "                  (pre --user or --group UID/GID change)\n"
   "--up-delay      : Delay tun/tap open and possible --up script execution\n"
   "                  until after TCP/UDP connection establishment with peer.\n"
-  "--down cmd      : Shell cmd to run after tun device close.\n"
+  "--down cmd      : Run command cmd after tun device close.\n"
   "                  (post --user/--group UID/GID change and/or --chroot)\n"
-  "                  (script parameters are same as --up option)\n"
-  "--down-pre      : Call --down cmd/script before TUN/TAP close.\n"
-  "--up-restart    : Run up/down scripts for all restarts including those\n"
+  "                  (command parameters are same as --up option)\n"
+  "--down-pre      : Run --down command before TUN/TAP close.\n"
+  "--up-restart    : Run up/down commands for all restarts including those\n"
   "                  caused by --ping-restart or SIGUSR1\n"
   "--user user     : Set UID to user after initialization.\n"
   "--group group   : Set GID to group after initialization.\n"
@@ -452,7 +452,7 @@ static const char usage_message[] =
   "                  the authenticated username as the common name,\n"
   "                  rather than the common name from the client cert.\n"
   "--auth-user-pass-verify cmd method: Query client for username/password and\n"
-  "                  run script cmd to verify.  If method='via-env', pass\n"
+  "                  run command cmd to verify.  If method='via-env', pass\n"
   "                  user/pass via environment, if method='via-file', pass\n"
   "                  user/pass via temporary file.\n"
   "--opt-verify    : Clients that connect with options that are incompatible\n"
@@ -464,8 +464,8 @@ static const char usage_message[] =
   "--client-to-client : Internally route client-to-client traffic.\n"
   "--duplicate-cn  : Allow multiple clients with the same common name to\n"
   "                  concurrently connect.\n"
-  "--client-connect cmd : Run script cmd on client connection.\n"
-  "--client-disconnect cmd : Run script cmd on client disconnection.\n"
+  "--client-connect cmd : Run command cmd on client connection.\n"
+  "--client-disconnect cmd : Run command cmd on client disconnection.\n"
   "--client-config-dir dir : Directory for custom client config files.\n"
   "--ccd-exclusive : Refuse connection unless custom client config is found.\n"
   "--tmp-dir dir   : Temporary directory, used for --client-connect return file and plugin communication.\n"
@@ -475,7 +475,7 @@ static const char usage_message[] =
   "--tcp-queue-limit n : Maximum number of queued TCP output packets.\n"
   "--tcp-nodelay   : Macro that sets TCP_NODELAY socket flag on the server\n"
   "                  as well as pushes it to connecting clients.\n"
-  "--learn-address cmd : Run script cmd to validate client virtual addresses.\n"
+  "--learn-address cmd : Run command cmd to validate client virtual addresses.\n"
   "--connect-freq n s : Allow a maximum of n new connections per s seconds.\n"
   "--max-clients n : Allow a maximum of n simultaneously connected clients.\n"
   "--max-routes-per-client n : Allow a maximum of n internal routes per client.\n"
@@ -609,7 +609,7 @@ static const char usage_message[] =
   "--askpass [file]: Get PEM password from controlling tty before we daemonize.\n"
   "--auth-nocache  : Don't cache --askpass or --auth-user-pass passwords.\n"
   "--crl-verify crl ['dir']: Check peer certificate against a CRL.\n"
-  "--tls-verify cmd: Execute shell command cmd to verify the X509 name of a\n"
+  "--tls-verify cmd: Run command cmd to verify the X509 name of a\n"
   "                  pending TLS connection that has otherwise passed all other\n"
   "                  tests of certification.  cmd should return 0 to allow\n"
   "                  TLS handshake to proceed, or 1 to fail.  (cmd is\n"
@@ -2676,6 +2676,55 @@ check_file_access(const int type, const char *file, const int mode, const char *
 }
 
 /*
+ * Verifies that the path in the "command" that comes after certain script options (e.g., --up) is a
+ * valid file with appropriate permissions.
+ *
+ * "command" consists of a path, optionally followed by a space, which may be
+ * followed by arbitrary arguments. It is NOT a full shell command line -- shell expansion is not
+ * performed.
+ *
+ * The path and arguments in "command" may be single- or double-quoted or escaped.
+ *
+ * The path is extracted from "command", then check_file_access() is called to check it. The
+ * arguments, if any, are ignored.
+ *
+ * Note that the type, mode, and opt arguments to this routine are the same as the corresponding
+ * check_file_access() arguments.
+ */
+static bool
+check_cmd_access(const char *command, const char *opt)
+{
+  struct argv argv;
+  bool return_code;
+
+  /* If no command was set, there are no errors to look for */
+  if (! command)
+      return false;
+
+  /* Extract executable path and arguments */
+  argv = argv_new ();
+  argv_printf (&argv, "%sc", command);
+
+  /* if an executable is specified then check it; otherwise, complain */
+  if (argv.argv[0])
+    /* Scripts requires R_OK as well, but that might fail on binaries which
+     * only requires X_OK to function on Unix - a scenario not unlikely to
+     * be seen on suid binaries.
+     */
+    return_code = check_file_access(CHKACC_FILE, argv.argv[0], X_OK, opt);
+  else
+    {
+      msg (M_NOPREFIX|M_OPTERR, "%s fails with '%s': No path to executable.",
+           opt, command);
+      return_code = true;
+    }
+
+  argv_reset (&argv);
+
+  return return_code;
+}
+
+/*
  * Sanity check of all file/dir options.  Checks that file/dir
  * is accessible by OpenVPN
  */
@@ -2751,27 +2800,29 @@ options_postprocess_filechecks (struct options *options)
 #if P2MP_SERVER
   errs |= check_file_access (CHKACC_FILE, options->client_config_dir,
                              R_OK|X_OK, "--client-config-dir");
-  /* ** Script hooks ** */
-  errs |= check_file_access (CHKACC_FILE, options->client_connect_script,
-                             R_OK|X_OK, "--client-connect script");
-  errs |= check_file_access (CHKACC_FILE, options->client_disconnect_script,
-                             R_OK|X_OK, "--client-disconnect script");
-  errs |= check_file_access (CHKACC_FILE, options->auth_user_pass_verify_script,
-                             R_OK|X_OK, "--auth-user-pass-verify script");
-  errs |= check_file_access (CHKACC_FILE, options->tls_verify,
-                             R_OK|X_OK, "--tls-verify script");
-  errs |= check_file_access (CHKACC_FILE, options->up_script,
-                             R_OK|X_OK, "--up script");
-  errs |= check_file_access (CHKACC_FILE, options->down_script,
-                             R_OK|X_OK, "--down script");
-  errs |= check_file_access (CHKACC_FILE, options->ipchange,
-                             R_OK|X_OK, "--ipchange script");
-  errs |= check_file_access (CHKACC_FILE, options->route_script,
-                             R_OK|X_OK, "--route-up script");
-  errs |= check_file_access (CHKACC_FILE, options->route_predown_script,
-                             R_OK|X_OK, "--route-pre-down script");
-  errs |= check_file_access (CHKACC_FILE, options->learn_address_script,
-                             R_OK|X_OK, "--learn-address script");
+
+  /* ** Script hooks that accept an optionally quoted and/or escaped executable path, ** */
+  /* ** optionally followed by arguments ** */
+  errs |= check_cmd_access (options->auth_user_pass_verify_script,
+                            "--auth-user-pass-verify script");
+  errs |= check_cmd_access (options->client_connect_script,
+                            "--client-connect script");
+  errs |= check_cmd_access (options->client_disconnect_script,
+                            "--client-disconnect script");
+  errs |= check_cmd_access (options->tls_verify,
+                            "--tls-verify script");
+  errs |= check_cmd_access (options->up_script,
+                            "--up script");
+  errs |= check_cmd_access (options->down_script,
+                            "--down script");
+  errs |= check_cmd_access (options->ipchange,
+                            "--ipchange script");
+  errs |= check_cmd_access (options->route_script,
+                            "--route-up script");
+  errs |= check_cmd_access (options->route_predown_script,
+                            "--route-pre-down script");
+  errs |= check_cmd_access (options->learn_address_script,
+                            "--learn-address script");
 #endif /* P2MP_SERVER */
 
   if (errs)

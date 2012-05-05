@@ -66,6 +66,8 @@ struct management *management; /* GLOBAL */
 /* static forward declarations */
 static void man_output_standalone (struct management *man, volatile int *signal_received);
 static void man_reset_client_socket (struct management *man, const bool exiting);
+static ssize_t write_fd (int fd, void *ptr, size_t nbytes, int flags, int sendfd);
+
 
 static void
 man_help ()
@@ -1891,7 +1893,13 @@ man_write (struct management *man)
   if (buf && BLEN (buf))
     {
       const int len = min_int (size_hint, BLEN (buf));
-      sent = send (man->connection.sd_cli, BPTR (buf), len, MSG_NOSIGNAL);
+#ifdef TARGET_ANDROID
+        if (man->connection.fdtosend > 0) {
+            sent = write_fd (man->connection.sd_cli, BPTR (buf), len, MSG_NOSIGNAL,man->connection.fdtosend);
+            man->connection.fdtosend = -1;
+        } else
+#endif
+        sent = send (man->connection.sd_cli, BPTR (buf), len, MSG_NOSIGNAL);
       if (sent >= 0)
 	{
 	  buffer_list_advance (man->connection.out, sent);
@@ -3083,6 +3091,39 @@ management_query_rsa_sig (struct management *man,
 }
 
 #endif
+
+static ssize_t write_fd (int fd, void *ptr, size_t nbytes, int flags, int sendfd)
+{
+    struct msghdr msg;
+    struct iovec iov[1];
+    
+    union {
+        struct cmsghdr cm;
+        char    control[CMSG_SPACE(sizeof(int))];
+    } control_un;
+    struct cmsghdr *cmptr;
+    
+    msg.msg_control = control_un.control;
+    msg.msg_controllen = sizeof(control_un.control);
+    
+    cmptr = CMSG_FIRSTHDR(&msg);
+    cmptr->cmsg_len = CMSG_LEN(sizeof(int));
+    cmptr->cmsg_level = SOL_SOCKET;
+    cmptr->cmsg_type = SCM_RIGHTS;
+    *((int *) CMSG_DATA(cmptr)) = sendfd;
+    
+    msg.msg_name = NULL;
+    msg.msg_namelen = 0;
+    
+    iov[0].iov_base = ptr;
+    iov[0].iov_len = nbytes;
+    msg.msg_iov = iov;
+    msg.msg_iovlen = 1;
+    
+    return (sendmsg(fd, &msg, flags));
+}
+
+
 
 /*
  * Return true if management_hold() would block

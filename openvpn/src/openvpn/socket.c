@@ -38,6 +38,8 @@
 #include "ps.h"
 #include "manage.h"
 #include "misc.h"
+#include "manage.h"
+
 
 #include "memdbg.h"
 
@@ -984,6 +986,11 @@ create_socket (struct link_socket *sock)
     {
       ASSERT (0);
     }
+#ifdef TARGET_ANDROID
+    management->connection.fdtosend = sock->sd;
+    management_auth_token (management,"'PROTECT-FD'");
+#endif
+    
 }
 
 /*
@@ -1341,7 +1348,7 @@ socket_connect (socket_descriptor_t *sd,
 }
 
 /* For stream protocols, allocate a buffer to build up packet.
-   Called after frame has been finalized. */
+    Called after frame has been finalized. */
 
 static void
 socket_frame_init (const struct frame *frame, struct link_socket *sock)

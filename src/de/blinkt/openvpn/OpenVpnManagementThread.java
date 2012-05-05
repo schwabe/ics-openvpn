@@ -3,6 +3,8 @@ package de.blinkt.openvpn;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Vector;
 
 import android.net.LocalSocket;
@@ -14,9 +16,10 @@ public class OpenVpnManagementThread implements Runnable {
 	private LocalSocket mSocket;
 	private VpnProfile mProfile;
 	private OpenVpnService mOpenVPNService;
-	
-private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
-	
+	private Vector<Integer> mFDList=new Vector<Integer>();
+
+	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
+
 	public OpenVpnManagementThread(VpnProfile profile, LocalSocket mgmtsocket, OpenVpnService openVpnService) {
 		mProfile = profile;
 		mSocket = mgmtsocket;
@@ -46,7 +49,7 @@ private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManageme
 	public void run() {
 		Log.i(TAG, "Managment Socket Thread started");
 		byte [] buffer  =new byte[2048];
-	//	mSocket.setSoTimeout(5); // Setting a timeout cannot be that bad
+		//	mSocket.setSoTimeout(5); // Setting a timeout cannot be that bad
 		InputStream instream = null;
 		try {
 			instream = mSocket.getInputStream();
@@ -55,23 +58,48 @@ private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManageme
 		}
 		String pendingInput="";
 		active.add(this);
-		
+
 		try {
 
 			while(true) {
-			int numbytesread = instream.read(buffer);
-			if(numbytesread==-1)
-				return;
-			
-			String input = new String(buffer,0,numbytesread,"UTF-8");
-			
-			pendingInput += input;
-			
-			pendingInput=processInput(pendingInput);
-			
-			
-			
-		}
+				int numbytesread = instream.read(buffer);
+				if(numbytesread==-1)
+					return;
+				
+				FileDescriptor[] fds = null;
+				try {
+					fds = mSocket.getAncillaryFileDescriptors();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				if(fds!=null){
+					Log.i(TAG, "fds:" + fds);
+					for (FileDescriptor fd : fds) {
+						try {
+							Method getInt = FileDescriptor.class.getDeclaredMethod("getInt$");
+							int fdint = (Integer) getInt.invoke(fd);
+							mFDList.add(fdint);
+						} catch (NoSuchMethodException e) {
+							e.printStackTrace();
+						} catch (IllegalArgumentException e) {
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							e.printStackTrace();
+						} catch (InvocationTargetException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+
+				String input = new String(buffer,0,numbytesread,"UTF-8");
+
+				pendingInput += input;
+
+				pendingInput=processInput(pendingInput);
+
+
+
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -80,6 +108,8 @@ private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManageme
 
 
 	private String processInput(String pendingInput) {
+
+
 		while(pendingInput.contains("\n")) {
 			String[] tokens = pendingInput.split("\\r?\\n", 2);
 			processCommand(tokens[0]);
@@ -105,7 +135,7 @@ private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManageme
 			else if (cmd.equals("PASSWORD")) {
 				processPWCommand(argument);
 			} else if (cmd.equals("HOLD")) {
-				managmentCommand("hold release\nlog on\n");
+				managmentCommand("hold release\n");
 			} else if (cmd.equals("PROTECT-FD")) {
 				protectFD(argument);
 			}
@@ -119,7 +149,7 @@ private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManageme
 	private void protectFD(String argument) {
 		try {
 			FileDescriptor[] fds = mSocket.getAncillaryFileDescriptors();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -133,9 +163,9 @@ private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManageme
 		int p2 = argument.indexOf('\'',p1+1);
 		//String needed = argument.replace("Need '", "").replace("' password", "");
 		String needed = argument.substring(p1+1, p2);
-		
+
 		String pw=null;
-		
+
 		if(needed.equals("Private Key")) {
 			pw = mProfile.getPasswordPrivateKey();
 		} else if (needed.equals("Auth")) {
@@ -148,7 +178,7 @@ private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManageme
 			String cmd = String.format("password '%s' %s\n", needed, managmentEscape(pw));
 			managmentCommand(cmd);
 		}
-		
+
 	}
 
 

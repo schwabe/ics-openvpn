@@ -17,10 +17,7 @@
 package de.blinkt.openvpn;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Vector;
-
-import de.blinkt.openvpn.OpenVpnService.CIDRIP;
 
 import android.app.PendingIntent;
 import android.content.Intent;

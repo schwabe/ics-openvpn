@@ -208,7 +208,7 @@ struct man_persist {
   bool hold_release;
 
   const char *special_state_msg;
-
+    
   counter_type bytes_in;
   counter_type bytes_out;
 };
@@ -303,6 +303,10 @@ struct man_connection {
 #ifdef MANAGMENT_EXTERNAL_KEY
   struct buffer_list *rsa_sig;
 #endif
+#ifdef TARGET_ANDROID
+    int fdtosend;
+#endif
+    
 };
 
 struct management

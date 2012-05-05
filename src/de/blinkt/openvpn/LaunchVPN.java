@@ -32,7 +32,6 @@ import android.os.Parcelable;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;

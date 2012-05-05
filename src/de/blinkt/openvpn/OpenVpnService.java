@@ -17,7 +17,10 @@
 package de.blinkt.openvpn;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.Vector;
+
+import de.blinkt.openvpn.OpenVpnService.CIDRIP;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -83,11 +86,30 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		public String toString() {
 			return String.format("%s/%d",mIp,len);
 		}
+		
+		public boolean normalise(){
+			long ip=0;
+
+			String[] ipt = mIp.split("\\.");
+
+			ip += Long.parseLong(ipt[0])<< 24;
+			ip += Integer.parseInt(ipt[1])<< 16;
+			ip += Integer.parseInt(ipt[2])<< 8;
+			ip += Integer.parseInt(ipt[3]);
+			
+			long newip = ip & (0xffffffffl << (32 -len));
+			if (newip != ip){
+				mIp = String.format("%d.%d.%d.%d", (newip & 0xff000000) >> 24,(newip & 0xff0000) >> 16, (newip & 0xff00) >> 8 ,newip & 0xff);
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 
 	@Override
 	public void onRevoke() {
-		mSocketManager.managmentCommand("signal SIGINT\n");
+		OpenVpnManagementThread.stopOpenVPN();
 		mServiceThread=null;
 		stopSelf();
 	};
@@ -128,8 +150,12 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		}
 
 		// Stop the previous session by interrupting the thread.
-		if (mSocketManager != null) {
-			mSocketManager.managmentCommand("signal SIGINT\n");
+		if(OpenVpnManagementThread.stopOpenVPN()){
+			// an old was asked to exit, wait 2s
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+			}
 		}
 
 		if (mServiceThread!=null) {
@@ -210,13 +236,25 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		if(mDomain!=null)
 			builder.addSearchDomain(mDomain);
 
-
+		String bconfig[] = new String[5];
+		
+		bconfig[0]= getString(R.string.last_openvpn_tun_config);
+		bconfig[1] = String.format(getString(R.string.local_ip_info,mLocalIP.mIp,mLocalIP.len));
+		bconfig[2] = String.format(getString(R.string.dns_server_info, joinString(mDnslist)));
+		bconfig[3] = String.format(getString(R.string.dns_domain_info, mDomain));
+		bconfig[4] = String.format(getString(R.string.routes_info, joinString(mRoutes)));
+		
+		
+		OpenVPN.logBuilderConfig(bconfig);
+		
 		mDnslist.clear();
 		mRoutes.clear();
 
 
 		builder.setSession(mProfile.mName + " - " + mLocalIP);
 
+		
+		
 		// Let the configure Button show the Log
 		Intent intent = new Intent(getBaseContext(),LogWindow.class);
 		PendingIntent startLW = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
@@ -233,6 +271,23 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 	}
 
+	
+	// Ugly, but java has no such method
+	private <T> String joinString(Vector<T> vec) {
+		String ret = "";
+		if(vec.size() > 0);
+		ret = vec.get(0).toString();
+		for(int i=1;i < vec.size();i++) {
+			ret = ret + ", " + vec.get(i).toString();
+		}
+		return ret;
+	}
+
+
+
+
+
+
 	public void addDNS(String dns) {
 		mDnslist.add(dns);		
 	}
@@ -246,7 +301,15 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 
 	public void addRoute(String dest, String mask) {
-		mRoutes.add(new CIDRIP(dest, mask));
+		CIDRIP route = new CIDRIP(dest, mask);		
+		if(route.len == 32 && !mask.equals("255.255.255.255")) {
+			OpenVPN.logMessage(0, "", String.format(getString(R.string.route_not_cidr,dest,mask)));
+		}
+		
+		if(route.normalise())
+			OpenVPN.logMessage(0, "", String.format(getString(R.string.route_not_netip,dest,route.len,route.mIp)));
+		
+		mRoutes.add(route);
 	}
 
 

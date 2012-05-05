@@ -55,6 +55,8 @@ public class OpenVPNThread implements Runnable {
 
 
 			mService.getHandler().sendEmptyMessage(R.string.disconnected);
+			// Not a good place to do it, but will do
+			OpenVPN.logBuilderConfig(null);
 			Log.i(TAG, "Exiting");
 		}
 	}

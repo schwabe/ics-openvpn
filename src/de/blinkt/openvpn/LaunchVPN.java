@@ -29,6 +29,8 @@ import android.content.Intent;
 import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -207,7 +209,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 		final EditText entry = new EditText(this);
 		entry.setSingleLine();
-		entry.setInputType(EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
+		entry.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		entry.setTransformationMethod(new PasswordTransformationMethod());
 
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		dialog.setTitle("Need " + type);

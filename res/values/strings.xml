@@ -115,7 +115,6 @@
     <string name="custom_config_title">Enable Custom Options</string>
     <string name="custom_config_summary">Specify custom options. Use with care!</string>
     <string name="route_rejected">Route rejected by Android</string>
-    <string formatted="false" name="ip_not_cidr">Cannot make sense of %s and %s as IP and CIDR netmask, assuming second address is peer address of remote. Using /32 netmask for local IP.</string>
     <string name="cancel_connection">Disconnect</string>
     <string name="clear_log">clear log</string>
     <string name="title_cancel">Cancel Confirmation</string>
@@ -156,4 +155,15 @@
     <string name="tun_error_helpful">" On some custom ICS images the permission on /dev/tun might be wrong, or the tun module might be missing completly"</string>
     <string name="tun_open_error">Opening tun interface failed badly.</string>
     <string name="error">"Error: "</string>
+    <string name="clear">Clear</string>
+    <string name="info">info</string>
+    <string name="show_connection_details">Show connection details</string>
+    <string name="last_openvpn_tun_config">Last interface configuration from Openvpn:</string>
+    <string name="local_ip_info">Local IP: %1$s/%2$d</string>
+    <string name="dns_server_info">DNS Server: %s</string>
+    <string name="dns_domain_info">DNS Domain: %s</string>
+    <string name="routes_info">Routes: %s</string>
+    <string name="ip_not_cidr">Cannot make sense of %1$s and %2$s as local IP with CIDR netmask, assuming second address is peer address of remote. Using /32 netmask for local IP.</string>
+    <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
+    <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>  
 </resources>

@@ -105,13 +105,14 @@ private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManageme
 			else if (cmd.equals("PASSWORD")) {
 				processPWCommand(argument);
 			} else if (cmd.equals("HOLD")) {
-				managmentCommand("hold release\n");
+				managmentCommand("hold release\nlog on\n");
 			} else if (cmd.equals("PROTECT-FD")) {
 				protectFD(argument);
 			}
+			Log.i(TAG, "Got unrecognized command" + command);
+		} else {
+			Log.i(TAG, "Got unrecognized line from managment" + command);
 		}
-        Log.i(TAG, "Got unrecognized command" + command);
-
 	}
 
 
@@ -158,10 +159,13 @@ private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManageme
 	}
 
 
-	public static void stopOpenVPN() {
+	public static boolean stopOpenVPN() {
+		boolean sendCMD=false;
 		for (OpenVpnManagementThread mt: active){
 			mt.managmentCommand("signal SIGINT\n");
-		}		
+			sendCMD=true;
+		}
+		return sendCMD;		
 	}
 
 }

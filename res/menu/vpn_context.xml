@@ -18,9 +18,8 @@
     <!--  <item
         android:id="@+id/connect_vpn"
         android:alphabeticShortcut="c"
-        android:
         android:icon="@android:drawable/ic_media_play"
-        android:showAsAction="withText|ifRoom"
+        android:showAsAction="ifRoom|withText"
         android:title="@string/connect"/>
 	-->
 </menu>

@@ -168,7 +168,6 @@
                 android:layout_marginLeft="8dip"
                 android:layout_marginRight="8dip"
                 android:hint="@string/pw_query_hint"
-                
                 android:inputType="textPassword" />
         </LinearLayout>
 

@@ -23,6 +23,8 @@ import android.widget.TextView;
 import de.blinkt.openvpn.OpenVPN.LogListener;
 
 public class LogWindow extends ListActivity  {
+	private String[] mBconfig=null;
+
 
 	class LogWindowListAdapter implements ListAdapter,LogListener, Callback {
 
@@ -35,6 +37,7 @@ public class LogWindow extends ListActivity  {
 		private Handler mHandler;
 
 		private Vector<DataSetObserver> observers=new Vector<DataSetObserver>();
+
 
 		public LogWindowListAdapter() {
 			initLogBuffer();
@@ -159,7 +162,6 @@ public class LogWindow extends ListActivity  {
 			OpenVPN.logMessage(0,"","Log cleared.");
 			mHandler.sendEmptyMessage(MESSAGE_CLEARLOG);
 		}
-
 	}
 
 
@@ -185,6 +187,9 @@ public class LogWindow extends ListActivity  {
 			builder.setNegativeButton(android.R.string.no, null);
 			builder.show();
 			return true;
+		} else if(item.getItemId()==R.id.info) {
+			if(mBconfig==null)
+				OpenVPN.triggerLogBuilderConfig();
 		}
 
 		return super.onOptionsItemSelected(item);

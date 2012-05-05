@@ -69,7 +69,7 @@ public class Settings_Obscure extends PreferenceFragment implements OnPreference
 		if(preference==mLogverbosity) {
 			// Catch old version problem
 			if(newValue==null){
-				newValue=1;
+				newValue="1";
 			}
 			mLogverbosity.setDefaultValue(newValue);
 			//This is idiotic. 

@@ -5420,6 +5420,11 @@ add_option (struct options *options,
       options->occ = false;
     }
 #endif
+  else if (streq (p[0], "tmp-dir") && p[1])
+  {
+      VERIFY_PERMISSION (OPT_P_GENERAL);
+      options->tmp_dir = p[1];
+  }
 #if P2MP
 #if P2MP_SERVER
   else if (streq (p[0], "server") && p[1] && p[2])
@@ -5700,11 +5705,6 @@ add_option (struct options *options,
 	goto err;
       warn_multiple_script (options->learn_address_script, "learn-address");
       options->learn_address_script = p[1];
-    }
-  else if (streq (p[0], "tmp-dir") && p[1])
-    {
-      VERIFY_PERMISSION (OPT_P_GENERAL);
-      options->tmp_dir = p[1];
     }
   else if (streq (p[0], "client-config-dir") && p[1])
     {

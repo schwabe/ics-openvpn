@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.DatagramSocket;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Vector;
 
 import android.net.LocalSocket;
+import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 public class OpenVpnManagementThread implements Runnable {
@@ -16,7 +20,7 @@ public class OpenVpnManagementThread implements Runnable {
 	private LocalSocket mSocket;
 	private VpnProfile mProfile;
 	private OpenVpnService mOpenVPNService;
-	private Vector<Integer> mFDList=new Vector<Integer>();
+	private LinkedList<FileDescriptor> mFDList=new LinkedList<FileDescriptor>(); 
 
 	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
 
@@ -65,7 +69,7 @@ public class OpenVpnManagementThread implements Runnable {
 				int numbytesread = instream.read(buffer);
 				if(numbytesread==-1)
 					return;
-				
+
 				FileDescriptor[] fds = null;
 				try {
 					fds = mSocket.getAncillaryFileDescriptors();
@@ -73,21 +77,10 @@ public class OpenVpnManagementThread implements Runnable {
 					e.printStackTrace();
 				}
 				if(fds!=null){
-					Log.i(TAG, "fds:" + fds);
+
 					for (FileDescriptor fd : fds) {
-						try {
-							Method getInt = FileDescriptor.class.getDeclaredMethod("getInt$");
-							int fdint = (Integer) getInt.invoke(fd);
-							mFDList.add(fdint);
-						} catch (NoSuchMethodException e) {
-							e.printStackTrace();
-						} catch (IllegalArgumentException e) {
-							e.printStackTrace();
-						} catch (IllegalAccessException e) {
-							e.printStackTrace();
-						} catch (InvocationTargetException e) {
-							e.printStackTrace();
-						}
+
+						mFDList.add(fd);
 					}
 				}
 
@@ -106,6 +99,30 @@ public class OpenVpnManagementThread implements Runnable {
 		active.remove(this);
 	}
 
+	//! Hack O Rama 2000!
+	private void protectFileDescriptor(FileDescriptor fd) {
+		try {
+			Method getInt = FileDescriptor.class.getDeclaredMethod("getInt$");
+			int fdint = (Integer) getInt.invoke(fd);
+	
+			Log.d("Openvpn", "Got FD from socket: " + fd + " " + fdint);
+			ParcelFileDescriptor pfd = ParcelFileDescriptor.fromFd(fdint);
+			mOpenVPNService.protect(fdint);
+			pfd.close();
+			return;
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Log.d("Openvpn", "Failed to retrieve fd from socket: " + fd);
+	}
 
 	private String processInput(String pendingInput) {
 
@@ -136,26 +153,15 @@ public class OpenVpnManagementThread implements Runnable {
 				processPWCommand(argument);
 			} else if (cmd.equals("HOLD")) {
 				managmentCommand("hold release\n");
-			} else if (cmd.equals("PROTECT-FD")) {
-				protectFD(argument);
+			} else if (cmd.equals("NEED-OK")) {
+				processPWCommand(argument);
+			} else {
+				Log.i(TAG, "Got unrecognized command" + command);
 			}
-			Log.i(TAG, "Got unrecognized command" + command);
 		} else {
 			Log.i(TAG, "Got unrecognized line from managment" + command);
 		}
 	}
-
-
-	private void protectFD(String argument) {
-		try {
-			FileDescriptor[] fds = mSocket.getAncillaryFileDescriptors();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
 
 	private void processPWCommand(String argument) {
 		//argument has the form 	Need 'Private Key' password
@@ -165,6 +171,7 @@ public class OpenVpnManagementThread implements Runnable {
 		String needed = argument.substring(p1+1, p2);
 
 		String pw=null;
+		String response="password";
 
 		if(needed.equals("Private Key")) {
 			pw = mProfile.getPasswordPrivateKey();
@@ -173,9 +180,14 @@ public class OpenVpnManagementThread implements Runnable {
 					needed, managmentEscape(mProfile.mUsername));
 			managmentCommand(usercmd);
 			pw = mProfile.getPasswordAuth();
+		} else if (needed.equals("PROTECTFD")) {
+			FileDescriptor fdtoprotect = mFDList.pollFirst();
+			protectFileDescriptor(fdtoprotect);
+			pw = "ok";
+			response="needok";
 		}
 		if(pw!=null) {
-			String cmd = String.format("password '%s' %s\n", needed, managmentEscape(pw));
+			String cmd = String.format("%s '%s' %s\n",response, needed, managmentEscape(pw));
 			managmentCommand(cmd);
 		}
 

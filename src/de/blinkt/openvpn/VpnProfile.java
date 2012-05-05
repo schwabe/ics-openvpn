@@ -181,12 +181,12 @@ public class VpnProfile implements  Serializable{
 		cfg += "management-hold\n\n";
 
 		/* only needed if client is compiled with P2MP Server support as early version 
-		 * accidently were
+		 * accidently were */
 		cfg+="# /tmp does not exist on Android\n";
 		cfg+="tmp-dir ";
 		cfg+=cacheDir.getAbsolutePath();
 		cfg+="\n\n";
-		 */
+		
 		boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
 
 		if(useTLSClient && mUsePull)

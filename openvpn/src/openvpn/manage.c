@@ -2894,7 +2894,7 @@ management_event_loop_n_seconds (struct management *man, int sec)
  * Get a username/password from management channel in standalone mode.
  */
 bool
-management_query_user_pass (struct management *man,
+    management_query_user_pass (struct management *man,
 			    struct user_pass *up,
 			    const char *type,
 			    const unsigned int flags,

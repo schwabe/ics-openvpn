@@ -1176,7 +1176,7 @@ get_user_pass_cr (struct user_pass *up,
 	      if (ac)
 		{
 		  char *response = (char *) gc_malloc (USER_PASS_LEN, false, &gc);
-		  struct buffer packed_resp;
+		  struct buffer packed_resp; 
 
 		  buf_set_write (&packed_resp, (uint8_t*)up->password, USER_PASS_LEN);
 		  msg (M_INFO|M_NOPREFIX, "CHALLENGE: %s", ac->challenge_text);

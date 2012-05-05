@@ -865,12 +865,7 @@ create_socket_tcp (void)
   }
 #endif
 
-#ifdef TARGET_ANDROID
-    /* Protects the socket from being routed via VPN */
-    android_protect_socket(sd);
-#endif
-
-  return sd;
+    return sd;
 }
 
 static socket_descriptor_t
@@ -898,11 +893,6 @@ create_socket_udp (const unsigned int flags)
     }
 #endif
 
-#ifdef TARGET_ANDROID
-    /* Protects the socket from being routed via VPN */
-    android_protect_socket(sd);
-#endif
-
   return sd;
 }
 
@@ -921,10 +911,6 @@ create_socket_udp6 (const unsigned int flags)
 		      (void*)&pad, sizeof(pad)) < 0)
 	msg(M_SOCKERR, "UDP: failed setsockopt for IPV6_RECVPKTINFO");
     }
-#endif
-#ifdef TARGET_ANDROID
-    /* Protects the socket from being routed via VPN */
-    android_protect_socket(sd);
 #endif
 
   return sd;
@@ -945,10 +931,6 @@ create_socket_tcp6 (void)
 		    (void *) &on, sizeof (on)) < 0)
       msg (M_SOCKERR, "TCP: Cannot setsockopt SO_REUSEADDR on TCP6 socket");
   }
-#ifdef TARGET_ANDROID
-    /* Protects the socket from being routed via VPN */
-    android_protect_socket(sd);
-#endif
 
   return sd;
 }
@@ -987,8 +969,12 @@ create_socket (struct link_socket *sock)
       ASSERT (0);
     }
 #ifdef TARGET_ANDROID
+    struct user_pass up;
+    strcpy(up.username ,__func__);
     management->connection.fdtosend = sock->sd;
-    management_auth_token (management,"'PROTECT-FD'");
+    management_query_user_pass(management, &up , "PROTECTFD", GET_USER_PASS_NEED_OK,(void*) 0);
+
+
 #endif
     
 }

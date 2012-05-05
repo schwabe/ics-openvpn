@@ -88,17 +88,7 @@ public class OpenVPN {
 	public static void setCallback(OpenVpnService openVpnService) {
 		mOpenVpnService = openVpnService;
 	}
-
-	public static boolean protectSocket (int sockfd)
-	{
-		boolean p = mOpenVpnService.protect(sockfd);
-		if(p)
-			Log.d("openvpn","Protected socket "+ sockfd);
-		else
-			Log.e("openvpn","Error protecting socket "+ sockfd);
-		return p;
-	}
-
+	
 	public static int openTunDevice() {
 		Log.d(TAG,"Opening tun device");
 		return mOpenVpnService.openTun();

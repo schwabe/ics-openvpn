@@ -38,10 +38,10 @@ public class VpnProfile implements  Serializable{
 	public static final int TYPE_USERPASS_CERTIFICATES = 5;
 	public static final int TYPE_USERPASS_PKCS12 = 6;
 	public static final int TYPE_USERPASS_KEYSTORE = 7;
-	
-	
-	
-	
+
+
+
+
 
 
 	private static final String OVPNCONFIGFILE = "android.conf";
@@ -186,7 +186,7 @@ public class VpnProfile implements  Serializable{
 		cfg+="tmp-dir ";
 		cfg+=cacheDir.getAbsolutePath();
 		cfg+="\n\n";
-		
+
 		boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
 
 		if(useTLSClient && mUsePull)
@@ -455,8 +455,6 @@ public class VpnProfile implements  Serializable{
 			ks.store(fout,mypw.toCharArray());
 			fout.flush(); fout.close();
 			return;
-		} catch (KeyChainException e) {
-			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (KeyStoreException e) {
@@ -469,6 +467,8 @@ public class VpnProfile implements  Serializable{
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (KeyChainException e) {
+			OpenVPN.logMessage(0,"",context.getString(R.string.keychain_access));
 		}
 
 	}
@@ -538,7 +538,7 @@ public class VpnProfile implements  Serializable{
 		if(isUserPWAuth() && (mPassword.equals("") || mPassword == null)) {
 			if(mTransientPW==null)
 				return "Password";
-			
+
 		}
 		return null;
 	}
@@ -552,8 +552,8 @@ public class VpnProfile implements  Serializable{
 			return mPassword;
 		}
 	}
-	
-	
+
+
 	// Used by the Array Adapter
 	@Override
 	public String toString() {

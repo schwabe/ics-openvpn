@@ -17,7 +17,7 @@ public class OpenVPN {
 	private static int counter=0;
 
 	private static Vector<LogListener> logListener=new Vector<OpenVPN.LogListener>();
-	private static String[] mBconfig=null;
+	private static String[] mBconfig;
 
 	public interface LogListener {
 		void newLog(String logmessage);

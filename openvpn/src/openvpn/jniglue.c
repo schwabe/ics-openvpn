@@ -137,28 +137,11 @@ int android_open_tun () {
 }
 
 
-unsigned char android_protect_socket(int sockfd) {
-    jmethodID aMethodID = (*openvpnjenv)->GetStaticMethodID(openvpnjenv, openvpnclass, "protectSocket", 
-                                                            "(I)Z");
-    return (*openvpnjenv)->CallStaticBooleanMethod(openvpnjenv,openvpnclass,aMethodID,sockfd);
-    
-}
-
-
 void android_set_dns(const char* dns) {
     jmethodID aMethodID = (*openvpnjenv)->GetStaticMethodID(openvpnjenv, openvpnclass, "addDns", 
                                                             "(Ljava/lang/String;)V");
     jstring jdns = (*openvpnjenv)->NewStringUTF(openvpnjenv,dns);
     (*openvpnjenv)->CallStaticVoidMethod(openvpnjenv,openvpnclass,aMethodID,jdns);
-    
-    
-}
-
-void android_set_domain(const char* domain) {
-    jmethodID aMethodID = (*openvpnjenv)->GetStaticMethodID(openvpnjenv, openvpnclass, "addDomain", 
-                                                            "(Ljava/lang/String;)V");
-    jstring jdomain = (*openvpnjenv)->NewStringUTF(openvpnjenv,domain);
-    (*openvpnjenv)->CallStaticVoidMethod(openvpnjenv,openvpnclass,aMethodID,jdomain);
     
     
 }

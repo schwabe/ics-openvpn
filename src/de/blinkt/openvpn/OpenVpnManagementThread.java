@@ -31,14 +31,6 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 
 
-	private String managmentEscape(String unescape) {
-		String escapedString = unescape.replace("\\", "\\\\");
-		escapedString = escapedString.replace("\"","\\\"");
-		escapedString = escapedString.replace("\n","\\n");
-		return '"' + escapedString + '"';
-	}
-
-
 	public void managmentCommand(String cmd) {
 		try {
 			mSocket.getOutputStream().write(cmd.getBytes());
@@ -177,7 +169,7 @@ public class OpenVpnManagementThread implements Runnable {
 			pw = mProfile.getPasswordPrivateKey();
 		} else if (needed.equals("Auth")) {
 			String usercmd = String.format("username '%s' %s\n", 
-					needed, managmentEscape(mProfile.mUsername));
+					needed, VpnProfile.openVpnEscape(mProfile.mUsername));
 			managmentCommand(usercmd);
 			pw = mProfile.getPasswordAuth();
 		} else if (needed.equals("PROTECTFD")) {
@@ -187,7 +179,7 @@ public class OpenVpnManagementThread implements Runnable {
 			response="needok";
 		}
 		if(pw!=null) {
-			String cmd = String.format("%s '%s' %s\n",response, needed, managmentEscape(pw));
+			String cmd = String.format("%s '%s' %s\n",response, needed, VpnProfile.openVpnEscape(pw));
 			managmentCommand(cmd);
 		}
 

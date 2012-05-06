@@ -167,5 +167,9 @@
     <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
     <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>
     <string name="keychain_access">Cannot accces the Android Keychain Certificates. If you restored a backup of the app reselect the certificate</string>
-    <string name="version_info">Version: %s</string>  
+    <string name="version_info">Version: %s</string>
+    <string name="could_not_write_log">Could not write log contents to file</string>
+    <string name="send_logfile">Send Logfile</string>
+    <string name="send">Send</string>
+    <string name="ics_openvpn_log_file">ICS Openvpn log file</string>  
 </resources>

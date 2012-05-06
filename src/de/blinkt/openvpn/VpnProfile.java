@@ -148,6 +148,13 @@ public class VpnProfile implements  Serializable{
 		}
 	};
 
+	public static String openVpnEscape(String unescape) {
+		String escapedString = unescape.replace("\\", "\\\\");
+		escapedString = escapedString.replace("\"","\\\"");
+		escapedString = escapedString.replace("\n","\\n");
+		return '"' + escapedString + '"';
+	}
+	
 
 	static final String OVPNCONFIGPKCS12 = "android.pkcs12";
 
@@ -231,22 +238,22 @@ public class VpnProfile implements  Serializable{
 		case VpnProfile.TYPE_CERTIFICATES:
 			// Ca
 			cfg+="ca ";
-			cfg+=mCaFilename;
+			cfg+=openVpnEscape(mCaFilename);
 			cfg+="\n";
 
 			// Client Cert + Key
 			cfg+="key ";
-			cfg+=mClientKeyFilename;
+			cfg+=openVpnEscape(mClientKeyFilename);
 			cfg+="\n";
 			cfg+="cert ";
-			cfg+=mClientCertFilename;
+			cfg+=openVpnEscape(mClientCertFilename);
 			cfg+="\n";
 			break;
 		case VpnProfile.TYPE_USERPASS_PKCS12:
 			cfg+="auth-user-pass\n";
 		case VpnProfile.TYPE_PKCS12:
 			cfg+="pkcs12 ";
-			cfg+=mPKCS12Filename;
+			cfg+=openVpnEscape(mPKCS12Filename);
 			cfg+="\n";
 			cfg+="management-query-passwords\n";
 			break;
@@ -262,7 +269,7 @@ public class VpnProfile implements  Serializable{
 		case VpnProfile.TYPE_USERPASS:
 			cfg+="auth-user-pass\n";
 			cfg+="management-query-passwords\n";
-			cfg+="ca " + mCaFilename +"\n";
+			cfg+="ca " +openVpnEscape(mCaFilename) +"\n";
 		}
 
 		if(mUseLzo) {
@@ -274,7 +281,7 @@ public class VpnProfile implements  Serializable{
 				cfg+="secret ";
 			else
 				cfg+="tls-auth ";
-			cfg+=mTLSAuthFilename;
+			cfg+=openVpnEscape(mTLSAuthFilename);
 			cfg+=" ";
 			cfg+= mTLSAuthDirection;
 			cfg+="\n";

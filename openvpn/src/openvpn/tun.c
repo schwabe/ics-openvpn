@@ -1384,8 +1384,10 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
         android_set_dns(print_in_addr_t(tt->options.dns[i], 0, &gc));
     }
 
+
+
     if(tt->options.domain)
-        android_set_domain(tt->options.domain);
+        management_query_user_pass(management, &up , "DNSDOMAIN", GET_USER_PASS_NEED_OK,(void*) 0);
 
     if((tt->fd = android_open_tun())< 0){
         msg (M_ERR, "ERROR: Cannot open TUN");

@@ -1,13 +1,19 @@
 package de.blinkt.openvpn;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Vector;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.database.DataSetObserver;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
@@ -20,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.blinkt.openvpn.OpenVPN.LogListener;
 
 public class LogWindow extends ListActivity  {
@@ -54,6 +61,22 @@ public class LogWindow extends ListActivity  {
 			for (String litem : OpenVPN.getlogbuffer()) {
 				myEntries.add(litem);				
 			}
+		}
+
+		String getLogStr() {
+			String str = "";
+			for(String entry:myEntries) {
+					str+=entry + '\n';
+			}
+			return str;
+		}
+
+		private void shareLog() {
+			Intent shareIntent = new Intent(Intent.ACTION_SEND);
+			shareIntent.putExtra(Intent.EXTRA_TEXT, getLogStr());
+			shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.ics_openvpn_log_file));
+			shareIntent.setType("text/plain");
+			startActivity(Intent.createChooser(shareIntent, "Send Logfile"));
 		}
 
 		@Override
@@ -190,6 +213,8 @@ public class LogWindow extends ListActivity  {
 		} else if(item.getItemId()==R.id.info) {
 			if(mBconfig==null)
 				OpenVPN.triggerLogBuilderConfig();
+		} else if(item.getItemId()==R.id.send) {
+			ladapter.shareLog();
 		}
 
 		return super.onOptionsItemSelected(item);

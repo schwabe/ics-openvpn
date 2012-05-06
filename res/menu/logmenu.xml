@@ -19,4 +19,11 @@
         android:showAsAction="ifRoom|withText"
         android:title="@string/show_connection_details"
         android:titleCondensed="@string/info"/>
-</menu>
+    <item
+        android:id="@+id/send"
+        android:icon="@android:drawable/ic_menu_share"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/send_logfile"
+        android:titleCondensed="@string/send"/>
+
+</menu>

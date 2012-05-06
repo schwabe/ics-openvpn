@@ -1,19 +1,17 @@
 package de.blinkt.openvpn;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Vector;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ListActivity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.database.DataSetObserver;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
@@ -23,6 +21,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -235,6 +235,20 @@ public class LogWindow extends ListActivity  {
 		super.onCreate(savedInstanceState);
 
 		ListView lv = getListView();
+		
+		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+			
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				ClipboardManager clipboard = (ClipboardManager)
+				        getSystemService(Context.CLIPBOARD_SERVICE);
+				ClipData clip = ClipData.newPlainText("Log Entry",((TextView) view).getText());
+				clipboard.setPrimaryClip(clip);
+				Toast.makeText(getBaseContext(), R.string.copied_entry, Toast.LENGTH_SHORT).show();
+				return true;
+			}
+		});
 		//lv.setTextFilterEnabled(true);
 		ladapter = new LogWindowListAdapter();
 		lv.setAdapter(ladapter);

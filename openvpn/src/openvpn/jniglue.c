@@ -23,14 +23,6 @@ void android_openvpn_exit(int status) {
 }
 
 
-void testmsg(char* m1, ...) {
-	va_list arglist;
-	va_start(arglist,m1);
-	//	vsnprintf(m1, 100, "foo bbaz",arglist);
-	__android_log_vprint(ANDROID_LOG_DEBUG, "openvpn",m1, arglist);
-		va_end(arglist);
-}
-
 // Store env and class, we allow only one instance
 // so make these variables global for now
 jclass openvpnclass;
@@ -136,15 +128,6 @@ int android_open_tun () {
 
 }
 
-
-void android_set_dns(const char* dns) {
-    jmethodID aMethodID = (*openvpnjenv)->GetStaticMethodID(openvpnjenv, openvpnclass, "addDns", 
-                                                            "(Ljava/lang/String;)V");
-    jstring jdns = (*openvpnjenv)->NewStringUTF(openvpnjenv,dns);
-    (*openvpnjenv)->CallStaticVoidMethod(openvpnjenv,openvpnclass,aMethodID,jdns);
-    
-    
-}
 
 void addRouteInformation(const char* dest, const char* mask, const char* gw) {
     

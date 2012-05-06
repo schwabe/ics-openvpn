@@ -67,22 +67,6 @@ public class OpenVPN {
 	}
 
 
-	static void addInterfaceInfo(int mtu, String local, String netmask)
-	{
-		Log.i("openvpn","Got interface info M"  + mtu + " L: " + local + "NM: " + netmask);
-		mOpenVpnService.setLocalIP(local,netmask);
-	}
-
-	static void addDns(String dns) {
-		Log.i("openvpn","Got DNS Server: " + dns);
-		mOpenVpnService.addDNS(dns);
-	}
-
-
-	static void addDomain(String domain) {
-		Log.i("openvpn","Got DNS Domain: " + domain);
-		mOpenVpnService.setDomain(domain);
-	}
 
 
 	public static void setCallback(OpenVpnService openVpnService) {

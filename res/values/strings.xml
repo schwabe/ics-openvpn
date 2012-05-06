@@ -159,7 +159,7 @@
     <string name="info">info</string>
     <string name="show_connection_details">Show connection details</string>
     <string name="last_openvpn_tun_config">Last interface configuration from Openvpn:</string>
-    <string name="local_ip_info">Local IP: %1$s/%2$d</string>
+    <string name="local_ip_info">Local IP: %1$s/%2$d MTU: %3$d</string>
     <string name="dns_server_info">DNS Server: %s</string>
     <string name="dns_domain_info">DNS Domain: %s</string>
     <string name="routes_info">Routes: %s</string>
@@ -171,5 +171,6 @@
     <string name="could_not_write_log">Could not write log contents to file</string>
     <string name="send_logfile">Send Logfile</string>
     <string name="send">Send</string>
-    <string name="ics_openvpn_log_file">ICS Openvpn log file</string>  
+    <string name="ics_openvpn_log_file">ICS Openvpn log file</string>
+    <string name="copied_entry">Copied log entry to clip board</string>  
 </resources>

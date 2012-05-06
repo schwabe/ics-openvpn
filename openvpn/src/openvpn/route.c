@@ -1347,7 +1347,14 @@ add_route (struct route *r,
 #elif defined (TARGET_ANDROID)
 #include "jniglue.h"
 
-    addRouteInformation(network, netmask, gateway);
+    struct user_pass up;    
+    struct buffer out = alloc_buf_gc (64, &gc);
+
+    buf_printf (&out, "%s %s", network, netmask);
+
+    strcpy(up.username, buf_bptr(&out));
+    management_query_user_pass(management, &up , "ROUTE", GET_USER_PASS_NEED_OK,(void*) 0);
+
 
 #elif defined (WIN32)
   {

@@ -46,6 +46,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 	private OpenVpnManagementThread mSocketManager;
 
 	private Thread mSocketManagerThread;
+	private int mMtu;
 
 
 
@@ -220,6 +221,8 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		for (String dns : mDnslist ) {
 			builder.addDnsServer(dns);
 		}
+		
+		builder.setMtu(mMtu);
 
 
 		for (CIDRIP route:mRoutes) {
@@ -236,7 +239,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		String bconfig[] = new String[5];
 		
 		bconfig[0]= getString(R.string.last_openvpn_tun_config);
-		bconfig[1] = String.format(getString(R.string.local_ip_info,mLocalIP.mIp,mLocalIP.len));
+		bconfig[1] = String.format(getString(R.string.local_ip_info,mLocalIP.mIp,mLocalIP.len,mMtu));
 		bconfig[2] = String.format(getString(R.string.dns_server_info, joinString(mDnslist)));
 		bconfig[3] = String.format(getString(R.string.dns_domain_info, mDomain));
 		bconfig[4] = String.format(getString(R.string.routes_info, joinString(mRoutes)));
@@ -249,8 +252,6 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 
 		builder.setSession(mProfile.mName + " - " + mLocalIP);
-
-		
 		
 		// Let the configure Button show the Log
 		Intent intent = new Intent(getBaseContext(),LogWindow.class);
@@ -310,8 +311,10 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 	}
 
 
-	public void setLocalIP(String local, String netmask) {
+	public void setLocalIP(String local, String netmask,int mtu) {
 		mLocalIP = new CIDRIP(local, netmask);
+		mMtu = mtu;
+		
 		if(mLocalIP.len == 32 && !netmask.equals("255.255.255.255")) {
 			OpenVPN.logMessage(0, "", String.format(getString(R.string.ip_not_cidr, local,netmask)));
 		}

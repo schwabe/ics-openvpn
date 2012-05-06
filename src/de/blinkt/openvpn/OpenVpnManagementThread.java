@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.DatagramSocket;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Vector;
 
 import android.net.LocalSocket;
@@ -146,13 +144,44 @@ public class OpenVpnManagementThread implements Runnable {
 			} else if (cmd.equals("HOLD")) {
 				managmentCommand("hold release\n");
 			} else if (cmd.equals("NEED-OK")) {
-				processPWCommand(argument);
+				processNeedCommand(argument);
 			} else {
 				Log.i(TAG, "Got unrecognized command" + command);
 			}
 		} else {
 			Log.i(TAG, "Got unrecognized line from managment" + command);
 		}
+	}
+	
+	private void processNeedCommand(String argument) {
+		int p1 =argument.indexOf('\'');
+		int p2 = argument.indexOf('\'',p1+1);
+
+		String needed = argument.substring(p1+1, p2);
+		String extra = argument.split(":",2)[1];
+
+		if (needed.equals("PROTECTFD")) {
+			FileDescriptor fdtoprotect = mFDList.pollFirst();
+			protectFileDescriptor(fdtoprotect);
+		} else if (needed.equals("DNSSERVER")) {
+			mOpenVPNService.addDNS(extra);
+		}else if (needed.equals("DNSDOMAIN")){
+			mOpenVPNService.setDomain(extra);
+		} else if (needed.equals("ROUTE")) {
+			String[] routeparts = extra.split(" ");
+			mOpenVPNService.addRoute(routeparts[0], routeparts[1]);
+		} else if (needed.equals("IFCONFIG")) {
+			String[] ifconfigparts = extra.split(" ");
+			int mtu = Integer.parseInt(ifconfigparts[0]);
+			mOpenVPNService.setLocalIP(ifconfigparts[0], ifconfigparts[1],mtu);
+			
+		} else {
+			Log.e(TAG,"Unkown needok command " + argument);
+			return;
+		}
+		
+		String cmd = String.format("needok '%s' %s\n", needed, "ok");
+		managmentCommand(cmd);
 	}
 
 	private void processPWCommand(String argument) {
@@ -163,7 +192,7 @@ public class OpenVpnManagementThread implements Runnable {
 		String needed = argument.substring(p1+1, p2);
 
 		String pw=null;
-		String response="password";
+		
 
 		if(needed.equals("Private Key")) {
 			pw = mProfile.getPasswordPrivateKey();
@@ -172,14 +201,9 @@ public class OpenVpnManagementThread implements Runnable {
 					needed, VpnProfile.openVpnEscape(mProfile.mUsername));
 			managmentCommand(usercmd);
 			pw = mProfile.getPasswordAuth();
-		} else if (needed.equals("PROTECTFD")) {
-			FileDescriptor fdtoprotect = mFDList.pollFirst();
-			protectFileDescriptor(fdtoprotect);
-			pw = "ok";
-			response="needok";
-		}
+		} 
 		if(pw!=null) {
-			String cmd = String.format("%s '%s' %s\n",response, needed, VpnProfile.openVpnEscape(pw));
+			String cmd = String.format("password '%s' %s\n", needed, VpnProfile.openVpnEscape(pw));
 			managmentCommand(cmd);
 		}
 

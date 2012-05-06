@@ -46,8 +46,8 @@
 #include "manage.h"
 #include "route.h"
 #include "win32.h"
-
 #include "memdbg.h"
+#include <string.h>
 
 #ifdef TARGET_ANDROID
 #include "jniglue.h"
@@ -774,7 +774,16 @@ do_ifconfig (struct tuntap *tt,
 
 #endif /*ENABLE_IPROUTE*/
 #elif defined(TARGET_ANDROID)
-       addInterfaceInformation(tun_mtu,ifconfig_local, ifconfig_remote_netmask);
+        
+        struct user_pass up;    
+        struct buffer out = alloc_buf_gc (64, &gc);
+        
+        buf_printf (&out, "%s %s %d", ifconfig_local, ifconfig_remote_netmask, tun_mtu);
+        
+        strcpy(up.username, buf_bptr(&out));
+        management_query_user_pass(management, &up , "IFCONFIG", GET_USER_PASS_NEED_OK,(void*) 0);
+        
+        
 #elif defined(TARGET_SOLARIS)
 
       /* Solaris 2.6 (and 7?) cannot set all parameters in one go...
@@ -1378,20 +1387,24 @@ close_tun_generic (struct tuntap *tt)
 void
 open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tuntap *tt)
 {
-    struct gc_arena gc = gc_new ();
     int i;
+    struct user_pass up;
+    struct gc_arena gc = gc_new ();
+    
     for (i = 0; i < tt->options.dns_len; ++i) {
-        android_set_dns(print_in_addr_t(tt->options.dns[i], 0, &gc));
+        strcpy(up.username, print_in_addr_t(tt->options.dns[i], 0, &gc));
+        management_query_user_pass(management, &up , "DNSSERVER", GET_USER_PASS_NEED_OK,(void*) 0);
     }
 
-
-
-    if(tt->options.domain)
+    if(tt->options.domain) {
+        strcpy(up.username , tt->options.domain);
         management_query_user_pass(management, &up , "DNSDOMAIN", GET_USER_PASS_NEED_OK,(void*) 0);
-
+    }
+    
     if((tt->fd = android_open_tun())< 0){
         msg (M_ERR, "ERROR: Cannot open TUN");
     }
+    gc_free (&gc);
 }
 
 #else

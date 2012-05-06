@@ -92,62 +92,6 @@ public class VpnProfile implements  Serializable{
 	public String mVerb="1";
 
 
-
-	public int describeContents() {
-		return 0;
-	}
-
-	// Not used 
-	public void writeToParcel(Parcel out, int flags) {
-		out.writeInt(mAuthenticationType);
-		out.writeLong(mUuid.getMostSignificantBits());
-		out.writeLong(mUuid.getLeastSignificantBits());
-		out.writeString(mName);
-		out.writeString(mAlias);
-		out.writeString(mClientCertFilename);
-		out.writeString(mTLSAuthDirection);
-		out.writeString(mTLSAuthFilename);
-		out.writeString(mClientKeyFilename);
-		out.writeString(mCaFilename);
-		out.writeValue(mUseLzo);
-		out.writeString(mServerPort);
-		out.writeValue(mUseUdp);
-		out.writeString(mPKCS12Filename);
-		out.writeString(mPKCS12Password);
-		out.writeValue(mUseTLSAuth);
-		out.writeString(mServerName);
-	}
-
-	private VpnProfile(Parcel in) {
-		mAuthenticationType = in.readInt();
-		mUuid = new UUID(in.readLong(), in.readLong());
-		mName = in.readString();
-		mAlias = in.readString();
-		mClientCertFilename = in.readString();
-		mTLSAuthDirection = in.readString(); 
-		mTLSAuthFilename = in.readString();
-		mClientKeyFilename = in.readString();
-		mCaFilename = in.readString();
-		mUseLzo = (Boolean) in.readValue(null);
-		mServerPort = in.readString();
-		mUseUdp = (Boolean) in.readValue(null);
-		mPKCS12Filename = in.readString();
-		mPKCS12Password = in.readString();
-		mUseTLSAuth = (Boolean) in.readValue(null);
-		mServerName = in.readString(); 
-	}
-
-	public static final Parcelable.Creator<VpnProfile> CREATOR
-	= new Parcelable.Creator<VpnProfile>() {
-		public VpnProfile createFromParcel(Parcel in) {
-			return new VpnProfile(in);
-		}
-
-		public VpnProfile[] newArray(int size) {
-			return new VpnProfile[size];
-		}
-	};
-
 	public static String openVpnEscape(String unescape) {
 		String escapedString = unescape.replace("\\", "\\\\");
 		escapedString = escapedString.replace("\"","\\\"");
@@ -180,19 +124,22 @@ public class VpnProfile implements  Serializable{
 
 		String cfg="";
 
-		// Enable managment interface 
+		// Enable managment interface
+		cfg += "# Enables connection to GUI\n";
 		cfg += "management ";
 
 		cfg +=cacheDir.getAbsolutePath() + "/" +  "mgmtsocket";
 		cfg += " unix\n";
 		cfg += "management-hold\n\n";
 
-		/* only needed if client is compiled with P2MP Server support as early version 
-		 * accidently were */
 		cfg+="# /tmp does not exist on Android\n";
 		cfg+="tmp-dir ";
 		cfg+=cacheDir.getAbsolutePath();
 		cfg+="\n\n";
+		
+		cfg+="# Silences script security warning\n";
+		cfg+="script-security 0\n\n";
+		
 
 		boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
 

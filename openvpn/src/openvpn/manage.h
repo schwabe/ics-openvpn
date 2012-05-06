@@ -305,6 +305,7 @@ struct man_connection {
 #endif
 #ifdef TARGET_ANDROID
     int fdtosend;
+    int lastfdreceived;
 #endif
     
 };

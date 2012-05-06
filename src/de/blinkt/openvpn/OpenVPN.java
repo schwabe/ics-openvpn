@@ -8,7 +8,6 @@ import android.util.Log;
 public class OpenVPN {
 	private static OpenVpnService mOpenVpnService;
 	private static final int MAXLOGENTRIES = 500;
-	public static native int startOpenVPNThread();
 	public static native int startOpenVPNThreadArgs(String argv[]);
 	private static final String TAG = "OpenVpn";
 
@@ -30,14 +29,9 @@ public class OpenVPN {
 		System.loadLibrary("openvpn");
 	}
 
-	static void addRoute(String dest,String mask, String gw) {
-		Log.i("openvpn" ,"Got Routing information " + dest + " " + mask + "  " + gw  );	
-		mOpenVpnService.addRoute(dest,mask);
-	}
-
 	synchronized static void logMessage(int level,String prefix, String message)
 	{
-		logbuffer.addLast(prefix + " " + message);
+		logbuffer.addLast(prefix +  message);
 		if(logbuffer.size()>MAXLOGENTRIES)
 			logbuffer.removeFirst();
 
@@ -49,7 +43,7 @@ public class OpenVPN {
 		}
 
 		for (LogListener ll : logListener) {
-			ll.newLog(prefix + "  "  + message);
+			ll.newLog(prefix + message);
 		}
 
 	}
@@ -72,11 +66,7 @@ public class OpenVPN {
 	public static void setCallback(OpenVpnService openVpnService) {
 		mOpenVpnService = openVpnService;
 	}
-	
-	public static int openTunDevice() {
-		Log.d(TAG,"Opening tun device");
-		return mOpenVpnService.openTun();
-	}
+
 	//! Dummy method being called to force loading of JNI Libraries
 	public static void foo() {	}
 

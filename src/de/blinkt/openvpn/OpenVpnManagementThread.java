@@ -34,7 +34,6 @@ public class OpenVpnManagementThread implements Runnable {
 			mSocket.getOutputStream().write(cmd.getBytes());
 			mSocket.getOutputStream().flush();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -94,7 +93,7 @@ public class OpenVpnManagementThread implements Runnable {
 		try {
 			Method getInt = FileDescriptor.class.getDeclaredMethod("getInt$");
 			int fdint = (Integer) getInt.invoke(fd);
-	
+
 			Log.d("Openvpn", "Got FD from socket: " + fd + " " + fdint);
 			ParcelFileDescriptor pfd = ParcelFileDescriptor.fromFd(fdint);
 			mOpenVPNService.protect(fdint);
@@ -146,19 +145,26 @@ public class OpenVpnManagementThread implements Runnable {
 			} else if (cmd.equals("NEED-OK")) {
 				processNeedCommand(argument);
 			} else {
+				OpenVPN.logMessage(0, "MGMT:", "Got unrecognized command" + command);
 				Log.i(TAG, "Got unrecognized command" + command);
 			}
+		} else if (command.startsWith("SUCCESS:")) {
+			// ignore
 		} else {
 			Log.i(TAG, "Got unrecognized line from managment" + command);
+			OpenVPN.logMessage(0, "MGMT:", "Got unrecognized line from management:" + command);
 		}
 	}
-	
+
 	private void processNeedCommand(String argument) {
 		int p1 =argument.indexOf('\'');
 		int p2 = argument.indexOf('\'',p1+1);
 
 		String needed = argument.substring(p1+1, p2);
 		String extra = argument.split(":",2)[1];
+
+		String status = "ok";
+
 
 		if (needed.equals("PROTECTFD")) {
 			FileDescriptor fdtoprotect = mFDList.pollFirst();
@@ -174,15 +180,65 @@ public class OpenVpnManagementThread implements Runnable {
 			String[] ifconfigparts = extra.split(" ");
 			int mtu = Integer.parseInt(ifconfigparts[2]);
 			mOpenVPNService.setLocalIP(ifconfigparts[0], ifconfigparts[1],mtu);
-			
+		} else if (needed.equals("OPENTUN")) {
+			if(sendTunFD(needed,extra))
+				return;
+			else
+				status="cancel";
+			// This not nice or anything but setFileDescriptors accepts only FilDescriptor class :(
+
 		} else {
 			Log.e(TAG,"Unkown needok command " + argument);
 			return;
 		}
-		
-		String cmd = String.format("needok '%s' %s\n", needed, "ok");
+
+		String cmd = String.format("needok '%s' %s\n", needed, status);
 		managmentCommand(cmd);
 	}
+
+	private boolean sendTunFD (String needed, String extra) {
+		if(!extra.equals("tun")) {
+			// We only support tun
+			String errmsg = String.format("Devicetype %s requested, but only tun is possible with the Android API, sorry!",extra);
+			OpenVPN.logMessage(0, "", errmsg );
+					
+			return false;
+		}
+		ParcelFileDescriptor pfd = mOpenVPNService.openTun(); 
+		if(pfd==null)
+			return false;
+
+		Method setInt;
+		int fdint = pfd.getFd();
+		try {
+			setInt = FileDescriptor.class.getDeclaredMethod("setInt$",int.class);
+			FileDescriptor fdtosend = new FileDescriptor();
+
+			setInt.invoke(fdtosend,fdint);
+			
+			FileDescriptor[] fds = {fdtosend};
+			mSocket.setFileDescriptorsForSend(fds);
+			
+			Log.d("Openvpn", "Sending FD tosocket: " + fdtosend + " " + fdint);
+			// Trigger a send so we can close the fd on our side of the channel
+			String cmd = String.format("needok '%s' %s\n", needed, "ok");
+			managmentCommand(cmd);
+			pfd.close();
+			return true;
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 
 	private void processPWCommand(String argument) {
 		//argument has the form 	Need 'Private Key' password
@@ -192,7 +248,7 @@ public class OpenVpnManagementThread implements Runnable {
 		String needed = argument.substring(p1+1, p2);
 
 		String pw=null;
-		
+
 
 		if(needed.equals("Private Key")) {
 			pw = mProfile.getPasswordPrivateKey();

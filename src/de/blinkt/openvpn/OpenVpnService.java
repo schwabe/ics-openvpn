@@ -65,7 +65,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 			// Add 33. bit to ensure the loop terminates
 			netmask += 1l << 32;
-			
+
 			int lenZeros = 0;
 			while((netmask & 0x1) == 0) {
 				lenZeros++;
@@ -78,13 +78,13 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 			} else {
 				len =32 -lenZeros; 
 			}
-			
+
 		}
 		@Override
 		public String toString() {
 			return String.format("%s/%d",mIp,len);
 		}
-		
+
 		public boolean normalise(){
 			long ip=0;
 
@@ -94,7 +94,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 			ip += Integer.parseInt(ipt[1])<< 16;
 			ip += Integer.parseInt(ipt[2])<< 8;
 			ip += Integer.parseInt(ipt[3]);
-			
+
 			long newip = ip & (0xffffffffl << (32 -len));
 			if (newip != ip){
 				mIp = String.format("%d.%d.%d.%d", (newip & 0xff000000) >> 24,(newip & 0xff0000) >> 16, (newip & 0xff00) >> 8 ,newip & 0xff);
@@ -213,7 +213,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 
 
-	public int openTun() {
+	public ParcelFileDescriptor openTun() {
 		Builder builder = new Builder();
 
 		builder.addAddress(mLocalIP.mIp, mLocalIP.len);
@@ -221,7 +221,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		for (String dns : mDnslist ) {
 			builder.addDnsServer(dns);
 		}
-		
+
 		builder.setMtu(mMtu);
 
 
@@ -237,46 +237,47 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 			builder.addSearchDomain(mDomain);
 
 		String bconfig[] = new String[5];
-		
+
 		bconfig[0]= getString(R.string.last_openvpn_tun_config);
 		bconfig[1] = String.format(getString(R.string.local_ip_info,mLocalIP.mIp,mLocalIP.len,mMtu));
 		bconfig[2] = String.format(getString(R.string.dns_server_info, joinString(mDnslist)));
 		bconfig[3] = String.format(getString(R.string.dns_domain_info, mDomain));
 		bconfig[4] = String.format(getString(R.string.routes_info, joinString(mRoutes)));
-		
-		
+
+
 		OpenVPN.logBuilderConfig(bconfig);
-		
+
 		mDnslist.clear();
 		mRoutes.clear();
 
 
 		builder.setSession(mProfile.mName + " - " + mLocalIP);
-		
+
 		// Let the configure Button show the Log
 		Intent intent = new Intent(getBaseContext(),LogWindow.class);
 		PendingIntent startLW = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 		builder.setConfigureIntent(startLW);
 		try {
 			ParcelFileDescriptor pfd = builder.establish();
-			return pfd.detachFd();
+			return pfd;
 		} catch (Exception e) {
 			OpenVPN.logMessage(0, "", getString(R.string.tun_open_error));
 			OpenVPN.logMessage(0, "", getString(R.string.error) + e.getLocalizedMessage());
 			OpenVPN.logMessage(0, "", getString(R.string.tun_error_helpful));
-			return -1;
+			return null;
 		}
 
 	}
 
-	
+
 	// Ugly, but java has no such method
 	private <T> String joinString(Vector<T> vec) {
 		String ret = "";
-		if(vec.size() > 0);
-		ret = vec.get(0).toString();
-		for(int i=1;i < vec.size();i++) {
-			ret = ret + ", " + vec.get(i).toString();
+		if(vec.size() > 0){ 
+			ret = vec.get(0).toString();
+			for(int i=1;i < vec.size();i++) {
+				ret = ret + ", " + vec.get(i).toString();
+			}
 		}
 		return ret;
 	}
@@ -303,10 +304,10 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		if(route.len == 32 && !mask.equals("255.255.255.255")) {
 			OpenVPN.logMessage(0, "", String.format(getString(R.string.route_not_cidr,dest,mask)));
 		}
-		
+
 		if(route.normalise())
 			OpenVPN.logMessage(0, "", String.format(getString(R.string.route_not_netip,dest,route.len,route.mIp)));
-		
+
 		mRoutes.add(route);
 	}
 
@@ -314,7 +315,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 	public void setLocalIP(String local, String netmask,int mtu) {
 		mLocalIP = new CIDRIP(local, netmask);
 		mMtu = mtu;
-		
+
 		if(mLocalIP.len == 32 && !netmask.equals("255.255.255.255")) {
 			OpenVPN.logMessage(0, "", String.format(getString(R.string.ip_not_cidr, local,netmask)));
 		}

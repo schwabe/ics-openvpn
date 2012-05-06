@@ -1401,7 +1401,13 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
         management_query_user_pass(management, &up , "DNSDOMAIN", GET_USER_PASS_NEED_OK,(void*) 0);
     }
     
-    if((tt->fd = android_open_tun())< 0){
+    strcpy(up.username , dev);
+    management_query_user_pass(management, &up , "OPENTUN", GET_USER_PASS_NEED_OK,(void*) 0);
+
+    tt->fd = management->connection.lastfdreceived;
+    management->connection.lastfdreceived=-1;
+    
+    if( (tt->fd < 0) || ! (strcmp("ok",up.password)==0)) {
         msg (M_ERR, "ERROR: Cannot open TUN");
     }
     gc_free (&gc);

@@ -67,6 +67,7 @@ struct management *management; /* GLOBAL */
 static void man_output_standalone (struct management *man, volatile int *signal_received);
 static void man_reset_client_socket (struct management *man, const bool exiting);
 static ssize_t write_fd (int fd, void *ptr, size_t nbytes, int flags, int sendfd);
+static ssize_t read_fd(int fd, void *ptr, size_t nbytes, int flags, int *recvfd);
 
 
 static void
@@ -1815,8 +1816,15 @@ man_read (struct management *man)
    */
   unsigned char buf[256];
   int len = 0;
+  int fd = -1;
 
-  len = recv (man->connection.sd_cli, buf, sizeof (buf), MSG_NOSIGNAL);
+#ifdef TARGET_ANDROID
+    len = read_fd (man->connection.sd_cli, buf, sizeof (buf), MSG_NOSIGNAL, &fd);
+    if(fd >= 0)
+        man->connection.lastfdreceived = fd;
+#else
+    len = recv (man->connection.sd_cli, buf, sizeof (buf), MSG_NOSIGNAL);
+#endif
   if (len == 0)
     {
       man_reset_client_socket (man, false);
@@ -3092,6 +3100,7 @@ management_query_rsa_sig (struct management *man,
 
 #endif
 
+#ifdef TARGET_ANDROID
 static ssize_t write_fd (int fd, void *ptr, size_t nbytes, int flags, int sendfd)
 {
     struct msghdr msg;
@@ -3123,6 +3132,45 @@ static ssize_t write_fd (int fd, void *ptr, size_t nbytes, int flags, int sendfd
     return (sendmsg(fd, &msg, flags));
 }
 
+static ssize_t read_fd(int fd, void *ptr, size_t nbytes, int flags, int *recvfd)
+{
+    struct msghdr msghdr;
+    struct iovec iov[1];
+    ssize_t n;
+    
+    union {
+        struct cmsghdr cm;
+        char     control[CMSG_SPACE(sizeof (int))];
+    } control_un;
+    struct cmsghdr  *cmptr;
+    
+    msghdr.msg_control  = control_un.control;
+    msghdr.msg_controllen = sizeof(control_un.control);
+    
+    msghdr.msg_name = NULL;
+    msghdr.msg_namelen = 0;
+    
+    iov[0].iov_base = ptr;
+    iov[0].iov_len = nbytes;
+    msghdr.msg_iov = iov;
+    msghdr.msg_iovlen = 1;
+    
+    if ( (n = recvmsg(fd, &msghdr, flags)) <= 0)
+        return (n);
+    
+    if ( (cmptr = CMSG_FIRSTHDR(&msghdr)) != NULL &&
+        cmptr->cmsg_len == CMSG_LEN(sizeof(int))) {
+        if (cmptr->cmsg_level != SOL_SOCKET)
+            msg (M_ERR, "control level != SOL_SOCKET");
+        if (cmptr->cmsg_type != SCM_RIGHTS)
+            msg (M_ERR, "control type != SCM_RIGHTS");
+        *recvfd = *((int *) CMSG_DATA(cmptr));
+    } else
+        *recvfd = -1;           /* descriptor was not passed */
+    
+    return (n);
+}
+#endif
 
 
 /*

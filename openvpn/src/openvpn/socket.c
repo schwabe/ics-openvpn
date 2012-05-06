@@ -380,7 +380,7 @@ getaddr6 (unsigned int flags,
 
       /*
        * Resolve hostname
-       */
+       */ 
       while (true)
 	{
 	  /* try hostname lookup */

@@ -163,10 +163,10 @@
     <string name="dns_server_info">DNS Server: %s</string>
     <string name="dns_domain_info">DNS Domain: %s</string>
     <string name="routes_info">Routes: %s</string>
-    <string name="ip_not_cidr">Cannot make sense of %1$s and %2$s as local IP with CIDR netmask, assuming second address is peer address of remote. Using /32 netmask for local IP.</string>
+    <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP.</string>
     <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
     <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>
-    <string name="keychain_access">Cannot accces the Android Keychain Certificates. If you restored a backup of the app reselect the certificate</string>
+    <string name="keychain_access">Cannot accces the Android Keychain Certificates. If you restored a backup of the app/app settings reselect the certificate to recreate the permission to access the certificate.</string>
     <string name="version_info">Version: %s</string>
     <string name="could_not_write_log">Could not write log contents to file</string>
     <string name="send_logfile">Send Logfile</string>

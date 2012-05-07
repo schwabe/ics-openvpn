@@ -43,11 +43,6 @@
 
 #include "memdbg.h"
 
-#ifdef TARGET_ANDROID
-#include "jniglue.h"
-#endif 
-
-
 const int proto_overhead[] = { /* indexed by PROTO_x */
   0,
   IPv4_UDP_HEADER_SIZE, /* IPv4 */

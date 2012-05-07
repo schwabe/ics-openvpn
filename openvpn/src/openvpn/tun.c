@@ -49,10 +49,6 @@
 #include "memdbg.h"
 #include <string.h>
 
-#ifdef TARGET_ANDROID
-#include "jniglue.h"
-#endif
-
 
 #ifdef WIN32
 

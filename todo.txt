@@ -1,1 +1,28 @@
-- VPN List as ListFragment with Context Menu
+- Implement tabbed filebrowser with 
+   1. tab file selection
+   2. tab inline file for safer storage
+   
+ - implement security notice fragment
+   - explain plain text storage of all data except for android keystore
+   - explain even more insecure of storage on sd card
+  
+- implement a small app that can do cert+key+ca => p12 or suggest an app on the market
+   - Implementation in ICS OpenVpn would require SD_WRITE permission which I would like to avoid
+   
+- finish .ovpn -> configuration importer
+    - depends on inline file storage, since config files can include inline files
+    - 
+
+Missing configuration options:
+
+IPv6 support:
+- Enable IPv6 (tun-ipv6)
+- Implementing/testing IPv6 route/ifconfig/DNS Server 
+
+
+Requested by users:
+cipher
+mtu-link
+auth
+
+

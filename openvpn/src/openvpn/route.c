@@ -1345,7 +1345,6 @@ add_route (struct route *r,
   status = openvpn_execve_check (&argv, es, 0, "ERROR: Linux route add command failed");
 
 #elif defined (TARGET_ANDROID)
-#include "jniglue.h"
 
     struct user_pass up;    
     struct buffer out = alloc_buf_gc (64, &gc);
@@ -1859,7 +1858,8 @@ delete_route (struct route *r,
 
   argv_msg (D_ROUTE, &argv);
   openvpn_execve_check (&argv, es, 0, "ERROR: OpenBSD/NetBSD route delete command failed");
-
+#elif defined(TARGET_ANDROID)
+  msg (M_NONFATAL, "Sorry, deleting routes on Android is not possible. The VpnService API allows routes to be set on connect only.");
 #else
   msg (M_FATAL, "Sorry, but I don't know how to do 'route' commands on this operating system.  Try putting your routes in a --route-up script");
 #endif

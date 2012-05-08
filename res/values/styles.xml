@@ -24,6 +24,21 @@
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:singleLine">true</item>
     </style>
+    
+    <style name="faqitem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+   
+    
+    <style name="faqhead">
+        <item name="android:paddingTop">10sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:singleLine">true</item>
+    </style>
 
     <style name="accountSetupButton">
         <item name="android:layout_width">160sp</item>

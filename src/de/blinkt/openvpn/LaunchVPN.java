@@ -291,7 +291,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			try {
 				startActivityForResult(intent, START_VPN_PROFILE);
 			} catch (ActivityNotFoundException ane){
-				Toast.makeText(this, "Your image does not support the VPNService API,sorry :(", Toast.LENGTH_LONG);
+				Toast.makeText(this, "Your image does not support the VPNService API,sorry :(", Toast.LENGTH_LONG).show();
 			}
 		} else {
 			onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);

@@ -1,3 +1,5 @@
+Ideas:
+
 - Implement tabbed filebrowser with 
    1. tab file selection
    2. tab inline file for safer storage
@@ -11,14 +13,19 @@
    
 - finish .ovpn -> configuration importer
     - depends on inline file storage, since config files can include inline files
-    - 
+
+- implement an encryption for profiles, so no sensitive data has be stored in plaintext
+   - encrypt/decrypt with android private storage key (+no user input required)
+   
+- implement general settings dialog
+   - encyrption of profiles
+   - Speed/Transfered in notifcation bar (byte counter of managment) 
 
 Missing configuration options:
 
 IPv6 support:
 - Enable IPv6 (tun-ipv6)
 - Implementing/testing IPv6 route/ifconfig/DNS Server 
-
 
 Tap support:
 - People still ask how to do tap support. :(
@@ -29,8 +36,6 @@ Tap support:
    - append mac header on send
    - implement arp, possible the most difficult task ...
       - need to chose right mac of receiver
-      
-   
 
 Requested by users:
 cipher

@@ -18,6 +18,15 @@
 
         <TextView
             style="@style/faqhead"
+            android:text="@string/copying_log_entries" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/faq_copying"/>
+        
+        
+        <TextView
+            style="@style/faqhead"
             android:text="@string/tap_mode" />
 
         <TextView

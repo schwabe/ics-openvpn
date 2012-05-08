@@ -20,9 +20,21 @@ IPv6 support:
 - Implementing/testing IPv6 route/ifconfig/DNS Server 
 
 
+Tap support:
+- People still ask how to do tap support. :(
+- Put statements that tap is not supported everywhere.
+- Actually it is possible to emulate tap with tun device, a minimal implementation would have to do:
+   - generate random mac
+   - strip macs header on receive
+   - append mac header on send
+   - implement arp, possible the most difficult task ...
+      - need to chose right mac of receiver
+      
+   
+
 Requested by users:
 cipher
-mtu-link
 auth
+mtu-link
 
 

@@ -13,12 +13,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/version" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp" />
+        
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/copyright_blinktgui" />
-
+            android:text="@string/copyright_blinktgui"
+            android:autoLink="all" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp" />
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        	android:text="@string/copyright_guicode"
+        	android:autoLink="all" />
+        
         <Space
             android:layout_width="match_parent"
             android:layout_height="20sp" />

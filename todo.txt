@@ -14,12 +14,12 @@ Ideas:
 - finish .ovpn -> configuration importer
     - depends on inline file storage, since config files can include inline files
 
-- implement an encryption for profiles, so no sensitive data has be stored in plaintext
+- implement an encryption for profiles, so no sensitive data has be stored in plain text
    - encrypt/decrypt with android private storage key (+no user input required)
    
 - implement general settings dialog
-   - encyrption of profiles
-   - Speed/Transfered in notifcation bar (byte counter of managment) 
+   - encryption of profiles
+   - Speed/Transfered in notification bar (byte counter of managment) 
 
 Missing configuration options:
 
@@ -41,5 +41,4 @@ Requested by users:
 cipher
 auth
 mtu-link
-
 

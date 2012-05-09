@@ -88,5 +88,25 @@ LOCAL_SRC_FILES:= src/openvpn/jniglue.c \
 	src/openvpn/status.c \
 	src/openvpn/tun.c 
 
-#include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_SHARED_LIBRARY)
+#include $(BUILD_EXECUTABLE)
+
+
+include $(CLEAR_VARS)
+
+LOCAL_LDLIBS := -llog 
+LOCAL_SRC_FILES:= src/openvpn/jniglue.c 
+LOCAL_MODULE = opvpnutil
+include $(BUILD_SHARED_LIBRARY)
+
+
+include $(CLEAR_VARS)
+
+
+LOCAL_LDLIBS := -llog 
+LOCAL_SRC_FILES:= src/openvpn/testmain.c
+LOCAL_MODULE = minivpn
+LOCAL_SHARED_LIBRARIES=openvpn
 include $(BUILD_EXECUTABLE)
+
+

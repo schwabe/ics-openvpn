@@ -28,6 +28,9 @@ public class OpenVpnManagementThread implements Runnable {
 		mOpenVPNService = openVpnService;
 	}
 
+	static {
+		System.loadLibrary("opvpnutil");
+	}
 
 	public void managmentCommand(String cmd) {
 		Log.d("openvpn", "mgmt cmd" + mSocket + " "  +cmd + " " );
@@ -100,10 +103,11 @@ public class OpenVpnManagementThread implements Runnable {
 			
 			Log.d("Openvpn", "Got FD from socket: " + fd + " " + fdint);
 
-			mOpenVPNService.protect(fdint);
+			//mOpenVPNService.protect(fdint);
 			
 			//ParcelFileDescriptor pfd = ParcelFileDescriptor.fromFd(fdint);
 			//pfd.close();
+			jniclose(fdint);
 			return;
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
@@ -237,7 +241,8 @@ public class OpenVpnManagementThread implements Runnable {
 			
 			// Set the FileDescriptor to null to stop this mad behavior 
 			mSocket.setFileDescriptorsForSend(null);
-			pfd.close();
+			
+			pfd.close();			
 
 			return true;
 		} catch (NoSuchMethodException e) {
@@ -253,6 +258,10 @@ public class OpenVpnManagementThread implements Runnable {
 		}
 		return false;
 	}
+
+
+	private native void jniclose(int fdint);
+
 
 
 	private void processPWCommand(String argument) {

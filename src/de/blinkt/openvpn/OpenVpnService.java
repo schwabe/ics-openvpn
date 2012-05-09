@@ -151,13 +151,17 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		if(OpenVpnManagementThread.stopOpenVPN()){
 			// an old was asked to exit, wait 2s
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
 		}
 
 		if (mServiceThread!=null) {
 			mServiceThread.interrupt();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+			}
 		}
 
 

@@ -1,6 +1,12 @@
 package de.blinkt.openvpn;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import android.util.Log;
 
@@ -8,11 +14,16 @@ public class OpenVPNThread implements Runnable {
 	private static final String TAG = "OpenVPN";
 	private OpenVpnService mService;
 	private String[] mArgv;
+	private Process mProcess;
 
 	public OpenVPNThread(OpenVpnService service,String[] argv)
 	{
 		mService = service;
 		mArgv = argv;
+	}
+	
+	public void stopProcess() {
+		mProcess.destroy();
 	}
 
 	@Override
@@ -35,12 +46,9 @@ public class OpenVPNThread implements Runnable {
 
 			OpenVPN.logMessage(0, "argv:" , Arrays.toString(mArgv));
 
-			OpenVPN.startOpenVPNThreadArgs(mArgv);
+			startOpenVPNThreadArgs(mArgv);
 
-
-
-			// Sleep for a while. This also checks if we got interrupted.
-			Thread.sleep(3000);
+			
 			//}
 			Log.i(TAG, "Giving up");
 		} catch (Exception e) {
@@ -59,5 +67,37 @@ public class OpenVPNThread implements Runnable {
 			OpenVPN.logBuilderConfig(null);
 			Log.i(TAG, "Exiting");
 		}
+	}
+
+	private void startOpenVPNThreadArgs(String[] argv) {
+		LinkedList<String> argvlist = new LinkedList<String>();
+		
+		for(String arg:argv)
+			argvlist.add(arg);
+	
+		ProcessBuilder pb = new ProcessBuilder(argvlist);
+		pb.redirectErrorStream(true);
+		try {
+			mProcess = pb.start();
+			// Close the output, since we don't need it
+			mProcess.getOutputStream().close();
+			InputStream in = mProcess.getInputStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			
+			
+			while(true) {
+				String logline = br.readLine();
+				if(logline==null)
+					return;
+				OpenVPN.logMessage(0, "P:", logline);
+			}
+		
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+			stopProcess();
+		}
+		
+		
 	}
 }

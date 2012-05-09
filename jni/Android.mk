@@ -7,6 +7,3 @@ include lzo/Android.mk
 include openssl/Android.mk
 
 include openvpn/Android.mk
-
-
-

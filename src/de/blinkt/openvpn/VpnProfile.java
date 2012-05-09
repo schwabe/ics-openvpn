@@ -345,7 +345,8 @@ public class VpnProfile implements  Serializable{
 		Vector<String> args = new Vector<String>();
 
 		// Add fixed paramenters
-		args.add("openvpn");
+		//args.add("/data/data/de.blinkt.openvpn/lib/openvpn");
+		args.add(cacheDir.getAbsolutePath() +"/" +"openvpn");
 
 		args.add("--config");
 		args.add(cacheDir.getAbsolutePath() + "/" + OVPNCONFIGFILE);

@@ -58,6 +58,9 @@
 #define MANAGEMENT_ECHO_FLAGS 0
 #endif
 
+#include <android/log.h>
+
+
 /* tag for blank username/password */
 static const char blank_up[] = "[[BLANK]]";
 
@@ -1808,6 +1811,7 @@ man_io_error (struct management *man, const char *prefix)
     return false;
 }
 
+
 static int
 man_read (struct management *man)
 {
@@ -1820,8 +1824,12 @@ man_read (struct management *man)
 
 #ifdef TARGET_ANDROID
     len = read_fd (man->connection.sd_cli, buf, sizeof (buf), MSG_NOSIGNAL, &fd);
-    if(fd >= 0)
+    __android_log_print(ANDROID_LOG_DEBUG,"openvpn-dbg","read_fd %d %d", len, fd);
+    if(fd >= 0) {
         man->connection.lastfdreceived = fd;
+        if(len == 0) // No data message but a fd, return without resetting socket...
+            return 0;
+    }
 #else
     len = recv (man->connection.sd_cli, buf, sizeof (buf), MSG_NOSIGNAL);
 #endif

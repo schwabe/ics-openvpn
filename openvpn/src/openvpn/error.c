@@ -714,10 +714,7 @@ openvpn_exit (const int status)
       if (status == OPENVPN_EXIT_STATUS_GOOD)
 	perf_output_results ();
     }
-#ifdef TARGET_ANDROID
-    android_openvpn_exit(status);
-#endif
-    
+
   exit (status);
 }
 

@@ -8,7 +8,7 @@ import android.util.Log;
 public class OpenVPN {
 	private static OpenVpnService mOpenVpnService;
 	private static final int MAXLOGENTRIES = 500;
-	public static native int startOpenVPNThreadArgs(String argv[]);
+	//public static native int startOpenVPNThreadArgs(String argv[]);
 	private static final String TAG = "OpenVpn";
 
 
@@ -21,13 +21,14 @@ public class OpenVPN {
 	public interface LogListener {
 		void newLog(String logmessage);
 	}
-
+	
+	/*
 	static {
 		System.loadLibrary("crypto");
 		System.loadLibrary("ssl");
 		System.loadLibrary("lzo");
 		System.loadLibrary("openvpn");
-	}
+	}*/
 
 	synchronized static void logMessage(int level,String prefix, String message)
 	{
@@ -39,7 +40,7 @@ public class OpenVPN {
 		// but kills me for logging 100 messages with too many references :(
 		// Force GC how and then to kill loose ends
 		if(counter++ % 50==0) {
-			System.gc();
+			//System.gc();
 		}
 
 		for (LogListener ll : logListener) {

@@ -8,8 +8,9 @@ LOCAL_C_INCLUDES := openssl/include lzo/include openssl/crypto openssl openvpn/s
 
 
 
-LOCAL_SHARED_LIBRARIES :=  libssl  libcrypto  liblzo
-#LOCAL_STATIC_LIBRARIES :=  libssl  libcrypto  liblzo
+#LOCAL_SHARED_LIBRARIES :=  libssl  libcrypto  liblzo
+LOCAL_STATIC_LIBRARIES :=  libssl_static libcrypto_static   liblzo-static
+
 
 LOCAL_CFLAGS= -DHAVE_CONFIG_H
 LOCAL_MODULE = openvpn
@@ -87,4 +88,5 @@ LOCAL_SRC_FILES:= src/openvpn/jniglue.c \
 	src/openvpn/status.c \
 	src/openvpn/tun.c 
 
-include $(BUILD_SHARED_LIBRARY)
+#include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_EXECUTABLE)

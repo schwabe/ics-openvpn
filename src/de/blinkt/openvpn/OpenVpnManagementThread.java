@@ -30,10 +30,12 @@ public class OpenVpnManagementThread implements Runnable {
 
 
 	public void managmentCommand(String cmd) {
+		Log.d("openvpn", "mgmt cmd" + mSocket + " "  +cmd + " " );
 		try {
 			mSocket.getOutputStream().write(cmd.getBytes());
 			mSocket.getOutputStream().flush();
 		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -94,10 +96,14 @@ public class OpenVpnManagementThread implements Runnable {
 			Method getInt = FileDescriptor.class.getDeclaredMethod("getInt$");
 			int fdint = (Integer) getInt.invoke(fd);
 
+			// You can even get more evil by parsing toString() and extract the int from that :)
+			
 			Log.d("Openvpn", "Got FD from socket: " + fd + " " + fdint);
-			ParcelFileDescriptor pfd = ParcelFileDescriptor.fromFd(fdint);
+
 			mOpenVPNService.protect(fdint);
-			pfd.close();
+			
+			//ParcelFileDescriptor pfd = ParcelFileDescriptor.fromFd(fdint);
+			//pfd.close();
 			return;
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
@@ -106,8 +112,6 @@ public class OpenVpnManagementThread implements Runnable {
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		Log.d("Openvpn", "Failed to retrieve fd from socket: " + fd);
@@ -142,10 +146,15 @@ public class OpenVpnManagementThread implements Runnable {
 				processPWCommand(argument);
 			} else if (cmd.equals("HOLD")) {
 				managmentCommand("hold release\n");
+				managmentCommand("log on\n");
+				managmentCommand("bytecount 13\n");
 			} else if (cmd.equals("NEED-OK")) {
 				processNeedCommand(argument);
+			} else if (cmd.equals("LOG")) {
+				OpenVPN.logMessage(0, "",  command);
 			} else {
 				OpenVPN.logMessage(0, "MGMT:", "Got unrecognized command" + command);
+				managmentCommand("log 1\n");
 				Log.i(TAG, "Got unrecognized command" + command);
 			}
 		} else if (command.startsWith("SUCCESS:")) {
@@ -219,11 +228,17 @@ public class OpenVpnManagementThread implements Runnable {
 			FileDescriptor[] fds = {fdtosend};
 			mSocket.setFileDescriptorsForSend(fds);
 			
-			Log.d("Openvpn", "Sending FD tosocket: " + fdtosend + " " + fdint);
+			Log.d("Openvpn", "Sending FD tosocket: " + fdtosend + " " + fdint + "  " + pfd);
 			// Trigger a send so we can close the fd on our side of the channel
+			// The API documentation fails to mention that it will not reset the file descriptor to
+			// be send and will happily send the file descriptor on every write ...
 			String cmd = String.format("needok '%s' %s\n", needed, "ok");
 			managmentCommand(cmd);
+			
+			// Set the FileDescriptor to null to stop this mad behavior 
+			mSocket.setFileDescriptorsForSend(null);
 			pfd.close();
+
 			return true;
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
@@ -278,6 +293,11 @@ public class OpenVpnManagementThread implements Runnable {
 		for (OpenVpnManagementThread mt: active){
 			mt.managmentCommand("signal SIGINT\n");
 			sendCMD=true;
+			try {
+				mt.mSocket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return sendCMD;		
 	}

@@ -78,6 +78,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 	private ProfileManager mPM;
 	private VpnProfile mSelectedProfile;
 
+	static boolean minivpnwritten=false;
+	
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -210,6 +212,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 	}
 	
 	private boolean writeMiniVPN() {
+		if(minivpnwritten)
+			return true;
 		try {
 			InputStream mvpn = getAssets().open("minivpn");
 			File mvpnout = new File(getCacheDir(),"minivpn");
@@ -227,7 +231,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			if(!mvpnout.setExecutable(true))
 				return false;
 			
-			
+			minivpnwritten=true;
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -321,8 +325,10 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			// Start the query
 			try {
 				startActivityForResult(intent, START_VPN_PROFILE);
-			} catch (ActivityNotFoundException ane){
-				Toast.makeText(this, "Your image does not support the VPNService API,sorry :(", Toast.LENGTH_LONG).show();
+			} catch (ActivityNotFoundException ane) {
+				// Shame on you Sony! At least one user reported that 
+				// an official Sony Xperia Arc S image triggers this exception
+				Toast.makeText(this, R.string.no_vpn_support_image, Toast.LENGTH_LONG).show();
 			}
 		} else {
 			onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
@@ -341,7 +347,6 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			Intent startLW = new Intent(getBaseContext(),LogWindow.class);
 			startActivity(startLW);
 			
-			OpenVPN.logMessage(0, "", "Writing minivpn binary");
 			if(!writeMiniVPN()) {
 				OpenVPN.logMessage(0, "", "Error writing minivpn binary");
 				return;

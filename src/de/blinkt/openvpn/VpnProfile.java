@@ -137,8 +137,6 @@ public class VpnProfile implements  Serializable{
 		cfg+=cacheDir.getAbsolutePath();
 		cfg+="\n\n";
 		
-		cfg+="# Silences script security warning\n";
-		cfg+="script-security 0\n\n";
 		
 
 		boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
@@ -350,7 +348,11 @@ public class VpnProfile implements  Serializable{
 
 		args.add("--config");
 		args.add(cacheDir.getAbsolutePath() + "/" + OVPNCONFIGFILE);
-
+		// Silences script security warning
+		
+		args.add("script-security");
+		args.add("0");
+		
 
 		return  (String[]) args.toArray(new String[args.size()]);
 	}

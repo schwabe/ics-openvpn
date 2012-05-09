@@ -1,6 +1,7 @@
 package de.blinkt.openvpn;
 
 import android.app.Fragment;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,14 +24,17 @@ public class AboutFragment extends Fragment  {
     	TextView ver = (TextView) v.findViewById(R.id.version);
     	
     	String version;
+    	String name="Openvpn";
 		try {
-			version = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+			PackageInfo packageinfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+			version = packageinfo.versionName;
+			name = getString(R.string.app);
 		} catch (NameNotFoundException e) {
 			version = "error fetching version";
 		}
 
     	
-    	ver.setText(getString(R.string.version_info,version));
+    	ver.setText(getString(R.string.version_info,name,version));
     	return v;
     }
 

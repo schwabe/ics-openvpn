@@ -185,4 +185,8 @@
     <string name="faq_shortcut">Shortcut to start</string>  
     <string name="faq_howto_shortcut">You can place a shortcut to start OpenVPN on your desktop. Depending on your homescreen program you have to add a shortcut or a widget.</string>  
     <string name="no_vpn_support_image">Your image does not support the VPNService API,sorry :(</string>  
+    <string name="encryption">Encryption</string>  
+    <string name="cipher_dialog_title">Enter Encryption method</string>  
+    <string name="chipher_dialog_message">Enter the cipher key for openvpn. Leave empty to use default cipher</string>
+    <string name="settings_auth">Authentication/Encryption</string>  
 </resources>

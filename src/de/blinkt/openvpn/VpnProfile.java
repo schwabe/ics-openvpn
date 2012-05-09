@@ -90,6 +90,7 @@ public class VpnProfile implements  Serializable{
 	public boolean mUseCustomConfig=false;
 	public String mCustomConfigOptions="";
 	public String mVerb="1";
+	public String mCipher="";
 
 
 	public static String openVpnEscape(String unescaped) {
@@ -271,6 +272,9 @@ public class VpnProfile implements  Serializable{
 			cfg += "remote-cert-tls server\n";
 
 
+		if(nonNull(mCipher)){
+			cfg += "cipher " + mCipher + "\n";
+		}
 
 
 		// Obscure Settings dialog
@@ -291,6 +295,13 @@ public class VpnProfile implements  Serializable{
 
 
 		return cfg;
+	}
+
+	private boolean nonNull(String val) {
+		if(val == null || val.equals("")) 
+			return false;
+		else
+			return true;
 	}
 
 	private Collection<String> getCustomRoutes() {

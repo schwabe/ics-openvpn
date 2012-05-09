@@ -76,6 +76,8 @@ public class OpenVPNThread implements Runnable {
 			argvlist.add(arg);
 	
 		ProcessBuilder pb = new ProcessBuilder(argvlist);
+		// Hack O rama
+		pb.environment().put("LD_LIBRARY_PATH", "/data/data/de.blinkt.openvpn/lib");
 		pb.redirectErrorStream(true);
 		try {
 			mProcess = pb.start();

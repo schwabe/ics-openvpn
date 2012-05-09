@@ -27,7 +27,6 @@
     <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
 
     <application
-        android:debuggable="true"
         android:icon="@drawable/icon"
         android:label="@string/app" >
         <activity android:name="com.lamerman.FileDialog" />

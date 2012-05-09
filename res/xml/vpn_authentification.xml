@@ -28,14 +28,20 @@
             android:title="@string/tls_auth_file" />
 
         <ListPreference
+            android:dependency="useTLSAuth"
             android:entries="@array/tls_directions_entries"
-                    android:dependency="useTLSAuth"
-            
             android:entryValues="@array/tls_directions_values"
             android:key="tls_direction"
             android:persistent="false"
             android:title="@string/tls_direction" />
     </PreferenceCategory>
-/>
+    <PreferenceCategory android:title="@string/encryption" >
+        <EditTextPreference
+            android:dialogMessage="@string/chipher_dialog_message"
+            android:dialogTitle="@string/cipher_dialog_title"
+            android:key="cipher"
+            android:persistent="false"
+            android:title="Encryption cipher" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

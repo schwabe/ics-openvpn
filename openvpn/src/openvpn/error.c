@@ -199,11 +199,6 @@ msg_fp(const unsigned int flags)
 
 int x_msg_line_num; /* GLOBAL */
 
-#include "android/log.h"
- 
-
-
-
 void x_msg (const unsigned int flags, const char *format, ...)
 {
   struct gc_arena gc;
@@ -219,7 +214,6 @@ void x_msg (const unsigned int flags, const char *format, ...)
   const char *prefix_sep;
 
   void usage_small (void);
-    
 
 #ifndef HAVE_VARARG_MACROS
   /* the macro has checked this otherwise */
@@ -304,12 +298,10 @@ void x_msg (const unsigned int flags, const char *format, ...)
   if (!prefix)
     prefix_sep = prefix = "";
 
-
   /* virtual output capability used to copy output to management subsystem */
   if (!forked)
     {
       const struct virtual_output *vo = msg_get_virtual_output ();
-        
       if (vo)
 	{
 	  openvpn_snprintf (m2, ERR_BUF_SIZE, "%s%s%s",
@@ -331,7 +323,7 @@ void x_msg (const unsigned int flags, const char *format, ...)
                     m1); 
 #endif
         }
-        else // No Syslog
+      else
         {
             FILE *fp = msg_fp(flags);
             const bool show_usec = check_debug_level (DEBUG_LEVEL_USEC_TIME);
@@ -356,13 +348,8 @@ void x_msg (const unsigned int flags, const char *format, ...)
             fflush(fp);
             ++x_msg_line_num;
         }
-#ifdef TARGET_ANDROID
-        android_openvpn_log(prefix,prefix_sep,m1);;
-#endif
     }
 
-
-    
   if (flags & M_FATAL)
     msg (M_INFO, "Exiting due to fatal error");
 

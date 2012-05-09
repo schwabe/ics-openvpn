@@ -33,7 +33,7 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 
 	public void managmentCommand(String cmd) {
-		Log.d("openvpn", "mgmt cmd" + mSocket + " "  +cmd + " " );
+		//Log.d("openvpn", "mgmt cmd" + mSocket + " "  +cmd + " " );
 		try {
 			mSocket.getOutputStream().write(cmd.getBytes());
 			mSocket.getOutputStream().flush();
@@ -144,21 +144,24 @@ public class OpenVpnManagementThread implements Runnable {
 			String argument = parts[1];
 
 
-			if(cmd.equals("INFO"))
-				logStatusMessage(command);
-			else if (cmd.equals("PASSWORD")) {
+			if(cmd.equals("INFO")) {
+				// Ignore greeting from mgmt
+				//logStatusMessage(command);
+			}else if (cmd.equals("PASSWORD")) {
 				processPWCommand(argument);
 			} else if (cmd.equals("HOLD")) {
 				managmentCommand("hold release\n");
-				managmentCommand("log on\n");
-				managmentCommand("bytecount 13\n");
+				//managmentCommand("log on\n");
 			} else if (cmd.equals("NEED-OK")) {
 				processNeedCommand(argument);
 			} else if (cmd.equals("LOG")) {
-				OpenVPN.logMessage(0, "",  command);
+				String[] args = argument.split(",",3);
+				// 0 unix time stamp
+				// 1 log level N,I,E etc.
+				// 2 log message
+				OpenVPN.logMessage(0, "",  args[2]);
 			} else {
 				OpenVPN.logMessage(0, "MGMT:", "Got unrecognized command" + command);
-				managmentCommand("log 1\n");
 				Log.i(TAG, "Got unrecognized command" + command);
 			}
 		} else if (command.startsWith("SUCCESS:")) {

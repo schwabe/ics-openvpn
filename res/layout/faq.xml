@@ -18,13 +18,12 @@
 
         <TextView
             style="@style/faqhead"
-            android:text="@string/copying_log_entries" />
+            android:text="@string/faq_shortcut" />
 
         <TextView
             style="@style/faqitem"
-            android:text="@string/faq_copying"/>
-        
-        
+            android:text="@string/faq_howto_shortcut" />
+
         <TextView
             style="@style/faqhead"
             android:text="@string/tap_mode" />
@@ -35,14 +34,12 @@
 
         <TextView
             style="@style/faqhead"
-            android:text="@string/faq_shortcut" />
+            android:text="@string/copying_log_entries" />
 
         <TextView
             style="@style/faqitem"
-            android:text="@string/faq_howto_shortcut" />
-        
-        
-        
+            android:text="@string/faq_copying" />
+
         <TextView
             style="@style/faqhead"
             android:text="@string/tap_mode" />

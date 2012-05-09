@@ -44,7 +44,7 @@ public class OpenVPNThread implements Runnable {
 
 			// Log argv
 
-			OpenVPN.logMessage(0, "argv:" , Arrays.toString(mArgv));
+			//OpenVPN.logMessage(0, "argv:" , Arrays.toString(mArgv));
 
 			startOpenVPNThreadArgs(mArgv);
 
@@ -77,7 +77,17 @@ public class OpenVPNThread implements Runnable {
 	
 		ProcessBuilder pb = new ProcessBuilder(argvlist);
 		// Hack O rama
-		pb.environment().put("LD_LIBRARY_PATH", "/data/data/de.blinkt.openvpn/lib");
+		
+		// Hack until I find a good way to get the real library path
+		String applibpath = argv[0].replace("/cache/minivpn", "/lib");
+		
+		String lbpath = pb.environment().get("LD_LIBRARY_PATH");
+		if(lbpath==null)
+			lbpath = applibpath;
+		else
+			lbpath = lbpath + ":" + applibpath;
+		
+		pb.environment().put("LD_LIBRARY_PATH", lbpath);
 		pb.redirectErrorStream(true);
 		try {
 			mProcess = pb.start();

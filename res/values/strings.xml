@@ -184,4 +184,5 @@
     <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the gui.</string>  
     <string name="faq_shortcut">Shortcut to start</string>  
     <string name="faq_howto_shortcut">You can place a shortcut to start OpenVPN on your desktop. Depending on your homescreen program you have to add a shortcut or a widget.</string>  
+    <string name="no_vpn_support_image">Your image does not support the VPNService API,sorry :(</string>  
 </resources>

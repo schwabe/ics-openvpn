@@ -9,4 +9,5 @@ openvpn/config.log
 openvpn/config.h.in
 openvpn/configure
 syntax: regexp
+.DS_Store
 ^openvpn/xcopenvpn$

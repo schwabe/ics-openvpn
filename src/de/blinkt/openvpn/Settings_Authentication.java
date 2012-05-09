@@ -46,7 +46,8 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 		mProfile = ProfileManager.get(profileUUID);
 		mTLSAuthFile.setOnPreferenceClickListener(this);		
 		
-		mCipher =(EditTextPreference) findPreference("cipher"); 
+		mCipher =(EditTextPreference) findPreference("cipher");
+		mCipher.setOnPreferenceChangeListener(this);
 		
 		loadSettings();
 

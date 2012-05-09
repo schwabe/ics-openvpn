@@ -92,8 +92,10 @@ public class VpnProfile implements  Serializable{
 	public String mVerb="1";
 
 
-	public static String openVpnEscape(String unescape) {
-		String escapedString = unescape.replace("\\", "\\\\");
+	public static String openVpnEscape(String unescaped) {
+		if(unescaped==null)
+			return null;
+		String escapedString = unescaped.replace("\\", "\\\\");
 		escapedString = escapedString.replace("\"","\\\"");
 		escapedString = escapedString.replace("\n","\\n");
 		return '"' + escapedString + '"';
@@ -343,8 +345,8 @@ public class VpnProfile implements  Serializable{
 		Vector<String> args = new Vector<String>();
 
 		// Add fixed paramenters
-		//args.add(cacheDir.getAbsolutePath() +"/" +"openvpn");
-		args.add(cacheDir.getAbsolutePath() +"/" +"minivpn");
+		//args.add("/data/data/de.blinkt.openvpn/lib/openvpn");
+		args.add(cacheDir.getAbsolutePath() +"/" +"openvpn");
 
 		args.add("--config");
 		args.add(cacheDir.getAbsolutePath() + "/" + OVPNCONFIGFILE);

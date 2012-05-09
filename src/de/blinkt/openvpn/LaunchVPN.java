@@ -16,6 +16,11 @@
 
 package de.blinkt.openvpn;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -203,6 +208,32 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		//    }
 
 	}
+	
+	private boolean writeMiniVPN() {
+		try {
+			InputStream mvpn = getAssets().open("minivpn");
+			File mvpnout = new File(getCacheDir(),"minivpn");
+			FileOutputStream fout = new FileOutputStream(mvpnout);
+			
+			byte buf[]= new byte[4096];
+			
+			int lenread = mvpn.read(buf);
+			while(lenread> 0) {
+				fout.write(buf, 0, lenread);
+				lenread = mvpn.read(buf);
+			}
+			fout.close();
+			
+			if(!mvpnout.setExecutable(true))
+				return false;
+			
+			
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	private void askForPW(final String type) {
 
@@ -309,8 +340,12 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		void startOpenVpn() {
 			Intent startLW = new Intent(getBaseContext(),LogWindow.class);
 			startActivity(startLW);
-
-
+			
+			OpenVPN.logMessage(0, "", "Writing minivpn binary");
+			if(!writeMiniVPN()) {
+				OpenVPN.logMessage(0, "", "Error writing minivpn binary");
+				return;
+			}
 			OpenVPN.logMessage(0, "", "Building configration...");
 
 			Intent startVPN = mSelectedProfile.prepareIntent(getBaseContext());

@@ -31,7 +31,7 @@
     <string name="defaultport">1194</string>
 
     
-        <string name="app_name">File dialog</string>
+	 <string name="app_name">File dialog</string>
     <string name="location">Location</string>
     <string name="cant_read_folder">folder can\'t be read!</string>
     <string name="nnew">New</string>
@@ -55,7 +55,8 @@
     <string name="opevpn_copyright">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net&gt;\n
 
 	  "OpenVPN" is a trademark of OpenVPN Technologies, Inc.\n</string>
-    <string name="copyright_blinktgui">Copyright 2012 Arne Schwabe</string>
+    <string name="copyright_blinktgui">Copyright 2012\nArne Schwabe &lt;arne@rfc2549.org></string>
+    <string name="copyright_guicode">Source code and issue tracker available under http://code.google.com/p/ics-openvpn/ </string>
     <string name="copyright_others">The program uses the following components. See the source for full details on the licenses</string>
     <string name="copyright_file_dialog">File Dialog for the Android\nAlexander Ponomarev"</string>
     <string name="lzo_copyright">Copyright © 1996 – 2011 Markus Franz Xaver Johannes Oberhumer</string>
@@ -167,10 +168,18 @@
     <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
     <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>
     <string name="keychain_access">Cannot accces the Android Keychain Certificates. If you restored a backup of the app/app settings reselect the certificate to recreate the permission to access the certificate.</string>
-    <string name="version_info">Version: %s</string>
+    <string name="version_info">%1$s %2$s</string>
     <string name="could_not_write_log">Could not write log contents to file</string>
     <string name="send_logfile">Send Logfile</string>
     <string name="send">Send</string>
     <string name="ics_openvpn_log_file">ICS Openvpn log file</string>
-    <string name="copied_entry">Copied log entry to clip board</string>  
+    <string name="copied_entry">Copied log entry to clip board</string>
+    <string name="tap_mode">Tap Mode</string>
+    <string name="faq_tap_mode">Tap Mode is not possible with the non root VPN api. Therefore this application cannot provide tap support</string>
+    <string name="tap_faq2">Again? Are you kidding? No tap mode is really not supported and sending more mail aksing if it will be supported will not help.</string>
+    <string name="tap_faq3">A third time? Actually one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would have to implement also ARP and possible a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.</string>
+    <string name="faq">FAQ</string>  
+    <string name="faq_summary">frequently asked questions and some adivce</string>  
+    <string name="copying_log_entries">Copying log entries</string>  
+    <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the gui.</string>  
 </resources>

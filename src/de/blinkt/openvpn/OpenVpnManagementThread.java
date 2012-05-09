@@ -103,7 +103,7 @@ public class OpenVpnManagementThread implements Runnable {
 			
 			Log.d("Openvpn", "Got FD from socket: " + fd + " " + fdint);
 
-			//mOpenVPNService.protect(fdint);
+			mOpenVPNService.protect(fdint);
 			
 			//ParcelFileDescriptor pfd = ParcelFileDescriptor.fromFd(fdint);
 			//pfd.close();

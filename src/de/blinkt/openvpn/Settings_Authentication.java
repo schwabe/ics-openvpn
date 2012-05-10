@@ -24,6 +24,7 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 	private ListPreference mTLSAuthDirection;
 	private Preference mTLSAuthFile;
 	private SwitchPreference mUseTLSAuth;
+	private EditTextPreference mCipher;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,9 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 		mProfile = ProfileManager.get(profileUUID);
 		mTLSAuthFile.setOnPreferenceClickListener(this);		
 		
+		mCipher =(EditTextPreference) findPreference("cipher");
+		mCipher.setOnPreferenceChangeListener(this);
+		
 		loadSettings();
 
 	}
@@ -59,6 +63,8 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 		mUseTLSAuth.setChecked(mProfile.mUseTLSAuth);
 		mTLSAuthFile.setSummary(mProfile.mTLSAuthFilename);
 		mTLSAuthDirection.setValue(mProfile.mTLSAuthDirection);
+		mCipher.setText(mProfile.mCipher);
+		onPreferenceChange(mCipher, mProfile.mCipher);
 	}
 	
 	private void saveSettings() {
@@ -76,6 +82,12 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 			mProfile.mTLSAuthDirection=null;
 		else
 			mProfile.mTLSAuthDirection = mTLSAuthDirection.getValue().toString();
+		
+		if(mCipher.getText()==null)
+			mProfile.mCipher=null;
+		else
+			mProfile.mCipher = mCipher.getText();
+		
 	}
 	
 	@Override
@@ -91,6 +103,8 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 				preference.setSummary(mProfile.mServerName);
 			else
 				preference.setSummary((String)newValue);
+		} else if (preference == mCipher) {
+			preference.setSummary((CharSequence) newValue);
 		}
 		return true;
 	}

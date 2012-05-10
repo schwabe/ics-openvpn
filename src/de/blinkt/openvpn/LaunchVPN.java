@@ -212,11 +212,15 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 	}
 	
 	private boolean writeMiniVPN() {
+		File mvpnout = new File(getCacheDir(),"minivpn");
+		if (mvpnout.exists() && mvpnout.canExecute())
+			return true;
+			
 		if(minivpnwritten)
 			return true;
 		try {
 			InputStream mvpn = getAssets().open("minivpn");
-			File mvpnout = new File(getCacheDir(),"minivpn");
+			
 			FileOutputStream fout = new FileOutputStream(mvpnout);
 			
 			byte buf[]= new byte[4096];

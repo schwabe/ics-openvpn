@@ -11,12 +11,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.lamerman.FileDialog;
-import com.lamerman.SelectionMode;
 
 public class FileSelectLayout extends LinearLayout implements OnClickListener {
 
-	private TextView mData;
+	private TextView mDataView;
+	private String mData;
 	private Fragment mFragment;
 	private int mTaskId;
 	private Button mSelectButton;
@@ -32,7 +31,7 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 		TextView tview = (TextView) findViewById(R.id.file_title);
 		tview.setText(title);
 		
-		mData = (TextView) findViewById(R.id.file_selected_item);
+		mDataView = (TextView) findViewById(R.id.file_selected_item);
 		mSelectButton = (Button) findViewById(R.id.file_select_button);
 		mSelectButton.setOnClickListener(this);
 
@@ -45,20 +44,23 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 	}
 	
 	public void getCertificateFileDialog() {
-		Intent startFC = new Intent(getContext(),FileDialog.class);
-		startFC.putExtra(FileDialog.START_PATH, "/sdcard");
-		startFC.putExtra(FileDialog.SELECTION_MODE, SelectionMode.MODE_OPEN);
+		Intent startFC = new Intent(getContext(),FileSelect.class);
+		startFC.putExtra(FileSelect.START_DATA, mData);
 		
 		mFragment.startActivityForResult(startFC,mTaskId);
 	}
 
 	
 	public String getData() {
-		return mData.getText().toString();
+		return mData;
 	}
 
 	public void setData(String data) {
-		mData.setText(data);
+		mData = data;
+		if(mData.startsWith(FileSelect.INLINE_TAG))
+			mDataView.setText(R.string.inline_file_data);
+		else
+			mDataView.setText(data);
 		
 	}
 

@@ -18,6 +18,7 @@ package de.blinkt.openvpn;
 
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,7 +38,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.lamerman.FileDialog;
 
 import de.blinkt.openvpn.R.id;
 
@@ -142,10 +142,10 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	
 	 @Override
 	public void onActivityResult(int request, int result, Intent data) {
-            if (request >= CHOOSE_FILE_OFFSET) {
-                     String filepath = data.getStringExtra(FileDialog.RESULT_PATH);
+            if (result == Activity.RESULT_OK && request >= CHOOSE_FILE_OFFSET) {
+                     String filedata = data.getStringExtra(FileSelect.RESULT_DATA);
                      FileSelectLayout fsl = fileselects.get(request);
-                     fsl.setData(filepath);
+                     fsl.setData(filedata);
              }
              savePreferences();
      }

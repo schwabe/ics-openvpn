@@ -12,8 +12,6 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 
-import com.lamerman.FileDialog;
-import com.lamerman.SelectionMode;
 
 public class Settings_Authentication extends PreferenceFragment implements OnPreferenceChangeListener, OnPreferenceClickListener {
 	private static final int SELECT_TLS_FILE = 23223232;
@@ -25,6 +23,7 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 	private Preference mTLSAuthFile;
 	private SwitchPreference mUseTLSAuth;
 	private EditTextPreference mCipher;
+	private String mTlsAuthFileData;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,8 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 		onPreferenceChange(mRemoteCN, mProfile.mRemoteCN);
 		
 		mUseTLSAuth.setChecked(mProfile.mUseTLSAuth);
-		mTLSAuthFile.setSummary(mProfile.mTLSAuthFilename);
+		mTlsAuthFileData= mProfile.mTLSAuthFilename;
+		setTlsAuthSummary(mTlsAuthFileData);
 		mTLSAuthDirection.setValue(mProfile.mTLSAuthDirection);
 		mCipher.setText(mProfile.mCipher);
 		onPreferenceChange(mCipher, mProfile.mCipher);
@@ -73,10 +73,7 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 		mProfile.mRemoteCN=mRemoteCN.getText();
 		
 		mProfile.mUseTLSAuth = mUseTLSAuth.isChecked();
-		if(mTLSAuthFile.getSummary()==null)
-			mProfile.mTLSAuthFilename=null;
-		else
-			mProfile.mTLSAuthFilename = mTLSAuthFile.getSummary().toString();
+		mProfile.mTLSAuthFilename = mTlsAuthFileData;
 		
 		if(mTLSAuthDirection.getValue()==null)
 			mProfile.mTLSAuthDirection=null;
@@ -109,9 +106,8 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 		return true;
 	}
 	void startFileDialog() {
-		Intent startFC = new Intent(getActivity(),FileDialog.class);
-		startFC.putExtra(FileDialog.START_PATH, "/sdcard");
-		startFC.putExtra(FileDialog.SELECTION_MODE, SelectionMode.MODE_OPEN);
+		Intent startFC = new Intent(getActivity(),FileSelectionFragment.class);
+		startFC.putExtra(FileSelect.START_DATA, "/sdcard");
 	
 		startActivityForResult(startFC,SELECT_TLS_FILE);
 	}
@@ -126,9 +122,17 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode==SELECT_TLS_FILE && resultCode == Activity.RESULT_OK){
-			   String filepath = data.getStringExtra(FileDialog.RESULT_PATH);
-			   mTLSAuthFile.setSummary(filepath);
+			   String result = data.getStringExtra(FileSelect.RESULT_DATA);
+			   mTlsAuthFileData=result;
+			   setTlsAuthSummary(result);
 			
 		}
+	}
+
+	private void setTlsAuthSummary(String result) {
+		if(result.startsWith(FileSelect.INLINE_TAG))
+			   mTLSAuthFile.setSummary(R.string.inline_file_data);
+		   else
+			   mTLSAuthFile.setSummary(result);
 	}
 }

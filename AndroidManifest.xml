@@ -29,12 +29,13 @@
     <application
         android:icon="@drawable/icon"
         android:label="@string/app" >
-        <activity android:name="com.lamerman.FileDialog" />
+        <activity android:name=".FileSelectionFragment" />
         <activity android:name=".AboutFragment" />
         <activity android:name=".VPNPreferences" />
         <activity
             android:name=".LogWindow"
             android:label="OpenVPN Log" />
+        <activity android:name=".FileSelect" />
         <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

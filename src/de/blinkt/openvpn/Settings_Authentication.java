@@ -106,7 +106,7 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 		return true;
 	}
 	void startFileDialog() {
-		Intent startFC = new Intent(getActivity(),FileSelectionFragment.class);
+		Intent startFC = new Intent(getActivity(),FileSelect.class);
 		startFC.putExtra(FileSelect.START_DATA, "/sdcard");
 	
 		startActivityForResult(startFC,SELECT_TLS_FILE);
@@ -130,6 +130,7 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 	}
 
 	private void setTlsAuthSummary(String result) {
+		if(result==null) result = getString(R.string.no_certificate);
 		if(result.startsWith(FileSelect.INLINE_TAG))
 			   mTLSAuthFile.setSummary(R.string.inline_file_data);
 		   else

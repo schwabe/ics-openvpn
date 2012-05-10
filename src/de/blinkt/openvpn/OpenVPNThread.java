@@ -27,11 +27,7 @@ public class OpenVPNThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			Log.i(TAG, "Starting o");
-
-
-			OpenVPN.setCallback(mService);
-
+			Log.i(TAG, "Starting openvpn");
 
 			// We try to create the tunnel for several times. The better way
 			// is to work with ConnectivityManager, such as trying only when

@@ -45,7 +45,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 	private Vector<CIDRIP> mRoutes=new Vector<CIDRIP>();
 
-	private CIDRIP mLocalIP;
+	private CIDRIP mLocalIP=null;
 
 	private OpenVpnManagementThread mSocketManager;
 
@@ -253,7 +253,12 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 	public ParcelFileDescriptor openTun() {
 		Builder builder = new Builder();
-
+		
+		if(mLocalIP==null) {
+			OpenVPN.logMessage(0, "", getString(R.string.opentun_no_ipaddr));
+			return null;
+		}
+		
 		builder.addAddress(mLocalIP.mIp, mLocalIP.len);
 
 		for (String dns : mDnslist ) {
@@ -282,15 +287,16 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		bconfig[3] = String.format(getString(R.string.dns_domain_info, mDomain));
 		bconfig[4] = String.format(getString(R.string.routes_info, joinString(mRoutes)));
 
+		builder.setSession(mProfile.mName + " - " + mLocalIP);
+
 
 		OpenVPN.logBuilderConfig(bconfig);
 
+		// Reset information
 		mDnslist.clear();
 		mRoutes.clear();
-
-
-		builder.setSession(mProfile.mName + " - " + mLocalIP);
-
+		mLocalIP=null;
+		
 		// Let the configure Button show the Log
 		Intent intent = new Intent(getBaseContext(),LogWindow.class);
 		PendingIntent startLW = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);

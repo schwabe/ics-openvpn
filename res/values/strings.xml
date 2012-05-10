@@ -194,5 +194,6 @@
     <string name="import_file">Import</string>
     <string name="error_importing_file">Error importing File</string>
     <string name="import_error_message">Could not import File from Filesystem</string>
-    <string name="inline_file_data">[[Inline file data]]</string>  
+    <string name="inline_file_data">[[Inline file data]]</string>
+    <string name="opentun_no_ipaddr">Refusing to open tun device without IP information</string>  
 </resources>

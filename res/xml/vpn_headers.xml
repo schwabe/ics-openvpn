@@ -15,8 +15,7 @@
         android:title="IP Settings" />
     <header
         android:fragment="de.blinkt.openvpn.Settings_Authentication"
-        android:summary="Authentication"
-        android:title="Authentication" />
+        android:title="@string/settings_auth" />
 
     <!-- android:icon="@drawable/ic_settings_display" -->
      <header

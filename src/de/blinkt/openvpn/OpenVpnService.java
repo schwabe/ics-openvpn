@@ -17,9 +17,14 @@
 package de.blinkt.openvpn;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Vector;
 
+import android.R.anim;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
@@ -117,11 +122,10 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 
 
-	private LocalSocket openManagmentInterface() {
+	private LocalSocket openManagmentInterface(int tries) {
 		// Could take a while to open connection
 		String socketname = (getCacheDir().getAbsolutePath() + "/" +  "mgmtsocket");
 		LocalSocket sock = new LocalSocket();
-		int tries = 8;
 
 		while(tries > 0 && !sock.isConnected()) {
 			try {
@@ -142,6 +146,14 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		// Extract information from the intent.
+		String prefix = getPackageName();
+		String[] argv = intent.getStringArrayExtra(prefix + ".ARGV");
+
+		String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
+		mProfile = ProfileManager.get(profileUUID);
+		
+
 		// The handler is only used to show messages.
 		if (mHandler == null) {
 			mHandler = new Handler(this);
@@ -164,13 +176,19 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 			}
 		}
 
+		// See if there is a managment socket we can connect to and kill the process too
+		LocalSocket mgmtsocket =  openManagmentInterface(1);
+		if(mgmtsocket!=null) {
+			// Fire and forget :)
+			new OpenVpnManagementThread(mProfile,mgmtsocket,this).managmentCommand("signal SIGINT\n");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+			}
+			//checkForRemainingMiniVpns();
+		}
 
-		// Extract information from the intent.
-		String prefix = getPackageName();
-		String[] argv = intent.getStringArrayExtra(prefix + ".ARGV");
 
-		String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
-		mProfile = ProfileManager.get(profileUUID);
 
 		// Start a new session by creating a new thread.
 
@@ -181,7 +199,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 
 		// Open the Management Interface
-		LocalSocket mgmtsocket =  openManagmentInterface();
+		mgmtsocket =  openManagmentInterface(8);
 
 		if(mgmtsocket!=null) {
 			// start a Thread that handles incoming messages of the managment socket
@@ -192,6 +210,23 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 		return START_NOT_STICKY;
 	}
+
+
+
+
+
+	private void checkForRemainingMiniVpns() {
+		 ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+	      if (manager == null)
+	    	  return;
+		List<RunningAppProcessInfo> service= manager.getRunningAppProcesses();
+		// Does not return the minivpn binarys :S
+		for(RunningAppProcessInfo rapi:service){
+			if(rapi.processName.equals("minivpn"))
+				android.os.Process.killProcess(rapi.pid);
+		}
+	}
+
 
 
 

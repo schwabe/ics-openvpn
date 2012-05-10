@@ -859,7 +859,6 @@ create_socket_tcp (void)
       msg (M_SOCKERR, "TCP: Cannot setsockopt SO_LINGER on TCP socket");
   }
 #endif
-
     return sd;
 }
 

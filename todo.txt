@@ -1,9 +1,4 @@
 Ideas:
-
-- Implement tabbed filebrowser with 
-   1. tab file selection
-   2. tab inline file for safer storage
-   
  - implement security notice fragment
    - explain plain text storage of all data except for android keystore
    - explain even more insecure of storage on sd card
@@ -38,8 +33,9 @@ Tap support:
       - need to chose right mac of receiver
 
 Requested by users:
-cipher
+keepalive 10 120
 auth
 mtu-link
 nobind
+
 

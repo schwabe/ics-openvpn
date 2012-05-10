@@ -11,7 +11,7 @@ import java.util.Vector;
 // And rember, this is valid :)
 // --<foo>
 // bar
-// </bar>
+// </foo>
 public class ConfigParser {
 
 

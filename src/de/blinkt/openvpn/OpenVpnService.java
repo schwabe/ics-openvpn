@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
-import android.R.anim;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.PendingIntent;

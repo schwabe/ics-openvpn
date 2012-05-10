@@ -19,8 +19,6 @@ import java.util.Vector;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.security.KeyChain;
 import android.security.KeyChainException;
 
@@ -185,24 +183,17 @@ public class VpnProfile implements  Serializable{
 			cfg+="management-query-passwords\n";
 		case VpnProfile.TYPE_CERTIFICATES:
 			// Ca
-			cfg+="ca ";
-			cfg+=openVpnEscape(mCaFilename);
-			cfg+="\n";
+			cfg+=insertFileData("ca",mCaFilename);
 
 			// Client Cert + Key
-			cfg+="key ";
-			cfg+=openVpnEscape(mClientKeyFilename);
-			cfg+="\n";
-			cfg+="cert ";
-			cfg+=openVpnEscape(mClientCertFilename);
-			cfg+="\n";
+			cfg+=insertFileData("key",mClientKeyFilename);
+			cfg+=insertFileData("cert",mClientCertFilename);
+
 			break;
 		case VpnProfile.TYPE_USERPASS_PKCS12:
 			cfg+="auth-user-pass\n";
 		case VpnProfile.TYPE_PKCS12:
-			cfg+="pkcs12 ";
-			cfg+=openVpnEscape(mPKCS12Filename);
-			cfg+="\n";
+			cfg+=insertFileData("pkcs12",mPKCS12Filename);
 			cfg+="management-query-passwords\n";
 			break;
 
@@ -217,7 +208,7 @@ public class VpnProfile implements  Serializable{
 		case VpnProfile.TYPE_USERPASS:
 			cfg+="auth-user-pass\n";
 			cfg+="management-query-passwords\n";
-			cfg+="ca " +openVpnEscape(mCaFilename) +"\n";
+			cfg+=insertFileData("ca",mCaFilename);
 		}
 
 		if(mUseLzo) {
@@ -226,12 +217,15 @@ public class VpnProfile implements  Serializable{
 
 		if(mUseTLSAuth) {
 			if(mAuthenticationType==TYPE_STATICKEYS)
-				cfg+="secret ";
+				cfg+=insertFileData("scecret",mTLSAuthFilename);
 			else
-				cfg+="tls-auth ";
-			cfg+=openVpnEscape(mTLSAuthFilename);
+				cfg+=insertFileData("tls-auth",mTLSAuthFilename);
 			cfg+=" ";
-			cfg+= mTLSAuthDirection;
+		
+			if(nonNull(mTLSAuthDirection)) {
+				cfg+= "key-direction ";
+				cfg+= mTLSAuthDirection;
+			}
 			cfg+="\n";
 		}
 
@@ -295,6 +289,16 @@ public class VpnProfile implements  Serializable{
 
 
 		return cfg;
+	}
+
+	//! Put inline data inline and other data as normal escaped filename
+	private String insertFileData(String cfgentry, String filedata) {
+		if(filedata.startsWith(FileSelect.INLINE_TAG)){
+			String datawoheader = filedata.substring(FileSelect.INLINE_TAG.length());
+			return String.format("<%s>\n%s\n</%s>\n",cfgentry,datawoheader,cfgentry);
+		} else {
+			return String.format("%s %s",cfgentry,openVpnEscape(filedata));
+		}
 	}
 
 	private boolean nonNull(String val) {

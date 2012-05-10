@@ -3,8 +3,6 @@ package de.blinkt.openvpn;
 import java.util.LinkedList;
 import java.util.Vector;
 
-import android.util.Log;
-
 public class OpenVPN {
 	private static OpenVpnService mOpenVpnService;
 	private static final int MAXLOGENTRIES = 500;

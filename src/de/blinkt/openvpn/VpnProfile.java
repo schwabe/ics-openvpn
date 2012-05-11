@@ -19,6 +19,7 @@ import java.util.Vector;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.security.KeyChain;
 import android.security.KeyChainException;
 
@@ -385,6 +386,9 @@ public class VpnProfile implements  Serializable{
 
 		intent.putExtra(prefix + ".ARGV" , buildOpenvpnArgv(context.getCacheDir()));
 		intent.putExtra(prefix + ".profileUUID", mUuid.toString());
+		
+		ApplicationInfo info = context.getApplicationInfo();
+		intent.putExtra(prefix +".nativelib",info.nativeLibraryDir);
 
 		try {
 			FileWriter cfg = new FileWriter(context.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE);

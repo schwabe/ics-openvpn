@@ -148,6 +148,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		// Extract information from the intent.
 		String prefix = getPackageName();
 		String[] argv = intent.getStringArrayExtra(prefix + ".ARGV");
+		String nativelibdir = intent.getStringExtra(prefix + ".nativelib");
 
 		String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
 		mProfile = ProfileManager.get(profileUUID);
@@ -191,7 +192,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 		// Start a new session by creating a new thread.
 
-		OpenVPNThread serviceThread = new OpenVPNThread(this, argv);
+		OpenVPNThread serviceThread = new OpenVPNThread(this, argv,nativelibdir);
 
 		mServiceThread = new Thread(serviceThread, "OpenVPNServiceThread");
 		mServiceThread.start();

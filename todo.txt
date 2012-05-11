@@ -1,4 +1,9 @@
 Ideas:
+
+- Implement tabbed filebrowser with 
+   1. tab file selection
+   2. tab inline file for safer storage
+   
  - implement security notice fragment
    - explain plain text storage of all data except for android keystore
    - explain even more insecure of storage on sd card
@@ -15,6 +20,10 @@ Ideas:
 - implement general settings dialog
    - encryption of profiles
    - Speed/Transfered in notification bar (byte counter of managment) 
+   - Kick openvpn on network state change (Wifi <-> GPRS/EDGE/UMTS)
+
+- map SIGUSR1 to SIGINT
+
 
 Missing configuration options:
 
@@ -33,9 +42,8 @@ Tap support:
       - need to chose right mac of receiver
 
 Requested by users:
-keepalive 10 120
+cipher
 auth
 mtu-link
 nobind
-
 

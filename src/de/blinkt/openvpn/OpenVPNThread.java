@@ -13,11 +13,13 @@ public class OpenVPNThread implements Runnable {
 	private OpenVpnService mService;
 	private String[] mArgv;
 	private Process mProcess;
+	private String mNativeDir;
 
-	public OpenVPNThread(OpenVpnService service,String[] argv)
+	public OpenVPNThread(OpenVpnService service,String[] argv, String nativelibdir)
 	{
 		mService = service;
 		mArgv = argv;
+		mNativeDir = nativelibdir;
 	}
 	
 	public void stopProcess() {
@@ -76,10 +78,14 @@ public class OpenVPNThread implements Runnable {
 		String applibpath = argv[0].replace("/cache/minivpn", "/lib");
 		
 		String lbpath = pb.environment().get("LD_LIBRARY_PATH");
-		if(lbpath==null)
+		if(lbpath==null) 
 			lbpath = applibpath;
 		else
 			lbpath = lbpath + ":" + applibpath;
+		
+		if (!applibpath.equals(mNativeDir)) {
+			lbpath = lbpath + ":" + mNativeDir;
+		}
 		
 		pb.environment().put("LD_LIBRARY_PATH", lbpath);
 		pb.redirectErrorStream(true);

@@ -13,19 +13,19 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 public class FileSelect extends Activity {
 	public static final String RESULT_DATA = "RESULT_PATH";
 	public static final String START_DATA = "START_DATA";
-	public static final String INLINE_TAG = "[[INLINE]]";
+	public static final String NO_INLINE_SELECTION = "de.blinkt.openvpn.NO_INLINE_SELECTION";
 	private FileSelectionFragment mFSFragment;
 	private InlineFileTab mInlineFragment;
 	private String mData;
 	private Tab inlineFileTab;
 	private Tab fileExplorerTab;
+	private boolean mNoInline;
 
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -33,6 +33,10 @@ public class FileSelect extends Activity {
 		setContentView(R.layout.file_dialog);
 
 		mData = getIntent().getStringExtra(START_DATA);
+		if(mData==null)
+			mData="/sdcard";
+		
+		mNoInline = getIntent().getBooleanExtra(NO_INLINE_SELECTION, false);
 		
 		ActionBar bar = getActionBar();
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); 
@@ -40,13 +44,15 @@ public class FileSelect extends Activity {
 		inlineFileTab = bar.newTab().setText(R.string.inline_file_tab); 
 
 		mFSFragment = new FileSelectionFragment();
-		mInlineFragment = new InlineFileTab();
+		mFSFragment.setNoInLine();
 		fileExplorerTab.setTabListener(new MyTabsListener<FileSelectionFragment>(this, mFSFragment));
-		inlineFileTab.setTabListener(new MyTabsListener<InlineFileTab>(this, mInlineFragment));
-
 		bar.addTab(fileExplorerTab);
-		bar.addTab(inlineFileTab);
 		
+		if(!mNoInline) {
+			mInlineFragment = new InlineFileTab();
+			inlineFileTab.setTabListener(new MyTabsListener<InlineFileTab>(this, mInlineFragment));
+			bar.addTab(inlineFileTab);
+			}
 
 		
 	}
@@ -88,7 +94,7 @@ public class FileSelect extends Activity {
 		Exception fe = null;
 		try {
 			FileInputStream fis = new FileInputStream(ifile);
-			String data =INLINE_TAG;
+			String data =VpnProfile.INLINE_TAG;
 
 			byte buf[] =new byte[16384];
 			int len=fis.read(buf);
@@ -116,21 +122,21 @@ public class FileSelect extends Activity {
 
 	public void setFile(String path) {
 		Intent intent = new Intent();
-		intent.putExtra(RESULT_DATA, mData);
+		intent.putExtra(RESULT_DATA, path);
 		setResult(Activity.RESULT_OK,intent);
 		finish();		
 	}
 
 	public String getSelectPath() {
-		if(mData.startsWith(INLINE_TAG))
+		if(mData.startsWith(VpnProfile.INLINE_TAG))
 			return mData;
 		else
 			return "/mnt/sdcard";
 	}
 
 	public CharSequence getInlineData() {
-		if(mData.startsWith(INLINE_TAG))
-			return mData.substring(INLINE_TAG.length());
+		if(mData.startsWith(VpnProfile.INLINE_TAG))
+			return mData.substring(VpnProfile.INLINE_TAG.length());
 		else
 			return "";
 	}

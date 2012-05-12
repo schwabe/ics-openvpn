@@ -1,9 +1,11 @@
 package de.blinkt.openvpn;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Vector;
 
 //! Openvpn Config FIle Parser, probably not 100% accurate but close enough
@@ -16,12 +18,13 @@ public class ConfigParser {
 
 
 	private HashMap<String,Vector<String>> options = new HashMap<String, Vector<String>>();
-	private void parseConfig(String filename) throws IOException, ConfigParseError {
+	public void parseConfig(InputStream inputStream) throws IOException, ConfigParseError {
 
 
-		FileReader fr = new FileReader(filename);
+		InputStreamReader fr = new InputStreamReader(inputStream);
 		BufferedReader br =new BufferedReader(fr);
 
+		@SuppressWarnings("unused")
 		int lineno=0;
 
 		while (true){
@@ -29,8 +32,6 @@ public class ConfigParser {
 			if(line==null)
 				break;
 			lineno++;
-			System.out.print("LINE:");
-			System.out.println(line);
 			Vector<String> args = parseline(line);
 			if(args.size() ==0)
 				continue;
@@ -51,7 +52,7 @@ public class ConfigParser {
 		// CHeck for <foo>
 		if(arg0.startsWith("<") && arg0.endsWith(">")) {
 			String argname = arg0.substring(1, arg0.length()-1);
-			String inlinefile = "";
+			String inlinefile = VpnProfile.INLINE_TAG;
 
 			String endtag = String.format("</%s>",argname);
 			do {
@@ -192,37 +193,217 @@ public class ConfigParser {
 		return parameters;
 	}
 
-	void convertProfile() throws ConfigParseError{
-		VpnProfile newprofile = new VpnProfile("converted Profile");
+
+	final String[] unsupportedOptions = { "config", 
+			"connection", 
+			"proto-force", 
+			"remote-random",
+			"tls-server"
+
+	};
+
+	// Ignore all scripts
+	// in most cases these won't work and user who wish to execute scripts will
+	// figure out themselves
+	final String[] ignoreOptions = { "tls-client",
+			"askpass",
+			"auth-nocache",
+			"up",
+			"down",
+			"route-up",
+			"ipchange",
+			"route-up",
+			"auth-user-pass-verify"
+	};
+	// Missing
+	// proto tcp-client|udp
+
+	VpnProfile convertProfile() throws ConfigParseError{
+		VpnProfile np = new VpnProfile("converted Profile");
 		// Pull, client, tls-client
-		
+		np.clearDefaults();
+
 		if(options.containsKey("client") || options.containsKey("pull")) {
-			newprofile.mUsePull=true;
+			np.mUsePull=true;
 			options.remove("pull");
 			options.remove("client");
 		}
-		
-		if(options.containsKey("secret")){
-			newprofile.mAuthenticationType=VpnProfile.TYPE_STATICKEYS;
-			options.remove("secret");
+
+		Vector<String> secret = getOption("secret", 1, 2);
+		if(secret!=null) 
+		{
+			np.mAuthenticationType=VpnProfile.TYPE_STATICKEYS;
+			np.mUseTLSAuth=true;
+			np.mTLSAuthFilename=secret.get(1);
+			if(secret.size()==3)
+				np.mTLSAuthDirection=secret.get(2);
 		}
-		
+
+		Vector<String> tlsauth = getOption("tls-auth", 1, 2);
+		if(tlsauth!=null) 
+		{
+			np.mUseTLSAuth=true;
+			np.mTLSAuthFilename=tlsauth.get(1);
+			if(tlsauth.size()==3)
+				np.mTLSAuthDirection=tlsauth.get(2);
+		}
+
+		Vector<String> direction = getOption("key-direction", 1, 1);
+		if(direction!=null)
+			np.mTLSAuthDirection=direction.get(1);
+
 		if(options.containsKey("redirect-gateway")) {
 			options.remove("redirect-gateway");
-			newprofile.mUseDefaultRoute=true;
+			np.mUseDefaultRoute=true;
 		} else {
-			newprofile.mUseDefaultRoute=true;
+			np.mUseDefaultRoute=true;
 		}
-		
-		Vector<String> mode = options.get("mode");
+
+		Vector<String> dev =getOption("dev",1,1);
+		Vector<String> devtype =getOption("dev-type",1,1);
+
+		if( (devtype !=null && devtype.get(1).equals("tun")) ||  
+				(dev!=null && dev.get(1).startsWith("tun")) || 
+				(devtype ==null && dev == null) ) {
+			//everything okay 
+		} else {
+			throw new ConfigParseError("Sorry. Only tun mode is supported. See the FAQ for more detail");
+		}
+
+
+
+		Vector<String> mode =getOption("mode",1,1);
 		if (mode != null){
-			options.remove("mode");
-			if(mode.size() != 2) 
-				throw new ConfigParseError("--mode has more than one parameter");
 			if(!mode.get(1).equals("p2p"))
-				throw new ConfigParseError("Invalid mode for --mode specified");
+				throw new ConfigParseError("Invalid mode for --mode specified, need p2p");
+		}
+
+		// Parse remote config
+		Vector<String> remote = getOption("remote",1,3);
+		if(remote != null){
+			switch (remote.size()) {
+			case 4:
+				String proto = remote.get(3);
+				if(proto.equals("udp"))
+					np.mUseUdp=true;
+				else if (proto.equals("tcp"))
+					np.mUseUdp=false;
+				else
+					throw new ConfigParseError("remote protocol must be tcp or udp");
+			case 3:
+				np.mServerPort = remote.get(2);
+			case 2:
+				np.mServerName = remote.get(1);
+			}
 		}
 		
+		Vector<String> proto = getOption("proto, ", 1,1);
+		if(proto!=null){
+			if(proto.get(1).equals("udp"))
+				np.mUseUdp=true;
+			else if (proto.get(1).equals("tcp-client"))
+				np.mUseUdp=false;
+			else 
+				throw new ConfigParseError("Unsupported option to --proto " + proto.get(1));
+					
+		}
+		
+		Vector<String> dhcpoption = getOption("dhcp-options", 1, 3);
+		if(dhcpoption!=null) {
+			String type=dhcpoption.get(1);
+
+		}
+		
+		if(getOption("remote-random-hostname", 0, 0)!=null)
+			np.mUseRandomHostname=true;
+
+		if(getOption("float", 0, 0)!=null)
+			np.mUseFloat=true;
+
+		if(getOption("comp-lzo", 0, 1)!=null)
+			np.mUseLzo=true;
+
+		Vector<String> cipher = getOption("cipher", 1, 1);
+		if(cipher!=null)
+			np.mCipher= cipher.get(1);
+
+		Vector<String> ca = getOption("ca",1,1);
+		if(ca!=null){
+			np.mCaFilename = ca.get(1);
+		}
+
+		Vector<String> cert = getOption("cert",1,1);
+		if(cert!=null){
+			np.mClientCertFilename = cert.get(1);
+			np.mAuthenticationType = VpnProfile.TYPE_CERTIFICATES;
+		}
+		Vector<String> key= getOption("key",1,1);
+		if(key!=null)
+			np.mClientKeyFilename=key.get(1);
+
+		Vector<String> pkcs12 = getOption("pkcs12",1,1);
+		if(pkcs12!=null) {
+			np.mPKCS12Filename = pkcs12.get(1);
+			np.mAuthenticationType = VpnProfile.TYPE_KEYSTORE;
+		}
+
+		Vector<String> tlsremote = getOption("tls-remote",1,1);
+		if(tlsremote!=null){
+			np.mRemoteCN = tlsremote.get(1);
+			np.mCheckRemoteCN=true;
+		} 
+		
+		Vector<String> verb = getOption("verb",1,1);
+		if(verb!=null){
+			np.mVerb=verb.get(1);
+		}
+
+		// Check the other options
+
+		for(String option:unsupportedOptions)
+			if(options.containsKey(option))
+				throw new ConfigParseError(String.format("Unsupported Option %s encountered in config file. Aborting",option));
+
+		for(String option:ignoreOptions)
+			// removing an item which is not in the map is no error
+			options.remove(option);
+
+		if(options.size()> 0) {
+			String custom = "# These Options were found in the config file but not parsed:\n";
+			for(Entry<String, Vector<String>> option:options.entrySet()) {
+				for (String arg : option.getValue()) {
+					custom+= arg + " ";
+				}
+				custom+="\n";
+			}
+			np.mCustomConfigOptions = custom;
+			np.mUseCustomConfig=true;
+
+		}
+
+
+		fixup(np);
+
+		return np;
+	}
+
+	private void fixup(VpnProfile np) {
+		if(np.mRemoteCN.equals(np.mServerName)) {
+			np.mRemoteCN="";
+		}
+	}
+
+	private Vector<String> getOption(String option, int minarg, int maxarg) throws ConfigParseError {
+		Vector<String> args = options.get(option);
+		if(args==null)
+			return null;
+		if(args.size()< (minarg+1) || args.size() > maxarg+1) {
+			String err = String.format("Option %s has %d parameters, expected between %d and %d",
+					option,args.size()-1,minarg,maxarg );
+			throw new ConfigParseError(err);
+		}
+		options.remove(option);
+		return args;
 	}
 
 }

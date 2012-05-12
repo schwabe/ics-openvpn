@@ -4,7 +4,6 @@
     <header
         android:tag="BasicSettings"
         android:fragment="de.blinkt.openvpn.Settings_Basic"
-        android:summary="Server, port and authentication method. Normally you should only settings specified here."
         android:title="Basic Settings" 
         android:id="@+id/basicsettingsid"/>
     <!-- android:icon="@drawable/ic_settings_applications" -->

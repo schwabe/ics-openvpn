@@ -131,7 +131,7 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 
 	private void setTlsAuthSummary(String result) {
 		if(result==null) result = getString(R.string.no_certificate);
-		if(result.startsWith(FileSelect.INLINE_TAG))
+		if(result.startsWith(VpnProfile.INLINE_TAG))
 			   mTLSAuthFile.setSummary(R.string.inline_file_data);
 		   else
 			   mTLSAuthFile.setSummary(result);

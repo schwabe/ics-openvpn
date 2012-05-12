@@ -1,11 +1,13 @@
 package de.blinkt.openvpn;
 
+import de.blinkt.openvpn.FileSelect.MyTabsListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -56,11 +58,8 @@ public class VPNProfileList extends ListFragment {
 				}
 			});
 				
-			
 			return v;
 		}
-		
-		
 	}
 	
 	
@@ -68,6 +67,13 @@ public class VPNProfileList extends ListFragment {
 	private static final int MENU_ADD_PROFILE = Menu.FIRST;
 
 	private static final int START_VPN_CONFIG = 92;
+	private static final int SELECT_PROFILE = 43;
+	private static final int IMPORT_PROFILE = 231;
+
+	private static final int MENU_IMPORT_PROFILE = Menu.FIRST +1;
+
+	
+
 
 	private ArrayAdapter<VpnProfile> mArrayadapter;
 
@@ -104,6 +110,13 @@ public class VPNProfileList extends ListFragment {
 		.setAlphabeticShortcut('a')
 		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM
 				| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		
+		menu.add(0, MENU_IMPORT_PROFILE, 0, R.string.menu_import)
+		.setIcon(android.R.drawable.ic_menu_myplaces)
+		.setAlphabeticShortcut('a')
+		.setTitleCondensed(getActivity().getString(R.string.menu_import_short))
+		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM
+				| MenuItem.SHOW_AS_ACTION_WITH_TEXT );
 	}
 
 
@@ -112,6 +125,11 @@ public class VPNProfileList extends ListFragment {
 		final int itemId = item.getItemId();
 		if (itemId == MENU_ADD_PROFILE) {
 			onAddProfileClicked();
+			return true;
+		} else if (itemId == MENU_IMPORT_PROFILE) {
+			Intent intent = new Intent(getActivity(),FileSelect.class);
+			intent.putExtra(FileSelect.NO_INLINE_SELECTION, true);
+			startActivityForResult(intent, SELECT_PROFILE);
 			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
@@ -198,13 +216,26 @@ public class VPNProfileList extends ListFragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == START_VPN_CONFIG && resultCode == Activity.RESULT_OK) {
-			String configuredVPN = data.getStringExtra(getActivity().getPackageName() + ".profileUUID");
+		if(resultCode != Activity.RESULT_OK)
+			return;
+		
+		if (requestCode == START_VPN_CONFIG) {
+			String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
 
 			VpnProfile profile = ProfileManager.get(configuredVPN);
 			getPM().saveProfile(getActivity(), profile);
 			// Name could be modified
 
+		} else if(requestCode== SELECT_PROFILE) {
+			String filedata = data.getStringExtra(FileSelect.RESULT_DATA);
+			Intent startImport = new Intent(getActivity(),ConfigConverter.class);
+			startImport.setAction(ConfigConverter.IMPORT_PROFILE);
+			Uri uri = new Uri.Builder().path(filedata).scheme("file").build();
+			startImport.setData(uri);
+			startActivityForResult(startImport, IMPORT_PROFILE);
+		} else if(requestCode == IMPORT_PROFILE) {
+			String profileUUID = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
+			mArrayadapter.add(ProfileManager.get(profileUUID));
 		}
 
 	}

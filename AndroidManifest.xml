@@ -39,6 +39,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -51,6 +52,46 @@
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".ConfigConverter"
+            android:label="Convert Config File" >
+            <intent-filter android:label="foo" >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="application/x-openvpn-profile" />
+            </intent-filter>
+            <intent-filter android:label="foo" >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="application/ovpn" />
+            </intent-filter>
+            <intent-filter android:label="foo" >
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:pathPattern=".*\\.ovpn"
+                    android:scheme="content" />
+            </intent-filter>
+            <intent-filter android:label="foo" >
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:pathPattern=".*\\.ovpn"
+                    android:scheme="file" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".LaunchVPN"
             android:label="@string/vpn_launch_title" >

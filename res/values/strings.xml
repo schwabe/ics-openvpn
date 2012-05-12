@@ -195,5 +195,16 @@
     <string name="error_importing_file">Error importing File</string>
     <string name="import_error_message">Could not import File from Filesystem</string>
     <string name="inline_file_data">[[Inline file data]]</string>
-    <string name="opentun_no_ipaddr">Refusing to open tun device without IP information</string>  
+    <string name="opentun_no_ipaddr">Refusing to open tun device without IP information</string>
+    <string name="menu_import">Import Profile from ovpn file</string>
+    <string name="menu_import_short">Import</string>
+    <string name="import_content_resolve_error">Could not read Profile to import</string>
+    <string name="error_reading_config_file">Error reading Config file</string>
+    <string name="add_profile">add Profile</string>
+    <string name="trying_to_read">Trying to read file: %1$s</string>
+    <string name="import_could_not_open">Could not find file %1$s mentioned in the imported Config file</string>
+    <string name="importing_config">Importing config file from source %1$s</string>
+    <string name="import_pkcs12_to_keystore">Your config file specified a pkcs12 file. Please import the file by selecting select in the Basic Settings configuration of the converted VPN</string>
+    <string name="import_warning_custom_options">Your configuration had a few configuration options that could be parsed. These options were added as custom configuration options. The custom configuration is displayed below:</string>
+    <string name="import_done">Done reading config file.</string>  
 </resources>

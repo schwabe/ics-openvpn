@@ -51,6 +51,7 @@ public class FileSelectionFragment extends ListFragment {
 	private HashMap<String, Integer> lastPositions = new HashMap<String, Integer>();
 	private String mStartPath;
 	private Button importFile;
+	private boolean mHideImport=false;
 
 	
 	@Override
@@ -73,6 +74,7 @@ public class FileSelectionFragment extends ListFragment {
 			}
 		});
 
+		
 		importFile = (Button) v.findViewById(R.id.importfile);
 		importFile.setEnabled(false);
 		importFile.setOnClickListener(new OnClickListener() {
@@ -83,7 +85,9 @@ public class FileSelectionFragment extends ListFragment {
 			}
 		});
 
-
+		if(mHideImport== true) {
+			importFile.setVisibility(View.GONE);
+		}
 
 		
 		return v;
@@ -239,6 +243,10 @@ public class FileSelectionFragment extends ListFragment {
 			selectButton.setEnabled(true);
 			importFile.setEnabled(true);
 		}
+	}
+
+	public void setNoInLine() {
+		mHideImport=true;
 	}
 
 }

@@ -57,7 +57,9 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 
 	public void setData(String data) {
 		mData = data;
-		if(mData.startsWith(FileSelect.INLINE_TAG))
+		if(data==null) 
+			mDataView.setText(mFragment.getString(R.string.no_data));
+		else if(mData.startsWith(VpnProfile.INLINE_TAG))
 			mDataView.setText(R.string.inline_file_data);
 		else
 			mDataView.setText(data);

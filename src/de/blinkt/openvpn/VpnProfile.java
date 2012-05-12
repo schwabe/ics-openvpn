@@ -38,6 +38,8 @@ public class VpnProfile implements  Serializable{
 	public static final int TYPE_USERPASS_PKCS12 = 6;
 	public static final int TYPE_USERPASS_KEYSTORE = 7;
 
+	// Don't change this, not all parts of the program use this constant
+	public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
 
 
 
@@ -90,6 +92,17 @@ public class VpnProfile implements  Serializable{
 	public String mCustomConfigOptions="";
 	public String mVerb="1";
 	public String mCipher="";
+	public static final String INLINE_TAG = "[[INLINE]]";
+
+	
+
+	public void clearDefaults() {
+		mServerName="unkown";
+		mUsePull=false;
+		mUseLzo=false;
+		mUseDefaultRoute=false;
+		mExpectTLSCert=false;
+	}
 
 
 	public static String openVpnEscape(String unescaped) {
@@ -294,11 +307,11 @@ public class VpnProfile implements  Serializable{
 
 	//! Put inline data inline and other data as normal escaped filename
 	private String insertFileData(String cfgentry, String filedata) {
-		if(filedata.startsWith(FileSelect.INLINE_TAG)){
-			String datawoheader = filedata.substring(FileSelect.INLINE_TAG.length());
+		if(filedata.startsWith(VpnProfile.INLINE_TAG)){
+			String datawoheader = filedata.substring(VpnProfile.INLINE_TAG.length());
 			return String.format("<%s>\n%s\n</%s>\n",cfgentry,datawoheader,cfgentry);
 		} else {
-			return String.format("%s %s",cfgentry,openVpnEscape(filedata));
+			return String.format("%s %s\n",cfgentry,openVpnEscape(filedata));
 		}
 	}
 

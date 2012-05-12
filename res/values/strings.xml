@@ -206,5 +206,9 @@
     <string name="importing_config">Importing config file from source %1$s</string>
     <string name="import_pkcs12_to_keystore">Your config file specified a pkcs12 file. Please import the file by selecting select in the Basic Settings configuration of the converted VPN</string>
     <string name="import_warning_custom_options">Your configuration had a few configuration options that could be parsed. These options were added as custom configuration options. The custom configuration is displayed below:</string>
-    <string name="import_done">Done reading config file.</string>  
+    <string name="import_done">Done reading config file.</string>
+    <string name="nobind_summary">Do not bind to local address and port</string>
+    <string name="no_bind">No local binding</string>
+    <string name="import_experimental">Please not that the config importer is an experimental feature.</string>
+    <string name="import_configuration_file">Import configuration file</string>  
 </resources>

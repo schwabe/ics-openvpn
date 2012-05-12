@@ -19,6 +19,7 @@ import android.os.Bundle;
 public class FileSelect extends Activity {
 	public static final String RESULT_DATA = "RESULT_PATH";
 	public static final String START_DATA = "START_DATA";
+	public static final String WINDOW_TITLE = "WINDOW_TILE";
 	public static final String NO_INLINE_SELECTION = "de.blinkt.openvpn.NO_INLINE_SELECTION";
 	private FileSelectionFragment mFSFragment;
 	private InlineFileTab mInlineFragment;
@@ -26,7 +27,8 @@ public class FileSelect extends Activity {
 	private Tab inlineFileTab;
 	private Tab fileExplorerTab;
 	private boolean mNoInline;
-
+	
+		
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState); 
@@ -35,6 +37,13 @@ public class FileSelect extends Activity {
 		mData = getIntent().getStringExtra(START_DATA);
 		if(mData==null)
 			mData="/sdcard";
+		
+		String title = getIntent().getStringExtra(WINDOW_TITLE);
+		int titleId = getIntent().getIntExtra(WINDOW_TITLE, 0);
+		if(titleId!=0) 
+			title =getString(titleId);
+		if(title!=null)
+			setTitle(title);
 		
 		mNoInline = getIntent().getBooleanExtra(NO_INLINE_SELECTION, false);
 		

@@ -1,6 +1,5 @@
 package de.blinkt.openvpn;
 
-import de.blinkt.openvpn.FileSelect.MyTabsListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListFragment;
@@ -95,6 +94,10 @@ public class VPNProfileList extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
+		setListAdapter();
+	}
+
+	private void setListAdapter() {
 		mArrayadapter = new VPNArrayAdapter(getActivity(),R.layout.vpn_list_item,R.id.vpn_item_title);
 		mArrayadapter.addAll(getPM().getProfiles());
 		
@@ -112,8 +115,8 @@ public class VPNProfileList extends ListFragment {
 				| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		
 		menu.add(0, MENU_IMPORT_PROFILE, 0, R.string.menu_import)
-		.setIcon(android.R.drawable.ic_menu_myplaces)
-		.setAlphabeticShortcut('a')
+		.setIcon(R.drawable.ic_menu_archive)
+		.setAlphabeticShortcut('i')
 		.setTitleCondensed(getActivity().getString(R.string.menu_import_short))
 		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM
 				| MenuItem.SHOW_AS_ACTION_WITH_TEXT );
@@ -129,6 +132,7 @@ public class VPNProfileList extends ListFragment {
 		} else if (itemId == MENU_IMPORT_PROFILE) {
 			Intent intent = new Intent(getActivity(),FileSelect.class);
 			intent.putExtra(FileSelect.NO_INLINE_SELECTION, true);
+			intent.putExtra(FileSelect.WINDOW_TITLE, R.string.import_configuration_file);
 			startActivityForResult(intent, SELECT_PROFILE);
 			return true;
 		} else {
@@ -185,12 +189,7 @@ public class VPNProfileList extends ListFragment {
 
 
 			});
-			dialog.setNegativeButton(android.R.string.cancel,
-					new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-				}
-			});
+			dialog.setNegativeButton(android.R.string.cancel, null);
 			dialog.create().show();
 		}
 
@@ -224,8 +223,9 @@ public class VPNProfileList extends ListFragment {
 
 			VpnProfile profile = ProfileManager.get(configuredVPN);
 			getPM().saveProfile(getActivity(), profile);
-			// Name could be modified
-
+			// Name could be modified, reset List adapter
+			setListAdapter();
+			
 		} else if(requestCode== SELECT_PROFILE) {
 			String filedata = data.getStringExtra(FileSelect.RESULT_DATA);
 			Intent startImport = new Intent(getActivity(),ConfigConverter.class);

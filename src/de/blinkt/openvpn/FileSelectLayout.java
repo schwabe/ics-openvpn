@@ -19,6 +19,8 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 	private Fragment mFragment;
 	private int mTaskId;
 	private Button mSelectButton;
+	private boolean mNoInline;
+	private String mTitle;
 
 	public FileSelectLayout( Context context,AttributeSet attrset) {
 		super(context,attrset);
@@ -26,10 +28,10 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 		
 		TypedArray ta = context.obtainStyledAttributes(attrset,R.styleable.FileSelectLayout);
 		
-		String title = ta.getString(R.styleable.FileSelectLayout_title);
+		mTitle = ta.getString(R.styleable.FileSelectLayout_title);
 		
 		TextView tview = (TextView) findViewById(R.id.file_title);
-		tview.setText(title);
+		tview.setText(mTitle);
 		
 		mDataView = (TextView) findViewById(R.id.file_selected_item);
 		mSelectButton = (Button) findViewById(R.id.file_select_button);
@@ -46,7 +48,9 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 	public void getCertificateFileDialog() {
 		Intent startFC = new Intent(getContext(),FileSelect.class);
 		startFC.putExtra(FileSelect.START_DATA, mData);
-		
+		startFC.putExtra(FileSelect.WINDOW_TITLE,mTitle);
+		if(mNoInline)
+			startFC.putExtra(FileSelect.NO_INLINE_SELECTION, true);
 		mFragment.startActivityForResult(startFC,mTaskId);
 	}
 
@@ -71,6 +75,10 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 		if(v == mSelectButton) {
 			getCertificateFileDialog();
 		}
+	}
+
+	public void setNoline() {
+		mNoInline=true;
 	}
 
 	

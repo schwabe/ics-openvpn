@@ -37,14 +37,10 @@ public class VpnProfile implements  Serializable{
 	public static final int TYPE_USERPASS_CERTIFICATES = 5;
 	public static final int TYPE_USERPASS_PKCS12 = 6;
 	public static final int TYPE_USERPASS_KEYSTORE = 7;
-
+	
 	// Don't change this, not all parts of the program use this constant
 	public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
-
-
-
-
-
+	public static final String INLINE_TAG = "[[INLINE]]";
 	private static final String OVPNCONFIGFILE = "android.conf";
 
 	protected transient String mTransientPW=null;
@@ -52,6 +48,8 @@ public class VpnProfile implements  Serializable{
 
 	private static transient String mTempPKCS12Password;
 
+	public static String DEFAULT_DNS1="131.234.137.23";
+	public static String DEFAULT_DNS2="131.234.137.24";
 
 	// Public attributes, since I got mad with getter/setter
 	// set members to default values
@@ -71,8 +69,8 @@ public class VpnProfile implements  Serializable{
 	public String mPKCS12Password;
 	public boolean mUseTLSAuth = false;
 	public String mServerName = "openvpn.blinkt.de" ;
-	public String mDNS1="131.234.137.23";
-	public String mDNS2="131.234.137.24";
+	public String mDNS1=DEFAULT_DNS1;
+	public String mDNS2=DEFAULT_DNS2;
 	public String mIPv4Address;
 	public String mIPv6Address;
 	public boolean mOverrideDNS=false;
@@ -92,9 +90,8 @@ public class VpnProfile implements  Serializable{
 	public String mCustomConfigOptions="";
 	public String mVerb="1";
 	public String mCipher="";
-	public static final String INLINE_TAG = "[[INLINE]]";
+	public boolean mNobind=false;
 
-	
 
 	public void clearDefaults() {
 		mServerName="unkown";
@@ -266,6 +263,9 @@ public class VpnProfile implements  Serializable{
 				cfg+="dhcp-option DNS " + mDNS2 + "\n";
 
 		}
+		
+		if(mNobind)
+			cfg+="nobind\n";
 
 
 
@@ -307,7 +307,9 @@ public class VpnProfile implements  Serializable{
 
 	//! Put inline data inline and other data as normal escaped filename
 	private String insertFileData(String cfgentry, String filedata) {
-		if(filedata.startsWith(VpnProfile.INLINE_TAG)){
+		if(filedata==null) {
+			return String.format("%s %s\n",cfgentry,"missing");
+		}else if(filedata.startsWith(VpnProfile.INLINE_TAG)){
 			String datawoheader = filedata.substring(VpnProfile.INLINE_TAG.length());
 			return String.format("<%s>\n%s\n</%s>\n",cfgentry,datawoheader,cfgentry);
 		} else {

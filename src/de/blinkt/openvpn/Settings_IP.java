@@ -20,6 +20,7 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 		private CheckBoxPreference mUseDefaultRoute;
 		private VpnProfile mProfile;
 		private CheckBoxPreference mRouteNoPull;
+		private CheckBoxPreference mNobind;
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 			mCustomRoutes = (EditTextPreference) findPreference("customRoutes");
 			mUseDefaultRoute = (CheckBoxPreference) findPreference("useDefaultRoute");
 			mRouteNoPull = (CheckBoxPreference) findPreference("routenopull");
+			mNobind = (CheckBoxPreference) findPreference("nobind");
 
 			mIPv4.setOnPreferenceChangeListener(this);
 			mIPv6.setOnPreferenceChangeListener(this);
@@ -56,10 +58,7 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 			mOverrideDNS.setOnPreferenceChangeListener(this);
 			mSearchdomain.setOnPreferenceChangeListener(this);
 			mCustomRoutes.setOnPreferenceChangeListener(this);
-			
-			
-
-			
+						
 			loadSettings();
 		}
 
@@ -109,6 +108,7 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 			mProfile.mUseDefaultRoute = mUseDefaultRoute.isChecked();
 			mProfile.mCustomRoutes = mCustomRoutes.getText();
 			mProfile.mRoutenopull = mRouteNoPull.isChecked();
+			mProfile.mNobind = mNobind.isChecked();
 			
 		}
 		

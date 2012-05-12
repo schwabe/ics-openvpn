@@ -18,7 +18,14 @@
             android:dependency="usePull"
             android:dialogMessage="@string/ipv6_dialog_tile"
             android:key="ipv6_address"
-            android:title="@string/ipv6_address" />
+            android:title="@string/ipv6_address" 
+            android:enabled="false"/>
+        <CheckBoxPreference 
+            android:title="@string/no_bind"
+            android:summary="@string/nobind_summary"
+            android:persistent="false"
+            android:key="nobind" />
+
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/dns" >
         <CheckBoxPreference

@@ -24,7 +24,7 @@ public class ConfigConverter extends ListActivity {
 
 	private VpnProfile mResult;
 	private ArrayAdapter<String> mArrayAdapter;
-	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class ConfigConverter extends ListActivity {
 		Toast.makeText(this, "Got called!", Toast.LENGTH_LONG).show();
 	}
 
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId()==R.id.cancel){
@@ -41,6 +41,7 @@ public class ConfigConverter extends ListActivity {
 		} else if(item.getItemId()==R.id.ok) {
 			if(mResult==null) {
 				log("Importing the config had error, cannot save it");
+				return true;
 			}
 			Intent result = new Intent();
 			ProfileManager vpl = ProfileManager.getInstance(this);
@@ -48,6 +49,7 @@ public class ConfigConverter extends ListActivity {
 			result.putExtra(VpnProfile.EXTRA_PROFILEUUID,mResult.getUUID().toString());
 			setResult(Activity.RESULT_OK, result);
 			finish();
+			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -61,7 +63,7 @@ public class ConfigConverter extends ListActivity {
 		return true;
 	}
 
-	
+
 	private String embedFile(String filename)
 	{
 		if(filename == null || filename.equals(""))
@@ -69,7 +71,7 @@ public class ConfigConverter extends ListActivity {
 		// Already embedded, nothing to do
 		if(filename.startsWith(VpnProfile.INLINE_TAG))
 			return filename;
-		
+
 		// Try diffent path relative to /mnt/sdcard
 		File sdcard = Environment.getExternalStorageDirectory();
 		File root = new File("/");
@@ -82,15 +84,15 @@ public class ConfigConverter extends ListActivity {
 					suffix = fileparts[i];
 				else
 					suffix = fileparts[i] + "/" + suffix;
-				
+
 				File possibleFile = new File(rootdir,suffix);
 				if(!possibleFile.canRead())
 					continue;
-				
+
 				// read the file inline
 				String filedata = VpnProfile.INLINE_TAG;
 				byte[] buf =new byte[2048];
-				
+
 				log(R.string.trying_to_read, possibleFile.getAbsolutePath());
 				try {
 					FileInputStream fis = new FileInputStream(possibleFile);
@@ -105,25 +107,25 @@ public class ConfigConverter extends ListActivity {
 				} catch (IOException e) {
 					log(e.getLocalizedMessage());
 				}	
-						
-			
+
+
 			}
 		}
 		log(R.string.import_could_not_open,filename);
 		return null;
 	}
-	
+
 	void embedFiles() {
 		// This where I would like to have a c++ style
 		// void embedFile(std::string & option)
-		
+
 		mResult.mCaFilename = embedFile(mResult.mCaFilename);
 		mResult.mClientCertFilename = embedFile(mResult.mClientCertFilename);
 		mResult.mClientKeyFilename = embedFile(mResult.mClientKeyFilename);
 		mResult.mTLSAuthFilename = embedFile(mResult.mTLSAuthFilename);
 	}
-	
-	
+
+
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -137,6 +139,7 @@ public class ConfigConverter extends ListActivity {
 			final android.net.Uri data = intent.getData ();
 			if (data != null)
 			{
+				log(R.string.import_experimental);
 				log(R.string.importing_config,data.toString());
 				try {
 					InputStream is = getContentResolver().openInputStream(data);
@@ -146,14 +149,14 @@ public class ConfigConverter extends ListActivity {
 				}
 			} 
 		} 
-				
+
 		return;
 	}
 
 	private void log(String logmessage) {
 		mArrayAdapter.add(logmessage);
 	}
-	
+
 	private void doImport(InputStream is) {
 		ConfigParser cp = new ConfigParser();
 		try {
@@ -164,7 +167,7 @@ public class ConfigConverter extends ListActivity {
 			displayWarnings();
 			log(R.string.import_done);
 			return;
-			
+
 		} catch (IOException e) {
 			log(R.string.error_reading_config_file);
 			log(e.getLocalizedMessage());
@@ -173,7 +176,7 @@ public class ConfigConverter extends ListActivity {
 			log(e.getLocalizedMessage());			
 		}
 		mResult=null;
-		
+
 	}
 
 	private void displayWarnings() {
@@ -181,11 +184,11 @@ public class ConfigConverter extends ListActivity {
 			log(R.string.import_warning_custom_options);
 			log(mResult.mCustomConfigOptions);
 		}
-		
+
 		if(mResult.mAuthenticationType==VpnProfile.TYPE_KEYSTORE) {
 			log(R.string.import_pkcs12_to_keystore);
 		}
-		
+
 	}
 
 

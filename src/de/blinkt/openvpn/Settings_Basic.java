@@ -19,7 +19,10 @@ package de.blinkt.openvpn;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Fragment;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +39,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 
@@ -45,7 +49,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	private static final int CHOOSE_FILE_OFFSET = 1000;
 	private static final int UPDATE_ALIAS = 20;
 
-	
+
 
 	private TextView mServerAddress;
 	private TextView mServerPort;
@@ -63,7 +67,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 
 
-	
+
 
 	private HashMap<Integer, FileSelectLayout> fileselects = new HashMap<Integer, FileSelectLayout>();
 
@@ -87,8 +91,8 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		fileselects.put(i, fsl);
 		fsl.setFragment(this,i);
 	}
-   
-	
+
+
 	public void onCreate(Bundle savedInstanceState) {
 		String profileuuid =getArguments().getString(getActivity().getPackageName() + ".profileUUID");
 		mProfile=ProfileManager.get(profileuuid);
@@ -97,10 +101,10 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
-		
+
+
 		mView = inflater.inflate(R.layout.basic_settings,container,false);
-		
+
 		mProfileName = (EditText) mView.findViewById(R.id.profilename);
 		mServerAddress = (TextView) mView.findViewById(R.id.address);
 		mServerPort = (TextView) mView.findViewById(R.id.port);
@@ -116,9 +120,9 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 		mUserName = (EditText) mView.findViewById(R.id.auth_username);
 		mPassword = (EditText) mView.findViewById(R.id.auth_password);
-		
-		
-		
+
+
+
 
 		addFileSelectLayout(mCaCert);
 		addFileSelectLayout(mClientCert);
@@ -131,26 +135,26 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mType.setOnItemSelectedListener(this);
 
 		mView.findViewById(R.id.select_keystore_button).setOnClickListener(this);
-	
+
 
 		if (mHandler == null) {
 			mHandler = new Handler(this);
 		}
-		
+
 		return mView;
 	}
-	
-	
-	 @Override
+
+
+	@Override
 	public void onActivityResult(int request, int result, Intent data) {
-            if (result == Activity.RESULT_OK && request >= CHOOSE_FILE_OFFSET) {
-                     String filedata = data.getStringExtra(FileSelect.RESULT_DATA);
-                     FileSelectLayout fsl = fileselects.get(request);
-                     fsl.setData(filedata);
-             }
-             savePreferences();
-     }
-	
+		if (result == Activity.RESULT_OK && request >= CHOOSE_FILE_OFFSET) {
+			String filedata = data.getStringExtra(FileSelect.RESULT_DATA);
+			FileSelectLayout fsl = fileselects.get(request);
+			fsl.setData(filedata);
+		}
+		savePreferences();
+	}
+
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -197,7 +201,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		case VpnProfile.TYPE_KEYSTORE:
 			mView.findViewById(R.id.keystore).setVisibility(View.VISIBLE);
 			break;
-			
+
 		case VpnProfile.TYPE_USERPASS:
 			mView.findViewById(R.id.userpassword).setVisibility(View.VISIBLE);
 			mView.findViewById(R.id.cacert).setVisibility(View.VISIBLE);
@@ -222,7 +226,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mPKCS12Password.setText(mProfile.mPKCS12Password);
 		mUserName.setText(mProfile.mUsername);
 		mPassword.setText(mProfile.mPassword);
-		
+
 		setAlias();
 
 	}
@@ -258,22 +262,30 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	}
 
 	public void showCertDialog () {
-		KeyChain.choosePrivateKeyAlias(getActivity(),
-				new KeyChainAliasCallback() {
+		try	{
+			KeyChain.choosePrivateKeyAlias(getActivity(),
+					new KeyChainAliasCallback() {
 
-			public void alias(String alias) {
-				// Credential alias selected.  Remember the alias selection for future use.
-				mProfile.mAlias=alias;
-				mHandler.sendEmptyMessage(UPDATE_ALIAS);
-			}
+				public void alias(String alias) {
+					// Credential alias selected.  Remember the alias selection for future use.
+					mProfile.mAlias=alias;
+					mHandler.sendEmptyMessage(UPDATE_ALIAS);
+				}
 
 
-		},
-		new String[] {"RSA", "DSA"}, // List of acceptable key types. null for any
-		null,                        // issuer, null for any
-		"internal.example.com",      // host name of server requesting the cert, null if unavailable
-		443,                         // port of server requesting the cert, -1 if unavailable
-		null);                       // alias to preselect, null if unavailable
+			},
+			new String[] {"RSA", "DSA"}, // List of acceptable key types. null for any
+			null,                        // issuer, null for any
+			"internal.example.com",      // host name of server requesting the cert, null if unavailable
+			443,                         // port of server requesting the cert, -1 if unavailable
+			null);                       // alias to preselect, null if unavailable
+		} catch (ActivityNotFoundException anf) {
+			Builder ab = new AlertDialog.Builder(getActivity());
+			ab.setTitle(R.string.broken_image_cert_title);
+			ab.setMessage(R.string.broken_image_cert);
+			ab.setPositiveButton(android.R.string.ok, null);
+			ab.show();
+		}
 	}
 
 	@Override
@@ -282,7 +294,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 			showCertDialog();
 		}
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);

@@ -192,10 +192,15 @@ public class OpenVpnManagementThread implements Runnable {
 		} else if (needed.equals("ROUTE")) {
 			String[] routeparts = extra.split(" ");
 			mOpenVPNService.addRoute(routeparts[0], routeparts[1]);
+		} else if (needed.equals("ROUTE6")) {
+			mOpenVPNService.addRoutev6(extra);
 		} else if (needed.equals("IFCONFIG")) {
 			String[] ifconfigparts = extra.split(" ");
 			int mtu = Integer.parseInt(ifconfigparts[2]);
 			mOpenVPNService.setLocalIP(ifconfigparts[0], ifconfigparts[1],mtu);
+		} else if (needed.equals("IFCONFIG6")) {
+			mOpenVPNService.setLocalIPv6(extra);
+		
 		} else if (needed.equals("OPENTUN")) {
 			if(sendTunFD(needed,extra))
 				return;

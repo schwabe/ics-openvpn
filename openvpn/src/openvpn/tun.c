@@ -771,14 +771,22 @@ do_ifconfig (struct tuntap *tt,
 #endif /*ENABLE_IPROUTE*/
 #elif defined(TARGET_ANDROID)
         
+        
+        if (do_ipv6) {
+            struct user_pass up6;    
+            struct buffer out6 = alloc_buf_gc (64, &gc);
+            buf_printf (&out6, "%s/%d", ifconfig_ipv6_local,tt->netbits_ipv6);
+            strcpy(up6.username, buf_bptr(&out6));
+            management_query_user_pass(management, &up6 , "IFCONFIG6", GET_USER_PASS_NEED_OK,(void*) 0);
+        }
+
         struct user_pass up;    
         struct buffer out = alloc_buf_gc (64, &gc);
-        
         buf_printf (&out, "%s %s %d", ifconfig_local, ifconfig_remote_netmask, tun_mtu);
-        
         strcpy(up.username, buf_bptr(&out));
         management_query_user_pass(management, &up , "IFCONFIG", GET_USER_PASS_NEED_OK,(void*) 0);
-        
+
+
         
 #elif defined(TARGET_SOLARIS)
 
@@ -1377,8 +1385,6 @@ close_tun_generic (struct tuntap *tt)
 
 #endif
 
-#if defined(TARGET_LINUX) || defined(TARGET_ANDROID)
-
 #if defined (TARGET_ANDROID)
 void
 open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tuntap *tt)
@@ -1409,8 +1415,29 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
     gc_free (&gc);
 }
 
-#else
+void
+close_tun (struct tuntap *tt)
+{
+    if (tt)
+    {
+        close_tun_generic (tt);
+        free (tt);
+    }
+}
 
+int
+write_tun (struct tuntap* tt, uint8_t *buf, int len)
+{
+    return write (tt->fd, buf, len);
+}
+
+int
+read_tun (struct tuntap* tt, uint8_t *buf, int len)
+{
+    return read (tt->fd, buf, len);
+}
+
+#elif defined(TARGET_LINUX)
 #ifdef HAVE_LINUX_IF_TUN_H	/* New driver support */
 
 #ifndef HAVE_LINUX_SOCKIOS_H
@@ -1455,7 +1482,7 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
       if (!tt->ipv6)
 	ifr.ifr_flags = IFF_NO_PI;
 
-#if defined(IFF_ONE_QUEUE) && defined(SIOCSIFTXQLEN) && !defined(TARGET_ANDROID)
+#if defined(IFF_ONE_QUEUE) && defined(SIOCSIFTXQLEN)
       ifr.ifr_flags |= IFF_ONE_QUEUE;
 #endif
 
@@ -1545,7 +1572,6 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
 }
 
 #endif /* HAVE_LINUX_IF_TUN_H */
-#endif /* TARGET_ANDROID */
 
 #ifdef ENABLE_FEATURE_TUN_PERSIST
 
@@ -1698,7 +1724,7 @@ read_tun (struct tuntap* tt, uint8_t *buf, int len)
       ret = readv(tt->fd, vect, 2);
       return(ret - sizeof(pi));
     }
-  else
+  else 
     return read (tt->fd, buf, len);
 }
 

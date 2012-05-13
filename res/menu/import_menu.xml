@@ -6,7 +6,7 @@
         android:icon="@android:drawable/ic_menu_save"
         android:showAsAction="ifRoom|withText"
         android:title="@string/add_profile"
-        android:titleCondensed="@string/clear"/>
+        android:titleCondensed="@string/import_vpn"/>
     <item
         android:id="@+id/cancel"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"

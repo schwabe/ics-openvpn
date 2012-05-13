@@ -1608,6 +1608,15 @@ add_route_ipv6 (struct route_ipv6 *r6, const struct tuntap *tt, unsigned int fla
   argv_msg (D_ROUTE, &argv);
   status = openvpn_execve_check (&argv, es, 0, "ERROR: Linux route -6/-A inet6 add command failed");
 
+#elif defined (TARGET_ANDROID)
+    struct user_pass up;    
+    struct buffer out = alloc_buf_gc (64, &gc);
+    
+    buf_printf (&out, "%s/%d", network, r6->netbits);
+    
+    strcpy(up.username, buf_bptr(&out));
+    management_query_user_pass(management, &up , "ROUTE6", GET_USER_PASS_NEED_OK,(void*) 0);
+
 #elif defined (WIN32)
 
   /* netsh interface ipv6 add route 2001:db8::/32 MyTunDevice */

@@ -45,6 +45,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 	private String mDomain=null;
 
 	private Vector<CIDRIP> mRoutes=new Vector<CIDRIP>();
+	private Vector<String> mRoutesv6=new Vector<String>();
 
 	private CIDRIP mLocalIP=null;
 
@@ -52,6 +53,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 	private Thread mSocketManagerThread;
 	private int mMtu;
+	private String mLocalIPv6=null;
 
 
 
@@ -201,12 +203,20 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 	public ParcelFileDescriptor openTun() {
 		Builder builder = new Builder();
 		
-		if(mLocalIP==null) {
+		if(mLocalIP==null && mLocalIPv6==null) {
 			OpenVPN.logMessage(0, "", getString(R.string.opentun_no_ipaddr));
 			return null;
 		}
 		
-		builder.addAddress(mLocalIP.mIp, mLocalIP.len);
+		if(mLocalIP!=null) {
+			builder.addAddress(mLocalIP.mIp, mLocalIP.len);
+		}
+		
+		if(mLocalIPv6!=null) {
+			String[] ipv6parts = mLocalIPv6.split("/");
+			builder.addAddress(ipv6parts[0],Integer.parseInt(ipv6parts[1]));
+		}
+		
 
 		for (String dns : mDnslist ) {
 			builder.addDnsServer(dns);
@@ -223,16 +233,26 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 			}
 		}
 
+		for(String v6route:mRoutesv6) {
+			try {
+				String[] v6parts = v6route.split("/");
+				builder.addRoute(v6parts[0],Integer.parseInt(v6parts[1]));
+			} catch (IllegalArgumentException ia) {
+				OpenVPN.logMessage(0, "", getString(R.string.route_rejected) + v6route + " " + ia.getLocalizedMessage());
+			}
+		}
+		
 		if(mDomain!=null)
 			builder.addSearchDomain(mDomain);
 
-		String bconfig[] = new String[5];
+		String bconfig[] = new String[6];
 
 		bconfig[0]= getString(R.string.last_openvpn_tun_config);
-		bconfig[1] = String.format(getString(R.string.local_ip_info,mLocalIP.mIp,mLocalIP.len,mMtu));
+		bconfig[1] = String.format(getString(R.string.local_ip_info,mLocalIP.mIp,mLocalIP.len,mLocalIPv6, mMtu));
 		bconfig[2] = String.format(getString(R.string.dns_server_info, joinString(mDnslist)));
 		bconfig[3] = String.format(getString(R.string.dns_domain_info, mDomain));
 		bconfig[4] = String.format(getString(R.string.routes_info, joinString(mRoutes)));
+		bconfig[5] = String.format(getString(R.string.routes_info6, joinString(mRoutesv6)));
 
 		builder.setSession(mProfile.mName + " - " + mLocalIP);
 
@@ -242,7 +262,9 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		// Reset information
 		mDnslist.clear();
 		mRoutes.clear();
+		mRoutesv6.clear();
 		mLocalIP=null;
+		mLocalIPv6=null;
 		
 		// Let the configure Button show the Log
 		Intent intent = new Intent(getBaseContext(),LogWindow.class);
@@ -301,6 +323,10 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 		mRoutes.add(route);
 	}
+	
+	public void addRoutev6(String extra) {
+		mRoutesv6.add(extra);		
+	}
 
 
 	public void setLocalIP(String local, String netmask,int mtu) {
@@ -313,7 +339,13 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 	}
 
 
+	public void setLocalIPv6(String ipv6addr) {
+		mLocalIPv6 = ipv6addr;
+	}
+
+
 	public Handler getHandler() {
 		return mHandler;
 	}
+
 }

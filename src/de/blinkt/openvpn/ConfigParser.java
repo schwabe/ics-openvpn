@@ -337,7 +337,7 @@ public class ConfigParser {
 
 		}
 
-		Vector<Vector<String>> dhcpoptions = getAllOption("dhcp-options", 2, 2);
+		Vector<Vector<String>> dhcpoptions = getAllOption("dhcp-option", 2, 2);
 		if(dhcpoptions!=null) {
 			for(Vector<String> dhcpoption:dhcpoptions) {
 				String type=dhcpoption.get(1);
@@ -354,6 +354,12 @@ public class ConfigParser {
 			}
 		}
 
+		Vector<String> ifconfig = getOption("ifconfig", 2, 2);
+		if(ifconfig!=null) {
+			CIDRIP cidr = new CIDRIP(ifconfig.get(1), ifconfig.get(2));
+			np.mIPv4Address=cidr.toString();
+		}
+		
 		if(getOption("remote-random-hostname", 0, 0)!=null)
 			np.mUseRandomHostname=true;
 

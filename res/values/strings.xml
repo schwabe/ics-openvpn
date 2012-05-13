@@ -214,5 +214,7 @@
     <string name="import_configuration_file">Import configuration file</string>
     <string name="faq_security_title">Security considerations</string>
     <string name="faq_security">"As openvpn is security sensitive a few notes about security are sensible. All data on the sdcard is inherently unsecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the vpn profile. The vpn profiles are only accessable by this application. (Do not forget to delte the copies on the sdcard afterwards). Even though accessible only by this application the data is stil unecrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."</string>
-    <string name="import_vpn">Import</string>  
+    <string name="import_vpn">Import</string>
+    <string name="broken_image_cert_title">Error showing certificate selection</string>
+    <string name="broken_image_cert">Got an excption trying to show the Android 4.0+ certificate selction dialog. This should never happens as this a standard feature of Android 4.0+. Maybe your Android ROM support for certificate storage is broken</string>  
 </resources>

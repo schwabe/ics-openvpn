@@ -18,7 +18,7 @@
     <string name="file_name">Dateiname:</string>
     <string name="cancel">Abbrechen</string>
     <string name="create">Speichern</string>
-    <string name="no_data">Kein Daten</string>
+    <string name="no_data">Keine Daten</string>
     <string name="err">Fehler</string>
     <string name="usercert">Clientzertifikat</string>
     <string name="useLZO">LZO Komprimierung</string>

@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 import de.blinkt.openvpn.ConfigParser.ConfigParseError;
 
 public class ConfigConverter extends ListActivity {
@@ -29,7 +28,6 @@ public class ConfigConverter extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Toast.makeText(this, "Got called!", Toast.LENGTH_LONG).show();
 	}
 
 

@@ -53,7 +53,6 @@ public class FileSelect extends Activity {
 		inlineFileTab = bar.newTab().setText(R.string.inline_file_tab); 
 
 		mFSFragment = new FileSelectionFragment();
-		mFSFragment.setNoInLine();
 		fileExplorerTab.setTabListener(new MyTabsListener<FileSelectionFragment>(this, mFSFragment));
 		bar.addTab(fileExplorerTab);
 		
@@ -61,7 +60,9 @@ public class FileSelect extends Activity {
 			mInlineFragment = new InlineFileTab();
 			inlineFileTab.setTabListener(new MyTabsListener<InlineFileTab>(this, mInlineFragment));
 			bar.addTab(inlineFileTab);
-			}
+		} else {
+			mFSFragment.setNoInLine();
+		}
 
 		
 	}

@@ -148,7 +148,10 @@ public class VpnProfile implements  Serializable{
 		cfg+="tmp-dir ";
 		cfg+=cacheDir.getAbsolutePath();
 		cfg+="\n\n";
-		
+
+		cfg+="# Log window is better readable this way\n";
+		cfg+="suppress-timestamps\n";
+
 		
 
 		boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);

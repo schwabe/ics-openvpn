@@ -219,7 +219,8 @@ public class ConfigParser {
 			"route-gateway",
 			"topology",
 			"persist-tun",
-			"route-metric"
+			"route-metric",
+			"suppress-timestamps"
 			
 	};
 	

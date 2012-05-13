@@ -18,6 +18,14 @@
 
         <TextView
             style="@style/faqhead"
+            android:text="@string/faq_security_title" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/faq_security" />
+
+        <TextView
+            style="@style/faqhead"
             android:text="@string/faq_shortcut" />
 
         <TextView

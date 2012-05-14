@@ -8,7 +8,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 
-public class Settings_IP extends PreferenceFragment implements OnPreferenceChangeListener {
+public class Settings_IP extends OpenVpnPreferencesFragment implements OnPreferenceChangeListener {
 		private EditTextPreference mIPv4;
 		private EditTextPreference mIPv6;
 		private SwitchPreference mUsePull;
@@ -18,7 +18,6 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 		private EditTextPreference mDNS2;
 		private EditTextPreference mCustomRoutes;
 		private CheckBoxPreference mUseDefaultRoute;
-		private VpnProfile mProfile;
 		private CheckBoxPreference mRouteNoPull;
 		private CheckBoxPreference mNobind;
 
@@ -26,10 +25,7 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			
-			String profileUUID = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-			mProfile = ProfileManager.get(profileUUID);
-
-			
+		
 			// Make sure default values are applied.  In a real app, you would
 			// want this in a shared function that is used to retrieve the
 			// SharedPreferences wherever they are needed.
@@ -62,7 +58,8 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 			loadSettings();
 		}
 
-		private void loadSettings() {
+		@Override
+		protected void loadSettings() {
 		
 			mUsePull.setChecked(mProfile.mUsePull);
 			mIPv4.setText(mProfile.mIPv4Address);
@@ -74,6 +71,7 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 			mUseDefaultRoute.setChecked(mProfile.mUseDefaultRoute);
 			mCustomRoutes.setText(mProfile.mCustomRoutes);
 			mRouteNoPull.setChecked(mProfile.mRoutenopull);
+			mNobind.setChecked(mProfile.mNobind);
 			
 			// Sets Summary
 			onPreferenceChange(mIPv4, mIPv4.getText());
@@ -86,18 +84,9 @@ public class Settings_IP extends PreferenceFragment implements OnPreferenceChang
 			setDNSState();
 		}
 		
-		public void onSaveInstanceState (Bundle outState) {
-			saveSettings();
-		}
 		
 		@Override
-		public void onStop() {
-			saveSettings();
-			super.onStop();
-			
-		}
-		
-		private void saveSettings() {
+		protected void saveSettings() {
 			mProfile.mUsePull = mUsePull.isChecked();
 			mProfile.mIPv4Address = mIPv4.getText();
 			mProfile.mIPv6Address = mIPv6.getText();

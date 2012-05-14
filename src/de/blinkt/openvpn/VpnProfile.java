@@ -557,6 +557,11 @@ public class VpnProfile implements  Serializable{
 	}
 
 
+	public String getUUIDString() {
+		return mUuid.toString();
+	}
+
+
 
 }
 

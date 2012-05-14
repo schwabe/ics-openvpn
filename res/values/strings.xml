@@ -58,7 +58,7 @@
     <string name="copyright_blinktgui">Copyright 2012\nArne Schwabe &lt;arne@rfc2549.org></string>
     <string name="copyright_guicode">Source code and issue tracker available under http://code.google.com/p/ics-openvpn/ </string>
     <string name="copyright_others">The program uses the following components. See the source for full details on the licenses</string>
-    <string name="copyright_file_dialog">File Dialog for the Android\nAlexander Ponomarev"</string>
+    <string name="copyright_file_dialog">File Dialog based on work by Alexander Ponomarev"</string>
     <string name="lzo_copyright">Copyright © 1996 – 2011 Markus Franz Xaver Johannes Oberhumer</string>
     <string name="copyright_openssl">
         This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit\n

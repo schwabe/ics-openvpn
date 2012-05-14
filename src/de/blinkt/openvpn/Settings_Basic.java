@@ -93,9 +93,9 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 
 	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		String profileuuid =getArguments().getString(getActivity().getPackageName() + ".profileUUID");
 		mProfile=ProfileManager.get(profileuuid);
-		super.onCreate(savedInstanceState);
 	}
 
 	@Override
@@ -129,8 +129,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		addFileSelectLayout(mpkcs12);
 		mpkcs12.setNoline();
 
-		loadPreferences();
-
+	
 		mType.setOnItemSelectedListener(this);
 
 		mView.findViewById(R.id.select_keystore_button).setOnClickListener(this);
@@ -143,6 +142,15 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		return mView;
 	}
 
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		String profileuuid =getArguments().getString(getActivity().getPackageName() + ".profileUUID");
+		mProfile=ProfileManager.get(profileuuid);
+		loadPreferences();
+
+	}
 
 	@Override
 	public void onActivityResult(int request, int result, Intent data) {
@@ -158,7 +166,6 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		((VPNPreferences) getActivity()).setmBS(this);
 	}
 
 	@Override
@@ -166,6 +173,11 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		if (parent == mType) {
 			changeType(position);
 		}
+	}
+	@Override
+	public void onPause() {
+		super.onPause();
+		savePreferences();
 	}
 
 
@@ -298,7 +310,9 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		savePreferences();
-		outState.putString(getActivity().getPackageName() + "profileUUID", mProfile.getUUID().toString());
+		if(mProfile!=null) {
+			outState.putString(getActivity().getPackageName() + "profileUUID", mProfile.getUUID().toString());
+		}
 	}
 
 	@Override

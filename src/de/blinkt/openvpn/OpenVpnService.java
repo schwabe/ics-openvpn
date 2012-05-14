@@ -159,27 +159,6 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		return START_NOT_STICKY;
 	}
 
-
-
-
-
-	private void checkForRemainingMiniVpns() {
-		 ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-	      if (manager == null)
-	    	  return;
-		List<RunningAppProcessInfo> service= manager.getRunningAppProcesses();
-		// Does not return the minivpn binarys :S
-		for(RunningAppProcessInfo rapi:service){
-			if(rapi.processName.equals("minivpn"))
-				android.os.Process.killProcess(rapi.pid);
-		}
-	}
-
-
-
-
-
-
 	@Override
 	public void onDestroy() {
 		if (mServiceThread != null) {
@@ -254,7 +233,12 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		bconfig[4] = String.format(getString(R.string.routes_info, joinString(mRoutes)));
 		bconfig[5] = String.format(getString(R.string.routes_info6, joinString(mRoutesv6)));
 
-		builder.setSession(mProfile.mName + " - " + mLocalIP);
+		String session = mProfile.mName;
+		if(mLocalIP!=null)
+			session+= " - " + mLocalIP;
+		if(mLocalIPv6!=null)
+			session+= " - " + mLocalIPv6;
+		builder.setSession(session);
 
 
 		OpenVPN.logBuilderConfig(bconfig);

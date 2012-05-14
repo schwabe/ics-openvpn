@@ -17,14 +17,10 @@
 package de.blinkt.openvpn;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Vector;
 
 
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;

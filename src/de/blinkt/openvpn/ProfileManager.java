@@ -87,9 +87,12 @@ public class ProfileManager {
 		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
+			throw new RuntimeException(e);
 		} catch (IOException e) {
 
 			e.printStackTrace();
+			throw new RuntimeException(e);
+
 		}
 	}
 	
@@ -98,6 +101,7 @@ public class ProfileManager {
 		profiles = new HashMap<String, VpnProfile>();
 		SharedPreferences settings =context.getSharedPreferences(PREFS_NAME,Activity.MODE_PRIVATE);
 		Set<String> vlist = settings.getStringSet("vpnlist", null);
+		Exception exp =null;
 		if(vlist==null){
 			vlist = new HashSet<String>();
 		}
@@ -110,13 +114,16 @@ public class ProfileManager {
 				profiles.put(vp.getUUID().toString(), vp);
 
 			} catch (StreamCorruptedException e) {
-				e.printStackTrace();
+				exp=e;
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				exp=e;
 			} catch (IOException e) {
-				e.printStackTrace();
+				exp=e;
 			} catch (ClassNotFoundException e) { 
-				e.printStackTrace();
+				exp=e;
+			}
+			if(exp!=null) {
+				exp.printStackTrace();
 			}
 		}
 	}

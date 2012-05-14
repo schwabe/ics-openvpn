@@ -38,7 +38,7 @@ public class OpenVpnManagementThread implements Runnable {
 			mSocket.getOutputStream().write(cmd.getBytes());
 			mSocket.getOutputStream().flush();
 		} catch (IOException e) {
-			e.printStackTrace();
+			// Ignore socket stack traces
 		}
 	}
 
@@ -68,6 +68,7 @@ public class OpenVpnManagementThread implements Runnable {
 				try {
 					fds = mSocket.getAncillaryFileDescriptors();
 				} catch (IOException e) {
+					OpenVPN.logMessage(0, "", "Error reading fds from socket" + e.getLocalizedMessage());
 					e.printStackTrace();
 				}
 				if(fds!=null){
@@ -95,30 +96,35 @@ public class OpenVpnManagementThread implements Runnable {
 
 	//! Hack O Rama 2000!
 	private void protectFileDescriptor(FileDescriptor fd) {
+		Exception exp=null;
 		try {
 			Method getInt = FileDescriptor.class.getDeclaredMethod("getInt$");
 			int fdint = (Integer) getInt.invoke(fd);
 
 			// You can even get more evil by parsing toString() and extract the int from that :)
-			
+
 			Log.d("Openvpn", "Got FD from socket: " + fd + " " + fdint);
 
 			mOpenVPNService.protect(fdint);
-			
+
 			//ParcelFileDescriptor pfd = ParcelFileDescriptor.fromFd(fdint);
 			//pfd.close();
 			jniclose(fdint);
 			return;
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			exp =e;
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			exp =e;
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			exp =e;
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			exp =e;
 		}
-		Log.d("Openvpn", "Failed to retrieve fd from socket: " + fd);
+		if(exp!=null) {
+			exp.printStackTrace();
+			Log.d("Openvpn", "Failed to retrieve fd from socket: " + fd);
+			OpenVPN.logMessage(0, "",  "Failed to retrieve fd from socket: " + exp.getLocalizedMessage());
+		}
 	}
 
 	private String processInput(String pendingInput) {
@@ -200,7 +206,7 @@ public class OpenVpnManagementThread implements Runnable {
 			mOpenVPNService.setLocalIP(ifconfigparts[0], ifconfigparts[1],mtu);
 		} else if (needed.equals("IFCONFIG6")) {
 			mOpenVPNService.setLocalIPv6(extra);
-		
+
 		} else if (needed.equals("OPENTUN")) {
 			if(sendTunFD(needed,extra))
 				return;
@@ -218,11 +224,12 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 
 	private boolean sendTunFD (String needed, String extra) {
+		Exception exp = null;
 		if(!extra.equals("tun")) {
 			// We only support tun
 			String errmsg = String.format("Devicetype %s requested, but only tun is possible with the Android API, sorry!",extra);
 			OpenVPN.logMessage(0, "", errmsg );
-					
+
 			return false;
 		}
 		ParcelFileDescriptor pfd = mOpenVPNService.openTun(); 
@@ -236,33 +243,37 @@ public class OpenVpnManagementThread implements Runnable {
 			FileDescriptor fdtosend = new FileDescriptor();
 
 			setInt.invoke(fdtosend,fdint);
-			
+
 			FileDescriptor[] fds = {fdtosend};
 			mSocket.setFileDescriptorsForSend(fds);
-			
+
 			Log.d("Openvpn", "Sending FD tosocket: " + fdtosend + " " + fdint + "  " + pfd);
 			// Trigger a send so we can close the fd on our side of the channel
 			// The API documentation fails to mention that it will not reset the file descriptor to
 			// be send and will happily send the file descriptor on every write ...
 			String cmd = String.format("needok '%s' %s\n", needed, "ok");
 			managmentCommand(cmd);
-			
+
 			// Set the FileDescriptor to null to stop this mad behavior 
 			mSocket.setFileDescriptorsForSend(null);
-			
+
 			pfd.close();			
 
 			return true;
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			exp =e;
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			exp =e;
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			exp =e;
 		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+			exp =e;
 		} catch (IOException e) {
-			e.printStackTrace();
+			exp =e;
+		}
+		if(exp!=null) {
+			OpenVPN.logMessage(0,"", "Could not send fd over socket:" + exp.getLocalizedMessage());
+			exp.printStackTrace();
 		}
 		return false;
 	}
@@ -274,9 +285,15 @@ public class OpenVpnManagementThread implements Runnable {
 
 	private void processPWCommand(String argument) {
 		//argument has the form 	Need 'Private Key' password
-		int p1 =argument.indexOf('\'');
-		int p2 = argument.indexOf('\'',p1+1);
-		//String needed = argument.replace("Need '", "").replace("' password", "");
+		int p1,p2;
+		try{
+			p1 =argument.indexOf('\'');
+			p2 = argument.indexOf('\'',p1+1);
+			//String needed = argument.replace("Need '", "").replace("' password", "");
+		} catch (StringIndexOutOfBoundsException sioob) {
+			OpenVPN.logMessage(0, "", "Could not parse management Password command: "  + argument);
+			return;
+		}
 		String needed = argument.substring(p1+1, p2);
 
 		String pw=null;
@@ -313,7 +330,7 @@ public class OpenVpnManagementThread implements Runnable {
 			try {
 				mt.mSocket.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				// Ignore close error on maybe already closed socket
 			}
 		}
 		return sendCMD;		

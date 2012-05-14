@@ -1,7 +1,4 @@
 Ideas:
- - implement security notice fragment
-   - explain plain text storage of all data except for android keystore
-   - explain even more insecure of storage on sd card
   
 - implement a small app that can do cert+key+ca => p12 or suggest an app on the market
    - Implementation in ICS OpenVpn would require SD_WRITE permission which I would like to avoid
@@ -20,12 +17,10 @@ Ideas:
 Missing configuration options:
 
 IPv6 support:
-- Enable IPv6 (tun-ipv6)
-- Implementing/testing IPv6 route/ifconfig/DNS Server 
+- Make GUI IPv6 fit
+- fix bogus tun-ipv6 warning
 
 Tap support:
-- People still ask how to do tap support. :(
-- Put statements that tap is not supported everywhere.
 - Actually it is possible to emulate tap with tun device, a minimal implementation would have to do:
    - generate random mac
    - strip macs header on receive

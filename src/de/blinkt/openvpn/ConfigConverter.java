@@ -44,6 +44,8 @@ public class ConfigConverter extends ListActivity {
 			Intent result = new Intent();
 			ProfileManager vpl = ProfileManager.getInstance(this);
 			vpl.addProfile(mResult);
+			vpl.saveProfile(this, mResult);
+			vpl.saveProfileList(this);
 			result.putExtra(VpnProfile.EXTRA_PROFILEUUID,mResult.getUUID().toString());
 			setResult(Activity.RESULT_OK, result);
 			finish();

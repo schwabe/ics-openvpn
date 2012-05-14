@@ -9,10 +9,6 @@ import android.preference.PreferenceActivity;
 public class VPNPreferences extends PreferenceActivity {
 
 	private String mProfileUUID;
-	private Settings_Basic mBS;
-	public void setmBS(Settings_Basic mBS) {
-		this.mBS = mBS;
-	}
 
 	public VPNPreferences() {
 		super();
@@ -20,13 +16,7 @@ public class VPNPreferences extends PreferenceActivity {
 	}
 	
 
-	protected void onPause() {
-		super.onPause();
-		if(mBS!=null)
-			mBS.savePreferences();
 
-	}
-	
 	
 	@Override
 	protected void onStop() {
@@ -39,14 +29,6 @@ public class VPNPreferences extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		mProfileUUID = getIntent().getStringExtra(getPackageName() + ".profileUUID");
 		super.onCreate(savedInstanceState);
-
-
-				
-		/* if (hasHeaders()) {
-			Button button = new Button(this);
-			button.setText("Save");
-			setListFooter(button);
-		} */
 	}
 	
 	

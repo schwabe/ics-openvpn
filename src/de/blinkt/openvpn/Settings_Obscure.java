@@ -6,10 +6,8 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceFragment;
 
-public class Settings_Obscure extends PreferenceFragment implements OnPreferenceChangeListener {
-	private VpnProfile mProfile;
+public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPreferenceChangeListener {
 	private CheckBoxPreference mUseRandomHostName;
 	private CheckBoxPreference mUseFloat;
 	private CheckBoxPreference mUseCustomConfig;
@@ -22,9 +20,6 @@ public class Settings_Obscure extends PreferenceFragment implements OnPreference
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.vpn_obscure);
 		
-		String profileUUID = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		mProfile = ProfileManager.get(profileUUID);
-
 		
 		mUseRandomHostName = (CheckBoxPreference) findPreference("useRandomHostname");
 		mUseFloat = (CheckBoxPreference) findPreference("useFloat");
@@ -39,7 +34,7 @@ public class Settings_Obscure extends PreferenceFragment implements OnPreference
 
 	}
 	
-	private void loadSettings() {
+	protected void loadSettings() {
 		mUseRandomHostName.setChecked(mProfile.mUseRandomHostname);
 		mUseFloat.setChecked(mProfile.mUseFloat);
 		mUseCustomConfig.setChecked(mProfile.mUseCustomConfig);
@@ -49,13 +44,8 @@ public class Settings_Obscure extends PreferenceFragment implements OnPreference
 		onPreferenceChange(mLogverbosity, mProfile.mVerb);
 	}
 
-	@Override
-	public void onPause() {
-		saveSettings();
-		super.onPause();
-	}
 
-	private void saveSettings() {
+	protected void saveSettings() {
 		mProfile.mUseRandomHostname = mUseRandomHostName.isChecked();
 		mProfile.mUseFloat = mUseFloat.isChecked();
 		mProfile.mUseCustomConfig = mUseCustomConfig.isChecked();

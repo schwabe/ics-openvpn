@@ -13,12 +13,11 @@ import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 
 
-public class Settings_Authentication extends PreferenceFragment implements OnPreferenceChangeListener, OnPreferenceClickListener {
+public class Settings_Authentication extends OpenVpnPreferencesFragment implements OnPreferenceChangeListener, OnPreferenceClickListener {
 	private static final int SELECT_TLS_FILE = 23223232;
 	private CheckBoxPreference mExpectTLSCert;
 	private CheckBoxPreference mCheckRemoteCN;
 	private EditTextPreference mRemoteCN;
-	private VpnProfile mProfile;
 	private ListPreference mTLSAuthDirection;
 	private Preference mTLSAuthFile;
 	private SwitchPreference mUseTLSAuth;
@@ -41,8 +40,7 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 		mTLSAuthFile = findPreference("tlsAuthFile");
 		mTLSAuthDirection = (ListPreference) findPreference("tls_direction");
 		
-		String profileUUID = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		mProfile = ProfileManager.get(profileUUID);
+		
 		mTLSAuthFile.setOnPreferenceClickListener(this);		
 		
 		mCipher =(EditTextPreference) findPreference("cipher");
@@ -52,7 +50,8 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 
 	}
 
-	private void loadSettings() {
+	@Override
+	protected void loadSettings() {
 		
 		mExpectTLSCert.setChecked(mProfile.mExpectTLSCert);
 		mCheckRemoteCN.setChecked(mProfile.mCheckRemoteCN);
@@ -67,7 +66,8 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 		onPreferenceChange(mCipher, mProfile.mCipher);
 	}
 	
-	private void saveSettings() {
+	@Override
+	protected void saveSettings() {
 		mProfile.mExpectTLSCert=mExpectTLSCert.isChecked();
 		mProfile.mCheckRemoteCN=mCheckRemoteCN.isChecked();
 		mProfile.mRemoteCN=mRemoteCN.getText();
@@ -87,11 +87,7 @@ public class Settings_Authentication extends PreferenceFragment implements OnPre
 		
 	}
 	
-	@Override
-	public void onPause() {
-		super.onPause();
-		saveSettings();
-	}
+	
 
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {

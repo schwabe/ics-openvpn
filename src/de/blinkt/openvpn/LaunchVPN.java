@@ -237,6 +237,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			minivpnwritten=true;
 			return true;
 		} catch (IOException e) {
+			OpenVPN.logMessage(0, "",e.getLocalizedMessage());
 			e.printStackTrace();
 			return false;
 		}

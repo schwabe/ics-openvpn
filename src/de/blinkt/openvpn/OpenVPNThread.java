@@ -106,6 +106,7 @@ public class OpenVPNThread implements Runnable {
 		
 		
 		} catch (IOException e) {
+			OpenVPN.logMessage(0, "", "Error reading from output of OpenVPN process"+ e.getLocalizedMessage());
 			e.printStackTrace();
 			stopProcess();
 		}

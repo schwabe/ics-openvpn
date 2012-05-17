@@ -125,7 +125,7 @@
     <string name="check_remote_tlscert_title">Except TLS Server</string>
     <string name="remote_tlscn_check_summary">Checks the Remote Server Certificate CN against a String</string>
     <string name="remote_tlscn_check_title">Certificate Hostname Check</string>
-    <string name="enter_tlscn_dialog">Enter the String against which the remote Server is checked. Openvpn will use prefix matching. &amp;quot;Server&amp;quot; matches &amp;quot;Server-1&amp;quot; and &amp;quot;Server-2&amp;quot;\\nLeave empty to check the CN against the server hostname.</string>
+    <string name="enter_tlscn_dialog">Enter the String against which the remote Server is checked. Openvpn will use prefix matching. &quot;Server&quot; matches &quot;Server-1&quot; and &quot;Server-2&quot;\\nLeave empty to check the CN against the server hostname.</string>
     <string name="enter_tlscn_title">Remote Hostname(CN)</string>
     <string name="tls_key_auth">Enables the TLS Key Authentication</string>
     <string name="tls_auth_file">TLS Auth File</string>
@@ -145,7 +145,7 @@
     <string name="ignore_routes_summary">Ignore routed pushed by the server.</string>
     <string name="default_route_summary">Redirects all Traffic over the VPN</string>
     <string name="use_default_title">Use default Route</string>
-    <string name="custom_route_message">Enter custom routes. Only enter destination in CIDR format. &amp;quot;10.0.0.0/8 2002::/16&amp;quot; would direct the networks 10.0.0.0/8 and 2002::/16 over the VPN.</string>
+    <string name="custom_route_message">Enter custom routes. Only enter destination in CIDR format. &quot;10.0.0.0/8 2002::/16&quot; would direct the networks 10.0.0.0/8 and 2002::/16 over the VPN.</string>
     <string name="custom_routes_title">Custom Routes</string>
     <string name="log_verbosity_level">Log verbosity level</string>
     <string name="float_summary">Allows authenticated packets from any IP</string>
@@ -216,5 +216,9 @@
     <string name="faq_security">"As openvpn is security sensitive a few notes about security are sensible. All data on the sdcard is inherently unsecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the vpn profile. The vpn profiles are only accessable by this application. (Do not forget to delte the copies on the sdcard afterwards). Even though accessible only by this application the data is stil unecrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."</string>
     <string name="import_vpn">Import</string>
     <string name="broken_image_cert_title">Error showing certificate selection</string>
-    <string name="broken_image_cert">Got an excption trying to show the Android 4.0+ certificate selction dialog. This should never happens as this a standard feature of Android 4.0+. Maybe your Android ROM support for certificate storage is broken</string>  
+    <string name="broken_image_cert">Got an excption trying to show the Android 4.0+ certificate selction dialog. This should never happens as this a standard feature of Android 4.0+. Maybe your Android ROM support for certificate storage is broken</string>
+    <string name="ipv4">IPv4</string>
+    <string name="ipv6">IPv6</string>
+    <string name="use_default_titlev6">TODO</string>
+    <string name="speed_waiting">Waiting byte count message</string>  
 </resources>

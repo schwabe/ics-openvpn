@@ -18,7 +18,10 @@ public class OpenVpnManagementThread implements Runnable {
 	private LocalSocket mSocket;
 	private VpnProfile mProfile;
 	private OpenVpnService mOpenVPNService;
-	private LinkedList<FileDescriptor> mFDList=new LinkedList<FileDescriptor>(); 
+	private LinkedList<FileDescriptor> mFDList=new LinkedList<FileDescriptor>();
+	private int mBytecountinterval=2;
+	private long mLastIn=0; 
+	private long mLastOut=0; 
 
 	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
 
@@ -157,9 +160,11 @@ public class OpenVpnManagementThread implements Runnable {
 				processPWCommand(argument);
 			} else if (cmd.equals("HOLD")) {
 				managmentCommand("hold release\n");
-				//managmentCommand("log on\n");
+				managmentCommand("bytecount " + mBytecountinterval + "\n");
 			} else if (cmd.equals("NEED-OK")) {
 				processNeedCommand(argument);
+			} else if (cmd.equals("BYTECOUNT")){
+				processByteCount(argument);
 			} else if (cmd.equals("LOG")) {
 				String[] args = argument.split(",",3);
 				// 0 unix time stamp
@@ -178,6 +183,37 @@ public class OpenVpnManagementThread implements Runnable {
 		}
 	}
 
+	private void processByteCount(String argument) {
+		//   >BYTECOUNT:{BYTES_IN},{BYTES_OUT}
+		int comma = argument.indexOf(',');
+		long in = Long.parseLong(argument.substring(0, comma));
+		long out = Long.parseLong(argument.substring(comma+1));
+		
+		long diffin = in - mLastIn; 
+		long diffout = out - mLastOut;
+		
+		mLastIn=in;
+		mLastOut=out;
+		
+		String netstat = String.format("In: %8s, %8s/s     Out %8s, %8s/s  ",
+				humanReadableByteCount(in, false),
+				humanReadableByteCount(diffin, false),
+				humanReadableByteCount(out, false),
+				humanReadableByteCount(diffout, false));
+		OpenVPN.updateSpeedString(netstat);
+				
+		
+	}
+
+	// From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
+	public static String humanReadableByteCount(long bytes, boolean si) {
+	    int unit = si ? 1000 : 1024;
+	    if (bytes < unit) return bytes + " B";
+	    int exp = (int) (Math.log(bytes) / Math.log(unit));
+	    String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
+	    return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+	}
+	
 	private void processNeedCommand(String argument) {
 		int p1 =argument.indexOf('\'');
 		int p2 = argument.indexOf('\'',p1+1);

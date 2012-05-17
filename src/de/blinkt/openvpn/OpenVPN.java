@@ -10,12 +10,16 @@ public class OpenVPN {
 	public static LinkedList<String> logbuffer = new LinkedList<String>();
 	
 	private static Vector<LogListener> logListener=new Vector<OpenVPN.LogListener>();
+	private static Vector<SpeedListener> speedListener=new Vector<OpenVPN.SpeedListener>();
 	private static String[] mBconfig;
 
 	public interface LogListener {
 		void newLog(String logmessage);
 	}
 	
+	public interface SpeedListener {
+		void updateSpeed(String logmessage);
+	}
 
 	synchronized static void logMessage(int level,String prefix, String message)
 	{
@@ -41,6 +45,16 @@ public class OpenVPN {
 		logListener.remove(ll);
 	}
 
+	
+	synchronized static void addSpeedListener(SpeedListener sl){
+		speedListener.add(sl);
+	}
+
+	synchronized static void removeSpeedListener(SpeedListener sl) {
+		speedListener.remove(sl);
+	}
+
+
 
 	synchronized public static String[] getlogbuffer() {
 
@@ -61,5 +75,11 @@ public class OpenVPN {
 			}	
 		}
 
+	}
+
+	public static void updateSpeedString(String msg) {
+		for (SpeedListener sl : speedListener) {
+			sl.updateSpeed(msg);
+		}
 	}
 }

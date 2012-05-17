@@ -4,9 +4,9 @@
     <SwitchPreference
         android:disableDependentsState="true"
         android:key="usePull"
-        android:title="@string/use_pull" 
+        android:summaryOff="@string/pull_off_summary"
         android:summaryOn="@string/pull_on_summary"
-    	android:summaryOff="@string/pull_off_summary" />
+        android:title="@string/use_pull" />
 
     <PreferenceCategory android:title="IP" >
         <EditTextPreference
@@ -17,15 +17,15 @@
         <EditTextPreference
             android:dependency="usePull"
             android:dialogMessage="@string/ipv6_dialog_tile"
+            android:enabled="false"
             android:key="ipv6_address"
-            android:title="@string/ipv6_address" 
-            android:enabled="false"/>
-        <CheckBoxPreference 
-            android:title="@string/no_bind"
-            android:summary="@string/nobind_summary"
-            android:persistent="false"
-            android:key="nobind" />
+            android:title="@string/ipv6_address" />
 
+        <CheckBoxPreference
+            android:key="nobind"
+            android:persistent="false"
+            android:summary="@string/nobind_summary"
+            android:title="@string/no_bind" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/dns" >
         <CheckBoxPreference
@@ -37,32 +37,13 @@
             android:key="searchdomain"
             android:title="@string/searchdomain" />
         <EditTextPreference
-            android:key="dns1"
             android:dialogMessage="@string/dns1_summary"
+            android:key="dns1"
             android:title="@string/dns_server" />
         <EditTextPreference
-            android:key="dns2"
             android:dialogMessage="@string/secondary_dns_message"
+            android:key="dns2"
             android:title="@string/backup_dns" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="Routing" >
-        <CheckBoxPreference
-			android:title="@string/ignored_pushed_routes"
-			android:key="routenopull"
-			android:summary="@string/ignore_routes_summary"
-
-            />
-        <CheckBoxPreference
-            android:disableDependentsState="true"
-            android:key="useDefaultRoute"
-            android:summary="@string/default_route_summary"
-            android:title="@string/use_default_title" />
-
-        <EditTextPreference
-            android:dependency="useDefaultRoute"
-            android:dialogMessage="@string/custom_route_message"
-            android:key="customRoutes"
-            android:title="@string/custom_routes_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

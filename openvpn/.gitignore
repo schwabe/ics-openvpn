@@ -49,3 +49,4 @@ doc/openvpn.8.html
 distro/rpm/openvpn.spec
 tests/t_client.sh
 src/openvpn/openvpn
+xcopenvpn

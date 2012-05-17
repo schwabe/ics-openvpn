@@ -16,9 +16,6 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 		private EditTextPreference mSearchdomain;
 		private EditTextPreference mDNS1;
 		private EditTextPreference mDNS2;
-		private EditTextPreference mCustomRoutes;
-		private CheckBoxPreference mUseDefaultRoute;
-		private CheckBoxPreference mRouteNoPull;
 		private CheckBoxPreference mNobind;
 
 		@Override
@@ -41,9 +38,6 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 			mSearchdomain =(EditTextPreference) findPreference("searchdomain");
 			mDNS1 = (EditTextPreference) findPreference("dns1");
 			mDNS2 = (EditTextPreference) findPreference("dns2");
-			mCustomRoutes = (EditTextPreference) findPreference("customRoutes");
-			mUseDefaultRoute = (CheckBoxPreference) findPreference("useDefaultRoute");
-			mRouteNoPull = (CheckBoxPreference) findPreference("routenopull");
 			mNobind = (CheckBoxPreference) findPreference("nobind");
 
 			mIPv4.setOnPreferenceChangeListener(this);
@@ -53,7 +47,6 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 			mUsePull.setOnPreferenceChangeListener(this);
 			mOverrideDNS.setOnPreferenceChangeListener(this);
 			mSearchdomain.setOnPreferenceChangeListener(this);
-			mCustomRoutes.setOnPreferenceChangeListener(this);
 						
 			loadSettings();
 		}
@@ -68,9 +61,6 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 			mDNS2.setText(mProfile.mDNS2);
 			mOverrideDNS.setChecked(mProfile.mOverrideDNS);
 			mSearchdomain.setText(mProfile.mSearchDomain);
-			mUseDefaultRoute.setChecked(mProfile.mUseDefaultRoute);
-			mCustomRoutes.setText(mProfile.mCustomRoutes);
-			mRouteNoPull.setChecked(mProfile.mRoutenopull);
 			mNobind.setChecked(mProfile.mNobind);
 			
 			// Sets Summary
@@ -79,8 +69,7 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 			onPreferenceChange(mDNS1, mDNS1.getText());
 			onPreferenceChange(mDNS2, mDNS2.getText());
 			onPreferenceChange(mSearchdomain, mSearchdomain.getText());
-			onPreferenceChange(mCustomRoutes, mCustomRoutes.getText());
-						
+									
 			setDNSState();
 		}
 		
@@ -94,9 +83,6 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 			mProfile.mDNS2 = mDNS2.getText();
 			mProfile.mOverrideDNS = mOverrideDNS.isChecked();
 			mProfile.mSearchDomain = mSearchdomain.getText();
-			mProfile.mUseDefaultRoute = mUseDefaultRoute.isChecked();
-			mProfile.mCustomRoutes = mCustomRoutes.getText();
-			mProfile.mRoutenopull = mRouteNoPull.isChecked();
 			mProfile.mNobind = mNobind.isChecked();
 			
 		}
@@ -106,7 +92,7 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 				Object newValue) {
 			if(preference==mIPv4 || preference == mIPv6 
 					 || preference==mDNS1 || preference == mDNS2
-					 || preference == mSearchdomain || preference == mCustomRoutes
+					 || preference == mSearchdomain 
 					)
 			
 				preference.setSummary((String)newValue);
@@ -125,7 +111,6 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 		private void setDNSState() {
 			boolean enabled;
 			mOverrideDNS.setEnabled(mUsePull.isChecked());
-			mRouteNoPull.setEnabled(mUsePull.isChecked());
 			if(!mUsePull.isChecked())
 				enabled =true;
 			else if (mOverrideDNS.isChecked())

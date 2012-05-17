@@ -91,6 +91,8 @@ public class VpnProfile implements  Serializable{
 	public String mVerb="1";
 	public String mCipher="";
 	public boolean mNobind=false;
+	public boolean mUseDefaultRoutev6=true;
+	public String mCustomRoutesv6="";
 
 
 	public void clearDefaults() {
@@ -231,7 +233,7 @@ public class VpnProfile implements  Serializable{
 
 		if(mUseTLSAuth) {
 			if(mAuthenticationType==TYPE_STATICKEYS)
-				cfg+=insertFileData("scecret",mTLSAuthFilename);
+				cfg+=insertFileData("secret",mTLSAuthFilename);
 			else
 				cfg+=insertFileData("tls-auth",mTLSAuthFilename);
 			cfg+=" ";
@@ -243,9 +245,12 @@ public class VpnProfile implements  Serializable{
 			cfg+="\n";
 		}
 
-		// Basic Settings
 		if(!mUsePull ) {
-			cfg +="ifconfig " + cidrToIPAndNetmask(mIPv4Address) + "\n";
+			if(nonNull(mIPv4Address))
+				cfg +="ifconfig " + cidrToIPAndNetmask(mIPv4Address) + "\n";
+			
+			if(nonNull(mIPv6Address))
+				cfg +="ifconfig-ipv6 " + mIPv6Address + "\n";
 		}
 
 		if(mUsePull && mRoutenopull)
@@ -258,6 +263,13 @@ public class VpnProfile implements  Serializable{
 				cfg += "route " + route + "\n";
 			}
 
+		
+		if(mUseDefaultRoutev6)
+			cfg += "route-ipv6 ::/0\n";
+		else
+			for(String route:getCustomRoutesv6()) {
+				cfg += "route-ipv6 " + route + "\n";
+			}
 
 		if(mOverrideDNS || !mUsePull) {
 			if(!mDNS1.equals("") && mDNS1!=null)
@@ -346,6 +358,23 @@ public class VpnProfile implements  Serializable{
 		return cidrRoutes;
 	}
 
+	private Collection<String> getCustomRoutesv6() {
+		Vector<String> cidrRoutes=new Vector<String>();
+		if(mCustomRoutesv6==null) {
+			// No routes set, return empty vector
+			return cidrRoutes;
+		}
+		for(String route:mCustomRoutesv6.split("[\n \t]")) {
+			if(!route.equals("")) {
+				cidrRoutes.add(route);
+			}
+		}
+
+		return cidrRoutes;
+	}
+
+	
+	
 	private String cidrToIPAndNetmask(String route) {
 		String[] parts = route.split("/");
 

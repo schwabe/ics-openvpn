@@ -29,9 +29,6 @@ public class FileSelectionFragment extends ListFragment {
 	private static final String ITEM_KEY = "key";
 	private static final String ITEM_IMAGE = "image";
 	private static final String ROOT = "/";
-
-
-
     
     
 	private List<String> path = null;

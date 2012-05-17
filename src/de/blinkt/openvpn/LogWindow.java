@@ -28,8 +28,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.blinkt.openvpn.OpenVPN.LogListener;
+import de.blinkt.openvpn.OpenVPN.SpeedListener;
 
-public class LogWindow extends ListActivity  {
+public class LogWindow extends ListActivity implements SpeedListener  {
 	private String[] mBconfig=null;
 
 
@@ -190,6 +191,7 @@ public class LogWindow extends ListActivity  {
 
 
 	private LogWindowListAdapter ladapter;
+	private TextView mSpeedView;
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -228,12 +230,23 @@ public class LogWindow extends ListActivity  {
 		return true;
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		OpenVPN.addSpeedListener(this);
+	}
 
+	@Override
+	protected void onStop() {
+		super.onStop();
+		OpenVPN.removeSpeedListener(this);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		setContentView(R.layout.logwindow);
 		ListView lv = getListView();
 		
 		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -249,12 +262,29 @@ public class LogWindow extends ListActivity  {
 				return true;
 			}
 		});
-		//lv.setTextFilterEnabled(true);
+
 		ladapter = new LogWindowListAdapter();
 		lv.setAdapter(ladapter);
 
+		mSpeedView = (TextView) findViewById(R.id.speed);
 	}
 
-
+	@Override
+	public void updateSpeed(final String logmessage) {
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				mSpeedView.setText(logmessage);
+			}
+		});
+		
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		OpenVPN.removeLogListener(ladapter);
+	}
 
 }

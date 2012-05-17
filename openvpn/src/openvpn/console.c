@@ -232,6 +232,7 @@ get_console_input (const char *prompt, const bool echo, char *input, const int c
 	}
     }
 #else
+  msg (M_ERR, "Requiring input from console: %s", prompt);
   msg (M_FATAL, "Sorry, but I can't get console input on this OS");
 #endif
   return ret;

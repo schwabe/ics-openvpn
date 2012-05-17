@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <CheckBoxPreference
+        android:key="routenopull"
+        android:summary="@string/ignore_routes_summary"
+        android:title="@string/ignored_pushed_routes" />
+
+    <PreferenceCategory android:title="@string/ipv4" >
+        <CheckBoxPreference
+            android:disableDependentsState="true"
+            android:key="useDefaultRoute"
+            android:summary="@string/default_route_summary"
+            android:title="@string/use_default_title" />
+
+        <EditTextPreference
+            android:dependency="useDefaultRoute"
+            android:dialogMessage="@string/custom_route_message"
+            android:key="customRoutes"
+            android:title="@string/custom_routes_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/ipv6" >
+        <CheckBoxPreference
+            android:disableDependentsState="true"
+            android:key="useDefaultRoutev6"
+            android:summary="@string/default_route_summary"
+            android:title="@string/use_default_title" />
+
+        <EditTextPreference
+            android:dependency="useDefaultRoutev6"
+            android:dialogMessage="@string/custom_route_message"
+            android:key="customRoutesv6"
+            android:title="@string/custom_routes_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

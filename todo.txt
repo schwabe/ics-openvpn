@@ -17,7 +17,6 @@ Ideas:
 Missing configuration options:
 
 IPv6 support:
-- Make GUI IPv6 fit
 - fix bogus tun-ipv6 warning
 
 Tap support:

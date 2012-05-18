@@ -219,5 +219,6 @@
     <string name="broken_image_cert">Got an excption trying to show the Android 4.0+ certificate selction dialog. This should never happens as this a standard feature of Android 4.0+. Maybe your Android ROM support for certificate storage is broken</string>
     <string name="ipv4">IPv4</string>
     <string name="ipv6">IPv6</string>
-    <string name="speed_waiting">Waiting for byte count message…</string>  
+    <string name="speed_waiting">Waiting for state message…</string>
+    <string name="generalsettings">General Settings</string>  
 </resources>

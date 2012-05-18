@@ -28,9 +28,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.blinkt.openvpn.OpenVPN.LogListener;
-import de.blinkt.openvpn.OpenVPN.SpeedListener;
+import de.blinkt.openvpn.OpenVPN.StateListener;
 
-public class LogWindow extends ListActivity implements SpeedListener  {
+public class LogWindow extends ListActivity implements StateListener  {
 	private String[] mBconfig=null;
 
 
@@ -270,7 +270,7 @@ public class LogWindow extends ListActivity implements SpeedListener  {
 	}
 
 	@Override
-	public void updateSpeed(final String logmessage) {
+	public void updateState(final String logmessage) {
 		runOnUiThread(new Runnable() {
 			
 			@Override

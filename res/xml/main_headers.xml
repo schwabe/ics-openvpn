@@ -11,11 +11,10 @@
         android:summary="@string/faq_summary"
         android:title="@string/faq" />
     
-    <header
-        android:fragment="de.blinkt.openvpn.AboutFragment"
-        android:summary="@string/about_summary"
-        android:title="@string/about" />
+<!--    <header
+        android:fragment="de.blinkt.openvpn.GeneralSettings"
+        android:title="@string/generalsettings" /> -->
     
-    
+
 
 </preference-headers>

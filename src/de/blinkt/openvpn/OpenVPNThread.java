@@ -58,7 +58,7 @@ public class OpenVPNThread implements Runnable {
 			//mInterface = null;
 
 
-			mService.getHandler().sendEmptyMessage(R.string.disconnected);
+			OpenVPN.updateStateString("No process running");
 			// Not a good place to do it, but will do
 			OpenVPN.logBuilderConfig(null);
 			Log.i(TAG, "Exiting");

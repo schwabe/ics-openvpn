@@ -239,7 +239,7 @@ public class OpenVpnManagementThread implements Runnable {
 		} else if (needed.equals("IFCONFIG")) {
 			String[] ifconfigparts = extra.split(" ");
 			int mtu = Integer.parseInt(ifconfigparts[2]);
-			mOpenVPNService.setLocalIP(ifconfigparts[0], ifconfigparts[1],mtu);
+			mOpenVPNService.setLocalIP(ifconfigparts[0], ifconfigparts[1],mtu,ifconfigparts[3]);
 		} else if (needed.equals("IFCONFIG6")) {
 			mOpenVPNService.setLocalIPv6(extra);
 

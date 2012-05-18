@@ -782,7 +782,22 @@ do_ifconfig (struct tuntap *tt,
 
         struct user_pass up;    
         struct buffer out = alloc_buf_gc (64, &gc);
-        buf_printf (&out, "%s %s %d", ifconfig_local, ifconfig_remote_netmask, tun_mtu);
+        char* top;
+        switch(tt->topology) {
+            case TOP_NET30:
+                top = "net30";
+                break;
+            case TOP_P2P:
+                top="p2p";
+                break;
+            case TOP_SUBNET:
+                top="subnet";
+                break;
+            default:
+                top="undef";
+        }
+        
+        buf_printf (&out, "%s %s %d %s", ifconfig_local, ifconfig_remote_netmask, tun_mtu,top);
         strcpy(up.username, buf_bptr(&out));
         management_query_user_pass(management, &up , "IFCONFIG", GET_USER_PASS_NEED_OK,(void*) 0);
 

@@ -4,14 +4,12 @@
     <header
         android:id="@+id/basicsettingsid"
         android:fragment="de.blinkt.openvpn.Settings_Basic"
-        android:tag="BasicSettings"
-        android:title="Basic Settings" />
+        android:title="Basic" />
     <!-- android:icon="@drawable/ic_settings_applications" -->
 
     <header
         android:fragment="de.blinkt.openvpn.Settings_IP"
-        android:summary="IP Address"
-        android:title="IP Settings" />
+        android:title="IP and DNS" />
     <header
         android:fragment="de.blinkt.openvpn.Settings_Routing"
         android:title="Routing" />
@@ -23,7 +21,7 @@
     <header
         android:fragment="de.blinkt.openvpn.Settings_Obscure"
         android:summary="Obscure OpenVPN Settings. Normally not needed."
-        android:title="Obscure" >
+        android:title="Advanced" >
     </header>
     <header
         android:fragment="de.blinkt.openvpn.ShowConfigFragment"

@@ -165,7 +165,7 @@
     <string name="dns_domain_info">DNS Domain: %s</string>
     <string name="routes_info">Routes: %s</string>
     <string name="routes_info6">Routes Ipv6: %s</string>
-    <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP.</string>
+    <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP. Mode given by openvpn is \"%3$s\".</string>
     <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
     <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>
     <string name="keychain_access">Cannot accces the Android Keychain Certificates. If you restored a backup of the app/app settings reselect the certificate to recreate the permission to access the certificate.</string>
@@ -219,6 +219,5 @@
     <string name="broken_image_cert">Got an excption trying to show the Android 4.0+ certificate selction dialog. This should never happens as this a standard feature of Android 4.0+. Maybe your Android ROM support for certificate storage is broken</string>
     <string name="ipv4">IPv4</string>
     <string name="ipv6">IPv6</string>
-    <string name="use_default_titlev6">TODO</string>
-    <string name="speed_waiting">Waiting byte count message</string>  
+    <string name="speed_waiting">Waiting for byte count message…</string>  
 </resources>

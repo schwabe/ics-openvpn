@@ -248,7 +248,9 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		
 		// Let the configure Button show the Log
 		Intent intent = new Intent(getBaseContext(),LogWindow.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		PendingIntent startLW = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		builder.setConfigureIntent(startLW);
 		try {
 			ParcelFileDescriptor pfd = builder.establish();
@@ -309,14 +311,29 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 	}
 
 
-	public void setLocalIP(String local, String netmask,int mtu) {
+	public void setLocalIP(String local, String netmask,int mtu, String mode) {
 		mLocalIP = new CIDRIP(local, netmask);
 		mMtu = mtu;
 
 		if(mLocalIP.len == 32 && !netmask.equals("255.255.255.255")) {
-			OpenVPN.logMessage(0, "", String.format(getString(R.string.ip_not_cidr, local,netmask)));
+			// get the netmask as IP
+			long netint = CIDRIP.getInt(netmask);
+			if(Math.abs(netint - mLocalIP.getInt()) ==1) {
+				if(mode.equals("net30"))
+					mLocalIP.len=30;
+				else
+					mLocalIP.len=31;
+			} else {
+				OpenVPN.logMessage(0, "", String.format(getString(R.string.ip_not_cidr, local,netmask,mode)));
+			}
 		}
 	}
+
+
+
+
+
+
 
 
 	public void setLocalIPv6(String ipv6addr) {

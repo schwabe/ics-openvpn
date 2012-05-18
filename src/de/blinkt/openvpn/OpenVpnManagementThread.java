@@ -161,10 +161,13 @@ public class OpenVpnManagementThread implements Runnable {
 			} else if (cmd.equals("HOLD")) {
 				managmentCommand("hold release\n");
 				managmentCommand("bytecount " + mBytecountinterval + "\n");
+				managmentCommand("state on\n");
 			} else if (cmd.equals("NEED-OK")) {
 				processNeedCommand(argument);
 			} else if (cmd.equals("BYTECOUNT")){
 				processByteCount(argument);
+			} else if (cmd.equals("STATE")){
+				processState(argument);
 			} else if (cmd.equals("LOG")) {
 				String[] args = argument.split(",",3);
 				// 0 unix time stamp
@@ -183,6 +186,12 @@ public class OpenVpnManagementThread implements Runnable {
 		}
 	}
 
+	private void processState(String argument) {
+		String[] args = argument.split(",",2);
+		OpenVPN.updateStateString(args[1]);
+	}
+
+
 	private void processByteCount(String argument) {
 		//   >BYTECOUNT:{BYTES_IN},{BYTES_OUT}
 		int comma = argument.indexOf(',');
@@ -200,7 +209,7 @@ public class OpenVpnManagementThread implements Runnable {
 				humanReadableByteCount(diffin, false),
 				humanReadableByteCount(out, false),
 				humanReadableByteCount(diffout, false));
-		OpenVPN.updateSpeedString(netstat);
+		OpenVPN.updateStateString(netstat);
 				
 		
 	}

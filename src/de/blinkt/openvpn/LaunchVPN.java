@@ -349,6 +349,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 		void startOpenVpn() {
 			Intent startLW = new Intent(getBaseContext(),LogWindow.class);
+			startLW.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 			startActivity(startLW);
 			
 			if(!writeMiniVPN()) {

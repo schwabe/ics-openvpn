@@ -5,13 +5,7 @@ class CIDRIP{
 	int len;
 	public CIDRIP(String ip, String mask){
 		mIp=ip;
-		String[] ipt = mask.split("\\.");
-		long netmask=0;
-
-		netmask += Long.parseLong(ipt[0])<< 24;
-		netmask += Integer.parseInt(ipt[1])<< 16;
-		netmask += Integer.parseInt(ipt[2])<< 8;
-		netmask += Integer.parseInt(ipt[3]);
+		long netmask=getInt(mask);
 
 		// Add 33. bit to ensure the loop terminates
 		netmask += 1l << 32;
@@ -36,14 +30,7 @@ class CIDRIP{
 	}
 
 	public boolean normalise(){
-		long ip=0;
-
-		String[] ipt = mIp.split("\\.");
-
-		ip += Long.parseLong(ipt[0])<< 24;
-		ip += Integer.parseInt(ipt[1])<< 16;
-		ip += Integer.parseInt(ipt[2])<< 8;
-		ip += Integer.parseInt(ipt[3]);
+		long ip=getInt(mIp);
 
 		long newip = ip & (0xffffffffl << (32 -len));
 		if (newip != ip){
@@ -53,4 +40,19 @@ class CIDRIP{
 			return false;
 		}
 	}
+	static long getInt(String ipaddr) {
+		String[] ipt = ipaddr.split("\\.");
+		long ip=0;
+
+		ip += Long.parseLong(ipt[0])<< 24;
+		ip += Integer.parseInt(ipt[1])<< 16;
+		ip += Integer.parseInt(ipt[2])<< 8;
+		ip += Integer.parseInt(ipt[3]);
+
+		return ip;
+	}
+	public long getInt() {
+		return getInt(mIp);
+	}
+	
 }

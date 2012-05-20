@@ -330,19 +330,19 @@ public class OpenVpnManagementThread implements Runnable {
 
 	private void processPWCommand(String argument) {
 		//argument has the form 	Need 'Private Key' password
-		int p1,p2;
+		
+		String needed;
 		try{
-			p1 =argument.indexOf('\'');
-			p2 = argument.indexOf('\'',p1+1);
-			//String needed = argument.replace("Need '", "").replace("' password", "");
+			
+			int p1 = argument.indexOf('\'');
+			int p2 = argument.indexOf('\'',p1+1);
+			needed = argument.substring(p1+1, p2);
 		} catch (StringIndexOutOfBoundsException sioob) {
 			OpenVPN.logMessage(0, "", "Could not parse management Password command: "  + argument);
 			return;
 		}
-		String needed = argument.substring(p1+1, p2);
 
 		String pw=null;
-
 
 		if(needed.equals("Private Key")) {
 			pw = mProfile.getPasswordPrivateKey();

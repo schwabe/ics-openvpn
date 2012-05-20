@@ -19,19 +19,17 @@ package de.blinkt.openvpn;
 import java.io.IOException;
 import java.util.Vector;
 
-
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.net.VpnService;
-import android.os.Handler;
-import android.os.Message;
 import android.os.ParcelFileDescriptor;
-import android.widget.Toast;
 
-public class OpenVpnService extends VpnService implements Handler.Callback {
-	Handler mHandler;
+public class OpenVpnService extends VpnService {
 	private Thread mServiceThread;
 
 	private Vector<String> mDnslist=new Vector<String>();
@@ -50,9 +48,10 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 	private Thread mSocketManagerThread;
 	private int mMtu;
 	private String mLocalIPv6=null;
+	private Notification mNotification=null;
 
-
-
+	private static final int HELLO_ID = 1;
+	
 	@Override
 	public void onRevoke() {
 		OpenVpnManagementThread.stopOpenVPN();
@@ -60,8 +59,36 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		stopSelf();
 	};
 
+	private void showNotification() {
+		String ns = Context.NOTIFICATION_SERVICE;
+		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
 
+		int icon = R.drawable.icon;
+		CharSequence tickerText = "Hello";
+		long when = System.currentTimeMillis();
+
+		mNotification = new Notification(icon, tickerText, when);
+
+		Context context = getApplicationContext();
+		CharSequence contentTitle = "My notification";
+		CharSequence contentText = "Hello World!";
+
+		mNotification.setLatestEventInfo(context, contentTitle, contentText, getLogPendingIntent());
+
+		mNotificationManager.notify(HELLO_ID, mNotification);
+		
+	}
+
+	PendingIntent getLogPendingIntent() {
+		// Let the configure Button show the Log
+		Intent intent = new Intent(getBaseContext(),LogWindow.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		PendingIntent startLW = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		return startLW;
+
+	}
 
 
 
@@ -97,12 +124,8 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
 		mProfile = ProfileManager.get(profileUUID);
 		
-
-		// The handler is only used to show messages.
-		if (mHandler == null) {
-			mHandler = new Handler(this);
-		}
-
+		//showNotification();
+		
 		// Stop the previous session by interrupting the thread.
 		if(OpenVpnManagementThread.stopOpenVPN()){
 			// an old was asked to exit, wait 2s
@@ -132,10 +155,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 			//checkForRemainingMiniVpns();
 		}
 
-
-
 		// Start a new session by creating a new thread.
-
 		OpenVPNThread serviceThread = new OpenVPNThread(this, argv,nativelibdir);
 
 		mServiceThread = new Thread(serviceThread, "OpenVPNServiceThread");
@@ -164,34 +184,25 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		}
 	}
 
-	@Override
-	public boolean handleMessage(Message message) {
-		if (message != null) {
-			Toast.makeText(this, message.what, Toast.LENGTH_SHORT).show();
-		}
-		return true;
-	}
-
-
 
 
 	public ParcelFileDescriptor openTun() {
 		Builder builder = new Builder();
-		
+
 		if(mLocalIP==null && mLocalIPv6==null) {
 			OpenVPN.logMessage(0, "", getString(R.string.opentun_no_ipaddr));
 			return null;
 		}
-		
+
 		if(mLocalIP!=null) {
 			builder.addAddress(mLocalIP.mIp, mLocalIP.len);
 		}
-		
+
 		if(mLocalIPv6!=null) {
 			String[] ipv6parts = mLocalIPv6.split("/");
 			builder.addAddress(ipv6parts[0],Integer.parseInt(ipv6parts[1]));
 		}
-		
+
 
 		for (String dns : mDnslist ) {
 			builder.addDnsServer(dns);
@@ -216,7 +227,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 				OpenVPN.logMessage(0, "", getString(R.string.route_rejected) + v6route + " " + ia.getLocalizedMessage());
 			}
 		}
-		
+
 		if(mDomain!=null)
 			builder.addSearchDomain(mDomain);
 
@@ -245,13 +256,9 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		mRoutesv6.clear();
 		mLocalIP=null;
 		mLocalIPv6=null;
-		
-		// Let the configure Button show the Log
-		Intent intent = new Intent(getBaseContext(),LogWindow.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-		PendingIntent startLW = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-		builder.setConfigureIntent(startLW);
+
+		builder.setConfigureIntent(getLogPendingIntent());
+
 		try {
 			ParcelFileDescriptor pfd = builder.establish();
 			return pfd;
@@ -305,7 +312,7 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 
 		mRoutes.add(route);
 	}
-	
+
 	public void addRoutev6(String extra) {
 		mRoutesv6.add(extra);		
 	}
@@ -329,20 +336,8 @@ public class OpenVpnService extends VpnService implements Handler.Callback {
 		}
 	}
 
-
-
-
-
-
-
-
 	public void setLocalIPv6(String ipv6addr) {
 		mLocalIPv6 = ipv6addr;
-	}
-
-
-	public Handler getHandler() {
-		return mHandler;
 	}
 
 }

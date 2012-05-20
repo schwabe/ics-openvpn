@@ -29,19 +29,7 @@ public class OpenVPNThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			Log.i(TAG, "Starting openvpn");
-
-			// We try to create the tunnel for several times. The better way
-			// is to work with ConnectivityManager, such as trying only when
-			// the network is avaiable. Here we just use a counter to keep
-			// things simple.
-			//for (int attempt = 0; attempt < 10; ++attempt) {
-			mService.getHandler().sendEmptyMessage(R.string.connecting);
-
-			// Log argv
-
-			//OpenVPN.logMessage(0, "argv:" , Arrays.toString(mArgv));
-
+			Log.i(TAG, "Starting openvpn");			
 			startOpenVPNThreadArgs(mArgv);
 
 			

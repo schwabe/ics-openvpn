@@ -41,8 +41,11 @@ public class ConfigConverter extends ListActivity {
 				log("Importing the config had error, cannot save it");
 				return true;
 			}
+			
 			Intent result = new Intent();
 			ProfileManager vpl = ProfileManager.getInstance(this);
+			
+			setUniqueProfileName(vpl);
 			vpl.addProfile(mResult);
 			vpl.saveProfile(this, mResult);
 			vpl.saveProfileList(this);
@@ -54,6 +57,19 @@ public class ConfigConverter extends ListActivity {
 
 		return super.onOptionsItemSelected(item);
 
+	}
+
+
+	private void setUniqueProfileName(ProfileManager vpl) {
+		int i=1;
+		String newname = getString(R.string.converted_profile);
+		
+		while(vpl.getProfileByName(newname)!=null) {
+			i++;
+			newname = getString(R.string.converted_profile_i,i);
+		}
+		
+		mResult.mName=newname;
 	}
 
 	@Override

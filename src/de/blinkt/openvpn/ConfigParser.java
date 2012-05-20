@@ -258,9 +258,13 @@ public class ConfigParser {
 				if(route.size() >= 3)
 					netmask = route.get(2);
 				String net = route.get(1);	
-				
-				CIDRIP cidr = new CIDRIP(net, netmask);
-				routeopt+=cidr.toString() + " ";
+				try {
+					CIDRIP cidr = new CIDRIP(net, netmask);
+					routeopt+=cidr.toString() + " ";
+				} catch (ArrayIndexOutOfBoundsException aioob) {
+					throw new ConfigParseError("Could not parse netmask of route " + netmask);
+				}
+			
 			}
 			np.mCustomRoutes=routeopt;
 		}

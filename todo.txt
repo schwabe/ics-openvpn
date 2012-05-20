@@ -8,11 +8,12 @@ Ideas:
    
 - implement general settings dialog
    - encryption of profiles
-   - Speed/Transfered in notification bar (byte counter of managment) 
+   - Speed/Transfered in notification bar (byte counter of management) 
    - Kick openvpn on network state change (Wifi <-> GPRS/EDGE/UMTS)
 
 - map SIGUSR1 to SIGINT
 
+- add a put this certificate into file obscure option
 
 Missing configuration options:
 

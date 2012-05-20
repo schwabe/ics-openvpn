@@ -5,16 +5,21 @@
         android:fragment="de.blinkt.openvpn.VPNProfileList"
         android:summary="@string/vpn_list_summary"
         android:title="@string/vpn_list_title" />
-    
-        <header
+
+    <!--
+            <header
+
+        android:fragment="de.blinkt.openvpn.GeneralSettings"
+        android:title="@string/generalsettings" />
+    -->
+
+    <header
         android:fragment="de.blinkt.openvpn.FaqFragment"
         android:summary="@string/faq_summary"
         android:title="@string/faq" />
-    
-<!--    <header
-        android:fragment="de.blinkt.openvpn.GeneralSettings"
-        android:title="@string/generalsettings" /> -->
-    
-
+    <header
+        android:fragment="de.blinkt.openvpn.AboutFragment"
+        android:summary="@string/about_summary"
+        android:title="@string/about" />
 
 </preference-headers>

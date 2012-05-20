@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import de.blinkt.openvpn.R.string;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,6 +24,7 @@ public class ProfileManager {
 
 	private static ProfileManager instance;
 	private HashMap<String,VpnProfile> profiles=new HashMap<String, VpnProfile>();
+
 
 	public static VpnProfile get(String key) {
 		if(instance==null)
@@ -65,7 +68,14 @@ public class ProfileManager {
 		SharedPreferences sharedprefs = context.getSharedPreferences(PREFS_NAME,Activity.MODE_PRIVATE);
 		Editor editor = sharedprefs.edit();
 		editor.putStringSet("vpnlist", profiles.keySet());
-		editor.commit();
+		
+		// For reasing I do not understand at all 
+		// Android saves my prefs file only one time 
+		// if I remove the debug code below :(
+		int counter = sharedprefs.getInt("counter", 0);
+		editor.putInt("counter", counter+1);
+		editor.apply();
+
 	}
 
 	public void addProfile(VpnProfile profile) {
@@ -99,8 +109,8 @@ public class ProfileManager {
 	
 	private void loadVPNList(Context context) {
 		profiles = new HashMap<String, VpnProfile>();
-		SharedPreferences settings =context.getSharedPreferences(PREFS_NAME,Activity.MODE_PRIVATE);
-		Set<String> vlist = settings.getStringSet("vpnlist", null);
+		SharedPreferences listpref = context.getSharedPreferences(PREFS_NAME,Activity.MODE_PRIVATE);
+		Set<String> vlist = listpref.getStringSet("vpnlist", null);
 		Exception exp =null;
 		if(vlist==null){
 			vlist = new HashSet<String>();

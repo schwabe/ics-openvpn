@@ -1480,8 +1480,8 @@ do_open_tun (struct context *c)
         
         /* possibly add routes */
         if(ifconfig_order() == ROUTE_BEFORE_TUN) {
-            if (!c->options.route_delay_defined)
-                do_route (&c->options, c->c1.route_list, c->c1.route_ipv6_list,
+            // Ignore route_delay
+            do_route (&c->options, c->c1.route_list, c->c1.route_ipv6_list,
                           c->c1.tuntap, c->plugins, c->c2.es);
         }
 
@@ -1724,6 +1724,7 @@ do_up (struct context *c, bool pulled_options, unsigned int option_types_found)
 	  save_pulled_options_digest (c, &c->c2.pulled_options_digest);
 #endif
 
+#ifndef ROUTE_BEFORE_TUN
 	  /* if --route-delay was specified, start timer */
 	  if (c->options.route_delay_defined)
 	    {
@@ -1733,6 +1734,7 @@ do_up (struct context *c, bool pulled_options, unsigned int option_types_found)
 		tun_standby_init (c->c1.tuntap);
 	    }
 	  else
+#endif
 	    {
 	      initialization_sequence_completed (c, 0); /* client/p2p --route-delay undefined */
 	    }

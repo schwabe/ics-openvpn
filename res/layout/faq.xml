@@ -24,10 +24,22 @@
             style="@style/faqitem"
             android:text="@string/faq_security" />
 
+        
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/broken_images" 
+            />
+        
+        <TextView
+            style="@style/faqitem"
+            android:id="@+id/brokenimages" />
+        
+        
         <TextView
             style="@style/faqhead"
             android:text="@string/faq_shortcut" />
-
+        
+        
         <TextView
             style="@style/faqitem"
             android:text="@string/faq_howto_shortcut" />

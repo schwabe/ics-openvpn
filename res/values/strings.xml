@@ -176,7 +176,7 @@
     <string name="ics_openvpn_log_file">ICS Openvpn log file</string>
     <string name="copied_entry">Copied log entry to clip board</string>
     <string name="tap_mode">Tap Mode</string>
-    <string name="faq_tap_mode">Tap Mode is not possible with the non root VPN api. Therefore this application cannot provide tap support</string>
+    <string name="faq_tap_mode">Tap Mode is not possible with the non root VPN API. Therefore this application cannot provide tap support</string>
     <string name="tap_faq2">Again? Are you kidding? No tap mode is really not supported and sending more mail aksing if it will be supported will not help.</string>
     <string name="tap_faq3">A third time? Actually one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would have to implement also ARP and possible a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.</string>
     <string name="faq">FAQ</string>  
@@ -213,7 +213,7 @@
     <string name="import_experimental">Please not that the config importer is an experimental feature. If it does not work for you or you think that things could be done better please drop me a email.</string>
     <string name="import_configuration_file">Import configuration file</string>
     <string name="faq_security_title">Security considerations</string>
-    <string name="faq_security">"As openvpn is security sensitive a few notes about security are sensible. All data on the sdcard is inherently unsecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the vpn profile. The vpn profiles are only accessable by this application. (Do not forget to delte the copies on the sdcard afterwards). Even though accessible only by this application the data is stil unecrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."</string>
+    <string name="faq_security">"As openvpn is security sensitive a few notes about security are sensible. All data on the sdcard is inherently unsecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the vpn profile. The vpn profiles are only accessable by this application. (Do not forget to delete the copies on the sd card afterwards). Even though accessible only by this application the data is stil unecrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."</string>
     <string name="import_vpn">Import</string>
     <string name="broken_image_cert_title">Error showing certificate selection</string>
     <string name="broken_image_cert">Got an excption trying to show the Android 4.0+ certificate selction dialog. This should never happens as this a standard feature of Android 4.0+. Maybe your Android ROM support for certificate storage is broken</string>
@@ -222,5 +222,7 @@
     <string name="speed_waiting">Waiting for state message…</string>
     <string name="generalsettings">General Settings</string>
     <string name="converted_profile">imported profile</string>
-    <string name="converted_profile_i">imported profile %d</string>  
+    <string name="converted_profile_i">imported profile %d</string>
+    <string name="broken_images">Broken Images</string>
+    <string name="broken_images_faq">&lt;p>Offical HTC images are known to have a strange routing problem causing traffic not to flow through the tunnel (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\">Issue 18&lt;/a> in the bug tracker.)&lt;/p>&lt;p>The offical SONY images from Xperia arc S and Xperia Ray have been reported to be missing the VPNService completly from the image. Other Sony images may be affected as well. (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\">Issue 29&lt;/a> in the bug tracker.)&lt;/p>&lt;p>On custom build images the tun module might be missing or the rights of /dev/tun might be wrong. On the experimental CM9 Defy image a &lt;i>chown system /dev/tun&lt;/i> is needed to make the VPNService API work.&lt;/p></string>  
 </resources>

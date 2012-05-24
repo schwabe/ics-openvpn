@@ -15,6 +15,10 @@ Ideas:
 
 - add a put this certificate into file obscure option
 
+Bugfixes:
+ - startpath file explorer
+
+
 Missing configuration options:
 
 IPv6 support:

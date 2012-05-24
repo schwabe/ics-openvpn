@@ -505,7 +505,9 @@ public class VpnProfile implements  Serializable{
 		if(!mUsePull) {
 			if(mIPv4Address == null || cidrToIPAndNetmask(mIPv4Address) == null)
 				return R.string.ipv4_format_error;
-
+		}
+		if(isUserPWAuth() && !nonNull(mUsername)) {
+			return R.string.error_empty_username;
 		}
 		if(!mUseDefaultRoute && getCustomRoutes()==null)
 			return R.string.custom_route_format_error;

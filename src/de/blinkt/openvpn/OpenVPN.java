@@ -7,6 +7,9 @@ public class OpenVPN {
 	private static final int MAXLOGENTRIES = 200;
 
 
+	public static final String MANAGMENT_PREFIX = "M:";
+
+
 	public static LinkedList<String> logbuffer = new LinkedList<String>();
 	
 	private static Vector<LogListener> logListener=new Vector<OpenVPN.LogListener>();

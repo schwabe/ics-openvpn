@@ -10,7 +10,7 @@
     
     <string name="selectCertificate">Auswählen…</string>
     
-    <string name="app_name">File dialog</string>
+    <string name="app_name">Datei öffnen</string>
     <string name="location">Ort</string>
     <string name="cant_read_folder">Verzeichnis kann nicht gelesen werden</string>
     <string name="nnew">Neu</string>

@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.blinkt.openvpn.R.string;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;

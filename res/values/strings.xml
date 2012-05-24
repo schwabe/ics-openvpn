@@ -125,7 +125,7 @@
     <string name="check_remote_tlscert_title">Except TLS Server</string>
     <string name="remote_tlscn_check_summary">Checks the Remote Server Certificate CN against a String</string>
     <string name="remote_tlscn_check_title">Certificate Hostname Check</string>
-    <string name="enter_tlscn_dialog">Enter the String against which the remote Server is checked. Openvpn will use prefix matching. &quot;Server&quot; matches &quot;Server-1&quot; and &quot;Server-2&quot;\\nLeave empty to check the CN against the server hostname.</string>
+    <string name="enter_tlscn_dialog">Enter the string against which the remote Server is checked. Openvpn will use prefix matching. &quot;Server&quot; matches &quot;Server-1&quot; and &quot;Server-2&quot;\nLeave empty to check the CN against the server hostname.</string>
     <string name="enter_tlscn_title">Remote Hostname(CN)</string>
     <string name="tls_key_auth">Enables the TLS Key Authentication</string>
     <string name="tls_auth_file">TLS Auth File</string>

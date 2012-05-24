@@ -10,14 +10,12 @@ import android.util.Log;
 
 public class OpenVPNThread implements Runnable {
 	private static final String TAG = "OpenVPN";
-	private OpenVpnService mService;
 	private String[] mArgv;
 	private Process mProcess;
 	private String mNativeDir;
 
 	public OpenVPNThread(OpenVpnService service,String[] argv, String nativelibdir)
 	{
-		mService = service;
 		mArgv = argv;
 		mNativeDir = nativelibdir;
 	}
@@ -31,9 +29,6 @@ public class OpenVPNThread implements Runnable {
 		try {
 			Log.i(TAG, "Starting openvpn");			
 			startOpenVPNThreadArgs(mArgv);
-
-			
-			//}
 			Log.i(TAG, "Giving up");
 		} catch (Exception e) {
 			Log.e(TAG, "Got " + e.toString());

@@ -3,6 +3,7 @@ package de.blinkt.openvpn;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
@@ -37,7 +38,7 @@ public class VpnProfile implements  Serializable{
 	public static final int TYPE_USERPASS_CERTIFICATES = 5;
 	public static final int TYPE_USERPASS_PKCS12 = 6;
 	public static final int TYPE_USERPASS_KEYSTORE = 7;
-	
+
 	// Don't change this, not all parts of the program use this constant
 	public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
 	public static final String INLINE_TAG = "[[INLINE]]";
@@ -93,6 +94,7 @@ public class VpnProfile implements  Serializable{
 	public boolean mNobind=false;
 	public boolean mUseDefaultRoutev6=true;
 	public String mCustomRoutesv6="";
+	public String mKeyPassword="";
 
 
 	public void clearDefaults() {
@@ -112,7 +114,7 @@ public class VpnProfile implements  Serializable{
 		escapedString = escapedString.replace("\n","\\n");
 		return '"' + escapedString + '"';
 	}
-	
+
 
 	static final String OVPNCONFIGPKCS12 = "android.pkcs12";
 
@@ -144,6 +146,7 @@ public class VpnProfile implements  Serializable{
 
 		cfg +=cacheDir.getAbsolutePath() + "/" +  "mgmtsocket";
 		cfg += " unix\n";
+		cfg+= "management-query-passwords\n";
 		cfg += "management-hold\n\n";
 
 		cfg+="# /tmp does not exist on Android\n";
@@ -154,7 +157,7 @@ public class VpnProfile implements  Serializable{
 		cfg+="# Log window is better readable this way\n";
 		cfg+="suppress-timestamps\n";
 
-		
+
 
 		boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
 
@@ -196,7 +199,6 @@ public class VpnProfile implements  Serializable{
 		switch(mAuthenticationType) {
 		case VpnProfile.TYPE_USERPASS_CERTIFICATES:
 			cfg+="auth-user-pass\n";
-			cfg+="management-query-passwords\n";
 		case VpnProfile.TYPE_CERTIFICATES:
 			// Ca
 			cfg+=insertFileData("ca",mCaFilename);
@@ -210,7 +212,6 @@ public class VpnProfile implements  Serializable{
 			cfg+="auth-user-pass\n";
 		case VpnProfile.TYPE_PKCS12:
 			cfg+=insertFileData("pkcs12",mPKCS12Filename);
-			cfg+="management-query-passwords\n";
 			break;
 
 		case VpnProfile.TYPE_USERPASS_KEYSTORE:
@@ -219,11 +220,9 @@ public class VpnProfile implements  Serializable{
 			cfg+="pkcs12 ";
 			cfg+=cacheDir.getAbsolutePath() + "/" + OVPNCONFIGPKCS12;
 			cfg+="\n";
-			cfg+="management-query-passwords\n";
 			break;
 		case VpnProfile.TYPE_USERPASS:
 			cfg+="auth-user-pass\n";
-			cfg+="management-query-passwords\n";
 			cfg+=insertFileData("ca",mCaFilename);
 		}
 
@@ -237,7 +236,7 @@ public class VpnProfile implements  Serializable{
 			else
 				cfg+=insertFileData("tls-auth",mTLSAuthFilename);
 			cfg+=" ";
-		
+
 			if(nonNull(mTLSAuthDirection)) {
 				cfg+= "key-direction ";
 				cfg+= mTLSAuthDirection;
@@ -248,7 +247,7 @@ public class VpnProfile implements  Serializable{
 		if(!mUsePull ) {
 			if(nonNull(mIPv4Address))
 				cfg +="ifconfig " + cidrToIPAndNetmask(mIPv4Address) + "\n";
-			
+
 			if(nonNull(mIPv6Address))
 				cfg +="ifconfig-ipv6 " + mIPv6Address + "\n";
 		}
@@ -263,7 +262,7 @@ public class VpnProfile implements  Serializable{
 				cfg += "route " + route + "\n";
 			}
 
-		
+
 		if(mUseDefaultRoutev6)
 			cfg += "route-ipv6 ::/0\n";
 		else
@@ -278,7 +277,7 @@ public class VpnProfile implements  Serializable{
 				cfg+="dhcp-option DNS " + mDNS2 + "\n";
 
 		}
-		
+
 		if(mNobind)
 			cfg+="nobind\n";
 
@@ -373,8 +372,8 @@ public class VpnProfile implements  Serializable{
 		return cidrRoutes;
 	}
 
-	
-	
+
+
 	private String cidrToIPAndNetmask(String route) {
 		String[] parts = route.split("/");
 
@@ -414,10 +413,10 @@ public class VpnProfile implements  Serializable{
 		args.add("--config");
 		args.add(cacheDir.getAbsolutePath() + "/" + OVPNCONFIGFILE);
 		// Silences script security warning
-		
+
 		args.add("script-security");
 		args.add("0");
-		
+
 
 		return  (String[]) args.toArray(new String[args.size()]);
 	}
@@ -433,7 +432,7 @@ public class VpnProfile implements  Serializable{
 
 		intent.putExtra(prefix + ".ARGV" , buildOpenvpnArgv(context.getCacheDir()));
 		intent.putExtra(prefix + ".profileUUID", mUuid.toString());
-		
+
 		ApplicationInfo info = context.getApplicationInfo();
 		intent.putExtra(prefix +".nativelib",info.nativeLibraryDir);
 
@@ -534,11 +533,12 @@ public class VpnProfile implements  Serializable{
 		case TYPE_USERPASS_PKCS12:
 			return mPKCS12Password;
 
+		case TYPE_CERTIFICATES:
+		case TYPE_USERPASS_CERTIFICATES:
+			return mKeyPassword;
 
 		case TYPE_USERPASS:
 		case TYPE_STATICKEYS:
-		case TYPE_CERTIFICATES:
-		case TYPE_USERPASS_CERTIFICATES:
 		default:
 			return null;
 		}
@@ -556,18 +556,60 @@ public class VpnProfile implements  Serializable{
 		}
 	}
 
-	public String needUserPWInput() {
+
+	public boolean requireTLSKeyPassword() {
+		if(!nonNull(mClientKeyFilename))
+			return false;
+
+		String data = "";
+		if(mClientKeyFilename.startsWith(INLINE_TAG))
+			data = mClientKeyFilename;
+		else {
+			char[] buf = new char[2048];
+			FileReader fr;
+			try {
+				fr = new FileReader(mClientKeyFilename);
+				int len = fr.read(buf);
+				while(len > 0 ) {
+					data += new String(buf,0,len);
+					len = fr.read(buf);
+				}
+			} catch (FileNotFoundException e) {
+				return false;
+			} catch (IOException e) {
+				return false;
+			}
+
+		}
+		
+		if(data.contains("Proc-Type: 4,ENCRYPTED"))
+			return true;
+		else if(data.contains("-----BEGIN ENCRYPTED PRIVATE KEY-----"))
+			return true;
+		else
+			return false;
+	}
+
+	public int needUserPWInput() {
 		if((mAuthenticationType == TYPE_PKCS12 || mAuthenticationType == TYPE_USERPASS_PKCS12)&&
 				(mPKCS12Password.equals("") || mPKCS12Password == null)) {
 			if(mTransientPCKS12PW==null)
-				return "PKCS12 File Encryption Key";
+				return R.string.pkcs12_file_encryption_key;
 		}
+		
+		if(mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) {
+			if(requireTLSKeyPassword() && !nonNull(mKeyPassword))
+				if(mTransientPCKS12PW==null) {
+					return R.string.private_key_password;
+				}
+		}
+		
 		if(isUserPWAuth() && (mPassword.equals("") || mPassword == null)) {
 			if(mTransientPW==null)
-				return "Password";
+				return R.string.password;
 
 		}
-		return null;
+		return 0;
 	}
 
 	public String getPasswordAuth() {

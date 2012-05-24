@@ -225,5 +225,8 @@
     <string name="converted_profile_i">imported profile %d</string>
     <string name="broken_images">Broken Images</string>
     <string name="broken_images_faq">&lt;p>Offical HTC images are known to have a strange routing problem causing traffic not to flow through the tunnel (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\">Issue 18&lt;/a> in the bug tracker.)&lt;/p>&lt;p>The offical SONY images from Xperia arc S and Xperia Ray have been reported to be missing the VPNService completly from the image. Other Sony images may be affected as well. (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\">Issue 29&lt;/a> in the bug tracker.)&lt;/p>&lt;p>On custom build images the tun module might be missing or the rights of /dev/tun might be wrong. On the experimental CM9 Defy image a &lt;i>chown system /dev/tun&lt;/i> is needed to make the VPNService API work.&lt;/p></string>
-    <string name="error_empty_username">The username must not be empty.</string>  
+    <string name="error_empty_username">The username must not be empty.</string>
+    <string name="pkcs12_file_encryption_key">PKCS12 File Encryption Key</string>
+    <string name="private_key_password">Private Key Password</string>
+    <string name="password">Password</string>  
 </resources>

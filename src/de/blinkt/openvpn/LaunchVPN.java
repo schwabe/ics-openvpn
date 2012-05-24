@@ -243,7 +243,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		}
 	}
 
-	private void askForPW(final String type) {
+	private void askForPW(final int type) {
 
 		final EditText entry = new EditText(this);
 		entry.setSingleLine();
@@ -251,7 +251,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		entry.setTransformationMethod(new PasswordTransformationMethod());
 
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-		dialog.setTitle("Need " + type);
+		dialog.setTitle("Need " + getString(type));
 		dialog.setMessage("Enter the password for profile " + mSelectedProfile.mName);
 		dialog.setView(entry);
 
@@ -260,7 +260,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				String pw = entry.getText().toString();
-				if(type.equals("Password")) {
+				if(type == R.string.password) {
 					mSelectedProfile.mTransientPW = pw;
 				} else {
 					mSelectedProfile.mTransientPCKS12PW = pw;
@@ -287,9 +287,9 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 		if(requestCode==START_VPN_PROFILE) {
 			if(resultCode == Activity.RESULT_OK) {
-
-				if(mSelectedProfile.needUserPWInput()!=null) {
-					askForPW(mSelectedProfile.needUserPWInput());
+				int needpw = mSelectedProfile.needUserPWInput();
+				if(needpw !=0) {
+					askForPW(needpw);
 				} else {
 					new startOpenVpnThread().start();
 				}

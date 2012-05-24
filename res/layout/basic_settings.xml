@@ -140,6 +140,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 blinkt:title="@string/client_key_title" />
+
+            <LinearLayout
+                android:id="@+id/key_password_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    style="@style/item"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
+                    android:text="@string/private_key_password"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <EditText
+                    android:id="@+id/key_password"
+                    style="@style/item"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
+                    android:hint="@string/pw_query_hint"
+                    android:inputType="textPassword" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

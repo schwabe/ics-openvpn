@@ -82,6 +82,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 	private VpnProfile mProfile;
 	private EditText mProfileName;
+	private EditText mKeyPassword;
 
 
 
@@ -119,7 +120,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 		mUserName = (EditText) mView.findViewById(R.id.auth_username);
 		mPassword = (EditText) mView.findViewById(R.id.auth_password);
-
+		mKeyPassword = (EditText) mView.findViewById(R.id.key_password);
 
 
 
@@ -158,8 +159,15 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 			String filedata = data.getStringExtra(FileSelect.RESULT_DATA);
 			FileSelectLayout fsl = fileselects.get(request);
 			fsl.setData(filedata);
+
+			savePreferences();
+
+			// Private key files may result in showing/hiding the private key password dialog
+			if(fsl==mClientKey) {
+				changeType(mType.getSelectedItemPosition());
+			}
 		}
-		savePreferences();
+
 	}
 
 
@@ -190,6 +198,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mView.findViewById(R.id.keystore).setVisibility(View.GONE);
 		mView.findViewById(R.id.cacert).setVisibility(View.GONE);
 		mView.findViewById(R.id.userpassword).setVisibility(View.GONE);
+		mView.findViewById(R.id.key_password_layout).setVisibility(View.GONE);
 
 		// Fallthroughs are by desing
 		switch(type) {
@@ -198,6 +207,8 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		case VpnProfile.TYPE_CERTIFICATES:
 			mView.findViewById(R.id.certs).setVisibility(View.VISIBLE);
 			mView.findViewById(R.id.cacert).setVisibility(View.VISIBLE);
+			if(mProfile.requireTLSKeyPassword())
+				mView.findViewById(R.id.key_password_layout).setVisibility(View.VISIBLE);
 			break;
 		case VpnProfile.TYPE_USERPASS_PKCS12:
 			mView.findViewById(R.id.userpassword).setVisibility(View.VISIBLE);
@@ -237,6 +248,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mPKCS12Password.setText(mProfile.mPKCS12Password);
 		mUserName.setText(mProfile.mUsername);
 		mPassword.setText(mProfile.mPassword);
+		mKeyPassword.setText(mProfile.mKeyPassword);
 
 		setAlias();
 
@@ -260,6 +272,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 		mProfile.mPassword = mPassword.getText().toString();
 		mProfile.mUsername = mUserName.getText().toString();
+		mProfile.mKeyPassword = mKeyPassword.getText().toString();
 
 	}
 

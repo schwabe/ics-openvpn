@@ -220,8 +220,11 @@ public class ConfigParser {
 			"topology",
 			"persist-tun",
 			"route-metric",
-			"suppress-timestamps"
-			
+			"suppress-timestamps",
+			"management-query-passwords",
+			"tmp-dir",
+			"management-hold",
+			"management"
 	};
 	
 	

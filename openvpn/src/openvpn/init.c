@@ -2292,10 +2292,10 @@ do_init_crypto_tls (struct context *c, const unsigned int flags)
   to.mda_context = &c->c2.mda_context;
 #endif
 
+  to.tmp_dir = options->tmp_dir;
 #if P2MP_SERVER
   to.auth_user_pass_verify_script = options->auth_user_pass_verify_script;
   to.auth_user_pass_verify_script_via_file = options->auth_user_pass_verify_script_via_file;
-  to.tmp_dir = options->tmp_dir;
   if (options->ccd_exclusive)
     to.client_config_dir_exclusive = options->client_config_dir;
 #endif
@@ -2477,7 +2477,7 @@ do_option_warnings (struct context *c)
 {
   const struct options *o = &c->options;
 
-#if 0 /* JYFIXME -- port warning */
+#if 1 /* JYFIXME -- port warning */
   if (!o->ce.port_option_used && (o->ce.local_port == OPENVPN_PORT && o->ce.remote_port == OPENVPN_PORT))
     msg (M_WARN, "IMPORTANT: OpenVPN's default port number is now %d, based on an official port number assignment by IANA.  OpenVPN 2.0-beta16 and earlier used 5000 as the default port.",
 	 OPENVPN_PORT);

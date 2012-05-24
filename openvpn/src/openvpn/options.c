@@ -4518,6 +4518,7 @@ add_option (struct options *options,
 	      goto err;
 	    }
 	  re.remote_port = port;
+      options->ce.port_option_used = true;
 	  if (p[3])
 	    {
 	      const int proto = ascii2proto (p[3]);

@@ -219,6 +219,7 @@ public class ConfigParser {
 			"route-gateway",
 			"topology",
 			"persist-tun",
+			"persist-key",
 			"route-metric",
 			"suppress-timestamps",
 			"management-query-passwords",

@@ -11,13 +11,7 @@
         <item>User/PW + PKCS12 </item>
         <item>User/PW + Android</item>
     </string-array>
-    <string-array name="vpn_entry_types">
-        <item>certs</item>
-        <item>pkcs12</item>
-        <item>keystore</item>
-        <item>userpw</item>
-        <item>statickeys</item>
-    </string-array>
+
     <string-array name="tls_directions_entries">
         <item>0</item>
         <item>1</item>

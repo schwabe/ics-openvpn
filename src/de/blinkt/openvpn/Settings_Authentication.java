@@ -3,6 +3,7 @@ package de.blinkt.openvpn;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -102,7 +103,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 	}
 	void startFileDialog() {
 		Intent startFC = new Intent(getActivity(),FileSelect.class);
-		startFC.putExtra(FileSelect.START_DATA, "/sdcard");
+		startFC.putExtra(FileSelect.START_DATA, Environment.getExternalStorageDirectory().getPath());
 	
 		startActivityForResult(startFC,SELECT_TLS_FILE);
 	}

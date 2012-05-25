@@ -13,36 +13,20 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
- -->
+-->
 
 <resources>
-    <string name="app">OpenVPN for Android</string>
 
+    <string name="app">OpenVPN for Android</string>
     <string name="address">Server Address:</string>
     <string name="port">Server Port:</string>
-    <string name="secret">Shared Secret:</string>
-    <string name="connect">Connect</string>
-
-    <string name="connecting">OpenVPN is connecting…</string>
-    <string name="connected">OpenVPN is connected!</string>
-    <string name="disconnected">OpenVPN is disconnected!</string>
-        
     <string name="defaultserver">openvpn.uni-paderborn.de</string>
     <string name="defaultport">1194</string>
-
-    
-	 <string name="app_name">File dialog</string>
     <string name="location">Location</string>
     <string name="cant_read_folder">folder can\'t be read!</string>
-    <string name="nnew">New</string>
     <string name="select">Select</string>
-    <string name="file_name">File name:</string>
     <string name="cancel">Cancel</string>
-    <string name="create">Save</string>
     <string name="no_data">No Data</string>
-    <color name="gray">#ffff0000</color>
-    <string name="err">Error</string>
-    <string name="usercert">User Certificate</string>
     <string name="useLZO">LZO Compression</string>
     <string name="client_no_certificate">No Certificate</string>
     <string name="client_certificate_title">Client Certificate</string>
@@ -51,8 +35,7 @@
     <string name="ca_title">CA Certificate</string>
     <string name="select_certificate">Select</string>
     <string name="no_certificate">Nothing selected</string>
-    <string name="openvpn_logo_descr">Openvpn Logo</string>
-    <string name="opevpn_copyright">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net&gt;\n
+    <string name="opevpn_copyright">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net>\n
 
 	  "OpenVPN" is a trademark of OpenVPN Technologies, Inc.\n</string>
     <string name="copyright_blinktgui">Copyright 2012\nArne Schwabe &lt;arne@rfc2549.org></string>
@@ -60,8 +43,7 @@
     <string name="copyright_others">The program uses the following components. See the source for full details on the licenses</string>
     <string name="copyright_file_dialog">File Dialog based on work by Alexander Ponomarev"</string>
     <string name="lzo_copyright">Copyright © 1996 – 2011 Markus Franz Xaver Johannes Oberhumer</string>
-    <string name="copyright_openssl">
-        This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit\n
+    <string name="copyright_openssl">        This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit\n
         Copyright © 1998-2008 The OpenSSL Project. All rights reserved.\n\n
         This product includes cryptographic software written by Eric Young (eay@cryptsoft.com)\n
         Copyright © 1995-1998 Eric Young (eay@cryptsoft.com) All rights reserved.</string>
@@ -73,21 +55,13 @@
     <string name="about_summary">About Openvpn for Android</string>
     <string name="vpn_list_summary">List of all configured VPNs</string>
     <string name="vpn_list_title">All your precious VPNs</string>
-    
     <string name="vpn_type">Type</string>
     <string name="pkcs12pwquery">PKCS12 Password</string>
     <string name="filetypeicon">FileTypeIcon</string>
-    <string name="select_keystore">Select…</string>
     <string name="file_select">Select…</string>
     <string name="file_nothing_selected">Nothing Selected</string>
-    <string name="tlsauth">TLS Auth</string>
-    <string name="show_advanced">Show advanced settings</string>
     <string name="useTLSAuth">Use TLS Authentication</string>
     <string name="tls_direction">TLS Direction</string>
-    <string name="vpn_settings_activity_title">VPN List</string>
-    <string name="new_vpn">Add OpenVPN Config</string>
-    <string name="vpn">Saved VPN Configs</string>
-    
     <string name="ipv6_dialog_tile">Enter IPv6 Address/Netmask in CIDR Format (e.g. 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Enter IPv4 Address/Netmask in CIDR Format (e.g. 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4 Address</string>
@@ -104,7 +78,6 @@
     <string name="no_keystore_cert_selected">No User certificate selected.</string>
     <string name="no_error_found">No error found</string>
     <string name="config_error_found">Error in Configuration</string>
-    <string name="config_error_message">An error has been found in your VPN configuration:</string>
     <string name="ipv4_format_error">Cannot parse the IPv4 address</string>
     <string name="custom_route_format_error">Cannot parse the custom routes</string>
     <string name="pw_query_hint">Leave empty to query on demand</string>
@@ -125,7 +98,7 @@
     <string name="check_remote_tlscert_title">Except TLS Server</string>
     <string name="remote_tlscn_check_summary">Checks the Remote Server Certificate CN against a String</string>
     <string name="remote_tlscn_check_title">Certificate Hostname Check</string>
-    <string name="enter_tlscn_dialog">Enter the string against which the remote Server is checked. Openvpn will use prefix matching. &quot;Server&quot; matches &quot;Server-1&quot; and &quot;Server-2&quot;\nLeave empty to check the CN against the server hostname.</string>
+    <string name="enter_tlscn_dialog">Enter the string against which the remote Server is checked. Openvpn will use prefix matching. "Server" matches "Server-1" and "Server-2"\nLeave empty to check the CN against the server hostname.</string>
     <string name="enter_tlscn_title">Remote Hostname(CN)</string>
     <string name="tls_key_auth">Enables the TLS Key Authentication</string>
     <string name="tls_auth_file">TLS Auth File</string>
@@ -136,7 +109,6 @@
     <string name="override_dns">Override DNS Settings by Server</string>
     <string name="dns_override_summary">Use your own DNS Servers</string>
     <string name="searchdomain">searchDomain</string>
-    <string name="dns1_title">DNS Server to be used.</string>
     <string name="dns1_summary">DNS Server to be used.</string>
     <string name="dns_server">DNS Server</string>
     <string name="secondary_dns_message">Secondary DNS Server used if the normal DNS Server cannot be reached.</string>
@@ -145,7 +117,7 @@
     <string name="ignore_routes_summary">Ignore routed pushed by the server.</string>
     <string name="default_route_summary">Redirects all Traffic over the VPN</string>
     <string name="use_default_title">Use default Route</string>
-    <string name="custom_route_message">Enter custom routes. Only enter destination in CIDR format. &quot;10.0.0.0/8 2002::/16&quot; would direct the networks 10.0.0.0/8 and 2002::/16 over the VPN.</string>
+    <string name="custom_route_message">Enter custom routes. Only enter destination in CIDR format. "10.0.0.0/8 2002::/16" would direct the networks 10.0.0.0/8 and 2002::/16 over the VPN.</string>
     <string name="custom_routes_title">Custom Routes</string>
     <string name="log_verbosity_level">Log verbosity level</string>
     <string name="float_summary">Allows authenticated packets from any IP</string>
@@ -170,7 +142,6 @@
     <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>
     <string name="keychain_access">Cannot accces the Android Keychain Certificates. If you restored a backup of the app/app settings reselect the certificate to recreate the permission to access the certificate.</string>
     <string name="version_info">%1$s %2$s</string>
-    <string name="could_not_write_log">Could not write log contents to file</string>
     <string name="send_logfile">Send Logfile</string>
     <string name="send">Send</string>
     <string name="ics_openvpn_log_file">ICS Openvpn log file</string>
@@ -179,15 +150,15 @@
     <string name="faq_tap_mode">Tap Mode is not possible with the non root VPN API. Therefore this application cannot provide tap support</string>
     <string name="tap_faq2">Again? Are you kidding? No tap mode is really not supported and sending more mail aksing if it will be supported will not help.</string>
     <string name="tap_faq3">A third time? Actually one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would have to implement also ARP and possible a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.</string>
-    <string name="faq">FAQ</string>  
-    <string name="faq_summary">frequently asked questions and some adivce</string>  
-    <string name="copying_log_entries">Copying log entries</string>  
-    <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the gui.</string>  
-    <string name="faq_shortcut">Shortcut to start</string>  
-    <string name="faq_howto_shortcut">You can place a shortcut to start OpenVPN on your desktop. Depending on your homescreen program you have to add a shortcut or a widget.</string>  
-    <string name="no_vpn_support_image">Your image does not support the VPNService API,sorry :(</string>  
-    <string name="encryption">Encryption</string>  
-    <string name="cipher_dialog_title">Enter Encryption method</string>  
+    <string name="faq">FAQ</string>
+    <string name="faq_summary">frequently asked questions and some adivce</string>
+    <string name="copying_log_entries">Copying log entries</string>
+    <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the gui.</string>
+    <string name="faq_shortcut">Shortcut to start</string>
+    <string name="faq_howto_shortcut">You can place a shortcut to start OpenVPN on your desktop. Depending on your homescreen program you have to add a shortcut or a widget.</string>
+    <string name="no_vpn_support_image">Your image does not support the VPNService API,sorry :(</string>
+    <string name="encryption">Encryption</string>
+    <string name="cipher_dialog_title">Enter Encryption method</string>
     <string name="chipher_dialog_message">Enter the cipher key for openvpn. Leave empty to use default cipher</string>
     <string name="settings_auth">Authentication/Encryption</string>
     <string name="file_explorer_tab">File Explorer</string>
@@ -220,7 +191,6 @@
     <string name="ipv4">IPv4</string>
     <string name="ipv6">IPv6</string>
     <string name="speed_waiting">Waiting for state message…</string>
-    <string name="generalsettings">General Settings</string>
     <string name="converted_profile">imported profile</string>
     <string name="converted_profile_i">imported profile %d</string>
     <string name="broken_images">Broken Images</string>
@@ -228,5 +198,6 @@
     <string name="error_empty_username">The username must not be empty.</string>
     <string name="pkcs12_file_encryption_key">PKCS12 File Encryption Key</string>
     <string name="private_key_password">Private Key Password</string>
-    <string name="password">Password</string>  
+    <string name="password">Password</string>
+
 </resources>

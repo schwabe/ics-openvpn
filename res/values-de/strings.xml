@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app">OpenVPN für Android</string>
 
+    <string name="app">OpenVPN für Android</string>
     <string name="address">Server:</string>
     <string name="port">Server Port:</string>
-    <string name="connect">Verbinden</string>
-
-    <string name="connecting">starte Verbindung…</string>
-    
-    <string name="selectCertificate">Auswählen…</string>
-    
-    <string name="app_name">Datei öffnen</string>
     <string name="location">Ort</string>
     <string name="cant_read_folder">Verzeichnis kann nicht gelesen werden</string>
-    <string name="nnew">Neu</string>
     <string name="select">Auswählen</string>
-    <string name="file_name">Dateiname:</string>
     <string name="cancel">Abbrechen</string>
-    <string name="create">Speichern</string>
     <string name="no_data">Keine Daten</string>
-    <string name="err">Fehler</string>
-    <string name="usercert">Clientzertifikat</string>
     <string name="useLZO">LZO Komprimierung</string>
     <string name="client_no_certificate">Kein Zertifikat</string>
     <string name="client_certificate_title">Clientzertifikat</string>
@@ -31,8 +19,6 @@
     <string name="about">Über</string>
     <string name="vpn_type">Typ</string>
     <string name="pkcs12pwquery">PKCS12 Passwort</string>
-    <string name="tlsauth">TLS Authentifizierung</string>
-    <string name="show_advanced">Erweiterte Einstellungen</string>
-    <string name="useTLSAuth">Benutze TLS Authentifizierung</string>    
+    <string name="useTLSAuth">Benutze TLS Authentifizierung</string>
 
 </resources>

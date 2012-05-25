@@ -1,6 +1,14 @@
-This is my first Android project, so some things my be done in a completely stupid way.
+This is my first Android project, so some things may be done in a completely stupid way.
 
+See  the file todo.txt for ideas/not yet implemented features (and the bug tracker).
 
-I am for example not really sure if it was a good idea to use the Preferences Framework for the preferences.
+Build instraction:
 
-See also the file todo.txt for ideas/not yet implemented features.
+- Install sdk
+- Install ndk
+
+Do ndk-build in the root directory of the project.
+
+Use eclipse with android plugins to build the project.
+
+Optional: Copy minivpn from lib/ to assets (if you want your own compiled version)

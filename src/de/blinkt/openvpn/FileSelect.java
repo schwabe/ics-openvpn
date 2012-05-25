@@ -15,6 +15,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 
 public class FileSelect extends Activity {
 	public static final String RESULT_DATA = "RESULT_PATH";
@@ -36,7 +37,7 @@ public class FileSelect extends Activity {
 
 		mData = getIntent().getStringExtra(START_DATA);
 		if(mData==null)
-			mData="/sdcard";
+			mData=Environment.getExternalStorageDirectory().getPath();
 		
 		String title = getIntent().getStringExtra(WINDOW_TITLE);
 		int titleId = getIntent().getIntExtra(WINDOW_TITLE, 0);

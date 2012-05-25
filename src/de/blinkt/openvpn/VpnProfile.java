@@ -456,7 +456,7 @@ public class VpnProfile implements  Serializable{
 		// Put enough digits togher to make a password :)
 		Random r = new Random();
 		for(int i=0;i < 4;i++) {
-			pw += new Integer(r.nextInt(1000)).toString();
+			pw +=  Integer.valueOf(r.nextInt(1000)).toString();
 		}
 
 		mTempPKCS12Password=pw;

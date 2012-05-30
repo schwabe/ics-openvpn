@@ -26,6 +26,6 @@
     <header
         android:fragment="de.blinkt.openvpn.ShowConfigFragment"
         android:summary="Shows the generated openvpn Configuration File"
-        android:title="Generated Config" />
+        android:title="@string/generated_config" />
 
 </preference-headers>

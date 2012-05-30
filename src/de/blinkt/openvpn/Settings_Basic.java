@@ -30,6 +30,7 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 
 
-	private HashMap<Integer, FileSelectLayout> fileselects = new HashMap<Integer, FileSelectLayout>();
+	private SparseArray<FileSelectLayout> fileselects = new SparseArray<FileSelectLayout>();
 
 
 	private EditText mUserName;

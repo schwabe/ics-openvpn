@@ -17,12 +17,12 @@
         <item>1</item>
         <item>Unspecified</item>
     </string-array>
-    <string-array name="tls_directions_values">
+    <string-array translatable="false" name="tls_directions_values">
         <item>0</item>
         <item>1</item>
         <item></item>
     </string-array>
-    <string-array name="verb_values">
+    <string-array translatable="false" name="verb_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>

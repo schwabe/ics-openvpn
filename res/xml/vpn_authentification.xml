@@ -16,7 +16,7 @@
         android:key="remotecn"
         android:title="@string/enter_tlscn_title" />
 
-    <PreferenceCategory android:title="TLS Authentication" >
+    <PreferenceCategory android:title="@string/tls_authentication" >
         <SwitchPreference
             android:key="useTLSAuth"
             android:summary="@string/tls_key_auth"

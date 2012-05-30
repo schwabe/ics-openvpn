@@ -83,15 +83,17 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		mPM =ProfileManager.getInstance(this);
+
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
 		// Resolve the intent
 
 		final Intent intent = getIntent();
 		final String action = intent.getAction();
-
-		mPM =ProfileManager.getInstance(this);
-
-
-
 		// If the intent is a request to create a shortcut, we'll do that and exit
 
 		if(Intent.ACTION_MAIN.equals(action)) {

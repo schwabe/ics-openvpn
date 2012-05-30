@@ -30,9 +30,11 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -76,7 +78,9 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 	private ProfileManager mPM;
 	private VpnProfile mSelectedProfile;
-
+	
+	
+	private boolean mCmfixed=false;
 	static boolean minivpnwritten=false;
 	
 	@Override
@@ -326,6 +330,25 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		}
 
 		Intent intent = VpnService.prepare(this);
+		// Check if we want to fix /dev/tun
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
+		boolean usecm9fix = prefs.getBoolean("useCM9Fix", false);
+		
+		if(usecm9fix && !mCmfixed ) {
+			ProcessBuilder pb = new ProcessBuilder(new String[] {"su","-c","chown system /dev/tun"});
+			try {
+				Process p = pb.start();
+				int ret = p.waitFor();
+				if(ret ==0)
+					mCmfixed=true;
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+			
+		
 
 		if (intent != null) {
 			// Start the query

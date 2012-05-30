@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <CheckBoxPreference
+        android:key="useCM9Fix"
+        android:summary="@string/owner_fix_summary"
+        android:title="@string/owner_fix"
+        android:defaultValue="false" />
+
+</PreferenceScreen>

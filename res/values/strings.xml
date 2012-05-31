@@ -124,7 +124,7 @@
     <string name="custom_options_title">Custom Options</string>
     <string name="edit_vpn">Edit VPN Settings</string>
     <string name="remove_vpn_query">Remove the VPN Profile %s?</string>
-    <string name="tun_error_helpful">" On some custom ICS images the permission on /dev/tun might be wrong, or the tun module might be missing completly. For CM9 images try the fix ownership option under general settings"</string>
+    <string name="tun_error_helpful">On some custom ICS images the permission on /dev/tun might be wrong, or the tun module might be missing completly. For CM9 images try the fix ownership option under general settings"</string>
     <string name="tun_open_error">Opening tun interface failed badly.</string>
     <string name="error">"Error: "</string>
     <string name="clear">Clear</string>

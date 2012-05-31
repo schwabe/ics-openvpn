@@ -102,6 +102,7 @@ public class VpnProfile implements  Serializable{
 		mUsePull=false;
 		mUseLzo=false;
 		mUseDefaultRoute=false;
+		mUseDefaultRoutev6=false;
 		mExpectTLSCert=false;
 	}
 
@@ -130,7 +131,6 @@ public class VpnProfile implements  Serializable{
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
 		return mName;
 	}
 

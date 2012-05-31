@@ -301,7 +301,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 				}
 
 			} else if (resultCode == Activity.RESULT_CANCELED) {
-				// User does want us to start, so we just vanish
+				// User does not want us to start, so we just vanish
 				finish();
 			}
 		}

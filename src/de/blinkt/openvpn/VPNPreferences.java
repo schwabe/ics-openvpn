@@ -28,6 +28,10 @@ public class VPNPreferences extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		mProfileUUID = getIntent().getStringExtra(getPackageName() + ".profileUUID");
+		VpnProfile profile = ProfileManager.get(this,mProfileUUID);
+		if(profile!=null) {
+			setTitle(getString(R.string.edit_profile_title, profile.getName()));
+		}
 		super.onCreate(savedInstanceState);
 	}
 	

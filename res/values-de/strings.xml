@@ -53,16 +53,15 @@
     <string name="converted_profile">Importiertes Profil</string>
     <string name="converted_profile_i">Importiertes Profil %d</string>
     <string name="broken_images">Broken Images</string>
-    <string name="broken_images_faq">&lt;p>Offical HTC images are known to have a strange routing problem causing traffic not to flow through the tunnel (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\">Issue 18&lt;/a> in the bug tracker.)&lt;/p>&lt;p>The offical SONY images from Xperia arc S and Xperia Ray have been reported to be missing the VPNService completly from the image. Other Sony images may be affected as well. (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\">Issue 29&lt;/a> in the bug tracker.)&lt;/p>&lt;p>On custom build images the tun module might be missing or the rights of /dev/tun might be wrong. On the experimental CM9 Defy image a &lt;i>chown system /dev/tun&lt;/i> is needed to make the VPNService API work.&lt;/p></string>
     <string name="error_empty_username">Der Benutzername darf nicht leer sein</string>
     <string name="pkcs12_file_encryption_key">PKCS12 File Encryption Key</string>
-    <string name="private_key_password">Passwort privater Schlümmel</string>
+    <string name="private_key_password">Passphrase privater Schlüssel</string>
     <string name="password">Passwort</string>
     <string name="ipv4">IPv4</string>
     <string name="ipv6">IPv6</string>
     <string name="tls_direction">TLS Richtung</string>
     <string name="ipv6_dialog_tile">Tragen Sie die IPv6 Adresse und Netzmaske im CIDR Format ein (z.B. 2000:dd::23/64)</string>
-    <string name="ipv4_dialog_title">Tragen Sie die IPv4 Adresse und Netmaske im CIDR Format ein (z.B. 1.2.3.4/24)</string>
+    <string name="ipv4_dialog_title">Tragen Sie die IPv4 Adresse und Netzmaske im CIDR Format ein (z.B. 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4 Adresse</string>
     <string name="ipv6_address">IPv6 Adresse</string>
     <string name="custom_option_warning">Tragen Sie eigene OpenVPN Optionen ein. Beachten Sie, dass einige (vor allem tun spezifische) Optionen von der Android Version nicht unterstützt werden können. Wenn Sie denken, dass eine wichtige Option fehlt, kontaktieren Sie den Author.</string>
@@ -81,7 +80,7 @@
     <string name="config_error_found">Fehler in der Konfiguration</string>
     <string name="ipv4_format_error">Kann die die IPv4 Adresse nicht parsen</string>
     <string name="custom_route_format_error">Kann die Routes nicht parsen</string>
-    <string name="pw_query_hint">Leer lassen um nicht zu speichern</string>
+    <string name="pw_query_hint">Password nicht speichern</string>
     <string name="vpn_shortcut">OpenVPN Verknüpfung</string>
     <string name="vpn_launch_title">VPN verbinden</string>
     <string name="shortcut_profile_notfound">Von der Verknüpfung referenziertes Profil konnte nicht gefunden werden</string>
@@ -97,7 +96,16 @@
     <string name="remove_vpn">VPN löschen</string>
     <string name="check_remote_tlscert">Überprüft ob der Server ein  TLS Server Zertifikat benutzt.</string>
     <string name="check_remote_tlscert_title">Erwarte TLS Server</string>
-    <string name="remote_tlscn_check_summary">Prüfe Server CN gegen eine Zeichenfolge/string><string name="remote_tlscn_check_title">Zertifikat Hostnamem Überprüfung</string><string name="enter_tlscn_dialog">Geben Sie die Zeichenkette an gegen die Openvn den CN (common name) prüfen soll. Openvpn prüft auf Präfixe. D.h. die Angabe "Server" wertet "Server-1" und "Server-2" als gültig\nLeer lassen um gegen den Servernamen zu prüfen.</string><string name="enter_tlscn_title">Server Hostname(CN)</string><string name="tls_key_auth">Benutzte TLS Schlüssel Authentifizierung</string><string name="tls_auth_file">TLS Auth Datei</string><string name="pull_on_summary">Fordert IP Addressen, Routen and andere Optionen vom Server an.</string><string name="pull_off_summary">Keine Informationen werden vom Server bezogen. Geben Sie manuell die Optionen an.</string><string name="use_pull">Pull Settings</string><string name="dns">DNS</string></string>
+    <string name="remote_tlscn_check_summary">Prüft den CN des Serverzertifikats gegen eine Zeichenfolge</string>
+    <string name="remote_tlscn_check_title">Zertifikat Namen überprüfen</string>
+    <string name="enter_tlscn_dialog">Geben Sie die Zeichenkette an gegen die Openvn den CN (common name) prüfen soll. Openvpn prüft auf Präfixe. D.h. die Angabe "Server" wertet "Server-1" und "Server-2" als gültig\nLeer lassen um gegen den Servernamen zu prüfen.</string>
+    <string name="enter_tlscn_title">Server Hostname(CN)</string>
+    <string name="tls_key_auth">Benutzte TLS Schlüssel Authentifizierung</string>
+    <string name="tls_auth_file">TLS Auth Datei</string>
+    <string name="pull_on_summary">Fordert IP Addressen, Routen and andere Optionen vom Server an.</string>
+    <string name="pull_off_summary">Keine Informationen werden vom Server bezogen. Geben Sie manuell die Optionen an.</string>
+    <string name="use_pull">Pull Settings</string>
+    <string name="dns">DNS</string>
     <string name="override_dns">Eigene DNS Server.</string>
     <string name="dns_override_summary">Eigene DNS Server benutzen.</string>
     <string name="searchdomain">DNS Such Domäne</string>
@@ -105,9 +113,9 @@
     <string name="dns_server">DNS Server</string>
     <string name="secondary_dns_message">Sekundärer DNS Server. Wird genutzt falls der normale DNS Server nicht erreicht werden kann</string>
     <string name="backup_dns">Backup DNS Server</string>
-    <string name="ignored_pushed_routes">Vom Server erhaltene Routen ignorieren</string>
-    <string name="ignore_routes_summary">Ignore routed pushed by the server.</string>
-    <string name="default_route_summary">Redirects all Traffic over the VPN</string>
+    <string name="ignored_pushed_routes">Ignoriere gepushte Routen</string>
+    <string name="ignore_routes_summary">Ingoriere die Routen, die der Server dem Client sendet.</string>
+    <string name="default_route_summary">Leitet allen Internet Vekehr über das VPN</string>
     <string name="use_default_title">Benutze Default Route</string>
     <string name="custom_route_message">Benutze eigene Routen. Geben Sie Zielnetzwerk im CIDR format an. Z.b. "10.0.0.0/8 2002::/16" würde die Netzwerke 10.0.0.0/8 und 2002::/16 über das VPN routen.</string>
     <string name="custom_routes_title">Eigene Routen</string>
@@ -137,11 +145,11 @@
     <string name="ics_openvpn_log_file">ICS Openvpn log Datei</string>
     <string name="copied_entry">Log Eintrag in die Zwischenablage kopiert</string>
     <string name="tap_mode">Tap Mode</string>
-    <string name="faq_tap_mode">Tap Mode ist mit der VPNService API, die VPN mit nicht root möglich macht, unterstützt nur tun modus. Das Unterstützen des Tap Modus ist daher nicht möglich.</string>
+    <string name="faq_tap_mode">Die VPN API von Android, die ohne rooten des Telefons funktioniert, unterstützt nur den tun modus. Das Unterstützen des Tap Modus ist daher nicht möglich.</string>
     <string name="tap_faq2">Again? Are you kidding? No tap mode is really not supported and sending more mail aksing if it will be supported will not help.</string>
     <string name="tap_faq3">A third time? Actually one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would have to implement also ARP and possible a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.</string>
     <string name="faq">FAQ</string>
-    <string name="faq_summary">häufig gefragte Fragen und Hinweise</string>
+    <string name="faq_summary">häufig gestellte Fragen und Hinweise</string>
     <string name="copying_log_entries">Kopieren von Log Einträgen</string>
     <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the gui.</string>
     <string name="faq_shortcut">Verknüpfung zu einem VPN</string>
@@ -156,6 +164,9 @@
     <string name="generalsettings">Allgemeine Einstellungen</string>
     <string name="no_vpn_support_image">Dieses Android ROM enthält keine VPNService API, sorry :(</string>
     <string name="broken_image_cert_title">Fehler beim Anzeigen des Zertifikatsauswahlbildschirmes</string>
-    <string name="owner_fix_summary">Versuch den Eigentümer von /dev/tun auf system zu ändern. Einige Cyanogenmod 9 ROM Versionen benötigen diese Option, damit die VPN API funktioniert.</string>
-    <string name="owner_fix">Repariere Eigentümer of /dev/tun</string>
+    <string name="owner_fix_summary">Versuch den Eigentümer von /dev/tun auf system zu ändern. Einige Cyanogenmod 9 ROM Versionen benötigen diese Option, damit die VPN API funktioniert. Benötigt root.</string>
+    <string name="owner_fix">/dev/tun Eigentümer setzen.</string>
+    <string name="generated_config_summary">Zeigt die generierte Konfigurationsdatei</string>
+        <string name="edit_profile_title">Editiere \"%s\"</string>
+    
 </resources>

@@ -17,6 +17,7 @@ Ideas:
 
 Bugfixes:
  - startpath file explorer
+ - fix opening of files in email etc.
 
 
 Missing configuration options:

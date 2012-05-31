@@ -16,8 +16,6 @@
 
 package de.blinkt.openvpn;
 
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -98,6 +96,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		super.onCreate(savedInstanceState);
 		String profileuuid =getArguments().getString(getActivity().getPackageName() + ".profileUUID");
 		mProfile=ProfileManager.get(profileuuid);
+		getActivity().setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
 	}
 
 	@Override

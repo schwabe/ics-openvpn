@@ -150,4 +150,11 @@ public class ProfileManager {
 		
 	}
 
+
+
+	public static VpnProfile get(Context context, String profileUUID) {
+		checkInstance(context);
+		return get(profileUUID);
+	}
+
 }

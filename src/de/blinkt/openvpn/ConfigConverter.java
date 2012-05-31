@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Vector;
 
 import android.app.Activity;
 import android.app.ListActivity;
@@ -23,6 +25,8 @@ public class ConfigConverter extends ListActivity {
 
 	private VpnProfile mResult;
 	private ArrayAdapter<String> mArrayAdapter;
+
+	private List<String> mPathsegments;
 
 
 	@Override
@@ -91,7 +95,20 @@ public class ConfigConverter extends ListActivity {
 		// Try diffent path relative to /mnt/sdcard
 		File sdcard = Environment.getExternalStorageDirectory();
 		File root = new File("/");
-		File[] dirlist = {root, sdcard};
+		
+		Vector<File> dirlist = new Vector<File>();
+
+		for(int i=mPathsegments.size()-1;i >=0 ;i--){
+			String path = "";
+			for (int j = 0;j<=i;j++) {
+				path += "/" + mPathsegments.get(j);
+			}
+			dirlist.add(new File(path));
+		}
+		dirlist.add(sdcard);
+		dirlist.add(root);
+		
+		
 		String[] fileparts = filename.split("/");
 		for(File rootdir:dirlist){
 			String suffix="";
@@ -159,6 +176,8 @@ public class ConfigConverter extends ListActivity {
 				log(R.string.importing_config,data.toString());
 				try {
 					InputStream is = getContentResolver().openInputStream(data);
+					mPathsegments = data.getPathSegments();
+					
 					doImport(is);
 				} catch (FileNotFoundException e) {
 					log(R.string.import_content_resolve_error);

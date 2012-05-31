@@ -13,11 +13,11 @@ public abstract class OpenVpnPreferencesFragment extends PreferenceFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Make sure there is an instance of the profile manager
-		ProfileManager.getInstance(getActivity());
-		
+
 		String profileUUID = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		mProfile = ProfileManager.get(profileUUID);
+		mProfile = ProfileManager.get(getActivity(),profileUUID);
+		getActivity().setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
+
 	}
 	
 	@Override
@@ -31,8 +31,7 @@ public abstract class OpenVpnPreferencesFragment extends PreferenceFragment {
 		super.onActivityCreated(savedInstanceState);
 		if(savedInstanceState!=null) {
 			String profileUUID=savedInstanceState.getString(VpnProfile.EXTRA_PROFILEUUID);
-			ProfileManager.getInstance(getActivity());
-			mProfile = ProfileManager.get(profileUUID);
+			mProfile = ProfileManager.get(getActivity(),profileUUID);
 			loadSettings();
 		}
 	}

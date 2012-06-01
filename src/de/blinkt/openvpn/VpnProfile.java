@@ -271,10 +271,12 @@ public class VpnProfile implements  Serializable{
 			}
 
 		if(mOverrideDNS || !mUsePull) {
-			if(!mDNS1.equals("") && mDNS1!=null)
+			if(nonNull(mDNS1))
 				cfg+="dhcp-option DNS " + mDNS1 + "\n";
-			if(!mDNS2.equals("") && mDNS2!=null)
+			if(nonNull(mDNS2))
 				cfg+="dhcp-option DNS " + mDNS2 + "\n";
+			if(nonNull(mSearchDomain))
+				cfg+="dhcp-option DOMAIN " + mSearchDomain + "\n";
 
 		}
 

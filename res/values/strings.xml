@@ -206,4 +206,5 @@
     <string name="owner_fix">Fix ownership of /dev/tun</string>
     <string name="generated_config_summary">Shows the generated openvpn Configuration File</string>
     <string name="edit_profile_title">Editing \"%s\"</string>
+    <string name="building_configration">Building configration…</string>
 </resources>

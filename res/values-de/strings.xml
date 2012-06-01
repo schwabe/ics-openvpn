@@ -167,6 +167,7 @@
     <string name="owner_fix_summary">Versuch den Eigentümer von /dev/tun auf system zu ändern. Einige Cyanogenmod 9 ROM Versionen benötigen diese Option, damit die VPN API funktioniert. Benötigt root.</string>
     <string name="owner_fix">/dev/tun Eigentümer setzen.</string>
     <string name="generated_config_summary">Zeigt die generierte Konfigurationsdatei</string>
-        <string name="edit_profile_title">Editiere \"%s\"</string>
-    
+    <string name="edit_profile_title">Editiere \"%s\"</string>
+    <string name="building_configration">Generiere OpenVPN Konfigration…</string>
+
 </resources>

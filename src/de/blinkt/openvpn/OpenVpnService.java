@@ -256,6 +256,7 @@ public class OpenVpnService extends VpnService {
 		mRoutesv6.clear();
 		mLocalIP=null;
 		mLocalIPv6=null;
+		mDomain=null;
 
 		builder.setConfigureIntent(getLogPendingIntent());
 

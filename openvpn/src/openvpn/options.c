@@ -228,7 +228,7 @@ static const char usage_message[] =
   "--route-noexec  : Don't add routes automatically.  Instead pass routes to\n"
   "                  --route-up script using environmental variables.\n"
   "--route-nopull  : When used with --client or --pull, accept options pushed\n"
-  "                  by server EXCEPT for routes.\n"
+  "                  by server EXCEPT for routes and dhcp options.\n"
   "--allow-pull-fqdn : Allow client to pull DNS names from server for\n"
   "                    --ifconfig, --route, and --route-gateway.\n"
   "--redirect-gateway [flags]: Automatically execute routing\n"
@@ -4029,18 +4029,19 @@ void options_string_import (struct options *options,
 
 #if P2MP
 
-#define VERIFY_PERMISSION(mask) { if (!verify_permission(p[0], (mask), permission_mask, option_types_found, msglevel)) goto err; }
+#define VERIFY_PERMISSION(mask) { if (!verify_permission(p[0], file, (mask), permission_mask, option_types_found, msglevel)) goto err; }
 
 static bool
 verify_permission (const char *name,
-		   const unsigned int type,
+           const char* file,
+           const unsigned int type,
 		   const unsigned int allowed,
 		   unsigned int *found,
 		   const int msglevel)
 {
   if (!(type & allowed))
     {
-      msg (msglevel, "option '%s' cannot be used in this context", name);
+      msg (msglevel, "option '%s' cannot be used in this context (%s)", name, file);
       return false;
     }
   else

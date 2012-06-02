@@ -1477,13 +1477,13 @@ do_open_tun (struct context *c)
 						&gc);
 	  do_ifconfig (c->c1.tuntap, guess, TUN_MTU_SIZE (&c->c2.frame), c->c2.es);
 	}
-        
-        /* possibly add routes */
-        if(ifconfig_order() == ROUTE_BEFORE_TUN) {
-            // Ignore route_delay
-            do_route (&c->options, c->c1.route_list, c->c1.route_ipv6_list,
-                          c->c1.tuntap, c->plugins, c->c2.es);
-        }
+
+      /* possibly add routes */
+      if(ifconfig_order() == ROUTE_BEFORE_TUN) {
+		  /* Ignore route_delay, would cause ROUTE_BEFORE_TUN to be ignored */
+		  do_route (&c->options, c->c1.route_list, c->c1.route_ipv6_list,
+					c->c1.tuntap, c->plugins, c->c2.es);
+    }
 
       /* open the tun device */
       open_tun (c->options.dev, c->options.dev_type, c->options.dev_node,
@@ -1516,11 +1516,10 @@ do_open_tun (struct context *c)
 		   c->c2.es);
 
       /* possibly add routes */
-        if(ifconfig_order() == ROUTE_AFTER_TUN) {
-      if (!c->options.route_delay_defined)
+      if ((ifconfig_order() == ROUTE_AFTER_TUN) && (!c->options.route_delay_defined))
 	do_route (&c->options, c->c1.route_list, c->c1.route_ipv6_list,
 		  c->c1.tuntap, c->plugins, c->c2.es);
-        }
+
       /*
        * Did tun/tap driver give us an MTU?
        */
@@ -1724,9 +1723,8 @@ do_up (struct context *c, bool pulled_options, unsigned int option_types_found)
 	  save_pulled_options_digest (c, &c->c2.pulled_options_digest);
 #endif
 
-#ifndef ROUTE_BEFORE_TUN
 	  /* if --route-delay was specified, start timer */
-	  if (c->options.route_delay_defined)
+	  if ((ifconfig_order() == ROUTE_AFTER_TUN) && c->options.route_delay_defined)
 	    {
 	      event_timeout_init (&c->c2.route_wakeup, c->options.route_delay, now);
 	      event_timeout_init (&c->c2.route_wakeup_expire, c->options.route_delay + c->options.route_delay_window, now);
@@ -1734,7 +1732,6 @@ do_up (struct context *c, bool pulled_options, unsigned int option_types_found)
 		tun_standby_init (c->c1.tuntap);
 	    }
 	  else
-#endif
 	    {
 	      initialization_sequence_completed (c, 0); /* client/p2p --route-delay undefined */
 	    }
@@ -2292,10 +2289,10 @@ do_init_crypto_tls (struct context *c, const unsigned int flags)
   to.mda_context = &c->c2.mda_context;
 #endif
 
-  to.tmp_dir = options->tmp_dir;
 #if P2MP_SERVER
   to.auth_user_pass_verify_script = options->auth_user_pass_verify_script;
   to.auth_user_pass_verify_script_via_file = options->auth_user_pass_verify_script_via_file;
+  to.tmp_dir = options->tmp_dir;
   if (options->ccd_exclusive)
     to.client_config_dir_exclusive = options->client_config_dir;
 #endif

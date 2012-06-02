@@ -208,7 +208,7 @@ struct man_persist {
   bool hold_release;
 
   const char *special_state_msg;
-    
+
   counter_type bytes_in;
   counter_type bytes_out;
 };
@@ -307,7 +307,6 @@ struct man_connection {
     int fdtosend;
     int lastfdreceived;
 #endif
-    
 };
 
 struct management

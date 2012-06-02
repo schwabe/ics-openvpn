@@ -76,7 +76,6 @@ struct tuntap_options {
 
   int netbios_node_type;     /* NBT 1,2,4,8 (46) */
 
-
 #define N_DHCP_ADDR 4        /* Max # of addresses allowed for
 			        DNS, WINS, etc. */
 
@@ -313,8 +312,6 @@ route_order(void)
     return ROUTE_ORDER_DEFAULT;
 #endif
 }
-
-
 
 
 #ifdef WIN32

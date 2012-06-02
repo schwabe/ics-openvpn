@@ -308,46 +308,46 @@ void x_msg (const unsigned int flags, const char *format, ...)
 			    prefix,
 			    prefix_sep,
 			    m1);
-        virtual_output_print (vo, flags, m2);
+	  virtual_output_print (vo, flags, m2);
 	}
     }
 
-  if (!(flags & M_MSG_VIRT_OUT) )
+  if (!(flags & M_MSG_VIRT_OUT))
     {
-        if (use_syslog && !std_redir && !forked)
-        {
+      if (use_syslog && !std_redir && !forked)
+	{
 #if SYSLOG_CAPABILITY
-            syslog (level, "%s%s%s",
-                    prefix,
-                    prefix_sep,
-                    m1); 
+	  syslog (level, "%s%s%s",
+		  prefix,
+		  prefix_sep,
+		  m1);
 #endif
-        }
+	}
       else
-        {
-            FILE *fp = msg_fp(flags);
-            const bool show_usec = check_debug_level (DEBUG_LEVEL_USEC_TIME);
-            
-            if ((flags & M_NOPREFIX) || suppress_timestamps)
-            {
-                fprintf (fp, "%s%s%s%s",
-                         prefix,
-                         prefix_sep,
-                         m1,
-                         (flags&M_NOLF) ? "" : "\n");
-            }
-            else
-            {
-                fprintf (fp, "%s %s%s%s%s",
-                         time_string (0, 0, show_usec, &gc),
-                         prefix,
-                         prefix_sep,
-                         m1,
-                         (flags&M_NOLF) ? "" : "\n"); 
-            }
-            fflush(fp);
-            ++x_msg_line_num;
-        }
+	{
+	  FILE *fp = msg_fp(flags);
+	  const bool show_usec = check_debug_level (DEBUG_LEVEL_USEC_TIME);
+
+	  if ((flags & M_NOPREFIX) || suppress_timestamps)
+	    {
+	      fprintf (fp, "%s%s%s%s",
+		       prefix,
+		       prefix_sep,
+		       m1,
+		       (flags&M_NOLF) ? "" : "\n");
+	    }
+	  else
+	    {
+	      fprintf (fp, "%s %s%s%s%s",
+		       time_string (0, 0, show_usec, &gc),
+		       prefix,
+		       prefix_sep,
+		       m1,
+		       (flags&M_NOLF) ? "" : "\n");
+	    }
+	  fflush(fp);
+	  ++x_msg_line_num;
+	}
     }
 
   if (flags & M_FATAL)

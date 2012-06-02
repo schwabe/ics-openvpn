@@ -506,6 +506,7 @@ socket_defined (const socket_descriptor_t sd)
 
 #if P2MP && !defined(ENABLE_CLIENT_ONLY)
 #define P2MP_SERVER 1
+#define ENABLE_TMPDIR 1
 #else
 #define P2MP_SERVER 0
 #endif

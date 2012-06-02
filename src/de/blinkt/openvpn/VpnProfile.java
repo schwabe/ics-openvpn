@@ -149,10 +149,11 @@ public class VpnProfile implements  Serializable{
 		cfg+= "management-query-passwords\n";
 		cfg += "management-hold\n\n";
 
+		/* tmp-dir patched out :) 
 		cfg+="# /tmp does not exist on Android\n";
 		cfg+="tmp-dir ";
 		cfg+=cacheDir.getAbsolutePath();
-		cfg+="\n\n";
+		cfg+="\n\n"; */
 
 		cfg+="# Log window is better readable this way\n";
 		cfg+="suppress-timestamps\n";

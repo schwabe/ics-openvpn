@@ -35,6 +35,9 @@
 #elif defined(_MSC_VER)
 #include "config-msvc.h"
 #endif
+#ifdef HAVE_CONFIG_VERSION_H
+#include "config-version.h"
+#endif
 
 #include "syshead.h"
 
@@ -859,6 +862,7 @@ init_options (struct options *o, const bool init_gc)
   o->pkcs11_pin_cache_period = -1;
 #endif			/* ENABLE_PKCS11 */
 
+#ifdef ENABLE_TMPDIR
   /* Set default --tmp-dir */
 #ifdef WIN32
   /* On Windows, find temp dir via enviroment variables */
@@ -870,6 +874,7 @@ init_options (struct options *o, const bool init_gc)
           o->tmp_dir = "/tmp";
   }
 #endif /* WIN32 */
+#endif /* ENABLE_TMPDIR */
 }
 
 void
@@ -1045,22 +1050,6 @@ string_substitute (const char *src, int from, int to, struct gc_arena *gc)
     }
   while (c);
   return ret;
-}
-
-bool
-is_persist_option (const struct options *o)
-{
-  return o->persist_tun
-      || o->persist_key
-      || o->persist_local_ip
-      || o->persist_remote_ip
-    ;
-}
-
-bool
-is_stateful_restart (const struct options *o)
-{
-  return is_persist_option (o) || connection_list_defined (o);
 }
 
 #ifdef ENABLE_SSL
@@ -2774,19 +2763,21 @@ options_postprocess_filechecks (struct options *options)
                              options->management_user_pass, R_OK,
                              "--management user/password file");
 #endif /* ENABLE_MANAGEMENT */
-#if P2MP
+#if ENABLE_TMPDIR
   errs |= check_file_access (CHKACC_FILE|CHKACC_ACPTSTDIN,
                              options->auth_user_pass_file, R_OK,
                              "--auth-user-pass");
-#endif /* P2MP */
+
+  errs |= check_file_access (CHKACC_FILE, options->tmp_dir,
+                             R_OK|W_OK|X_OK, "Temporary directory (--tmp-dir)");
+
+#endif /* ENABLE_TMPDIR */
 
   /* ** System related ** */
   errs |= check_file_access (CHKACC_FILE, options->chroot_dir,
                              R_OK|X_OK, "--chroot directory");
   errs |= check_file_access (CHKACC_DIRPATH|CHKACC_FILEXSTWR, options->writepid,
                              R_OK|W_OK, "--writepid");
-  errs |= check_file_access (CHKACC_FILE, options->tmp_dir,
-                             R_OK|W_OK|X_OK, "Temporary directory (--tmp-dir)");
 
   /* ** Log related ** */
   errs |= check_file_access (CHKACC_DIRPATH|CHKACC_FILEXSTWR, options->status_file,
@@ -3483,6 +3474,9 @@ usage_version (void)
 #ifdef CONFIGURE_DEFINES
   msg (M_INFO|M_NOPREFIX, "Compile time defines: %s", CONFIGURE_DEFINES);
 #endif
+#ifdef CONFIGURE_GIT_REVISION
+  msg (M_INFO|M_NOPREFIX, "git revision: %s", CONFIGURE_GIT_REVISION);
+#endif
 #endif
   openvpn_exit (OPENVPN_EXIT_STATUS_USAGE); /* exit point */
 }
@@ -4033,8 +4027,8 @@ void options_string_import (struct options *options,
 
 static bool
 verify_permission (const char *name,
-           const char* file,
-           const unsigned int type,
+		   const char* file,
+		   const unsigned int type,
 		   const unsigned int allowed,
 		   unsigned int *found,
 		   const int msglevel)
@@ -5473,11 +5467,6 @@ add_option (struct options *options,
       options->occ = false;
     }
 #endif
-  else if (streq (p[0], "tmp-dir") && p[1])
-  {
-      VERIFY_PERMISSION (OPT_P_GENERAL);
-      options->tmp_dir = p[1];
-  }
 #if P2MP
 #if P2MP_SERVER
   else if (streq (p[0], "server") && p[1] && p[2])
@@ -5758,6 +5747,11 @@ add_option (struct options *options,
 	goto err;
       warn_multiple_script (options->learn_address_script, "learn-address");
       options->learn_address_script = p[1];
+    }
+  else if (streq (p[0], "tmp-dir") && p[1])
+    {
+      VERIFY_PERMISSION (OPT_P_GENERAL);
+      options->tmp_dir = p[1];
     }
   else if (streq (p[0], "client-config-dir") && p[1])
     {

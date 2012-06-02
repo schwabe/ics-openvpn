@@ -40,7 +40,6 @@
 #include "misc.h"
 #include "manage.h"
 
-
 #include "memdbg.h"
 
 const int proto_overhead[] = { /* indexed by PROTO_x */
@@ -375,7 +374,7 @@ getaddr6 (unsigned int flags,
 
       /*
        * Resolve hostname
-       */ 
+       */
       while (true)
 	{
 	  /* try hostname lookup */
@@ -859,7 +858,8 @@ create_socket_tcp (void)
       msg (M_SOCKERR, "TCP: Cannot setsockopt SO_LINGER on TCP socket");
   }
 #endif
-    return sd;
+
+  return sd;
 }
 
 static socket_descriptor_t
@@ -886,7 +886,6 @@ create_socket_udp (const unsigned int flags)
 #endif
     }
 #endif
-
   return sd;
 }
 
@@ -906,7 +905,6 @@ create_socket_udp6 (const unsigned int flags)
 	msg(M_SOCKERR, "UDP: failed setsockopt for IPV6_RECVPKTINFO");
     }
 #endif
-
   return sd;
 }
 
@@ -1328,7 +1326,7 @@ socket_connect (socket_descriptor_t *sd,
 }
 
 /* For stream protocols, allocate a buffer to build up packet.
-    Called after frame has been finalized. */
+   Called after frame has been finalized. */
 
 static void
 socket_frame_init (const struct frame *frame, struct link_socket *sock)

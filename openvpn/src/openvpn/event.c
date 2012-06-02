@@ -753,10 +753,6 @@ po_wait (struct event_set *es, const struct timeval *tv, struct event_set_return
 	      ++out;
 	      ++j;
 	    }
-      else if(pfdp->revents==0x0020) 
-        {
-            openvpn_exit (OPENVPN_EXIT_STATUS_ERROR);
-        }
 	  else if (pfdp->revents)
 	    {
 	      msg (D_EVENT_ERRORS, "Error: poll: unknown revents=0x%04x", (unsigned int)pfdp->revents);

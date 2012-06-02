@@ -46,9 +46,9 @@
 #include "manage.h"
 #include "route.h"
 #include "win32.h"
+
 #include "memdbg.h"
 #include <string.h>
-
 
 #ifdef WIN32
 
@@ -1739,7 +1739,7 @@ read_tun (struct tuntap* tt, uint8_t *buf, int len)
       ret = readv(tt->fd, vect, 2);
       return(ret - sizeof(pi));
     }
-  else 
+  else
     return read (tt->fd, buf, len);
 }
 

@@ -40,19 +40,33 @@ MAINTAINERCLEANFILES = \
 	$(srcdir)/depcomp $(srcdir)/aclocal.m4 \
 	$(srcdir)/config.guess $(srcdir)/config.sub
 
+CLEANFILES = \
+	config-version.h
+
 EXTRA_DIST = \
 	contrib \
 	debug
 
+.PHONY: config-version.h
+
+if GIT_CHECKOUT
+BUILT_SOURCES = \
+	config-version.h
+endif
+
 SUBDIRS = build distro include src sample doc tests
 
 dist_doc_DATA = \
+	README \
+	README.IPv6 \
+	README.polarssl \
 	COPYRIGHT.GPL \
 	COPYING
 
 dist_noinst_DATA = \
 	.gitignore \
 	.gitattributes \
+	config-version.h.in \
 	PORTS \
 	README.IPv6 TODO.IPv6 \
 	README.polarssl \
@@ -75,3 +89,13 @@ if WIN32
 rootdir=$(prefix)
 root_DATA = version.sh
 endif
+
+config-version.h:
+	@CONFIGURE_GIT_REVISION="`GIT_DIR=\"$(top_srcdir)/.git\" $(GIT) rev-parse --symbolic-full-name HEAD`/`GIT_DIR=\"$(top_srcdir)/.git\" $(GIT) rev-parse --short=16 HEAD`"; \
+		$(SED) "s#@CONFIGURE_GIT_REVISION[@]#$${CONFIGURE_GIT_REVISION}#g" "$(srcdir)/config-version.h.in" > config-version.h.tmp
+	@if ! [ -f config-version.h ] || ! cmp -s config-version.h.tmp config-version.h; then \
+		echo "replacing config-version.h"; \
+		mv config-version.h.tmp config-version.h; \
+	else \
+		rm -f config-version.h.tmp; \
+	fi

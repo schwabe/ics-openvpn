@@ -2,9 +2,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="netchangereconnect"
+        android:summary="@string/netchange_summary"
+        android:title="@string/netchange" />
+    <CheckBoxPreference
+        android:defaultValue="false"
         android:key="useCM9Fix"
         android:summary="@string/owner_fix_summary"
-        android:title="@string/owner_fix"
-        android:defaultValue="false" />
+        android:title="@string/owner_fix" />
 
 </PreferenceScreen>

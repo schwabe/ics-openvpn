@@ -18,5 +18,4 @@ void android_openvpn_log(int level,const char* prefix,const char* prefix_sep,con
 
 void Java_de_blinkt_openvpn_OpenVpnManagementThread_jniclose(JNIEnv *env,jobject jo, jint fd) {
 	int ret = close(fd);
-    __android_log_print(ANDROID_LOG_DEBUG,"openvpn","fd close %d %d",fd,ret);
 }

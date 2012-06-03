@@ -106,8 +106,6 @@ public class OpenVpnManagementThread implements Runnable {
 
 			// You can even get more evil by parsing toString() and extract the int from that :)
 
-			Log.d("Openvpn", "Got FD from socket: " + fd + " " + fdint);
-
 			mOpenVPNService.protect(fdint);
 
 			//ParcelFileDescriptor pfd = ParcelFileDescriptor.fromFd(fdint);

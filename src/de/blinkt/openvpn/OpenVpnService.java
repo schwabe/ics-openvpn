@@ -24,6 +24,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.net.VpnService;
@@ -49,6 +51,8 @@ public class OpenVpnService extends VpnService {
 	private int mMtu;
 	private String mLocalIPv6=null;
 	private Notification mNotification=null;
+
+	private NetworkSateReceiver mNetworkStateReceiver;
 
 	private static final int HELLO_ID = 1;
 	
@@ -112,6 +116,13 @@ public class OpenVpnService extends VpnService {
 		return sock;
 
 	}
+	
+	void registerNetworkStateReceiver() {
+		  // Registers BroadcastReceiver to track network connection changes.
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        mNetworkStateReceiver = new NetworkSateReceiver(mSocketManager);
+        this.registerReceiver(mNetworkStateReceiver, filter);
+	}
 
 
 	@Override
@@ -161,7 +172,8 @@ public class OpenVpnService extends VpnService {
 		mServiceThread = new Thread(serviceThread, "OpenVPNServiceThread");
 		mServiceThread.start();
 
-
+		
+		
 		// Open the Management Interface
 		mgmtsocket =  openManagmentInterface(8);
 
@@ -170,6 +182,7 @@ public class OpenVpnService extends VpnService {
 			mSocketManager = new OpenVpnManagementThread(mProfile,mgmtsocket,this);
 			mSocketManagerThread = new Thread(mSocketManager,"OpenVPNMgmtThread");
 			mSocketManagerThread.start();
+			registerNetworkStateReceiver();
 		}
 
 		return START_NOT_STICKY;
@@ -182,6 +195,9 @@ public class OpenVpnService extends VpnService {
 
 			mServiceThread.interrupt();
 		}
+		  if (mNetworkStateReceiver!= null) {
+	            this.unregisterReceiver(mNetworkStateReceiver);
+	        }
 	}
 
 

@@ -381,7 +381,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 				OpenVPN.logMessage(0, "", "Error writing minivpn binary");
 				return;
 			}
-			OpenVPN.logMessage(0, "", "Building configration...");
+			OpenVPN.logMessage(0, "", getString(R.string.building_configration));
 
 			Intent startVPN = mSelectedProfile.prepareIntent(getBaseContext());
 

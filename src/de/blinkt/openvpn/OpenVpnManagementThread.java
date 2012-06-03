@@ -383,4 +383,10 @@ public class OpenVpnManagementThread implements Runnable {
 		return sendCMD;		
 	}
 
+
+	public void reconnect() {
+		managmentCommand("signal SIGUSR1\n");
+		
+	}
+
 }

@@ -164,10 +164,12 @@
     <string name="generalsettings">Allgemeine Einstellungen</string>
     <string name="no_vpn_support_image">Dieses Android ROM enthält keine VPNService API, sorry :(</string>
     <string name="broken_image_cert_title">Fehler beim Anzeigen des Zertifikatsauswahlbildschirmes</string>
-    <string name="owner_fix_summary">Versuch den Eigentümer von /dev/tun auf system zu ändern. Einige Cyanogenmod 9 ROM Versionen benötigen diese Option, damit die VPN API funktioniert. Benötigt root.</string>
+    <string name="owner_fix_summary">Versucht den Eigentümer von /dev/tun auf system zu ändern. Einige Cyanogenmod 9 ROM Versionen benötigen diese Option, damit die VPN API funktioniert. Benötigt root.</string>
     <string name="owner_fix">/dev/tun Eigentümer setzen.</string>
     <string name="generated_config_summary">Zeigt die generierte Konfigurationsdatei</string>
     <string name="edit_profile_title">Editiere \"%s\"</string>
     <string name="building_configration">Generiere OpenVPN Konfigration…</string>
+    <string name="netchange_summary">Aktivieren dieser Option zwingt OpenVPN dazu beim Wechsel des Netzwerkes (WLAN zu Mobilfunk und umgekehrt) neu zu verbinden.</string>
+    <string name="netchange">Netzwerkänderungen beachten</string>
 
 </resources>

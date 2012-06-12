@@ -192,7 +192,7 @@ public class VpnProfile implements  Serializable{
 		if(mUseUdp)
 			cfg+=" udp\n";
 		else
-			cfg+=" tcp\n";
+			cfg+=" tcp-client\n";
 
 
 

@@ -10,10 +10,15 @@ Ideas:
    - encryption of profiles
    - Speed/Transfered in notification bar (byte counter of management) 
    - Kick openvpn on network state change (Wifi <-> GPRS/EDGE/UMTS)
+   
+ - rework logging system (first step: rename OpenVPN class to samething sensible) 
 
 - map SIGUSR1 to SIGINT
 
 - add a put this certificate into file obscure option
+- adding a profile should bring up editing the profile instantly
+
+
 
 Bugfixes:
  - startpath file explorer

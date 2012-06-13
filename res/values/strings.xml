@@ -209,4 +209,7 @@
     <string name="building_configration">Building configration…</string>
     <string name="netchange_summary">Turning this option on will force a reconnet if the network state is change (WIFI to/from mobile)</string>
     <string name="netchange">Reconnect on Network change</string>
+    <string name="keychain_nocacert">No CA Certificate returned while reading from Android keystore. Auhtentication will probably fail.</string>
+    <string name="cert_from_keystore">Got certificate \'%s\' from Keystore</string>
+    <string name="netstatus">Network Status: %s</string>
 </resources>

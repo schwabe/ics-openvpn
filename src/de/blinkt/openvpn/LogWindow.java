@@ -27,6 +27,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import de.blinkt.openvpn.OpenVPN.LogItem;
 import de.blinkt.openvpn.OpenVPN.LogListener;
 import de.blinkt.openvpn.OpenVPN.StateListener;
 
@@ -59,8 +60,8 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 		private void initLogBuffer() {
 			myEntries.clear();
-			for (String litem : OpenVPN.getlogbuffer()) {
-				myEntries.add(litem);				
+			for (LogItem litem : OpenVPN.getlogbuffer()) {
+				myEntries.add(litem.getString(getBaseContext()));				
 			}
 		}
 
@@ -149,11 +150,11 @@ public class LogWindow extends ListActivity implements StateListener  {
 		}
 
 		@Override
-		public void newLog(String logmessage) {
+		public void newLog(LogItem logmessage) {
 			Message msg = Message.obtain();
 			msg.what=MESSAGE_NEWLOG;
 			Bundle mbundle=new Bundle();
-			mbundle.putString("logmessage", logmessage);
+			mbundle.putString("logmessage", logmessage.getString(getBaseContext()));
 			msg.setData(mbundle);
 			mHandler.sendMessage(msg);
 		}

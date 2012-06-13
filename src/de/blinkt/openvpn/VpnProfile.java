@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.security.KeyChain;
 import android.security.KeyChainException;
+import android.util.Log;
 
 public class VpnProfile implements  Serializable{
 	// Parcable
@@ -473,7 +474,14 @@ public class VpnProfile implements  Serializable{
 		try {
 			privateKey = KeyChain.getPrivateKey(context,mAlias);
 			cachain = KeyChain.getCertificateChain(context, mAlias);
+			if(cachain.length <= 1)
+				OpenVPN.logMessage(0, "", context.getString(R.string.keychain_nocacert));
 
+			
+			for(X509Certificate cert:cachain) {
+				OpenVPN.logInfo(R.string.cert_from_keystore,cert.getSubjectDN());
+			}
+			
 			KeyStore ks = KeyStore.getInstance("PKCS12");
 			ks.load(null, null);
 			ks.setKeyEntry("usercert", privateKey, null, cachain);

@@ -29,10 +29,14 @@ public class NetworkSateReceiver extends BroadcastReceiver {
 
 		String netstatestring;
 		if(networkInfo==null)
-			netstatestring = "null";
-		else 
+			netstatestring = "not connected";
+		else  {
+			String subtype = networkInfo.getSubtypeName();
+			if(subtype==null) 
+				subtype = "";
 			netstatestring = String.format("%2$s %4$s to %1$s %3$s",networkInfo.getTypeName(),
-					networkInfo.getDetailedState(),networkInfo.getExtraInfo(), networkInfo.getSubtypeName());
+					networkInfo.getDetailedState(),networkInfo.getExtraInfo(),subtype );
+		}
 		
 		if(networkInfo!=null && networkInfo.getState() == State.CONNECTED) {
 				int newnet = networkInfo.getType();
@@ -43,7 +47,7 @@ public class NetworkSateReceiver extends BroadcastReceiver {
 				lastNetwork = newnet;
 		}
 		if(!netstatestring.equals(lastStateMsg))
-			OpenVPN.logMessage(0, "Network:", netstatestring);
+			OpenVPN.logInfo(R.string.netstatus, netstatestring);
 		lastStateMsg=netstatestring;
 
 	}

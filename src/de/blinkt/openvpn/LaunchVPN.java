@@ -74,6 +74,8 @@ import android.widget.Toast;
 public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 	static final String EXTRA_KEY = "de.blinkt.openvpn.shortcutProfileUUID";
+	static final String EXTRA_NAME = "de.blinkt.openvpn.shortcutProfileName";
+
 	private static final int START_VPN_PROFILE= 70;
 
 	private ProfileManager mPM;
@@ -103,8 +105,12 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		if(Intent.ACTION_MAIN.equals(action)) {
 			// we got called to be the starting point, most likely a shortcut
 			String shortcutUUID = intent.getStringExtra( EXTRA_KEY);
+			String shortcutName = intent.getStringExtra( EXTRA_KEY);
 
 			VpnProfile profileToConnect = ProfileManager.get(shortcutUUID);
+			if(shortcutName != null && profileToConnect ==null)
+				profileToConnect = ProfileManager.getInstance(this).getProfileByName(shortcutName);
+			
 			if(profileToConnect ==null) {
 				Toast notfound = Toast.makeText(this, R.string.shortcut_profile_notfound, Toast.LENGTH_SHORT);
 				notfound.show();

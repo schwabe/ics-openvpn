@@ -106,6 +106,12 @@
             android:visibility="gone" >
 
             <include layout="@layout/keystore_selector" />
+
+            <TextView
+                style="@style/item"
+                android:singleLine="false"
+                android:text="@string/extracahint"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
         <LinearLayout

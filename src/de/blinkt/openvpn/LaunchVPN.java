@@ -105,7 +105,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		if(Intent.ACTION_MAIN.equals(action)) {
 			// we got called to be the starting point, most likely a shortcut
 			String shortcutUUID = intent.getStringExtra( EXTRA_KEY);
-			String shortcutName = intent.getStringExtra( EXTRA_KEY);
+			String shortcutName = intent.getStringExtra( EXTRA_NAME);
 
 			VpnProfile profileToConnect = ProfileManager.get(shortcutUUID);
 			if(shortcutName != null && profileToConnect ==null)

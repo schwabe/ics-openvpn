@@ -23,7 +23,7 @@
             android:id="@+id/fdButtonSelect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/select" >
+            android:text="@string/select_file" >
         </Button>
     </LinearLayout>
 

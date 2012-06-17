@@ -21,7 +21,8 @@ public class OpenVpnManagementThread implements Runnable {
 	private LinkedList<FileDescriptor> mFDList=new LinkedList<FileDescriptor>();
 	private int mBytecountinterval=2;
 	private long mLastIn=0; 
-	private long mLastOut=0; 
+	private long mLastOut=0;
+	private String mCurrentstate; 
 
 	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
 
@@ -185,8 +186,9 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 
 	private void processState(String argument) {
-		String[] args = argument.split(",",2);
-		OpenVPN.updateStateString(args[1]);
+		String[] args = argument.split(",",3);
+		mCurrentstate = args[1];
+		OpenVPN.updateStateString(mCurrentstate,args[2]);
 	}
 
 
@@ -195,32 +197,32 @@ public class OpenVpnManagementThread implements Runnable {
 		int comma = argument.indexOf(',');
 		long in = Long.parseLong(argument.substring(0, comma));
 		long out = Long.parseLong(argument.substring(comma+1));
-		
+
 		long diffin = in - mLastIn; 
 		long diffout = out - mLastOut;
-		
+
 		mLastIn=in;
 		mLastOut=out;
-		
-		String netstat = String.format("In: %8s, %8s/s     Out %8s, %8s/s  ",
+
+		String netstat = String.format("In: %8s, %8s/s  Out %8s, %8s/s",
 				humanReadableByteCount(in, false),
 				humanReadableByteCount(diffin, false),
 				humanReadableByteCount(out, false),
 				humanReadableByteCount(diffout, false));
-		OpenVPN.updateStateString(netstat);
-				
-		
+		OpenVPN.updateStateString("BYTECOUNT",netstat);
+
+
 	}
 
 	// From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
 	public static String humanReadableByteCount(long bytes, boolean si) {
-	    int unit = si ? 1000 : 1024;
-	    if (bytes < unit) return bytes + " B";
-	    int exp = (int) (Math.log(bytes) / Math.log(unit));
-	    String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
-	    return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+		int unit = si ? 1000 : 1024;
+		if (bytes < unit) return bytes + " B";
+		int exp = (int) (Math.log(bytes) / Math.log(unit));
+		String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
+		return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
 	}
-	
+
 	private void processNeedCommand(String argument) {
 		int p1 =argument.indexOf('\'');
 		int p2 = argument.indexOf('\'',p1+1);
@@ -328,10 +330,10 @@ public class OpenVpnManagementThread implements Runnable {
 
 	private void processPWCommand(String argument) {
 		//argument has the form 	Need 'Private Key' password
-		
+
 		String needed;
 		try{
-			
+
 			int p1 = argument.indexOf('\'');
 			int p2 = argument.indexOf('\'',p1+1);
 			needed = argument.substring(p1+1, p2);
@@ -384,7 +386,7 @@ public class OpenVpnManagementThread implements Runnable {
 
 	public void reconnect() {
 		managmentCommand("signal SIGUSR1\n");
-		
+
 	}
 
 }

@@ -19,19 +19,24 @@ package de.blinkt.openvpn;
 import java.io.IOException;
 import java.util.Vector;
 
+import de.blinkt.openvpn.OpenVPN.StateListener;
+
 import android.app.Notification;
+import android.app.Notification.Builder;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.net.VpnService;
 import android.os.ParcelFileDescriptor;
+import android.preference.PreferenceManager;
 
-public class OpenVpnService extends VpnService {
+public class OpenVpnService extends VpnService implements StateListener {
 	private Thread mServiceThread;
 
 	private Vector<String> mDnslist=new Vector<String>();
@@ -54,7 +59,9 @@ public class OpenVpnService extends VpnService {
 
 	private NetworkSateReceiver mNetworkStateReceiver;
 
-	private static final int HELLO_ID = 1;
+	private boolean mDisplayBytecount=false;
+
+	private static final int OPENVPN_STATUS = 1;
 	
 	@Override
 	public void onRevoke() {
@@ -63,24 +70,36 @@ public class OpenVpnService extends VpnService {
 		stopSelf();
 	};
 
-	private void showNotification() {
+	private void hideNotification() {
+		String ns = Context.NOTIFICATION_SERVICE;
+		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
+		mNotificationManager.cancel(OPENVPN_STATUS);
+		
+	}
+	private void showNotification(String msg) {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
 
 		int icon = R.drawable.icon;
-		CharSequence tickerText = "Hello";
 		long when = System.currentTimeMillis();
+		
+		android.app.Notification.Builder nbuilder = new Notification.Builder(this);
 
-		mNotification = new Notification(icon, tickerText, when);
+		nbuilder.setContentTitle("OpenVPN - "  + mProfile.mName);
+		nbuilder.setContentText(msg);
+		nbuilder.setOnlyAlertOnce(true);
+		nbuilder.setOngoing(true);
+		nbuilder.setContentIntent(getLogPendingIntent());
+		nbuilder.setSmallIcon(icon);
+		nbuilder.setWhen(when);
 
-		Context context = getApplicationContext();
-		CharSequence contentTitle = "My notification";
-		CharSequence contentText = "Hello World!";
+		mNotification = nbuilder.getNotification();
 
-		mNotification.setLatestEventInfo(context, contentTitle, contentText, getLogPendingIntent());
 
-		mNotificationManager.notify(HELLO_ID, mNotification);
+		
+
+		mNotificationManager.notify(OPENVPN_STATUS, mNotification);
 		
 	}
 
@@ -135,7 +154,7 @@ public class OpenVpnService extends VpnService {
 		String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
 		mProfile = ProfileManager.get(profileUUID);
 		
-		//showNotification();
+		OpenVPN.addSpeedListener(this);
 		
 		// Stop the previous session by interrupting the thread.
 		if(OpenVpnManagementThread.stopOpenVPN()){
@@ -355,6 +374,33 @@ public class OpenVpnService extends VpnService {
 
 	public void setLocalIPv6(String ipv6addr) {
 		mLocalIPv6 = ipv6addr;
+	}
+
+	@Override
+	public void updateState(String state,String logmessage) {
+		if("NOPROCESS".equals(state)) {
+			hideNotification();
+			mDisplayBytecount=false;
+			return;
+		}
+		
+		if("CONNECTED".equals(state)) {
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
+			mDisplayBytecount = prefs.getBoolean("statusafterconnect", false);
+			if(!mDisplayBytecount) {
+				hideNotification();
+				return;
+			}			
+		}
+		
+		if("BYTECOUNT".equals(state)) {
+			if(mDisplayBytecount) {
+				showNotification(logmessage);
+			}
+		} else {
+			// Other notifications are shown
+			showNotification(state +" " + logmessage);
+		}
 	}
 
 }

@@ -35,6 +35,12 @@ public class OpenVPN {
 			mMessage = message;
 		}
 
+		public LogItem(int loglevel, String msg) {
+			mLevel = loglevel;
+			mMessage = msg;
+		}
+
+
 		String getString(Context c) {
 			if(mMessage !=null) {
 				return mMessage;
@@ -142,6 +148,11 @@ public class OpenVPN {
 		for (LogListener ll : logListener) {
 			ll.newLog(logItem);
 		}
+	}
+
+	public static void logError(String msg) {
+		newlogItem(new LogItem(LogItem.ERROR, msg));
+		
 	}
 
 	

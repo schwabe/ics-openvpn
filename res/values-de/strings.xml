@@ -14,7 +14,7 @@
     <string name="client_certificate_title">Clientzertifikat</string>
     <string name="client_key_title">Clientzertifikatsschlüssel</string>
     <string name="ca_title">CA Zertifikat</string>
-    <string name="select_certificate">Auswählen</string>
+    <string name="select_file">Auswählen</string>
     <string name="no_certificate">Nichts ausgewählt</string>
     <string name="about">Über</string>
     <string name="vpn_type">Typ</string>
@@ -171,5 +171,9 @@
     <string name="building_configration">Generiere OpenVPN Konfigration…</string>
     <string name="netchange_summary">Aktivieren dieser Option zwingt OpenVPN dazu beim Wechsel des Netzwerkes (WLAN zu Mobilfunk und umgekehrt) neu zu verbinden.</string>
     <string name="netchange">Netzwerkänderungen beachten</string>
+    <string name="netstatus">Netzwerkstatus: %s</string>
+    <string name="keychain_nocacert">Beim Abfragen des Android KeyStore wurde kein CA Zertifikat zurückgegeben. Überprüfen des Serverzertifikat wird warscheinlich fehlschlagen. Geben Sie manuell ein CA Zertifikat an.</string>
+    <string name="cert_from_keystore">Zertifikat (KeyStore): \'%s\' </string>
+    <string name="extracahint">Das CA Zertifikat wird meist aus dem Zertifikatsspeicher automatisch ausgewählt. Sollte dies nicht funktionieren und Sie Verifizierungsprobleme erhalten(self signed certificate), wählen Sie manuell ein Zertifikat aus.</string>
 
 </resources>

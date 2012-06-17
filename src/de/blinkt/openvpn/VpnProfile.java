@@ -1,17 +1,22 @@
 package de.blinkt.openvpn;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Collection;
 import java.util.Random;
@@ -474,7 +479,7 @@ public class VpnProfile implements  Serializable{
 		try {
 			privateKey = KeyChain.getPrivateKey(context,mAlias);
 			cachain = KeyChain.getCertificateChain(context, mAlias);
-			if(cachain.length <= 1)
+			if(cachain.length <= 1 && !nonNull(mCaFilename))
 				OpenVPN.logMessage(0, "", context.getString(R.string.keychain_nocacert));
 
 			
@@ -484,6 +489,15 @@ public class VpnProfile implements  Serializable{
 			
 			KeyStore ks = KeyStore.getInstance("PKCS12");
 			ks.load(null, null);
+			if(nonNull(mCaFilename)) {
+				try {
+				Certificate cacert = getCacertFromFile();
+				
+				ks.setCertificateEntry("cacert", cacert);
+				} catch (Exception e) {
+					OpenVPN.logError("Could not read CA certificate" + e.getLocalizedMessage());
+				}
+			}
 			ks.setKeyEntry("usercert", privateKey, null, cachain);
 			String mypw = getTemporaryPKCS12Password();
 			FileOutputStream fout = new FileOutputStream(context.getCacheDir().getAbsolutePath() + "/" + VpnProfile.OVPNCONFIGPKCS12);
@@ -507,6 +521,20 @@ public class VpnProfile implements  Serializable{
 		}
 
 	}
+	private Certificate getCacertFromFile() throws FileNotFoundException, CertificateException {
+		 CertificateFactory certFact = CertificateFactory.getInstance("X.509");
+		 
+		 InputStream inStream;
+		
+		 if(mCaFilename.startsWith(INLINE_TAG))
+			 inStream = new ByteArrayInputStream(mCaFilename.replace(INLINE_TAG,"").getBytes());
+		else 
+			inStream = new FileInputStream(mCaFilename);
+		 
+		 return certFact.generateCertificate(inStream);
+	}
+
+
 	//! Return an error if somethign is wrong
 	int checkProfile() {
 		if((mAuthenticationType==TYPE_KEYSTORE || mAuthenticationType==TYPE_USERPASS_KEYSTORE) && mAlias==null) 

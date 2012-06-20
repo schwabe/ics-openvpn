@@ -76,7 +76,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 		mNotificationManager.cancel(OPENVPN_STATUS);
 		
 	}
-	private void showNotification(String msg) {
+	private void showNotification(String msg, String tickerText) {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
@@ -93,6 +93,9 @@ public class OpenVpnService extends VpnService implements StateListener {
 		nbuilder.setContentIntent(getLogPendingIntent());
 		nbuilder.setSmallIcon(icon);
 		nbuilder.setWhen(when);
+		
+		if(tickerText!=null)
+			nbuilder.setTicker(tickerText);
 
 		mNotification = nbuilder.getNotification();
 
@@ -395,11 +398,12 @@ public class OpenVpnService extends VpnService implements StateListener {
 		
 		if("BYTECOUNT".equals(state)) {
 			if(mDisplayBytecount) {
-				showNotification(logmessage);
+				showNotification(logmessage,null);
 			}
 		} else {
 			// Other notifications are shown
-			showNotification(state +" " + logmessage);
+			String ticker = state.toLowerCase();
+			showNotification(state +" " + logmessage,ticker);
 		}
 	}
 

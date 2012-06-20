@@ -24,6 +24,7 @@
     <string name="defaultport" translatable="false">1194</string>
     <string name="location">Location</string>
     <string name="cant_read_folder">folder can\'t be read!</string>
+    <string name="select">Select</string>
     <string name="cancel">Cancel</string>
     <string name="no_data">No Data</string>
     <string name="useLZO">LZO Compression</string>
@@ -32,6 +33,7 @@
     <string name="client_key_title">Client Certificate Key</string>
     <string name="client_pkcs12_title">PKCS12 File</string>
     <string name="ca_title">CA Certificate</string>
+    <string name="select_certificate">Select</string>
     <string name="no_certificate">Nothing selected</string>
     <string name="opevpn_copyright" translatable="false">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net>\n
 
@@ -55,7 +57,6 @@
     <string name="vpn_list_title">All your precious VPNs</string>
     <string name="vpn_type">Type</string>
     <string name="pkcs12pwquery">PKCS12 Password</string>
-    <string name="select">Select…</string>
     <string name="file_select">Select…</string>
     <string name="file_nothing_selected">Nothing Selected</string>
     <string name="useTLSAuth">Use TLS Authentication</string>
@@ -123,7 +124,7 @@
     <string name="custom_options_title">Custom Options</string>
     <string name="edit_vpn">Edit VPN Settings</string>
     <string name="remove_vpn_query">Remove the VPN Profile %s?</string>
-    <string name="tun_error_helpful">On some custom ICS images the permission on /dev/tun might be wrong, or the tun module might be missing completely. For CM9 images try the fix ownership option under general settings"</string>
+    <string name="tun_error_helpful">On some custom ICS images the permission on /dev/tun might be wrong, or the tun module might be missing completely. For CM9 images try the fix ownership option under general settings</string>
     <string name="tun_open_error">Opening tun interface failed badly.</string>
     <string name="error">"Error: "</string>
     <string name="clear">Clear</string>
@@ -212,6 +213,11 @@
     <string name="netstatus">Network Status: %s</string>
     <string name="extracahint">The CA cert is usually returned from the Android Keystore. Specify a separate certificate if you get certificate verification errors.</string>
     <string name="select_file">Select</string>
-        <string name="keychain_nocacert">No CA Certificate returned while reading from Android keystore. Authentication will probably fail.</string>
-    
+
+    <string name="keychain_nocacert">No CA Certificate returned while reading from Android keystore. Auhtentication will probably fail.</string>
+    <string name="show_log_summary">Shows the log window on connect. The log window can always be accessed from the notification status.</string>
+    <string name="show_log_window">Show log window</string>
+    <string name="keppstatus_summary">Keep the notification displayed after the connection is established to show traffic statistics.</string>
+    <string name="keepstatus">Show Traffic Statistics</string>
 </resources>
+

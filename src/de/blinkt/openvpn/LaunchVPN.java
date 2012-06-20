@@ -44,7 +44,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * This Activity actually handles two stages of a launcher shortcut's life cycle.
@@ -80,11 +79,11 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 	private ProfileManager mPM;
 	private VpnProfile mSelectedProfile;
-	
-	
+
+
 	private boolean mCmfixed=false;
 	static boolean minivpnwritten=false;
-	
+
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -92,7 +91,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		mPM =ProfileManager.getInstance(this);
 
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -100,6 +99,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 		final Intent intent = getIntent();
 		final String action = intent.getAction();
+		
 		// If the intent is a request to create a shortcut, we'll do that and exit
 
 		if(Intent.ACTION_MAIN.equals(action)) {
@@ -110,10 +110,11 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			VpnProfile profileToConnect = ProfileManager.get(shortcutUUID);
 			if(shortcutName != null && profileToConnect ==null)
 				profileToConnect = ProfileManager.getInstance(this).getProfileByName(shortcutName);
-			
+
 			if(profileToConnect ==null) {
-				Toast notfound = Toast.makeText(this, R.string.shortcut_profile_notfound, Toast.LENGTH_SHORT);
-				notfound.show();
+				OpenVPN.logError(R.string.shortcut_profile_notfound);
+				// show Log window to display error
+				showLogWindow();
 				finish();
 				return;
 			}
@@ -221,31 +222,31 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		//    }
 
 	}
-	
+
 	private boolean writeMiniVPN() {
 		File mvpnout = new File(getCacheDir(),"minivpn");
 		if (mvpnout.exists() && mvpnout.canExecute())
 			return true;
-			
+
 		if(minivpnwritten)
 			return true;
 		try {
 			InputStream mvpn = getAssets().open("minivpn");
-			
+
 			FileOutputStream fout = new FileOutputStream(mvpnout);
-			
+
 			byte buf[]= new byte[4096];
-			
+
 			int lenread = mvpn.read(buf);
 			while(lenread> 0) {
 				fout.write(buf, 0, lenread);
 				lenread = mvpn.read(buf);
 			}
 			fout.close();
-			
+
 			if(!mvpnout.setExecutable(true))
 				return false;
-			
+
 			minivpnwritten=true;
 			return true;
 		} catch (IOException e) {
@@ -303,14 +304,24 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 				if(needpw !=0) {
 					askForPW(needpw);
 				} else {
+					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
+					boolean showlogwindow = prefs.getBoolean("showlogwindow", false);
+					if(showlogwindow)
+						showLogWindow();
 					new startOpenVpnThread().start();
 				}
-
 			} else if (resultCode == Activity.RESULT_CANCELED) {
 				// User does not want us to start, so we just vanish
 				finish();
 			}
 		}
+	}
+	void showLogWindow() {
+
+		Intent startLW = new Intent(getBaseContext(),LogWindow.class);
+		startLW.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(startLW);
+
 	}
 
 	void showConfigErrorDialog(int vpnok) {
@@ -318,11 +329,11 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		d.setTitle(R.string.config_error_found);
 		d.setMessage(vpnok);
 		d.setPositiveButton(android.R.string.ok, new OnClickListener() {
-			
+
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				finish();
-				
+
 			}
 		});
 		d.show();
@@ -339,7 +350,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		// Check if we want to fix /dev/tun
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
 		boolean usecm9fix = prefs.getBoolean("useCM9Fix", false);
-		
+
 		if(usecm9fix && !mCmfixed ) {
 			ProcessBuilder pb = new ProcessBuilder(new String[] {"su","-c","chown system /dev/tun"});
 			try {
@@ -353,8 +364,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 				e.printStackTrace();
 			}
 		}
-			
-		
+
+
 
 		if (intent != null) {
 			// Start the query
@@ -363,7 +374,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			} catch (ActivityNotFoundException ane) {
 				// Shame on you Sony! At least one user reported that 
 				// an official Sony Xperia Arc S image triggers this exception
-				Toast.makeText(this, R.string.no_vpn_support_image, Toast.LENGTH_LONG).show();
+				OpenVPN.logError(R.string.no_vpn_support_image);
+				showLogWindow();
 			}
 		} else {
 			onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
@@ -379,10 +391,6 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		}
 
 		void startOpenVpn() {
-			Intent startLW = new Intent(getBaseContext(),LogWindow.class);
-			startLW.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-			startActivity(startLW);
-			
 			if(!writeMiniVPN()) {
 				OpenVPN.logMessage(0, "", "Error writing minivpn binary");
 				return;

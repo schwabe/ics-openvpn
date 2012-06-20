@@ -271,12 +271,15 @@ public class LogWindow extends ListActivity implements StateListener  {
 	}
 
 	@Override
-	public void updateState(final String logmessage) {
+	public void updateState(final String status,final String logmessage) {
 		runOnUiThread(new Runnable() {
 			
 			@Override
 			public void run() {
-				mSpeedView.setText(logmessage);
+				String prefix=status+ ":";
+				if (status.equals("BYTECOUNT") || status.equals("NOPROCESS") )
+					prefix="";
+				mSpeedView.setText(prefix + logmessage);
 			}
 		});
 		

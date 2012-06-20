@@ -24,6 +24,7 @@
     <string name="defaultport" translatable="false">1194</string>
     <string name="location">Location</string>
     <string name="cant_read_folder">folder can\'t be read!</string>
+    <string name="select">Select</string>
     <string name="cancel">Cancel</string>
     <string name="no_data">No Data</string>
     <string name="useLZO">LZO Compression</string>
@@ -32,6 +33,7 @@
     <string name="client_key_title">Client Certificate Key</string>
     <string name="client_pkcs12_title">PKCS12 File</string>
     <string name="ca_title">CA Certificate</string>
+    <string name="select_certificate">Select</string>
     <string name="no_certificate">Nothing selected</string>
     <string name="opevpn_copyright" translatable="false">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net>\n
 
@@ -50,12 +52,11 @@
     <string name="lzo" translatable="false">LZO</string>
     <string name="openssl" translatable="false">OpenSSL</string>
     <string name="about">About</string>
-    <string name="about_summary">About Openvpn for Android</string>
+    <string name="about_summary">About OpenVPN for Android</string>
     <string name="vpn_list_summary">List of all configured VPNs</string>
     <string name="vpn_list_title">All your precious VPNs</string>
     <string name="vpn_type">Type</string>
     <string name="pkcs12pwquery">PKCS12 Password</string>
-    <string name="select">Select…</string>
     <string name="file_select">Select…</string>
     <string name="file_nothing_selected">Nothing Selected</string>
     <string name="useTLSAuth">Use TLS Authentication</string>
@@ -64,7 +65,7 @@
     <string name="ipv4_dialog_title">Enter IPv4 Address/Netmask in CIDR Format (e.g. 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4 Address</string>
     <string name="ipv6_address">IPv6 Address</string>
-    <string name="custom_option_warning">Enter custom OpenVPN options. Use with great care. Also note that many of the tun related Openvpn settings cannot be supported by design of the VPNSettings. If you think an important option is missing contact the author</string>
+    <string name="custom_option_warning">Enter custom OpenVPN options. Use with great care. Also note that many of the tun related OpenVPN settings cannot be supported by design of the VPNSettings. If you think an important option is missing contact the author</string>
     <string name="auth_username">Username</string>
     <string name="auth_pwquery">Password</string>
     <string name="static_keys_info">For the static configuration the TLS Auth Keys will be used as static keys.</string>
@@ -83,7 +84,7 @@
     <string name="vpn_launch_title">Connect to VPN</string>
     <string name="shortcut_profile_notfound">Profile specified in shortcut not found</string>
     <string name="random_host_prefix">Random Host Prefix</string>
-    <string name="random_host_summary">adds 6 random chars in front of hostname</string>
+    <string name="random_host_summary">Adds 6 random chars in front of hostname</string>
     <string name="custom_config_title">Enable Custom Options</string>
     <string name="custom_config_summary">Specify custom options. Use with care!</string>
     <string name="route_rejected">Route rejected by Android</string>
@@ -94,9 +95,9 @@
     <string name="remove_vpn">Remove VPN</string>
     <string name="check_remote_tlscert">Checks whether the server uses a TLS Server Certificate</string>
     <string name="check_remote_tlscert_title">Except TLS Server</string>
-    <string name="remote_tlscn_check_summary">Checks the Remote Server Certificate CN against a String</string>
+    <string name="remote_tlscn_check_summary">Checks the Remote Server Certificate CN against a string</string>
     <string name="remote_tlscn_check_title">Certificate Hostname Check</string>
-    <string name="enter_tlscn_dialog">Enter the string against which the remote Server is checked. Openvpn will use prefix matching. "Server" matches "Server-1" and "Server-2"\nLeave empty to check the CN against the server hostname.</string>
+    <string name="enter_tlscn_dialog">Enter the string against which the remote Server is checked. OpenVPN will use prefix matching. "Server" matches "Server-1" and "Server-2"\nLeave empty to check the CN against the server hostname.</string>
     <string name="enter_tlscn_title">Remote Hostname(CN)</string>
     <string name="tls_key_auth">Enables the TLS Key Authentication</string>
     <string name="tls_auth_file">TLS Auth File</string>
@@ -123,56 +124,56 @@
     <string name="custom_options_title">Custom Options</string>
     <string name="edit_vpn">Edit VPN Settings</string>
     <string name="remove_vpn_query">Remove the VPN Profile %s?</string>
-    <string name="tun_error_helpful">On some custom ICS images the permission on /dev/tun might be wrong, or the tun module might be missing completly. For CM9 images try the fix ownership option under general settings"</string>
+    <string name="tun_error_helpful">On some custom ICS images the permission on /dev/tun might be wrong, or the tun module might be missing completely. For CM9 images try the fix ownership option under general settings</string>
     <string name="tun_open_error">Opening tun interface failed badly.</string>
     <string name="error">"Error: "</string>
     <string name="clear">Clear</string>
     <string name="info">info</string>
     <string name="show_connection_details">Show connection details</string>
-    <string name="last_openvpn_tun_config">Last interface configuration from Openvpn:</string>
+    <string name="last_openvpn_tun_config">Last interface configuration from OpenVPN:</string>
     <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
     <string name="dns_server_info">DNS Server: %s</string>
     <string name="dns_domain_info">DNS Domain: %s</string>
     <string name="routes_info">Routes: %s</string>
-    <string name="routes_info6">Routes Ipv6: %s</string>
-    <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP. Mode given by openvpn is \"%3$s\".</string>
+    <string name="routes_info6">Routes IPv6: %s</string>
+    <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP. Mode given by OpenVPN is \"%3$s\".</string>
     <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
     <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>
-    <string name="keychain_access">Cannot accces the Android Keychain Certificates. If you restored a backup of the app/app settings reselect the certificate to recreate the permission to access the certificate.</string>
+    <string name="keychain_access">Cannot access the Android Keychain Certificates. If you restored a backup of the app/app settings re-select the certificate to recreate the permission to access the certificate.</string>
     <string name="version_info">%1$s %2$s</string>
-    <string name="send_logfile">Send Logfile</string>
+    <string name="send_logfile">Send log file</string>
     <string name="send">Send</string>
-    <string name="ics_openvpn_log_file">ICS Openvpn log file</string>
+    <string name="ics_openvpn_log_file">ICS OpenVPN log file</string>
     <string name="copied_entry">Copied log entry to clip board</string>
     <string name="tap_mode">Tap Mode</string>
     <string name="faq_tap_mode">Tap Mode is not possible with the non root VPN API. Therefore this application cannot provide tap support</string>
-    <string name="tap_faq2">Again? Are you kidding? No tap mode is really not supported and sending more mail aksing if it will be supported will not help.</string>
+    <string name="tap_faq2">Again? Are you kidding? No tap mode is really not supported and sending more mail asking if it will be supported will not help.</string>
     <string name="tap_faq3">A third time? Actually one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would have to implement also ARP and possible a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.</string>
     <string name="faq">FAQ</string>
-    <string name="faq_summary">frequently asked questions and some adivce</string>
+    <string name="faq_summary">Frequently asked questions and some advice</string>
     <string name="copying_log_entries">Copying log entries</string>
-    <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the gui.</string>
+    <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the GUI.</string>
     <string name="faq_shortcut">Shortcut to start</string>
     <string name="faq_howto_shortcut">You can place a shortcut to start OpenVPN on your desktop. Depending on your homescreen program you have to add a shortcut or a widget.</string>
     <string name="no_vpn_support_image">Your image does not support the VPNService API,sorry :(</string>
     <string name="encryption">Encryption</string>
-    <string name="cipher_dialog_title">Enter Encryption method</string>
-    <string name="chipher_dialog_message">Enter the cipher key for openvpn. Leave empty to use default cipher</string>
+    <string name="cipher_dialog_title">Enter encryption method</string>
+    <string name="chipher_dialog_message">Enter the cipher key for OpenVPN. Leave empty to use default cipher</string>
     <string name="settings_auth">Authentication/Encryption</string>
     <string name="file_explorer_tab">File Explorer</string>
     <string name="inline_file_tab">Inline File</string>
     <string name="import_file">Import</string>
     <string name="error_importing_file">Error importing File</string>
-    <string name="import_error_message">Could not import File from Filesystem</string>
+    <string name="import_error_message">Could not import File from filesystem</string>
     <string name="inline_file_data">[[Inline file data]]</string>
     <string name="opentun_no_ipaddr">Refusing to open tun device without IP information</string>
     <string name="menu_import">Import Profile from ovpn file</string>
     <string name="menu_import_short">Import</string>
     <string name="import_content_resolve_error">Could not read Profile to import</string>
-    <string name="error_reading_config_file">Error reading Config file</string>
+    <string name="error_reading_config_file">Error reading config file</string>
     <string name="add_profile">add Profile</string>
     <string name="trying_to_read">Trying to read file: %1$s</string>
-    <string name="import_could_not_open">Could not find file %1$s mentioned in the imported Config file</string>
+    <string name="import_could_not_open">Could not find file %1$s mentioned in the imported config file</string>
     <string name="importing_config">Importing config file from source %1$s</string>
     <string name="import_pkcs12_to_keystore">Your config file specified a pkcs12 file. Please import the file by selecting select in the Basic Settings configuration of the converted VPN</string>
     <string name="import_warning_custom_options">Your configuration had a few configuration options that could be parsed. These options were added as custom configuration options. The custom configuration is displayed below:</string>
@@ -182,17 +183,17 @@
     <string name="import_experimental">Please not that the config importer is an experimental feature. If it does not work for you or you think that things could be done better please drop me a email.</string>
     <string name="import_configuration_file">Import configuration file</string>
     <string name="faq_security_title">Security considerations</string>
-    <string name="faq_security">"As openvpn is security sensitive a few notes about security are sensible. All data on the sdcard is inherently unsecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the vpn profile. The vpn profiles are only accessable by this application. (Do not forget to delete the copies on the sd card afterwards). Even though accessible only by this application the data is stil unecrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."</string>
+    <string name="faq_security">"As OpenVPN is security sensitive a few notes about security are sensible. All data on the sdcard is inherently insecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the VPN profile. The VPN profiles are only accessible by this application. (Do not forget to delete the copies on the sd card afterwards). Even though accessible only by this application the data is still unencrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."</string>
     <string name="import_vpn">Import</string>
     <string name="broken_image_cert_title">Error showing certificate selection</string>
-    <string name="broken_image_cert">Got an excption trying to show the Android 4.0+ certificate selction dialog. This should never happens as this a standard feature of Android 4.0+. Maybe your Android ROM support for certificate storage is broken</string>
+    <string name="broken_image_cert">Got an exception trying to show the Android 4.0+ certificate selection dialog. This should never happen as this a standard feature of Android 4.0+. Maybe your Android ROM support for certificate storage is broken</string>
     <string name="ipv4">IPv4</string>
     <string name="ipv6">IPv6</string>
     <string name="speed_waiting">Waiting for state message…</string>
     <string name="converted_profile">imported profile</string>
     <string name="converted_profile_i">imported profile %d</string>
     <string name="broken_images">Broken Images</string>
-    <string name="broken_images_faq">&lt;p>Offical HTC images are known to have a strange routing problem causing traffic not to flow through the tunnel (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\">Issue 18&lt;/a> in the bug tracker.)&lt;/p>&lt;p>The offical SONY images from Xperia arc S and Xperia Ray have been reported to be missing the VPNService completly from the image. Other Sony images may be affected as well. (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\">Issue 29&lt;/a> in the bug tracker.)&lt;/p>&lt;p>On custom build images the tun module might be missing or the rights of /dev/tun might be wrong. Some CM9 images need the fix ownership option under general settings.&lt;/p>&lt;p>Most important: If you have a broken image, report it to your vendor. The more people report the issue to the vendor the more likely you will get a fix.&lt;/p></string>
+    <string name="broken_images_faq">&lt;p>Official HTC images are known to have a strange routing problem causing traffic not to flow through the tunnel (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\">Issue 18&lt;/a> in the bug tracker.)&lt;/p>&lt;p>The official SONY images from Xperia arc S and Xperia Ray have been reported to be missing the VPNService completely from the image. Other Sony images may be affected as well. (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\">Issue 29&lt;/a> in the bug tracker.)&lt;/p>&lt;p>On custom build images the tun module might be missing or the rights of /dev/tun might be wrong. Some CM9 images need the fix ownership option under general settings.&lt;/p>&lt;p>Most important: If you have a broken image, report it to your vendor. The more people report the issue to the vendor the more likely you will get a fix.&lt;/p></string>
     <string name="error_empty_username">The username must not be empty.</string>
     <string name="pkcs12_file_encryption_key">PKCS12 File Encryption Key</string>
     <string name="private_key_password">Private Key Password</string>
@@ -203,15 +204,20 @@
     <string name="generalsettings">General Settings</string>
     <string name="owner_fix_summary">Tries to set the owner of /dev/tun to system. Some CM9 images need this to make the VPNService API work. Requires root.</string>
     <string name="owner_fix">Fix ownership of /dev/tun</string>
-    <string name="generated_config_summary">Shows the generated openvpn Configuration File</string>
+    <string name="generated_config_summary">Shows the generated OpenVPN Configuration File</string>
     <string name="edit_profile_title">Editing \"%s\"</string>
-    <string name="building_configration">Building configration…</string>
-    <string name="netchange_summary">Turning this option on will force a reconnet if the network state is change (WIFI to/from mobile)</string>
-    <string name="netchange">Reconnect on Network change</string>
+    <string name="building_configration">Building configuration…</string>
+    <string name="netchange_summary">Turning this option on will force a reconnect if the network state is change (WIFI to/from mobile)</string>
+    <string name="netchange">Reconnect on network change</string>
     <string name="cert_from_keystore">Got certificate \'%s\' from Keystore</string>
     <string name="netstatus">Network Status: %s</string>
-    <string name="extracahint">The CA cert is usually returned from the Android Keystore. Specify a seperate certificate if you get certificate verification errors.</string>
+    <string name="extracahint">The CA cert is usually returned from the Android Keystore. Specify a separate certificate if you get certificate verification errors.</string>
     <string name="select_file">Select</string>
-        <string name="keychain_nocacert">No CA Certificate returned while reading from Android keystore. Auhtentication will probably fail.</string>
-    
+
+    <string name="keychain_nocacert">No CA Certificate returned while reading from Android keystore. Auhtentication will probably fail.</string>
+    <string name="show_log_summary">Shows the log window on connect. The log window can always be accessed from the notification status.</string>
+    <string name="show_log_window">Show log window</string>
+    <string name="keppstatus_summary">Keep the notification displayed after the connection is established to show traffic statistics.</string>
+    <string name="keepstatus">Show Traffic Statistics</string>
 </resources>
+

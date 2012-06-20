@@ -41,6 +41,12 @@ public class OpenVPN {
 		}
 
 
+		public LogItem(int loglevel, int ressourceId) {
+			mRessourceId =ressourceId;
+			mLevel = loglevel;
+		}
+
+
 		String getString(Context c) {
 			if(mMessage !=null) {
 				return mMessage;
@@ -73,7 +79,7 @@ public class OpenVPN {
 	}
 	
 	public interface StateListener {
-		void updateState(String logmessage);
+		void updateState(String state, String logmessage);
 	}
 
 	synchronized static void logMessage(int level,String prefix, String message)
@@ -126,9 +132,9 @@ public class OpenVPN {
 
 	}
 
-	public static void updateStateString(String msg) {
+	public static void updateStateString(String state, String msg) {
 		for (StateListener sl : stateListener) {
-			sl.updateState(msg);
+			sl.updateState(state,msg);
 		}
 	}
 
@@ -153,6 +159,10 @@ public class OpenVPN {
 	public static void logError(String msg) {
 		newlogItem(new LogItem(LogItem.ERROR, msg));
 		
+	}
+
+	public static void logError(int ressourceId) {
+		newlogItem(new LogItem(LogItem.ERROR, ressourceId));
 	}
 
 	

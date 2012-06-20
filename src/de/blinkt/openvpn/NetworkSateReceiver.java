@@ -26,7 +26,6 @@ public class NetworkSateReceiver extends BroadcastReceiver {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);        
 		boolean sendusr1 = prefs.getBoolean("netchangereconnect", true);
 
-
 		String netstatestring;
 		if(networkInfo==null)
 			netstatestring = "not connected";

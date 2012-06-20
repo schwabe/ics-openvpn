@@ -11,5 +11,15 @@
         android:key="useCM9Fix"
         android:summary="@string/owner_fix_summary"
         android:title="@string/owner_fix" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="showlogwindow"
+        android:summary="@string/show_log_summary"
+        android:title="@string/show_log_window" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="statusafterconnect"
+        android:summary="@string/keppstatus_summary"
+        android:title="@string/keepstatus" />
 
 </PreferenceScreen>

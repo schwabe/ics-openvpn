@@ -28,7 +28,6 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.security.KeyChain;
 import android.security.KeyChainException;
-import android.util.Log;
 
 public class VpnProfile implements  Serializable{
 	// Parcable

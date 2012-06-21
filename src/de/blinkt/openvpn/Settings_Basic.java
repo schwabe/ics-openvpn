@@ -39,8 +39,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
-
 import de.blinkt.openvpn.R.id;
 
 public class Settings_Basic extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback {

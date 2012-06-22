@@ -385,9 +385,9 @@ public class VpnProfile implements  Serializable{
 	private String cidrToIPAndNetmask(String route) {
 		String[] parts = route.split("/");
 
-		// No /xx, return verbatim
+		// No /xx, assume /32 as netmask
 		if (parts.length ==1)
-			return route;
+			parts = (route + "/32").split("/");
 
 		if (parts.length!=2)
 			return null;
@@ -480,7 +480,6 @@ public class VpnProfile implements  Serializable{
 			cachain = KeyChain.getCertificateChain(context, mAlias);
 			if(cachain.length <= 1 && !nonNull(mCaFilename))
 				OpenVPN.logMessage(0, "", context.getString(R.string.keychain_nocacert));
-
 			
 			for(X509Certificate cert:cachain) {
 				OpenVPN.logInfo(R.string.cert_from_keystore,cert.getSubjectDN());

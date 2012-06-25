@@ -216,16 +216,21 @@ public class ConfigParser {
 			"ipchange",
 			"route-up",
 			"auth-user-pass-verify",
-			"route-gateway",
-			"topology",
+			"dhcp-release",
+			"dhcp-renew",
+			"management-hold",
+			"management",
+			"management-query-passwords",
+			"pause-exit",
 			"persist-tun",
 			"persist-key",
+			"register-dns",
+			"route-gateway",
 			"route-metric",
+			"show-net-up",
 			"suppress-timestamps",
-			"management-query-passwords",
 			"tmp-dir",
-			"management-hold",
-			"management"
+			"topology",
 	};
 	
 	

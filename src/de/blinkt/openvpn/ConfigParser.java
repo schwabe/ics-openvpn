@@ -227,6 +227,7 @@ public class ConfigParser {
 			"register-dns",
 			"route-gateway",
 			"route-metric",
+			"route-method",
 			"show-net-up",
 			"suppress-timestamps",
 			"tmp-dir",

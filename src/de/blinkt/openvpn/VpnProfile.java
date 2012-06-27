@@ -261,11 +261,14 @@ public class VpnProfile implements  Serializable{
 		if(mUsePull && mRoutenopull)
 			cfg += "route-nopull\n";
 
+		String routes = "";
+		int numroutes=0;
 		if(mUseDefaultRoute)
-			cfg += "route 0.0.0.0 0.0.0.0\n";
+			routes += "route 0.0.0.0 0.0.0.0\n";
 		else
 			for(String route:getCustomRoutes()) {
-				cfg += "route " + route + "\n";
+				routes += "route " + route + "\n";
+				numroutes++;
 			}
 
 
@@ -273,9 +276,18 @@ public class VpnProfile implements  Serializable{
 			cfg += "route-ipv6 ::/0\n";
 		else
 			for(String route:getCustomRoutesv6()) {
-				cfg += "route-ipv6 " + route + "\n";
+				routes += "route-ipv6 " + route + "\n";
+				numroutes++;
 			}
 
+		// Round number to next 100 
+		if(numroutes> 90) {
+			numroutes = ((numroutes / 100)+1) * 100;
+			cfg+="# Alot of routes are set, increase max-routes\n";
+			cfg+="max-routes " + numroutes + "\n";
+		}
+		cfg+=routes;
+		
 		if(mOverrideDNS || !mUsePull) {
 			if(nonNull(mDNS1))
 				cfg+="dhcp-option DNS " + mDNS1 + "\n";

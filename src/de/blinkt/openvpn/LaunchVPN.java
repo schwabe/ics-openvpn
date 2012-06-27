@@ -305,7 +305,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 					askForPW(needpw);
 				} else {
 					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
-					boolean showlogwindow = prefs.getBoolean("showlogwindow", false);
+					boolean showlogwindow = prefs.getBoolean("showlogwindow", true);
 					if(showlogwindow)
 						showLogWindow();
 					new startOpenVpnThread().start();

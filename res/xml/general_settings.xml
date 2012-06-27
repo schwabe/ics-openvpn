@@ -12,7 +12,7 @@
         android:summary="@string/owner_fix_summary"
         android:title="@string/owner_fix" />
     <CheckBoxPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="showlogwindow"
         android:summary="@string/show_log_summary"
         android:title="@string/show_log_window" />

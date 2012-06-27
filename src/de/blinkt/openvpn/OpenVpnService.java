@@ -81,7 +81,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
 
-		int icon = R.drawable.icon;
+		int icon = R.drawable.ic_stat_vpn;
 		long when = System.currentTimeMillis();
 		
 		android.app.Notification.Builder nbuilder = new Notification.Builder(this);

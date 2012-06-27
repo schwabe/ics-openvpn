@@ -4,8 +4,23 @@ import java.util.LinkedList;
 import java.util.Vector;
 
 import android.content.Context;
+import android.os.Build;
 
 public class OpenVPN {
+	
+
+	public static LinkedList<LogItem> logbuffer;
+	
+	private static Vector<LogListener> logListener;
+	private static Vector<StateListener> stateListener;
+	private static String[] mBconfig;
+	
+	static {
+		logbuffer  = new LinkedList<LogItem>();
+		logListener = new Vector<OpenVPN.LogListener>();
+		stateListener = new Vector<OpenVPN.StateListener>();
+		logInformation();
+	}
 	
 	static class LogItem {
 		public static final int ERROR = 1;
@@ -68,11 +83,6 @@ public class OpenVPN {
 	
 
 
-	public static LinkedList<LogItem> logbuffer = new LinkedList<LogItem>();
-	
-	private static Vector<LogListener> logListener=new Vector<OpenVPN.LogListener>();
-	private static Vector<StateListener> stateListener=new Vector<OpenVPN.StateListener>();
-	private static String[] mBconfig;
 
 	public interface LogListener {
 		void newLog(LogItem logItem);
@@ -90,6 +100,12 @@ public class OpenVPN {
 
 	synchronized static void clearLog() {
 		logbuffer.clear();
+		logInformation();
+	}
+
+	private static void logInformation() {
+		
+		logInfo(R.string.mobile_info,Build.MODEL, Build.BOARD,Build.BRAND,Build.VERSION.SDK_INT);
 	}
 
 	synchronized static void addLogListener(LogListener ll){
@@ -108,7 +124,6 @@ public class OpenVPN {
 	synchronized static void removeSpeedListener(StateListener sl) {
 		stateListener.remove(sl);
 	}
-
 
 
 	synchronized public static LogItem[] getlogbuffer() {

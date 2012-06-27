@@ -19,10 +19,7 @@ package de.blinkt.openvpn;
 import java.io.IOException;
 import java.util.Vector;
 
-import de.blinkt.openvpn.OpenVPN.StateListener;
-
 import android.app.Notification;
-import android.app.Notification.Builder;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -35,6 +32,7 @@ import android.net.LocalSocketAddress;
 import android.net.VpnService;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
+import de.blinkt.openvpn.OpenVPN.StateListener;
 
 public class OpenVpnService extends VpnService implements StateListener {
 	private Thread mServiceThread;

@@ -134,6 +134,7 @@ public class ConfigConverter extends ListActivity {
 						filedata += new String(buf,0,len);
 						len = fis.read(buf);
 					}
+					fis.close();
 					return filedata;
 				} catch (FileNotFoundException e) {
 					log(e.getLocalizedMessage());

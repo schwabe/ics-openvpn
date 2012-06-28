@@ -4,24 +4,22 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Collection;
-import java.util.Random;
 import java.util.UUID;
 import java.util.Vector;
+
+import org.spongycastle.util.io.pem.PemObject;
+import org.spongycastle.util.io.pem.PemWriter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -51,8 +49,7 @@ public class VpnProfile implements  Serializable{
 
 	protected transient String mTransientPW=null;
 	protected transient String mTransientPCKS12PW=null;
-
-	private static transient String mTempPKCS12Password;
+	private transient PrivateKey mPrivateKey;
 
 	public static String DEFAULT_DNS1="131.234.137.23";
 	public static String DEFAULT_DNS2="131.234.137.24";
@@ -100,6 +97,7 @@ public class VpnProfile implements  Serializable{
 	public boolean mUseDefaultRoutev6=true;
 	public String mCustomRoutesv6="";
 	public String mKeyPassword="";
+	
 
 
 	public void clearDefaults() {
@@ -122,7 +120,8 @@ public class VpnProfile implements  Serializable{
 	}
 
 
-	static final String OVPNCONFIGPKCS12 = "android.pkcs12";
+	static final String OVPNCONFIGCA = "android-ca.pem";
+	static final String OVPNCONFIGUSERCERT = "android-user.pem";
 
 
 	public VpnProfile(String name) {
@@ -223,9 +222,10 @@ public class VpnProfile implements  Serializable{
 		case VpnProfile.TYPE_USERPASS_KEYSTORE:
 			cfg+="auth-user-pass\n";
 		case VpnProfile.TYPE_KEYSTORE:
-			cfg+="pkcs12 ";
-			cfg+=cacheDir.getAbsolutePath() + "/" + OVPNCONFIGPKCS12;
-			cfg+="\n";
+			cfg+="ca " + cacheDir.getAbsolutePath() + "/" + OVPNCONFIGCA + "\n";
+			cfg+="cert " + cacheDir.getAbsolutePath() + "/" + OVPNCONFIGUSERCERT + "\n";
+			cfg+="management-external-key\n";
+			
 			break;
 		case VpnProfile.TYPE_USERPASS:
 			cfg+="auth-user-pass\n";
@@ -447,7 +447,7 @@ public class VpnProfile implements  Serializable{
 		Intent intent = new Intent(context,OpenVpnService.class);
 
 		if(mAuthenticationType == VpnProfile.TYPE_KEYSTORE || mAuthenticationType == VpnProfile.TYPE_USERPASS_KEYSTORE) {
-			savePKCS12(context);
+			saveCertificates(context);
 		}
 
 		intent.putExtra(prefix + ".ARGV" , buildOpenvpnArgv(context.getCacheDir()));
@@ -468,27 +468,13 @@ public class VpnProfile implements  Serializable{
 		return intent;
 	}
 
-	private String getTemporaryPKCS12Password() {
-		if(mTempPKCS12Password!=null)
-			return mTempPKCS12Password;
-
-		String pw= "";
-		// Put enough digits togher to make a password :)
-		Random r = new Random();
-		for(int i=0;i < 4;i++) {
-			pw +=  Integer.valueOf(r.nextInt(1000)).toString();
-		}
-
-		mTempPKCS12Password=pw;
-		return mTempPKCS12Password;
-
-	}
-
-	private void savePKCS12(Context context) {
+	private void saveCertificates(Context context) {
 		PrivateKey privateKey = null;
 		X509Certificate[] cachain=null;
 		try {
 			privateKey = KeyChain.getPrivateKey(context,mAlias);
+			mPrivateKey = privateKey;
+			
 			cachain = KeyChain.getCertificateChain(context, mAlias);
 			if(cachain.length <= 1 && !nonNull(mCaFilename))
 				OpenVPN.logMessage(0, "", context.getString(R.string.keychain_nocacert));
@@ -496,31 +482,49 @@ public class VpnProfile implements  Serializable{
 			for(X509Certificate cert:cachain) {
 				OpenVPN.logInfo(R.string.cert_from_keystore,cert.getSubjectDN());
 			}
+		
 			
-			KeyStore ks = KeyStore.getInstance("PKCS12");
-			ks.load(null, null);
+			
+
 			if(nonNull(mCaFilename)) {
 				try {
-				Certificate cacert = getCacertFromFile();
-				
-				ks.setCertificateEntry("cacert", cacert);
+					Certificate cacert = getCacertFromFile();
+					X509Certificate[] newcachain = new X509Certificate[cachain.length+1];
+					for(int i=0;i<cachain.length;i++)
+						newcachain[i]=cachain[i];
+					
+					newcachain[cachain.length-1]=(X509Certificate) cacert;
+					
 				} catch (Exception e) {
 					OpenVPN.logError("Could not read CA certificate" + e.getLocalizedMessage());
 				}
 			}
-			ks.setKeyEntry("usercert", privateKey, null, cachain);
-			String mypw = getTemporaryPKCS12Password();
-			FileOutputStream fout = new FileOutputStream(context.getCacheDir().getAbsolutePath() + "/" + VpnProfile.OVPNCONFIGPKCS12);
-			ks.store(fout,mypw.toCharArray());
-			fout.flush(); fout.close();
+
+			
+			FileWriter fout = new FileWriter(context.getCacheDir().getAbsolutePath() + "/" + VpnProfile.OVPNCONFIGCA);
+			PemWriter pw = new PemWriter(fout);
+			for(X509Certificate cert:cachain) {
+				pw.writeObject(new PemObject("CERTIFICATE", cert.getEncoded()));
+			}
+
+			pw.close();
+			
+			
+			if(cachain.length>= 1){
+				X509Certificate usercert = cachain[0];
+
+				FileWriter userout = new FileWriter(context.getCacheDir().getAbsolutePath() + "/" + VpnProfile.OVPNCONFIGUSERCERT);
+
+				PemWriter upw = new PemWriter(userout);
+				upw.writeObject(new PemObject("CERTIFICATE", usercert.getEncoded()));
+				upw.close();
+
+			}
+			
 			return;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		} catch (KeyStoreException e) {
-			e.printStackTrace();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (CertificateException e) {
 			e.printStackTrace();
@@ -574,10 +578,6 @@ public class VpnProfile implements  Serializable{
 			return pwcopy;
 		}
 		switch (mAuthenticationType) {
-		case TYPE_KEYSTORE:
-		case TYPE_USERPASS_KEYSTORE:
-			return getTemporaryPKCS12Password();
-
 		case TYPE_PKCS12:
 		case TYPE_USERPASS_PKCS12:
 			return mPKCS12Password;
@@ -623,6 +623,7 @@ public class VpnProfile implements  Serializable{
 					data += new String(buf,0,len);
 					len = fr.read(buf);
 				}
+				fr.close();
 			} catch (FileNotFoundException e) {
 				return false;
 			} catch (IOException e) {
@@ -681,6 +682,11 @@ public class VpnProfile implements  Serializable{
 
 	public String getUUIDString() {
 		return mUuid.toString();
+	}
+
+
+	public PrivateKey getKeystoreKey() {
+		return mPrivateKey;
 	}
 
 

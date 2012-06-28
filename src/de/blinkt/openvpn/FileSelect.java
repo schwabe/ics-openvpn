@@ -113,7 +113,7 @@ public class FileSelect extends Activity {
 				data += new String(buf,0,len);
 				len=fis.read(buf);
 			}
-			
+			fis.close();
 			mData =data;
 			mInlineFragment.setData(data);
 			getActionBar().selectTab(inlineFileTab);

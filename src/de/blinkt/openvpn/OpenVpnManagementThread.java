@@ -5,11 +5,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.util.LinkedList;
 import java.util.Vector;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 import android.net.LocalSocket;
 import android.os.ParcelFileDescriptor;
+import android.util.Base64;
 import android.util.Log;
 
 public class OpenVpnManagementThread implements Runnable {
@@ -173,6 +182,8 @@ public class OpenVpnManagementThread implements Runnable {
 				// 1 log level N,I,E etc.
 				// 2 log message
 				OpenVPN.logMessage(0, "",  args[2]);
+			} else if (cmd.equals("RSA_SIGN")) {
+				processSignCommand(argument);
 			} else {
 				OpenVPN.logMessage(0, "MGMT:", "Got unrecognized command" + command);
 				Log.i(TAG, "Got unrecognized command" + command);
@@ -387,6 +398,35 @@ public class OpenVpnManagementThread implements Runnable {
 	public void reconnect() {
 		managmentCommand("signal SIGUSR1\n");
 
+	}
+
+	private void processSignCommand(String b64data) {
+		PrivateKey privkey = mProfile.getKeystoreKey();
+		Exception err =null;
+		try{
+			byte[] data = Base64.decode(b64data, Base64.DEFAULT);
+			Cipher rsasinger = javax.crypto.Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+			rsasinger.init(Cipher.ENCRYPT_MODE, privkey);
+
+			byte[] signed_bytes = rsasinger.doFinal(data);
+			String signed_string = Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
+			managmentCommand("rsa-sig\n");
+			managmentCommand(signed_string);
+			managmentCommand("\nEND\n");
+		} catch (NoSuchAlgorithmException e){
+			err =e;
+		} catch (InvalidKeyException e) {
+			err =e;
+		} catch (NoSuchPaddingException e) {
+			err =e;
+		} catch (IllegalBlockSizeException e) {
+			err =e;
+		} catch (BadPaddingException e) {
+			err =e;
+		}
+		if(err !=null) {
+			OpenVPN.logError(R.string.error_rsa_sign,err.getLocalizedMessage());
+		}
 	}
 
 }

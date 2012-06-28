@@ -147,7 +147,7 @@ public class OpenVPN {
 
 	}
 
-	public static void updateStateString(String state, String msg) {
+	public synchronized static void updateStateString(String state, String msg) {
 		for (StateListener sl : stateListener) {
 			sl.updateState(state,msg);
 		}
@@ -179,7 +179,9 @@ public class OpenVPN {
 	public static void logError(int ressourceId) {
 		newlogItem(new LogItem(LogItem.ERROR, ressourceId));
 	}
-
+	public static void logError(int ressourceId, Object... args) {
+		newlogItem(new LogItem(LogItem.ERROR, ressourceId,args));
+	}
 	
 	
 }

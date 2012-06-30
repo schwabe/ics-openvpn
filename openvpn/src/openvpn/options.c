@@ -2732,7 +2732,7 @@ options_postprocess_filechecks (struct options *options)
                              "--extra-certs");
 
 #ifdef MANAGMENT_EXTERNAL_KEY
-	if(!(options->management_flags | MF_EXTERNAL_KEY))
+	if(!(options->management_flags & MF_EXTERNAL_KEY))
 #endif
   errs |= check_file_access (CHKACC_FILE|CHKACC_INLINE, options->priv_key_file, R_OK,
                              "--key");

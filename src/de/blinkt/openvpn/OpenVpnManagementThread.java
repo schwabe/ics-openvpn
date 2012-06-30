@@ -403,9 +403,12 @@ public class OpenVpnManagementThread implements Runnable {
 	private void processSignCommand(String b64data) {
 		PrivateKey privkey = mProfile.getKeystoreKey();
 		Exception err =null;
+		
 		try{
 			byte[] data = Base64.decode(b64data, Base64.DEFAULT);
-			Cipher rsasinger = javax.crypto.Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+
+			Cipher rsasinger = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+
 			rsasinger.init(Cipher.ENCRYPT_MODE, privkey);
 
 			byte[] signed_bytes = rsasinger.doFinal(data);
@@ -425,8 +428,9 @@ public class OpenVpnManagementThread implements Runnable {
 			err =e;
 		}
 		if(err !=null) {
-			OpenVPN.logError(R.string.error_rsa_sign,err.getLocalizedMessage());
+			OpenVPN.logError(R.string.error_rsa_sign,err.getClass().toString(),err.getLocalizedMessage());
 		}
+
 	}
 
 }

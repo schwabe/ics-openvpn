@@ -24,6 +24,7 @@ import org.spongycastle.util.io.pem.PemWriter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.os.Build;
 import android.security.KeyChain;
 import android.security.KeyChainException;
 
@@ -551,8 +552,12 @@ public class VpnProfile implements  Serializable{
 
 	//! Return an error if somethign is wrong
 	int checkProfile() {
-		if((mAuthenticationType==TYPE_KEYSTORE || mAuthenticationType==TYPE_USERPASS_KEYSTORE) && mAlias==null) 
-			return R.string.no_keystore_cert_selected;
+		if(mAuthenticationType==TYPE_KEYSTORE || mAuthenticationType==TYPE_USERPASS_KEYSTORE) {
+			if(mAlias==null) 
+				return R.string.no_keystore_cert_selected;
+			if(Build.VERSION.SDK_INT == 16)
+				return R.string.keychain_jellybeans;
+		}
 
 		if(!mUsePull) {
 			if(mIPv4Address == null || cidrToIPAndNetmask(mIPv4Address) == null)

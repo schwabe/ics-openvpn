@@ -494,7 +494,7 @@ public class ConfigParser {
 
 			if(optionline.size()< (minarg+1) || optionline.size() > maxarg+1) {
 				String err = String.format("Option %s has %d parameters, expected between %d and %d",
-						option,args.size()-1,minarg,maxarg );
+						option,optionline.size()-1,minarg,maxarg );
 				throw new ConfigParseError(err);
 			}
 		options.remove(option);

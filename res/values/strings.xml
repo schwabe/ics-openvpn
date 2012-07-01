@@ -33,7 +33,6 @@
     <string name="client_key_title">Client Certificate Key</string>
     <string name="client_pkcs12_title">PKCS12 File</string>
     <string name="ca_title">CA Certificate</string>
-    <string name="select_certificate">Select</string>
     <string name="no_certificate">Nothing selected</string>
     <string name="opevpn_copyright" translatable="false">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net>\n
 

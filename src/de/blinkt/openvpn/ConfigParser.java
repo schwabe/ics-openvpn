@@ -436,7 +436,7 @@ public class ConfigParser {
 				np.mAuthenticationType=VpnProfile.TYPE_USERPASS_KEYSTORE;
 			}
 			if(authuser.size()>1) {
-				np.mName=authuser.get(1);
+				np.mUsername=authuser.get(1);
 			}
 			
 		}

@@ -159,8 +159,8 @@ public class ConfigConverter extends ListActivity {
 		mResult.mClientKeyFilename = VpnProfile.INLINE_TAG + embedFile(mResult.mClientKeyFilename);
 		mResult.mTLSAuthFilename = VpnProfile.INLINE_TAG + embedFile(mResult.mTLSAuthFilename);
 		
-		if(mResult.mUsername != null){
-			String data =embedFile(mResult.mName);
+		if(mResult.mUsername != null && !mResult.mUsername.equals("")){
+			String data =embedFile(mResult.mUsername);
 			mResult.mName=null;
 			if(data!=null) {
 				String[] parts = data.split("\n");

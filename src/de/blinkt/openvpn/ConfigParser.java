@@ -225,6 +225,7 @@ public class ConfigParser {
 			"persist-tun",
 			"persist-key",
 			"register-dns",
+			"route-delay",
 			"route-gateway",
 			"route-metric",
 			"route-method",
@@ -424,14 +425,20 @@ public class ConfigParser {
 		if(getOption("nobind", 0, 0) != null)
 			np.mNobind=true;
 		
-		if(getOption("auth-user-pass",0,1) != null) {
+		Vector<String> authuser = getOption("auth-user-pass",0,1);
+		if(authuser !=null){
+			
 			if(noauthtypeset) {
 				np.mAuthenticationType=VpnProfile.TYPE_USERPASS;
 			} else if(np.mAuthenticationType==VpnProfile.TYPE_CERTIFICATES) {
 				np.mAuthenticationType=VpnProfile.TYPE_USERPASS_CERTIFICATES;
 			} else if(np.mAuthenticationType==VpnProfile.TYPE_KEYSTORE) {
 				np.mAuthenticationType=VpnProfile.TYPE_USERPASS_KEYSTORE;
-			} 
+			}
+			if(authuser.size()>1) {
+				np.mName=authuser.get(1);
+			}
+			
 		}
 
 		

@@ -33,7 +33,6 @@
     <string name="client_key_title">Client Certificate Key</string>
     <string name="client_pkcs12_title">PKCS12 File</string>
     <string name="ca_title">CA Certificate</string>
-    <string name="select_certificate">Select</string>
     <string name="no_certificate">Nothing selected</string>
     <string name="opevpn_copyright" translatable="false">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net>\n
 
@@ -220,6 +219,7 @@
     <string name="keppstatus_summary">Keep the notification displayed after the connection is established to show traffic statistics.</string>
     <string name="keepstatus">Show Traffic Statistics</string>
     <string name="mobile_info">Running on %1$s (%2$s) %3$s, Android API %4$d</string>
-    <string name="error_rsa_sign">Error signing with Android keystore key %s</string>
+    <string name="error_rsa_sign">Error signing with Android keystore key %1$s: %2$s</string>
+    <string name="keychain_jellybeans">Reading from Android Keystore does not work in Jelly Beans (Google change the way private keys are returned)</string>
 </resources>
 

@@ -146,9 +146,7 @@
     <string name="copied_entry">Log Eintrag in die Zwischenablage kopiert</string>
     <string name="tap_mode">Tap Mode</string>
     <string name="faq_tap_mode">Die VPN API von Android, die ohne rooten des Telefons funktioniert, unterstützt nur den tun modus. Das Unterstützen des Tap Modus ist daher nicht möglich.</string>
-    <string name="tap_faq2">Again? Are you kidding? No tap mode is really not supported and sending more mail aksing if it will be supported will not help.</string>
-    <string name="tap_faq3">A third time? Actually one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would have to implement also ARP and possible a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.</string>
-    <string name="faq">FAQ</string>
+        <string name="faq">FAQ</string>
     <string name="faq_summary">häufig gestellte Fragen und Hinweise</string>
     <string name="copying_log_entries">Kopieren von Log Einträgen</string>
     <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the gui.</string>
@@ -175,5 +173,12 @@
     <string name="keychain_nocacert">Beim Abfragen des Android KeyStore wurde kein CA Zertifikat zurückgegeben. Überprüfen des Serverzertifikat wird warscheinlich fehlschlagen. Geben Sie manuell ein CA Zertifikat an.</string>
     <string name="cert_from_keystore">Zertifikat (KeyStore): \'%s\' </string>
     <string name="extracahint">Das CA Zertifikat wird meist aus dem Zertifikatsspeicher automatisch ausgewählt. Sollte dies nicht funktionieren und Sie Verifizierungsprobleme erhalten(self signed certificate), wählen Sie manuell ein Zertifikat aus.</string>
-
+   <string name="show_log_summary">Zeigt das Status Log, wenn ein VPN verbunden wird. Das Status log kann immer über die Benachrichtigung aufgerufen werden.</string>
+    <string name="show_log_window">Zeige Log</string>
+    <string name="keppstatus_summary">Zeige die OpenVPN Benachrichtung nach Verbinden zusätzlich zu der System Benachrichtigung an um Traffic Statistiken anzuzeigen.</string>
+    <string name="keepstatus">Traffic Statistiken</string>
+    <string name="mobile_info">Modell %1$s (%2$s) %3$s, Android API %4$d</string>
+    <string name="error_rsa_sign">Fehler beim Zugriff auf den Android Keystore %1$s: %2$s</string>
 </resources>
+<!-- LocalWords:  OpenVPN
+-->

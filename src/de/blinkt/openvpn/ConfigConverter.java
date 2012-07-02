@@ -123,7 +123,8 @@ public class ConfigConverter extends ListActivity {
 					continue;
 
 				// read the file inline
-				String filedata = VpnProfile.INLINE_TAG;
+
+				String filedata =  "";
 				byte[] buf =new byte[2048];
 
 				log(R.string.trying_to_read, possibleFile.getAbsolutePath());
@@ -153,10 +154,22 @@ public class ConfigConverter extends ListActivity {
 		// This where I would like to have a c++ style
 		// void embedFile(std::string & option)
 
-		mResult.mCaFilename = embedFile(mResult.mCaFilename);
-		mResult.mClientCertFilename = embedFile(mResult.mClientCertFilename);
-		mResult.mClientKeyFilename = embedFile(mResult.mClientKeyFilename);
-		mResult.mTLSAuthFilename = embedFile(mResult.mTLSAuthFilename);
+		mResult.mCaFilename = VpnProfile.INLINE_TAG +  embedFile(mResult.mCaFilename);
+		mResult.mClientCertFilename = VpnProfile.INLINE_TAG + embedFile(mResult.mClientCertFilename);
+		mResult.mClientKeyFilename = VpnProfile.INLINE_TAG + embedFile(mResult.mClientKeyFilename);
+		mResult.mTLSAuthFilename = VpnProfile.INLINE_TAG + embedFile(mResult.mTLSAuthFilename);
+		
+		if(mResult.mUsername != null){
+			String data =embedFile(mResult.mName);
+			mResult.mName=null;
+			if(data!=null) {
+				String[] parts = data.split("\n");
+				if(parts.length >= 2) {
+					mResult.mName=parts[0];
+					mResult.mPassword=parts[1];
+				}
+			}
+		}
 	}
 
 

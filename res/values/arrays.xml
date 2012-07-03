@@ -4,7 +4,7 @@
     <string-array name="vpn_types">
         <item>Certificates</item>
         <item>PKCS12 File</item>
-        <item>Android Certficate</item>
+        <item>Android Certificate</item>
         <item>Username/Password</item>
         <item>Static Keys</item>
         <item>User/PW + Certificates</item>

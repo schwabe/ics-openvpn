@@ -156,7 +156,7 @@
     <string name="file_icon">Datei Symbol</string>
     <string name="generated_config">Generierte Konfiguration</string>
     <string name="copyright_guicode">Quellcode und Iusse tracker unter http://code.google.com/p/ics-openvpn/ verfügbar</string>
-    <string name="copyright_others">Dieses Programm nutzte die folgenden Komponenten. Die kompletten Lizenzdetails sind im Quelltext verfügbar</string>
+    <string name="copyright_others">Dieses Programm nutzt die folgenden Komponenten. Die kompletten Lizenzdetails sind im Quelltext verfügbar</string>
     <string name="tls_authentication">TLS Authentifizierung</string>
     <string name="faq_security_title">Bemerkungen zur Sicherheit</string>
     <string name="generalsettings">Allgemeine Einstellungen</string>

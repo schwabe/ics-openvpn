@@ -8,6 +8,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/faq_system_dialogs_title" />
+        
+        
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/faq_system_dialogs" />
+        
+        
         <TextView
             style="@style/faqhead"
             android:text="@string/tap_mode" />

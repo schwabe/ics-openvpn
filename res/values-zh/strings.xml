@@ -1,0 +1,162 @@
+<!--
+  Copyright (C) 2011 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+--><resources>
+
+    <string name="app">"OpenVPN为Android"</string>
+    <string name="address">"服务器地址："</string>
+    <string name="port">"服务器端口："</string>
+    <string name="location">"地点"</string>
+    <string name="cant_read_folder">"无法读取文件夹！"</string>
+    <string name="select">"选择"</string>
+    <string name="cancel">"取消"</string>
+    <string name="no_data">"无数据"</string>
+    <string name="useLZO">"LZO 压缩"</string>
+    <string name="client_no_certificate">"无证书"</string>
+    <string name="client_certificate_title">"客户端证书"</string>
+    <string name="client_key_title">"客户端证书密钥"</string>
+    <string name="client_pkcs12_title">"PKCS12 文件"</string>
+    <string name="ca_title">"CA 证书"</string>
+    <string name="no_certificate">"未选择任何项"</string>
+    <string name="about">"关于"</string>
+    <string name="about_summary">"关于 OpenVPN 为 Android"</string>
+    <string name="vpn_list_summary">"所有配置的 VPN 列举"</string>
+    <string name="vpn_list_title">"所有你的 VPN"</string>
+    <string name="vpn_type">"类型"</string>
+    <string name="pkcs12pwquery">"PKCS12 密码"</string>
+    <string name="file_select">"选择"</string>
+    <string name="file_nothing_selected">"未选择任何项"</string>
+    <string name="useTLSAuth">"使用 TLS 认证"</string>
+    <string name="tls_direction">"TLS 方向"</string>
+    <string name="ipv6_dialog_tile">"输入 CIDR 格式的 IPv6 地址/网掩码（例如：2000:dd::23/64）"</string>
+    <string name="ipv4_dialog_title">"输入 CIDR 格式的 IPv4 地址/网掩码（例如：1.2.3.4/24）"</string>
+    <string name="ipv4_address">"IPv4 地址"</string>
+    <string name="ipv6_address">"IPv6 地址"</string>
+    <string name="custom_option_warning">""</string>
+    <string name="auth_username">"用户名"</string>
+    <string name="auth_pwquery">"密码"</string>
+    <string name="configure_the_vpn">"配置 VPN"</string>
+    <string name="menu_add_profile">"添加网络"</string>
+    <string name="add_profile_name_prompt">"输入新网络的名称："</string>
+    <string name="profilename">"网络名称"</string>
+    <string name="no_keystore_cert_selected">"未选用户证书。"</string>
+    <string name="no_error_found">"未找到错误"</string>
+    <string name="config_error_found">"配置有错误"</string>
+    <string name="ipv4_format_error">"无法解析 IPv4 地址"</string>
+    <string name="custom_route_format_error">"无法解析自定义路由"</string>
+    <string name="vpn_shortcut">"OpenVPN 快捷方式"</string>
+    <string name="vpn_launch_title">"连接到 VPN"</string>
+    <string name="random_host_prefix">"随机主机前缀"</string>
+    <string name="random_host_summary">"在主机名前添加6个随机字符"</string>
+    <string name="custom_config_title">"启用自定义选项"</string>
+    <string name="custom_config_summary">"指定自定义选项。小心使用！"</string>
+    <string name="route_rejected">"路由由Android拒绝"</string>
+    <string name="cancel_connection">"断开"</string>
+    <string name="clear_log">"清除记录"</string>
+    <string name="title_cancel">"取消确认"</string>
+    <string name="cancel_connection_query">"断开连接的 VPN / 取消连接尝试？"</string>
+    <string name="remove_vpn">"删除 VPN"</string>
+    <string name="check_remote_tlscert">"检查服务器是否使用 TLS 服务器证书"</string>
+    <string name="tls_key_auth">"启用 TLS 密钥认证"</string>
+    <string name="tls_auth_file">"TLS 认证文件"</string>
+    <string name="pull_on_summary">"向服务器要求 IP 地址、路由和时机选择。"</string>
+    <string name="pull_off_summary">"没有任何向服务器要求的信息。设定需要指定。"</string>
+    <string name="use_pull">"拉设定"</string>
+    <string name="dns">"DNS"</string>
+    <string name="override_dns">"覆盖服务器 DNS 设定"</string>
+    <string name="dns_override_summary">"使用自定义 DNS 服务器"</string>
+    <string name="searchdomain">"sea​​rchDomain"</string>
+    <string name="dns1_summary">"要使用的 DNS 服务器。"</string>
+    <string name="dns_server">"DNS 服务器"</string>
+    <string name="secondary_dns_message">"如果无法达到主 DNS 服务器，要使用辅助 DNS 服务器。"</string>
+    <string name="backup_dns">"备用 DNS 服务器"</string>
+    <string name="ignored_pushed_routes">"忽略推路由"</string>
+    <string name="ignore_routes_summary">"忽略服务器推的路由。"</string>
+    <string name="use_default_title">"使用默认路由"</string>
+    <string name="custom_route_message">"输入自定义路由。只输入 CIDR 格式的目的地。"</string>
+    <string name="custom_routes_title">"自定义路由"</string>
+    <string name="log_verbosity_level">"记录详细级别"</string>
+    <string name="float_summary">"允许来自任何 IP 认证的数据包"</string>
+    <string name="float_title">"允许浮服务器"</string>
+    <string name="custom_options_title">"自定义选项"</string>
+    <string name="edit_vpn">"编辑 VPN 设定"</string>
+    <string name="remove_vpn_query">"删除 VPN 网络 %s 吗？"</string>
+    <string name="error">"错误"</string>
+    <string name="clear">"清除"</string>
+    <string name="info">"信息"</string>
+    <string name="show_connection_details">"显示连接信息"</string>
+    <string name="last_openvpn_tun_config">"最后 OpenVPN 接口配置："</string>
+    <string name="local_ip_info">"本地 IPv4： %1$s/%2$d IPv6： %3$s MTU： %4$d"</string>
+    <string name="dns_server_info">"DNS 服务器： %s"</string>
+    <string name="dns_domain_info">"DNS 域名： %s"</string>
+    <string name="routes_info">"路由： %s"</string>
+    <string name="routes_info6">"IPv6 路由： %s"</string>
+    <string name="version_info">"%1$s %2$s"</string>
+    <string name="send_logfile">"发送记录文件"</string>
+    <string name="send">"发送"</string>
+    <string name="ics_openvpn_log_file">"ICS OpenVPN 记录文件"</string>
+    <string name="copied_entry">"记录条目已复制剪贴板"</string>
+    <string name="tap_mode">"Tap 模式"</string>
+    <string name="faq">"常见问题"</string>
+    <string name="faq_summary">"常见问题和建议"</string>
+    <string name="copying_log_entries">"复制记录条目"</string>
+    <string name="faq_shortcut">"启动快捷方式"</string>
+    <string name="encryption">"加密"</string>
+    <string name="cipher_dialog_title">"输入加密方法"</string>
+    <string name="chipher_dialog_message">"输入 OpenVPN 密钥。留空以使用默认密码"</string>
+    <string name="settings_auth">"认证/加密"</string>
+    <string name="file_explorer_tab">"文件浏览器"</string>
+    <string name="import_file">"导入"</string>
+    <string name="error_importing_file">"导入文件出错"</string>
+    <string name="import_error_message">"无法导入文件系统文件"</string>
+    <string name="inline_file_data">"[[Inline file data]]"</string>
+    <string name="menu_import">"从ovpn文件导入网络"</string>
+    <string name="menu_import_short">"导入"</string>
+    <string name="import_content_resolve_error">"无法读取要导入的网络"</string>
+    <string name="error_reading_config_file">"读取配置文件出错"</string>
+    <string name="add_profile">"添加网络"</string>
+    <string name="trying_to_read">"尝试读取文件： %1$s"</string>
+    <string name="import_could_not_open">"找不到导入的配置文件参考文件： %1$s"</string>
+    <string name="import_done">"读取配置文件完成。"</string>
+    <string name="import_experimental">"请注意，配置导入是一个实验性的功能。如果它出错，或你有什么建议请给我发电子邮件。"</string>
+    <string name="import_configuration_file">"导入配置文件"</string>
+    <string name="faq_security_title">"安全注意"</string>
+    <string name="import_vpn">"导入"</string>
+    <string name="broken_image_cert_title">"显示证书出错"</string>
+    <string name="ipv4">"IPv4"</string>
+    <string name="ipv6">"IPv6"</string>
+    <string name="speed_waiting">"等待状态消息"</string>
+    <string name="converted_profile">"导入的配置"</string>
+    <string name="converted_profile_i">"导入的配置 %d"</string>
+    <string name="error_empty_username">"用户名不能为空。"</string>
+    <string name="pkcs12_file_encryption_key">"PKCS12 文件加密密钥"</string>
+    <string name="private_key_password">"私钥密码"</string>
+    <string name="password">"密码"</string>
+    <string name="file_icon">"文件图标"</string>
+    <string name="tls_authentication">"TLS 认证"</string>
+    <string name="generated_config">"生成的配置"</string>
+    <string name="generalsettings">"通用设定"</string>
+    <string name="generated_config_summary">"显示生成的 OpenVPN 配置文件"</string>
+    <string name="edit_profile_title">"编辑 %s"</string>
+    <string name="building_configration">"正在生成配置"</string>
+    <string name="netchange">"更换网络时重新连接"</string>
+    <string name="netstatus">"网络状态： %s"</string>
+    <string name="select_file">"选择"</string>
+   <string name="show_log_window">"显示记录窗口"</string>
+        <string name="keepstatus">"显示流量统计"</string>
+    <string name="mobile_info">"运行 %1$s （ %2$s ） %3$s ，Android API %4$d"</string>
+    	<string name="translationby">中文翻译： 白达卫 （Gerard Bonner）
+&lt;gbonner689@gmail.com</string>
+
+</resources>

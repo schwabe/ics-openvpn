@@ -179,4 +179,5 @@
     <string name="keepstatus">Traffic Statistiken</string>
     <string name="mobile_info">Modell %1$s (%2$s) %3$s, Android API %4$d</string>
     <string name="error_rsa_sign">Fehler beim Zugriff auf den Android Keystore %1$s: %2$s</string>
+    
 </resources>

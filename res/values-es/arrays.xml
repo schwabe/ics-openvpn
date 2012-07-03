@@ -1,0 +1,41 @@
+<resources>
+	<!--  Keep the order the same as the TYPE_ constants in VPNProfile -->
+    <string-array name="vpn_types">
+        <item>"Certificados"</item>
+        <item>"Archivo PKCS12"</item>
+        <item>"Certificado Android"</item>
+        <item>"Usuario/contraseña"</item>
+        <item>"Claves estáticas"</item>
+        <item>"Usuario/contr. + Certificados"</item>
+        <item>"Usuario/contr. + PKCS12 "</item>
+        <item>"Usuario/contr. + Android"</item>
+    </string-array>
+
+    <string-array name="tls_directions_entries">
+        <item>"0"</item>
+        <item>"1"</item>
+        <item>"Sin especificar"</item>
+    </string-array>
+    <string-array name="tls_directions_values" translatable="false">
+        <item>"0"</item>
+        <item>"1"</item>
+        <item/>
+    </string-array>
+    <string-array name="verb_values" translatable="false">
+        <item>"0"</item>
+        <item>"1"</item>
+        <item>"2"</item>
+        <item>"3"</item>
+        <item>"4"</item>
+        <item>"5"</item>
+    </string-array>
+    <string-array name="verb_entries">
+        <item>"0 - No hay registro"</item>
+        <item>"1 - Detalle prederminado"</item>
+        <item>"2 - Registro más detallado"</item>
+        <item>"3"</item>
+        <item>"4"</item>
+        <item>"5 - registro de depuración"</item>
+    </string-array>
+
+</resources>

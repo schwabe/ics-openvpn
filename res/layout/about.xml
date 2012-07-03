@@ -8,38 +8,53 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/version" />
+            android:autoLink="all"
+            android:text="@string/copyright_blinktgui" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="10sp" />
-        
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/copyright_blinktgui"
-            android:autoLink="all" />
+            android:autoLink="all"
+            android:text="@string/copyright_guicode" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="10sp" />
-        <TextView 
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-        	android:text="@string/copyright_guicode"
-        	android:autoLink="all" />
-        
+            android:autoLink="all"
+            android:text="@string/translationby" />
+
         <Space
             android:layout_width="match_parent"
-            android:layout_height="20sp" />
+            android:layout_height="10sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/copyright_others" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp" />
+        
 
         <TextView
             android:layout_width="match_parent"

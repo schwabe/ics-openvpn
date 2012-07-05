@@ -1,0 +1,28 @@
+<resources>
+	<!--  Keep the order the same as the TYPE_ constants in VPNProfile -->
+    <string-array name="vpn_types">
+        <item>"证书"</item>
+        <item>"PKCS12 文件"</item>
+        <item>"Android 证书"</item>
+        <item>"用户名/密码"</item>
+        <item>"静态密钥"</item>
+        <item>"用户名/密码 + 证书"</item>
+        <item>"用户名/密码 + PKCS12 "</item>
+        <item>"用户名/密码 + Android"</item>
+    </string-array>
+
+    <string-array name="tls_directions_entries">
+        <item>"0"</item>
+        <item>"1"</item>
+        <item>"未指定"</item>
+    </string-array>
+      <string-array name="verb_entries">
+        <item>"0 - 无记录"</item>
+        <item>"1 - 默认详细级别"</item>
+        <item>"2 - 多详细"</item>
+        <item>"3"</item>
+        <item>"4"</item>
+        <item>"5 - 调试记录"</item>
+    </string-array>
+
+</resources>

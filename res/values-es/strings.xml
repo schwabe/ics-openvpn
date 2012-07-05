@@ -175,19 +175,20 @@
     <string name="generated_config">"Configuración generada"</string>
     <string name="generalsettings">"Ajustes generales"</string>
     <string name="owner_fix">"Corregir la propiedad de /dev/tun"</string>
+<string name="owner_fix_summary">Intentar definir la propriedad de /dev/tun como system. Algunos firmwares CM9 lo necesita para que la API VPNService funcione. Necesita root.</string>
     <string name="generated_config_summary">"Muestra el archivo de configuración de OpenVPN generado"</string>
-    <string name="edit_profile_title">"Editar \" %s \""</string>
+    <string name="edit_profile_title">"Editar \"%s\""</string>
     <string name="building_configration">"Generando configuración…"</string>
     <string name="netchange_summary">"Habilitar esta opción obliga la reconexión si el estado de la red se cambia (Wi-Fi a móvil, y al revés)"</string>
     <string name="netchange">"Reconectar si la red se cambia"</string>
     <string name="cert_from_keystore">"Tiene certificado de '%s' del llavero"</string>
     <string name="netstatus">"Estado de red: %s"</string>
     <string name="select_file">"Seleccionar"</string>
-    <string name="show_log_summary">"Muestra la ventana de registro cuando se establece la conexión. La ventana de registro se puede acceder de la barra de notificaciones."</string>
+    <string name="show_log_summary">"Mostrar la ventana de registro cuando se establece la conexión. La ventana de registro se puede acceder de la barra de notificaciones."</string>
     <string name="show_log_window">"Mostrar ventana de registro"</string>
-    <string name="keppstatus_summary">"Mantenga la notificación mostrada después de que la conexión se establece para mostrar las estadísticas de tráfico."</string>
+    <string name="keppstatus_summary">"Mantener la notificación mostrada después de que la conexión se establece, para mostrar las estadísticas de tráfico."</string>
     <string name="keepstatus">"Mostrar estadísticas de tráfico"</string>
     <string name="mobile_info">"Correr en %1$s (%2$s) %3$s, Android API %4$d"</string>
 	<string name="translationby">Traducción español por Gerard Bonner
-&lt;gbonner689@gmail.com</string>
+   &lt;59539051+ovpntrans.es@mail.dcu.ie&gt;</string>
 </resources>

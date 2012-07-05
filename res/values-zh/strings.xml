@@ -14,7 +14,7 @@
   limitations under the License.
 --><resources>
 
-    <string name="app">"OpenVPN为Android"</string>
+    <string name="app">"OpenVPN 为 Android"</string>
     <string name="address">"服务器地址："</string>
     <string name="port">"服务器端口："</string>
     <string name="location">"地点"</string>
@@ -76,7 +76,7 @@
     <string name="dns">"DNS"</string>
     <string name="override_dns">"覆盖服务器 DNS 设定"</string>
     <string name="dns_override_summary">"使用自定义 DNS 服务器"</string>
-    <string name="searchdomain">"sea​​rchDomain"</string>
+    <string name="searchdomain">"searchDomain"</string>
     <string name="dns1_summary">"要使用的 DNS 服务器。"</string>
     <string name="dns_server">"DNS 服务器"</string>
     <string name="secondary_dns_message">"如果无法达到主 DNS 服务器，要使用辅助 DNS 服务器。"</string>
@@ -156,7 +156,7 @@
    <string name="show_log_window">"显示记录窗口"</string>
         <string name="keepstatus">"显示流量统计"</string>
     <string name="mobile_info">"运行 %1$s （ %2$s ） %3$s ，Android API %4$d"</string>
-    	<string name="translationby">中文翻译： 白达卫 （Gerard Bonner）
-&lt;gbonner689@gmail.com</string>
+    	<string name="translationby">中文翻译： 白达卫
+&lt;59539051+ovpntrans.zh@mail.dcu.ie&gt;</string>
 
 </resources>

@@ -8,15 +8,12 @@ Ideas:
    
 - implement general settings dialog
    - encryption of profiles
-   - Speed/Transfered in notification bar (byte counter of management) 
+   - Speed/Transfered in notification bar with nice bar graph!
    
 - map SIGUSR1 to SIGINT
 
-- add a put this certificate into file obscure option
-
 Bugfixes:
  - startpath file explorer
- - fix opening of files in email etc.
 
 
 Missing configuration options:

@@ -53,11 +53,11 @@ public class OpenVpnService extends VpnService implements StateListener {
 	private Thread mSocketManagerThread;
 	private int mMtu;
 	private String mLocalIPv6=null;
-	private Notification mNotification=null;
-
 	private NetworkSateReceiver mNetworkStateReceiver;
 
 	private boolean mDisplayBytecount=false;
+
+	private boolean mNotificationvisible;
 
 	private static final int OPENVPN_STATUS = 1;
 	
@@ -72,7 +72,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 		mNotificationManager.cancel(OPENVPN_STATUS);
-		
+		mNotificationvisible=false;
 	}
 	private void showNotification(String msg, String tickerText) {
 		String ns = Context.NOTIFICATION_SERVICE;
@@ -95,12 +95,10 @@ public class OpenVpnService extends VpnService implements StateListener {
 		if(tickerText!=null)
 			nbuilder.setTicker(tickerText);
 
-		mNotification = nbuilder.getNotification();
+		Notification notification = nbuilder.getNotification();
 
-
-		
-
-		mNotificationManager.notify(OPENVPN_STATUS, mNotification);
+		mNotificationManager.notify(OPENVPN_STATUS, notification);
+		mNotificationvisible=true;
 		
 	}
 
@@ -393,6 +391,12 @@ public class OpenVpnService extends VpnService implements StateListener {
 				return;
 			}			
 		}
+		
+		// Skip exiting status if the status is already hidden
+		if("EXITING SIGINT".equals(state) && !mNotificationvisible) {
+			return;
+		}
+			
 		
 		if("BYTECOUNT".equals(state)) {
 			if(mDisplayBytecount) {

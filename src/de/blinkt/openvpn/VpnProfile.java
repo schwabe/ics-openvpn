@@ -555,7 +555,7 @@ public class VpnProfile implements  Serializable{
 		if(mAuthenticationType==TYPE_KEYSTORE || mAuthenticationType==TYPE_USERPASS_KEYSTORE) {
 			if(mAlias==null) 
 				return R.string.no_keystore_cert_selected;
-			if(Build.VERSION.SDK_INT == 16)
+			if(Build.VERSION.SDK_INT >= 16 && !Build.MODEL.equals("sdk") )
 				return R.string.keychain_jellybeans;
 		}
 

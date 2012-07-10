@@ -232,6 +232,7 @@
     <string name="routing">Routing</string>
     <string name="obscure">Obscure OpenVPN Settings. Normally not needed.</string>
     <string name="advanced">Advanced</string>
+    <string name="export_config_title">ICS Openvpn Config</string>
     
 
 </resources>

@@ -291,7 +291,8 @@ public class VPNProfileList extends ListFragment {
 	            	return true;
 	            default:
 	                return false;
-	        }		}
+	        }		
+		}
 
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {

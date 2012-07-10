@@ -279,14 +279,19 @@ public class ConfigParser {
 			}
 			np.mCustomRoutes=routeopt;
 		}
-		
-		Vector<String> tlsauth = getOption("tls-auth", 1, 2);
-		if(tlsauth!=null) 
-		{
-			np.mUseTLSAuth=true;
-			np.mTLSAuthFilename=tlsauth.get(1);
-			if(tlsauth.size()==3)
-				np.mTLSAuthDirection=tlsauth.get(2);
+
+		// Also recognize tls-auth [inline] direction ... 
+		Vector<Vector<String>> tlsauthoptions = getAllOption("tls-auth", 1, 2);
+		for(Vector<String> tlsauth:tlsauthoptions) {
+			if(tlsauth!=null) 
+			{
+				if(!tlsauth.get(1).equals("[inline]")) {
+					np.mTLSAuthFilename=tlsauth.get(1);
+					np.mUseTLSAuth=true;
+				}
+				if(tlsauth.size()==3)
+					np.mTLSAuthDirection=tlsauth.get(2);
+			}
 		}
 
 		Vector<String> direction = getOption("key-direction", 1, 1);

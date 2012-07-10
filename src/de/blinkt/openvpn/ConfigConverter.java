@@ -1,3 +1,4 @@
+
 package de.blinkt.openvpn;
 
 import java.io.File;
@@ -187,7 +188,7 @@ public class ConfigConverter extends ListActivity {
 			final android.net.Uri data = intent.getData ();
 			if (data != null)
 			{
-				log(R.string.import_experimental);
+				//log(R.string.import_experimental);
 				log(R.string.importing_config,data.toString());
 				try {
 					InputStream is = getContentResolver().openInputStream(data);
@@ -232,7 +233,13 @@ public class ConfigConverter extends ListActivity {
 	private void displayWarnings() {
 		if(mResult.mUseCustomConfig) {
 			log(R.string.import_warning_custom_options);
-			log(mResult.mCustomConfigOptions);
+			String copt = mResult.mCustomConfigOptions;
+			if(copt.startsWith("#")) {
+				int until = copt.indexOf('\n');
+				copt = copt.substring(until+1);
+			}
+				
+			log(copt);
 		}
 
 		if(mResult.mAuthenticationType==VpnProfile.TYPE_KEYSTORE) {

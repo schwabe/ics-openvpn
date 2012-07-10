@@ -242,13 +242,13 @@ public class VpnProfile implements  Serializable{
 				cfg+=insertFileData("secret",mTLSAuthFilename);
 			else
 				cfg+=insertFileData("tls-auth",mTLSAuthFilename);
-			cfg+=" ";
 
 			if(nonNull(mTLSAuthDirection)) {
 				cfg+= "key-direction ";
 				cfg+= mTLSAuthDirection;
+				cfg+="\n";
 			}
-			cfg+="\n";
+
 		}
 
 		if(!mUsePull ) {

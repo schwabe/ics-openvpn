@@ -136,7 +136,7 @@ public class ConfigConverter extends ListActivity {
 						len = fis.read(buf);
 					}
 					fis.close();
-					return filedata;
+					return VpnProfile.INLINE_TAG + filedata;
 				} catch (FileNotFoundException e) {
 					log(e.getLocalizedMessage());
 				} catch (IOException e) {
@@ -154,15 +154,16 @@ public class ConfigConverter extends ListActivity {
 		// This where I would like to have a c++ style
 		// void embedFile(std::string & option)
 
-		mResult.mCaFilename = VpnProfile.INLINE_TAG +  embedFile(mResult.mCaFilename);
-		mResult.mClientCertFilename = VpnProfile.INLINE_TAG + embedFile(mResult.mClientCertFilename);
-		mResult.mClientKeyFilename = VpnProfile.INLINE_TAG + embedFile(mResult.mClientKeyFilename);
-		mResult.mTLSAuthFilename = VpnProfile.INLINE_TAG + embedFile(mResult.mTLSAuthFilename);
+		mResult.mCaFilename = embedFile(mResult.mCaFilename);
+		mResult.mClientCertFilename = embedFile(mResult.mClientCertFilename);
+		mResult.mClientKeyFilename = embedFile(mResult.mClientKeyFilename);
+		mResult.mTLSAuthFilename = embedFile(mResult.mTLSAuthFilename);
 		
 		if(mResult.mUsername != null && !mResult.mUsername.equals("")){
 			String data =embedFile(mResult.mUsername);
 			mResult.mName=null;
 			if(data!=null) {
+				data = data.replace(VpnProfile.INLINE_TAG, "");
 				String[] parts = data.split("\n");
 				if(parts.length >= 2) {
 					mResult.mName=parts[0];

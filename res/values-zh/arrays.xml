@@ -17,12 +17,12 @@
         <item>"未指定"</item>
     </string-array>
       <string-array name="verb_entries">
-        <item>"0 - 无记录"</item>
+        <item>"0 - 无日志"</item>
         <item>"1 - 默认详细级别"</item>
-        <item>"2 - 多详细"</item>
+        <item>"2 - 更详细"</item>
         <item>"3"</item>
         <item>"4"</item>
-        <item>"5 - 调试记录"</item>
+        <item>"5 - 调试日志"</item>
     </string-array>
 
 </resources>

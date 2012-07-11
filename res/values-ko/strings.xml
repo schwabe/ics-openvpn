@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2011 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<resources>
+
+    <string name="app">안드로이드용 OpenVPN</string>
+    <string name="address">서버 주소:</string>
+    <string name="port">서버 포트:</string>
+    <string name="location">위치</string>
+    <string name="cant_read_folder">폴더를 읽을 수 없음!</string>
+    <string name="select">선택</string>
+    <string name="cancel">취소</string>
+    <string name="no_data">데이터 없음</string>
+    <string name="useLZO">LZO 압축</string>
+    <string name="client_no_certificate">인증서 없음</string>
+    <string name="client_certificate_title">클라이언트 인증서</string>
+    <string name="client_key_title">클라이언트 인증서 키</string>
+    <string name="client_pkcs12_title">PKCS12 파일</string>
+    <string name="ca_title">CA 인증서</string>
+    <string name="no_certificate">선택 안됨</string>
+    <string name="copyright_guicode">소스 코드와 issue tracker는 http://code.google.com/p/ics-openvpn/ 에 있습니다.</string>
+    <string name="copyright_others">프로그램은 다음과 같은 컴포넌트를 사용합니다. 라이센스에 관련된 전체 내용은 소스에서 확인하세요.</string>
+    <string name="about">정보</string>
+    <string name="about_summary">안드로이드용 OpenVPN 정보</string>
+    <string name="vpn_list_summary">설절된 VPN 목록</string>
+    <string name="vpn_list_title">VPN 목록</string>
+    <string name="vpn_type">종류</string>
+    <string name="pkcs12pwquery">PKCS12 암호</string>
+    <string name="file_select">선택…</string>
+    <string name="file_nothing_selected">선택 안됨</string>
+    <string name="useTLSAuth">TLS 인증 사용</string>
+    <string name="tls_direction">TLS Direction</string>
+    <string name="ipv6_dialog_tile">IPv6 주소/넷마스크를 CIDR 형식으로 입력 (예제. 2000:dd::23/64)</string>
+    <string name="ipv4_dialog_title">IPv4 주소/넷마스크를 CIDR 형식으로 입력 (예제. 1.2.3.4/24)</string>
+    <string name="ipv4_address">IPv4 주소</string>
+    <string name="ipv6_address">IPv6 주소</string>
+    <string name="custom_option_warning">사용자 정의 OpenVPN 옵션 입력. 매우 조심할것. 또한 많은 tun과 연관된 OpenVPN 설정은 VPN 설정의 설계로 인하여 지원될 수 없음. 중요한 옵션이 누락됐다고 생각되면 저자에게 연락하시오.</string>
+    <string name="auth_username">계정</string>
+    <string name="auth_pwquery">암호</string>
+    <string name="static_keys_info">For the static configuration the TLS Auth Keys will be used as static keys.</string>
+    <string name="configure_the_vpn">VPN 설정</string>
+    <string name="menu_add_profile">프로파일 추가</string>
+    <string name="add_profile_name_prompt">새로운 프로파일을 식별할 수 있는 명칭을 입력하세요</string>
+    <string name="duplicate_profile_name">프로파일명 중복</string>
+    <string name="profilename">프로파일 명칭</string>
+    <string name="no_keystore_cert_selected">사용자 인증서를 선택 안했습니다.</string>
+    <string name="no_error_found">오류 없음</string>
+    <string name="config_error_found">설정에 오류</string>
+    <string name="ipv4_format_error">IPv4 주소 분석 불가</string>
+    <string name="custom_route_format_error">사용자 정의 라우트 분석 불가</string>
+    <string name="pw_query_hint">빈칸으로두면 필요시 요청함</string>
+    <string name="vpn_shortcut">OpenVPN 바로가기</string>
+    <string name="vpn_launch_title">VPN 연결 시도</string>
+    <string name="shortcut_profile_notfound">바로가기에서 지정된 프로파일이 없음</string>
+    <string name="random_host_prefix">랜덤 호스트 접두사</string>
+    <string name="random_host_summary">6개의 랜덤문자를 호스트명 앞에 추가</string>
+    <string name="custom_config_title">사용자 정의 옵션 활성화</string>
+    <string name="custom_config_summary">사용자만의 옵션을 정의한다. 조심해 사용할것!</string>
+    <string name="route_rejected">안드로이드에서 라우트 거부</string>
+    <string name="cancel_connection">끊기</string>
+    <string name="clear_log">로그 지우기</string>
+    <string name="title_cancel">취소 확인</string>
+    <string name="cancel_connection_query">연결된 VPN 끊기/연결시도 취소?</string>
+    <string name="remove_vpn">Remove VPN</string>
+    <string name="check_remote_tlscert">서버가 TLS 서버 인증서를 사용하는가를 확인합니다</string>
+    <string name="check_remote_tlscert_title">TLS 서버 제외</string>
+    <string name="remote_tlscn_check_summary">원격 서버 인증서의 CN 을 문자와 비교검사한다.</string>
+    <string name="remote_tlscn_check_title">인증서 호스트명 확인</string>
+    <string name="enter_tlscn_dialog">원격 서버와 비교검사할 문자를 입력하시오. OpenVPN은 점두사 비교법을 사용합니다. "Server"는 "Server-1"과 "Server-2"를 만족시킵니다.\nCN을 서버 호스트명과 비교하기 위해서는 공란으로 두세요.</string>
+    <string name="enter_tlscn_title">원격 호스트명(CN)</string>
+    <string name="tls_key_auth">TLS Key 인증 활성화</string>
+    <string name="tls_auth_file">TLS Auth 파일</string>
+    <string name="pull_on_summary">서버로부터 IP 주소, 라우트와 타이밍 옵션을 요구합니다.</string>
+    <string name="pull_off_summary">서버로부터 정보를 요구하지 않습니다. 아래 설정이 필요합니다.</string>
+    <string name="use_pull">설정 받기</string>
+    <string name="dns">DNS</string>
+    <string name="override_dns">DNS 설정 덮어쓰기</string>
+    <string name="dns_override_summary">지정한 DNS서버 사용하기</string>
+    <string name="searchdomain">searchDomain</string>
+    <string name="dns1_summary">사용할 DNS 서버.</string>
+    <string name="dns_server">DNS 서버</string>
+    <string name="secondary_dns_message">보조 DNS 서버는 평소 DNS 서버에 접근불가시 사용됩니다.</string>
+    <string name="backup_dns">보조 DNS 서버</string>
+    <string name="ignored_pushed_routes">받은 라우트 무시하기</string>
+    <string name="ignore_routes_summary">서버로부터 받은 라우트를 무시합니다.</string>
+    <string name="default_route_summary">모든 트래픽을 VPN으로 보냅니다.</string>
+    <string name="use_default_title">기본 라우트 사용하기</string>
+    <string name="custom_route_message">사용자만의 라우트를 입력하십시오. 목적지는 CIDR 형식으로만 입력하십시오. "10.0.0.0/8 2002::/16"은 10.0.0.0/8 과 2002::/16 네트워크를 VPN으로 보냅니다.</string>
+    <string name="custom_routes_title">사용자 라우트</string>
+    <string name="log_verbosity_level">로그 단계</string>
+    <string name="float_summary">아무 IP에서 오는 인증된 패킷 허용</string>
+    <string name="float_title">플로팅 서버 허용</string>
+    <string name="custom_options_title">사용자 정의 옵션</string>
+    <string name="edit_vpn">VPN 설정 수정</string>
+    <string name="remove_vpn_query">%s VPN 프로파일 삭제?</string>
+    <string name="tun_error_helpful">On some custom ICS images the permission on /dev/tun might be wrong, or the tun module might be missing completely. For CM9 images try the fix ownership option under general settings</string>
+    <string name="tun_open_error">Opening tun interface failed badly.</string>
+    <string name="error">"Error: "</string>
+    <string name="clear">Clear</string>
+    <string name="info">info</string>
+    <string name="show_connection_details">연결 내용 보기</string>
+    <string name="last_openvpn_tun_config">Last interface configuration from OpenVPN:</string>
+    <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
+    <string name="dns_server_info">DNS 서버: %s</string>
+    <string name="dns_domain_info">DNS 도매인: %s</string>
+    <string name="routes_info">라우트: %s</string>
+    <string name="routes_info6">라우트 IPv6: %s</string>
+    <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP. Mode given by OpenVPN is \"%3$s\".</string>
+    <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
+    <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>
+    <string name="keychain_access">Cannot access the Android Keychain Certificates. If you restored a backup of the app/app settings re-select the certificate to recreate the permission to access the certificate.</string>
+    <string name="version_info">%1$s %2$s</string>
+    <string name="send_logfile">로그 파일 보내기</string>
+    <string name="send">Send</string>
+    <string name="ics_openvpn_log_file">ICS OpenVPN log file</string>
+    <string name="copied_entry">클립보드로 로그 복사</string>
+    <string name="tap_mode">Tap Mode</string>
+    <string name="faq_tap_mode">Tap Mode is not possible with the non root VPN API. Therefore this application cannot provide tap support</string>
+    <string name="tap_faq2">Again? Are you kidding? No tap mode is really not supported and sending more mail asking if it will be supported will not help.</string>
+    <string name="tap_faq3">A third time? Actually one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would have to implement also ARP and possible a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.</string>
+    <string name="faq">FAQ</string>
+    <string name="faq_summary">자주 문의하는 질문들과 몇가지 충고</string>
+    <string name="copying_log_entries">Copying log entries</string>
+    <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the GUI.</string>
+    <string name="faq_shortcut">Shortcut to start</string>
+    <string name="faq_howto_shortcut">You can place a shortcut to start OpenVPN on your desktop. Depending on your homescreen program you have to add a shortcut or a widget.</string>
+    <string name="no_vpn_support_image">Your image does not support the VPNService API,sorry :(</string>
+    <string name="encryption">암호화</string>
+    <string name="cipher_dialog_title">암호화 방법 입력</string>
+    <string name="chipher_dialog_message">OpenVPN의 cipher key를 입력하세요. 기본cipher사용시 공란으로 놔둘것.</string>
+    <string name="settings_auth">인증/암호화</string>
+    <string name="file_explorer_tab">파일 탐색기</string>
+    <string name="inline_file_tab">인라인 파일</string>
+    <string name="import_file">가져오기</string>
+    <string name="error_importing_file">파일 가져오기 오류</string>
+    <string name="import_error_message">파일을 파일시스템에서 가져오지 못했습니다.</string>
+    <string name="inline_file_data">[[인라인 파일 데이터]]</string>
+    <string name="opentun_no_ipaddr">Refusing to open tun device without IP information</string>
+    <string name="menu_import">Import Profile from ovpn file</string>
+    <string name="menu_import_short">Import</string>
+    <string name="import_content_resolve_error">Could not read Profile to import</string>
+    <string name="error_reading_config_file">설정 파일 읽기 실패</string>
+    <string name="add_profile">프로파일 추가</string>
+    <string name="trying_to_read">Trying to read file: %1$s</string>
+    <string name="import_could_not_open">Could not find file %1$s mentioned in the imported config file</string>
+    <string name="importing_config">Importing config file from source %1$s</string>
+    <string name="import_pkcs12_to_keystore">Your config file specified a pkcs12 file. Please import the file by selecting select in the Basic Settings configuration of the converted VPN</string>
+    <string name="import_warning_custom_options">Your configuration had a few configuration options that could be parsed. These options were added as custom configuration options. The custom configuration is displayed below:</string>
+    <string name="import_done">설정 파일 읽기 완료</string>
+    <string name="nobind_summary">로컬 주소와 포트로 바인드 안하기</string>
+    <string name="no_bind">로컬 바인딩 안함</string>
+    <string name="import_experimental">Please not that the config importer is an experimental feature. If it does not work for you or you think that things could be done better please drop me a email.</string>
+    <string name="import_configuration_file">설정 파일 가져오기</string>
+    <string name="faq_security_title">Security considerations</string>
+    <string name="faq_security">"As OpenVPN is security sensitive a few notes about security are sensible. All data on the sdcard is inherently insecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the VPN profile. The VPN profiles are only accessible by this application. (Do not forget to delete the copies on the sd card afterwards). Even though accessible only by this application the data is still unencrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."</string>
+    <string name="import_vpn">Import</string>
+    <string name="broken_image_cert_title">Error showing certificate selection</string>
+    <string name="broken_image_cert">Got an exception trying to show the Android 4.0+ certificate selection dialog. This should never happen as this a standard feature of Android 4.0+. Maybe your Android ROM support for certificate storage is broken</string>
+    <string name="ipv4">IPv4</string>
+    <string name="ipv6">IPv6</string>
+    <string name="speed_waiting">Waiting for state message…</string>
+    <string name="converted_profile">가져온 프로파일</string>
+    <string name="converted_profile_i">가져온 프로파일 %d</string>
+    <string name="broken_images">깨진 이미지</string>
+    <string name="broken_images_faq">&lt;p>Official HTC images are known to have a strange routing problem causing traffic not to flow through the tunnel (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\">Issue 18&lt;/a> in the bug tracker.)&lt;/p>&lt;p>The official SONY images from Xperia arc S and Xperia Ray have been reported to be missing the VPNService completely from the image. Other Sony images may be affected as well. (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\">Issue 29&lt;/a> in the bug tracker.)&lt;/p>&lt;p>On custom build images the tun module might be missing or the rights of /dev/tun might be wrong. Some CM9 images need the fix ownership option under general settings.&lt;/p>&lt;p>Most important: If you have a broken image, report it to your vendor. The more people report the issue to the vendor the more likely you will get a fix.&lt;/p></string>
+    <string name="error_empty_username">The username must not be empty.</string>
+    <string name="pkcs12_file_encryption_key">PKCS12 File Encryption Key</string>
+    <string name="private_key_password">Private Key 암호</string>
+    <string name="password">암호</string>
+    <string name="file_icon">파일 아이콘</string>
+    <string name="tls_authentication">TLS Authentication</string>
+    <string name="generated_config">생성된 설정</string>
+    <string name="generalsettings">일반 설정</string>
+    <string name="owner_fix_summary">/dev/tun의 소유권이 시스템으로 설정됩니다. 일부 CM9 이미지에서 VPNService API를 사용하기 위해서는 앞의 작업이 요구됩니다. root권한을 가져야합니다.</string>
+    <string name="owner_fix">/dev/tun 소유권 문제 해결</string>
+    <string name="generated_config_summary">생성된 OpenVPN의 설정 파일 보기</string>
+    <string name="edit_profile_title">수정 \"%s\"</string>
+    <string name="building_configration">설정 만드는중…</string>
+    <string name="netchange_summary">이 기능을 사용하면 네트워크 상태 변환시 강제로 재접속을 합니다. (WIFI 로/에서 모바일)</string>
+    <string name="netchange">네트워크 변화시 재접속</string>
+    <string name="cert_from_keystore">Keystore에서 인증서 \'%s\' 받음</string>
+    <string name="netstatus">네트워크 상태: %s</string>
+    <string name="extracahint">CA 인증서는 일반적으로 안드로이드 Keystore에 있는것을 사용합니다. 인증서 오류 발생시 벌도의 인증서를 지정하세요.</string>
+    <string name="select_file">선택</string>
+    <string name="keychain_nocacert">No CA Certificate returned while reading from Android keystore. Auhtentication will probably fail.</string>
+    <string name="show_log_summary">연결시 로그 윈도우를 보여드립니다. 로그 윈도우는 항상 notification status에서 접근이 가능합니다.</string>
+    <string name="show_log_window">로그 윈도우 보기</string>
+    <string name="keppstatus_summary">트래픽 통계를 보여드리기 위해 연결후 notification을 보이도록 유지합니다.</string>
+    <string name="keepstatus">트래픽 통계 보기</string>
+    <string name="mobile_info">Running on %1$s (%2$s) %3$s, Android API %4$d</string>
+    <string name="error_rsa_sign">Error signing with Android keystore key %1$s: %2$s</string>
+    <string name="keychain_jellybeans">Reading from Android Keystore does not work in Jelly Beans (Google change the way private keys are returned)</string>
+    <string name="faq_system_dialogs">The VPN connection warning telling you that this app can intercept all traffic is imposed by the system to prevent abuse of the VPNService API.\nThe VPN connection notification (The key symbol) is also imposed by the Android system to signal an ongoing VPN connection. On some images this notification plays a sound.\nAndroid introduced these system dialog are for your own safety and made sure that they cannot be circumenvented. (On some images this unfortunely includes a notifciation sound)</string>
+    <string name="faq_system_dialogs_title">Connection warning and notification sound</string>
+    <string name="basic">기본</string>
+    <string name="ip_and_dns">IP 와 DNS</string>
+    <string name="routing">라우트</string>
+    <string name="advanced">고급</string>
+    <string name="advanced_summary">OpenVPN 세부 설정. 평소에 필요하지 않음.</string>
+    <string name="translationby"></string>
+    <!--
+    When translating use a string like this: --> 
+    <string name="translationby">한국어 번역 (주)기가드 안규태&lt;ktdann@gmail.com></string>
+
+    
+</resources>

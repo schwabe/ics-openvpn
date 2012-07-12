@@ -206,15 +206,17 @@
     <string name="keychain_jellybeans">Reading from Android Keystore does not work in Jelly Beans (Google change the way private keys are returned)</string>
     <string name="faq_system_dialogs">The VPN connection warning telling you that this app can intercept all traffic is imposed by the system to prevent abuse of the VPNService API.\nThe VPN connection notification (The key symbol) is also imposed by the Android system to signal an ongoing VPN connection. On some images this notification plays a sound.\nAndroid introduced these system dialog are for your own safety and made sure that they cannot be circumenvented. (On some images this unfortunely includes a notifciation sound)</string>
     <string name="faq_system_dialogs_title">Connection warning and notification sound</string>
-    <string name="basic">기본</string>
-    <string name="ip_and_dns">IP 와 DNS</string>
-    <string name="routing">라우트</string>
-    <string name="advanced">고급</string>
-    <string name="advanced_summary">OpenVPN 세부 설정. 평소에 필요하지 않음.</string>
-    <string name="translationby"></string>
-    <!--
-    When translating use a string like this: --> 
     <string name="translationby">한국어 번역 (주)기가드 안규태&lt;ktdann@gmail.com></string>
+    <!--
+    When translating use a string like this:  
+    <string name="translationby">English translation by Arne Schwabe&lt;arne@rfc2549.org></string>
+    -->
+    <string name="ipdns">IP 와 DNS</string>
+    <string name="basic">기본</string>
+    <string name="routing">라우트</string>
+    <string name="obscure">OpenVPN 세부 설정. 평소에 필요하지 않음.</string>
+    <string name="advanced">고급</string>
+    <string name="export_config_title">ICS Openvpn 설정</string>
 
     
 </resources>

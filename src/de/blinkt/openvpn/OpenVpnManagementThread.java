@@ -17,6 +17,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 import android.net.LocalSocket;
+import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.util.Base64;
 import android.util.Log;
@@ -34,6 +35,9 @@ public class OpenVpnManagementThread implements Runnable {
 	private String mCurrentstate; 
 
 	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
+	
+	static private native void jniclose(int fdint);
+	static private native byte[] rsasign(byte[] input,int pkey) throws InvalidKeyException;
 
 	public OpenVpnManagementThread(VpnProfile profile, LocalSocket mgmtsocket, OpenVpnService openVpnService) {
 		mProfile = profile;
@@ -333,12 +337,7 @@ public class OpenVpnManagementThread implements Runnable {
 		}
 		return false;
 	}
-
-
-	private native void jniclose(int fdint);
-
-
-
+	
 	private void processPWCommand(String argument) {
 		//argument has the form 	Need 'Private Key' password
 
@@ -401,11 +400,21 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 
 	private void processSignCommand(String b64data) {
+		
 		PrivateKey privkey = mProfile.getKeystoreKey();
 		Exception err =null;
+		// The Jelly Bean *evil* Hack
+		
+		byte[] data = Base64.decode(b64data, Base64.DEFAULT);
+
+		if(Build.VERSION.SDK_INT==16){
+			processSignJellyBeans(privkey,data);
+			return;
+		}
+		
 		
 		try{
-			byte[] data = Base64.decode(b64data, Base64.DEFAULT);
+		
 
 			Cipher rsasinger = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
 
@@ -433,4 +442,47 @@ public class OpenVpnManagementThread implements Runnable {
 
 	}
 
+
+	private void processSignJellyBeans(PrivateKey privkey, byte[] data) {
+		Exception err =null;
+		try {
+			Method[] allm = privkey.getClass().getSuperclass().getDeclaredMethods();
+			System.out.println(allm);
+			Method getKey = privkey.getClass().getSuperclass().getDeclaredMethod("getOpenSSLKey");
+			getKey.setAccessible(true);
+			
+			// Real object type is OpenSSLKey
+			Object opensslkey = getKey.invoke(privkey);
+			
+			getKey.setAccessible(false);
+			
+			Method getPkeyContext = opensslkey.getClass().getDeclaredMethod("getPkeyContext");
+			
+			// integer pointer to EVP_pkey
+			getPkeyContext.setAccessible(true);
+			int pkey = (Integer) getPkeyContext.invoke(opensslkey);
+			getPkeyContext.setAccessible(false);
+			
+			byte[] signed_bytes = rsasign(data, pkey); 
+			String signed_string = Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
+			managmentCommand("rsa-sig\n");
+			managmentCommand(signed_string);
+			managmentCommand("\nEND\n");
+
+		} catch (NoSuchMethodException e) {
+			err=e;
+		} catch (IllegalArgumentException e) {
+			err=e;
+		} catch (IllegalAccessException e) {
+			err=e;
+		} catch (InvocationTargetException e) {
+			err=e;
+		} catch (InvalidKeyException e) {
+			err=e;
+		}
+		if(err !=null) {
+			OpenVPN.logError(R.string.error_rsa_sign,err.getClass().toString(),err.getLocalizedMessage());
+		}
+
+	}
 }

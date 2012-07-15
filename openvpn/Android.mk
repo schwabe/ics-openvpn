@@ -6,8 +6,6 @@ include $(CLEAR_VARS)
 LOCAL_LDLIBS := -lz -llog 
 LOCAL_C_INCLUDES := openssl/include lzo/include openssl/crypto openssl openvpn/src/compat openvpn/src/openvpn openvpn/include
 
-
-
 #LOCAL_SHARED_LIBRARIES :=  libssl  libcrypto  liblzo
 LOCAL_STATIC_LIBRARIES :=  libssl_static libcrypto_static   liblzo-static
 
@@ -15,7 +13,7 @@ LOCAL_STATIC_LIBRARIES :=  libssl_static libcrypto_static   liblzo-static
 LOCAL_CFLAGS= -DHAVE_CONFIG_H
 LOCAL_MODULE = openvpn
 
-LOCAL_SRC_FILES:= src/openvpn/jniglue.c \
+LOCAL_SRC_FILES:= \
 	src/compat/compat-basename.c \
 	src/compat/compat-daemon.c \
 	src/compat/compat-dirname.c \
@@ -91,22 +89,5 @@ LOCAL_SRC_FILES:= src/openvpn/jniglue.c \
 include $(BUILD_SHARED_LIBRARY)
 #include $(BUILD_EXECUTABLE)
 
-
-include $(CLEAR_VARS)
-
-LOCAL_LDLIBS := -llog 
-LOCAL_SRC_FILES:= src/openvpn/jniglue.c 
-LOCAL_MODULE = opvpnutil
-include $(BUILD_SHARED_LIBRARY)
-
-
-include $(CLEAR_VARS)
-
-
-LOCAL_LDLIBS := -llog 
-LOCAL_SRC_FILES:= src/openvpn/testmain.c
-LOCAL_MODULE = minivpn
-LOCAL_SHARED_LIBRARIES=openvpn
-include $(BUILD_EXECUTABLE)
 
 

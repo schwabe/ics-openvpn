@@ -12,9 +12,32 @@
 #include <openssl/rsa.h>
 #include <openssl/objects.h>
 #include <openssl/md5.h>
+#include <android/log.h>
+#include <openssl/err.h>
+
 
 extern "C" {
 jbyteArray Java_de_blinkt_openvpn_OpenVpnManagementThread_rsasign(JNIEnv* env, jclass, jbyteArray from, jint pkeyRef);
+}
+
+int jniThrowException(JNIEnv* env, const char* className, const char* msg) {
+
+    jclass exceptionClass = env->FindClass(className);
+
+    if (exceptionClass == NULL) {
+        __android_log_print(ANDROID_LOG_DEBUG,"openvpn","Unable to find exception class %s", className);
+        /* ClassNotFoundException now pending */
+        return -1;
+    }
+
+    if (env->ThrowNew( exceptionClass, msg) != JNI_OK) {
+    	__android_log_print(ANDROID_LOG_DEBUG,"openvpn","Failed throwing '%s' '%s'", className, msg);
+        /* an exception, most likely OOM, will now be pending */
+        return -1;
+    }
+
+    env->DeleteLocalRef(exceptionClass);
+    return 0;
 }
 
 
@@ -32,9 +55,10 @@ jbyteArray Java_de_blinkt_openvpn_OpenVpnManagementThread_rsasign(JNIEnv* env, j
 	jbyte* data =  env-> GetByteArrayElements (from, NULL);
 	int  datalen = env-> GetArrayLength(from);
 
-	if(data==NULL || datalen == )
+	if(data==NULL )
+		jniThrowException(env, "java/lang/NullPointerException", "data is null");
 
-		unsigned int siglen;
+	unsigned int siglen;
 	unsigned char* sigret = (unsigned char*)malloc(RSA_size(pkey->pkey.rsa));
 
 
@@ -46,7 +70,6 @@ jbyteArray Java_de_blinkt_openvpn_OpenVpnManagementThread_rsasign(JNIEnv* env, j
 			sigret, &siglen, pkey->pkey.rsa) <= 0 )
 	{
 
-		ERR_print_errors(errbio);
 		jniThrowException(env, "java/security/InvalidKeyException", "rsa_sign went wrong, see logcat");
 
 		ERR_print_errors_fp(stderr);

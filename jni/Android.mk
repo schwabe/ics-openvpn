@@ -25,7 +25,7 @@ include $(BUILD_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 LOCAL_LDLIBS := -llog 
 LOCAL_SRC_FILES:= minivpn.c 
-LOCAL_MODULE = minivp
+LOCAL_MODULE = minivpn
 LOCAL_SHARED_LIBRARIES=openvpn
 include $(BUILD_EXECUTABLE)
 

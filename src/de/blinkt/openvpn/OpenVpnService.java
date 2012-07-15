@@ -241,7 +241,8 @@ public class OpenVpnService extends VpnService implements StateListener {
 		for (String dns : mDnslist ) {
 			builder.addDnsServer(dns);
 		}
-
+		
+		
 		builder.setMtu(mMtu);
 
 
@@ -283,7 +284,11 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 
 		OpenVPN.logBuilderConfig(bconfig);
-
+		
+		// No DNS Server, log a warning 
+		if(mDnslist.size()==0)
+			OpenVPN.logInfo(R.string.warn_no_dns);
+			
 		// Reset information
 		mDnslist.clear();
 		mRoutes.clear();
@@ -393,10 +398,10 @@ public class OpenVpnService extends VpnService implements StateListener {
 		}
 		
 		// Skip exiting status if the status is already hidden
-		if("EXITING SIGINT".equals(state) && !mNotificationvisible) {
+		if(("EXITING SIGINT".equals(state) || "EXITING".equals(state))
+				&& !mNotificationvisible) {
 			return;
-		}
-			
+		}	
 		
 		if("BYTECOUNT".equals(state)) {
 			if(mDisplayBytecount) {

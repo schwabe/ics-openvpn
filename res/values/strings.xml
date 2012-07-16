@@ -234,6 +234,7 @@
     <string name="advanced">Advanced</string>
     <string name="export_config_title">ICS Openvpn Config</string>
     <string name="warn_no_dns">No DNS servers being used. Name resolution may not work. Consider setting custom DNS Servers</string>
+    <string name="dns_add_error">Could not add DNS Server \"%1$s\", rejected by the system: %2$s</string>
     
 
 </resources>

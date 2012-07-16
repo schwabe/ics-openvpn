@@ -21,7 +21,7 @@ public class ShowConfigFragment extends Fragment {
 		View v=inflater.inflate(R.layout.viewconfig, container,false);
 		TextView cv = (TextView) v.findViewById(R.id.configview);
 		
-		int check=vp.checkProfile();
+		int check=vp.checkProfile(getActivity());
 		if(check!=R.string.no_error_found) {
 			cv.setText(check);
 			configtext = getString(check);

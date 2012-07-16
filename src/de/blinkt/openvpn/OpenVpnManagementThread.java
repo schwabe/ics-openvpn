@@ -407,7 +407,7 @@ public class OpenVpnManagementThread implements Runnable {
 		
 		byte[] data = Base64.decode(b64data, Base64.DEFAULT);
 
-		if(Build.VERSION.SDK_INT==16){
+		if(Build.VERSION.SDK_INT>=16){
 			processSignJellyBeans(privkey,data);
 			return;
 		}

@@ -239,7 +239,11 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 
 		for (String dns : mDnslist ) {
-			builder.addDnsServer(dns);
+			try {
+				builder.addDnsServer(dns);
+			} catch (IllegalArgumentException iae) {
+				OpenVPN.logError(R.string.dns_add_error, dns,iae.getLocalizedMessage());
+			}
 		}
 		
 		

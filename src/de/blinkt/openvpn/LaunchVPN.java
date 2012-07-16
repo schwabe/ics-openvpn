@@ -340,7 +340,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 	}
 
 	void launchVPN () {
-		int vpnok = mSelectedProfile.checkProfile();
+		int vpnok = mSelectedProfile.checkProfile(this);
 		if(vpnok!= R.string.no_error_found) {
 			showConfigErrorDialog(vpnok);
 			return;
@@ -398,8 +398,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			OpenVPN.logMessage(0, "", getString(R.string.building_configration));
 
 			Intent startVPN = mSelectedProfile.prepareIntent(getBaseContext());
-
-			startService(startVPN);
+			if(startVPN!=null)
+				startService(startVPN);
 			finish();
 
 		}

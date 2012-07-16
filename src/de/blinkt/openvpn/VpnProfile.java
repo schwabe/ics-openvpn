@@ -447,7 +447,8 @@ public class VpnProfile implements  Serializable{
 		Intent intent = new Intent(context,OpenVpnService.class);
 
 		if(mAuthenticationType == VpnProfile.TYPE_KEYSTORE || mAuthenticationType == VpnProfile.TYPE_USERPASS_KEYSTORE) {
-			saveCertificates(context);
+			if(!saveCertificates(context))
+				return null;
 		}
 
 		intent.putExtra(prefix + ".ARGV" , buildOpenvpnArgv(context.getCacheDir()));
@@ -468,7 +469,7 @@ public class VpnProfile implements  Serializable{
 		return intent;
 	}
 
-	private void saveCertificates(Context context) {
+	private boolean saveCertificates(Context context) {
 		PrivateKey privateKey = null;
 		X509Certificate[] cachain=null;
 		try {
@@ -521,7 +522,7 @@ public class VpnProfile implements  Serializable{
 
 			}
 			
-			return;
+			return true;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
@@ -533,7 +534,7 @@ public class VpnProfile implements  Serializable{
 		} catch (KeyChainException e) {
 			OpenVPN.logMessage(0,"",context.getString(R.string.keychain_access));
 		}
-
+		return false;
 	}
 	private Certificate getCacertFromFile() throws FileNotFoundException, CertificateException {
 		 CertificateFactory certFact = CertificateFactory.getInstance("X.509");
@@ -550,7 +551,7 @@ public class VpnProfile implements  Serializable{
 
 
 	//! Return an error if somethign is wrong
-	int checkProfile() {
+	int checkProfile(Context context) {
 		if(mAuthenticationType==TYPE_KEYSTORE || mAuthenticationType==TYPE_USERPASS_KEYSTORE) {
 			if(mAlias==null) 
 				return R.string.no_keystore_cert_selected;
@@ -690,9 +691,6 @@ public class VpnProfile implements  Serializable{
 	public PrivateKey getKeystoreKey() {
 		return mPrivateKey;
 	}
-
-
-
 }
 
 

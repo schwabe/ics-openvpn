@@ -47,7 +47,8 @@ public class FileSelectionFragment extends ListFragment {
 	private File selectedFile;
 	private HashMap<String, Integer> lastPositions = new HashMap<String, Integer>();
 	private String mStartPath;
-	private Button importFile;
+	private Button mImportFile;
+	private Button mClearButton;
 	private boolean mHideImport=false;
 
 	
@@ -71,11 +72,22 @@ public class FileSelectionFragment extends ListFragment {
 			}
 		});
 
+		mClearButton = (Button) v.findViewById(R.id.fdClear);
+		mClearButton.setEnabled(false);
+		mClearButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
+		mClearButton.setVisibility(View.GONE);
 		
-		importFile = (Button) v.findViewById(R.id.importfile);
-		importFile.setEnabled(false);
-		importFile.setOnClickListener(new OnClickListener() {
-
+		
+		mImportFile = (Button) v.findViewById(R.id.importfile);
+		mImportFile.setEnabled(false);
+		mImportFile.setOnClickListener(new OnClickListener() {
+			
 			@Override
 			public void onClick(View v) {
 				((FileSelect) getActivity()).importFile(selectedFile.getPath());
@@ -83,8 +95,9 @@ public class FileSelectionFragment extends ListFragment {
 		});
 
 		if(mHideImport== true) {
-			importFile.setVisibility(View.GONE);
+			mImportFile.setVisibility(View.GONE);
 		}
+
 
 		
 		return v;
@@ -224,7 +237,7 @@ public class FileSelectionFragment extends ListFragment {
 
 		if (file.isDirectory()) {
 			selectButton.setEnabled(false);
-			importFile.setEnabled(false);
+			mImportFile.setEnabled(false);
 			
 			if (file.canRead()) {
 				lastPositions.put(currentPath, position);
@@ -238,7 +251,7 @@ public class FileSelectionFragment extends ListFragment {
 			selectedFile = file;
 			v.setSelected(true);
 			selectButton.setEnabled(true);
-			importFile.setEnabled(true);
+			mImportFile.setEnabled(true);
 		}
 	}
 

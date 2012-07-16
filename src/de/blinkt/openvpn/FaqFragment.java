@@ -3,6 +3,7 @@ package de.blinkt.openvpn;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,15 @@ public class FaqFragment extends Fragment  {
     	TextView bImages = (TextView) v.findViewById(R.id.brokenimages);
     	bImages.setText(Html.fromHtml(getActivity().getString(R.string.broken_images_faq)));
     	bImages.setMovementMethod(LinkMovementMethod.getInstance());
+    	
+    	TextView quickstart = (TextView) v.findViewById(R.id.faq_howto);
+    	Spanned htmltext = Html.fromHtml(getActivity().getString(R.string.faq_howto));
+    	quickstart.setText(htmltext);
+    	quickstart.setMovementMethod(LinkMovementMethod.getInstance());
+		
 		return v;
+		
+		
 
     }
 

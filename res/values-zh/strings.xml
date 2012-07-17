@@ -14,7 +14,7 @@
   limitations under the License.
 --><resources>
 
-  <string name="app">OpenVPN 为 Android</string>
+  <string name="app">OpenVPN Android版</string>
   <string name="address">服务器地址：</string>
   <string name="port">服务器端口：</string>
   <string name="defaultserver">openvpn.uni-paderborn.de</string>
@@ -25,21 +25,21 @@
   <string name="cancel">取消</string>
   <string name="no_data">无数据</string>
   <string name="useLZO">LZO 压缩</string>
-  <string name="client_no_certificate">无证书</string>
+  <string name="client_no_certificate">无客户端证书</string>
   <string name="client_certificate_title">客户端证书</string>
   <string name="client_key_title">客户端证书密钥</string>
   <string name="client_pkcs12_title">PKCS12 文件</string>
   <string name="ca_title">CA 证书</string>
-  <string name="no_certificate">未选择任何项</string>
+  <string name="no_certificate">无证书</string>
   <string name="openvpn">OpenVPN</string>
-  <string name="file_dialog">文件对话框</string>
+  <string name="file_dialog">文件</string>
   <string name="lzo">LZO</string>
   <string name="openssl">OpenSSL</string>
   <string name="about">关于</string>
-  <string name="about_summary">关于 OpenVPN 为 Android</string>
+  <string name="about_summary">关于 OpenVPN Android版</string>
   <string name="vpn_list_summary">已配置的 VPN 列表</string>
-  <string name="vpn_list_title">你所有 VPN</string>
-  <string name="vpn_type">类型</string>
+  <string name="vpn_list_title">VPN列表</string>
+  <string name="vpn_type">VPN类型</string>
   <string name="pkcs12pwquery">PKCS12 密码</string>
   <string name="file_select">选择</string>
   <string name="file_nothing_selected">未选择任何项</string>
@@ -79,17 +79,17 @@
   <string name="enter_tlscn_title">远程主机名 （CN）</string>
   <string name="tls_key_auth">启用 TLS 密钥认证</string>
   <string name="tls_auth_file">TLS 认证文件</string>
-  <string name="use_pull">Pull设置</string>
+  <string name="use_pull">使用pull</string>
   <string name="dns">DNS</string>
   <string name="override_dns">覆盖服务器 DNS 设置</string>
   <string name="dns_override_summary">使用自定义 DNS 服务器</string>
-  <string name="searchdomain">searchDomain</string>
+  <string name="searchdomain">搜索域</string>
   <string name="dns1_summary">要使用的 DNS 服务器</string>
   <string name="dns_server">DNS 服务器</string>
   <string name="secondary_dns_message">如果无法达到主 DNS 服务器，要使用辅助 DNS 服务器。</string>
   <string name="backup_dns">备用 DNS 服务器</string>
-  <string name="ignored_pushed_routes">忽略推路由</string>
-  <string name="ignore_routes_summary">忽略服务器推的路由</string>
+  <string name="ignored_pushed_routes">忽略推送路由</string>
+  <string name="ignore_routes_summary">忽略服务器推送的路由</string>
   <string name="use_default_title">使用默认路由</string>
   <string name="custom_route_message">输入自定义路由。输入 CIDR 格式地址。</string>
   <string name="custom_routes_title">自定义路由</string>
@@ -137,7 +137,7 @@
   <string name="importing_config">从 %1$s 中导入配置文件</string>
   <string name="import_done">读取配置文件完成</string>
   <string name="nobind_summary">不关联到本地地址和端口</string>
-  <string name="import_experimental">请注意，设置导入是一个实验性功能。如果发生错误，或你有什么建议请给我发电子邮件。</string>
+  <string name="import_experimental">请注意，设置导入是一个实验性功能。如果发生错误，或有任何建议请给我发电子邮件。</string>
   <string name="import_configuration_file">导入配置文件</string>
   <string name="faq_security_title">安全注意</string>
   <string name="import_vpn">导入</string>
@@ -169,7 +169,7 @@
   <string name="ipdns">IP 和 DNS</string>
   <string name="basic">基本</string>
   <string name="routing">路由</string>
-  <string name="obscure">少用的 OpenVPN 设定。</string>
+  <string name="obscure">旧的 OpenVPN 设定</string>
   <string name="advanced">高级</string>
 
 </resources>

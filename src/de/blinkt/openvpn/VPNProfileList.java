@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,10 +16,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 public class VPNProfileList extends ListFragment {
+	
+	final static int RESULT_VPN_DELETED = Activity.RESULT_FIRST_USER;
+	
 	class VPNArrayAdapter extends ArrayAdapter<VpnProfile> {
 
 		public VPNArrayAdapter(Context context, int resource,
@@ -46,13 +47,8 @@ public class VPNProfileList extends ListFragment {
 				
 				@Override
 				public void onClick(View v) {
-				    if (mActionMode != null) {
-			            return;
-			        }
-
-			        // Start the CAB using the ActionMode.Callback defined above
-			        mActionMode = getActivity().startActionMode(mActionModeCallback);
 					mEditProfile =(VpnProfile) getListAdapter().getItem(position);
+					editVPN(mEditProfile);
 					
 				}
 			});
@@ -75,8 +71,6 @@ public class VPNProfileList extends ListFragment {
 
 
 	private ArrayAdapter<VpnProfile> mArrayadapter;
-
-	protected Object mActionMode;
 
 	protected VpnProfile mEditProfile=null;
 
@@ -130,37 +124,23 @@ public class VPNProfileList extends ListFragment {
 			onAddProfileClicked();
 			return true;
 		} else if (itemId == MENU_IMPORT_PROFILE) {
-			Intent intent = new Intent(getActivity(),FileSelect.class);
-			intent.putExtra(FileSelect.NO_INLINE_SELECTION, true);
-			intent.putExtra(FileSelect.WINDOW_TITLE, R.string.import_configuration_file);
-			startActivityForResult(intent, SELECT_PROFILE);
+			startImportConfig();
 			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void askProfileRemoval() {
-		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-		dialog.setTitle("Confirm deletion");
-		dialog.setMessage(getString(R.string.remove_vpn_query, mEditProfile.mName));
-
-		dialog.setPositiveButton(android.R.string.yes,
-				new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				removeProfile(mEditProfile);
-			}
-
-		});
-		dialog.setNegativeButton(android.R.string.no,null);
-		dialog.create().show();
+	private void startImportConfig() {
+		Intent intent = new Intent(getActivity(),FileSelect.class);
+		intent.putExtra(FileSelect.NO_INLINE_SELECTION, true);
+		intent.putExtra(FileSelect.WINDOW_TITLE, R.string.import_configuration_file);
+		startActivityForResult(intent, SELECT_PROFILE);
 	}
 
-	protected void removeProfile(VpnProfile profile) {
-		mArrayadapter.remove(profile);
-		getPM().removeProfile(getActivity(),profile);
-	}
+
+
+
 
 	private void onAddProfileClicked() {
 		Context context = getActivity();
@@ -215,6 +195,12 @@ public class VPNProfileList extends ListFragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		
+		if(resultCode == RESULT_VPN_DELETED){
+			if(mArrayadapter != null && mEditProfile !=null)
+				mArrayadapter.remove(mEditProfile);
+		}
+		
 		if(resultCode != Activity.RESULT_OK)
 			return;
 		
@@ -260,45 +246,5 @@ public class VPNProfileList extends ListFragment {
 		
 		getActivity().finish();
 	}
-
-	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
-		@Override
-		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-			MenuInflater inflater = mode.getMenuInflater();
-			inflater.inflate(R.menu.vpn_context, menu);
-			return true;
-		}
-
-		@Override
-		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-			return false;// Return false if nothing is done
-		}
-
-		@Override
-		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-		      switch (item.getItemId()) {
-	            case R.id.remove_vpn:
-	                askProfileRemoval();
-	                mode.finish(); // Action picked, so close the CAB
-	                return true;
-/*	            case R.id.connect_vpn:
-	            	startVPN(mEditProfile);
-	            	mode.finish();
-	            	return true; */ 
-	            case R.id.edit_vpn:
-	            	editVPN(mEditProfile);
-	            	mode.finish();
-	            	return true;
-	            default:
-	                return false;
-	        }		
-		}
-
-		@Override
-		public void onDestroyActionMode(ActionMode mode) {
-	        mActionMode = null;
-	        getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
-		}
-	};
 
 }

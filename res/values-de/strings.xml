@@ -178,5 +178,20 @@
     <string name="keepstatus">Traffic Statistiken</string>
     <string name="mobile_info">Modell %1$s (%2$s) %3$s, Android API %4$d</string>
     <string name="error_rsa_sign">Fehler beim Zugriff auf den Android Keystore %1$s: %2$s</string>
-    
+    <string name="ipdns">IP und DNS</string>
+     <string name="basic">Basic</string>
+    <string name="routing">Routing</string>
+    <string name="obscure">Oskure OpenVPN Einstellungen, die normalerweise nicht benötigt werden.</string>
+    <string name="advanced">Erweitert</string>
+    <string name="export_config_title">ICS Openvpn Konfiguration</string>
+    <string name="warn_no_dns">Es werden keine DNS Server gesetzt. Möglicherweise wird die DNS Auflösung nicht funktionieren. Ziehen Sie in Betracht die Option \"eigene DNS Server\" zu benutzen.</string>
+    <string name="dns_add_error">Konnte den DNS Server \"%1$s\" nicht hinzufügen, da das System ihn zurückweist mit %2$s</string>
+    <string name="faq_howto">&lt;p>Benutzen Sie eine funktionierende Konfiguration (getestest auf einem Computer oder bereit gestellt von Ihrer Organisation/Ihrem Provider)&lt;/p>&lt;p>Falls Sie nur eine einzelne Datei benötigen können Sie diese sich als Anhang zuschicken. Falls Ihre Openvpn Konfiguration aus meheren Dateien besteht müssen Sie alle Dateien auf die SD Karte kopieren.&lt;/p>&lt;p>Klicken Sie auf den Email Anhang im Android Mail Program bzw. benutzen Sie das Ordner Symbol in der VPN Liste und wählen Sie die .ovpn bzw. .conf Konfigurationsdatei aus.&lt;/p>&lt;p>Falls der Import fehlende Dateien anmerkt, kopieren Sie diese auf die SD Karte und starten den Import erneut.&lt;/p>&lt;p>Benutzen Sie anschließend das Speichern Symbol um das VPN zur VPN Liste hinzuzufügen&lt;/p>&lt;p>Tippen Sie den Namen des VPNs an um das VPN zu starten&lt;/p>&lt;p>Achten Sie auf Fehler und Warnungen im Verbindungslog.&lt;/p> </string>
+    <string name="faq_howto_title">Schnellstart</string>
+    <string name="setting_loadtun_summary">Versuche das tun.ko Kernel Modul zu laden. Benötigt root.</string>
+    <string name="setting_loadtun">Lade tun Modul</string>
+    <!--  Der Author hat die deutsch Übersetzung ganz allein verbrochen :) -->
+    <string name="translationby"></string>
+	<string name="faq_system_dialogs_title">Warnung beim Verbinden und Benachrichtigungston</string>
+    <string name="tun_error_helpful">Auf manchen ROM Version sind eventuell die Zugriffsrechte von /dev/tun falsch oder das tun Kernel Modul fehlt. Für Cyanogenmod 9 ROMs mit root gibt einen provisorischen Fix in den generellen Einstellungen.</string>
 </resources>

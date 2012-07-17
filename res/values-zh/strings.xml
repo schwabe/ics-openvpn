@@ -17,8 +17,6 @@
   <string name="app">OpenVPN Android版</string>
   <string name="address">服务器地址：</string>
   <string name="port">服务器端口：</string>
-  <string name="defaultserver">openvpn.uni-paderborn.de</string>
-  <string name="defaultport">1194</string>
   <string name="location">地点</string>
   <string name="cant_read_folder">无法读取文件夹！</string>
   <string name="select">选择</string>
@@ -31,12 +29,8 @@
   <string name="client_pkcs12_title">PKCS12 文件</string>
   <string name="ca_title">CA 证书</string>
   <string name="no_certificate">无证书</string>
-  <string name="openvpn">OpenVPN</string>
-  <string name="file_dialog">文件</string>
-  <string name="lzo">LZO</string>
-  <string name="openssl">OpenSSL</string>
-  <string name="about">关于</string>
-  <string name="about_summary">关于 OpenVPN Android版</string>
+<string name="about">关于</string>
+  <string name="about_summary">关于  Android版</string>
   <string name="vpn_list_summary">已配置的 VPN 列表</string>
   <string name="vpn_list_title">VPN列表</string>
   <string name="vpn_type">VPN类型</string>
@@ -137,7 +131,6 @@
   <string name="importing_config">从 %1$s 中导入配置文件</string>
   <string name="import_done">读取配置文件完成</string>
   <string name="nobind_summary">不关联到本地地址和端口</string>
-  <string name="import_experimental">请注意，设置导入是一个实验性功能。如果发生错误，或有任何建议请给我发电子邮件。</string>
   <string name="import_configuration_file">导入配置文件</string>
   <string name="faq_security_title">安全注意</string>
   <string name="import_vpn">导入</string>

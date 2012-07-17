@@ -350,21 +350,14 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		// Check if we want to fix /dev/tun
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
 		boolean usecm9fix = prefs.getBoolean("useCM9Fix", false);
+		boolean loadTunModule = prefs.getBoolean("loadTunModule", false);
 
 		if(usecm9fix && !mCmfixed ) {
-			ProcessBuilder pb = new ProcessBuilder(new String[] {"su","-c","chown system /dev/tun"});
-			try {
-				Process p = pb.start();
-				int ret = p.waitFor();
-				if(ret ==0)
-					mCmfixed=true;
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			execeuteSUcmd("chown system /dev/tun");
 		}
 
+		if(loadTunModule)
+			execeuteSUcmd("modprobe tun");
 
 
 		if (intent != null) {
@@ -381,6 +374,20 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
 		}
 
+	}
+
+	private void execeuteSUcmd(String command) {
+		ProcessBuilder pb = new ProcessBuilder(new String[] {"su","-c",command});
+		try {
+			Process p = pb.start();
+			int ret = p.waitFor();
+			if(ret ==0)
+				mCmfixed=true;
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private class startOpenVpnThread extends Thread {

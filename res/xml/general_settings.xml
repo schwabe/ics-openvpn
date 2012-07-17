@@ -7,11 +7,6 @@
         android:summary="@string/netchange_summary"
         android:title="@string/netchange" />
     <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="useCM9Fix"
-        android:summary="@string/owner_fix_summary"
-        android:title="@string/owner_fix" />
-    <CheckBoxPreference
         android:defaultValue="true"
         android:key="showlogwindow"
         android:summary="@string/show_log_summary"
@@ -21,5 +16,18 @@
         android:key="statusafterconnect"
         android:summary="@string/keppstatus_summary"
         android:title="@string/keepstatus" />
+
+    <PreferenceCategory android:title="Device specifics Hacks" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="useCM9Fix"
+            android:summary="@string/owner_fix_summary"
+            android:title="@string/owner_fix" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="loadTunModule"
+            android:summary="@string/setting_loadtun_summary"
+            android:title="@string/setting_loadtun" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

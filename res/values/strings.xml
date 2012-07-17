@@ -237,4 +237,6 @@
     <string name="dns_add_error">Could not add DNS Server \"%1$s\", rejected by the system: %2$s</string>
     <string name="faq_howto">&lt;p>Get a working config (tested on your computer or download from your provider/organisation)&lt;/p>&lt;p>If it is a single file no with no extra pem/pks12 files you can email the file yourself and open the attachment. If you have multiple files put them on your sd card.&lt;/p>&lt;p>Click on the email attachment/Use the folder icon in the vpn list to import the config file&lt;/p>&lt;p>If there are errors about missing files put the missing files on your sd card.&lt;/p>&lt;p>Click on the save symbol to add the imported VPN to your VPN list&lt;/p>&lt;p>Connect the VPN by clicking on the name of the VPN&lt;/p>&lt;p>If there are error or warnings in the log try to understand the warnings/error and try to fix them&lt;/p> </string>
     <string name="faq_howto_title">Quick Start</string>
+    <string name="setting_loadtun_summary">Try to load the tun.ko kernel module before trying to connect. Needs rooted devices.</string>
+    <string name="setting_loadtun">Load tun module</string>
 </resources>

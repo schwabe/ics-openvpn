@@ -352,12 +352,13 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		boolean usecm9fix = prefs.getBoolean("useCM9Fix", false);
 		boolean loadTunModule = prefs.getBoolean("loadTunModule", false);
 
+		if(loadTunModule)
+			execeuteSUcmd("modprobe tun");
+
 		if(usecm9fix && !mCmfixed ) {
 			execeuteSUcmd("chown system /dev/tun");
 		}
 
-		if(loadTunModule)
-			execeuteSUcmd("modprobe tun");
 
 
 		if (intent != null) {

@@ -163,7 +163,6 @@
     <string name="import_done">설정 파일 읽기 완료</string>
     <string name="nobind_summary">로컬 주소와 포트로 바인드 안하기</string>
     <string name="no_bind">로컬 바인딩 안함</string>
-    <string name="import_experimental">Please not that the config importer is an experimental feature. If it does not work for you or you think that things could be done better please drop me a email.</string>
     <string name="import_configuration_file">설정 파일 가져오기</string>
     <string name="faq_security_title">보안 고려 사항</string>
     <string name="faq_security">"OpenVPN은 보안에 민감하기 때문에 보안에 관련된 부분을 알고가는것이 현명하다. SD카드의 있는 데이터는 기본적으로 보안이 취약하다. 모든 앱이 읽을 수 있기 때문이다 (예로 이 프로그램 또한 SD카드의 읽기 권한이 필요없다). 본앱의 데이터는 본앱만이 읽을 수 있다. cacert/cert/key를 파일 탐색기의 가져오기 옵션을 사용하면 데이터는 VPN 프로파일 내에 저장된다. VPN 프로파일은 본앱만이 접근할 수 있다. (잊지말고 SD카드에 있는 것을 삭제해라). 접근은 본앱만이 가능하더라도 데이터는 암호화가 되어있지 않다. 루팅을 비롯한 다른 방법을 악용하여 데이터를 빼낼수있다. 암호 또한 일반 텍스트로 저장되어 있다. pkcs12 파일은 안드로이드 keystore에 보관할것을 강력하게 추천한다."</string>
@@ -203,7 +202,6 @@
     <string name="keepstatus">트래픽 통계 보기</string>
     <string name="mobile_info">Running on %1$s (%2$s) %3$s, Android API %4$d</string>
     <string name="error_rsa_sign">Error signing with Android keystore key %1$s: %2$s</string>
-    <string name="keychain_jellybeans">Reading from Android Keystore does not work in Jelly Beans (Google change the way private keys are returned)</string>
     <string name="faq_system_dialogs">시스템에서는 VPN연결 경고를 통해 당신에게 본앱이 모든 트래픽을 가로챌수있다는 점을 알리게 되어 있는데 이는 VPNService API가 남용하는것을 막기 위함이다.\nVPN 연결 알림 (키 아이콘) 또한 안드로이드 시스템에서 부과하는 부분이며 이는 VPN연결을 알리는 신호이다. 어떤 버전에서는 소리를 알림으로 사용하는 경우도 있다.\n안드로이드는 이같은 방법을 당신의 안전을 위해 도입하였으며 사용은 필수적이다. (어떤 버전에서는 유감스럽게도 소리 알림 또한 포함된다.)</string>
     <string name="faq_system_dialogs_title">연결 경고와 알림 소리</string>
     <string name="translationby">한국어 번역 (주)기가드 안규태&lt;ktdann@gmail.com></string>

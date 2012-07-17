@@ -17,8 +17,6 @@
     <string name="app">OpenVPN para Android</string>
     <string name="address">Dirección del servidor:</string>
     <string name="port">Puerto del servidor:</string>
-    <string name="defaultserver">openvpn.uni-paderborn.de</string>
-    <string name="defaultport">1194</string>
     <string name="location">Ubicación</string>
     <string name="cant_read_folder">¡carpeta no se puede leer!</string>
     <string name="select">Seleccionar</string>
@@ -33,9 +31,6 @@
     <string name="no_certificate">No hay nada seleccionado</string>
     <string name="copyright_guicode">El código fuente y seguimiento de problemas están disponibles a http://code.google.com/p/ics-openvpn/ </string>
     <string name="copyright_others">Este programa utiliza los siguientes componentes. Ver la fuente para detalles completos sobre las licencias.</string>
-    <string name="openvpn">OpenVPN</string>
-    <string name="lzo">LZO</string>
-    <string name="openssl">OpenSSL</string>
     <string name="about">Acerca de</string>
     <string name="about_summary">Acerca de OpenVPN para Android</string>
     <string name="vpn_list_summary">Lista de todas las VPNs configuradas</string>
@@ -163,7 +158,6 @@
     <string name="import_done">Lectura del archivo de configuración terminada.</string>
     <string name="nobind_summary">No enlazar a la dirección local y el puerto</string>
     <string name="no_bind">Sin enlazamiento local</string>
-    <string name="import_experimental">Por favor, ten en cuenta que importador de configuración es una característica experimental. Si no funciona para ti o crees que se podría mejorar, mándame un correo.</string>
     <string name="import_configuration_file">Importar archivo de configuración</string>
     <string name="faq_security_title">Seguridad</string>
     <string name="import_vpn">Importar</string>

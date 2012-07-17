@@ -46,7 +46,6 @@
     <string name="import_done">Konfigurationsdatei lesen abgeschlossen.</string>
     <string name="nobind_summary">Binde nicht an lokalen Port und IP Adresse</string>
     <string name="no_bind">Kein lokales Binden</string>
-    <string name="import_experimental">Bitte beachten Sie, dass der Konfigurations Importer ein experimentelles Feature ist. Sollte dieser für Sie nicht funktionieren oder sollten Sie Verbeserungsvorschläge haben, schreiben Sie mir bitte eine Email.</string>
     <string name="import_configuration_file">Importiere Konfigurationsdatei</string>
     <string name="import_vpn">Importieren</string>
     <string name="speed_waiting">Warte auf OpenVPN Status Nachricht…</string>

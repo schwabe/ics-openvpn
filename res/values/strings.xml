@@ -179,7 +179,6 @@
     <string name="import_done">Done reading config file.</string>
     <string name="nobind_summary">Do not bind to local address and port</string>
     <string name="no_bind">No local binding</string>
-    <string name="import_experimental">Please not that the config importer is an experimental feature. If it does not work for you or you think that things could be done better please drop me a email.</string>
     <string name="import_configuration_file">Import configuration file</string>
     <string name="faq_security_title">Security considerations</string>
     <string name="faq_security">"As OpenVPN is security sensitive a few notes about security are sensible. All data on the sdcard is inherently insecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the VPN profile. The VPN profiles are only accessible by this application. (Do not forget to delete the copies on the sd card afterwards). Even though accessible only by this application the data is still unencrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."</string>
@@ -219,7 +218,6 @@
     <string name="keepstatus">Show Traffic Statistics</string>
     <string name="mobile_info">Running on %1$s (%2$s) %3$s, Android API %4$d</string>
     <string name="error_rsa_sign">Error signing with Android keystore key %1$s: %2$s</string>
-    <string name="keychain_jellybeans">Reading from Android Keystore does not work in Jelly Beans (Google change the way private keys are returned)</string>
     <string name="faq_system_dialogs">The VPN connection warning telling you that this app can intercept all traffic is imposed by the system to prevent abuse of the VPNService API.\nThe VPN connection notification (The key symbol) is also imposed by the Android system to signal an ongoing VPN connection. On some images this notification plays a sound.\nAndroid introduced these system dialog are for your own safety and made sure that they cannot be circumenvented. (On some images this unfortunely includes a notifciation sound)</string>
     <string name="faq_system_dialogs_title">Connection warning and notification sound</string>
     <string name="translationby"></string> 

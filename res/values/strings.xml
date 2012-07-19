@@ -237,4 +237,5 @@
     <string name="faq_howto_title">Quick Start</string>
     <string name="setting_loadtun_summary">Try to load the tun.ko kernel module before trying to connect. Needs rooted devices.</string>
     <string name="setting_loadtun">Load tun module</string>
+    <string name="importpkcs12fromconfig">Import PKCS12 from configuration into Android Keystore</string>
 </resources>

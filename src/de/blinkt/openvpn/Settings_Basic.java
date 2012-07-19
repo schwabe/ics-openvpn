@@ -300,11 +300,11 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 
 			},
-			new String[] {"RSA", "DSA"}, // List of acceptable key types. null for any
+			new String[] {"RSA"}, // List of acceptable key types. null for any
 			null,                        // issuer, null for any
-			"internal.example.com",      // host name of server requesting the cert, null if unavailable
-			443,                         // port of server requesting the cert, -1 if unavailable
-			null);                       // alias to preselect, null if unavailable
+			mProfile.mServerName,      // host name of server requesting the cert, null if unavailable
+			-1,                         // port of server requesting the cert, -1 if unavailable
+			mProfile.mAlias);                       // alias to preselect, null if unavailable
 		} catch (ActivityNotFoundException anf) {
 			Builder ab = new AlertDialog.Builder(getActivity());
 			ab.setTitle(R.string.broken_image_cert_title);

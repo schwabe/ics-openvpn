@@ -153,7 +153,6 @@
     <string name="trying_to_read">Intentando leer el archivo: %1$s</string>
     <string name="import_could_not_open">No se encontró el archivo %1$s que se menciona en el archivo de configuración importado</string>
     <string name="importing_config">Importando archivo de configuración de la fuente %1$s</string>
-    <string name="import_pkcs12_to_keystore">Tu archivo de configuración especificó un archivo PKCS12. Selecciónalo en la configuración básica de la VPN convertida para importarlo.</string>
     <string name="import_warning_custom_options">Tu configuración tiene algunas opciones de configuración que no se pudieron analizar. Estas opciones se han añadido como opciones de configuración personalizada. La configuración personalizada se muestra abajo:</string>
     <string name="import_done">Lectura del archivo de configuración terminada.</string>
     <string name="nobind_summary">No enlazar a la dirección local y el puerto</string>

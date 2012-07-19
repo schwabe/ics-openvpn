@@ -41,7 +41,6 @@
     <string name="trying_to_read">Versuche Datei %1$s zu lesen</string>
     <string name="import_could_not_open">Konnte die Datei %1$s, die in  der importierten Konfiguration angeben war, nicht finden</string>
     <string name="importing_config">Importiere Konfigurationsdatei aus %1$s</string>
-    <string name="import_pkcs12_to_keystore">Ihre Konfigurationsdatei spezifiziert eine PKCS12 Datei. Bitte importieren Sie diese Datei indem Sie Select in den Grundeinstellungen auswählen.</string>
     <string name="import_warning_custom_options">Ihre Konfigurations hat spezielle Optionen, die nicht direkt auf Einstellungen übertragen werden konnten. Diese Eistellungen wurden als spezielle Optionen gespeichert:</string>
     <string name="import_done">Konfigurationsdatei lesen abgeschlossen.</string>
     <string name="nobind_summary">Binde nicht an lokalen Port und IP Adresse</string>
@@ -194,4 +193,6 @@
     <string name="translationby"></string>
 	<string name="faq_system_dialogs_title">Warnung beim Verbinden und Benachrichtigungston</string>
     <string name="tun_error_helpful">Auf manchen ROM Version sind eventuell die Zugriffsrechte von /dev/tun falsch oder das tun Kernel Modul fehlt. Für Cyanogenmod 9 ROMs mit root gibt einen provisorischen Fix in den generellen Einstellungen.</string>
+    <string name="importpkcs12fromconfig">Importiere die PKCS12 Datei, die in der Konfiguration angegeben ist, in den Android Keystore</string>
+    
 </resources>

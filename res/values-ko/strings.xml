@@ -158,7 +158,6 @@
     <string name="trying_to_read">Trying to read file: %1$s</string>
     <string name="import_could_not_open">Could not find file %1$s mentioned in the imported config file</string>
     <string name="importing_config">Importing config file from source %1$s</string>
-    <string name="import_pkcs12_to_keystore">Your config file specified a pkcs12 file. Please import the file by selecting select in the Basic Settings configuration of the converted VPN</string>
     <string name="import_warning_custom_options">Your configuration had a few configuration options that could be parsed. These options were added as custom configuration options. The custom configuration is displayed below:</string>
     <string name="import_done">설정 파일 읽기 완료</string>
     <string name="nobind_summary">로컬 주소와 포트로 바인드 안하기</string>

@@ -28,7 +28,8 @@
         <TextView
             style="@style/item"
             android:text="@string/profilename"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            />
 
         <EditText
             android:id="@+id/profilename"

@@ -122,7 +122,7 @@
     <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP. Mode given by OpenVPN is \"%3$s\".</string>
     <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
     <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>
-    <string name="keychain_access">Cannot access the Android Keychain Certificates. If you restored a backup of the app/app settings re-select the certificate to recreate the permission to access the certificate.</string>
+
     <string name="version_info">%1$s %2$s</string>
     <string name="send_logfile">로그 파일 보내기</string>
     <string name="send">Send</string>

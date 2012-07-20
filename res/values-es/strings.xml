@@ -117,7 +117,7 @@
     <string name="ip_not_cidr">Se ha obtenido información de interfaz %1$s, y %2$s, suponiendo que la segunda dirección es la dirección del nodo remoto. Utilizando máscara de red /32 para IP local. Modo relatado por OpenVPN es \\"%3$s\\".</string>
     <string name="route_not_cidr">No se puede entender %1$s, y %2$s como ruta IP con máscara de red CIDR, utilizando /32 como la máscara de red.</string>
     <string name="route_not_netip">Ruta %1$s/%2$s corregida en %3$s/%2$s</string>
-    <string name="keychain_access">Cannot access the Android Keychain Certificates. If you restored a backup of the app/app settings re-select the certificate to recreate the permission to access the certificate.</string>
+    
     <string name="version_info">%1$s %2$s</string>
     <string name="send_logfile">Enviar el archivo de registro</string>
     <string name="send">Enviar</string>

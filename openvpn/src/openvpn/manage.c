@@ -92,9 +92,8 @@ man_help ()
   msg (M_CLIENT, "                         where action is reply string.");
   msg (M_CLIENT, "net                    : (Windows only) Show network info and routing table.");
   msg (M_CLIENT, "password type p        : Enter password p for a queried OpenVPN password.");
-#if MANAGEMENT_QUERY_REMOTE
   msg (M_CLIENT, "remote type [host port] : Override remote directive, type=ACCEPT|MOD|SKIP.");
-#endif
+  msg (M_CLIENT, "proxy type [host port flags] : Enter dynamic proxy server info.");
   msg (M_CLIENT, "pid                    : Show process ID of the current OpenVPN process.");
 #ifdef ENABLE_PKCS11
   msg (M_CLIENT, "pkcs11-id-count        : Get number of available PKCS#11 identities.");
@@ -123,10 +122,6 @@ man_help ()
   msg (M_CLIENT, "username type u        : Enter username u for a queried OpenVPN username.");
   msg (M_CLIENT, "verb [n]               : Set log verbosity level to n, or show if n is absent.");
   msg (M_CLIENT, "version                : Show current version number.");
-#if HTTP_PROXY_FALLBACK
-  msg (M_CLIENT, "http-proxy-fallback <server> <port> [flags] : Enter dynamic HTTP proxy fallback info.");
-  msg (M_CLIENT, "http-proxy-fallback-disable : Disable HTTP proxy fallback.");
-#endif
   msg (M_CLIENT, "END");
 }
 
@@ -1073,32 +1068,20 @@ man_need (struct management *man, const char **p, const int n, unsigned int flag
   return true;
 }
 
-#if HTTP_PROXY_FALLBACK
-
 static void
-man_http_proxy_fallback (struct management *man, const char *server, const char *port, const char *flags)
+man_proxy (struct management *man, const char **p)
 {
-  if (man->persist.callback.http_proxy_fallback_cmd)
+  if (man->persist.callback.proxy_cmd)
     {
-      const bool status = (*man->persist.callback.http_proxy_fallback_cmd)(man->persist.callback.arg, server, port, flags);
+      const bool status = (*man->persist.callback.proxy_cmd)(man->persist.callback.arg, p);
       if (status)
-	{
-	  msg (M_CLIENT, "SUCCESS: proxy-fallback command succeeded");
-	}
+        msg (M_CLIENT, "SUCCESS: proxy command succeeded");
       else
-	{
-	  msg (M_CLIENT, "ERROR: proxy-fallback command failed");
-	}
+        msg (M_CLIENT, "ERROR: proxy command failed");
     }
   else
-    {
-      msg (M_CLIENT, "ERROR: The proxy-fallback command is not supported by the current daemon mode");
-    }
+    msg (M_CLIENT, "ERROR: The proxy command is not supported by the current daemon mode");
 }
-
-#endif
-
-#if MANAGEMENT_QUERY_REMOTE
 
 static void
 man_remote (struct management *man, const char **p)
@@ -1120,8 +1103,6 @@ man_remote (struct management *man, const char **p)
       msg (M_CLIENT, "ERROR: The remote command is not supported by the current daemon mode");
     }
 }
-
-#endif
 
 static void
 man_dispatch_command (struct management *man, struct status_output *so, const char **p, const int nparms)
@@ -1341,24 +1322,16 @@ man_dispatch_command (struct management *man, struct status_output *so, const ch
 	man_pkcs11_id_get (man, atoi(p[1]));
     }
 #endif
-#if HTTP_PROXY_FALLBACK
-  else if (streq (p[0], "http-proxy-fallback"))
+  else if (streq (p[0], "proxy"))
     {
-      if (man_need (man, p, 2, MN_AT_LEAST))
-	man_http_proxy_fallback (man, p[1], p[2], p[3]);
+      if (man_need (man, p, 1, MN_AT_LEAST))
+        man_proxy (man, p);
     }
-  else if (streq (p[0], "http-proxy-fallback-disable"))
-    {
-      man_http_proxy_fallback (man, NULL, NULL, NULL);
-    }
-#endif
-#if MANAGEMENT_QUERY_REMOTE
   else if (streq (p[0], "remote"))
     {
       if (man_need (man, p, 1, MN_AT_LEAST))
 	man_remote (man, p);
     }
-#endif
 #if 1
   else if (streq (p[0], "test"))
     {
@@ -1602,7 +1575,7 @@ man_listen (struct management *man)
        * Listen for connection
        */
       if (listen (man->connection.sd_top, 1))
-	msg (M_SOCKERR, "MANAGEMENT: listen() failed");
+	msg (M_ERR, "MANAGEMENT: listen() failed");
 
       /*
        * Set misc socket properties
@@ -1790,7 +1763,7 @@ man_process_command (struct management *man, const char *line)
 static bool
 man_io_error (struct management *man, const char *prefix)
 {
-  const int err = openvpn_errno_socket ();
+  const int err = openvpn_errno ();
 
   if (!ignore_sys_error (err))
     {
@@ -3440,19 +3413,6 @@ log_history_ref (const struct log_history *h, const int index)
   else
     return NULL;
 }
-
-#if HTTP_PROXY_FALLBACK
-
-void
-management_http_proxy_fallback_notify (struct management *man, const char *type, const char *remote_ip_hint)
-{
-  if (remote_ip_hint)
-    msg (M_CLIENT, ">PROXY:%s,%s", type, remote_ip_hint);
-  else
-    msg (M_CLIENT, ">PROXY:%s", type);
-}
-
-#endif /* HTTP_PROXY_FALLBACK */
 
 #else
 static void dummy(void) {}

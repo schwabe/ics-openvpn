@@ -111,102 +111,99 @@ update_options_ce_post (struct options *options)
 #endif
 }
 
-#if HTTP_PROXY_FALLBACK
-
+#ifdef ENABLE_MANAGEMENT
 static bool
-ce_http_proxy_fallback_defined(const struct context *c)
+management_callback_proxy_cmd (void *arg, const char **p)
 {
-  const struct connection_list *l = c->options.connection_list;
-  if (l && l->current == 0)
-    {
-      int i;
-      for (i = 0; i < l->len; ++i)
-	{
-	  const struct connection_entry *ce = l->array[i];
-	  if (ce->flags & CE_HTTP_PROXY_FALLBACK)
-	    return true;
-	}
-    }
-  return false;
-}
-
-static void
-ce_http_proxy_fallback_start(struct context *c, const char *remote_ip_hint)
-{
-  const struct connection_list *l = c->options.connection_list;
-  if (l)
-    {
-      int i;
-      for (i = 0; i < l->len; ++i)
-	{
-	  struct connection_entry *ce = l->array[i];
-	  if (ce->flags & CE_HTTP_PROXY_FALLBACK)
-	    {
-	      ce->http_proxy_options = NULL;
-	      ce->ce_http_proxy_fallback_timestamp = 0;
-	      if (!remote_ip_hint)
-		remote_ip_hint = ce->remote;
-	    }
-	}
-    }
-
-  if (management)
-    management_http_proxy_fallback_notify(management, "NEED_LATER", remote_ip_hint);
-}
-
-static bool
-ce_http_proxy_fallback (struct context *c, volatile const struct connection_entry *ce)
-{
-  const int proxy_info_expire = 120; /* seconds before proxy info expires */
+  struct context *c = arg;
+  struct connection_entry *ce = &c->options.ce;
+  struct gc_arena *gc = &c->c2.gc;
+  bool ret = false;
 
   update_time();
-  if (management)
+  if (streq (p[1], "NONE"))
+    ret = true;
+  else if (p[2] && p[3])
     {
-      if (!ce->ce_http_proxy_fallback_timestamp)
-	{
-	  management_http_proxy_fallback_notify(management, "NEED_NOW", NULL);
-	  while (!ce->ce_http_proxy_fallback_timestamp)
-	    {
-	      management_event_loop_n_seconds (management, 1);
-	      if (IS_SIG (c))
-		return false;
-	    }
-	}
-      return (now < ce->ce_http_proxy_fallback_timestamp + proxy_info_expire && ce->http_proxy_options);
-    }
-  return false;
-}
+      const int port = atoi(p[3]);
+      if (!legal_ipv4_port (port))
+        {
+          msg (M_WARN, "Bad proxy port number: %s", p[3]);
+          return false;
+        }
 
-static bool
-management_callback_http_proxy_fallback_cmd (void *arg, const char *server, const char *port, const char *flags)
-{
-  struct context *c = (struct context *) arg;
-  const struct connection_list *l = c->options.connection_list;
-  int ret = false;
-  struct http_proxy_options *ho = parse_http_proxy_fallback (c, server, port, flags, M_WARN);
-
-  update_time();
-  if (l)
-    {
-      int i;
-      for (i = 0; i < l->len; ++i)
-	{
-	  struct connection_entry *ce = l->array[i];
-	  if (ce->flags & CE_HTTP_PROXY_FALLBACK)
-	    {
-	      ce->http_proxy_options = ho;
-	      ce->ce_http_proxy_fallback_timestamp = now;
-	      ret = true;
-	    }
-	}
+      if (streq (p[1], "HTTP"))
+        {
+#ifndef ENABLE_HTTP_PROXY
+          msg (M_WARN, "HTTP proxy support is not available");
+#else
+          struct http_proxy_options *ho;
+          if (ce->proto != PROTO_TCPv4 && ce->proto != PROTO_TCPv4_CLIENT &&
+              ce->proto != PROTO_TCPv6 && ce->proto != PROTO_TCPv6_CLIENT)
+            {
+              msg (M_WARN, "HTTP proxy support only works for TCP based connections");
+              return false;
+            }
+          ho = init_http_proxy_options_once (ce->http_proxy_options, gc);
+          ho->server = string_alloc (p[2], gc);
+          ho->port = port;
+          ho->retry = true;
+          ho->auth_retry = (p[4] && streq (p[4], "nct") ? PAR_NCT : PAR_ALL);
+          ce->http_proxy_options = ho;
+          ret = true;
+#endif
+        }
+      else if (streq (p[1], "SOCKS"))
+        {
+#ifndef ENABLE_SOCKS
+          msg (M_WARN, "SOCKS proxy support is not available");
+#else
+          ce->socks_proxy_server = string_alloc (p[2], gc);
+          ce->socks_proxy_port = port;
+          ret = true;
+#endif
+        }
     }
-  
+  else
+    msg (M_WARN, "Bad proxy command");
+
+  ce->flags &= ~CE_MAN_QUERY_PROXY;
+
   return ret;
 }
 
-#endif
+static bool
+ce_management_query_proxy (struct context *c)
+{
+  const struct connection_list *l = c->options.connection_list;
+  struct connection_entry *ce = &c->options.ce;
+  struct gc_arena gc;
+  bool ret = true;
 
-#if MANAGEMENT_QUERY_REMOTE
+  update_time();
+  if (management)
+    {
+      gc = gc_new ();
+      struct buffer out = alloc_buf_gc (256, &gc);
+      buf_printf (&out, ">PROXY:%u,%s,%s", (l ? l->current : 0) + 1,
+                  (proto_is_udp (ce->proto) ? "UDP" : "TCP"), np (ce->remote));
+      management_notify_generic (management, BSTR (&out));
+      ce->flags |= CE_MAN_QUERY_PROXY;
+      while (ce->flags & CE_MAN_QUERY_PROXY)
+        {
+          management_event_loop_n_seconds (management, 1);
+          if (IS_SIG (c))
+            {
+              ret = false;
+              break;
+            }
+        }
+      gc_free (&gc);
+    }
+
+  return ret;
+}
+
 
 static bool
 management_callback_remote_cmd (void *arg, const char **p)
@@ -287,8 +284,7 @@ ce_management_query_remote (struct context *c, const char *remote_ip_hint)
   gc_free (&gc);
   return ret;
 }
-
-#endif
+#endif /* ENABLE_MANAGEMENT */
 
 /*
  * Initialize and possibly randomize connection list.
@@ -296,7 +292,6 @@ ce_management_query_remote (struct context *c, const char *remote_ip_hint)
 static void
 init_connection_list (struct context *c)
 {
-#ifdef ENABLE_CONNECTION
   struct connection_list *l = c->options.connection_list;
   if (l)
     {
@@ -317,32 +312,7 @@ init_connection_list (struct context *c)
 	    }
 	}
     }
-#endif
 }
-
-#if 0 /* fixme -- disable for production */
-static void
-show_connection_list (const struct connection_list *l)
-{
-  int i;
-  dmsg (M_INFO, "CONNECTION_LIST len=%d current=%d",
-	l->len, l->current);
-  for (i = 0; i < l->len; ++i)
-    {
-      dmsg (M_INFO, "[%d] %s:%d proto=%s http_proxy=%d",
-	    i,
-	    l->array[i]->remote,
-	    l->array[i]->remote_port,
-	    proto2ascii(l->array[i]->proto, true),
-	    BOOL_CAST(l->array[i]->http_proxy_options));
-    }
-}
-#else
-static inline void
-show_connection_list (const struct connection_list *l)
-{
-}
-#endif
 
 /*
  * Increment to next connection entry
@@ -350,7 +320,6 @@ show_connection_list (const struct connection_list *l)
 static void
 next_connection_entry (struct context *c)
 {
-#ifdef ENABLE_CONNECTION
   struct connection_list *l = c->options.connection_list;
   if (l)
     {
@@ -379,7 +348,6 @@ next_connection_entry (struct context *c)
 
 	    if (l->current == 0)
 	      newcycle = true;
-	    show_connection_list(l);
 	  }
 
 	ce = l->array[l->current];
@@ -387,44 +355,33 @@ next_connection_entry (struct context *c)
 	if (c->options.remote_ip_hint && !l->n_cycles)
 	  remote_ip_hint = c->options.remote_ip_hint;
 
-#if HTTP_PROXY_FALLBACK
-	if (newcycle && ce_http_proxy_fallback_defined(c))
-	  ce_http_proxy_fallback_start(c, remote_ip_hint);
-
-	if (ce->flags & CE_HTTP_PROXY_FALLBACK)
-	  {
-	    ce_defined = ce_http_proxy_fallback(c, ce);
-	    if (IS_SIG (c))
-	      break;
-	  }
-#endif
-
 	if (ce->flags & CE_DISABLED)
 	  ce_defined = false;
 
 	c->options.ce = *ce;
-
-#if MANAGEMENT_QUERY_REMOTE
+#ifdef ENABLE_MANAGEMENT
 	if (ce_defined && management && management_query_remote_enabled(management))
 	  {
 	    /* allow management interface to override connection entry details */
 	    ce_defined = ce_management_query_remote(c, remote_ip_hint);
 	    if (IS_SIG (c))
 	      break;
-	  } else
+	  }
+        else
 #endif
 	if (remote_ip_hint)
 	  c->options.ce.remote = remote_ip_hint;
 
-#if 0 /* fixme -- disable for production, this code simulates a network where proxy fallback is the only method to reach the OpenVPN server */
-	if (!(c->options.ce.flags & CE_HTTP_PROXY_FALLBACK))
-	  {
-	    c->options.ce.remote = "10.10.0.1"; /* use an unreachable address here */
-	  }
+#ifdef ENABLE_MANAGEMENT
+        if (ce_defined && management && management_query_proxy_enabled (management))
+          {
+            ce_defined = ce_management_query_proxy (c);
+            if (IS_SIG (c))
+              break;
+          }
 #endif
       } while (!ce_defined);
     }
-#endif
   update_options_ce_post (&c->options);
 }
 
@@ -498,11 +455,10 @@ init_proxy_dowork (struct context *c)
   uninit_proxy_dowork (c);
 
 #ifdef ENABLE_HTTP_PROXY
-  if (c->options.ce.http_proxy_options || c->options.auto_proxy_info)
+  if (c->options.ce.http_proxy_options)
     {
       /* Possible HTTP proxy user/pass input */
-      c->c1.http_proxy = http_proxy_new (c->options.ce.http_proxy_options,
-					 c->options.auto_proxy_info);
+      c->c1.http_proxy = http_proxy_new (c->options.ce.http_proxy_options);
       if (c->c1.http_proxy)
 	{
 	  did_http = true;
@@ -512,13 +468,12 @@ init_proxy_dowork (struct context *c)
 #endif
 
 #ifdef ENABLE_SOCKS
-  if (!did_http && (c->options.ce.socks_proxy_server || c->options.auto_proxy_info))
+  if (!did_http && c->options.ce.socks_proxy_server)
     {
       c->c1.socks_proxy = socks_proxy_new (c->options.ce.socks_proxy_server,
 					   c->options.ce.socks_proxy_port,
 					   c->options.ce.socks_proxy_authfile,
-					   c->options.ce.socks_proxy_retry,
-					   c->options.auto_proxy_info);
+					   c->options.ce.socks_proxy_retry);
       if (c->c1.socks_proxy)
 	{
 	  c->c1.socks_proxy_owned = true;
@@ -1251,10 +1206,7 @@ do_init_route_ipv6_list (const struct options *options,
 {
   const char *gw = NULL;
   int dev = dev_type_enum (options->dev, options->dev_type);
-  int metric = 0;
-
-  if (dev != DEV_TYPE_TUN )
-    msg( M_WARN, "IPv6 routes on TAP devices are going to fail on some platforms (need gateway spec)" );	/* TODO-GERT */
+  int metric = -1;		/* no metric set */
 
   gw = options->ifconfig_ipv6_remote;		/* default GW = remote end */
 #if 0					/* not yet done for IPv6 - TODO!*/
@@ -2065,13 +2017,11 @@ do_init_crypto_static (struct context *c, const unsigned int flags)
 	unsigned int rkf_flags = RKF_MUST_SUCCEED;
 	const char *rkf_file = options->shared_secret_file;
 
-#if ENABLE_INLINE_FILES
 	if (options->shared_secret_file_inline)
 	  {
 	    rkf_file = options->shared_secret_file_inline;
 	    rkf_flags |= RKF_INLINE;
 	  }
-#endif
 	read_key_file (&key2, rkf_file, rkf_flags);
       }
 
@@ -2165,13 +2115,11 @@ do_init_crypto_tls_c1 (struct context *c)
 	  unsigned int flags = 0;
 	  const char *file = options->tls_auth_file;
 
-#if ENABLE_INLINE_FILES
 	  if (options->tls_auth_file_inline)
 	    {
 	      flags |= GHK_INLINE;
 	      file = options->tls_auth_file_inline;
 	    }
-#endif
 	  get_tls_handshake_key (&c->c1.ks.key_type,
 				 &c->c1.ks.tls_auth_key,
 				 file,
@@ -2473,12 +2421,6 @@ static void
 do_option_warnings (struct context *c)
 {
   const struct options *o = &c->options;
-
-#if 1 /* JYFIXME -- port warning */
-  if (!o->ce.port_option_used && (o->ce.local_port == OPENVPN_PORT && o->ce.remote_port == OPENVPN_PORT))
-    msg (M_WARN, "IMPORTANT: OpenVPN's default port number is now %d, based on an official port number assignment by IANA.  OpenVPN 2.0-beta16 and earlier used 5000 as the default port.",
-	 OPENVPN_PORT);
-#endif
 
   if (o->ping_send_timeout && !o->ping_rec_timeout)
     msg (M_WARN, "WARNING: --ping should normally be used with --ping-restart or --ping-exit");
@@ -3197,12 +3139,8 @@ init_management_callback_p2p (struct context *c)
       cb.arg = c;
       cb.status = management_callback_status_p2p;
       cb.show_net = management_show_net_callback;
-#if HTTP_PROXY_FALLBACK
-      cb.http_proxy_fallback_cmd = management_callback_http_proxy_fallback_cmd;
-#endif
-#if MANAGEMENT_QUERY_REMOTE
+      cb.proxy_cmd = management_callback_proxy_cmd;
       cb.remote_cmd = management_callback_remote_cmd;
-#endif
       management_set_callback (management, &cb);
     }
 #endif

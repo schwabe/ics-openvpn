@@ -22,12 +22,14 @@ public class FileSelect extends Activity {
 	public static final String START_DATA = "START_DATA";
 	public static final String WINDOW_TITLE = "WINDOW_TILE";
 	public static final String NO_INLINE_SELECTION = "de.blinkt.openvpn.NO_INLINE_SELECTION";
+	public static final String SHOW_CLEAR_BUTTON = "de.blinkt.openvpn.SHOW_CLEAR_BUTTON";
 	private FileSelectionFragment mFSFragment;
 	private InlineFileTab mInlineFragment;
 	private String mData;
 	private Tab inlineFileTab;
 	private Tab fileExplorerTab;
 	private boolean mNoInline;
+	private boolean mShowClear;
 	
 		
 	public void onCreate(Bundle savedInstanceState)
@@ -47,6 +49,7 @@ public class FileSelect extends Activity {
 			setTitle(title);
 		
 		mNoInline = getIntent().getBooleanExtra(NO_INLINE_SELECTION, false);
+		mShowClear = getIntent().getBooleanExtra(SHOW_CLEAR_BUTTON, false);
 		
 		ActionBar bar = getActionBar();
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); 
@@ -66,6 +69,13 @@ public class FileSelect extends Activity {
 		}
 
 		
+	}
+	
+	protected boolean showClear() {
+		if(mData == null || mData.equals(""))
+			return false;
+		else
+			return mShowClear;
 	}
 
 	protected class MyTabsListener<T extends Fragment> implements ActionBar.TabListener
@@ -139,7 +149,7 @@ public class FileSelect extends Activity {
 	}
 
 	public String getSelectPath() {
-		if(mData.startsWith(VpnProfile.INLINE_TAG))
+		if(!mData.startsWith(VpnProfile.INLINE_TAG))
 			return mData;
 		else
 			return "/mnt/sdcard";
@@ -150,6 +160,14 @@ public class FileSelect extends Activity {
 			return mData.substring(VpnProfile.INLINE_TAG.length());
 		else
 			return "";
+	}
+	
+	public void clearData() {
+		Intent intent = new Intent();
+		intent.putExtra(RESULT_DATA, (String)null);
+		setResult(Activity.RESULT_OK,intent);
+		finish();
+		
 	}
 
 	public void saveInlineData(String string) {

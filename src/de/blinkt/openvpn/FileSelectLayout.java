@@ -21,6 +21,7 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 	private Button mSelectButton;
 	private boolean mNoInline;
 	private String mTitle;
+	private boolean mShowClear;
 
 	public FileSelectLayout( Context context,AttributeSet attrset) {
 		super(context,attrset);
@@ -51,6 +52,8 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 		startFC.putExtra(FileSelect.WINDOW_TITLE,mTitle);
 		if(mNoInline)
 			startFC.putExtra(FileSelect.NO_INLINE_SELECTION, true);
+		if(mShowClear)
+			startFC.putExtra(FileSelect.SHOW_CLEAR_BUTTON, true);
 		mFragment.startActivityForResult(startFC,mTaskId);
 	}
 
@@ -81,5 +84,8 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 		mNoInline=true;
 	}
 
+	public void setShowClear() {
+		mShowClear=true;
+	}
 	
 }

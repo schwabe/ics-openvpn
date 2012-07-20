@@ -73,15 +73,17 @@ public class FileSelectionFragment extends ListFragment {
 		});
 
 		mClearButton = (Button) v.findViewById(R.id.fdClear);
-		mClearButton.setEnabled(false);
 		mClearButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
+				((FileSelect) getActivity()).clearData();
 			}
 		});
-		mClearButton.setVisibility(View.GONE);
+		if(!((FileSelect) getActivity()).showClear()) {
+			mClearButton.setVisibility(View.GONE);
+			mClearButton.setEnabled(false);
+		}
 		
 		
 		mImportFile = (Button) v.findViewById(R.id.importfile);
@@ -108,7 +110,7 @@ public class FileSelectionFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		
 		mStartPath = ((FileSelect) getActivity()).getSelectPath();
-					getDir(mStartPath);
+		getDir(mStartPath);
 	}
 	
 	@Override

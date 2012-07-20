@@ -127,6 +127,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		addFileSelectLayout(mClientKey);
 		addFileSelectLayout(mpkcs12);
 		mpkcs12.setNoline();
+		mCaCert.setShowClear();
 
 	
 		mType.setOnItemSelectedListener(this);

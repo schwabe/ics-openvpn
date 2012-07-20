@@ -450,7 +450,7 @@
 #define PACKAGE_NAME "OpenVPN"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "OpenVPN 2.3_alpha1"
+#define PACKAGE_STRING "OpenVPN 2.3_alpha3"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "openvpn"

@@ -135,10 +135,6 @@ static const char usage_message[] =
   "                    between connection retries (default=%d).\n"
   "--connect-timeout n : For --proto tcp-client, connection timeout (in seconds).\n"
   "--connect-retry-max n : Maximum connection attempt retries, default infinite.\n"
-#ifdef GENERAL_PROXY_SUPPORT
-  "--auto-proxy    : Try to sense proxy settings (or lack thereof) automatically.\n"
-  "--show-proxy-settings : Show sensed proxy settings.\n"
-#endif
 #ifdef ENABLE_HTTP_PROXY
   "--http-proxy s p [up] [auth] : Connect to remote host\n"
   "                  through an HTTP proxy at address s and port p.\n"
@@ -385,9 +381,8 @@ static const char usage_message[] =
   "                      ip/port rather than listen as a TCP server.\n"
   "--management-query-passwords : Query management channel for private key\n"
   "                  and auth-user-pass passwords.\n"
-#if MANAGEMENT_QUERY_REMOTE
+  "--management-query-proxy : Query management channel for proxy information.\n"
   "--management-query-remote : Query management channel for --remote directive.\n"
-#endif
   "--management-hold : Start " PACKAGE_NAME " in a hibernating state, until a client\n"
   "                    of the management interface explicitly starts it.\n"
   "--management-signal : Issue SIGUSR1 when management disconnect event occurs.\n"
@@ -862,7 +857,8 @@ init_options (struct options *o, const bool init_gc)
   o->pkcs11_pin_cache_period = -1;
 #endif			/* ENABLE_PKCS11 */
 
-#ifdef ENABLE_TMPDIR
+/* tmp is only used in P2MP server context */
+#if P2MP_SERVER
   /* Set default --tmp-dir */
 #ifdef WIN32
   /* On Windows, find temp dir via enviroment variables */
@@ -874,7 +870,7 @@ init_options (struct options *o, const bool init_gc)
           o->tmp_dir = "/tmp";
   }
 #endif /* WIN32 */
-#endif /* ENABLE_TMPDIR */
+#endif /* P2MP_SERVER */
 }
 
 void
@@ -934,7 +930,6 @@ setenv_settings (struct env_set *es, const struct options *o)
   setenv_unsigned (es, "daemon_start_time", time(NULL));
   setenv_int (es, "daemon_pid", platform_getpid());
 
-#ifdef ENABLE_CONNECTION
   if (o->connection_list)
     {
       int i;
@@ -942,7 +937,6 @@ setenv_settings (struct env_set *es, const struct options *o)
 	setenv_connection_entry (es, o->connection_list->array[i], i+1);
     }
   else
-#endif
     setenv_connection_entry (es, &o->ce, 1);
 }
 
@@ -1391,7 +1385,6 @@ show_connection_entries (const struct options *o)
 {
   msg (D_SHOW_PARMS, "Connection profiles [default]:");
   show_connection_entry (&o->ce);
-#ifdef ENABLE_CONNECTION
  if (o->connection_list)
    {
      const struct connection_list *l = o->connection_list;
@@ -1402,7 +1395,6 @@ show_connection_entries (const struct options *o)
 	 show_connection_entry (l->array[i]);
        }
    }
-#endif
   msg (D_SHOW_PARMS, "Connection profiles END");
 }
 
@@ -1674,24 +1666,7 @@ show_settings (const struct options *o)
 #undef SHOW_INT
 #undef SHOW_BOOL
 
-#ifdef ENABLE_HTTP_PROXY
-
-struct http_proxy_options *
-init_http_options_if_undefined (struct options *o)
-{
-  if (!o->ce.http_proxy_options)
-    {
-      ALLOC_OBJ_CLEAR_GC (o->ce.http_proxy_options, struct http_proxy_options, &o->gc);
-      /* http proxy defaults */
-      o->ce.http_proxy_options->timeout = 5;
-      o->ce.http_proxy_options->http_version = "1.0";
-    }
-  return o->ce.http_proxy_options;
-}
-
-#endif
-
-#if HTTP_PROXY_FALLBACK
+#if HTTP_PROXY_OVERRIDE
 
 static struct http_proxy_options *
 parse_http_proxy_override (const char *server,
@@ -1728,68 +1703,6 @@ parse_http_proxy_override (const char *server,
     return NULL;
 }
 
-struct http_proxy_options *
-parse_http_proxy_fallback (struct context *c,
-			   const char *server,
-			   const char *port,
-			   const char *flags,
-			   const int msglevel)
-{
-  struct gc_arena gc = gc_new ();
-  struct http_proxy_options *ret = NULL;
-  struct http_proxy_options *hp = parse_http_proxy_override(server, port, flags, msglevel, &gc);
-  if (hp)
-    {
-      struct hpo_store *hpos = c->options.hpo_store;
-      if (!hpos)
-	{
-	  ALLOC_OBJ_CLEAR_GC (hpos, struct hpo_store, &c->options.gc);
-	  c->options.hpo_store = hpos;
-	}
-      hpos->hpo = *hp;
-      hpos->hpo.server = hpos->server;
-      strncpynt(hpos->server, hp->server, sizeof(hpos->server));
-      ret = &hpos->hpo;
-    }
-  gc_free (&gc);
-  return ret;
-}
-
-static void
-http_proxy_warn(const char *name)
-{
-  msg (M_WARN, "Note: option %s ignored because no TCP-based connection profiles are defined", name);
-}
-
-void
-options_postprocess_http_proxy_fallback (struct options *o)
-{
-  struct connection_list *l = o->connection_list;
-  if (l)
-    {
-      int i;
-      for (i = 0; i < l->len; ++i)
-	{
-	  struct connection_entry *ce = l->array[i];
-	  if (ce->proto == PROTO_TCPv4_CLIENT || ce->proto == PROTO_TCPv4)
-	    {
-	      if (l->len < CONNECTION_LIST_SIZE)
-		{
-		  struct connection_entry *newce;
-		  ALLOC_OBJ_GC (newce, struct connection_entry, &o->gc);
-		  *newce = *ce;
-		  newce->flags |= CE_HTTP_PROXY_FALLBACK;
-		  newce->http_proxy_options = NULL;
-		  newce->ce_http_proxy_fallback_timestamp = 0;
-		  l->array[l->len++] = newce;
-		}
-	      return;
-	    }
-	}
-    }
-  http_proxy_warn("http-proxy-fallback");
-}
-
 void
 options_postprocess_http_proxy_override (struct options *o)
 {
@@ -1819,15 +1732,11 @@ options_postprocess_http_proxy_override (struct options *o)
 	    }
 	}
       else
-	{
-	  http_proxy_warn("http-proxy-override");
-	}
+        msg (M_WARN, "Note: option http-proxy-override ignored because no TCP-based connection profiles are defined");
     }
 }
 
 #endif
-
-#if ENABLE_CONNECTION
 
 static struct connection_list *
 alloc_connection_list_if_undef (struct options *options)
@@ -1876,8 +1785,6 @@ alloc_remote_entry (struct options *options, const int msglevel)
   l->array[l->len++] = e;
   return e;
 }
-
-#endif
 
 void
 connection_entry_load_re (struct connection_entry *ce, const struct remote_entry *re)
@@ -2025,6 +1932,15 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
   if ((options->management_client_user || options->management_client_group)
       && !(options->management_flags & MF_UNIX_SOCK))
     msg (M_USAGE, "--management-client-(user|group) can only be used on unix domain sockets");
+#ifdef MANAGMENT_EXTERNAL_KEY
+  if(options->management_flags & MF_EXTERNAL_KEY) {
+	  if(options->priv_key_file)
+		  msg (M_USAGE, "--key and --management-external-key are mutually exclusive");
+	  /* set a filename for nicer output in the logs */
+	  options->priv_key_file = "EXTERNAL_PRIVATE_KEY";
+  }
+#endif
+
 #endif
 
   /*
@@ -2064,8 +1980,8 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
     msg (M_USAGE, "--remote MUST be used in TCP Client mode");
 
 #ifdef ENABLE_HTTP_PROXY
-  if ((ce->http_proxy_options || options->auto_proxy_info) && ce->proto != PROTO_TCPv4_CLIENT)
-    msg (M_USAGE, "--http-proxy or --auto-proxy MUST be used in TCP Client mode (i.e. --proto tcp-client)");
+  if ((ce->http_proxy_options) && ce->proto != PROTO_TCPv4_CLIENT)
+    msg (M_USAGE, "--http-proxy MUST be used in TCP Client mode (i.e. --proto tcp-client)");
 #endif
 
 #if defined(ENABLE_HTTP_PROXY) && defined(ENABLE_SOCKS)
@@ -2117,10 +2033,8 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
       if (ce->socks_proxy_server)
 	msg (M_USAGE, "--socks-proxy cannot be used with --mode server");
 #endif
-#ifdef ENABLE_CONNECTION
       if (options->connection_list)
 	msg (M_USAGE, "<connection> cannot be used with --mode server");
-#endif
 #if 0
       if (options->tun_ipv6)
 	msg (M_USAGE, "--tun-ipv6 cannot be used with --mode server");
@@ -2521,7 +2435,6 @@ options_postprocess_mutate_invariant (struct options *options)
 static void
 options_postprocess_verify (const struct options *o)
 {
-#ifdef ENABLE_CONNECTION
   if (o->connection_list)
     {
       int i;
@@ -2529,7 +2442,6 @@ options_postprocess_verify (const struct options *o)
 	options_postprocess_verify_ce (o, o->connection_list->array[i]);
     }
   else
-#endif
     options_postprocess_verify_ce (o, &o->ce);
 }
 
@@ -2546,7 +2458,6 @@ options_postprocess_mutate (struct options *o)
 
   options_postprocess_mutate_invariant (o);
 
-#ifdef ENABLE_CONNECTION
   if (o->remote_list && !o->connection_list)
     {
       /*
@@ -2585,15 +2496,12 @@ options_postprocess_mutate (struct options *o)
       for (i = 0; i < o->connection_list->len; ++i)
 	options_postprocess_mutate_ce (o, o->connection_list->array[i]);
 
-#if HTTP_PROXY_FALLBACK
+#if HTTP_PROXY_OVERRIDE
       if (o->http_proxy_override)
 	options_postprocess_http_proxy_override(o);
-      else if (o->http_proxy_fallback)
-	options_postprocess_http_proxy_fallback(o);
 #endif
     }
   else
-#endif
     options_postprocess_mutate_ce (o, &o->ce);  
 
 #if P2MP
@@ -2730,9 +2638,8 @@ options_postprocess_filechecks (struct options *options)
   errs |= check_file_access (CHKACC_FILE|CHKACC_INLINE, options->cert_file, R_OK, "--cert");
   errs |= check_file_access (CHKACC_FILE|CHKACC_INLINE, options->extra_certs_file, R_OK,
                              "--extra-certs");
-
 #ifdef MANAGMENT_EXTERNAL_KEY
-	if(!(options->management_flags & MF_EXTERNAL_KEY))
+  if(!options->management_flags & MF_EXTERNAL_KEY)
 #endif
   errs |= check_file_access (CHKACC_FILE|CHKACC_INLINE, options->priv_key_file, R_OK,
                              "--key");
@@ -2767,15 +2674,11 @@ options_postprocess_filechecks (struct options *options)
                              options->management_user_pass, R_OK,
                              "--management user/password file");
 #endif /* ENABLE_MANAGEMENT */
-#if ENABLE_TMPDIR
+#if P2MP
   errs |= check_file_access (CHKACC_FILE|CHKACC_ACPTSTDIN,
                              options->auth_user_pass_file, R_OK,
                              "--auth-user-pass");
-
-  errs |= check_file_access (CHKACC_FILE, options->tmp_dir,
-                             R_OK|W_OK|X_OK, "Temporary directory (--tmp-dir)");
-
-#endif /* ENABLE_TMPDIR */
+#endif /* P2MP */
 
   /* ** System related ** */
   errs |= check_file_access (CHKACC_FILE, options->chroot_dir,
@@ -2795,6 +2698,8 @@ options_postprocess_filechecks (struct options *options)
 #if P2MP_SERVER
   errs |= check_file_access (CHKACC_FILE, options->client_config_dir,
                              R_OK|X_OK, "--client-config-dir");
+  errs |= check_file_access (CHKACC_FILE, options->tmp_dir,
+                             R_OK|W_OK|X_OK, "Temporary directory (--tmp-dir)");
 
   /* ** Script hooks that accept an optionally quoted and/or escaped executable path, ** */
   /* ** optionally followed by arguments ** */
@@ -3478,6 +3383,9 @@ usage_version (void)
 #ifdef CONFIGURE_DEFINES
   msg (M_INFO|M_NOPREFIX, "Compile time defines: %s", CONFIGURE_DEFINES);
 #endif
+#ifdef CONFIGURE_SPECIAL_BUILD
+  msg (M_INFO|M_NOPREFIX, "special build: %s", CONFIGURE_SPECIAL_BUILD);
+#endif
 #ifdef CONFIGURE_GIT_REVISION
   msg (M_INFO|M_NOPREFIX, "git revision: %s", CONFIGURE_GIT_REVISION);
 #endif
@@ -3691,8 +3599,6 @@ bypass_doubledash (char **p)
     *p += 2;
 }
 
-#if ENABLE_INLINE_FILES
-
 struct in_src {
 # define IS_TYPE_FP 1
 # define IS_TYPE_BUF 2
@@ -3785,8 +3691,6 @@ check_inline_file_via_buf (struct buffer *multiline, char *p[], struct gc_arena 
   return check_inline_file (&is, p, gc);
 }
 
-#endif
-
 static void
 add_option (struct options *options,
 	    char *p[],
@@ -3832,9 +3736,7 @@ read_config_file (struct options *options,
 	      if (parse_line (line, p, SIZE (p), file, line_num, msglevel, &options->gc))
 		{
 		  bypass_doubledash (&p[0]);
-#if ENABLE_INLINE_FILES
 		  check_inline_file_via_fp (fp, p, &options->gc);
-#endif
 		  add_option (options, p, file, line_num, level, msglevel, permission_mask, option_types_found, es);
 		}
 	    }
@@ -3877,9 +3779,7 @@ read_config_string (const char *prefix,
       if (parse_line (line, p, SIZE (p), prefix, line_num, msglevel, &options->gc))
 	{
 	  bypass_doubledash (&p[0]);
-#if ENABLE_INLINE_FILES
 	  check_inline_file_via_buf (&multiline, p, &options->gc);
-#endif
 	  add_option (options, p, NULL, line_num, 0, msglevel, permission_mask, option_types_found, es);
 	}
       CLEAR (p);
@@ -3897,33 +3797,6 @@ parse_argv (struct options *options,
 	    struct env_set *es)
 {
   int i, j;
-
-#ifdef WIN32
-  /*
-   * Windows replaces Unicode characters in argv[] that are not present
-   * in the current codepage with '?'. Get the wide char command line and
-   * convert it to UTF-8 ourselves.
-   */
-  int wargc;
-  WCHAR **wargv;
-  char **uargv;
-
-  wargv = CommandLineToArgvW (GetCommandLineW (), &wargc);
-  if (wargv == NULL || wargc != argc)
-    usage ();
-
-  uargv = gc_malloc (wargc * sizeof (*uargv), false, &options->gc);
-
-  for (i = 0; i < wargc; i++)
-    {
-      int n = WideCharToMultiByte (CP_UTF8, 0, wargv[i], -1, NULL, 0, NULL, NULL);
-      uargv[i] = gc_malloc (n, false, &options->gc);
-      WideCharToMultiByte (CP_UTF8, 0, wargv[i], -1, uargv[i], n, NULL, NULL);
-    }
-
-  LocalFree (wargv);
-  argv = uargv;
-#endif
 
   /* usage message */
   if (argc <= 1)
@@ -4240,13 +4113,17 @@ add_option (struct options *options,
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->management_flags |= MF_QUERY_PASSWORDS;
     }
-#if MANAGEMENT_QUERY_REMOTE
   else if (streq (p[0], "management-query-remote"))
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->management_flags |= MF_QUERY_REMOTE;
     }
-#endif
+  else if (streq (p[0], "management-query-proxy"))
+    {
+      VERIFY_PERMISSION (OPT_P_GENERAL);
+      options->management_flags |= MF_QUERY_PROXY;
+      options->force_connection_list = true;
+    }
   else if (streq (p[0], "management-hold"))
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
@@ -4278,7 +4155,6 @@ add_option (struct options *options,
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->management_flags |= MF_EXTERNAL_KEY;
-      options->priv_key_file = "EXTERNAL_PRIVATE_KEY";
     }
 #endif
 #ifdef MANAGEMENT_DEF_AUTH
@@ -4450,7 +4326,6 @@ add_option (struct options *options,
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->remote_random = true;
     }
-#if ENABLE_CONNECTION
   else if (streq (p[0], "connection") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
@@ -4476,21 +4351,12 @@ add_option (struct options *options,
 	  uninit_options (&sub);
 	}
     }
-#endif
-#ifdef ENABLE_CONNECTION
   else if (streq (p[0], "remote-ip-hint") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->remote_ip_hint = p[1];
     }
-#endif
-#if HTTP_PROXY_FALLBACK
-  else if (streq (p[0], "http-proxy-fallback"))
-    {
-      VERIFY_PERMISSION (OPT_P_GENERAL);
-      options->http_proxy_fallback = true;
-      options->force_connection_list = true;
-    }
+#if HTTP_PROXY_OVERRIDE
   else if (streq (p[0], "http-proxy-override") && p[1] && p[2])
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
@@ -4517,7 +4383,6 @@ add_option (struct options *options,
 	      goto err;
 	    }
 	  re.remote_port = port;
-      options->ce.port_option_used = true;
 	  if (p[3])
 	    {
 	      const int proto = ascii2proto (p[3]);
@@ -4529,7 +4394,6 @@ add_option (struct options *options,
 	      re.proto = proto;
 	    }
 	}
-#ifdef ENABLE_CONNECTION
       if (permission_mask & OPT_P_GENERAL)
 	{
 	  struct remote_entry *e = alloc_remote_entry (options, msglevel);
@@ -4538,7 +4402,6 @@ add_option (struct options *options,
 	  *e = re;
 	}
       else if (permission_mask & OPT_P_CONNECTION)
-#endif
 	{
 	  connection_entry_load_re (&options->ce, &re);
 	}
@@ -4930,7 +4793,6 @@ add_option (struct options *options,
 	  msg (msglevel, "Bad port number: %s", p[1]);
 	  goto err;
 	}
-      options->ce.port_option_used = true;
       options->ce.local_port = options->ce.remote_port = port;
     }
   else if (streq (p[0], "lport") && p[1])
@@ -4945,7 +4807,6 @@ add_option (struct options *options,
 	  goto err;
 	}
       options->ce.local_port_defined = true;
-      options->ce.port_option_used = true;
       options->ce.local_port = port;
     }
   else if (streq (p[0], "rport") && p[1])
@@ -4959,7 +4820,6 @@ add_option (struct options *options,
 	  msg (msglevel, "Bad remote port number: %s", p[1]);
 	  goto err;
 	}
-      options->ce.port_option_used = true;
       options->ce.remote_port = port;
     }
   else if (streq (p[0], "bind"))
@@ -5011,38 +4871,6 @@ add_option (struct options *options,
       options->proto_force = proto_force;
       options->force_connection_list = true;
     }
-#ifdef GENERAL_PROXY_SUPPORT
-  else if (streq (p[0], "auto-proxy"))
-    {
-      char *error = NULL;
-
-      VERIFY_PERMISSION (OPT_P_GENERAL);
-      options->auto_proxy_info = get_proxy_settings (&error, &options->gc);
-      if (error)
-	msg (M_WARN, "PROXY: %s", error);
-    }
-  else if (streq (p[0], "show-proxy-settings"))
-    {
-      struct auto_proxy_info *pi;
-      char *error = NULL;
-
-      VERIFY_PERMISSION (OPT_P_GENERAL);
-      pi = get_proxy_settings (&error, &options->gc);
-      if (pi)
-	{
-	  msg (M_INFO|M_NOPREFIX, "HTTP Server: %s", np(pi->http.server));
-	  msg (M_INFO|M_NOPREFIX, "HTTP Port: %d", pi->http.port);
-	  msg (M_INFO|M_NOPREFIX, "SOCKS Server: %s", np(pi->socks.server));
-	  msg (M_INFO|M_NOPREFIX, "SOCKS Port: %d", pi->socks.port);
-	}
-      if (error)
-	msg (msglevel, "Proxy error: %s", error);
-#ifdef WIN32
-      show_win_proxy_settings (M_INFO|M_NOPREFIX);
-#endif
-      openvpn_exit (OPENVPN_EXIT_STATUS_GOOD); /* exit point */
-    }
-#endif /* GENERAL_PROXY_SUPPORT */
 #ifdef ENABLE_HTTP_PROXY
   else if (streq (p[0], "http-proxy") && p[1])
     {
@@ -5064,7 +4892,7 @@ add_option (struct options *options,
 	    goto err;
 	  }
 	
-	ho = init_http_options_if_undefined (options);
+	ho = init_http_proxy_options_once (options->ce.http_proxy_options, &options->gc);
 	
 	ho->server = p[1];
 	ho->port = port;
@@ -5099,7 +4927,7 @@ add_option (struct options *options,
     {
       struct http_proxy_options *ho;
       VERIFY_PERMISSION (OPT_P_GENERAL|OPT_P_CONNECTION);
-      ho = init_http_options_if_undefined (options);
+      ho = init_http_proxy_options_once (options->ce.http_proxy_options, &options->gc);
       ho->retry = true;
     }
   else if (streq (p[0], "http-proxy-timeout") && p[1])
@@ -5107,7 +4935,7 @@ add_option (struct options *options,
       struct http_proxy_options *ho;
 
       VERIFY_PERMISSION (OPT_P_GENERAL|OPT_P_CONNECTION);
-      ho = init_http_options_if_undefined (options);
+      ho = init_http_proxy_options_once (options->ce.http_proxy_options, &options->gc);
       ho->timeout = positive_atoi (p[1]);
     }
   else if (streq (p[0], "http-proxy-option") && p[1])
@@ -5115,7 +4943,7 @@ add_option (struct options *options,
       struct http_proxy_options *ho;
 
       VERIFY_PERMISSION (OPT_P_GENERAL|OPT_P_CONNECTION);
-      ho = init_http_options_if_undefined (options);
+      ho = init_http_proxy_options_once (options->ce.http_proxy_options, &options->gc);
 
       if (streq (p[1], "VERSION") && p[2])
 	{
@@ -6318,13 +6146,11 @@ add_option (struct options *options,
   else if (streq (p[0], "secret") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
-#if ENABLE_INLINE_FILES
       if (streq (p[1], INLINE_FILE_TAG) && p[2])
 	{
 	  options->shared_secret_file_inline = p[2];
 	}
       else
-#endif
       if (p[2])
 	{
 	  int key_direction;
@@ -6515,12 +6341,10 @@ add_option (struct options *options,
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->ca_file = p[1];
-#if ENABLE_INLINE_FILES
       if (streq (p[1], INLINE_FILE_TAG) && p[2])
 	{
 	  options->ca_file_inline = p[2];
 	}
-#endif
     }
 #ifndef ENABLE_CRYPTO_POLARSSL
   else if (streq (p[0], "capath") && p[1])
@@ -6533,34 +6357,28 @@ add_option (struct options *options,
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->dh_file = p[1];
-#if ENABLE_INLINE_FILES
       if (streq (p[1], INLINE_FILE_TAG) && p[2])
 	{
 	  options->dh_file_inline = p[2];
 	}
-#endif
     }
   else if (streq (p[0], "cert") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->cert_file = p[1];
-#if ENABLE_INLINE_FILES
       if (streq (p[1], INLINE_FILE_TAG) && p[2])
 	{
 	  options->cert_file_inline = p[2];
 	}
-#endif
     }
   else if (streq (p[0], "extra-certs") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->extra_certs_file = p[1];
-#if ENABLE_INLINE_FILES
       if (streq (p[1], INLINE_FILE_TAG) && p[2])
 	{
 	  options->extra_certs_file_inline = p[2];
 	}
-#endif
     }
   else if (streq (p[0], "verify-hash") && p[1])
     {
@@ -6578,24 +6396,20 @@ add_option (struct options *options,
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->priv_key_file = p[1];
-#if ENABLE_INLINE_FILES
       if (streq (p[1], INLINE_FILE_TAG) && p[2])
 	{
 	  options->priv_key_file_inline = p[2];
 	}
-#endif
     }
 #ifndef ENABLE_CRYPTO_POLARSSL
   else if (streq (p[0], "pkcs12") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->pkcs12_file = p[1];
-#if ENABLE_INLINE_FILES
       if (streq (p[1], INLINE_FILE_TAG) && p[2])
 	{
 	  options->pkcs12_file_inline = p[2];
 	}
-#endif
     }
 #endif /* ENABLE_CRYPTO_POLARSSL */
   else if (streq (p[0], "askpass"))
@@ -6756,13 +6570,11 @@ add_option (struct options *options,
   else if (streq (p[0], "tls-auth") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
-#if ENABLE_INLINE_FILES
       if (streq (p[1], INLINE_FILE_TAG) && p[2])
 	{
 	  options->tls_auth_file_inline = p[2];
 	}
       else
-#endif
       if (p[2])
 	{
 	  int key_direction;

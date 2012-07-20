@@ -46,6 +46,21 @@
 
 #define UP_TYPE_PROXY        "HTTP Proxy"
 
+struct http_proxy_options *
+init_http_proxy_options_once (struct http_proxy_options *hpo,
+                              struct gc_arena *gc)
+{
+  if (!hpo)
+    {
+      ALLOC_OBJ_CLEAR_GC (hpo, struct http_proxy_options, gc);
+      /* http proxy defaults */
+      hpo->timeout = 5;
+      hpo->http_version = "1.0";
+    }
+  return hpo;
+}
+
+
 /* cached proxy username/password */
 static struct user_pass static_proxy_user_pass;
 
@@ -93,7 +108,7 @@ recv_line (socket_descriptor_t sd,
       if (status == 0)
 	{
 	  if (verbose)
-	    msg (D_LINK_ERRORS | M_ERRNO_SOCK, "recv_line: TCP port read timeout expired");
+	    msg (D_LINK_ERRORS | M_ERRNO, "recv_line: TCP port read timeout expired");
 	  goto error;
 	}
 
@@ -101,7 +116,7 @@ recv_line (socket_descriptor_t sd,
       if (status < 0)
 	{
 	  if (verbose)
-	    msg (D_LINK_ERRORS | M_ERRNO_SOCK, "recv_line: TCP port read failed on select()");
+	    msg (D_LINK_ERRORS | M_ERRNO, "recv_line: TCP port read failed on select()");
 	  goto error;
 	}
 
@@ -112,7 +127,7 @@ recv_line (socket_descriptor_t sd,
       if (size != 1)
 	{
 	  if (verbose)
-	    msg (D_LINK_ERRORS | M_ERRNO_SOCK, "recv_line: TCP port read failed on recv()");
+	    msg (D_LINK_ERRORS | M_ERRNO, "recv_line: TCP port read failed on recv()");
 	  goto error;
 	}
 
@@ -137,7 +152,7 @@ recv_line (socket_descriptor_t sd,
 	  if (!isprint(c) && !isspace(c)) /* not ascii? */
 	    {
 	      if (verbose)
-		msg (D_LINK_ERRORS | M_ERRNO_SOCK, "recv_line: Non-ASCII character (%d) read on recv()", (int)c);
+		msg (D_LINK_ERRORS | M_ERRNO, "recv_line: Non-ASCII character (%d) read on recv()", (int)c);
 	      *lookahead = la;
 	      return false;
 	    }
@@ -167,7 +182,7 @@ send_line (socket_descriptor_t sd,
   const ssize_t size = send (sd, buf, strlen (buf), MSG_NOSIGNAL);
   if (size != (ssize_t) strlen (buf))
     {
-      msg (D_LINK_ERRORS | M_ERRNO_SOCK, "send_line: TCP port write failed on send()");
+      msg (D_LINK_ERRORS | M_ERRNO, "send_line: TCP port write failed on send()");
       return false;
     }
   return true;
@@ -421,46 +436,10 @@ get_pa_var (const char *key, const char *pa, struct gc_arena *gc)
 }
 
 struct http_proxy_info *
-http_proxy_new (const struct http_proxy_options *o,
-		struct auto_proxy_info *auto_proxy_info)
+http_proxy_new (const struct http_proxy_options *o)
 {
   struct http_proxy_info *p;
   struct http_proxy_options opt;
-
-  if (auto_proxy_info)
-    {
-      if (o && o->server)
-	{
-	  /* if --http-proxy explicitly given, disable auto-proxy */
-	  auto_proxy_info = NULL;
-	}
-      else
-	{
-	  /* if no --http-proxy explicitly given and no auto settings, fail */
-	  if (!auto_proxy_info->http.server)
-	    return NULL;
-
-	  if (o)
-	    {
-	      opt = *o;
-	    }
-	  else
-	    {
-	      CLEAR (opt);
-	  
-	      /* These settings are only used for --auto-proxy */
-	      opt.timeout = 5;
-	      opt.http_version = "1.0";
-	    }
-
-	  opt.server = auto_proxy_info->http.server;
-	  opt.port = auto_proxy_info->http.port;
-	  if (!opt.auth_retry)
-	    opt.auth_retry = PAR_ALL;
-
-	  o = &opt;
-	}
-    }
 
   if (!o || !o->server)
     msg (M_FATAL, "HTTP_PROXY: server not specified");
@@ -527,7 +506,7 @@ establish_http_proxy_passthru (struct http_proxy_info *p,
   bool ret = false;
   bool processed = false;
 
-  /* get user/pass if not previously given or if --auto-proxy is being used */
+  /* get user/pass if not previously given */
   if (p->auth_method == HTTP_AUTH_BASIC
       || p->auth_method == HTTP_AUTH_DIGEST
       || p->auth_method == HTTP_AUTH_NTLM)
@@ -926,205 +905,3 @@ establish_http_proxy_passthru (struct http_proxy_info *p,
 static void dummy(void) {}
 #endif /* ENABLE_HTTP_PROXY */
 
-#ifdef GENERAL_PROXY_SUPPORT
-
-#ifdef WIN32
-
-#if 0
-char *
-get_windows_internet_string (const DWORD dwOption, struct gc_arena *gc)
-{
-  DWORD size = 0;
-  char *ret = NULL;
-
-  /* Initially, get size of return buffer */
-  InternetQueryOption (NULL, dwOption, NULL, &size);
-  if (size)
-    {
-      /* Now get actual info */
-      ret = (INTERNET_PROXY_INFO *) gc_malloc (size, false, gc);
-      if (!InternetQueryOption (NULL, dwOption, (LPVOID) ret, &size))
-	ret = NULL;
-    }
-  return ret;
-}
-#endif
-
-static INTERNET_PROXY_INFO *
-get_windows_proxy_settings (struct gc_arena *gc)
-{
-  DWORD size = 0;
-  INTERNET_PROXY_INFO *ret = NULL;
-
-  /* Initially, get size of return buffer */
-  InternetQueryOption (NULL, INTERNET_OPTION_PROXY, NULL, &size);
-  if (size)
-    {
-      /* Now get actual info */
-      ret = (INTERNET_PROXY_INFO *) gc_malloc (size, false, gc);
-      if (!InternetQueryOption (NULL, INTERNET_OPTION_PROXY, (LPVOID) ret, &size))
-	ret = NULL;
-    }
-  return ret;
-}
-
-static const char *
-parse_windows_proxy_setting (const char *str, struct auto_proxy_info_entry *e, struct gc_arena *gc)
-{
-  char buf[128];
-  const char *ret = NULL;
-  struct buffer in;
-
-  CLEAR (*e);
-
-  buf_set_read (&in, (const uint8_t *)str, strlen (str));
-
-  if (strchr (str, '=') != NULL)
-    {
-      if (buf_parse (&in, '=', buf, sizeof (buf)))
-	ret = string_alloc (buf, gc);
-    }
-	
-  if (buf_parse (&in, ':', buf, sizeof (buf)))
-    e->server = string_alloc (buf, gc);
-
-  if (e->server && buf_parse (&in, '\0', buf, sizeof (buf)))
-    e->port = atoi (buf);
-
-  return ret;
-}
-
-static void
-parse_windows_proxy_setting_list (const char *str, const char *type, struct auto_proxy_info_entry *e, struct gc_arena *gc)
-{
-  struct gc_arena gc_local = gc_new ();
-  struct auto_proxy_info_entry el;
-
-  CLEAR (*e);
-  if (type)
-    {
-      char buf[128];
-      struct buffer in;
-
-      buf_set_read (&in, (const uint8_t *)str, strlen (str));
-      if (strchr (str, '=') != NULL)
-	{
-	  while (buf_parse (&in, ' ', buf, sizeof (buf)))
-	    {
-	      const char *t = parse_windows_proxy_setting (buf, &el, &gc_local);
-	      if (t && !strcmp (t, type))
-		goto found;
-	    }
-	}
-    }
-  else
-    {
-      if (!parse_windows_proxy_setting (str, &el, &gc_local))
-	goto found;
-    }
-  goto done;
-
- found:
-  if (el.server && el.port > 0)
-    {
-      e->server = string_alloc (el.server, gc);
-      e->port = el.port;
-    }
-
- done:
-  gc_free (&gc_local);
-}
-
-static const char *
-win_proxy_access_type (const DWORD dwAccessType)
-{
-  switch (dwAccessType)
-    {
-    case INTERNET_OPEN_TYPE_DIRECT:
-      return "INTERNET_OPEN_TYPE_DIRECT";
-    case INTERNET_OPEN_TYPE_PROXY:
-      return "INTERNET_OPEN_TYPE_PROXY";
-    default:
-      return "[UNKNOWN]";
-    }
-}
-
-void
-show_win_proxy_settings (const int msglevel)
-{
-  INTERNET_PROXY_INFO *info;
-  struct gc_arena gc = gc_new ();
-
-  info = get_windows_proxy_settings (&gc);
-  msg (msglevel, "PROXY INFO: %s %s",
-       win_proxy_access_type (info->dwAccessType),
-       info->lpszProxy ? info->lpszProxy : "[NULL]");
-
-  gc_free (&gc);
-}
-
-struct auto_proxy_info *
-get_proxy_settings (char **err, struct gc_arena *gc)
-{
-  struct gc_arena gc_local = gc_new ();
-  INTERNET_PROXY_INFO *info;
-  struct auto_proxy_info *pi;
-
-  ALLOC_OBJ_CLEAR_GC (pi, struct auto_proxy_info, gc);
-
-  if (err)
-    *err = NULL;
-
-  info = get_windows_proxy_settings (&gc_local);
-
-  if (!info)
-    {
-      if (err)
-	*err = "PROXY: failed to obtain windows proxy info";
-      goto done;
-    }
-
-  switch (info->dwAccessType)
-    {
-    case INTERNET_OPEN_TYPE_DIRECT:
-      break;
-    case INTERNET_OPEN_TYPE_PROXY:
-      if (!info->lpszProxy)
-	break;
-      parse_windows_proxy_setting_list (info->lpszProxy, NULL, &pi->http, gc);
-      if (!pi->http.server)
-	parse_windows_proxy_setting_list (info->lpszProxy, "http", &pi->http, gc);
-      parse_windows_proxy_setting_list (info->lpszProxy, "socks", &pi->socks, gc);
-      break;
-    default:
-      if (err)
-	*err = "PROXY: unknown proxy type";
-      break;
-    }
-
- done:
-  gc_free (&gc_local);
-  return pi;
-}
-
-#else
-
-struct auto_proxy_info *
-get_proxy_settings (char **err, struct gc_arena *gc)
-{
-#if 1
-  if (err)
-    *err = string_alloc ("PROXY: automatic detection not supported on this OS", gc);
-  return NULL;
-#else /* test --auto-proxy feature */
-  struct auto_proxy_info *pi;
-  ALLOC_OBJ_CLEAR_GC (pi, struct auto_proxy_info, gc);
-  pi->http.server = "10.10.0.2";
-  pi->http.port = 4000;
-  return pi;
-#endif
-}
-
-#endif
-
-#endif /* GENERAL_PROXY_SUPPORT */

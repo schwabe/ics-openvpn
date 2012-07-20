@@ -90,7 +90,6 @@ struct connection_entry
   int local_port;
   bool local_port_defined;
   int remote_port;
-  bool port_option_used;
   const char *local;
   const char *remote;
   bool remote_float;
@@ -130,11 +129,7 @@ struct connection_entry
 #endif
 
 # define CE_DISABLED (1<<0)
-#if HTTP_PROXY_FALLBACK
-# define CE_HTTP_PROXY_FALLBACK (1<<1)
-  time_t ce_http_proxy_fallback_timestamp; /* time when fallback http_proxy_options was last updated */
-#endif
-#if MANAGEMENT_QUERY_REMOTE
+# define CE_MAN_QUERY_PROXY (1<<1)
 # define CE_MAN_QUERY_REMOTE_UNDEF  0
 # define CE_MAN_QUERY_REMOTE_QUERY  1
 # define CE_MAN_QUERY_REMOTE_ACCEPT 2
@@ -142,7 +137,6 @@ struct connection_entry
 # define CE_MAN_QUERY_REMOTE_SKIP   4
 # define CE_MAN_QUERY_REMOTE_MASK   (0x07)
 # define CE_MAN_QUERY_REMOTE_SHIFT  (2)
-#endif
   unsigned int flags;
 };
 
@@ -152,8 +146,6 @@ struct remote_entry
   int remote_port;
   int proto;
 };
-
-#ifdef ENABLE_CONNECTION
 
 #define CONNECTION_LIST_SIZE 64
 
@@ -172,23 +164,11 @@ struct remote_list
   struct remote_entry *array[CONNECTION_LIST_SIZE];
 };
 
-#endif
-
-#if HTTP_PROXY_FALLBACK
-struct hpo_store
-{
-  struct http_proxy_options hpo;
-  char server[80];
-};
-#endif
-
-#if MANAGEMENT_QUERY_REMOTE
 struct remote_host_store
 {
 # define RH_HOST_LEN 80
   char host[RH_HOST_LEN];
 };
-#endif
 
 /* Command line options */
 struct options
@@ -224,27 +204,16 @@ struct options
 
   /* Networking parms */
   struct connection_entry ce;
-
-#ifdef ENABLE_CONNECTION
   char *remote_ip_hint;
   struct connection_list *connection_list;
   struct remote_list *remote_list;
   bool force_connection_list;
-#endif
 
-#ifdef GENERAL_PROXY_SUPPORT
-  struct auto_proxy_info *auto_proxy_info;
-#endif
-
-#if HTTP_PROXY_FALLBACK
-  bool http_proxy_fallback;
+#if HTTP_PROXY_OVERRIDE
   struct http_proxy_options *http_proxy_override;
-  struct hpo_store *hpo_store; /* used to store dynamic proxy info given by management interface */
 #endif
 
-#if MANAGEMENT_QUERY_REMOTE
   struct remote_host_store *rh_store;
-#endif
 
   bool remote_random;
   const char *ipchange;
@@ -403,13 +372,13 @@ struct options
   struct plugin_option_list *plugin_list;
 #endif
 
-#ifdef ENABLE_TMPDIR
-  const char *tmp_dir;
-#endif
+
 
 #if P2MP
 
 #if P2MP_SERVER
+  /* the tmp dir is for now only used in the P2P server context */
+  const char *tmp_dir;
   bool server_defined;
   in_addr_t server_network;
   in_addr_t server_netmask;
@@ -503,9 +472,7 @@ struct options
 #ifdef ENABLE_CRYPTO
   /* Cipher parms */
   const char *shared_secret_file;
-#if ENABLE_INLINE_FILES
   const char *shared_secret_file_inline;
-#endif
   int key_direction;
   bool ciphername_defined;
   const char *ciphername;
@@ -543,14 +510,12 @@ struct options
   const char *tls_remote;
   const char *crl_file;
 
-#if ENABLE_INLINE_FILES
   const char *ca_file_inline;
   const char *cert_file_inline;
   const char *extra_certs_file_inline;
   char *priv_key_file_inline;
   const char *dh_file_inline;
   const char *pkcs12_file_inline; /* contains the base64 encoding of pkcs12 file */
-#endif
 
   int ns_cert_type; /* set to 0, NS_CERT_CHECK_SERVER, or NS_CERT_CHECK_CLIENT */
   unsigned remote_cert_ku[MAX_PARMS];
@@ -597,9 +562,7 @@ struct options
 
   /* Special authentication MAC for TLS control channel */
   const char *tls_auth_file;		/* shared secret */
-#if ENABLE_INLINE_FILES
   const char *tls_auth_file_inline;
-#endif
 
   /* Allow only one session */
   bool single_session;
@@ -812,31 +775,14 @@ bool get_ipv6_addr( const char * prefix_str, struct in6_addr *network,
 static inline bool
 connection_list_defined (const struct options *o)
 {
-#ifdef ENABLE_CONNECTION
   return o->connection_list != NULL;
-#else
-  return false;
-#endif
 }
 
 static inline void
 connection_list_set_no_advance (struct options *o)
 {
-#ifdef ENABLE_CONNECTION
   if (o->connection_list)
     o->connection_list->no_advance = true;
-#endif
 }
-
-#if HTTP_PROXY_FALLBACK
-
-struct http_proxy_options *
-parse_http_proxy_fallback (struct context *c,
-			   const char *server,
-			   const char *port,
-			   const char *flags,
-			   const int msglevel);
-
-#endif /* HTTP_PROXY_FALLBACK */
 
 #endif

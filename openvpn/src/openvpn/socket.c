@@ -835,7 +835,7 @@ create_socket_tcp (void)
   socket_descriptor_t sd;
 
   if ((sd = socket (PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
-    msg (M_SOCKERR, "Cannot create TCP socket");
+    msg (M_ERR, "Cannot create TCP socket");
 
 #ifndef WIN32 /* using SO_REUSEADDR on Windows will cause bind to succeed on port conflicts! */
   /* set SO_REUSEADDR on socket */
@@ -843,7 +843,7 @@ create_socket_tcp (void)
     int on = 1;
     if (setsockopt (sd, SOL_SOCKET, SO_REUSEADDR,
 		    (void *) &on, sizeof (on)) < 0)
-      msg (M_SOCKERR, "TCP: Cannot setsockopt SO_REUSEADDR on TCP socket");
+      msg (M_ERR, "TCP: Cannot setsockopt SO_REUSEADDR on TCP socket");
   }
 #endif
 
@@ -855,7 +855,7 @@ create_socket_tcp (void)
     linger.l_linger = 2;
     if (setsockopt (sd, SOL_SOCKET, SO_LINGER,
 		    (void *) &linger, sizeof (linger)) < 0)
-      msg (M_SOCKERR, "TCP: Cannot setsockopt SO_LINGER on TCP socket");
+      msg (M_ERR, "TCP: Cannot setsockopt SO_LINGER on TCP socket");
   }
 #endif
 
@@ -868,7 +868,7 @@ create_socket_udp (const unsigned int flags)
   socket_descriptor_t sd;
 
   if ((sd = socket (PF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0)
-    msg (M_SOCKERR, "UDP: Cannot create UDP socket");
+    msg (M_ERR, "UDP: Cannot create UDP socket");
 #if ENABLE_IP_PKTINFO
   else if (flags & SF_USE_IP_PKTINFO)
     {
@@ -876,11 +876,11 @@ create_socket_udp (const unsigned int flags)
 #ifdef IP_PKTINFO
       if (setsockopt (sd, SOL_IP, IP_PKTINFO,
 		      (void*)&pad, sizeof(pad)) < 0)
-        msg(M_SOCKERR, "UDP: failed setsockopt for IP_PKTINFO");
+        msg(M_ERR, "UDP: failed setsockopt for IP_PKTINFO");
 #elif defined(IP_RECVDSTADDR)
       if (setsockopt (sd, IPPROTO_IP, IP_RECVDSTADDR,
 		      (void*)&pad, sizeof(pad)) < 0)
-        msg(M_SOCKERR, "UDP: failed setsockopt for IP_RECVDSTADDR");
+        msg(M_ERR, "UDP: failed setsockopt for IP_RECVDSTADDR");
 #else
 #error ENABLE_IP_PKTINFO is set without IP_PKTINFO xor IP_RECVDSTADDR (fix syshead.h)
 #endif
@@ -895,14 +895,19 @@ create_socket_udp6 (const unsigned int flags)
   socket_descriptor_t sd;
 
   if ((sd = socket (PF_INET6, SOCK_DGRAM, IPPROTO_UDP)) < 0)
-    msg (M_SOCKERR, "UDP: Cannot create UDP6 socket");
+    msg (M_ERR, "UDP: Cannot create UDP6 socket");
 #if ENABLE_IP_PKTINFO
   else if (flags & SF_USE_IP_PKTINFO)
     {
       int pad = 1;
+#ifndef IPV6_RECVPKTINFO /* Some older Darwin platforms require this */
+      if (setsockopt (sd, IPPROTO_IPV6, IPV6_PKTINFO,
+		      (void*)&pad, sizeof(pad)) < 0)
+#else
       if (setsockopt (sd, IPPROTO_IPV6, IPV6_RECVPKTINFO,
 		      (void*)&pad, sizeof(pad)) < 0)
-	msg(M_SOCKERR, "UDP: failed setsockopt for IPV6_RECVPKTINFO");
+#endif
+	msg(M_ERR, "UDP: failed setsockopt for IPV6_RECVPKTINFO");
     }
 #endif
   return sd;
@@ -914,14 +919,14 @@ create_socket_tcp6 (void)
   socket_descriptor_t sd;
 
   if ((sd = socket (PF_INET6, SOCK_STREAM, IPPROTO_TCP)) < 0)
-    msg (M_SOCKERR, "Cannot create TCP6 socket");
+    msg (M_ERR, "Cannot create TCP6 socket");
 
   /* set SO_REUSEADDR on socket */
   {
     int on = 1;
     if (setsockopt (sd, SOL_SOCKET, SO_REUSEADDR,
 		    (void *) &on, sizeof (on)) < 0)
-      msg (M_SOCKERR, "TCP: Cannot setsockopt SO_REUSEADDR on TCP6 socket");
+      msg (M_ERR, "TCP: Cannot setsockopt SO_REUSEADDR on TCP6 socket");
   }
 
   return sd;
@@ -987,7 +992,7 @@ socket_do_listen (socket_descriptor_t sd,
       msg (M_INFO, "Listening for incoming TCP connection on %s", 
 	   print_sockaddr (local, &gc));
       if (listen (sd, 1))
-	msg (M_SOCKERR, "TCP: listen() failed");
+	msg (M_ERR, "TCP: listen() failed");
     }
 
   /* set socket to non-blocking mode */
@@ -1018,7 +1023,7 @@ socket_do_accept (socket_descriptor_t sd,
       new_sd = getpeername (sd, &act->dest.addr.sa, &remote_len);
 
       if (!socket_defined (new_sd))
-	msg (D_LINK_ERRORS | M_ERRNO_SOCK, "TCP: getpeername() failed");
+	msg (D_LINK_ERRORS | M_ERRNO, "TCP: getpeername() failed");
       else
 	new_sd = sd;
     }
@@ -1042,7 +1047,7 @@ socket_do_accept (socket_descriptor_t sd,
 
   if (!socket_defined (new_sd))
     {
-      msg (D_LINK_ERRORS | M_ERRNO_SOCK, "TCP: accept(%d) failed", sd);
+      msg (D_LINK_ERRORS | M_ERRNO, "TCP: accept(%d) failed", sd);
     }
   /* only valid if we have remote_len_af!=0 */
   else if (remote_len_af && remote_len != remote_len_af)
@@ -1102,7 +1107,7 @@ socket_listen_accept (socket_descriptor_t sd,
 	}
 
       if (status < 0)
-	msg (D_LINK_ERRORS | M_ERRNO_SOCK, "TCP: select() failed");
+	msg (D_LINK_ERRORS | M_ERRNO, "TCP: select() failed");
 
       if (status <= 0)
 	{
@@ -1122,7 +1127,7 @@ socket_listen_accept (socket_descriptor_t sd,
 		   "TCP NOTE: Rejected connection attempt from %s due to --remote setting",
 		   print_link_socket_actual (act, &gc));
 	      if (openvpn_close_socket (new_sd))
-		msg (M_SOCKERR, "TCP: close socket failed (new_sd)");
+		msg (M_ERR, "TCP: close socket failed (new_sd)");
 	    }
 	  else
 	    break;
@@ -1131,7 +1136,7 @@ socket_listen_accept (socket_descriptor_t sd,
     }
 
   if (!nowait && openvpn_close_socket (sd))
-    msg (M_SOCKERR, "TCP: close socket failed (sd)");
+    msg (M_ERR, "TCP: close socket failed (sd)");
 
   tcp_connection_established (act);
 
@@ -1148,7 +1153,7 @@ socket_bind (socket_descriptor_t sd,
 
   if (bind (sd, &local->addr.sa, af_addr_size(local->addr.sa.sa_family)))
     {
-      const int errnum = openvpn_errno_socket ();
+      const int errnum = openvpn_errno ();
       msg (M_FATAL, "%s: Socket bind failed on local address %s: %s",
 	   prefix,
            print_sockaddr (local, &gc),
@@ -1169,8 +1174,14 @@ openvpn_connect (socket_descriptor_t sd,
   set_nonblock (sd);
   status = connect (sd, &remote->addr.sa, af_addr_size(remote->addr.sa.sa_family));
   if (status)
-    status = openvpn_errno_socket ();
-  if (status == EINPROGRESS)
+    status = openvpn_errno ();
+  if (
+#ifdef WIN32
+    status == WSAEWOULDBLOCK
+#else
+    status == EINPROGRESS
+#endif
+  )
     {
       while (true)
 	{
@@ -1195,7 +1206,7 @@ openvpn_connect (socket_descriptor_t sd,
 	    }
 	  if (status < 0)
 	    {
-	      status = openvpn_errno_socket ();
+	      status = openvpn_errno ();
 	      break;
 	    }
 	  if (status <= 0)
@@ -1219,7 +1230,7 @@ openvpn_connect (socket_descriptor_t sd,
 		&& len == sizeof (val))
 	      status = val;
 	    else
-	      status = openvpn_errno_socket ();
+	      status = openvpn_errno ();
 	    break;
 	  }
 	}
@@ -1227,7 +1238,7 @@ openvpn_connect (socket_descriptor_t sd,
 #else
   status = connect (sd, &remote->addr.sa, af_addr_size(remote->addr.sa.sa_family));
   if (status)
-    status = openvpn_errno_socket ();
+    status = openvpn_errno ();
 #endif
 
   return status;
@@ -2045,7 +2056,7 @@ link_socket_close (struct link_socket *sock)
 	    {
 	      msg (D_LOW, "TCP/UDP: Closing socket");
 	      if (openvpn_close_socket (sock->sd))
-		msg (M_WARN | M_ERRNO_SOCK, "TCP/UDP: Close Socket failed");
+		msg (M_WARN | M_ERRNO, "TCP/UDP: Close Socket failed");
 	    }
 	  sock->sd = SOCKET_UNDEFINED;
 #ifdef WIN32
@@ -2061,7 +2072,7 @@ link_socket_close (struct link_socket *sock)
       if (socket_defined (sock->ctrl_sd))
 	{
 	  if (openvpn_close_socket (sock->ctrl_sd))
-	    msg (M_WARN | M_ERRNO_SOCK, "TCP/UDP: Close Socket (ctrl_sd) failed");
+	    msg (M_WARN | M_ERRNO, "TCP/UDP: Close Socket (ctrl_sd) failed");
 	  sock->ctrl_sd = SOCKET_UNDEFINED;
 	}
 #endif
@@ -3353,7 +3364,7 @@ socket_finalize (SOCKET s,
 	      /* if no error (i.e. just not finished yet), then DON'T execute this code */
 	      io->iostate = IOSTATE_INITIAL;
 	      ASSERT (ResetEvent (io->overlapped.hEvent));
-	      msg (D_WIN32_IO | M_ERRNO_SOCK, "WIN32 I/O: Socket Completion error");
+	      msg (D_WIN32_IO | M_ERRNO, "WIN32 I/O: Socket Completion error");
 	    }
 	}
       break;
@@ -3366,7 +3377,7 @@ socket_finalize (SOCKET s,
 	  /* error return for a non-queued operation */
 	  WSASetLastError (io->status);
 	  ret = -1;
-	  msg (D_WIN32_IO | M_ERRNO_SOCK, "WIN32 I/O: Socket Completion non-queued error");
+	  msg (D_WIN32_IO | M_ERRNO, "WIN32 I/O: Socket Completion non-queued error");
 	}
       else
 	{
@@ -3500,7 +3511,7 @@ create_socket_unix (void)
   socket_descriptor_t sd;
 
   if ((sd = socket (PF_UNIX, SOCK_STREAM, 0)) < 0)
-    msg (M_SOCKERR, "Cannot create unix domain socket");
+    msg (M_ERR, "Cannot create unix domain socket");
   return sd;
 }
 
@@ -3517,7 +3528,7 @@ socket_bind_unix (socket_descriptor_t sd,
 
   if (bind (sd, (struct sockaddr *) local, sizeof (struct sockaddr_un)))
     {
-      const int errnum = openvpn_errno_socket ();
+      const int errnum = openvpn_errno ();
       msg (M_FATAL, "%s: Socket bind[%d] failed on unix domain socket %s: %s",
 	   prefix,
 	   (int)sd,
@@ -3550,7 +3561,7 @@ socket_connect_unix (socket_descriptor_t sd,
 {
   int status = connect (sd, (struct sockaddr *) remote, sizeof (struct sockaddr_un));
   if (status)
-    status = openvpn_errno_socket ();
+    status = openvpn_errno ();
   return status;
 }
 

@@ -1932,15 +1932,6 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
   if ((options->management_client_user || options->management_client_group)
       && !(options->management_flags & MF_UNIX_SOCK))
     msg (M_USAGE, "--management-client-(user|group) can only be used on unix domain sockets");
-#ifdef MANAGMENT_EXTERNAL_KEY
-  if(options->management_flags & MF_EXTERNAL_KEY) {
-	  if(options->priv_key_file)
-		  msg (M_USAGE, "--key and --management-external-key are mutually exclusive");
-	  /* set a filename for nicer output in the logs */
-	  options->priv_key_file = "EXTERNAL_PRIVATE_KEY";
-  }
-#endif
-
 #endif
 
   /*
@@ -2366,6 +2357,14 @@ options_postprocess_mutate_ce (struct options *o, struct connection_entry *ce)
 #endif      
     }
 
+#ifdef MANAGMENT_EXTERNAL_KEY
+  if(o->management_flags & MF_EXTERNAL_KEY) {
+	  if(o->priv_key_file)
+		  msg (M_USAGE, "--key and --management-external-key are mutually exclusive");
+	  /* set a filename for nicer output in the logs */
+	  o->priv_key_file = "EXTERNAL_PRIVATE_KEY";
+  }
+#endif
   /*
    * Set MTU defaults
    */

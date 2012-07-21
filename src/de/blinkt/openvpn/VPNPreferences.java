@@ -28,11 +28,23 @@ public class VPNPreferences extends PreferenceActivity {
 		super.onStop();
 	};
 	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putString(getIntent().getStringExtra(getPackageName() + ".profileUUID"),mProfileUUID);
+		super.onSaveInstanceState(outState);
+	}
+	
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		mProfileUUID = getIntent().getStringExtra(getPackageName() + ".profileUUID");
+		if(savedInstanceState!=null){
+			String savedUUID = savedInstanceState.getString(getPackageName() + ".profileUUID");
+			if(savedUUID!=null)
+				mProfileUUID=savedUUID;
+		}
+			
 		mProfile = ProfileManager.get(this,mProfileUUID);
 		if(mProfile!=null) {
 			setTitle(getString(R.string.edit_profile_title, mProfile.getName()));

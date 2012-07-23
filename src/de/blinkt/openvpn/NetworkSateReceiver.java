@@ -33,8 +33,12 @@ public class NetworkSateReceiver extends BroadcastReceiver {
 			String subtype = networkInfo.getSubtypeName();
 			if(subtype==null) 
 				subtype = "";
+			String extrainfo = networkInfo.getExtraInfo();
+			if(extrainfo==null)
+				extrainfo="";
+			
 			netstatestring = String.format("%2$s %4$s to %1$s %3$s",networkInfo.getTypeName(),
-					networkInfo.getDetailedState(),networkInfo.getExtraInfo(),subtype );
+					networkInfo.getDetailedState(),extrainfo,subtype );
 		}
 		
 		if(networkInfo!=null && networkInfo.getState() == State.CONNECTED) {

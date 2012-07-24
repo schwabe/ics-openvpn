@@ -428,7 +428,7 @@ public class VpnProfile implements  Serializable{
 
 		// Add fixed paramenters
 		//args.add("/data/data/de.blinkt.openvpn/lib/openvpn");
-		args.add(cacheDir.getAbsolutePath() +"/" +"minivpn");
+		args.add(cacheDir.getAbsolutePath() +"/" +"miniovpn");
 
 		args.add("--config");
 		args.add(cacheDir.getAbsolutePath() + "/" + OVPNCONFIGFILE);

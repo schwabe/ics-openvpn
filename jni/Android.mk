@@ -23,7 +23,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 
 include $(CLEAR_VARS)
-LOCAL_LDLIBS := -lz 
+LOCAL_LDLIBS := -lz  -lc
 LOCAL_SHARED_LIBRARIES := libssl libcrypto openvpn
 LOCAL_SRC_FILES:= minivpn.c 
 LOCAL_MODULE = minivpn

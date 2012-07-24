@@ -3,11 +3,12 @@ LOCAL_PATH:= $(call my-dir)/
 
 include $(CLEAR_VARS)
 
-LOCAL_LDLIBS := -lz -llog 
+LOCAL_LDLIBS := -lz 
 LOCAL_C_INCLUDES := openssl/include lzo/include openssl/crypto openssl openvpn/src/compat openvpn/src/openvpn openvpn/include
 
-#LOCAL_SHARED_LIBRARIES :=  libssl  libcrypto  liblzo
-LOCAL_STATIC_LIBRARIES :=  libssl_static libcrypto_static   liblzo-static
+LOCAL_SHARED_LIBRARIES :=  libssl libcrypto 
+#LOCAL_STATIC_LIBRARIES :=  libssl_static libcrypto_static  liblzo-static
+LOCAL_STATIC_LIBRARIES :=  liblzo-static
 
 
 LOCAL_CFLAGS= -DHAVE_CONFIG_H

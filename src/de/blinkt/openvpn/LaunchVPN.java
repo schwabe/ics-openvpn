@@ -32,6 +32,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.VpnService;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -82,7 +83,6 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 
 	private boolean mCmfixed=false;
-	static boolean minivpnwritten=false;
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -224,14 +224,25 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 	}
 
 	private boolean writeMiniVPN() {
-		File mvpnout = new File(getCacheDir(),"minivpn");
+		File mvpnout = new File(getCacheDir(),"miniovpn");
 		if (mvpnout.exists() && mvpnout.canExecute())
 			return true;
 
-		if(minivpnwritten)
-			return true;
+		IOException e2 = null;
+
 		try {
-			InputStream mvpn = getAssets().open("minivpn");
+			
+			
+			InputStream mvpn;
+			
+			try {
+				mvpn = getAssets().open("minivpn." + Build.CPU_ABI);
+			}
+			catch (IOException errabi) {
+				e2=errabi;
+				mvpn = getAssets().open("minivpn." + Build.CPU_ABI2);	
+			}
+
 
 			FileOutputStream fout = new FileOutputStream(mvpnout);
 
@@ -246,10 +257,11 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 			if(!mvpnout.setExecutable(true))
 				return false;
-
-			minivpnwritten=true;
+			
 			return true;
 		} catch (IOException e) {
+			if(e2!=null)
+				OpenVPN.logMessage(0, "",e2.getLocalizedMessage());
 			OpenVPN.logMessage(0, "",e.getLocalizedMessage());
 			e.printStackTrace();
 			return false;

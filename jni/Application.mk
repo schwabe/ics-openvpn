@@ -1,4 +1,5 @@
 APP_ABI := all
+NDK_TOOLCHAIN_VERSION=4.4.3
 #APP_PLATFORM := android-14
 
 #APP_OPTIM := release

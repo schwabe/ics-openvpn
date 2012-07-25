@@ -97,6 +97,7 @@ public class VpnProfile implements  Serializable{
 	public boolean mUseDefaultRoutev6=true;
 	public String mCustomRoutesv6="";
 	public String mKeyPassword="";
+	static final String MINIVPN = "miniopenvpn";
 	
 
 
@@ -428,7 +429,7 @@ public class VpnProfile implements  Serializable{
 
 		// Add fixed paramenters
 		//args.add("/data/data/de.blinkt.openvpn/lib/openvpn");
-		args.add(cacheDir.getAbsolutePath() +"/" +"miniovpn");
+		args.add(cacheDir.getAbsolutePath() +"/" + VpnProfile.MINIVPN);
 
 		args.add("--config");
 		args.add(cacheDir.getAbsolutePath() + "/" + OVPNCONFIGFILE);

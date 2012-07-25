@@ -90,7 +90,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 		mPM =ProfileManager.getInstance(this);
 
-	}
+	}	
 
 	@Override
 	protected void onStart() {
@@ -224,7 +224,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 	}
 
 	private boolean writeMiniVPN() {
-		File mvpnout = new File(getCacheDir(),"miniovpn");
+		File mvpnout = new File(getCacheDir(),VpnProfile.MINIVPN);
 		if (mvpnout.exists() && mvpnout.canExecute())
 			return true;
 

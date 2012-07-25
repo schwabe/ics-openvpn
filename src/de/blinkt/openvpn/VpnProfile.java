@@ -117,7 +117,11 @@ public class VpnProfile implements  Serializable{
 		String escapedString = unescaped.replace("\\", "\\\\");
 		escapedString = escapedString.replace("\"","\\\"");
 		escapedString = escapedString.replace("\n","\\n");
-		return '"' + escapedString + '"';
+
+		if (escapedString.equals(unescaped) && !escapedString.contains(" "))
+			return unescaped;
+		else
+			return '"' + escapedString + '"';
 	}
 
 

@@ -97,6 +97,7 @@ public class VpnProfile implements  Serializable{
 	public boolean mUseDefaultRoutev6=true;
 	public String mCustomRoutesv6="";
 	public String mKeyPassword="";
+	static final String MINIVPN = "miniopenvpn";
 	
 
 
@@ -116,7 +117,11 @@ public class VpnProfile implements  Serializable{
 		String escapedString = unescaped.replace("\\", "\\\\");
 		escapedString = escapedString.replace("\"","\\\"");
 		escapedString = escapedString.replace("\n","\\n");
-		return '"' + escapedString + '"';
+
+		if (escapedString.equals(unescaped) && !escapedString.contains(" "))
+			return unescaped;
+		else
+			return '"' + escapedString + '"';
 	}
 
 
@@ -428,7 +433,7 @@ public class VpnProfile implements  Serializable{
 
 		// Add fixed paramenters
 		//args.add("/data/data/de.blinkt.openvpn/lib/openvpn");
-		args.add(cacheDir.getAbsolutePath() +"/" +"miniovpn");
+		args.add(cacheDir.getAbsolutePath() +"/" + VpnProfile.MINIVPN);
 
 		args.add("--config");
 		args.add(cacheDir.getAbsolutePath() + "/" + OVPNCONFIGFILE);

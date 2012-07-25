@@ -1,6 +1,4 @@
 # Path of the sources
-
-
 JNI_DIR := $(call my-dir)
 
 include lzo/Android.mk
@@ -23,7 +21,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 
 include $(CLEAR_VARS)
-LOCAL_LDLIBS := -lz  -lc
+LOCAL_LDLIBS := -lz  -lc 
 LOCAL_SHARED_LIBRARIES := libssl libcrypto openvpn
 LOCAL_SRC_FILES:= minivpn.c 
 LOCAL_MODULE = minivpn

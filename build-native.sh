@@ -1,6 +1,7 @@
 ndk-build APP_API=all -j 8
 if [ $? = 0 ]; then
 	cd libs
+	mkdir -p ../assets
 	for i in *
 	do
 		cp -v $i/minivpn ../assets/minivpn.$i

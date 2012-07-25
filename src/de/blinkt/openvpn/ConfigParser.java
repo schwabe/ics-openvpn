@@ -472,7 +472,7 @@ public class ConfigParser {
 			for(Vector<Vector<String>> option:options.values()) {
 				for(Vector<String> optionsline: option) {
 					for (String arg : optionsline)
-						custom+= arg + " ";
+						custom+= VpnProfile.openVpnEscape(arg) + " ";
 				}
 				custom+="\n";
 

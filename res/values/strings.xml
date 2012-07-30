@@ -237,4 +237,8 @@
     <string name="setting_loadtun_summary">Try to load the tun.ko kernel module before trying to connect. Needs rooted devices.</string>
     <string name="setting_loadtun">Load tun module</string>
     <string name="importpkcs12fromconfig">Import PKCS12 from configuration into Android Keystore</string>
+    <string name="getproxy_error">Error getting proxy settings: %s</string>
+    <string name="using_proxy">Using proxy %1$s %2$d</string>
+    <string name="use_system_proxy">Use system proxy</string>
+    <string name="use_system_proxy_summary">Use the system wide configuration for HTTP/HTTPS proxies to connect.</string>
 </resources>

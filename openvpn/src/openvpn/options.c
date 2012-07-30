@@ -4891,7 +4891,7 @@ add_option (struct options *options,
 	    goto err;
 	  }
 	
-	ho = init_http_proxy_options_once (options->ce.http_proxy_options, &options->gc);
+	ho = init_http_proxy_options_once (&options->ce.http_proxy_options, &options->gc);
 	
 	ho->server = p[1];
 	ho->port = port;
@@ -4926,7 +4926,7 @@ add_option (struct options *options,
     {
       struct http_proxy_options *ho;
       VERIFY_PERMISSION (OPT_P_GENERAL|OPT_P_CONNECTION);
-      ho = init_http_proxy_options_once (options->ce.http_proxy_options, &options->gc);
+      ho = init_http_proxy_options_once (&options->ce.http_proxy_options, &options->gc);
       ho->retry = true;
     }
   else if (streq (p[0], "http-proxy-timeout") && p[1])
@@ -4934,7 +4934,7 @@ add_option (struct options *options,
       struct http_proxy_options *ho;
 
       VERIFY_PERMISSION (OPT_P_GENERAL|OPT_P_CONNECTION);
-      ho = init_http_proxy_options_once (options->ce.http_proxy_options, &options->gc);
+      ho = init_http_proxy_options_once (&options->ce.http_proxy_options, &options->gc);
       ho->timeout = positive_atoi (p[1]);
     }
   else if (streq (p[0], "http-proxy-option") && p[1])
@@ -4942,7 +4942,7 @@ add_option (struct options *options,
       struct http_proxy_options *ho;
 
       VERIFY_PERMISSION (OPT_P_GENERAL|OPT_P_CONNECTION);
-      ho = init_http_proxy_options_once (options->ce.http_proxy_options, &options->gc);
+      ho = init_http_proxy_options_once (&options->ce.http_proxy_options, &options->gc);
 
       if (streq (p[1], "VERSION") && p[2])
 	{

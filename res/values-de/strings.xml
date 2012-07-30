@@ -194,5 +194,6 @@
 	<string name="faq_system_dialogs_title">Warnung beim Verbinden und Benachrichtigungston</string>
     <string name="tun_error_helpful">Auf manchen ROM Version sind eventuell die Zugriffsrechte von /dev/tun falsch oder das tun Kernel Modul fehlt. Für Cyanogenmod 9 ROMs mit root gibt einen provisorischen Fix in den generellen Einstellungen.</string>
     <string name="importpkcs12fromconfig">Importiere die PKCS12 Datei, die in der Konfiguration angegeben ist, in den Android Keystore</string>
-    
+    <string name="use_system_proxy">Benutze System Proxies</string>
+    <string name="use_system_proxy_summary">Benutze die System weiten Einstellungen für HTTP/HTTPS Proxies beim Verbinden.</string>
 </resources>

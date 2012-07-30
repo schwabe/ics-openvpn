@@ -23,7 +23,9 @@ import org.spongycastle.util.io.pem.PemWriter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.preference.PreferenceManager;
 import android.security.KeyChain;
 import android.security.KeyChainException;
 
@@ -144,9 +146,10 @@ public class VpnProfile implements  Serializable{
 	}
 
 
-	public String getConfigFile(File cacheDir)
+	public String getConfigFile(Context context)
 	{
 
+		File cacheDir= context.getCacheDir();
 		String cfg="";
 
 		// Enable managment interface
@@ -331,6 +334,14 @@ public class VpnProfile implements  Serializable{
 		if(mUseFloat)
 			cfg+= "float\n";
 
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);        
+		boolean usesystemproxy = prefs.getBoolean("usesystemproxy", true);
+		if(usesystemproxy) {
+			cfg+= "# Use system proxy setting\n";
+			cfg+= "management-query-proxy\n";
+		}
+		
+		
 		if(mUseCustomConfig) {
 			cfg += "# Custom configuration options\n";
 			cfg += "# You are on your on own here :)\n";
@@ -464,7 +475,7 @@ public class VpnProfile implements  Serializable{
 
 		try {
 			FileWriter cfg = new FileWriter(context.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE);
-			cfg.write(getConfigFile(context.getCacheDir()));
+			cfg.write(getConfigFile(context));
 			cfg.flush();
 			cfg.close();
 		} catch (IOException e) {

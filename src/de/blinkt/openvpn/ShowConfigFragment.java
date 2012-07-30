@@ -27,7 +27,7 @@ public class ShowConfigFragment extends Fragment {
 			configtext = getString(check);
 		}
 		else { 
-			String cfg=vp.getConfigFile(getActivity().getCacheDir());
+			String cfg=vp.getConfigFile(getActivity());
 			configtext= cfg;
 			cv.setText(cfg);
 		}

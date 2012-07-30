@@ -16,6 +16,11 @@
         android:key="statusafterconnect"
         android:summary="@string/keppstatus_summary"
         android:title="@string/keepstatus" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="usesystemproxy"
+        android:summary="@string/use_system_proxy_summary"
+        android:title="@string/use_system_proxy" />
 
     <PreferenceCategory android:title="Device specifics Hacks" >
         <CheckBoxPreference

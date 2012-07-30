@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -35,7 +37,7 @@ public class OpenVpnManagementThread implements Runnable {
 	private String mCurrentstate; 
 
 	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
-	
+
 	static private native void jniclose(int fdint);
 	static private native byte[] rsasign(byte[] input,int pkey) throws InvalidKeyException;
 
@@ -178,8 +180,10 @@ public class OpenVpnManagementThread implements Runnable {
 				processNeedCommand(argument);
 			} else if (cmd.equals("BYTECOUNT")){
 				processByteCount(argument);
-			} else if (cmd.equals("STATE")){
+			} else if (cmd.equals("STATE")) {
 				processState(argument);
+			} else if (cmd.equals("PROXY")) {
+				processProxyCMD(argument);
 			} else if (cmd.equals("LOG")) {
 				String[] args = argument.split(",",3);
 				// 0 unix time stamp
@@ -200,6 +204,22 @@ public class OpenVpnManagementThread implements Runnable {
 		}
 	}
 
+	private void processProxyCMD(String argument) {
+		SocketAddress proxyaddr = ProxyDetection.detectProxy(mProfile);
+
+
+		if(proxyaddr instanceof InetSocketAddress ){
+			InetSocketAddress isa = (InetSocketAddress) proxyaddr;
+			
+			OpenVPN.logInfo(R.string.using_proxy, isa.getHostName(),isa.getPort());
+			
+			String proxycmd = String.format("proxy HTTP %s %d\n", isa.getHostName(),isa.getPort());
+			managmentCommand(proxycmd);
+		} else {
+			managmentCommand("proxy NONE\n");
+		}
+
+	}
 	private void processState(String argument) {
 		String[] args = argument.split(",",3);
 		mCurrentstate = args[1];
@@ -337,7 +357,7 @@ public class OpenVpnManagementThread implements Runnable {
 		}
 		return false;
 	}
-	
+
 	private void processPWCommand(String argument) {
 		//argument has the form 	Need 'Private Key' password
 
@@ -400,21 +420,21 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 
 	private void processSignCommand(String b64data) {
-		
+
 		PrivateKey privkey = mProfile.getKeystoreKey();
 		Exception err =null;
 		// The Jelly Bean *evil* Hack
-		
+
 		byte[] data = Base64.decode(b64data, Base64.DEFAULT);
 
 		if(Build.VERSION.SDK_INT>=16){
 			processSignJellyBeans(privkey,data);
 			return;
 		}
-		
-		
+
+
 		try{
-		
+
 
 			Cipher rsasinger = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
 
@@ -450,19 +470,19 @@ public class OpenVpnManagementThread implements Runnable {
 			System.out.println(allm);
 			Method getKey = privkey.getClass().getSuperclass().getDeclaredMethod("getOpenSSLKey");
 			getKey.setAccessible(true);
-			
+
 			// Real object type is OpenSSLKey
 			Object opensslkey = getKey.invoke(privkey);
-			
+
 			getKey.setAccessible(false);
-			
+
 			Method getPkeyContext = opensslkey.getClass().getDeclaredMethod("getPkeyContext");
-			
+
 			// integer pointer to EVP_pkey
 			getPkeyContext.setAccessible(true);
 			int pkey = (Integer) getPkeyContext.invoke(opensslkey);
 			getPkeyContext.setAccessible(false);
-			
+
 			byte[] signed_bytes = rsasign(data, pkey); 
 			String signed_string = Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
 			managmentCommand("rsa-sig\n");

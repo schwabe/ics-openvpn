@@ -38,6 +38,15 @@
             android:layout_height="10sp" />
 
         <TextView
+            android:id="@+id/donatestring"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="all"
@@ -51,10 +60,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/copyright_others" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="10sp" />
-        
 
         <TextView
             android:layout_width="match_parent"

@@ -4,6 +4,9 @@ import android.app.Fragment;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +38,14 @@ public class AboutFragment extends Fragment  {
 
     	
     	ver.setText(getString(R.string.version_info,name,version));
+    	
+    	TextView paypal = (TextView) v.findViewById(R.id.donatestring);
+    	
+    	String donatetext = getActivity().getString(R.string.donatewithpaypal);
+    	Spanned htmltext = Html.fromHtml(donatetext);
+    	paypal.setText(htmltext);
+    	paypal.setMovementMethod(LinkMovementMethod.getInstance());
+    	
     	return v;
     }
 

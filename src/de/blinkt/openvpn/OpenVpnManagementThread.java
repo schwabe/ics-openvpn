@@ -18,6 +18,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import android.net.LocalServerSocket;
 import android.net.LocalSocket;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
@@ -34,16 +35,17 @@ public class OpenVpnManagementThread implements Runnable {
 	private int mBytecountinterval=2;
 	private long mLastIn=0; 
 	private long mLastOut=0;
-	private String mCurrentstate; 
+	private String mCurrentstate;
+	private LocalServerSocket mServerSocket; 
 
 	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
 
 	static private native void jniclose(int fdint);
 	static private native byte[] rsasign(byte[] input,int pkey) throws InvalidKeyException;
 
-	public OpenVpnManagementThread(VpnProfile profile, LocalSocket mgmtsocket, OpenVpnService openVpnService) {
+	public OpenVpnManagementThread(VpnProfile profile, LocalServerSocket mgmtsocket, OpenVpnService openVpnService) {
 		mProfile = profile;
-		mSocket = mgmtsocket;
+		mServerSocket = mgmtsocket;
 		mOpenVPNService = openVpnService;
 	}
 
@@ -67,16 +69,14 @@ public class OpenVpnManagementThread implements Runnable {
 		Log.i(TAG, "Managment Socket Thread started");
 		byte [] buffer  =new byte[2048];
 		//	mSocket.setSoTimeout(5); // Setting a timeout cannot be that bad
-		InputStream instream = null;
-		try {
-			instream = mSocket.getInputStream();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 		String pendingInput="";
 		active.add(this);
 
 		try {
+			// Wait for a client to connect
+			mSocket= mServerSocket.accept();
+			InputStream instream = mSocket.getInputStream();
 
 			while(true) {
 				int numbytesread = instream.read(buffer);

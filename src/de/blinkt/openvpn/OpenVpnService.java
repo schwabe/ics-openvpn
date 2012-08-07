@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.LocalServerSocket;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.net.VpnService;
@@ -114,14 +115,14 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 
 
-	private LocalSocket openManagmentInterface(int tries) {
+	private LocalServerSocket openManagmentInterface(int tries) {
 		// Could take a while to open connection
 		String socketname = (getCacheDir().getAbsolutePath() + "/" +  "mgmtsocket");
 		LocalSocket sock = new LocalSocket();
 
 		while(tries > 0 && !sock.isConnected()) {
 			try {
-				sock.connect(new LocalSocketAddress(socketname,
+				sock.bind(new LocalSocketAddress(socketname,
 						LocalSocketAddress.Namespace.FILESYSTEM));
 			} catch (IOException e) {
 				// wait 300 ms before retrying
@@ -131,7 +132,16 @@ public class OpenVpnService extends VpnService implements StateListener {
 			} 
 			tries--;
 		}
-		return sock;
+		
+		try {
+			LocalServerSocket lss = new LocalServerSocket(sock.getFileDescriptor());
+			return lss;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
 
 	}
 	
@@ -171,18 +181,18 @@ public class OpenVpnService extends VpnService implements StateListener {
 			} catch (InterruptedException e) {
 			}
 		}
+		// Open the Management Interface
+		LocalServerSocket mgmtsocket = openManagmentInterface(8);
 
-		// See if there is a managment socket we can connect to and kill the process too
-		LocalSocket mgmtsocket =  openManagmentInterface(1);
 		if(mgmtsocket!=null) {
-			// Fire and forget :)
-			new OpenVpnManagementThread(mProfile,mgmtsocket,this).managmentCommand("signal SIGINT\n");
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			}
-			//checkForRemainingMiniVpns();
+			// start a Thread that handles incoming messages of the managment socket
+			mSocketManager = new OpenVpnManagementThread(mProfile,mgmtsocket,this);
+			mSocketManagerThread = new Thread(mSocketManager,"OpenVPNMgmtThread");
+			mSocketManagerThread.start();
+			OpenVPN.logInfo("started Socket Thread");
+			registerNetworkStateReceiver();
 		}
+
 
 		// Start a new session by creating a new thread.
 		OpenVPNThread serviceThread = new OpenVPNThread(this, argv,nativelibdir);
@@ -192,16 +202,6 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 		
 		
-		// Open the Management Interface
-		mgmtsocket =  openManagmentInterface(8);
-
-		if(mgmtsocket!=null) {
-			// start a Thread that handles incoming messages of the managment socket
-			mSocketManager = new OpenVpnManagementThread(mProfile,mgmtsocket,this);
-			mSocketManagerThread = new Thread(mSocketManager,"OpenVPNMgmtThread");
-			mSocketManagerThread.start();
-			registerNetworkStateReceiver();
-		}
 
 		return START_NOT_STICKY;
 	}

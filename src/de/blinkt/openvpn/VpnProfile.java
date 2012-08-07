@@ -158,7 +158,9 @@ public class VpnProfile implements  Serializable{
 
 		cfg +=cacheDir.getAbsolutePath() + "/" +  "mgmtsocket";
 		cfg += " unix\n";
-		cfg+= "management-query-passwords\n";
+		cfg += "management-client\n";
+		cfg += "management-signal\n";
+		cfg += "management-query-passwords\n";
 		cfg += "management-hold\n\n";
 
 		/* tmp-dir patched out :) 

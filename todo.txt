@@ -14,7 +14,10 @@ Ideas:
 
 Bugfixes:
  - startpath file explorer
-
+a) die App sollte keine Verbindung aufbauen, wenn der Flugzeugmodus
+   aktiviert ist
+b) die App sollte kein Reconnect durchführen, wenn der Flugzeugmodus
+   aktiviert ist
 
 Missing configuration options:
 

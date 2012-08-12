@@ -44,11 +44,17 @@ public class NetworkSateReceiver extends BroadcastReceiver {
 		if(networkInfo!=null && networkInfo.getState() == State.CONNECTED) {
 				int newnet = networkInfo.getType();
 			
-				if(sendusr1 && lastNetwork!=-1 && (lastNetwork!=newnet))
+				if(sendusr1 && lastNetwork!=newnet)
 					mManangement.reconnect();
 							
 				lastNetwork = newnet;
+		} else if (networkInfo==null) {
+			// Not connected, stop openvpn, set last connected network to no network
+			lastNetwork=-1;
+			if(sendusr1)
+				mManangement.signalusr1();
 		}
+		
 		if(!netstatestring.equals(lastStateMsg))
 			OpenVPN.logInfo(R.string.netstatus, netstatestring);
 		lastStateMsg=netstatestring;

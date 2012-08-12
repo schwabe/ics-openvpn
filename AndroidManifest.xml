@@ -22,8 +22,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     
+    <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
     <uses-sdk android:minSdkVersion="14" />
 
@@ -31,8 +32,9 @@
         android:icon="@drawable/icon"
         android:label="@string/app" >
         <activity android:name=".AboutFragment" />
-        <activity android:name=".VPNPreferences" 
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".VPNPreferences"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".LogWindow"
             android:label="OpenVPN Log" />
@@ -53,8 +55,12 @@
                 <action android:name="android.net.VpnService" />
             </intent-filter>
         </service>
+        <receiver android:name=".OnBootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
-        
         <activity
             android:name=".ConfigConverter"
             android:label="Convert Config File" >
@@ -63,19 +69,19 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:mimeType="application/x-openvpn-profile" />
             </intent-filter>
             <intent-filter android:label="Import OpenVPN Config" >
-                 <action android:name="android.intent.action.VIEW" />
-          
+                <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:mimeType="application/ovpn" />
             </intent-filter>
             <intent-filter android:label="Import OpenVPN Config" >
-                
-				<action android:name="android.intent.action.VIEW" />                
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -84,7 +90,7 @@
                     android:pathPattern=".*\\.ovpn"
                     android:scheme="content" />
             </intent-filter>
-        </activity>  
+        </activity>
         <activity
             android:name=".LaunchVPN"
             android:label="@string/vpn_launch_title" >

@@ -67,6 +67,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 		OpenVpnManagementThread.stopOpenVPN();
 		mServiceThread=null;
 		stopSelf();
+		ProfileManager.onBootDelete(this);
 	};
 
 	private void hideNotification() {
@@ -200,9 +201,8 @@ public class OpenVpnService extends VpnService implements StateListener {
 		mServiceThread = new Thread(serviceThread, "OpenVPNServiceThread");
 		mServiceThread.start();
 
+		ProfileManager.setOnBootProfile(this, mProfile);
 		
-		
-
 		return START_NOT_STICKY;
 	}
 

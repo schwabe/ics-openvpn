@@ -24,6 +24,7 @@ import org.spongycastle.util.io.pem.PemWriter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ApplicationInfo;
 import android.preference.PreferenceManager;
 import android.security.KeyChain;
@@ -710,6 +711,9 @@ public class VpnProfile implements  Serializable{
 	public PrivateKey getKeystoreKey() {
 		return mPrivateKey;
 	}
+
+
+	
 }
 
 

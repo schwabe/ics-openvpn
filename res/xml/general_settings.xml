@@ -21,6 +21,11 @@
         android:key="usesystemproxy"
         android:summary="@string/use_system_proxy_summary"
         android:title="@string/use_system_proxy" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="restartvpnonboot"
+        android:summary="@string/onbootrestartsummary"
+        android:title="@string/onbootrestart" />
 
     <PreferenceCategory android:title="Device specifics Hacks" >
         <CheckBoxPreference
@@ -34,5 +39,6 @@
             android:summary="@string/setting_loadtun_summary"
             android:title="@string/setting_loadtun" />
     </PreferenceCategory>
+
 
 </PreferenceScreen>

@@ -196,4 +196,6 @@
     <string name="importpkcs12fromconfig">Importiere die PKCS12 Datei, die in der Konfiguration angegeben ist, in den Android Keystore</string>
     <string name="use_system_proxy">Benutze System Proxies</string>
     <string name="use_system_proxy_summary">Benutze die System weiten Einstellungen für HTTP/HTTPS Proxies beim Verbinden.</string>
+    <string name="onbootrestartsummary">Openvpn wird bei einem Neustart des Telefon das beim herrunterfahren/neu starten aktive VPN weider verbinden. Bitte lesen Sie die FAQ &quot;Warnung beim Verbinden&quot; FAQ bevor Sie diese Option verwenden.</string>
+    <string name="onbootrestart">Nach Neustart verbinden</string>
 </resources>

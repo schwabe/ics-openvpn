@@ -14,9 +14,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 
 public class ProfileManager {
 	private static final String PREFS_NAME =  "VPNList";
+
+
+
+	private static final String ONBOOTPROFILE = "onBootProfile";
 
 
 
@@ -46,6 +51,37 @@ public class ProfileManager {
 		checkInstance(context);
 		return instance;
 	}
+	
+	public static void onBootDelete(Context c) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+		Editor prefsedit = prefs.edit();
+		prefsedit.putString(ONBOOTPROFILE, null);
+		prefsedit.apply();
+		
+	}
+
+	public static void setOnBootProfile(Context c, VpnProfile bootprofile) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+		Editor prefsedit = prefs.edit();
+		
+		prefsedit.putString(ONBOOTPROFILE, bootprofile.getUUIDString());
+		prefsedit.apply();
+		
+	}
+	
+	public static VpnProfile getOnBootProfile(Context c) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+
+		boolean useStartOnBoot = prefs.getBoolean("restartvpnonboot", false);
+
+		
+		String mBootProfileUUID = prefs.getString(ONBOOTPROFILE,null);
+		if(useStartOnBoot && mBootProfileUUID!=null)
+			return get(c, mBootProfileUUID);
+		else 
+			return null;
+	}
+	
 	
 	
 	

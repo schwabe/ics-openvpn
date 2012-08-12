@@ -2,22 +2,20 @@ Ideas:
   
 - implement a small app that can do cert+key+ca => p12 or suggest an app on the market
    - Implementation in ICS OpenVpn would require SD_WRITE permission which I would like to avoid
+   - Do cert+key+ca => p12 inside the app, import directly to keystore
    
 - implement an encryption for profiles, so no sensitive data has be stored in plain text
    - encrypt/decrypt with android private storage key (+no user input required)
    
-- implement general settings dialog
+- general settings dialog
    - encryption of profiles
-   - Speed/Transfered in notification bar with nice bar graph!
+ 
+- Give the notification a nice speed bar
    
 - map SIGUSR1 to SIGINT
 
 Bugfixes:
  - startpath file explorer
-a) die App sollte keine Verbindung aufbauen, wenn der Flugzeugmodus
-   aktiviert ist
-b) die App sollte kein Reconnect durchführen, wenn der Flugzeugmodus
-   aktiviert ist
 
 Missing configuration options:
 

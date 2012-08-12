@@ -18,10 +18,13 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
+import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
 
@@ -36,7 +39,9 @@ public class OpenVpnManagementThread implements Runnable {
 	private long mLastIn=0; 
 	private long mLastOut=0;
 	private String mCurrentstate;
-	private LocalServerSocket mServerSocket; 
+	private LocalServerSocket mServerSocket;
+	private boolean mReleaseHold=true;
+	private boolean mWaitingForRelease=false; 
 
 	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
 
@@ -47,6 +52,13 @@ public class OpenVpnManagementThread implements Runnable {
 		mProfile = profile;
 		mServerSocket = mgmtsocket;
 		mOpenVPNService = openVpnService;
+		
+
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(openVpnService);
+		boolean managemeNetworkState = prefs.getBoolean("netchangereconnect", true);
+		if(managemeNetworkState)
+			mReleaseHold=false;
+
 	}
 
 	static {
@@ -54,12 +66,13 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 
 	public void managmentCommand(String cmd) {
-		//Log.d("openvpn", "mgmt cmd" + mSocket + " "  +cmd + " " );
-		try {
-			mSocket.getOutputStream().write(cmd.getBytes());
-			mSocket.getOutputStream().flush();
-		} catch (IOException e) {
-			// Ignore socket stack traces
+		if(mSocket!=null) {
+			try {
+				mSocket.getOutputStream().write(cmd.getBytes());
+				mSocket.getOutputStream().flush();
+			} catch (IOException e) {
+				// Ignore socket stack traces
+			}
 		}
 	}
 
@@ -173,9 +186,10 @@ public class OpenVpnManagementThread implements Runnable {
 			}else if (cmd.equals("PASSWORD")) {
 				processPWCommand(argument);
 			} else if (cmd.equals("HOLD")) {
-				managmentCommand("hold release\n");
-				managmentCommand("bytecount " + mBytecountinterval + "\n");
-				managmentCommand("state on\n");
+				if(mReleaseHold)
+					releaseHoldCmd();
+				else
+					mWaitingForRelease=true;
 			} else if (cmd.equals("NEED-OK")) {
 				processNeedCommand(argument);
 			} else if (cmd.equals("BYTECOUNT")){
@@ -202,6 +216,19 @@ public class OpenVpnManagementThread implements Runnable {
 			Log.i(TAG, "Got unrecognized line from managment" + command);
 			OpenVPN.logMessage(0, "MGMT:", "Got unrecognized line from management:" + command);
 		}
+	}
+	private void releaseHoldCmd() {
+		mWaitingForRelease=false;
+		managmentCommand("hold release\n");
+		managmentCommand("bytecount " + mBytecountinterval + "\n");
+		managmentCommand("state on\n");
+	}
+	
+	public void releaseHold() {
+		if(mWaitingForRelease)
+			releaseHoldCmd();
+		else	
+			mReleaseHold=true;
 	}
 
 	private void processProxyCMD(String argument) {
@@ -413,10 +440,15 @@ public class OpenVpnManagementThread implements Runnable {
 		return sendCMD;		
 	}
 
+	public void signalusr1() {
+		if(!mWaitingForRelease)
+			managmentCommand("signal SIGUSR1\n");
+		mReleaseHold=false;
+	}
 
 	public void reconnect() {
-		managmentCommand("signal SIGUSR1\n");
-
+		signalusr1();
+		releaseHold();
 	}
 
 	private void processSignCommand(String b64data) {

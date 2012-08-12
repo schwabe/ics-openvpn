@@ -58,6 +58,8 @@ public class LogWindow extends ListActivity implements StateListener  {
 			OpenVPN.addLogListener(this);
 		}
 
+		
+		
 		private void initLogBuffer() {
 			myEntries.clear();
 			for (LogItem litem : OpenVPN.getlogbuffer()) {
@@ -207,6 +209,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
+					ProfileManager.onBootDelete(getApplicationContext());
 					OpenVpnManagementThread.stopOpenVPN();		
 				}
 			});

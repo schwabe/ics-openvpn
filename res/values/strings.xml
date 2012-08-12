@@ -242,4 +242,6 @@
     <string name="use_system_proxy">Use system proxy</string>
     <string name="use_system_proxy_summary">Use the system wide configuration for HTTP/HTTPS proxies to connect.</string>
     <string name="donatewithpaypal">You can &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\">donate with PayPal&lt;/a> </string>
+    <string name="onbootrestartsummary">OpenVPN will reconnect a VPN if it was active on system reboot/shutdown. Please read the Connection warning FAQ before using this option.</string>
+    <string name="onbootrestart">Reconnect on reboot</string>
 </resources>

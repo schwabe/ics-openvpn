@@ -75,12 +75,14 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 	static final String EXTRA_KEY = "de.blinkt.openvpn.shortcutProfileUUID";
 	static final String EXTRA_NAME = "de.blinkt.openvpn.shortcutProfileName";
+	public static final String EXTRA_HIDELOG =  "de.blinkt.openvpn.showNoLogWindow";;
 
 	private static final int START_VPN_PROFILE= 70;
+	
 
 	private ProfileManager mPM;
 	private VpnProfile mSelectedProfile;
-
+	private boolean mhideLog=false;
 
 	private boolean mCmfixed=false;
 
@@ -102,10 +104,12 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		
 		// If the intent is a request to create a shortcut, we'll do that and exit
 
+		
 		if(Intent.ACTION_MAIN.equals(action)) {
 			// we got called to be the starting point, most likely a shortcut
 			String shortcutUUID = intent.getStringExtra( EXTRA_KEY);
 			String shortcutName = intent.getStringExtra( EXTRA_NAME);
+			mhideLog = intent.getBooleanExtra(EXTRA_HIDELOG, false);
 
 			VpnProfile profileToConnect = ProfileManager.get(shortcutUUID);
 			if(shortcutName != null && profileToConnect ==null)
@@ -122,18 +126,9 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			mSelectedProfile = profileToConnect;
 			launchVPN();
 
-
-
 		} else if (Intent.ACTION_CREATE_SHORTCUT.equals(action)) {
 			createListView();
 		}
-
-
-
-
-
-
-
 	}
 
 	private void createListView() {
@@ -318,7 +313,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 				} else {
 					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
 					boolean showlogwindow = prefs.getBoolean("showlogwindow", true);
-					if(showlogwindow)
+					
+					if(!mhideLog && showlogwindow)
 						showLogWindow();
 					new startOpenVpnThread().start();
 				}
@@ -370,7 +366,6 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		if(usecm9fix && !mCmfixed ) {
 			execeuteSUcmd("chown system /dev/tun");
 		}
-
 
 
 		if (intent != null) {

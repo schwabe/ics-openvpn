@@ -1,5 +1,6 @@
 @echo on
-ndk-build -j 8
+call ndk-build -j 8
+
 cd libs
 mkdir ..\assets
 

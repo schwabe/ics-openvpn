@@ -6,7 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkInfo.State;
+import android.net.wifi.SupplicantState;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
 
 public class NetworkSateReceiver extends BroadcastReceiver {
@@ -37,9 +41,22 @@ public class NetworkSateReceiver extends BroadcastReceiver {
 			if(extrainfo==null)
 				extrainfo="";
 			
+			/*
+			if(networkInfo.getType()==android.net.ConnectivityManager.TYPE_WIFI) {
+				WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);			
+				WifiInfo wifiinfo = wifiMgr.getConnectionInfo();
+				extrainfo+=wifiinfo.getBSSID();
+				
+				subtype += wifiinfo.getNetworkId();
+			}*/
+			
+			
+			
 			netstatestring = String.format("%2$s %4$s to %1$s %3$s",networkInfo.getTypeName(),
 					networkInfo.getDetailedState(),extrainfo,subtype );
 		}
+		
+		
 		
 		if(networkInfo!=null && networkInfo.getState() == State.CONNECTED) {
 				int newnet = networkInfo.getType();

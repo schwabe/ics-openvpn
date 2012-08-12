@@ -50,3 +50,11 @@ assets/minivpn.armeabi
 assets/minivpn.armeabi-v7a
 assets/minivpn.mips
 assets/minivpn.x86
+openvpn/a.out.dSYM
+openvpn/config-version.h
+openvpn/config.status
+Makefile
+openvpn/libtool
+openvpn/stamp-h1
+openvpn/version.sh
+t_client.sh

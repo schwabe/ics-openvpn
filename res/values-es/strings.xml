@@ -161,7 +161,6 @@
     <string name="faq_security_title">Seguridad</string>
     <string name="import_vpn">Importar</string>
     <string name="broken_image_cert_title">Error al mostrar selección de certificado</string>
-    <string name="broken_image_cert">Got an exception trying to show the Android 4.0+ certificate selection dialog. This should never happen as this a standard feature of Android 4.0+. Maybe your Android ROM support for certificate storage is broken</string>
     <string name="ipv4">IPv4</string>
     <string name="ipv6">IPv6</string>
     <string name="speed_waiting">Esperando mensaje de estado…</string>

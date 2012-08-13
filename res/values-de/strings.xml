@@ -144,7 +144,7 @@
     <string name="copied_entry">Log Eintrag in die Zwischenablage kopiert</string>
     <string name="tap_mode">Tap Mode</string>
     <string name="faq_tap_mode">Die VPN API von Android, die ohne rooten des Telefons funktioniert, unterstützt nur den tun modus. Das Unterstützen des Tap Modus ist daher nicht möglich.</string>
-        <string name="faq">FAQ</string>
+    <string name="faq">FAQ</string>
     <string name="faq_summary">häufig gestellte Fragen und Hinweise</string>
     <string name="copying_log_entries">Kopieren von Log Einträgen</string>
     <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the gui.</string>
@@ -171,14 +171,14 @@
     <string name="keychain_nocacert">Beim Abfragen des Android KeyStore wurde kein CA Zertifikat zurückgegeben. Überprüfen des Serverzertifikat wird warscheinlich fehlschlagen. Geben Sie manuell ein CA Zertifikat an.</string>
     <string name="cert_from_keystore">Zertifikat (KeyStore): \'%s\' </string>
     <string name="extracahint">Das CA Zertifikat wird meist aus dem Zertifikatsspeicher automatisch ausgewählt. Sollte dies nicht funktionieren und Sie Verifizierungsprobleme erhalten(self signed certificate), wählen Sie manuell ein Zertifikat aus.</string>
-   <string name="show_log_summary">Zeigt das Status Log, wenn ein VPN verbunden wird. Das Status log kann immer über die Benachrichtigung aufgerufen werden.</string>
+    <string name="show_log_summary">Zeigt das Status Log, wenn ein VPN verbunden wird. Das Status log kann immer über die Benachrichtigung aufgerufen werden.</string>
     <string name="show_log_window">Zeige Log</string>
     <string name="keppstatus_summary">Zeige die OpenVPN Benachrichtung nach Verbinden zusätzlich zu der System Benachrichtigung an um Traffic Statistiken anzuzeigen.</string>
     <string name="keepstatus">Traffic Statistiken</string>
     <string name="mobile_info">Modell %1$s (%2$s) %3$s, Android API %4$d</string>
     <string name="error_rsa_sign">Fehler beim Zugriff auf den Android Keystore %1$s: %2$s</string>
     <string name="ipdns">IP und DNS</string>
-     <string name="basic">Basic</string>
+    <string name="basic">Basic</string>
     <string name="routing">Routing</string>
     <string name="obscure">Oskure OpenVPN Einstellungen, die normalerweise nicht benötigt werden.</string>
     <string name="advanced">Erweitert</string>
@@ -189,13 +189,15 @@
     <string name="faq_howto_title">Schnellstart</string>
     <string name="setting_loadtun_summary">Versuche das tun.ko Kernel Modul zu laden. Benötigt root.</string>
     <string name="setting_loadtun">Lade tun Modul</string>
-    <!--  Der Author hat die deutsche Übersetzung ganz allein verbrochen :) -->
+    <!-- Der Author hat die deutsche Übersetzung ganz allein verbrochen :) -->
     <string name="translationby"></string>
-	<string name="faq_system_dialogs_title">Warnung beim Verbinden und Benachrichtigungston</string>
+    <string name="faq_system_dialogs_title">Warnung beim Verbinden und Benachrichtigungston</string>
     <string name="tun_error_helpful">Auf manchen ROM Version sind eventuell die Zugriffsrechte von /dev/tun falsch oder das tun Kernel Modul fehlt. Für Cyanogenmod 9 ROMs mit root gibt einen provisorischen Fix in den generellen Einstellungen.</string>
     <string name="importpkcs12fromconfig">Importiere die PKCS12 Datei, die in der Konfiguration angegeben ist, in den Android Keystore</string>
     <string name="use_system_proxy">Benutze System Proxies</string>
     <string name="use_system_proxy_summary">Benutze die System weiten Einstellungen für HTTP/HTTPS Proxies beim Verbinden.</string>
+    <string name="getproxy_error">Fehler beim Ermittlen der Proxy Einstellungen: %s</string>
+    <string name="using_proxy">Benutzt Proxy %1$s %2$d</string>
     <string name="onbootrestartsummary">Openvpn wird bei einem Neustart des Telefon das beim herrunterfahren/neu starten aktive VPN weider verbinden. Bitte lesen Sie die FAQ &quot;Warnung beim Verbinden&quot; FAQ bevor Sie diese Option verwenden.</string>
     <string name="onbootrestart">Nach Neustart verbinden</string>
     <string name="faq_howto_shortcut">Sie können ein Shortcut zum Starten des VPN auf Ihren Startbildschirm legen. Abhängig davon welches Home/Launcher Programm Sie verwenden müssen ein Widget, Shortcut oder Verknüpfung hinzufügen</string>
@@ -205,4 +207,5 @@
     <string name="restart_vpn_after_change">Konfigurationsänderungen werden erst nach einem VPN Neustart aktiv. Jetzt neu verbinden?</string>
     <string name="configuration_changed">Konfiguration geändert</string>
     <string name="log_no_last_vpn">Konnte das zuletzt verbundene Profile beim Versuch des Editieren nicht ermitteln.</string>
+
 </resources>

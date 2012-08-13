@@ -26,6 +26,10 @@ public class ProfileManager {
 
 
 	private static ProfileManager instance;
+
+
+
+	private static VpnProfile mLastConnectedVpn=null;
 	private HashMap<String,VpnProfile> profiles=new HashMap<String, VpnProfile>();
 
 
@@ -52,7 +56,7 @@ public class ProfileManager {
 		return instance;
 	}
 	
-	public static void onBootDelete(Context c) {
+	public static void setConntectedVpnProfileDisconnected(Context c) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 		Editor prefsedit = prefs.edit();
 		prefsedit.putString(ONBOOTPROFILE, null);
@@ -60,12 +64,13 @@ public class ProfileManager {
 		
 	}
 
-	public static void setOnBootProfile(Context c, VpnProfile bootprofile) {
+	public static void setConnectedVpnProfile(Context c, VpnProfile connectedrofile) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 		Editor prefsedit = prefs.edit();
 		
-		prefsedit.putString(ONBOOTPROFILE, bootprofile.getUUIDString());
+		prefsedit.putString(ONBOOTPROFILE, connectedrofile.getUUIDString());
 		prefsedit.apply();
+		mLastConnectedVpn=connectedrofile;
 		
 	}
 	
@@ -183,6 +188,8 @@ public class ProfileManager {
 		profiles.remove(vpnentry);
 		saveProfileList(context);
 		context.deleteFile(vpnentry + ".vp");
+		if(mLastConnectedVpn==profile)
+			mLastConnectedVpn=null;
 		
 	}
 
@@ -191,6 +198,12 @@ public class ProfileManager {
 	public static VpnProfile get(Context context, String profileUUID) {
 		checkInstance(context);
 		return get(profileUUID);
+	}
+
+
+
+	public static VpnProfile getLastConnectedVpn() {
+		return mLastConnectedVpn;
 	}
 
 }

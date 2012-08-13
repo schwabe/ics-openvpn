@@ -431,9 +431,10 @@ public class OpenVpnManagementThread implements Runnable {
 			mt.managmentCommand("signal SIGINT\n");
 			sendCMD=true;
 			try {
-				mt.mSocket.close();
+				if(mt !=null)
+					mt.mSocket.close();
 			} catch (IOException e) {
-				// Ignore close error on maybe already closed socket
+				// Ignore close error on already closed socket
 			}
 		}
 		return sendCMD;		

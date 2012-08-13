@@ -1,0 +1,256 @@
+
+Scanning .: ............
+Scanning . (Phase 2): ............
+res/values/strings.xml:41: Error: "copyright_guicode" is not translated in zh [MissingTranslation]
+    <string name="copyright_guicode">Source code and issue tracker available under http://code.google.com/p/ics-openvpn/ </string>
+    ^
+res/values/strings.xml:42: Error: "copyright_others" is not translated in zh [MissingTranslation]
+    <string name="copyright_others">The program uses the following components. See the source for full details on the licenses</string>
+    ^
+res/values/strings.xml:70: Error: "static_keys_info" is not translated in ko, zh [MissingTranslation]
+    <string name="static_keys_info">For the static configuration the TLS Auth Keys will be used as static keys.</string>
+    ^
+res/values/strings.xml:81: Error: "pw_query_hint" is not translated in zh [MissingTranslation]
+    <string name="pw_query_hint">Leave empty to query on demand</string>
+    ^
+res/values/strings.xml:94: Error: "remove_vpn" is not translated in ko [MissingTranslation]
+    <string name="remove_vpn">Remove VPN</string>
+    ^
+res/values/strings.xml:96: Error: "check_remote_tlscert_title" is not translated in zh [MissingTranslation]
+    <string name="check_remote_tlscert_title">Except TLS Server</string>
+    ^
+res/values/strings.xml:97: Error: "remote_tlscn_check_summary" is not translated in es, zh [MissingTranslation]
+    <string name="remote_tlscn_check_summary">Checks the Remote Server Certificate CN against a string</string>
+    ^
+res/values/strings.xml:98: Error: "remote_tlscn_check_title" is not translated in zh [MissingTranslation]
+    <string name="remote_tlscn_check_title">Certificate Hostname Check</string>
+    ^
+res/values/strings.xml:99: Error: "enter_tlscn_dialog" is not translated in es, zh [MissingTranslation]
+    <string name="enter_tlscn_dialog">Enter the string against which the remote Server is checked. OpenVPN will use prefix matching. "Server" matches "Server-1" and "Server-2"\nLeave empty to check the CN against the server hostname.</string>
+    ^
+res/values/strings.xml:103: Error: "pull_on_summary" is not translated in zh [MissingTranslation]
+    <string name="pull_on_summary">Requests IP addresses, routes and timing options from the server.</string>
+    ^
+res/values/strings.xml:104: Error: "pull_off_summary" is not translated in zh [MissingTranslation]
+    <string name="pull_off_summary">No information is requested from the server. Settings need to be specified below.</string>
+    ^
+res/values/strings.xml:116: Error: "default_route_summary" is not translated in zh [MissingTranslation]
+    <string name="default_route_summary">Redirects all Traffic over the VPN</string>
+    ^
+res/values/strings.xml:126: Error: "tun_error_helpful" is not translated in ko, zh [MissingTranslation]
+    <string name="tun_error_helpful">On some custom ICS images the permission on /dev/tun might be wrong, or the tun module might be missing completely. For CM9 images try the fix ownership option under general settings</string>
+    ^
+res/values/strings.xml:127: Error: "tun_open_error" is not translated in ko, zh [MissingTranslation]
+    <string name="tun_open_error">Opening tun interface failed badly.</string>
+    ^
+res/values/strings.xml:128: Error: "error" is not translated in ko [MissingTranslation]
+    <string name="error">"Error: "</string>
+    ^
+res/values/strings.xml:129: Error: "clear" is not translated in ko [MissingTranslation]
+    <string name="clear">Clear</string>
+    ^
+res/values/strings.xml:130: Error: "info" is not translated in ko [MissingTranslation]
+    <string name="info">info</string>
+    ^
+res/values/strings.xml:138: Error: "ip_not_cidr" is not translated in ko, zh [MissingTranslation]
+    <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP. Mode given by OpenVPN is \"%3$s\".</string>
+    ^
+res/values/strings.xml:139: Error: "route_not_cidr" is not translated in ko, zh [MissingTranslation]
+    <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
+    ^
+res/values/strings.xml:140: Error: "route_not_netip" is not translated in ko, zh [MissingTranslation]
+    <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>
+    ^
+res/values/strings.xml:141: Error: "keychain_access" is not translated in de, es, ko, zh [MissingTranslation]
+    <string name="keychain_access">Cannot access the Android Keychain Certificates. (Can be caused by a firmware upgrade or by restoring a backup of the app/app settings). Please edit the VPN and reselect the certificate under basic settings to recreate the permission to access the certificate.</string>
+    ^
+res/values/strings.xml:144: Error: "send" is not translated in ko [MissingTranslation]
+    <string name="send">Send</string>
+    ^
+res/values/strings.xml:148: Error: "faq_tap_mode" is not translated in zh [MissingTranslation]
+    <string name="faq_tap_mode">Tap Mode is not possible with the non root VPN API. Therefore this application cannot provide tap support</string>
+    ^
+res/values/strings.xml:149: Error: "tap_faq2" is not translated in de, ko, zh [MissingTranslation]
+    <string name="tap_faq2">Again? Are you kidding? No tap mode is really not supported and sending more mail asking if it will be supported will not help.</string>
+    ^
+res/values/strings.xml:150: Error: "tap_faq3" is not translated in de, ko, zh [MissingTranslation]
+    <string name="tap_faq3">A third time? Actually one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would have to implement also ARP and possible a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.</string>
+    ^
+res/values/strings.xml:151: Error: "faq" is not translated in ko [MissingTranslation]
+    <string name="faq">FAQ</string>
+    ^
+res/values/strings.xml:154: Error: "faq_copying" is not translated in ko, zh [MissingTranslation]
+    <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the GUI.</string>
+    ^
+res/values/strings.xml:155: Error: "faq_shortcut" is not translated in ko [MissingTranslation]
+    <string name="faq_shortcut">Shortcut to start</string>
+    ^
+res/values/strings.xml:156: Error: "faq_howto_shortcut" is not translated in ko, zh [MissingTranslation]
+    <string name="faq_howto_shortcut">You can place a shortcut to start OpenVPN on your desktop. Depending on your homescreen program you have to add a shortcut or a widget.</string>
+    ^
+res/values/strings.xml:157: Error: "no_vpn_support_image" is not translated in ko, zh [MissingTranslation]
+    <string name="no_vpn_support_image">Your image does not support the VPNService API,sorry :(</string>
+    ^
+res/values/strings.xml:163: Error: "inline_file_tab" is not translated in zh [MissingTranslation]
+    <string name="inline_file_tab">Inline File</string>
+    ^
+res/values/strings.xml:167: Error: "inline_file_data" is not translated in zh [MissingTranslation]
+    <string name="inline_file_data">[[Inline file data]]</string>
+    ^
+res/values/strings.xml:168: Error: "opentun_no_ipaddr" is not translated in ko, zh [MissingTranslation]
+    <string name="opentun_no_ipaddr">Refusing to open tun device without IP information</string>
+    ^
+res/values/strings.xml:169: Error: "menu_import" is not translated in ko [MissingTranslation]
+    <string name="menu_import">Import Profile from ovpn file</string>
+    ^
+res/values/strings.xml:170: Error: "menu_import_short" is not translated in ko [MissingTranslation]
+    <string name="menu_import_short">Import</string>
+    ^
+res/values/strings.xml:171: Error: "import_content_resolve_error" is not translated in ko [MissingTranslation]
+    <string name="import_content_resolve_error">Could not read Profile to import</string>
+    ^
+res/values/strings.xml:174: Error: "trying_to_read" is not translated in ko [MissingTranslation]
+    <string name="trying_to_read">Trying to read file: %1$s</string>
+    ^
+res/values/strings.xml:175: Error: "import_could_not_open" is not translated in ko [MissingTranslation]
+    <string name="import_could_not_open">Could not find file %1$s mentioned in the imported config file</string>
+    ^
+res/values/strings.xml:176: Error: "importing_config" is not translated in ko [MissingTranslation]
+    <string name="importing_config">Importing config file from source %1$s</string>
+    ^
+res/values/strings.xml:177: Error: "import_warning_custom_options" is not translated in ko, zh [MissingTranslation]
+    <string name="import_warning_custom_options">Your configuration had a few configuration options that could be parsed. These options were added as custom configuration options. The custom configuration is displayed below:</string>
+    ^
+res/values/strings.xml:180: Error: "no_bind" is not translated in zh [MissingTranslation]
+    <string name="no_bind">No local binding</string>
+    ^
+res/values/strings.xml:183: Error: "faq_security" is not translated in de, es, zh [MissingTranslation]
+    <string name="faq_security">"As OpenVPN is security sensitive a few notes about security are sensible. All data on the sdcard is inherently insecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the VPN profile. The VPN profiles are only accessible by this application. (Do not forget to delete the copies on the sd card afterwards). Even though accessible only by this application the data is still unencrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."</string>
+    ^
+res/values/strings.xml:184: Error: "import_vpn" is not translated in ko [MissingTranslation]
+    <string name="import_vpn">Import</string>
+    ^
+res/values/strings.xml:185: Error: "broken_image_cert_title" is not translated in ko [MissingTranslation]
+    <string name="broken_image_cert_title">Error showing certificate selection</string>
+    ^
+res/values/strings.xml:186: Error: "broken_image_cert" is not translated in de, es, ko, zh [MissingTranslation]
+    <string name="broken_image_cert">Got an exception trying to show the Android 4.0+ certificate selection dialog. This should never happen as this a standard feature of Android 4.0+. Maybe your Android ROM support for certificate storage is broken</string>
+    ^
+res/values/strings.xml:187: Error: "ipv4" is not translated in ko [MissingTranslation]
+    <string name="ipv4">IPv4</string>
+    ^
+res/values/strings.xml:188: Error: "ipv6" is not translated in ko [MissingTranslation]
+    <string name="ipv6">IPv6</string>
+    ^
+res/values/strings.xml:189: Error: "speed_waiting" is not translated in ko [MissingTranslation]
+    <string name="speed_waiting">Waiting for state message…</string>
+    ^
+res/values/strings.xml:192: Error: "broken_images" is not translated in zh [MissingTranslation]
+    <string name="broken_images">Broken Images</string>
+    ^
+res/values/strings.xml:193: Error: "broken_images_faq" is not translated in de, es, ko, zh [MissingTranslation]
+    <string name="broken_images_faq">&lt;p>Official HTC images are known to have a strange routing problem causing traffic not to flow through the tunnel (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\">Issue 18&lt;/a> in the bug tracker.)&lt;/p>&lt;p>The official SONY images from Xperia arc S and Xperia Ray have been reported to be missing the VPNService completely from the image. Other Sony images may be affected as well. (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\">Issue 29&lt;/a> in the bug tracker.)&lt;/p>&lt;p>On custom build images the tun module might be missing or the rights of /dev/tun might be wrong. Some CM9 images need the fix ownership option under general settings.&lt;/p>&lt;p>Most important: If you have a broken image, report it to your vendor. The more people report the issue to the vendor the more likely you will get a fix.&lt;/p></string>
+    ^
+res/values/strings.xml:194: Error: "error_empty_username" is not translated in ko [MissingTranslation]
+    <string name="error_empty_username">The username must not be empty.</string>
+    ^
+res/values/strings.xml:195: Error: "pkcs12_file_encryption_key" is not translated in ko [MissingTranslation]
+    <string name="pkcs12_file_encryption_key">PKCS12 File Encryption Key</string>
+    ^
+res/values/strings.xml:202: Error: "owner_fix_summary" is not translated in zh [MissingTranslation]
+    <string name="owner_fix_summary">Tries to set the owner of /dev/tun to system. Some CM9 images need this to make the VPNService API work. Requires root.</string>
+    ^
+res/values/strings.xml:203: Error: "owner_fix" is not translated in zh [MissingTranslation]
+    <string name="owner_fix">Fix ownership of /dev/tun</string>
+    ^
+res/values/strings.xml:207: Error: "netchange_summary" is not translated in zh [MissingTranslation]
+    <string name="netchange_summary">Turning this option on will force a reconnect if the network state is change (WIFI to/from mobile)</string>
+    ^
+res/values/strings.xml:209: Error: "cert_from_keystore" is not translated in zh [MissingTranslation]
+    <string name="cert_from_keystore">Got certificate \'%s\' from Keystore</string>
+    ^
+res/values/strings.xml:211: Error: "extracahint" is not translated in es, zh [MissingTranslation]
+    <string name="extracahint">The CA cert is usually returned from the Android Keystore. Specify a separate certificate if you get certificate verification errors.</string>
+    ^
+res/values/strings.xml:213: Error: "keychain_nocacert" is not translated in es, ko, zh [MissingTranslation]
+    <string name="keychain_nocacert">No CA Certificate returned while reading from Android keystore. Auhtentication will probably fail.</string>
+    ^
+res/values/strings.xml:214: Error: "show_log_summary" is not translated in zh [MissingTranslation]
+    <string name="show_log_summary">Shows the log window on connect. The log window can always be accessed from the notification status.</string>
+    ^
+res/values/strings.xml:216: Error: "keppstatus_summary" is not translated in zh [MissingTranslation]
+    <string name="keppstatus_summary">Keep the notification displayed after the connection is established to show traffic statistics.</string>
+    ^
+res/values/strings.xml:218: Error: "mobile_info" is not translated in ko [MissingTranslation]
+    <string name="mobile_info">Running on %1$s (%2$s) %3$s, Android API %4$d</string>
+    ^
+res/values/strings.xml:219: Error: "error_rsa_sign" is not translated in es, ko, zh [MissingTranslation]
+    <string name="error_rsa_sign">Error signing with Android keystore key %1$s: %2$s</string>
+    ^
+res/values/strings.xml:220: Error: "faq_system_dialogs" is not translated in de, es, zh [MissingTranslation]
+    <string name="faq_system_dialogs">The VPN connection warning telling you that this app can intercept all traffic is imposed by the system to prevent abuse of the VPNService API.\nThe VPN connection notification (The key symbol) is also imposed by the Android system to signal an ongoing VPN connection. On some images this notification plays a sound.\nAndroid introduced these system dialog are for your own safety and made sure that they cannot be circumenvented. (On some images this unfortunely includes a notifciation sound)</string>
+    ^
+res/values/strings.xml:221: Error: "faq_system_dialogs_title" is not translated in es, zh [MissingTranslation]
+    <string name="faq_system_dialogs_title">Connection warning and notification sound</string>
+    ^
+res/values/strings.xml:232: Error: "export_config_title" is not translated in es, zh [MissingTranslation]
+    <string name="export_config_title">ICS Openvpn Config</string>
+    ^
+res/values/strings.xml:233: Error: "warn_no_dns" is not translated in es, ko, zh [MissingTranslation]
+    <string name="warn_no_dns">No DNS servers being used. Name resolution may not work. Consider setting custom DNS Servers</string>
+    ^
+res/values/strings.xml:234: Error: "dns_add_error" is not translated in es, ko, zh [MissingTranslation]
+    <string name="dns_add_error">Could not add DNS Server \"%1$s\", rejected by the system: %2$s</string>
+    ^
+res/values/strings.xml:235: Error: "faq_howto" is not translated in es, ko, zh [MissingTranslation]
+    <string name="faq_howto">&lt;p>Get a working config (tested on your computer or download from your provider/organisation)&lt;/p>&lt;p>If it is a single file no with no extra pem/pks12 files you can email the file yourself and open the attachment. If you have multiple files put them on your sd card.&lt;/p>&lt;p>Click on the email attachment/Use the folder icon in the vpn list to import the config file&lt;/p>&lt;p>If there are errors about missing files put the missing files on your sd card.&lt;/p>&lt;p>Click on the save symbol to add the imported VPN to your VPN list&lt;/p>&lt;p>Connect the VPN by clicking on the name of the VPN&lt;/p>&lt;p>If there are error or warnings in the log try to understand the warnings/error and try to fix them&lt;/p> </string>
+    ^
+res/values/strings.xml:236: Error: "faq_howto_title" is not translated in es, ko, zh [MissingTranslation]
+    <string name="faq_howto_title">Quick Start</string>
+    ^
+res/values/strings.xml:237: Error: "setting_loadtun_summary" is not translated in es, ko, zh [MissingTranslation]
+    <string name="setting_loadtun_summary">Try to load the tun.ko kernel module before trying to connect. Needs rooted devices.</string>
+    ^
+res/values/strings.xml:238: Error: "setting_loadtun" is not translated in es, ko, zh [MissingTranslation]
+    <string name="setting_loadtun">Load tun module</string>
+    ^
+res/values/strings.xml:239: Error: "importpkcs12fromconfig" is not translated in es, ko, zh [MissingTranslation]
+    <string name="importpkcs12fromconfig">Import PKCS12 from configuration into Android Keystore</string>
+    ^
+res/values/strings.xml:240: Error: "getproxy_error" is not translated in es, ko, zh [MissingTranslation]
+    <string name="getproxy_error">Error getting proxy settings: %s</string>
+    ^
+res/values/strings.xml:241: Error: "using_proxy" is not translated in es, ko, zh [MissingTranslation]
+    <string name="using_proxy">Using proxy %1$s %2$d</string>
+    ^
+res/values/strings.xml:242: Error: "use_system_proxy" is not translated in es, ko, zh [MissingTranslation]
+    <string name="use_system_proxy">Use system proxy</string>
+    ^
+res/values/strings.xml:243: Error: "use_system_proxy_summary" is not translated in es, ko, zh [MissingTranslation]
+    <string name="use_system_proxy_summary">Use the system wide configuration for HTTP/HTTPS proxies to connect.</string>
+    ^
+res/values/strings.xml:244: Error: "donatewithpaypal" is not translated in es, ko, zh [MissingTranslation]
+    <string name="donatewithpaypal">You can &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\">donate with PayPal&lt;/a> </string>
+    ^
+res/values/strings.xml:245: Error: "onbootrestartsummary" is not translated in es, ko, zh [MissingTranslation]
+    <string name="onbootrestartsummary">OpenVPN will reconnect a VPN if it was active on system reboot/shutdown. Please read the Connection warning FAQ before using this option.</string>
+    ^
+res/values/strings.xml:246: Error: "onbootrestart" is not translated in es, ko, zh [MissingTranslation]
+    <string name="onbootrestart">Reconnect on reboot</string>
+    ^
+res/values/strings.xml:247: Error: "ignore" is not translated in es, ko, zh [MissingTranslation]
+    <string name="ignore">Ignore</string>
+    ^
+res/values/strings.xml:248: Error: "restart" is not translated in es, ko, zh [MissingTranslation]
+    <string name="restart">Restart</string>
+    ^
+res/values/strings.xml:249: Error: "restart_vpn_after_change" is not translated in es, ko, zh [MissingTranslation]
+    <string name="restart_vpn_after_change">Configuration changes are applied after restarting the VPN. (Re)start the VPN now?</string>
+    ^
+res/values/strings.xml:250: Error: "configuration_changed" is not translated in es, ko, zh [MissingTranslation]
+    <string name="configuration_changed">Configuration changed</string>
+    ^
+res/values/strings.xml:251: Error: "log_no_last_vpn" is not translated in es, ko, zh [MissingTranslation]
+    <string name="log_no_last_vpn">Could not determine last connected profile for editing</string>
+    ^
+84 errors, 0 warnings

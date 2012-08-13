@@ -244,4 +244,9 @@
     <string name="donatewithpaypal">You can &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\">donate with PayPal&lt;/a> </string>
     <string name="onbootrestartsummary">OpenVPN will reconnect a VPN if it was active on system reboot/shutdown. Please read the Connection warning FAQ before using this option.</string>
     <string name="onbootrestart">Reconnect on reboot</string>
+    <string name="ignore">Ignore</string>
+    <string name="restart">Restart</string>
+    <string name="restart_vpn_after_change">Configuration changes are applied after restarting the VPN. (Re)start the VPN now?</string>
+    <string name="configuration_changed">Configuration changed</string>
+    <string name="log_no_last_vpn">Could not determine last connected profile for editing</string>
 </resources>

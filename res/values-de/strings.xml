@@ -189,7 +189,7 @@
     <string name="faq_howto_title">Schnellstart</string>
     <string name="setting_loadtun_summary">Versuche das tun.ko Kernel Modul zu laden. Benötigt root.</string>
     <string name="setting_loadtun">Lade tun Modul</string>
-    <!--  Der Author hat die deutsch Übersetzung ganz allein verbrochen :) -->
+    <!--  Der Author hat die deutsche Übersetzung ganz allein verbrochen :) -->
     <string name="translationby"></string>
 	<string name="faq_system_dialogs_title">Warnung beim Verbinden und Benachrichtigungston</string>
     <string name="tun_error_helpful">Auf manchen ROM Version sind eventuell die Zugriffsrechte von /dev/tun falsch oder das tun Kernel Modul fehlt. Für Cyanogenmod 9 ROMs mit root gibt einen provisorischen Fix in den generellen Einstellungen.</string>
@@ -200,4 +200,9 @@
     <string name="onbootrestart">Nach Neustart verbinden</string>
     <string name="faq_howto_shortcut">Sie können ein Shortcut zum Starten des VPN auf Ihren Startbildschirm legen. Abhängig davon welches Home/Launcher Programm Sie verwenden müssen ein Widget, Shortcut oder Verknüpfung hinzufügen</string>
     <string name="donatewithpaypal">&lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\">Spenden mit PayPal&lt;/a> </string>
+    <string name="ignore">Ignorieren</string>
+    <string name="restart">Neu verbinden</string>
+    <string name="restart_vpn_after_change">Konfigurationsänderungen werden erst nach einem VPN Neustart aktiv. Jetzt neu verbinden?</string>
+    <string name="configuration_changed">Konfiguration geändert</string>
+    <string name="log_no_last_vpn">Konnte das zuletzt verbundene Profile beim Versuch des Editieren nicht ermitteln.</string>
 </resources>

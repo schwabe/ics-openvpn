@@ -32,6 +32,7 @@ import de.blinkt.openvpn.OpenVPN.LogListener;
 import de.blinkt.openvpn.OpenVPN.StateListener;
 
 public class LogWindow extends ListActivity implements StateListener  {
+	private static final int START_VPN_CONFIG = 0;
 	private String[] mBconfig=null;
 
 
@@ -58,8 +59,8 @@ public class LogWindow extends ListActivity implements StateListener  {
 			OpenVPN.addLogListener(this);
 		}
 
-		
-		
+
+
 		private void initLogBuffer() {
 			myEntries.clear();
 			for (LogItem litem : OpenVPN.getlogbuffer()) {
@@ -70,7 +71,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 		String getLogStr() {
 			String str = "";
 			for(String entry:myEntries) {
-					str+=entry + '\n';
+				str+=entry + '\n';
 			}
 			return str;
 		}
@@ -205,15 +206,16 @@ public class LogWindow extends ListActivity implements StateListener  {
 			Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(R.string.title_cancel);
 			builder.setMessage(R.string.cancel_connection_query);
+			builder.setNegativeButton(android.R.string.no, null);
 			builder.setPositiveButton(android.R.string.yes, new OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					ProfileManager.onBootDelete(getApplicationContext());
+					ProfileManager.setConntectedVpnProfileDisconnected(getApplicationContext());
 					OpenVpnManagementThread.stopOpenVPN();		
 				}
 			});
-			builder.setNegativeButton(android.R.string.no, null);
+			
 			builder.show();
 			return true;
 		} else if(item.getItemId()==R.id.info) {
@@ -221,6 +223,18 @@ public class LogWindow extends ListActivity implements StateListener  {
 				OpenVPN.triggerLogBuilderConfig();
 		} else if(item.getItemId()==R.id.send) {
 			ladapter.shareLog();
+		} else if(item.getItemId()==R.id.edit_vpn) {
+			VpnProfile lastConnectedprofile = ProfileManager.getLastConnectedVpn();
+
+			if(lastConnectedprofile!=null) {
+				Intent vprefintent = new Intent(this,VPNPreferences.class)
+				.putExtra(VpnProfile.EXTRA_PROFILEUUID,lastConnectedprofile.getUUIDString());
+				startActivityForResult(vprefintent,START_VPN_CONFIG);
+			} else {
+				Toast.makeText(this, R.string.log_no_last_vpn, Toast.LENGTH_LONG).show();
+			}
+
+
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -241,6 +255,38 @@ public class LogWindow extends ListActivity implements StateListener  {
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == START_VPN_CONFIG && resultCode==RESULT_OK) {
+			String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
+
+			final VpnProfile profile = ProfileManager.get(configuredVPN);
+			ProfileManager.getInstance(this).saveProfile(this, profile);
+			// Name could be modified, reset List adapter
+
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+			dialog.setTitle(R.string.configuration_changed);
+			dialog.setMessage(R.string.restart_vpn_after_change);
+
+
+			dialog.setPositiveButton(R.string.restart,
+					new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Intent intent = new Intent(getBaseContext(), LaunchVPN.class);
+					intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
+					intent.setAction(Intent.ACTION_MAIN);
+					startActivity(intent);
+				}
+
+
+			});
+			dialog.setNegativeButton(R.string.ignore, null);
+			dialog.create().show();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
 	protected void onStop() {
 		super.onStop();
 		OpenVPN.removeSpeedListener(this);
@@ -252,14 +298,14 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 		setContentView(R.layout.logwindow);
 		ListView lv = getListView();
-		
+
 		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
-			
+
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				ClipboardManager clipboard = (ClipboardManager)
-				        getSystemService(Context.CLIPBOARD_SERVICE);
+						getSystemService(Context.CLIPBOARD_SERVICE);
 				ClipData clip = ClipData.newPlainText("Log Entry",((TextView) view).getText());
 				clipboard.setPrimaryClip(clip);
 				Toast.makeText(getBaseContext(), R.string.copied_entry, Toast.LENGTH_SHORT).show();
@@ -276,7 +322,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 	@Override
 	public void updateState(final String status,final String logmessage) {
 		runOnUiThread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				String prefix=status+ ":";
@@ -285,9 +331,9 @@ public class LogWindow extends ListActivity implements StateListener  {
 				mSpeedView.setText(prefix + logmessage);
 			}
 		});
-		
+
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

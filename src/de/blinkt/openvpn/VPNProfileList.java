@@ -1,13 +1,8 @@
 package de.blinkt.openvpn;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.Vector;
 
 import android.app.Activity;
 import android.app.AlertDialog;

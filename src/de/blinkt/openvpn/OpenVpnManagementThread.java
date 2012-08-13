@@ -231,8 +231,16 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 
 	private void processProxyCMD(String argument) {
+		String[] args = argument.split(",",3);
 		SocketAddress proxyaddr = ProxyDetection.detectProxy(mProfile);
 
+		
+		if(args.length >= 2) {
+			String proto = args[1];
+			if(proto.equals("UDP")) {
+				proxyaddr=null;
+			}
+		}
 
 		if(proxyaddr instanceof InetSocketAddress ){
 			InetSocketAddress isa = (InetSocketAddress) proxyaddr;

@@ -1,5 +1,14 @@
 package de.blinkt.openvpn;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.Vector;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListFragment;
@@ -91,9 +100,22 @@ public class VPNProfileList extends ListFragment {
 		setListAdapter();
 	}
 
+	class VpnProfileNameComperator implements Comparator<VpnProfile> {
+
+		@Override
+		public int compare(VpnProfile lhs, VpnProfile rhs) {
+			return lhs.mName.compareTo(rhs.mName);
+		}
+		
+	}
+	
 	private void setListAdapter() {
 		mArrayadapter = new VPNArrayAdapter(getActivity(),R.layout.vpn_list_item,R.id.vpn_item_title);
-		mArrayadapter.addAll(getPM().getProfiles());
+		Collection<VpnProfile> allvpn = getPM().getProfiles();
+		
+		TreeSet<VpnProfile> sortedset = new TreeSet<VpnProfile>(new VpnProfileNameComperator()); 
+		sortedset.addAll(allvpn);
+		mArrayadapter.addAll(sortedset);
 		
 		setListAdapter(mArrayadapter);
 	}

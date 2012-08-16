@@ -36,7 +36,7 @@ import android.preference.PreferenceManager;
 import de.blinkt.openvpn.OpenVPN.StateListener;
 
 public class OpenVpnService extends VpnService implements StateListener {
-	private Thread mServiceThread;
+	private Thread mProcessThread;
 
 	private Vector<String> mDnslist=new Vector<String>();
 
@@ -58,25 +58,28 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 	private boolean mDisplayBytecount=false;
 
-	private boolean mNotificationvisible;
-
 	private static final int OPENVPN_STATUS = 1;
 	
 	@Override
 	public void onRevoke() {
 		OpenVpnManagementThread.stopOpenVPN();
-		mServiceThread=null;
-		stopSelf();
-		ProfileManager.setConntectedVpnProfileDisconnected(this);
-	};
-
-	private void hideNotification() {
-		String ns = Context.NOTIFICATION_SERVICE;
-		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
-		mNotificationManager.cancel(OPENVPN_STATUS);
-		mNotificationvisible=false;
+		endVpnService();
 	}
-	private void showNotification(String msg, String tickerText) {
+	
+	// Similar to revoke but do not try to stop process
+	public void processDied() {
+		endVpnService();
+	}
+	
+	private void endVpnService() {
+		mProcessThread=null;
+		OpenVPN.logBuilderConfig(null);
+		ProfileManager.setConntectedVpnProfileDisconnected(this);
+		stopSelf();
+		stopForeground(true);
+	}
+
+		private Notification showNotification(String msg, String tickerText) {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
@@ -98,9 +101,10 @@ public class OpenVpnService extends VpnService implements StateListener {
 			nbuilder.setTicker(tickerText);
 
 		Notification notification = nbuilder.getNotification();
+		
 
 		mNotificationManager.notify(OPENVPN_STATUS, notification);
-		mNotificationvisible=true;
+		return notification;
 		
 	}
 
@@ -113,7 +117,6 @@ public class OpenVpnService extends VpnService implements StateListener {
 		return startLW;
 
 	}
-
 
 
 	private LocalServerSocket openManagmentInterface(int tries) {
@@ -156,6 +159,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		
 		// Extract information from the intent.
 		String prefix = getPackageName();
 		String[] argv = intent.getStringArrayExtra(prefix + ".ARGV");
@@ -163,6 +167,9 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 		String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
 		mProfile = ProfileManager.get(profileUUID);
+
+		Notification start = showNotification("Starting VPN " + mProfile.mName,null);
+		startForeground(OPENVPN_STATUS, start);
 		
 		OpenVPN.addSpeedListener(this);
 		
@@ -175,8 +182,8 @@ public class OpenVpnService extends VpnService implements StateListener {
 			}
 		}
 
-		if (mServiceThread!=null) {
-			mServiceThread.interrupt();
+		if (mProcessThread!=null) {
+			mProcessThread.interrupt();
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -196,10 +203,10 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 
 		// Start a new session by creating a new thread.
-		OpenVPNThread serviceThread = new OpenVPNThread(this, argv,nativelibdir);
+		OpenVPNThread processThread = new OpenVPNThread(this, argv,nativelibdir);
 
-		mServiceThread = new Thread(serviceThread, "OpenVPNServiceThread");
-		mServiceThread.start();
+		mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
+		mProcessThread.start();
 
 		ProfileManager.setConnectedVpnProfile(this, mProfile);
 		
@@ -208,14 +215,15 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 	@Override
 	public void onDestroy() {
-		if (mServiceThread != null) {
+		if (mProcessThread != null) {
 			mSocketManager.managmentCommand("signal SIGINT\n");
 
-			mServiceThread.interrupt();
+			mProcessThread.interrupt();
 		}
 		  if (mNetworkStateReceiver!= null) {
 	            this.unregisterReceiver(mNetworkStateReceiver);
 	        }
+		  
 	}
 
 
@@ -386,36 +394,29 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 	@Override
 	public void updateState(String state,String logmessage) {
-		if("NOPROCESS".equals(state)) {
-			hideNotification();
-			mDisplayBytecount=false;
+		// If the process is not running, ignore any state, 
+		// Notification should be invisible in this state
+		if(mProcessThread==null)
 			return;
-		}
+		
+		// Display byte count only after being connected
 		
 		if("CONNECTED".equals(state)) {
-			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
-			mDisplayBytecount = prefs.getBoolean("statusafterconnect", false);
-			if(!mDisplayBytecount) {
-				hideNotification();
-				return;
-			}			
-		}
-		
-		// Skip exiting status if the status is already hidden
-		if(("EXITING SIGINT".equals(state) || "EXITING".equals(state))
-				&& !mNotificationvisible) {
-			return;
-		}	
-		
-		if("BYTECOUNT".equals(state)) {
+			mDisplayBytecount = true;
+		} else if("BYTECOUNT".equals(state)) {
 			if(mDisplayBytecount) {
 				showNotification(logmessage,null);
 			}
 		} else {
-			// Other notifications are shown
+			// Other notifications are shown,
+			// This also mean we are no longer connected, ignore bytecount messages until next
+			// CONNECTED
 			String ticker = state.toLowerCase();
 			showNotification(state +" " + logmessage,ticker);
+			mDisplayBytecount=false;
 		}
 	}
+
+	
 
 }

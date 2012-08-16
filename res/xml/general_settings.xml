@@ -11,11 +11,11 @@
         android:key="showlogwindow"
         android:summary="@string/show_log_summary"
         android:title="@string/show_log_window" />
-    <CheckBoxPreference
+    <!--  <CheckBoxPreference
         android:defaultValue="false"
         android:key="statusafterconnect"
         android:summary="@string/keppstatus_summary"
-        android:title="@string/keepstatus" />
+        android:title="@string/keepstatus" /> -->
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="usesystemproxy"

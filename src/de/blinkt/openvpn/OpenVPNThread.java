@@ -13,17 +13,21 @@ public class OpenVPNThread implements Runnable {
 	private String[] mArgv;
 	private Process mProcess;
 	private String mNativeDir;
+	private OpenVpnService mService;
 
 	public OpenVPNThread(OpenVpnService service,String[] argv, String nativelibdir)
 	{
 		mArgv = argv;
 		mNativeDir = nativelibdir;
+		mService = service;
 	}
 	
 	public void stopProcess() {
 		mProcess.destroy();
 	}
 
+	
+	
 	@Override
 	public void run() {
 		try {
@@ -34,20 +38,19 @@ public class OpenVPNThread implements Runnable {
 			Log.e(TAG, "Got " + e.toString());
 		} finally {
 			try {
-				///    mInterface.close();
+
 			} catch (Exception e) {
 				// ignore	
 			}
-			//mInterface = null;
-
 
 			OpenVPN.updateStateString("NOPROCESS","No process running");
-			// Not a good place to do it, but will do
-			OpenVPN.logBuilderConfig(null);
+
+
+			mService.processDied();
 			Log.i(TAG, "Exiting");
 		}
 	}
-
+	
 	private void startOpenVPNThreadArgs(String[] argv) {
 		LinkedList<String> argvlist = new LinkedList<String>();
 		

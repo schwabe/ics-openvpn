@@ -91,7 +91,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		super.onCreate(icicle);
 
 		mPM =ProfileManager.getInstance(this);
-
+	
 	}	
 
 	@Override

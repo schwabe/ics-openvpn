@@ -17,6 +17,8 @@
 package de.blinkt.openvpn;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Vector;
 
 import android.app.Notification;
@@ -81,7 +83,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 		}
 	}
 
-	private Notification showNotification(String msg, String tickerText) {
+	private Notification showNotification(String msg, String tickerText, boolean lowpriority) {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
@@ -97,12 +99,28 @@ public class OpenVpnService extends VpnService implements StateListener {
 		nbuilder.setOngoing(true);
 		nbuilder.setContentIntent(getLogPendingIntent());
 		nbuilder.setSmallIcon(icon);
-		nbuilder.setWhen(when);
 
+		// Try to set the priority available since API 16 (Jellybean)
+		if(lowpriority) {
+			try {
+				Method setpriority = nbuilder.getClass().getMethod("setPriority", int.class);
+				// PRIORITY_MIN == -2
+				setpriority.invoke(nbuilder, -2 );
+
+				//ignore exception
+			} catch (NoSuchMethodException nsm) {
+			} catch (IllegalArgumentException e) {
+			} catch (IllegalAccessException e) {
+			} catch (InvocationTargetException e) {
+			}
+		}
 		if(tickerText!=null)
 			nbuilder.setTicker(tickerText);
 
 		Notification notification = nbuilder.getNotification();
+
+
+
 
 
 		mNotificationManager.notify(OPENVPN_STATUS, notification);
@@ -170,7 +188,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 		String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
 		mProfile = ProfileManager.get(profileUUID);
 
-		showNotification("Starting VPN " + mProfile.mName,null);
+		showNotification("Starting VPN " + mProfile.mName,"Starting VPN " + mProfile.mName, false);
 
 
 		OpenVPN.addSpeedListener(this);
@@ -195,8 +213,8 @@ public class OpenVpnService extends VpnService implements StateListener {
 		}
 		// An old running VPN should now be exited
 		mStarting=false;
-		
-		
+
+
 		// Open the Management Interface
 		LocalServerSocket mgmtsocket = openManagmentInterface(8);
 
@@ -413,14 +431,14 @@ public class OpenVpnService extends VpnService implements StateListener {
 			mDisplayBytecount = true;
 		} else if("BYTECOUNT".equals(state)) {
 			if(mDisplayBytecount) {
-				showNotification(logmessage,null);
+				showNotification(logmessage,null,true);
 			}
 		} else {
 			// Other notifications are shown,
 			// This also mean we are no longer connected, ignore bytecount messages until next
 			// CONNECTED
 			String ticker = state.toLowerCase();
-			showNotification(state +" " + logmessage,ticker);
+			showNotification(state +" " + logmessage,ticker,false);
 			mDisplayBytecount=false;
 		}
 	}

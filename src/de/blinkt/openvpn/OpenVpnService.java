@@ -36,7 +36,7 @@ import android.preference.PreferenceManager;
 import de.blinkt.openvpn.OpenVPN.StateListener;
 
 public class OpenVpnService extends VpnService implements StateListener {
-	private Thread mProcessThread;
+	private Thread mProcessThread=null;
 
 	private Vector<String> mDnslist=new Vector<String>();
 
@@ -104,6 +104,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 		
 
 		mNotificationManager.notify(OPENVPN_STATUS, notification);
+		startForeground(OPENVPN_STATUS, notification);
 		return notification;
 		
 	}
@@ -168,8 +169,8 @@ public class OpenVpnService extends VpnService implements StateListener {
 		String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
 		mProfile = ProfileManager.get(profileUUID);
 
-		Notification start = showNotification("Starting VPN " + mProfile.mName,null);
-		startForeground(OPENVPN_STATUS, start);
+		showNotification("Starting VPN " + mProfile.mName,null);
+
 		
 		OpenVPN.addSpeedListener(this);
 		

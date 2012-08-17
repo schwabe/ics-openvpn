@@ -123,7 +123,7 @@
     <string name="custom_options_title">Eigene Optionen</string>
     <string name="edit_vpn">Ändere VPN Einstellungen</string>
     <string name="remove_vpn_query">VPN %s löschen?</string>
-    <string name="tun_open_error">Das Öffnen des tun Interfaces ist katastrophak gescheitert</string>
+    <string name="tun_open_error">Das Öffnen des tun Interfaces ist katastrophal gescheitert.</string>
     <string name="error">"Fehler: "</string>
     <string name="clear">Clear</string>
     <string name="info">Info</string>

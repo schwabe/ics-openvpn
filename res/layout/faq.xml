@@ -26,6 +26,14 @@
 
         <TextView
             style="@style/faqhead"
+            android:text="@string/faq_duplicate_notification_title" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/faq_duplicate_notification" />
+
+        <TextView
+            style="@style/faqhead"
             android:text="@string/tap_mode" />
 
         <TextView

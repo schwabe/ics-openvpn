@@ -249,4 +249,6 @@
     <string name="restart_vpn_after_change">Configuration changes are applied after restarting the VPN. (Re)start the VPN now?</string>
     <string name="configuration_changed">Configuration changed</string>
     <string name="log_no_last_vpn">Could not determine last connected profile for editing</string>
+    <string name="faq_duplicate_notification_title">Duplicate notifications</string>
+    <string name="faq_duplicate_notification">If Android is under system memory (RAM) pressure app and service which are not needed at the moment are removed from active memory. This terminates an ongoing VPN connection. To ensure that the connection/Openvpn survices the service runs with higher priority. To run with higher priority the application must display a notification. The key notification icon is imposed by the system as described in the previous FAQ entry. It does not count as app notification for purpose of running with higher priority.</string>
 </resources>

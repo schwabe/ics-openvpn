@@ -188,7 +188,7 @@ res/values/strings.xml:219: Error: "error_rsa_sign" is not translated in es, ko,
     <string name="error_rsa_sign">Error signing with Android keystore key %1$s: %2$s</string>
     ^
 res/values/strings.xml:220: Error: "faq_system_dialogs" is not translated in de, es, zh [MissingTranslation]
-    <string name="faq_system_dialogs">The VPN connection warning telling you that this app can intercept all traffic is imposed by the system to prevent abuse of the VPNService API.\nThe VPN connection notification (The key symbol) is also imposed by the Android system to signal an ongoing VPN connection. On some images this notification plays a sound.\nAndroid introduced these system dialog are for your own safety and made sure that they cannot be circumenvented. (On some images this unfortunely includes a notifciation sound)</string>
+    <string name="faq_system_dialogs">The VPN connection warning telling you that this app can intercept all traffic is imposed by the system to prevent abuse of the VPNService API.\nThe VPN connection notification (The key symbol) is also imposed by the Android system to signal an ongoing VPN connection. On some images this notification plays a sound.\nAndroid introduced these system dialogs for your own safety and made sure that they cannot be circumenvented. (On some images this unfortunely includes a notifciation sound)</string>
     ^
 res/values/strings.xml:221: Error: "faq_system_dialogs_title" is not translated in es, zh [MissingTranslation]
     <string name="faq_system_dialogs_title">Connection warning and notification sound</string>
@@ -253,4 +253,10 @@ res/values/strings.xml:250: Error: "configuration_changed" is not translated in 
 res/values/strings.xml:251: Error: "log_no_last_vpn" is not translated in es, ko, zh [MissingTranslation]
     <string name="log_no_last_vpn">Could not determine last connected profile for editing</string>
     ^
-84 errors, 0 warnings
+res/values/strings.xml:252: Error: "faq_duplicate_notification_title" is not translated in es, ko, zh [MissingTranslation]
+    <string name="faq_duplicate_notification_title">Duplicate notifications</string>
+    ^
+res/values/strings.xml:253: Error: "faq_duplicate_notification" is not translated in es, ko, zh [MissingTranslation]
+    <string name="faq_duplicate_notification">If Android is under system memory (RAM) pressure app and service which are not needed at the moment are removed from active memory. This terminates an ongoing VPN connection. To ensure that the connection/Openvpn survices the service runs with higher priority. To run with higher priority the application must display a notification. The key notification icon is imposed by the system as described in the previous FAQ entry. It does not count as app notification for purpose of running with higher priority.</string>
+    ^
+86 errors, 0 warnings

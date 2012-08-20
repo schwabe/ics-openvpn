@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="@string/select_file" >
         </Button>
-
+	
         <Button
             android:id="@+id/fdClear"
             android:layout_width="wrap_content"

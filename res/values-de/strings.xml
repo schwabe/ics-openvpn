@@ -198,7 +198,7 @@
     <string name="use_system_proxy_summary">Benutze die System weiten Einstellungen für HTTP/HTTPS Proxies beim Verbinden.</string>
     <string name="getproxy_error">Fehler beim Ermittlen der Proxy Einstellungen: %s</string>
     <string name="using_proxy">Benutzt Proxy %1$s %2$d</string>
-    <string name="onbootrestartsummary">Openvpn wird bei einem Neustart des Telefon das beim herrunterfahren/neu starten aktive VPN weider verbinden. Bitte lesen Sie die FAQ &quot;Warnung beim Verbinden&quot; FAQ bevor Sie diese Option verwenden.</string>
+    <string name="onbootrestartsummary">Openvpn wird bei einem Neustart des Telefon das beim herrunterfahren/neu starten aktive VPN weider verbinden. Bitte lesen Sie die FAQ \"Warnung beim Verbinden\" FAQ bevor Sie diese Option verwenden.</string>
     <string name="onbootrestart">Nach Neustart verbinden</string>
     <string name="faq_howto_shortcut">Sie können ein Shortcut zum Starten des VPN auf Ihren Startbildschirm legen. Abhängig davon welches Home/Launcher Programm Sie verwenden müssen ein Widget, Shortcut oder Verknüpfung hinzufügen</string>
     <string name="donatewithpaypal">&lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\">Spenden mit PayPal&lt;/a> </string>
@@ -208,5 +208,9 @@
     <string name="configuration_changed">Konfiguration geändert</string>
     <string name="log_no_last_vpn">Konnte das zuletzt verbundene Profile beim Versuch des Editieren nicht ermitteln.</string>
 <string name="faq_duplicate_notification_title">Doppelte Benachrichtigungen</string>
-    <string name="faq_duplicate_notification">Android beendet automatisch Anwendungen und Dienste, die im Hintergrund laufen, wenn der Arbeitsspeicher knapp wird. Wird dabei Openvpn beendet, bricht die VPN Verbindung ab. Um dies zu vermeiden, läuft der VPN Prozess mit einer höheren Priorität. Um eine höhere Prioität nutzen zu können, muss die Anwesenheit des Prozesses dem Benutzer im Form einer Benachrichtigung mitgeteilt werden. Daher zeigt Openvpn für Android immer seine eigene Benachrichtigung an. Die Schlüssel Benachrichtung, die auch im letzen Eintrag erklärt wird, zählt leider nicht als Benachrichtigung, die der Anwendung erlaubt mit höherer Priorität zu arbeiten.</string> 
+    <string name="faq_duplicate_notification">Android beendet automatisch Anwendungen und Dienste, die im Hintergrund laufen, wenn der Arbeitsspeicher knapp wird. Wird dabei Openvpn beendet, bricht die VPN Verbindung ab. Um dies zu vermeiden, läuft der VPN Prozess mit einer höheren Priorität. Um eine höhere Prioität nutzen zu können, muss die Anwesenheit des Prozesses dem Benutzer im Form einer Benachrichtigung mitgeteilt werden. Daher zeigt Openvpn für Android immer seine eigene Benachrichtigung an. Die Schlüssel Benachrichtung, die auch im letzen Eintrag erklärt wird, zählt leider nicht als Benachrichtigung, die der Anwendung erlaubt mit höherer Priorität zu arbeiten.</string>
+    <string name="no_vpn_profiles_defined">Keine VPN Profile definiert.</string>
+    <string name="add_new_vpn_hint">Benutzen Sie &lt;img src=\"ic_menu_add\"/> um ein neues VPN anzulegen</string>
+    <string name="vpn_import_hint">Benutzen Sie &lt;img src=\"ic_menu_archive\"/> um ein vorhandenes (.ovpn oder .conf) Profil von Ihrer SD Karte zu importieren</string>
+    <string name="faq_hint">Lesen Sie auch die FAQ. Dort befindet sich eine Schnellstart Anleitung</string>
 </resources>

@@ -89,8 +89,6 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 
 		int icon = R.drawable.ic_stat_vpn;
-		long when = System.currentTimeMillis();
-
 		android.app.Notification.Builder nbuilder = new Notification.Builder(this);
 
 		nbuilder.setContentTitle("OpenVPN - "  + mProfile.mName);

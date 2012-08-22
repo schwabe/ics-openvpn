@@ -3,20 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-<CheckBox
-            android:id="@+id/importpkcs12"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/importpkcs12fromconfig"
-            android:visibility="gone"
-            />
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
 
-        
-        
-    </LinearLayout>
+    <CheckBox
+        android:id="@+id/importpkcs12"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/importpkcs12fromconfig"
+        android:visibility="gone" />
 
+    <CheckBox
+        android:id="@+id/correcttls"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/correcttls"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>

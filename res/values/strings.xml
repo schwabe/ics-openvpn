@@ -255,4 +255,5 @@
     <string name="add_new_vpn_hint">Use the &lt;img src=\"ic_menu_add\"/> icon to add a new VPN</string>
     <string name="vpn_import_hint">Use the &lt;img src=\"ic_menu_archive\"/> icon to import an existing (.ovpn or .conf) profile from your sdcard.</string>
     <string name="faq_hint">Be sure to also check out the FAQ. There is a quick start guide.</string>
+    <string name="correcttls">Convert remote-tls format from OpenVPN 2.2 to 2.3 format</string>
 </resources>

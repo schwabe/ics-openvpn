@@ -319,7 +319,7 @@ public class VpnProfile implements  Serializable{
 			if(mRemoteCN == null || mRemoteCN.equals("") )
 				cfg+="tls-remote " + mServerName + "\n";
 			else
-				cfg += "tls-remote " + mRemoteCN + "\n";
+				cfg += "tls-remote " + openVpnEscape(mRemoteCN) + "\n";
 		}
 		if(mExpectTLSCert)
 			cfg += "remote-cert-tls server\n";

@@ -48,8 +48,8 @@ public class ConfigConverter extends ListActivity {
 		setContentView(R.layout.config_converter);
 	}
 
-	
-	
+
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId()==R.id.cancel){
@@ -60,9 +60,9 @@ public class ConfigConverter extends ListActivity {
 				log("Importing the config had error, cannot save it");
 				return true;
 			}
-			
+
 			Intent in = installPKCS12();
-			
+
 			if(in != null)
 				startActivityForResult(in, RESULT_INSTALLPKCS12);
 			else
@@ -90,6 +90,10 @@ public class ConfigConverter extends ListActivity {
 		Intent result = new Intent();
 		ProfileManager vpl = ProfileManager.getInstance(this);
 
+		if(((CheckBox)findViewById(R.id.correcttls)).isChecked() && isOldCNFormat()) {
+			convertTLSRemote();
+		}
+		
 		setUniqueProfileName(vpl);
 		vpl.addProfile(mResult);
 		vpl.saveProfile(this, mResult);
@@ -98,7 +102,15 @@ public class ConfigConverter extends ListActivity {
 		setResult(Activity.RESULT_OK, result);
 		finish();
 	}
-	
+
+
+
+	private void convertTLSRemote() {
+		if(mResult.mRemoteCN.startsWith("/"))
+			mResult.mRemoteCN = mResult.mRemoteCN.substring(1);
+		mResult.mRemoteCN = mResult.mRemoteCN.replace("/", ", ");
+	}
+
 	public void showCertDialog () {
 		try	{
 			KeyChain.choosePrivateKeyAlias(this,
@@ -184,7 +196,7 @@ public class ConfigConverter extends ListActivity {
 	{
 		if(filename==null)
 			return null;
-		
+
 		// Already embedded, nothing to do
 		if(filename.startsWith(VpnProfile.INLINE_TAG))
 			return filename;
@@ -389,8 +401,13 @@ public class ConfigConverter extends ListActivity {
 			findViewById(R.id.importpkcs12).setVisibility(View.VISIBLE);
 		}
 
+		if (isOldCNFormat())
+			findViewById(R.id.correcttls).setVisibility(View.VISIBLE);
 	}
 
+	private boolean isOldCNFormat() {
+		return mResult.mCheckRemoteCN && mResult.mRemoteCN.contains("/") && ! mResult.mRemoteCN.contains("_");
+	}
 
 	private void log(int ressourceId, Object... formatArgs) {
 		log(getString(ressourceId,formatArgs));

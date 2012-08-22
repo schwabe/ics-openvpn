@@ -207,10 +207,12 @@
     <string name="restart_vpn_after_change">Konfigurationsänderungen werden erst nach einem VPN Neustart aktiv. Jetzt neu verbinden?</string>
     <string name="configuration_changed">Konfiguration geändert</string>
     <string name="log_no_last_vpn">Konnte das zuletzt verbundene Profile beim Versuch des Editieren nicht ermitteln.</string>
-<string name="faq_duplicate_notification_title">Doppelte Benachrichtigungen</string>
+    <string name="faq_duplicate_notification_title">Doppelte Benachrichtigungen</string>
     <string name="faq_duplicate_notification">Android beendet automatisch Anwendungen und Dienste, die im Hintergrund laufen, wenn der Arbeitsspeicher knapp wird. Wird dabei Openvpn beendet, bricht die VPN Verbindung ab. Um dies zu vermeiden, läuft der VPN Prozess mit einer höheren Priorität. Um eine höhere Prioität nutzen zu können, muss die Anwesenheit des Prozesses dem Benutzer im Form einer Benachrichtigung mitgeteilt werden. Daher zeigt Openvpn für Android immer seine eigene Benachrichtigung an. Die Schlüssel Benachrichtung, die auch im letzen Eintrag erklärt wird, zählt leider nicht als Benachrichtigung, die der Anwendung erlaubt mit höherer Priorität zu arbeiten.</string>
     <string name="no_vpn_profiles_defined">Keine VPN Profile definiert.</string>
     <string name="add_new_vpn_hint">Benutzen Sie &lt;img src=\"ic_menu_add\"/> um ein neues VPN anzulegen</string>
     <string name="vpn_import_hint">Benutzen Sie &lt;img src=\"ic_menu_archive\"/> um ein vorhandenes (.ovpn oder .conf) Profil von Ihrer SD Karte zu importieren</string>
     <string name="faq_hint">Lesen Sie auch die FAQ. Dort befindet sich eine Schnellstart Anleitung</string>
+    <string name="correcttls">Konventiere den remote-tls Parameter vom OpenVPN 2.2 zum OpenVPN 2.3 Format</string>
+
 </resources>

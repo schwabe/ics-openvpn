@@ -218,6 +218,7 @@ public class ConfigParser {
 			"auth-user-pass-verify",
 			"dhcp-release",
 			"dhcp-renew",
+			"dh",
 			"management-hold",
 			"management",
 			"management-query-passwords",

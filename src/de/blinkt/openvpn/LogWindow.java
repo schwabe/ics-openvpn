@@ -251,7 +251,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		OpenVPN.addSpeedListener(this);
+		OpenVPN.addStateListener(this);
 	}
 
 	@Override

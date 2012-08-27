@@ -14,6 +14,10 @@ public class OpenVPN {
 	private static Vector<LogListener> logListener;
 	private static Vector<StateListener> stateListener;
 	private static String[] mBconfig;
+
+	private static String mLaststatemsg;
+
+	private static String mLaststate;
 	
 	static {
 		logbuffer  = new LinkedList<LogItem>();
@@ -117,8 +121,10 @@ public class OpenVPN {
 	}
 
 	
-	synchronized static void addSpeedListener(StateListener sl){
+	synchronized static void addStateListener(StateListener sl){
 		stateListener.add(sl);
+		if(mLaststate!=null)
+			sl.updateState(mLaststate, mLaststatemsg);
 	}
 
 	synchronized static void removeSpeedListener(StateListener sl) {
@@ -148,6 +154,9 @@ public class OpenVPN {
 	}
 
 	public synchronized static void updateStateString(String state, String msg) {
+		mLaststate= state;
+		mLaststatemsg = msg;
+		
 		for (StateListener sl : stateListener) {
 			sl.updateState(state,msg);
 		}

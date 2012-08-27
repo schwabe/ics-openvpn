@@ -37,7 +37,6 @@ public class OpenVpnManagementThread implements Runnable {
 	private int mBytecountinterval=2;
 	private long mLastIn=0; 
 	private long mLastOut=0;
-	private String mCurrentstate;
 	private LocalServerSocket mServerSocket;
 	private boolean mReleaseHold=true;
 	private boolean mWaitingForRelease=false; 
@@ -185,10 +184,7 @@ public class OpenVpnManagementThread implements Runnable {
 			}else if (cmd.equals("PASSWORD")) {
 				processPWCommand(argument);
 			} else if (cmd.equals("HOLD")) {
-				if(mReleaseHold)
-					releaseHoldCmd();
-				else
-					mWaitingForRelease=true;
+				handleHold();
 			} else if (cmd.equals("NEED-OK")) {
 				processNeedCommand(argument);
 			} else if (cmd.equals("BYTECOUNT")){
@@ -214,6 +210,14 @@ public class OpenVpnManagementThread implements Runnable {
 		} else {
 			Log.i(TAG, "Got unrecognized line from managment" + command);
 			OpenVPN.logMessage(0, "MGMT:", "Got unrecognized line from management:" + command);
+		}
+	}
+	private void handleHold() {
+		if(mReleaseHold) {
+			releaseHoldCmd();
+		} else { 
+			mWaitingForRelease=true;
+			OpenVPN.updateStateString("NONETWORK", "Waiting for usable network");
 		}
 	}
 	private void releaseHoldCmd() {
@@ -256,8 +260,11 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 	private void processState(String argument) {
 		String[] args = argument.split(",",3);
-		mCurrentstate = args[1];
-		OpenVPN.updateStateString(mCurrentstate,args[2]);
+		String currentstate = args[1];
+		if(args[2].equals(",,"))
+			OpenVPN.updateStateString(currentstate,"");
+		else
+			OpenVPN.updateStateString(currentstate,args[2]);
 	}
 
 

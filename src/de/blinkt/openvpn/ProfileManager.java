@@ -160,6 +160,10 @@ public class ProfileManager {
 				ObjectInputStream vpnfile = new ObjectInputStream(context.openFileInput(vpnentry + ".vp"));
 				VpnProfile vp = ((VpnProfile) vpnfile.readObject());
 
+				// Sanity check 
+				if(vp==null || vp.mName==null || vp.getUUID()==null)
+					continue;
+				
 				profiles.put(vp.getUUID().toString(), vp);
 
 			} catch (StreamCorruptedException e) {

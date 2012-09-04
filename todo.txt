@@ -1,6 +1,6 @@
 Ideas:
 
-- Implement base64 inlining of p12 files.  
+- Write a FAQ about Android's routing/ifconfig
 
 - Do cert+key+ca => p12 inside the app, import directly to keystore
    

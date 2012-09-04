@@ -152,7 +152,7 @@ public class FileSelect extends Activity {
 		if(!mData.startsWith(VpnProfile.INLINE_TAG))
 			return mData;
 		else
-			return "/mnt/sdcard";
+			return Environment.getExternalStorageDirectory().getPath();
 	}
 
 	public CharSequence getInlineData() {

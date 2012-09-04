@@ -17,7 +17,6 @@
         <EditTextPreference
             android:dependency="usePull"
             android:dialogMessage="@string/ipv6_dialog_tile"
-            android:enabled="false"
             android:key="ipv6_address"
             android:title="@string/ipv6_address" />
 

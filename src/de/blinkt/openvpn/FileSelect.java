@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -16,6 +17,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Base64;
 
 public class FileSelect extends Activity {
 	public static final String RESULT_DATA = "RESULT_PATH";
@@ -23,6 +25,8 @@ public class FileSelect extends Activity {
 	public static final String WINDOW_TITLE = "WINDOW_TILE";
 	public static final String NO_INLINE_SELECTION = "de.blinkt.openvpn.NO_INLINE_SELECTION";
 	public static final String SHOW_CLEAR_BUTTON = "de.blinkt.openvpn.SHOW_CLEAR_BUTTON";
+	public static final String DO_BASE64_ENCODE = "de.blinkt.openvpn.BASE64ENCODE";
+	
 	private FileSelectionFragment mFSFragment;
 	private InlineFileTab mInlineFragment;
 	private String mData;
@@ -30,6 +34,7 @@ public class FileSelect extends Activity {
 	private Tab fileExplorerTab;
 	private boolean mNoInline;
 	private boolean mShowClear;
+	private boolean mBase64Encode;
 	
 		
 	public void onCreate(Bundle savedInstanceState)
@@ -50,6 +55,7 @@ public class FileSelect extends Activity {
 		
 		mNoInline = getIntent().getBooleanExtra(NO_INLINE_SELECTION, false);
 		mShowClear = getIntent().getBooleanExtra(SHOW_CLEAR_BUTTON, false);
+		mBase64Encode = getIntent().getBooleanExtra(DO_BASE64_ENCODE, false);
 		
 		ActionBar bar = getActionBar();
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); 
@@ -114,16 +120,15 @@ public class FileSelect extends Activity {
 		File ifile = new File(path);
 		Exception fe = null;
 		try {
-			FileInputStream fis = new FileInputStream(ifile);
-			String data =VpnProfile.INLINE_TAG;
 
-			byte buf[] =new byte[16384];
-			int len=fis.read(buf);
-			while(len >0) {
-				data += new String(buf,0,len);
-				len=fis.read(buf);
-			}
-			fis.close();
+			String data =VpnProfile.INLINE_TAG;
+			
+			byte[] filedata = readBytesFromFile(ifile) ;
+			if(mBase64Encode)
+				data += Base64.encodeToString(filedata, Base64.DEFAULT);
+			else
+				data += new String(filedata);
+			
 			mData =data;
 			mInlineFragment.setData(data);
 			getActionBar().selectTab(inlineFileTab);
@@ -141,6 +146,28 @@ public class FileSelect extends Activity {
 		}
 	}
 
+	private byte[] readBytesFromFile(File file) throws IOException {
+		InputStream input = new FileInputStream(file);
+
+		long len= file.length();
+
+
+		// Create the byte array to hold the data
+		byte[] bytes = new byte[(int) len];
+
+		// Read in the bytes
+		int offset = 0;
+		int bytesRead = 0;
+		while (offset < bytes.length
+				&& (bytesRead=input.read(bytes, offset, bytes.length-offset)) >= 0) {
+			offset += bytesRead;
+		}
+
+		input.close();
+		return bytes;
+	}
+	
+	
 	public void setFile(String path) {
 		Intent intent = new Intent();
 		intent.putExtra(RESULT_DATA, path);

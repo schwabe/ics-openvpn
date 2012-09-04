@@ -19,7 +19,7 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 	private Fragment mFragment;
 	private int mTaskId;
 	private Button mSelectButton;
-	private boolean mNoInline;
+	private boolean mBase64Encode;
 	private String mTitle;
 	private boolean mShowClear;
 
@@ -50,8 +50,8 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 		Intent startFC = new Intent(getContext(),FileSelect.class);
 		startFC.putExtra(FileSelect.START_DATA, mData);
 		startFC.putExtra(FileSelect.WINDOW_TITLE,mTitle);
-		if(mNoInline)
-			startFC.putExtra(FileSelect.NO_INLINE_SELECTION, true);
+		if(mBase64Encode)
+			startFC.putExtra(FileSelect.DO_BASE64_ENCODE, true);
 		if(mShowClear)
 			startFC.putExtra(FileSelect.SHOW_CLEAR_BUTTON, true);
 		mFragment.startActivityForResult(startFC,mTaskId);
@@ -80,8 +80,8 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 		}
 	}
 
-	public void setNoline() {
-		mNoInline=true;
+	public void setBase64Encode() {
+		mBase64Encode =true;
 	}
 
 	public void setShowClear() {

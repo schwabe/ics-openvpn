@@ -44,7 +44,7 @@
         <EditText
             android:id="@+id/address"
             style="@style/item"
-            android:inputType="text"
+            android:inputType="textUri"
             android:text="@string/defaultserver" >
 
             <!-- <requestFocus /> -->

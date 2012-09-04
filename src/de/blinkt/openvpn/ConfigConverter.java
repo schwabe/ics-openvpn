@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -140,10 +141,13 @@ public class ConfigConverter extends ListActivity {
 
 
 	private Intent installPKCS12() {
-		if(!((CheckBox)findViewById(R.id.importpkcs12)).isChecked())
+		
+		if(!((CheckBox)findViewById(R.id.importpkcs12)).isChecked()) {
+			embedPKCS12File();
 			return null;
+		}
+		
 		File possiblepkcs12 = findFile(mResult.mPKCS12Filename);
-
 		if(possiblepkcs12!=null) {
 			Intent inkeyintent = KeyChain.createInstallIntent();
 			byte[] pkcs12data;
@@ -169,6 +173,23 @@ public class ConfigConverter extends ListActivity {
 	}
 
 
+
+	private void embedPKCS12File() {
+		mResult.mPKCS12Filename = embedFile(mResult.mPKCS12Filename,true);
+		if(mResult.mPKCS12Filename.startsWith(VpnProfile.INLINE_TAG)) {
+			if(mResult.mAuthenticationType==VpnProfile.TYPE_USERPASS_KEYSTORE)
+				mResult.mAuthenticationType=VpnProfile.TYPE_USERPASS_PKCS12;
+			
+			if(mResult.mAuthenticationType==VpnProfile.TYPE_KEYSTORE)
+				mResult.mAuthenticationType=VpnProfile.TYPE_PKCS12;
+			
+		}
+	}
+
+
+
+
+
 	private void setUniqueProfileName(ProfileManager vpl) {
 		int i=0;
 
@@ -191,8 +212,12 @@ public class ConfigConverter extends ListActivity {
 		inflater.inflate(R.menu.import_menu, menu);
 		return true;
 	}
+	
+	private String embedFile(String filename) {
+		return embedFile(filename, false);		
+	}
 
-	private String embedFile(String filename)
+	private String embedFile(String filename, boolean base64encode)
 	{
 		if(filename==null)
 			return null;
@@ -205,7 +230,7 @@ public class ConfigConverter extends ListActivity {
 		if(possibleFile==null)
 			return null;
 		else
-			return readFileContent(possibleFile);
+			return readFileContent(possibleFile,base64encode);
 
 	}
 
@@ -253,27 +278,24 @@ public class ConfigConverter extends ListActivity {
 		return null;
 	}
 
-	String readFileContent(File possibleFile) {
-		String filedata =  "";
-		byte[] buf =new byte[2048];
-
-		log(R.string.trying_to_read, possibleFile.getAbsolutePath());
+	String readFileContent(File possibleFile, boolean base64encode) {
+		byte [] filedata;
 		try {
-			FileInputStream fis = new FileInputStream(possibleFile);
-			int len = fis.read(buf);
-			while( len > 0){
-				filedata += new String(buf,0,len);
-				len = fis.read(buf);
-			}
-			fis.close();
-			return VpnProfile.INLINE_TAG + filedata;
-		} catch (FileNotFoundException e) {
-			log(e.getLocalizedMessage());
+			filedata = readBytesFromFile(possibleFile);
 		} catch (IOException e) {
 			log(e.getLocalizedMessage());
-		}	
+			return null;
+		}
+		
+		String data;
+		if(base64encode) {
+			data = Base64.encodeToString(filedata, Base64.DEFAULT);
+		} else {
+			data = new String(filedata);
 
-		return null;
+		}
+		return VpnProfile.INLINE_TAG + data;
+		
 	}
 
 

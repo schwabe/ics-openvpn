@@ -87,6 +87,15 @@
         <TextView
             style="@style/faqitem"
             android:text="@string/tap_faq3" />
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/faq_routing_title" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/faq_routing" >
+        </TextView>
     </LinearLayout>
 
 </ScrollView>

@@ -214,5 +214,6 @@
     <string name="vpn_import_hint">Benutzen Sie &lt;img src=\"ic_menu_archive\"/> um ein vorhandenes (.ovpn oder .conf) Profil von Ihrer SD Karte zu importieren</string>
     <string name="faq_hint">Lesen Sie auch die FAQ. Dort befindet sich eine Schnellstart Anleitung</string>
     <string name="correcttls">Konventiere den remote-tls Parameter vom OpenVPN 2.2 zum OpenVPN 2.3 Format</string>
-
+ 	<string name="faq_routing_title">Routing/Netzwerk Konfiguration</string>
+    <string name="faq_routing">In dieser Anwendung wird die Routing und Netzwerkkonfiguration nicht mit den traditionellen ifconfig/route Kommandos konfiguiert sondern mittels der VPNService API. Diese erwartet eine Tunnel IP Adresse und die Netzwerke, die über den Tunnel geroutet werden sollen. Inbesondere wird keine Gateway oder Peer IP Adresse benötigt. Die Anwendung ignoriert diese daher auch beim Import. Dass die Verbindung zum VPN Server nicht über den Tunnel geroutet wird, wird auch über die VPNService API sichergestellt ohne dass hierfür spezielle Routen nötig sind. Da nur Netzwerke, die über den Tunnel geroutet werden sollen, angeben werden können, ist es nicht möglich andere Routen zu unterstützen (z.B. route x.x.x.x y.y.y.y net_gateway)"</string>
 </resources>

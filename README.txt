@@ -32,3 +32,8 @@ public class StartOpenVPNActivity extends Activity {
 		startActivity(shortcutIntent);
     }
 }
+
+or from the shell:
+
+am start -a android.intent.action.MAIN -n de.blinkt.openvpn/.LaunchVPN -e de.blinkt.openvpn.shortcutProfileName Home
+

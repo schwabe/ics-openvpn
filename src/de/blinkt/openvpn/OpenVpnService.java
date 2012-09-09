@@ -60,6 +60,8 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 	private boolean mStarting=false;
 
+	private long mConnecttime;
+
 	private static final int OPENVPN_STATUS = 1;
 
 	@Override
@@ -83,7 +85,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 		}
 	}
 
-	private void showNotification(String msg, String tickerText, boolean lowpriority) {
+	private void showNotification(String msg, String tickerText, boolean lowpriority, long when) {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
@@ -97,6 +99,8 @@ public class OpenVpnService extends VpnService implements StateListener {
 		nbuilder.setOngoing(true);
 		nbuilder.setContentIntent(getLogPendingIntent());
 		nbuilder.setSmallIcon(icon);
+		if(when !=0)
+			nbuilder.setWhen(when);
 
 
 		// Try to set the priority available since API 16 (Jellybean)
@@ -104,7 +108,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 			try {
 				Method setpriority = nbuilder.getClass().getMethod("setPriority", int.class);
 				// PRIORITY_MIN == -2
-				setpriority.invoke(nbuilder, -1 );
+				setpriority.invoke(nbuilder, -2 );
 
 				//ignore exception
 			} catch (NoSuchMethodException nsm) {
@@ -182,7 +186,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 		String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
 		mProfile = ProfileManager.get(profileUUID);
 
-		showNotification("Starting VPN " + mProfile.mName,"Starting VPN " + mProfile.mName, false);
+		showNotification("Starting VPN " + mProfile.mName,"Starting VPN " + mProfile.mName, false,0);
 
 
 		OpenVPN.addStateListener(this);
@@ -423,19 +427,21 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 		if("BYTECOUNT".equals(state)) {
 			if(mDisplayBytecount) {
-				showNotification(logmessage,null,true);
+				showNotification(logmessage,null,true,mConnecttime);
 			}
 		} else {
-			if("CONNECTED".equals(state)) 
+			if("CONNECTED".equals(state)) {
 				mDisplayBytecount = true;
-			else
+				mConnecttime = System.currentTimeMillis();
+			} else {
 				mDisplayBytecount = false;
-
+			}
+			
 			// Other notifications are shown,
 			// This also mean we are no longer connected, ignore bytecount messages until next
 			// CONNECTED
 			String ticker = state.toLowerCase();
-			showNotification(state +" " + logmessage,ticker,false);
+			showNotification(state +" " + logmessage,ticker,false,0);
 
 		}
 	}

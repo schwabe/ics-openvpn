@@ -664,7 +664,7 @@ public class VpnProfile implements  Serializable{
 
 	public int needUserPWInput() {
 		if((mAuthenticationType == TYPE_PKCS12 || mAuthenticationType == TYPE_USERPASS_PKCS12)&&
-				(mPKCS12Password.equals("") || mPKCS12Password == null)) {
+				(mPKCS12Password == null || mPKCS12Password.equals(""))) {
 			if(mTransientPCKS12PW==null)
 				return R.string.pkcs12_file_encryption_key;
 		}

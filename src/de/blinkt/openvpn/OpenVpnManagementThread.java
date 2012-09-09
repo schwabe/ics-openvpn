@@ -222,6 +222,7 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 	private void releaseHoldCmd() {
 		mWaitingForRelease=false;
+		mReleaseHold=true;
 		managmentCommand("hold release\n");
 		managmentCommand("bytecount " + mBytecountinterval + "\n");
 		managmentCommand("state on\n");

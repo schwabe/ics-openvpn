@@ -425,7 +425,7 @@ bool ip_or_dns_addr_safe (const char *addr, const bool allow_fqdn);
 bool mac_addr_safe (const char *mac_addr);
 bool ipv6_addr_safe (const char *ipv6_text_addr);
 
-socket_descriptor_t create_socket_tcp (void);
+socket_descriptor_t create_socket_tcp (int af);
 
 socket_descriptor_t socket_do_accept (socket_descriptor_t sd,
 				      struct link_socket_actual *act,
@@ -467,11 +467,6 @@ bool unix_socket_get_peer_uid_gid (const socket_descriptor_t sd, int *uid, int *
  * DNS resolution
  */
 
-struct resolve_list {
-  int len;
-  in_addr_t data[16];
-};
-
 #define GETADDR_RESOLVE               (1<<0)
 #define GETADDR_FATAL                 (1<<1)
 #define GETADDR_HOST_ORDER            (1<<2)
@@ -494,12 +489,12 @@ in_addr_t getaddr (unsigned int flags,
 		   bool *succeeded,
 		   volatile int *signal_received);
 
-in_addr_t getaddr_multi (unsigned int flags,
-			 const char *hostname,
-			 int resolve_retry_seconds,
-			 bool *succeeded,
-			 volatile int *signal_received,
-			 struct resolve_list *reslist);
+int openvpn_getaddrinfo (unsigned int flags,
+                         const char *hostname,
+                         int resolve_retry_seconds,
+                         volatile int *signal_received,
+                         int ai_family,
+                         struct addrinfo **res);
 
 /*
  * Transport protocol naming and other details.

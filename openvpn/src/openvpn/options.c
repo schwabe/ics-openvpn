@@ -62,6 +62,10 @@
 
 #include "memdbg.h"
 
+#ifdef MANAGMENT_EXTERNAL_KEY
+#define EXTERNAL_KEY_STRING "EXTERNAL_PRIVATE_KEY"
+#endif
+
 const char title_string[] =
   PACKAGE_STRING
   " " TARGET_ALIAS
@@ -106,8 +110,7 @@ const char title_string[] =
 #if ENABLE_IP_PKTINFO
   " [MH]"
 #endif
-  " [PF_INET6]"
-  " [IPv6 payload 20110522-1 (2.2.0)]"
+  " [IPv6]"
   " built on " __DATE__
 ;
 
@@ -2183,6 +2186,11 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
       else
 #endif
 #ifdef ENABLE_CRYPTOAPI
+#ifdef MANAGMENT_EXTERNAL_KEY
+    if((options->management_flags & MF_EXTERNAL_KEY) && !strcmp(options->priv_key_file,EXTERNAL_KEY_STRING)==0)
+		msg (M_USAGE, "--key and --management-external-key are mutually exclusive");
+#endif
+
       if (options->cryptoapi_cert)
 	{
 	  if ((!(options->ca_file)) && (!(options->ca_path)))
@@ -2357,14 +2365,6 @@ options_postprocess_mutate_ce (struct options *o, struct connection_entry *ce)
 #endif      
     }
 
-#ifdef MANAGMENT_EXTERNAL_KEY
-  if(o->management_flags & MF_EXTERNAL_KEY) {
-	  if(o->priv_key_file)
-		  msg (M_USAGE, "--key and --management-external-key are mutually exclusive");
-	  /* set a filename for nicer output in the logs */
-	  o->priv_key_file = "EXTERNAL_PRIVATE_KEY";
-  }
-#endif
   /*
    * Set MTU defaults
    */
@@ -2640,7 +2640,7 @@ options_postprocess_filechecks (struct options *options)
 #ifdef MANAGMENT_EXTERNAL_KEY
   if(!options->management_flags & MF_EXTERNAL_KEY)
 #endif
-  errs |= check_file_access (CHKACC_FILE|CHKACC_INLINE, options->priv_key_file, R_OK,
+     errs |= check_file_access (CHKACC_FILE|CHKACC_INLINE, options->priv_key_file, R_OK,
                              "--key");
   errs |= check_file_access (CHKACC_FILE|CHKACC_INLINE, options->pkcs12_file, R_OK,
                              "--pkcs12");
@@ -4154,6 +4154,9 @@ add_option (struct options *options,
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->management_flags |= MF_EXTERNAL_KEY;
+	  /* Set priv key file name only if not defined, so --key and this option can be checked later */
+	  if(!options->priv_key_file)
+		  options->priv_key_file = EXTERNAL_KEY_STRING;
     }
 #endif
 #ifdef MANAGEMENT_DEF_AUTH

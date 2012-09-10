@@ -62,10 +62,6 @@
 
 #include "memdbg.h"
 
-#ifdef MANAGMENT_EXTERNAL_KEY
-#define EXTERNAL_KEY_STRING "EXTERNAL_PRIVATE_KEY"
-#endif
-
 const char title_string[] =
   PACKAGE_STRING
   " " TARGET_ALIAS
@@ -1586,6 +1582,12 @@ show_settings (const struct options *o)
   SHOW_STR (ca_path);
   SHOW_STR (dh_file);
   SHOW_STR (cert_file);
+
+#ifdef MANAGMENT_EXTERNAL_KEY
+  if((o->management_flags & MF_EXTERNAL_KEY))
+	SHOW_PARM ("priv_key_file","EXTERNAL_PRIVATE_KEY","%s");
+  else
+#endif
   SHOW_STR (priv_key_file);
 #ifndef ENABLE_CRYPTO_POLARSSL
   SHOW_STR (pkcs12_file);
@@ -2176,6 +2178,10 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 	  msg(M_USAGE, "Parameter --cert cannot be used when --pkcs11-provider is also specified.");
 	if (options->priv_key_file)
 	  msg(M_USAGE, "Parameter --key cannot be used when --pkcs11-provider is also specified.");
+#ifdef MANAGMENT_EXTERNAL_KEY
+	if (options->management_flags & MF_EXTERNAL_KEY)
+	  msg(M_USAGE, "Parameter --management-external-key cannot be used when --pkcs11-provider is also specified.");
+#endif
 	if (options->pkcs12_file)
 	  msg(M_USAGE, "Parameter --pkcs12 cannot be used when --pkcs11-provider is also specified.");
 #ifdef ENABLE_CRYPTOAPI
@@ -2187,7 +2193,7 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 #endif
 #ifdef ENABLE_CRYPTOAPI
 #ifdef MANAGMENT_EXTERNAL_KEY
-    if((options->management_flags & MF_EXTERNAL_KEY) && !strcmp(options->priv_key_file,EXTERNAL_KEY_STRING)==0)
+	 if((options->management_flags & MF_EXTERNAL_KEY) && options->priv_key_file)
 		msg (M_USAGE, "--key and --management-external-key are mutually exclusive");
 #endif
 
@@ -2201,6 +2207,10 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 	    msg(M_USAGE, "Parameter --key cannot be used when --cryptoapicert is also specified.");
           if (options->pkcs12_file)
 	    msg(M_USAGE, "Parameter --pkcs12 cannot be used when --cryptoapicert is also specified.");
+#ifdef MANAGMENT_EXTERNAL_KEY
+          if (options->management_flags & MF_EXTERNAL_KEY)
+	    msg(M_USAGE, "Parameter --management-external-key cannot be used when --cryptoapicert is also specified.");
+#endif
 	}
       else
 #endif
@@ -2215,6 +2225,10 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 	    msg(M_USAGE, "Parameter --cert cannot be used when --pkcs12 is also specified.");
           if (options->priv_key_file)
 	    msg(M_USAGE, "Parameter --key cannot be used when --pkcs12 is also specified.");
+#ifdef MANAGMENT_EXTERNAL_KEY
+          if (options->management_flags & MF_EXTERNAL_KEY)
+	    msg(M_USAGE, "Parameter --external-management-key cannot be used when --pkcs12 is also specified.");
+#endif
 #endif
         }
       else
@@ -2230,7 +2244,15 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 #endif
 	  if (pull)
 	    {
-	      const int sum = (options->cert_file != NULL) + (options->priv_key_file != NULL);
+
+	      const int sum = (options->cert_file != NULL) +
+#ifdef MANAGMENT_EXTERNAL_KEY
+			((options->priv_key_file != NULL) || (options->management_flags & MF_EXTERNAL_KEY));
+#else 
+		    (options->priv_key_file != NULL);
+#endif
+
+
 	      if (sum == 0)
 		{
 #if P2MP
@@ -2248,6 +2270,9 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 	  else
 	    {
 	      notnull (options->cert_file, "certificate file (--cert) or PKCS#12 file (--pkcs12)");
+#ifdef MANAGMENT_EXTERNAL_KEY
+          if (!options->management_flags & MF_EXTERNAL_KEY)
+#endif
 	      notnull (options->priv_key_file, "private key file (--key) or PKCS#12 file (--pkcs12)");
 	    }
 	}
@@ -4154,9 +4179,6 @@ add_option (struct options *options,
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->management_flags |= MF_EXTERNAL_KEY;
-	  /* Set priv key file name only if not defined, so --key and this option can be checked later */
-	  if(!options->priv_key_file)
-		  options->priv_key_file = EXTERNAL_KEY_STRING;
     }
 #endif
 #ifdef MANAGEMENT_DEF_AUTH

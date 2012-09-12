@@ -147,6 +147,8 @@ public class OpenVpnManagementThread implements Runnable {
 			exp =e;
 		} catch (InvocationTargetException e) {
 			exp =e;
+		} catch (NullPointerException e) {
+			exp =e;
 		}
 		if(exp!=null) {
 			exp.printStackTrace();

@@ -1402,8 +1402,19 @@ do_open_tun (struct context *c)
   c->c2.ipv4_tun = (!c->options.tun_ipv6
 		    && is_dev_type (c->options.dev, c->options.dev_type, "tun"));
 
+#ifndef TARGET_ANDROID
   if (!c->c1.tuntap)
     {
+#endif
+      
+#ifdef TARGET_ANDROID
+      /* If we emulate persist-tun on android we still have to open a new tun and
+         then close the old */
+      int oldtunfd=-1;
+      if(c->c1.tuntap)
+          oldtunfd = c->c1.tuntap->fd;
+#endif
+        
       /* initialize (but do not open) tun/tap object */
       do_init_tun (c);
 
@@ -1439,7 +1450,10 @@ do_open_tun (struct context *c)
       /* open the tun device */
       open_tun (c->options.dev, c->options.dev_type, c->options.dev_node,
 		c->c1.tuntap);
-
+#ifdef TARGET_ANDROID
+      if(oldtunfd>=0)
+        close(oldtunfd);
+#endif
       /* set the hardware address */
       if (c->options.lladdr)
 	  set_lladdr(c->c1.tuntap->actual_name, c->options.lladdr, c->c2.es);
@@ -1481,6 +1495,7 @@ do_open_tun (struct context *c)
 
       ret = true;
       static_context = c;
+#ifndef TARGET_ANDROID
     }
   else
     {
@@ -1503,6 +1518,7 @@ do_open_tun (struct context *c)
 		     "up",
 		     c->c2.es);
     }
+#endif
   gc_free (&gc);
   return ret;
 }
@@ -2487,13 +2503,6 @@ do_option_warnings (struct context *c)
   if (o->ce.connect_timeout_defined)
     msg (M_WARN, "NOTE: --connect-timeout option is not supported on this OS");
 #endif
-
-  if (script_security >= SSEC_SCRIPTS)
-    msg (M_WARN, "NOTE: the current --script-security setting may allow this configuration to call user-defined scripts");
-  else if (script_security >= SSEC_PW_ENV)
-    msg (M_WARN, "WARNING: the current --script-security setting may allow passwords to be passed to scripts via environmental variables");
-  else
-    msg (M_WARN, "NOTE: " PACKAGE_NAME " 2.1 requires '--script-security 2' or higher to call user-defined scripts or executables");
 
   if (script_method == SM_SYSTEM)
     msg (M_WARN, "NOTE: --script-security method='system' is deprecated due to the fact that passed parameters will be subject to shell expansion");

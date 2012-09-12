@@ -730,8 +730,8 @@ create_socket (struct link_socket *sock)
     struct user_pass up;
     strcpy(up.username ,__func__);
     management->connection.fdtosend = sock->sd;
+    msg(M_DEBUG, "Protecting socket fd %d", sock->sd);
     management_query_user_pass(management, &up , "PROTECTFD", GET_USER_PASS_NEED_OK,(void*) 0);
-
 
 #endif
     

@@ -223,7 +223,6 @@ public class ConfigParser {
 			"management",
 			"management-query-passwords",
 			"pause-exit",
-			"persist-tun",
 			"persist-key",
 			"register-dns",
 			"route-delay",
@@ -432,6 +431,9 @@ public class ConfigParser {
 		
 		if(getOption("nobind", 0, 0) != null)
 			np.mNobind=true;
+		
+		if(getOption("persist-tun", 0,0) != null)
+			np.mPersistTun=true;
 		
 		Vector<String> authuser = getOption("auth-user-pass",0,1);
 		if(authuser !=null){

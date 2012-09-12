@@ -101,6 +101,7 @@ public class VpnProfile implements  Serializable{
 	public String mKeyPassword="";
 	static final String MINIVPN = "miniopenvpn";
 	
+	public boolean mPersistTun = true;
 
 
 	public void clearDefaults() {
@@ -110,6 +111,7 @@ public class VpnProfile implements  Serializable{
 		mUseDefaultRoute=false;
 		mUseDefaultRoutev6=false;
 		mExpectTLSCert=false;
+		mPersistTun = false;
 	}
 
 
@@ -337,6 +339,9 @@ public class VpnProfile implements  Serializable{
 		if(mUseFloat)
 			cfg+= "float\n";
 
+		if(mPersistTun)
+			cfg+= "persist-tun\n";
+		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);        
 		boolean usesystemproxy = prefs.getBoolean("usesystemproxy", true);
 		if(usesystemproxy) {

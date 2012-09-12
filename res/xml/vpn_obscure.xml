@@ -19,37 +19,11 @@
         android:persistent="false"
         android:summary="@string/float_summary"
         android:title="@string/float_title" />
-
-    <!--
-    <CheckBoxPreference android:key="setmtu" android:title="Set custom MTU" />
-      <EditTextPreference
-        android:dependency="setmtu"
-        android:defaultValue="1500"
-        android:title="MTU" />
-    -->
-
-
-    <!--
-	Shaping works only on outgoing packet, so it is rather uninteresting :(
     <CheckBoxPreference
-       android:persistent="false"
-        android:key="useBWShaping"
-        android:title="bandwidth shaping" 
-        android:summary="Limit Bandwidth of the VPN"/>
+        android:key="usePersistTun"
+        android:summary="@string/persisttun_summary"
+        android:title="@string/persistent_tun_title" />
 
-    <EditTextPreference
-        android:key="shaperLimit"
-        android:dependency="useBWShaping"
-        android:title="Bandwidth in KByte/s" />
-    -->
-
-
-    <!--
-         <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="enableReplayProtection"
-        android:title="Replay Protection" />
-    -->
     <PreferenceCategory android:title="@string/custom_config_title" >
         <CheckBoxPreference
             android:key="enableCustomOptions"

@@ -101,7 +101,7 @@ public class VpnProfile implements  Serializable{
 	public String mKeyPassword="";
 	static final String MINIVPN = "miniopenvpn";
 	
-	public boolean mPersistTun = true;
+	public boolean mPersistTun = false;
 
 
 	public void clearDefaults() {

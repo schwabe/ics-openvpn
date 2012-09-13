@@ -2132,6 +2132,9 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 
       if (options->stale_routes_check_interval)
         msg (M_USAGE, "--stale-routes-check requires --mode server");
+
+      if (compat_flag (COMPAT_FLAG_QUERY | COMPAT_NO_NAME_REMAPPING))
+        msg (M_USAGE, "--compat-x509-names no-remapping requires --mode server");
     }
 #endif /* P2MP_SERVER */
 
@@ -2248,7 +2251,7 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 	      const int sum = (options->cert_file != NULL) +
 #ifdef MANAGMENT_EXTERNAL_KEY
 			((options->priv_key_file != NULL) || (options->management_flags & MF_EXTERNAL_KEY));
-#else 
+#else
 		    (options->priv_key_file != NULL);
 #endif
 
@@ -5549,6 +5552,13 @@ add_option (struct options *options,
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->ssl_flags |= SSLF_AUTH_USER_PASS_OPTIONAL;
+    }
+  else if (streq (p[0], "compat-names"))
+    {
+      VERIFY_PERMISSION (OPT_P_GENERAL);
+      compat_flag (COMPAT_FLAG_SET | COMPAT_NAMES);
+      if (p[1] && streq (p[1], "no-remapping"))
+        compat_flag (COMPAT_FLAG_SET | COMPAT_NO_NAME_REMAPPING);
     }
   else if (streq (p[0], "opt-verify"))
     {

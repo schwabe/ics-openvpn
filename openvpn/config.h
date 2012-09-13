@@ -450,13 +450,13 @@
 #define PACKAGE_NAME "OpenVPN"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "OpenVPN 2.3_alpha3"
+#define PACKAGE_STRING "OpenVPN 2.3_beta1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "openvpn"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.3_alpha1"
+#define PACKAGE_VERSION "2.3_beta1"
 
 /* Define to the necessary symbol if this constant uses a non-standard name on
    your system. */
@@ -615,4 +615,4 @@
 #define HAVE_LZO_LZOUTIL_H 1
 #define HAVE_LZO_LZO1X_H 1
 #define HAVE_SYS_TIME_H 1
-#define HAVE_TIME_H 1j
+#define HAVE_TIME_H 1

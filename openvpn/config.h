@@ -490,7 +490,7 @@
 #define TAP_WIN32_MIN_MINOR 1
 
 /* A string representing our target */
-#define TARGET_ALIAS "arm-linux-androideabi"
+#define TARGET_ALIAS TARGET_ABI
 
 /* Are we running on Mac OS X? */
 /* #undef TARGET_DARWIN */

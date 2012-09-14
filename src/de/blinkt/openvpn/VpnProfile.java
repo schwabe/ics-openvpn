@@ -339,8 +339,11 @@ public class VpnProfile implements  Serializable{
 		if(mUseFloat)
 			cfg+= "float\n";
 
-		if(mPersistTun)
+		if(mPersistTun) {
 			cfg+= "persist-tun\n";
+			cfg+= "# persist-tun also sets persist-remote-ip to avoid DNS resolve problem\n";
+			cfg+= "persist-remote-ip\n";
+		}
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);        
 		boolean usesystemproxy = prefs.getBoolean("usesystemproxy", true);

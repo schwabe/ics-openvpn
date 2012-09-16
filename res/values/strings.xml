@@ -53,7 +53,7 @@
     <string name="about">About</string>
     <string name="about_summary">About OpenVPN for Android</string>
     <string name="vpn_list_summary">List of all configured VPNs</string>
-    <string name="vpn_list_title">All your precious VPNs</string>
+    <string name="vpn_list_title">VPN Profiles</string>
     <string name="vpn_type">Type</string>
     <string name="pkcs12pwquery">PKCS12 Password</string>
     <string name="file_select">Select…</string>
@@ -250,7 +250,7 @@
     <string name="configuration_changed">Configuration changed</string>
     <string name="log_no_last_vpn">Could not determine last connected profile for editing</string>
     <string name="faq_duplicate_notification_title">Duplicate notifications</string>
-    <string name="faq_duplicate_notification">If Android is under system memory (RAM) pressure app and service which are not needed at the moment are removed from active memory. This terminates an ongoing VPN connection. To ensure that the connection/Openvpn survices the service runs with higher priority. To run with higher priority the application must display a notification. The key notification icon is imposed by the system as described in the previous FAQ entry. It does not count as app notification for purpose of running with higher priority.</string>
+    <string name="faq_duplicate_notification">If Android is under system memory (RAM) pressure, apps and service which are not needed at the moment are removed from active memory. This terminates an ongoing VPN connection. To ensure that the connection/OpenVPN survives the service runs with higher priority. To run with higher priority the application must display a notification. The key notification icon is imposed by the system as described in the previous FAQ entry. It does not count as app notification for purpose of running with higher priority.</string>
     <string name="no_vpn_profiles_defined">No VPN profiles defined.</string>
     <string name="add_new_vpn_hint">Use the &lt;img src=\"ic_menu_add\"/> icon to add a new VPN</string>
     <string name="vpn_import_hint">Use the &lt;img src=\"ic_menu_archive\"/> icon to import an existing (.ovpn or .conf) profile from your sdcard.</string>

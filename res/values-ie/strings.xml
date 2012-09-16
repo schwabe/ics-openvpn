@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2011 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<resources>
+	<string name="app">OpenVPN לאנדרואיד</string>
+	<string name="address">:כתובת שרת</string>
+	<string name="port">:פורט שרת</string>
+	<string name="location">איזור</string>
+	<string name="cant_read_folder">אי אפשר לקרוא את הספריה!</string>
+	<string name="select">בחר</string>
+	<string name="cancel">בטל</string>
+	<string name="no_data">אין נתונים</string>
+	<string name="useLZO">LZO כיווץ</string>
+	<string name="client_no_certificate">אין קובץ אישור</string>
+	<string name="client_certificate_title">קובץ אישור של הלקוח</string>
+	<string name="client_key_title">מפתח אישור של לקוח</string>
+	<string name="client_pkcs12_title">PKCS12 קובץ</string>
+	<string name="ca_title">CA קובץ אישור של</string>
+	<string name="no_certificate">כלום לא נבחר</string>
+	<string name="copyright_guicode">קובצי קוד המקור נמצאים ב http://code.google.com/p/ics-openvpn/ </string>
+	<string name="copyright_others">התוכנית משתמשת ברכיבים הבאים. ראה קוד מקור כדי ללמוד על הרשיון</string>
+	<string name="about">על התוכנה</string>
+	<string name="about_summary">על התוכנה OpenVPN לאנדרואיד</string>
+	<string name="vpn_list_summary">רשימת כל ה VPNs</string>
+	<string name="vpn_list_title">רשימת כל המיוחדים VPNs</string>
+	<string name="vpn_type">סוג</string>
+	<string name="pkcs12pwquery">PKCS12 סיסמה</string>
+	<string name="file_select">בחר…</string>
+	<string name="file_nothing_selected">כלום לא נבחר</string>
+	<string name="useTLSAuth">השתמש ב TLS תהליך אימות</string>
+	<string name="tls_direction">TLS כיוון ה</string>
+	<string name="ipv6_dialog_tile">הכנס IPv6 כתובת/מסכה בפורמט CIDR ( 2000:dd::23/64 לדוגמה)</string>
+	<string name="ipv4_dialog_title">הכנס IPv4 כתובת/מסכה בפורמט CIDR (לדוגמה 1.2.3.4/24)</string>
+	<string name="ipv4_address">IPv4 כתובת</string>
+	<string name="ipv6_address">IPv6 כתובת</string>
+	<string name="custom_option_warning">הכנס OpenVPN אפשרויות מיוחדות. !I! השתמש הזהירות רבה . Also note that many of the tun related OpenVPN settings cannot be supported by design of the VPNSettings. If you think an important option is missing contact the author</string>
+	<string name="auth_username">שם משתמש</string>
+	<string name="auth_pwquery">סיסמה</string>
+	<string name="configure_the_vpn">הגדר את ה VPN</string>
+	<string name="menu_add_profile">הוסף פרופיל</string>
+	<string name="add_profile_name_prompt">הכנס שם מזהה לפרופיל</string>
+	<string name="duplicate_profile_name">שכפל שם הפרופיל</string>
+	<string name="profilename">שם הפרופיל</string>
+	<string name="no_keystore_cert_selected">לא ניבחר קובץ אישור.</string>
+	<string name="no_error_found">אין אף טעות</string>
+	<string name="config_error_found">טעות בהגדרות</string>
+	<string name="ipv4_format_error">לא ניתן להבין את כתובת ה IPv4 </string>
+	<string name="custom_route_format_error">לא ניתן להבין את הנטיב המיוחד</string>
+	<string name="pw_query_hint">השרא ריק לשאילתה לפי דרישה</string>
+	<string name="vpn_shortcut">OpenVPN קיצור דרך ל</string>
+	<string name="vpn_launch_title">התחבר אל VPN</string>
+	<string name="shortcut_profile_notfound">הפרופיל שנמצא בקיצור הדרך לא נמצא</string>
+	<string name="random_host_prefix">התחלת שם שרת אקראית</string>
+	<string name="random_host_summary">הוסף 6 אותיות אקראיות לשם השרת</string>
+	<string name="custom_config_title">אפשר אפשרויות מיוחדות</string>
+	<string name="custom_config_summary">הגדר אפשרויות מיוחדות - השתמש בזהירות</string>
+	<string name="route_rejected">אנדרואיד דחה את המסלול</string>
+	<string name="cancel_connection">נתק</string>
+	<string name="clear_log">נקה לוג</string>
+	<string name="title_cancel">בטל אישור</string>
+	<string name="cancel_connection_query">נתק את ה VPN המחובר/I בטל את ניסיון ההתחברות?</string>
+	<string name="remove_vpn">הוצא את ה VPN</string>
+	<string name="check_remote_tlscert">בדוק האם השרת משתמש ב TLS אישור שרת מסוג</string>
+	<string name="check_remote_tlscert_title">אל תקבל TLS Server</string>
+	<string name="remote_tlscn_check_summary">בדוק את קובץ אישור השרת המרוחק CN מול השורה</string>
+	<string name="remote_tlscn_check_title">בודק קובץ אישור שרת</string>
+	<string name="enter_tlscn_title">שם שרת מרוחק (CN)</string>
+	<string name="tls_key_auth">הכנס את מפתח ההזדהות TLS</string>
+	<string name="tls_auth_file">קובץ זיהוי TLS</string>
+	<string name="pull_on_summary">מבקש אפשרויות כתובת IP נתיבים ותזמונים מהשרת</string>
+	<string name="pull_off_summary">לא נדרשת שום אינפורמציה מהשרת. ההגדרות צריכות להיות מסומנות למטה.</string>
+	<string name="use_pull">משוך הגדרות</string>
+	<string name="dns">DNS</string>
+	<string name="override_dns">דרוס הגדרות DNS ע"י השרת</string>
+	<string name="dns_override_summary">השתמש בשרת DNS משלך</string>
+	<string name="searchdomain">חיפוש תחום</string>
+	<string name="dns1_summary">שרת DNS לשימוש</string>
+	<string name="dns_server">DNS שרת</string>
+	<string name="secondary_dns_message">שרת DNS משני לשימוש במידה ושרת הDNS הרגיל לא נימצא</string>
+	<string name="backup_dns">שרת DNS גיבוי</string>
+	<string name="ignored_pushed_routes">התעלם מנתיבים נדחפים</string>
+	<string name="default_route_summary">העבר את כל התקשורת דרך הVPN</string>
+	<string name="use_default_title">השתמש בנתיב ברירת המחדל</string>
+	<string name="custom_routes_title">נתיבים מותאמים אישית</string>
+	<string name="float_summary">אפשר חבילות שנבדקו מכל כתובת IP</string>
+	<string name="float_title">אפשר שרת צף</string>
+	<string name="custom_options_title">אפשרויות מיוחדות</string>
+	<string name="edit_vpn">ערוך אפשרויות VPN</string>
+	<string name="remove_vpn_query">למחוק את פרופיל הVPN %s?</string>
+	<string name="tun_open_error">פתיחת ערוץ tun נכשלה בגדול</string>
+	<string name="clear">נקי</string>
+	<string name="info">מידע</string>
+	<string name="show_connection_details">הראה נתוני חיבור</string>
+	<string name="dns_server_info">DNS שרת : %s</string>
+	<string name="dns_domain_info">DNS Domain: %s</string>
+	<string name="routes_info">נתיבים : %s</string>
+	<string name="routes_info6"> נתיבים IPv6: %s</string>
+	<string name="version_info">%1$s %2$s</string>
+	<string name="send_logfile">שלח קובץ log</string>
+	<string name="send">שלח</string>
+	<string name="copied_entry">השורה ב log הועתקה ללוח הזמני</string>
+	<string name="tap_mode">Tap מצב</string>
+	<string name="faq_tap_mode">מצב tap לא אפשרי ב VPN ללא גישת root לכן אפליקציה זו לא יכולה לספק גישה לממשק המערכת</string>
+	<string name="faq">שאלות נפוצות</string>
+	<string name="faq_summary">שאלות נפוצות וקצת עיצות</string>
+	<string name="copying_log_entries">מעתיק שורות log</string>
+	<string name="faq_shortcut">קיצור דרך להתחל</string>
+	<string name="no_vpn_support_image">הרום שלך לא תומך בשירותי VPN - סליחה. :-(</string>
+	<string name="encryption">הצפנה</string>
+	<string name="cipher_dialog_title">הכנס שיטת הצפנה</string>
+	<string name="chipher_dialog_message">הכנס מפתח הצפנה ל OpenVPN . השאר ריק לשימוש בקוד ברירת המחדל</string>
+	<string name="settings_auth">אימות\הצפנה</string>
+	<string name="file_explorer_tab">מנהל הקבצים</string>
+	<string name="inline_file_tab">Inline File</string>
+	<string name="import_file">יבוא</string>
+	<string name="error_importing_file">בעיה ביבוא קובץ</string>
+	<string name="import_error_message">לא מצליח ליבא קובץ ממערכת הקבצים</string>
+	<string name="inline_file_data">[[Inline file data]]</string>
+	<string name="opentun_no_ipaddr">מסרב לפתוח tun בלי נתוני כתובת IP</string>
+	<string name="menu_import">יבא פרופיל מקובץ ovpn </string>
+	<string name="menu_import_short">יבוא</string>
+	<string name="import_content_resolve_error">לא מצליח לקרא פרופיל ליבוא</string>
+	<string name="error_reading_config_file">טעות בקריאת קובץ הגדרות</string>
+	<string name="add_profile">הוסף פרופיל</string>
+	<string name="trying_to_read">מנסה לקרוא קובץ : %1$s</string>
+	<string name="import_could_not_open">לא מצליח לקרוא קובץ %1$ שמוזכר בקובץ ההגדרות המיובאות</string>
+	<string name="importing_config">מיבא קובץ הגדרות מהמקור %1$</string>
+	<string name="import_warning_custom_options">Your configuration had a few configuration options that could be parsed. These options were added as custom configuration options. The custom configuration is displayed below:</string>
+	<string name="import_done">סיים לקרא קובץ הגדרות</string>
+	<string name="nobind_summary">אל תחבר לכתובת ופורט מקומיים</string>
+	<string name="no_bind">ללא חיבורים מקומיים</string>
+	<string name="import_configuration_file">ייבא קובץ הגדרות</string>
+	<string name="import_vpn">ייבוא</string>
+	<string name="broken_image_cert_title">לא מצליח להראות בחירת קובץ אישורים</string>
+	<string name="ipv4">IPv4</string>
+	<string name="ipv6">IPv6</string>
+	<string name="speed_waiting">ממתין להודעה על מצב…</string>
+	<string name="converted_profile">פרופיל מיובא</string>
+	<string name="converted_profile_i">פרופיל מיובא %d</string>
+	<string name="broken_images">Broken Images</string>
+	<string name="error_empty_username">שם המשתמש חייב להיות מלא.</string>
+	<string name="pkcs12_file_encryption_key">PKCS12 File Encryption Key</string>
+	<string name="private_key_password">Private Key Password</string>
+	<string name="password">סיסמה</string>
+	<string name="tls_authentication">TLS הרשאת</string>
+	<string name="generalsettings">הגדרות כלליות</string>
+	<string name="generated_config_summary">הראה את קובץ ההגדרות OpenVPN שנוצר</string>
+	<string name="building_configration">בונה תצורה…</string>
+	<string name="netchange">חבר מחדש בזמן שינויים ברשת</string>
+	<string name="netstatus">מצב הרשת: %s</string>
+	<string name="select_file">בחר</string>
+    <!-- <string name="translationby">English translation by Arne Schwabe&lt;arne@rfc2549.org></string> -->
+	<string name="basic">בסיסי</string>
+	<string name="routing">ניתוב</string>
+	<string name="obscure">הגדרות OpenVPN מוסתרות. בד"כ לא נדרשות</string>
+	<string name="advanced">מתקדם</string>
+	<string name="faq_howto_title">התחלה מהירה</string>
+	<string name="setting_loadtun">טען מודול tum</string>
+	<string name="use_system_proxy">השתמש ב proxy של המערכת</string>
+	<string name="onbootrestartsummary">OpenVPN יתחבר מחדש אם הוא היה מחובר בזמן אתחול\כיבוי. בבקשה קרא את השאלות הנפוצות על אזהרות חיבור לפני שימוש באפשרות זו</string>
+	<string name="onbootrestart">התחבר אחרי חיבור מחדש</string>
+	<string name="ignore">התעלם</string>
+	<string name="restart">אתחול</string>
+	<string name="restart_vpn_after_change">ההגדרות ישונו אחרי איתחול הVPN. לאתחל את הVPN?</string>
+	<string name="configuration_changed">הגדרות שונו</string>
+	<string name="log_no_last_vpn">לא מוצא את הפרופיל האחרון לעריכה</string>
+	<string name="faq_duplicate_notification_title">הודעה כפולה</string>
+	<string name="no_vpn_profiles_defined">לא הוגדרו פרופילי VPN</string>
+	<string name="faq_hint">זה מדריך מהיר. אנא השתמש ברשימת השאלות הנפוצות בנוסף.</string>
+	<string name="correcttls">המר פורמט של remote-tls מ OpenVPN 2.2 לפורמט של 2.3</string>
+	<string name="faq_routing_title">הגדרות ניתוב\ממשק</string>
+</resources>

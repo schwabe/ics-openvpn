@@ -250,8 +250,11 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			}
 			fout.close();
 
-			if(!mvpnout.setExecutable(true))
+			if(!mvpnout.setExecutable(true)) {
+				OpenVPN.logMessage(0, "","Failed to set minivpn executable");
 				return false;
+			}
+				
 			
 			return true;
 		} catch (IOException e) {

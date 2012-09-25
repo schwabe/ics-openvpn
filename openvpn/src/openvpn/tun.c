@@ -1438,6 +1438,8 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
     if( (tt->fd < 0) || ! (strcmp("ok",up.password)==0)) {
         msg (M_ERR, "ERROR: Cannot open TUN");
     }
+    /* Set the actual name to a dummy name to enable scripts */
+    tt->actual_name = "vpnservice-tun";
     gc_free (&gc);
 }
 

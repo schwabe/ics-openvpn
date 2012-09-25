@@ -36,7 +36,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 	private String[] mBconfig=null;
 
 
-	class LogWindowListAdapter implements ListAdapter,LogListener, Callback {
+	class LogWindowListAdapter implements ListAdapter, LogListener, Callback {
 
 		private static final int MESSAGE_NEWLOG = 0;
 
@@ -64,7 +64,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 		private void initLogBuffer() {
 			myEntries.clear();
 			for (LogItem litem : OpenVPN.getlogbuffer()) {
-				myEntries.add(litem.getString(getBaseContext()));				
+				myEntries.add(litem.getString(getContext()));				
 			}
 		}
 
@@ -239,6 +239,10 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 		return super.onOptionsItemSelected(item);
 
+	}
+
+	protected Context getContext() {
+		return this;
 	}
 
 	@Override

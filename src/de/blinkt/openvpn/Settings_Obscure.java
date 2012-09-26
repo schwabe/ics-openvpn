@@ -13,6 +13,7 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 	private CheckBoxPreference mUseCustomConfig;
 	private EditTextPreference mCustomConfig;
 	private ListPreference mLogverbosity;
+	private CheckBoxPreference mPersistent;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -26,9 +27,11 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 		mUseCustomConfig = (CheckBoxPreference) findPreference("enableCustomOptions");
 		mCustomConfig = (EditTextPreference) findPreference("customOptions");
 		mLogverbosity = (ListPreference) findPreference("verblevel");
-		
+		mPersistent = (CheckBoxPreference) findPreference("usePersistTun");
+				
 		mLogverbosity.setOnPreferenceChangeListener(this);
 		mLogverbosity.setSummary("%s");
+		
 		
 		loadSettings();
 
@@ -39,6 +42,7 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 		mUseFloat.setChecked(mProfile.mUseFloat);
 		mUseCustomConfig.setChecked(mProfile.mUseCustomConfig);
 		mCustomConfig.setText(mProfile.mCustomConfigOptions);
+		mPersistent.setChecked(mProfile.mPersistTun);
 		
 		mLogverbosity.setValue(mProfile.mVerb);
 		onPreferenceChange(mLogverbosity, mProfile.mVerb);
@@ -51,6 +55,7 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 		mProfile.mUseCustomConfig = mUseCustomConfig.isChecked();
 		mProfile.mCustomConfigOptions = mCustomConfig.getText();
 		mProfile.mVerb = mLogverbosity.getValue();
+		mProfile.mPersistTun = mPersistent.isChecked();
 	}
 
 	

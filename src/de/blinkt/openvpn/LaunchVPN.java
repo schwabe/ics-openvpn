@@ -234,8 +234,10 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 				mvpn = getAssets().open("minivpn." + Build.CPU_ABI);
 			}
 			catch (IOException errabi) {
+				OpenVPN.logInfo("Failed getting assets for archicture " + Build.CPU_ABI);
 				e2=errabi;
-				mvpn = getAssets().open("minivpn." + Build.CPU_ABI2);	
+				mvpn = getAssets().open("minivpn." + Build.CPU_ABI2);
+				
 			}
 
 

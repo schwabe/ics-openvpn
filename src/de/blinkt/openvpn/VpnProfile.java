@@ -52,6 +52,8 @@ public class VpnProfile implements  Serializable{
 	protected transient String mTransientPW=null;
 	protected transient String mTransientPCKS12PW=null;
 	private transient PrivateKey mPrivateKey;
+	protected boolean profileDleted=false;
+
 
 	public static String DEFAULT_DNS1="131.234.137.23";
 	public static String DEFAULT_DNS2="131.234.137.24";

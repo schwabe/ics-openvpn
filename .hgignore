@@ -58,3 +58,4 @@ openvpn/libtool
 openvpn/stamp-h1
 openvpn/version.sh
 t_client.sh
+ics-openvpn.zip

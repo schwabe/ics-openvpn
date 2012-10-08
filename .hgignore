@@ -59,3 +59,5 @@ openvpn/stamp-h1
 openvpn/version.sh
 t_client.sh
 ics-openvpn.zip
+zh-CN.zip
+zh-TW.zip

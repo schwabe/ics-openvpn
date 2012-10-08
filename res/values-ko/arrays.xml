@@ -18,7 +18,7 @@
   </string-array>
   <string-array name="verb_entries">
     <item>0 - 로깅 안함</item>
-    <item>1 - 기본 로깅</item>
+    <item>1 - 기본 로깅</item>
     <item>2 - 더 자세한 로깅</item>
     <item>3</item>
     <item>4</item>

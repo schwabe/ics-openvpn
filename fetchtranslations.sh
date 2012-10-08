@@ -2,7 +2,7 @@
 
 fetch http://crowdin.net/download/project/ics-openvpn.zip
 
-langtoinclude="de cs ko et fr"
+langtoinclude="de cs ko et fr he"
 
 for lang in $langtoinclude
 do

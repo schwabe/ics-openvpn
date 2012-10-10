@@ -46,6 +46,13 @@ public class AboutFragment extends Fragment  {
     	paypal.setText(htmltext);
     	paypal.setMovementMethod(LinkMovementMethod.getInstance());
     	
+    	TextView translation = (TextView) v.findViewById(R.id.translation);
+    	
+    	// Don't print a text for myself
+    	if ( getString(R.string.translationby).contains("Arne Schwabe"))
+    		translation.setText("");
+    	else
+    		translation.setText(R.string.translationby);
     	return v;
     }
 

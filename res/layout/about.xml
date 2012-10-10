@@ -47,10 +47,10 @@
             android:layout_height="10sp" />
 
         <TextView
+            android:id="@+id/translation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autoLink="all"
-            android:text="@string/translationby" />
+            android:autoLink="all" />
 
         <Space
             android:layout_width="match_parent"

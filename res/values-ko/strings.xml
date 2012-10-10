@@ -187,7 +187,7 @@
   <string name="error_rsa_sign">안드로이드 keystore 키 %1$s: %2$s과 싸이닝 오류</string>
   <string name="faq_system_dialogs">시스템에서는 VPN연결 경고를 통해 당신에게 본앱이 모든 트래픽을 가로챌수있다는 점을 알리게 되어 있는데 이는 VPNService API가 남용하는것을 막기 위함입니다.\nVPN 연결 알림 (키 아이콘) 또한 안드로이드 시스템에서 부과하는 부분이며 이는 VPN연결을 알리는 신호입니다. 어떤 버전에서는 소리를 알림으로 사용하는 경우도 있습니다.\n안드로이드는 이같은 방법을 당신의 안전을 위해 도입하였으며 사용은 필수적입니다. (어떤 버전에서는 유감스럽게도 소리 알림 또한 포함됩니다.)</string>
   <string name="faq_system_dialogs_title">연결 경고 및 알림 소리</string>
-  <string name="translationby"> </string>
+  <string name="translationby">한국어 번역 (주)기가드 안규태&lt;ktdann@gmail.com></string>
   <string name="ipdns">IP 와 DNS</string>
   <string name="basic">기본</string>
   <string name="routing">라우팅</string>

@@ -162,7 +162,6 @@
   <string name="keepstatus">Показать статистику трафика</string>
   <string name="error_rsa_sign">Ошибка подписи с использованием ключа из хранилища Android %1$s: %2$s</string>
   <string name="faq_system_dialogs_title">Сообщение о подключении и звук уведомления</string>
-  <string name="translationby"> </string>
   <string name="ipdns">IP-адрес и DNS</string>
   <string name="basic">Основные</string>
   <string name="routing">Маршрутизация</string>

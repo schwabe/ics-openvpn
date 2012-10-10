@@ -19,9 +19,11 @@ done
 
 # Chinese language require zh-CN and zh-TW
 
-lang="zh-CN"
-rlang="zh-rCN"
+for lang in "zh-CN"
 do
+	if [ $lang = "zh-CN" ] ; then
+		rlang="zh-rCN"
+	fi
 	echo "Fetch archive for $lang"
 	fetch http://crowdin.net/download/project/ics-openvpn/$lang.zip
 	tar -xv -C res/values-$rlang/ --strip-components 3 -f $lang.zip

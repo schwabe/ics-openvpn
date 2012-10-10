@@ -187,7 +187,6 @@
   <string name="error_rsa_sign">Fehler beim Zugriff auf den Android Keystore %1$s: %2$s</string>
   <string name="faq_system_dialogs">Die Meldung, dass OpenVPN versucht eine VPN-Verbindung aufzubauen und dabei den gesamten Netzwerkverkehr abhören kann, wird vom Android System selbst erzeugt. Diese wird vom System erzwungen, damit keine Anwendung vom Benutzer unbemerkt eine VPN Verbindung aufbauen kann\Die VPN Benachrichtigung (Das Schlüssel Symbol) wird genauso vom Android System angezeigt um eine bestehende VPN anzuzeigen.\nDiese beiden Features wurden in Android für die Sicherheit des Nutzers implementiert und können nicht umgangen werden. (Auf machen Telefon/Tablets wird die Benachrichtigung leider mit einem Ton signalisiert.)</string>
   <string name="faq_system_dialogs_title">Warnung beim Verbinden und Benachrichtigungston</string>
-  <string name="translationby"> </string>
   <string name="ipdns">IP und DNS</string>
   <string name="basic">Grundeinstellungen</string>
   <string name="routing">Routing</string>

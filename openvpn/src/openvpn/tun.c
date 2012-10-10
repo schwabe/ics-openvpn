@@ -1405,7 +1405,7 @@ close_tun_generic (struct tuntap *tt)
   if (tt->fd >= 0)
     close (tt->fd);
   if (tt->actual_name)
-    free (tt->actual_name);
+	  free (tt->actual_name);
   clear_tuntap (tt);
 }
 
@@ -1439,7 +1439,8 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
         msg (M_ERR, "ERROR: Cannot open TUN");
     }
     /* Set the actual name to a dummy name to enable scripts */
-    tt->actual_name = "vpnservice-tun";
+	tt->actual_name = (char *) malloc(32);
+	strncpy(tt->actual_name, "vpnservice-tun",32);
     gc_free (&gc);
 }
 

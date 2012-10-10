@@ -37,13 +37,16 @@ public class OpenVPNThread implements Runnable {
 		} catch (Exception e) {
 			Log.e(TAG, "Got " + e.toString());
 		} finally {
+			int exitvalue = 0;
 			try {
-
-			} catch (Exception e) {
-				// ignore	
+				 exitvalue = mProcess.exitValue();
+			} catch ( IllegalThreadStateException ite) {
+				OpenVPN.logError("Illegal Thread state: " + ite.getLocalizedMessage());
 			}
-
-			OpenVPN.updateStateString("NOPROCESS","No process running");
+			if( exitvalue != 0)
+				OpenVPN.logError("Process exited with exit value " + exitvalue);
+			
+			OpenVPN.updateStateString("NOPROCESS","No process running.");
 
 
 			mService.processDied();
@@ -89,7 +92,7 @@ public class OpenVPNThread implements Runnable {
 					return;
 				OpenVPN.logMessage(0, "P:", logline);
 			}
-		
+			
 		
 		} catch (IOException e) {
 			OpenVPN.logMessage(0, "", "Error reading from output of OpenVPN process"+ e.getLocalizedMessage());

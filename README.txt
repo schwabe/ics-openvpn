@@ -7,7 +7,7 @@ Build instraction:
 - Install sdk
 - Install ndk
 
-Do ndk-build in the root directory of the project.
+Do ./build-native.sh in the root directory of the project.
 
 Use eclipse with android plugins to build the project.
 

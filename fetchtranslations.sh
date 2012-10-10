@@ -3,12 +3,14 @@
 
 if [ "$ICSCROWDAPIKEY" != "" ]
 then
-	fetch -1 -o - http://api.crowdin.net/api/project/ics-openvpn/export?key=$ICSCROWDAPIKEY
+	echo "Generating new translation archives"
+	fetch -q -1 -o - http://api.crowdin.net/api/project/ics-openvpn/export?key=$ICSCROWDAPIKEY
 fi
 
-fetch http://crowdin.net/download/project/ics-openvpn.zip
+echo "Fetch translation archive"
+fetch -q http://crowdin.net/download/project/ics-openvpn.zip
 
-langtoinclude="de cs ko et fr he"
+langtoinclude="de cs ko et fr he ru"
 
 for lang in $langtoinclude
 do
@@ -17,8 +19,10 @@ done
 
 # Chinese language require zh-CN and zh-TW
 
-for lang in zh-CN
+lang="zh-CN"
+rlang="zh-rCN"
 do
+	echo "Fetch archive for $lang"
 	fetch http://crowdin.net/download/project/ics-openvpn/$lang.zip
-	tar -xv -C res/values-$lang/ --strip-components 3 -f $lang.zip
+	tar -xv -C res/values-$rlang/ --strip-components 3 -f $lang.zip
 done

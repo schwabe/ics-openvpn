@@ -186,11 +186,8 @@
     <string name="error_rsa_sign">Error signing with Android keystore key %1$s: %2$s</string>
     <string name="faq_system_dialogs">The VPN connection warning telling you that this app can intercept all traffic is imposed by the system to prevent abuse of the VPNService API.\nThe VPN connection notification (The key symbol) is also imposed by the Android system to signal an ongoing VPN connection. On some images this notification plays a sound.\nAndroid introduced these system dialogs for your own safety and made sure that they cannot be circumenvented. (On some images this unfortunely includes a notifciation sound)</string>
     <string name="faq_system_dialogs_title">Connection warning and notification sound</string>
-    <string name="translationby"></string> 
-    <!--
-    When translating use a string like this:  
+
     <string name="translationby">English translation by Arne Schwabe&lt;arne@rfc2549.org></string>
-    -->
     <string name="ipdns">IP and DNS</string>
     <string name="basic">Basic</string>
     <string name="routing">Routing</string>

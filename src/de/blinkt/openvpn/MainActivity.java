@@ -13,9 +13,9 @@ public class MainActivity extends PreferenceActivity {
 		
 
 		String translatedby = getString(R.string.translationby);
-		if(!translatedby.equals("")) {
+		if(!translatedby.equals("") && !translatedby.contains("Arne Schwabe")) {
 			Header translation = new Header();
-			translation.title = "Translation";
+			translation.title = getString(R.string.translation);
 			translation.summary = translatedby;
 			target.add(translation);
 		}

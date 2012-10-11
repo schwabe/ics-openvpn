@@ -60,8 +60,6 @@ public class VPNPreferences extends PreferenceActivity {
 			setResult(VPNProfileList.RESULT_VPN_DELETED);
 			finish();
 		}
-			
-		
 	}
 
 	@Override

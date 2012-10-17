@@ -331,12 +331,12 @@ public class ConfigConverter extends ListActivity {
 
 		if(mResult.mUsername != null && !mResult.mUsername.equals("")){
 			String data =embedFile(mResult.mUsername);
-			mResult.mName=null;
+			mResult.mUsername=null;
 			if(data!=null) {
 				data = data.replace(VpnProfile.INLINE_TAG, "");
 				String[] parts = data.split("\n");
 				if(parts.length >= 2) {
-					mResult.mName=parts[0];
+					mResult.mUsername=parts[0];
 					mResult.mPassword=parts[1];
 				}
 			}

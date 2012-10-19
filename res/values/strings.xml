@@ -225,4 +225,6 @@
     <string name="persisttun_summary">Do not fallback to no VPN connection when OpenVPN is reconnecting.</string>
     <string name="persistent_tun_title">Persistent tun</string>
     <string name="translation">Translation</string>
+    <string name="openvpn_log">OpenVPN Log</string>
+    <string name="import_config">Import OpenVPN configuration</string>
 </resources>

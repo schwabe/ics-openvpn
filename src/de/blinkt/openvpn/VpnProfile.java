@@ -196,7 +196,7 @@ public class VpnProfile implements  Serializable{
 
 		// quit after 5 tries
 		cfg+="connect-retry-max 5\n";
-		cfg+="resolv-retry 5\n";
+		cfg+="resolv-retry 60\n";
 
 
 

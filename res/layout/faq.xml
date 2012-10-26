@@ -34,6 +34,14 @@
 
         <TextView
             style="@style/faqhead"
+            android:text="@string/battery_consumption_title" />
+
+        <TextView
+            android:id="@+id/faq_battery"
+            style="@style/faqitem" />
+
+        <TextView
+            style="@style/faqhead"
             android:text="@string/tap_mode" />
 
         <TextView

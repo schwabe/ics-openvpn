@@ -3,7 +3,6 @@ package de.blinkt.openvpn;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,19 +22,20 @@ public class FaqFragment extends Fragment  {
     		Bundle savedInstanceState) {
     	View v= inflater.inflate(R.layout.faq, container, false);
     	
-    	TextView bImages = (TextView) v.findViewById(R.id.brokenimages);
-    	bImages.setText(Html.fromHtml(getActivity().getString(R.string.broken_images_faq)));
-    	bImages.setMovementMethod(LinkMovementMethod.getInstance());
-    	
-    	TextView quickstart = (TextView) v.findViewById(R.id.faq_howto);
-    	Spanned htmltext = Html.fromHtml(getActivity().getString(R.string.faq_howto));
-    	quickstart.setText(htmltext);
-    	quickstart.setMovementMethod(LinkMovementMethod.getInstance());
+    	insertHtmlEntry(v,R.id.brokenimages,R.string.broken_images_faq);
+    	insertHtmlEntry(v,R.id.faq_howto,R.string.faq_howto);
+    	insertHtmlEntry(v, R.id.faq_battery, R.string.baterry_consumption);    	
 		
 		return v;
 		
 		
 
     }
+
+	private void insertHtmlEntry (View v, int viewId, int stringId) {
+		TextView faqitem = (TextView) v.findViewById(viewId);
+    	faqitem.setText(Html.fromHtml(getActivity().getString(stringId)));
+    	faqitem.setMovementMethod(LinkMovementMethod.getInstance());
+	}
 
 }

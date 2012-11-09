@@ -23,6 +23,8 @@ Ideas:
 
 Bugfixes:
  - startpath file explorer
+ - check copy&paste
+ - hibernate when screen offf and < 50 kB min
 
 Missing configuration options:
 

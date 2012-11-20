@@ -24,7 +24,8 @@ public class FaqFragment extends Fragment  {
     	
     	insertHtmlEntry(v,R.id.brokenimages,R.string.broken_images_faq);
     	insertHtmlEntry(v,R.id.faq_howto,R.string.faq_howto);
-    	insertHtmlEntry(v, R.id.faq_battery, R.string.baterry_consumption);    	
+    	insertHtmlEntry(v, R.id.faq_battery, R.string.baterry_consumption);  
+    	insertHtmlEntry(v, R.id.vpn_tethering, R.string.faq_tethering);
 		
 		return v;
 		

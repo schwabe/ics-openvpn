@@ -50,6 +50,14 @@
 
         <TextView
             style="@style/faqhead"
+            android:text="@string/vpn_tethering_title" />
+
+        <TextView
+            style="@style/faqitem"
+            android:id="@+id/vpn_tethering" />
+
+        <TextView
+            style="@style/faqhead"
             android:text="@string/faq_security_title" />
 
         <TextView

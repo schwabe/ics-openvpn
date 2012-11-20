@@ -22,10 +22,10 @@ public class FaqFragment extends Fragment  {
     		Bundle savedInstanceState) {
     	View v= inflater.inflate(R.layout.faq, container, false);
     	
-    	insertHtmlEntry(v,R.id.brokenimages,R.string.broken_images_faq);
+    	insertHtmlEntry(v,R.id.broken_images_faq,R.string.broken_images_faq);
     	insertHtmlEntry(v,R.id.faq_howto,R.string.faq_howto);
-    	insertHtmlEntry(v, R.id.faq_battery, R.string.baterry_consumption);  
-    	insertHtmlEntry(v, R.id.vpn_tethering, R.string.faq_tethering);
+    	insertHtmlEntry(v, R.id.baterry_consumption, R.string.baterry_consumption);  
+    	insertHtmlEntry(v, R.id.faq_tethering, R.string.faq_tethering);
 		
 		return v;
 		

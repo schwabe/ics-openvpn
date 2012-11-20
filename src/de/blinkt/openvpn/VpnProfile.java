@@ -101,6 +101,7 @@ public class VpnProfile implements  Serializable{
 	public boolean mUseDefaultRoutev6=true;
 	public String mCustomRoutesv6="";
 	public String mKeyPassword="";
+	
 	static final String MINIVPN = "miniopenvpn";
 	
 	public boolean mPersistTun = false;

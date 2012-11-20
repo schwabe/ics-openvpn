@@ -229,10 +229,12 @@ public class ConfigParser {
 			"route-gateway",
 			"route-metric",
 			"route-method",
+			"script-security",
 			"show-net-up",
 			"suppress-timestamps",
 			"tmp-dir",
 			"topology",
+			"win-sys"
 	};
 	
 	

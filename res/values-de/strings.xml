@@ -187,6 +187,7 @@
   <string name="error_rsa_sign">Fehler beim Zugriff auf den Android Keystore %1$s: %2$s</string>
   <string name="faq_system_dialogs">Die Meldung, dass OpenVPN versucht eine VPN-Verbindung aufzubauen und dabei den gesamten Netzwerkverkehr abhören kann, wird vom Android System selbst erzeugt. Diese wird vom System erzwungen, damit keine Anwendung vom Benutzer unbemerkt eine VPN Verbindung aufbauen kann\Die VPN Benachrichtigung (Das Schlüssel Symbol) wird genauso vom Android System angezeigt um eine bestehende VPN anzuzeigen.\nDiese beiden Features wurden in Android für die Sicherheit des Nutzers implementiert und können nicht umgangen werden. (Auf machen Telefon/Tablets wird die Benachrichtigung leider mit einem Ton signalisiert.)</string>
   <string name="faq_system_dialogs_title">Warnung beim Verbinden und Benachrichtigungston</string>
+  <string name="translationby">Deutsche Übersetzung von Arne Schwabe &lt;arne@rfc2549.org&gt;</string>
   <string name="ipdns">IP und DNS</string>
   <string name="basic">Grundeinstellungen</string>
   <string name="routing">Routing</string>
@@ -223,4 +224,9 @@
   <string name="faq_routing">In dieser Anwendung wird die Routing und Netzwerkkonfiguration nicht mit den traditionellen ifconfig/route Kommandos konfiguriert sondern mittels der VPNService API. Diese erwartet eine Tunnel IP Adresse und die Netzwerke, die über den Tunnel geroutet werden sollen. Insbesondere wird keine Gateway oder Peer IP Adresse benötigt. Die Anwendung ignoriert diese daher auch beim Import. Dass die Verbindung zum VPN Server nicht über den Tunnel geroutet wird, wird auch über die VPNService API sichergestellt ohne dass hierfür spezielle Routen nötig sind. Da nur Netzwerke, die über den Tunnel geroutet werden sollen, angeben werden können, ist es nicht möglich andere Routen zu unterstützen (z.B. route x.x.x.x y.y.y.y net_gateway)\"</string>
   <string name="persisttun_summary">Verhindere Zurückfallen auf nicht VPN Verbindungen während OpenVPN neu verbindet.</string>
   <string name="persistent_tun_title">Persistentes tun Device</string>
+  <string name="translation">Übersetzung</string>
+  <string name="openvpn_log">OpenVPN-Log</string>
+  <string name="import_config">OpenVPN Konfiguration importieren</string>
+  <string name="battery_consumption_title">Energieverbrauch</string>
+  <string name="baterry_consumption">In meinen eigenen Tests ist der Hauptgrund für den hohen Stromverbrauch von OpenVPN das Senden und Empfangen der Keepalive-Pakete. Die meisten OpenVPN-Server haben eine Konfigurationsoption wie \' keepalive 10 60\', was bedeutet dass vom Client an den Server und Server an den Client alle zehn Sekunden ein Paket geschickt wird. &lt;p&gt; Diese Pakete sind klein und erzeugen keine große Datenmenge. Sie sorgen allerdings dafür, dass das permanent Daten übertragen werden und somit auch die Mobilfunk bzw. WLAN Einheit aktiv ist und steigern damit den Energieverbrauch. &lt;p&gt; Diese keepalive Einstellung kann nicht auf dem Client geändert werden. Nur der Systemadministrator des VPN Servers kann die Einstellung ändern. &lt;p&gt; Leider hat eine keepalive Einstellung von mehr als 60 Sekunden mit udp Probleme mit einigen NAT-Gateways, die für inaktive Verbindung nur eine sehr kurze Haltzeit haben und danach verwerfen (60s in meinen Tests).  Benutzen von TCP mit langen Keep-Alive-Timeout funktioniert, hat aber das TCP über TCP Problem. (Siehe &lt; a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\" &gt; Why TCP Over TCP Is A Bad Ide&lt;/a&gt;)</string>
 </resources>

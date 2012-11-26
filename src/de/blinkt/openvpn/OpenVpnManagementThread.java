@@ -473,11 +473,12 @@ public class OpenVpnManagementThread implements Runnable {
 
 		PrivateKey privkey = mProfile.getKeystoreKey();
 		Exception err =null;
-		// The Jelly Bean *evil* Hack
 
 		byte[] data = Base64.decode(b64data, Base64.DEFAULT);
 
-		if(Build.VERSION.SDK_INT>=16){
+		// The Jelly Bean *evil* Hack
+		// 4.2 implements the RSA/ECB/PKCS1PADDING in the OpenSSLprovider
+		if(Build.VERSION.SDK_INT==16){
 			processSignJellyBeans(privkey,data);
 			return;
 		}

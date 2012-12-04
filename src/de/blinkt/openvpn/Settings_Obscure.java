@@ -69,7 +69,12 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 			mLogverbosity.setDefaultValue(newValue);
 			//This is idiotic. 
 			int i =Integer.parseInt((String) newValue);
-			mLogverbosity.setSummary(mLogverbosity.getEntries()[i]);
+			
+			// verb >= 5 is not supported by the chooser
+			if(i < mLogverbosity.getEntries().length )
+				mLogverbosity.setSummary(mLogverbosity.getEntries()[i]);
+			else
+				mLogverbosity.setSummary(String.format("debug verbosity: %d",i));
 		}
 			
 		return true;

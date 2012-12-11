@@ -129,6 +129,7 @@
   <string name="speed_waiting">等待状态消息</string>
   <string name="converted_profile">已导入配置文件</string>
   <string name="converted_profile_i">已导入配置文件 %d</string>
+  <string name="broken_images">图像已损坏</string>
   <string name="error_empty_username">用户名不能为空。</string>
   <string name="pkcs12_file_encryption_key">PKCS12 文件加密密钥</string>
   <string name="private_key_password">私钥密码</string>
@@ -158,6 +159,8 @@
   <string name="setting_loadtun">载入 tun 模块</string>
   <string name="importpkcs12fromconfig">将 PKCS12 导入 Android 密钥库</string>
   <string name="getproxy_error">获取代理设置时出错：%s</string>
+  <string name="using_proxy">使用代理 %1$s %2$d</string>
+  <string name="use_system_proxy">使用系统代理</string>
   <string name="onbootrestart">重启时重新连接</string>
   <string name="ignore">忽略</string>
   <string name="restart">重启</string>

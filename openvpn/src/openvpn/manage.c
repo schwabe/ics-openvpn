@@ -287,13 +287,13 @@ virtual_output_callback_func (void *arg, const unsigned int flags, const char *s
 
 # define AF_DID_PUSH  (1<<0)
 # define AF_DID_RESET (1<<1)
-  unsigned int action_flags = 0;
 
   if (!recursive_level) /* don't allow recursion */
     {
       struct gc_arena gc = gc_new ();
       struct log_entry e;
       const char *out = NULL;
+      unsigned int action_flags = 0;
 
       ++recursive_level;
 
@@ -334,14 +334,15 @@ virtual_output_callback_func (void *arg, const unsigned int flags, const char *s
 	    }
 	}
 
-      --recursive_level;
       gc_free (&gc);
-    }
 
-  if (action_flags & AF_DID_PUSH)
-    man_output_list_push_finalize (man);
-  if (action_flags & AF_DID_RESET)
-    man_reset_client_socket (man, true);
+      if (action_flags & AF_DID_PUSH)
+        man_output_list_push_finalize (man);
+      if (action_flags & AF_DID_RESET)
+        man_reset_client_socket (man, true);
+
+      --recursive_level;
+    }
 }
 
 /*
@@ -1460,7 +1461,7 @@ man_new_connection_post (struct management *man, const char *description)
 #endif
     msg (D_MANAGEMENT, "MANAGEMENT: %s %s",
 	 description,
-	 print_sockaddr (&man->settings.local, &gc));
+	 print_sockaddr (man->settings.local->ai_addr, &gc));
 
   buffer_list_reset (man->connection.out);
 
@@ -1568,7 +1569,8 @@ man_listen (struct management *man)
 #endif
 	{
 	  man->connection.sd_top = create_socket_tcp (AF_INET);
-	  socket_bind (man->connection.sd_top, &man->settings.local, "MANAGEMENT");
+	  socket_bind (man->connection.sd_top, man->settings.local,
+                       AF_INET, "MANAGEMENT");
 	}
 
       /*
@@ -1592,7 +1594,7 @@ man_listen (struct management *man)
       else
 #endif
 	msg (D_MANAGEMENT, "MANAGEMENT: TCP Socket listening on %s",
-	     print_sockaddr (&man->settings.local, &gc));
+	     print_sockaddr (man->settings.local->ai_addr, &gc));
     }
 
 #ifdef WIN32
@@ -1635,7 +1637,7 @@ man_connect (struct management *man)
     {
       man->connection.sd_cli = create_socket_tcp (AF_INET);
       status = openvpn_connect (man->connection.sd_cli,
-				&man->settings.local,
+				man->settings.local->ai_addr,
 				5,
 				&signal_received);
     }
@@ -1660,7 +1662,7 @@ man_connect (struct management *man)
 #endif
       msg (D_LINK_ERRORS,
 	   "MANAGEMENT: connect to %s failed: %s",
-	   print_sockaddr (&man->settings.local, &gc),
+	   print_sockaddr (man->settings.local->ai_addr, &gc),
 	   strerror_ts (status, &gc));
       throw_signal_soft (SIGTERM, "management-connect-failed");
       goto done;
@@ -2044,7 +2046,7 @@ man_persist_close (struct man_persist *mp)
 static void
 man_settings_init (struct man_settings *ms,
 		   const char *addr,
-		   const int port,
+		   const char *port,
 		   const char *pass_file,
 		   const char *client_user,
 		   const char *client_group,
@@ -2097,12 +2099,6 @@ man_settings_init (struct man_settings *ms,
       else
 #endif
 	{
-	  /*
-	   * Initialize socket address
-	   */
-	  ms->local.addr.in4.sin_family = AF_INET;
-	  ms->local.addr.in4.sin_addr.s_addr = 0;
-	  ms->local.addr.in4.sin_port = htons (port);
 
 	  /*
 	   * Run management over tunnel, or
@@ -2114,8 +2110,9 @@ man_settings_init (struct man_settings *ms,
 	    }
 	  else
 	    {
-	      ms->local.addr.in4.sin_addr.s_addr = getaddr
-		(GETADDR_RESOLVE|GETADDR_WARN_ON_SIGNAL|GETADDR_FATAL, addr, 0, NULL, NULL);
+              int status = openvpn_getaddrinfo(GETADDR_RESOLVE|GETADDR_WARN_ON_SIGNAL|GETADDR_FATAL,
+                                               addr, port, 0, NULL, AF_INET, &ms->local);
+              ASSERT(status==0);
 	    }
 	}
       
@@ -2234,7 +2231,7 @@ management_init (void)
 bool
 management_open (struct management *man,
 		 const char *addr,
-		 const int port,
+		 const char *port,
 		 const char *pass_file,
 		 const char *client_user,
 		 const char *client_group,
@@ -2600,7 +2597,13 @@ management_post_tunnel_open (struct management *man, const in_addr_t tun_local_i
       && man->connection.state == MS_INITIAL)
     {
       /* listen on our local TUN/TAP IP address */
-      man->settings.local.addr.in4.sin_addr.s_addr = htonl (tun_local_ip);
+      struct in_addr ia;
+      int ret;
+      
+      ia.s_addr = htonl(tun_local_ip);
+      ret = openvpn_getaddrinfo(0, inet_ntoa(ia), NULL, 0, NULL,
+                                AF_INET, &man->settings.local);
+      ASSERT (ret==0);
       man_connection_init (man);
     }
 

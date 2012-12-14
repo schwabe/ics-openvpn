@@ -294,12 +294,12 @@ init_route (struct route *r,
   if(get_special_addr (rl, ro->network, &special.s_addr, &status))
     {
       special.s_addr = htonl(special.s_addr);
-      ret = openvpn_getaddrinfo(0, inet_ntoa(special), 0, NULL,
+      ret = openvpn_getaddrinfo(0, inet_ntoa(special), NULL, 0, NULL,
                                 AF_INET, network_list);
     }
   else
     ret = openvpn_getaddrinfo(GETADDR_RESOLVE | GETADDR_WARN_ON_SIGNAL,
-                              ro->network, 0, NULL, AF_INET, network_list);
+                              ro->network, NULL, 0, NULL, AF_INET, network_list);
 
   status = (ret == 0);
 
@@ -2722,7 +2722,7 @@ get_default_gateway (struct route_gateway_info *rgi)
 
   if (write(s, (char *)&m_rtmsg, l) < 0)
     {
-      warn("writing to routing socket");
+      msg(M_WARN|M_ERRNO, "Could not retrieve default gateway from route socket:");
       gc_free (&gc);
       close(s);
       return;
@@ -3088,7 +3088,7 @@ get_default_gateway (struct route_gateway_info *rgi)
 
   if (write(s, (char *)&m_rtmsg, l) < 0)
     {
-      warn("writing to routing socket");
+      msg(M_WARN|M_ERRNO, "Could not retrieve default gateway from route socket:");
       gc_free (&gc);
       close(s);
       return;

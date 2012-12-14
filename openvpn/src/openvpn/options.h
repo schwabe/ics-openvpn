@@ -87,9 +87,10 @@ struct options_pre_pull
 struct connection_entry
 {
   int proto;
-  int local_port;
+  sa_family_t af;
+  const char* local_port;
   bool local_port_defined;
-  int remote_port;
+  const char* remote_port;
   const char *local;
   const char *remote;
   bool remote_float;
@@ -97,7 +98,6 @@ struct connection_entry
   bool bind_local;
   int connect_retry_seconds;
   bool connect_retry_defined;
-  int connect_retry_max;
   int connect_timeout;
   bool connect_timeout_defined;
 #ifdef ENABLE_HTTP_PROXY
@@ -105,7 +105,7 @@ struct connection_entry
 #endif  
 #ifdef ENABLE_SOCKS
   const char *socks_proxy_server;
-  int socks_proxy_port;
+  const char *socks_proxy_port;
   const char *socks_proxy_authfile;
   bool socks_proxy_retry;
 #endif
@@ -143,8 +143,9 @@ struct connection_entry
 struct remote_entry
 {
   const char *remote;
-  int remote_port;
+  const char *remote_port;
   int proto;
+  sa_family_t af;
 };
 
 #define CONNECTION_LIST_SIZE 64
@@ -154,7 +155,6 @@ struct connection_list
   int len;
   int current;
   int n_cycles;
-  bool no_advance;
   struct connection_entry *array[CONNECTION_LIST_SIZE];
 };
 
@@ -168,6 +168,8 @@ struct remote_host_store
 {
 # define RH_HOST_LEN 80
   char host[RH_HOST_LEN];
+#define RH_PORT_LEN 20
+  char port[RH_PORT_LEN];
 };
 
 /* Command line options */
@@ -203,11 +205,15 @@ struct options
 #endif
 
   /* Networking parms */
+  int connect_retry_max;
   struct connection_entry ce;
-  char *remote_ip_hint;
   struct connection_list *connection_list;
+
   struct remote_list *remote_list;
-  bool force_connection_list;
+  /* Do not advanced the connection or remote addr list*/
+  bool no_advance;
+  /* Counts the number of unsuccessful connection attempts */
+  unsigned int unsuccessful_attempts;
 
 #if HTTP_PROXY_OVERRIDE
   struct http_proxy_options *http_proxy_override;
@@ -354,7 +360,7 @@ struct options
 
 #ifdef ENABLE_MANAGEMENT
   const char *management_addr;
-  int management_port;
+  const char *management_port;
   const char *management_user_pass;
   int management_log_history_cache;
   int management_echo_buffer_size;
@@ -449,7 +455,7 @@ struct options
   bool auth_user_pass_verify_script_via_file;
 #if PORT_SHARE
   char *port_share_host;
-  int port_share_port;
+  char *port_share_port;
   const char *port_share_journal_dir;
 #endif
 #endif
@@ -769,20 +775,5 @@ bool get_ipv6_addr( const char * prefix_str, struct in6_addr *network,
 		    unsigned int * netbits, char ** printable_ipv6, 
 		    int msglevel );
 
-/*
- * inline functions
- */
-static inline bool
-connection_list_defined (const struct options *o)
-{
-  return o->connection_list != NULL;
-}
-
-static inline void
-connection_list_set_no_advance (struct options *o)
-{
-  if (o->connection_list)
-    o->connection_list->no_advance = true;
-}
 
 #endif

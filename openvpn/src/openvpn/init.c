@@ -125,28 +125,19 @@ management_callback_proxy_cmd (void *arg, const char **p)
     ret = true;
   else if (p[2] && p[3])
     {
-      const int port = atoi(p[3]);
-      if (!legal_ipv4_port (port))
-        {
-          msg (M_WARN, "Bad proxy port number: %s", p[3]);
-          return false;
-        }
-
       if (streq (p[1], "HTTP"))
         {
 #ifndef ENABLE_HTTP_PROXY
           msg (M_WARN, "HTTP proxy support is not available");
 #else
           struct http_proxy_options *ho;
-          if (ce->proto != PROTO_TCPv4 && ce->proto != PROTO_TCPv4_CLIENT &&
-              ce->proto != PROTO_TCPv6 && ce->proto != PROTO_TCPv6_CLIENT)
-            {
+          if (ce->proto != PROTO_TCP && ce->proto != PROTO_TCP_CLIENT )            {
               msg (M_WARN, "HTTP proxy support only works for TCP based connections");
               return false;
             }
           ho = init_http_proxy_options_once (&ce->http_proxy_options, gc);
           ho->server = string_alloc (p[2], gc);
-          ho->port = port;
+          ho->port = p[3];
           ho->retry = true;
           ho->auth_retry = (p[4] && streq (p[4], "nct") ? PAR_NCT : PAR_ALL);
           ret = true;
@@ -158,7 +149,7 @@ management_callback_proxy_cmd (void *arg, const char **p)
           msg (M_WARN, "SOCKS proxy support is not available");
 #else
           ce->socks_proxy_server = string_alloc (p[2], gc);
-          ce->socks_proxy_port = port;
+          ce->socks_proxy_port = p[3];
           ret = true;
 #endif
         }
@@ -225,8 +216,7 @@ management_callback_remote_cmd (void *arg, const char **p)
 	}
       else if (!strcmp(p[1], "MOD") && p[2] && p[3])
 	{
-	  const int port = atoi(p[3]);
-	  if (strlen(p[2]) < RH_HOST_LEN && legal_ipv4_port(port))
+	  if (strlen(p[2]) < RH_HOST_LEN && strlen(p[3]) < RH_PORT_LEN)
 	    {
 	      struct remote_host_store *rhs = c->options.rh_store;
 	      if (!rhs)
@@ -235,8 +225,10 @@ management_callback_remote_cmd (void *arg, const char **p)
 		  c->options.rh_store = rhs;
 		}
 	      strncpynt(rhs->host, p[2], RH_HOST_LEN);
+              strncpynt(rhs->port, p[3], RH_PORT_LEN);
+
 	      ce->remote = rhs->host;
-	      ce->remote_port = port;
+	      ce->remote_port = rhs->port;
 	      flags = CE_MAN_QUERY_REMOTE_MOD;
 	      ret = true;
 	    }
@@ -251,7 +243,7 @@ management_callback_remote_cmd (void *arg, const char **p)
 }
 
 static bool
-ce_management_query_remote (struct context *c, const char *remote_ip_hint)
+ce_management_query_remote (struct context *c)
 {
   struct gc_arena gc = gc_new ();
   volatile struct connection_entry *ce = &c->options.ce;
@@ -260,7 +252,7 @@ ce_management_query_remote (struct context *c, const char *remote_ip_hint)
   if (management)
     {
       struct buffer out = alloc_buf_gc (256, &gc);
-      buf_printf (&out, ">REMOTE:%s,%d,%s", np(ce->remote), ce->remote_port, proto2ascii(ce->proto, false));
+      buf_printf (&out, ">REMOTE:%s,%s,%s", np(ce->remote), ce->remote_port, proto2ascii(ce->proto, ce->af, false));
       management_notify_generic(management, BSTR (&out));
       ce->flags &= ~(CE_MAN_QUERY_REMOTE_MASK<<CE_MAN_QUERY_REMOTE_SHIFT);
       ce->flags |= (CE_MAN_QUERY_REMOTE_QUERY<<CE_MAN_QUERY_REMOTE_SHIFT);
@@ -276,8 +268,6 @@ ce_management_query_remote (struct context *c, const char *remote_ip_hint)
     }
   {
     const int flags = ((ce->flags>>CE_MAN_QUERY_REMOTE_SHIFT) & CE_MAN_QUERY_REMOTE_MASK);
-    if (flags == CE_MAN_QUERY_REMOTE_ACCEPT && remote_ip_hint)
-      ce->remote = remote_ip_hint;
     ret = (flags != CE_MAN_QUERY_REMOTE_SKIP);
   }
   gc_free (&gc);
@@ -292,25 +282,34 @@ static void
 init_connection_list (struct context *c)
 {
   struct connection_list *l = c->options.connection_list;
-  if (l)
+  l->current = -1;
+  if (c->options.remote_random)
     {
-      l->current = -1;
-      if (c->options.remote_random)
-	{
-	  int i;
-	  for (i = 0; i < l->len; ++i)
-	    {
-	      const int j = get_random () % l->len;
-	      if (i != j)
-		{
-		  struct connection_entry *tmp;
-		  tmp = l->array[i];
-		  l->array[i] = l->array[j];
-		  l->array[j] = tmp;
-		}
-	    }
-	}
+      int i;
+      for (i = 0; i < l->len; ++i)
+        {
+          const int j = get_random () % l->len;
+          if (i != j)
+            {
+              struct connection_entry *tmp;
+              tmp = l->array[i];
+              l->array[i] = l->array[j];
+              l->array[j] = tmp;
+            }
+        }
     }
+}
+
+/*
+ * Clear the remote address list
+ */
+static void clear_remote_addrlist (struct link_socket_addr *lsa)
+{
+    if (lsa->remote_list) {
+        freeaddrinfo(lsa->remote_list);
+    }
+    lsa->remote_list = NULL;
+    lsa->current_remote = NULL;
 }
 
 /*
@@ -320,67 +319,84 @@ static void
 next_connection_entry (struct context *c)
 {
   struct connection_list *l = c->options.connection_list;
-  if (l)
-    {
-      bool ce_defined;
-      struct connection_entry *ce;
-      int n_cycles = 0;
-
-      do {
-	const char *remote_ip_hint = NULL;
-	bool newcycle = false;
-
-	ce_defined = true;
-	if (l->no_advance && l->current >= 0)
-	  {
-	    l->no_advance = false;
-	  }
-	else
-	  {
-	    if (++l->current >= l->len)
-	      {
-		l->current = 0;
-		++l->n_cycles;
-		if (++n_cycles >= 2)
-		  msg (M_FATAL, "No usable connection profiles are present");
-	      }
-
-	    if (l->current == 0)
-	      newcycle = true;
-	  }
-
-	ce = l->array[l->current];
-
-	if (c->options.remote_ip_hint && !l->n_cycles)
-	  remote_ip_hint = c->options.remote_ip_hint;
-
-	if (ce->flags & CE_DISABLED)
-	  ce_defined = false;
-
-	c->options.ce = *ce;
-#ifdef ENABLE_MANAGEMENT
-	if (ce_defined && management && management_query_remote_enabled(management))
-	  {
-	    /* allow management interface to override connection entry details */
-	    ce_defined = ce_management_query_remote(c, remote_ip_hint);
-	    if (IS_SIG (c))
-	      break;
-	  }
-        else
-#endif
-	if (remote_ip_hint)
-	  c->options.ce.remote = remote_ip_hint;
-
-#ifdef ENABLE_MANAGEMENT
-        if (ce_defined && management && management_query_proxy_enabled (management))
+  bool ce_defined;
+  struct connection_entry *ce;
+  int n_cycles = 0;
+  
+  do {
+    ce_defined = true;
+    if (c->options.no_advance && l->current >= 0)
+      {
+        c->options.no_advance = false;
+      }
+    else
+      {
+        /* Check if there is another resolved address to try for
+         * the current connection */
+        if (c->c1.link_socket_addr.current_remote &&
+            c->c1.link_socket_addr.current_remote->ai_next)
           {
-            ce_defined = ce_management_query_proxy (c);
-            if (IS_SIG (c))
-              break;
+            c->c1.link_socket_addr.current_remote =
+                c->c1.link_socket_addr.current_remote->ai_next;
           }
+        else
+          {
+            c->options.unsuccessful_attempts++;
+            if (++l->current >= l->len)
+              {
+                /* FIXME (schwabe) fix the persist-remote-ip option for real,
+                 * this is broken probably ever since connection lists and multiple
+                 * remote existed
+                 */
+                /*
+                 * Increase the number of connection attempts
+                 * If this is connect-retry-max * size(l)
+                 * OpenVPN will quit
+                 */
+                
+                if (!c->options.persist_remote_ip)
+                    clear_remote_addrlist (&c->c1.link_socket_addr);
+                
+                l->current = 0;
+                ++l->n_cycles;
+                if (++n_cycles >= 2)
+                    msg (M_FATAL, "No usable connection profiles are present");
+              }
+          }
+      }
+
+    ce = l->array[l->current];
+
+    if (ce->flags & CE_DISABLED)
+      ce_defined = false;
+
+    c->options.ce = *ce;
+#ifdef ENABLE_MANAGEMENT
+    if (ce_defined && management && management_query_remote_enabled(management))
+      {
+        /* allow management interface to override connection entry details */
+        ce_defined = ce_management_query_remote(c);
+        if (IS_SIG (c))
+          break;
+      }
+    else
 #endif
-      } while (!ce_defined);
-    }
+
+#ifdef ENABLE_MANAGEMENT
+      if (ce_defined && management && management_query_proxy_enabled (management))
+        {
+          ce_defined = ce_management_query_proxy (c);
+          if (IS_SIG (c))
+            break;
+        }
+#endif
+  } while (!ce_defined);
+  
+  /* Check if this connection attempt would bring us over the limit */
+  if (c->options.connect_retry_max > 0 &&
+      c->options.unsuccessful_attempts > (l->len  * c->options.connect_retry_max))
+      msg(M_FATAL, "All connections have been connect-retry-max (%d) times unsuccessful, exiting",
+          c->options.connect_retry_max);
   update_options_ce_post (&c->options);
 }
 
@@ -414,12 +430,6 @@ init_query_passwords (struct context *c)
  */
 
 #ifdef GENERAL_PROXY_SUPPORT
-
-static int
-proxy_scope (struct context *c)
-{
-  return connection_list_defined (&c->options) ? 2 : 1;
-}
 
 static void
 uninit_proxy_dowork (struct context *c)
@@ -482,17 +492,15 @@ init_proxy_dowork (struct context *c)
 }
 
 static void
-init_proxy (struct context *c, const int scope)
+init_proxy (struct context *c)
 {
-  if (scope == proxy_scope (c))
-    init_proxy_dowork (c);
+  init_proxy_dowork (c);
 }
 
 static void
 uninit_proxy (struct context *c)
 {
-  if (c->sig->signal_received != SIGUSR1 || proxy_scope (c) == 2)
-    uninit_proxy_dowork (c);
+   uninit_proxy_dowork (c);
 }
 
 #else
@@ -544,8 +552,6 @@ context_init_1 (struct context *c)
  }
 #endif
 
-  /* initialize HTTP or SOCKS proxy object at scope level 1 */
-  init_proxy (c, 1);
 }
 
 void
@@ -1240,6 +1246,9 @@ void
 initialization_sequence_completed (struct context *c, const unsigned int flags)
 {
   static const char message[] = "Initialization Sequence Completed";
+    
+  /* Reset the unsuccessful connection counter on complete initialisation */
+  c->options.unsuccessful_attempts=0;
 
   /* If we delayed UID/GID downgrade or chroot, do it now */
   do_uid_gid_chroot (c, true);
@@ -1258,9 +1267,9 @@ initialization_sequence_completed (struct context *c, const unsigned int flags)
   else
     msg (M_INFO, "%s", message);
 
-  /* Flag connection_list that we initialized */
-  if ((flags & (ISC_ERRORS|ISC_SERVER)) == 0 && connection_list_defined (&c->options))
-    connection_list_set_no_advance (&c->options);
+  /* Flag that we initialized */
+  if ((flags & (ISC_ERRORS|ISC_SERVER)) == 0)
+    c->options.no_advance=true;
 
 #ifdef WIN32
   fork_register_dns_action (c->c1.tuntap);
@@ -1374,8 +1383,8 @@ do_init_tun (struct context *c)
 			   c->options.ifconfig_ipv6_local,
 			   c->options.ifconfig_ipv6_netbits,
 			   c->options.ifconfig_ipv6_remote,
-			   addr_host (&c->c1.link_socket_addr.local),
-			   addr_host (&c->c1.link_socket_addr.remote),
+			   c->c1.link_socket_addr.bind_local,
+			   c->c1.link_socket_addr.remote_list,
 			   !c->options.ifconfig_nowarn,
 			   c->c2.es);
 
@@ -1853,17 +1862,11 @@ socket_restart_pause (struct context *c)
 
   switch (c->options.ce.proto)
     {
-    case PROTO_UDPv4:
-    case PROTO_UDPv6:
-      if (proxy)
-	sec = c->options.ce.connect_retry_seconds;
-      break;
-    case PROTO_TCPv4_SERVER:
-    case PROTO_TCPv6_SERVER:
+    case PROTO_TCP_SERVER:
       sec = 1;
       break;
-    case PROTO_TCPv4_CLIENT:
-    case PROTO_TCPv6_CLIENT:
+    case PROTO_UDP:
+    case PROTO_TCP_CLIENT:
       sec = c->options.ce.connect_retry_seconds;
       break;
     }
@@ -2219,7 +2222,7 @@ do_init_crypto_tls (struct context *c, const unsigned int flags)
 
   /* should we not xmit any packets until we get an initial
      response from client? */
-  if (to.server && options->ce.proto == PROTO_TCPv4_SERVER)
+  if (to.server && options->ce.proto == PROTO_TCP_SERVER)
     to.xmit_hold = true;
 
 #ifdef ENABLE_OCC
@@ -2504,8 +2507,6 @@ do_option_warnings (struct context *c)
     msg (M_WARN, "NOTE: --connect-timeout option is not supported on this OS");
 #endif
 
-  if (script_method == SM_SYSTEM)
-    msg (M_WARN, "NOTE: --script-security method='system' is deprecated due to the fact that passed parameters will be subject to shell expansion");
 }
 
 static void
@@ -2628,12 +2629,12 @@ do_init_socket_1 (struct context *c, const int mode)
 #endif
 
   link_socket_init_phase1 (c->c2.link_socket,
-			   connection_list_defined (&c->options),
 			   c->options.ce.local,
 			   c->options.ce.local_port,
 			   c->options.ce.remote,
 			   c->options.ce.remote_port,
 			   c->options.ce.proto,
+         c->options.ce.af,
 			   mode,
 			   c->c2.accept_from,
 #ifdef ENABLE_HTTP_PROXY
@@ -2652,9 +2653,7 @@ do_init_socket_1 (struct context *c, const int mode)
 			   c->options.ipchange,
 			   c->plugins,
 			   c->options.resolve_retry_seconds,
-			   c->options.ce.connect_retry_seconds,
 			   c->options.ce.connect_timeout,
-			   c->options.ce.connect_retry_max,
 			   c->options.ce.mtu_discover_type,
 			   c->options.rcvbuf,
 			   c->options.sndbuf,
@@ -2669,7 +2668,7 @@ static void
 do_init_socket_2 (struct context *c)
 {
   link_socket_init_phase2 (c->c2.link_socket, &c->c2.frame,
-			   &c->sig->signal_received);
+			   c->sig);
 }
 
 /*
@@ -2841,14 +2840,30 @@ do_close_link_socket (struct context *c)
       c->c2.link_socket = NULL;
     }
 
-  if (!(c->sig->signal_received == SIGUSR1 && c->options.persist_remote_ip))
+    
+  /* Preserve the resolved list of remote if the user request to or if we want
+   * reconnect to the same host again or there are still addresses that need
+   * to be tried */
+  if (!(c->sig->signal_received == SIGUSR1 &&
+        ( (c->options.persist_remote_ip)
+         ||
+         ( c->sig->source != SIG_SOURCE_HARD &&
+          ((c->c1.link_socket_addr.current_remote && c->c1.link_socket_addr.current_remote->ai_next)
+           || c->options.no_advance))
+         )))
     {
-      CLEAR (c->c1.link_socket_addr.remote);
-      CLEAR (c->c1.link_socket_addr.actual);
+      clear_remote_addrlist(&c->c1.link_socket_addr);
     }
 
-  if (!(c->sig->signal_received == SIGUSR1 && c->options.persist_local_ip))
-    CLEAR (c->c1.link_socket_addr.local);
+    /* Clear the remote actual address when persist_remote_ip is not in use */
+    if (!(c->sig->signal_received == SIGUSR1 && c->options.persist_remote_ip))
+      CLEAR (c->c1.link_socket_addr.actual);
+
+  if (!(c->sig->signal_received == SIGUSR1 && c->options.persist_local_ip)) {
+    if (c->c1.link_socket_addr.bind_local)
+        freeaddrinfo(c->c1.link_socket_addr.bind_local);
+    c->c1.link_socket_addr.bind_local=NULL;
+  }
 }
 
 /*
@@ -3271,7 +3286,7 @@ init_instance (struct context *c, const struct env_set *env, const unsigned int 
   /* signals caught here will abort */
   c->sig->signal_received = 0;
   c->sig->signal_text = NULL;
-  c->sig->hard = false;
+  c->sig->source = SIG_SOURCE_SOFT;
 
   if (c->mode == CM_P2P)
     init_management_callback_p2p (c);
@@ -3290,8 +3305,7 @@ init_instance (struct context *c, const struct env_set *env, const unsigned int 
   /* link_socket_mode allows CM_CHILD_TCP
      instances to inherit acceptable fds
      from a top-level parent */
-  if (c->options.ce.proto == PROTO_TCPv4_SERVER
-      || c->options.ce.proto == PROTO_TCPv6_SERVER)
+  if (c->options.ce.proto == PROTO_TCP_SERVER)
     {
       if (c->mode == CM_TOP)
 	link_socket_mode = LS_MODE_TCP_LISTEN;
@@ -3358,7 +3372,7 @@ init_instance (struct context *c, const struct env_set *env, const unsigned int 
     do_event_set_init (c, false);
 
   /* initialize HTTP or SOCKS proxy object at scope level 2 */
-  init_proxy (c, 2);
+  init_proxy (c);
 
   /* allocate our socket object */
   if (c->mode == CM_P2P || c->mode == CM_TOP || c->mode == CM_CHILD_TCP)
@@ -3689,7 +3703,7 @@ close_context (struct context *c, int sig, unsigned int flags)
   if (c->sig->signal_received == SIGUSR1)
     {
       if ((flags & CC_USR1_TO_HUP)
-	  || (c->sig->hard && (flags & CC_HARD_USR1_TO_HUP)))
+	  || (c->sig->source == SIG_SOURCE_HARD && (flags & CC_HARD_USR1_TO_HUP)))
 	c->sig->signal_received = SIGHUP;
     }
 

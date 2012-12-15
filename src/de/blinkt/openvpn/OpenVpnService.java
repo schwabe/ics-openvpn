@@ -104,19 +104,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 
 		// Try to set the priority available since API 16 (Jellybean)
-		if( lowpriority) {
-			try {
-				Method setpriority = nbuilder.getClass().getMethod("setPriority", int.class);
-				// PRIORITY_MIN == -2
-				setpriority.invoke(nbuilder, -2 );
-
-				//ignore exception
-			} catch (NoSuchMethodException nsm) {
-			} catch (IllegalArgumentException e) {
-			} catch (IllegalAccessException e) {
-			} catch (InvocationTargetException e) {
-			}
-		}
+		jbNotificationExtras(lowpriority, nbuilder);
 		if(tickerText!=null)
 			nbuilder.setTicker(tickerText);
 
@@ -125,6 +113,29 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 		mNotificationManager.notify(OPENVPN_STATUS, notification);
 		startForeground(OPENVPN_STATUS, notification);
+	}
+
+	private void jbNotificationExtras(boolean lowpriority,
+			android.app.Notification.Builder nbuilder) {
+		try {
+			if( lowpriority) {
+				Method setpriority = nbuilder.getClass().getMethod("setPriority", int.class);
+				// PRIORITY_MIN == -2
+				setpriority.invoke(nbuilder, -2 );
+				
+/*				PendingIntent cancelconnet=null;
+				
+				nbuilder.addAction(android.R.drawable.ic_menu_close_clear_cancel, 
+						getString(R.string.cancel_connection),cancelconnet); */
+			}
+
+			//ignore exception
+		} catch (NoSuchMethodException nsm) {
+		} catch (IllegalArgumentException e) {
+		} catch (IllegalAccessException e) {
+		} catch (InvocationTargetException e) {
+		}
+
 	}
 
 	PendingIntent getLogPendingIntent() {
@@ -436,7 +447,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 			} else {
 				mDisplayBytecount = false;
 			}
-			
+
 			// Other notifications are shown,
 			// This also mean we are no longer connected, ignore bytecount messages until next
 			// CONNECTED

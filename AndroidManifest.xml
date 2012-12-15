@@ -27,7 +27,7 @@
 
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
-    <uses-sdk android:minSdkVersion="14" />
+    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="14"/>
 
     <application
         android:icon="@drawable/icon"

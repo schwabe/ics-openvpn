@@ -14,13 +14,15 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 	private EditTextPreference mCustomConfig;
 	private ListPreference mLogverbosity;
 	private CheckBoxPreference mPersistent;
+	private ListPreference mConnectretrymax;
+	private EditTextPreference mConnectretry;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.vpn_obscure);
-		
+
 		
 		mUseRandomHostName = (CheckBoxPreference) findPreference("useRandomHostname");
 		mUseFloat = (CheckBoxPreference) findPreference("useFloat");
@@ -28,9 +30,16 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 		mCustomConfig = (EditTextPreference) findPreference("customOptions");
 		mLogverbosity = (ListPreference) findPreference("verblevel");
 		mPersistent = (CheckBoxPreference) findPreference("usePersistTun");
-				
+		mConnectretrymax = (ListPreference) findPreference("connectretrymax");
+		mConnectretry = (EditTextPreference) findPreference("connectretry");
+
 		mLogverbosity.setOnPreferenceChangeListener(this);
 		mLogverbosity.setSummary("%s");
+		
+		mConnectretrymax.setOnPreferenceChangeListener(this);
+		mConnectretrymax.setSummary("%s");
+		
+		mConnectretry.setOnPreferenceChangeListener(this);
 		
 		
 		loadSettings();
@@ -46,6 +55,12 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 		
 		mLogverbosity.setValue(mProfile.mVerb);
 		onPreferenceChange(mLogverbosity, mProfile.mVerb);
+		
+		mConnectretrymax.setValue(mProfile.mConnectRetryMax);
+		onPreferenceChange(mConnectretrymax, mProfile.mConnectRetryMax);
+				
+		mConnectretry.setText(mProfile.mConnectRetry);
+		onPreferenceChange(mConnectretry, mProfile.mConnectRetry);
 	}
 
 
@@ -55,7 +70,9 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 		mProfile.mUseCustomConfig = mUseCustomConfig.isChecked();
 		mProfile.mCustomConfigOptions = mCustomConfig.getText();
 		mProfile.mVerb = mLogverbosity.getValue();
+		mProfile.mConnectRetryMax = mConnectretrymax.getValue();
 		mProfile.mPersistTun = mPersistent.isChecked();
+		mProfile.mConnectRetry = mConnectretry.getText();
 	}
 
 	
@@ -75,6 +92,21 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 				mLogverbosity.setSummary(mLogverbosity.getEntries()[i]);
 			else
 				mLogverbosity.setSummary(String.format("debug verbosity: %d",i));
+		} else if (preference == mConnectretrymax) {
+			if(newValue==null) {
+				newValue="5";
+			}
+			mConnectretrymax.setDefaultValue(newValue);
+			
+			for(int i=0;i<mConnectretrymax.getEntryValues().length;i++){
+				if(mConnectretrymax.getEntryValues().equals(newValue))
+					mConnectretrymax.setSummary(mConnectretrymax.getEntries()[i]);
+			}
+			
+		} else if (preference == mConnectretry) {
+			if(newValue==null || newValue=="")
+				newValue="5";
+			mConnectretry.setSummary(String.format("%s s" , newValue));
 		}
 			
 		return true;

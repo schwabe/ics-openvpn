@@ -27,9 +27,10 @@
 
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
-    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="14"/>
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="17"/>
 
     <application
+        android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app" >
         <activity android:name=".AboutFragment" />

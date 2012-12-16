@@ -92,7 +92,7 @@
   <string name="info">Info</string>
   <string name="show_connection_details">Visualizza i dettagli della connessione</string>
   <string name="last_openvpn_tun_config">Ultima configurazione interfaccia OpenVPN:</string>
-  <string name="local_ip_info">IPv4 locale: %1$s/%2$d IPv6: %3$ s MTU: %4$ d</string>
+  <string name="local_ip_info">IPv4 locale: %1$s/%2$d IPv6: %3$s MTU: %4$ d</string>
   <string name="dns_server_info">Server DNS: %s</string>
   <string name="dns_domain_info">Dominio DNS: %s</string>
   <string name="routes_info">Rotte: %s</string>
@@ -174,5 +174,4 @@ Effettuata la lettura del file di configurazione</string>
   <string name="openvpn_log">Log di OpenVPN</string>
   <string name="import_config">Importa configurazione OpenVPN</string>
   <string name="battery_consumption_title">Consumo della batteria</string>
-  <string name="baterry_consumption">Nei miei test la causa principale per il consumo elevato della batteria di OpenVPN sono i pacchetti keepalive. La maggior parte dei server OpenVPN hanno una direttiva di configurazione tipo \' keepalive 10 60\', che si traduce in un pacchetto keepalive dal client al server e al client ogni dieci secondi. &lt;p&gt; Anche se questi pacchetti sono piccoli e non utilizzano drandi quantità di traffico, tengono occupata la rete radio mobile e aumentano il consumo di energia. &lt;p&gt; Non è possibile modificare il settaggio keepalive sul client. Solo l\'amministratore di sistema dell\'OpenVPN può modificare l\'impostazione. Purtroppo &lt;p&gt; utilizzando un keepalive maggiore di 60 secondi, udp ha problemi con alcuni gateway NAT che terminano lo stato per garantire una connessione dopo un timeout breve (60 secondi nei miei test). Utilizzare TCP keepalive lungo funziona, ma si crea un problema di TCP su TCP. (Vedere &lt; un href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\" &gt; perché TCP Over TCP è A Bad Ide &lt;/a&gt;)</string>
 </resources>

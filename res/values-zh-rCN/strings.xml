@@ -59,6 +59,7 @@
   <string name="cancel_connection_query">断开已连接的 VPN / 取消连接尝试？</string>
   <string name="remove_vpn">删除 VPN</string>
   <string name="check_remote_tlscert">检查服务器是否使用 TLS 服务器证书</string>
+  <string name="remote_tlscn_check_title">证书主机名检查</string>
   <string name="enter_tlscn_title">远程主机名 （CN）</string>
   <string name="tls_key_auth">启用 TLS 密钥认证</string>
   <string name="tls_auth_file">TLS 认证文件</string>
@@ -73,6 +74,7 @@
   <string name="backup_dns">备用 DNS 服务器</string>
   <string name="ignored_pushed_routes">忽略推送路由</string>
   <string name="ignore_routes_summary">忽略服务器推送的路由</string>
+  <string name="default_route_summary">重定向所有流量到VPN</string>
   <string name="use_default_title">使用默认路由</string>
   <string name="custom_route_message">输入自定义路由。输入 CIDR 格式地址。</string>
   <string name="custom_routes_title">自定义路由</string>
@@ -107,9 +109,11 @@
   <string name="chipher_dialog_message">输入 OpenVPN 密钥。留空以使用默认密码</string>
   <string name="settings_auth">认证/加密</string>
   <string name="file_explorer_tab">文件浏览器</string>
+  <string name="inline_file_tab">内联文件</string>
   <string name="import_file">导入</string>
   <string name="error_importing_file">导入文件出错</string>
   <string name="import_error_message">无法导入文件系统文件</string>
+  <string name="inline_file_data">[[内联文件数据]]</string>
   <string name="menu_import">从 ovpn 文件中导入配置文件</string>
   <string name="menu_import_short">导入</string>
   <string name="import_content_resolve_error">无法读取要导入的配置文件</string>
@@ -120,6 +124,7 @@
   <string name="importing_config">从 %1$s 中导入配置文件</string>
   <string name="import_done">读取配置文件完成</string>
   <string name="nobind_summary">不关联到本地地址和端口</string>
+  <string name="no_bind">无本地绑定</string>
   <string name="import_configuration_file">导入配置文件</string>
   <string name="faq_security_title">安全注意</string>
   <string name="import_vpn">导入</string>
@@ -154,6 +159,7 @@
   <string name="routing">路由设置</string>
   <string name="obscure">其他 OpenVPN 设置，一般不需要修改。</string>
   <string name="advanced">高级设置</string>
+  <string name="export_config_title">ICS Openvpn 配置</string>
   <string name="faq_howto_title">快速入门</string>
   <string name="setting_loadtun_summary">尝试在连接之前加载 tun.ko 内核模块。需要 root 权限。</string>
   <string name="setting_loadtun">载入 tun 模块</string>
@@ -165,6 +171,13 @@
   <string name="ignore">忽略</string>
   <string name="restart">重启</string>
   <string name="configuration_changed">配置已更改</string>
+  <string name="faq_duplicate_notification_title">重复的通知</string>
+  <string name="no_vpn_profiles_defined">没有定义 VPN 配置文件</string>
+  <string name="add_new_vpn_hint">使用 &lt; img src =\"ic_menu_add\"/ &gt; 图标以添加新的 VPN</string>
   <string name="persisttun_summary">当 OpenVPN 重连时，也一直使用 VPN 连接。</string>
   <string name="persistent_tun_title">保持 tun 通道</string>
+  <string name="translation">翻译</string>
+  <string name="openvpn_log">OpenVPN 日志</string>
+  <string name="import_config">导入 OpenVPN 配置文件</string>
+  <string name="battery_consumption_title">电池消耗</string>
 </resources>

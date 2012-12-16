@@ -17,8 +17,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.blinkt.openvpn"
-    android:versionCode="52"
-    android:versionName="0.5.25" >
+    android:versionCode="53"
+    android:versionName="0.5.26" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

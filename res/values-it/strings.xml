@@ -92,7 +92,7 @@
   <string name="info">Info</string>
   <string name="show_connection_details">Visualizza i dettagli della connessione</string>
   <string name="last_openvpn_tun_config">Ultima configurazione interfaccia OpenVPN:</string>
-  <string name="local_ip_info">IPv4 locale: %1$s/%2$d IPv6: %3$s MTU: %4$ d</string>
+  <string name="local_ip_info">IPv4 locale: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">Server DNS: %s</string>
   <string name="dns_domain_info">Dominio DNS: %s</string>
   <string name="routes_info">Rotte: %s</string>
@@ -152,7 +152,7 @@ Effettuata la lettura del file di configurazione</string>
   <string name="generated_config">Configurazione generata</string>
   <string name="generalsettings">Impostazioni generali</string>
   <string name="owner_fix">Correggi i diritti su /dev/tun</string>
-  <string name="edit_profile_title">Modifica \"% s\"</string>
+  <string name="edit_profile_title">Modifica \"%s\"</string>
   <string name="building_configration">Configurazione dell\'edificio...</string>
   <string name="netstatus">Stato della rete: %s</string>
   <string name="select_file">Selezionare</string>

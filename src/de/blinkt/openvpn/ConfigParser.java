@@ -353,10 +353,12 @@ public class ConfigParser {
 		
 		Vector<String> proto = getOption("proto", 1,1);
 		if(proto!=null){
-			if(proto.get(1).equals("udp"))
+			if(proto.get(1).equals("udp") || proto.get(1).equals("udp6"))
 				np.mUseUdp=true;
 			else if (proto.get(1).equals("tcp-client") ||
-					proto.get(1).equals("tcp"))
+					proto.get(1).equals("tcp")  || 
+					proto.get(1).equals("tcp6") ||
+					proto.get(1).endsWith("tcp6-client"))
 				np.mUseUdp=false;
 			else 
 				throw new ConfigParseError("Unsupported option to --proto " + proto.get(1));
@@ -438,6 +440,15 @@ public class ConfigParser {
 		
 		if(getOption("persist-tun", 0,0) != null)
 			np.mPersistTun=true;
+		
+		Vector<String> connectretry = getOption("connect-retry", 1, 1);
+		if(connectretry!=null)
+			np.mConnectRetry =connectretry.get(1);
+		
+		Vector<String> connectretrymax = getOption("connect-retry-max", 1, 1);
+		if(connectretrymax!=null)
+			np.mConnectRetryMax =connectretrymax.get(1);
+		
 		
 		Vector<String> authuser = getOption("auth-user-pass",0,1);
 		if(authuser !=null){

@@ -1859,11 +1859,6 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
   /*
    * Sanity check on TCP mode options
    */
-
-  if (ce->connect_retry_defined && ce->proto != PROTO_TCP_CLIENT)
-    msg (M_USAGE, "--connect-retry doesn't make sense unless also used with "
-	 "--proto tcp-client or tcp6-client");
-
   if (ce->connect_timeout_defined && ce->proto != PROTO_TCP_CLIENT)
     msg (M_USAGE, "--connect-timeout doesn't make sense unless also used with "
 	 "--proto tcp-client or tcp6-client");
@@ -4397,7 +4392,6 @@ add_option (struct options *options,
     {
       VERIFY_PERMISSION (OPT_P_GENERAL|OPT_P_CONNECTION);
       options->ce.connect_retry_seconds = positive_atoi (p[1]);
-      options->ce.connect_retry_defined = true;
     }
   else if (streq (p[0], "connect-timeout") && p[1])
     {

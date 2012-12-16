@@ -97,7 +97,6 @@ struct connection_entry
   bool bind_defined;
   bool bind_local;
   int connect_retry_seconds;
-  bool connect_retry_defined;
   int connect_timeout;
   bool connect_timeout_defined;
 #ifdef ENABLE_HTTP_PROXY

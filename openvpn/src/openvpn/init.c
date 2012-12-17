@@ -137,7 +137,7 @@ management_callback_proxy_cmd (void *arg, const char **p)
             }
           ho = init_http_proxy_options_once (&ce->http_proxy_options, gc);
           ho->server = string_alloc (p[2], gc);
-          ho->port = p[3];
+          ho->port = string_alloc (p[3], gc);
           ho->retry = true;
           ho->auth_retry = (p[4] && streq (p[4], "nct") ? PAR_NCT : PAR_ALL);
           ret = true;

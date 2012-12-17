@@ -1386,7 +1386,7 @@ link_socket_init_phase1 (struct link_socket *sock,
   /* are we running in HTTP proxy mode? */
   else if (sock->http_proxy)
     {
-      ASSERT (sock->info.proto == PROTO_TCP_CLIENT && sock->info.af == AF_INET);
+      ASSERT (sock->info.proto == PROTO_TCP_CLIENT);
       ASSERT (!sock->inetd);
 
       /* the proxy server */

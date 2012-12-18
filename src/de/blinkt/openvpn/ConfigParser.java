@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Vector;
 
 //! Openvpn Config FIle Parser, probably not 100% accurate but close enough
@@ -85,7 +86,7 @@ public class ConfigParser {
 	private boolean space(char c) {
 		// I really hope nobody is using zero bytes inside his/her config file
 		// to sperate parameter but here we go:
-		return Character.isSpace(c) || c == '\0';
+		return Character.isWhitespace(c) || c == '\0';
 
 	}
 
@@ -525,7 +526,7 @@ public class ConfigParser {
 		for(Vector<String> optionline:args)
 
 			if(optionline.size()< (minarg+1) || optionline.size() > maxarg+1) {
-				String err = String.format("Option %s has %d parameters, expected between %d and %d",
+				String err = String.format(Locale.getDefault(),"Option %s has %d parameters, expected between %d and %d",
 						option,optionline.size()-1,minarg,maxarg );
 				throw new ConfigParseError(err);
 			}

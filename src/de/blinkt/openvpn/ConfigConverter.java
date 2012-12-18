@@ -176,7 +176,7 @@ public class ConfigConverter extends ListActivity {
 
 	private void embedPKCS12File() {
 		mResult.mPKCS12Filename = embedFile(mResult.mPKCS12Filename,true);
-		if(mResult.mPKCS12Filename.startsWith(VpnProfile.INLINE_TAG)) {
+		if(mResult.mPKCS12Filename!=null && mResult.mPKCS12Filename.startsWith(VpnProfile.INLINE_TAG)) {
 			if(mResult.mAuthenticationType==VpnProfile.TYPE_USERPASS_KEYSTORE)
 				mResult.mAuthenticationType=VpnProfile.TYPE_USERPASS_PKCS12;
 			

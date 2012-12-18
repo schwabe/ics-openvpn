@@ -232,6 +232,7 @@ public class ConfigParser {
 			"route-method",
 			"script-security",
 			"show-net-up",
+			"status",
 			"suppress-timestamps",
 			"tmp-dir",
 			"topology",

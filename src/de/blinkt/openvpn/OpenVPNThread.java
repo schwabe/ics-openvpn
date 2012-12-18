@@ -39,9 +39,11 @@ public class OpenVPNThread implements Runnable {
 		} finally {
 			int exitvalue = 0;
 			try {
-				 exitvalue = mProcess.exitValue();
+				 exitvalue = mProcess.waitFor();
 			} catch ( IllegalThreadStateException ite) {
 				OpenVPN.logError("Illegal Thread state: " + ite.getLocalizedMessage());
+			} catch (InterruptedException ie) {
+				OpenVPN.logError("InterruptedException: " + ie.getLocalizedMessage());
 			}
 			if( exitvalue != 0)
 				OpenVPN.logError("Process exited with exit value " + exitvalue);
@@ -84,12 +86,12 @@ public class OpenVPNThread implements Runnable {
 			mProcess.getOutputStream().close();
 			InputStream in = mProcess.getInputStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			
-			
+				
 			while(true) {
 				String logline = br.readLine();
-				if(logline==null)
+				if(logline==null) {
 					return;
+				}
 				OpenVPN.logMessage(0, "P:", logline);
 			}
 			

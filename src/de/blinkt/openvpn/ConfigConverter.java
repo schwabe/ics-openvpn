@@ -228,7 +228,7 @@ public class ConfigConverter extends ListActivity {
 
 		File possibleFile = findFile(filename);
 		if(possibleFile==null)
-			return null;
+			return filename;
 		else
 			return readFileContent(possibleFile,base64encode);
 

@@ -19,6 +19,7 @@ package de.blinkt.openvpn;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Locale;
 import java.util.Vector;
 
 import android.app.Notification;
@@ -108,6 +109,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 		if(tickerText!=null)
 			nbuilder.setTicker(tickerText);
 
+		@SuppressWarnings("deprecation")
 		Notification notification = nbuilder.getNotification();
 
 
@@ -451,7 +453,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 			// Other notifications are shown,
 			// This also mean we are no longer connected, ignore bytecount messages until next
 			// CONNECTED
-			String ticker = state.toLowerCase();
+			String ticker = state.toLowerCase(Locale.getDefault());
 			showNotification(state +" " + logmessage,ticker,false,0);
 
 		}

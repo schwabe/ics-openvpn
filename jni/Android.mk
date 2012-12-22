@@ -5,6 +5,10 @@ include lzo/Android.mk
 
 include openssl/Android.mk
 
+ifneq ($(TARGET_ARCH),mips)
+include google-breakpad/android/google_breakpad/Android.mk
+endif
+
 include openvpn/Android.mk
 
 

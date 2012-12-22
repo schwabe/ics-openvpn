@@ -321,6 +321,12 @@ wmain (int argc, wchar_t *wargv[]) {
 #else
 int
 main (int argc, char *argv[]) {
+#ifdef TARGET_ANDROID
+#ifdef GOOGLE_BREAKPAD
+#include "../jni/icsandroid.h"
+    setup_breakpad();
+#endif
+#endif
 	return openvpn_main(argc, argv);
 }
 #endif

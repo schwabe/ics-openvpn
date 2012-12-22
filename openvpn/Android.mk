@@ -1,17 +1,21 @@
-# Android openvpn JNI 
 LOCAL_PATH:= $(call my-dir)/
 
 include $(CLEAR_VARS)
 
 LOCAL_LDLIBS := -lz 
-LOCAL_C_INCLUDES := openssl/include lzo/include openssl/crypto openssl openvpn/src/compat openvpn/src/openvpn openvpn/include
+LOCAL_C_INCLUDES := openssl/include lzo/include openssl/crypto openssl openvpn/src/compat openvpn/src/openvpn openvpn/include google-breakpad/src google-breakpad/src/common/android/include 
 
 LOCAL_SHARED_LIBRARIES :=  libssl libcrypto 
 #LOCAL_STATIC_LIBRARIES :=  libssl_static libcrypto_static  liblzo-static
-LOCAL_STATIC_LIBRARIES :=  liblzo-static
-
 
 LOCAL_CFLAGS= -DHAVE_CONFIG_H -DTARGET_ABI=\"${TARGET_ABI}\"
+LOCAL_STATIC_LIBRARIES :=  liblzo-static
+
+ifneq ($(TARGET_ARCH),mips)
+LOCAL_STATIC_LIBRARIES += breakpad_client
+LOCAL_CFLAGS += -DGOOGLE_BREAKPAD=1
+endif
+
 LOCAL_MODULE = openvpn
 
 LOCAL_SRC_FILES:= \
@@ -85,7 +89,12 @@ LOCAL_SRC_FILES:= \
 	src/openvpn/ssl_verify_openssl.c \
 	src/openvpn/ssl_verify_polarssl.c \
 	src/openvpn/status.c \
-	src/openvpn/tun.c 
+	src/openvpn/tun.c  
+ifneq ($(TARGET_ARCH),mips)
+LOCAL_SRC_FILES+=../jni/icsandroid.cpp
+endif
+
+
 
 include $(BUILD_SHARED_LIBRARY)
 #include $(BUILD_EXECUTABLE)

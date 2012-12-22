@@ -163,7 +163,7 @@ public class OpenVPN {
 	}
 
 	public static void logInfo(String message) {
-		
+		newlogItem(new LogItem(LogItem.INFO, message));
 	}
 
 	public static void logInfo(int ressourceId, Object... args) {

@@ -451,6 +451,12 @@ public class ConfigParser {
 		if(connectretrymax!=null)
 			np.mConnectRetryMax =connectretrymax.get(1);
 		
+		Vector<Vector<String>> remotetls = getAllOption("remote-tls", 1, 1);
+		if(remotetls!=null)
+			if(remotetls.get(1).equals("server"))
+				np.mExpectTLSCert=true;
+			else
+				options.put("remotetls",remotetls);
 		
 		Vector<String> authuser = getOption("auth-user-pass",0,1);
 		if(authuser !=null){

@@ -464,6 +464,7 @@ process_incoming_push_msg (struct context *c,
 		md5_state_update (&c->c2.pulled_options_state, BPTR(&buf_orig), BLEN(&buf_orig));
 		md5_state_final (&c->c2.pulled_options_state, &c->c2.pulled_options_digest);
 		ret = PUSH_MSG_REPLY;
+		md5_state_init (&c->c2.pulled_options_state);
 		break;
 	      case 2:
 		md5_state_update (&c->c2.pulled_options_state, BPTR(&buf_orig), BLEN(&buf_orig));

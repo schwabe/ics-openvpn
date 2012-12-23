@@ -235,8 +235,9 @@ public class ConfigParser {
 			"status",
 			"suppress-timestamps",
 			"tmp-dir",
+			"tun-ipv6",
 			"topology",
-			"win-sys"
+			"win-sys",
 	};
 	
 	
@@ -451,9 +452,9 @@ public class ConfigParser {
 		if(connectretrymax!=null)
 			np.mConnectRetryMax =connectretrymax.get(1);
 		
-		Vector<Vector<String>> remotetls = getAllOption("remote-tls", 1, 1);
+		Vector<Vector<String>> remotetls = getAllOption("remote-cert-tls", 1, 1);
 		if(remotetls!=null)
-			if(remotetls.get(1).equals("server"))
+			if(remotetls.get(0).get(1).equals("server"))
 				np.mExpectTLSCert=true;
 			else
 				options.put("remotetls",remotetls);

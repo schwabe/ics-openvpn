@@ -231,7 +231,6 @@ public class OpenVpnManagementThread implements Runnable {
 			
 		}
 		mWaitingForRelease=false;
-		mReleaseHold=true;
 		mLastHoldRelease  = System.currentTimeMillis();
 		managmentCommand("hold release\n");
 		managmentCommand("bytecount " + mBytecountinterval + "\n");
@@ -239,10 +238,10 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 	
 	public void releaseHold() {
+		mReleaseHold=true;
 		if(mWaitingForRelease)
 			releaseHoldCmd();
-		else	
-			mReleaseHold=true;
+			
 	}
 
 	private void processProxyCMD(String argument) {
@@ -467,9 +466,9 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 
 	public void signalusr1() {
+		mReleaseHold=false;
 		if(!mWaitingForRelease)
 			managmentCommand("signal SIGUSR1\n");
-		mReleaseHold=false;
 	}
 
 	public void reconnect() {

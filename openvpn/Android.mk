@@ -91,7 +91,7 @@ LOCAL_SRC_FILES:= \
 	src/openvpn/status.c \
 	src/openvpn/tun.c  
 ifneq ($(TARGET_ARCH),mips)
-LOCAL_SRC_FILES+=../jni/icsandroid.cpp
+LOCAL_SRC_FILES+=src/openvpn/breakpad.cpp
 endif
 
 

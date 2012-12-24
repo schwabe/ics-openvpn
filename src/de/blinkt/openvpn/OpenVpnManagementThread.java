@@ -39,7 +39,8 @@ public class OpenVpnManagementThread implements Runnable {
 	private long mLastOut=0;
 	private LocalServerSocket mServerSocket;
 	private boolean mReleaseHold=true;
-	private boolean mWaitingForRelease=false; 
+	private boolean mWaitingForRelease=false;
+	private long mLastHoldRelease=0; 
 
 	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
 
@@ -223,8 +224,15 @@ public class OpenVpnManagementThread implements Runnable {
 		}
 	}
 	private void releaseHoldCmd() {
+		if ((System.currentTimeMillis()- mLastHoldRelease) < 5000) {
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {}
+			
+		}
 		mWaitingForRelease=false;
 		mReleaseHold=true;
+		mLastHoldRelease  = System.currentTimeMillis();
 		managmentCommand("hold release\n");
 		managmentCommand("bytecount " + mBytecountinterval + "\n");
 		managmentCommand("state on\n");

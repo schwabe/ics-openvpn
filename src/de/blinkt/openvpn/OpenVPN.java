@@ -7,10 +7,10 @@ import android.content.Context;
 import android.os.Build;
 
 public class OpenVPN {
-	
+
 
 	public static LinkedList<LogItem> logbuffer;
-	
+
 	private static Vector<LogListener> logListener;
 	private static Vector<StateListener> stateListener;
 	private static String[] mBconfig;
@@ -18,14 +18,14 @@ public class OpenVPN {
 	private static String mLaststatemsg;
 
 	private static String mLaststate;
-	
+
 	static {
 		logbuffer  = new LinkedList<LogItem>();
 		logListener = new Vector<OpenVPN.LogListener>();
 		stateListener = new Vector<OpenVPN.StateListener>();
 		logInformation();
 	}
-	
+
 	static class LogItem {
 		public static final int ERROR = 1;
 		public static final int INFO = 2;
@@ -36,20 +36,20 @@ public class OpenVPN {
 		private int mRessourceId;
 		// Default log priority
 		int mLevel = INFO;
-		
+
 		public LogItem(int ressourceId, Object[] args) {
-		 mRessourceId = ressourceId;
-		 mArgs = args;
+			mRessourceId = ressourceId;
+			mArgs = args;
 		}
 
-		
-		public LogItem(int loglevel,int ressourceId, Object[] args) {
-			 mRessourceId = ressourceId;
-			 mArgs = args;
-			 mLevel = loglevel;
-			}
 
-		
+		public LogItem(int loglevel,int ressourceId, Object[] args) {
+			mRessourceId = ressourceId;
+			mArgs = args;
+			mLevel = loglevel;
+		}
+
+
 		public LogItem(String message) {
 			mMessage = message;
 		}
@@ -70,28 +70,32 @@ public class OpenVPN {
 			if(mMessage !=null) {
 				return mMessage;
 			} else {
-				if(mArgs == null)
-					return c.getString(mRessourceId);
-				else
-					return c.getString(mRessourceId,mArgs);
+				if(c!=null) {
+					if(mArgs == null)
+						return c.getString(mRessourceId);
+					else
+						return c.getString(mRessourceId,mArgs);
+				} else {
+					return String.format("Log (no context) resid %d", mRessourceId);
+				}
 			}
 		}
 	}
-	
+
 	private static final int MAXLOGENTRIES = 200;
 
 
 	public static final String MANAGMENT_PREFIX = "M:";
 
 
-	
+
 
 
 
 	public interface LogListener {
 		void newLog(LogItem logItem);
 	}
-	
+
 	public interface StateListener {
 		void updateState(String state, String logmessage);
 	}
@@ -108,7 +112,7 @@ public class OpenVPN {
 	}
 
 	private static void logInformation() {
-		
+
 		logInfo(R.string.mobile_info,Build.MODEL, Build.BOARD,Build.BRAND,Build.VERSION.SDK_INT);
 	}
 
@@ -120,7 +124,7 @@ public class OpenVPN {
 		logListener.remove(ll);
 	}
 
-	
+
 	synchronized static void addStateListener(StateListener sl){
 		stateListener.add(sl);
 		if(mLaststate!=null)
@@ -156,7 +160,7 @@ public class OpenVPN {
 	public synchronized static void updateStateString(String state, String msg) {
 		mLaststate= state;
 		mLaststatemsg = msg;
-		
+
 		for (StateListener sl : stateListener) {
 			sl.updateState(state,msg);
 		}
@@ -174,7 +178,7 @@ public class OpenVPN {
 		logbuffer.addLast(logItem);
 		if(logbuffer.size()>MAXLOGENTRIES)
 			logbuffer.removeFirst();
-		
+
 		for (LogListener ll : logListener) {
 			ll.newLog(logItem);
 		}
@@ -182,7 +186,7 @@ public class OpenVPN {
 
 	public static void logError(String msg) {
 		newlogItem(new LogItem(LogItem.ERROR, msg));
-		
+
 	}
 
 	public static void logError(int ressourceId) {
@@ -191,6 +195,6 @@ public class OpenVPN {
 	public static void logError(int ressourceId, Object... args) {
 		newlogItem(new LogItem(LogItem.ERROR, ressourceId,args));
 	}
-	
-	
+
+
 }

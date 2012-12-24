@@ -1,9 +1,5 @@
 package de.blinkt.openvpn;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import android.app.AlertDialog;
@@ -16,7 +12,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.DataSetObserver;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
@@ -227,8 +222,6 @@ public class LogWindow extends ListActivity implements StateListener  {
 		} else if(item.getItemId()==R.id.info) {
 			if(mBconfig==null)
 				OpenVPN.triggerLogBuilderConfig();
-		} else if(item.getItemId()==R.id.minidump) {
-			emailMiniDumps();
 
 		} else if(item.getItemId()==R.id.send) {
 			ladapter.shareLog();
@@ -258,70 +251,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.logmenu, menu);
-		
-		
-		
-		if(getLastestDump()==null)
-			menu.removeItem(R.id.minidump);
-		
 		return true;
-	}
-
-	private File getLastestDump() {
-		long newestDumpTime=0;
-		File newestDumpFile=null;
-
-		for(File f:getCacheDir().listFiles()) {
-			if(!f.getName().endsWith(".dmp"))
-				continue;
-
-			if (newestDumpTime < f.lastModified()) {
-				newestDumpTime = f.lastModified();
-				newestDumpFile=f;
-			}
-		}
-		return newestDumpFile;
-	}
-
-
-	public void emailMiniDumps()
-	{
-		//need to "send multiple" to get more than one attachment
-		final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
-		emailIntent.setType("*/*");
-		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, 
-				new String[]{"Arne Schwabe <arne@rfc2549.org>"});
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "OpenVPN Minidump");
-
-		
-		ArrayList<CharSequence> textarraylist = new ArrayList<CharSequence>();
-		textarraylist.add("Please describe the issue you have experienced");
-		emailIntent.putExtra(Intent.EXTRA_TEXT, textarraylist);
-
-
-		ArrayList<Uri> uris = new ArrayList<Uri>();
-
-		File ldump = getLastestDump();
-		if(ldump==null) {
-			OpenVPN.logError("No Minidump found!");
-		}
-		
-		uris.add(Uri.parse("content://de.blinkt.openvpn.FileProvider/" + ldump.getName()));
-		uris.add(Uri.parse("content://de.blinkt.openvpn.FileProvider/openvpn.log"));
-		
-		
-		try {
-			FileWriter logout = new FileWriter(new File(getCacheDir(),"openvpn.log"));
-			logout.write(ladapter.getLogStr());
-			logout.close();
-
-		} catch (IOException e1) {
-			OpenVPN.logError("Error writing log: " + e1.getLocalizedMessage());
-		}
-		
-		//emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-		emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
-		startActivity(emailIntent);
 	}
 
 

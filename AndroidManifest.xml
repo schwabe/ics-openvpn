@@ -43,6 +43,7 @@
         <activity
             android:name=".LogWindow"
             android:label="@string/openvpn_log" />
+        <activity android:name=".SendDumpActivity" />
         <activity android:name=".FileSelect" />
         <activity android:name=".MainActivity" >
             <intent-filter>
@@ -121,8 +122,8 @@
         <provider
             android:name=".FileProvider"
             android:authorities="de.blinkt.openvpn.FileProvider"
-            android:grantUriPermissions="true"
-            android:exported="true" />
+            android:exported="true"
+            android:grantUriPermissions="true" />
     </application>
 
 </manifest>

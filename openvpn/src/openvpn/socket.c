@@ -1255,7 +1255,7 @@ resolve_remote (struct link_socket *sock,
 	  if (remote_dynamic)
 	    *remote_dynamic = NULL;
 	}
-      else
+      /*      else, quick hack to fix persistent-remote ....*/
 	{
           CLEAR (sock->info.lsa->actual);
           if(sock->info.lsa->current_remote)

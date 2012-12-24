@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
-        android:id="@+id/minidump"
-        android:icon="@android:drawable/ic_menu_upload"
-        android:showAsAction="ifRoom|withText"
-        android:title="Send Minidump to developer"
-        android:titleCondensed="Send Minidump"/>
-    <item
         android:id="@+id/clearlog"
         android:icon="@drawable/ic_menu_trash_holo_light"
         android:showAsAction="ifRoom|withText"

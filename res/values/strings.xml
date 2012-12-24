@@ -143,7 +143,7 @@
     <string name="trying_to_read">Trying to read file: %1$s</string>
     <string name="import_could_not_open">Could not find file %1$s mentioned in the imported config file</string>
     <string name="importing_config">Importing config file from source %1$s</string>
-    <string name="import_warning_custom_options">Your configuration had a few configuration options that could be parsed. These options were added as custom configuration options. The custom configuration is displayed below:</string>
+    <string name="import_warning_custom_options">Your configuration had a few configuration options that could not be parsed. These options were added as custom configuration options. The custom configuration is displayed below:</string>
     <string name="import_done">Done reading config file.</string>
     <string name="nobind_summary">Do not bind to local address and port</string>
     <string name="no_bind">No local binding</string>

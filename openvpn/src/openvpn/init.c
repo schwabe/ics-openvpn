@@ -341,24 +341,29 @@ next_connection_entry (struct context *c)
           }
         else
           {
+            /* FIXME (schwabe) fix the persist-remote-ip option for real,
+             * this is broken probably ever since connection lists and multiple
+             * remote existed
+             */
+            
+            if (!c->options.persist_remote_ip)
+                clear_remote_addrlist (&c->c1.link_socket_addr);
+            else
+                c->c1.link_socket_addr.current_remote =
+                c->c1.link_socket_addr.remote_list;
+
+            /*
+             * Increase the number of connection attempts
+             * If this is connect-retry-max * size(l)
+             * OpenVPN will quit
+             */
+            
             c->options.unsuccessful_attempts++;
+
             if (++l->current >= l->len)
               {
-                /* FIXME (schwabe) fix the persist-remote-ip option for real,
-                 * this is broken probably ever since connection lists and multiple
-                 * remote existed
-                 */
-                /*
-                 * Increase the number of connection attempts
-                 * If this is connect-retry-max * size(l)
-                 * OpenVPN will quit
-                 */
-                
-                if (!c->options.persist_remote_ip)
-                    clear_remote_addrlist (&c->c1.link_socket_addr);
-                
+
                 l->current = 0;
-                ++l->n_cycles;
                 if (++n_cycles >= 2)
                     msg (M_FATAL, "No usable connection profiles are present");
               }

@@ -104,6 +104,7 @@ public class VpnProfile implements  Serializable{
 	public boolean mPersistTun = false;
 	public String mConnectRetryMax="5";
 	public String mConnectRetry="5";
+	public boolean mUserEditable=true;
 	
 	static final String MINIVPN = "miniopenvpn";
 	

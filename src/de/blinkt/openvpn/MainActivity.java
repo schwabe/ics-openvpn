@@ -1,8 +1,11 @@
 package de.blinkt.openvpn;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.preference.PreferenceActivity;
 
 public class MainActivity extends PreferenceActivity {
@@ -19,6 +22,15 @@ public class MainActivity extends PreferenceActivity {
 			translation.summary = translatedby;
 			target.add(translation);
 		}
+		
+		if(SendDumpActivity.getLastestDump(this)!=null) {
+			Header sendDump = new Header();
+			sendDump.titleRes = R.string.send_minidump;
+			sendDump.summaryRes = R.string.send_minidump_summary;
+			sendDump.intent = new Intent(this,SendDumpActivity.class);
+			target.add(sendDump);
+		}
+		
 	}
 	
 	@Override
@@ -29,4 +41,6 @@ public class MainActivity extends PreferenceActivity {
 		
 		
 	}
+
+
 }

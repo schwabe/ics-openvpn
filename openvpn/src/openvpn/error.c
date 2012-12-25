@@ -57,6 +57,10 @@
 #endif
 #endif
 
+#ifdef GOOGLE_BREAKPAD
+#include "breakpad.h"
+#endif
+
 /* Globals */
 unsigned int x_debug_level; /* GLOBAL */
 
@@ -259,7 +263,7 @@ void x_msg_va (const unsigned int flags, const char *format, va_list arglist)
   if (flags & M_SSL)
     {
       int nerrs = 0;
-      int err;
+      size_t err;
       while ((err = ERR_get_error ()))
 	{
 	  openvpn_snprintf (m2, ERR_BUF_SIZE, "%s: %s",
@@ -399,6 +403,9 @@ dont_mute (unsigned int flags)
 void
 assert_failed (const char *filename, int line)
 {
+#ifdef GOOGLE_BREAKPAD
+    breakpad_dodump();
+#endif
   msg (M_FATAL, "Assertion failed at %s:%d", filename, line);
 }
 
@@ -602,7 +609,7 @@ x_check_status (int status,
   const char *extended_msg = NULL;
 
   msg (x_cs_verbose_level, "%s %s returned %d",
-       sock ? proto2ascii (sock->info.proto, true) : "",
+       sock ? proto2ascii (sock->info.proto, sock->info.af, true) : "",
        description,
        status);
 
@@ -630,14 +637,14 @@ x_check_status (int status,
 	  if (extended_msg)
 	    msg (x_cs_info_level, "%s %s [%s]: %s (code=%d)",
 		 description,
-		 sock ? proto2ascii (sock->info.proto, true) : "",
+		 sock ? proto2ascii (sock->info.proto, sock->info.af, true) : "",
 		 extended_msg,
 		 strerror_ts (my_errno, &gc),
 		 my_errno);
 	  else
 	    msg (x_cs_info_level, "%s %s: %s (code=%d)",
 		 description,
-		 sock ? proto2ascii (sock->info.proto, true) : "",
+		 sock ? proto2ascii (sock->info.proto, sock->info.af, true) : "",
 		 strerror_ts (my_errno, &gc),
 		 my_errno);
 

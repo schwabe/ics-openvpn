@@ -98,7 +98,9 @@ plugin_type_name (const int type)
     case OPENVPN_PLUGIN_TLS_FINAL:
       return "PLUGIN_TLS_FINAL";
     case OPENVPN_PLUGIN_ENABLE_PF:
-      return "OPENVPN_PLUGIN_ENABLE_PF";
+      return "PLUGIN_ENABLE_PF";
+    case OPENVPN_PLUGIN_ROUTE_PREDOWN:
+      return "PLUGIN_ROUTE_PREDOWN";
     default:
       return "PLUGIN_???";
     }
@@ -376,10 +378,10 @@ plugin_open_item (struct plugin *p,
         struct openvpn_plugin_args_open_return retargs;
 
         CLEAR(retargs);
+        retargs.return_list = retlist;
         if ((*p->open3)(OPENVPN_PLUGINv3_STRUCTVER, &args, &retargs) == OPENVPN_PLUGIN_FUNC_SUCCESS) {
           p->plugin_type_mask = retargs.type_mask;
           p->plugin_handle = retargs.handle;
-          retlist = retargs.return_list;
         } else {
           p->plugin_handle = NULL;
         }
@@ -458,8 +460,8 @@ plugin_call_item (const struct plugin *p,
         struct openvpn_plugin_args_func_return retargs;
 
         CLEAR(retargs);
+        retargs.return_list = retlist;
         status = (*p->func3)(OPENVPN_PLUGINv3_STRUCTVER, &args, &retargs);
-        retlist = retargs.return_list;
       } else if (p->func2)
 	status = (*p->func2)(p->plugin_handle, type, (const char **)a.argv, envp, per_client_context, retlist);
       else if (p->func1)

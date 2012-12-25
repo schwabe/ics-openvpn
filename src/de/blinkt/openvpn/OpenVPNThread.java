@@ -1,19 +1,24 @@
 package de.blinkt.openvpn;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 
 import android.util.Log;
+import de.blinkt.openvpn.OpenVPN.LogItem;
 
 public class OpenVPNThread implements Runnable {
+	private static final String DUMP_PATH_STRING = "Dump path: ";
 	private static final String TAG = "OpenVPN";
 	private String[] mArgv;
 	private Process mProcess;
 	private String mNativeDir;
 	private OpenVpnService mService;
+	private String mDumpPath;
 
 	public OpenVPNThread(OpenVpnService service,String[] argv, String nativelibdir)
 	{
@@ -39,15 +44,28 @@ public class OpenVPNThread implements Runnable {
 		} finally {
 			int exitvalue = 0;
 			try {
-				 exitvalue = mProcess.exitValue();
+				 exitvalue = mProcess.waitFor();
 			} catch ( IllegalThreadStateException ite) {
 				OpenVPN.logError("Illegal Thread state: " + ite.getLocalizedMessage());
+			} catch (InterruptedException ie) {
+				OpenVPN.logError("InterruptedException: " + ie.getLocalizedMessage());
 			}
 			if( exitvalue != 0)
 				OpenVPN.logError("Process exited with exit value " + exitvalue);
 			
 			OpenVPN.updateStateString("NOPROCESS","No process running.");
-
+			if(mDumpPath!=null) {
+				try {
+					BufferedWriter logout = new BufferedWriter(new FileWriter(mDumpPath + ".log"));
+					for(LogItem li :OpenVPN.getlogbuffer()){
+						logout.write(li.getString(null) + "\n");
+					}
+					logout.close();
+					OpenVPN.logError(R.string.minidump_generated);
+				} catch (IOException e) {
+					OpenVPN.logError("Writing minidump log: " +e.getLocalizedMessage());
+				}
+			}
 
 			mService.processDied();
 			Log.i(TAG, "Exiting");
@@ -84,12 +102,15 @@ public class OpenVPNThread implements Runnable {
 			mProcess.getOutputStream().close();
 			InputStream in = mProcess.getInputStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			
-			
+				
 			while(true) {
 				String logline = br.readLine();
-				if(logline==null)
+				if (logline.startsWith(DUMP_PATH_STRING))
+					mDumpPath = logline.substring(DUMP_PATH_STRING.length());
+					
+				if(logline==null) {
 					return;
+				}
 				OpenVPN.logMessage(0, "P:", logline);
 			}
 			

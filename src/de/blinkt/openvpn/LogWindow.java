@@ -76,6 +76,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 			return str;
 		}
 
+
 		private void shareLog() {
 			Intent shareIntent = new Intent(Intent.ACTION_SEND);
 			shareIntent.putExtra(Intent.EXTRA_TEXT, getLogStr());
@@ -215,12 +216,13 @@ public class LogWindow extends ListActivity implements StateListener  {
 					OpenVpnManagementThread.stopOpenVPN();		
 				}
 			});
-			
+
 			builder.show();
 			return true;
 		} else if(item.getItemId()==R.id.info) {
 			if(mBconfig==null)
 				OpenVPN.triggerLogBuilderConfig();
+
 		} else if(item.getItemId()==R.id.send) {
 			ladapter.shareLog();
 		} else if(item.getItemId()==R.id.edit_vpn) {
@@ -251,6 +253,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 		inflater.inflate(R.menu.logmenu, menu);
 		return true;
 	}
+
 
 	@Override
 	protected void onResume() {

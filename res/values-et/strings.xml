@@ -5,7 +5,7 @@
   <string name="address">Serveri aadress:</string>
   <string name="port">Serveri port:</string>
   <string name="location">Asukoht</string>
-  <string name="cant_read_folder">Kataloogi ei saa lugeda!</string>
+  <string name="cant_read_folder">Kataloog pole loetav</string>
   <string name="select">Vali</string>
   <string name="cancel">Tühista</string>
   <string name="no_data">Andmed puuduvad</string>
@@ -15,8 +15,8 @@
   <string name="client_key_title">Kliendisertifikaadi võti</string>
   <string name="client_pkcs12_title">PKCS12 fail</string>
   <string name="ca_title">CA sertifikaat</string>
-  <string name="no_certificate">Pole valitud</string>
-  <string name="copyright_guicode">Lähtetekst ja probleemihaldur asuvad veebilehel http://code.google.com/p/ics-openvpn/ </string>
+  <string name="no_certificate">Peate valima sertifikaadi</string>
+  <string name="copyright_guicode">Lähtetekst ja probleemihaldur asuvad veebilehel http://code.google.com/p/ics-openvpn/</string>
   <string name="copyright_others">Programmis kasutatakse järgnevaid komponente. Detailse litsenseerimisinfo leiate lähtekoodist</string>
   <string name="about">Lähemalt</string>
   <string name="about_summary">Täpsemalt programmist OpenVPN Androidile</string>
@@ -25,7 +25,7 @@
   <string name="vpn_type">Tüüp</string>
   <string name="pkcs12pwquery">PKCS12 salasõna</string>
   <string name="file_select">Vali…</string>
-  <string name="file_nothing_selected">Pole valitud</string>
+  <string name="file_nothing_selected">Valige fail</string>
   <string name="useTLSAuth">Kasuta TLS autentimist</string>
   <string name="tls_direction">TLS suund</string>
   <string name="ipv6_dialog_tile">Sisesta IPv6 Aadress/Võrgumask CIDR formaadis (nt. 2000:dd::23/64)</string>
@@ -35,18 +35,18 @@
   <string name="custom_option_warning">Sisestage OpenVPN kohandatud valikud. Ettevaatlikkus ei tee paha. Palun samuti tähele panna et VPNSettings API ei toeta paljusid tun liidesega seotud OpenVPN seadistusi. Siiski, kui te leiate et mõni oluline seadistusvalik on puudu, siis kontakteeruge programmi autoriga</string>
   <string name="auth_username">Kasutajanimi</string>
   <string name="auth_pwquery">Salasõna</string>
-  <string name="static_keys_info">Staatilise konfiguratsiooni puhul kasutatakse TLS Auth võtmeid staatiliste võtmetena.</string>
+  <string name="static_keys_info">Staatilise konfiguratsiooni puhul kasutatakse TLS Auth võtmeid staatiliste võtmetena</string>
   <string name="configure_the_vpn">Konfigureeri VPN</string>
   <string name="menu_add_profile">Lisa profiil</string>
   <string name="add_profile_name_prompt">Lisage uuele profiilile osutav nimi</string>
-  <string name="duplicate_profile_name">Topelt profiili nimi</string>
+  <string name="duplicate_profile_name">Palun sisestage unikaalne profiilinimi</string>
   <string name="profilename">Profiili nimi</string>
-  <string name="no_keystore_cert_selected">Ühtegi kasutajasertifikaati pole valitud.</string>
+  <string name="no_keystore_cert_selected">Peate valima kasutaja sertifikaadi</string>
   <string name="no_error_found">Vigu ei leitud</string>
   <string name="config_error_found">Konfiguratsiooni viga</string>
-  <string name="ipv4_format_error">IPv4 aadress ei allu analüüsile</string>
+  <string name="ipv4_format_error">Sisestatud IPv4 aadress ei allu süntaksianalüüsile</string>
   <string name="custom_route_format_error">Kohandatud marsruudid ei allu süntaksianalüüsile</string>
-  <string name="pw_query_hint">Jäta tühjaks, küsitakse vajadusel</string>
+  <string name="pw_query_hint">(jäta tühjaks, küsitakse vajadusel)</string>
   <string name="vpn_shortcut">OpenVPN kiirkäivitus</string>
   <string name="vpn_launch_title">Ühendu VPN\'iga</string>
   <string name="shortcut_profile_notfound">Lühivalikus määratud profiil puudub</string>
@@ -90,9 +90,9 @@
   <string name="float_title">Luba \'ujuv\' server</string>
   <string name="custom_options_title">Kohandatud valikud</string>
   <string name="edit_vpn">Muuda VPN seadistusi</string>
-  <string name="remove_vpn_query">Kas eemaldada VPN profiil %s?</string>
+  <string name="remove_vpn_query">Kas eemaldada VPN profiil \'%s\'?</string>
   <string name="tun_error_helpful">Mõnel modifitseeritud ICS versioonil võivad /dev/tun õigused olla valed, või selle moodul sootuks puududa. CM9 puhul võib probleemi lahendada üldiste seadistuste alt omanikuõiguste parandamine</string>
-  <string name="tun_open_error">tun liidese avamine ebaõnnestus täielikult.</string>
+  <string name="tun_open_error">Tun liidese avamine ebaõnnestus</string>
   <string name="error">"Viga:"</string>
   <string name="clear">Tühjenda</string>
   <string name="info">info</string>
@@ -106,7 +106,7 @@
   <string name="ip_not_cidr">Liidese andmed on %1$s ja %2$s, eeldades et teine aadress on eemalasuva serveri aadress. Lokaalse IP jaoks kasutatakse /32 võrgumaski. OpenVPN teatab režiimiks %3$s\".</string>
   <string name="route_not_cidr">%1$s ja %2$s on mõttetud CIDR võrgumaskiga IP marsruutidest, võrgumaskiks määratakse /32.</string>
   <string name="route_not_netip">%1$s/%2$s marsruut parandatud: %3$s/%2$s</string>
-  <string name="keychain_access">Androidi Keychain sertifikaadid on kättesaamatud. (See võib olla põhjustatud püsivara uuendamisest või appide/apiseadistuste taastamisest). Sertifikaatide pääsuõiguste taastamiseks redigeerige palun VPN seadistusi ja valige uuesti üldiste seadistuste alt sertifikaat.</string>
+  <string name="keychain_access">Androidi Keychain sertifikaadid on kättesaamatud. See võib olla põhjustatud püsivara uuendamisest või appide/apiseadistuste taastamisest. Sertifikaatide pääsuõiguste taastamiseks redigeerige palun VPN seadistusi ja valige uuesti üldiste seadistuste alt sertifikaat.</string>
   <string name="version_info">%1$s %2$s</string>
   <string name="send_logfile">Saada logifail</string>
   <string name="send">Saada</string>
@@ -142,7 +142,7 @@
   <string name="trying_to_read">Üritan lugeda faili: %1$s</string>
   <string name="import_could_not_open">Ei õnnestunud leida imporditavas konfiguratsioonifailis mainitud faili: %1$s</string>
   <string name="importing_config">Allikast %1$s imporditakse konfiguratsioonifaili</string>
-  <string name="import_warning_custom_options">Teie konfiguratsioonis leidus vähe analüüsile alluvaid valikuid. Leitud valikud lisati kohandatud seadistusvalikutena. Kohandatud konfiguratiooni leiate allpool:</string>
+  <string name="import_warning_custom_options">Teie konfiguratsioonis on mõned süntaktilisele analüüsile allumatud valikuid. Leitud valikud lisati kohandatud seadistusvalikutena. Kohandatud konfiguratiooni leiate allpool:</string>
   <string name="import_done">Konfiguratsioonifail loetud.</string>
   <string name="nobind_summary">Ära seo lokaalse aadressi ja pordiga</string>
   <string name="no_bind">Lokaalne sidumine puudub</string>
@@ -172,7 +172,7 @@
   <string name="generated_config_summary">Näitab genereeritud OpenVPN konfiguratsioonifaili</string>
   <string name="edit_profile_title">Redigeeritakse \"%s\"</string>
   <string name="building_configration">Koostatakse konfiguratsiooni…</string>
-  <string name="netchange_summary">Selle valiku aktiveerimine kutsub esile VPN uuestiühendumise kui võrgu olek muutub (WIFI peale/pealt mobiilile)</string>
+  <string name="netchange_summary">Selle valiku aktiveerimine kutsub esile VPN uuestiühendumise kui võrgu olek muutub (nt. WIFI peale/pealt mobiilile)</string>
   <string name="netchange">Uuestiühendus võrgu oleku muutumisel</string>
   <string name="cert_from_keystore">Saadud sertifikaat \'%s\' võtmehoidlast</string>
   <string name="netstatus">Võrgu olek: %s</string>
@@ -224,4 +224,18 @@
   <string name="faq_routing">Marsruutimine ja liidese seadistamine ei toimu traditsiooniliste ifconfig/route käskudega vaid VPNService API abil. Tulemuseks on teistest OS\'dest erinev marsruutimise konfiguratsioon. Konfiguratsioonis on kirjed ainult tunneli-liidese IP jaoks ja nende võrkude kirjeldused mis peavad olema marsruuditud läbi selle liidese. Täpsemalt, pole vaja kirjeldada ei teise poole aadressi ega ruuterit. Spetsiaalsed ruutingukirjed VPN serveriga kontakteerumiseks (nagu näiteks redirect-gateway kasutamisel) ei ole samuti vajalikud. Seetõttu ignoreeritakse konfiguratsiooni importimisel neid kirjeid. Programm kindlustab VPNService API abil et VPN serveriga kontakteerumist nõudvaid ühendusi ei ruudita läbi VPN tunneli. Kuna toetatud on ainult tunneldatavate võrkude marsruudid, siis ei saa kirjeldada ka ruutinguid mis ei suuna liiklust läbi tunneli. (nt. route x.x.x.x y.y.y.y net_gateway). \'Näita ühenduse andmeid\' nupp logiaknas näitab kehtivat VPNService võrgukonfiguratsiooni.</string>
   <string name="persisttun_summary">Ära taasta otseühendust kui OpenVPN on taasühendumas.</string>
   <string name="persistent_tun_title">Katkematu tun</string>
+  <string name="translation">Tõlge</string>
+  <string name="openvpn_log">OpenVPN Logi</string>
+  <string name="import_config">Impordi OpenVPN konfiguratsioon</string>
+  <string name="battery_consumption_title">Akukasutus</string>
+  <string name="baterry_consumption">Minu isiklike testide põhjal kulutavad akut peamiselt OpenVPN keepalive paketid. Enamikel OpenVPN serveritel esineb direktiiv nagu \'keepalive 10 60\' mis tähendab et klient saadab serverile ja server kliendile keepalive pakette iga 10 sekundi tagant. &lt;p&gt; Ehkki keepalive paketid on väikesed ja ei põhjusta märgatavat võrguliiklust, ei lase nad mobiilse ühenduse raadiovõrgukiibil minna energiasäästurežiimi. &lt;p&gt; Need keepalive seadistused pole kliendi poolt muudetavad, neid seadistusi saab muuta ainult OpenVPN serveri süsteemiadministraator. &lt;p&gt; Kahjuks esineb üle 60 sekundi pikkuse keepalive puhul probleeme UDP protokolliga üle mõnede NAT ruuterite mis kustutavad UDP ühenduste olekuinfo väga lühikese aja jooksul (minu testides 60s). TCP protokolliga seda probleemi ei esine, kuid esineb TCP üle TCP tunneldamise probleem. (Vaata &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Miks TCP üle TCP on halb mõte&lt;/a&gt;)</string>
+  <string name="faq_tethering">Android Tethering (üle WiFi, USB või Bluetoothi) ja VPNService API (mida käesolev programm kasutab) ei ole koos kasutatavad. Täpsemad detailid leiad &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;issue #34&lt;/a&gt;</string>
+  <string name="vpn_tethering_title">VPN ja tether</string>
+  <string name="connection_retries">Ühendumise korduskatseid</string>
+  <string name="reconnection_settings">Taasühendusseaded</string>
+  <string name="connectretrymessage">Mitu sekundit oodata ühendumiskatsete vahel.</string>
+  <string name="connectretrywait">Sekundeid ühenduste vahel</string>
+  <string name="minidump_generated">OpenVPN jooksis ootamatult kokku. Palun kaaluge \"saada Minitõmmis\" valiku lubamist peamenüüs</string>
+  <string name="send_minidump">Saada arendajale minitõmmis</string>
+  <string name="send_minidump_summary">Saada eelmise kokkujooksmise kohta käiv silumisinfo arendajale</string>
 </resources>

@@ -10,7 +10,7 @@ fi
 echo "Fetch translation archive"
 fetch -q http://crowdin.net/download/project/ics-openvpn.zip
 
-langtoinclude="ca cs de es et fr he it  ja ko no nl ru"
+langtoinclude="ca cs de es et fr he id it ja ko no nl ru"
 
 for lang in $langtoinclude
 do

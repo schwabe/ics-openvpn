@@ -140,7 +140,6 @@
     <string name="import_content_resolve_error">Could not read Profile to import</string>
     <string name="error_reading_config_file">Error reading config file</string>
     <string name="add_profile">add Profile</string>
-    <string name="trying_to_read">Trying to read file: %1$s</string>
     <string name="import_could_not_open">Could not find file %1$s mentioned in the imported config file</string>
     <string name="importing_config">Importing config file from source %1$s</string>
     <string name="import_warning_custom_options">Your configuration had a few configuration options that could not be parsed. These options were added as custom configuration options. The custom configuration is displayed below:</string>
@@ -182,8 +181,6 @@
     <string name="keychain_nocacert">No CA Certificate returned while reading from Android keystore. Auhtentication will probably fail.</string>
     <string name="show_log_summary">Shows the log window on connect. The log window can always be accessed from the notification status.</string>
     <string name="show_log_window">Show log window</string>
-    <string name="keppstatus_summary">Keep the notification displayed after the connection is established to show traffic statistics.</string>
-    <string name="keepstatus">Show Traffic Statistics</string>
     <string name="mobile_info">Running on %1$s (%2$s) %3$s, Android API %4$d</string>
     <string name="error_rsa_sign">Error signing with Android keystore key %1$s: %2$s</string>
     <string name="faq_system_dialogs">The VPN connection warning telling you that this app can intercept all traffic is imposed by the system to prevent abuse of the VPNService API.\nThe VPN connection notification (The key symbol) is also imposed by the Android system to signal an ongoing VPN connection. On some images this notification plays a sound.\nAndroid introduced these system dialogs for your own safety and made sure that they cannot be circumenvented. (On some images this unfortunely includes a notifciation sound)</string>

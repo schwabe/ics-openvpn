@@ -5,7 +5,6 @@
   <string name="address">Server Adres:</string>
   <string name="port">Server Poort:</string>
   <string name="location">Locatie</string>
-  <string name="cant_read_folder">map onleesbaar!</string>
   <string name="select">Selecteer</string>
   <string name="cancel">Annuleer</string>
   <string name="no_data">Geen Gegevens</string>
@@ -15,9 +14,6 @@
   <string name="client_key_title">Client Certificaat Sleutel</string>
   <string name="client_pkcs12_title">PKCS12 Bestand</string>
   <string name="ca_title">CA Certificaat</string>
-  <string name="no_certificate">Niets geselecteerd</string>
-  <string name="copyright_guicode">Broncode en probleem tracker zijn beschikbaar via http://code.google.com/p/ics-openvpn/</string>
-  <string name="copyright_others">Het programma gebruikt de volgende componenten. Zie de broncode voor volledige details over de licenties</string>
   <string name="about">Over</string>
   <string name="about_summary">Over OpenVPN voor Android</string>
   <string name="vpn_list_summary">Lijst van alle geconfigureerde VPN verbindingen</string>
@@ -25,7 +21,6 @@
   <string name="vpn_type">Type</string>
   <string name="pkcs12pwquery">PKCS12 Wachtwoord</string>
   <string name="file_select">Selecteer…</string>
-  <string name="file_nothing_selected">Niets Geselecteerd</string>
   <string name="useTLSAuth">Gebruik TLS autentificatie</string>
   <string name="tls_direction">TLS Richting</string>
   <string name="ipv6_dialog_tile">Voer een IPv6 Adres/Netmask in met het CIDR Formaat (v.b. 2000:dd::23/64)</string>
@@ -34,17 +29,12 @@
   <string name="ipv6_address">IPv4 Adres</string>
   <string name="auth_username">Gebruikersnaam</string>
   <string name="auth_pwquery">wachtwoord</string>
-  <string name="static_keys_info">Voor de statische configuratie worden de TLS Auth keys als statische keys gebruikt.</string>
   <string name="configure_the_vpn">VPN configureren</string>
   <string name="menu_add_profile">Profiel toevoegen</string>
   <string name="add_profile_name_prompt">Voer een naam in voor het nieuwe Profiel</string>
-  <string name="duplicate_profile_name">Dubbele Profielnaam</string>
   <string name="profilename">Profiel name</string>
-  <string name="no_keystore_cert_selected">Geen Gebruikerscertificaat geselecteerd.</string>
   <string name="no_error_found">Geen fout.</string>
   <string name="config_error_found">Fout in de configuratie</string>
-  <string name="ipv4_format_error">Het IPv4 adres is foutief</string>
-  <string name="custom_route_format_error">De aangepaste route is foutief</string>
   <string name="vpn_shortcut">Open VPN shortcut</string>
   <string name="vpn_launch_title">Met VPN verbinden</string>
   <string name="shortcut_profile_notfound">Het profiel zoals aangegeven in de snelkoppeling kon niet gevonden worden.</string>
@@ -81,8 +71,6 @@
   <string name="float_title">Zwevende server toestaan</string>
   <string name="custom_options_title">Aangepaste Opties</string>
   <string name="edit_vpn">VPN Instellingen Bewerken</string>
-  <string name="remove_vpn_query">Verwijder het VPN Profiel %s?</string>
-  <string name="tun_open_error">Het openen van de tun interface ging verkeerd.</string>
   <string name="error">"Fout:"</string>
   <string name="clear">Leeg maken</string>
   <string name="info">info</string>
@@ -98,7 +86,6 @@
   <string name="send">Verzenden</string>
   <string name="tap_mode">Tap mode</string>
   <string name="faq_tap_mode">De VPN API van Android werkt zonder rooten van de telefoon en ondersteunt alleen de tun modus. Daarom is de tap modus niet mogelijk met deze app.</string>
-  <string name="tap_faq2">Alweer dit? Serieus? Nee, de tap modus kan écht niet gebruikt worden. Het helpt ook niet om mij met de vraag wanneer dit wél mogelijk is te mailen.</string>
   <string name="import_configuration_file">configuratie bestand importeren</string>
   <string name="faq_security_title">Beveiligingsoverwegingen</string>
   <string name="import_vpn">Importeren</string>

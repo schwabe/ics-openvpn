@@ -37,9 +37,22 @@ public class NetworkSateReceiver extends BroadcastReceiver {
 			if(extrainfo==null)
 				extrainfo="";
 			
+			/*
+			if(networkInfo.getType()==android.net.ConnectivityManager.TYPE_WIFI) {
+				WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);			
+				WifiInfo wifiinfo = wifiMgr.getConnectionInfo();
+				extrainfo+=wifiinfo.getBSSID();
+				
+				subtype += wifiinfo.getNetworkId();
+			}*/
+			
+			
+			
 			netstatestring = String.format("%2$s %4$s to %1$s %3$s",networkInfo.getTypeName(),
 					networkInfo.getDetailedState(),extrainfo,subtype );
 		}
+		
+		
 		
 		if(networkInfo!=null && networkInfo.getState() == State.CONNECTED) {
 				int newnet = networkInfo.getType();

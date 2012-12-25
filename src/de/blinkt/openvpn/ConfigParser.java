@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
@@ -18,11 +19,10 @@ public class ConfigParser {
 
 
 	private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
-	public void parseConfig(InputStream inputStream) throws IOException, ConfigParseError {
+	public void parseConfig(Reader reader) throws IOException, ConfigParseError {
 
 
-		InputStreamReader fr = new InputStreamReader(inputStream);
-		BufferedReader br =new BufferedReader(fr);
+		BufferedReader br =new BufferedReader(reader);
 
 		@SuppressWarnings("unused")
 		int lineno=0;
@@ -230,9 +230,9 @@ public class ConfigParser {
 			"route-gateway",
 			"route-metric",
 			"route-method",
+			"status",
 			"script-security",
 			"show-net-up",
-			"status",
 			"suppress-timestamps",
 			"tmp-dir",
 			"tun-ipv6",

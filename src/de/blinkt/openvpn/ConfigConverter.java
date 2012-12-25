@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Vector;
 
@@ -407,7 +408,9 @@ public class ConfigConverter extends ListActivity {
 	private void doImport(InputStream is) {
 		ConfigParser cp = new ConfigParser();
 		try {
-			cp.parseConfig(is);
+			InputStreamReader isr = new InputStreamReader(is);
+
+			cp.parseConfig(isr);
 			VpnProfile vp = cp.convertProfile();
 			mResult = vp;
 			embedFiles();

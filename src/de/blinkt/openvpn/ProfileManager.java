@@ -51,7 +51,7 @@ public class ProfileManager {
 		}
 	}
 
-	public static ProfileManager getInstance(Context context) {
+	synchronized public static ProfileManager getInstance(Context context) {
 		checkInstance(context);
 		return instance;
 	}

@@ -5,7 +5,7 @@
   <string name="address">服务器地址：</string>
   <string name="port">服务器端口：</string>
   <string name="location">地点</string>
-  <string name="cant_read_folder">无法读取文件夹！</string>
+  <string name="cant_read_folder">无法读取目录</string>
   <string name="select">选择</string>
   <string name="cancel">取消</string>
   <string name="no_data">无数据</string>
@@ -15,7 +15,7 @@
   <string name="client_key_title">客户端证书密钥</string>
   <string name="client_pkcs12_title">PKCS12 文件</string>
   <string name="ca_title">CA 证书</string>
-  <string name="no_certificate">无证书</string>
+  <string name="no_certificate">您必须选择一个证书</string>
   <string name="copyright_guicode">请前往 http://code.google.com/p/ics-openvpn/ 源码或提供问题反馈</string>
   <string name="copyright_others">本程序使用以下组件，请在 Licenses 查看源码获取更详细内容。</string>
   <string name="about">关于</string>
@@ -25,26 +25,21 @@
   <string name="vpn_type">类型</string>
   <string name="pkcs12pwquery">PKCS12 密码</string>
   <string name="file_select">选择</string>
-  <string name="file_nothing_selected">未选择任何项</string>
+  <string name="file_nothing_selected">您必须选择一个文件</string>
   <string name="useTLSAuth">使用 TLS 认证</string>
   <string name="tls_direction">TLS 方向</string>
   <string name="ipv6_dialog_tile">输入 CIDR 格式 IPv6 地址/子网掩码（例如：2000:dd::23/64）</string>
   <string name="ipv4_dialog_title">输入 CIDR 格式 IPv4 地址/子网掩码（例如：1.2.3.4/24）</string>
   <string name="ipv4_address">IPv4 地址</string>
   <string name="ipv6_address">IPv6 地址</string>
-  <string name="custom_option_warning">输入自定义 OpenVPN 选项</string>
   <string name="auth_username">用户名</string>
   <string name="auth_pwquery">密码</string>
   <string name="configure_the_vpn">配置 VPN</string>
   <string name="menu_add_profile">添加配置文件</string>
   <string name="add_profile_name_prompt">输入新配置文件名：</string>
-  <string name="duplicate_profile_name">配置文件名已存在</string>
   <string name="profilename">配置文件名</string>
-  <string name="no_keystore_cert_selected">未选用户证书。</string>
   <string name="no_error_found">未找到错误</string>
   <string name="config_error_found">配置有错误</string>
-  <string name="ipv4_format_error">无法解析 IPv4 地址</string>
-  <string name="custom_route_format_error">无法解析自定义路由</string>
   <string name="vpn_shortcut">OpenVPN 快捷方式</string>
   <string name="vpn_launch_title">连接到 VPN</string>
   <string name="shortcut_profile_notfound">未找到快捷方式中指定的配置文件</string>
@@ -59,6 +54,7 @@
   <string name="cancel_connection_query">断开已连接的 VPN / 取消连接尝试？</string>
   <string name="remove_vpn">删除 VPN</string>
   <string name="check_remote_tlscert">检查服务器是否使用 TLS 服务器证书</string>
+  <string name="remote_tlscn_check_title">证书主机名检查</string>
   <string name="enter_tlscn_title">远程主机名 （CN）</string>
   <string name="tls_key_auth">启用 TLS 密钥认证</string>
   <string name="tls_auth_file">TLS 认证文件</string>
@@ -73,6 +69,7 @@
   <string name="backup_dns">备用 DNS 服务器</string>
   <string name="ignored_pushed_routes">忽略推送路由</string>
   <string name="ignore_routes_summary">忽略服务器推送的路由</string>
+  <string name="default_route_summary">重定向所有流量到VPN</string>
   <string name="use_default_title">使用默认路由</string>
   <string name="custom_route_message">输入自定义路由。输入 CIDR 格式地址。</string>
   <string name="custom_routes_title">自定义路由</string>
@@ -81,7 +78,6 @@
   <string name="float_title">允许浮服务器</string>
   <string name="custom_options_title">自定义选项</string>
   <string name="edit_vpn">编辑 VPN 设置</string>
-  <string name="remove_vpn_query">删除 VPN 配置文件 %s 吗？</string>
   <string name="error">错误</string>
   <string name="clear">清除</string>
   <string name="info">信息</string>
@@ -107,9 +103,11 @@
   <string name="chipher_dialog_message">输入 OpenVPN 密钥。留空以使用默认密码</string>
   <string name="settings_auth">认证/加密</string>
   <string name="file_explorer_tab">文件浏览器</string>
+  <string name="inline_file_tab">内联文件</string>
   <string name="import_file">导入</string>
   <string name="error_importing_file">导入文件出错</string>
   <string name="import_error_message">无法导入文件系统文件</string>
+  <string name="inline_file_data">[[内联文件数据]]</string>
   <string name="menu_import">从 ovpn 文件中导入配置文件</string>
   <string name="menu_import_short">导入</string>
   <string name="import_content_resolve_error">无法读取要导入的配置文件</string>
@@ -120,6 +118,7 @@
   <string name="importing_config">从 %1$s 中导入配置文件</string>
   <string name="import_done">读取配置文件完成</string>
   <string name="nobind_summary">不关联到本地地址和端口</string>
+  <string name="no_bind">无本地绑定</string>
   <string name="import_configuration_file">导入配置文件</string>
   <string name="faq_security_title">安全注意</string>
   <string name="import_vpn">导入</string>
@@ -129,6 +128,7 @@
   <string name="speed_waiting">等待状态消息</string>
   <string name="converted_profile">已导入配置文件</string>
   <string name="converted_profile_i">已导入配置文件 %d</string>
+  <string name="broken_images">图像已损坏</string>
   <string name="error_empty_username">用户名不能为空。</string>
   <string name="pkcs12_file_encryption_key">PKCS12 文件加密密钥</string>
   <string name="private_key_password">私钥密码</string>
@@ -153,15 +153,25 @@
   <string name="routing">路由设置</string>
   <string name="obscure">其他 OpenVPN 设置，一般不需要修改。</string>
   <string name="advanced">高级设置</string>
+  <string name="export_config_title">ICS Openvpn 配置</string>
   <string name="faq_howto_title">快速入门</string>
   <string name="setting_loadtun_summary">尝试在连接之前加载 tun.ko 内核模块。需要 root 权限。</string>
   <string name="setting_loadtun">载入 tun 模块</string>
   <string name="importpkcs12fromconfig">将 PKCS12 导入 Android 密钥库</string>
   <string name="getproxy_error">获取代理设置时出错：%s</string>
+  <string name="using_proxy">使用代理 %1$s %2$d</string>
+  <string name="use_system_proxy">使用系统代理</string>
   <string name="onbootrestart">重启时重新连接</string>
   <string name="ignore">忽略</string>
   <string name="restart">重启</string>
   <string name="configuration_changed">配置已更改</string>
+  <string name="faq_duplicate_notification_title">重复的通知</string>
+  <string name="no_vpn_profiles_defined">没有定义 VPN 配置文件</string>
+  <string name="add_new_vpn_hint">使用 &lt; img src =\"ic_menu_add\"/ &gt; 图标以添加新的 VPN</string>
   <string name="persisttun_summary">当 OpenVPN 重连时，也一直使用 VPN 连接。</string>
   <string name="persistent_tun_title">保持 tun 通道</string>
+  <string name="translation">翻译</string>
+  <string name="openvpn_log">OpenVPN 日志</string>
+  <string name="import_config">导入 OpenVPN 配置文件</string>
+  <string name="battery_consumption_title">电池消耗</string>
 </resources>

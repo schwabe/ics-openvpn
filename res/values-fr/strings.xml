@@ -15,7 +15,7 @@
   <string name="client_key_title">"Clé du certificat client"</string>
   <string name="client_pkcs12_title">"Fichier PKCS12"</string>
   <string name="ca_title">"Certificat CA"</string>
-  <string name="no_certificate">"Rien de sélectionné"</string>
+  <string name="no_certificate">"Vous devez sélectionner un certificat"</string>
   <string name="copyright_guicode">"Le code source et le tracker de bugs est disponible ici: http://code.google.com/p/ics-openvpn/ "</string>
   <string name="copyright_others">"Le programme utilise les composants suivants. Voir le code source pour plus de détails sur les licences."</string>
   <string name="about">"À propos"</string>
@@ -25,7 +25,6 @@
   <string name="vpn_type">"Type"</string>
   <string name="pkcs12pwquery">"Mot de passe PKCS12"</string>
   <string name="file_select">"Sélectionner..."</string>
-  <string name="file_nothing_selected">"Rien de sélectionné"</string>
   <string name="useTLSAuth">"Utiliser l\'authentification TLS"</string>
   <string name="tls_direction">"Direction de l\'authentification TLS"</string>
   <string name="ipv6_dialog_tile">"Entrez l\'adresse IPv6 / masque de réseau au format CIDR (ex.: 2000:jj::23/64)"</string>
@@ -39,7 +38,6 @@
   <string name="configure_the_vpn">"Configurer le VPN"</string>
   <string name="menu_add_profile">"Ajouter un profil"</string>
   <string name="add_profile_name_prompt">"Entrez un nom identifiant le nouveau profil"</string>
-  <string name="duplicate_profile_name">"Dupliquer un nom de profil"</string>
   <string name="profilename">"Nom de profil"</string>
   <string name="no_keystore_cert_selected">"Aucun certificat utilisateur sélectionné."</string>
   <string name="no_error_found">"Aucune erreur"</string>
@@ -91,7 +89,7 @@
   <string name="float_title">"Permettre des serveur flottants"</string>
   <string name="custom_options_title">"Options personnalisées"</string>
   <string name="edit_vpn">"Modifier les paramètres VPN"</string>
-  <string name="remove_vpn_query">"Effacer le profil VPN %s ?"</string>
+  <string name="remove_vpn_query">\"Effacer le profil VPN %s ?\"?</string>
   <string name="tun_error_helpful">"Sur certaines ROMs ICS les permissions de /dev/tun peuvent être incorrectes, ou le module Tun peut être manquant. Pour les ROMs CM9, essayez de corriger les options dans \"General Settings\""</string>
   <string name="tun_open_error">"L\'ouverture de l\'interface Tun a échoué."</string>
   <string name="error">"Erreur: "</string>
@@ -107,7 +105,7 @@
   <string name="ip_not_cidr">"Informations récupérées de l\'interface: %1$s et %2$s , en supposant que la seconde adresse est l\'adresse peer du réseau distant. Utilisation du masque de réseau /32 pour l\'IP locale. Mode donné par OpenVPN: \"%3$s\"."</string>
   <string name="route_not_cidr">"Ne peut pas donner un sens à %1$s et %2$s comme routage IP avec masque réseau de type CIDR, en utilisant /32 comme masque de réseau."</string>
   <string name="route_not_netip">"Règle de redirection corrigée: %1$s / %2$s en %3$s / %2$s"</string>
-  <string name="keychain_access">"Impossible d\'accéder aux certificats \"Android Keychain\". (Peut être causé par une mise à jour du firmware ou par une restauration d\'une sauvegarde des paramètres de l\'application). Veuillez modifier le profil VPN et sélectionnez de nouveau le certificat dans les réglages de base pour recréer l\'autorisation d\'accéder au certificat."</string>
+  <string name="keychain_access">\"Impossible d\'accéder aux certificats \"Android Keychain\". (Peut être causé par une mise à jour du firmware ou par une restauration d\'une sauvegarde des paramètres de l\'application). Veuillez modifier le profil VPN et sélectionnez de nouveau le certificat dans les réglages de base pour recréer l\'autorisation d\'accéder au certificat.\".</string>
   <string name="version_info">"%1$s %2$s"</string>
   <string name="send_logfile">"Envoyer le fichier de log"</string>
   <string name="send">"Envoyer"</string>
@@ -115,8 +113,8 @@
   <string name="copied_entry">"Entrée du log copiée"</string>
   <string name="tap_mode">"Mode TAP"</string>
   <string name="faq_tap_mode">"Le mode TAP est indisponible avec l\'API non root VPN. Par conséquent, cette application ne peut pas supporter TAP"</string>
-  <string name="tap_faq2">"Encore une fois? Vous plaisantez? Le mode TAP n\'est absolument pas pris en charge et l\'envoi de plus d\'e-mails demandant si il sera intégré ne va en rien aider."</string>
-  <string name="tap_faq3">"Encore une fois ? En fait il est possible que quelqu\'un puisse écrire un émulateur TAP basé sur TUN qui pourrait analyser des informations de type \"layer2\". Mais cet émulateur devrait aussi implémenter ARP et un client DHCP. Je ne suis actuellement pas au courant que quelqu\'un travail dessus. Contactez moi si vous voulez m\'aider là dessus"</string>
+  <string name="tap_faq2">\"Encore une fois? Vous plaisantez? Le mode TAP n\'est absolument pas pris en charge et l\'envoi de plus d\'e-mails demandant si il sera intégré ne va en rien aider.\".</string>
+  <string name="tap_faq3">\"Encore une fois ? En fait il est possible que quelqu\'un puisse écrire un émulateur TAP basé sur TUN qui pourrait analyser des informations de type \"layer2\". Mais cet émulateur devrait aussi implémenter ARP et un client DHCP. Je ne suis actuellement pas au courant que quelqu\'un travail dessus. Contactez moi si vous voulez m\'aider là dessus\".</string>
   <string name="faq">"FAQ"</string>
   <string name="faq_summary">"Foire aux questions et quelques conseils"</string>
   <string name="copying_log_entries">"Copie des entrées du log"</string>
@@ -143,7 +141,7 @@
   <string name="trying_to_read">"Tentative de lecture du fichier: %1$s"</string>
   <string name="import_could_not_open">"Impossible de trouver le fichier %1$s mentionné dans le fichier de configuration importé"</string>
   <string name="importing_config">"Importation du fichier de configuration depuis %1$s"</string>
-  <string name="import_warning_custom_options">"Votre configuration a quelques options de configuration qui pourraient être analysées. Ces options ont été ajoutées comme options de configuration personnalisées. La configuration personnalisée est affichée ci-dessous:"</string>
+  <string name="import_warning_custom_options">\"Votre configuration a des options de configuration qui ne pouvaient pas être analysées. Ces options ont été ajoutées comme options de configuration personnalisées. La configuration personnalisée est affichée ci-dessous:\":</string>
   <string name="import_done">"Fin de la lecture du fichier de configuration."</string>
   <string name="nobind_summary">"Ne pas se lier à l\'adresse locale et au port"</string>
   <string name="no_bind">"Aucune liaison locale"</string>
@@ -224,5 +222,17 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="correcttls">"Converti le format \"remote-tls\" du format OpenVPN 2.2 au 2.3"</string>
   <string name="faq_routing_title">"Redirections / Configuration de l\'interface"</string>
   <string name="faq_routing">"La configuration de l\'interface TUN et des règles de redirection de ports n\'est pas faite par les commandes traditionnelles du genre \"ifconfig\" ou \"route\" mais en utilisant l\'API VPNService. Il en résulte que la configuration de routage est différente des autres systèmes d\'exploitation. La configuration se compose uniquement de l\'adresse IP de l\'interface du tunnel, et les réseaux qui doivent être routés via cette interface. Aucune adresse peer partenaire ou passerelle n\'est nécessaire. Des règles de redirection spéciales pour atteindre le serveur VPN (par exemple ajouté lors de l\'utilisation redirect-gateway) ne sont pas nécessaires non plus. L\'application va donc ignorer ces paramètres lors de l\'importation d\'une configuration. L\'application permet à l\'API VPNService que la connexion au serveur n\'est pas acheminé par le tunnel VPN. Étant donné que seuls les réseaux spécifiant vouloir être routés via le tunnel sont pris en charge, les règles de redirection supplémentaires ne pointant pas vers le tunnel ne sont aussi pas prises en charge. (ex.: x.x.x.x y.y.y.y net_gateway). Le bouton d\'information dans le log affiche la configuration actuelle de la configuration du réseau VPNService."</string>
+  <string name="persisttun_summary">Ne pas couper la connexion VPN lors de la reconnexion d\'OpenVPN.</string>
   <string name="persistent_tun_title">Persistance de l\'interface TUN</string>
+  <string name="translation">"Traduction"</string>
+  <string name="openvpn_log">Log OpenVPN</string>
+  <string name="import_config">"Importer une configuration OpenVPN"</string>
+  <string name="battery_consumption_title">"Consommation de la batterie"</string>
+  <string name="baterry_consumption">"Lors de mes tests d\'OpenVPN, la source de principale de consommation de la batterie est l\'émission des paquets de servant à maintenir la connexion active (keepalive). La plupart des serveurs OpenVPN utilisent la directive \'keepalive 10 60\' ce qui signifie que des packets de keepalive sont envoyés toutes les 10 secondes du client au serveur et vice-versa, et que la connexion sera redemmarée après 60s en cas d\'inactivité. lt;gt;Bien que le trafic généré soit faible, ces paquets maintiennent le module radio actif et augmentent la consommation d\'énergie. lt;pgt; Malheureusement, la configuration du keepalive ne peut pas être changé sur le client, seul l\'administrateur du réseau OpenVPN peut le faire. En effet, utiliser une période de keepalive supérieure à 60 secondes pose problème pour les réseaux UDP et les passerelles NAT qui ferment alors la connexion (mes tests ont mis en évidence un timeout de 60s). L\'usage de TCP et d\'une plus longue periode de keepalive est possible mais présente les inconvénient lié aux connexion TCP encapsulées (cf., site en anglais: lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"gt;Why TCP Over TCP Is A Bad Idelt;/agt;)"</string>
+  <string name="faq_tethering">La fonctionnalité de Tethering Android (sur WiFi, USB ou Bluetooth) et l\'API VPNService (utilisé par ce programme) ne fonctionnent pas ensemble. Pour plus de détails, voir la &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\" &gt; page #34 &lt;/a&gt;</string>
+  <string name="vpn_tethering_title">VPN et Tethering</string>
+  <string name="connection_retries">"Tentatives de connexion"</string>
+  <string name="reconnection_settings">"Paramètres de reconnexion"</string>
+  <string name="connectretrymessage">"Nombre de secondes d\'attente entre chaque tentative de connexion."</string>
+  <string name="connectretrywait">"Temps, en secondes, entre deux connexions"</string>
 </resources>

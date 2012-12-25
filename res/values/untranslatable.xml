@@ -31,5 +31,11 @@
         <item>4</item>
         <item>5</item>
     </string-array>
-
-</resources>
+    <string-array name="crm_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>50</item>
+        <item>-1</item>
+    </string-array>
+    </resources>

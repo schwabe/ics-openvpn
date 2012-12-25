@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
     <item
         android:id="@+id/clearlog"
         android:icon="@drawable/ic_menu_trash_holo_light"
@@ -19,17 +18,18 @@
         android:showAsAction="ifRoom|withText"
         android:title="@string/show_connection_details"
         android:titleCondensed="@string/info"/>
+
     <item
         android:id="@+id/send"
         android:icon="@android:drawable/ic_menu_share"
         android:showAsAction="ifRoom|withText"
         android:title="@string/send_logfile"
         android:titleCondensed="@string/send"/>
-   <item
+    <item
         android:id="@+id/edit_vpn"
         android:alphabeticShortcut="e"
         android:icon="@android:drawable/ic_menu_edit"
         android:showAsAction="withText|ifRoom"
         android:title="@string/edit_vpn"/>
-    
+
 </menu>

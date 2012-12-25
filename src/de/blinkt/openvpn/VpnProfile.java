@@ -101,9 +101,15 @@ public class VpnProfile implements  Serializable{
 	public boolean mUseDefaultRoutev6=true;
 	public String mCustomRoutesv6="";
 	public String mKeyPassword="";
+	public boolean mPersistTun = false;
+	public String mConnectRetryMax="5";
+	public String mConnectRetry="5";
+	
 	static final String MINIVPN = "miniopenvpn";
 	
-	public boolean mPersistTun = false;
+	
+	
+
 
 
 	public void clearDefaults() {
@@ -191,11 +197,19 @@ public class VpnProfile implements  Serializable{
 
 		cfg+="verb " + mVerb + "\n";
 
-
-
-
-		// quit after 5 tries
-		cfg+="connect-retry-max 5\n";
+		if(mConnectRetryMax ==null) {
+			mConnectRetryMax="5";
+		}
+		
+		if(!mConnectRetryMax.equals("-1"))
+				cfg+="connect-retry-max " + mConnectRetryMax+ "\n";
+	
+		if(mConnectRetry==null)
+			mConnectRetry="5";
+		
+	
+		cfg+="connect-retry " + mConnectRetry + "\n";
+		
 		cfg+="resolv-retry 60\n";
 
 

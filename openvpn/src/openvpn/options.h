@@ -153,7 +153,6 @@ struct connection_list
 {
   int len;
   int current;
-  int n_cycles;
   struct connection_entry *array[CONNECTION_LIST_SIZE];
 };
 

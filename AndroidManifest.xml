@@ -17,8 +17,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.blinkt.openvpn"
-    android:versionCode="52"
-    android:versionName="0.5.25" >
+    android:versionCode="57"
+    android:versionName="0.5.29" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -28,9 +28,12 @@
 
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
-    <uses-sdk android:minSdkVersion="14" />
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="14" />
 
     <application
+        android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app" >
         <activity android:name=".AboutFragment" />
@@ -40,6 +43,7 @@
         <activity
             android:name=".LogWindow"
             android:label="@string/openvpn_log" />
+        <activity android:name=".SendDumpActivity" />
         <activity android:name=".FileSelect" />
         <activity android:name=".MainActivity" >
             <intent-filter>
@@ -114,6 +118,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity-alias>
+
+        <provider
+            android:name=".FileProvider"
+            android:authorities="de.blinkt.openvpn.FileProvider"
+            android:exported="true"
+            android:grantUriPermissions="true" />
     </application>
 
 </manifest>

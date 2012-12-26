@@ -224,4 +224,9 @@
   <string name="faq_routing">라우팅과 인터페이스 설정은 일반적인 ifconfig/route 명령어를 사용하지 않고 VPNService API를 사용합니다. 그 결과 타 OS들과 비교해 다른 라우팅 설정이 요구됩니다. 설정은 터널 인터페이스의 IP와 이 인터페이스로 라우팅이 되야되는 네트워크만으로 이루어 저야 합니다. 특히 피어 파트너 주소 또는 게이트웨이 주소는 요구되지 않습니다. VPN 서버에 도달하기 위한 특별한 라우트 (예를 들어 redirect-gateway를 사용할때 추가하는 경우) 역시 필요하지 않습니다. 따라서 응용프로그램 설정을 가져올 때 이러한 설정을 무시 합니다. 앱은 VPNService API를 사용하여 서버와의 연결이 VPN 터널을 통해 라우팅 되지 않도록 합니다. 터널을 통해 라우팅이 되야되는 네트워크만 지정할 수 있음으로 터널을 통하지 않는 추가 라우팅 기능도 지원하지 않습니다. (예: route x.x.x.x y.y.y.y net_gateway). 로그 위도우에 정보 보기 버튼은 VPNService 네트워크 설정의 현재 설정을 표시 합니다.</string>
   <string name="persisttun_summary">OpenVPN을 다시 연결 하는 경우 VPN 연결 없음으로 표기하지 마십시오.</string>
   <string name="persistent_tun_title">tun 유지</string>
+  <string name="translation">번역</string>
+  <string name="openvpn_log">OpenVPN 로그</string>
+  <string name="import_config">OpenVPN 설정 가져오기</string>
+  <string name="battery_consumption_title">배터리 소모</string>
+  <string name="baterry_consumption">내 개인적인 테스트에서 Openvpn의 높은 배터리 소비에 대한 주요 이유는 keepalive 패킷 때문이었습니다. 대부분의 OpenVPN 서버 설정에는 \'keepalive 10 60\' 와 같은 문구가 있는데 이는 클라이언트에서 서버로 서버에서 클라이언트로 keepalive 패킷을 10 초 마다 보냅니다. &lt;p&gt; 이러한 패킷은 작고 많은 트래픽을 사용 하지 않습니다만 이들은 모바일 라디오 네트워크를 계속 유지하게 만들게되고 따라서 에너지 소비를 증가 합니다. &lt;p&gt;이 keepalive 설정을 클라이언트에서 변경할 수 없습니다. OpenVPN의 시스템 관리자만 설정을 변경할 수 있습니다. &lt;p&gt; 불행히도 udp를 사용할때 keepalive값을 60초 이상으로 하면 짧은 만료기간 (제 테스트의 경우 60초) 후 연결을 종료 하는 NAT 게이트웨이들과 사용시 문제가 있습니다. TCP와 긴 keepalive 만료기간을 함께 사용할 수는 있지만 이런경우에는 TCP TCP 문제에 노출될 수 있습니다. (참조 &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;왜 TCP를 통한 TCP는 안좋은 방법인지&lt;/a&gt;)</string>
 </resources>

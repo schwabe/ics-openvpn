@@ -73,8 +73,8 @@ import android.widget.TextView;
  */
 public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
-	static final String EXTRA_KEY = "de.blinkt.openvpn.shortcutProfileUUID";
-	static final String EXTRA_NAME = "de.blinkt.openvpn.shortcutProfileName";
+	public static final String EXTRA_KEY = "de.blinkt.openvpn.shortcutProfileUUID";
+	public static final String EXTRA_NAME = "de.blinkt.openvpn.shortcutProfileName";
 	public static final String EXTRA_HIDELOG =  "de.blinkt.openvpn.showNoLogWindow";;
 
 	private static final int START_VPN_PROFILE= 70;

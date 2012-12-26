@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Vector;
 
@@ -143,23 +144,22 @@ public class ConfigConverter extends ListActivity {
 	private Intent installPKCS12() {
 		
 		if(!((CheckBox)findViewById(R.id.importpkcs12)).isChecked()) {
-			embedPKCS12File();
+			setAuthTypeToEmbeddedPKCS12();
 			return null;
+			
 		}
-		
-		File possiblepkcs12 = findFile(mResult.mPKCS12Filename);
-		if(possiblepkcs12!=null) {
+		String pkcs12datastr = mResult.mPKCS12Filename;
+		if(pkcs12datastr!=null && pkcs12datastr.startsWith(VpnProfile.INLINE_TAG)) {
 			Intent inkeyintent = KeyChain.createInstallIntent();
-			byte[] pkcs12data;
-			try {
-				pkcs12data = readBytesFromFile(possiblepkcs12);
-			} catch (IOException e) {
-				return null;
-			}
+			
+			pkcs12datastr= pkcs12datastr.substring(VpnProfile.INLINE_TAG.length());
+			
+			
+			byte[] pkcs12data = Base64.decode(pkcs12datastr, Base64.DEFAULT);
+
 
 			inkeyintent.putExtra(KeyChain.EXTRA_PKCS12,pkcs12data );
 
-			mAliasName = possiblepkcs12.getName().replace(".p12", "");
 			if(mAliasName.equals(""))
 				mAliasName=null;
 
@@ -174,9 +174,8 @@ public class ConfigConverter extends ListActivity {
 
 
 
-	private void embedPKCS12File() {
-		mResult.mPKCS12Filename = embedFile(mResult.mPKCS12Filename,true);
-		if(mResult.mPKCS12Filename.startsWith(VpnProfile.INLINE_TAG)) {
+	private void setAuthTypeToEmbeddedPKCS12() {
+		if(mResult.mPKCS12Filename!=null && mResult.mPKCS12Filename.startsWith(VpnProfile.INLINE_TAG)) {
 			if(mResult.mAuthenticationType==VpnProfile.TYPE_USERPASS_KEYSTORE)
 				mResult.mAuthenticationType=VpnProfile.TYPE_USERPASS_PKCS12;
 			
@@ -228,13 +227,24 @@ public class ConfigConverter extends ListActivity {
 
 		File possibleFile = findFile(filename);
 		if(possibleFile==null)
-			return null;
+			return filename;
 		else
 			return readFileContent(possibleFile,base64encode);
 
 	}
 
-	private File findFile(String filename)
+	private File findFile(String filename) {
+		File foundfile =findFileRaw(filename);
+		
+		if (foundfile==null && filename!=null && !filename.equals(""))
+			log(R.string.import_could_not_open,filename);
+
+		return foundfile;
+	}
+
+
+
+	private File findFileRaw(String filename)
 	{
 		if(filename == null || filename.equals(""))
 			return null;
@@ -274,7 +284,6 @@ public class ConfigConverter extends ListActivity {
 
 			}
 		}
-		log(R.string.import_could_not_open,filename);
 		return null;
 	}
 
@@ -324,10 +333,22 @@ public class ConfigConverter extends ListActivity {
 		// This where I would like to have a c++ style
 		// void embedFile(std::string & option)
 
+		if (mResult.mPKCS12Filename!=null) {
+			File pkcs12file = findFileRaw(mResult.mPKCS12Filename);
+			if(pkcs12file!=null) {
+				mAliasName = pkcs12file.getName().replace(".p12", "");
+			} else {
+				mAliasName = "Imported PKCS12";
+			}
+		}
+			
+		
 		mResult.mCaFilename = embedFile(mResult.mCaFilename);
 		mResult.mClientCertFilename = embedFile(mResult.mClientCertFilename);
 		mResult.mClientKeyFilename = embedFile(mResult.mClientKeyFilename);
 		mResult.mTLSAuthFilename = embedFile(mResult.mTLSAuthFilename);
+		mResult.mPKCS12Filename = embedFile(mResult.mPKCS12Filename,true);
+		
 
 		if(mResult.mUsername != null && !mResult.mUsername.equals("")){
 			String data =embedFile(mResult.mUsername);
@@ -387,7 +408,9 @@ public class ConfigConverter extends ListActivity {
 	private void doImport(InputStream is) {
 		ConfigParser cp = new ConfigParser();
 		try {
-			cp.parseConfig(is);
+			InputStreamReader isr = new InputStreamReader(is);
+
+			cp.parseConfig(isr);
 			VpnProfile vp = cp.convertProfile();
 			mResult = vp;
 			embedFiles();

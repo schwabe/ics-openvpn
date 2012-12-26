@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Vector;
 
 //! Openvpn Config FIle Parser, probably not 100% accurate but close enough
@@ -17,11 +19,10 @@ public class ConfigParser {
 
 
 	private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
-	public void parseConfig(InputStream inputStream) throws IOException, ConfigParseError {
+	public void parseConfig(Reader reader) throws IOException, ConfigParseError {
 
 
-		InputStreamReader fr = new InputStreamReader(inputStream);
-		BufferedReader br =new BufferedReader(fr);
+		BufferedReader br =new BufferedReader(reader);
 
 		@SuppressWarnings("unused")
 		int lineno=0;
@@ -85,7 +86,7 @@ public class ConfigParser {
 	private boolean space(char c) {
 		// I really hope nobody is using zero bytes inside his/her config file
 		// to sperate parameter but here we go:
-		return Character.isSpace(c) || c == '\0';
+		return Character.isWhitespace(c) || c == '\0';
 
 	}
 
@@ -229,10 +230,14 @@ public class ConfigParser {
 			"route-gateway",
 			"route-metric",
 			"route-method",
+			"status",
+			"script-security",
 			"show-net-up",
 			"suppress-timestamps",
 			"tmp-dir",
+			"tun-ipv6",
 			"topology",
+			"win-sys",
 	};
 	
 	
@@ -351,10 +356,12 @@ public class ConfigParser {
 		
 		Vector<String> proto = getOption("proto", 1,1);
 		if(proto!=null){
-			if(proto.get(1).equals("udp"))
+			if(proto.get(1).equals("udp") || proto.get(1).equals("udp6"))
 				np.mUseUdp=true;
 			else if (proto.get(1).equals("tcp-client") ||
-					proto.get(1).equals("tcp"))
+					proto.get(1).equals("tcp")  || 
+					proto.get(1).equals("tcp6") ||
+					proto.get(1).endsWith("tcp6-client"))
 				np.mUseUdp=false;
 			else 
 				throw new ConfigParseError("Unsupported option to --proto " + proto.get(1));
@@ -437,6 +444,21 @@ public class ConfigParser {
 		if(getOption("persist-tun", 0,0) != null)
 			np.mPersistTun=true;
 		
+		Vector<String> connectretry = getOption("connect-retry", 1, 1);
+		if(connectretry!=null)
+			np.mConnectRetry =connectretry.get(1);
+		
+		Vector<String> connectretrymax = getOption("connect-retry-max", 1, 1);
+		if(connectretrymax!=null)
+			np.mConnectRetryMax =connectretrymax.get(1);
+		
+		Vector<Vector<String>> remotetls = getAllOption("remote-cert-tls", 1, 1);
+		if(remotetls!=null)
+			if(remotetls.get(0).get(1).equals("server"))
+				np.mExpectTLSCert=true;
+			else
+				options.put("remotetls",remotetls);
+		
 		Vector<String> authuser = getOption("auth-user-pass",0,1);
 		if(authuser !=null){
 			
@@ -512,7 +534,7 @@ public class ConfigParser {
 		for(Vector<String> optionline:args)
 
 			if(optionline.size()< (minarg+1) || optionline.size() > maxarg+1) {
-				String err = String.format("Option %s has %d parameters, expected between %d and %d",
+				String err = String.format(Locale.getDefault(),"Option %s has %d parameters, expected between %d and %d",
 						option,optionline.size()-1,minarg,maxarg );
 				throw new ConfigParseError(err);
 			}

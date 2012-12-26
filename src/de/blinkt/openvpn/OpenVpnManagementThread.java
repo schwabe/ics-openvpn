@@ -39,7 +39,8 @@ public class OpenVpnManagementThread implements Runnable {
 	private long mLastOut=0;
 	private LocalServerSocket mServerSocket;
 	private boolean mReleaseHold=true;
-	private boolean mWaitingForRelease=false; 
+	private boolean mWaitingForRelease=false;
+	private long mLastHoldRelease=0; 
 
 	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
 
@@ -223,18 +224,24 @@ public class OpenVpnManagementThread implements Runnable {
 		}
 	}
 	private void releaseHoldCmd() {
+		if ((System.currentTimeMillis()- mLastHoldRelease) < 5000) {
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {}
+			
+		}
 		mWaitingForRelease=false;
-		mReleaseHold=true;
+		mLastHoldRelease  = System.currentTimeMillis();
 		managmentCommand("hold release\n");
 		managmentCommand("bytecount " + mBytecountinterval + "\n");
 		managmentCommand("state on\n");
 	}
 	
 	public void releaseHold() {
+		mReleaseHold=true;
 		if(mWaitingForRelease)
 			releaseHoldCmd();
-		else	
-			mReleaseHold=true;
+			
 	}
 
 	private void processProxyCMD(String argument) {
@@ -459,9 +466,9 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 
 	public void signalusr1() {
+		mReleaseHold=false;
 		if(!mWaitingForRelease)
 			managmentCommand("signal SIGUSR1\n");
-		mReleaseHold=false;
 	}
 
 	public void reconnect() {
@@ -473,11 +480,12 @@ public class OpenVpnManagementThread implements Runnable {
 
 		PrivateKey privkey = mProfile.getKeystoreKey();
 		Exception err =null;
-		// The Jelly Bean *evil* Hack
 
 		byte[] data = Base64.decode(b64data, Base64.DEFAULT);
 
-		if(Build.VERSION.SDK_INT>=16){
+		// The Jelly Bean *evil* Hack
+		// 4.2 implements the RSA/ECB/PKCS1PADDING in the OpenSSLprovider
+		if(Build.VERSION.SDK_INT==16){
 			processSignJellyBeans(privkey,data);
 			return;
 		}

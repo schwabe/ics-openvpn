@@ -10,7 +10,7 @@ fi
 echo "Fetch translation archive"
 fetch -q http://crowdin.net/download/project/ics-openvpn.zip
 
-langtoinclude="de cs ko et fr he ru"
+langtoinclude="ca cs de es et fr he id it ja ko no nl ru"
 
 for lang in $langtoinclude
 do
@@ -19,11 +19,14 @@ done
 
 # Chinese language require zh-CN and zh-TW
 
-for lang in "zh-CN"
+for lang in zh-CN zh-TW
 do
 	if [ $lang = "zh-CN" ] ; then
 		rlang="zh-rCN"
+    elif [ $lang = "zh-TW" ] ; then
+        rlang="zh-rTW"
 	fi
+
 	echo "Fetch archive for $lang"
 	fetch http://crowdin.net/download/project/ics-openvpn/$lang.zip
 	tar -xv -C res/values-$rlang/ --strip-components 3 -f $lang.zip

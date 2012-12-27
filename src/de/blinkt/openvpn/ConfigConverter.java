@@ -350,17 +350,9 @@ public class ConfigConverter extends ListActivity {
 		mResult.mPKCS12Filename = embedFile(mResult.mPKCS12Filename,true);
 		
 
-		if(mResult.mUsername != null && !mResult.mUsername.equals("")){
-			String data =embedFile(mResult.mUsername);
-			mResult.mUsername=null;
-			if(data!=null) {
-				data = data.replace(VpnProfile.INLINE_TAG, "");
-				String[] parts = data.split("\n");
-				if(parts.length >= 2) {
-					mResult.mUsername=parts[0];
-					mResult.mPassword=parts[1];
-				}
-			}
+		if(mResult.mUsername == null && mResult.mPassword != null ){
+			String data =embedFile(mResult.mPassword);
+			ConfigParser.useEmbbedUserAuth(mResult, data);			
 		}
 	}
 

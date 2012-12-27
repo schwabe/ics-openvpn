@@ -31,9 +31,13 @@ public class ProfileManager {
 
 	private static VpnProfile mLastConnectedVpn=null;
 	private HashMap<String,VpnProfile> profiles=new HashMap<String, VpnProfile>();
+	private static VpnProfile tmpprofile=null;
 
 
 	public static VpnProfile get(String key) {
+		if (tmpprofile!=null && tmpprofile.getUUIDString().equals(key))
+			return tmpprofile;
+			
 		if(instance==null)
 			return null;
 		return instance.profiles.get(key);
@@ -120,6 +124,10 @@ public class ProfileManager {
 	public void addProfile(VpnProfile profile) {
 		profiles.put(profile.getUUID().toString(),profile);
 		
+	}
+	
+	public static void setTemporaryProfile(VpnProfile tmp) {
+		ProfileManager.tmpprofile = tmp;
 	}
 	
 	

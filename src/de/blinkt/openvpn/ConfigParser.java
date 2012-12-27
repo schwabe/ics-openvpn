@@ -242,7 +242,7 @@ public class ConfigParser {
 	
 	
 	// This method is far too long
-	VpnProfile convertProfile() throws ConfigParseError{
+	public VpnProfile convertProfile() throws ConfigParseError{
 		boolean noauthtypeset=true;
 		VpnProfile np = new VpnProfile("converted Profile");
 		// Pull, client, tls-client
@@ -461,7 +461,6 @@ public class ConfigParser {
 		
 		Vector<String> authuser = getOption("auth-user-pass",0,1);
 		if(authuser !=null){
-			
 			if(noauthtypeset) {
 				np.mAuthenticationType=VpnProfile.TYPE_USERPASS;
 			} else if(np.mAuthenticationType==VpnProfile.TYPE_CERTIFICATES) {
@@ -470,7 +469,10 @@ public class ConfigParser {
 				np.mAuthenticationType=VpnProfile.TYPE_USERPASS_KEYSTORE;
 			}
 			if(authuser.size()>1) {
-				np.mUsername=authuser.get(1);
+				// Set option value to password get to get canche to embed later.
+				np.mUsername=null;
+				np.mPassword=authuser.get(1);
+				useEmbbedUserAuth(np,authuser.get(1));
 			}
 			
 		}
@@ -482,6 +484,16 @@ public class ConfigParser {
 		fixup(np);
 
 		return np;
+	}
+	
+	static public void useEmbbedUserAuth(VpnProfile np,String inlinedata)
+	{
+		String data = inlinedata.replace(VpnProfile.INLINE_TAG, "");
+		String[] parts = data.split("\n");
+		if(parts.length >= 2) {
+			np.mUsername=parts[0];
+			np.mPassword=parts[1];
+		}
 	}
 
 	private void checkIgnoreAndInvalidOptions(VpnProfile np) throws ConfigParseError {

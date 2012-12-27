@@ -218,55 +218,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 	}
 
-	private boolean writeMiniVPN() {
-		File mvpnout = new File(getCacheDir(),VpnProfile.MINIVPN);
-		if (mvpnout.exists() && mvpnout.canExecute())
-			return true;
-
-		IOException e2 = null;
-
-		try {
-			
-			
-			InputStream mvpn;
-			
-			try {
-				mvpn = getAssets().open("minivpn." + Build.CPU_ABI);
-			}
-			catch (IOException errabi) {
-				OpenVPN.logInfo("Failed getting assets for archicture " + Build.CPU_ABI);
-				e2=errabi;
-				mvpn = getAssets().open("minivpn." + Build.CPU_ABI2);
-				
-			}
-
-
-			FileOutputStream fout = new FileOutputStream(mvpnout);
-
-			byte buf[]= new byte[4096];
-
-			int lenread = mvpn.read(buf);
-			while(lenread> 0) {
-				fout.write(buf, 0, lenread);
-				lenread = mvpn.read(buf);
-			}
-			fout.close();
-
-			if(!mvpnout.setExecutable(true)) {
-				OpenVPN.logMessage(0, "","Failed to set minivpn executable");
-				return false;
-			}
-				
-			
-			return true;
-		} catch (IOException e) {
-			if(e2!=null)
-				OpenVPN.logMessage(0, "",e2.getLocalizedMessage());
-			OpenVPN.logMessage(0, "",e.getLocalizedMessage());
-			e.printStackTrace();
-			return false;
-		}
-	}
+	
 
 	private void askForPW(final int type) {
 
@@ -407,22 +359,11 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 		@Override
 		public void run() {
-			startOpenVpn();
-		}
-
-		void startOpenVpn() {
-			if(!writeMiniVPN()) {
-				OpenVPN.logMessage(0, "", "Error writing minivpn binary");
-				return;
-			}
-			OpenVPN.logMessage(0, "", getString(R.string.building_configration));
-
-			Intent startVPN = mSelectedProfile.prepareIntent(getBaseContext());
-			if(startVPN!=null)
-				startService(startVPN);
+			VPNLaunchHelper.startOpenVpn(mSelectedProfile, getBaseContext());
 			finish();
 
 		}
+
 	}
 
 

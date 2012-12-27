@@ -125,13 +125,13 @@ public class OpenVPN {
 	}
 
 
-	synchronized static void addStateListener(StateListener sl){
+	public synchronized static void addStateListener(StateListener sl){
 		stateListener.add(sl);
 		if(mLaststate!=null)
 			sl.updateState(mLaststate, mLaststatemsg);
 	}
 
-	synchronized static void removeSpeedListener(StateListener sl) {
+	public synchronized static void removeStateListener(StateListener sl) {
 		stateListener.remove(sl);
 	}
 

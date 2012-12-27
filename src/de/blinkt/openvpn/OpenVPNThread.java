@@ -40,7 +40,8 @@ public class OpenVPNThread implements Runnable {
 			startOpenVPNThreadArgs(mArgv);
 			Log.i(TAG, "Giving up");
 		} catch (Exception e) {
-			Log.e(TAG, "Got " + e.toString());
+			e.printStackTrace();
+			Log.e(TAG, "OpenVPNThread Got " + e.toString());
 		} finally {
 			int exitvalue = 0;
 			try {
@@ -105,12 +106,13 @@ public class OpenVPNThread implements Runnable {
 				
 			while(true) {
 				String logline = br.readLine();
+				if(logline==null) 
+					return;
+
 				if (logline.startsWith(DUMP_PATH_STRING))
 					mDumpPath = logline.substring(DUMP_PATH_STRING.length());
 					
-				if(logline==null) {
-					return;
-				}
+
 				OpenVPN.logMessage(0, "P:", logline);
 			}
 			

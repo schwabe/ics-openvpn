@@ -563,4 +563,11 @@ public class OpenVpnManagementThread implements Runnable {
 		}
 
 	}
+	public static boolean protectFD(ParcelFileDescriptor fd) {
+		boolean hasBeenProtected=false;
+		for (OpenVpnManagementThread mt : active) {
+			hasBeenProtected = hasBeenProtected || mt.mOpenVPNService.protect(fd.getFd());
+		}
+		return hasBeenProtected;
+	}
 }

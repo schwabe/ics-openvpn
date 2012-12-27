@@ -29,8 +29,15 @@
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="14" />
+        android:minSdkVersion="15"
+        android:targetSdkVersion="15" />
+
+    <permission
+        android:name="de.blinkt.openvpn.REMOTE_API"
+        android:description="@string/permission_description"
+        android:label="Control OpenVPN"
+        android:permissionGroup="android.permission-group.NETWORK"
+        android:protectionLevel="dangerous" />
 
     <application
         android:allowBackup="true"
@@ -59,6 +66,12 @@
             android:permission="android.permission.BIND_VPN_SERVICE" >
             <intent-filter>
                 <action android:name="android.net.VpnService" />
+            </intent-filter>
+        </service>
+        <service android:name=".api.ExternalOpenVPNService" 
+            android:permission="de.blinkt.openvpn.REMOTE_API">
+            <intent-filter>
+                <action android:name="de.blinkt.openvpn.api.IOpenVPNAPIService" />
             </intent-filter>
         </service>
 

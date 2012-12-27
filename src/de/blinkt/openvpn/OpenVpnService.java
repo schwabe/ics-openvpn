@@ -120,7 +120,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 	private void jbNotificationExtras(boolean lowpriority,
 			android.app.Notification.Builder nbuilder) {
 		try {
-			if( lowpriority) {
+			if(lowpriority) {
 				Method setpriority = nbuilder.getClass().getMethod("setPriority", int.class);
 				// PRIORITY_MIN == -2
 				setpriority.invoke(nbuilder, -2 );
@@ -195,8 +195,8 @@ public class OpenVpnService extends VpnService implements StateListener {
 		String prefix = getPackageName();
 		String[] argv = intent.getStringArrayExtra(prefix + ".ARGV");
 		String nativelibdir = intent.getStringExtra(prefix + ".nativelib");
-
 		String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
+
 		mProfile = ProfileManager.get(profileUUID);
 
 		showNotification("Starting VPN " + mProfile.mName,"Starting VPN " + mProfile.mName, false,0);
@@ -317,12 +317,12 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 		String bconfig[] = new String[6];
 
-		bconfig[0]= getString(R.string.last_openvpn_tun_config);
-		bconfig[1] = String.format(getString(R.string.local_ip_info,mLocalIP.mIp,mLocalIP.len,mLocalIPv6, mMtu));
-		bconfig[2] = String.format(getString(R.string.dns_server_info, joinString(mDnslist)));
-		bconfig[3] = String.format(getString(R.string.dns_domain_info, mDomain));
-		bconfig[4] = String.format(getString(R.string.routes_info, joinString(mRoutes)));
-		bconfig[5] = String.format(getString(R.string.routes_info6, joinString(mRoutesv6)));
+		bconfig[0]=  getString(R.string.last_openvpn_tun_config);
+		bconfig[1] = getString(R.string.local_ip_info,mLocalIP.mIp,mLocalIP.len,mLocalIPv6, mMtu);
+		bconfig[2] = getString(R.string.dns_server_info, joinString(mDnslist));
+		bconfig[3] = getString(R.string.dns_domain_info, mDomain);
+		bconfig[4] = getString(R.string.routes_info, joinString(mRoutes));
+		bconfig[5] = getString(R.string.routes_info6, joinString(mRoutesv6));
 
 		String session = mProfile.mName;
 		if(mLocalIP!=null)
@@ -393,11 +393,11 @@ public class OpenVpnService extends VpnService implements StateListener {
 	public void addRoute(String dest, String mask) {
 		CIDRIP route = new CIDRIP(dest, mask);		
 		if(route.len == 32 && !mask.equals("255.255.255.255")) {
-			OpenVPN.logMessage(0, "", String.format(getString(R.string.route_not_cidr,dest,mask)));
+			OpenVPN.logMessage(0, "", getString(R.string.route_not_cidr,dest,mask));
 		}
 
 		if(route.normalise())
-			OpenVPN.logMessage(0, "", String.format(getString(R.string.route_not_netip,dest,route.len,route.mIp)));
+			OpenVPN.logMessage(0, "", getString(R.string.route_not_netip,dest,route.len,route.mIp));
 
 		mRoutes.add(route);
 	}
@@ -420,7 +420,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 				else
 					mLocalIP.len=31;
 			} else {
-				OpenVPN.logMessage(0, "", String.format(getString(R.string.ip_not_cidr, local,netmask,mode)));
+				OpenVPN.logMessage(0, "", getString(R.string.ip_not_cidr, local,netmask,mode));
 			}
 		}
 	}

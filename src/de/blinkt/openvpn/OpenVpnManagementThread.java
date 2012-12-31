@@ -411,13 +411,20 @@ public class OpenVpnManagementThread implements Runnable {
 
 	private void processPWCommand(String argument) {
 		//argument has the form 	Need 'Private Key' password
-
+		// or  ">PASSWORD:Verification Failed: '%s' ['%s']"
 		String needed;
+		
+		
+		
 		try{
 
 			int p1 = argument.indexOf('\'');
 			int p2 = argument.indexOf('\'',p1+1);
 			needed = argument.substring(p1+1, p2);
+			if (argument.startsWith("Verification Failed")) {
+				proccessPWFailed(needed, argument.substring(p2+1));
+				return;
+			}
 		} catch (StringIndexOutOfBoundsException sioob) {
 			OpenVPN.logMessage(0, "", "Could not parse management Password command: "  + argument);
 			return;
@@ -445,6 +452,9 @@ public class OpenVpnManagementThread implements Runnable {
 
 
 
+	private void proccessPWFailed(String needed, String args) {
+		OpenVPN.updateStateString("AUTH_FAILED", needed + args);
+	}
 	private void logStatusMessage(String command) {
 		OpenVPN.logMessage(0,"MGMT:", command);
 	}

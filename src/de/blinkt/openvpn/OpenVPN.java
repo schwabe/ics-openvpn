@@ -26,7 +26,7 @@ public class OpenVPN {
 		logInformation();
 	}
 
-	static class LogItem {
+	public static class LogItem {
 		public static final int ERROR = 1;
 		public static final int INFO = 2;
 		public static final int VERBOSE = 3;
@@ -116,11 +116,11 @@ public class OpenVPN {
 		logInfo(R.string.mobile_info,Build.MODEL, Build.BOARD,Build.BRAND,Build.VERSION.SDK_INT);
 	}
 
-	synchronized static void addLogListener(LogListener ll){
+	public synchronized static void addLogListener(LogListener ll){
 		logListener.add(ll);
 	}
 
-	synchronized static void removeLogListener(LogListener ll) {
+	public synchronized static void removeLogListener(LogListener ll) {
 		logListener.remove(ll);
 	}
 

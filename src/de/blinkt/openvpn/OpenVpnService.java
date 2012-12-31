@@ -94,7 +94,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 		int icon = R.drawable.ic_stat_vpn;
 		android.app.Notification.Builder nbuilder = new Notification.Builder(this);
 
-		nbuilder.setContentTitle("OpenVPN - "  + mProfile.mName);
+		nbuilder.setContentTitle(getString(R.string.notifcation_title,mProfile.mName));
 		nbuilder.setContentText(msg);
 		nbuilder.setOnlyAlertOnce(true);
 		nbuilder.setOngoing(true);
@@ -124,9 +124,9 @@ public class OpenVpnService extends VpnService implements StateListener {
 				Method setpriority = nbuilder.getClass().getMethod("setPriority", int.class);
 				// PRIORITY_MIN == -2
 				setpriority.invoke(nbuilder, -2 );
-				
-/*				PendingIntent cancelconnet=null;
-				
+
+				/*				PendingIntent cancelconnet=null;
+
 				nbuilder.addAction(android.R.drawable.ic_menu_close_clear_cancel, 
 						getString(R.string.cancel_connection),cancelconnet); */
 			}
@@ -325,10 +325,11 @@ public class OpenVpnService extends VpnService implements StateListener {
 		bconfig[5] = getString(R.string.routes_info6, joinString(mRoutesv6));
 
 		String session = mProfile.mName;
-		if(mLocalIP!=null)
-			session+= " - " + mLocalIP;
-		if(mLocalIPv6!=null)
-			session+= " - " + mLocalIPv6;
+		if(mLocalIP!=null && mLocalIPv6!=null)
+			session = getString(R.string.session_ipv6string,session, mLocalIP, mLocalIPv6);
+		else if (mLocalIP !=null)
+			session= getString(R.string.session_ipv4string, session, mLocalIP);
+
 		builder.setSession(session);
 
 

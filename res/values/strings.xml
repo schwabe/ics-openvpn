@@ -226,7 +226,7 @@
     <string name="openvpn_log">OpenVPN Log</string>
     <string name="import_config">Import OpenVPN configuration</string>
     <string name="battery_consumption_title">Battery consumption</string>
-    <string name="baterry_consumption">In my personal tests the main reason for high battery consumption of OpenVPN are the keepalive packets. Most OpenVPN servers have a configuration directive like \'keepalive 10 60\' which translates to a keepalive packet from client to server and server to client every ten seconds. &lt;p&gt; While these packets are small and do not use much traffic, they keep the mobile radio network busy and increase the energy consumption. &lt;p&gt; This keepalive setting cannot be changed on the client. Only the system administrator of the OpenVPN can change the setting. &lt;p&gt; Unfortunatly using a keepalive larger than 60 seconds with udp has problems with some NAT gateways which terminate the state for a connnection after a short timeout (60s in my tests). Using TCP with long keepalive timeout works but has the TCP over TCP problem. (See &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Ide&lt;/a&gt;)</string>
+    <string name="baterry_consumption">In my personal tests the main reason for high battery consumption of OpenVPN are the keepalive packets. Most OpenVPN servers have a configuration directive like \'keepalive 10 60\' which translates to a keepalive packet from client to server and server to client every ten seconds. &lt;p&gt; While these packets are small and do not use much traffic, they keep the mobile radio network busy and increase the energy consumption. &lt;p&gt; This keepalive setting cannot be changed on the client. Only the system administrator of the OpenVPN can change the setting. &lt;p&gt; Unfortunately using a keepalive larger than 60 seconds with udp has problems with some NAT gateways which terminate the state for a connnection after a short timeout (60s in my tests). Using TCP with long keepalive timeout works but has the TCP over TCP problem. (See &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Ide&lt;/a&gt;)</string>
     <string name="faq_tethering">The Android Tethering feature (over WiFi, USB or Bluetooth) and the VPNService API (used by this program) do not work together. For more details see the &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\">issue #34&lt;/a></string>
     <string name="vpn_tethering_title">VPN and Tethering</string>
     <string name="connection_retries">Connection retries</string>
@@ -236,5 +236,22 @@
     <string name="minidump_generated">OpenVPN crashed unexpectedly. Please consider using the send Minidump option in the main menu</string>
     <string name="send_minidump">Send Minidump to developer</string>
     <string name="send_minidump_summary">Send debugging information about last crash to developer</string>
+    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="session_ipv4string">%1$s - %2$s</string>
+    <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
+    <string name="state_connecting">Connecting</string>
+    <string name="state_wait">Waiting for server reply</string>
+    <string name="state_auth">Authenticating</string>
+    <string name="state_get_config">Getting client configuration</string>
+    <string name="state_assign_ip">Assigning IP addresses</string>
+    <string name="state_add_routes">Adding routes</string>
+    <string name="state_connected">Connected</string>
+    <string name="state_reconnecting">Reconnecting</string>
+    <string name="state_exiting">Exiting</string>
+    <string name="state_noprocess">Not running</string>
+    <string name="state_resolve">Resolving host names</string>
+    <string name="state_tcp_connect">Connecting (TCP)</string>
+    <string name="state_auth_failed">Authentication failed</string>
+    <string name="state_nonetwork">Waiting for usable network</string>
 
 </resources>

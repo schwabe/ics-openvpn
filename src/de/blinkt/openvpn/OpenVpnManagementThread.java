@@ -220,7 +220,7 @@ public class OpenVpnManagementThread implements Runnable {
 			releaseHoldCmd();
 		} else { 
 			mWaitingForRelease=true;
-			OpenVPN.updateStateString("NONETWORK", "Waiting for usable network");
+			OpenVPN.updateStateString("NONETWORK", "",R.string.state_nonetwork);
 		}
 	}
 	private void releaseHoldCmd() {
@@ -453,7 +453,7 @@ public class OpenVpnManagementThread implements Runnable {
 
 
 	private void proccessPWFailed(String needed, String args) {
-		OpenVPN.updateStateString("AUTH_FAILED", needed + args);
+		OpenVPN.updateStateString("AUTH_FAILED", needed + args,R.string.state_auth_failed);
 	}
 	private void logStatusMessage(String command) {
 		OpenVPN.logMessage(0,"MGMT:", command);

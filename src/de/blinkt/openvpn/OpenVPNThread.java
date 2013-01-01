@@ -54,7 +54,7 @@ public class OpenVPNThread implements Runnable {
 			if( exitvalue != 0)
 				OpenVPN.logError("Process exited with exit value " + exitvalue);
 			
-			OpenVPN.updateStateString("NOPROCESS","No process running.");
+			OpenVPN.updateStateString("NOPROCESS","No process running.", R.string.state_noprocess);
 			if(mDumpPath!=null) {
 				try {
 					BufferedWriter logout = new BufferedWriter(new FileWriter(mDumpPath + ".log"));

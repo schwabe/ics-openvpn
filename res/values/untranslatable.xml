@@ -17,7 +17,9 @@
     <string name="file_dialog" translatable="false">File Dialog</string>
     <string name="lzo" translatable="false">LZO</string>
     <string name="openssl" translatable="false">OpenSSL</string>
-
+    <string name="unknown_state" translatable="false">Unknown state</string>
+    
+    
     <string-array name="tls_directions_values" translatable="false">
         <item>0</item>
         <item>1</item>

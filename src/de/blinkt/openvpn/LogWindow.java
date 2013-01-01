@@ -327,12 +327,12 @@ public class LogWindow extends ListActivity implements StateListener  {
 	}
 
 	@Override
-	public void updateState(final String status,final String logmessage) {
+	public void updateState(final String status,final String logmessage, final int resid) {
 		runOnUiThread(new Runnable() {
 
 			@Override
 			public void run() {
-				String prefix=status+ ":";
+				String prefix=getString(resid) + ":";
 				if (status.equals("BYTECOUNT") || status.equals("NOPROCESS") )
 					prefix="";
 				mSpeedView.setText(prefix + logmessage);

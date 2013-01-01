@@ -1,11 +1,8 @@
 package de.blinkt.openvpn;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.preference.PreferenceActivity;
 
 public class MainActivity extends PreferenceActivity {

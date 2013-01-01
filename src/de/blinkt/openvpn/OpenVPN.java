@@ -19,6 +19,8 @@ public class OpenVPN {
 
 	private static String mLaststate;
 
+	private static int mLastStateresid=R.string.state_noprocess;
+
 	static {
 		logbuffer  = new LinkedList<LogItem>();
 		logListener = new Vector<OpenVPN.LogListener>();
@@ -66,7 +68,7 @@ public class OpenVPN {
 		}
 
 
-		String getString(Context c) {
+		public String getString(Context c) {
 			if(mMessage !=null) {
 				return mMessage;
 			} else {
@@ -97,7 +99,7 @@ public class OpenVPN {
 	}
 
 	public interface StateListener {
-		void updateState(String state, String logmessage);
+		void updateState(String state, String logmessage, int localizedResId);
 	}
 
 	synchronized static void logMessage(int level,String prefix, String message)
@@ -128,7 +130,35 @@ public class OpenVPN {
 	public synchronized static void addStateListener(StateListener sl){
 		stateListener.add(sl);
 		if(mLaststate!=null)
-			sl.updateState(mLaststate, mLaststatemsg);
+			sl.updateState(mLaststate, mLaststatemsg, mLastStateresid);
+	}	
+	
+	private static int getLocalizedState(String state){
+		if (state.equals("CONNECTING")) 
+			return R.string.state_connecting;
+		else if (state.equals("WAIT"))
+			return R.string.state_wait;
+		else if (state.equals("AUTH"))
+			return R.string.state_auth;
+		else if (state.equals("GET_CONFIG"))
+			return R.string.state_get_config;
+		else if (state.equals("ASSIGN_IP"))
+			return R.string.state_assign_ip;
+		else if (state.equals("ADD_ROUTES"))
+			return R.string.state_add_routes;
+		else if (state.equals("CONNECTED"))
+			return R.string.state_connected;
+		else if (state.equals("RECONNECTING"))
+			return R.string.state_reconnecting;
+		else if (state.equals("EXITING"))
+			return R.string.state_exiting;
+		else if (state.equals("RESOLVE"))
+			return R.string.state_resolve;
+		else if (state.equals("TCP_CONNECT"))
+			return R.string.state_tcp_connect;
+		else
+			return R.string.unknown_state;
+
 	}
 
 	public synchronized static void removeStateListener(StateListener sl) {
@@ -157,12 +187,18 @@ public class OpenVPN {
 
 	}
 
-	public synchronized static void updateStateString(String state, String msg) {
+	public static void updateStateString (String state, String msg) {
+		int rid = getLocalizedState(state);
+		updateStateString(state, msg,rid);
+	}
+
+	public synchronized static void updateStateString(String state, String msg, int resid) {
 		mLaststate= state;
 		mLaststatemsg = msg;
-
+		mLastStateresid = resid;
+		
 		for (StateListener sl : stateListener) {
-			sl.updateState(state,msg);
+			sl.updateState(state,msg,resid);
 		}
 	}
 
@@ -195,6 +231,5 @@ public class OpenVPN {
 	public static void logError(int ressourceId, Object... args) {
 		newlogItem(new LogItem(LogItem.ERROR, ressourceId,args));
 	}
-
 
 }

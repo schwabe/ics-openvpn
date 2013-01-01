@@ -19,7 +19,6 @@ package de.blinkt.openvpn;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Locale;
 import java.util.Vector;
 
 import android.app.Notification;
@@ -431,7 +430,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 	}
 
 	@Override
-	public void updateState(String state,String logmessage) {
+	public void updateState(String state,String logmessage, int resid) {
 		// If the process is not running, ignore any state, 
 		// Notification should be invisible in this state
 		if(mProcessThread==null)
@@ -454,8 +453,8 @@ public class OpenVpnService extends VpnService implements StateListener {
 			// Other notifications are shown,
 			// This also mean we are no longer connected, ignore bytecount messages until next
 			// CONNECTED
-			String ticker = state.toLowerCase(Locale.getDefault());
-			showNotification(state +" " + logmessage,ticker,false,0);
+			String ticker = getString(resid);
+			showNotification(getString(resid) +" " + logmessage,ticker,false,0);
 
 		}
 	}

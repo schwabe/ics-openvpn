@@ -148,6 +148,9 @@ openvpn_getaddrinfo (unsigned int flags,
   ASSERT (hostname || servname);
   ASSERT (!(flags & GETADDR_HOST_ORDER));
 
+  if (hostname && (flags & GETADDR_RANDOMIZE))
+    hostname = hostname_randomize(hostname, &gc);
+
   if(hostname)
     print_hostname = hostname;
   else
@@ -157,10 +160,6 @@ openvpn_getaddrinfo (unsigned int flags,
     print_servname = servname;
   else
     print_servname = "";
-
-
-  if (flags & GETADDR_RANDOMIZE)
-    hostname = hostname_randomize(hostname, &gc);
 
   if (flags & GETADDR_MSG_VIRT_OUT)
     msglevel |= M_MSG_VIRT_OUT;

@@ -5,7 +5,7 @@
   <string name="address">서버 주소:</string>
   <string name="port">서버 포트:</string>
   <string name="location">위치</string>
-  <string name="cant_read_folder">폴더를 읽을 수 없습니다!</string>
+  <string name="cant_read_folder">폴더를 읽을 수 없습니다</string>
   <string name="select">선택</string>
   <string name="cancel">취소</string>
   <string name="no_data">데이터 없음</string>
@@ -15,9 +15,9 @@
   <string name="client_key_title">클라이언트 인증서 키</string>
   <string name="client_pkcs12_title">PKCS12 파일</string>
   <string name="ca_title">CA 인증서</string>
-  <string name="no_certificate">선택 안됨</string>
-  <string name="copyright_guicode">소스 코드와 문제 추적기는 http://code.google.com/p/ics-openvpn/에서 사용할 수 있습니다.</string>
-  <string name="copyright_others">프로그램은 다음 구성 요소를 사용합니다. 라이선스에 대 한 자세한 내용은 소스를 참조 하십시오.</string>
+  <string name="no_certificate">인증서를 선택 해야 합니다</string>
+  <string name="copyright_guicode">소스 코드와 문제 추적기는 http://code.google.com/p/ics-openvpn/에서 사용할 수 있습니다</string>
+  <string name="copyright_others">프로그램은 다음 구성 요소를 사용합니다. 라이선스에 대 한 자세한 내용은 소스를 참조 하십시오</string>
   <string name="about">소개</string>
   <string name="about_summary">안드로이드용 OpenVPN 소개</string>
   <string name="vpn_list_summary">설정된 VPN의 목록</string>
@@ -25,28 +25,28 @@
   <string name="vpn_type">유형</string>
   <string name="pkcs12pwquery">PKCS12 암호</string>
   <string name="file_select">선택...</string>
-  <string name="file_nothing_selected">선택 안됨</string>
+  <string name="file_nothing_selected">파일을 선택 해야 합니다</string>
   <string name="useTLSAuth">TLS 인증 사용</string>
   <string name="tls_direction">TLS 방향</string>
   <string name="ipv6_dialog_tile">CIDR 형식의 IPv6 주소/넷마스크를 입력 (예: 2000:dd::23/64)</string>
   <string name="ipv4_dialog_title">CIDR 형식의 IPv4 주소/넷마스크를 입력 (예: 1.2.3.4/24)</string>
   <string name="ipv4_address">IPv4 주소</string>
   <string name="ipv6_address">IPv6 주소</string>
-  <string name="custom_option_warning">사용자 정의 OpenVPN 옵션을 입력하세요. 매우 조심하세요. 또한 많은 tun과 연관된 OpenVPN 설정은 VPN 설정의 설계로 인하여 지원 되지 않습니다. 중요한 옵션이 누락됐다고 생각되면 저자에게 연락하십시오.</string>
+  <string name="custom_option_warning">사용자 정의 OpenVPN 옵션을 입력하세요. 매우 조심하세요. 또한 많은 tun과 연관된 OpenVPN 설정은 VPN 설정의 설계로 인하여 지원 되지 않습니다. 중요한 옵션이 누락됐다고 생각되면 저자에게 연락하십시오</string>
   <string name="auth_username">계정</string>
   <string name="auth_pwquery">암호</string>
-  <string name="static_keys_info">고정설정에는 TLS인증 키가 고정키로 사용됩니다.</string>
+  <string name="static_keys_info">고정설정에는 TLS인증 키가 고정키로 사용됩니다</string>
   <string name="configure_the_vpn">VPN 설정</string>
   <string name="menu_add_profile">프로파일 추가</string>
   <string name="add_profile_name_prompt">새 프로 파일을 식별 하는 이름을 입력 하십시오</string>
-  <string name="duplicate_profile_name">프로 파일 이름이 중복 되었습니다.</string>
+  <string name="duplicate_profile_name">고유 프로필 이름을 입력 하십시오</string>
   <string name="profilename">프로 파일 이름</string>
-  <string name="no_keystore_cert_selected">사용자 인증서가 선택되지 않았습니다.</string>
+  <string name="no_keystore_cert_selected">사용자 인증서를 선택 해야 합니다</string>
   <string name="no_error_found">오류 없음</string>
   <string name="config_error_found">설정 오류</string>
-  <string name="ipv4_format_error">IPv4 주소를 구문 분석할 수 없습니다.</string>
-  <string name="custom_route_format_error">사용자 지정 라우트를 구문 분석할 수 없습니다.</string>
-  <string name="pw_query_hint">필요시 쿼리를 하려면 비워 두세요.</string>
+  <string name="ipv4_format_error">IPv4 주소 구문 분석 오류</string>
+  <string name="custom_route_format_error">사용자 지정 경로 구문 분석 오류</string>
+  <string name="pw_query_hint">(비워두면 요청시 쿼리됨)</string>
   <string name="vpn_shortcut">OpenVPN 바로 가기</string>
   <string name="vpn_launch_title">VPN에 연결 하기</string>
   <string name="shortcut_profile_notfound">바로 가기에 지정 된 프로파일을 찾을 수 없습니다.</string>
@@ -90,9 +90,9 @@
   <string name="float_title">플로팅 서버 허용</string>
   <string name="custom_options_title">사용자 지정 옵션</string>
   <string name="edit_vpn">VPN 설정 편집</string>
-  <string name="remove_vpn_query">VPN 프로 파일 %s 제거?</string>
+  <string name="remove_vpn_query">VPN 프로 파일 \'%s\' 제거?</string>
   <string name="tun_error_helpful">일부 사용자 지정 ICS 이미지에서는 /dev/tun에 대한 권한이 잘못 되어 있거나 tun 모듈 자체가 누락 될 수 있습니다. CM9 이미지는 일반 설정에 있는 소유권 고치기 옵션을 사용해 보십시오.</string>
-  <string name="tun_open_error">Tun 인터페이스 열기를 실패 했습니다.</string>
+  <string name="tun_open_error">Tun 인터페이스를 열지 못했습니다</string>
   <string name="error">"오류:"</string>
   <string name="clear">지우기</string>
   <string name="info">정보</string>
@@ -106,7 +106,7 @@
   <string name="ip_not_cidr">인터페이스 정보 %1$s와 %2$s에 있어, 두 번째 주소를 원격 피어 주소로 가정 하겠습니다. 로컬 IP의 넷마스크로는 /32를 사용하겠습니다. OpenVPN에 의해 주어진 모드는 \"%3$s\" 입니다.</string>
   <string name="route_not_cidr">CIDR 넷마스크가 있는 IP 라우트 %1$s 와 %2$s 에 있어서 처리가 불가능합니다. /32를 넷마스크로 사용하겠습니다.</string>
   <string name="route_not_netip">%1$s/%2$s 에서 %3$s/%2$s로 라우트 수정</string>
-  <string name="keychain_access">안드로이드 키체인 인증서에 접근할 수 없습니다. (펌웨어 업그래이드 또는 백업된 앱/앱 설정을 복구하면서 발생할 수 있습니다). 인증서에 액세스할 수 있는 권한을 다시 생성하기 위해 VPN을 편집 하고 기본 설정 아래에서 인증서를 다시 선택 하십시오.</string>
+  <string name="keychain_access">안드로이드 키체인 인증서에 접근할 수 없습니다. 펌웨어 업그래이드 또는 백업된 앱/앱 설정을 복구하면서 발생할 수 있습니다. 인증서에 액세스할 수 있는 권한을 다시 생성하기 위해 VPN을 편집 하고 기본 설정 아래에서 인증서를 다시 선택 하십시오.</string>
   <string name="version_info">%1$s %2$s</string>
   <string name="send_logfile">로그 파일 보내기</string>
   <string name="send">보내기</string>
@@ -122,7 +122,7 @@
   <string name="faq_copying">단일 로그 항목을 복사 하려면 로그 항목을 누르고 계세요. 전체 로그를 복사/전송 하려면  로그 보내기 옵션을 사용하십시오. GUI에 표시 되지 않는 경우 하드웨어 메뉴 버튼를 사용하세요.</string>
   <string name="faq_shortcut">시작으로 바로 가기</string>
   <string name="faq_howto_shortcut">바탕 화면에 OpenVPN 시작 바로 가기를 배치할 수 있습니다. 당신의 homescreen 프로그램에 따라 바로 가기 또는 위젯 추가를 해야 합니다.</string>
-  <string name="no_vpn_support_image">당신의 이미지는 VPNService API를 지원 하지 않습니다 죄송 합니다:(</string>
+  <string name="no_vpn_support_image">당신의 이미지는 VPNService API를 지원 하지 않습니다, 죄송 합니다:(</string>
   <string name="encryption">암호화</string>
   <string name="cipher_dialog_title">입력 암호화 방법</string>
   <string name="chipher_dialog_message">Openvpn에 대한 암호화 키를 입력 합니다. 공란으로 두시면 기본 cipher를 사용하게 됩니다.</string>
@@ -139,7 +139,6 @@
   <string name="import_content_resolve_error">가져올 프로 파일을 읽을 수 없습니다.</string>
   <string name="error_reading_config_file">설정 파일 읽기 오류</string>
   <string name="add_profile">프로파일 추가</string>
-  <string name="trying_to_read">파일: %1$s 읽기 시도중</string>
   <string name="import_could_not_open">가져온된 설정 파일에 언급 된 파일 %1$s를 찾을 수 없습니다.</string>
   <string name="importing_config">원본 %1$s에서 설정 파일 가져오기</string>
   <string name="import_warning_custom_options">당신의 설정중에는 몇개의 구문 분석될 수 있는 설정 옵션이 있습니다. 이러한 옵션은 사용자 지정 설정 옵션으로 추가 되었습니다. 사용자 지정 설정은 아래와 같이 표시 됩니다:</string>
@@ -172,7 +171,7 @@
   <string name="generated_config_summary">생성된 OpenVPN의 설정 파일 보기</string>
   <string name="edit_profile_title">수정 \"%s\"</string>
   <string name="building_configration">설정 만드는중…</string>
-  <string name="netchange_summary">이 기능을 사용하면 네트워크 상태 변환시 강제로 재접속을 합니다. (WIFI 로/에서 모바일)</string>
+  <string name="netchange_summary">이 기능을 사용하면 네트워크 상태 변환시 강제로 재접속을 합니다 (예. WIFI 로/에서 모바일)</string>
   <string name="netchange">네트워크 변화시 재접속</string>
   <string name="cert_from_keystore">Keystore에서 인증서 \'%s\'  받음</string>
   <string name="netstatus">네트워크 상태: %s</string>
@@ -181,8 +180,6 @@
   <string name="keychain_nocacert">안드로이드 keystore에서 CA 인증서를 찾지 못했습니다. Auhtentication은 실패할 것 입니다.</string>
   <string name="show_log_summary">연결시 로그 윈도우를 보여드립니다. 로그 윈도우는 항상 notification status에서 접근이 가능합니다.</string>
   <string name="show_log_window">로그 윈도우 보기</string>
-  <string name="keppstatus_summary">트래픽 통계를 보여드리기 위해 연결후 notification을 보이도록 유지합니다.</string>
-  <string name="keepstatus">트래픽 통계 보기</string>
   <string name="mobile_info">%1$s (%2$s) %3$s, 안드로이드 API %4$d 에서 실행</string>
   <string name="error_rsa_sign">안드로이드 keystore 키 %1$s: %2$s과 싸이닝 오류</string>
   <string name="faq_system_dialogs">시스템에서는 VPN연결 경고를 통해 당신에게 본앱이 모든 트래픽을 가로챌수있다는 점을 알리게 되어 있는데 이는 VPNService API가 남용하는것을 막기 위함입니다.\nVPN 연결 알림 (키 아이콘) 또한 안드로이드 시스템에서 부과하는 부분이며 이는 VPN연결을 알리는 신호입니다. 어떤 버전에서는 소리를 알림으로 사용하는 경우도 있습니다.\n안드로이드는 이같은 방법을 당신의 안전을 위해 도입하였으며 사용은 필수적입니다. (어떤 버전에서는 유감스럽게도 소리 알림 또한 포함됩니다.)</string>
@@ -228,5 +225,13 @@
   <string name="openvpn_log">OpenVPN 로그</string>
   <string name="import_config">OpenVPN 설정 가져오기</string>
   <string name="battery_consumption_title">배터리 소모</string>
-  <string name="baterry_consumption">내 개인적인 테스트에서 Openvpn의 높은 배터리 소비에 대한 주요 이유는 keepalive 패킷 때문이었습니다. 대부분의 OpenVPN 서버 설정에는 \'keepalive 10 60\' 와 같은 문구가 있는데 이는 클라이언트에서 서버로 서버에서 클라이언트로 keepalive 패킷을 10 초 마다 보냅니다. &lt;p&gt; 이러한 패킷은 작고 많은 트래픽을 사용 하지 않습니다만 이들은 모바일 라디오 네트워크를 계속 유지하게 만들게되고 따라서 에너지 소비를 증가 합니다. &lt;p&gt;이 keepalive 설정을 클라이언트에서 변경할 수 없습니다. OpenVPN의 시스템 관리자만 설정을 변경할 수 있습니다. &lt;p&gt; 불행히도 udp를 사용할때 keepalive값을 60초 이상으로 하면 짧은 만료기간 (제 테스트의 경우 60초) 후 연결을 종료 하는 NAT 게이트웨이들과 사용시 문제가 있습니다. TCP와 긴 keepalive 만료기간을 함께 사용할 수는 있지만 이런경우에는 TCP TCP 문제에 노출될 수 있습니다. (참조 &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;왜 TCP를 통한 TCP는 안좋은 방법인지&lt;/a&gt;)</string>
+  <string name="faq_tethering">안드로이드 테더링 기능 (WiFi, USB 또는 블루투스를 통한)과 VPNService API (이 프로그램에서 사용됨)는 함께 작동 하지 않습니다. 자세한 내용은 &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;issue #34&lt;/a&gt; 를 참조 하십시오</string>
+  <string name="vpn_tethering_title">VPN과 테더링</string>
+  <string name="connection_retries">다시 연결</string>
+  <string name="reconnection_settings">다시 연결 설정</string>
+  <string name="connectretrymessage">연결 시도 사이의 기다리는 초단위 주기 입니다.</string>
+  <string name="connectretrywait">연결과 연결 사이의 초단위 기간</string>
+  <string name="minidump_generated">OpenVPN이 예기치 않게 종료됐습니다. 메인 메뉴에 있는 미니 덤프 보내기 옵션의 사용을 고려 하시기 바랍니다</string>
+  <string name="send_minidump">미니 덤프를 개발자에게 보내기</string>
+  <string name="send_minidump_summary">개발자에게 마지막 종료에 대한 디버깅 정보 보내기</string>
 </resources>

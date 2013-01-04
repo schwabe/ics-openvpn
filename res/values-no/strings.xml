@@ -5,7 +5,6 @@
   <string name="address">Server adresse:</string>
   <string name="port">Server port:</string>
   <string name="location">Plassering</string>
-  <string name="cant_read_folder">mappen kan ikke leses!</string>
   <string name="select">velg</string>
   <string name="cancel">Avbryt</string>
   <string name="no_data">Ingen Data</string>
@@ -15,9 +14,6 @@
   <string name="client_key_title">Klientsertifikat nøkkel</string>
   <string name="client_pkcs12_title">PKCS12 fil</string>
   <string name="ca_title">CA-sertifikat</string>
-  <string name="no_certificate">Ingenting er valgt</string>
-  <string name="copyright_guicode">Kildekoden og problemsporing er tilgjengelig under http://code.google.com/p/ics-openvpn/ </string>
-  <string name="copyright_others">Programmet bruker følgende komponenter. Se kilden for full informasjon om lisensene</string>
   <string name="about">Om</string>
   <string name="about_summary">Om OpenVPN for Android</string>
   <string name="vpn_list_summary">Liste over alle konfigurerte VPN-tilkoblinger</string>
@@ -25,7 +21,6 @@
   <string name="vpn_type">Type</string>
   <string name="pkcs12pwquery">PKCS12 passord</string>
   <string name="file_select">Velg...</string>
-  <string name="file_nothing_selected">Ingenting valgt</string>
   <string name="useTLSAuth">Bruke TLS-godkjenning</string>
   <string name="tls_direction">TLS-retning</string>
   <string name="ipv6_dialog_tile">Angi IPv6-adresse/nettmaske i CIDR format (f.eks 2000:dd::23/64)</string>
@@ -37,13 +32,9 @@
   <string name="configure_the_vpn">Konfigurer VPN</string>
   <string name="menu_add_profile">Legge til profil</string>
   <string name="add_profile_name_prompt">Angi et navn som identifiserer den nye profilen</string>
-  <string name="duplicate_profile_name">Profilnavnet finnes allerde</string>
   <string name="profilename">Profilnavn</string>
-  <string name="no_keystore_cert_selected">Ingen brukersertifikat er valgt.</string>
   <string name="no_error_found">Ingen feil funnet</string>
   <string name="config_error_found">Feil i konfigurasjonen</string>
-  <string name="ipv4_format_error">Kan ikke tolke IPv4-adressen</string>
-  <string name="custom_route_format_error">Kan ikke tolke de egendefinerte rutene</string>
   <string name="vpn_shortcut">OpenVPN snarvei</string>
   <string name="vpn_launch_title">Koble til VPN</string>
   <string name="random_host_prefix">Tilfeldig vert prefiks</string>
@@ -62,7 +53,6 @@
   <string name="log_verbosity_level">Detaljnivå for Logging</string>
   <string name="custom_options_title">Egendefinerte valg</string>
   <string name="edit_vpn">Rediger VPN-innstillinger</string>
-  <string name="remove_vpn_query">Fjerne VPN profilen %s?</string>
   <string name="error">"Feil:"</string>
   <string name="clear">Fjern</string>
   <string name="info">info</string>
@@ -91,7 +81,6 @@
   <string name="import_content_resolve_error">Kan ikke lese profil for importering</string>
   <string name="error_reading_config_file">Feil under lesing av config-filen</string>
   <string name="add_profile">legg til profil</string>
-  <string name="trying_to_read">Forsøker å lese filen: %1$s</string>
   <string name="import_could_not_open">Finner ikke filen %1$s nevnt i importert konfigurasjons fil</string>
   <string name="importing_config">Importerer konfigurasjonsfilen fra kilde %1$s</string>
   <string name="import_done">Ferdig med å lese konfigurasjons-filen.</string>
@@ -121,7 +110,6 @@
   <string name="netstatus">Nettverksstatus: %s</string>
   <string name="select_file">Velg</string>
   <string name="show_log_window">Vis logg-vindu</string>
-  <string name="keepstatus">Vis trafikk-statistikk</string>
   <string name="mobile_info">Kjører på %1$s (%2$s) %3$s, Android API %4$d</string>
   <string name="translationby">Norsk oversettelse av Jonny</string>
   <string name="ipdns">IP og DNS</string>

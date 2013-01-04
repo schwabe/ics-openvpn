@@ -123,7 +123,6 @@
   <string name="import_content_resolve_error">匯入過程中無法讀取設定檔</string>
   <string name="error_reading_config_file">讀取設定檔時發生錯誤</string>
   <string name="add_profile">新增設定檔</string>
-  <string name="trying_to_read">正嘗試讀取檔案: %1$s</string>
   <string name="import_done">成功讀取設定檔</string>
   <string name="nobind_summary">不要綁定本地地址和端口</string>
   <string name="no_bind">沒有本地綁定</string>
@@ -151,7 +150,6 @@
   <string name="netstatus">網絡狀態: %s</string>
   <string name="select_file">選擇</string>
   <string name="show_log_window">顯示記錄視窗</string>
-  <string name="keepstatus">顯示流量狀態</string>
   <string name="mobile_info">於 %1$s (%2$s) %3$s 上運行, Android API 版本: %4$d</string>
   <string name="faq_system_dialogs_title">連線警告和通知時發出音效</string>
   <string name="translationby">繁體中文 由 羊羊@自由網絡研究中心 &lt;sora8964@gmail.com&gt; 翻譯</string>

@@ -139,7 +139,6 @@
   <string name="import_content_resolve_error">Imporditava faili lugemine ebaõnnestus</string>
   <string name="error_reading_config_file">Viga konfiguratsioonifaili lugemisel</string>
   <string name="add_profile">lisa profiil</string>
-  <string name="trying_to_read">Üritan lugeda faili: %1$s</string>
   <string name="import_could_not_open">Ei õnnestunud leida imporditavas konfiguratsioonifailis mainitud faili: %1$s</string>
   <string name="importing_config">Allikast %1$s imporditakse konfiguratsioonifaili</string>
   <string name="import_warning_custom_options">Teie konfiguratsioonis on mõned süntaktilisele analüüsile allumatud valikuid. Leitud valikud lisati kohandatud seadistusvalikutena. Kohandatud konfiguratiooni leiate allpool:</string>
@@ -181,8 +180,6 @@
   <string name="keychain_nocacert">Androidi võtmehoidlast lugemine ei andnud ühtegi CA sertifikaati. Suure tõenäosusega autentimine ebaõnnestub.</string>
   <string name="show_log_summary">Näitab ühendumisel logiakent. Logiakna saab alati ette manada VPN teatisealast.</string>
   <string name="show_log_window">Näita logiakent</string>
-  <string name="keppstatus_summary">Jäta teatiseaken avatusks ka pärast ühenduse loomist liiklusstatistika jälgimiseks.</string>
-  <string name="keepstatus">Näita liiklusstatistikat</string>
   <string name="mobile_info">Töötamas %1$s (%2$s) %3$s peal, Android API %4$d</string>
   <string name="error_rsa_sign">Viga allkirjastamisel Androidi võtmehoidla võtmega %1$s: %2$s</string>
   <string name="faq_system_dialogs">VPN ühendumisel ilmub ekraanile hoiatus et see programm võib pealt kuulata kogu võrguliiklust. Tegemist on VPNService API süsteemse hoiatusega et hoida ära väärkasutust.\nVPN ühenduse teatis (Võtme sümbol) on samuti VPNService API poolt kuvatav aktiivse VPN ühenduse indikaator. Mõne süsteemitarkvara puhul võib see indikaator anda märku ka heliga.\nNeed teatised on Androidi süsteemile lisatud teie turvalisuse tagamiseks ja samuti on välistatud nende kasutamisest mööda minemine. (Kahjuks tähendab see seda et mõne süsteemitarkvara puhul kaasneb ühendusega alati ka heliteade)</string>
@@ -228,7 +225,6 @@
   <string name="openvpn_log">OpenVPN Logi</string>
   <string name="import_config">Impordi OpenVPN konfiguratsioon</string>
   <string name="battery_consumption_title">Akukasutus</string>
-  <string name="baterry_consumption">Minu isiklike testide põhjal kulutavad akut peamiselt OpenVPN keepalive paketid. Enamikel OpenVPN serveritel esineb direktiiv nagu \'keepalive 10 60\' mis tähendab et klient saadab serverile ja server kliendile keepalive pakette iga 10 sekundi tagant. &lt;p&gt; Ehkki keepalive paketid on väikesed ja ei põhjusta märgatavat võrguliiklust, ei lase nad mobiilse ühenduse raadiovõrgukiibil minna energiasäästurežiimi. &lt;p&gt; Need keepalive seadistused pole kliendi poolt muudetavad, neid seadistusi saab muuta ainult OpenVPN serveri süsteemiadministraator. &lt;p&gt; Kahjuks esineb üle 60 sekundi pikkuse keepalive puhul probleeme UDP protokolliga üle mõnede NAT ruuterite mis kustutavad UDP ühenduste olekuinfo väga lühikese aja jooksul (minu testides 60s). TCP protokolliga seda probleemi ei esine, kuid esineb TCP üle TCP tunneldamise probleem. (Vaata &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Miks TCP üle TCP on halb mõte&lt;/a&gt;)</string>
   <string name="faq_tethering">Android Tethering (üle WiFi, USB või Bluetoothi) ja VPNService API (mida käesolev programm kasutab) ei ole koos kasutatavad. Täpsemad detailid leiad &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;issue #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN ja tether</string>
   <string name="connection_retries">Ühendumise korduskatseid</string>

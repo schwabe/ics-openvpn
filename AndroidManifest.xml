@@ -68,12 +68,21 @@
                 <action android:name="android.net.VpnService" />
             </intent-filter>
         </service>
-        <service android:name=".api.ExternalOpenVPNService" 
-            android:permission="de.blinkt.openvpn.REMOTE_API">
+        <service
+            android:name=".api.ExternalOpenVPNService"
+            android:permission="de.blinkt.openvpn.REMOTE_API" >
             <intent-filter>
                 <action android:name="de.blinkt.openvpn.api.IOpenVPNAPIService" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".api.GrantPermissionsActivity"
+            android:permission="de.blinkt.openvpn.REMOTE_API" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
         <receiver android:name=".OnBootReceiver" >
             <intent-filter>

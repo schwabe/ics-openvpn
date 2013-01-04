@@ -21,6 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Vector;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -32,10 +33,18 @@ import android.net.LocalServerSocket;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.net.VpnService;
+import android.os.Binder;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Build;
+import android.os.IBinder;
+import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import de.blinkt.openvpn.OpenVPN.StateListener;
 
-public class OpenVpnService extends VpnService implements StateListener {
+public class OpenVpnService extends VpnService implements StateListener, Callback {
+	public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";
+
 	private Thread mProcessThread=null;
 
 	private Vector<String> mDnslist=new Vector<String>();
@@ -62,8 +71,29 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 	private long mConnecttime;
 
+
 	private static final int OPENVPN_STATUS = 1;
 
+	public static final int PROTECT_FD = 0;
+
+	private final IBinder mBinder = new LocalBinder();
+	
+	public class LocalBinder extends Binder {
+		public OpenVpnService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return OpenVpnService.this;
+        }
+    }
+	
+	@Override
+	public IBinder onBind(Intent intent) {
+		String action = intent.getAction();
+		if( action !=null && action.equals(START_SERVICE))
+			return mBinder;
+		else
+			return super.onBind(intent);
+	}
+	
 	@Override
 	public void onRevoke() {
 		OpenVpnManagementThread.stopOpenVPN();
@@ -116,6 +146,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 		startForeground(OPENVPN_STATUS, notification);
 	}
 
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private void jbNotificationExtras(boolean lowpriority,
 			android.app.Notification.Builder nbuilder) {
 		try {
@@ -124,6 +155,7 @@ public class OpenVpnService extends VpnService implements StateListener {
 				// PRIORITY_MIN == -2
 				setpriority.invoke(nbuilder, -2 );
 
+				nbuilder.setUsesChronometer(true);
 				/*				PendingIntent cancelconnet=null;
 
 				nbuilder.addAction(android.R.drawable.ic_menu_close_clear_cancel, 
@@ -188,7 +220,11 @@ public class OpenVpnService extends VpnService implements StateListener {
 
 
 	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
+	public int onStartCommand(Intent intent, int flags, int startId) {		
+		
+		if(intent != null && intent.getAction() !=null &&intent.getAction().equals(START_SERVICE))
+			return START_NOT_STICKY;
+			
 
 		// Extract information from the intent.
 		String prefix = getPackageName();
@@ -456,6 +492,17 @@ public class OpenVpnService extends VpnService implements StateListener {
 			String ticker = getString(resid);
 			showNotification(getString(resid) +" " + logmessage,ticker,false,0);
 
+		}
+	}
+
+	@Override
+	public boolean handleMessage(Message msg) {
+		Runnable r = msg.getCallback();
+		if(r!=null){
+			r.run();
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

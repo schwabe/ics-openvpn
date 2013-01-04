@@ -327,26 +327,7 @@ public class ConfigParser {
 			if(!mode.get(1).equals("p2p"))
 				throw new ConfigParseError("Invalid mode for --mode specified, need p2p");
 		}
-
-		// Parse remote config
-		Vector<String> remote = getOption("remote",1,3);
-		if(remote != null){
-			switch (remote.size()) {
-			case 4:
-				String proto = remote.get(3);
-				if(proto.equals("udp"))
-					np.mUseUdp=true;
-				else if (proto.equals("tcp"))
-					np.mUseUdp=false;
-				else
-					throw new ConfigParseError("remote protocol must be tcp or udp");
-			case 3:
-				np.mServerPort = remote.get(2);
-			case 2:
-				np.mServerName = remote.get(1);
-			}
-		}
-
+		
 		Vector<String> port = getOption("port", 1,1);
 		if(port!=null){
 			np.mServerPort = port.get(1);
@@ -354,16 +335,20 @@ public class ConfigParser {
 		
 		Vector<String> proto = getOption("proto", 1,1);
 		if(proto!=null){
-			if(proto.get(1).equals("udp") || proto.get(1).equals("udp6"))
-				np.mUseUdp=true;
-			else if (proto.get(1).equals("tcp-client") ||
-					proto.get(1).equals("tcp")  || 
-					proto.get(1).equals("tcp6") ||
-					proto.get(1).endsWith("tcp6-client"))
-				np.mUseUdp=false;
-			else 
-				throw new ConfigParseError("Unsupported option to --proto " + proto.get(1));
+			np.mUseUdp=isUdpProto(proto.get(1));;
+		}
 
+		// Parse remote config
+		Vector<String> remote = getOption("remote",1,3);
+		if(remote != null){
+			switch (remote.size()) {
+			case 4:
+				np.mUseUdp=isUdpProto(remote.get(3));
+			case 3:
+				np.mServerPort = remote.get(2);
+			case 2:
+				np.mServerName = remote.get(1);
+			}
 		}
 
 		Vector<Vector<String>> dhcpoptions = getAllOption("dhcp-option", 2, 2);
@@ -482,6 +467,20 @@ public class ConfigParser {
 		fixup(np);
 
 		return np;
+	}
+
+	private boolean isUdpProto(String proto) throws ConfigParseError {
+		boolean isudp;
+		if(proto.equals("udp") || proto.equals("udp6"))
+			isudp=true;
+		else if (proto.equals("tcp-client") ||
+				proto.equals("tcp")  || 
+				proto.equals("tcp6") ||
+				proto.endsWith("tcp6-client"))
+			isudp =false;
+		else 
+			throw new ConfigParseError("Unsupported option to --proto " + proto);
+		return isudp;
 	}
 	
 	static public void useEmbbedUserAuth(VpnProfile np,String inlinedata)

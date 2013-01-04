@@ -16,8 +16,8 @@
   <string name="client_pkcs12_title">PKCS12 Datei</string>
   <string name="ca_title">CA Zertifikat</string>
   <string name="no_certificate">Kein Zertifikat ausgewählt</string>
-  <string name="copyright_guicode">Quellcode und Iusse Tracker unter http://code.google.com/p/ics-openvpn/ verfügbar</string>
-  <string name="copyright_others">Dieses Programm nutzt die folgenden Komponenten. Die kompletten Lizenzdetails sind im Quelltext verfügbar</string>
+  <string name="copyright_guicode">Quellcode und Issue Tracker sind verfügbar unter http://code.google.com/p/ics-openvpn/</string>
+  <string name="copyright_others">Dieses Programm nutzt die folgenden Komponenten. Die kompletten Lizenzdetails sind im Quelltext verfügbar.</string>
   <string name="about">Über</string>
   <string name="about_summary">Über OpenVPN für Android</string>
   <string name="vpn_list_summary">Alle konfigurierten VPN Profile</string>
@@ -39,7 +39,7 @@
   <string name="configure_the_vpn">VPN konfigurieren</string>
   <string name="menu_add_profile">Profil hinzufügen</string>
   <string name="add_profile_name_prompt">Geben Sie einen Namen für das neue Profil an</string>
-  <string name="duplicate_profile_name">Doppelter Profilname, bitte vergeben Sie einen eindeutigen Profilnamen.</string>
+  <string name="duplicate_profile_name">Profilname bereits vorhanden. Bitte vergeben Sie einen eindeutigen Profilnamen.</string>
   <string name="profilename">Profilname</string>
   <string name="no_keystore_cert_selected">Kein Benutzerzertifikat ausgewählt</string>
   <string name="no_error_found">Kein Fehler.</string>
@@ -106,7 +106,7 @@
   <string name="ip_not_cidr">Interface Information %1$s und %2$s, nehme an, die zweite Adresse ist die Peer Adresse. Benutze /32 Netzmaske für die lokale IP Adresse. Interface Modus spezifiziert von OpenVPN ist \"%3$s\".</string>
   <string name="route_not_cidr">Die Route %1$s mit der Netzmaske %2$s ist keine Route mit einer CIDR Netzmaske, benutze /32 als Netzmaske.</string>
   <string name="route_not_netip">Route %1$s/%2$s korrigiert zu %3$s/%2$s</string>
-  <string name="keychain_access">Kann nicht auf die Android Keychain Zertifikate zugreifen. (Dies kann durch ein System Update oder durch Zurücksichern der Anwendung aus einem Backup hervorgerufen werden.). Bitte editieren sie das VPN und wählen Sie erneut das Zertifikat in dem  Grundeinstellungen aus um die Berechtigung auf das Zertifikat zuzugreifen zu können wieder herzustellen.</string>
+  <string name="keychain_access">Kann nicht auf die Android Keychain Zertifikate zugreifen (dies kann durch ein System Update oder durch Zurücksichern der Anwendung aus einem Backup hervorgerufen werden). Bitte editieren Sie das VPN und wählen Sie erneut das Zertifikat in dem  Grundeinstellungen aus, um die Zugriffsberechtigung für das Zertifikat wieder herzustellen.</string>
   <string name="version_info">%1$s %2$s</string>
   <string name="send_logfile">Sende Logdatei</string>
   <string name="send">Sende</string>
@@ -114,15 +114,15 @@
   <string name="copied_entry">Log Eintrag in die Zwischenablage kopiert</string>
   <string name="tap_mode">Tap Mode</string>
   <string name="faq_tap_mode">Die VPN API von Android, die ohne rooten des Telefons funktioniert, unterstützt nur den tun Modus. Das Unterstützen des Tap Modus ist daher nicht möglich.</string>
-  <string name="tap_faq2">Die gleiche Frage nochmal? Meinen Sie das ernst? Ohne root kann tap wirklich nicht unterstützt werden. Emails an mich mit der Frage wann tap unterstützt wird, helfen hier kein Stück.</string>
-  <string name="tap_faq3">Ein drittes Mal? Nun gut, theoretisch kann tap mit einem tun Gerät emuliert werden. Dieser tap Emulator müsste die Layer 2 Informationen beim Senden hinzufügen und beim Empfangen wieder entfernen. Zusätzlich muss noch ARP und sinnvollerweise auch ein DHCP Client implementiert werden. Mir ist niemand bekannt, der etwas in diese Richtung unternimmt. Kontaktieren Sie mich, wenn Sie etwas in dies implementieren wollen.</string>
+  <string name="tap_faq2">Die gleiche Frage nochmal? Meinen Sie das ernst? Ohne root kann tap wirklich nicht unterstützt werden. Emails an mich, mit der Frage, wann tap unterstützt wird, helfen hier kein Stück.</string>
+  <string name="tap_faq3">Ein drittes Mal? Nun gut, theoretisch kann tap mit einem tun Gerät emuliert werden. Dieser tap Emulator müsste die Layer 2 Informationen beim Senden hinzufügen und beim Empfangen wieder entfernen. Zusätzlich muss noch ARP und sinnvollerweise auch ein DHCP Client implementiert werden. Mir ist niemand bekannt, der etwas in dieser Richtung unternimmt. Kontaktieren Sie mich, falls Sie so etwas implementieren möchten.</string>
   <string name="faq">FAQ</string>
   <string name="faq_summary">häufig gestellte Fragen und Hinweise</string>
   <string name="copying_log_entries">Kopieren von Log Einträgen</string>
   <string name="faq_copying">Um einen einzelnen Log Eintrag zu kopieren berühren Sie den Log Eintrag und halten Sie gedrückt. Um das ganze Log zu Kopieren/Versenden benutzen Sie die \"Sende Log\" Option. Falls Sie Option nicht im in der GUI sehen, drücken Sie die Menü Taste am Gerät.</string>
   <string name="faq_shortcut">Verknüpfung zu einem VPN</string>
   <string name="faq_howto_shortcut">Sie können ein Shortcut zum Starten des VPN auf Ihren Startbildschirm legen. Abhängig davon welches Home/Launcher Programm Sie verwenden müssen ein Widget, Shortcut oder Verknüpfung hinzufügen</string>
-  <string name="no_vpn_support_image">Dieses Android ROM enthält keine VPNService API, sorry :(</string>
+  <string name="no_vpn_support_image">Dieses Android ROM enthält keine VPNService API. Sorry :(</string>
   <string name="encryption">Verschlüsselung</string>
   <string name="cipher_dialog_title">Geben Sie die Verschlüsslungsmethode an</string>
   <string name="chipher_dialog_message">Verschlüsslungsalgorithmus (chiper). Leer lassen um Standardalgorithmus auszuwählen</string>
@@ -139,7 +139,6 @@
   <string name="import_content_resolve_error">Konnte zu importierendes Profil nicht lesen</string>
   <string name="error_reading_config_file">Fehler beim Lesen der Konfigurationsdatei</string>
   <string name="add_profile">Profil hinzufügen</string>
-  <string name="trying_to_read">Versuche Datei %1$s zu lesen</string>
   <string name="import_could_not_open">Konnte die Datei %1$s, die in  der importierten Konfiguration angeben war, nicht finden</string>
   <string name="importing_config">Importiere Konfigurationsdatei aus %1$s</string>
   <string name="import_warning_custom_options">Ihre Konfiguration hat spezielle Optionen, die nicht direkt auf Einstellungen übertragen werden konnten. Diese Einstellungen wurden als spezielle Optionen gespeichert:</string>
@@ -172,7 +171,7 @@
   <string name="generated_config_summary">Zeigt die generierte Konfigurationsdatei</string>
   <string name="edit_profile_title">Editiere \"%s\"</string>
   <string name="building_configration">Generiere OpenVPN Konfiguration…</string>
-  <string name="netchange_summary">Aktivieren dieser Option zwingt OpenVPN dazu beim Wechsel des Netzwerkes (WLAN zu Mobilfunk und umgekehrt) neu zu verbinden</string>
+  <string name="netchange_summary">Aktivieren dieser Option zwingt OpenVPN dazu, beim Wechsel des Netzwerkes (WLAN zu Mobilfunk und umgekehrt), neu zu verbinden</string>
   <string name="netchange">Netzwerkänderungen beachten</string>
   <string name="cert_from_keystore">Zertifikat (KeyStore): \'%s\' </string>
   <string name="netstatus">Netzwerkstatus: %s</string>
@@ -181,8 +180,6 @@
   <string name="keychain_nocacert">Beim Abfragen des Android KeyStore wurde kein CA Zertifikat zurückgegeben. Überprüfen des Serverzertifikat wird wahrscheinlich fehlschlagen. Geben Sie manuell ein CA Zertifikat an.</string>
   <string name="show_log_summary">Zeigt das Status Log, wenn ein VPN verbunden wird. Das Status log kann immer über die Benachrichtigung aufgerufen werden.</string>
   <string name="show_log_window">Zeige Log</string>
-  <string name="keppstatus_summary">Zeige die OpenVPN Benachrichtigung nach Verbinden zusätzlich zu der System Benachrichtigung an um Traffic Statistiken anzuzeigen.</string>
-  <string name="keepstatus">Traffic Statistiken</string>
   <string name="mobile_info">Modell %1$s (%2$s) %3$s, Android API %4$d</string>
   <string name="error_rsa_sign">Fehler beim Zugriff auf den Android Keystore %1$s: %2$s</string>
   <string name="faq_system_dialogs">Die Meldung, dass OpenVPN versucht eine VPN-Verbindung aufzubauen und dabei den gesamten Netzwerkverkehr abhören kann, wird vom Android System selbst erzeugt. Diese wird vom System erzwungen, damit keine Anwendung vom Benutzer unbemerkt eine VPN Verbindung aufbauen kann\Die VPN Benachrichtigung (Das Schlüssel Symbol) wird genauso vom Android System angezeigt um eine bestehende VPN anzuzeigen.\nDiese beiden Features wurden in Android für die Sicherheit des Nutzers implementiert und können nicht umgangen werden. (Auf machen Telefon/Tablets wird die Benachrichtigung leider mit einem Ton signalisiert.)</string>
@@ -196,7 +193,7 @@
   <string name="export_config_title">ICS OpenVPN Konfiguration</string>
   <string name="warn_no_dns">Es werden keine DNS Server gesetzt. Möglicherweise wird die DNS Auflösung nicht funktionieren. Ziehen Sie in Betracht die Option \"eigene DNS Server\" zu benutzen.</string>
   <string name="dns_add_error">Konnte den DNS Server \"%1$s\" nicht hinzufügen, da das System ihn zurückweist mit %2$s</string>
-  <string name="faq_howto">&lt;p&gt;Benutzen Sie eine funktionierende Konfiguration (getestet auf einem Computer oder bereit gestellt von Ihrer Organisation/Ihrem Provider)&lt;/p&gt;&lt;p&gt;Falls Sie nur eine einzelne Datei benötigen können Sie diese sich als Anhang zuschicken. Falls Ihre OpenVPN Konfiguration aus mehreren Dateien besteht müssen Sie alle Dateien auf die SD Karte kopieren.&lt;/p&gt;&lt;p&gt;Klicken Sie auf den Email Anhang im Android Mail Programm bzw. benutzen Sie das Ordner Symbol in der VPN Liste und wählen Sie die .ovpn bzw. .conf Konfigurationsdatei aus.&lt;/p&gt;&lt;p&gt;Falls der Import fehlende Dateien anmerkt, kopieren Sie diese auf die SD Karte und starten den Import erneut.&lt;/p&gt;&lt;p&gt;Benutzen Sie anschließend das Speichern Symbol um das VPN zur VPN Liste hinzuzufügen&lt;/p&gt;&lt;p&gt;Tippen Sie den Namen des VPNs an um das VPN zu starten&lt;/p&gt;&lt;p&gt;Achten Sie auf Fehler und Warnungen im Verbindungslog.&lt;/p&gt; </string>
+  <string name="faq_howto">&lt;p&gt;Benutzen Sie eine funktionierende Konfiguration (getestet auf einem Computer, oder von Ihrer Organisation/Ihrem Provider bereitgestellt)&lt;/p&gt;&lt;p&gt;Falls Sie nur eine einzelne Datei benötigen, können Sie sich diese als Email-Anhang zuschicken. Falls Ihre OpenVPN Konfiguration aus mehreren Dateien besteht, müssen Sie alle Dateien auf die SD Karte kopieren.&lt;/p&gt;&lt;p&gt;Klicken Sie auf den Email Anhang im Android Mail Programm bzw. benutzen Sie das Ordner Symbol in der VPN Liste und wählen Sie die .ovpn bzw. .conf Konfigurationsdatei aus.&lt;/p&gt;&lt;p&gt;Falls der Import fehlende Dateien anmerkt, kopieren Sie diese auf die SD Karte und starten den Import erneut.&lt;/p&gt;&lt;p&gt;Benutzen Sie anschließend das Speichern Symbol um das VPN zur VPN Liste hinzuzufügen&lt;/p&gt;&lt;p&gt;Tippen Sie den Namen des VPNs an, um das VPN zu starten&lt;/p&gt;&lt;p&gt;Achten Sie auf Fehler und Warnungen im Verbindungslog.&lt;/p&gt; </string>
   <string name="faq_howto_title">Schnellstart</string>
   <string name="setting_loadtun_summary">Versuche das tun.ko Kernel Modul zu laden. Benötigt root.</string>
   <string name="setting_loadtun">Lade tun Modul</string>
@@ -228,14 +225,31 @@
   <string name="openvpn_log">OpenVPN-Log</string>
   <string name="import_config">OpenVPN Konfiguration importieren</string>
   <string name="battery_consumption_title">Energieverbrauch</string>
-  <string name="baterry_consumption">In meinen eigenen Tests ist der Hauptgrund für den hohen Stromverbrauch von OpenVPN das Senden und Empfangen der Keepalive-Pakete. Die meisten OpenVPN-Server haben eine Konfigurationsoption wie \' keepalive 10 60\', was bedeutet dass vom Client an den Server und Server an den Client alle zehn Sekunden ein Paket geschickt wird. lt;pgt; Diese Pakete sind klein und erzeugen keine große Datenmenge. Sie sorgen allerdings dafür, dass das permanent Daten übertragen werden und somit auch die Mobilfunk bzw. WLAN Einheit aktiv ist und steigern damit den Energieverbrauch. lt;pgt; Diese keepalive Einstellung kann nicht auf dem Client geändert werden. Nur der Systemadministrator des VPN Servers kann die Einstellung ändern. lt;pgt; Leider hat eine keepalive Einstellung von mehr als 60 Sekunden mit udp Probleme mit einigen NAT-Gateways, die für inaktive Verbindung nur eine sehr kurze Haltzeit haben und danach verwerfen (60s in meinen Tests).  Benutzen von TCP mit langen Keep-Alive-Timeout funktioniert, hat aber das TCP über TCP Problem. (Siehe lt; a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\" gt; Why TCP Over TCP Is A Bad Idelt;/agt;)</string>
-  <string name="faq_tethering">Die \"Anbindung &amp; mobiler WLAN-Hotspot\" Funktion und die VPNService-API, die von diesem Programm verwendet wird, funktionieren nicht zusammen. Für weitere Details siehe &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt; Issue #34 &lt;/a&gt;</string>
+  <string name="baterry_consumption">In meinen eigenen Tests ist der Hauptgrund für den hohen Stromverbrauch von OpenVPN das Senden und Empfangen der Keepalive-Pakete. Die meisten OpenVPN-Server haben eine Konfigurationsoption wie \'keepalive 10 60\', was bedeutet, dass vom Client an den Server und vom Server an den Client alle zehn Sekunden ein Paket geschickt wird. &lt;p&gt; Diese Pakete sind klein und erzeugen keine große Datenmenge. Sie sorgen allerdings dafür, dass permanent Daten übertragen werden und somit auch die Mobilfunk- bzw. WLAN Einheit aktiv ist und steigern damit den Energieverbrauch. &lt;p&gt; Diese keepalive Einstellung kann nicht auf dem Client geändert werden. Nur der Systemadministrator des VPN Servers kann die Einstellung ändern. &lt;p&gt; Leider hat eine keepalive Einstellung von mehr als 60 Sekunden unter udp Probleme mit einigen NAT-Gateways, die für inaktive Verbindungen nur eine sehr kurze Haltzeit haben und danach verwerfen (60s in meinen Tests).  Benutzen von TCP mit langen Keep-Alive-Timeouts funktioniert, hat aber das TCP über TCP Problem. (Siehe &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\" &gt; Why TCP Over TCP Is A Bad Idea &lt;/a&gt;)</string>
+  <string name="faq_tethering">Die Funktion \"Anbindung &amp; mobiler WLAN-Hotspot\" und die VPNService-API, die von diesem Programm verwendet wird, funktionieren nicht zusammen. Für weitere Details siehe &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt; Issue #34 &lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN und \"Anbindung &amp; mobiler WLAN-Hotspot\"</string>
   <string name="connection_retries">Anzahl Verbindungsversuche</string>
   <string name="reconnection_settings">Einstellungen für das Neuverbinden</string>
   <string name="connectretrymessage">Anzahl von Sekunden zwischen Verbindungsversuchen.</string>
   <string name="connectretrywait">Sekunden zwischen Verbindungsversuchen</string>
-  <string name="minidump_generated">Der OpenVPN Prozess ist unerwartet abgestützt. Bitte erwägen Sie die \"Minidump senden\" im Hauptmenü</string>
+  <string name="minidump_generated">Der OpenVPN Prozess ist unerwartet abgestürzt. Bitte erwägen Sie die Option \"Minidump senden\" im Hauptmenü</string>
   <string name="send_minidump">Minidump an Entwickler senden</string>
   <string name="send_minidump_summary">Sendet Debugging Informationen des letzten Absturzes an den Entwickler</string>
+  <string name="notifcation_title">OpenVPN - %s</string>
+  <string name="session_ipv4string">%1$s - %2$s</string>
+  <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
+  <string name="state_connecting">Verbinde</string>
+  <string name="state_wait">Warte auf Serverantwort</string>
+  <string name="state_auth">Authentifiziere</string>
+  <string name="state_get_config">Warte auf Clientkonfiguration</string>
+  <string name="state_assign_ip">Weise IP Adressen zu</string>
+  <string name="state_add_routes">Hinzufügen von Routen</string>
+  <string name="state_connected">Verbunden</string>
+  <string name="state_reconnecting">Wiederverbinden</string>
+  <string name="state_exiting">Beende</string>
+  <string name="state_noprocess">Kein OpenVPN Prozess</string>
+  <string name="state_resolve">Löse Hostnamen auf</string>
+  <string name="state_tcp_connect">Verbinde (TCP)</string>
+  <string name="state_auth_failed">Authentifizierung fehlgeschlagen</string>
+  <string name="state_nonetwork">Warte auf Internetverbindung</string>
 </resources>

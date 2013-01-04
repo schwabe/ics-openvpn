@@ -106,6 +106,7 @@
   <string name="ip_not_cidr">Información de la interfaz obtenida %1$s and %2$s, asumiendo que la segunda dirección es una dirección equivalente del remoto. Usando una máscara de red /32 para la IP local. El modo dado por OpenVPN es \"%3$s\".</string>
   <string name="route_not_cidr">No tienen sentido %1$s y %2$s como ruta IP con máscara de red CIDR, usando /32 como máscara de red.</string>
   <string name="route_not_netip">Ruta conectada de %1$s/%2$s a %3$s/%2$s</string>
+  <string name="keychain_access">No se puede acceder a los certificados de Android. Puede ser causado por una actualización de firmware o por restaurar una copia de seguridad de la aplicación/configuración de la aplicación. Por favor edite la VPN y vuelva a seleccionar el certificado bajo meltdownajustes básicos para recrear los permisos para acceder al certificado.</string>
   <string name="version_info">%1$s %2$s</string>
   <string name="send_logfile">Enviar el archivo de registro</string>
   <string name="send">Enviar</string>
@@ -121,6 +122,7 @@
   <string name="faq_copying">Para copiar una sola entrada de registro presione y mantenga pulsado sobre la entrada del registro. Para copiar y enviar el registro completo use la opción Enviar registro. Utilice el botón fisico de menú si no visible en la interfaz.</string>
   <string name="faq_shortcut">Acceso directo para iniciar</string>
   <string name="faq_howto_shortcut">Puede colocar un acceso directo para iniciar OpenVPN en el escritorio. Dependiendo del programa de la pantalla de inicio tiene que añadir un acceso directo o un widget.</string>
+  <string name="no_vpn_support_image">Su imagen no es compatible con la API de VPNService, lo siento :(</string>
   <string name="encryption">Cifrado</string>
   <string name="cipher_dialog_title">Especifique el método de cifrado</string>
   <string name="chipher_dialog_message">Introduzca la clave de cifrado para OpenVPN. Deje en blanco para utilizar cifrado predeterminado</string>
@@ -137,7 +139,6 @@
   <string name="import_content_resolve_error">No se pudo leer el perfil a importar</string>
   <string name="error_reading_config_file">Error al leer el archivo de configuración</string>
   <string name="add_profile">Agregar perfil</string>
-  <string name="trying_to_read">Intentando leer el archivo: %1$s</string>
   <string name="import_could_not_open">No se pudo encontrar el archivo %1$s mencionado en el archivo de configuracion importado</string>
   <string name="importing_config">Importando archivo de configuración del origen %1$s</string>
   <string name="import_warning_custom_options">Su configuración tiene algunas opciones de configuración que pueden ser analizadas. Estas opciones se agregaron como opciones de configuración personalizadas. A continuación se muestra la configuración personalizada:</string>
@@ -178,8 +179,6 @@
   <string name="keychain_nocacert">No se obtuvo ningún certificado de CA al leer el almacén de claves de Android. La autenticación probablemente fallará.</string>
   <string name="show_log_summary">Muestra la ventana de registro el conectarse. La ventana de registro siempre puede accederse desde el estado de la notificación.</string>
   <string name="show_log_window">Mostrar ventana de registro</string>
-  <string name="keppstatus_summary">Mantenga la notificación visible después de que la conexión es establecida para mostrar estadísticas de tráfico.</string>
-  <string name="keepstatus">Mostrar estadísticas de tráfico</string>
   <string name="mobile_info">Ejecutándose en %1$s (%2$s) %3$s, API de Android %4$d</string>
   <string name="error_rsa_sign">Error al firmar con la llave del almacén de llaves de Android %1$s: %2$s</string>
   <string name="faq_system_dialogs_title">Advertencia de conexión y sonido de notificación</string>
@@ -221,7 +220,6 @@
   <string name="openvpn_log">Registro de OpenVPN</string>
   <string name="import_config">Importar configuración de OpenVPN</string>
   <string name="battery_consumption_title">Consumo de batería</string>
-  <string name="baterry_consumption">En mis pruebas personales la razón principal del alto consumo de batería de OpenVPN son los paquetes de sobrevivencia (keepalive). La mayoría de servidores de OpenVPN tienen una configuración como \'keepalive 10 60\' que se traduce en un paquete de keepalive del cliente al servidor y viceversa cada diez segundos. &lt;p&gt; Si bien estos paquetes son pequeños y no utilizan mucho tráfico, mantienen la red móvil ocupada e incrementan el consumo de energía. &lt;p&gt; Esta configuración de sobrevivencia no puede ser cambiada en el cliente. Sólo el administrador de sistemas de la OpenVPN puede cambiar esta configuración. &lt;p&gt; Desafortunadamente, usar una sobrevivencia mayor a 60 segundos con udp ocasiona problemas con algunas puertas de entrada NAT los cuales terminan una conexión después de un corto tiempo de espera (60s en mis pruebas). Usar TCP con un tiempo de sobrevivencia largo funciona pero genera el problema de TCP sobre TCP. (Ver &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt; Por qué TCP sobre TCP es una mala idea (en inglés) &lt;/a&gt;)</string>
   <string name="faq_tethering">La funcionalidad de Tethering de Android (sobre WiFi, USB o Bluetooth) y la API del servicio de VPN (utilizada por esta aplicación) no pueden trabajar juntas. Para más detalles vea el &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;problema #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN y Tethering</string>
   <string name="connection_retries">Reintentos de conexión</string>

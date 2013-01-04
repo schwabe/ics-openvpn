@@ -32,14 +32,19 @@
   <string name="ipv4_dialog_title">输入 CIDR 格式 IPv4 地址/子网掩码（例如：1.2.3.4/24）</string>
   <string name="ipv4_address">IPv4 地址</string>
   <string name="ipv6_address">IPv6 地址</string>
+  <string name="custom_option_warning">请谨慎输入 OpenVPN 的自定义选项。此外请注意许多与 tun 模块有关的 OpenVPN 设置由于系统 VPN 功能的设计而不能得到支持。如果您缺少认为一个很重要的选项，请联系作者。</string>
   <string name="auth_username">用户名</string>
   <string name="auth_pwquery">密码</string>
   <string name="configure_the_vpn">配置 VPN</string>
   <string name="menu_add_profile">添加配置文件</string>
   <string name="add_profile_name_prompt">输入新配置文件名：</string>
+  <string name="duplicate_profile_name">请输入一个唯一的配置文件名称</string>
   <string name="profilename">配置文件名</string>
   <string name="no_error_found">未找到错误</string>
   <string name="config_error_found">配置有错误</string>
+  <string name="ipv4_format_error">无法解析 IPv4 地址</string>
+  <string name="custom_route_format_error">无法解析自定义路由</string>
+  <string name="pw_query_hint">(根据需求留空)</string>
   <string name="vpn_shortcut">OpenVPN 快捷方式</string>
   <string name="vpn_launch_title">连接到 VPN</string>
   <string name="shortcut_profile_notfound">未找到快捷方式中指定的配置文件</string>
@@ -54,6 +59,7 @@
   <string name="cancel_connection_query">断开已连接的 VPN / 取消连接尝试？</string>
   <string name="remove_vpn">删除 VPN</string>
   <string name="check_remote_tlscert">检查服务器是否使用 TLS 服务器证书</string>
+  <string name="check_remote_tlscert_title">除了 TLS 服务器</string>
   <string name="remote_tlscn_check_title">证书主机名检查</string>
   <string name="enter_tlscn_title">远程主机名 （CN）</string>
   <string name="tls_key_auth">启用 TLS 密钥认证</string>
@@ -78,6 +84,7 @@
   <string name="float_title">允许浮服务器</string>
   <string name="custom_options_title">自定义选项</string>
   <string name="edit_vpn">编辑 VPN 设置</string>
+  <string name="tun_open_error">未能打开 tun 模块</string>
   <string name="error">错误</string>
   <string name="clear">清除</string>
   <string name="info">信息</string>
@@ -108,12 +115,12 @@
   <string name="error_importing_file">导入文件出错</string>
   <string name="import_error_message">无法导入文件系统文件</string>
   <string name="inline_file_data">[[内联文件数据]]</string>
+  <string name="opentun_no_ipaddr">无 IP 信息，拒绝打开 tun 设备</string>
   <string name="menu_import">从 ovpn 文件中导入配置文件</string>
   <string name="menu_import_short">导入</string>
   <string name="import_content_resolve_error">无法读取要导入的配置文件</string>
   <string name="error_reading_config_file">读取配置文件发生出错</string>
   <string name="add_profile">添加配置文件</string>
-  <string name="trying_to_read">尝试读取文件： %1$s</string>
   <string name="import_could_not_open">无法找到导入配置文件参考的文件： %1$s</string>
   <string name="importing_config">从 %1$s 中导入配置文件</string>
   <string name="import_done">读取配置文件完成</string>
@@ -137,6 +144,7 @@
   <string name="tls_authentication">TLS 认证</string>
   <string name="generated_config">已生成的配置</string>
   <string name="generalsettings">通用设置</string>
+  <string name="owner_fix">修复 /dev/tun 的权限</string>
   <string name="generated_config_summary">显示已生成的 OpenVPN 配置文件</string>
   <string name="edit_profile_title">编辑 %s</string>
   <string name="building_configration">正在生成配置</string>
@@ -144,7 +152,6 @@
   <string name="netstatus">网络状态： %s</string>
   <string name="select_file">选择</string>
   <string name="show_log_window">显示日志窗口</string>
-  <string name="keepstatus">显示流量统计</string>
   <string name="mobile_info">运行 %1$s （ %2$s ） %3$s ，Android API %4$d</string>
   <string name="translationby">中文翻译： 白达卫
 &lt;59539051+ovpntrans.zh@mail.dcu.ie&gt;</string>
@@ -161,6 +168,7 @@
   <string name="getproxy_error">获取代理设置时出错：%s</string>
   <string name="using_proxy">使用代理 %1$s %2$d</string>
   <string name="use_system_proxy">使用系统代理</string>
+  <string name="donatewithpaypal">您可以 &lt; href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS &amp; amp; cmd = _s xclick\"&gt; 通过 PayPal 捐助&lt;/a&gt;</string>
   <string name="onbootrestart">重启时重新连接</string>
   <string name="ignore">忽略</string>
   <string name="restart">重启</string>

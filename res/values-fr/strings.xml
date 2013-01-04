@@ -138,7 +138,6 @@
   <string name="import_content_resolve_error">"Impossible de lire le profil à importer"</string>
   <string name="error_reading_config_file">"Erreur de lecture du fichier de configuration"</string>
   <string name="add_profile">"Ajouter un profil"</string>
-  <string name="trying_to_read">"Tentative de lecture du fichier: %1$s"</string>
   <string name="import_could_not_open">"Impossible de trouver le fichier %1$s mentionné dans le fichier de configuration importé"</string>
   <string name="importing_config">"Importation du fichier de configuration depuis %1$s"</string>
   <string name="import_warning_custom_options">\"Votre configuration a des options de configuration qui ne pouvaient pas être analysées. Ces options ont été ajoutées comme options de configuration personnalisées. La configuration personnalisée est affichée ci-dessous:\":</string>
@@ -180,8 +179,6 @@
   <string name="keychain_nocacert">"Aucun certificat CA renvoyée lors de la lecture depuis le gestionnaire de clés. L\'authentification échouera probablement."</string>
   <string name="show_log_summary">"Affiche la fenêtre de log à la connexion. Cette fenêtre peut toujours être consultée à partir de la notification d\'état."</string>
   <string name="show_log_window">"Afficher la fenêtre de log"</string>
-  <string name="keppstatus_summary">"Garde la notification affichée une fois la connexion établie, pour montrer les statistiques du trafic."</string>
-  <string name="keepstatus">"Afficher les statistiques du trafic"</string>
   <string name="mobile_info">"Fonctionnant sur %1$s (%2$s) %3$s , Android API %4$d"</string>
   <string name="error_rsa_sign">"Erreur de signature de la clé %1$s : %2$s par le gestionnaire d\'Android"</string>
   <string name="faq_system_dialogs">\"L\'avertissement de connexion au VPN qui vous informe que cette application peut intercepter tout le trafic est imposé par le système pour éviter les abus de l\'API du service VPN.\nLa notification de connexion au VPN (Le symbole qui ressemble à une clé) est aussi imposé par le système Android pour signaler une connexion VPN en cours de fonctionnement.
@@ -228,7 +225,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="openvpn_log">Log OpenVPN</string>
   <string name="import_config">"Importer une configuration OpenVPN"</string>
   <string name="battery_consumption_title">"Consommation de la batterie"</string>
-  <string name="baterry_consumption">"Lors de mes tests d\'OpenVPN, la source de principale de consommation de la batterie est l\'émission des paquets de servant à maintenir la connexion active (keepalive). La plupart des serveurs OpenVPN utilisent la directive \'keepalive 10 60\' ce qui signifie que des packets de keepalive sont envoyés toutes les 10 secondes du client au serveur et vice-versa, et que la connexion sera redemmarée après 60s en cas d\'inactivité. lt;gt;Bien que le trafic généré soit faible, ces paquets maintiennent le module radio actif et augmentent la consommation d\'énergie. lt;pgt; Malheureusement, la configuration du keepalive ne peut pas être changé sur le client, seul l\'administrateur du réseau OpenVPN peut le faire. En effet, utiliser une période de keepalive supérieure à 60 secondes pose problème pour les réseaux UDP et les passerelles NAT qui ferment alors la connexion (mes tests ont mis en évidence un timeout de 60s). L\'usage de TCP et d\'une plus longue periode de keepalive est possible mais présente les inconvénient lié aux connexion TCP encapsulées (cf., site en anglais: lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"gt;Why TCP Over TCP Is A Bad Idelt;/agt;)"</string>
   <string name="faq_tethering">La fonctionnalité de Tethering Android (sur WiFi, USB ou Bluetooth) et l\'API VPNService (utilisé par ce programme) ne fonctionnent pas ensemble. Pour plus de détails, voir la &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\" &gt; page #34 &lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN et Tethering</string>
   <string name="connection_retries">"Tentatives de connexion"</string>

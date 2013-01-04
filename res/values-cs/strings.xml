@@ -139,7 +139,6 @@
   <string name="import_content_resolve_error">Nemohu přečíst profil k importu</string>
   <string name="error_reading_config_file">Chyba při čtení konfiguračního souboru</string>
   <string name="add_profile">přidat profil</string>
-  <string name="trying_to_read">Snažim se přečíst soubor: %1$s</string>
   <string name="import_could_not_open">Nemohu najít soubor %1$s zmiňovaný v importovaném profilu</string>
   <string name="importing_config">Importuji nastavení z %1$s</string>
   <string name="import_warning_custom_options">Tvé nastavení obsahuje několik položek, které se nepodařilo zpracovat. Tyto položky byly přidány jako vlastní nastavení. Vlastní nastavení je zobrazeno níže:</string>
@@ -181,8 +180,6 @@
   <string name="keychain_nocacert">Žádný CA certifikát nebyl získán z úložiště, autentikace pravděpodobně selže.</string>
   <string name="show_log_summary">Zobrazit okno s logem při připojování. okno lze vždy otevřít z notifikace.</string>
   <string name="show_log_window">Zobrazit okno s logem</string>
-  <string name="keppstatus_summary">Ponechat notifikaci zobrazenou i po připojení a zobrazovat statistiky provozu.</string>
-  <string name="keepstatus">Zobrazovat statistiky provozu</string>
   <string name="mobile_info">Spuštěno na %1$s (%2$s) %3$s, Android API %4$d</string>
   <string name="error_rsa_sign">Chyba při podepisování klíčem %1$s: %2$s</string>
   <string name="faq_system_dialogs">VPN varování při připojování oznamující o možnosti přesměrování veškerého provozu je vynuceno systémem, aby se zabránilo zneužití VPNService API.\nNotifikace (symbol s klíčem) je také vynucena systémem, aby signalizovala odchozí VPN spojení. Na některých systémech přehrává notifikace i zvuk.\nAndroid zavedl tyto dialogy pro tvoji osobní bezpečnost a ujistil se, že nejdou obejít. (Někdu to bohužel zahrnuje i zvuk notifikace.)</string>
@@ -228,7 +225,6 @@
   <string name="openvpn_log">OpenVPN Log</string>
   <string name="import_config">Importovat OpenVPN nastavení</string>
   <string name="battery_consumption_title">Spotřeba baterie</string>
-  <string name="baterry_consumption">V testech se jako hlavní důvod vysoké spotřeby baterie ukázaly keepalive pakety. Většina OpenVPN serverů má v konfiguraci něco jako \'keepalive 10 60\', což znamená posílání paketů každých deset vteřin. &lt;p&gt; Tyto pakety jsou malé a neznamenají velký provoz, ale udržují mobilní síť aktivní a zvyšují spotřebu energie. &lt;p&gt; Toto nastavení nelze změnit na klientské straně. Jen administrátor OpenVPN může toto nastavení změnit. &lt;p&gt; Bohužel používání keepalive hodnot větších než 60 vteřin spolu s UDP může způsobovat problémy s některými NATy, které ukončují po krátkém čase spojení. Použití TCP s dlouhým keepalive funguje, ale má problém \"TCP přes TCP\" (Viz &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Proč je TCP přes TCP špatný nápad&lt;/a&gt;)</string>
   <string name="faq_tethering">Androidí funkce tetheringu (přes WiFi, USB, nebo Bluetooth) a VPService API (používané tímto programem) spolu nepracují. Více detailů viz &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;problém #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN a tethering</string>
   <string name="connection_retries">Opakování připojení</string>
@@ -238,4 +234,20 @@
   <string name="minidump_generated">OpenVPN neočekávaně havarovalo. Zvaž možnost použití volby poslat Minidump z hlavního menu</string>
   <string name="send_minidump">Poslat Minidump vývojáři</string>
   <string name="send_minidump_summary">Poslat ladící informace o poslední havárii vývojáři</string>
+  <string name="notifcation_title">OpenVPN - %s</string>
+  <string name="session_ipv4string">%1$s - %2$s</string>
+  <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
+  <string name="state_connecting">Připojuji se</string>
+  <string name="state_wait">Čekání na odpověď serveru</string>
+  <string name="state_auth">Ověřuji autorizaci</string>
+  <string name="state_get_config">Stahuji konfigurace klienta</string>
+  <string name="state_assign_ip">Nastavuji IP adresu</string>
+  <string name="state_add_routes">Přidávám trasy</string>
+  <string name="state_connected">Připojeno</string>
+  <string name="state_reconnecting">Obnovuji připojení</string>
+  <string name="state_exiting">Ukončuji</string>
+  <string name="state_noprocess">Neběží</string>
+  <string name="state_tcp_connect">Připojuji (TCP)</string>
+  <string name="state_auth_failed">Přihlášení nebylo úspěšné</string>
+  <string name="state_nonetwork">Čekání na použitelnou síť</string>
 </resources>

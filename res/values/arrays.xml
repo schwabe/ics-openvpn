@@ -17,7 +17,7 @@
         <item>Unspecified</item>
     </string-array>
     <string-array name="verb_entries">
-        <item>0 - No Logging</item>
+        <item>0 - No logging</item>
         <item>1 - Default logging</item>
         <item>2 - More verbose logging</item>
         <item>3</item>

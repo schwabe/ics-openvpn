@@ -1,6 +1,7 @@
 package de.blinkt.openvpn;
 
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Vector;
 
 import android.content.Context;
@@ -78,7 +79,11 @@ public class OpenVPN {
 					else
 						return c.getString(mRessourceId,mArgs);
 				} else {
-					return String.format("Log (no context) resid %d", mRessourceId);
+					String str = String.format(Locale.ENGLISH,"Log (no context) resid %d", mRessourceId);
+					if(mArgs !=null)
+						for(Object o:mArgs)
+						str += "|" +  o.toString();
+					return str;
 				}
 			}
 		}

@@ -89,7 +89,7 @@ public class OpenVPN {
 		}
 	}
 
-	private static final int MAXLOGENTRIES = 200;
+	private static final int MAXLOGENTRIES = 500;
 
 
 	public static final String MANAGMENT_PREFIX = "M:";

@@ -19,12 +19,14 @@ done
 
 # Chinese language require zh-CN and zh-TW
 
-for lang in zh-CN zh-TW
+for lang in zh-CN zh-TW id
 do
 	if [ $lang = "zh-CN" ] ; then
 		rlang="zh-rCN"
     elif [ $lang = "zh-TW" ] ; then
         rlang="zh-rTW"
+    elif [ $lang = "id" ] ; then
+        rlang="id"
 	fi
 
 	echo "Fetch archive for $lang"

@@ -225,6 +225,7 @@
   <string name="openvpn_log">OpenVPN Log</string>
   <string name="import_config">Importovat OpenVPN nastavení</string>
   <string name="battery_consumption_title">Spotřeba baterie</string>
+  <string name="baterry_consumption">V testech se jako hlavní důvod vysoké spotřeby baterie ukázaly keepalive pakety. Většina OpenVPN serverů má v konfiguraci něco jako \'keepalive 10 60\', což znamená posílání paketů každých deset vteřin. &lt;p&gt; Tyto pakety jsou malé a neznamenají velký provoz, ale udržují mobilní síť aktivní a zvyšují spotřebu energie. &lt;p&gt; Toto nastavení nelze změnit na klientské straně. Jen administrátor OpenVPN může toto nastavení změnit. &lt;p&gt; Bohužel používání keepalive hodnot větších než 60 vteřin spolu s UDP může způsobovat problémy s některými NATy, které ukončují po krátkém čase spojení. Použití TCP s dlouhým keepalive funguje, ale má problém \"TCP přes TCP\" (Viz &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Proč je TCP přes TCP špatný nápad&lt;/a&gt;)</string>
   <string name="faq_tethering">Androidí funkce tetheringu (přes WiFi, USB, nebo Bluetooth) a VPService API (používané tímto programem) spolu nepracují. Více detailů viz &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;problém #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN a tethering</string>
   <string name="connection_retries">Opakování připojení</string>
@@ -240,13 +241,14 @@
   <string name="state_connecting">Připojuji se</string>
   <string name="state_wait">Čekání na odpověď serveru</string>
   <string name="state_auth">Ověřuji autorizaci</string>
-  <string name="state_get_config">Stahuji konfigurace klienta</string>
+  <string name="state_get_config">Stahuji konfiguraci klienta</string>
   <string name="state_assign_ip">Nastavuji IP adresu</string>
   <string name="state_add_routes">Přidávám trasy</string>
   <string name="state_connected">Připojeno</string>
   <string name="state_reconnecting">Obnovuji připojení</string>
   <string name="state_exiting">Ukončuji</string>
   <string name="state_noprocess">Neběží</string>
+  <string name="state_resolve">Překlad názvů</string>
   <string name="state_tcp_connect">Připojuji (TCP)</string>
   <string name="state_auth_failed">Přihlášení nebylo úspěšné</string>
   <string name="state_nonetwork">Čekání na použitelnou síť</string>

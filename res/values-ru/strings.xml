@@ -147,6 +147,7 @@
   <string name="no_bind">Не использовать привязки</string>
   <string name="import_configuration_file">Импорт файла конфигурации</string>
   <string name="faq_security_title">Соображения безопасности</string>
+  <string name="faq_security">"Так как OpenVPN чувствителен к безопасности, то будут разумными несколько замечаний относительно защиты. Все данные на sd карте по сути не защищены. Каждое приложение может прочесть их (например эта программа не требует специальных привилегий на sd карту). Данные этого приложения могут быть прочитаны только им самим. При использовании опции импорта для cacert/cert/key в диалоговом окне файл, данные сохраняются в VPN профиле. VPN профили доступны только этому приложению. (Потом не забудьте удалить копии на sd карте). Несмотря на то, что данные доступны только этому приложению, они все еще незашифрованы. Путем получения прав администратора (рута) на телефоне или другими эксплойтами возможно извлечь данные. Также сохраненные пароли хранятся в обычном текстовом виде. Настоятельно рекомендуется pkcs12 файлы импортировать в android keystore."</string>
   <string name="import_vpn">Импорт</string>
   <string name="broken_image_cert_title">Ошибка вывода выбранного сертификата</string>
   <string name="broken_image_cert">Произошла ошибка при попытке вызова системного диалога выбора сертификатов Android 4.0+ Этого не должно было случиться на стандартной прошивке. Может быть в вашей прошивке испорчено хранилище сертификатов</string>
@@ -224,6 +225,7 @@
   <string name="openvpn_log">OpenVPN Журнал</string>
   <string name="import_config">Импорт конфигурации OpenVPN</string>
   <string name="battery_consumption_title">Потребление батареи</string>
+  <string name="faq_tethering">Тетеринг функция Android (через WiFi, USB или Bluetooth) и VPNService API (используемое этой программой) не работают вместе. Подробней в &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;проблеме №34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN и Tethering</string>
   <string name="connection_retries">Попытки подключения</string>
   <string name="reconnection_settings">Параметры переподключения</string>

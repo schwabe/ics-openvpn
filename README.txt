@@ -4,6 +4,10 @@ See  the file todo.txt for ideas/not yet implemented features (and the bug track
 
 Build instraction:
 
+Checkout google breakcode:
+
+svn co http://google-breakpad.googlecode.com/svn/trunk/ google-breakpad
+
 - Install sdk
 - Install ndk
 

@@ -1,7 +1,5 @@
 Ideas:
 
-- Write a FAQ about Android's routing/ifconfig
-
 - Do cert+key+ca => p12 inside the app, import directly to keystore
    
 - general settings dialog
@@ -23,13 +21,9 @@ Ideas:
 
 Bugfixes:
  - startpath file explorer
- - check copy&paste
- - hibernate when screen offf and < 50 kB min
+ - hibernate when screen off and < 50 kB min
 
 Missing configuration options:
-
-IPv6 support:
-- fix bogus tun-ipv6 warning
 
 Tap support:
 - Actually it is possible to emulate tap with tun device, a minimal implementation would have to do:

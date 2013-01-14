@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Vector;
 
+
 import android.content.Context;
 import android.os.Build;
 
@@ -82,7 +83,7 @@ public class OpenVPN {
 					String str = String.format(Locale.ENGLISH,"Log (no context) resid %d", mRessourceId);
 					if(mArgs !=null)
 						for(Object o:mArgs)
-						str += "|" +  o.toString();
+							str += "|" +  o.toString();
 					return str;
 				}
 			}
@@ -137,7 +138,7 @@ public class OpenVPN {
 		if(mLaststate!=null)
 			sl.updateState(mLaststate, mLaststatemsg, mLastStateresid);
 	}	
-	
+
 	private static int getLocalizedState(String state){
 		if (state.equals("CONNECTING")) 
 			return R.string.state_connecting;
@@ -198,10 +199,12 @@ public class OpenVPN {
 	}
 
 	public synchronized static void updateStateString(String state, String msg, int resid) {
-		mLaststate= state;
-		mLaststatemsg = msg;
-		mLastStateresid = resid;
-		
+		if (! "BYTECOUNT".equals(state)) {
+			mLaststate= state;
+			mLaststatemsg = msg;
+			mLastStateresid = resid;
+		}
+
 		for (StateListener sl : stateListener) {
 			sl.updateState(state,msg,resid);
 		}

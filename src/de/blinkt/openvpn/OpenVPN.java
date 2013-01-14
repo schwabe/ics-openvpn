@@ -9,6 +9,7 @@ import android.content.Context;
 import android.os.Build;
 
 public class OpenVPN {
+	private static final String NOPROCESS = "NOPROCESS";
 
 
 	public static LinkedList<LogItem> logbuffer;
@@ -19,7 +20,7 @@ public class OpenVPN {
 
 	private static String mLaststatemsg;
 
-	private static String mLaststate;
+	private static String mLaststate=NOPROCESS;
 
 	private static int mLastStateresid=R.string.state_noprocess;
 

@@ -214,6 +214,7 @@ public class ConfigParser {
 			"route-up",
 			"ipchange",
 			"route-up",
+			"route-pre-down",
 			"auth-user-pass-verify",
 			"dhcp-release",
 			"dhcp-renew",

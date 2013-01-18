@@ -1780,12 +1780,17 @@ link_socket_init_phase2 (struct link_socket *sock,
           phase2_tcp_client (sock, sig_info);
     
         }
-#ifdef ENABLE_SOCKS
-      else if (sock->info.proto == PROTO_UDP && sock->socks_proxy && sock->info.af == AF_INET)
+      else if (sock->info.proto == PROTO_UDP)
         {
-          phase2_socks_client (sock, sig_info);
+#ifdef ENABLE_SOCKS
+          if (sock->info.proto == PROTO_UDP && sock->socks_proxy)
+            {
+              phase2_socks_client (sock, sig_info);
 #endif
+            }
+          protect_fd_nonlocal (sock->sd, &sock->info.lsa->actual.dest.addr.sa);
         }
+
       if (sig_info && sig_info->signal_received)
         goto done;
     }

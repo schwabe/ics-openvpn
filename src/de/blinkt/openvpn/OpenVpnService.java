@@ -58,7 +58,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	private CIDRIP mLocalIP=null;
 
-	private OpenVpnManagementThread mSocketManager;
+	private OpenVpnManagementThread mManagementThread;
 
 	private Thread mSocketManagerThread;
 	private int mMtu;
@@ -214,7 +214,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	void registerNetworkStateReceiver() {
 		// Registers BroadcastReceiver to track network connection changes.
 		IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-		mNetworkStateReceiver = new NetworkSateReceiver(mSocketManager);
+		mNetworkStateReceiver = new NetworkSateReceiver(mManagementThread);
 		this.registerReceiver(mNetworkStateReceiver, filter);
 	}
 
@@ -266,8 +266,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 		if(mgmtsocket!=null) {
 			// start a Thread that handles incoming messages of the managment socket
-			mSocketManager = new OpenVpnManagementThread(mProfile,mgmtsocket,this);
-			mSocketManagerThread = new Thread(mSocketManager,"OpenVPNMgmtThread");
+			mManagementThread=new OpenVpnManagementThread(mProfile,mgmtsocket,this);
+			mSocketManagerThread = new Thread(mManagementThread,"OpenVPNMgmtThread");
 			mSocketManagerThread.start();
 			OpenVPN.logInfo("started Socket Thread");
 			registerNetworkStateReceiver();
@@ -288,7 +288,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	@Override
 	public void onDestroy() {
 		if (mProcessThread != null) {
-			mSocketManager.managmentCommand("signal SIGINT\n");
+			mManagementThread.managmentCommand("signal SIGINT\n");
 
 			mProcessThread.interrupt();
 		}
@@ -504,5 +504,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		} else {
 			return false;
 		}
+	}
+
+	public OpenVpnManagementThread getManagementThread() {
+		return mManagementThread;
 	}
 }

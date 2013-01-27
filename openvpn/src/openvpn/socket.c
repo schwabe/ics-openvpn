@@ -686,7 +686,6 @@ create_socket (struct link_socket *sock)
     {
       ASSERT (0);
     }
-
     /* set socket buffers based on --sndbuf and --rcvbuf options */
     socket_set_buffers (sock->sd, &sock->socket_buffer_sizes);
     
@@ -939,7 +938,6 @@ openvpn_connect (socket_descriptor_t sd,
 
   protect_fd_nonlocal(sd, remote);
   status = connect (sd, remote, af_addr_size(remote->sa_family));
-
   if (status)
     status = openvpn_errno ();
   if (

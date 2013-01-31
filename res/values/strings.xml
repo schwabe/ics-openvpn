@@ -253,5 +253,6 @@
     <string name="state_tcp_connect">Connecting (TCP)</string>
     <string name="state_auth_failed">Authentication failed</string>
     <string name="state_nonetwork">Waiting for usable network</string>
-
+    <string name="statusline_bytecount">In: %8$1s %8$2s/s  Out: %8$3s %8$4s/s</string>
+    <string name="notifcation_title_notconnect">Not connected</string>
 </resources>

@@ -15,18 +15,23 @@ public class OpenVPN {
 
 	private static Vector<LogListener> logListener;
 	private static Vector<StateListener> stateListener;
+	private static Vector<ByteCountListener> byteCountListener;
+
 	private static String[] mBconfig;
 
-	private static String mLaststatemsg;
+	private static String mLaststatemsg="";
 
-	private static String mLaststate;
+	private static String mLaststate = "NOPROCESS";
 
 	private static int mLastStateresid=R.string.state_noprocess;
+	
+	private static long mlastByteCount[]={0,0,0,0};
 
 	static {
 		logbuffer  = new LinkedList<LogItem>();
 		logListener = new Vector<OpenVPN.LogListener>();
 		stateListener = new Vector<OpenVPN.StateListener>();
+		byteCountListener = new Vector<OpenVPN.ByteCountListener>();
 		logInformation();
 	}
 
@@ -83,7 +88,7 @@ public class OpenVPN {
 					String str = String.format(Locale.ENGLISH,"Log (no context) resid %d", mRessourceId);
 					if(mArgs !=null)
 						for(Object o:mArgs)
-							str += "|" +  o.toString();
+						str += "|" +  o.toString();
 					return str;
 				}
 			}
@@ -106,6 +111,10 @@ public class OpenVPN {
 
 	public interface StateListener {
 		void updateState(String state, String logmessage, int localizedResId);
+	}
+	
+	public interface ByteCountListener {
+		void updateByteCount(long in, long out, long diffin, long diffout);
 	}
 
 	synchronized static void logMessage(int level,String prefix, String message)
@@ -131,14 +140,25 @@ public class OpenVPN {
 	public synchronized static void removeLogListener(LogListener ll) {
 		logListener.remove(ll);
 	}
+	
+	public static void addByteCountListener(ByteCountListener bcl) {
+		bcl.updateByteCount(mlastByteCount[0],	mlastByteCount[1], mlastByteCount[2], mlastByteCount[3]);
+		byteCountListener.add(bcl);
+	}	
+	
+	public static void removeByteCountListener(ByteCountListener bcl) {
+		byteCountListener.remove(bcl);
+	}
 
 
 	public synchronized static void addStateListener(StateListener sl){
-		stateListener.add(sl);
-		if(mLaststate!=null)
-			sl.updateState(mLaststate, mLaststatemsg, mLastStateresid);
+		if(!stateListener.contains(sl)){
+			stateListener.add(sl);
+			if(mLaststate!=null)
+				sl.updateState(mLaststate, mLaststatemsg, mLastStateresid);
+		}
 	}	
-
+	
 	private static int getLocalizedState(String state){
 		if (state.equals("CONNECTING")) 
 			return R.string.state_connecting;
@@ -199,12 +219,10 @@ public class OpenVPN {
 	}
 
 	public synchronized static void updateStateString(String state, String msg, int resid) {
-		if (! "BYTECOUNT".equals(state)) {
-			mLaststate= state;
-			mLaststatemsg = msg;
-			mLastStateresid = resid;
-		}
-
+		mLaststate= state;
+		mLaststatemsg = msg;
+		mLastStateresid = resid;
+		
 		for (StateListener sl : stateListener) {
 			sl.updateState(state,msg,resid);
 		}
@@ -239,5 +257,14 @@ public class OpenVPN {
 	public static void logError(int ressourceId, Object... args) {
 		newlogItem(new LogItem(LogItem.ERROR, ressourceId,args));
 	}
+
+	public static void updateByteCount(long in, long out, long diffin, long diffout) {
+		mlastByteCount = new long[] {in,out,diffin,diffout};
+		for(ByteCountListener bcl:byteCountListener){
+			bcl.updateByteCount(in, out, diffin,diffout);
+		}
+	}
+
+
 
 }

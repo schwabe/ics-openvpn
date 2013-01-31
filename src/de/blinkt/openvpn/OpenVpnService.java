@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package de.blinkt.openvpn;
-
-import java.io.IOException;
+package de.blinkt.openvpn;import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Vector;
@@ -34,16 +32,19 @@ import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.net.VpnService;
 import android.os.Binder;
-import android.os.Handler;
-import android.os.Handler.Callback;
 import android.os.Build;
+import android.os.Handler.Callback;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
+
 import de.blinkt.openvpn.OpenVPN.StateListener;
 
 public class OpenVpnService extends VpnService implements StateListener, Callback {
 	public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";
+	public static final String START_SERVICE_STICKY = "de.blinkt.openvpn.START_SERVICE_STICKY";
+	public static final String ALWAYS_SHOW_NOTIFICATION = "de.blinkt.openvpn.NOTIFICATION_ALWAYS_VISIBLE";
+
 
 	private Thread mProcessThread=null;
 
@@ -76,15 +77,22 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	public static final int PROTECT_FD = 0;
 
+
+	private static final int LEVEL_OFFLINE = 0;
+	private static final int LEVEL_NOTCONNECTED = 1;
+	private static final int LEVEL_CONNECTED = 2;
+
+	private static boolean mNotificationalwaysVisible=false;
+
 	private final IBinder mBinder = new LocalBinder();
-	
+
 	public class LocalBinder extends Binder {
 		public OpenVpnService getService() {
-            // Return this instance of LocalService so clients can call public methods
-            return OpenVpnService.this;
-        }
-    }
-	
+			// Return this instance of LocalService so clients can call public methods
+			return OpenVpnService.this;
+		}
+	}
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		String action = intent.getAction();
@@ -93,7 +101,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		else
 			return super.onBind(intent);
 	}
-	
+
 	@Override
 	public void onRevoke() {
 		OpenVpnManagementThread.stopOpenVPN();
@@ -115,27 +123,31 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		}
 	}
 
-	private void showNotification(String msg, String tickerText, boolean lowpriority, long when) {
+	private void showNotification(String msg, String tickerText, boolean lowpriority, long when, int level) {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
 
-		int icon = R.drawable.ic_stat_vpn;
+		int icon = R.drawable.notification_icon;
 		android.app.Notification.Builder nbuilder = new Notification.Builder(this);
 
-		nbuilder.setContentTitle(getString(R.string.notifcation_title,mProfile.mName));
+		if(mProfile!=null)
+			nbuilder.setContentTitle(getString(R.string.notifcation_title,mProfile.mName));
+		else
+			nbuilder.setContentTitle(getString(R.string.notifcation_title_notconnect));
+
 		nbuilder.setContentText(msg);
 		nbuilder.setOnlyAlertOnce(true);
 		nbuilder.setOngoing(true);
 		nbuilder.setContentIntent(getLogPendingIntent());
-		nbuilder.setSmallIcon(icon);
+		nbuilder.setSmallIcon(icon,level);
 		if(when !=0)
 			nbuilder.setWhen(when);
 
 
 		// Try to set the priority available since API 16 (Jellybean)
 		jbNotificationExtras(lowpriority, nbuilder);
-		if(tickerText!=null)
+		if(tickerText!=null && !tickerText.equals(""))
 			nbuilder.setTicker(tickerText);
 
 		@SuppressWarnings("deprecation")
@@ -220,11 +232,19 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 
 	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {		
-		
+	public int onStartCommand(Intent intent, int flags, int startId) {
+
+		if(intent != null && intent.getBooleanExtra(ALWAYS_SHOW_NOTIFICATION, false))
+			mNotificationalwaysVisible=true;
+
+		OpenVPN.addStateListener(this);
+
 		if(intent != null && intent.getAction() !=null &&intent.getAction().equals(START_SERVICE))
 			return START_NOT_STICKY;
-			
+		if(intent != null && intent.getAction() !=null &&intent.getAction().equals(START_SERVICE_STICKY)) {
+			return START_REDELIVER_INTENT;
+		}
+
 
 		// Extract information from the intent.
 		String prefix = getPackageName();
@@ -234,10 +254,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 		mProfile = ProfileManager.get(profileUUID);
 
-		showNotification("Starting VPN " + mProfile.mName,"Starting VPN " + mProfile.mName, false,0);
+		showNotification("Starting VPN " + mProfile.mName,"Starting VPN " + mProfile.mName, false,0,LEVEL_NOTCONNECTED);
 
 
-		OpenVPN.addStateListener(this);
 
 		// Set a flag that we are starting a new VPN
 		mStarting=true;
@@ -469,20 +488,23 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	public void updateState(String state,String logmessage, int resid) {
 		// If the process is not running, ignore any state, 
 		// Notification should be invisible in this state
-		if(mProcessThread==null)
+		if(mProcessThread==null && !mNotificationalwaysVisible)
 			return;
 
 		// Display byte count only after being connected
 
-		if("BYTECOUNT".equals(state)) {
-			if(mDisplayBytecount) {
-				showNotification(logmessage,null,true,mConnecttime);
-			}
-		} else {
+		{
+			int level;
 			if("CONNECTED".equals(state)) {
 				mDisplayBytecount = true;
 				mConnecttime = System.currentTimeMillis();
+				level = LEVEL_CONNECTED;
 			} else {
+				if ("NONETWORK".equals(state)) {
+					level = LEVEL_OFFLINE;
+				} else {
+					level = LEVEL_NOTCONNECTED;
+				}
 				mDisplayBytecount = false;
 			}
 
@@ -490,9 +512,33 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			// This also mean we are no longer connected, ignore bytecount messages until next
 			// CONNECTED
 			String ticker = getString(resid);
-			showNotification(getString(resid) +" " + logmessage,ticker,false,0);
+			showNotification(getString(resid) +" " + logmessage,ticker,false,0, level);
 
 		}
+	}
+
+
+	public void updateByteCount(long in, long out, long diffin, long diffout) {
+		if(mDisplayBytecount) {
+			String netstat = String.format(getString(R.string.statusline_bytecount),
+					humanReadableByteCount(in, false),
+					humanReadableByteCount(diffin, false),
+					humanReadableByteCount(out, false),
+					humanReadableByteCount(diffout, false));
+
+			boolean lowpriority = !mNotificationalwaysVisible;
+			showNotification(netstat,null,lowpriority,mConnecttime, LEVEL_CONNECTED);
+		}
+
+	}
+
+	// From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
+	public static String humanReadableByteCount(long bytes, boolean si) {
+		int unit = si ? 1000 : 1024;
+		if (bytes < unit) return bytes + " B";
+		int exp = (int) (Math.log(bytes) / Math.log(unit));
+		String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
+		return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
 	}
 
 	@Override

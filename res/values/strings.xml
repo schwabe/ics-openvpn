@@ -255,4 +255,5 @@
     <string name="state_nonetwork">Waiting for usable network</string>
     <string name="statusline_bytecount">In: %8$1s %8$2s/s  Out: %8$3s %8$4s/s</string>
     <string name="notifcation_title_notconnect">Not connected</string>
+    <string name="jelly_keystore_alphanumeric_bug">Some versions of Android 4.1 have problem if the name of the keystore certificate contains non alphanumeric character (like spaces or dashes)</string>
 </resources>

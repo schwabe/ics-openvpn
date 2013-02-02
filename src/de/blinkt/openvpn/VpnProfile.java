@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.security.KeyChain;
 import android.security.KeyChainException;
@@ -577,6 +578,11 @@ public class VpnProfile implements  Serializable{
 			e.printStackTrace();
 		} catch (KeyChainException e) {
 			OpenVPN.logMessage(0,"",context.getString(R.string.keychain_access));
+			if(Build.VERSION.SDK_INT==Build.VERSION_CODES.JELLY_BEAN){
+				if(!mAlias.matches("^[a-zA-Z0-9]$")) {
+					OpenVPN.logError(R.string.jelly_keystore_alphanumeric_bug);
+				}
+			}
 		}
 		return false;
 	}

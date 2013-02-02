@@ -804,7 +804,7 @@ setenv_str_ex (struct env_set *es,
     }
   else
     {
-      char *str = construct_name_value (name_tmp, val_tmp, NULL);
+      char *str = construct_name_value (name_tmp, val_tmp, &gc);
       if (platform_putenv(str))
       {
         msg (M_WARN | M_ERRNO, "putenv('%s') failed", str);

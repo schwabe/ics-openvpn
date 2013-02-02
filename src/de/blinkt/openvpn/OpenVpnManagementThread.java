@@ -483,7 +483,7 @@ public class OpenVpnManagementThread implements Runnable {
 
 		// The Jelly Bean *evil* Hack
 		// 4.2 implements the RSA/ECB/PKCS1PADDING in the OpenSSLprovider
-		if(Build.VERSION.SDK_INT==16){
+		if(Build.VERSION.SDK_INT==Build.VERSION_CODES.JELLY_BEAN){
 			processSignJellyBeans(privkey,data);
 			return;
 		}

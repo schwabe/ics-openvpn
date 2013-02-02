@@ -106,6 +106,7 @@ public class VpnProfile implements  Serializable{
 	public String mConnectRetryMax="5";
 	public String mConnectRetry="5";
 	public boolean mUserEditable=true;
+	public String mAuth="";
 	
 	static final String MINIVPN = "miniopenvpn";
 	
@@ -349,6 +350,9 @@ public class VpnProfile implements  Serializable{
 			cfg += "cipher " + mCipher + "\n";
 		}
 
+		if(nonNull(mAuth)) {
+			cfg += "auth " + mAuth + "\n";
+		}
 
 		// Obscure Settings dialog
 		if(mUseRandomHostname)

@@ -23,6 +23,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 	private SwitchPreference mUseTLSAuth;
 	private EditTextPreference mCipher;
 	private String mTlsAuthFileData;
+	private EditTextPreference mAuth;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,9 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 		mCipher =(EditTextPreference) findPreference("cipher");
 		mCipher.setOnPreferenceChangeListener(this);
 		
+		mAuth =(EditTextPreference) findPreference("auth");
+		mAuth.setOnPreferenceChangeListener(this);
+		
 		loadSettings();
 
 	}
@@ -64,6 +68,8 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 		mTLSAuthDirection.setValue(mProfile.mTLSAuthDirection);
 		mCipher.setText(mProfile.mCipher);
 		onPreferenceChange(mCipher, mProfile.mCipher);
+		mAuth.setText(mProfile.mAuth);
+		onPreferenceChange(mAuth, mProfile.mAuth);
 	}
 	
 	@Override
@@ -85,6 +91,11 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 		else
 			mProfile.mCipher = mCipher.getText();
 		
+		if(mAuth.getText()==null)
+			mProfile.mAuth = null;
+		else
+			mProfile.mAuth = mAuth.getText();
+		
 	}
 	
 	
@@ -96,7 +107,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 				preference.setSummary(mProfile.mServerName);
 			else
 				preference.setSummary((String)newValue);
-		} else if (preference == mCipher) {
+		} else if (preference == mCipher || preference == mAuth) {
 			preference.setSummary((CharSequence) newValue);
 		}
 		return true;

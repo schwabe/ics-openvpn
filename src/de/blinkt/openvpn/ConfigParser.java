@@ -388,6 +388,11 @@ public class ConfigParser {
 		if(cipher!=null)
 			np.mCipher= cipher.get(1);
 
+		Vector<String> auth = getOption("auth", 1, 1);
+		if(auth!=null)
+			np.mAuth = auth.get(1);
+
+		
 		Vector<String> ca = getOption("ca",1,1);
 		if(ca!=null){
 			np.mCaFilename = ca.get(1);

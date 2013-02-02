@@ -126,7 +126,8 @@
     <string name="no_vpn_support_image">Your image does not support the VPNService API, sorry :(</string>
     <string name="encryption">Encryption</string>
     <string name="cipher_dialog_title">Enter encryption method</string>
-    <string name="chipher_dialog_message">Enter the cipher key for OpenVPN. Leave empty to use default cipher</string>
+    <string name="chipher_dialog_message">Enter the encryption cipher alogithm used by OpenVPN. Leave empty to use default cipher.</string>
+    <string name="auth_dialog_message">Enter the authentication digest used for OpenVPN. Leave empty to use default digest.</string>
     <string name="settings_auth">Authentication/Encryption</string>
     <string name="file_explorer_tab">File Explorer</string>
     <string name="inline_file_tab">Inline File</string>
@@ -256,4 +257,8 @@
     <string name="statusline_bytecount">In: %8$1s %8$2s/s  Out: %8$3s %8$4s/s</string>
     <string name="notifcation_title_notconnect">Not connected</string>
     <string name="jelly_keystore_alphanumeric_bug">Some versions of Android 4.1 have problem if the name of the keystore certificate contains non alphanumeric character (like spaces or dashes)</string>
+    <string name="encryption_cipher">Encryption cipher</string>
+    <string name="packet_auth">Packets authentication</string>
+    <string name="auth_dialog_title">Enter packet authentication method</string>
+
 </resources>

@@ -110,14 +110,21 @@
                 <data android:mimeType="application/ovpn" />
             </intent-filter>
             <intent-filter android:label="@string/import_config" >
+                <!--  http://stackoverflow.com/questions/7030832/associating-certain-file-extension-to-my-android-application/7102838#7102838 -->
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data
-                    android:pathPattern=".*\\.ovpn"
-                    android:scheme="content" />
+                <data android:mimeType="*/*" />
+                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:port="*" />
+                <data android:pathPattern=".*..*..*..*..*.AAA" />
+                <data android:pathPattern=".*..*..*..*.AAA" />
+                <data android:pathPattern=".*..*..*.AAA" />
+                <data android:pathPattern=".*..*.AAA" />
+                <data android:pathPattern=".*.AAA" />
             </intent-filter>
         </activity>
         <activity

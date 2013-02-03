@@ -226,12 +226,12 @@
   <string name="import_config">Імпорт конфігурації OpenVPN</string>
   <string name="battery_consumption_title">Споживання акумулятора</string>
   <string name="baterry_consumption">У моїх особистих тестах основна причина високого споживання батареї OpenVPN є підтримуючі пакети. Більшість OpenVPN серверів мають директиви на кшталт як  \'keepalive 10 60\', яка переводить підтримуючий пакет від клієнта до сервера і від сервера до клієнта кожні десять секунд. &lt;p&gt; Хоча ці пакети є невеликими і не використовують багато трафіку, вони тримають мережі мобільного інтернету зайнятими і збільшують споживання енергії. &lt;p&gt; Цей параметр утримання мережі  не може бути зміненим на клієнті. Тільки системний адміністратор OpenVPN може змінити налаштування. &lt;p&gt; На жаль, використання утримання мережі більше 60 секунд з UDP має проблеми з деякими шлюзами NAT, які закінчують стан з\'єднання після короткої затримки (60с в моїх тестах). Використання TCP з довгими затримками утримання мережі працює, але має проблему TCP над TCP. (Див. &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt; Чому TCP над TCP є поганим середовищем &lt;/a&gt;)</string>
-  <string name="faq_tethering">Функція транзитного з\'єднання на Android (через WiFi, USB або Bluetooth) та VPNService API (використовуване цією програмою) не працюють разом. Детальніше в <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=34"> проблема № 34 </a></string>
+  <string name="faq_tethering">Функція транзитного з\'єднання на Android (через WiFi, USB або Bluetooth) та VPNService API (використовуване цією програмою) не працюють разом. Детальніше в &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt; Issue 34 &lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN і тетерінг</string>
   <string name="connection_retries">Спроб підключення</string>
   <string name="reconnection_settings">Налаштування перепідключення</string>
   <string name="connectretrymessage">Кількість секунд очікування між спробами підключення.</string>
-  <string name="connectretrywait">Секундм між підключеннями</string>
+  <string name="connectretrywait">Секунд між підключеннями</string>
   <string name="minidump_generated">OpenVPN впав несподівано. Будь ласка, розгляньте використання параметру \"Надіслати Мінідамп\" в головному меню</string>
   <string name="send_minidump">Надіслати мінідамп розробнику</string>
   <string name="send_minidump_summary">Надіслати налагоджувальну інформацію про останній збій розробнику</string>

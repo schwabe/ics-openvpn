@@ -125,7 +125,8 @@
   <string name="no_vpn_support_image">Dieses Android ROM enthält keine VPNService API. Sorry :(</string>
   <string name="encryption">Verschlüsselung</string>
   <string name="cipher_dialog_title">Geben Sie die Verschlüsslungsmethode an</string>
-  <string name="chipher_dialog_message">Verschlüsslungsalgorithmus (chiper). Leer lassen um Standardalgorithmus auszuwählen</string>
+  <string name="chipher_dialog_message">Verschlüsslungsalgorithmus der von OpenVPN genutzt werden soll. Um den Standardalgorithmus zu benutzten leer lassen.</string>
+  <string name="auth_dialog_message">Geben Sie den Hashalgorithmus der zur Nachrichtenauthentifizierung benutzt wird an. Leer lassen um den Standard Algorithmus zu nutzen.</string>
   <string name="settings_auth">Authentifizierung/Verschlüsselung</string>
   <string name="file_explorer_tab">Datei auswählen…</string>
   <string name="inline_file_tab">Eingebettete Datei</string>
@@ -252,4 +253,10 @@
   <string name="state_tcp_connect">Verbinde (TCP)</string>
   <string name="state_auth_failed">Authentifizierung fehlgeschlagen</string>
   <string name="state_nonetwork">Warte auf Internetverbindung</string>
+  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
+  <string name="notifcation_title_notconnect">Nicht verbunden</string>
+  <string name="jelly_keystore_alphanumeric_bug">Einige Versionen von Android 4.1 haben Probleme, wenn der Name des im Zertifikat Keystore gespeicherten Zertifikates nicht alphanumerische Zeichen (wie Leerzeichen, Unterstriche oder Bindestriche) enthält. Probieren Sie das Sie das Zertifikat mit einem Namen ohne Sonderzeichen zu importieren.</string>
+  <string name="encryption_cipher">Verschlüsslungsalgorithmus</string>
+  <string name="packet_auth">Packetauthentifizierung</string>
+  <string name="auth_dialog_title">Geben Sie den Authentifizierungsalgorithmus an</string>
 </resources>

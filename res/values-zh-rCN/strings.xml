@@ -109,7 +109,6 @@
   <string name="faq_shortcut">启动快捷方式</string>
   <string name="encryption">加密</string>
   <string name="cipher_dialog_title">输入加密方法</string>
-  <string name="chipher_dialog_message">输入 OpenVPN 密钥。留空以使用默认密码</string>
   <string name="settings_auth">认证/加密</string>
   <string name="file_explorer_tab">文件浏览器</string>
   <string name="inline_file_tab">内联文件</string>

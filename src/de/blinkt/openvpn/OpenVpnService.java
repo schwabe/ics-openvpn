@@ -201,6 +201,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	private LocalServerSocket openManagmentInterface(int tries) {
 		// Could take a while to open connection
 		String socketname = (getCacheDir().getAbsolutePath() + "/" +  "mgmtsocket");
+		// The sock is transfered to the LocalServerSocket, ignore warning
+		@SuppressWarnings("resource")
 		LocalSocket sock = new LocalSocket();
 
 		while(tries > 0 && !sock.isConnected()) {
@@ -221,12 +223,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			return lss;
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				sock.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
 		return null;
 

@@ -125,7 +125,6 @@
   <string name="no_vpn_support_image">Teie süsteemitarkvara ei toeta VPNService API\'t, vabandame :(</string>
   <string name="encryption">Krüpteerimine</string>
   <string name="cipher_dialog_title">Vali krüpteerimismeetod</string>
-  <string name="chipher_dialog_message">Sisestage OpenVPN šifrivõti. Valikust loobumisel kasutatakse vaikimisi šifrit</string>
   <string name="settings_auth">Autentimine/Krüpteerimine</string>
   <string name="file_explorer_tab">Failihaldur</string>
   <string name="inline_file_tab">Integreeritud fail</string>

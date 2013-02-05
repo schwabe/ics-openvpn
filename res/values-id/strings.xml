@@ -125,7 +125,6 @@
   <string name="no_vpn_support_image">Gambar Anda tidak mendukung VPNService API, maaf:(</string>
   <string name="encryption">Enkripsi</string>
   <string name="cipher_dialog_title">Masukkan metode enkripsi</string>
-  <string name="chipher_dialog_message">Masukkan kunci sandi untuk OpenVPN. Biarkan kosong untuk menggunakan standar cipher</string>
   <string name="settings_auth">Otentikasi/Enkripsi</string>
   <string name="file_explorer_tab">Penjelajah berkas</string>
   <string name="inline_file_tab">Inline File</string>

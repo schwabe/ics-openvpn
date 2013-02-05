@@ -125,7 +125,6 @@
   <string name="no_vpn_support_image">Su imagen no es compatible con la API de VPNService, lo siento :(</string>
   <string name="encryption">Cifrado</string>
   <string name="cipher_dialog_title">Especifique el método de cifrado</string>
-  <string name="chipher_dialog_message">Introduzca la clave de cifrado para OpenVPN. Deje en blanco para utilizar cifrado predeterminado</string>
   <string name="settings_auth">Autenticación/Cifrado</string>
   <string name="file_explorer_tab">Administrador de archivos</string>
   <string name="inline_file_tab">Archivo en línea</string>

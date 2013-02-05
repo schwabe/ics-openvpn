@@ -110,7 +110,6 @@
   <string name="no_vpn_support_image">你的Android ROM不支援VPN服務API，抱歉了。 :(</string>
   <string name="encryption">加密</string>
   <string name="cipher_dialog_title">輸入加密方法</string>
-  <string name="chipher_dialog_message">輸入OpenVPN加密方法，留空則使用預設</string>
   <string name="settings_auth">驗證/加密</string>
   <string name="file_explorer_tab">檔案瀏覽器</string>
   <string name="inline_file_tab">內嵌檔案</string>

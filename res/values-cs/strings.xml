@@ -125,7 +125,6 @@
   <string name="no_vpn_support_image">Tvůj obrázek není podporovaný rozhraním VPNService, je mi líto :-(</string>
   <string name="encryption">Šifrování</string>
   <string name="cipher_dialog_title">Zadej šifrovací metodu</string>
-  <string name="chipher_dialog_message">Zadej šifru pro OpenVPN. Nech prázdné pro výchozí šifru</string>
   <string name="settings_auth">Autentizace/Šifrování</string>
   <string name="file_explorer_tab">Prohlížeč souború</string>
   <string name="inline_file_tab">Vložený soubor</string>

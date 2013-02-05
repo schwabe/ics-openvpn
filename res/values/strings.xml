@@ -254,7 +254,7 @@
     <string name="state_tcp_connect">Connecting (TCP)</string>
     <string name="state_auth_failed">Authentication failed</string>
     <string name="state_nonetwork">Waiting for usable network</string>
-    <string name="statusline_bytecount">In: %1$8s %2$8s/s  Out: %3$8s %4$8s/s</string>
+    <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
     <string name="notifcation_title_notconnect">Not connected</string>
     <string name="jelly_keystore_alphanumeric_bug">Some versions of Android 4.1 have problems if the name of the keystore certificate contains non alphanumeric characters (like spaces, underscores or dashes). Try to reimport the certificate without special characters</string>
     <string name="encryption_cipher">Encryption cipher</string>

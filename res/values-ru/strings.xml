@@ -125,7 +125,6 @@
   <string name="no_vpn_support_image">Ваша прошивка не поддерживает VPNService API, извините :(</string>
   <string name="encryption">Шифрование</string>
   <string name="cipher_dialog_title">Укажите метод шифрования</string>
-  <string name="chipher_dialog_message">Введите ключ шифра для OpenVPN. Оставьте пустым для использования шифрования по умолчанию</string>
   <string name="settings_auth">Авторизация/шифрование</string>
   <string name="file_explorer_tab">Обзор файлов</string>
   <string name="inline_file_tab">Встроенный файл</string>

@@ -24,7 +24,7 @@
   <string name="vpn_list_title">"Vos VPNs"</string>
   <string name="vpn_type">"Type"</string>
   <string name="pkcs12pwquery">"Mot de passe PKCS12"</string>
-  <string name="file_select">"Sélectionner..."</string>
+  <string name="file_select">"Sélectionner…"</string>
   <string name="useTLSAuth">"Utiliser l\'authentification TLS"</string>
   <string name="tls_direction">"Direction de l\'authentification TLS"</string>
   <string name="ipv6_dialog_tile">"Entrez l\'adresse IPv6 / masque de réseau au format CIDR (ex.: 2000:jj::23/64)"</string>
@@ -152,7 +152,7 @@
   <string name="broken_image_cert">"Exception en essayant d\'afficher le dialogue de sélection du certification d\'Android 4.0+. Ceci ne devrait pas se produire car c\'est une des fonctionnalités de base de ce système. Il est donc possible que votre ROM ne supporte pas le stockage de certfiicats."</string>
   <string name="ipv4">"IPv4"</string>
   <string name="ipv6">"IPv6"</string>
-  <string name="speed_waiting">"Attente du status..."</string>
+  <string name="speed_waiting">"Attente du status…"</string>
   <string name="converted_profile">"profil importé"</string>
   <string name="converted_profile_i">"profil importé: %d"</string>
   <string name="broken_images">"Images corrompues "</string>
@@ -169,7 +169,7 @@
   <string name="owner_fix">"Corriger le propriétaire de /dev/tun"</string>
   <string name="generated_config_summary">"Affiche le fichier de configuration OpenVPN généré"</string>
   <string name="edit_profile_title">"Modification \"%s\""</string>
-  <string name="building_configration">"Création de la configuration ..."</string>
+  <string name="building_configration">"Création de la configuration…"</string>
   <string name="netchange_summary">"L\'activation de cette option forcera l\'appareil à se reconnecter si l\'état du réseau change (ex.: WIFI/Mobile)"</string>
   <string name="netchange">"Reconnexion lors de changement du réseau"</string>
   <string name="cert_from_keystore">"Certificat \'%s\' obtenu"</string>

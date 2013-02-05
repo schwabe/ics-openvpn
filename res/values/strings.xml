@@ -254,9 +254,9 @@
     <string name="state_tcp_connect">Connecting (TCP)</string>
     <string name="state_auth_failed">Authentication failed</string>
     <string name="state_nonetwork">Waiting for usable network</string>
-    <string name="statusline_bytecount">In: %8$1s %8$2s/s  Out: %8$3s %8$4s/s</string>
+    <string name="statusline_bytecount">In: %1$8s %2$8s/s  Out: %3$8s %4$8s/s</string>
     <string name="notifcation_title_notconnect">Not connected</string>
-    <string name="jelly_keystore_alphanumeric_bug">Some versions of Android 4.1 have problem if the name of the keystore certificate contains non alphanumeric character (like spaces or dashes)</string>
+    <string name="jelly_keystore_alphanumeric_bug">Some versions of Android 4.1 have problems if the name of the keystore certificate contains non alphanumeric characters (like spaces, underscores or dashes). Try to reimport the certificate without special characters</string>
     <string name="encryption_cipher">Encryption cipher</string>
     <string name="packet_auth">Packets authentication</string>
     <string name="auth_dialog_title">Enter packet authentication method</string>

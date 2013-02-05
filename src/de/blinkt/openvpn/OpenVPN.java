@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Vector;
 
-
 import android.content.Context;
 import android.os.Build;
 

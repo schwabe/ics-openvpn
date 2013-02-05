@@ -17,6 +17,7 @@
 package de.blinkt.openvpn;import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Locale;
 import java.util.Vector;
 
 import android.annotation.TargetApi;
@@ -37,10 +38,10 @@ import android.os.Handler.Callback;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
-
+import de.blinkt.openvpn.OpenVPN.ByteCountListener;
 import de.blinkt.openvpn.OpenVPN.StateListener;
 
-public class OpenVpnService extends VpnService implements StateListener, Callback {
+public class OpenVpnService extends VpnService implements StateListener, Callback, ByteCountListener {
 	public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";
 	public static final String START_SERVICE_STICKY = "de.blinkt.openvpn.START_SERVICE_STICKY";
 	public static final String ALWAYS_SHOW_NOTIFICATION = "de.blinkt.openvpn.NOTIFICATION_ALWAYS_VISIBLE";
@@ -116,6 +117,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	private void endVpnService() {
 		mProcessThread=null;
 		OpenVPN.logBuilderConfig(null);
+		OpenVPN.removeStateListener(this);
+		OpenVPN.removeByteCountListener(this);
 		ProfileManager.setConntectedVpnProfileDisconnected(this);
 		if(!mStarting) {
 			stopSelf();
@@ -157,6 +160,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		mNotificationManager.notify(OPENVPN_STATUS, notification);
 		startForeground(OPENVPN_STATUS, notification);
 	}
+
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private void jbNotificationExtras(boolean lowpriority,
@@ -217,6 +221,12 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			return lss;
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				sock.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 
@@ -238,6 +248,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			mNotificationalwaysVisible=true;
 
 		OpenVPN.addStateListener(this);
+		OpenVPN.addByteCountListener(this);
 
 		if(intent != null && intent.getAction() !=null &&intent.getAction().equals(START_SERVICE))
 			return START_NOT_STICKY;
@@ -517,7 +528,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		}
 	}
 
-
+	@Override
 	public void updateByteCount(long in, long out, long diffin, long diffout) {
 		if(mDisplayBytecount) {
 			String netstat = String.format(getString(R.string.statusline_bytecount),
@@ -538,7 +549,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		if (bytes < unit) return bytes + " B";
 		int exp = (int) (Math.log(bytes) / Math.log(unit));
 		String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
-		return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+		return String.format(Locale.getDefault(),"%.1f %sB", bytes / Math.pow(unit, exp), pre);
 	}
 
 	@Override

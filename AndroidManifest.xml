@@ -30,7 +30,7 @@
 
     <uses-sdk
         android:minSdkVersion="15"
-        android:targetSdkVersion="15" />
+        android:targetSdkVersion="17" />
 
     <permission
         android:name="de.blinkt.openvpn.REMOTE_API"
@@ -42,7 +42,8 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
-        android:label="@string/app" >
+        android:label="@string/app"
+        android:supportsRtl="true" >
         <activity android:name=".AboutFragment" />
         <activity
             android:name=".VPNPreferences"
@@ -110,7 +111,8 @@
                 <data android:mimeType="application/ovpn" />
             </intent-filter>
             <intent-filter android:label="@string/import_config" >
-                <!--  http://stackoverflow.com/questions/7030832/associating-certain-file-extension-to-my-android-application/7102838#7102838 -->
+
+                <!-- http://stackoverflow.com/questions/7030832/associating-certain-file-extension-to-my-android-application/7102838#7102838 -->
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />

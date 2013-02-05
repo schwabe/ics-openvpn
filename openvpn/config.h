@@ -456,7 +456,7 @@
 #define PACKAGE_TARNAME "openvpn"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.3_beta1"
+#define PACKAGE_VERSION "2.3_master"
 
 /* Define to the necessary symbol if this constant uses a non-standard name on
    your system. */

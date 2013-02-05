@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.TreeMap;
 
 import android.app.AlertDialog;
@@ -180,12 +181,12 @@ public class FileSelectionFragment extends ListFragment {
 				dirsPathMap.put(dirName, file.getPath());
 			} else {
 				final String fileName = file.getName();
-				final String fileNameLwr = fileName.toLowerCase();
+				final String fileNameLwr = fileName.toLowerCase(Locale.getDefault());
 				// se ha um filtro de formatos, utiliza-o
 				if (formatFilter != null) {
 					boolean contains = false;
 					for (int i = 0; i < formatFilter.length; i++) {
-						final String formatLwr = formatFilter[i].toLowerCase();
+						final String formatLwr = formatFilter[i].toLowerCase(Locale.getDefault());
 						if (fileNameLwr.endsWith(formatLwr)) {
 							contains = true;
 							break;

@@ -58,29 +58,15 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	private Spinner mType;
 	private FileSelectLayout mpkcs12;
 	private TextView mPKCS12Password;
-
 	private Handler mHandler;
-
-
-
-
-
-	private SparseArray<FileSelectLayout> fileselects = new SparseArray<FileSelectLayout>();
-
-
 	private EditText mUserName;
-
-
 	private EditText mPassword;
-
-
 	private View mView;
-
-
 	private VpnProfile mProfile;
 	private EditText mProfileName;
 	private EditText mKeyPassword;
 
+	private SparseArray<FileSelectLayout> fileselects = new SparseArray<FileSelectLayout>();
 
 
 	private void addFileSelectLayout (FileSelectLayout fsl) {
@@ -129,7 +115,6 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mpkcs12.setBase64Encode();
 		mCaCert.setShowClear();
 
-	
 		mType.setOnItemSelectedListener(this);
 
 		mView.findViewById(R.id.select_keystore_button).setOnClickListener(this);

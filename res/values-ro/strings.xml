@@ -123,7 +123,7 @@
   <string name="menu_import_short">Import</string>
   <string name="error_reading_config_file">Eroare la citirea fişierului de configurare</string>
   <string name="add_profile">Adaugă profil</string>
-  <string name="import_could_not_open">Imposibil de găsit fișierul %1$ s menţionat în fişierul de configurare importat</string>
+  <string name="import_could_not_open">Imposibil de găsit fișierul %1$s menţionat în fişierul de configurare importat</string>
   <string name="import_done">S-a terminat citirea fişierului de configurare.</string>
   <string name="no_bind">Fără binding local</string>
   <string name="import_configuration_file">Import fişier de configurare</string>
@@ -160,7 +160,7 @@
   <string name="faq_howto_title">Pornire rapidă</string>
   <string name="setting_loadtun">Încarcă modulul tun</string>
   <string name="importpkcs12fromconfig">Import PKCS12 configurare în Android Keystore</string>
-  <string name="using_proxy">Folosesc proxy %1$ s %2$ d</string>
+  <string name="using_proxy">Folosesc proxy %1$s %2$d</string>
   <string name="use_system_proxy">Foloseşte proxy sistem</string>
   <string name="onbootrestart">Reconectarea la reboot</string>
   <string name="ignore">Ignora</string>

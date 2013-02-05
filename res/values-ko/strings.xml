@@ -24,7 +24,7 @@
   <string name="vpn_list_title">VPN 프로파일</string>
   <string name="vpn_type">유형</string>
   <string name="pkcs12pwquery">PKCS12 암호</string>
-  <string name="file_select">선택...</string>
+  <string name="file_select">선택…</string>
   <string name="file_nothing_selected">파일을 선택 해야 합니다</string>
   <string name="useTLSAuth">TLS 인증 사용</string>
   <string name="tls_direction">TLS 방향</string>
@@ -153,7 +153,7 @@
   <string name="broken_image_cert">안드로이드 4.0+의 인증서 선택창을 보여주려는 과정에서 예외가 발생됐습니다. 안드로이드 4.0+의 표준 기능임으로 이 같은 일은 일어나면 안됩니다. 어쩌면 인증서 저장소에 대한 귀하의 안드로이드 ROM 지원이 깨졌습니다.</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">상태 메시지를 기다리는 중...</string>
+  <string name="speed_waiting">상태 메시지를 기다리는 중…</string>
   <string name="converted_profile">가져온 프로파일</string>
   <string name="converted_profile_i">가져온 프로파일 %d</string>
   <string name="broken_images">깨진 이미지</string>

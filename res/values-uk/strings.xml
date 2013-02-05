@@ -24,7 +24,7 @@
   <string name="vpn_list_title">VPN профілі</string>
   <string name="vpn_type">Тип</string>
   <string name="pkcs12pwquery">Пароль PKCS12</string>
-  <string name="file_select">Виберіть...</string>
+  <string name="file_select">Виберіть…</string>
   <string name="file_nothing_selected">Слід вибрати файл</string>
   <string name="useTLSAuth">Використовувати TLS аутентифікацію</string>
   <string name="tls_direction">TLS напрямок</string>
@@ -153,7 +153,7 @@
   <string name="broken_image_cert">Відбулася помилка при спробі виклику системного діалогу вибору сертифікатів Android 4.0 + Цього не повинно було статися на стандартній прошивці. Можливо у вашій прошивці зіпсовано сховище сертифікатів</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Очікування повідомлення стану...</string>
+  <string name="speed_waiting">Очікування повідомлення стану…</string>
   <string name="converted_profile">імпортований профіль</string>
   <string name="converted_profile_i">імпортований профіль: %d</string>
   <string name="broken_images">Пошкоджені зображення</string>

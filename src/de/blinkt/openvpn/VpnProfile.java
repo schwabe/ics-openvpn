@@ -15,6 +15,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -391,12 +392,13 @@ public class VpnProfile implements  Serializable{
 	//! Put inline data inline and other data as normal escaped filename
 	private String insertFileData(String cfgentry, String filedata) {
 		if(filedata==null) {
+			// TODO: generate good error
 			return String.format("%s %s\n",cfgentry,"missing");
 		}else if(filedata.startsWith(VpnProfile.INLINE_TAG)){
 			String datawoheader = filedata.substring(VpnProfile.INLINE_TAG.length());
-			return String.format("<%s>\n%s\n</%s>\n",cfgentry,datawoheader,cfgentry);
+			return String.format(Locale.ENGLISH,"<%s>\n%s\n</%s>\n",cfgentry,datawoheader,cfgentry);
 		} else {
-			return String.format("%s %s\n",cfgentry,openVpnEscape(filedata));
+			return String.format(Locale.ENGLISH,"%s %s\n",cfgentry,openVpnEscape(filedata));
 		}
 	}
 
@@ -465,7 +467,7 @@ public class VpnProfile implements  Serializable{
 		long nm = 0xffffffffl;
 		nm = (nm << (32-len)) & 0xffffffffl;
 
-		String netmask =String.format("%d.%d.%d.%d", (nm & 0xff000000) >> 24,(nm & 0xff0000) >> 16, (nm & 0xff00) >> 8 ,nm & 0xff  );	
+		String netmask =String.format(Locale.ENGLISH,"%d.%d.%d.%d", (nm & 0xff000000) >> 24,(nm & 0xff0000) >> 16, (nm & 0xff00) >> 8 ,nm & 0xff  );	
 		return parts[0] + "  " + netmask;
 	}
 

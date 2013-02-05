@@ -1,5 +1,7 @@
 package de.blinkt.openvpn;
 
+import java.util.Locale;
+
 class CIDRIP{
 	String mIp;
 	int len;
@@ -26,7 +28,7 @@ class CIDRIP{
 	}
 	@Override
 	public String toString() {
-		return String.format("%s/%d",mIp,len);
+		return String.format(Locale.ENGLISH,"%s/%d",mIp,len);
 	}
 
 	public boolean normalise(){

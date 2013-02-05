@@ -11,6 +11,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Vector;
 
 import javax.crypto.BadPaddingException;
@@ -261,7 +262,7 @@ public class OpenVpnManagementThread implements Runnable {
 			
 			OpenVPN.logInfo(R.string.using_proxy, isa.getHostName(),isa.getPort());
 			
-			String proxycmd = String.format("proxy HTTP %s %d\n", isa.getHostName(),isa.getPort());
+			String proxycmd = String.format(Locale.ENGLISH,"proxy HTTP %s %d\n", isa.getHostName(),isa.getPort());
 			managmentCommand(proxycmd);
 		} else {
 			managmentCommand("proxy NONE\n");

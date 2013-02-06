@@ -19,7 +19,6 @@ public class InlineFileTab extends Fragment
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
 		mInlineData.setText(((FileSelect)getActivity()).getInlineData());
 	}
 

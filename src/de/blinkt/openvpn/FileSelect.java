@@ -199,7 +199,8 @@ public class FileSelect extends Activity {
 
 	public void saveInlineData(String string) {
 		Intent intent = new Intent();
-		intent.putExtra(RESULT_DATA, string);
+		
+		intent.putExtra(RESULT_DATA,VpnProfile.INLINE_TAG + string);
 		setResult(Activity.RESULT_OK,intent);
 		finish();
 		

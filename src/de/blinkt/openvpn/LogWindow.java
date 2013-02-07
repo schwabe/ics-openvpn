@@ -236,9 +236,18 @@ public class LogWindow extends ListActivity implements StateListener  {
 				Toast.makeText(this, R.string.log_no_last_vpn, Toast.LENGTH_LONG).show();
 			}
 
+		} else if(item.getItemId() == android.R.id.home) {
+			// This is called when the Home (Up) button is pressed
+			// in the Action Bar.
+			Intent parentActivityIntent = new Intent(this, MainActivity.class);
+			parentActivityIntent.addFlags(
+					Intent.FLAG_ACTIVITY_CLEAR_TOP |
+					Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(parentActivityIntent);
+			finish();
+			return true;
 
 		}
-
 		return super.onOptionsItemSelected(item);
 
 	}
@@ -324,6 +333,8 @@ public class LogWindow extends ListActivity implements StateListener  {
 		lv.setAdapter(ladapter);
 
 		mSpeedView = (TextView) findViewById(R.id.speed);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+
 	}
 
 	@Override

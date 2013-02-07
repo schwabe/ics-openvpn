@@ -88,6 +88,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	private static boolean mNotificationalwaysVisible=false;
 
 	private final IBinder mBinder = new LocalBinder();
+	private boolean mOvpn3;
+	private OpenVPNThreadv3 mOpenVPN3;
 
 	public class LocalBinder extends Binder {
 		public OpenVpnService getService() {
@@ -107,7 +109,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	@Override
 	public void onRevoke() {
-		OpenVpnManagementThread.stopOpenVPN();
+		if(!mOvpn3)
+			OpenVpnManagementThread.stopOpenVPN();
+		else
+			mOpenVPN3.stopVPN();
 		endVpnService();
 	}
 
@@ -309,14 +314,14 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		// Start a new session by creating a new thread.
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
 
-		boolean ovpn3 = prefs.getBoolean("ovpn3", false);
+		mOvpn3 = prefs.getBoolean("ovpn3", false);
 
 		Runnable processThread;
-		if(ovpn3) {
+		if(mOvpn3) {
 
-			OpenVPNThreadv3 v3Thread = new OpenVPNThreadv3(this,mProfile);
+			mOpenVPN3 = new OpenVPNThreadv3(this,mProfile);
 			
-			processThread = v3Thread;
+			processThread = mOpenVPN3;
 
 		} else {
 

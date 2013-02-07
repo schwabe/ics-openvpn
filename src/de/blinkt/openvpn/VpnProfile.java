@@ -782,8 +782,8 @@ public class VpnProfile implements  Serializable{
 			rsasinger.init(Cipher.ENCRYPT_MODE, privkey);
 
 			byte[] signed_bytes = rsasinger.doFinal(data);
-			String signed_string = Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
-		;
+			return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
+			
 		} catch (NoSuchAlgorithmException e){
 			err =e;
 		} catch (InvalidKeyException e) {
@@ -824,8 +824,7 @@ public class VpnProfile implements  Serializable{
 			getPkeyContext.setAccessible(false);
 
 			byte[] signed_bytes = rsasign(data, pkey); 
-			String signed_string = Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
-			return signed_string;
+			return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
 			
 		} catch (NoSuchMethodException e) {
 			err=e;

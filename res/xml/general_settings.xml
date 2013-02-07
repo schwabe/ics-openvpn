@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="netchangereconnect"
@@ -26,6 +25,12 @@
         android:key="restartvpnonboot"
         android:summary="@string/onbootrestartsummary"
         android:title="@string/onbootrestart" />
+    <CheckBoxPreference 
+        android:defaultValue="false"
+        android:key="ovpn3"
+        android:summaryOn="Use the C++ OpenVPN3 library"
+        android:summaryOff="Use OpenVPN 2.3"
+        android:title="OpenVPN 3 Core"/>
 
     <PreferenceCategory android:title="Device specifics Hacks" >
         <CheckBoxPreference

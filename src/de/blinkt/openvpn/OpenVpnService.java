@@ -27,6 +27,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
@@ -38,6 +39,7 @@ import android.os.Handler.Callback;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
+import android.preference.PreferenceManager;
 import de.blinkt.openvpn.OpenVPN.ByteCountListener;
 import de.blinkt.openvpn.OpenVPN.StateListener;
 
@@ -121,8 +123,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		OpenVPN.removeByteCountListener(this);
 		ProfileManager.setConntectedVpnProfileDisconnected(this);
 		if(!mStarting) {
-			stopSelf();
-			stopForeground(true);
+			stopForeground(!mNotificationalwaysVisible);
+
+			if( !mNotificationalwaysVisible)
+				stopSelf();
 		}
 	}
 
@@ -171,7 +175,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 				// PRIORITY_MIN == -2
 				setpriority.invoke(nbuilder, -2 );
 
-				nbuilder.setUsesChronometer(true);
+				Method setUsesChronometer = nbuilder.getClass().getMethod("setPriority", boolean.class);
+				setUsesChronometer.invoke(nbuilder,true);
+				
 				/*				PendingIntent cancelconnet=null;
 
 				nbuilder.addAction(android.R.drawable.ic_menu_close_clear_cancel, 
@@ -301,8 +307,22 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 
 		// Start a new session by creating a new thread.
-		OpenVPNThread processThread = new OpenVPNThread(this, argv,nativelibdir);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
 
+		boolean ovpn3 = prefs.getBoolean("ovpn3", false);
+
+		Runnable processThread;
+		if(ovpn3) {
+
+			OpenVPNThreadv3 v3Thread = new OpenVPNThreadv3(this,mProfile);
+			
+			processThread = v3Thread;
+
+		} else {
+
+			processThread = new OpenVPNThread(this, argv,nativelibdir);
+
+		}
 		mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
 		mProcessThread.start();
 
@@ -452,6 +472,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	}
 
 
+	public void addRoute(CIDRIP route)
+	{
+		mRoutes.add(route );
+	}
 	public void addRoute(String dest, String mask) {
 		CIDRIP route = new CIDRIP(dest, mask);		
 		if(route.len == 32 && !mask.equals("255.255.255.255")) {
@@ -468,7 +492,16 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		mRoutesv6.add(extra);		
 	}
 
-
+	public void setMtu(int mtu) {
+		mMtu=mtu;
+	}
+	
+	public void setLocalIP(CIDRIP cdrip)
+	{
+		mLocalIP=cdrip;
+	}
+	
+	
 	public void setLocalIP(String local, String netmask,int mtu, String mode) {
 		mLocalIP = new CIDRIP(local, netmask);
 		mMtu = mtu;
@@ -477,7 +510,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			// get the netmask as IP
 			long netint = CIDRIP.getInt(netmask);
 			if(Math.abs(netint - mLocalIP.getInt()) ==1) {
-				if(mode.equals("net30"))
+				if("net30".equals(mode))
 					mLocalIP.len=30;
 				else
 					mLocalIP.len=31;

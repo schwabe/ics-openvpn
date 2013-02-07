@@ -191,11 +191,15 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	}
 
 	@Override
-	public void event(ClientAPI_Event arg0) {
-		if(arg0.getError())
-			OpenVPN.logError(String.format("EVENT(Error): %s: %s",arg0.getName(),arg0.getInfo()));
-		else
-			OpenVPN.logInfo(String.format("EVENT %s: %s",arg0.getName(),arg0.getInfo()));
+	public void event(ClientAPI_Event event) {
+		OpenVPN.updateStateString(event.getName(), event.getInfo());
+		if(event.getError())
+			OpenVPN.logError(String.format("EVENT(Error): %s: %s",event.getName(),event.getInfo()));
+	}
+
+	public void stopVPN() {
+		stop();
+		
 	}
 
 }

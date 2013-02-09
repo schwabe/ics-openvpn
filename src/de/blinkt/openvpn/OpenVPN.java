@@ -173,6 +173,8 @@ public class OpenVPN {
 			return R.string.state_add_routes;
 		else if (state.equals("CONNECTED"))
 			return R.string.state_connected;
+		else if (state.equals("DISCONNECTED"))
+			return R.string.state_disconnected;
 		else if (state.equals("RECONNECTING"))
 			return R.string.state_reconnecting;
 		else if (state.equals("EXITING"))
@@ -257,7 +259,12 @@ public class OpenVPN {
 		newlogItem(new LogItem(LogItem.ERROR, ressourceId,args));
 	}
 
-	public static void updateByteCount(long in, long out, long diffin, long diffout) {
+	public static void updateByteCount(long in, long out) {
+		long lastIn = mlastByteCount[0];
+		long lastOut = mlastByteCount[1];
+		long diffin = in - lastIn;
+		long diffout = out - lastOut;
+		
 		mlastByteCount = new long[] {in,out,diffin,diffout};
 		for(ByteCountListener bcl:byteCountListener){
 			bcl.updateByteCount(in, out, diffin,diffout);

@@ -9,8 +9,9 @@ import net.openvpn.ovpn3.ClientAPI_LogInfo;
 import net.openvpn.ovpn3.ClientAPI_OpenVPNClient;
 import net.openvpn.ovpn3.ClientAPI_ProvideCreds;
 import net.openvpn.ovpn3.ClientAPI_Status;
+import net.openvpn.ovpn3.ClientAPI_TransportStats;
 
-public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable {
+public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable, OpenVPNMangement {
 
 	static {
 		System.loadLibrary("crypto");
@@ -21,6 +22,34 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	private VpnProfile mVp;
 	private OpenVpnService mService;
 
+	class StatusPoller implements  Runnable 
+	{
+		private long mSleeptime;
+
+		boolean mStopped=false;
+
+		public StatusPoller(long sleeptime) {
+			mSleeptime=sleeptime;
+		}
+
+		public void run() {
+			while(!mStopped) {
+				try {
+					Thread.sleep(mSleeptime);
+				} catch (InterruptedException e) {
+				}
+				ClientAPI_TransportStats t = transport_stats();
+				long in = t.getBytesIn();
+				long out = t.getBytesOut();
+				OpenVPN.updateByteCount(in, out);
+			}
+		}
+
+		public void stop() {
+			mStopped=true;
+		}
+	}
+
 	@Override
 	public void run() {
 		String configstr = mVp.getConfigFile(mService,true); 
@@ -28,20 +57,25 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 			return;
 		setUserPW();
 		OpenVPN.logInfo(copyright());
+
+		StatusPoller statuspoller = new StatusPoller(5000);
+		new Thread(statuspoller,"Status Poller").start();
+
 		ClientAPI_Status status = connect();
 		if(status.getError()) {
 			OpenVPN.logError(String.format("connect() error: %s: %s",status.getStatus(),status.getMessage()));
 		} else {
-			OpenVPN.logInfo(String.format("connect() error: %s: %s",status.getStatus(),status.getMessage()));
+			OpenVPN.logInfo("OpenVPN3 thread finished");
 		}
+		statuspoller.stop();
 	}
-	
+
 	@Override
 	public boolean tun_builder_set_remote_address(String address, boolean ipv6) {
 		mService.setMtu(1500);
 		return true;
 	}
-	
+
 	@Override
 	public boolean tun_builder_set_mtu(int mtu) {
 		mService.setMtu(mtu);
@@ -52,36 +86,39 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		mService.addDNS(address);
 		return true;
 	}
-	
+
 	@Override
 	public boolean tun_builder_add_route(String address, int prefix_length,
 			boolean ipv6) {
+		if (address.equals("remote_host"))
+			return false;
+		
 		if(ipv6)
 			mService.addRoutev6(address + "/" + prefix_length);
 		else
 			mService.addRoute(new CIDRIP(address, prefix_length));
 		return true;
 	}
-	
+
 	@Override
 	public boolean tun_builder_add_search_domain(String domain) {
 		mService.setDomain(domain);
 		return true;
 	}
-	
+
 	@Override
 	public int tun_builder_establish() {
 		return mService.openTun().detachFd();
 	}
-	
+
 	@Override
 	public boolean tun_builder_set_session_name(String name) {
 		OpenVPN.logInfo("We should call this session" + name);
 		return true;
 	}
-	
 
-	
+
+
 	@Override
 	public boolean tun_builder_add_address(String address, int prefix_length,
 			boolean ipv6) {
@@ -91,20 +128,20 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 			mService.setLocalIPv6(address+ "/" + prefix_length);
 		return true;
 	}
-	
+
 	@Override
 	public boolean tun_builder_new() {
-		
+
 		return true;
 	}
-	
+
 	@Override
 	public boolean tun_builder_reroute_gw(String server_address,
 			boolean server_address_ipv6, boolean ipv4, boolean ipv6, long flags) {
 		// ignore
 		return true;
 	}
-	
+
 	@Override
 	public boolean tun_builder_exclude_route(String address, int prefix_length,
 			boolean ipv6) {
@@ -114,15 +151,15 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 
 	private boolean setConfig(String vpnconfig) {
-		
+
 		ClientAPI_Config config = new ClientAPI_Config();
 		if(mVp.getPasswordPrivateKey()!=null)
 			config.setPrivateKeyPassword(mVp.getPasswordPrivateKey());
-		
+
 		config.setContent(vpnconfig);
 		config.setTunPersist(mVp.mPersistTun);
 		config.setExternalPkiAlias("extpki");
-		
+
 		ClientAPI_EvalConfig ec = eval_config(config);
 		if(ec.getExternalPki()) {
 			OpenVPN.logError("OpenVPN seem to think as external PKI");
@@ -135,7 +172,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 			return true;
 		}
 	}
-	
+
 	@Override
 	public void external_pki_cert_request(ClientAPI_ExternalPKICertRequest certreq) {
 		OpenVPN.logError("EXT PKI CERT");
@@ -145,15 +182,14 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 			certreq.setErrorText("Error in pki cert request");
 			return;
 		}
-			
+
 		certreq.setSupportingChain(ks[0]);
 		certreq.setCert(ks[1]);
 		certreq.setError(false);
 	}
-	
+
 	@Override
 	public void external_pki_sign_request(ClientAPI_ExternalPKISignRequest signreq) {
-		OpenVPN.logError("EXT PKI Sign");
 		signreq.setSig(mVp.getSignedData(signreq.getData()));
 	}
 
@@ -170,9 +206,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	@Override
 	public boolean socket_protect(int socket) {
 		boolean b= mService.protect(socket);
-		OpenVPN.logInfo("protect from v3: " + b);
-		return true;
-		
+		return b;
+
 	}
 
 	public OpenVPNThreadv3(OpenVpnService openVpnService, VpnProfile vp) {
@@ -186,7 +221,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		String logmsg =arg0.getText();
 		while (logmsg.endsWith("\n"))
 			logmsg = logmsg.substring(0, logmsg.length()-1);
-		
+
 		OpenVPN.logInfo(logmsg);
 	}
 
@@ -197,9 +232,26 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 			OpenVPN.logError(String.format("EVENT(Error): %s: %s",event.getName(),event.getInfo()));
 	}
 
-	public void stopVPN() {
+
+	// When a connection is close to timeout, the core will call this
+	// method.  If it returns false, the core will disconnect with a
+	// CONNECTION_TIMEOUT event.  If true, the core will enter a PAUSE
+	// state.
+
+	@Override
+	public boolean pause_on_connection_timeout() {
+		OpenVPN.logInfo("pause on connection timeout?! ");
+		return true; 
+	}
+
+	public boolean stopVPN() {
 		stop();
-		
+		return true;
+	}
+
+	@Override
+	public void reconnect() {
+		reconnect(1);
 	}
 
 }

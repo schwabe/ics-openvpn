@@ -7,28 +7,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Vector;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 import android.content.SharedPreferences;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
-import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
-import android.util.Base64;
 import android.util.Log;
 
-public class OpenVpnManagementThread implements Runnable {
+public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
 
 	private static final String TAG = "openvpn";
 	private LocalSocket mSocket;
@@ -36,8 +26,6 @@ public class OpenVpnManagementThread implements Runnable {
 	private OpenVpnService mOpenVPNService;
 	private LinkedList<FileDescriptor> mFDList=new LinkedList<FileDescriptor>();
 	private int mBytecountinterval=2;
-	private long mLastIn=0; 
-	private long mLastOut=0;
 	private LocalServerSocket mServerSocket;
 	private boolean mReleaseHold=true;
 	private boolean mWaitingForRelease=false;
@@ -284,13 +272,7 @@ public class OpenVpnManagementThread implements Runnable {
 		long in = Long.parseLong(argument.substring(0, comma));
 		long out = Long.parseLong(argument.substring(comma+1));
 
-		long diffin = in - mLastIn; 
-		long diffout = out - mLastOut;
-
-		mLastIn=in;
-		mLastOut=out;
-
-		OpenVPN.updateByteCount(in,out,diffin, diffout);
+		OpenVPN.updateByteCount(in,out);
 
 
 	}
@@ -448,7 +430,7 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 
 
-	public static boolean stopOpenVPN() {
+	private static boolean stopOpenVPN() {
 		boolean sendCMD=false;
 		for (OpenVpnManagementThread mt: active){
 			mt.managmentCommand("signal SIGINT\n");
@@ -480,5 +462,20 @@ public class OpenVpnManagementThread implements Runnable {
 		managmentCommand("rsa-sig\n");
 		managmentCommand(signed_string);
 		managmentCommand("\nEND\n");
+	}
+
+	@Override
+	public void pause() {
+		signalusr1();
+	}
+
+	@Override
+	public void resume() {
+		releaseHold();
+	}
+
+	@Override
+	public boolean stopVPN() {
+		return stopOpenVPN();
 	}
 }

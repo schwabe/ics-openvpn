@@ -86,9 +86,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	private final IBinder mBinder = new LocalBinder();
 	private boolean mOvpn3;
-	private OpenVPNThreadv3 mOpenVPN3;
 	private Thread mSocketManagerThread;
 	private OpenVPNMangement mManagement;
+
 
 	public class LocalBinder extends Binder {
 		public OpenVpnService getService() {
@@ -249,8 +249,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			this.unregisterReceiver(mNetworkStateReceiver);
 		mNetworkStateReceiver=null;
 	}
-	
-	
+
+
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -288,16 +288,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			}
 
 
-		if(mOpenVPN3!=null) {
-			mOpenVPN3.stopVPN();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			}
-
-		}
-
-
 		if (mProcessThread!=null) {
 			mProcessThread.interrupt();
 			try {
@@ -330,10 +320,11 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 		Runnable processThread;
 		if(mOvpn3) {
-			mOpenVPN3 = new OpenVPNThreadv3(this,mProfile);
-			processThread = mOpenVPN3;
+
+			OpenVPNMangement mOpenVPN3 = instantiateOpenVPN3Core();
+			processThread = (Runnable) mOpenVPN3;
 			mManagement = mOpenVPN3;
-			
+
 
 		} else {
 			processThread = new OpenVPNThread(this, argv,nativelibdir);
@@ -348,6 +339,27 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		ProfileManager.setConnectedVpnProfile(this, mProfile);
 
 		return START_NOT_STICKY;
+	}
+
+	private OpenVPNMangement instantiateOpenVPN3Core() {
+		//new OpenVPNThreadv3(this,mProfile);
+		try {
+			Class cl = Class.forName("Lde/blinkt/openvpn/OpenVPNThreadv3;");
+			return (OpenVPNMangement) cl.getConstructor(OpenVpnService.class,VpnProfile.class).newInstance(this,mProfile);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

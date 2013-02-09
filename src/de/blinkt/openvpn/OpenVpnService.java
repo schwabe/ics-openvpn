@@ -89,6 +89,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	private Thread mSocketManagerThread;
 	private OpenVPNMangement mManagement;
 
+
 	public class LocalBinder extends Binder {
 		public OpenVpnService getService() {
 			// Return this instance of LocalService so clients can call public methods
@@ -248,8 +249,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			this.unregisterReceiver(mNetworkStateReceiver);
 		mNetworkStateReceiver=null;
 	}
-	
-	
+
+
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -319,11 +320,11 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 		Runnable processThread;
 		if(mOvpn3) {
-			
+
 			OpenVPNMangement mOpenVPN3 = instantiateOpenVPN3Core();
 			processThread = (Runnable) mOpenVPN3;
 			mManagement = mOpenVPN3;
-	
+
 
 		} else {
 			processThread = new OpenVPNThread(this, argv,nativelibdir);

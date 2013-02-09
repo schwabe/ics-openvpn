@@ -5,6 +5,8 @@ import java.util.Locale;
 class CIDRIP{
 	String mIp;
 	int len;
+	
+	
 	public CIDRIP(String ip, String mask){
 		mIp=ip;
 		long netmask=getInt(mask);
@@ -25,6 +27,10 @@ class CIDRIP{
 			len =32 -lenZeros; 
 		}
 
+	}
+	public CIDRIP(String address, int prefix_length) {
+		len = prefix_length;
+		mIp = address;
 	}
 	@Override
 	public String toString() {

@@ -17,21 +17,41 @@ public class ShowConfigFragment extends Fragment {
 	public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
 	{
 		String profileUUID = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		VpnProfile vp = ProfileManager.get(profileUUID);
+		final VpnProfile vp = ProfileManager.get(profileUUID);
 		View v=inflater.inflate(R.layout.viewconfig, container,false);
-		TextView cv = (TextView) v.findViewById(R.id.configview);
+		final TextView cv = (TextView) v.findViewById(R.id.configview);
 		
 		int check=vp.checkProfile(getActivity());
 		if(check!=R.string.no_error_found) {
 			cv.setText(check);
 			configtext = getString(check);
 		}
-		else { 
-			String cfg=vp.getConfigFile(getActivity());
-			configtext= cfg;
-			cv.setText(cfg);
+		else {
+			// Run in own Thread since Keystore does not like to be queried from the main thread
+
+			cv.setText("Generating config...");
+			startGenConfig(vp, cv);
 		}
 		return v;
+	}
+
+	private void startGenConfig(final VpnProfile vp, final TextView cv) {
+		
+		new Thread() {
+			public void run() {
+				final String cfg=vp.getConfigFile(getActivity(),false);
+				configtext= cfg;
+				getActivity().runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						cv.setText(cfg);		
+					}
+				});
+				
+				
+			};
+		}.start();
 	};
 
 	@Override

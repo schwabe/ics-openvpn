@@ -11,13 +11,13 @@ import android.preference.PreferenceManager;
 
 public class NetworkSateReceiver extends BroadcastReceiver {
 	private int lastNetwork=-1;
-	private OpenVpnManagementThread mManangement;
+	private OpenVPNMangement mManangement;
 
 	private String lastStateMsg=null;
 	
-	public NetworkSateReceiver(OpenVpnManagementThread managementThread) {
+	public NetworkSateReceiver(OpenVPNMangement magnagement) {
 		super();
-		mManangement = managementThread;
+		mManangement = magnagement;
 	}
 
 	@Override
@@ -57,15 +57,19 @@ public class NetworkSateReceiver extends BroadcastReceiver {
 		if(networkInfo!=null && networkInfo.getState() == State.CONNECTED) {
 				int newnet = networkInfo.getType();
 			
-				if(sendusr1 && lastNetwork!=newnet)
-					mManangement.reconnect();
+				if(sendusr1 && lastNetwork!=newnet) {
+					if (lastNetwork==-1)
+						mManangement.resume();
+					else
+						mManangement.reconnect();
+				}
 							
 				lastNetwork = newnet;
 		} else if (networkInfo==null) {
 			// Not connected, stop openvpn, set last connected network to no network
 			lastNetwork=-1;
 			if(sendusr1)
-				mManangement.signalusr1();
+				mManangement.pause();
 		}
 		
 		if(!netstatestring.equals(lastStateMsg))

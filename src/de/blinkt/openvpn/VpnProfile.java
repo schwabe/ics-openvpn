@@ -9,6 +9,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.io.StringWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
@@ -18,6 +23,11 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.Vector;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import org.spongycastle.util.io.pem.PemObject;
 import org.spongycastle.util.io.pem.PemWriter;
@@ -30,6 +40,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.security.KeyChain;
 import android.security.KeyChainException;
+import android.util.Base64;
 
 public class VpnProfile implements  Serializable{
 	// Parcable
@@ -112,9 +123,10 @@ public class VpnProfile implements  Serializable{
 	static final String MINIVPN = "miniopenvpn";
 	
 	
-	
-
-
+	static private native byte[] rsasign(byte[] input,int pkey) throws InvalidKeyException;
+	static {
+		System.loadLibrary("opvpnutil");
+	}
 
 	public void clearDefaults() {
 		mServerName="unkown";
@@ -140,11 +152,6 @@ public class VpnProfile implements  Serializable{
 			return '"' + escapedString + '"';
 	}
 
-
-	static final String OVPNCONFIGCA = "android-ca.pem";
-	static final String OVPNCONFIGUSERCERT = "android-user.pem";
-
-
 	public VpnProfile(String name) {
 		mUuid = UUID.randomUUID();
 		mName = name;
@@ -160,7 +167,7 @@ public class VpnProfile implements  Serializable{
 	}
 
 
-	public String getConfigFile(Context context)
+	public String getConfigFile(Context context, boolean configForOvpn3)
 	{
 
 		File cacheDir= context.getCacheDir();
@@ -255,10 +262,13 @@ public class VpnProfile implements  Serializable{
 		case VpnProfile.TYPE_USERPASS_KEYSTORE:
 			cfg+="auth-user-pass\n";
 		case VpnProfile.TYPE_KEYSTORE:
-			cfg+="ca " + cacheDir.getAbsolutePath() + "/" + OVPNCONFIGCA + "\n";
-			cfg+="cert " + cacheDir.getAbsolutePath() + "/" + OVPNCONFIGUSERCERT + "\n";
-			cfg+="management-external-key\n";
-			
+			if(!configForOvpn3) {
+				String[] ks =getKeyStoreCertificates(context);
+				cfg+="### From Keystore ####\n";
+				cfg+="<ca>\n" + ks[0] + "</ca>\n";
+				cfg+="<cert>\n" + ks[0] + "</cert>\n";
+				cfg+="management-external-key\n";
+			}
 			break;
 		case VpnProfile.TYPE_USERPASS:
 			cfg+="auth-user-pass\n";
@@ -498,7 +508,7 @@ public class VpnProfile implements  Serializable{
 		Intent intent = new Intent(context,OpenVpnService.class);
 
 		if(mAuthenticationType == VpnProfile.TYPE_KEYSTORE || mAuthenticationType == VpnProfile.TYPE_USERPASS_KEYSTORE) {
-			if(!saveCertificates(context))
+			if(getKeyStoreCertificates(context)==null)
 				return null;
 		}
 
@@ -510,7 +520,7 @@ public class VpnProfile implements  Serializable{
 
 		try {
 			FileWriter cfg = new FileWriter(context.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE);
-			cfg.write(getConfigFile(context));
+			cfg.write(getConfigFile(context,false));
 			cfg.flush();
 			cfg.close();
 		} catch (IOException e) {
@@ -520,7 +530,7 @@ public class VpnProfile implements  Serializable{
 		return intent;
 	}
 
-	private boolean saveCertificates(Context context) {
+	String[] getKeyStoreCertificates(Context context) {
 		PrivateKey privateKey = null;
 		X509Certificate[] cachain=null;
 		try {
@@ -553,27 +563,30 @@ public class VpnProfile implements  Serializable{
 			}
 
 			
-			FileWriter fout = new FileWriter(context.getCacheDir().getAbsolutePath() + "/" + VpnProfile.OVPNCONFIGCA);
-			PemWriter pw = new PemWriter(fout);
+
+			StringWriter caout = new StringWriter();
+
+			PemWriter pw = new PemWriter(caout);
 			for(X509Certificate cert:cachain) {
 				pw.writeObject(new PemObject("CERTIFICATE", cert.getEncoded()));
 			}
-
 			pw.close();
 			
 			
+			
+			StringWriter certout = new StringWriter();
+
+
 			if(cachain.length>= 1){
 				X509Certificate usercert = cachain[0];
 
-				FileWriter userout = new FileWriter(context.getCacheDir().getAbsolutePath() + "/" + VpnProfile.OVPNCONFIGUSERCERT);
-
-				PemWriter upw = new PemWriter(userout);
+				PemWriter upw = new PemWriter(certout);
 				upw.writeObject(new PemObject("CERTIFICATE", usercert.getEncoded()));
 				upw.close();
 
 			}
-			
-			return true;
+
+			return new String[] {caout.toString(),certout.toString()};
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
@@ -590,7 +603,7 @@ public class VpnProfile implements  Serializable{
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 	private Certificate getCacertFromFile() throws FileNotFoundException, CertificateException {
 		 CertificateFactory certFact = CertificateFactory.getInstance("X.509");
@@ -651,7 +664,7 @@ public class VpnProfile implements  Serializable{
 			return null;
 		}
 	}
-	private boolean isUserPWAuth() {
+	boolean isUserPWAuth() {
 		switch(mAuthenticationType) {
 		case TYPE_USERPASS:
 		case TYPE_USERPASS_CERTIFICATES:
@@ -746,6 +759,89 @@ public class VpnProfile implements  Serializable{
 
 	public PrivateKey getKeystoreKey() {
 		return mPrivateKey;
+	}
+
+	public String getSignedData(String b64data) {
+		PrivateKey privkey = getKeystoreKey();
+		Exception err =null;
+
+		byte[] data = Base64.decode(b64data, Base64.DEFAULT);
+
+		// The Jelly Bean *evil* Hack
+		// 4.2 implements the RSA/ECB/PKCS1PADDING in the OpenSSLprovider
+		if(Build.VERSION.SDK_INT==Build.VERSION_CODES.JELLY_BEAN){
+			return processSignJellyBeans(privkey,data);
+		}
+
+
+		try{
+
+
+			Cipher rsasinger = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+
+			rsasinger.init(Cipher.ENCRYPT_MODE, privkey);
+
+			byte[] signed_bytes = rsasinger.doFinal(data);
+			return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
+			
+		} catch (NoSuchAlgorithmException e){
+			err =e;
+		} catch (InvalidKeyException e) {
+			err =e;
+		} catch (NoSuchPaddingException e) {
+			err =e;
+		} catch (IllegalBlockSizeException e) {
+			err =e;
+		} catch (BadPaddingException e) {
+			err =e;
+		}
+		if(err !=null) {
+			OpenVPN.logError(R.string.error_rsa_sign,err.getClass().toString(),err.getLocalizedMessage());
+		}
+		return null;
+
+	}
+
+
+	private String processSignJellyBeans(PrivateKey privkey, byte[] data) {
+		Exception err =null;
+		try {
+			Method[] allm = privkey.getClass().getSuperclass().getDeclaredMethods();
+			System.out.println(allm);
+			Method getKey = privkey.getClass().getSuperclass().getDeclaredMethod("getOpenSSLKey");
+			getKey.setAccessible(true);
+
+			// Real object type is OpenSSLKey
+			Object opensslkey = getKey.invoke(privkey);
+
+			getKey.setAccessible(false);
+
+			Method getPkeyContext = opensslkey.getClass().getDeclaredMethod("getPkeyContext");
+
+			// integer pointer to EVP_pkey
+			getPkeyContext.setAccessible(true);
+			int pkey = (Integer) getPkeyContext.invoke(opensslkey);
+			getPkeyContext.setAccessible(false);
+
+			byte[] signed_bytes = rsasign(data, pkey); 
+			return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
+			
+		} catch (NoSuchMethodException e) {
+			err=e;
+		} catch (IllegalArgumentException e) {
+			err=e;
+		} catch (IllegalAccessException e) {
+			err=e;
+		} catch (InvocationTargetException e) {
+			err=e;
+		} catch (InvalidKeyException e) {
+			err=e;
+		}
+		if(err !=null) {
+			OpenVPN.logError(R.string.error_rsa_sign,err.getClass().toString(),err.getLocalizedMessage());
+		}
+		return null;
+
 	}
 
 

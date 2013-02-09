@@ -27,6 +27,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
@@ -38,6 +39,7 @@ import android.os.Handler.Callback;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
+import android.preference.PreferenceManager;
 import de.blinkt.openvpn.OpenVPN.ByteCountListener;
 import de.blinkt.openvpn.OpenVPN.StateListener;
 
@@ -60,9 +62,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	private CIDRIP mLocalIP=null;
 
-	private OpenVpnManagementThread mManagementThread;
-
-	private Thread mSocketManagerThread;
 	private int mMtu;
 	private String mLocalIPv6=null;
 	private NetworkSateReceiver mNetworkStateReceiver;
@@ -86,6 +85,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	private static boolean mNotificationalwaysVisible=false;
 
 	private final IBinder mBinder = new LocalBinder();
+	private boolean mOvpn3;
+	private Thread mSocketManagerThread;
+	private OpenVPNMangement mManagement;
 
 	public class LocalBinder extends Binder {
 		public OpenVpnService getService() {
@@ -105,7 +107,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	@Override
 	public void onRevoke() {
-		OpenVpnManagementThread.stopOpenVPN();
+		mManagement.stopVPN();
 		endVpnService();
 	}
 
@@ -119,10 +121,13 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		OpenVPN.logBuilderConfig(null);
 		OpenVPN.removeStateListener(this);
 		OpenVPN.removeByteCountListener(this);
+		unregisterNetworkStateReceiver();
 		ProfileManager.setConntectedVpnProfileDisconnected(this);
 		if(!mStarting) {
-			stopSelf();
-			stopForeground(true);
+			stopForeground(!mNotificationalwaysVisible);
+
+			if( !mNotificationalwaysVisible)
+				stopSelf();
 		}
 	}
 
@@ -171,7 +176,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 				// PRIORITY_MIN == -2
 				setpriority.invoke(nbuilder, -2 );
 
-				nbuilder.setUsesChronometer(true);
+				Method setUsesChronometer = nbuilder.getClass().getMethod("setUsesChronometer", boolean.class);
+				setUsesChronometer.invoke(nbuilder,true);
+
 				/*				PendingIntent cancelconnet=null;
 
 				nbuilder.addAction(android.R.drawable.ic_menu_close_clear_cancel, 
@@ -229,14 +236,20 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	}
 
-	void registerNetworkStateReceiver() {
+	void registerNetworkStateReceiver(OpenVPNMangement magnagement) {
 		// Registers BroadcastReceiver to track network connection changes.
 		IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-		mNetworkStateReceiver = new NetworkSateReceiver(mManagementThread);
+		mNetworkStateReceiver = new NetworkSateReceiver(magnagement);
 		this.registerReceiver(mNetworkStateReceiver, filter);
 	}
 
-
+	void unregisterNetworkStateReceiver() {
+		if(mNetworkStateReceiver!=null)
+			this.unregisterReceiver(mNetworkStateReceiver);
+		mNetworkStateReceiver=null;
+	}
+	
+	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -263,18 +276,16 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 		showNotification("Starting VPN " + mProfile.mName,"Starting VPN " + mProfile.mName, false,0,LEVEL_NOTCONNECTED);
 
-
-
 		// Set a flag that we are starting a new VPN
 		mStarting=true;
 		// Stop the previous session by interrupting the thread.
-		if(OpenVpnManagementThread.stopOpenVPN()){
-			// an old was asked to exit, wait 2s
+		if(mManagement!=null && mManagement.stopVPN())
+			// an old was asked to exit, wait 1s
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
-		}
+
 
 		if (mProcessThread!=null) {
 			mProcessThread.interrupt();
@@ -288,33 +299,72 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 
 		// Open the Management Interface
-		LocalServerSocket mgmtsocket = openManagmentInterface(8);
+		if(!mOvpn3) {
+			LocalServerSocket mgmtsocket = openManagmentInterface(8);
 
-		if(mgmtsocket!=null) {
-			// start a Thread that handles incoming messages of the managment socket
-			mManagementThread=new OpenVpnManagementThread(mProfile,mgmtsocket,this);
-			mSocketManagerThread = new Thread(mManagementThread,"OpenVPNMgmtThread");
-			mSocketManagerThread.start();
-			OpenVPN.logInfo("started Socket Thread");
-			registerNetworkStateReceiver();
+			if(mgmtsocket!=null) {
+				// start a Thread that handles incoming messages of the managment socket
+				OpenVpnManagementThread ovpnmgmthread = new OpenVpnManagementThread(mProfile,mgmtsocket,this);
+				mSocketManagerThread = new Thread(ovpnmgmthread,"OpenVPNMgmtThread");
+				mSocketManagerThread.start();
+				mManagement= ovpnmgmthread;
+				OpenVPN.logInfo("started Socket Thread");
+			}
 		}
 
-
 		// Start a new session by creating a new thread.
-		OpenVPNThread processThread = new OpenVPNThread(this, argv,nativelibdir);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
+
+		mOvpn3 = prefs.getBoolean("ovpn3", false);
+
+		Runnable processThread;
+		if(mOvpn3) {
+			
+			OpenVPNMangement mOpenVPN3 = instantiateOpenVPN3Core();
+			processThread = (Runnable) mOpenVPN3;
+			mManagement = mOpenVPN3;
+	
+
+		} else {
+			processThread = new OpenVPNThread(this, argv,nativelibdir);
+		}
 
 		mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
 		mProcessThread.start();
+
+		registerNetworkStateReceiver(mManagement);
+
 
 		ProfileManager.setConnectedVpnProfile(this, mProfile);
 
 		return START_NOT_STICKY;
 	}
 
+	private OpenVPNMangement instantiateOpenVPN3Core() {
+		//new OpenVPNThreadv3(this,mProfile);
+		try {
+			Class cl = Class.forName("Lde/blinkt/openvpn/OpenVPNThreadv3;");
+			return (OpenVPNMangement) cl.getConstructor(OpenVpnService.class,VpnProfile.class).newInstance(this,mProfile);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	@Override
 	public void onDestroy() {
 		if (mProcessThread != null) {
-			mManagementThread.managmentCommand("signal SIGINT\n");
+			mManagement.stopVPN();
 
 			mProcessThread.interrupt();
 		}
@@ -452,6 +502,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	}
 
 
+	public void addRoute(CIDRIP route)
+	{
+		mRoutes.add(route );
+	}
 	public void addRoute(String dest, String mask) {
 		CIDRIP route = new CIDRIP(dest, mask);		
 		if(route.len == 32 && !mask.equals("255.255.255.255")) {
@@ -468,6 +522,15 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		mRoutesv6.add(extra);		
 	}
 
+	public void setMtu(int mtu) {
+		mMtu=mtu;
+	}
+
+	public void setLocalIP(CIDRIP cdrip)
+	{
+		mLocalIP=cdrip;
+	}
+
 
 	public void setLocalIP(String local, String netmask,int mtu, String mode) {
 		mLocalIP = new CIDRIP(local, netmask);
@@ -477,7 +540,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			// get the netmask as IP
 			long netint = CIDRIP.getInt(netmask);
 			if(Math.abs(netint - mLocalIP.getInt()) ==1) {
-				if(mode.equals("net30"))
+				if("net30".equals(mode))
 					mLocalIP.len=30;
 				else
 					mLocalIP.len=31;
@@ -559,7 +622,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		}
 	}
 
-	public OpenVpnManagementThread getManagementThread() {
-		return mManagementThread;
+	public OpenVPNMangement getManagement() {
+		return mManagement;
 	}
 }

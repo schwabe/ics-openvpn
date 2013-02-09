@@ -7,28 +7,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Vector;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 import android.content.SharedPreferences;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
-import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
-import android.util.Base64;
 import android.util.Log;
 
-public class OpenVpnManagementThread implements Runnable {
+public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
 
 	private static final String TAG = "openvpn";
 	private LocalSocket mSocket;
@@ -36,8 +26,6 @@ public class OpenVpnManagementThread implements Runnable {
 	private OpenVpnService mOpenVPNService;
 	private LinkedList<FileDescriptor> mFDList=new LinkedList<FileDescriptor>();
 	private int mBytecountinterval=2;
-	private long mLastIn=0; 
-	private long mLastOut=0;
 	private LocalServerSocket mServerSocket;
 	private boolean mReleaseHold=true;
 	private boolean mWaitingForRelease=false;
@@ -46,7 +34,6 @@ public class OpenVpnManagementThread implements Runnable {
 	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
 
 	static private native void jniclose(int fdint);
-	static private native byte[] rsasign(byte[] input,int pkey) throws InvalidKeyException;
 
 	public OpenVpnManagementThread(VpnProfile profile, LocalServerSocket mgmtsocket, OpenVpnService openVpnService) {
 		mProfile = profile;
@@ -285,13 +272,7 @@ public class OpenVpnManagementThread implements Runnable {
 		long in = Long.parseLong(argument.substring(0, comma));
 		long out = Long.parseLong(argument.substring(comma+1));
 
-		long diffin = in - mLastIn; 
-		long diffout = out - mLastOut;
-
-		mLastIn=in;
-		mLastOut=out;
-
-		OpenVPN.updateByteCount(in,out,diffin, diffout);
+		OpenVPN.updateByteCount(in,out);
 
 
 	}
@@ -449,7 +430,7 @@ public class OpenVpnManagementThread implements Runnable {
 	}
 
 
-	public static boolean stopOpenVPN() {
+	private static boolean stopOpenVPN() {
 		boolean sendCMD=false;
 		for (OpenVpnManagementThread mt: active){
 			mt.managmentCommand("signal SIGINT\n");
@@ -477,89 +458,24 @@ public class OpenVpnManagementThread implements Runnable {
 
 	private void processSignCommand(String b64data) {
 
-		PrivateKey privkey = mProfile.getKeystoreKey();
-		Exception err =null;
-
-		byte[] data = Base64.decode(b64data, Base64.DEFAULT);
-
-		// The Jelly Bean *evil* Hack
-		// 4.2 implements the RSA/ECB/PKCS1PADDING in the OpenSSLprovider
-		if(Build.VERSION.SDK_INT==Build.VERSION_CODES.JELLY_BEAN){
-			processSignJellyBeans(privkey,data);
-			return;
-		}
-
-
-		try{
-
-
-			Cipher rsasinger = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
-
-			rsasinger.init(Cipher.ENCRYPT_MODE, privkey);
-
-			byte[] signed_bytes = rsasinger.doFinal(data);
-			String signed_string = Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
-			managmentCommand("rsa-sig\n");
-			managmentCommand(signed_string);
-			managmentCommand("\nEND\n");
-		} catch (NoSuchAlgorithmException e){
-			err =e;
-		} catch (InvalidKeyException e) {
-			err =e;
-		} catch (NoSuchPaddingException e) {
-			err =e;
-		} catch (IllegalBlockSizeException e) {
-			err =e;
-		} catch (BadPaddingException e) {
-			err =e;
-		}
-		if(err !=null) {
-			OpenVPN.logError(R.string.error_rsa_sign,err.getClass().toString(),err.getLocalizedMessage());
-		}
-
+		String signed_string = mProfile.getSignedData(b64data);
+		managmentCommand("rsa-sig\n");
+		managmentCommand(signed_string);
+		managmentCommand("\nEND\n");
 	}
 
+	@Override
+	public void pause() {
+		signalusr1();
+	}
 
-	private void processSignJellyBeans(PrivateKey privkey, byte[] data) {
-		Exception err =null;
-		try {
-			Method[] allm = privkey.getClass().getSuperclass().getDeclaredMethods();
-			System.out.println(allm);
-			Method getKey = privkey.getClass().getSuperclass().getDeclaredMethod("getOpenSSLKey");
-			getKey.setAccessible(true);
+	@Override
+	public void resume() {
+		releaseHold();
+	}
 
-			// Real object type is OpenSSLKey
-			Object opensslkey = getKey.invoke(privkey);
-
-			getKey.setAccessible(false);
-
-			Method getPkeyContext = opensslkey.getClass().getDeclaredMethod("getPkeyContext");
-
-			// integer pointer to EVP_pkey
-			getPkeyContext.setAccessible(true);
-			int pkey = (Integer) getPkeyContext.invoke(opensslkey);
-			getPkeyContext.setAccessible(false);
-
-			byte[] signed_bytes = rsasign(data, pkey); 
-			String signed_string = Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
-			managmentCommand("rsa-sig\n");
-			managmentCommand(signed_string);
-			managmentCommand("\nEND\n");
-
-		} catch (NoSuchMethodException e) {
-			err=e;
-		} catch (IllegalArgumentException e) {
-			err=e;
-		} catch (IllegalAccessException e) {
-			err=e;
-		} catch (InvocationTargetException e) {
-			err=e;
-		} catch (InvalidKeyException e) {
-			err=e;
-		}
-		if(err !=null) {
-			OpenVPN.logError(R.string.error_rsa_sign,err.getClass().toString(),err.getLocalizedMessage());
-		}
-
+	@Override
+	public boolean stopVPN() {
+		return stopOpenVPN();
 	}
 }

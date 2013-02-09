@@ -24,7 +24,7 @@ openvpn/build/msvc/Makefile.in
 openvpn/src/openvpn/.deps
 openvpn/src/compat/.deps
 *.o
-
+ovpn3
 *.patch
 openvpn/distro/Makefile.in
 openvpn/distro/rpm/Makefile.in
@@ -63,3 +63,4 @@ zh-CN.zip
 zh-TW.zip
 google-breakpad/
 id.zip
+ovpn3/boost

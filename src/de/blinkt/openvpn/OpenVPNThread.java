@@ -6,7 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.Locale;
 
 import android.util.Log;
 import de.blinkt.openvpn.OpenVPN.LogItem;
@@ -58,8 +61,10 @@ public class OpenVPNThread implements Runnable {
 			if(mDumpPath!=null) {
 				try {
 					BufferedWriter logout = new BufferedWriter(new FileWriter(mDumpPath + ".log"));
+					SimpleDateFormat timeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.GERMAN);
 					for(LogItem li :OpenVPN.getlogbuffer()){
-						logout.write(li.getString(null) + "\n");
+						String time = timeformat.format(new Date(li.getLogtime()));
+						logout.write(time +" " + li.getString(null) + "\n");
 					}
 					logout.close();
 					OpenVPN.logError(R.string.minidump_generated);

@@ -1,5 +1,6 @@
 package de.blinkt.openvpn;
 
+import java.util.Date;
 import java.util.Vector;
 
 import android.app.AlertDialog;
@@ -19,6 +20,7 @@ import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.IBinder;
 import android.os.Message;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -65,12 +67,16 @@ public class LogWindow extends ListActivity implements StateListener  {
 		private static final int MESSAGE_NEWLOG = 0;
 
 		private static final int MESSAGE_CLEARLOG = 1;
+		
+		private static final int MESSAGE_NEWTS = 1;
 
-		private Vector<String> myEntries=new Vector<String>();
+		private Vector<LogItem> myEntries=new Vector<LogItem>();
 
 		private Handler mHandler;
 
 		private Vector<DataSetObserver> observers=new Vector<DataSetObserver>();
+
+		private int mTimeFormat=0;
 
 
 		public LogWindowListAdapter() {
@@ -88,14 +94,14 @@ public class LogWindow extends ListActivity implements StateListener  {
 		private void initLogBuffer() {
 			myEntries.clear();
 			for (LogItem litem : OpenVPN.getlogbuffer()) {
-				myEntries.add(litem.getString(getContext()));				
+				myEntries.add(litem);
 			}
 		}
 
 		String getLogStr() {
 			String str = "";
-			for(String entry:myEntries) {
-				str+=entry + '\n';
+			for(LogItem entry:myEntries) {
+				str+=entry.getString(LogWindow.this) + '\n';
 			}
 			return str;
 		}
@@ -147,7 +153,15 @@ public class LogWindow extends ListActivity implements StateListener  {
 				v = new TextView(getBaseContext());
 			else
 				v = (TextView) convertView;
-			v.setText(myEntries.get(position));
+			
+			LogItem le = myEntries.get(position);
+			String msg = le.getString(LogWindow.this);
+			if (mTimeFormat%2 == 1) {
+				Date d = new Date(le.getLogtime());
+				String time = DateFormat.getTimeFormat(LogWindow.this).format(d);
+				msg =  time + " " + msg;
+			}
+			v.setText(msg);
 			return v;
 		}
 
@@ -182,7 +196,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 			Message msg = Message.obtain();
 			msg.what=MESSAGE_NEWLOG;
 			Bundle mbundle=new Bundle();
-			mbundle.putString("logmessage", logmessage.getString(getBaseContext()));
+			mbundle.putParcelable("logmessage", logmessage);
 			msg.setData(mbundle);
 			mHandler.sendMessage(msg);
 		}
@@ -192,7 +206,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 			// We have been called
 			if(msg.what==MESSAGE_NEWLOG) {
 
-				String logmessage = msg.getData().getString("logmessage");
+				LogItem logmessage = msg.getData().getParcelable("logmessage");
 				myEntries.add(logmessage);
 
 				for (DataSetObserver observer : observers) {
@@ -203,7 +217,11 @@ public class LogWindow extends ListActivity implements StateListener  {
 				for (DataSetObserver observer : observers) {
 					observer.onInvalidated();
 				}
-			} 
+			}  else if (msg.what == MESSAGE_NEWTS) {
+				for (DataSetObserver observer : observers) {
+					observer.onInvalidated();
+				}
+			}
 
 			return true;
 		}
@@ -214,6 +232,13 @@ public class LogWindow extends ListActivity implements StateListener  {
 			OpenVPN.clearLog();
 			OpenVPN.logMessage(0,"","Log cleared.");
 			mHandler.sendEmptyMessage(MESSAGE_CLEARLOG);
+		}
+
+
+
+		public void nextTimeFormat() {
+			mTimeFormat+=1;
+			mHandler.sendEmptyMessage(MESSAGE_NEWTS);
 		}
 	}
 
@@ -261,7 +286,8 @@ public class LogWindow extends ListActivity implements StateListener  {
 			} else {
 				Toast.makeText(this, R.string.log_no_last_vpn, Toast.LENGTH_LONG).show();
 			}
-
+		} else if(item.getItemId() == R.id.toggle_time) {
+			ladapter.nextTimeFormat();
 		} else if(item.getItemId() == android.R.id.home) {
 			// This is called when the Home (Up) button is pressed
 			// in the Action Bar.
@@ -278,9 +304,6 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 	}
 
-	protected Context getContext() {
-		return this;
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,5 +1,14 @@
 <level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--  connected -->
   <item android:maxLevel="0" android:drawable="@drawable/ic_stat_vpn" />
-  <item android:maxLevel="1" android:drawable="@drawable/ic_stat_vpn" />
-  <item android:maxLevel="2" android:drawable="@drawable/ic_stat_vpn" />
+  <!--  connecting, server reply -->
+  <item android:maxLevel="1" android:drawable="@drawable/ic_stat_vpn_more_halo" />
+  <!--  connecting, no server rply yet -->
+  <item android:maxLevel="2" android:drawable="@drawable/ic_stat_vpn_minimal_halo" />
+  <!--  no useable network -->
+  <item android:maxLevel="3" android:drawable="@drawable/ic_stat_vpn_offline" />
+	<!--  Authentication failed -->
+  <item android:maxLevel="4" android:drawable="@drawable/ic_stat_vpn_more_halo" />
+    <!--  client not running, not used  -->
+  <item android:maxLevel="5" android:drawable="@drawable/ic_stat_vpn_offline" />
  </level-list>

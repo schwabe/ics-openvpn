@@ -28,6 +28,18 @@ public class OpenVPN {
 
 	private static long mlastByteCount[]={0,0,0,0};
 
+
+	
+
+	static final int LEVEL_NONETWORK = 3;
+	static final int LEVEL_NOTCONNECTED = 4;
+	public static final int LEVEL_AUTH_FAILED = 5;
+	static final int LEVEL_CONNECTING_SERVER_REPLIED = 1;
+	static final int LEVEL_CONNECTING_NO_SERVER_REPLY_YET = 2;
+	static final int LEVEL_CONNECTED = 0;
+
+	private static int mLastLevel=LEVEL_NOTCONNECTED;
+	
 	static {
 		logbuffer  = new LinkedList<LogItem>();
 		logListener = new Vector<OpenVPN.LogListener>();
@@ -145,7 +157,7 @@ public class OpenVPN {
 	}
 
 	public interface StateListener {
-		void updateState(String state, String logmessage, int localizedResId);
+		void updateState(String state, String logmessage, int localizedResId, int level);
 	}
 
 	public interface ByteCountListener {
@@ -190,7 +202,7 @@ public class OpenVPN {
 		if(!stateListener.contains(sl)){
 			stateListener.add(sl);
 			if(mLaststate!=null)
-				sl.updateState(mLaststate, mLaststatemsg, mLastStateresid);
+				sl.updateState(mLaststate, mLaststatemsg, mLastStateresid, mLastLevel);
 		}
 	}	
 
@@ -224,6 +236,35 @@ public class OpenVPN {
 
 	}
 
+	private static int getLevel(String state){
+		String[] noreplyet = {"CONNECTING","WAIT", "RECONNECTING", "RESOLVE", "TCP_CONNECT"}; 
+		String[] reply = {"AUTH","GETCONFIG","ASSIGN_IP","ADD_ROUTES"};
+		String[] connected = {"CONNECTED"};
+		String[] notconnected = {"DISCONNECTED", "EXITING"};
+		
+		for(String x:noreplyet)
+			if(state.equals(x))
+				return LEVEL_CONNECTING_NO_SERVER_REPLY_YET;
+		
+		for(String x:reply)
+			if(state.equals(x))
+				return LEVEL_CONNECTING_SERVER_REPLIED;
+		
+		for(String x:connected)
+			if(state.equals(x))
+				return LEVEL_CONNECTED;
+		
+		for(String x:notconnected)
+			if(state.equals(x))
+				return LEVEL_NOTCONNECTED;
+		
+		return -1;
+		
+	}
+
+
+	
+	
 	public synchronized static void removeStateListener(StateListener sl) {
 		stateListener.remove(sl);
 	}
@@ -252,16 +293,18 @@ public class OpenVPN {
 
 	public static void updateStateString (String state, String msg) {
 		int rid = getLocalizedState(state);
-		updateStateString(state, msg,rid);
+		int level = getLevel(state);
+		updateStateString(state, msg, rid, level);
 	}
 
-	public synchronized static void updateStateString(String state, String msg, int resid) {
+	public synchronized static void updateStateString(String state, String msg, int resid, int level) {
 		mLaststate= state;
 		mLaststatemsg = msg;
 		mLastStateresid = resid;
+		mLastLevel = level;
 
 		for (StateListener sl : stateListener) {
-			sl.updateState(state,msg,resid);
+			sl.updateState(state,msg,resid,level);
 		}
 	}
 

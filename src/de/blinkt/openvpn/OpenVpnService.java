@@ -77,11 +77,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	public static final int PROTECT_FD = 0;
 
-
-	private static final int LEVEL_OFFLINE = 0;
-	private static final int LEVEL_NOTCONNECTED = 1;
-	private static final int LEVEL_CONNECTED = 2;
-
 	private static boolean mNotificationalwaysVisible=false;
 
 	private final IBinder mBinder = new LocalBinder();
@@ -136,7 +131,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
 
-		int icon = R.drawable.notification_icon;
+		int icon = R.drawable.ic_notification_icon;
 		android.app.Notification.Builder nbuilder = new Notification.Builder(this);
 
 		if(mProfile!=null)
@@ -248,8 +243,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			this.unregisterReceiver(mNetworkStateReceiver);
 		mNetworkStateReceiver=null;
 	}
-	
-	
+
+
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -274,7 +269,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 		mProfile = ProfileManager.get(profileUUID);
 
-		showNotification("Starting VPN " + mProfile.mName,"Starting VPN " + mProfile.mName, false,0,LEVEL_NOTCONNECTED);
+		showNotification("Starting VPN " + mProfile.mName,"Starting VPN " + mProfile.mName,
+				false,0,OpenVPN.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
 
 		// Set a flag that we are starting a new VPN
 		mStarting=true;
@@ -320,11 +316,11 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 		Runnable processThread;
 		if(mOvpn3) {
-			
+
 			OpenVPNMangement mOpenVPN3 = instantiateOpenVPN3Core();
 			processThread = (Runnable) mOpenVPN3;
 			mManagement = mOpenVPN3;
-	
+
 
 		} else {
 			processThread = new OpenVPNThread(this, argv,nativelibdir);
@@ -556,7 +552,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	}
 
 	@Override
-	public void updateState(String state,String logmessage, int resid) {
+	public void updateState(String state,String logmessage, int resid, int level) {
 		// If the process is not running, ignore any state, 
 		// Notification should be invisible in this state
 		if(mProcessThread==null && !mNotificationalwaysVisible)
@@ -565,17 +561,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		// Display byte count only after being connected
 
 		{
-			int level;
-			if("CONNECTED".equals(state)) {
+			if(level == OpenVPN.LEVEL_CONNECTED) {
 				mDisplayBytecount = true;
 				mConnecttime = System.currentTimeMillis();
-				level = LEVEL_CONNECTED;
 			} else {
-				if ("NONETWORK".equals(state)) {
-					level = LEVEL_OFFLINE;
-				} else {
-					level = LEVEL_NOTCONNECTED;
-				}
 				mDisplayBytecount = false;
 			}
 
@@ -598,7 +587,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 					humanReadableByteCount(diffout, false));
 
 			boolean lowpriority = !mNotificationalwaysVisible;
-			showNotification(netstat,null,lowpriority,mConnecttime, LEVEL_CONNECTED);
+			showNotification(netstat,null,lowpriority,mConnecttime, OpenVPN.LEVEL_CONNECTED);
 		}
 
 	}

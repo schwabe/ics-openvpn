@@ -392,7 +392,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 	}
 
 	@Override
-	public void updateState(final String status,final String logmessage, final int resid) {
+	public void updateState(final String status,final String logmessage, final int resid, final int level) {
 		runOnUiThread(new Runnable() {
 
 			@Override

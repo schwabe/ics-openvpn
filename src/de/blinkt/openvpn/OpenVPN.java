@@ -6,6 +6,8 @@ import java.util.Vector;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 public class OpenVPN {
 
@@ -23,7 +25,7 @@ public class OpenVPN {
 	private static String mLaststate = "NOPROCESS";
 
 	private static int mLastStateresid=R.string.state_noprocess;
-	
+
 	private static long mlastByteCount[]={0,0,0,0};
 
 	static {
@@ -34,7 +36,7 @@ public class OpenVPN {
 		logInformation();
 	}
 
-	public static class LogItem {
+	public static class LogItem implements Parcelable {
 		public static final int ERROR = 1;
 		public static final int INFO = 2;
 		public static final int VERBOSE = 3;
@@ -44,12 +46,46 @@ public class OpenVPN {
 		private int mRessourceId;
 		// Default log priority
 		int mLevel = INFO;
+		private long logtime = System.currentTimeMillis();
 
 		public LogItem(int ressourceId, Object[] args) {
 			mRessourceId = ressourceId;
 			mArgs = args;
 		}
 
+		@Override
+		public int describeContents() {
+			return 0;
+		}
+
+
+		@Override
+		public void writeToParcel(Parcel dest, int flags) {
+			dest.writeArray(mArgs);
+			dest.writeString(mMessage);
+			dest.writeInt(mRessourceId);
+			dest.writeInt(mLevel);
+			dest.writeLong(logtime);
+		}
+
+		public LogItem(Parcel in) {
+			mArgs = in.readArray(Object.class.getClassLoader());
+			mMessage = in.readString();
+			mRessourceId = in.readInt();
+			mLevel = in.readInt();
+			logtime = in.readLong();
+		}
+
+		public static final Parcelable.Creator<LogItem> CREATOR
+		= new Parcelable.Creator<LogItem>() {
+			public LogItem createFromParcel(Parcel in) {
+				return new LogItem(in);
+			}
+
+			public LogItem[] newArray(int size) {
+				return new LogItem[size];
+			}
+		};
 
 		public LogItem(int loglevel,int ressourceId, Object[] args) {
 			mRessourceId = ressourceId;
@@ -73,7 +109,6 @@ public class OpenVPN {
 			mLevel = loglevel;
 		}
 
-
 		public String getString(Context c) {
 			if(mMessage !=null) {
 				return mMessage;
@@ -87,21 +122,22 @@ public class OpenVPN {
 					String str = String.format(Locale.ENGLISH,"Log (no context) resid %d", mRessourceId);
 					if(mArgs !=null)
 						for(Object o:mArgs)
-						str += "|" +  o.toString();
+							str += "|" +  o.toString();
 					return str;
 				}
 			}
 		}
+
+		public long getLogtime() {
+			return logtime;
+		}
+
+
 	}
 
 	private static final int MAXLOGENTRIES = 500;
 
-
 	public static final String MANAGMENT_PREFIX = "M:";
-
-
-
-
 
 
 	public interface LogListener {
@@ -111,7 +147,7 @@ public class OpenVPN {
 	public interface StateListener {
 		void updateState(String state, String logmessage, int localizedResId);
 	}
-	
+
 	public interface ByteCountListener {
 		void updateByteCount(long in, long out, long diffin, long diffout);
 	}
@@ -139,12 +175,12 @@ public class OpenVPN {
 	public synchronized static void removeLogListener(LogListener ll) {
 		logListener.remove(ll);
 	}
-	
+
 	public static void addByteCountListener(ByteCountListener bcl) {
 		bcl.updateByteCount(mlastByteCount[0],	mlastByteCount[1], mlastByteCount[2], mlastByteCount[3]);
 		byteCountListener.add(bcl);
 	}	
-	
+
 	public static void removeByteCountListener(ByteCountListener bcl) {
 		byteCountListener.remove(bcl);
 	}
@@ -157,7 +193,7 @@ public class OpenVPN {
 				sl.updateState(mLaststate, mLaststatemsg, mLastStateresid);
 		}
 	}	
-	
+
 	private static int getLocalizedState(String state){
 		if (state.equals("CONNECTING")) 
 			return R.string.state_connecting;
@@ -223,7 +259,7 @@ public class OpenVPN {
 		mLaststate= state;
 		mLaststatemsg = msg;
 		mLastStateresid = resid;
-		
+
 		for (StateListener sl : stateListener) {
 			sl.updateState(state,msg,resid);
 		}
@@ -264,7 +300,7 @@ public class OpenVPN {
 		long lastOut = mlastByteCount[1];
 		long diffin = in - lastIn;
 		long diffout = out - lastOut;
-		
+
 		mlastByteCount = new long[] {in,out,diffin,diffout};
 		for(ByteCountListener bcl:byteCountListener){
 			bcl.updateByteCount(in, out, diffin,diffout);

@@ -264,5 +264,6 @@
     <string name="encryption_cipher">Encryption cipher</string>
     <string name="packet_auth">Packets authentication</string>
     <string name="auth_dialog_title">Enter packet authentication method</string>
+    <string name="toggle_timestamps">Toggle timestamps</string>
 
 </resources>

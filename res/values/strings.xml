@@ -257,6 +257,9 @@
     <string name="state_nonetwork">Waiting for usable network</string>
     <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
     <string name="notifcation_title_notconnect">Not connected</string>
+    <string name="start_vpn_title">Connecting to VPN %s</string>
+    <string name="start_vpn_ticker">Connecting to VPN %s</string>
+
     <string name="jelly_keystore_alphanumeric_bug">Some versions of Android 4.1 have problems if the name of the keystore certificate contains non alphanumeric characters (like spaces, underscores or dashes). Try to reimport the certificate without special characters</string>
     <string name="encryption_cipher">Encryption cipher</string>
     <string name="packet_auth">Packets authentication</string>

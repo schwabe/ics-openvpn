@@ -20,19 +20,23 @@ Optional: Copy minivpn from lib/ to assets (if you want your own compiled versio
 
 FAQ
 
+Q: How is the OpenVPN version different from normal OpenVPN
+
+A: OpenVPN for Android uses a OpenVPN 2.3 master branch + Android patches + dual stack client patches. 
+   A git repository of the OpenVPN source code and changes is under: 
+   https://github.com/schwabe/openvpn/tree/android_2.3rc1%2Bds
+
 Q: what is minivpn?
 
 A: minivpn is only a executable thats links against libopenvpn which is the normal openvpn build as
    library. It is done this way so the Android Play/Store apk will treat the library as normal library
    and update it on updates of the application. Also the application does not need to take care of 
    keeping minivpn up to date because it contains no code. For almost all intents and purposes
-   minivpn + libopenvpn.so is the same as the normal openvpn binary. 
+   minivpn + libopenvpn.so is the same as the normal openvpn binary
 
+Q: How to a VPN by name from an external app
 
-
-Starting a VPN by name from an external app:
-
-public class StartOpenVPNActivity extends Activity {
+A: public class StartOpenVPNActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

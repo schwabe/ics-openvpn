@@ -25,7 +25,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
 	private VpnProfile mProfile;
 	private OpenVpnService mOpenVPNService;
 	private LinkedList<FileDescriptor> mFDList=new LinkedList<FileDescriptor>();
-	private int mBytecountinterval=2;
 	private LocalServerSocket mServerSocket;
 	private boolean mReleaseHold=true;
 	private boolean mWaitingForRelease=false;
@@ -273,8 +272,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
 		long out = Long.parseLong(argument.substring(comma+1));
 
 		OpenVPN.updateByteCount(in,out);
-
-
+		
 	}
 
 

@@ -565,9 +565,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		if(mDisplayBytecount) {
 			String netstat = String.format(getString(R.string.statusline_bytecount),
 					humanReadableByteCount(in, false),
-					humanReadableByteCount(diffin, false),
+					humanReadableByteCount(diffin/OpenVPNMangement.mBytecountinterval, true),
 					humanReadableByteCount(out, false),
-					humanReadableByteCount(diffout, false));
+					humanReadableByteCount(diffout/OpenVPNMangement.mBytecountinterval, true));
 
 			boolean lowpriority = !mNotificationalwaysVisible;
 			showNotification(netstat,null,lowpriority,mConnecttime, OpenVPN.LEVEL_CONNECTED);
@@ -576,12 +576,19 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	}
 
 	// From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
-	public static String humanReadableByteCount(long bytes, boolean si) {
-		int unit = si ? 1000 : 1024;
-		if (bytes < unit) return bytes + " B";
+	public static String humanReadableByteCount(long bytes, boolean mbit) {
+		if(mbit)
+			bytes = bytes *8;
+		int unit = mbit ? 1000 : 1024;
+		if (bytes < unit)
+			return bytes + (mbit ? " bit" : " B");
+
 		int exp = (int) (Math.log(bytes) / Math.log(unit));
-		String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
-		return String.format(Locale.getDefault(),"%.1f %sB", bytes / Math.pow(unit, exp), pre);
+		String pre = (mbit ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (mbit ? "" : "");
+		if(mbit)
+			return String.format(Locale.getDefault(),"%.1f %sbit", bytes / Math.pow(unit, exp), pre);
+		else 
+			return String.format(Locale.getDefault(),"%.1f %sB", bytes / Math.pow(unit, exp), pre);
 	}
 
 	@Override

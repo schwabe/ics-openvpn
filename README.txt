@@ -18,6 +18,16 @@ Use eclipse with android plugins to build the project.
 Optional: Copy minivpn from lib/ to assets (if you want your own compiled version)
 
 
+FAQ
+
+Q: what is minivpn?
+
+A: minivpn is only a executable thats links against libopenvpn which is the normal openvpn build as
+   library. It is done this way so the Android Play/Store apk will treat the library as normal library
+   and update it on updates of the application. Also the application does not need to take care of 
+   keeping minivpn up to date because it contains no code. For almost all intents and purposes
+   minivpn + libopenvpn.so is the same as the normal openvpn binary. 
+
 
 
 Starting a VPN by name from an external app:

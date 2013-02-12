@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 
 public class SendDumpActivity extends Activity {
@@ -23,7 +25,19 @@ public class SendDumpActivity extends Activity {
 		emailIntent.setType("*/*");
 		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, 
 				new String[]{"Arne Schwabe <arne@rfc2549.org>"});
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "OpenVPN Minidump");
+		
+		String version;
+    	String name="ics-openvpn";
+		try {
+			PackageInfo packageinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			version = packageinfo.versionName;
+			name = packageinfo.applicationInfo.name;
+		} catch (NameNotFoundException e) {
+			version = "error fetching version";
+		}
+		
+		
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, String.format("%s %s Minidump",name,version));
 
 		emailIntent.putExtra(Intent.EXTRA_TEXT, "Please describe the issue you have experienced");
 

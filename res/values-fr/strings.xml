@@ -8,7 +8,7 @@
   <string name="cant_read_folder">"Le dossier ne peut être lu !"</string>
   <string name="select">"Sélectionner"</string>
   <string name="cancel">"Annuler"</string>
-  <string name="no_data">"Aucune données"</string>
+  <string name="no_data">"Aucune donnée"</string>
   <string name="useLZO">"Compression LZO"</string>
   <string name="client_no_certificate">"Aucun certificat"</string>
   <string name="client_certificate_title">"Certificat client"</string>
@@ -25,6 +25,7 @@
   <string name="vpn_type">"Type"</string>
   <string name="pkcs12pwquery">"Mot de passe PKCS12"</string>
   <string name="file_select">"Sélectionner…"</string>
+  <string name="file_nothing_selected">Vous devez sélectionner un fichier</string>
   <string name="useTLSAuth">"Utiliser l\'authentification TLS"</string>
   <string name="tls_direction">"Direction de l\'authentification TLS"</string>
   <string name="ipv6_dialog_tile">"Entrez l\'adresse IPv6 / masque de réseau au format CIDR (ex.: 2000:jj::23/64)"</string>
@@ -38,6 +39,7 @@
   <string name="configure_the_vpn">"Configurer le VPN"</string>
   <string name="menu_add_profile">"Ajouter un profil"</string>
   <string name="add_profile_name_prompt">"Entrez un nom identifiant le nouveau profil"</string>
+  <string name="duplicate_profile_name">Veuillez entrer un nom de profil unique</string>
   <string name="profilename">"Nom de profil"</string>
   <string name="no_keystore_cert_selected">"Aucun certificat utilisateur sélectionné."</string>
   <string name="no_error_found">"Aucune erreur"</string>
@@ -124,6 +126,8 @@
   <string name="no_vpn_support_image">"Votre ROM ne prend pas en charge l\'API VPNService, désolé :("</string>
   <string name="encryption">"Cryptage"</string>
   <string name="cipher_dialog_title">"Entrez la méthode de cryptage"</string>
+  <string name="chipher_dialog_message">Entrer l\'algorithme de chiffrement utilisé par OpenVPN. Laisser vide pour utiliser l\'algorithme par défaut.</string>
+  <string name="auth_dialog_message">Entrer le digest à utiliser par OpenVPN pour l\'authentification. Laisser vide pour utiliser l\'algorithme par défaut.</string>
   <string name="settings_auth">"Authentification / Cryptage"</string>
   <string name="file_explorer_tab">"Explorateur de fichiers"</string>
   <string name="inline_file_tab">"Fichier personnalisé"</string>
@@ -230,4 +234,25 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="reconnection_settings">"Paramètres de reconnexion"</string>
   <string name="connectretrymessage">"Nombre de secondes d\'attente entre chaque tentative de connexion."</string>
   <string name="connectretrywait">"Temps, en secondes, entre deux connexions"</string>
+  <string name="minidump_generated">OpenVPN s\'est écrasé de façon inattendue. S\'il vous plaît, envisagez d\'utiliser l\'option de Minidump depuis le menu principal</string>
+  <string name="send_minidump">Envoyer le Minidump au développeur</string>
+  <string name="send_minidump_summary">Envoyer des informations de débogage au sujet du dernier incident au développeur</string>
+  <string name="notifcation_title">OpenVPN - %s</string>
+  <string name="state_connecting">Connexion</string>
+  <string name="state_wait">En attente de réponse du serveur</string>
+  <string name="state_auth">Authentification</string>
+  <string name="state_get_config">Obtention de la configuration du client</string>
+  <string name="state_assign_ip">Attribution de l\'adresses IP</string>
+  <string name="state_add_routes">Ajout des routes</string>
+  <string name="state_connected">Connecté</string>
+  <string name="state_reconnecting">Reconnexion</string>
+  <string name="state_exiting">Fermeture</string>
+  <string name="state_noprocess">Eteint</string>
+  <string name="state_resolve">Résolution des noms d\'hôtes</string>
+  <string name="state_tcp_connect">Connexion (TCP)</string>
+  <string name="state_auth_failed">Echec de l\'authentification</string>
+  <string name="state_nonetwork">En attente de réseau utilisable</string>
+  <string name="notifcation_title_notconnect">Non connecté</string>
+  <string name="jelly_keystore_alphanumeric_bug">Certaines versions d\'Android 4.1 rencontrent des problèmes si le nom du certificat du trousseau de clé contient des caractères non alphanumériques (comme des espaces, des caractères de soulignement ou des tirets). Essayez de réimporter le certificat sans caractères spéciaux</string>
+  <string name="packet_auth">Authentification des paquets</string>
 </resources>

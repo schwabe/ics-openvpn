@@ -228,4 +228,17 @@
   <string name="minidump_generated">OpenVPN falló inesperadamente. Por favor considere usar la opción envío de minivolcado en el menú principal</string>
   <string name="send_minidump">Enviar minivolcado al desarrollador</string>
   <string name="send_minidump_summary">Enviar información de depuración sobre último fallo al desarrollador</string>
+  <string name="state_connecting">Conectando</string>
+  <string name="state_wait">Esperando respuesta del servidor</string>
+  <string name="state_assign_ip">Asignando direcciones IP</string>
+  <string name="state_add_routes">Añadiendo rutas</string>
+  <string name="state_connected">Conectado</string>
+  <string name="state_reconnecting">Reconectando</string>
+  <string name="state_exiting">Saliendo</string>
+  <string name="state_tcp_connect">Conectando (TCP)</string>
+  <string name="state_auth_failed">Fallo de autenticación</string>
+  <string name="notifcation_title_notconnect">No conectado</string>
+  <string name="jelly_keystore_alphanumeric_bug">Algunas versiones de Android 4.1 experimentan problemas si el nombre del almacén de certificados contiene caracteres no alfanuméricos (como espacios, subrayados o barras). Intente volver a importar el certificado sin caracteres especiales</string>
+  <string name="packet_auth">Autenticación de paquetes</string>
+  <string name="auth_dialog_title">Introduzca método de autenticación de paquetes</string>
 </resources>

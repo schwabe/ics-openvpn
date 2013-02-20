@@ -127,6 +127,8 @@
   <string name="no_vpn_support_image">申し訳ありませんが、お使いの環境ではVPNサービスがサポートされていません。</string>
   <string name="encryption">暗号化</string>
   <string name="cipher_dialog_title">暗号化方式を入力</string>
+  <string name="chipher_dialog_message">OpenVPNが暗号化に使用する暗号方式を入力してください。空欄にするとデフォルトを使用します。</string>
+  <string name="auth_dialog_message">OpenVPNが使用する認証ダイジェストを入力します。空欄にするとデフォルトのダイジェストを使用します。</string>
   <string name="settings_auth">認証/暗号化</string>
   <string name="file_explorer_tab">ファイルを選択</string>
   <string name="inline_file_tab">インライン ファイル</string>
@@ -290,4 +292,10 @@ TCP keepaliveと長いタイムアウト時間は動作しますが、TCP over T
   <string name="state_tcp_connect">接続中(TCP)</string>
   <string name="state_auth_failed">認証に失敗しました</string>
   <string name="state_nonetwork">使用可能なネットワークを待機中</string>
+  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
+  <string name="notifcation_title_notconnect">未接続</string>
+  <string name="jelly_keystore_alphanumeric_bug">Android 4.1の一部のバージョンで、キーストアの証明書の名前にアルファベット以外の特殊な文字(スペース、アンダーバー、ダッシュ等)を含む場合に問題が発生します。証明書の名前から特殊な文字を外して再度インポートを試みてください。</string>
+  <string name="encryption_cipher">暗号化方式</string>
+  <string name="packet_auth">パケット認証</string>
+  <string name="auth_dialog_title">パケット認証方式を入力してください。</string>
 </resources>

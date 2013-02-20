@@ -265,5 +265,9 @@
     <string name="packet_auth">Packets authentication</string>
     <string name="auth_dialog_title">Enter packet authentication method</string>
     <string name="toggle_timestamps">Toggle timestamps</string>
-
+    <string name="mobile_info_extended">Running on %1$s (%2$s) %3$s, Android API %4$d, version %5$s, %6$s</string>
+    <string name="built_by">built by %s</string>
+    <string name="debug_build">debug build</string>
+    <string name="official_build">official build</string>
+    
 </resources>

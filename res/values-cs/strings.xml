@@ -125,6 +125,8 @@
   <string name="no_vpn_support_image">Tvůj obrázek není podporovaný rozhraním VPNService, je mi líto :-(</string>
   <string name="encryption">Šifrování</string>
   <string name="cipher_dialog_title">Zadej šifrovací metodu</string>
+  <string name="chipher_dialog_message">Zadej šifrovací algoritmus. Ponech prázdné pro výchozí šifru.</string>
+  <string name="auth_dialog_message">Zadej algoritmus pro autentizaci. Nech prázdné pro výchozí algoritmus.</string>
   <string name="settings_auth">Autentizace/Šifrování</string>
   <string name="file_explorer_tab">Prohlížeč souború</string>
   <string name="inline_file_tab">Vložený soubor</string>
@@ -251,4 +253,10 @@
   <string name="state_tcp_connect">Připojuji (TCP)</string>
   <string name="state_auth_failed">Přihlášení nebylo úspěšné</string>
   <string name="state_nonetwork">Čekání na použitelnou síť</string>
+  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
+  <string name="notifcation_title_notconnect">Nepřipojeno</string>
+  <string name="jelly_keystore_alphanumeric_bug">Některé verze Androidu 4.1 mají problém, pokud je ve jméně certifikátu obsažen jiný než alfanumerický znak (mezera, podtržítko, mínus). Zkus reimportovat certifikát bez speciálních znaků</string>
+  <string name="encryption_cipher">Šifrovací algoritmus</string>
+  <string name="packet_auth">Ověřování paketů</string>
+  <string name="auth_dialog_title">Zadej způsob ověřování paketů</string>
 </resources>

@@ -125,6 +125,7 @@
   <string name="no_vpn_support_image">Ваша прошивка не поддерживает VPNService API, извините :(</string>
   <string name="encryption">Шифрование</string>
   <string name="cipher_dialog_title">Укажите метод шифрования</string>
+  <string name="chipher_dialog_message">Введите алгоритм шифрования, используемый OpenVPN. Оставьте пустым, чтобы использовать шифрование по-умолчанию.</string>
   <string name="settings_auth">Авторизация/шифрование</string>
   <string name="file_explorer_tab">Обзор файлов</string>
   <string name="inline_file_tab">Встроенный файл</string>
@@ -251,4 +252,10 @@
   <string name="state_tcp_connect">Подключение (TCP)</string>
   <string name="state_auth_failed">Ошибка аутентификации</string>
   <string name="state_nonetwork">Ожидание работы сети</string>
+  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
+  <string name="notifcation_title_notconnect">Разъединено</string>
+  <string name="jelly_keystore_alphanumeric_bug">В некоторых версиях Android 4.1 есть проблемы, если имя сертификата содержит не буквенно-цифровые символы (например, пробелы, подчеркивания или тире). Попробуйте переустановить сертификат без использования специальных символов.</string>
+  <string name="encryption_cipher">Алгоритм шифрования</string>
+  <string name="packet_auth">Проверка подлинности пакетов</string>
+  <string name="auth_dialog_title">Укажите метод проверки подлинности пакетов</string>
 </resources>

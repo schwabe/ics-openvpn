@@ -35,6 +35,7 @@
   <string name="custom_option_warning">请谨慎输入 OpenVPN 的自定义选项。此外请注意许多与 tun 模块有关的 OpenVPN 设置由于系统 VPN 功能的设计而不能得到支持。如果您缺少认为一个很重要的选项，请联系作者。</string>
   <string name="auth_username">用户名</string>
   <string name="auth_pwquery">密码</string>
+  <string name="static_keys_info">静态配置中 TLS 身份验证密钥将被用作静态密钥</string>
   <string name="configure_the_vpn">配置 VPN</string>
   <string name="menu_add_profile">添加配置文件</string>
   <string name="add_profile_name_prompt">输入新配置文件名：</string>
@@ -65,6 +66,7 @@
   <string name="enter_tlscn_title">远程主机名 （CN）</string>
   <string name="tls_key_auth">启用 TLS 密钥认证</string>
   <string name="tls_auth_file">TLS 认证文件</string>
+  <string name="pull_on_summary">从服务器请求 IP 地址、 路由规则和计时选项。</string>
   <string name="use_pull">Pull 设置</string>
   <string name="dns">DNS</string>
   <string name="override_dns">覆盖服务器 DNS 设置</string>
@@ -97,16 +99,19 @@
   <string name="dns_domain_info">DNS 域： %s</string>
   <string name="routes_info">IPv4 路由： %s</string>
   <string name="routes_info6">IPv6 路由： %s</string>
+  <string name="route_not_netip">纠正路由 %1$s/%2$s 为 %3$s/%2$s</string>
   <string name="version_info">%1$s %2$s</string>
   <string name="send_logfile">发送日志文件</string>
   <string name="send">发送</string>
   <string name="ics_openvpn_log_file">ICS OpenVPN 日志文件</string>
   <string name="copied_entry">日志条目已复制剪贴板</string>
   <string name="tap_mode">Tap 模式</string>
+  <string name="tap_faq2">还来? 您在开玩笑嘛? tap 连接模式是不支持的，不要再发邮件问这些问题了。</string>
   <string name="faq">常见问题</string>
   <string name="faq_summary">常见问题和建议</string>
   <string name="copying_log_entries">复制日志条目</string>
   <string name="faq_shortcut">启动快捷方式</string>
+  <string name="faq_howto_shortcut">您可以在主屏幕上放置一个 OpenVPN 的快捷方式。这取决于您的主屏幕管理程序，可能是快捷方式，也可能是一个小挂件。</string>
   <string name="encryption">加密</string>
   <string name="cipher_dialog_title">输入加密方法</string>
   <string name="settings_auth">认证/加密</string>
@@ -150,6 +155,7 @@
   <string name="edit_profile_title">编辑 %s</string>
   <string name="building_configration">正在生成配置</string>
   <string name="netchange">当转换网络时重新连接</string>
+  <string name="cert_from_keystore">从密钥库中获取证书 \'%s\'</string>
   <string name="netstatus">网络状态： %s</string>
   <string name="select_file">选择</string>
   <string name="show_log_window">显示日志窗口</string>
@@ -171,7 +177,8 @@
   <string name="getproxy_error">获取代理设置时出错：%s</string>
   <string name="using_proxy">使用代理 %1$s %2$d</string>
   <string name="use_system_proxy">使用系统代理</string>
-  <string name="donatewithpaypal">您可以 &lt; href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS &amp; amp; cmd = _s xclick\"&gt; 通过 PayPal 捐助&lt;/a&gt;</string>
+  <string name="donatewithpaypal">您可以 &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt; 通过 PayPal 捐助&lt;/a&gt;</string>
+  <string name="onbootrestartsummary">OpenVPN 将会在重启后自动重新连接 VPN。请在启用该选项前先阅读连接警告的常见问题解答。</string>
   <string name="onbootrestart">重启时重新连接</string>
   <string name="ignore">忽略</string>
   <string name="restart">重启</string>
@@ -179,6 +186,7 @@
   <string name="faq_duplicate_notification_title">重复的通知</string>
   <string name="no_vpn_profiles_defined">没有定义 VPN 配置文件</string>
   <string name="add_new_vpn_hint">点击 &lt;img src=\"ic_menu_add\"/&gt; 图标添加新的 VPN 配置</string>
+  <string name="faq_hint">请确保阅读常见问题解答。这是一个快速向导。</string>
   <string name="faq_routing_title">路由/接口配置</string>
   <string name="persisttun_summary">当 OpenVPN 重连时，也一直使用 VPN 连接。</string>
   <string name="persistent_tun_title">保持 tun 通道</string>
@@ -193,16 +201,26 @@
   <string name="connectretrywait">两次连接间隔时间(秒)</string>
   <string name="minidump_generated">OpenVPN 意外崩溃。建议您使用主菜单中的发送转储文件功能向开发者发送转储文件</string>
   <string name="send_minidump">向开发者发送转储信息</string>
+  <string name="send_minidump_summary">向开发人员发送上次崩溃的调试信息</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="session_ipv4string">%1$s - %2$s</string>
   <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
   <string name="state_connecting">连接中</string>
   <string name="state_wait">等待服务器响应</string>
   <string name="state_auth">验证中</string>
+  <string name="state_get_config">正在获取客户端配置</string>
+  <string name="state_assign_ip">正在分配 IP 地址</string>
+  <string name="state_add_routes">添加路由</string>
+  <string name="state_connected">已连接</string>
+  <string name="state_reconnecting">正在重新连接</string>
   <string name="state_exiting">正在退出</string>
   <string name="state_noprocess">未运行</string>
   <string name="state_resolve">正在解析主机名</string>
   <string name="state_tcp_connect">连接中(TCP)</string>
   <string name="state_auth_failed">验证失败</string>
   <string name="state_nonetwork">等待可用网络</string>
+  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
+  <string name="notifcation_title_notconnect">未连接</string>
+  <string name="jelly_keystore_alphanumeric_bug">某些版本的 Android 4.1 存在问题，如果密钥库证书的名称包含非字母和数字字符(如空格、 下划线或短划线)。请尝试重新导入不包含特殊字符的证书</string>
+  <string name="packet_auth">数据包验证</string>
 </resources>

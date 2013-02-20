@@ -1,10 +1,21 @@
 package de.blinkt.openvpn;
 
+import java.io.ByteArrayInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Vector;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -38,6 +49,10 @@ public class OpenVPN {
 	static final int LEVEL_CONNECTING_NO_SERVER_REPLY_YET = 2;
 	static final int LEVEL_CONNECTED = 0;
 
+	public static final byte[] officalkey = {-58, -42, -44, -106, 90, -88, -87, -88, -52, -124, 84, 117, 66, 79, -112, -111, -46, 86, -37, 109};
+	public static final byte[] officaldebugkey = {-99, -69, 45, 71, 114, -116, 82, 66, -99, -122, 50, -70, -56, -111, 98, -35, -65, 105, 82, 43};
+	public static final byte[] amazonkey = {-116, -115, -118, -89, -116, -112, 120, 55, 79, -8, -119, -23, 106, -114, -85, -56, -4, 105, 26, -57};
+
 	private static int mLastLevel=LEVEL_NOTCONNECTED;
 	
 	static {
@@ -47,6 +62,7 @@ public class OpenVPN {
 		byteCountListener = new Vector<OpenVPN.ByteCountListener>();
 		logInformation();
 	}
+
 
 	public static class LogItem implements Parcelable {
 		public static final int ERROR = 1;
@@ -126,6 +142,8 @@ public class OpenVPN {
 				return mMessage;
 			} else {
 				if(c!=null) {
+					if(mRessourceId==R.string.mobile_info)
+						return getMobileInfoString(c);
 					if(mArgs == null)
 						return c.getString(mRessourceId);
 					else
@@ -135,9 +153,49 @@ public class OpenVPN {
 					if(mArgs !=null)
 						for(Object o:mArgs)
 							str += "|" +  o.toString();
+					
 					return str;
 				}
 			}
+		}
+
+		private String getMobileInfoString(Context c) {
+			c.getPackageManager();
+			String apksign="error getting package signature";
+
+			String version="error getting version";
+			try {
+				Signature raw = c.getPackageManager().getPackageInfo(c.getPackageName(), PackageManager.GET_SIGNATURES).signatures[0];
+				CertificateFactory cf = CertificateFactory.getInstance("X.509");
+				X509Certificate cert = (X509Certificate) cf.generateCertificate(new ByteArrayInputStream(raw.toByteArray()));
+				MessageDigest md = MessageDigest.getInstance("SHA-1");
+		    	byte[] der = cert.getEncoded();
+		    	md.update(der);
+		    	byte[] digest = md.digest();
+		    	
+		    	if (Arrays.equals(digest, officalkey))
+		    		apksign = c.getString(R.string.official_build);
+		    	else if (Arrays.equals(digest, officaldebugkey))
+		    		apksign = c.getString(R.string.debug_build);
+		    	else if (Arrays.equals(digest, amazonkey))
+		    		apksign = "amazon version";
+		    	else
+		    		apksign = c.getString(R.string.built_by,cert.getSubjectX500Principal().getName());
+		    	
+				PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
+				version = packageinfo.versionName;
+		    	
+			} catch (NameNotFoundException e) {
+			} catch (CertificateException e) {
+			} catch (NoSuchAlgorithmException e) {
+			}
+			
+			Object[] argsext = Arrays.copyOf(mArgs, mArgs.length+2);
+			argsext[argsext.length-1]=apksign;
+			argsext[argsext.length-2]=version;
+			
+			return c.getString(R.string.mobile_info_extended, argsext);
+
 		}
 
 		public long getLogtime() {
@@ -176,6 +234,7 @@ public class OpenVPN {
 	}
 
 	private static void logInformation() {
+
 
 		logInfo(R.string.mobile_info,Build.MODEL, Build.BOARD,Build.BRAND,Build.VERSION.SDK_INT);
 	}

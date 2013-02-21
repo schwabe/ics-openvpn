@@ -1,6 +1,8 @@
 package de.blinkt.openvpn;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Vector;
 
 import android.app.AlertDialog;
@@ -38,6 +40,7 @@ import de.blinkt.openvpn.OpenVPN.StateListener;
 import de.blinkt.openvpn.OpenVpnService.LocalBinder;
 
 public class LogWindow extends ListActivity implements StateListener  {
+	private static final String LOGTIMEFORMAT = "logtimeformat";
 	private static final int START_VPN_CONFIG = 0;
 	private String[] mBconfig=null;
 	protected OpenVpnService mService;
@@ -156,9 +159,14 @@ public class LogWindow extends ListActivity implements StateListener  {
 			
 			LogItem le = myEntries.get(position);
 			String msg = le.getString(LogWindow.this);
-			if (mTimeFormat%2 == 1) {
+			if (mTimeFormat != 0) {
 				Date d = new Date(le.getLogtime());
-				String time = DateFormat.getTimeFormat(LogWindow.this).format(d);
+				java.text.DateFormat timeformat;
+				if (mTimeFormat==2) 
+					timeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
+				else
+					timeformat = DateFormat.getTimeFormat(LogWindow.this);
+				String time = timeformat.format(d);
 				msg =  time + " " + msg;
 			}
 			v.setText(msg);
@@ -237,9 +245,10 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 
 		public void nextTimeFormat() {
-			mTimeFormat+=1;
+			mTimeFormat= (mTimeFormat+ 1) % 3;
 			mHandler.sendEmptyMessage(MESSAGE_NEWTS);
 		}
+		
 	}
 
 
@@ -355,6 +364,8 @@ public class LogWindow extends ListActivity implements StateListener  {
 	protected void onStop() {
 		super.onStop();
 		OpenVPN.removeStateListener(this);
+		getPreferences(0).edit().putInt(LOGTIMEFORMAT, ladapter.mTimeFormat).apply();
+
 	}
 
 	@Override
@@ -379,6 +390,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 		});
 
 		ladapter = new LogWindowListAdapter();
+		ladapter.mTimeFormat = getPreferences(0).getInt(LOGTIMEFORMAT, 0);
 		lv.setAdapter(ladapter);
 
 		mSpeedView = (TextView) findViewById(R.id.speed);
@@ -407,6 +419,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 		});
 
 	}
+
 
 	@Override
 	protected void onDestroy() {

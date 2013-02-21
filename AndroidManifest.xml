@@ -16,6 +16,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="de.blinkt.openvpn"
     android:versionCode="59"
     android:versionName="0.5.32" >
@@ -50,7 +51,9 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".LogWindow"
-            android:label="@string/openvpn_log" />
+            android:allowTaskReparenting="true"
+            android:label="@string/openvpn_log"
+            android:launchMode="singleTask" />
         <activity android:name=".SendDumpActivity" />
         <activity android:name=".FileSelect" />
         <activity android:name=".MainActivity" >
@@ -122,11 +125,11 @@
                 <data android:scheme="file" />
                 <data android:host="*" />
                 <data android:port="*" />
-                <data android:pathPattern=".*..*..*..*..*.AAA" />
-                <data android:pathPattern=".*..*..*..*.AAA" />
-                <data android:pathPattern=".*..*..*.AAA" />
-                <data android:pathPattern=".*..*.AAA" />
-                <data android:pathPattern=".*.AAA" />
+                <data android:pathPattern=".*..*..*..*..*.ovpn" />
+                <data android:pathPattern=".*..*..*..*.ovpn" />
+                <data android:pathPattern=".*..*..*.ovpn" />
+                <data android:pathPattern=".*..*.ovpn" />
+                <data android:pathPattern=".*.ovpn" />
             </intent-filter>
         </activity>
         <activity
@@ -154,7 +157,8 @@
             android:name=".FileProvider"
             android:authorities="de.blinkt.openvpn.FileProvider"
             android:exported="true"
-            android:grantUriPermissions="true" />
+            android:grantUriPermissions="true"
+            tools:ignore="ExportedContentProvider" />
     </application>
 
 </manifest>

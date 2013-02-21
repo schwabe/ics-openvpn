@@ -64,7 +64,7 @@ public class OpenVPNThread implements Runnable {
 					SimpleDateFormat timeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.GERMAN);
 					for(LogItem li :OpenVPN.getlogbuffer()){
 						String time = timeformat.format(new Date(li.getLogtime()));
-						logout.write(time +" " + li.getString(null) + "\n");
+						logout.write(time +" " + li.getString(mService) + "\n");
 					}
 					logout.close();
 					OpenVPN.logError(R.string.minidump_generated);

@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
 
+import android.text.TextUtils;
+
 //! Openvpn Config FIle Parser, probably not 100% accurate but close enough
 
 // And rember, this is valid :)
@@ -17,8 +19,11 @@ public class ConfigParser {
 
 
 	private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
+	
+	private boolean extraRemotesAsCustom=false;
+	
 	public void parseConfig(Reader reader) throws IOException, ConfigParseError {
-
+	
 
 		BufferedReader br =new BufferedReader(reader);
 
@@ -340,8 +345,10 @@ public class ConfigParser {
 		}
 
 		// Parse remote config
-		Vector<String> remote = getOption("remote",1,3);
-		if(remote != null){
+		Vector<Vector<String>> remotes = getAllOption("remote",1,3);
+
+		if(remotes!=null && remotes.size()>1 && extraRemotesAsCustom) {
+			Vector<String> remote = remotes.get(0);
 			switch (remote.size()) {
 			case 4:
 				np.mUseUdp=isUdpProto(remote.get(3));
@@ -351,6 +358,8 @@ public class ConfigParser {
 				np.mServerName = remote.get(1);
 			}
 		}
+		
+
 
 		Vector<Vector<String>> dhcpoptions = getAllOption("dhcp-option", 2, 2);
 		if(dhcpoptions!=null) {
@@ -468,11 +477,21 @@ public class ConfigParser {
 
 		
 		// Check the other options
+		if(remotes !=null && remotes.size()>1 && extraRemotesAsCustom) {
+			// first is already added
+			remotes.remove(0);
+			np.mCustomConfigOptions += getOptionStrings(remotes);
+			np.mUseCustomConfig=true;
 
+		}
 		checkIgnoreAndInvalidOptions(np);
 		fixup(np);
 
 		return np;
+	}
+	
+	public void useExtraRemotesAsCustom(boolean b) {
+		this.extraRemotesAsCustom = b;
 	}
 
 	private boolean isUdpProto(String proto) throws ConfigParseError {
@@ -509,20 +528,25 @@ public class ConfigParser {
 			options.remove(option);
 
 		if(options.size()> 0) {
-			String custom = "# These Options were found in the config file do not map to config settings:\n";
+			np.mCustomConfigOptions += "# These Options were found in the config file do not map to config settings:\n";
 
 			for(Vector<Vector<String>> option:options.values()) {
-				for(Vector<String> optionsline: option) {
-					for (String arg : optionsline)
-						custom+= VpnProfile.openVpnEscape(arg) + " ";
-				}
-				custom+="\n";
+				np.mCustomConfigOptions += getOptionStrings(option);
 
 			}
-			np.mCustomConfigOptions = custom;
 			np.mUseCustomConfig=true;
 
 		}
+	}
+
+	private String getOptionStrings( Vector<Vector<String>> option) {
+		String custom="";
+		for(Vector<String> optionsline: option) {
+			for (String arg : optionsline)
+				custom+= VpnProfile.openVpnEscape(arg) + " ";
+			custom+="\n";
+		}
+		return custom;
 	}
 
 

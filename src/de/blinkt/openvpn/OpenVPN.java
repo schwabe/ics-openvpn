@@ -297,7 +297,7 @@ public class OpenVPN {
 
 	private static int getLevel(String state){
 		String[] noreplyet = {"CONNECTING","WAIT", "RECONNECTING", "RESOLVE", "TCP_CONNECT"}; 
-		String[] reply = {"AUTH","GETCONFIG","ASSIGN_IP","ADD_ROUTES"};
+		String[] reply = {"AUTH","GET_CONFIG","ASSIGN_IP","ADD_ROUTES"};
 		String[] connected = {"CONNECTED"};
 		String[] notconnected = {"DISCONNECTED", "EXITING"};
 		

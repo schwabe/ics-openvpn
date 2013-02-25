@@ -114,15 +114,16 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	private void endVpnService() {
 		mProcessThread=null;
 		OpenVPN.logBuilderConfig(null);
-		OpenVPN.removeStateListener(this);
 		OpenVPN.removeByteCountListener(this);
 		unregisterNetworkStateReceiver();
 		ProfileManager.setConntectedVpnProfileDisconnected(this);
 		if(!mStarting) {
 			stopForeground(!mNotificationalwaysVisible);
 
-			if( !mNotificationalwaysVisible)
+			if( !mNotificationalwaysVisible) {
 				stopSelf();
+				OpenVPN.removeStateListener(this);
+			}
 		}
 	}
 
@@ -351,6 +352,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		if (mNetworkStateReceiver!= null) {
 			this.unregisterReceiver(mNetworkStateReceiver);
 		}
+		// Just in case unregister for state
+		OpenVPN.removeStateListener(this);
 
 	}
 

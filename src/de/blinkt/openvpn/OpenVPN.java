@@ -247,12 +247,12 @@ public class OpenVPN {
 		logListener.remove(ll);
 	}
 
-	public static void addByteCountListener(ByteCountListener bcl) {
+	public synchronized static void addByteCountListener(ByteCountListener bcl) {
 		bcl.updateByteCount(mlastByteCount[0],	mlastByteCount[1], mlastByteCount[2], mlastByteCount[3]);
 		byteCountListener.add(bcl);
 	}	
 
-	public static void removeByteCountListener(ByteCountListener bcl) {
+	public synchronized static void removeByteCountListener(ByteCountListener bcl) {
 		byteCountListener.remove(bcl);
 	}
 
@@ -375,7 +375,7 @@ public class OpenVPN {
 		newlogItem(new LogItem(LogItem.INFO, ressourceId, args));
 	}
 
-	private static void newlogItem(LogItem logItem) {
+	private synchronized static void newlogItem(LogItem logItem) {
 		logbuffer.addLast(logItem);
 		if(logbuffer.size()>MAXLOGENTRIES)
 			logbuffer.removeFirst();
@@ -397,11 +397,13 @@ public class OpenVPN {
 		newlogItem(new LogItem(LogItem.ERROR, ressourceId,args));
 	}
 
-	public static void updateByteCount(long in, long out) {
+	public static synchronized void updateByteCount(long in, long out) {
 		long lastIn = mlastByteCount[0];
 		long lastOut = mlastByteCount[1];
-		long diffin = in - lastIn;
-		long diffout = out - lastOut;
+		long diffin = mlastByteCount[2] = in - lastIn;
+		long diffout = mlastByteCount[3] = out - lastOut;
+		
+		
 
 		mlastByteCount = new long[] {in,out,diffin,diffout};
 		for(ByteCountListener bcl:byteCountListener){

@@ -34,6 +34,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import de.blinkt.openvpn.OpenVPN.ConnectionStatus;
 import de.blinkt.openvpn.OpenVPN.LogItem;
 import de.blinkt.openvpn.OpenVPN.LogListener;
 import de.blinkt.openvpn.OpenVPN.StateListener;
@@ -404,7 +405,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 	}
 
 	@Override
-	public void updateState(final String status,final String logmessage, final int resid, final int level) {
+	public void updateState(final String status,final String logmessage, final int resid, final ConnectionStatus level) {
 		runOnUiThread(new Runnable() {
 
 			@Override

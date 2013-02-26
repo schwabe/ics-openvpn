@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 
 import android.util.Log;
+import de.blinkt.openvpn.OpenVPN.ConnectionStatus;
 import de.blinkt.openvpn.OpenVPN.LogItem;
 
 public class OpenVPNThread implements Runnable {
@@ -57,7 +58,7 @@ public class OpenVPNThread implements Runnable {
 			if( exitvalue != 0)
 				OpenVPN.logError("Process exited with exit value " + exitvalue);
 			
-			OpenVPN.updateStateString("NOPROCESS","No process running.", R.string.state_noprocess,OpenVPN.LEVEL_NOTCONNECTED);
+			OpenVPN.updateStateString("NOPROCESS","No process running.", R.string.state_noprocess,ConnectionStatus.LEVEL_NOTCONNECTED);
 			if(mDumpPath!=null) {
 				try {
 					BufferedWriter logout = new BufferedWriter(new FileWriter(mDumpPath + ".log"));

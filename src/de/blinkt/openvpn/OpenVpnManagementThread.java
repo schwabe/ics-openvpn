@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Vector;
 
+import de.blinkt.openvpn.OpenVPN.ConnectionStatus;
+
 import android.content.SharedPreferences;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
@@ -207,7 +209,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
 			releaseHoldCmd();
 		} else { 
 			mWaitingForRelease=true;
-			OpenVPN.updateStateString("NONETWORK", "",R.string.state_nonetwork,OpenVPN.LEVEL_NONETWORK);
+			OpenVPN.updateStateString("NONETWORK", "",R.string.state_nonetwork,ConnectionStatus.LEVEL_NONETWORK);
 		}
 	}
 	private void releaseHoldCmd() {
@@ -421,7 +423,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
 
 
 	private void proccessPWFailed(String needed, String args) {
-		OpenVPN.updateStateString("AUTH_FAILED", needed + args,R.string.state_auth_failed,OpenVPN.LEVEL_AUTH_FAILED);
+		OpenVPN.updateStateString("AUTH_FAILED", needed + args,R.string.state_auth_failed,ConnectionStatus.LEVEL_AUTH_FAILED);
 	}
 	private void logStatusMessage(String command) {
 		OpenVPN.logMessage(0,"MGMT:", command);

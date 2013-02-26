@@ -40,21 +40,28 @@ public class OpenVPN {
 	private static long mlastByteCount[]={0,0,0,0};
 
 
-	
 
-	static final int LEVEL_NONETWORK = 3;
-	static final int LEVEL_NOTCONNECTED = 4;
-	public static final int LEVEL_AUTH_FAILED = 5;
-	static final int LEVEL_CONNECTING_SERVER_REPLIED = 1;
-	static final int LEVEL_CONNECTING_NO_SERVER_REPLY_YET = 2;
-	static final int LEVEL_CONNECTED = 0;
+	public enum ConnectionStatus {
+		LEVEL_NONETWORK (3),
+		LEVEL_NOTCONNECTED  (4),
+		LEVEL_AUTH_FAILED ( 5),
+		LEVEL_CONNECTING_SERVER_REPLIED ( 1),
+		LEVEL_CONNECTING_NO_SERVER_REPLY_YET (2),
+		LEVEL_CONNECTED (0), UNKNOWN_LEVEL(-1);
+
+		public final int level;
+
+		ConnectionStatus(int level){
+			this.level = level;
+		}
+	}
 
 	public static final byte[] officalkey = {-58, -42, -44, -106, 90, -88, -87, -88, -52, -124, 84, 117, 66, 79, -112, -111, -46, 86, -37, 109};
 	public static final byte[] officaldebugkey = {-99, -69, 45, 71, 114, -116, 82, 66, -99, -122, 50, -70, -56, -111, 98, -35, -65, 105, 82, 43};
 	public static final byte[] amazonkey = {-116, -115, -118, -89, -116, -112, 120, 55, 79, -8, -119, -23, 106, -114, -85, -56, -4, 105, 26, -57};
 
-	private static int mLastLevel=LEVEL_NOTCONNECTED;
-	
+	private static ConnectionStatus mLastLevel=ConnectionStatus.LEVEL_NOTCONNECTED;
+
 	static {
 		logbuffer  = new LinkedList<LogItem>();
 		logListener = new Vector<OpenVPN.LogListener>();
@@ -153,7 +160,7 @@ public class OpenVPN {
 					if(mArgs !=null)
 						for(Object o:mArgs)
 							str += "|" +  o.toString();
-					
+
 					return str;
 				}
 			}
@@ -169,31 +176,31 @@ public class OpenVPN {
 				CertificateFactory cf = CertificateFactory.getInstance("X.509");
 				X509Certificate cert = (X509Certificate) cf.generateCertificate(new ByteArrayInputStream(raw.toByteArray()));
 				MessageDigest md = MessageDigest.getInstance("SHA-1");
-		    	byte[] der = cert.getEncoded();
-		    	md.update(der);
-		    	byte[] digest = md.digest();
-		    	
-		    	if (Arrays.equals(digest, officalkey))
-		    		apksign = c.getString(R.string.official_build);
-		    	else if (Arrays.equals(digest, officaldebugkey))
-		    		apksign = c.getString(R.string.debug_build);
-		    	else if (Arrays.equals(digest, amazonkey))
-		    		apksign = "amazon version";
-		    	else
-		    		apksign = c.getString(R.string.built_by,cert.getSubjectX500Principal().getName());
-		    	
+				byte[] der = cert.getEncoded();
+				md.update(der);
+				byte[] digest = md.digest();
+
+				if (Arrays.equals(digest, officalkey))
+					apksign = c.getString(R.string.official_build);
+				else if (Arrays.equals(digest, officaldebugkey))
+					apksign = c.getString(R.string.debug_build);
+				else if (Arrays.equals(digest, amazonkey))
+					apksign = "amazon version";
+				else
+					apksign = c.getString(R.string.built_by,cert.getSubjectX500Principal().getName());
+
 				PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
 				version = packageinfo.versionName;
-		    	
+
 			} catch (NameNotFoundException e) {
 			} catch (CertificateException e) {
 			} catch (NoSuchAlgorithmException e) {
 			}
-			
+
 			Object[] argsext = Arrays.copyOf(mArgs, mArgs.length+2);
 			argsext[argsext.length-1]=apksign;
 			argsext[argsext.length-2]=version;
-			
+
 			return c.getString(R.string.mobile_info_extended, argsext);
 
 		}
@@ -215,7 +222,7 @@ public class OpenVPN {
 	}
 
 	public interface StateListener {
-		void updateState(String state, String logmessage, int localizedResId, int level);
+		void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level);
 	}
 
 	public interface ByteCountListener {
@@ -295,35 +302,35 @@ public class OpenVPN {
 
 	}
 
-	private static int getLevel(String state){
+	private static ConnectionStatus getLevel(String state){
 		String[] noreplyet = {"CONNECTING","WAIT", "RECONNECTING", "RESOLVE", "TCP_CONNECT"}; 
 		String[] reply = {"AUTH","GET_CONFIG","ASSIGN_IP","ADD_ROUTES"};
 		String[] connected = {"CONNECTED"};
 		String[] notconnected = {"DISCONNECTED", "EXITING"};
-		
+
 		for(String x:noreplyet)
 			if(state.equals(x))
-				return LEVEL_CONNECTING_NO_SERVER_REPLY_YET;
-		
+				return ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET;
+
 		for(String x:reply)
 			if(state.equals(x))
-				return LEVEL_CONNECTING_SERVER_REPLIED;
-		
+				return ConnectionStatus.LEVEL_CONNECTING_SERVER_REPLIED;
+
 		for(String x:connected)
 			if(state.equals(x))
-				return LEVEL_CONNECTED;
-		
+				return ConnectionStatus.LEVEL_CONNECTED;
+
 		for(String x:notconnected)
 			if(state.equals(x))
-				return LEVEL_NOTCONNECTED;
-		
-		return -1;
-		
+				return ConnectionStatus.LEVEL_NOTCONNECTED;
+
+		return ConnectionStatus.UNKNOWN_LEVEL;
+
 	}
 
 
-	
-	
+
+
 	public synchronized static void removeStateListener(StateListener sl) {
 		stateListener.remove(sl);
 	}
@@ -352,11 +359,11 @@ public class OpenVPN {
 
 	public static void updateStateString (String state, String msg) {
 		int rid = getLocalizedState(state);
-		int level = getLevel(state);
+		ConnectionStatus level = getLevel(state);
 		updateStateString(state, msg, rid, level);
 	}
 
-	public synchronized static void updateStateString(String state, String msg, int resid, int level) {
+	public synchronized static void updateStateString(String state, String msg, int resid, ConnectionStatus level) {
 		mLaststate= state;
 		mLaststatemsg = msg;
 		mLastStateresid = resid;

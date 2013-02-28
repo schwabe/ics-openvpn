@@ -21,7 +21,6 @@
   <string name="about">關於</string>
   <string name="about_summary">關於 OpenVPN for Android</string>
   <string name="vpn_list_summary">列出所有已設置的VPN</string>
-  <string name="vpn_list_title">VPN設定檔</string>
   <string name="vpn_type">類型</string>
   <string name="pkcs12pwquery">PKCS12 密碼</string>
   <string name="file_select">選擇…</string>
@@ -138,7 +137,6 @@
   <string name="file_icon">檔案圖標</string>
   <string name="tls_authentication">傳輸層防火牆(TLS Firewall)</string>
   <string name="generated_config">生成的設定檔</string>
-  <string name="generalsettings">全域設置</string>
   <string name="owner_fix_summary">嘗試修正/dev/tun擁有者權限。已知有些CM9 ROM需要透過這個來才能使得VPN服務API得以運作。本功能需要Root。</string>
   <string name="owner_fix">修正 /dev/tun 的擁有者</string>
   <string name="generated_config_summary">顯示本程序生成的設定檔</string>
@@ -185,5 +183,4 @@
   <string name="connectretrywait">重新連接間隔時間</string>
   <string name="minidump_generated">OpenVPN非預期地崩潰，你或者會考慮在主選單下傳送Minidump給開發人員。</string>
   <string name="send_minidump">向開發人員傳送Minidump</string>
-  <string name="send_minidump_summary">將最後一次崩潰的除錯資訊傳送給開發人員</string>
 </resources>

@@ -17,7 +17,6 @@
   <string name="about">Quan a</string>
   <string name="about_summary">Quan a OpenVPN per Android</string>
   <string name="vpn_list_summary">Llista de VPNs configurades</string>
-  <string name="vpn_list_title">Perfils VPN</string>
   <string name="vpn_type">Tipus</string>
   <string name="pkcs12pwquery">Contrasenya PKCS12</string>
   <string name="file_select">Selecciona…</string>
@@ -99,7 +98,6 @@
   <string name="file_icon">Icona del fitxer</string>
   <string name="tls_authentication">Autentificació TLS</string>
   <string name="generated_config">Configuració generada</string>
-  <string name="generalsettings">Configuració General</string>
   <string name="owner_fix">Corregir els permisos de /dev/tun</string>
   <string name="generated_config_summary">Mostra el fitxer de configuració d\'OpenVPN generat</string>
   <string name="edit_profile_title">Editant \"%s\"</string>

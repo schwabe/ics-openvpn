@@ -21,7 +21,6 @@
   <string name="about">Informazioni</string>
   <string name="about_summary">Informazioni su OpenVPN per Android</string>
   <string name="vpn_list_summary">Elenco connessioni VPN configurate</string>
-  <string name="vpn_list_title">Profili VPN</string>
   <string name="vpn_type">Tipo</string>
   <string name="pkcs12pwquery">Password PKCS12</string>
   <string name="file_select">Seleziona…</string>
@@ -167,7 +166,6 @@ nel bug tracker).&lt;/p&gt;&lt;p&gt;Si è visto che ai firmware ufficiali della 
   <string name="file_icon">icona del file</string>
   <string name="tls_authentication">Autenticazione TLS</string>
   <string name="generated_config">Configurazione generata</string>
-  <string name="generalsettings">Impostazioni generali</string>
   <string name="owner_fix_summary">Tenta di impostare system come proprietario di /dev/tun. Alcune immaggini CM9 necessitano di questa impostazione affinché le API del servizio VPN funzionino. E\' necessario essere root.</string>
   <string name="owner_fix">Correggi i diritti su /dev/tun</string>
   <string name="generated_config_summary">Mostra il file di configurazione di OpenVPN generato</string>
@@ -235,5 +233,4 @@ nel bug tracker).&lt;/p&gt;&lt;p&gt;Si è visto che ai firmware ufficiali della 
   <string name="connectretrywait">Secondi tra le connessioni</string>
   <string name="minidump_generated">OpenVPN si è arrestato in modo imprevisto. Ti consigliamo di attivare l\'opzione Invia Minidump nel menu principale.</string>
   <string name="send_minidump">Invia Minidump allo sviluppatore</string>
-  <string name="send_minidump_summary">Invia le informazioni di debug sul più recente blocco del programma allo sviluppatore</string>
 </resources>

@@ -21,7 +21,6 @@
   <string name="about">バージョン情報</string>
   <string name="about_summary">OpenVPN for Androidについて</string>
   <string name="vpn_list_summary">設定されたすべてのVPN</string>
-  <string name="vpn_list_title">VPNプロファイル</string>
   <string name="vpn_type">種別</string>
   <string name="pkcs12pwquery">PKCS12のパスワード</string>
   <string name="file_select">選択</string>
@@ -177,7 +176,6 @@ SDカード上のデータは本質的に無防備です。すべてのアプリ
   <string name="file_icon">ファイルのアイコン</string>
   <string name="tls_authentication">TLS認証</string>
   <string name="generated_config">生成された構成</string>
-  <string name="generalsettings">全般設定</string>
   <string name="owner_fix_summary">システムに/dev/tunの所有者を設定します。いくつかのCM9のイメージでVPNService APIを動作させるために必要です。root権限が必要です。</string>
   <string name="owner_fix">/dev/tun の所有権を修正</string>
   <string name="generated_config_summary">生成された OpenVPN の構成ファイルを表示します</string>
@@ -274,7 +272,6 @@ TCP keepaliveと長いタイムアウト時間は動作しますが、TCP over T
   <string name="connectretrywait">接続間隔(秒)</string>
   <string name="minidump_generated">OpenVPN は予期せず終了しました。メイン メニューでミニダンプの送信オプションを検討してください。</string>
   <string name="send_minidump">ミニダンプを開発者に送信</string>
-  <string name="send_minidump_summary">最後にクラッシュした時のデバッグ情報を作者に送信します。</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="session_ipv4string">%1$s - %2$s</string>
   <string name="session_ipv6string">%1$s - %3$s, %2$s</string>

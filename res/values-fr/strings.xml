@@ -21,7 +21,6 @@
   <string name="about">"À propos"</string>
   <string name="about_summary">"À propos d\'OpenVPN pour Android"</string>
   <string name="vpn_list_summary">"Liste de tous les VPN configurés"</string>
-  <string name="vpn_list_title">"Vos VPNs"</string>
   <string name="vpn_type">"Type"</string>
   <string name="pkcs12pwquery">"Mot de passe PKCS12"</string>
   <string name="file_select">"Sélectionner…"</string>
@@ -167,7 +166,6 @@
   <string name="file_icon">"icône du fichier"</string>
   <string name="tls_authentication">"Authentification TLS"</string>
   <string name="generated_config">"Configuration générée"</string>
-  <string name="generalsettings">"Paramètres généraux"</string>
   <string name="owner_fix_summary">"Tente de définir le propriétaire de /dev/tun. Certaines ROMs CM9 en ont besoin pour faire fonctionner l\'API VPNService. Nécessite les droits root."</string>
   <string name="owner_fix">"Corriger le propriétaire de /dev/tun"</string>
   <string name="generated_config_summary">"Affiche le fichier de configuration OpenVPN généré"</string>
@@ -236,7 +234,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="connectretrywait">"Temps, en secondes, entre deux connexions"</string>
   <string name="minidump_generated">OpenVPN s\'est écrasé de façon inattendue. S\'il vous plaît, envisagez d\'utiliser l\'option de Minidump depuis le menu principal</string>
   <string name="send_minidump">Envoyer le Minidump au développeur</string>
-  <string name="send_minidump_summary">Envoyer des informations de débogage au sujet du dernier incident au développeur</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="state_connecting">Connexion</string>
   <string name="state_wait">En attente de réponse du serveur</string>

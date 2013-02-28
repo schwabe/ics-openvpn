@@ -21,7 +21,6 @@
   <string name="about">소개</string>
   <string name="about_summary">안드로이드용 OpenVPN 소개</string>
   <string name="vpn_list_summary">설정된 VPN의 목록</string>
-  <string name="vpn_list_title">VPN 프로파일</string>
   <string name="vpn_type">유형</string>
   <string name="pkcs12pwquery">PKCS12 암호</string>
   <string name="file_select">선택…</string>
@@ -164,7 +163,6 @@
   <string name="file_icon">파일 아이콘</string>
   <string name="tls_authentication">TLS 인증</string>
   <string name="generated_config">생성 된 설정</string>
-  <string name="generalsettings">일반 설정</string>
   <string name="owner_fix_summary">/dev/tun의 소유권을 시스템으로 설정 하려고 합니다. 일부 CM9 이미지에서 VPNService API를 사용하기 위해서는 앞의 작업이 요구됩니다. root권한을 가져야합니다.</string>
   <string name="owner_fix">/dev/tun 소유권 문제 해결</string>
   <string name="generated_config_summary">생성된 OpenVPN의 설정 파일 보기</string>
@@ -232,5 +230,4 @@
   <string name="connectretrywait">연결과 연결 사이의 초단위 기간</string>
   <string name="minidump_generated">OpenVPN이 예기치 않게 종료됐습니다. 메인 메뉴에 있는 미니 덤프 보내기 옵션의 사용을 고려 하시기 바랍니다</string>
   <string name="send_minidump">미니 덤프를 개발자에게 보내기</string>
-  <string name="send_minidump_summary">개발자에게 마지막 종료에 대한 디버깅 정보 보내기</string>
 </resources>

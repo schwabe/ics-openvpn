@@ -44,8 +44,7 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app"
-        android:supportsRtl="true"
-        android:uiOptions="splitActionBarWhenNarrow" >
+        android:supportsRtl="true" >
         <activity android:name=".AboutFragment" />
         <activity
             android:name=".VPNPreferences"
@@ -57,7 +56,10 @@
             android:launchMode="singleTask" />
         <activity android:name=".SendDumpFragment" />
         <activity android:name=".FileSelect" />
-        <activity android:name=".MainActivity" >
+        <activity
+            android:name=".MainActivity"
+            android:uiOptions="splitActionBarWhenNarrow"
+            tools:ignore="ExportedActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -97,7 +99,8 @@
 
         <activity
             android:name=".ConfigConverter"
-            android:label="Convert Config File" >
+            android:label="Convert Config File"
+            tools:ignore="ExportedActivity" >
             <intent-filter android:label="@string/import_config" >
                 <action android:name="android.intent.action.VIEW" />
 
@@ -135,7 +138,8 @@
         </activity>
         <activity
             android:name=".LaunchVPN"
-            android:label="@string/vpn_launch_title" >
+            android:label="@string/vpn_launch_title"
+            tools:ignore="ExportedActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -34,7 +34,7 @@
     <item
         android:id="@+id/toggle_time"
         android:alphabeticShortcut="t"
-        android:icon="@android:drawable/ic_menu_week"
+        android:icon="@drawable/ic_clock"
         android:showAsAction="withText|ifRoom"
         android:title="@string/toggle_timestamps"/>
 

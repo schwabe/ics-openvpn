@@ -33,7 +33,7 @@
         android:title="@string/edit_vpn"/>
     <item
         android:id="@+id/toggle_time"
-        android:alphabeticShortcut="e"
+        android:alphabeticShortcut="t"
         android:icon="@android:drawable/ic_menu_week"
         android:showAsAction="withText|ifRoom"
         android:title="@string/toggle_timestamps"/>

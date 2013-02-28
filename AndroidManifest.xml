@@ -44,7 +44,8 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app"
-        android:supportsRtl="true" >
+        android:supportsRtl="true"
+        android:uiOptions="splitActionBarWhenNarrow" >
         <activity android:name=".AboutFragment" />
         <activity
             android:name=".VPNPreferences"
@@ -54,7 +55,7 @@
             android:allowTaskReparenting="true"
             android:label="@string/openvpn_log"
             android:launchMode="singleTask" />
-        <activity android:name=".SendDumpActivity" />
+        <activity android:name=".SendDumpFragment" />
         <activity android:name=".FileSelect" />
         <activity android:name=".MainActivity" >
             <intent-filter>

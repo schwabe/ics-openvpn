@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -30,8 +31,8 @@ public class FileSelectionFragment extends ListFragment {
 	private static final String ITEM_KEY = "key";
 	private static final String ITEM_IMAGE = "image";
 	private static final String ROOT = "/";
-    
-    
+
+
 	private List<String> path = null;
 	private TextView myPath;
 	private ArrayList<HashMap<String, Object>> mList;
@@ -48,17 +49,27 @@ public class FileSelectionFragment extends ListFragment {
 	private File selectedFile;
 	private HashMap<String, Integer> lastPositions = new HashMap<String, Integer>();
 	private String mStartPath;
-	private Button mImportFile;
+	private CheckBox mInlineImport;
 	private Button mClearButton;
 	private boolean mHideImport=false;
 
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.file_dialog_main, container,false);
-		
+
 		myPath = (TextView) v.findViewById(R.id.path);
+
+		mInlineImport = (CheckBox) v.findViewById(R.id.doinline);
+		mInlineImport.setEnabled(false);
+
+		if(mHideImport== true) {
+			mInlineImport.setVisibility(View.GONE);
+			mInlineImport.setChecked(false);
+		}
+
+
 
 		selectButton = (Button) v.findViewById(R.id.fdButtonSelect);
 		selectButton.setEnabled(false);
@@ -67,15 +78,18 @@ public class FileSelectionFragment extends ListFragment {
 			@Override
 			public void onClick(View v) {
 				if (selectedFile != null) {
-					((FileSelect) getActivity()).setFile(selectedFile.getPath());
-					
+					if(mInlineImport.isChecked())
+
+						((FileSelect) getActivity()).importFile(selectedFile.getPath());
+					else 
+						((FileSelect) getActivity()).setFile(selectedFile.getPath());
 				}
 			}
 		});
 
 		mClearButton = (Button) v.findViewById(R.id.fdClear);
 		mClearButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				((FileSelect) getActivity()).clearData();
@@ -85,35 +99,21 @@ public class FileSelectionFragment extends ListFragment {
 			mClearButton.setVisibility(View.GONE);
 			mClearButton.setEnabled(false);
 		}
-		
-		
-		mImportFile = (Button) v.findViewById(R.id.importfile);
-		mImportFile.setEnabled(false);
-		mImportFile.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				((FileSelect) getActivity()).importFile(selectedFile.getPath());
-			}
-		});
-
-		if(mHideImport== true) {
-			mImportFile.setVisibility(View.GONE);
-		}
 
 
-		
+
+
 		return v;
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
+
 		mStartPath = ((FileSelect) getActivity()).getSelectPath();
 		getDir(mStartPath);
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
@@ -154,7 +154,7 @@ public class FileSelectionFragment extends ListFragment {
 			f = new File(currentPath);
 			files = f.listFiles();
 		}
-		
+
 		myPath.setText(getText(R.string.location) + ": " + currentPath);
 
 		if (!currentPath.equals(ROOT)) {
@@ -209,7 +209,7 @@ public class FileSelectionFragment extends ListFragment {
 		path.addAll(filesPathMap.tailMap("").values());
 
 		SimpleAdapter fileList = new SimpleAdapter(getActivity(), mList, R.layout.file_dialog_row, new String[] {
-				ITEM_KEY, ITEM_IMAGE }, new int[] { R.id.fdrowtext, R.id.fdrowimage });
+			ITEM_KEY, ITEM_IMAGE }, new int[] { R.id.fdrowtext, R.id.fdrowimage });
 
 		for (String dir : dirsMap.tailMap("").values()) {
 			addItem(dir, R.drawable.folder);
@@ -240,26 +240,25 @@ public class FileSelectionFragment extends ListFragment {
 
 		if (file.isDirectory()) {
 			selectButton.setEnabled(false);
-			mImportFile.setEnabled(false);
-			
+
 			if (file.canRead()) {
 				lastPositions.put(currentPath, position);
 				getDir(path.get(position));
 			} else {
 				new AlertDialog.Builder(getActivity()).setIcon(R.drawable.icon)
-						.setTitle("[" + file.getName() + "] " + getText(R.string.cant_read_folder))
-						.setPositiveButton("OK", null).show();
+				.setTitle("[" + file.getName() + "] " + getText(R.string.cant_read_folder))
+				.setPositiveButton("OK", null).show();
 			}
 		} else {
 			selectedFile = file;
 			v.setSelected(true);
 			selectButton.setEnabled(true);
-			mImportFile.setEnabled(true);
 		}
 	}
 
 	public void setNoInLine() {
 		mHideImport=true;
+	
 	}
 
 }

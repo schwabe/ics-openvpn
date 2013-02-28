@@ -92,8 +92,6 @@ public class VPNProfileList extends ListFragment {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 
-		// Debug load JNI
-		//OpenVPN.foo();
 	}
 
 
@@ -172,15 +170,14 @@ public class VPNProfileList extends ListFragment {
 		menu.add(0, MENU_ADD_PROFILE, 0, R.string.menu_add_profile)
 		.setIcon(android.R.drawable.ic_menu_add)
 		.setAlphabeticShortcut('a')
-		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM
-				| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		.setTitleCondensed(getActivity().getString(R.string.add))
+		.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
 		menu.add(0, MENU_IMPORT_PROFILE, 0, R.string.menu_import)
 		.setIcon(R.drawable.ic_menu_archive)
 		.setAlphabeticShortcut('i')
 		.setTitleCondensed(getActivity().getString(R.string.menu_import_short))
-		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM
-				| MenuItem.SHOW_AS_ACTION_WITH_TEXT );
+		.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT );
 	}
 
 

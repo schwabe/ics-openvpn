@@ -22,7 +22,7 @@
     <string name="about">About</string>
     <string name="about_summary">About OpenVPN for Android</string>
     <string name="vpn_list_summary">List of all configured VPNs</string>
-    <string name="vpn_list_title">VPN Profiles</string>
+    <string name="vpn_list_title">Profiles</string>
     <string name="vpn_type">Type</string>
     <string name="pkcs12pwquery">PKCS12 Password</string>
     <string name="file_select">Select…</string>
@@ -167,7 +167,7 @@
     <string name="file_icon">file icon</string>
     <string name="tls_authentication">TLS Authentication</string>
     <string name="generated_config">Generated Config</string>
-    <string name="generalsettings">General Settings</string>
+    <string name="generalsettings">Settings</string>
     <string name="owner_fix_summary">Tries to set the owner of /dev/tun to system. Some CM9 images need this to make the VPNService API work. Requires root.</string>
     <string name="owner_fix">Fix ownership of /dev/tun</string>
     <string name="generated_config_summary">Shows the generated OpenVPN Configuration File</string>
@@ -223,7 +223,6 @@
     <string name="faq_routing">The Routing and interface configuration is not done via traditionell ifconfig/route command but by using the VPNService API. This results in a different routing configuration than on other OSes. The configuration only consists of the IP of the tunnel interface and the networks that should be routed over this interface. Especially no peer partner address or gateway address is needed. Special routes to reach the VPN Server (for example added when using redirect-gateway) are not needed either. The application will consequently ignore these settings when importing a configuration. The app ensures with the VPNService API that the connection to the server is not routed through the VPN tunnel. Since only specifing networks to be routed via tunnel is supported extra routes not pointing to the tunnel cannot be supported either. (e.g. route x.x.x.x y.y.y.y net_gateway). The show information button in the log windows show the current configuration of the VPNService network configuration.</string>
     <string name="persisttun_summary">Do not fallback to no VPN connection when OpenVPN is reconnecting.</string>
     <string name="persistent_tun_title">Persistent tun</string>
-    <string name="translation">Translation</string>
     <string name="openvpn_log">OpenVPN Log</string>
     <string name="import_config">Import OpenVPN configuration</string>
     <string name="battery_consumption_title">Battery consumption</string>
@@ -236,7 +235,7 @@
     <string name="connectretrywait">Seconds between connections</string>
     <string name="minidump_generated">OpenVPN crashed unexpectedly. Please consider using the send Minidump option in the main menu</string>
     <string name="send_minidump">Send Minidump to developer</string>
-    <string name="send_minidump_summary">Send debugging information about last crash to developer</string>
+    <string name="send_minidump_summary">Sends debugging information about last crash to developer</string>
     <string name="notifcation_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
@@ -259,7 +258,6 @@
     <string name="notifcation_title_notconnect">Not connected</string>
     <string name="start_vpn_title">Connecting to VPN %s</string>
     <string name="start_vpn_ticker">Connecting to VPN %s</string>
-
     <string name="jelly_keystore_alphanumeric_bug">Some versions of Android 4.1 have problems if the name of the keystore certificate contains non alphanumeric characters (like spaces, underscores or dashes). Try to reimport the certificate without special characters</string>
     <string name="encryption_cipher">Encryption cipher</string>
     <string name="packet_auth">Packets authentication</string>
@@ -269,5 +267,9 @@
     <string name="built_by">built by %s</string>
     <string name="debug_build">debug build</string>
     <string name="official_build">official build</string>
-    
+    <string name="make_selection_inline">Copy into profile</string>
+    <string name="crashdump">Crashdump</string>
+    <string name="add">Add</string>
+    <string name="send_config">Send config file</string>
+
 </resources>

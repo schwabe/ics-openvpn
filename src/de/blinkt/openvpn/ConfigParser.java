@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
 
-import android.text.TextUtils;
-
 //! Openvpn Config FIle Parser, probably not 100% accurate but close enough
 
 // And rember, this is valid :)

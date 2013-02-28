@@ -5,7 +5,7 @@
         android:id="@+id/sendConfig"
         android:icon="@android:drawable/ic_menu_share"
         android:showAsAction="ifRoom|withText"
-        android:title="Send config file"
+        android:title="@string/send_config"
         android:titleCondensed="@string/send"/>
 
 </menu>

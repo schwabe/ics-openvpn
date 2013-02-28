@@ -38,6 +38,7 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 		mSelectButton = (Button) findViewById(R.id.file_select_button);
 		mSelectButton.setOnClickListener(this);
 
+		ta.recycle();
 	}
 
 	public void setFragment(Fragment fragment, int i)

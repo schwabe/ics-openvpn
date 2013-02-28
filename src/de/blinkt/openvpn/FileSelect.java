@@ -130,8 +130,11 @@ public class FileSelect extends Activity {
 				data += new String(filedata);
 			
 			mData =data;
+			
+			/*
 			mInlineFragment.setData(data);
-			getActionBar().selectTab(inlineFileTab);
+			getActionBar().selectTab(inlineFileTab); */
+			saveInlineData(data);
 		} catch (FileNotFoundException e) {
 			fe = e;
 		} catch (IOException e) {

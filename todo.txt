@@ -19,9 +19,8 @@ Ideas:
 - implement an encryption for profiles, so no sensitive data has be stored in plain text
    - encrypt/decrypt with android private storage key (+no user input required)
 
-Bugfixes:
- - startpath file explorer
  - hibernate when screen off and < 50 kB min
+
 
 Missing configuration options:
 

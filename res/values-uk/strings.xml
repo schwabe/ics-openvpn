@@ -21,7 +21,6 @@
   <string name="about">Про</string>
   <string name="about_summary">Про OpenVPN для Android</string>
   <string name="vpn_list_summary">Список всіх налаштованих VPN</string>
-  <string name="vpn_list_title">VPN профілі</string>
   <string name="vpn_type">Тип</string>
   <string name="pkcs12pwquery">Пароль PKCS12</string>
   <string name="file_select">Виберіть…</string>
@@ -164,7 +163,6 @@
   <string name="file_icon">Піктограма файлу</string>
   <string name="tls_authentication">Аутентифікація TLS</string>
   <string name="generated_config">Згенерована конфігурація</string>
-  <string name="generalsettings">Загальні параметри</string>
   <string name="owner_fix_summary">Спробуйте змінити власника для /dev/tun. Деякі прошивки CM9 вимагають цього для коректної роботи API OpenVPN. Потрібний root.</string>
   <string name="owner_fix">Виправити власника /dev/tun</string>
   <string name="generated_config_summary">Показує згенерований файл конфігурації OpenVPN</string>
@@ -233,7 +231,6 @@
   <string name="connectretrywait">Секунд між підключеннями</string>
   <string name="minidump_generated">OpenVPN впав несподівано. Будь ласка, розгляньте використання параметру \"Надіслати Мінідамп\" в головному меню</string>
   <string name="send_minidump">Надіслати мінідамп розробнику</string>
-  <string name="send_minidump_summary">Надіслати налагоджувальну інформацію про останній збій розробнику</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="session_ipv4string">%1$s - %2$s</string>
   <string name="session_ipv6string">%1$s - %3$s, %2$s</string>

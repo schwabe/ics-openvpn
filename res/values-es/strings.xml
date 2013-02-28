@@ -21,7 +21,6 @@
   <string name="about">Acerca de</string>
   <string name="about_summary">Acerca de OpenVPN para Android</string>
   <string name="vpn_list_summary">Lista de todas las VPN configuradas</string>
-  <string name="vpn_list_title">Perfiles VPN</string>
   <string name="vpn_type">Tipo</string>
   <string name="pkcs12pwquery">Contraseña PKCS12</string>
   <string name="file_select">Seleccionar…</string>
@@ -163,7 +162,6 @@
   <string name="file_icon">icono de archivo</string>
   <string name="tls_authentication">Autenticación TLS</string>
   <string name="generated_config">Configuración generada</string>
-  <string name="generalsettings">Preferencias generales</string>
   <string name="owner_fix_summary">Intenta establecer el propietario de /dev/tun a system. Algunas imágenes de CM9 lo necesitan hacer funcionar la API de VPNService. Requiere permisos root.</string>
   <string name="owner_fix">Arreglar la propiedad de /dev/tun</string>
   <string name="generated_config_summary">Muestra el archivo de configuración OpenVPN generado</string>
@@ -227,7 +225,6 @@
   <string name="connectretrywait">Segundos entre las conexiones</string>
   <string name="minidump_generated">OpenVPN falló inesperadamente. Por favor considere usar la opción envío de minivolcado en el menú principal</string>
   <string name="send_minidump">Enviar minivolcado al desarrollador</string>
-  <string name="send_minidump_summary">Enviar información de depuración sobre último fallo al desarrollador</string>
   <string name="state_connecting">Conectando</string>
   <string name="state_wait">Esperando respuesta del servidor</string>
   <string name="state_assign_ip">Asignando direcciones IP</string>

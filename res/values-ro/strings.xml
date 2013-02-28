@@ -21,7 +21,6 @@
   <string name="about">Despre</string>
   <string name="about_summary">Despre OpenVPN pentru Android</string>
   <string name="vpn_list_summary">Lista tuturor VPN-urilor configurate</string>
-  <string name="vpn_list_title">Profile VPN</string>
   <string name="vpn_type">Tip</string>
   <string name="pkcs12pwquery">Parola PKCS12</string>
   <string name="file_select">Selectaţi…</string>
@@ -140,7 +139,6 @@
   <string name="file_icon">icon fişier</string>
   <string name="tls_authentication">autentificare TLS</string>
   <string name="generated_config">Config generat</string>
-  <string name="generalsettings">Setări generale</string>
   <string name="owner_fix">Repară drepturi /dev/tun</string>
   <string name="generated_config_summary">Afişează fişierul de configurare OpenVPN generat</string>
   <string name="edit_profile_title">Editare \"%s\"</string>
@@ -180,5 +178,4 @@
   <string name="connectretrywait">Secunde între conexiuni</string>
   <string name="minidump_generated">OpenVPN sa oprit în mod neaşteptat. Vă rugăm să consideraţi opţiunea de trimitere a unui Minidump din meniul principal</string>
   <string name="send_minidump">Trimite Minidump la dezvoltator</string>
-  <string name="send_minidump_summary">Trimite informații de depanare despre ultimul crash la dezvoltator</string>
 </resources>

@@ -21,7 +21,6 @@
   <string name="about">O programu</string>
   <string name="about_summary">O programu OpenVPN pro Android</string>
   <string name="vpn_list_summary">Seznam všech nakonfigurovaných VPN</string>
-  <string name="vpn_list_title">Všechny VPN</string>
   <string name="vpn_type">Typ</string>
   <string name="pkcs12pwquery">PKCS12 heslo</string>
   <string name="file_select">Vyber…</string>
@@ -166,7 +165,6 @@
   <string name="file_icon">ikona souboru</string>
   <string name="tls_authentication">TLS autentikace</string>
   <string name="generated_config">Vygenerované nastavení</string>
-  <string name="generalsettings">Obecné nastavení</string>
   <string name="owner_fix_summary">Pokusit se nastavit vlastníka /dev/tun zařízení. Na některých systémech s CM9 je toto potřeba pro zprovoznění VPNService API. Vyžaduje root zařízení.</string>
   <string name="owner_fix">Opravit vlastnictví /dev/tun</string>
   <string name="generated_config_summary">Zobrazí vygenerované nastavení OpenVPN</string>
@@ -235,7 +233,6 @@
   <string name="connectretrywait">Vteřin mezi připojeními</string>
   <string name="minidump_generated">OpenVPN neočekávaně havarovalo. Zvaž možnost použití volby poslat Minidump z hlavního menu</string>
   <string name="send_minidump">Poslat Minidump vývojáři</string>
-  <string name="send_minidump_summary">Poslat ladící informace o poslední havárii vývojáři</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="session_ipv4string">%1$s - %2$s</string>
   <string name="session_ipv6string">%1$s - %3$s, %2$s</string>

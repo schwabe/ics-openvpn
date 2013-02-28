@@ -21,7 +21,6 @@
   <string name="about">Tentang…</string>
   <string name="about_summary">Tentang OpenVPN untuk Android</string>
   <string name="vpn_list_summary">Daftar konfigurasi VPN</string>
-  <string name="vpn_list_title">Profil VPN</string>
   <string name="vpn_type">Tipe</string>
   <string name="pkcs12pwquery">Password PKCS12</string>
   <string name="file_select">Pilih…</string>
@@ -164,7 +163,6 @@
   <string name="file_icon">ikon berkas</string>
   <string name="tls_authentication">Otentikasi TLS</string>
   <string name="generated_config">Konfigurasi Dibuat</string>
-  <string name="generalsettings">Setelan Umum</string>
   <string name="owner_fix_summary">Mencoba menetapkan pemilik /dev/tun ke sistem. Beberapa gambar CM9 memerlukan ini untuk membuat API VPNService bekerja. Memerlukan akses Root.</string>
   <string name="owner_fix">Perbaiki kepemilikan /dev/tun</string>
   <string name="generated_config_summary">Tunjukkan berkas konfigurasi OpenVPN yang dibuat</string>
@@ -233,7 +231,6 @@
   <string name="connectretrywait">Detik antar koneksi</string>
   <string name="minidump_generated">OpenVPN crash tak terduga. Silakan mempertimbangkan mengirim menggunakan pilihan Minidump di Menu Utama</string>
   <string name="send_minidump">Mengirim MiniDump untuk pengembang</string>
-  <string name="send_minidump_summary">Kirim informasi kesalahan tentang kegagalan aplikasi yang terakhir ke pengembang</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="session_ipv4string">%1$s - %2$s</string>
   <string name="session_ipv6string">%1$s - %3$s, %2$s</string>

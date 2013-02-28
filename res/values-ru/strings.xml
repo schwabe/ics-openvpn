@@ -21,7 +21,6 @@
   <string name="about">О программе</string>
   <string name="about_summary">Описание OpenVPN для Android</string>
   <string name="vpn_list_summary">Список всех туннелей VPN</string>
-  <string name="vpn_list_title">Профили VPN</string>
   <string name="vpn_type">Тип</string>
   <string name="pkcs12pwquery">Пароль для PKCS12</string>
   <string name="file_select">Выбрать…</string>
@@ -156,7 +155,7 @@
   <string name="speed_waiting">Ожидание сообщения о состоянии…</string>
   <string name="converted_profile">импортируемый профиль</string>
   <string name="converted_profile_i">импортируемый профиль %d</string>
-  <string name="broken_images">Нечитаемое изображение</string>
+  <string name="broken_images">Сломанные прошивки</string>
   <string name="broken_images_faq">&lt;p&gt;Извествно, что официальные прошивки HTC имеют странные проблемы с марщрутизацией, вызванной тем, что трафик не идёт через тунель (см. также &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; в баг-трекере)&lt;/p&gt;&lt;p&gt; Также сообщалось, что в официальных прошивках SONY от Xperia arc S и Xperia Ray полностью отсутствует сервис VPNService. Также и другие прошивки от Sony могут иметь такие же проблемы. (см. также &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; в баг-трекере)&lt;/p&gt;&lt;p&gt;В некоторых встроенных прошивках модуль tun может отсутствовать или иметь не правильные права файла-устройства /dev/tun. Некоторые CM9 прошивки могут требовать исправлений опции прав в главных настройках.&lt;/p&gt;&lt;p&gt;Важная информация: Если у вас прошивка с указанными проблемами, сообщите об этом производителю устройства. Чем больше пользователей сообщит о проблеме производителю, тем более шансов, что этот производитель соизволит убрать свои косяки.&lt;/p&gt;</string>
   <string name="error_empty_username">Имя пользователя не должно быть пустым.</string>
   <string name="pkcs12_file_encryption_key">Файл PKCS12-ключа</string>
@@ -165,7 +164,6 @@
   <string name="file_icon">файл значка</string>
   <string name="tls_authentication">TLS-аутентификация</string>
   <string name="generated_config">Сгенерированая конфигурация</string>
-  <string name="generalsettings">Общие параметры</string>
   <string name="owner_fix_summary">Попытаться изменить владельца для /dev/tun. Некоторые прошивки CM9 требуют этого для корректной работы API OpenVPN. Требуется root.</string>
   <string name="owner_fix">Исправить права для /dev/tun</string>
   <string name="generated_config_summary">Показать сгенерированный файл конфигурации OpenVPN</string>
@@ -234,7 +232,6 @@
   <string name="connectretrywait">Секунд между соединениями</string>
   <string name="minidump_generated">OpenVPN завершилась неожиданно. Пожалуйста, посмотрите опцию \"Отправить Minidump\" в главном меню</string>
   <string name="send_minidump">Отправить Minidump разработчику</string>
-  <string name="send_minidump_summary">Отправка отладочной информации разработчику о последнем неудачном завершении</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="session_ipv4string">%1$s - %2$s</string>
   <string name="session_ipv6string">%1$s - %3$s, %2$s</string>

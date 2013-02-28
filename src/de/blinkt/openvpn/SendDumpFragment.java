@@ -3,20 +3,34 @@ package de.blinkt.openvpn;
 import java.io.File;
 import java.util.ArrayList;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 
-public class SendDumpActivity extends Activity {
+public class SendDumpFragment extends Fragment implements OnClickListener {
 	
-	protected void onStart() {
-		super.onStart();
-		emailMiniDumps();
-		finish();
-	};
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+	
+		View v = inflater.inflate(R.layout.fragment_senddump, container, false);
+		v.findViewById(R.id.senddump).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				emailMiniDumps();
+			}
+		});
+		return v;
+	}
 	
 	public void emailMiniDumps()
 	{
@@ -29,7 +43,7 @@ public class SendDumpActivity extends Activity {
 		String version;
     	String name="ics-openvpn";
 		try {
-			PackageInfo packageinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			PackageInfo packageinfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
 			version = packageinfo.versionName;
 			name = packageinfo.applicationInfo.name;
 		} catch (NameNotFoundException e) {
@@ -43,7 +57,7 @@ public class SendDumpActivity extends Activity {
 
 		ArrayList<Uri> uris = new ArrayList<Uri>();
 
-		File ldump = getLastestDump(this);
+		File ldump = getLastestDump(getActivity());
 		if(ldump==null) {
 			OpenVPN.logError("No Minidump found!");
 		}
@@ -69,6 +83,18 @@ public class SendDumpActivity extends Activity {
 				newestDumpFile=f;
 			}
 		}
+		// Ignore old dumps
+		//if(System.currentTimeMillis() - 48 * 60 * 1000 > newestDumpTime )
+		//return null;
+		
 		return newestDumpFile;
+	}
+
+
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
 	}
 }

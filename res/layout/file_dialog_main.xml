@@ -13,23 +13,29 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/importfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/import_file" >
-        </Button>
-
-        <Button
             android:id="@+id/fdButtonSelect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/select_file" >
         </Button>
-	
+
+        <CheckBox
+            android:id="@+id/doinline"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/make_selection_inline" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
         <Button
             android:id="@+id/fdClear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:text="@string/clear" >
         </Button>
     </LinearLayout>

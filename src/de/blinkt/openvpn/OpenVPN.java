@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Vector;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -165,7 +166,9 @@ public class OpenVPN {
 				}
 			}
 		}
-
+		
+		// The lint is wrong here 
+		@SuppressLint("StringFormatMatches")
 		private String getMobileInfoString(Context c) {
 			c.getPackageManager();
 			String apksign="error getting package signature";

@@ -15,15 +15,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-public class SendDumpFragment extends Fragment implements OnClickListener {
-	
+public class SendDumpFragment extends Fragment  {
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-	
+
 		View v = inflater.inflate(R.layout.fragment_senddump, container, false);
 		v.findViewById(R.id.senddump).setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				emailMiniDumps();
@@ -31,7 +31,7 @@ public class SendDumpFragment extends Fragment implements OnClickListener {
 		});
 		return v;
 	}
-	
+
 	public void emailMiniDumps()
 	{
 		//need to "send multiple" to get more than one attachment
@@ -39,9 +39,9 @@ public class SendDumpFragment extends Fragment implements OnClickListener {
 		emailIntent.setType("*/*");
 		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, 
 				new String[]{"Arne Schwabe <arne@rfc2549.org>"});
-		
+
 		String version;
-    	String name="ics-openvpn";
+		String name="ics-openvpn";
 		try {
 			PackageInfo packageinfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
 			version = packageinfo.versionName;
@@ -49,8 +49,8 @@ public class SendDumpFragment extends Fragment implements OnClickListener {
 		} catch (NameNotFoundException e) {
 			version = "error fetching version";
 		}
-		
-		
+
+
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, String.format("%s %s Minidump",name,version));
 
 		emailIntent.putExtra(Intent.EXTRA_TEXT, "Please describe the issue you have experienced");
@@ -61,7 +61,7 @@ public class SendDumpFragment extends Fragment implements OnClickListener {
 		if(ldump==null) {
 			OpenVPN.logError("No Minidump found!");
 		}
-		
+
 		uris.add(Uri.parse("content://de.blinkt.openvpn.FileProvider/" + ldump.getName()));
 		uris.add(Uri.parse("content://de.blinkt.openvpn.FileProvider/" + ldump.getName() + ".log"));
 
@@ -86,15 +86,7 @@ public class SendDumpFragment extends Fragment implements OnClickListener {
 		// Ignore old dumps
 		//if(System.currentTimeMillis() - 48 * 60 * 1000 > newestDumpTime )
 		//return null;
-		
+
 		return newestDumpFile;
-	}
-
-
-
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		
 	}
 }

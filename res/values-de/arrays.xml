@@ -17,11 +17,18 @@
     <item>Unspezifiziert</item>
   </string-array>
   <string-array name="verb_entries">
-    <item>0 - Kein Logging</item>
+    <item>0 - Kein Protokoll</item>
     <item>1 - Standard Logging</item>
     <item>2 - Ausführlicheres Logging</item>
     <item>3</item>
     <item>4</item>
     <item>5 - Debug Logging</item>
+  </string-array>
+  <string-array name="crm_entries" translatable="false">
+    <item>Keine erneuter Verbindungsversuch</item>
+    <item>Ein Versuch wieder zuverbinden</item>
+    <item>Fünf Verbindungsversuche</item>
+    <item>Fünfzig Verbingsversuche</item>
+    <item>Unbegrenzte Anzahl Verbindungsversuche</item>
   </string-array>
 </resources>

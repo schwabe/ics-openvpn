@@ -17,11 +17,18 @@
     <item>Tidak\Belum ditentukan</item>
   </string-array>
   <string-array name="verb_entries">
-    <item>0 - Tidak ada catatan</item>
+    <item>0 - No logging</item>
     <item>2 -  Catatan standar</item>
     <item>2 - Catatan lengkap</item>
     <item>3</item>
     <item>4</item>
     <item>5 - Catatan pencarian masalah</item>
+  </string-array>
+  <string-array name="crm_entries" translatable="false">
+    <item>No reconnection retries</item>
+    <item>One reconnection retry</item>
+    <item>Five reconnection retries</item>
+    <item>Fifty reconnection retries</item>
+    <item>Unlimited reconnection retries</item>
   </string-array>
 </resources>

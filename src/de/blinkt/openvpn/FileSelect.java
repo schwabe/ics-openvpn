@@ -121,7 +121,7 @@ public class FileSelect extends Activity {
 		Exception fe = null;
 		try {
 
-			String data =VpnProfile.INLINE_TAG;
+			String data = "";
 			
 			byte[] filedata = readBytesFromFile(ifile) ;
 			if(mBase64Encode)

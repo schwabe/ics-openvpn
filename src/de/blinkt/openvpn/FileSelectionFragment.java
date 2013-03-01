@@ -62,7 +62,6 @@ public class FileSelectionFragment extends ListFragment {
 		myPath = (TextView) v.findViewById(R.id.path);
 
 		mInlineImport = (CheckBox) v.findViewById(R.id.doinline);
-		mInlineImport.setEnabled(false);
 
 		if(mHideImport== true) {
 			mInlineImport.setVisibility(View.GONE);

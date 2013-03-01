@@ -17,11 +17,18 @@
     <item>Niet-gespecificeerd</item>
   </string-array>
   <string-array name="verb_entries">
-    <item>0 - Geen logboek</item>
+    <item>0 - No logging</item>
     <item>1 - Standaard logboek</item>
     <item>2 - Uitgebreid logboek</item>
     <item>3</item>
     <item>4</item>
     <item>5 - Debug logboek</item>
+  </string-array>
+  <string-array name="crm_entries" translatable="false">
+    <item>No reconnection retries</item>
+    <item>One reconnection retry</item>
+    <item>Five reconnection retries</item>
+    <item>Fifty reconnection retries</item>
+    <item>Unlimited reconnection retries</item>
   </string-array>
 </resources>

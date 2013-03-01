@@ -17,11 +17,18 @@
     <item>Non spécifié</item>
   </string-array>
   <string-array name="verb_entries">
-    <item>0 - Aucun</item>
+    <item>0 - No logging</item>
     <item>1 - Par défaut</item>
     <item>2 - Avancé</item>
     <item>3</item>
     <item>4</item>
     <item>5 - Tout (Debug)</item>
+  </string-array>
+  <string-array name="crm_entries" translatable="false">
+    <item>No reconnection retries</item>
+    <item>One reconnection retry</item>
+    <item>Five reconnection retries</item>
+    <item>Fifty reconnection retries</item>
+    <item>Unlimited reconnection retries</item>
   </string-array>
 </resources>

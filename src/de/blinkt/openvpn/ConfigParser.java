@@ -345,7 +345,7 @@ public class ConfigParser {
 		// Parse remote config
 		Vector<Vector<String>> remotes = getAllOption("remote",1,3);
 
-		if(remotes!=null && remotes.size()>1 && extraRemotesAsCustom) {
+		if(remotes!=null && remotes.size()>=1 ) {
 			Vector<String> remote = remotes.get(0);
 			switch (remote.size()) {
 			case 4:

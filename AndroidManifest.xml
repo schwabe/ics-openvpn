@@ -30,8 +30,7 @@
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
     <uses-sdk
-        android:minSdkVersion="16"
-        android:maxSdkVersion="16"
+        android:minSdkVersion="15"
         android:targetSdkVersion="17" />
 
     <permission

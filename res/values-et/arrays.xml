@@ -17,7 +17,7 @@
     <item>Määratlemata</item>
   </string-array>
   <string-array name="verb_entries">
-    <item>0 - No logging</item>
+    <item>0 - Ei logita</item>
     <item>1 - Tavaline logi</item>
     <item>2 - Detailsem logi</item>
     <item>3</item>

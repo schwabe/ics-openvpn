@@ -194,6 +194,10 @@ public class ConfigConverter extends ListActivity {
 
 		String newname = mPossibleName;
 
+		// 	Default to 
+		if(mResult.mName!=null && !ConfigParser.CONVERTED_PROFILE.equals(mResult.mName))
+			newname=mResult.mName;
+			
 		while(vpl.getProfileByName(newname)!=null) {
 			i++;
 			if(i==1)

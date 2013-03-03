@@ -16,24 +16,31 @@ import java.util.Vector;
 public class ConfigParser {
 
 
+	public static final String CONVERTED_PROFILE = "converted Profile";
 	private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
-	
+	private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
+
+
 	private boolean extraRemotesAsCustom=false;
-	
+
 	public void parseConfig(Reader reader) throws IOException, ConfigParseError {
-	
+
 
 		BufferedReader br =new BufferedReader(reader);
-
-		@SuppressWarnings("unused")
-		int lineno=0;
 
 		while (true){
 			String line = br.readLine();
 			if(line==null)
 				break;
-			lineno++;
-			Vector<String> args = parseline(line);
+
+			// Check for OpenVPN Access Server Meta information
+			if (line.startsWith("# OVPN_ACCESS_SERVER_")) {
+				Vector<String> metaarg = parsemeta(line);
+				meta.put(metaarg.get(0),metaarg);
+				continue;
+			}
+			Vector<String> args = parseline(line);	
+
 			if(args.size() ==0)
 				continue;
 
@@ -49,6 +56,16 @@ public class ConfigParser {
 			}
 			options.get(optionname).add(args);
 		}
+	}
+
+	private Vector<String> parsemeta(String line) {
+		String meta = line.split("#\\sOVPN_ACCESS_SERVER_", 2)[1];
+		String[] parts = meta.split("=",2);
+		Vector<String> rval = new Vector<String>();
+		for(String p:parts)
+			rval.add(p);
+		return rval;
+
 	}
 
 	private void checkinlinefile(Vector<String> args, BufferedReader br) throws IOException, ConfigParseError {
@@ -241,12 +258,12 @@ public class ConfigParser {
 			"topology",
 			"win-sys",
 	};
-	
-	
+
+
 	// This method is far too long
 	public VpnProfile convertProfile() throws ConfigParseError{
 		boolean noauthtypeset=true;
-		VpnProfile np = new VpnProfile("converted Profile");
+		VpnProfile np = new VpnProfile(CONVERTED_PROFILE);
 		// Pull, client, tls-client
 		np.clearDefaults();
 
@@ -255,7 +272,7 @@ public class ConfigParser {
 			options.remove("pull");
 			options.remove("client");
 		}
-		
+
 		Vector<String> secret = getOption("secret", 1, 2);
 		if(secret!=null) 
 		{
@@ -265,9 +282,9 @@ public class ConfigParser {
 			np.mTLSAuthFilename=secret.get(1);
 			if(secret.size()==3)
 				np.mTLSAuthDirection=secret.get(2);
-			
+
 		}
-		
+
 		Vector<Vector<String>> routes = getAllOption("route", 1, 4);
 		if(routes!=null) {
 			String routeopt = "";
@@ -284,7 +301,7 @@ public class ConfigParser {
 				} catch (NumberFormatException ne) {
 					throw new ConfigParseError("Could not parse netmask of route " + netmask);
 				}
-			
+
 			}
 			np.mCustomRoutes=routeopt;
 		}
@@ -304,7 +321,7 @@ public class ConfigParser {
 				}
 			}
 		}
-		
+
 		Vector<String> direction = getOption("key-direction", 1, 1);
 		if(direction!=null)
 			np.mTLSAuthDirection=direction.get(1);
@@ -331,12 +348,12 @@ public class ConfigParser {
 			if(!mode.get(1).equals("p2p"))
 				throw new ConfigParseError("Invalid mode for --mode specified, need p2p");
 		}
-		
+
 		Vector<String> port = getOption("port", 1,1);
 		if(port!=null){
 			np.mServerPort = port.get(1);
 		}
-		
+
 		Vector<String> proto = getOption("proto", 1,1);
 		if(proto!=null){
 			np.mUseUdp=isUdpProto(proto.get(1));;
@@ -356,7 +373,7 @@ public class ConfigParser {
 				np.mServerName = remote.get(1);
 			}
 		}
-		
+
 
 
 		Vector<Vector<String>> dhcpoptions = getAllOption("dhcp-option", 2, 2);
@@ -381,7 +398,7 @@ public class ConfigParser {
 			CIDRIP cidr = new CIDRIP(ifconfig.get(1), ifconfig.get(2));
 			np.mIPv4Address=cidr.toString();
 		}
-		
+
 		if(getOption("remote-random-hostname", 0, 0)!=null)
 			np.mUseRandomHostname=true;
 
@@ -399,7 +416,7 @@ public class ConfigParser {
 		if(auth!=null)
 			np.mAuth = auth.get(1);
 
-		
+
 		Vector<String> ca = getOption("ca",1,1);
 		if(ca!=null){
 			np.mCaFilename = ca.get(1);
@@ -433,28 +450,28 @@ public class ConfigParser {
 			np.mVerb=verb.get(1);
 		}
 
-		
+
 		if(getOption("nobind", 0, 0) != null)
 			np.mNobind=true;
-		
+
 		if(getOption("persist-tun", 0,0) != null)
 			np.mPersistTun=true;
-		
+
 		Vector<String> connectretry = getOption("connect-retry", 1, 1);
 		if(connectretry!=null)
 			np.mConnectRetry =connectretry.get(1);
-		
+
 		Vector<String> connectretrymax = getOption("connect-retry-max", 1, 1);
 		if(connectretrymax!=null)
 			np.mConnectRetryMax =connectretrymax.get(1);
-		
+
 		Vector<Vector<String>> remotetls = getAllOption("remote-cert-tls", 1, 1);
 		if(remotetls!=null)
 			if(remotetls.get(0).get(1).equals("server"))
 				np.mExpectTLSCert=true;
 			else
 				options.put("remotetls",remotetls);
-		
+
 		Vector<String> authuser = getOption("auth-user-pass",0,1);
 		if(authuser !=null){
 			if(noauthtypeset) {
@@ -465,15 +482,23 @@ public class ConfigParser {
 				np.mAuthenticationType=VpnProfile.TYPE_USERPASS_KEYSTORE;
 			}
 			if(authuser.size()>1) {
-				// Set option value to password get to get canche to embed later.
+				// Set option value to password get to get cance to embed later.
 				np.mUsername=null;
 				np.mPassword=authuser.get(1);
 				useEmbbedUserAuth(np,authuser.get(1));
 			}
-			
 		}
 
-		
+		// Parse OpenVPN Access Server extra
+		Vector<String> friendlyname = meta.get("FRIENDLY_NAME");
+		if(friendlyname !=null && friendlyname.size() > 1)
+			np.mName=friendlyname.get(1);
+
+
+		Vector<String> ocusername = meta.get("USERNAME");
+		if(ocusername !=null && ocusername.size() > 1)
+			np.mUsername=ocusername.get(1);
+
 		// Check the other options
 		if(remotes !=null && remotes.size()>1 && extraRemotesAsCustom) {
 			// first is already added
@@ -487,7 +512,7 @@ public class ConfigParser {
 
 		return np;
 	}
-	
+
 	public void useExtraRemotesAsCustom(boolean b) {
 		this.extraRemotesAsCustom = b;
 	}
@@ -505,7 +530,7 @@ public class ConfigParser {
 			throw new ConfigParseError("Unsupported option to --proto " + proto);
 		return isudp;
 	}
-	
+
 	static public void useEmbbedUserAuth(VpnProfile np,String inlinedata)
 	{
 		String data = inlinedata.replace(VpnProfile.INLINE_TAG, "");

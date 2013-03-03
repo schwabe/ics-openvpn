@@ -18,8 +18,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="de.blinkt.openvpn"
-    android:versionCode="61"
-    android:versionName="0.5.34" >
+    android:versionCode="62"
+    android:versionName="0.5.34a" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -30,7 +30,8 @@
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
     <uses-sdk
-        android:minSdkVersion="15"
+        android:minSdkVersion="16"
+        android:maxSdkVersion="16"
         android:targetSdkVersion="17" />
 
     <permission
@@ -100,6 +101,7 @@
         <activity
             android:name=".ConfigConverter"
             android:label="Convert Config File"
+            android:uiOptions="splitActionBarWhenNarrow"
             tools:ignore="ExportedActivity" >
             <intent-filter android:label="@string/import_config" >
                 <action android:name="android.intent.action.VIEW" />
@@ -153,7 +155,6 @@
             android:targetActivity=".LaunchVPN" >
             <intent-filter>
                 <action android:name="android.intent.action.CREATE_SHORTCUT" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity-alias>

@@ -17,7 +17,7 @@
     <item>未指定</item>
   </string-array>
   <string-array name="verb_entries">
-    <item>0 - No logging</item>
+    <item>0-不记录</item>
     <item>1 - 默认</item>
     <item>2 - 详细</item>
     <item>3</item>

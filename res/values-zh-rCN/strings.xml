@@ -21,6 +21,7 @@
   <string name="about">关于</string>
   <string name="about_summary">关于 OpenVPN for Android</string>
   <string name="vpn_list_summary">已完成配置的 VPN 列表</string>
+  <string name="vpn_list_title">配置文件</string>
   <string name="vpn_type">类型</string>
   <string name="pkcs12pwquery">PKCS12 密码</string>
   <string name="file_select">选择</string>
@@ -89,6 +90,7 @@
   <string name="custom_options_title">自定义选项</string>
   <string name="edit_vpn">编辑 VPN 设置</string>
   <string name="remove_vpn_query">移除 VPN 配置文件 \'%s\' 吗？</string>
+  <string name="tun_error_helpful">在某些自定义 ICS 版本上，/dev/tun 的权限可能会有错误，或者根本就没有该文件。CM9 用户请尝试通过本程序的设置功能修复权限</string>
   <string name="tun_open_error">未能打开 tun 模块</string>
   <string name="error">错误</string>
   <string name="clear">清除</string>
@@ -101,6 +103,7 @@
   <string name="routes_info">IPv4 路由： %s</string>
   <string name="routes_info6">IPv6 路由： %s</string>
   <string name="route_not_netip">纠正路由 %1$s/%2$s 为 %3$s/%2$s</string>
+  <string name="keychain_access">不能访问 Android 密钥链证书。这可能是由于固件升级或通过还原备份的应用程序/软件设置造成的。请编辑 VPN 配置文件并在基本设置中重新选择证书以重新创建证书访问权限。</string>
   <string name="version_info">%1$s %2$s</string>
   <string name="send_logfile">发送日志文件</string>
   <string name="send">发送</string>
@@ -156,6 +159,8 @@
   <string name="file_icon">文件图标</string>
   <string name="tls_authentication">TLS 认证</string>
   <string name="generated_config">已生成的配置</string>
+  <string name="generalsettings">设置</string>
+  <string name="owner_fix_summary">尝试设定 /dev/tun 的属主为 system。一些 CM9 ROM 需要它以使 VPNService API 工作。本操作需要 root 权限。</string>
   <string name="owner_fix">修复 /dev/tun 的权限</string>
   <string name="generated_config_summary">显示已生成的 OpenVPN 配置文件</string>
   <string name="edit_profile_title">编辑 %s</string>
@@ -170,6 +175,7 @@
   <string name="show_log_summary">连接时显示日志窗口。日志窗口可始终从通知栏访问。</string>
   <string name="show_log_window">显示日志窗口</string>
   <string name="mobile_info">运行 %1$s （ %2$s ） %3$s ，Android API %4$d</string>
+  <string name="error_rsa_sign">与 Android 密钥库 %1$s 签名时出错： %2$s</string>
   <string name="faq_system_dialogs_title">连接警告和通知声音</string>
   <string name="translationby">中文翻译：Christopher Meng
 &lt;trans@cicku.me&gt;</string>
@@ -194,10 +200,12 @@
   <string name="onbootrestart">重启时重新连接</string>
   <string name="ignore">忽略</string>
   <string name="restart">重启</string>
+  <string name="restart_vpn_after_change">配置的变更将在重启 VPN 后生效，是否立即重启？</string>
   <string name="configuration_changed">配置已更改</string>
   <string name="faq_duplicate_notification_title">重复的通知</string>
   <string name="no_vpn_profiles_defined">没有定义 VPN 配置文件</string>
   <string name="add_new_vpn_hint">点击 &lt;img src=\"ic_menu_add\"/&gt; 图标添加新的 VPN 配置</string>
+  <string name="vpn_import_hint">使用 &lt;img src=\"ic_menu_archive\"/&gt; 图标导入存储卡中已有的配置文件(.ovpn 或 .conf)。</string>
   <string name="faq_hint">请确保阅读常见问题解答。这是一个快速向导。</string>
   <string name="correcttls">将 remote-tls 格式从 OpenVPN 2.2 适用格式转换为 2.3 适用格式</string>
   <string name="faq_routing_title">路由/接口配置</string>
@@ -215,6 +223,7 @@
   <string name="connectretrywait">两次连接间隔时间(秒)</string>
   <string name="minidump_generated">OpenVPN 意外崩溃。建议您使用主菜单中的发送转储文件功能向开发者发送转储文件</string>
   <string name="send_minidump">向开发者发送转储信息</string>
+  <string name="send_minidump_summary">向开发人员发送上次崩溃的调试信息</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="session_ipv4string">%1$s - %2$s</string>
   <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
@@ -225,6 +234,7 @@
   <string name="state_assign_ip">正在分配 IP 地址</string>
   <string name="state_add_routes">添加路由</string>
   <string name="state_connected">已连接</string>
+  <string name="state_disconnected">断开</string>
   <string name="state_reconnecting">正在重新连接</string>
   <string name="state_exiting">正在退出</string>
   <string name="state_noprocess">未运行</string>
@@ -234,8 +244,18 @@
   <string name="state_nonetwork">等待可用网络</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
   <string name="notifcation_title_notconnect">未连接</string>
+  <string name="start_vpn_title">正在连接 VPN %s</string>
+  <string name="start_vpn_ticker">正在连接 VPN %s</string>
   <string name="jelly_keystore_alphanumeric_bug">某些版本的 Android 4.1 存在问题，如果密钥库证书的名称包含非字母和数字字符(如空格、 下划线或短划线)。请尝试重新导入不包含特殊字符的证书</string>
   <string name="encryption_cipher">加密算法(cipher)</string>
   <string name="packet_auth">数据包验证</string>
   <string name="auth_dialog_title">数据包验证方式</string>
+  <string name="toggle_timestamps">切换时间戳</string>
+  <string name="mobile_info_extended">当前运行环境 %1$s (%2$s) %3$s，Android API %4$d，版本 %5$s，%6$s</string>
+  <string name="built_by">由 %s 构建</string>
+  <string name="debug_build">调试版本</string>
+  <string name="official_build">正式版本</string>
+  <string name="make_selection_inline">复制进配置文件</string>
+  <string name="crashdump">故障转储</string>
+  <string name="add">添加</string>
 </resources>

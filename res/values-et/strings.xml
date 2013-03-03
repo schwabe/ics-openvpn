@@ -21,6 +21,7 @@
   <string name="about">Lähemalt</string>
   <string name="about_summary">Täpsemalt programmist OpenVPN Androidile</string>
   <string name="vpn_list_summary">Kõigi seadistatud VPN kanalite nimekiri</string>
+  <string name="vpn_list_title">Profiilid</string>
   <string name="vpn_type">Tüüp</string>
   <string name="pkcs12pwquery">PKCS12 salasõna</string>
   <string name="file_select">Vali…</string>
@@ -124,6 +125,8 @@
   <string name="no_vpn_support_image">Teie süsteemitarkvara ei toeta VPNService API\'t, vabandame :(</string>
   <string name="encryption">Krüpteerimine</string>
   <string name="cipher_dialog_title">Vali krüpteerimismeetod</string>
+  <string name="chipher_dialog_message">Sisestage OpenVPN poolt kasutatav krüptošifri algoritm. Tühi väli tähendab vaikešifrit.</string>
+  <string name="auth_dialog_message">Sisestage OpenVPN poolt kasutatav autentimise räsifunktsioon. Tühi väli tähendab vaikeräsi.</string>
   <string name="settings_auth">Autentimine/Krüpteerimine</string>
   <string name="file_explorer_tab">Failihaldur</string>
   <string name="inline_file_tab">Integreeritud fail</string>
@@ -163,6 +166,7 @@
   <string name="file_icon">faili ikoon</string>
   <string name="tls_authentication">TLS autentimine</string>
   <string name="generated_config">Genereeritud konfiguratsioon</string>
+  <string name="generalsettings">Seaded</string>
   <string name="owner_fix_summary">Püütakse seada /dev/tun omanikku system\'iks. VPNService API nõuab seda mõne CM9 versiooni puhul. Seade peab olema ruuditud.</string>
   <string name="owner_fix">Korrasta /dev/tun omanikuõigused</string>
   <string name="generated_config_summary">Näitab genereeritud OpenVPN konfiguratsioonifaili</string>
@@ -222,6 +226,7 @@
   <string name="openvpn_log">OpenVPN Logi</string>
   <string name="import_config">Impordi OpenVPN konfiguratsioon</string>
   <string name="battery_consumption_title">Akukasutus</string>
+  <string name="baterry_consumption">Minu isiklike testide põhjal kulutavad akut peamiselt OpenVPN ülalhoide paketid. Enamikel OpenVPN serveritel esineb direktiiv nagu \'keepalive 10 60\' mis määrab et klient saadab serverile ja server kliendile keepalive pakette iga 10 sekundi tagant. &lt;p&gt; Ehkki ülalhoide paketid on väikesed ja ei põhjusta märgatavat võrguliiklust, ei lase nad mobiilse ühenduse raadiovõrgukiibil minna energiasäästurežiimi. &lt;p&gt; Need ülalhoidepaketi seadistused pole kliendi poolt muudetavad, neid seadistusi saab muuta ainult OpenVPN serveri süsteemiadministraator. &lt;p&gt; Kahjuks esineb üle 60 sekundi pikkuse keepalive puhul probleeme UDP protokolliga üle mõnede NAT ruuterite mis kustutavad UDP ühenduste olekuinfo väga lühikese aja jooksul (minu testides 60s). TCP protokolliga seda probleemi ei esine, kuid esineb TCP üle TCP tunneldamise probleem. (Vaata &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Miks TCP üle TCP on halb mõte&lt;/a&gt;)</string>
   <string name="faq_tethering">Android Tethering (üle WiFi, USB või Bluetoothi) ja VPNService API (mida käesolev programm kasutab) ei ole koos kasutatavad. Täpsemad detailid leiad &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;issue #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN ja tether</string>
   <string name="connection_retries">Ühendumise korduskatseid</string>
@@ -230,4 +235,39 @@
   <string name="connectretrywait">Sekundeid ühenduste vahel</string>
   <string name="minidump_generated">OpenVPN jooksis ootamatult kokku. Palun kaaluge \"saada Minitõmmis\" valiku lubamist peamenüüs</string>
   <string name="send_minidump">Saada arendajale minitõmmis</string>
+  <string name="send_minidump_summary">Saada eelmise kokkujooksmise kohta käiv silumisinfo arendajale</string>
+  <string name="notifcation_title">OpenVPN - %s</string>
+  <string name="session_ipv4string">%1$s - %2$s</string>
+  <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
+  <string name="state_connecting">Ühendumine</string>
+  <string name="state_wait">Serveri vastuse ootamine</string>
+  <string name="state_auth">Autentimine</string>
+  <string name="state_get_config">Kliendikonfiguratsiooni lugemine</string>
+  <string name="state_assign_ip">IP-aadressite omistamine</string>
+  <string name="state_add_routes">Marsruutide lisamine</string>
+  <string name="state_connected">Ühendatud</string>
+  <string name="state_disconnected">Katkesta ühendus</string>
+  <string name="state_reconnecting">Taasühendumine</string>
+  <string name="state_exiting">Väljumine</string>
+  <string name="state_noprocess">Ei tööta</string>
+  <string name="state_resolve">Arvutinimede lahendamine</string>
+  <string name="state_tcp_connect">Ühendumine (TCP)</string>
+  <string name="state_auth_failed">Autentimine ebaõnnestus</string>
+  <string name="state_nonetwork">Oodatakse kasutatavat võrku</string>
+  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
+  <string name="notifcation_title_notconnect">Pole ühendatud</string>
+  <string name="start_vpn_title">Ühendumine VPN %s külge</string>
+  <string name="start_vpn_ticker">Ühendumine VPN %s külge</string>
+  <string name="jelly_keystore_alphanumeric_bug">Mõnede Android 4.1 versioonide puhul esineb probleeme kui võtmehoidla sertifikaadi nimi sisaldab mittetähestikulisi sümboleid (nagu tühikud, alakriipsud või sidekriipsud). Proovige selline sertifikaat erisümboliteid kasutamata uuesti importida</string>
+  <string name="encryption_cipher">Krüptošiffer</string>
+  <string name="packet_auth">Pakettide autentimine</string>
+  <string name="auth_dialog_title">Sisestage pakettide autentimismeetod</string>
+  <string name="toggle_timestamps">Vaheta ajatempleid</string>
+  <string name="mobile_info_extended">Töötab seadmel %1$s (%2$s) %3$s, Android API %4$d, versioon %5$s, %6$s</string>
+  <string name="built_by">Kompileerija: %s</string>
+  <string name="debug_build">Silumisversioon</string>
+  <string name="official_build">Ametlik versioon</string>
+  <string name="make_selection_inline">Kopeeri profiili</string>
+  <string name="crashdump">Pangestustõmmis</string>
+  <string name="add">Lisa</string>
 </resources>

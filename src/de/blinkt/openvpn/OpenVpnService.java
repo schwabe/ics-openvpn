@@ -233,14 +233,14 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	}
 
-	void registerNetworkStateReceiver(OpenVPNMangement magnagement) {
+	synchronized void registerNetworkStateReceiver(OpenVPNMangement magnagement) {
 		// Registers BroadcastReceiver to track network connection changes.
 		IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
 		mNetworkStateReceiver = new NetworkSateReceiver(magnagement);
 		this.registerReceiver(mNetworkStateReceiver, filter);
 	}
 
-	void unregisterNetworkStateReceiver() {
+	synchronized void unregisterNetworkStateReceiver() {
 		if(mNetworkStateReceiver!=null)
 			this.unregisterReceiver(mNetworkStateReceiver);
 		mNetworkStateReceiver=null;

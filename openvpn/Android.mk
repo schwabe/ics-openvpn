@@ -11,7 +11,7 @@ LOCAL_SHARED_LIBRARIES :=  libssl libcrypto
 LOCAL_CFLAGS= -DHAVE_CONFIG_H -DTARGET_ABI=\"${TARGET_ABI}\"
 LOCAL_STATIC_LIBRARIES :=  liblzo-static
 
-ifneq ($(TARGET_ARCH),mips)
+ifeq ($(WITH_BREAKPAD),1)
 LOCAL_STATIC_LIBRARIES += breakpad_client
 LOCAL_CFLAGS += -DGOOGLE_BREAKPAD=1
 endif
@@ -90,7 +90,8 @@ LOCAL_SRC_FILES:= \
 	src/openvpn/ssl_verify_polarssl.c \
 	src/openvpn/status.c \
 	src/openvpn/tun.c  
-ifneq ($(TARGET_ARCH),mips)
+
+ifeq ($(WITH_BREAKPAD),1)
 LOCAL_SRC_FILES+=src/openvpn/breakpad.cpp
 endif
 

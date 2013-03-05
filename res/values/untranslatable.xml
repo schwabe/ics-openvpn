@@ -19,7 +19,9 @@
     <string name="openssl" translatable="false">OpenSSL</string>
     <string name="unknown_state" translatable="false">Unknown state</string>
     <string name="permission_description">Allows another app to control OpenVPN</string>
-
+    <string name="bouncy_castle"  translatable="false">Bouncy Castle Crypto APIs</string>
+    <string name="copyright_bouncycastle"  translatable="false">Copyright © 2000 - 2012 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)</string>
+    
     <string-array name="tls_directions_values" translatable="false">
         <item>0</item>
         <item>1</item>

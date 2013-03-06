@@ -239,6 +239,7 @@ public class ConfigParser {
 			"dhcp-release",
 			"dhcp-renew",
 			"dh",
+			"ip-win32",
 			"management-hold",
 			"management",
 			"management-query-passwords",

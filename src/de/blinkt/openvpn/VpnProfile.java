@@ -274,9 +274,16 @@ public class VpnProfile implements  Serializable{
 			if(!configForOvpn3) {
 				String[] ks =getKeyStoreCertificates(context);
 				cfg+="### From Keystore ####\n";
-				cfg+="<ca>\n" + ks[0] + "</ca>\n";
-				cfg+="<cert>\n" + ks[0] + "</cert>\n";
-				cfg+="management-external-key\n";
+				if(ks != null) {
+					cfg+="<ca>\n" + ks[0] + "</ca>\n";
+					cfg+="<cert>\n" + ks[0] + "</cert>\n";
+					cfg+="management-external-key\n";
+				} else {
+					cfg += context.getString(R.string.keychain_access) +"\n";
+					if(Build.VERSION.SDK_INT==Build.VERSION_CODES.JELLY_BEAN) 
+						if(!mAlias.matches("^[a-zA-Z0-9]$")) 
+							cfg += context.getString(R.string.jelly_keystore_alphanumeric_bug)+ "\n";
+				}
 			}
 			break;
 		case VpnProfile.TYPE_USERPASS:
@@ -358,7 +365,7 @@ public class VpnProfile implements  Serializable{
 		// Authentication
 		if(mCheckRemoteCN) {
 			if(mRemoteCN == null || mRemoteCN.equals("") )
-				cfg+="x509-verify-name " + mServerName + " name\n";
+				cfg+="verify-x509-name " + mServerName + " name\n";
 			else 
 				switch (mX509AuthType) {
 
@@ -370,15 +377,15 @@ public class VpnProfile implements  Serializable{
 					break;
 
 				case X509_VERIFY_TLSREMOTE_RDN:
-					cfg+="x509-verify-name " + openVpnEscape(mRemoteCN) + " name\n";
+					cfg+="verify-x509-name " + openVpnEscape(mRemoteCN) + " name\n";
 					break;
 
 				case X509_VERIFY_TLSREMOTE_RDN_PREFIX:
-					cfg+="x509-verify-name " + openVpnEscape(mRemoteCN) + " name-prefix\n";
+					cfg+="verify-x509-name " + openVpnEscape(mRemoteCN) + " name-prefix\n";
 					break;
 
 				case X509_VERIFY_TLSREMOTE_DN:
-					cfg+="x509-verify-name " + openVpnEscape(mRemoteCN) + "\n";
+					cfg+="verify-x509-name " + openVpnEscape(mRemoteCN) + "\n";
 					break;
 				}
 		}

@@ -57,6 +57,14 @@ public class VpnProfile implements  Serializable{
 	public static final int TYPE_USERPASS_PKCS12 = 6;
 	public static final int TYPE_USERPASS_KEYSTORE = 7;
 
+	public static final int X509_VERIFY_TLSREMOTE=0;
+	public static final int X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING=1;
+	public static final int X509_VERIFY_TLSREMOTE_DN=2;
+	public static final int X509_VERIFY_TLSREMOTE_RDN=3;
+	public static final int X509_VERIFY_TLSREMOTE_RDN_PREFIX=4;
+
+
+
 	// Don't change this, not all parts of the program use this constant
 	public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
 	public static final String INLINE_TAG = "[[INLINE]]";
@@ -119,10 +127,11 @@ public class VpnProfile implements  Serializable{
 	public String mConnectRetry="5";
 	public boolean mUserEditable=true;
 	public String mAuth="";
-	
+	public int mX509AuthType=X509_VERIFY_TLSREMOTE_RDN;
+
 	static final String MINIVPN = "miniopenvpn";
-	
-	
+
+
 	static private native byte[] rsasign(byte[] input,int pkey) throws InvalidKeyException;
 	static {
 		System.loadLibrary("opvpnutil");
@@ -211,16 +220,16 @@ public class VpnProfile implements  Serializable{
 		if(mConnectRetryMax ==null) {
 			mConnectRetryMax="5";
 		}
-		
+
 		if(!mConnectRetryMax.equals("-1"))
-				cfg+="connect-retry-max " + mConnectRetryMax+ "\n";
-	
+			cfg+="connect-retry-max " + mConnectRetryMax+ "\n";
+
 		if(mConnectRetry==null)
 			mConnectRetry="5";
-		
-	
+
+
 		cfg+="connect-retry " + mConnectRetry + "\n";
-		
+
 		cfg+="resolv-retry 60\n";
 
 
@@ -330,7 +339,7 @@ public class VpnProfile implements  Serializable{
 			cfg+="max-routes " + numroutes + "\n";
 		}
 		cfg+=routes;
-		
+
 		if(mOverrideDNS || !mUsePull) {
 			if(nonNull(mDNS1))
 				cfg+="dhcp-option DNS " + mDNS1 + "\n";
@@ -349,9 +358,29 @@ public class VpnProfile implements  Serializable{
 		// Authentication
 		if(mCheckRemoteCN) {
 			if(mRemoteCN == null || mRemoteCN.equals("") )
-				cfg+="tls-remote " + mServerName + "\n";
-			else
-				cfg += "tls-remote " + openVpnEscape(mRemoteCN) + "\n";
+				cfg+="x509-verify-name " + mServerName + " name\n";
+			else 
+				switch (mX509AuthType) {
+
+				// 2.2 style x509 checks
+				case X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING:
+					cfg+="compat-names no-remapping\n";
+				case X509_VERIFY_TLSREMOTE:
+					cfg+="tls-remote " + openVpnEscape(mRemoteCN) + "\n";
+					break;
+
+				case X509_VERIFY_TLSREMOTE_RDN:
+					cfg+="x509-verify-name " + openVpnEscape(mRemoteCN) + " name\n";
+					break;
+
+				case X509_VERIFY_TLSREMOTE_RDN_PREFIX:
+					cfg+="x509-verify-name " + openVpnEscape(mRemoteCN) + " name-prefix\n";
+					break;
+
+				case X509_VERIFY_TLSREMOTE_DN:
+					cfg+="x509-verify-name " + openVpnEscape(mRemoteCN) + "\n";
+					break;
+				}
 		}
 		if(mExpectTLSCert)
 			cfg += "remote-cert-tls server\n";
@@ -377,15 +406,15 @@ public class VpnProfile implements  Serializable{
 			cfg+= "# persist-tun also sets persist-remote-ip to avoid DNS resolve problem\n";
 			cfg+= "persist-remote-ip\n";
 		}
-		
+
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);        
 		boolean usesystemproxy = prefs.getBoolean("usesystemproxy", true);
 		if(usesystemproxy) {
 			cfg+= "# Use system proxy setting\n";
 			cfg+= "management-query-proxy\n";
 		}
-		
-		
+
+
 		if(mUseCustomConfig) {
 			cfg += "# Custom configuration options\n";
 			cfg += "# You are on your on own here :)\n";
@@ -536,17 +565,17 @@ public class VpnProfile implements  Serializable{
 		try {
 			privateKey = KeyChain.getPrivateKey(context,mAlias);
 			mPrivateKey = privateKey;
-			
+
 			cachain = KeyChain.getCertificateChain(context, mAlias);
 			if(cachain.length <= 1 && !nonNull(mCaFilename))
 				OpenVPN.logMessage(0, "", context.getString(R.string.keychain_nocacert));
-			
+
 			for(X509Certificate cert:cachain) {
 				OpenVPN.logInfo(R.string.cert_from_keystore,cert.getSubjectDN());
 			}
-		
-			
-			
+
+
+
 
 			if(nonNull(mCaFilename)) {
 				try {
@@ -554,15 +583,15 @@ public class VpnProfile implements  Serializable{
 					X509Certificate[] newcachain = new X509Certificate[cachain.length+1];
 					for(int i=0;i<cachain.length;i++)
 						newcachain[i]=cachain[i];
-					
+
 					newcachain[cachain.length-1]=(X509Certificate) cacert;
-					
+
 				} catch (Exception e) {
 					OpenVPN.logError("Could not read CA certificate" + e.getLocalizedMessage());
 				}
 			}
 
-			
+
 
 			StringWriter caout = new StringWriter();
 
@@ -571,9 +600,9 @@ public class VpnProfile implements  Serializable{
 				pw.writeObject(new PemObject("CERTIFICATE", cert.getEncoded()));
 			}
 			pw.close();
-			
-			
-			
+
+
+
 			StringWriter certout = new StringWriter();
 
 
@@ -606,16 +635,16 @@ public class VpnProfile implements  Serializable{
 		return null;
 	}
 	private Certificate getCacertFromFile() throws FileNotFoundException, CertificateException {
-		 CertificateFactory certFact = CertificateFactory.getInstance("X.509");
-		 
-		 InputStream inStream;
-		
-		 if(mCaFilename.startsWith(INLINE_TAG))
-			 inStream = new ByteArrayInputStream(mCaFilename.replace(INLINE_TAG,"").getBytes());
+		CertificateFactory certFact = CertificateFactory.getInstance("X.509");
+
+		InputStream inStream;
+
+		if(mCaFilename.startsWith(INLINE_TAG))
+			inStream = new ByteArrayInputStream(mCaFilename.replace(INLINE_TAG,"").getBytes());
 		else 
 			inStream = new FileInputStream(mCaFilename);
-		 
-		 return certFact.generateCertificate(inStream);
+
+		return certFact.generateCertificate(inStream);
 	}
 
 
@@ -703,7 +732,7 @@ public class VpnProfile implements  Serializable{
 			}
 
 		}
-		
+
 		if(data.contains("Proc-Type: 4,ENCRYPTED"))
 			return true;
 		else if(data.contains("-----BEGIN ENCRYPTED PRIVATE KEY-----"))
@@ -718,14 +747,14 @@ public class VpnProfile implements  Serializable{
 			if(mTransientPCKS12PW==null)
 				return R.string.pkcs12_file_encryption_key;
 		}
-		
+
 		if(mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) {
 			if(requireTLSKeyPassword() && !nonNull(mKeyPassword))
 				if(mTransientPCKS12PW==null) {
 					return R.string.private_key_password;
 				}
 		}
-		
+
 		if(isUserPWAuth() && (mPassword.equals("") || mPassword == null)) {
 			if(mTransientPW==null)
 				return R.string.password;
@@ -783,7 +812,7 @@ public class VpnProfile implements  Serializable{
 
 			byte[] signed_bytes = rsasinger.doFinal(data);
 			return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
-			
+
 		} catch (NoSuchAlgorithmException e){
 			err =e;
 		} catch (InvalidKeyException e) {
@@ -825,7 +854,7 @@ public class VpnProfile implements  Serializable{
 
 			byte[] signed_bytes = rsasign(data, pkey); 
 			return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
-			
+
 		} catch (NoSuchMethodException e) {
 			err=e;
 		} catch (IllegalArgumentException e) {
@@ -845,7 +874,7 @@ public class VpnProfile implements  Serializable{
 	}
 
 
-	
+
 }
 
 

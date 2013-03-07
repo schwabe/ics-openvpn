@@ -63,10 +63,10 @@
     <string name="remove_vpn">Remove VPN</string>
     <string name="check_remote_tlscert">Checks whether the server uses a TLS Server Certificate</string>
     <string name="check_remote_tlscert_title">Except TLS Server</string>
-    <string name="remote_tlscn_check_summary">Checks the Remote Server Certificate CN against a string</string>
+    <string name="remote_tlscn_check_summary">Checks the Remote Server Certificate Subject DN</string>
     <string name="remote_tlscn_check_title">Certificate Hostname Check</string>
-    <string name="enter_tlscn_dialog">Enter the string against which the remote Server is checked. OpenVPN will use prefix matching. \"Server\" matches \"Server-1\" and \"Server-2\"\nLeave empty to check the CN against the server hostname.</string>
-    <string name="enter_tlscn_title">Remote Hostname(CN)</string>
+    <string name="enter_tlscn_dialog">Specify the check used to verify the remote certificate DN\n\Specify the complete DN (e.g. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de) or the RDN (openvpn.blinkt.de in the DN example) or an RDN prefix for verification.\n\nRDN prefix will use prefix matching. \"Server\" matches \"Server-1\" and \"Server-2\"\nLeaving the text field empty will check the RDN against the server hostname.\nFor more details see the OpenVPN 2.3 manpage under --x509-verify-name</string>
+    <string name="enter_tlscn_title">Remote certificate subject</string>
     <string name="tls_key_auth">Enables the TLS Key Authentication</string>
     <string name="tls_auth_file">TLS Auth File</string>
     <string name="pull_on_summary">Requests IP addresses, routes and timing options from the server.</string>
@@ -271,5 +271,6 @@
     <string name="crashdump">Crashdump</string>
     <string name="add">Add</string>
     <string name="send_config">Send config file</string>
+    <string name="complete_dn">Complete DN</string>
 
 </resources>

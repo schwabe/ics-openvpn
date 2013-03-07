@@ -111,6 +111,7 @@ public class ConfigConverter extends ListActivity {
 		if(mResult.mRemoteCN.startsWith("/"))
 			mResult.mRemoteCN = mResult.mRemoteCN.substring(1);
 		mResult.mRemoteCN = mResult.mRemoteCN.replace("/", ", ");
+		mResult.mX509AuthType = VpnProfile.X509_VERIFY_TLSREMOTE_DN;
 	}
 
 	public void showCertDialog () {

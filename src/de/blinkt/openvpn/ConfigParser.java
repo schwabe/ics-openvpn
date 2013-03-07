@@ -454,17 +454,17 @@ public class ConfigParser {
 				np.mX509AuthType = VpnProfile.X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING;
 		}
 		
-		Vector<String> x509verifyname = getOption("x509-verify-name",1,2);
-		if(x509verifyname!=null){
-			np.mRemoteCN = x509verifyname.get(1);
+		Vector<String> verifyx509name = getOption("verify-x509-name",1,2);
+		if(verifyx509name!=null){
+			np.mRemoteCN = verifyx509name.get(1);
 			np.mCheckRemoteCN=true;
-			if(x509verifyname.size()>2) {  
-				if (x509verifyname.get(2).equals("name"))
+			if(verifyx509name.size()>2) {  
+				if (verifyx509name.get(2).equals("name"))
 					np.mX509AuthType=VpnProfile.X509_VERIFY_TLSREMOTE_RDN;
-				else if (x509verifyname.get(2).equals("name-prefix"))
+				else if (verifyx509name.get(2).equals("name-prefix"))
 					np.mX509AuthType=VpnProfile.X509_VERIFY_TLSREMOTE_RDN_PREFIX;
 				else 
-					throw new ConfigParseError("Unknown parameter to x509-verify-name: " + x509verifyname.get(2) );
+					throw new ConfigParseError("Unknown parameter to x509-verify-name: " + verifyx509name.get(2) );
 			} else {
 				np.mX509AuthType = VpnProfile.X509_VERIFY_TLSREMOTE_DN;
 			}

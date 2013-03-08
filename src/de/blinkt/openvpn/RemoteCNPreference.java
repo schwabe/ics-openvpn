@@ -7,7 +7,9 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class RemoteCNPreference extends DialogPreference {
 
@@ -15,8 +17,9 @@ public class RemoteCNPreference extends DialogPreference {
 	private Spinner mSpinner;
 	private EditText mEditText;
 	private int mDNType;
-	private ArrayAdapter<String> mAuthtypes;
 	private String mDn;
+	private TextView mRemoteTLSNote;
+	//private ScrollView mScrollView;
 
 	public RemoteCNPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -31,6 +34,8 @@ public class RemoteCNPreference extends DialogPreference {
 
 		mEditText = (EditText) view.findViewById(R.id.tlsremotecn);
 		mSpinner = (Spinner) view.findViewById(R.id.x509verifytype);
+		mRemoteTLSNote = (TextView) view.findViewById(R.id.tlsremotenote);
+		//mScrollView = (ScrollView) view.findViewById(R.id.tlsremotescroll);
 		if(mDn!=null)
 			mEditText.setText(mDn);
 
@@ -38,23 +43,12 @@ public class RemoteCNPreference extends DialogPreference {
 
 	}
 
-	private void populateSpinner() {
-		mAuthtypes = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
-		mAuthtypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		mAuthtypes.add(getContext().getString(R.string.complete_dn));
-		mAuthtypes.add("RDN (common name)");
-		mAuthtypes.add("RDN prefix");
-		if (mDNType == VpnProfile.X509_VERIFY_TLSREMOTE || mDNType == VpnProfile.X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING )
-			mAuthtypes.add("tls-remote (DEPRECATED)");
-
-		mSpinner.setAdapter(mAuthtypes);
-	}
 
 	public String getCNText() {
 		return mDn;
 	}
-	
+
 	public int getAuthtype() {
 		return mDNType;
 	}
@@ -84,7 +78,46 @@ public class RemoteCNPreference extends DialogPreference {
 			}
 		}
 	}
+	
+	private void populateSpinner() {
+		ArrayAdapter<String> authtypes = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item);
+		authtypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+		authtypes.add(getContext().getString(R.string.complete_dn));
+		authtypes.add(getContext().getString(R.string.rdn));
+		authtypes.add(getContext().getString(R.string.rdn_prefix));
+		if ((mDNType == VpnProfile.X509_VERIFY_TLSREMOTE || mDNType == VpnProfile.X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING) 
+				&& !(mDn==null || "".equals(mDn))) {
+			authtypes.add(getContext().getString(R.string.tls_remote_deprecated));
+			mRemoteTLSNote.setVisibility(View.VISIBLE);
+		} else {
+			mRemoteTLSNote.setVisibility(View.GONE);
+		}
+		mSpinner.setAdapter(authtypes);
+		mSpinner.setSelection(getSpinnerPositionFromAuthTYPE());
+	}
+	
+	private int getSpinnerPositionFromAuthTYPE() {
+		switch (mDNType) {
+		case VpnProfile.X509_VERIFY_TLSREMOTE_DN:
+			return 0;
+		case VpnProfile.X509_VERIFY_TLSREMOTE_RDN:
+			return 1;
+		case VpnProfile.X509_VERIFY_TLSREMOTE_RDN_PREFIX:
+			return 2;
+		case VpnProfile.X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING:
+		case VpnProfile.X509_VERIFY_TLSREMOTE:
+			if (mDn==null || "".equals(mDn))
+				return 1;
+			else
+				return 3;
+
+
+		default:
+			return 0;
+		}
+	}
+	
 	private int getAuthTypeFromSpinner() {
 		int pos = mSpinner.getSelectedItemPosition();
 		switch (pos) {

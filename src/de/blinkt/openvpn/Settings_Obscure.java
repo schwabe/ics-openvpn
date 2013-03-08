@@ -22,7 +22,6 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 		super.onCreate(savedInstanceState);
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.vpn_obscure);
-
 		
 		mUseRandomHostName = (CheckBoxPreference) findPreference("useRandomHostname");
 		mUseFloat = (CheckBoxPreference) findPreference("useFloat");

@@ -9,7 +9,7 @@ Checkout google breakcode:
 svn co http://google-breakpad.googlecode.com/svn/trunk/ google-breakpad
 
 - Install sdk
-- Install ndk
+- Install ndk (Version 8d gives strange linker errors, use 8b for now)
 
 Do ./build-native.sh in the root directory of the project.
 

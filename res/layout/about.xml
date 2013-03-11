@@ -15,7 +15,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="10sp" />
+            android:layout_height="12sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -25,7 +25,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="10sp" />
+            android:layout_height="12sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="10sp" />
+            android:layout_height="12sp" />
 
         <TextView
             android:id="@+id/donatestring"
@@ -44,7 +44,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="10sp" />
+            android:layout_height="12sp" />
 
         <TextView
             android:id="@+id/translation"
@@ -54,7 +54,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="10sp" />
+            android:layout_height="12sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -63,7 +63,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="10sp" />
+            android:layout_height="12sp" />
 
         <TextView
             android:layout_width="match_parent"

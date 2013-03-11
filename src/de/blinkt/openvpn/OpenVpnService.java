@@ -20,6 +20,7 @@ import java.lang.reflect.Method;
 import java.util.Locale;
 import java.util.Vector;
 
+import android.Manifest.permission;
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -542,6 +543,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	public void updateState(String state,String logmessage, int resid, ConnectionStatus level) {
 		// If the process is not running, ignore any state, 
 		// Notification should be invisible in this state
+		doSendBroadcast(state, level);
 		if(mProcessThread==null && !mNotificationalwaysVisible)
 			return;
 
@@ -562,6 +564,14 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			showNotification(getString(resid) +" " + logmessage,ticker,false,0, level);
 
 		}
+	}
+
+	private void doSendBroadcast(String state, ConnectionStatus level) {
+		Intent vpnstatus = new Intent();
+		vpnstatus.setAction("de.blinkt.openvpn.VPN_STATUS");
+		vpnstatus.putExtra("status", level.toString());
+		vpnstatus.putExtra("detailstatus", state);
+		sendBroadcast(vpnstatus, permission.ACCESS_NETWORK_STATE);
 	}
 
 	@Override

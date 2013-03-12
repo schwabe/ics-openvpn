@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/stdpadding" >
@@ -15,7 +16,8 @@
 
         <TextView
             android:id="@+id/faq_howto"
-            style="@style/faqitem" />
+            style="@style/faqitem"
+            tools:ignore="SelectableText" />
 
         <TextView
             style="@style/faqhead"
@@ -39,7 +41,8 @@
 
         <TextView
             android:id="@+id/baterry_consumption"
-            style="@style/faqitem" />
+            style="@style/faqitem"
+            tools:ignore="SelectableText" />
 
         <TextView
             style="@style/faqhead"
@@ -55,7 +58,8 @@
 
         <TextView
             android:id="@+id/faq_tethering"
-            style="@style/faqitem" />
+            style="@style/faqitem"
+            tools:ignore="SelectableText" />
 
         <TextView
             style="@style/faqhead"
@@ -71,7 +75,8 @@
 
         <TextView
             android:id="@+id/broken_images_faq"
-            style="@style/faqitem" />
+            style="@style/faqitem"
+            tools:ignore="SelectableText" />
 
         <TextView
             style="@style/faqhead"

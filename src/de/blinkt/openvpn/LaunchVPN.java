@@ -41,6 +41,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import de.blinkt.openvpn.core.OpenVPN;
+import de.blinkt.openvpn.core.ProfileManager;
+import de.blinkt.openvpn.core.VPNLaunchHelper;
 
 /**
  * This Activity actually handles two stages of a launcher shortcut's life cycle.

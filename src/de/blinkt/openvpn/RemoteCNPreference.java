@@ -7,7 +7,6 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -59,7 +58,7 @@ public class RemoteCNPreference extends DialogPreference {
 			mEditText.setText(dn);
 	}
 
-	void setAuthType(int x509authtype) {
+	public void setAuthType(int x509authtype) {
 		mDNType = x509authtype;
 		if (mSpinner!=null)
 			populateSpinner();

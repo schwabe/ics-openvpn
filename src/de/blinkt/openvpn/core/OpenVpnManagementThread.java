@@ -1,4 +1,4 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.core;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -11,14 +11,15 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Vector;
 
-import de.blinkt.openvpn.OpenVPN.ConnectionStatus;
-
 import android.content.SharedPreferences;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
 
 public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
 

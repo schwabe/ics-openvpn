@@ -1,4 +1,4 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.core;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,8 +12,10 @@ import java.util.LinkedList;
 import java.util.Locale;
 
 import android.util.Log;
-import de.blinkt.openvpn.OpenVPN.ConnectionStatus;
-import de.blinkt.openvpn.OpenVPN.LogItem;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
+import de.blinkt.openvpn.core.OpenVPN.LogItem;
 
 public class OpenVPNThread implements Runnable {
 	private static final String DUMP_PATH_STRING = "Dump path: ";

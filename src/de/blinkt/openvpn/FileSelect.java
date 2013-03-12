@@ -18,6 +18,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Base64;
+import de.blinkt.openvpn.fragments.FileSelectionFragment;
+import de.blinkt.openvpn.fragments.InlineFileTab;
 
 public class FileSelect extends Activity {
 	public static final String RESULT_DATA = "RESULT_PATH";
@@ -77,7 +79,7 @@ public class FileSelect extends Activity {
 		
 	}
 	
-	protected boolean showClear() {
+	public boolean showClear() {
 		if(mData == null || mData.equals(""))
 			return false;
 		else

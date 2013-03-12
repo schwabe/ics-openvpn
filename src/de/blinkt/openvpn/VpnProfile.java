@@ -41,16 +41,17 @@ import android.preference.PreferenceManager;
 import android.security.KeyChain;
 import android.security.KeyChainException;
 import android.util.Base64;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.core.OpenVPN;
+import de.blinkt.openvpn.core.OpenVpnService;
 
 public class VpnProfile implements  Serializable{
-	// Parcable
-	/**
-	 * 
-	 */
+	// Note that this class cannot be moved to core where it belongs since 
+	// the profile loading depends on it being here
 	private static final long serialVersionUID = 7085688938959334563L;
-	static final int TYPE_CERTIFICATES=0;
-	static final int TYPE_PKCS12=1;
-	static final int TYPE_KEYSTORE=2;
+	public static final int TYPE_CERTIFICATES=0;
+	public static final int TYPE_PKCS12=1;
+	public static final int TYPE_KEYSTORE=2;
 	public static final int TYPE_USERPASS = 3;
 	public static final int TYPE_STATICKEYS = 4;
 	public static final int TYPE_USERPASS_CERTIFICATES = 5;
@@ -70,10 +71,10 @@ public class VpnProfile implements  Serializable{
 	public static final String INLINE_TAG = "[[INLINE]]";
 	private static final String OVPNCONFIGFILE = "android.conf";
 
-	protected transient String mTransientPW=null;
-	protected transient String mTransientPCKS12PW=null;
+	public transient String mTransientPW=null;
+	public transient String mTransientPCKS12PW=null;
 	private transient PrivateKey mPrivateKey;
-	protected boolean profileDleted=false;
+	public boolean profileDleted=false;
 
 
 	public static String DEFAULT_DNS1="131.234.137.23";
@@ -129,7 +130,7 @@ public class VpnProfile implements  Serializable{
 	public String mAuth="";
 	public int mX509AuthType=X509_VERIFY_TLSREMOTE_RDN;
 
-	static final String MINIVPN = "miniopenvpn";
+	public static final String MINIVPN = "miniopenvpn";
 
 
 	static private native byte[] rsasign(byte[] input,int pkey) throws InvalidKeyException;

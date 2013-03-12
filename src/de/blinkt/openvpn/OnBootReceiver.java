@@ -3,6 +3,7 @@ package de.blinkt.openvpn;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import de.blinkt.openvpn.core.ProfileManager;
 
 
 public class OnBootReceiver extends BroadcastReceiver {

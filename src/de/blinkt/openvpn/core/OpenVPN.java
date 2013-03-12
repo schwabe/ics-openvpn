@@ -1,4 +1,4 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.core;
 
 import java.io.ByteArrayInputStream;
 import java.security.MessageDigest;
@@ -20,6 +20,7 @@ import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import de.blinkt.openvpn.R;
 
 public class OpenVPN {
 
@@ -232,13 +233,13 @@ public class OpenVPN {
 		void updateByteCount(long in, long out, long diffin, long diffout);
 	}
 
-	synchronized static void logMessage(int level,String prefix, String message)
+	public synchronized static void logMessage(int level,String prefix, String message)
 	{
 		newlogItem(new LogItem(prefix +  message));
 
 	}
 
-	synchronized static void clearLog() {
+	public synchronized static void clearLog() {
 		logbuffer.clear();
 		logInformation();
 	}

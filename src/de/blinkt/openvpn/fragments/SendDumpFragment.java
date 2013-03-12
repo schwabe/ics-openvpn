@@ -1,4 +1,4 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.fragments;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.core.OpenVPN;
 
 public class SendDumpFragment extends Fragment  {
 

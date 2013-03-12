@@ -1,4 +1,4 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.core;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,6 +8,8 @@ import java.io.InputStream;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 
 public class VPNLaunchHelper {
 	static private boolean writeMiniVPN(Context context) {

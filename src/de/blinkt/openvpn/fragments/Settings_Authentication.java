@@ -1,4 +1,4 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,10 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.SwitchPreference;
 import android.util.Pair;
+import de.blinkt.openvpn.FileSelect;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.RemoteCNPreference;
+import de.blinkt.openvpn.VpnProfile;
 
 
 public class Settings_Authentication extends OpenVpnPreferencesFragment implements OnPreferenceChangeListener, OnPreferenceClickListener {

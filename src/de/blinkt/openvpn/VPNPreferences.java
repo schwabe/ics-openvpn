@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import de.blinkt.openvpn.core.ProfileManager;
+import de.blinkt.openvpn.fragments.VPNProfileList;
 
 
 public class VPNPreferences extends PreferenceActivity {

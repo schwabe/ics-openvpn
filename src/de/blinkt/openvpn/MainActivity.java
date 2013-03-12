@@ -6,6 +6,11 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import de.blinkt.openvpn.fragments.AboutFragment;
+import de.blinkt.openvpn.fragments.FaqFragment;
+import de.blinkt.openvpn.fragments.GeneralSettings;
+import de.blinkt.openvpn.fragments.SendDumpFragment;
+import de.blinkt.openvpn.fragments.VPNProfileList;
 
 
 public class MainActivity extends Activity {
@@ -21,7 +26,7 @@ public class MainActivity extends Activity {
 		Tab abouttab = bar.newTab().setText(R.string.about);
 
 		vpnListTab.setTabListener(new TabListener<VPNProfileList>("profiles", VPNProfileList.class));
-		generalTab.setTabListener(new TabListener<FragmentGeneralSettings>("settings", FragmentGeneralSettings.class));
+		generalTab.setTabListener(new TabListener<GeneralSettings>("settings", GeneralSettings.class));
 		faqtab.setTabListener(new TabListener<FaqFragment>("faq", FaqFragment.class));
 		abouttab.setTabListener(new TabListener<AboutFragment>("about", AboutFragment.class));
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -39,7 +39,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import de.blinkt.openvpn.FileSelect;
+import de.blinkt.openvpn.FileSelectLayout;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.R.id;
+import de.blinkt.openvpn.core.ProfileManager;
 
 public class Settings_Basic extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback {
 	private static final int CHOOSE_FILE_OFFSET = 1000;

@@ -34,11 +34,14 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import de.blinkt.openvpn.OpenVPN.ConnectionStatus;
-import de.blinkt.openvpn.OpenVPN.LogItem;
-import de.blinkt.openvpn.OpenVPN.LogListener;
-import de.blinkt.openvpn.OpenVPN.StateListener;
-import de.blinkt.openvpn.OpenVpnService.LocalBinder;
+import de.blinkt.openvpn.core.OpenVPN;
+import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
+import de.blinkt.openvpn.core.OpenVPN.LogItem;
+import de.blinkt.openvpn.core.OpenVPN.LogListener;
+import de.blinkt.openvpn.core.OpenVPN.StateListener;
+import de.blinkt.openvpn.core.OpenVpnService;
+import de.blinkt.openvpn.core.OpenVpnService.LocalBinder;
+import de.blinkt.openvpn.core.ProfileManager;
 
 public class LogWindow extends ListActivity implements StateListener  {
 	private static final String LOGTIMEFORMAT = "logtimeformat";

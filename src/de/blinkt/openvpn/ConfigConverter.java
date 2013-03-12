@@ -27,7 +27,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import de.blinkt.openvpn.ConfigParser.ConfigParseError;
+import de.blinkt.openvpn.core.ConfigParser;
+import de.blinkt.openvpn.core.ConfigParser.ConfigParseError;
+import de.blinkt.openvpn.core.ProfileManager;
 
 public class ConfigConverter extends ListActivity {
 

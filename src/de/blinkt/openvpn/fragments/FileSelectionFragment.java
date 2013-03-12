@@ -1,4 +1,4 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.fragments;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,6 +19,8 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import de.blinkt.openvpn.FileSelect;
+import de.blinkt.openvpn.R;
 
 /**
  * Activity para escolha de arquivos/diretorios.

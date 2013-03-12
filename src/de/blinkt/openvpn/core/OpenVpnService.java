@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.blinkt.openvpn;import java.io.IOException;
+package de.blinkt.openvpn.core;import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Locale;
@@ -41,9 +41,12 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
-import de.blinkt.openvpn.OpenVPN.ByteCountListener;
-import de.blinkt.openvpn.OpenVPN.ConnectionStatus;
-import de.blinkt.openvpn.OpenVPN.StateListener;
+import de.blinkt.openvpn.LogWindow;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.core.OpenVPN.ByteCountListener;
+import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
+import de.blinkt.openvpn.core.OpenVPN.StateListener;
 
 public class OpenVpnService extends VpnService implements StateListener, Callback, ByteCountListener {
 	public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";

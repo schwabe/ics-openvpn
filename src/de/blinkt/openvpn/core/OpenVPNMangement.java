@@ -1,4 +1,4 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.core;
 
 public interface OpenVPNMangement {
 	int mBytecountinterval=2;

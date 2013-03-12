@@ -1,9 +1,10 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.fragments;
 import java.io.File;
 
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import de.blinkt.openvpn.R;
 
 public class GeneralSettings extends PreferenceFragment {
 

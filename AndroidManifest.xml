@@ -45,7 +45,6 @@
         android:icon="@drawable/icon"
         android:label="@string/app"
         android:supportsRtl="true" >
-        <activity android:name=".AboutFragment" />
         <activity
             android:name=".VPNPreferences"
             android:windowSoftInputMode="stateHidden" />
@@ -54,7 +53,6 @@
             android:allowTaskReparenting="true"
             android:label="@string/openvpn_log"
             android:launchMode="singleTask" />
-        <activity android:name=".SendDumpFragment" />
         <activity android:name=".FileSelect" />
         <activity
             android:name=".MainActivity"
@@ -69,7 +67,7 @@
         </activity>
 
         <service
-            android:name=".OpenVpnService"
+            android:name="de.blinkt.openvpn.core.OpenVpnService"
             android:permission="android.permission.BIND_VPN_SERVICE" >
             <intent-filter>
                 <action android:name="android.net.VpnService" />

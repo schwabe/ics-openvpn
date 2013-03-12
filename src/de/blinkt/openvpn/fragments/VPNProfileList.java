@@ -1,4 +1,4 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.fragments;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -26,10 +26,17 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import de.blinkt.openvpn.ConfigConverter;
+import de.blinkt.openvpn.FileSelect;
+import de.blinkt.openvpn.LaunchVPN;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VPNPreferences;
+import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.core.ProfileManager;
 
 public class VPNProfileList extends ListFragment {
 
-	final static int RESULT_VPN_DELETED = Activity.RESULT_FIRST_USER;
+	public final static int RESULT_VPN_DELETED = Activity.RESULT_FIRST_USER;
 
 	private static final int MENU_ADD_PROFILE = Menu.FIRST;
 

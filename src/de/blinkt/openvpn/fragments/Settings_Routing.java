@@ -1,9 +1,10 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.fragments;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import de.blinkt.openvpn.R;
 
 
 public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPreferenceChangeListener {

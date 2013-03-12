@@ -48,6 +48,10 @@ import de.blinkt.openvpn.core.OpenVpnService;
 public class VpnProfile implements  Serializable{
 	// Note that this class cannot be moved to core where it belongs since 
 	// the profile loading depends on it being here
+	// The Serializable documentation mentions that class name change are possible
+	// but the how is unclear
+	// 
+	
 	private static final long serialVersionUID = 7085688938959334563L;
 	public static final int TYPE_CERTIFICATES=0;
 	public static final int TYPE_PKCS12=1;
@@ -74,7 +78,11 @@ public class VpnProfile implements  Serializable{
 	public transient String mTransientPW=null;
 	public transient String mTransientPCKS12PW=null;
 	private transient PrivateKey mPrivateKey;
-	public boolean profileDleted=false;
+	
+	// variable named wrong and should haven beeen transient
+	// but needs to keep wrong name to guarante loading of old
+	// profiles
+	public transient boolean profileDleted=false;
 
 
 	public static String DEFAULT_DNS1="131.234.137.23";

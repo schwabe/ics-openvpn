@@ -71,8 +71,8 @@ public class VPNProfileList extends ListFragment {
 
 				@Override
 				public void onClick(View v) {
-					mEditProfile =(VpnProfile) getListAdapter().getItem(position);
-					editVPN(mEditProfile);
+					VpnProfile editProfile = (VpnProfile) getListAdapter().getItem(position);
+					editVPN(editProfile);
 
 				}
 			});
@@ -233,6 +233,7 @@ public class VPNProfileList extends ListFragment {
 					if (getPM().getProfileByName(name)==null) {
 						VpnProfile profile = new VpnProfile(name);
 						addProfile(profile);
+						editVPN(profile);
 					} else {
 						Toast.makeText(getActivity(), R.string.duplicate_profile_name, Toast.LENGTH_LONG).show();
 					}
@@ -299,7 +300,7 @@ public class VPNProfileList extends ListFragment {
 
 
 	private void editVPN(VpnProfile profile) {
-
+		mEditProfile =profile;
 		Intent vprefintent = new Intent(getActivity(),VPNPreferences.class)
 		.putExtra(getActivity().getPackageName() + ".profileUUID", profile.getUUID().toString());
 

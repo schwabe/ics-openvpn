@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/stdpadding"
+    android:paddingRight="@dimen/stdpadding" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +14,9 @@
         <TextView
             android:id="@+id/version"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            tools:ignore="SelectableText" />
 
         <Space
             android:layout_width="match_parent"
@@ -40,7 +45,8 @@
         <TextView
             android:id="@+id/donatestring"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="SelectableText" />
 
         <Space
             android:layout_width="match_parent"
@@ -50,7 +56,8 @@
             android:id="@+id/translation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autoLink="all" />
+            android:autoLink="all"
+            tools:ignore="SelectableText" />
 
         <Space
             android:layout_width="match_parent"
@@ -127,18 +134,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/copyright_openssl" />
-        
-            
-        <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/bouncy_castle"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/copyright_bouncycastle" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/bouncy_castle"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/copyright_bouncycastle" />
     </LinearLayout>
 
 </ScrollView>

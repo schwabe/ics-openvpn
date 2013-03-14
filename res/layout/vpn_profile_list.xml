@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/stdpadding"
+    android:paddingRight="@dimen/stdpadding" >
 
     <ListView
         android:id="@android:id/list"
@@ -24,22 +27,24 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="10sp" />
+            android:layout_height="12sp" />
 
         <TextView
             android:id="@+id/add_new_vpn_hint"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="SelectableText" />
 
         <TextView
             android:id="@+id/import_vpn_hint"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="SelectableText" />
 
-<Space
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="10sp" />
-        
+            android:layout_height="12sp" />
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

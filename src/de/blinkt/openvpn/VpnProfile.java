@@ -42,6 +42,7 @@ import android.security.KeyChain;
 import android.security.KeyChainException;
 import android.util.Base64;
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.core.NativeUtils;
 import de.blinkt.openvpn.core.OpenVPN;
 import de.blinkt.openvpn.core.OpenVpnService;
 
@@ -139,12 +140,6 @@ public class VpnProfile implements  Serializable{
 	public int mX509AuthType=X509_VERIFY_TLSREMOTE_RDN;
 
 	public static final String MINIVPN = "miniopenvpn";
-
-
-	static private native byte[] rsasign(byte[] input,int pkey) throws InvalidKeyException;
-	static {
-		System.loadLibrary("opvpnutil");
-	}
 
 	public void clearDefaults() {
 		mServerName="unkown";
@@ -868,7 +863,7 @@ public class VpnProfile implements  Serializable{
 			int pkey = (Integer) getPkeyContext.invoke(opensslkey);
 			getPkeyContext.setAccessible(false);
 
-			byte[] signed_bytes = rsasign(data, pkey); 
+			byte[] signed_bytes = NativeUtils.rsasign(data, pkey); 
 			return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
 
 		} catch (NoSuchMethodException e) {

@@ -17,7 +17,7 @@
 
 
 extern "C" {
-jbyteArray Java_de_blinkt_openvpn_VpnProfile_rsasign(JNIEnv* env, jclass, jbyteArray from, jint pkeyRef);
+jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsasign(JNIEnv* env, jclass, jbyteArray from, jint pkeyRef);
 }
 
 int jniThrowException(JNIEnv* env, const char* className, const char* msg) {

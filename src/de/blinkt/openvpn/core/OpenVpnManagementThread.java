@@ -35,8 +35,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
 
 	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
 
-	static private native void jniclose(int fdint);
-
 	public OpenVpnManagementThread(VpnProfile profile, LocalServerSocket mgmtsocket, OpenVpnService openVpnService) {
 		mProfile = profile;
 		mServerSocket = mgmtsocket;
@@ -128,7 +126,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
 
 			//ParcelFileDescriptor pfd = ParcelFileDescriptor.fromFd(fdint);
 			//pfd.close();
-			jniclose(fdint);
+			NativeUtils.jniclose(fdint);
 			return;
 		} catch (NoSuchMethodException e) {
 			exp =e;
@@ -425,9 +423,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
 
 	private void proccessPWFailed(String needed, String args) {
 		OpenVPN.updateStateString("AUTH_FAILED", needed + args,R.string.state_auth_failed,ConnectionStatus.LEVEL_AUTH_FAILED);
-	}
-	private void logStatusMessage(String command) {
-		OpenVPN.logMessage(0,"MGMT:", command);
 	}
 
 

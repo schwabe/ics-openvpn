@@ -398,8 +398,13 @@ public class ConfigParser {
 
 		Vector<String> ifconfig = getOption("ifconfig", 2, 2);
 		if(ifconfig!=null) {
-			CIDRIP cidr = new CIDRIP(ifconfig.get(1), ifconfig.get(2));
-			np.mIPv4Address=cidr.toString();
+			try	{
+				CIDRIP cidr = new CIDRIP(ifconfig.get(1), ifconfig.get(2));
+				np.mIPv4Address=cidr.toString();
+			} catch (NumberFormatException nfe) {
+				throw new ConfigParseError("Could not pase ifconfig IP address: " + nfe.getLocalizedMessage());
+			}
+
 		}
 
 		if(getOption("remote-random-hostname", 0, 0)!=null)
@@ -441,7 +446,7 @@ public class ConfigParser {
 			np.mAuthenticationType = VpnProfile.TYPE_KEYSTORE;
 			noauthtypeset=false;
 		}
-		
+
 
 		Vector<String> compatnames = getOption("compat-names",1,2);
 		Vector<String> nonameremapping = getOption("no-name-remapping",1,1);
@@ -450,12 +455,12 @@ public class ConfigParser {
 			np.mRemoteCN = tlsremote.get(1);
 			np.mCheckRemoteCN=true;
 			np.mX509AuthType = VpnProfile.X509_VERIFY_TLSREMOTE;
-			
+
 			if((compatnames!=null && compatnames.size() > 2) ||
 					(nonameremapping!=null))
 				np.mX509AuthType = VpnProfile.X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING;
 		}
-		
+
 		Vector<String> verifyx509name = getOption("verify-x509-name",1,2);
 		if(verifyx509name!=null){
 			np.mRemoteCN = verifyx509name.get(1);
@@ -470,7 +475,7 @@ public class ConfigParser {
 			} else {
 				np.mX509AuthType = VpnProfile.X509_VERIFY_TLSREMOTE_DN;
 			}
-				
+
 		} 
 
 

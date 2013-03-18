@@ -276,5 +276,6 @@
     <string name="rdn">RDN (common name)</string>
     <string name="rdn_prefix">RDN prefix</string>
     <string name="tls_remote_deprecated">tls-remote (DEPRECATED)</string>
+    <string name="help_translate">You can help translating by visiting http://crowdin.net/project/ics-openvpn/invite</string>
 
 </resources>

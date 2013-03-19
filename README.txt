@@ -4,9 +4,10 @@ See  the file todo.txt for ideas/not yet implemented features (and the bug track
 
 Build instraction:
 
-Checkout google breakcode:
+Disable Google breakcode (WITH_BREAKPAD=0 in jni/Android.mk) or checkout google breakcode
 
 svn co http://google-breakpad.googlecode.com/svn/trunk/ google-breakpad
+
 
 - Install sdk
 - Install ndk (Version 8d gives strange linker errors, use 8b for now)

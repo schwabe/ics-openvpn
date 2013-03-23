@@ -4,6 +4,7 @@
 #include <openssl/bn.h>
 #include <openssl/rsa.h>
 
+#ifdef ENABLE_CRYPTO_OPENSSL
 RSA *RSA_generate_key(int bits, unsigned long e_value,
 		      void (*callback)(int,int,void *), void *cb_arg)
 {
@@ -45,3 +46,4 @@ getpass (prompt)
   return "";
 }
 
+#endif

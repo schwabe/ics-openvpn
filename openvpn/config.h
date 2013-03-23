@@ -550,7 +550,10 @@
 #define ENABLE_SSL 1
 #define USE_SSL 1
 #define ENABLE_CRYPTO 1
-#define ENABLE_CRYPTO_OPENSSL 1
+
+/* via android.mk */
+/*#define ENABLE_CRYPTO_OPENSSL 1*/
+/* #define ENABLE_CRYPTO_POLARSSL 1 */
 
 /* Use valgrind memory debugging library */
 /* #undef USE_VALGRIND */

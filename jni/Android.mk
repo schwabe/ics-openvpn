@@ -1,6 +1,8 @@
 # Path of the sources
 JNI_DIR := $(call my-dir)
 
+#USE_POLAR=1
+
 include lzo/Android.mk
 
 include openssl/Android.mk
@@ -11,6 +13,9 @@ include google-breakpad/android/google_breakpad/Android.mk
 else
 WITH_BREAKPAD=0
 endif
+
+
+#include polarssl/Android.mk
 
 include openvpn/Android.mk
 

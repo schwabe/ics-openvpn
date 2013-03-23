@@ -3,13 +3,21 @@ LOCAL_PATH:= $(call my-dir)/
 include $(CLEAR_VARS)
 
 LOCAL_LDLIBS := -lz 
-LOCAL_C_INCLUDES := openssl/include lzo/include openssl/crypto openssl openvpn/src/compat openvpn/src/openvpn openvpn/include google-breakpad/src google-breakpad/src/common/android/include 
+LOCAL_C_INCLUDES := openssl/include lzo/include openssl/crypto openssl openvpn/src/compat openvpn/src/openvpn openvpn/include google-breakpad/src google-breakpad/src/common/android/include polarssl/include
 
-LOCAL_SHARED_LIBRARIES :=  libssl libcrypto 
+
 #LOCAL_STATIC_LIBRARIES :=  libssl_static libcrypto_static  liblzo-static
 
 LOCAL_CFLAGS= -DHAVE_CONFIG_H -DTARGET_ABI=\"${TARGET_ABI}\"
 LOCAL_STATIC_LIBRARIES :=  liblzo-static
+
+ifeq ($(USE_POLAR),1)
+LOCAL_STATIC_LIBRARIES +=  polarssl-static
+LOCAL_CFLAGS += -DENABLE_CRYPTO_POLARSSL=1
+else
+LOCAL_SHARED_LIBRARIES :=  libssl libcrypto 
+LOCAL_CFLAGS += -DENABLE_CRYPTO_OPENSSL=1
+endif
 
 ifeq ($(WITH_BREAKPAD),1)
 LOCAL_STATIC_LIBRARIES += breakpad_client
@@ -32,6 +40,7 @@ LOCAL_SRC_FILES:= \
 	src/openvpn/console.c \
 	src/openvpn/crypto.c \
 	src/openvpn/crypto_openssl.c \
+	src/openvpn/crypto_polarssl.c \
 	src/openvpn/cryptoapi.c \
 	src/openvpn/dhcp.c \
 	src/openvpn/error.c \
@@ -85,6 +94,7 @@ LOCAL_SRC_FILES:= \
 	src/openvpn/socks.c \
 	src/openvpn/ssl.c \
 	src/openvpn/ssl_openssl.c \
+	src/openvpn/ssl_polarssl.c \
 	src/openvpn/ssl_verify.c \
 	src/openvpn/ssl_verify_openssl.c \
 	src/openvpn/ssl_verify_polarssl.c \

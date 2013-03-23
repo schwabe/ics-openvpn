@@ -8,5 +8,5 @@ if [ $? = 0 ]; then
 	done
 	# Removed compiled openssl libs, will use platform so libs 
 	# Reduces size of apk
-	rm -v */libcrypto.so */libssl.so
+	rm -v */libcrypto.so */libssl.so 
 fi

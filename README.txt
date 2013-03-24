@@ -15,8 +15,6 @@ Do ./build-native.sh in the root directory of the project.
 
 Use eclipse with android plugins to build the project.
 
-Optional: Copy minivpn from lib/ to assets (if you want your own compiled version)
-
 
 FAQ
 

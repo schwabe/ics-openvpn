@@ -12,7 +12,7 @@ svn co http://google-breakpad.googlecode.com/svn/trunk/ google-breakpad
 - Install sdk
 - Install ndk (Version 8d gives strange linker errors, use 8b for now)
 
-Do ./build-native.sh in the root directory of the project.
+Do ./build-native.(sh|bat) in the root directory of the project.
 
 Use eclipse with android plugins to build the project.
 

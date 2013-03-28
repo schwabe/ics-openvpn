@@ -22,12 +22,6 @@ import android.widget.TextView;
 import de.blinkt.openvpn.FileSelect;
 import de.blinkt.openvpn.R;
 
-/**
- * Activity para escolha de arquivos/diretorios.
- * 
- * @author android
- * 
- */
 public class FileSelectionFragment extends ListFragment {
 
 	private static final String ITEM_KEY = "key";

@@ -232,7 +232,14 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	synchronized void unregisterNetworkStateReceiver() {
 		if(mNetworkStateReceiver!=null)
-			this.unregisterReceiver(mNetworkStateReceiver);
+			try {
+				this.unregisterReceiver(mNetworkStateReceiver);
+			} catch (IllegalArgumentException iae) {
+				// I don't know why  this happens:
+				// java.lang.IllegalArgumentException: Receiver not registered: de.blinkt.openvpn.NetworkSateReceiver@41a61a10
+				// Ignore for now ...
+				iae.printStackTrace();
+			}
 		mNetworkStateReceiver=null;
 	}
 

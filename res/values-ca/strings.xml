@@ -123,7 +123,6 @@
   <string name="faq_duplicate_notification_title">Notificacions duplicades</string>
   <string name="no_vpn_profiles_defined">No s\'han definit cap perfil.</string>
   <string name="faq_routing_title">Configuració del Ruting/Interficies</string>
-  <string name="translation">Traducció</string>
   <string name="openvpn_log">Registre OpenVPN</string>
   <string name="import_config">Importa la configuració OpenVPN</string>
   <string name="battery_consumption_title">Consum de la bateria</string>

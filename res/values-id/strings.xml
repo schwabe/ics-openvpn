@@ -61,10 +61,7 @@
   <string name="remove_vpn">Singkirkan VPN</string>
   <string name="check_remote_tlscert">Periksa apakah server memakai sertifikat TLS</string>
   <string name="check_remote_tlscert_title">Kecuali server TLS </string>
-  <string name="remote_tlscn_check_summary">Cek sertifikat CN Remote Server terhadap sebuah kalimat</string>
   <string name="remote_tlscn_check_title">Cek nama sertifikat Host</string>
-  <string name="enter_tlscn_dialog">Masukkan kata untuk remote Server yang dicentang. OpenVPN akan menggunakan pencocokan awalan. \"Server\" dianggap cocok dengan \"Server-1\" dan \"Server-2\"\n Kosongkan jika ingin memeriksa CN terhadap nama host server.</string>
-  <string name="enter_tlscn_title">Nama host remote (CN)</string>
   <string name="tls_key_auth">Aktifkan otentifikasi kunci TLS</string>
   <string name="tls_auth_file">Berkas otintikasi TLS</string>
   <string name="pull_on_summary">Meminta pilihan alamat IP, rute dan waktu dari server.</string>
@@ -218,11 +215,9 @@
   <string name="faq_routing">Konfigurasi Perutean dan antarmuka tidak dilakukan melalui perintah tradisional ifconfig/route tapi menggunakan VPNService API. Ini menghasilkan konfigurasi perutean berbeda daripada pada OS lain. Konfigurasi hanya terdiri dari IP antarmuka terowongan dan jaringan yang harus dialihkan melalui antarmuka ini. Terutama tidak ada alamat peer partner atau alamat gateway diperlukan. Rute khusus untuk mencapai Server VPN (misalnya ditambahkan ketika menggunakan redirect-gateway) juga tidak diperlukan. Aplikasi akibatnya akan mengabaikan pengaturan ini ketika mengimpor konfigurasi. App memastikan dengan VPNService API bahwa sambungan ke server yang tidak diarahkan melalui terowongan VPN. Karena hanya jaringan tertentu yang akan dialihkan melalui terowongan, rute tambahan yang tidak menunjuk ke terowongan juga tidak didukung. (misalnya rute x.x.x.x y.y.y.y net_gateway). Tombol Tampilkan Informasi dalam layar catatan menunjukkan konfigurasi jaringan VPNService yang digunakan.</string>
   <string name="persisttun_summary">Jangan kembali ke status tidak ada koneksi VPN ketika OpenVPN mencoba terhubung kembali.</string>
   <string name="persistent_tun_title">Paksa mode TUN</string>
-  <string name="translation">Terjemah</string>
   <string name="openvpn_log">Catatan OpenVPN</string>
   <string name="import_config">Ambil konfigurasi VPN</string>
   <string name="battery_consumption_title">Konsumsi baterai</string>
-  <string name="baterry_consumption">Dalam tes saya pribadi, penyebab utama konsumsi tinggi baterai OpenVPN adalah paket keepalive. Kebanyakan OpenVPN server memiliki konfigurasi seperti direktif \' keepalive 10 60\' yang diterjemahkan menjadi keepalive dari klien ke server dan server untuk klien setiap sepuluh detik. &lt;p&gt; Karena paket ini kecil dan tidak menggunakan banyak lalu lintas jaringan, mereka membuat jaringan mobile radio sibuk dan meningkatkan konsumsi energi. &lt;p&gt; Pengaturan keepalive ini tidak dapat diubah di klien. Hanya administrator sistem OpenVPN dapat mengubah pengaturan. &lt;p&gt; Sayangnya menggunakan keepalive yang lebih besar dari 60 detik dengan udp memiliki masalah dengan beberapa NAT Gateway yang menghentikan status untuk koneksi telepon setelah timeout pendek (60-an detik dalam tes). Menggunakan TCP dengan penyesuaian keepalive panjang, bisa berjalan tapi memiliki masalah TCP atas TCP. (Lihat &lt; href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\" &gt; Mengapa TCP di atas TCP adalah ide buruk &lt;/a&gt;)</string>
   <string name="faq_tethering">Fitur penggandengan Android (melalui WiFi, USB atau Bluetooth) dan API VPNService (digunakan oleh program ini) tidak bekerja bersama-sama. Untuk keterangan lanjut lihat &lt; href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\" &gt; mengeluarkan #34 &lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN dan penarikan</string>
   <string name="connection_retries">Mengulang koneksi</string>

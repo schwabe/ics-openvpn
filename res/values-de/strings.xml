@@ -62,10 +62,10 @@
   <string name="remove_vpn">VPN löschen</string>
   <string name="check_remote_tlscert">Überprüft ob der Server ein  TLS Server Zertifikat benutzt.</string>
   <string name="check_remote_tlscert_title">Erwarte TLS Server</string>
-  <string name="remote_tlscn_check_summary">Prüft den CN des Serverzertifikats gegen eine Zeichenfolge</string>
+  <string name="remote_tlscn_check_summary">Server Zertifikatssubjekt überprüfen</string>
   <string name="remote_tlscn_check_title">Zertifikat Namen überprüfen</string>
-  <string name="enter_tlscn_dialog">Geben Sie die Zeichenkette an gegen die OpenVPN den CN (common name) prüfen soll. OpenVPN prüft auf Präfixe. D.h. die Angabe \"Server\" wertet \"Server-1\" und \"Server-2\" als gültig\nLeer lassen um gegen den Servernamen zu prüfen.</string>
-  <string name="enter_tlscn_title">Server Hostname(CN)</string>
+  <string name="enter_tlscn_dialog">Spezifizieren Sie die Methode mit der der DN des Serverzertifikates (z. B. C=DE, L=Paderborn, OU=Avian IP-Carrier, CN=openvpn.blinkt.de) überprüft wird.\n\nSie können den vollständigen DN oder den RDN (openvpn.blinkt.de im Beispiel) oder ein RDN-Präfix angeben.\n\nDer RDN Präfix \"Server\" erlaubt z.B. \"Server-1\" und \"Server-2\" \n\nWenn Sie das Eingabefeld leer lassen, wird der RDN gegen den Servernamen geprüft.\n\n Für weitere Details sehen Sie die Manpage von OpenVPN 2.3.1+  unter  —verify-x509-name</string>
+  <string name="enter_tlscn_title">Serverzertifikat Subject</string>
   <string name="tls_key_auth">Benutzte TLS Schlüssel Authentifizierung</string>
   <string name="tls_auth_file">TLS Auth Datei</string>
   <string name="pull_on_summary">Fordert IP Adressen, Routen und andere Optionen vom Server an.</string>
@@ -222,11 +222,10 @@
   <string name="faq_routing">In dieser Anwendung wird die Routing und Netzwerkkonfiguration nicht mit den traditionellen ifconfig/route Kommandos konfiguriert sondern mittels der VPNService API. Diese erwartet eine Tunnel IP Adresse und die Netzwerke, die über den Tunnel geroutet werden sollen. Insbesondere wird keine Gateway oder Peer IP Adresse benötigt. Die Anwendung ignoriert diese daher auch beim Import. Dass die Verbindung zum VPN Server nicht über den Tunnel geroutet wird, wird auch über die VPNService API sichergestellt ohne dass hierfür spezielle Routen nötig sind. Da nur Netzwerke, die über den Tunnel geroutet werden sollen, angeben werden können, ist es nicht möglich andere Routen zu unterstützen (z.B. route x.x.x.x y.y.y.y net_gateway)\"</string>
   <string name="persisttun_summary">Verhindere Zurückfallen auf nicht VPN Verbindungen während OpenVPN neu verbindet.</string>
   <string name="persistent_tun_title">Persistentes tun Device</string>
-  <string name="translation">Übersetzung</string>
   <string name="openvpn_log">OpenVPN-Log</string>
   <string name="import_config">OpenVPN Konfiguration importieren</string>
   <string name="battery_consumption_title">Energieverbrauch</string>
-  <string name="baterry_consumption">In meinen eigenen Tests ist der Hauptgrund für den hohen Stromverbrauch von OpenVPN das Senden und Empfangen der Keepalive-Pakete. Die meisten OpenVPN-Server haben eine Konfigurationsoption wie \'keepalive 10 60\', was bedeutet, dass vom Client an den Server und vom Server an den Client alle zehn Sekunden ein Paket geschickt wird. &lt;p&gt; Diese Pakete sind klein und erzeugen keine große Datenmenge. Sie sorgen allerdings dafür, dass permanent Daten übertragen werden und somit auch die Mobilfunk- bzw. WLAN Einheit aktiv ist und steigern damit den Energieverbrauch. &lt;p&gt; Diese keepalive Einstellung kann nicht auf dem Client geändert werden. Nur der Systemadministrator des VPN Servers kann die Einstellung ändern. &lt;p&gt; Leider hat eine keepalive Einstellung von mehr als 60 Sekunden unter udp Probleme mit einigen NAT-Gateways, die für inaktive Verbindungen nur eine sehr kurze Haltzeit haben und danach verwerfen (60s in meinen Tests).  Benutzen von TCP mit langen Keep-Alive-Timeouts funktioniert, hat aber das TCP über TCP Problem. (Siehe &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\" &gt; Why TCP Over TCP Is A Bad Idea &lt;/a&gt;)</string>
+  <string name="baterry_consumption">In meinen eigenen Tests ist der Hauptgrund für den hohen Stromverbrauch von OpenVPN das Senden und Empfangen der Keepalive-Pakete. Die meisten OpenVPN-Server haben eine Konfigurationsoption wie \'keepalive 10 60\', was bedeutet, dass vom Client an den Server und vom Server an den Client alle zehn Sekunden ein Paket geschickt wird. &lt;p&gt; Diese Pakete sind klein und erzeugen keine große Datenmenge. Sie sorgen allerdings dafür, dass permanent Daten übertragen werden und somit auch die Mobilfunk- bzw. WLAN Einheit aktiv ist und steigern damit den Energieverbrauch. (Siehe auch &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt; Diese keepalive Einstellung kann nicht auf dem Client geändert werden. Nur der Systemadministrator des VPN Servers kann die Einstellung ändern. &lt;p&gt; Leider hat eine keepalive Einstellung von mehr als 60 Sekunden unter udp Probleme mit einigen NAT-Gateways, die für inaktive Verbindungen nur eine sehr kurze Haltzeit haben und danach verwerfen (60s in meinen Tests).  Benutzen von TCP mit langen Keep-Alive-Timeouts funktioniert, hat aber das TCP über TCP Problem. (Siehe &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\" &gt; Why TCP Over TCP Is A Bad Idea &lt;/a&gt;)</string>
   <string name="faq_tethering">Die Funktion \"Anbindung &amp; mobiler WLAN-Hotspot\" und die VPNService-API, die von diesem Programm verwendet wird, funktionieren nicht zusammen. Für weitere Details siehe &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt; Issue #34 &lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN und \"Anbindung &amp; mobiler WLAN-Hotspot\"</string>
   <string name="connection_retries">Anzahl Verbindungsversuche</string>
@@ -266,8 +265,15 @@
   <string name="mobile_info_extended">Modell %1$s (%2$s) %3$s, Android API %4$d, version %5$s, %6$s</string>
   <string name="built_by">compiliert von %s</string>
   <string name="debug_build">Testversion</string>
-  <string name="official_build">offizelle Version</string>
+  <string name="official_build">offizielle Version</string>
   <string name="make_selection_inline">Ins Profil einbetten</string>
   <string name="crashdump">Crashlog</string>
   <string name="add">Hinzufügen</string>
+  <string name="send_config">Konfigurationsdatei senden</string>
+  <string name="complete_dn">Völlständiger DN</string>
+  <string name="remotetlsnote">Ihre importierte Konfiguration verwendete die alte VERALTETE tls-remote-Option, die ein anderes DN-Format verwendet.</string>
+  <string name="rdn">RDN (common name)</string>
+  <string name="rdn_prefix">RDN Präfix</string>
+  <string name="tls_remote_deprecated">tls-remote (VERALTET)</string>
+  <string name="help_translate">Sie können helfen die Übersetzung zu verbessern auf der Website http://crowdin.net/project/ics-openvpn/invite</string>
 </resources>

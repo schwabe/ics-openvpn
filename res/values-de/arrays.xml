@@ -24,7 +24,7 @@
     <item>4</item>
     <item>5 - Debug Logging</item>
   </string-array>
-  <string-array name="crm_entries" translatable="false">
+  <string-array name="crm_entries">
     <item>Keine erneuter Verbindungsversuch</item>
     <item>Ein Versuch wieder zuverbinden</item>
     <item>Fünf Verbindungsversuche</item>

@@ -62,10 +62,10 @@
   <string name="remove_vpn">Odstranit VPN</string>
   <string name="check_remote_tlscert">Ověřit zda server používá TLS certifikát</string>
   <string name="check_remote_tlscert_title">Ověřit TLS server</string>
-  <string name="remote_tlscn_check_summary">Ověřit jméno ze serverového certifikátu proti řetězci</string>
+  <string name="remote_tlscn_check_summary">Kontrola DN v certifikátu vzdáleného serveru</string>
   <string name="remote_tlscn_check_title">Ověření jména certifikátu</string>
-  <string name="enter_tlscn_dialog">Zadej řetězec, proti kterému se bude ověřovat vzdálený server. OpenVPN použije prefixovou shodu. \"Server\" odpovídá řetězci \"Server-1\" a \"Server-2\"\nNech prázdné pro kontrolu proti jménu počítače (hostname).</string>
-  <string name="enter_tlscn_title">Jméno (hostname/CN)</string>
+  <string name="enter_tlscn_dialog">Specifikuj způsob kontroly DN v certifikátu vzdáleného serveru (př. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nSpecifikuj kompletní DN nebo RDN (openvpn.blinkt.de v příkladu) nebo RDN prefix pro verifikaci.\n\nPři použití RDN prefixu, \"Server\" sedí na \"Server-1\" i \"Server-2\"\n\nJe-li RDN pole prázdné, kontroluje se proti jménu serveru.\n\nPro více detailů, viz manuálová stránka OpenVPN 2.3.1+, přepínač —verify-x509-name</string>
+  <string name="enter_tlscn_title">Předmět vzdáleného certifikátu</string>
   <string name="tls_key_auth">Zapnout autentikaci pomocí TLS klíče</string>
   <string name="tls_auth_file">TLS autentikační soubor</string>
   <string name="pull_on_summary">Použít IP adresu, směrování a časování přijaté od serveru.</string>
@@ -222,11 +222,10 @@
   <string name="faq_routing">Směrování a rozhraní není nastavováno tradičním ifconfig/route způsobem, ale použitím VPNService API. Výsledkem je odlišný způsob směrování než na jiných operační systémech. Nastavení sestává pouze z IP tunelového rozhraní a sítě, která má být směrována skrz tento interface. Speciálně, žádná adresa partnera nebo brány není potřeba. Zvláštní směrování pro připojení k VPN serveru (například při poušití direktivy redirect-gateway) také nejsou potřeba. Aplikace bude tato nastavení při importu ignorovat. Aplikace zajišťuje ve spojení s VPNService API, že připojení k serveru nejde skrz tunel. Protože je podporované jen nastavení sítí, které jsou směrované skrz tunel, nelze podporovat nastavení extra sítí, které skrz runel nejdou (např route x.x.x.x y.y.y.y net_gateway). V okně s logem je možné zobrazit současné nastavení VPNService.</string>
   <string name="persisttun_summary">Nevracej se ke spojení mimo VPN, zatímco se OpenVPN připojuje.</string>
   <string name="persistent_tun_title">Trvalý tun</string>
-  <string name="translation">Překlad</string>
   <string name="openvpn_log">OpenVPN Log</string>
   <string name="import_config">Importovat OpenVPN nastavení</string>
   <string name="battery_consumption_title">Spotřeba baterie</string>
-  <string name="baterry_consumption">V testech se jako hlavní důvod vysoké spotřeby baterie ukázaly keepalive pakety. Většina OpenVPN serverů má v konfiguraci něco jako \'keepalive 10 60\', což znamená posílání paketů každých deset vteřin. &lt;p&gt; Tyto pakety jsou malé a neznamenají velký provoz, ale udržují mobilní síť aktivní a zvyšují spotřebu energie. &lt;p&gt; Toto nastavení nelze změnit na klientské straně. Jen administrátor OpenVPN může toto nastavení změnit. &lt;p&gt; Bohužel používání keepalive hodnot větších než 60 vteřin spolu s UDP může způsobovat problémy s některými NATy, které ukončují po krátkém čase spojení. Použití TCP s dlouhým keepalive funguje, ale má problém \"TCP přes TCP\" (Viz &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Proč je TCP přes TCP špatný nápad&lt;/a&gt;)</string>
+  <string name="baterry_consumption">V testech se jako hlavní důvod vysoké spotřeby baterie ukázaly keepalive pakety. Většina OpenVPN serverů má v konfiguraci něco jako \'keepalive 10 60\', což znamená posílání paketů každých deset vteřin. &lt;p&gt; Tyto pakety jsou malé a neznamenají velký provoz, ale udržují mobilní síť aktivní a zvyšují spotřebu energie. (Viz také &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt; Toto nastavení nelze změnit na klientské straně. Jen administrátor OpenVPN může toto nastavení změnit. &lt;p&gt; Bohužel používání keepalive hodnot větších než 60 vteřin spolu s UDP může způsobovat problémy s některými NATy, které ukončují po krátkém čase (60 vteřin dle testů) spojení. Použití TCP s dlouhým keepalive funguje, ale má problém \"TCP přes TCP\" (Viz &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Proč je TCP přes TCP špatný nápad&lt;/a&gt;)</string>
   <string name="faq_tethering">Androidí funkce tetheringu (přes WiFi, USB, nebo Bluetooth) a VPService API (používané tímto programem) spolu nepracují. Více detailů viz &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;problém #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN a tethering</string>
   <string name="connection_retries">Opakování připojení</string>
@@ -270,4 +269,11 @@
   <string name="make_selection_inline">Zkopírovat do profilu</string>
   <string name="crashdump">Havarijní výpis</string>
   <string name="add">Přidat</string>
+  <string name="send_config">Odeslat konfigurační soubor</string>
+  <string name="complete_dn">Kompletní DN</string>
+  <string name="remotetlsnote">Tvá importovaná konfigurace používá ZASTARALÉ nastavení tls-remote, které používá jiný formát DN.</string>
+  <string name="rdn">RDN (běžné jméno)</string>
+  <string name="rdn_prefix">RDN prefix</string>
+  <string name="tls_remote_deprecated">tls-remote (ZASTARALÉ)</string>
+  <string name="help_translate">Můžeš pomoci s překladem, navštiv http://crowdin.net/project/ics-openvpn/invite</string>
 </resources>

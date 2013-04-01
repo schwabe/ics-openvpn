@@ -62,11 +62,8 @@
   <string name="remove_vpn">VPN を削除</string>
   <string name="check_remote_tlscert">サーバがTLSサーバ証明書を使用する場合はチェックします。</string>
   <string name="check_remote_tlscert_title">TLS サーバーを除く</string>
-  <string name="remote_tlscn_check_summary">リモートサーバの証明書のCNをチェックします。</string>
+  <string name="remote_tlscn_check_summary">リモートサーバー証明書の所有者識別子(Subject DN)を確認します。</string>
   <string name="remote_tlscn_check_title">証明書のホスト名を確認する</string>
-  <string name="enter_tlscn_dialog">リモートサーバをチェックする際の文字列を指定します。OpenVPNでは前方一致を行います。\"Server\"は\"Server-1\"と\"Server-2\"にマッチします。\n
-空欄にすると、CNとサーバのホスト名を比較します。</string>
-  <string name="enter_tlscn_title">リモートホスト名(CN)</string>
   <string name="tls_key_auth">TLS鍵認証を有効にする</string>
   <string name="tls_auth_file">TLS 認証ファイル</string>
   <string name="pull_on_summary">IPアドレス、経路情報、DNSなどの情報をサーバから取得します。</string>
@@ -256,16 +253,9 @@ VPNService APIを使用してサーバに接続するアプリケーションは
 ログウィンドウの情報表示ボタンは、現在のVPNServiceのネットワーク設定を表示します。</string>
   <string name="persisttun_summary">OpenVPNが再接続試行中は、VPNなし状態を報告しません。</string>
   <string name="persistent_tun_title">永続的なTUNデバイス</string>
-  <string name="translation">翻訳</string>
   <string name="openvpn_log">OpenVPN のログ</string>
   <string name="import_config">OpenVPN の構成のインポート</string>
   <string name="battery_consumption_title">バッテリー消費量</string>
-  <string name="baterry_consumption">個人的な検証では、OpenVPNがバッテリを多く消費する主な原因はkeepaliveパケットです。
-大部分のOpenVPNサーバは\'keepalive 10 60\'のような設定を持っており、これは10秒ごとにサーバとクライアントで相互にkeepaliveパケットを送信しあうことを意味します。
-&lt;p&gt; これらのパケットは小さく多くの帯域は使用しませんが、モバイル回線機能を常に稼動させ続け電力消費を増大させます。
-&lt;p&gt; このkeepalive設定はクライアント側からは変更できません。OpenVPNのシステム管理者のみが変更可能です。
-&lt;p&gt; 残念なことに、60秒より大きな間隔のUDP keepaliveはいくつかのNATゲートウェイにおいては接続状態が維持できず、それより短い時間でタイムアウトします。(検証では60秒)
-TCP keepaliveと長いタイムアウト時間は動作しますが、TCP over TCP問題を引き起こします。(詳細は&lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;なぜTCP over TCPは悪いアイディアなのか&lt;/a&gt;を参照)</string>
   <string name="faq_tethering">Androidのテザリング機能(WiFi, USB, Bluetooth経由)とVPNService API(このプログラムから使用する機能)は同時に利用できません。詳細については&lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;issue #34&lt;/a&gt;を参照</string>
   <string name="vpn_tethering_title">VPN とテザリング</string>
   <string name="connection_retries">接続の再試行回数</string>
@@ -309,4 +299,5 @@ TCP keepaliveと長いタイムアウト時間は動作しますが、TCP over T
   <string name="make_selection_inline">プロファイルにコピー</string>
   <string name="crashdump">クラッシュ ダンプ</string>
   <string name="add">追加</string>
+  <string name="send_config">構成ファイルを送信</string>
 </resources>

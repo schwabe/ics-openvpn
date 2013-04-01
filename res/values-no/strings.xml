@@ -131,7 +131,6 @@
   <string name="no_vpn_profiles_defined">Ingen VPN-profiler er definert.</string>
   <string name="faq_routing_title">Ruting/grensesnitt-konfigurasjon</string>
   <string name="persisttun_summary">Ikke gå tilbake til ingen VPN-tilkoblingen mens OpenVPN kobler til på nytt.</string>
-  <string name="translation">Oversettelse</string>
   <string name="openvpn_log">OpenVPN Logg</string>
   <string name="import_config">Importer OpenVPN konfigurasjon</string>
   <string name="battery_consumption_title">Batteriforbruk</string>

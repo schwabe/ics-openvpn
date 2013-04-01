@@ -21,6 +21,7 @@
   <string name="about">"À propos"</string>
   <string name="about_summary">"À propos d\'OpenVPN pour Android"</string>
   <string name="vpn_list_summary">"Liste de tous les VPN configurés"</string>
+  <string name="vpn_list_title">Profils</string>
   <string name="vpn_type">"Type"</string>
   <string name="pkcs12pwquery">"Mot de passe PKCS12"</string>
   <string name="file_select">"Sélectionner…"</string>
@@ -61,11 +62,7 @@
   <string name="remove_vpn">"Retirer le VPN"</string>
   <string name="check_remote_tlscert">"Vérifie si le serveur utilise un certificat de serveur TLS"</string>
   <string name="check_remote_tlscert_title">"Ignorer pour les serveurs TLS"</string>
-  <string name="remote_tlscn_check_summary">"Compare le certification serveur CN à une chaîne"</string>
   <string name="remote_tlscn_check_title">"Vérification du certificat de l\'hôte"</string>
-  <string name="enter_tlscn_dialog">\"Entrez la chaîne à comparer au server distant. OpenVPN utilise la correspondance de préfix.
-\"Serveur\" correspond à \"Server-1\" et \"Server-2\"\nLaissez vide pour comparer le CN au serveur hôte.\"</string>
-  <string name="enter_tlscn_title">"Nom de l\'hôte distant (CN)"</string>
   <string name="tls_key_auth">"Activer l\'authentification par clé TLS"</string>
   <string name="tls_auth_file">"Fichier d\'authentification TLS"</string>
   <string name="pull_on_summary">"Demande les adresses IP, les règles de redirection et les options de synchronisation du serveur."</string>
@@ -166,6 +163,7 @@
   <string name="file_icon">"icône du fichier"</string>
   <string name="tls_authentication">"Authentification TLS"</string>
   <string name="generated_config">"Configuration générée"</string>
+  <string name="generalsettings">Paramètres</string>
   <string name="owner_fix_summary">"Tente de définir le propriétaire de /dev/tun. Certaines ROMs CM9 en ont besoin pour faire fonctionner l\'API VPNService. Nécessite les droits root."</string>
   <string name="owner_fix">"Corriger le propriétaire de /dev/tun"</string>
   <string name="generated_config_summary">"Affiche le fichier de configuration OpenVPN généré"</string>
@@ -222,7 +220,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="faq_routing">"La configuration de l\'interface TUN et des règles de redirection de ports n\'est pas faite par les commandes traditionnelles du genre \"ifconfig\" ou \"route\" mais en utilisant l\'API VPNService. Il en résulte que la configuration de routage est différente des autres systèmes d\'exploitation. La configuration se compose uniquement de l\'adresse IP de l\'interface du tunnel, et les réseaux qui doivent être routés via cette interface. Aucune adresse peer partenaire ou passerelle n\'est nécessaire. Des règles de redirection spéciales pour atteindre le serveur VPN (par exemple ajouté lors de l\'utilisation redirect-gateway) ne sont pas nécessaires non plus. L\'application va donc ignorer ces paramètres lors de l\'importation d\'une configuration. L\'application permet à l\'API VPNService que la connexion au serveur n\'est pas acheminé par le tunnel VPN. Étant donné que seuls les réseaux spécifiant vouloir être routés via le tunnel sont pris en charge, les règles de redirection supplémentaires ne pointant pas vers le tunnel ne sont aussi pas prises en charge. (ex.: x.x.x.x y.y.y.y net_gateway). Le bouton d\'information dans le log affiche la configuration actuelle de la configuration du réseau VPNService."</string>
   <string name="persisttun_summary">Ne pas couper la connexion VPN lors de la reconnexion d\'OpenVPN.</string>
   <string name="persistent_tun_title">Persistance de l\'interface TUN</string>
-  <string name="translation">"Traduction"</string>
   <string name="openvpn_log">Log OpenVPN</string>
   <string name="import_config">"Importer une configuration OpenVPN"</string>
   <string name="battery_consumption_title">"Consommation de la batterie"</string>
@@ -234,6 +231,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="connectretrywait">"Temps, en secondes, entre deux connexions"</string>
   <string name="minidump_generated">OpenVPN s\'est écrasé de façon inattendue. S\'il vous plaît, envisagez d\'utiliser l\'option de Minidump depuis le menu principal</string>
   <string name="send_minidump">Envoyer le Minidump au développeur</string>
+  <string name="send_minidump_summary">Envoyer les informations de débogage à propos du dernier accident au développeur</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="state_connecting">Connexion</string>
   <string name="state_wait">En attente de réponse du serveur</string>
@@ -242,6 +240,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="state_assign_ip">Attribution de l\'adresses IP</string>
   <string name="state_add_routes">Ajout des routes</string>
   <string name="state_connected">Connecté</string>
+  <string name="state_disconnected">Déconnecter</string>
   <string name="state_reconnecting">Reconnexion</string>
   <string name="state_exiting">Fermeture</string>
   <string name="state_noprocess">Eteint</string>
@@ -250,6 +249,14 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="state_auth_failed">Echec de l\'authentification</string>
   <string name="state_nonetwork">En attente de réseau utilisable</string>
   <string name="notifcation_title_notconnect">Non connecté</string>
+  <string name="start_vpn_title">Connexion au VPN %s</string>
+  <string name="start_vpn_ticker">Connexion au VPN %s</string>
   <string name="jelly_keystore_alphanumeric_bug">Certaines versions d\'Android 4.1 rencontrent des problèmes si le nom du certificat du trousseau de clé contient des caractères non alphanumériques (comme des espaces, des caractères de soulignement ou des tirets). Essayez de réimporter le certificat sans caractères spéciaux</string>
   <string name="packet_auth">Authentification des paquets</string>
+  <string name="toggle_timestamps">Activer/désactiver les horodateurs</string>
+  <string name="official_build">version officielle</string>
+  <string name="make_selection_inline">Copier dans le profil</string>
+  <string name="add">Ajouter</string>
+  <string name="send_config">Envoyer le fichier de config</string>
+  <string name="help_translate">Vous pouvez aider à traduire en visitant http://crowdin.net/project/ics-openvpn/invite</string>
 </resources>

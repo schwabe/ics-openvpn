@@ -49,7 +49,6 @@
   <string name="remove_vpn">VPN wissen</string>
   <string name="check_remote_tlscert">Checkt of de server een TLS server certificaat gebruikt.</string>
   <string name="remote_tlscn_check_title">Controleer Certificaat Hostname</string>
-  <string name="enter_tlscn_title">Externe Hostname(CN)</string>
   <string name="tls_auth_file">TLS Auth Bestand</string>
   <string name="pull_on_summary">Vraag IP adres, routes en timing opties van de server.</string>
   <string name="use_pull">Pull Instellingen</string>

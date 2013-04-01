@@ -21,6 +21,7 @@
   <string name="about">Acerca de</string>
   <string name="about_summary">Acerca de OpenVPN para Android</string>
   <string name="vpn_list_summary">Lista de todas las VPN configuradas</string>
+  <string name="vpn_list_title">Perfiles</string>
   <string name="vpn_type">Tipo</string>
   <string name="pkcs12pwquery">Contraseña PKCS12</string>
   <string name="file_select">Seleccionar…</string>
@@ -61,10 +62,10 @@
   <string name="remove_vpn">Eliminar VPN</string>
   <string name="check_remote_tlscert">Comprueba si el servidor utiliza un certificado de servidor TLS</string>
   <string name="check_remote_tlscert_title">Excepto servidor TLS</string>
-  <string name="remote_tlscn_check_summary">Comprueba el CN del certificado del servidor remoto contra una cadena</string>
+  <string name="remote_tlscn_check_summary">Checar el sujeto del DN del Certificado del Servidor Remoto</string>
   <string name="remote_tlscn_check_title">Comprobación del certificado de nombre de host</string>
-  <string name="enter_tlscn_dialog">Introduzca la cadena contra la que se comprueba el servidor remoto. OpenVPN usará coincidencias de prefijos. \"Servidor\" coincide con \"Servidor-1\" y \"Servidor-2\"\nDeje vacío para comprobar el CN contra el nombre de host del servidor.</string>
-  <string name="enter_tlscn_title">Nombre de Host remoto(CN)</string>
+  <string name="enter_tlscn_dialog">Especifica el chequeo usado para verificar el DN del certificado remoto (ej. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nEspecifica el DN completo o el RDN (openvpn.blinkt.de en el ejemplo) o un prefijo RDN para la verificación.\n\nCuando se usa un prefijo RDN como \"Server\" este coincide también con \"Server-1\" y \"Server-2\"\n\nDejando el campo de texto vacío verificara el RDN contra el nombre host del servidor.\n\nPara más detalles ve la página de manual (manpage) de OpenVPN 2.3.1+ en --verify-x509-name</string>
+  <string name="enter_tlscn_title">Sujeto del Certificado Remoto</string>
   <string name="tls_key_auth">habilita la autenticación de clave TLS</string>
   <string name="tls_auth_file">Archivo de autenticación TLS</string>
   <string name="pull_on_summary">Obtener Direcciones IP, rutas y opciones de sincronizacion del servidor.</string>
@@ -124,6 +125,8 @@
   <string name="no_vpn_support_image">Su imagen no es compatible con la API de VPNService, lo siento :(</string>
   <string name="encryption">Cifrado</string>
   <string name="cipher_dialog_title">Especifique el método de cifrado</string>
+  <string name="chipher_dialog_message">Ingrese el algoritmo de encriptación usado por OpenVPN. Déjelo vacío para usar el algoritmo por omisión.</string>
+  <string name="auth_dialog_message">Introduce la autenticacion digest usada por OpenVPN. Deja en blanco para usar el digest predeterminado.</string>
   <string name="settings_auth">Autenticación/Cifrado</string>
   <string name="file_explorer_tab">Administrador de archivos</string>
   <string name="inline_file_tab">Archivo en línea</string>
@@ -155,6 +158,7 @@
   <string name="converted_profile">perfil importado</string>
   <string name="converted_profile_i">perfil importado %d</string>
   <string name="broken_images">Imágenes rotas</string>
+  <string name="broken_images_faq">&lt;p&gt;Las imágenes oficiales de HTC son conocidas por tener un extraño problema de ruteo causando que el tráfico no fluya a través del túnel (Mira también &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; en el sistema de seguimiento de errores.)&lt;/p&gt;&lt;p&gt;Las imágenes oficiales de SONY del Xperia arc S y el Xperia Ray han sido reportadas por no tener el VPNService completamente en la imagen. Otras imágenes de Sony podrían estar afectadas. (Mira también  &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; en el sistema de seguimiento de errores.)&lt;/p&gt;&lt;p&gt;En ROMs personalizadas el modulo tun podría faltar o los permisos de /dev/tun podrían ser incorrectos. Algunas imágenes de CM9 necesitan la opción de arreglo de propietario que está en las preferencias.&lt;/p&gt;&lt;p&gt;Mas importante: Si tienes una imagen rota, repórtalo a tu proveedor. Entre más personas reporten el problema al proveedor es más posible que consigas una solución.&lt;/p&gt;</string>
   <string name="error_empty_username">El nombre de usuario no debe estar vacío.</string>
   <string name="pkcs12_file_encryption_key">Clave PKCS12 de cifrado de archivos</string>
   <string name="private_key_password">Contraseña de clave privada</string>
@@ -162,6 +166,7 @@
   <string name="file_icon">icono de archivo</string>
   <string name="tls_authentication">Autenticación TLS</string>
   <string name="generated_config">Configuración generada</string>
+  <string name="generalsettings">Preferencias</string>
   <string name="owner_fix_summary">Intenta establecer el propietario de /dev/tun a system. Algunas imágenes de CM9 lo necesitan hacer funcionar la API de VPNService. Requiere permisos root.</string>
   <string name="owner_fix">Arreglar la propiedad de /dev/tun</string>
   <string name="generated_config_summary">Muestra el archivo de configuración OpenVPN generado</string>
@@ -178,6 +183,7 @@
   <string name="show_log_window">Mostrar ventana de registro</string>
   <string name="mobile_info">Ejecutándose en %1$s (%2$s) %3$s, API de Android %4$d</string>
   <string name="error_rsa_sign">Error al firmar con la llave del almacén de llaves de Android %1$s: %2$s</string>
+  <string name="faq_system_dialogs">El aviso de conectividad VPN que esta aplicación puede interceptar todo el trafico esta impuesta por el sistema para evitar abusos de la API VPNService.\nLa notificación de conectividad (El símbolo de llave) también esta impuesta por el sistema Android para notificar una conexión VPN en curso. En algunas imágenes, esta notificación también emite un sonido.\nAndroid ha introducido estos diálogos de sistema para su seguridad e se ha asegurado que no pueden ser evitados. (En algunas imágenes, esto incluye la notificación sonora)</string>
   <string name="faq_system_dialogs_title">Advertencia de conexión y sonido de notificación</string>
   <string name="translationby">Traducción al español por José Luis Bandala Perez&lt;luis.449bp@gmail.com&gt;</string>
   <string name="ipdns">IP y DNS</string>
@@ -188,6 +194,7 @@
   <string name="export_config_title">Configuracion Openvpn de ICS</string>
   <string name="warn_no_dns">Sin servidores DNS utilizados. La resolución de nombres puede que no funcione. Considere configurar servidores DNS personalizados</string>
   <string name="dns_add_error">No se puede agregar el servidor DNS \"%1$s\", rechazado por el sistema: %2$s</string>
+  <string name="faq_howto">&lt;p&gt;Obtén una configuración funcionando (probada en tu computadora o descargada de tu proveedor/organización)&lt;/p&gt;&lt;p&gt;Si es un solo archivo sin archivos pem/pks12 puedes enviar en un correo tu mismo el archivo y abrir el adjunto. Si tienes varios archivos ponlos en tu tarjeta SD.&lt;/p&gt;&lt;p&gt;Da clic en el adjunto de tu correo/Usa el icono de carpeta en la lista de VPN para importar el archivo de configuración &lt;/p&gt;&lt;p&gt;Si hay errores de archivos faltantes pon los archivos que faltan en tu tarjeta SD.&lt;/p&gt;&lt;p&gt;Da clic en el símbolo de guardar para agregar la VPN importada a tu lista de VPN&lt;/p&gt;&lt;p&gt;Conéctate a la VPN dando clic en el nombre de la VPN&lt;/p&gt;&lt;p&gt;Si hay errores o advertencias en el registro intenta comprender los errores/advertencias e intenta solucionarlos&lt;/p&gt;</string>
   <string name="faq_howto_title">Inicio rápido</string>
   <string name="setting_loadtun_summary">Intente cargar el módulo del kernel tun.ko antes de intentar conectarse. Necesita dispositivos rooteados.</string>
   <string name="setting_loadtun">Cargar modulo tun</string>
@@ -205,18 +212,20 @@
   <string name="configuration_changed">Configuración cambiada</string>
   <string name="log_no_last_vpn">No se pudo determinar el último perfil conectado para editar</string>
   <string name="faq_duplicate_notification_title">Notificaciones duplicadas</string>
+  <string name="faq_duplicate_notification">Si Android está bajo presión de memoria del sistema (RAM), las aplicaciones y servicios que no estén siendo usados en el momento son removidos de la memoria activa. Esto termina una conexión VPN en marcha. Para asegurarse que la conexión/OpenVPN sobreviva el servicio tiene que ejecutarse con prioridad alta. Para ejecutarse con prioridad alta la aplicación debe de mostrar una notificación. El icono de notificación de llave es impuesto por el sistema como se describió en la entrada de FAQ anterior. Esta con cuenta como notificación de la aplicación con el propósito de ejecutarse con prioridad alta.</string>
   <string name="no_vpn_profiles_defined">No hay perfiles VPN definidos.</string>
   <string name="add_new_vpn_hint">Use el icono &lt;img src=\"ic_menu_add\"/&gt; para agregar una nueva VPN</string>
   <string name="vpn_import_hint">Use el icono &lt;img src=\"ic_menu_archive\"/&gt; para importar un perfil existente (.ovpn or .conf) de tu tarjeta.</string>
   <string name="faq_hint">Asegúrese de checar también las preguntas frecuentes. Hay una guía de inicio rápido.</string>
   <string name="correcttls">Convertir formato remote-tls de OpenVPN 2.2 al formato 2.3</string>
   <string name="faq_routing_title">Configuración de enrutamiento o interfaz</string>
+  <string name="faq_routing">La configuración de interfaz y enrutamiento no es hecha con el tradicional comando ifconfig/route si no que se usa la API VPNService. Esto resulta en una forma diferente  de enrutamiento que en otros sistemas operativos. La configuración solo consiste de la IP de la interfaz del túnel y las redes que deberían ser enrutadas sobre esta interfaz. Especialmente no se necesita la dirección asociada de pares ni la dirección de puerta de enlace. Las rutas especiales para alcanzar al servidor VPN (por ejemplo las agregadas cuando se usa redirect-gateway) tampoco son necesarias. La aplicación por consiguiente ignorara esas preferencias cuando importe una configuración. La aplicación se asegurara con la API VPNService que la conexión al servidor no sea enrutadas por el túnel VPN. Ya que solo especificando redes para ser enrutadas por el túnel es soportado. Las rutas extras que no apunten al túnel tampoco son soportadas (ej. route x.x.x.x y.y.y.y net_gateway).El botón mostrar información en la ventana de registro muestra la configuración actual de la configuración de red de VPNService.</string>
   <string name="persisttun_summary">No regresar a modo sin conexión VPN cuando OpenVPN esta volviendose a conectar.</string>
   <string name="persistent_tun_title">Tun persistente</string>
-  <string name="translation">Traducción</string>
   <string name="openvpn_log">Registro de OpenVPN</string>
   <string name="import_config">Importar configuración de OpenVPN</string>
   <string name="battery_consumption_title">Consumo de batería</string>
+  <string name="baterry_consumption">En pruebas personales la razón principal del alto consumo de batería de OpenVPN son los paquetes de sobrevivencia (keepalive). La mayoría de servidores de OpenVPN tienen una configuración como \'keepalive 10 60\' que se traduce en un paquete de keepalive del cliente al servidor y viceversa cada diez segundos. lt;pgt; Si bien estos paquetes son pequeños y no utilizan mucho tráfico, mantienen la red móvil ocupada e incrementan el consumo de energía.  (Mira también &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Esta configuración de sobrevivencia no puede ser cambiada en el cliente. Sólo el administrador de sistemas de OpenVPN puede cambiar esta configuración. lt;pgt; Desafortunadamente, usar una sobrevivencia mayor a 60 segundos con UDP ocasiona problemas con algunas puertas de entrada NAT las cuales terminan una conexión después de un tiempo de espera corto (60s en mis pruebas). Usar TCP con un tiempo de sobrevivencia largo funciona pero genera el problema de TCP sobre TCP. (Ver &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Ide&lt;/a&gt;)</string>
   <string name="faq_tethering">La funcionalidad de Tethering de Android (sobre WiFi, USB o Bluetooth) y la API del servicio de VPN (utilizada por esta aplicación) no pueden trabajar juntas. Para más detalles vea el &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;problema #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN y Tethering</string>
   <string name="connection_retries">Reintentos de conexión</string>
@@ -225,17 +234,46 @@
   <string name="connectretrywait">Segundos entre las conexiones</string>
   <string name="minidump_generated">OpenVPN falló inesperadamente. Por favor considere usar la opción envío de minivolcado en el menú principal</string>
   <string name="send_minidump">Enviar minivolcado al desarrollador</string>
+  <string name="send_minidump_summary">Enviar información de depuración sobre último fallo al desarrollador</string>
+  <string name="notifcation_title">OpenVPN - %s</string>
+  <string name="session_ipv4string">%1$s - %2$s</string>
+  <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
   <string name="state_connecting">Conectando</string>
   <string name="state_wait">Esperando respuesta del servidor</string>
+  <string name="state_auth">Autenticando</string>
+  <string name="state_get_config">Obteniendo información del cliente</string>
   <string name="state_assign_ip">Asignando direcciones IP</string>
   <string name="state_add_routes">Añadiendo rutas</string>
   <string name="state_connected">Conectado</string>
+  <string name="state_disconnected">Desconectar</string>
   <string name="state_reconnecting">Reconectando</string>
   <string name="state_exiting">Saliendo</string>
+  <string name="state_noprocess">Proceso terminado</string>
+  <string name="state_resolve">Resolviendo nombres de host</string>
   <string name="state_tcp_connect">Conectando (TCP)</string>
   <string name="state_auth_failed">Fallo de autenticación</string>
+  <string name="state_nonetwork">Esperando por una red que se pueda usar</string>
+  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
   <string name="notifcation_title_notconnect">No conectado</string>
+  <string name="start_vpn_title">Conectando a VPN %s</string>
+  <string name="start_vpn_ticker">Conectando a VPN %s</string>
   <string name="jelly_keystore_alphanumeric_bug">Algunas versiones de Android 4.1 experimentan problemas si el nombre del almacén de certificados contiene caracteres no alfanuméricos (como espacios, subrayados o barras). Intente volver a importar el certificado sin caracteres especiales</string>
+  <string name="encryption_cipher">Algoritmo de encriptación</string>
   <string name="packet_auth">Autenticación de paquetes</string>
   <string name="auth_dialog_title">Introduzca método de autenticación de paquetes</string>
+  <string name="toggle_timestamps">Alternar formato de fecha</string>
+  <string name="mobile_info_extended">Corriendo sobre %1$s (%2$s) %3$s, API Android %4$d, versión %5$s, %6$s</string>
+  <string name="built_by">compilado por %s</string>
+  <string name="debug_build">versión de depuración</string>
+  <string name="official_build">versión oficial</string>
+  <string name="make_selection_inline">Copiar en perfil</string>
+  <string name="crashdump">Volcado de fallo</string>
+  <string name="add">Añadir</string>
+  <string name="send_config">Enviar el archivo de configuración</string>
+  <string name="complete_dn">DN Completo</string>
+  <string name="remotetlsnote">La configuracion que importaste usa la opcion OBSOLETA tls-remote que usa un formato diferente para DN.</string>
+  <string name="rdn">RDN (nombre comun)</string>
+  <string name="rdn_prefix">Prefijo RDN</string>
+  <string name="tls_remote_deprecated">tls-remote (OBSOLETO)</string>
+  <string name="help_translate">Tu puedes ayudar traduciendo visitando http://crowdin.net/project/ics-openvpn/invite</string>
 </resources>

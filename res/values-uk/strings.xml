@@ -21,6 +21,7 @@
   <string name="about">Про</string>
   <string name="about_summary">Про OpenVPN для Android</string>
   <string name="vpn_list_summary">Список всіх налаштованих VPN</string>
+  <string name="vpn_list_title">Профілі</string>
   <string name="vpn_type">Тип</string>
   <string name="pkcs12pwquery">Пароль PKCS12</string>
   <string name="file_select">Виберіть…</string>
@@ -61,10 +62,10 @@
   <string name="remove_vpn">Видалити VPN</string>
   <string name="check_remote_tlscert">Перевіряє, чи сервер використовує сертифікат сервера TLS</string>
   <string name="check_remote_tlscert_title">За винятком TLS-сервера</string>
-  <string name="remote_tlscn_check_summary">Перевірка сертифікату CN віддаленого сервера на основі рядка</string>
+  <string name="remote_tlscn_check_summary">Перевірка DN об\'єкта віддаленого сертифіката</string>
   <string name="remote_tlscn_check_title">Перевірка імені вузла сертифікату</string>
-  <string name="enter_tlscn_dialog">Введіть шаблон для перевірки. OpenVPN використовує його як преффікс. \"Server\" буде відповідати як \"Server-1\", так і \"Server-2\" \n Залиште порожнім для перевірки імені сервера на основі даних CA.</string>
-  <string name="enter_tlscn_title">Віддалене ім\'я вузла(CN)</string>
+  <string name="enter_tlscn_dialog">Перемикач способу перевірки DN сертифікату (eg C = DE, L = Paderborn, OU = Avian IP Carriers, CN = openvpn.blinkt.de) \n \nМожливо значення: повний DN, RDN (для прикладу openvpn.blinkt.de) або тільки преффікс RDN для перевірки. \n \nПрі використанні преффікса RDN, наприклад \"Server\", значення будуть \"Server-1\", \"Server-2\" і т.д. \n \nПрі порожньому текстовому полі перевірка проводитиметься по імені хоста. \n \nДля подробиць дивіться керівництво для OpenVPN 2.3.1 +, розділ-verify-x509-name</string>
+  <string name="enter_tlscn_title">Об\'єкт віддаленого сертифіката</string>
   <string name="tls_key_auth">Увімкнути автентифікацію по TLS ключу</string>
   <string name="tls_auth_file">Файл авторизації TLS</string>
   <string name="pull_on_summary">Запити IP адрес, маршрутів та параметрів часу від сервера.</string>
@@ -124,6 +125,8 @@
   <string name="no_vpn_support_image">Ваша прошивка не підтримує VPNService API, вибачте :(</string>
   <string name="encryption">Шифрування</string>
   <string name="cipher_dialog_title">Введіть метод шифрування</string>
+  <string name="chipher_dialog_message">Введіть алгоритм шифрування, використовуваний OpenVPN. Залиште порожнім, щоб використовувати шифрування по-замовчуванню.</string>
+  <string name="auth_dialog_message">Введіть the authentication digest для OpenVPN. Залиште порожнім для використання стандартних значень.</string>
   <string name="settings_auth">Автентифікація/Шифрування</string>
   <string name="file_explorer_tab">Провідник файлів</string>
   <string name="inline_file_tab">Вбудований файл</string>
@@ -163,6 +166,7 @@
   <string name="file_icon">Піктограма файлу</string>
   <string name="tls_authentication">Аутентифікація TLS</string>
   <string name="generated_config">Згенерована конфігурація</string>
+  <string name="generalsettings">Параметри</string>
   <string name="owner_fix_summary">Спробуйте змінити власника для /dev/tun. Деякі прошивки CM9 вимагають цього для коректної роботи API OpenVPN. Потрібний root.</string>
   <string name="owner_fix">Виправити власника /dev/tun</string>
   <string name="generated_config_summary">Показує згенерований файл конфігурації OpenVPN</string>
@@ -218,11 +222,10 @@
   <string name="faq_routing">Маршрутизація та конфігурація інтерфейсу не зроблені через традиційну ifconfig / route команду, а використовують VPNService API. Це зроблено через те, що конфігурування маршрутизації відрізняється в різних операційних системах. Конфігурація складається тільки з IP інтерфейсу тунелювання і мереж, які повинні маршрутизуватися через цей інтерфейс. Особливо не потрібна адреса каналу (peer) або адреса шлюзу. Спеціальні марщрути для досягнення VPN сервера (для прикладу, додані, коли використаний шлюз перенаправлення) більше не потрібні. Отже, програма буде ігнорувати ці установки при імпорті конфігурації. Така поведінка з використанням VPNService API гарантує, що з\'єднання до сервера не буде маршрутизуватися в VPN тунель. Оскільки підтримуються тільки такі мережі, які маршрутизуються через тунель, маршрути, які не вказують на тунель, не можуть підтримуватися (наприклад route x.x.x.x y.y.y.y net_gateway). Кнопка \"Показати інформацію\" у вікні журналу показує поточну мережеву конфігурацію VPNService.</string>
   <string name="persisttun_summary">Не повертатися до жодного VPN з\'єднання, коли OpenVPN перепідключається.</string>
   <string name="persistent_tun_title">Стійкість tun</string>
-  <string name="translation">Переклад</string>
   <string name="openvpn_log">Журнал OpenVPN</string>
   <string name="import_config">Імпорт конфігурації OpenVPN</string>
   <string name="battery_consumption_title">Споживання акумулятора</string>
-  <string name="baterry_consumption">У моїх особистих тестах основна причина високого споживання батареї OpenVPN є підтримуючі пакети. Більшість OpenVPN серверів мають директиви на кшталт як  \'keepalive 10 60\', яка переводить підтримуючий пакет від клієнта до сервера і від сервера до клієнта кожні десять секунд. &lt;p&gt; Хоча ці пакети є невеликими і не використовують багато трафіку, вони тримають мережі мобільного інтернету зайнятими і збільшують споживання енергії. &lt;p&gt; Цей параметр утримання мережі  не може бути зміненим на клієнті. Тільки системний адміністратор OpenVPN може змінити налаштування. &lt;p&gt; На жаль, використання утримання мережі більше 60 секунд з UDP має проблеми з деякими шлюзами NAT, які закінчують стан з\'єднання після короткої затримки (60с в моїх тестах). Використання TCP з довгими затримками утримання мережі працює, але має проблему TCP над TCP. (Див. &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt; Чому TCP над TCP є поганим середовищем &lt;/a&gt;)</string>
+  <string name="baterry_consumption">У моїх особистих тестах основна причина високого споживання батареї OpenVPN є підтримуючі пакети. Більшість OpenVPN сервера мають директиви конфігурації, як \"залишайся в живих 10 60\", які перекладаються як підтримуючий пакет від клієнта до сервера і від сервера до клієнта кожні десять секунд. &lt;p&gt; Хоча ці пакети є невеликими і не використовують багато трафіку, вони тримають мережі мобільного радіозв\'язку зайнятими і збільшвють споживання енергії. (Див. також &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;Радіо State Machine | Android Developers &lt;/a&gt;) &lt;p&gt; Цей параметр надсилання пакетів не може бути змінений на клієнті. Тільки системний адміністратор OpenVPN може змінити настройки. &lt;p&gt; На жаль, використання цього параметру більше 60 секунд з UDP має проблеми з деякими шлюзами NAT, які закінчуються стан підключення після короткого тайм-ауту (60 с в моїх тестах). Використання TCP з довгими затримками працює, але має проблему TCP над TCP. (Див. &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt; Чому TCP над TCP є поганим середовищем&lt;/a&gt;)</string>
   <string name="faq_tethering">Функція транзитного з\'єднання на Android (через WiFi, USB або Bluetooth) та VPNService API (використовуване цією програмою) не працюють разом. Детальніше в &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt; Issue 34 &lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN і тетерінг</string>
   <string name="connection_retries">Спроб підключення</string>
@@ -231,6 +234,7 @@
   <string name="connectretrywait">Секунд між підключеннями</string>
   <string name="minidump_generated">OpenVPN впав несподівано. Будь ласка, розгляньте використання параметру \"Надіслати Мінідамп\" в головному меню</string>
   <string name="send_minidump">Надіслати мінідамп розробнику</string>
+  <string name="send_minidump_summary">Відправляє налагоджувальну інформацію розробнику про останнє аварійне завершення</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="session_ipv4string">%1$s - %2$s</string>
   <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
@@ -241,6 +245,7 @@
   <string name="state_assign_ip">Перепризначення IP-адрес</string>
   <string name="state_add_routes">Додавання маршрутів</string>
   <string name="state_connected">Підключено</string>
+  <string name="state_disconnected">Від\'єднати</string>
   <string name="state_reconnecting">Повторне підключення</string>
   <string name="state_exiting">Виходимо</string>
   <string name="state_noprocess">Не працює</string>
@@ -248,4 +253,27 @@
   <string name="state_tcp_connect">Підключення (TCP)</string>
   <string name="state_auth_failed">Помилка автентифікації</string>
   <string name="state_nonetwork">Очікування на використання мережі</string>
+  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
+  <string name="notifcation_title_notconnect">Не підключено</string>
+  <string name="start_vpn_title">Підключення до VPN %s</string>
+  <string name="start_vpn_ticker">Підключення до VPN %s</string>
+  <string name="jelly_keystore_alphanumeric_bug">У деяких версіях Android 4.1 є проблеми, якщо ім\'я сертифікату містить не буквено-цифрові символи (наприклад, пробіли, підкреслення або тире). Спробуйте перевстановити сертифікат без використання спеціальних символів.</string>
+  <string name="encryption_cipher">Алгоритм шифрування</string>
+  <string name="packet_auth">Пакети автентифікації</string>
+  <string name="auth_dialog_title">Введіть метод автентифікації пакетів</string>
+  <string name="toggle_timestamps">Переключити часові позначки</string>
+  <string name="mobile_info_extended">Запущено на %1$s (%2$s) %3$s, Android API %4$d, версії %5$s, %6$s</string>
+  <string name="built_by">побудована по %s</string>
+  <string name="debug_build">відлагоджувальна збірка</string>
+  <string name="official_build">Офіційна збірка</string>
+  <string name="make_selection_inline">Скопіювати в профіль</string>
+  <string name="crashdump">Звіт про крах</string>
+  <string name="add">Додати</string>
+  <string name="send_config">Надіслати файл конфігурації</string>
+  <string name="complete_dn">Повний DN</string>
+  <string name="remotetlsnote">Імпортована конфігурація використовує застарілий параметр tls-remote, який має інший формат DN.</string>
+  <string name="rdn">RDN (загальне ім\'я)</string>
+  <string name="rdn_prefix">RDN префікс</string>
+  <string name="tls_remote_deprecated">tls-remote (ЗАСТАРІЛЕ)</string>
+  <string name="help_translate">Ви можете допомогти в перекладі, відвідавши http://crowdin.net/project/ics-openvpn/invite</string>
 </resources>

@@ -62,10 +62,10 @@
   <string name="remove_vpn">Eemalda VPN</string>
   <string name="check_remote_tlscert">Kontrollib kas server kasutab TLS serverisertifikaati</string>
   <string name="check_remote_tlscert_title">Välista TLS server</string>
-  <string name="remote_tlscn_check_summary">Võrdleb eemal asuva serveri sertifikaadi CN\'i stringiga</string>
+  <string name="remote_tlscn_check_summary">Kontrollib eemalasuva serveri sertifikaadi subjekti DN\'i</string>
   <string name="remote_tlscn_check_title">Sertifikaadi domeeninime kontroll</string>
-  <string name="enter_tlscn_dialog">Sisesta string millega eemalasuva serveri nime võrreldakse. OpenVPN kasutab eesliite sobitamist. \"Server\" stringiga sobib näiteks \"Server-1\" ja \"Server-2\".\nTühja välja puhul võrreldakse omavahel CN\'i ja serveri nime.</string>
-  <string name="enter_tlscn_title">Eemalasuva arvuti nimi(CN)</string>
+  <string name="enter_tlscn_dialog">Määrake meetod millega kontrollida eemalasuva sertifikaadi DN (n.: C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nMäärata saab kas täieliku DN, RDN (openvpn.blinkt.de eelmises näites) või eesliitega RDN kontrolli.\n\nRDN eesliite kasutamisel vastab sellele nii \"Server\", \"Server-1\" kui ka \"Server-2\"\n\nTekstivälja tühjaks jätmisel kontrollitakse kas RDN  on vastavuses serveri nimega.\n\nDetailsema info leiate OpenVPN 2.3.1+ käsiraamatust —kinnita-x509-nimi all</string>
+  <string name="enter_tlscn_title">Eemalasuva sertifikaadi subjekt</string>
   <string name="tls_key_auth">Lubab TLS võtmega autentimise</string>
   <string name="tls_auth_file">TLS Auth fail</string>
   <string name="pull_on_summary">Küsib serverist IP aadresse, marsruute ja ajastusvalikuid.</string>
@@ -222,11 +222,10 @@
   <string name="faq_routing">Marsruutimine ja liidese seadistamine ei toimu traditsiooniliste ifconfig/route käskudega vaid VPNService API abil. Tulemuseks on teistest OS\'dest erinev marsruutimise konfiguratsioon. Konfiguratsioonis on kirjed ainult tunneli-liidese IP jaoks ja nende võrkude kirjeldused mis peavad olema marsruuditud läbi selle liidese. Täpsemalt, pole vaja kirjeldada ei teise poole aadressi ega ruuterit. Spetsiaalsed ruutingukirjed VPN serveriga kontakteerumiseks (nagu näiteks redirect-gateway kasutamisel) ei ole samuti vajalikud. Seetõttu ignoreeritakse konfiguratsiooni importimisel neid kirjeid. Programm kindlustab VPNService API abil et VPN serveriga kontakteerumist nõudvaid ühendusi ei ruudita läbi VPN tunneli. Kuna toetatud on ainult tunneldatavate võrkude marsruudid, siis ei saa kirjeldada ka ruutinguid mis ei suuna liiklust läbi tunneli. (nt. route x.x.x.x y.y.y.y net_gateway). \'Näita ühenduse andmeid\' nupp logiaknas näitab kehtivat VPNService võrgukonfiguratsiooni.</string>
   <string name="persisttun_summary">Ära taasta otseühendust kui OpenVPN on taasühendumas.</string>
   <string name="persistent_tun_title">Katkematu tun</string>
-  <string name="translation">Tõlge</string>
   <string name="openvpn_log">OpenVPN Logi</string>
   <string name="import_config">Impordi OpenVPN konfiguratsioon</string>
   <string name="battery_consumption_title">Akukasutus</string>
-  <string name="baterry_consumption">Minu isiklike testide põhjal kulutavad akut peamiselt OpenVPN ülalhoide paketid. Enamikel OpenVPN serveritel esineb direktiiv nagu \'keepalive 10 60\' mis määrab et klient saadab serverile ja server kliendile keepalive pakette iga 10 sekundi tagant. &lt;p&gt; Ehkki ülalhoide paketid on väikesed ja ei põhjusta märgatavat võrguliiklust, ei lase nad mobiilse ühenduse raadiovõrgukiibil minna energiasäästurežiimi. &lt;p&gt; Need ülalhoidepaketi seadistused pole kliendi poolt muudetavad, neid seadistusi saab muuta ainult OpenVPN serveri süsteemiadministraator. &lt;p&gt; Kahjuks esineb üle 60 sekundi pikkuse keepalive puhul probleeme UDP protokolliga üle mõnede NAT ruuterite mis kustutavad UDP ühenduste olekuinfo väga lühikese aja jooksul (minu testides 60s). TCP protokolliga seda probleemi ei esine, kuid esineb TCP üle TCP tunneldamise probleem. (Vaata &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Miks TCP üle TCP on halb mõte&lt;/a&gt;)</string>
+  <string name="baterry_consumption">Minu isiklike testide põhjal kulutavad akut peamiselt OpenVPN ülalhoide (keepalive) paketid. Enamik OpenVPN serverieid kasutab direktiivi \'keepalive 10 60\' mis määrab kliendilt serverile ja serverilt kliendile saadetavate keepalive pakettide intervalliks 10 sekundit. &lt;p&gt; Ehkki ülalhoidepaketid on väikesed ja ei põhjusta märgatavat võrguliiklust, ei lase nad mobiilse ühenduse raadiovõrgukiibil lülituda energiasäästurežiimi. (Vaata ka &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Nimetatud ülalhoidepaketi seadistused ei ole kliendi poolt muudetavad ja neid seadistusi saab muuta ainult OpenVPN serveri süsteemiadministraator. &lt;p&gt; Kahjuks esineb üle 60 sekundi pikkuse keepalive puhul probleeme UDP protokolliga üle mõnede NAT võrguväratite, mis eemaldavad UDP ühenduste olekuinfo väga lühikese aja jooksul (minu testides 60s). TCP protokolliga seda probleemi ei esine, kuid kaasneb TCP üle TCP tunneldamise probleem. (Vaata &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Miks TCP üle TCP on halb mõte&lt;/a&gt;)</string>
   <string name="faq_tethering">Android Tethering (üle WiFi, USB või Bluetoothi) ja VPNService API (mida käesolev programm kasutab) ei ole koos kasutatavad. Täpsemad detailid leiad &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;issue #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN ja tether</string>
   <string name="connection_retries">Ühendumise korduskatseid</string>
@@ -270,4 +269,11 @@
   <string name="make_selection_inline">Kopeeri profiili</string>
   <string name="crashdump">Pangestustõmmis</string>
   <string name="add">Lisa</string>
+  <string name="send_config">Saada konfiguratsioonifail</string>
+  <string name="complete_dn">Täielik DN</string>
+  <string name="remotetlsnote">Teie imporditud konfiguratsioon kasutab vana ja TAUNITAVAT tls-remote valikut mis kasutab erinevat DN kuju.</string>
+  <string name="rdn">RDN (ühine nimi)</string>
+  <string name="rdn_prefix">RDN eesliide</string>
+  <string name="tls_remote_deprecated">tls-remote (TAUNITAV)</string>
+  <string name="help_translate">Tõlkimisel saate abi pakkuda külastades veebilehte http://crowdin.net/project/ics-openvpn/invite</string>
 </resources>

@@ -58,8 +58,6 @@
   <string name="remove_vpn">移除VPN</string>
   <string name="check_remote_tlscert">檢查對方出示的是否TLS伺服器憑證</string>
   <string name="check_remote_tlscert_title">預期對方出示TLS伺服器憑證</string>
-  <string name="remote_tlscn_check_summary">檢查遠端伺服器所出示的證書的CN欄位是否特定字串</string>
-  <string name="enter_tlscn_title">遠端主機名稱(CN)</string>
   <string name="tls_key_auth">啟用傳輸層防火牆(TLS-Auth)</string>
   <string name="tls_auth_file">TLS驗證檔</string>
   <string name="pull_on_summary">向伺服器請求IP地址, 路由和時間資訊</string>
@@ -173,7 +171,6 @@
   <string name="configuration_changed">設定已變更</string>
   <string name="faq_duplicate_notification_title">重複的通知</string>
   <string name="faq_routing_title">路由/網絡介面 設定</string>
-  <string name="translation">翻譯</string>
   <string name="openvpn_log">OpenVPN 運作記錄</string>
   <string name="import_config">匯入 OpenVPN 配置</string>
   <string name="battery_consumption_title">電池消耗</string>

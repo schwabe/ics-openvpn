@@ -81,7 +81,7 @@ def main():
     open(faqpath + "/FAQ.wiki","w").write(faq)
 
     for directory in os.listdir("res"):
-        if directory.startswith("values-"):
+        if directory.startswith("values-") and directory.find("-sw")==-1:
             lang = directory.split("-",1)[1]
             print lang
             loadstrres("res/values-%s/strings.xml" % lang,lang)

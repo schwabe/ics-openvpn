@@ -41,7 +41,7 @@ int jniThrowException(JNIEnv* env, const char* className, const char* msg) {
 }
 
 
-jbyteArray Java_de_blinkt_openvpn_VpnProfile_rsasign(JNIEnv* env, jclass, jbyteArray from, jint pkeyRef) {
+jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsasign (JNIEnv* env, jclass, jbyteArray from, jint pkeyRef) {
 
 	//	EVP_MD_CTX* ctx = reinterpret_cast<EVP_MD_CTX*>(ctxRef);
 	EVP_PKEY* pkey = reinterpret_cast<EVP_PKEY*>(pkeyRef);

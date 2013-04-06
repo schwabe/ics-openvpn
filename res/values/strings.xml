@@ -277,5 +277,9 @@
     <string name="rdn_prefix">RDN prefix</string>
     <string name="tls_remote_deprecated">tls-remote (DEPRECATED)</string>
     <string name="help_translate">You can help translating by visiting http://crowdin.net/project/ics-openvpn/invite</string>
+    <!-- Dialog title to identify the request from a VPN application. [CHAR LIMIT=60] -->
+    <string name="prompt">%1$s attempts to control %2$s</string>
+    <string name="remote_warning">By proceeding, you are giving the application permission to completely control OpenVPN for Android and to intercept all network traffic. <b> Do NOT accept unless you trust the application. </b> Otherwise, you run the risk of having your data compromised by malicious software."</string>
+    <string name="remote_trust">I trust this application.</string>
 
 </resources>

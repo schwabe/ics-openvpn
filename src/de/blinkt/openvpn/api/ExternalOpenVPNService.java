@@ -2,6 +2,7 @@ package de.blinkt.openvpn.api;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.VpnService;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import de.blinkt.openvpn.R;
@@ -31,6 +34,8 @@ import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 
 public class ExternalOpenVPNService extends Service implements StateListener {
+
+	private static final int SEND_TOALL = 0;
 
 	final RemoteCallbackList<IOpenVPNStatusCallback> mCallbacks =
 			new RemoteCallbackList<IOpenVPNStatusCallback>();
@@ -56,7 +61,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 		}
 
 	};
-	
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -117,7 +122,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
 		public void startVPN(String inlineconfig) throws RemoteException {
 			checkOpenVPNPermission();
-			
+
 			ConfigParser cp = new ConfigParser();
 			try {
 				cp.parseConfig(new StringReader(inlineconfig));
@@ -164,7 +169,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 		public Intent prepare(String packagename) {
 			if (new ExternalAppDatabase(ExternalOpenVPNService.this).isAllowed(packagename))
 				return null;
-			
+
 			Intent intent = new Intent();
 			intent.setClass(ExternalOpenVPNService.this, ConfirmDialog.class);
 			return intent;
@@ -183,7 +188,11 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 				throws RemoteException {
 			checkOpenVPNPermission();
 
-			if (cb != null) mCallbacks.register(cb);
+			if (cb != null) {
+				cb.newStatus(mMostRecentState.state,
+						mMostRecentState.logmessage, mMostRecentState.level.name());
+				mCallbacks.register(cb);
+			}
 
 
 		}
@@ -193,8 +202,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 				throws RemoteException {
 			checkOpenVPNPermission();
 
-			if (cb != null) mCallbacks.unregister(cb);
-
+			if (cb != null)  
+				mCallbacks.unregister(cb);
 		}
 
 		@Override
@@ -205,7 +214,9 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 		}
 	};
 
-	@Override
+
+
+	private UpdateMessage mMostRecentState;	@Override
 	public IBinder onBind(Intent intent) {
 		return mBinder;
 	}
@@ -218,21 +229,59 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 		OpenVPN.removeStateListener(this);
 	}
 
-	@Override
-	public void updateState(String state, String logmessage, int resid, ConnectionStatus level) {
-		// Broadcast to all clients the new value.
-		final int N = mCallbacks.beginBroadcast();
-		for (int i=0; i<N; i++) {
-			try {
-				mCallbacks.getBroadcastItem(i).newStatus(state,logmessage);
-			} catch (RemoteException e) {
-				// The RemoteCallbackList will take care of removing
-				// the dead object for us.
-			}
+	class UpdateMessage {
+		public String state;
+		public String logmessage;
+		public ConnectionStatus level;
+
+		public UpdateMessage(String state, String logmessage, ConnectionStatus level) {
+			this.state = state;
+			this.logmessage = logmessage;
+			this.level = level;
 		}
-		mCallbacks.finishBroadcast();
 	}
 
+	@Override
+	public void updateState (String state, String logmessage, int resid, ConnectionStatus level) {
+		mMostRecentState =  new UpdateMessage(state, logmessage, level);
+		mHandler.obtainMessage(SEND_TOALL, mMostRecentState);
+	}
+
+	private static final Handler mHandler = new Handler() {
+		WeakReference<ExternalOpenVPNService> service= null;
+
+		@Override public void handleMessage(Message msg) {
+
+			RemoteCallbackList<IOpenVPNStatusCallback> callbacks;
+			switch (msg.what) {
+			case SEND_TOALL:
+				if(service ==null || service.get() == null)
+					return;
+
+				callbacks = service.get().mCallbacks;
+
+
+				// Broadcast to all clients the new value.
+				final int N = callbacks.beginBroadcast();
+				for (int i=0; i<N; i++) {
+					try {
+						sendUpdate(callbacks.getBroadcastItem(i),(UpdateMessage) msg.obj);
+					} catch (RemoteException e) {
+						// The RemoteCallbackList will take care of removing
+						// the dead object for us.
+					}
+				}
+				callbacks.finishBroadcast();
+				break;
+			}
+		}
+
+		private void sendUpdate(IOpenVPNStatusCallback broadcastItem,
+				UpdateMessage um) throws RemoteException 
+				{
+			broadcastItem.newStatus(um.state, um.logmessage, um.level.name());
+				}
+	};
 
 
 }

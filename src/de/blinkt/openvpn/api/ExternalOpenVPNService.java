@@ -72,6 +72,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 		intent.setAction(OpenVpnService.START_SERVICE);
 
 		bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+		mHandler.setService(this);
 	}
 
 	private final IOpenVPNAPIService.Stub mBinder = new IOpenVPNAPIService.Stub() {
@@ -249,9 +250,17 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 		
 	}
 
-	private static final Handler mHandler = new Handler() {
+	private static final OpenVPNServiceHandler mHandler = new OpenVPNServiceHandler();
+			
+			
+	static class OpenVPNServiceHandler extends Handler {
 		WeakReference<ExternalOpenVPNService> service= null;
 
+		private void setService(ExternalOpenVPNService eos)
+		{
+			service = new WeakReference<ExternalOpenVPNService>(eos);
+		}
+		
 		@Override public void handleMessage(Message msg) {
 
 			RemoteCallbackList<IOpenVPNStatusCallback> callbacks;

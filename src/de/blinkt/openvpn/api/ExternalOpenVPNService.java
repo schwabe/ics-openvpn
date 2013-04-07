@@ -244,7 +244,9 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 	@Override
 	public void updateState (String state, String logmessage, int resid, ConnectionStatus level) {
 		mMostRecentState =  new UpdateMessage(state, logmessage, level);
-		mHandler.obtainMessage(SEND_TOALL, mMostRecentState);
+		Message msg = mHandler.obtainMessage(SEND_TOALL, mMostRecentState);
+		msg.sendToTarget();
+		
 	}
 
 	private static final Handler mHandler = new Handler() {

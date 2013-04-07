@@ -25,12 +25,12 @@ public class ExternalAppDatabase {
 
 	}
 
-	Set<String> getExtAppList() {
+	public Set<String> getExtAppList() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);        
 		Set<String> allowedapps = prefs.getStringSet(PREFERENCES_KEY, new HashSet<String>());
 		return allowedapps;
 	}
-
+	
 	void addApp(String packagename)
 	{
 		Set<String> allowedapps = getExtAppList();
@@ -45,7 +45,7 @@ public class ExternalAppDatabase {
 		prefedit.apply();
 	}
 	
-	void clearAllApiApps() {
+	public void clearAllApiApps() {
 		saveExtAppList(new HashSet<String>());
 	}
 

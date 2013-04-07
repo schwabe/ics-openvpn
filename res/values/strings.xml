@@ -57,6 +57,7 @@
     <string name="custom_config_summary">Specify custom options. Use with care!</string>
     <string name="route_rejected">Route rejected by Android</string>
     <string name="cancel_connection">Disconnect</string>
+    <string name="disconnect">Disconnect</string>
     <string name="clear_log">clear log</string>
     <string name="title_cancel">Cancel Confirmation</string>
     <string name="cancel_connection_query">Disconnect the connected VPN/cancel the connection attempt?</string>
@@ -281,5 +282,8 @@
     <string name="prompt">%1$s attempts to control %2$s</string>
     <string name="remote_warning">By proceeding, you are giving the application permission to completely control OpenVPN for Android and to intercept all network traffic. <b> Do NOT accept unless you trust the application. </b> Otherwise, you run the risk of having your data compromised by malicious software."</string>
     <string name="remote_trust">I trust this application.</string>
+    <string name="no_external_app_allowed">No app allowed to use external API</string>
+    <string name="allowed_apps">Allowed apps: %s</string>
+    <string name="clearappsdialog">Clear list of allowed external apps?\nCurrent list of allowed apps:\n\n%s</string>
 
 </resources>

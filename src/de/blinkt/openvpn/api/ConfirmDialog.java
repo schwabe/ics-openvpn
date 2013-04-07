@@ -73,6 +73,7 @@ CompoundButton.OnCheckedChangeListener, DialogInterface.OnClickListener {
 			builder.setNegativeButton(android.R.string.cancel,this);
 			
 			mAlert = builder.create();
+			mAlert.setCanceledOnTouchOutside(false);
 			
 			mAlert.setOnShowListener (new OnShowListener() {
 				

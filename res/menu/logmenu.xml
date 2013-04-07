@@ -11,7 +11,7 @@
         android:id="@+id/cancel"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/cancel_connection"
+        android:title="@string/disconnect"
         android:titleCondensed="@string/cancel"/>
     <item
         android:id="@+id/info"

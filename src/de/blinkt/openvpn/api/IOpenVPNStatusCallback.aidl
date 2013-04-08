@@ -9,5 +9,5 @@ oneway interface IOpenVPNStatusCallback {
     /**
      * Called when the service has a new status for you.
      */
-    void newStatus(String state, String message, String level);
+    void newStatus(String uuid, String state, String message, String level);
 }

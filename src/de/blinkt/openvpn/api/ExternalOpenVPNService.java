@@ -190,7 +190,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 			checkOpenVPNPermission();
 
 			if (cb != null) {
-				cb.newStatus(mMostRecentState.state,
+				cb.newStatus(mMostRecentState.vpnUUID, mMostRecentState.state,
 						mMostRecentState.logmessage, mMostRecentState.level.name());
 				mCallbacks.register(cb);
 			}
@@ -234,6 +234,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 		public String state;
 		public String logmessage;
 		public ConnectionStatus level;
+		public String vpnUUID;
 
 		public UpdateMessage(String state, String logmessage, ConnectionStatus level) {
 			this.state = state;
@@ -245,14 +246,17 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 	@Override
 	public void updateState (String state, String logmessage, int resid, ConnectionStatus level) {
 		mMostRecentState =  new UpdateMessage(state, logmessage, level);
+		if (ProfileManager.getLastConnectedVpn()!=null)
+			mMostRecentState.vpnUUID = ProfileManager.getLastConnectedVpn().getUUIDString();
+
 		Message msg = mHandler.obtainMessage(SEND_TOALL, mMostRecentState);
 		msg.sendToTarget();
-		
+
 	}
 
 	private static final OpenVPNServiceHandler mHandler = new OpenVPNServiceHandler();
-			
-			
+
+
 	static class OpenVPNServiceHandler extends Handler {
 		WeakReference<ExternalOpenVPNService> service= null;
 
@@ -260,7 +264,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 		{
 			service = new WeakReference<ExternalOpenVPNService>(eos);
 		}
-		
+
 		@Override public void handleMessage(Message msg) {
 
 			RemoteCallbackList<IOpenVPNStatusCallback> callbacks;
@@ -290,7 +294,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 		private void sendUpdate(IOpenVPNStatusCallback broadcastItem,
 				UpdateMessage um) throws RemoteException 
 				{
-			broadcastItem.newStatus(um.state, um.logmessage, um.level.name());
+			broadcastItem.newStatus(um.vpnUUID, um.state, um.logmessage, um.level.name());
 				}
 	};
 

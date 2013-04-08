@@ -94,10 +94,6 @@ public class ConfigConverter extends ListActivity {
 		Intent result = new Intent();
 		ProfileManager vpl = ProfileManager.getInstance(this);
 
-		if(((CheckBox)findViewById(R.id.correcttls)).isChecked() && isOldCNFormat()) {
-			convertTLSRemote();
-		}
-		
 		setUniqueProfileName(vpl);
 		vpl.addProfile(mResult);
 		vpl.saveProfile(this, mResult);
@@ -105,15 +101,6 @@ public class ConfigConverter extends ListActivity {
 		result.putExtra(VpnProfile.EXTRA_PROFILEUUID,mResult.getUUID().toString());
 		setResult(Activity.RESULT_OK, result);
 		finish();
-	}
-
-
-
-	private void convertTLSRemote() {
-		if(mResult.mRemoteCN.startsWith("/"))
-			mResult.mRemoteCN = mResult.mRemoteCN.substring(1);
-		mResult.mRemoteCN = mResult.mRemoteCN.replace("/", ", ");
-		mResult.mX509AuthType = VpnProfile.X509_VERIFY_TLSREMOTE_DN;
 	}
 
 	public void showCertDialog () {
@@ -445,12 +432,6 @@ public class ConfigConverter extends ListActivity {
 			findViewById(R.id.importpkcs12).setVisibility(View.VISIBLE);
 		}
 
-		if (isOldCNFormat())
-			findViewById(R.id.correcttls).setVisibility(View.VISIBLE);
-	}
-
-	private boolean isOldCNFormat() {
-		return mResult.mCheckRemoteCN && mResult.mRemoteCN.contains("/") && ! mResult.mRemoteCN.contains("_");
 	}
 
 	private void log(int ressourceId, Object... formatArgs) {

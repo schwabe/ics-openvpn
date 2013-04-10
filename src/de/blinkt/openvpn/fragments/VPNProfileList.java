@@ -315,7 +315,5 @@ public class VPNProfileList extends ListFragment {
 		intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
 		intent.setAction(Intent.ACTION_MAIN);
 		startActivity(intent);
-
-		getActivity().finish();
 	}
 }

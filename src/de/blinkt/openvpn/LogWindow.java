@@ -46,7 +46,6 @@ import de.blinkt.openvpn.core.ProfileManager;
 public class LogWindow extends ListActivity implements StateListener  {
 	private static final String LOGTIMEFORMAT = "logtimeformat";
 	private static final int START_VPN_CONFIG = 0;
-	private String[] mBconfig=null;
 	protected OpenVpnService mService;
 	private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -283,10 +282,6 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 			builder.show();
 			return true;
-		} else if(item.getItemId()==R.id.info) {
-			if(mBconfig==null)
-				OpenVPN.triggerLogBuilderConfig();
-
 		} else if(item.getItemId()==R.id.send) {
 			ladapter.shareLog();
 		} else if(item.getItemId()==R.id.edit_vpn) {

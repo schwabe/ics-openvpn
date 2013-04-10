@@ -20,8 +20,6 @@
     <string name="copyright_guicode">Source code and issue tracker available at http://code.google.com/p/ics-openvpn/</string>
     <string name="copyright_others">This program uses the following components; see the source code for full details on the licenses</string>
     <string name="about">About</string>
-    <string name="about_summary">About OpenVPN for Android</string>
-    <string name="vpn_list_summary">List of all configured VPNs</string>
     <string name="vpn_list_title">Profiles</string>
     <string name="vpn_type">Type</string>
     <string name="pkcs12pwquery">PKCS12 Password</string>
@@ -57,7 +55,6 @@
     <string name="custom_config_summary">Specify custom options. Use with care!</string>
     <string name="route_rejected">Route rejected by Android</string>
     <string name="cancel_connection">Disconnect</string>
-    <string name="disconnect">Disconnect</string>
     <string name="clear_log">clear log</string>
     <string name="title_cancel">Cancel Confirmation</string>
     <string name="cancel_connection_query">Disconnect the connected VPN/cancel the connection attempt?</string>
@@ -99,10 +96,9 @@
     <string name="clear">Clear</string>
     <string name="info">info</string>
     <string name="show_connection_details">Show connection details</string>
-    <string name="last_openvpn_tun_config">Last interface configuration from OpenVPN:</string>
+    <string name="last_openvpn_tun_config">Opening tun interface:</string>
     <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-    <string name="dns_server_info">DNS Server: %s</string>
-    <string name="dns_domain_info">DNS Domain: %s</string>
+    <string name="dns_server_info">DNS Server: %1$s, Domain: %2$s</string>
     <string name="routes_info">Routes: %s</string>
     <string name="routes_info6">Routes IPv6: %s</string>
     <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP. Mode given by OpenVPN is \"%3$s\".</string>

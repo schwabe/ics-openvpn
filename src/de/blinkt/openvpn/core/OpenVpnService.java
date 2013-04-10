@@ -104,7 +104,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	private void endVpnService() {
 		mProcessThread=null;
-		OpenVPN.logBuilderConfig(null);
 		OpenVPN.removeByteCountListener(this);
 		unregisterNetworkStateReceiver();
 		ProfileManager.setConntectedVpnProfileDisconnected(this);
@@ -268,7 +267,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 		mProfile = ProfileManager.get(profileUUID);
 
-		showNotification("Starting VPN " + mProfile.mName,"Starting VPN " + mProfile.mName,
+		String startTitle = getString(R.string.start_vpn_title, mProfile.mName);
+		String startTicker = getString(R.string.start_vpn_ticker, mProfile.mName);
+		showNotification(startTitle, startTicker,
 				false,0,ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
 
 		// Set a flag that we are starting a new VPN
@@ -407,14 +408,11 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		if(mDomain!=null)
 			builder.addSearchDomain(mDomain);
 
-		String bconfig[] = new String[6];
-
-		bconfig[0]=  getString(R.string.last_openvpn_tun_config);
-		bconfig[1] = getString(R.string.local_ip_info,mLocalIP.mIp,mLocalIP.len,mLocalIPv6, mMtu);
-		bconfig[2] = getString(R.string.dns_server_info, joinString(mDnslist));
-		bconfig[3] = getString(R.string.dns_domain_info, mDomain);
-		bconfig[4] = getString(R.string.routes_info, joinString(mRoutes));
-		bconfig[5] = getString(R.string.routes_info6, joinString(mRoutesv6));
+		OpenVPN.logInfo(R.string.last_openvpn_tun_config);
+		OpenVPN.logInfo(R.string.local_ip_info,mLocalIP.mIp,mLocalIP.len,mLocalIPv6, mMtu);
+		OpenVPN.logInfo(R.string.dns_server_info, joinString(mDnslist), mDomain);
+		OpenVPN.logInfo(R.string.routes_info, joinString(mRoutes));
+		OpenVPN.logInfo(R.string.routes_info6, joinString(mRoutesv6));
 
 		String session = mProfile.mName;
 		if(mLocalIP!=null && mLocalIPv6!=null)
@@ -423,9 +421,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			session= getString(R.string.session_ipv4string, session, mLocalIP);
 
 		builder.setSession(session);
-
-
-		OpenVPN.logBuilderConfig(bconfig);
 
 		// No DNS Server, log a warning 
 		if(mDnslist.size()==0)

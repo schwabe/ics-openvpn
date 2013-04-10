@@ -31,8 +31,6 @@ public class OpenVPN {
 	private static Vector<StateListener> stateListener;
 	private static Vector<ByteCountListener> byteCountListener;
 
-	private static String[] mBconfig;
-
 	private static String mLaststatemsg="";
 
 	private static String mLaststate = "NOPROCESS";
@@ -345,19 +343,6 @@ public class OpenVPN {
 		// The stoned way of java to return an array from a vector
 		// brought to you by eclipse auto complete
 		return (LogItem[]) logbuffer.toArray(new LogItem[logbuffer.size()]);
-
-	}
-	public static void logBuilderConfig(String[] bconfig) {
-		mBconfig = bconfig;
-	}
-	public static void triggerLogBuilderConfig() {
-		if(mBconfig==null) {
-			logMessage(0, "", "No active interface");
-		} else {
-			for (String item : mBconfig) {
-				logMessage(0, "", item);
-			}	
-		}
 
 	}
 

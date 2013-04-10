@@ -11,14 +11,8 @@
         android:id="@+id/cancel"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/disconnect"
+        android:title="@string/cancel_connection"
         android:titleCondensed="@string/cancel"/>
-    <item
-        android:id="@+id/info"
-        android:icon="@android:drawable/ic_menu_info_details"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/show_connection_details"
-        android:titleCondensed="@string/info"/>
     <item
         android:id="@+id/send"
         android:icon="@android:drawable/ic_menu_share"

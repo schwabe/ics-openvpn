@@ -541,7 +541,11 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		// Display byte count only after being connected
 
 		{
-			if(level == ConnectionStatus.LEVEL_CONNECTED) {
+			if (level == ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT) {
+				// The user is presented a dialog of some kind, no need to inform the user 
+				// with a notifcation
+				return;
+			} else if(level == ConnectionStatus.LEVEL_CONNECTED) {
 				mDisplayBytecount = true;
 				mConnecttime = System.currentTimeMillis();
 			} else {

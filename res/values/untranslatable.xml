@@ -19,9 +19,9 @@
     <string name="openssl" translatable="false">OpenSSL</string>
     <string name="unknown_state" translatable="false">Unknown state</string>
     <string name="permission_description">Allows another app to control OpenVPN</string>
-    <string name="bouncy_castle"  translatable="false">Bouncy Castle Crypto APIs</string>
-    <string name="copyright_bouncycastle"  translatable="false">Copyright © 2000–2012 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)</string>
-    
+    <string name="bouncy_castle" translatable="false">Bouncy Castle Crypto APIs</string>
+    <string name="copyright_bouncycastle" translatable="false">Copyright © 2000–2012 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)</string>
+
     <string-array name="tls_directions_values" translatable="false">
         <item>0</item>
         <item>1</item>
@@ -43,4 +43,10 @@
         <item>-1</item>
     </string-array>
 
+    <!-- These strings should not be visible to the user -->
+    <string name="state_user_vpn_permission" translatable="false">Waiting for user permission to use VPN API</string>
+    <string name="state_user_vpn_password" translatable="false">Waiting for user VPN password</string>
+    <string name="state_user_vpn_password_cancelled" translatable="false">VPN password input dialog cancelled</string>
+    <string name="state_user_vpn_permission_cancelled" translatable="false">VPN API permission dialog cancelled</string>
+    
 </resources>

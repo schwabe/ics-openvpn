@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.blinkt.openvpn.core.OpenVPN;
+import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 
@@ -61,7 +62,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 	public static final String EXTRA_HIDELOG =  "de.blinkt.openvpn.showNoLogWindow";;
 
 	private static final int START_VPN_PROFILE= 70;
-	
+
 
 	private ProfileManager mPM;
 	private VpnProfile mSelectedProfile;
@@ -74,7 +75,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 		super.onCreate(icicle);
 
 		mPM =ProfileManager.getInstance(this);
-	
+
 	}	
 
 	@Override
@@ -84,10 +85,10 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 		final Intent intent = getIntent();
 		final String action = intent.getAction();
-		
+
 		// If the intent is a request to create a shortcut, we'll do that and exit
 
-		
+
 		if(Intent.ACTION_MAIN.equals(action)) {
 			// we got called to be the starting point, most likely a shortcut
 			String shortcutUUID = intent.getStringExtra( EXTRA_KEY);
@@ -201,7 +202,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 	}
 
-	
+
 
 	private void askForPW(final int type) {
 
@@ -234,6 +235,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 				new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				OpenVPN.updateStateString("USER_VPN_PASSWORD_CANCELLED", "", R.string.state_user_vpn_password_cancelled, 
+						ConnectionStatus.LEVEL_NOTCONNECTED);
 				finish();
 			}
 		});
@@ -242,24 +245,29 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 	}
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void onActivityResult (int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if(requestCode==START_VPN_PROFILE) {
 			if(resultCode == Activity.RESULT_OK) {
 				int needpw = mSelectedProfile.needUserPWInput();
 				if(needpw !=0) {
+					OpenVPN.updateStateString("USER_VPN_PASSWORD", "", R.string.state_user_vpn_password,
+							ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
 					askForPW(needpw);
 				} else {
 					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
 					boolean showlogwindow = prefs.getBoolean("showlogwindow", true);
-					
+
 					if(!mhideLog && showlogwindow)
 						showLogWindow();
 					new startOpenVpnThread().start();
 				}
 			} else if (resultCode == Activity.RESULT_CANCELED) {
 				// User does not want us to start, so we just vanish
+				OpenVPN.updateStateString("USER_VPN_PERMISSION_CANCELLED", "", R.string.state_user_vpn_permission_cancelled, 
+						ConnectionStatus.LEVEL_NOTCONNECTED);
+
 				finish();
 			}
 		}
@@ -309,6 +317,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 
 		if (intent != null) {
+			OpenVPN.updateStateString("USER_VPN_PERMISSION", "", R.string.state_user_vpn_password,
+					ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
 			// Start the query
 			try {
 				startActivityForResult(intent, START_VPN_PROFILE);

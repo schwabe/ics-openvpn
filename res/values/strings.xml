@@ -55,6 +55,7 @@
     <string name="custom_config_summary">Specify custom options. Use with care!</string>
     <string name="route_rejected">Route rejected by Android</string>
     <string name="cancel_connection">Disconnect</string>
+    <string name="cancel_connection_long">Disconnect VPN</string>
     <string name="clear_log">clear log</string>
     <string name="title_cancel">Cancel Confirmation</string>
     <string name="cancel_connection_query">Disconnect the connected VPN/cancel the connection attempt?</string>
@@ -95,7 +96,6 @@
     <string name="error">"Error: "</string>
     <string name="clear">Clear</string>
     <string name="info">info</string>
-    <string name="show_connection_details">Show connection details</string>
     <string name="last_openvpn_tun_config">Opening tun interface:</string>
     <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
     <string name="dns_server_info">DNS Server: %1$s, Domain: %2$s</string>
@@ -115,7 +115,6 @@
     <string name="tap_faq2">Again? Are you kidding? No, tap mode is really not supported and sending more mail asking if it will be supported will not help.</string>
     <string name="tap_faq3">A third time? Actually, one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would also have to implement ARP and possibly a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.</string>
     <string name="faq">FAQ</string>
-    <string name="faq_summary">Frequently asked questions and some advice</string>
     <string name="copying_log_entries">Copying log entries</string>
     <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the GUI.</string>
     <string name="faq_shortcut">Shortcut to start</string>
@@ -128,7 +127,6 @@
     <string name="settings_auth">Authentication/Encryption</string>
     <string name="file_explorer_tab">File Explorer</string>
     <string name="inline_file_tab">Inline File</string>
-    <string name="import_file">Import</string>
     <string name="error_importing_file">Error importing File</string>
     <string name="import_error_message">Could not import File from filesystem</string>
     <string name="inline_file_data">[[Inline file data]]</string>
@@ -215,7 +213,6 @@
     <string name="add_new_vpn_hint">Use the &lt;img src=\"ic_menu_add\"/&gt; icon to add a new VPN</string>
     <string name="vpn_import_hint">Use the &lt;img src=\"ic_menu_archive\"/&gt; icon to import an existing (.ovpn or .conf) profile from your sdcard.</string>
     <string name="faq_hint">Be sure to also check out the FAQ. There is a quick start guide.</string>
-    <string name="correcttls">Convert remote-tls format from OpenVPN 2.2 to 2.3 format</string>
     <string name="faq_routing_title">Routing/Interface Configuration</string>
     <string name="faq_routing">The Routing and interface configuration is not done via traditionell ifconfig/route command but by using the VPNService API. This results in a different routing configuration than on other OSes. The configuration only consists of the IP of the tunnel interface and the networks that should be routed over this interface. Especially no peer partner address or gateway address is needed. Special routes to reach the VPN Server (for example added when using redirect-gateway) are not needed either. The application will consequently ignore these settings when importing a configuration. The app ensures with the VPNService API that the connection to the server is not routed through the VPN tunnel. Since only specifing networks to be routed via tunnel is supported extra routes not pointing to the tunnel cannot be supported either. (e.g. route x.x.x.x y.y.y.y net_gateway). The show information button in the log windows show the current configuration of the VPNService network configuration.</string>
     <string name="persisttun_summary">Do not fallback to no VPN connection when OpenVPN is reconnecting.</string>

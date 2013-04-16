@@ -210,8 +210,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 		@Override
 		public void disconnect() throws RemoteException {
 			checkOpenVPNPermission();
-
-			mService.getManagement().stopVPN();
+			if(mService!=null && mService.getManagement()!=null)
+				mService.getManagement().stopVPN();
 		}
 	};
 

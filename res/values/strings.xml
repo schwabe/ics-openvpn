@@ -188,7 +188,7 @@
     <string name="obscure">Obscure OpenVPN Settings. Normally not needed.</string>
     <string name="advanced">Advanced</string>
     <string name="export_config_title">ICS Openvpn Config</string>
-    <string name="warn_no_dns">No DNS servers being used. Name resolution may not work. Consider setting custom DNS Servers</string>
+    <string name="warn_no_dns">No DNS servers being used. Name resolution may not work. Consider setting custom DNS Servers. Please also note that Android will keep using your proxy settings specified for your mobile/Wi-Fi connection when no DNS servers are set.</string>
     <string name="dns_add_error">Could not add DNS Server \"%1$s\", rejected by the system: %2$s</string>
     <string name="faq_howto">&lt;p&gt;Get a working config (tested on your computer or download from your provider/organisation)&lt;/p&gt;&lt;p&gt;If it is a single file no with no extra pem/pks12 files you can email the file yourself and open the attachment. If you have multiple files put them on your sd card.&lt;/p&gt;&lt;p&gt;Click on the email attachment/Use the folder icon in the vpn list to import the config file&lt;/p&gt;&lt;p&gt;If there are errors about missing files put the missing files on your sd card.&lt;/p&gt;&lt;p&gt;Click on the save symbol to add the imported VPN to your VPN list&lt;/p&gt;&lt;p&gt;Connect the VPN by clicking on the name of the VPN&lt;/p&gt;&lt;p&gt;If there are error or warnings in the log try to understand the warnings/error and try to fix them&lt;/p&gt; </string>
     <string name="faq_howto_title">Quick Start</string>

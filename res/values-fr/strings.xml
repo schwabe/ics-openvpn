@@ -19,8 +19,6 @@
   <string name="copyright_guicode">"Le code source et le tracker de bugs est disponible ici: http://code.google.com/p/ics-openvpn/ "</string>
   <string name="copyright_others">"Le programme utilise les composants suivants. Voir le code source pour plus de détails sur les licences."</string>
   <string name="about">"À propos"</string>
-  <string name="about_summary">"À propos d\'OpenVPN pour Android"</string>
-  <string name="vpn_list_summary">"Liste de tous les VPN configurés"</string>
   <string name="vpn_list_title">Profils</string>
   <string name="vpn_type">"Type"</string>
   <string name="pkcs12pwquery">"Mot de passe PKCS12"</string>
@@ -93,11 +91,7 @@
   <string name="error">"Erreur: "</string>
   <string name="clear">"Effacer"</string>
   <string name="info">"infos"</string>
-  <string name="show_connection_details">"Afficher les détails de la connexion"</string>
-  <string name="last_openvpn_tun_config">"Dernière configuration connue de l\'interface d\'OpenVPN:"</string>
   <string name="local_ip_info">"IPv4 locale: %1$s/%2$d IPv6: %3$s MTU: %4$d"</string>
-  <string name="dns_server_info">"Serveur DNS: %s"</string>
-  <string name="dns_domain_info">"Domaine DNS: %s"</string>
   <string name="routes_info">"Routes: %s"</string>
   <string name="routes_info6">"Routes IPv6: %s"</string>
   <string name="ip_not_cidr">"Informations récupérées de l\'interface: %1$s et %2$s , en supposant que la seconde adresse est l\'adresse peer du réseau distant. Utilisation du masque de réseau /32 pour l\'IP locale. Mode donné par OpenVPN: \"%3$s\"."</string>
@@ -114,7 +108,6 @@
   <string name="tap_faq2">\"Encore une fois? Vous plaisantez? Le mode TAP n\'est absolument pas pris en charge et l\'envoi de plus d\'e-mails demandant si il sera intégré ne va en rien aider.\".</string>
   <string name="tap_faq3">\"Encore une fois ? En fait il est possible que quelqu\'un puisse écrire un émulateur TAP basé sur TUN qui pourrait analyser des informations de type \"layer2\". Mais cet émulateur devrait aussi implémenter ARP et un client DHCP. Je ne suis actuellement pas au courant que quelqu\'un travail dessus. Contactez moi si vous voulez m\'aider là dessus\".</string>
   <string name="faq">"FAQ"</string>
-  <string name="faq_summary">"Foire aux questions et quelques conseils"</string>
   <string name="copying_log_entries">"Copie des entrées du log"</string>
   <string name="faq_copying">"Pour copier une seule entrée du log restez appuyé sur celle-ci. Pour copier ou envoyer le log au complet utilisez l\'option \"Envoi du Log\". Utilisez le bouton matériel s\'il n\'est pas visible."</string>
   <string name="faq_shortcut">"Raccourci pour démarrer"</string>
@@ -127,7 +120,6 @@
   <string name="settings_auth">"Authentification / Cryptage"</string>
   <string name="file_explorer_tab">"Explorateur de fichiers"</string>
   <string name="inline_file_tab">"Fichier personnalisé"</string>
-  <string name="import_file">"Importer"</string>
   <string name="error_importing_file">"Impossible d\'importer le fichier"</string>
   <string name="import_error_message">"Impossible d\'importer le fichier depuis le système de fichiers"</string>
   <string name="inline_file_data">"[[Fichier de données personnalisé]]"</string>
@@ -215,7 +207,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="add_new_vpn_hint">"Utilisez l\'icône &lt;img src=\"ic_menu_add\"/ pour ajouter un nouveau VPN"</string>
   <string name="vpn_import_hint">"Utilisez l\'icône &lt;img src=\"ic_menu_archive\"/&gt; pour importer un fichier profil (.opvpn ou  .conf) de votre carte SD."</string>
   <string name="faq_hint">"Veillez également à consulter la FAQ. Il s\'y trouve un guide de démarrage rapide."</string>
-  <string name="correcttls">"Converti le format \"remote-tls\" du format OpenVPN 2.2 au 2.3"</string>
   <string name="faq_routing_title">"Redirections / Configuration de l\'interface"</string>
   <string name="faq_routing">"La configuration de l\'interface TUN et des règles de redirection de ports n\'est pas faite par les commandes traditionnelles du genre \"ifconfig\" ou \"route\" mais en utilisant l\'API VPNService. Il en résulte que la configuration de routage est différente des autres systèmes d\'exploitation. La configuration se compose uniquement de l\'adresse IP de l\'interface du tunnel, et les réseaux qui doivent être routés via cette interface. Aucune adresse peer partenaire ou passerelle n\'est nécessaire. Des règles de redirection spéciales pour atteindre le serveur VPN (par exemple ajouté lors de l\'utilisation redirect-gateway) ne sont pas nécessaires non plus. L\'application va donc ignorer ces paramètres lors de l\'importation d\'une configuration. L\'application permet à l\'API VPNService que la connexion au serveur n\'est pas acheminé par le tunnel VPN. Étant donné que seuls les réseaux spécifiant vouloir être routés via le tunnel sont pris en charge, les règles de redirection supplémentaires ne pointant pas vers le tunnel ne sont aussi pas prises en charge. (ex.: x.x.x.x y.y.y.y net_gateway). Le bouton d\'information dans le log affiche la configuration actuelle de la configuration du réseau VPNService."</string>
   <string name="persisttun_summary">Ne pas couper la connexion VPN lors de la reconnexion d\'OpenVPN.</string>

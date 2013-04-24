@@ -19,8 +19,6 @@
   <string name="copyright_guicode">Zdrojové kódy a seznam problémů je na http://code.google.com/p/ics-openvpn/</string>
   <string name="copyright_others">Tento program používá následující komponenty; viz zdrojový kód pro detaily o licenci</string>
   <string name="about">O programu</string>
-  <string name="about_summary">O programu OpenVPN pro Android</string>
-  <string name="vpn_list_summary">Seznam všech nakonfigurovaných VPN</string>
   <string name="vpn_list_title">Profily</string>
   <string name="vpn_type">Typ</string>
   <string name="pkcs12pwquery">PKCS12 heslo</string>
@@ -56,6 +54,7 @@
   <string name="custom_config_summary">Zadat vlastní nastavení. Používat opatrně!</string>
   <string name="route_rejected">Směrování odmítnuto Androidem</string>
   <string name="cancel_connection">Odpojit</string>
+  <string name="cancel_connection_long">Odpojit VPN</string>
   <string name="clear_log">vymazat log</string>
   <string name="title_cancel">Zrušit potvrzení</string>
   <string name="cancel_connection_query">Odpojit/Zrušit připojování?</string>
@@ -96,11 +95,9 @@
   <string name="error">"Chyba: "</string>
   <string name="clear">Vymazat</string>
   <string name="info">info</string>
-  <string name="show_connection_details">Zobrazit detaily spojení</string>
-  <string name="last_openvpn_tun_config">Poslední nastavení rozhraní pro OpenVPN:</string>
+  <string name="last_openvpn_tun_config">Otevření rozhraní tun:</string>
   <string name="local_ip_info">Místní IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-  <string name="dns_server_info">DNS server: %s</string>
-  <string name="dns_domain_info">DNS doména: %s</string>
+  <string name="dns_server_info">DNS server: %1$s, Doména: %2$s</string>
   <string name="routes_info">Směrování: %s</string>
   <string name="routes_info6">Směrování IPv6: %s</string>
   <string name="ip_not_cidr">Získány informace o rozhraní %1$s a %2$s, předpokládám, že druhá adresa je adresa vzdáleného kolegy. Používám /32 masku pro místní IP adresu. Mód OpenVPN je \"%3$s\".</string>
@@ -117,7 +114,6 @@
   <string name="tap_faq2">Opět? Děláš si srandu? Ne, tap mód opravdu není podporován a další maily na tom nic nezmění.</string>
   <string name="tap_faq3">Potřetí? Ve skutečnosti, šlo by napsat emulátor tap zařizení pomocí tun, které by patřičně zpracovávalo informace z druhé vrstvy. Ale tento emulátor by také musel implementovat ARP a DHCP. Nejsem si vědom, že by někdo tímto směrem něco podnikl. Kontaktuj mne, pokud máš zájem toto naprogramovat.</string>
   <string name="faq">FAQ</string>
-  <string name="faq_summary">Často kladené otázky a nějaké rady</string>
   <string name="copying_log_entries">Kopírování záznamů z logu</string>
   <string name="faq_copying">Pro zkopírování jednoho záznamu stačí dlouze zmáčknout požadovaný záznam. Pro zkopírování/odeslání celého logu použij možnost Odeslat soubor s logem. Pokud není tlačítko viditené v uživatelském rozhraní, zkus použít to hardwarové.</string>
   <string name="faq_shortcut">Zkratka na spuštění</string>
@@ -130,7 +126,6 @@
   <string name="settings_auth">Autentizace/Šifrování</string>
   <string name="file_explorer_tab">Prohlížeč souború</string>
   <string name="inline_file_tab">Vložený soubor</string>
-  <string name="import_file">Import</string>
   <string name="error_importing_file">Chyba při importu souboru</string>
   <string name="import_error_message">Nemohu importovat soubor ze souborového systému</string>
   <string name="inline_file_data">[[Vložená data]]</string>
@@ -217,7 +212,6 @@
   <string name="add_new_vpn_hint">Použij ikonu &lt;img src=\"ic_menu_add\"/&gt; k přidání nové VPN</string>
   <string name="vpn_import_hint">Použij ikonu &lt;img src=\"ic_menu_archive\"/&gt; k imporu existujícího (.ovpn nebo .conf) profilu z SD karty.</string>
   <string name="faq_hint">Ujisti se, že jsi si pročetl FAQ. Je zde nápověda pro rychlý start.</string>
-  <string name="correcttls">Převeď remote-tls formát z OpenVPN 2.2 na 2.3</string>
   <string name="faq_routing_title">Nastavení směrování/rozhraní</string>
   <string name="faq_routing">Směrování a rozhraní není nastavováno tradičním ifconfig/route způsobem, ale použitím VPNService API. Výsledkem je odlišný způsob směrování než na jiných operační systémech. Nastavení sestává pouze z IP tunelového rozhraní a sítě, která má být směrována skrz tento interface. Speciálně, žádná adresa partnera nebo brány není potřeba. Zvláštní směrování pro připojení k VPN serveru (například při poušití direktivy redirect-gateway) také nejsou potřeba. Aplikace bude tato nastavení při importu ignorovat. Aplikace zajišťuje ve spojení s VPNService API, že připojení k serveru nejde skrz tunel. Protože je podporované jen nastavení sítí, které jsou směrované skrz tunel, nelze podporovat nastavení extra sítí, které skrz runel nejdou (např route x.x.x.x y.y.y.y net_gateway). V okně s logem je možné zobrazit současné nastavení VPNService.</string>
   <string name="persisttun_summary">Nevracej se ke spojení mimo VPN, zatímco se OpenVPN připojuje.</string>
@@ -276,4 +270,10 @@
   <string name="rdn_prefix">RDN prefix</string>
   <string name="tls_remote_deprecated">tls-remote (ZASTARALÉ)</string>
   <string name="help_translate">Můžeš pomoci s překladem, navštiv http://crowdin.net/project/ics-openvpn/invite</string>
+  <string name="prompt">%1$s se pokouší o kontrolu %2$s</string>
+  <string name="remote_warning">Pokračováním dáváš aplikaci oprávnění pro kompletní kontrolu OpenVPN a k zachytávání veškerého síťového provozu. <b>Nepotvrzuj, pokud nevěříš aplikaci.</b> V opačném případě riskuješ napadení nebezpečným softwarem.</string>
+  <string name="remote_trust">Věřím této aplikaci.</string>
+  <string name="no_external_app_allowed">Žádné aplikaci není povoleno použít externí API</string>
+  <string name="allowed_apps">Povolené aplikace: %s</string>
+  <string name="clearappsdialog">Vyčistit seznam povolených aplikací?\nSoučasný seznam povolených aplikací:\n\n%s</string>
 </resources>

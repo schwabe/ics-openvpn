@@ -19,8 +19,6 @@
   <string name="copyright_guicode">Quellcode und Issue Tracker sind verfügbar unter http://code.google.com/p/ics-openvpn/</string>
   <string name="copyright_others">Dieses Programm nutzt die folgenden Komponenten. Die kompletten Lizenzdetails sind im Quelltext verfügbar.</string>
   <string name="about">Über</string>
-  <string name="about_summary">Über OpenVPN für Android</string>
-  <string name="vpn_list_summary">Alle konfigurierten VPN Profile</string>
   <string name="vpn_list_title">Profile</string>
   <string name="vpn_type">Typ</string>
   <string name="pkcs12pwquery">PKCS12 Passwort</string>
@@ -56,6 +54,7 @@
   <string name="custom_config_summary">Geben Sie eigene Konfigurationsoptionen an. Seien Sie vorsichtig!</string>
   <string name="route_rejected">Route von Android zurückgewiesen.</string>
   <string name="cancel_connection">Trennen</string>
+  <string name="cancel_connection_long">VPN Verbindung trennen</string>
   <string name="clear_log">Log löschen.</string>
   <string name="title_cancel">Trennungsbestätigung</string>
   <string name="cancel_connection_query">Möchten Sie das VPN trennen bzw. den Verbindungsversuch abbrechen?</string>
@@ -96,11 +95,9 @@
   <string name="error">"Fehler: "</string>
   <string name="clear">Clear</string>
   <string name="info">Info</string>
-  <string name="show_connection_details">Zeige Verbindungsdetails</string>
-  <string name="last_openvpn_tun_config">Letzte Interface Konfiguration von OpenVPN:</string>
+  <string name="last_openvpn_tun_config">Öffne tun Netzwerkinterface:</string>
   <string name="local_ip_info">Lokale IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-  <string name="dns_server_info">DNS Server: %s</string>
-  <string name="dns_domain_info">DNS Domäne: %s</string>
+  <string name="dns_server_info">DNS-Server: %1$s, Domäne: %2$s</string>
   <string name="routes_info">Routen IPv4: %s</string>
   <string name="routes_info6">Routen IPv6: %s</string>
   <string name="ip_not_cidr">Interface Information %1$s und %2$s, nehme an, die zweite Adresse ist die Peer Adresse. Benutze /32 Netzmaske für die lokale IP Adresse. Interface Modus spezifiziert von OpenVPN ist \"%3$s\".</string>
@@ -117,7 +114,6 @@
   <string name="tap_faq2">Die gleiche Frage nochmal? Meinen Sie das ernst? Ohne root kann tap wirklich nicht unterstützt werden. Emails an mich, mit der Frage, wann tap unterstützt wird, helfen hier kein Stück.</string>
   <string name="tap_faq3">Ein drittes Mal? Nun gut, theoretisch kann tap mit einem tun Gerät emuliert werden. Dieser tap Emulator müsste die Layer 2 Informationen beim Senden hinzufügen und beim Empfangen wieder entfernen. Zusätzlich muss noch ARP und sinnvollerweise auch ein DHCP Client implementiert werden. Mir ist niemand bekannt, der etwas in dieser Richtung unternimmt. Kontaktieren Sie mich, falls Sie so etwas implementieren möchten.</string>
   <string name="faq">FAQ</string>
-  <string name="faq_summary">häufig gestellte Fragen und Hinweise</string>
   <string name="copying_log_entries">Kopieren von Log Einträgen</string>
   <string name="faq_copying">Um einen einzelnen Log Eintrag zu kopieren berühren Sie den Log Eintrag und halten Sie gedrückt. Um das ganze Log zu Kopieren/Versenden benutzen Sie die \"Sende Log\" Option. Falls Sie Option nicht im in der GUI sehen, drücken Sie die Menü Taste am Gerät.</string>
   <string name="faq_shortcut">Verknüpfung zu einem VPN</string>
@@ -130,7 +126,6 @@
   <string name="settings_auth">Authentifizierung/Verschlüsselung</string>
   <string name="file_explorer_tab">Datei auswählen…</string>
   <string name="inline_file_tab">Eingebettete Datei</string>
-  <string name="import_file">Importieren</string>
   <string name="error_importing_file">Fehler beim importieren der Datei</string>
   <string name="import_error_message">Konnte Datei nicht vom Dateisystem importieren</string>
   <string name="inline_file_data">[[Eingebettete Datei]]</string>
@@ -217,7 +212,6 @@
   <string name="add_new_vpn_hint">Benutzen Sie &lt;img src=\"ic_menu_add\"/&gt; um ein neues VPN anzulegen</string>
   <string name="vpn_import_hint">Benutzen Sie &lt;img src=\"ic_menu_archive\"/&gt; um ein vorhandenes (.ovpn oder .conf) Profil von Ihrer SD Karte zu importieren</string>
   <string name="faq_hint">Lesen Sie auch die FAQ. Dort befindet sich eine Schnellstart Anleitung</string>
-  <string name="correcttls">Konvertiere den remote-tls Parameter vom OpenVPN 2.2 zum OpenVPN 2.3 Format</string>
   <string name="faq_routing_title">Routing/Netzwerk Konfiguration</string>
   <string name="faq_routing">In dieser Anwendung wird die Routing und Netzwerkkonfiguration nicht mit den traditionellen ifconfig/route Kommandos konfiguriert sondern mittels der VPNService API. Diese erwartet eine Tunnel IP Adresse und die Netzwerke, die über den Tunnel geroutet werden sollen. Insbesondere wird keine Gateway oder Peer IP Adresse benötigt. Die Anwendung ignoriert diese daher auch beim Import. Dass die Verbindung zum VPN Server nicht über den Tunnel geroutet wird, wird auch über die VPNService API sichergestellt ohne dass hierfür spezielle Routen nötig sind. Da nur Netzwerke, die über den Tunnel geroutet werden sollen, angeben werden können, ist es nicht möglich andere Routen zu unterstützen (z.B. route x.x.x.x y.y.y.y net_gateway)\"</string>
   <string name="persisttun_summary">Verhindere Zurückfallen auf nicht VPN Verbindungen während OpenVPN neu verbindet.</string>
@@ -276,4 +270,10 @@
   <string name="rdn_prefix">RDN Präfix</string>
   <string name="tls_remote_deprecated">tls-remote (VERALTET)</string>
   <string name="help_translate">Sie können helfen die Übersetzung zu verbessern auf der Website http://crowdin.net/project/ics-openvpn/invite</string>
+  <string name="prompt">%1$s versucht %2$s zu steuern</string>
+  <string name="remote_warning">Wenn Sie fortfahren, gestatten Sie der App OpenVPN für Android komplett zu kontrollieren und den gesamten Netzwerkverkehr abzufangen. <b> Akzeptieren Sie nur, wenn Sie der App vertrauen. </b> Anderenfalls riskieren Sie, dass Ihre Daten von schädlicher Software manipuliert werden.</string>
+  <string name="remote_trust">Ich vertraue dieser App.</string>
+  <string name="no_external_app_allowed">Keine App für die Verwendung der API freigegeben</string>
+  <string name="allowed_apps">Freigegebene Apps: %s</string>
+  <string name="clearappsdialog">Liste der freigegeben externen Apps löschen? \nAktuelle Liste der freigegebenen Apps:\n\n%s</string>
 </resources>

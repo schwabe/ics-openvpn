@@ -19,8 +19,6 @@
   <string name="copyright_guicode">Kode program dan perekam masalah tersedia di</string>
   <string name="copyright_others">Aplikasi memakai komponen berikut; lihat kode program untuk lebih jelas mengenai lisensi</string>
   <string name="about">Tentang…</string>
-  <string name="about_summary">Tentang OpenVPN untuk Android</string>
-  <string name="vpn_list_summary">Daftar konfigurasi VPN</string>
   <string name="vpn_type">Tipe</string>
   <string name="pkcs12pwquery">Password PKCS12</string>
   <string name="file_select">Pilih…</string>
@@ -92,11 +90,7 @@
   <string name="error">"Kesalahan: "</string>
   <string name="clear">Bersihkan</string>
   <string name="info">Info</string>
-  <string name="show_connection_details">Detail koneksi</string>
-  <string name="last_openvpn_tun_config">Konfigurasi terakhir dari OpenVPN:</string>
   <string name="local_ip_info">IPv4 lokal : %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-  <string name="dns_server_info">Server DNS : %s</string>
-  <string name="dns_domain_info">Domain DNS : %s</string>
   <string name="routes_info">Rute: %s</string>
   <string name="routes_info6">Rute IPv6: %s</string>
   <string name="ip_not_cidr">Memilki informasi antarmuka %1$s dan %2$s, asumsi alamat kedua adalah alamat remote. Menggunakan netmask /32 untuk IP lokal. Mode yang diberikan oleh OpenVPN adalah \"%3$s\".</string>
@@ -113,7 +107,6 @@
   <string name="tap_faq2">Lagi ? Becanda ? mode TAP benar-benar tidak didukung dan mengirim email menanyakan apakah akan ada dukungan TAP, tidak akan membantu</string>
   <string name="tap_faq3">Untuk ketiga kalinya? Sebenarnya, seseorang bisa menulis emulator TAP berdasarkan tun yang akan menambahkan lapisan2 informasi pengiriman dan lapisan2 informasi penerimaan. Tapi emulator TAP ini juga harus menerapkan ARP dan mungkin klien DHCP. Saya tidak tau apakah ada yang bekerja ke arah ini. Hubungi saya jika Anda ingin memulai menulis kode2 emulator TAP ini.</string>
   <string name="faq">FAQ</string>
-  <string name="faq_summary">Pertanyaan yang sering diajukan dan beberapa saran</string>
   <string name="copying_log_entries">Menyalin catatan</string>
   <string name="faq_copying">Untuk menyalin satu catatan masuk, Tekan dan tahan di catatan masuk. Untuk meyanlin\mengirim seluruh catatan, gunakan opsi Kirim Log. Gunakan tombol perangkat keras jika tidak terlihat di GUI.</string>
   <string name="faq_shortcut">Jalan pintas memulai</string>
@@ -124,7 +117,6 @@
   <string name="settings_auth">Otentikasi/Enkripsi</string>
   <string name="file_explorer_tab">Penjelajah berkas</string>
   <string name="inline_file_tab">Inline File</string>
-  <string name="import_file">Ambil</string>
   <string name="error_importing_file">Gagal mengambil berkas</string>
   <string name="import_error_message">Tidak dapat mengambil berkas dari filesystem</string>
   <string name="inline_file_data">[[Inline file data]]</string>
@@ -210,7 +202,6 @@
   <string name="add_new_vpn_hint">Gunakan ikon &lt; img src = \"ic_menu_add\" / &gt; untuk menambah VPN baru</string>
   <string name="vpn_import_hint">Gunakan ikon &lt; img src = \"ic_menu_archive\" / &gt; untuk mengimpor profil (.ovpn atau .conf) yang ada dari sdcard Anda.</string>
   <string name="faq_hint">Pastikan untuk juga memeriksa FAQ. Ada petunjuk untuk memudahkan anda.</string>
-  <string name="correcttls">Konversi format remote-tls dari format OpenVPN 2.2 ke 2.3</string>
   <string name="faq_routing_title">Konfigurasi rute\antarmuka</string>
   <string name="faq_routing">Konfigurasi Perutean dan antarmuka tidak dilakukan melalui perintah tradisional ifconfig/route tapi menggunakan VPNService API. Ini menghasilkan konfigurasi perutean berbeda daripada pada OS lain. Konfigurasi hanya terdiri dari IP antarmuka terowongan dan jaringan yang harus dialihkan melalui antarmuka ini. Terutama tidak ada alamat peer partner atau alamat gateway diperlukan. Rute khusus untuk mencapai Server VPN (misalnya ditambahkan ketika menggunakan redirect-gateway) juga tidak diperlukan. Aplikasi akibatnya akan mengabaikan pengaturan ini ketika mengimpor konfigurasi. App memastikan dengan VPNService API bahwa sambungan ke server yang tidak diarahkan melalui terowongan VPN. Karena hanya jaringan tertentu yang akan dialihkan melalui terowongan, rute tambahan yang tidak menunjuk ke terowongan juga tidak didukung. (misalnya rute x.x.x.x y.y.y.y net_gateway). Tombol Tampilkan Informasi dalam layar catatan menunjukkan konfigurasi jaringan VPNService yang digunakan.</string>
   <string name="persisttun_summary">Jangan kembali ke status tidak ada koneksi VPN ketika OpenVPN mencoba terhubung kembali.</string>

@@ -19,8 +19,6 @@
   <string name="copyright_guicode">Cod sursă şi tracker probleme disponibile la http://code.google.com/p/ics-openvpn/</string>
   <string name="copyright_others">Acest program utilizează următoarele componente; a se vedea codul sursă pentru mai multe detalii despre licente</string>
   <string name="about">Despre</string>
-  <string name="about_summary">Despre OpenVPN pentru Android</string>
-  <string name="vpn_list_summary">Lista tuturor VPN-urilor configurate</string>
   <string name="vpn_list_title">Profile</string>
   <string name="vpn_type">Tip</string>
   <string name="pkcs12pwquery">Parola PKCS12</string>
@@ -96,11 +94,7 @@
   <string name="error">"Eroare:"</string>
   <string name="clear">Goleşte</string>
   <string name="info">info</string>
-  <string name="show_connection_details">Arată detaliile conexiunii</string>
-  <string name="last_openvpn_tun_config">Ultima configurare interfaţă din OpenVPN:</string>
   <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-  <string name="dns_server_info">Server DNS: %s</string>
-  <string name="dns_domain_info">Domeniu DNS: %s</string>
   <string name="routes_info">Rute: %s</string>
   <string name="routes_info6">Rute IPv6: %s</string>
   <string name="ip_not_cidr">S-au primit informaţiile despre interfaţă %1$s şi %2$s, presupun că a doua adresă este adresa peer a serverlui remote. Folosesc netmask /32 pentru IP local. Modul dat de OpenVPN este \"%3$s\".</string>
@@ -117,7 +111,6 @@
   <string name="tap_faq2">Din nou? Glumesti? Nu, modul tap chiar nu este suportat şi trimiţând mai multe email-uri în care îl cereţi nu va ajuta.</string>
   <string name="tap_faq3">A treia oară? De fapt, cineva ar putea scrie un emulator tap bazat pe tun ce ar adăuga informaţii din layer2 la trimitere şi are elimina informaţiile layer2 la primire. Dar acest emulator ar trebui sa implementeze ARP şi probabil un client DHCP. Nu sunt la curent cu cineva care lucrează la asta. Daca vreţi sa programaţi aceste funcţii mă puteţi contacta.</string>
   <string name="faq">FAQ</string>
-  <string name="faq_summary">Întrebări frecvente şi câteva sfaturi</string>
   <string name="copying_log_entries">Copiere linii jurnal</string>
   <string name="faq_copying">Pentru a copia o singură linie din jurnal apăsaţi şi menţineţi apăsat pe acea linie. Pentru a copia/trimite întreg jurnalul folosiţi opţiunea Trimite Jurnal. Folosiţi butonul de meniu hardware dacă nu este vizibil în GUI.</string>
   <string name="faq_shortcut">Shortcut pornire</string>
@@ -130,7 +123,6 @@
   <string name="settings_auth">Autentificare/criptare</string>
   <string name="file_explorer_tab">File Explorer</string>
   <string name="inline_file_tab">Fişier inline</string>
-  <string name="import_file">Import</string>
   <string name="error_importing_file">Eroare importare fişier</string>
   <string name="import_error_message">Nu s-a putut importa fişierul din filesystem</string>
   <string name="inline_file_data">[[date fişier inline]]</string>
@@ -217,7 +209,6 @@
   <string name="add_new_vpn_hint">Folosiţi icoana  &lt;img src=\"ic_menu_add\"/&gt; pentru a adăuga un nou VPN</string>
   <string name="vpn_import_hint">Folosiţi icoana &lt;img src=\"ic_menu_archive\"/&gt; pentru a importa un profil existent (.ovpn sau .conf) de pe cardul sd.</string>
   <string name="faq_hint">Verificaţi şi FAQ. Acolo este ghid rapid de utilizare.</string>
-  <string name="correcttls">Converteşte remote-tls de la formatul OpenVPN 2.2 la formatul 2.3</string>
   <string name="faq_routing_title">Configurare Rutare/Interfaţă</string>
   <string name="faq_routing">Rutarea şi configurarea interfeţei nu se face folosind comenzi ifconfig/route tradiţionale ci foloseşte API-ul VPNService. Aceasta rezultă într-o configurare de rutare diferită ca în alte SO. Configurarea constă doar din IP-ul interfeţei tunel şi a reţelelor ce trebuie rutate prin interfaţă. În special nu este nevoie de partener peer sau adresă gateway. Nu sunt necesare nici rute speciale pentru a ajunge la serverul VPN (de exemplu dacă folosiţi redirect-gateway). Aceastp aplicaţie va ignora aceste setări când importă o configurare. Aplicaţia se asigură cu API-ul VPNService că nu va ruta conexiunea la server prin tunelul VPN. Deoarece este suportat doar rutarea reţelelor specificate prin tunel alte rute ce nu pointează către tunel nu pot nici ele suportate (e.g. route x.x.x.x y.y.y.y net_gateway). Butonul de afişare informaţii din fereastra jurnal afişează configurarea de reţea curentă a VPNService.</string>
   <string name="persisttun_summary">Nu reveni la nici o conexiune VPN câtă vreme OpenVPN se reconectează.</string>

@@ -15,8 +15,6 @@
   <string name="client_pkcs12_title">Fitxer PKCS12</string>
   <string name="ca_title">Certificat CA</string>
   <string name="about">Quan a</string>
-  <string name="about_summary">Quan a OpenVPN per Android</string>
-  <string name="vpn_list_summary">Llista de VPNs configurades</string>
   <string name="vpn_type">Tipus</string>
   <string name="pkcs12pwquery">Contrasenya PKCS12</string>
   <string name="file_select">Selecciona…</string>
@@ -56,9 +54,6 @@
   <string name="error">"Error: "</string>
   <string name="clear">Neteja</string>
   <string name="info">info</string>
-  <string name="show_connection_details">Mostra els detalls de conexió</string>
-  <string name="dns_server_info">Servidor DNS: %s</string>
-  <string name="dns_domain_info">Domini DNS: %s</string>
   <string name="routes_info">Rutes: %s</string>
   <string name="routes_info6">Rutes IPv6: %s</string>
   <string name="send_logfile">Envia el fitxer de registre</string>
@@ -68,7 +63,6 @@
   <string name="tap_mode">Mode Tap</string>
   <string name="faq_tap_mode">No es pot utiltizar el mode tap amb la api no rootejada. L\'aplicació no suporta tap</string>
   <string name="faq">FAQ</string>
-  <string name="faq_summary">Preguntes frequents</string>
   <string name="copying_log_entries">Copiant entrades de registre</string>
   <string name="faq_shortcut">Acces directe per inciar</string>
   <string name="encryption">Encriptació</string>
@@ -76,7 +70,6 @@
   <string name="settings_auth">Autentificació/Encriptació</string>
   <string name="file_explorer_tab">Explorador de fitxers</string>
   <string name="inline_file_tab">Fitxer en linea</string>
-  <string name="import_file">Importa</string>
   <string name="error_importing_file">Error important el fitxer</string>
   <string name="import_error_message">No s\'ha pogut importar el fitxer del sistema de fitxers</string>
   <string name="inline_file_data">[[Inline file data]]</string>

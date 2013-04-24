@@ -19,8 +19,6 @@
   <string name="copyright_guicode">Codigo fuente y sistema de reporte de errores disponibles en http://code.google.com/p/ics-openvpn/</string>
   <string name="copyright_others">El programa utiliza los siguientes componentes. Vea los códigos fuentes para obtener más información sobre las licencias</string>
   <string name="about">Acerca de</string>
-  <string name="about_summary">Acerca de OpenVPN para Android</string>
-  <string name="vpn_list_summary">Lista de todas las VPN configuradas</string>
   <string name="vpn_list_title">Perfiles</string>
   <string name="vpn_type">Tipo</string>
   <string name="pkcs12pwquery">Contraseña PKCS12</string>
@@ -96,11 +94,7 @@
   <string name="error">"Error: "</string>
   <string name="clear">Borrar</string>
   <string name="info">información</string>
-  <string name="show_connection_details">Mostrar detalles de la conexión</string>
-  <string name="last_openvpn_tun_config">Última configuración de interfaz de OpenVPN:</string>
   <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-  <string name="dns_server_info">Servidor DNS: %s</string>
-  <string name="dns_domain_info">Dominio DNS: %s</string>
   <string name="routes_info">Rutas: %s</string>
   <string name="routes_info6">Rutas IPv6: %s</string>
   <string name="ip_not_cidr">Información de la interfaz obtenida %1$s and %2$s, asumiendo que la segunda dirección es una dirección equivalente del remoto. Usando una máscara de red /32 para la IP local. El modo dado por OpenVPN es \"%3$s\".</string>
@@ -117,7 +111,6 @@
   <string name="tap_faq2">¿Otra vez? ¿Estás bromeando? No, el modo tap realmente no está soportado y enviar más correos preguntando si será soportado no ayudará.</string>
   <string name="tap_faq3">¿Una tercera vez? En realidad se podría escribir un emulador de tap basado en tun que podria agregar información layer2 al enviar y obtener información layer2 al recibir. Pero este emulador tap tendría que implementar también ARP y posiblemente un cliente DHCP. No sé de alguien que este realizando trabajo en esa dirección. Ponte en contacto conmigo si deseas iniciar la codificación de esto.</string>
   <string name="faq">P+F</string>
-  <string name="faq_summary">Preguntas frecuentes y consejos</string>
   <string name="copying_log_entries">Copiar las entradas del registro</string>
   <string name="faq_copying">Para copiar una sola entrada de registro presione y mantenga pulsado sobre la entrada del registro. Para copiar y enviar el registro completo use la opción Enviar registro. Utilice el botón fisico de menú si no visible en la interfaz.</string>
   <string name="faq_shortcut">Acceso directo para iniciar</string>
@@ -130,7 +123,6 @@
   <string name="settings_auth">Autenticación/Cifrado</string>
   <string name="file_explorer_tab">Administrador de archivos</string>
   <string name="inline_file_tab">Archivo en línea</string>
-  <string name="import_file">Importar</string>
   <string name="error_importing_file">Error al importar el archivo</string>
   <string name="import_error_message">No se pudo importar el archivo del sistema de archivos</string>
   <string name="inline_file_data">[[Datos de archivo en línea]]</string>
@@ -217,7 +209,6 @@
   <string name="add_new_vpn_hint">Use el icono &lt;img src=\"ic_menu_add\"/&gt; para agregar una nueva VPN</string>
   <string name="vpn_import_hint">Use el icono &lt;img src=\"ic_menu_archive\"/&gt; para importar un perfil existente (.ovpn or .conf) de tu tarjeta.</string>
   <string name="faq_hint">Asegúrese de checar también las preguntas frecuentes. Hay una guía de inicio rápido.</string>
-  <string name="correcttls">Convertir formato remote-tls de OpenVPN 2.2 al formato 2.3</string>
   <string name="faq_routing_title">Configuración de enrutamiento o interfaz</string>
   <string name="faq_routing">La configuración de interfaz y enrutamiento no es hecha con el tradicional comando ifconfig/route si no que se usa la API VPNService. Esto resulta en una forma diferente  de enrutamiento que en otros sistemas operativos. La configuración solo consiste de la IP de la interfaz del túnel y las redes que deberían ser enrutadas sobre esta interfaz. Especialmente no se necesita la dirección asociada de pares ni la dirección de puerta de enlace. Las rutas especiales para alcanzar al servidor VPN (por ejemplo las agregadas cuando se usa redirect-gateway) tampoco son necesarias. La aplicación por consiguiente ignorara esas preferencias cuando importe una configuración. La aplicación se asegurara con la API VPNService que la conexión al servidor no sea enrutadas por el túnel VPN. Ya que solo especificando redes para ser enrutadas por el túnel es soportado. Las rutas extras que no apunten al túnel tampoco son soportadas (ej. route x.x.x.x y.y.y.y net_gateway).El botón mostrar información en la ventana de registro muestra la configuración actual de la configuración de red de VPNService.</string>
   <string name="persisttun_summary">No regresar a modo sin conexión VPN cuando OpenVPN esta volviendose a conectar.</string>

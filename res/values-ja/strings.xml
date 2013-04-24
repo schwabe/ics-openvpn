@@ -19,8 +19,6 @@
   <string name="copyright_guicode">ソースコードと問題管理は以下で： http://code.google.com/p/ics-openvpn/</string>
   <string name="copyright_others">プログラムは、次のコンポーネントを使用します。完全な詳細についてはソース上のライセンスを参照してください。</string>
   <string name="about">バージョン情報</string>
-  <string name="about_summary">OpenVPN for Androidについて</string>
-  <string name="vpn_list_summary">設定されたすべてのVPN</string>
   <string name="vpn_list_title">プロファイル</string>
   <string name="vpn_type">種別</string>
   <string name="pkcs12pwquery">PKCS12のパスワード</string>
@@ -94,11 +92,7 @@
   <string name="error">"エラー:"</string>
   <string name="clear">クリア</string>
   <string name="info">情報</string>
-  <string name="show_connection_details">接続の詳細を表示</string>
-  <string name="last_openvpn_tun_config">OpenVPNから設定した最後のインターフェイス:</string>
   <string name="local_ip_info">ローカル IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-  <string name="dns_server_info">DNS サーバー: %s</string>
-  <string name="dns_domain_info">DNS ドメイン: %s</string>
   <string name="routes_info">経路：%s</string>
   <string name="routes_info6">経路 IPv6：%s</string>
   <string name="ip_not_cidr">インターフェース情報として[%1$s]と[%2$s]を取得しました。2つめのアドレスはリモート側のピアアドレスです。32ビットマスクをローカルIPに使用します。 OpenVPNのモードは[%3$s]です。</string>
@@ -116,7 +110,6 @@
   <string name="tap_faq3">３回目です。本当のところ、TUN上で動くレイヤ2エミュレータを書くことはできました。(送信時の情報追加と受信時の情報削除で)。しかしこのエミュレータはARPやおそらくはDHCPをも実装しなければならないでしょう。誰もこのことに気がついていません。もしあなたがこの機能を作る気になったのであれば、どうぞ私に連絡してください。
 </string>
   <string name="faq">よくある質問</string>
-  <string name="faq_summary">よくある質問といくつかのアドバイス</string>
   <string name="copying_log_entries">ログ エントリのコピー</string>
   <string name="faq_copying">1行のログエントリをコピーするには、そのエントリをタッチし続けます。コピー／送信するには「ログエントリを送信」を使用します。GUIで表示されない場合はハードウェアのメニューボタンを使用してください。</string>
   <string name="faq_shortcut">起動ショートカット</string>
@@ -129,7 +122,6 @@
   <string name="settings_auth">認証/暗号化</string>
   <string name="file_explorer_tab">ファイルを選択</string>
   <string name="inline_file_tab">インライン ファイル</string>
-  <string name="import_file">インポート</string>
   <string name="error_importing_file">ファイルのインポート エラー</string>
   <string name="import_error_message">ファイルシステムからファイルをインポートできませんでした。</string>
   <string name="inline_file_data">[インライン ファイル データ]</string>
@@ -240,7 +232,6 @@ OpenVPNの接続を保証するためには、アプリケーションを高い�
   <string name="add_new_vpn_hint">新しいVPNを追加するには &lt;img src=\"ic_menu_add\"/&gt; のアイコンを使用します</string>
   <string name="vpn_import_hint">SDカードからプロファイル(.ovpnや.conf)をインポートするには &lt;img src=\"ic_menu_archive\"/&gt; のアイコンを使用します。</string>
   <string name="faq_hint">FAQを確認してください。クイックスタートガイドがあります。</string>
-  <string name="correcttls">リモートTLSをOpenVPN 2.2形式から2.3形式に変換します</string>
   <string name="faq_routing_title">経路情報／インターフェース設定</string>
   <string name="faq_routing">経路設定とインターフェース設定は伝統的なifconfig/routeコマンドでは行われず、VPNService APIを使用して行われます。
 この結果は、ほかのOSの経路設定とは異なります。

@@ -19,8 +19,6 @@
   <string name="copyright_guicode">Початковий код і відстеження проблем доступні по http://code.google.com/p/ics-openvpn/</string>
   <string name="copyright_others">Ця програма використовує такі компоненти; перегляньте вихідний код для повної інформації про ліцензії</string>
   <string name="about">Про</string>
-  <string name="about_summary">Про OpenVPN для Android</string>
-  <string name="vpn_list_summary">Список всіх налаштованих VPN</string>
   <string name="vpn_list_title">Профілі</string>
   <string name="vpn_type">Тип</string>
   <string name="pkcs12pwquery">Пароль PKCS12</string>
@@ -56,6 +54,7 @@
   <string name="custom_config_summary">Укажіть налаштовувані параметри. Використовуйте з обережністю!</string>
   <string name="route_rejected">Маршрут відхилено Андроїдом</string>
   <string name="cancel_connection">Від\'єднати</string>
+  <string name="cancel_connection_long">Відключити VPN</string>
   <string name="clear_log">очистити журнал</string>
   <string name="title_cancel">Підтвердження скасування</string>
   <string name="cancel_connection_query">Відключення активних VPN/скасувати спробу підключення?</string>
@@ -96,11 +95,9 @@
   <string name="error">"Помилка: "</string>
   <string name="clear">Очистити</string>
   <string name="info">Інформація</string>
-  <string name="show_connection_details">Показати відомості про підключення</string>
-  <string name="last_openvpn_tun_config">Останній інтерфейс конфігурації з OpenVPN:</string>
+  <string name="last_openvpn_tun_config">Відкриття tun інтерфейсу:</string>
   <string name="local_ip_info">Адреса IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-  <string name="dns_server_info">DNS-сервер: %s</string>
-  <string name="dns_domain_info">DNS домен: %s</string>
+  <string name="dns_server_info">DNS-сервер: %1$s, Домен: %2$s</string>
   <string name="routes_info">Маршрути: %s</string>
   <string name="routes_info6">Маршрути IPv6: %s</string>
   <string name="ip_not_cidr">Отримано інформацію інтерфейсу %1$s і %2$s, друга адреса є віддаленою адресою каналу. Використовується мережева маска /32 для локальної IP-адреси. Режим, встановлений OpenVPN: \"%3$s\".</string>
@@ -117,7 +114,6 @@
   <string name="tap_faq2">Знову? Жартуєш? Ні, TAP режим дійсно не підтримується і надсилання все більше листів з питаннями чи це буде підтримуватись не допоможе.</string>
   <string name="tap_faq3">Втретє? Насправді можна було б написати TAP емулятор на основі TUN який додавав інформацію 2 рівня при відправці і віднімав її при отриманні. Проте для цього TAP емулятора потрібно реалізувати ARP і можливо DHCP клієнта. Я не знаю будь-кого хто міг би цим зайнятися. Зв’яжіться зі мною, якщо ви хочете це зробити.</string>
   <string name="faq">ЧаПи</string>
-  <string name="faq_summary">Часті питання та поради</string>
   <string name="copying_log_entries">Копіювання записів журналу</string>
   <string name="faq_copying">Для копіювання одного запису журналу натисніть і утримуйте цей запис. Щоб скопіювати/надіслати увесь журнал використовуйте параметр Надіслати журнал. Використовуйте апаратну кнопку меню, якщо ви не бачите у графічному інтерфейсі.</string>
   <string name="faq_shortcut">Ярлик для запуску</string>
@@ -130,7 +126,6 @@
   <string name="settings_auth">Автентифікація/Шифрування</string>
   <string name="file_explorer_tab">Провідник файлів</string>
   <string name="inline_file_tab">Вбудований файл</string>
-  <string name="import_file">Імпорт</string>
   <string name="error_importing_file">Помилка імпорту файлу</string>
   <string name="import_error_message">Не вдалося імпортувати файл із файлової системи</string>
   <string name="inline_file_data">[[Вбудований файл даних]]</string>
@@ -217,7 +212,6 @@
   <string name="add_new_vpn_hint">Використовуйте &lt;img src=\"ic_menu_add\"/&gt; піктограму для додання нової VPN</string>
   <string name="vpn_import_hint">Використовуйте &lt;img src=\"ic_menu_archive\"/&gt; піктограму для імпорту існуючого (.ovpn or .conf) профілю з вашої карти пам\'яті.</string>
   <string name="faq_hint">Не забудьте заглянути у ЧаП. Там також є короткий посібник.</string>
-  <string name="correcttls">Перетворити віддалений tls-формат з OpenVPN 2.2 на 2.3</string>
   <string name="faq_routing_title">Конфігурація маршрутизації/інтерфейсу</string>
   <string name="faq_routing">Маршрутизація та конфігурація інтерфейсу не зроблені через традиційну ifconfig / route команду, а використовують VPNService API. Це зроблено через те, що конфігурування маршрутизації відрізняється в різних операційних системах. Конфігурація складається тільки з IP інтерфейсу тунелювання і мереж, які повинні маршрутизуватися через цей інтерфейс. Особливо не потрібна адреса каналу (peer) або адреса шлюзу. Спеціальні марщрути для досягнення VPN сервера (для прикладу, додані, коли використаний шлюз перенаправлення) більше не потрібні. Отже, програма буде ігнорувати ці установки при імпорті конфігурації. Така поведінка з використанням VPNService API гарантує, що з\'єднання до сервера не буде маршрутизуватися в VPN тунель. Оскільки підтримуються тільки такі мережі, які маршрутизуються через тунель, маршрути, які не вказують на тунель, не можуть підтримуватися (наприклад route x.x.x.x y.y.y.y net_gateway). Кнопка \"Показати інформацію\" у вікні журналу показує поточну мережеву конфігурацію VPNService.</string>
   <string name="persisttun_summary">Не повертатися до жодного VPN з\'єднання, коли OpenVPN перепідключається.</string>
@@ -276,4 +270,7 @@
   <string name="rdn_prefix">RDN префікс</string>
   <string name="tls_remote_deprecated">tls-remote (ЗАСТАРІЛЕ)</string>
   <string name="help_translate">Ви можете допомогти в перекладі, відвідавши http://crowdin.net/project/ics-openvpn/invite</string>
+  <string name="remote_trust">Я довіряю цьому додатку.</string>
+  <string name="no_external_app_allowed">Не дозволяється використовувати зовнішнє API</string>
+  <string name="allowed_apps">Дозволенi додатки: %s</string>
 </resources>

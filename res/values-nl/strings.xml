@@ -15,8 +15,6 @@
   <string name="client_pkcs12_title">PKCS12 Bestand</string>
   <string name="ca_title">CA Certificaat</string>
   <string name="about">Over</string>
-  <string name="about_summary">Over OpenVPN voor Android</string>
-  <string name="vpn_list_summary">Lijst van alle geconfigureerde VPN verbindingen</string>
   <string name="vpn_type">Type</string>
   <string name="pkcs12pwquery">PKCS12 Wachtwoord</string>
   <string name="file_select">Selecteer…</string>
@@ -72,11 +70,7 @@
   <string name="error">"Fout:"</string>
   <string name="clear">Leeg maken</string>
   <string name="info">info</string>
-  <string name="show_connection_details">Details van de verbinding weergeven</string>
-  <string name="last_openvpn_tun_config">Laatste interfaceconfiguratie van OpenVPN:</string>
   <string name="local_ip_info">Lokaal IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-  <string name="dns_server_info">DNS Server: %s</string>
-  <string name="dns_domain_info">DNS Domein: %s</string>
   <string name="routes_info">Routes: %s</string>
   <string name="routes_info6">Routes IPv6: %s</string>
   <string name="version_info">%1$s %2$s</string>

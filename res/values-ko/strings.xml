@@ -19,8 +19,6 @@
   <string name="copyright_guicode">소스 코드와 문제 추적기는 http://code.google.com/p/ics-openvpn/에서 사용할 수 있습니다</string>
   <string name="copyright_others">프로그램은 다음 구성 요소를 사용합니다. 라이선스에 대 한 자세한 내용은 소스를 참조 하십시오</string>
   <string name="about">소개</string>
-  <string name="about_summary">안드로이드용 OpenVPN 소개</string>
-  <string name="vpn_list_summary">설정된 VPN의 목록</string>
   <string name="vpn_list_title">프로파일</string>
   <string name="vpn_type">유형</string>
   <string name="pkcs12pwquery">PKCS12 암호</string>
@@ -96,11 +94,7 @@
   <string name="error">"오류:"</string>
   <string name="clear">지우기</string>
   <string name="info">정보</string>
-  <string name="show_connection_details">연결 세부 정보 보기</string>
-  <string name="last_openvpn_tun_config">Openvpn에서 마지막 인터페이스 구성:</string>
   <string name="local_ip_info">로컬 IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-  <string name="dns_server_info">DNS 서버: %s</string>
-  <string name="dns_domain_info">DNS 도매인: %s</string>
   <string name="routes_info">라우트: %s</string>
   <string name="routes_info6">라우트 IPv6: %s</string>
   <string name="ip_not_cidr">인터페이스 정보 %1$s와 %2$s에 있어, 두 번째 주소를 원격 피어 주소로 가정 하겠습니다. 로컬 IP의 넷마스크로는 /32를 사용하겠습니다. OpenVPN에 의해 주어진 모드는 \"%3$s\" 입니다.</string>
@@ -117,7 +111,6 @@
   <string name="tap_faq2">또? 농담인가요? 아니요 정말로 tap 모드는 지원이 불가능합니다. 계속해서 메일을 보내면서 요구하신다고 도움될 일이 아닙니다.</string>
   <string name="tap_faq3">3번째로? 누군가가 송신때 레이어2 정보를 추가하고 수신때 레이어2정보를 때내는 tun을 이용한 tap 에뮬레이터를 제작할 수 있습니다. 하지만 이것만이 아닌 ARP 그리고 어쩌면 DHCP 클라이언트 까지도 구현해야합니다. 본인은 이 같은 작업을 하는 분을 알고있지 않습니다. 코딩을 시작하려고 하시는 분이 계시면 제게 연락주십시오.</string>
   <string name="faq">자주 묻는 질문</string>
-  <string name="faq_summary">자주 묻는 질문 및 몇 가지 조언</string>
   <string name="copying_log_entries">로그 항목을 복사</string>
   <string name="faq_copying">단일 로그 항목을 복사 하려면 로그 항목을 누르고 계세요. 전체 로그를 복사/전송 하려면  로그 보내기 옵션을 사용하십시오. GUI에 표시 되지 않는 경우 하드웨어 메뉴 버튼를 사용하세요.</string>
   <string name="faq_shortcut">시작으로 바로 가기</string>
@@ -130,7 +123,6 @@
   <string name="settings_auth">인증/암호화</string>
   <string name="file_explorer_tab">파일 탐색기</string>
   <string name="inline_file_tab">인라인 파일</string>
-  <string name="import_file">가져오기</string>
   <string name="error_importing_file">파일 가져오기 오류</string>
   <string name="import_error_message">파일 시스템에서 파일을 가져올 수 없습니다.</string>
   <string name="inline_file_data">[[인라인 파일 데이터]]</string>
@@ -217,7 +209,6 @@
   <string name="add_new_vpn_hint">이 &lt;img src=\"ic_menu_add\"/&gt; 아이콘을 사용하여 VPN을 추가 하세요</string>
   <string name="vpn_import_hint">이 &lt;img src=\"ic_menu_archive\"/&gt; 아이콘을 사용하여 귀하의 sdcard에서 기존 (.ovpn 또는 .conf) 프로파일을 가져오세요.</string>
   <string name="faq_hint">꼭 FAQ를 확인 하세요. 빠른 시작 가이드가 있습니다.</string>
-  <string name="correcttls">remote-tls 포맷을 OpenVPN 2.2에서 2.3 형식으로 변환</string>
   <string name="faq_routing_title">라우팅/인터페이스 설정</string>
   <string name="faq_routing">라우팅과 인터페이스 설정은 일반적인 ifconfig/route 명령어를 사용하지 않고 VPNService API를 사용합니다. 그 결과 타 OS들과 비교해 다른 라우팅 설정이 요구됩니다. 설정은 터널 인터페이스의 IP와 이 인터페이스로 라우팅이 되야되는 네트워크만으로 이루어 저야 합니다. 특히 피어 파트너 주소 또는 게이트웨이 주소는 요구되지 않습니다. VPN 서버에 도달하기 위한 특별한 라우트 (예를 들어 redirect-gateway를 사용할때 추가하는 경우) 역시 필요하지 않습니다. 따라서 응용프로그램 설정을 가져올 때 이러한 설정을 무시 합니다. 앱은 VPNService API를 사용하여 서버와의 연결이 VPN 터널을 통해 라우팅 되지 않도록 합니다. 터널을 통해 라우팅이 되야되는 네트워크만 지정할 수 있음으로 터널을 통하지 않는 추가 라우팅 기능도 지원하지 않습니다. (예: route x.x.x.x y.y.y.y net_gateway). 로그 위도우에 정보 보기 버튼은 VPNService 네트워크 설정의 현재 설정을 표시 합니다.</string>
   <string name="persisttun_summary">OpenVPN을 다시 연결 하는 경우 VPN 연결 없음으로 표기하지 마십시오.</string>

@@ -3,13 +3,13 @@ LOCAL_PATH:= $(call my-dir)/
 include $(CLEAR_VARS)
 
 LOCAL_LDLIBS := -lz 
-LOCAL_C_INCLUDES := openssl/include lzo/include openssl/crypto openssl openvpn/src/compat openvpn/src/openvpn openvpn/include google-breakpad/src google-breakpad/src/common/android/include polarssl/include
+LOCAL_C_INCLUDES := openssl/include lzo/include openssl/crypto openssl openvpn/src/compat openvpn/src/openvpn openvpn/include google-breakpad/src google-breakpad/src/common/android/include polarssl/include snappy
 
 
 #LOCAL_STATIC_LIBRARIES :=  libssl_static libcrypto_static  liblzo-static
 
 LOCAL_CFLAGS= -DHAVE_CONFIG_H -DTARGET_ABI=\"${TARGET_ABI}\"
-LOCAL_STATIC_LIBRARIES :=  liblzo-static
+LOCAL_STATIC_LIBRARIES :=  liblzo-static snappy-static
 
 ifeq ($(USE_POLAR),1)
 LOCAL_STATIC_LIBRARIES +=  polarssl-static
@@ -99,7 +99,10 @@ LOCAL_SRC_FILES:= \
 	src/openvpn/ssl_verify_openssl.c \
 	src/openvpn/ssl_verify_polarssl.c \
 	src/openvpn/status.c \
-	src/openvpn/tun.c  
+	src/openvpn/tun.c \
+	src/openvpn/snappy.c \
+	src/openvpn/comp.c \
+	src/openvpn/compstub.c
 
 ifeq ($(WITH_BREAKPAD),1)
 LOCAL_SRC_FILES+=src/openvpn/breakpad.cpp

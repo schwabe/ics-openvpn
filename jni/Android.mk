@@ -4,6 +4,7 @@ JNI_DIR := $(call my-dir)
 #USE_POLAR=1
 
 include lzo/Android.mk
+include snappy/Android.mk
 
 include openssl/Android.mk
 

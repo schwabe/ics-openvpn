@@ -98,6 +98,8 @@ CompoundButton.OnCheckedChangeListener, DialogInterface.OnClickListener {
 
 	@Override
 	public void onBackPressed() {
+		setResult(RESULT_CANCELED);
+		finish();
 	}
 
 	@Override
@@ -116,6 +118,7 @@ CompoundButton.OnCheckedChangeListener, DialogInterface.OnClickListener {
 		}
 		
 		if (which == DialogInterface.BUTTON_NEGATIVE) {
+			setResult(RESULT_CANCELED);
 			finish();
 		}
 	}

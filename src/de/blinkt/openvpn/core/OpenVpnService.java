@@ -59,7 +59,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	private int mMtu;
 	private String mLocalIPv6=null;
-	private NetworkSateReceiver mNetworkStateReceiver;
+	private NetworkStateReceiver mNetworkStateReceiver;
 
 	private boolean mDisplayBytecount=false;
 
@@ -229,7 +229,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	synchronized void registerNetworkStateReceiver(OpenVPNMangement magnagement) {
 		// Registers BroadcastReceiver to track network connection changes.
 		IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-		mNetworkStateReceiver = new NetworkSateReceiver(magnagement);
+		mNetworkStateReceiver = new NetworkStateReceiver(magnagement);
 		registerReceiver(mNetworkStateReceiver, filter);
 	}
 

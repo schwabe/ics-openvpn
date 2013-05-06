@@ -10,13 +10,13 @@ import android.net.NetworkInfo.State;
 import android.preference.PreferenceManager;
 import de.blinkt.openvpn.R;
 
-public class NetworkSateReceiver extends BroadcastReceiver {
+public class NetworkStateReceiver extends BroadcastReceiver {
 	private int lastNetwork=-1;
 	private OpenVPNMangement mManangement;
 
 	private String lastStateMsg=null;
 	
-	public NetworkSateReceiver(OpenVPNMangement magnagement) {
+	public NetworkStateReceiver(OpenVPNMangement magnagement) {
 		super();
 		mManangement = magnagement;
 	}

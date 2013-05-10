@@ -335,6 +335,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			} catch (NameNotFoundException e) {
 			}
 			env.put("UV_ICSOPENVPN_VERSION", version);
+			env.put("UV_ICSOPENVPN_PKG", getPackageName());
 			processThread = new OpenVPNThread(this, argv, env, nativelibdir);
 		}
 

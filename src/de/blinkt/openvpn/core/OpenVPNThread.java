@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import android.util.Log;
 import de.blinkt.openvpn.R;
@@ -25,8 +27,9 @@ public class OpenVPNThread implements Runnable {
 	private String mNativeDir;
 	private OpenVpnService mService;
 	private String mDumpPath;
+	private Map<String, String> mProcessEnv;
 
-	public OpenVPNThread(OpenVpnService service,String[] argv, String nativelibdir)
+	public OpenVPNThread(OpenVpnService service,String[] argv, Map<String,String> processEnv, String nativelibdir)
 	{
 		mArgv = argv;
 		mNativeDir = nativelibdir;
@@ -43,7 +46,7 @@ public class OpenVPNThread implements Runnable {
 	public void run() {
 		try {
 			Log.i(TAG, "Starting openvpn");			
-			startOpenVPNThreadArgs(mArgv);
+			startOpenVPNThreadArgs(mArgv, mProcessEnv);
 			Log.i(TAG, "Giving up");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,7 +84,7 @@ public class OpenVPNThread implements Runnable {
 		}
 	}
 	
-	private void startOpenVPNThreadArgs(String[] argv) {
+	private void startOpenVPNThreadArgs(String[] argv,Map<String, String> env) {
 		LinkedList<String> argvlist = new LinkedList<String>();
 		
 		for(String arg:argv)
@@ -90,20 +93,14 @@ public class OpenVPNThread implements Runnable {
 		ProcessBuilder pb = new ProcessBuilder(argvlist);
 		// Hack O rama
 		
-		// Hack until I find a good way to get the real library path
-		String applibpath = argv[0].replace("/cache/" + VpnProfile.MINIVPN , "/lib");
-		
-		String lbpath = pb.environment().get("LD_LIBRARY_PATH");
-		if(lbpath==null) 
-			lbpath = applibpath;
-		else
-			lbpath = lbpath + ":" + applibpath;
-		
-		if (!applibpath.equals(mNativeDir)) {
-			lbpath = lbpath + ":" + mNativeDir;
-		}
+		String lbpath = genLibraryPath(argv, pb);
 		
 		pb.environment().put("LD_LIBRARY_PATH", lbpath);
+
+		// Add extra variables
+		for(Entry<String,String> e:env.entrySet()){
+			pb.environment().put(e.getKey(), e.getValue());
+		}
 		pb.redirectErrorStream(true);
 		try {
 			mProcess = pb.start();
@@ -132,5 +129,21 @@ public class OpenVPNThread implements Runnable {
 		}
 		
 		
+	}
+
+	private String genLibraryPath(String[] argv, ProcessBuilder pb) {
+		// Hack until I find a good way to get the real library path
+		String applibpath = argv[0].replace("/cache/" + VpnProfile.MINIVPN , "/lib");
+		
+		String lbpath = pb.environment().get("LD_LIBRARY_PATH");
+		if(lbpath==null) 
+			lbpath = applibpath;
+		else
+			lbpath = lbpath + ":" + applibpath;
+		
+		if (!applibpath.equals(mNativeDir)) {
+			lbpath = lbpath + ":" + mNativeDir;
+		}
+		return lbpath;
 	}
 }

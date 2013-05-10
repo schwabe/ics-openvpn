@@ -3,7 +3,9 @@ package de.blinkt.openvpn.core;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Vector;
 
 import android.Manifest.permission;
@@ -15,6 +17,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
@@ -323,7 +327,15 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 
 		} else {
-			processThread = new OpenVPNThread(this, argv,nativelibdir);
+			HashMap<String, String> env = new HashMap<String, String>();
+			String version="unknown";
+			try {
+				PackageInfo packageinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+				version = packageinfo.versionName;
+			} catch (NameNotFoundException e) {
+			}
+			env.put("UV_ICSOPENVPN_VERSION", version);
+			processThread = new OpenVPNThread(this, argv, env, nativelibdir);
 		}
 
 		mProcessThread = new Thread(processThread, "OpenVPNProcessThread");

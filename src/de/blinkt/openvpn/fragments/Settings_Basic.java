@@ -116,7 +116,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		return mView;
 	}
 
-	
+
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -138,7 +138,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 			// Private key files may result in showing/hiding the private key password dialog
 			if(fsl==mClientKey) {
 				changeType(mType.getSelectedItemPosition());
-			}
+			} 
 		}
 
 	}
@@ -183,13 +183,13 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 			if(mProfile.requireTLSKeyPassword())
 				mView.findViewById(R.id.key_password_layout).setVisibility(View.VISIBLE);
 			break;
-			
+
 		case VpnProfile.TYPE_USERPASS_PKCS12:
 			mView.findViewById(R.id.userpassword).setVisibility(View.VISIBLE);
 		case VpnProfile.TYPE_PKCS12:
 			mView.findViewById(R.id.pkcs12).setVisibility(View.VISIBLE);
 			break;
-			
+
 		case VpnProfile.TYPE_STATICKEYS:
 			mView.findViewById(R.id.statickeys).setVisibility(View.VISIBLE);
 			break;

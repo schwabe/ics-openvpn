@@ -45,6 +45,7 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.core.NativeUtils;
 import de.blinkt.openvpn.core.OpenVPN;
 import de.blinkt.openvpn.core.OpenVpnService;
+import de.blinkt.openvpn.core.X509Utils;
 
 public class VpnProfile implements  Serializable{
 	// Note that this class cannot be moved to core where it belongs since 
@@ -52,7 +53,7 @@ public class VpnProfile implements  Serializable{
 	// The Serializable documentation mentions that class name change are possible
 	// but the how is unclear
 	// 
-	
+
 	private static final long serialVersionUID = 7085688938959334563L;
 	public static final int TYPE_CERTIFICATES=0;
 	public static final int TYPE_PKCS12=1;
@@ -79,7 +80,7 @@ public class VpnProfile implements  Serializable{
 	public transient String mTransientPW=null;
 	public transient String mTransientPCKS12PW=null;
 	private transient PrivateKey mPrivateKey;
-	
+
 	// variable named wrong and should haven beeen transient
 	// but needs to keep wrong name to guarante loading of old
 	// profiles
@@ -590,7 +591,7 @@ public class VpnProfile implements  Serializable{
 
 			if(nonNull(mCaFilename)) {
 				try {
-					Certificate cacert = getCacertFromFile();
+					Certificate cacert = X509Utils.getCertificateFromFile(mCaFilename);
 					X509Certificate[] newcachain = new X509Certificate[cachain.length+1];
 					for(int i=0;i<cachain.length;i++)
 						newcachain[i]=cachain[i];
@@ -645,18 +646,6 @@ public class VpnProfile implements  Serializable{
 		}
 		return null;
 	}
-	private Certificate getCacertFromFile() throws FileNotFoundException, CertificateException {
-		CertificateFactory certFact = CertificateFactory.getInstance("X.509");
-
-		InputStream inStream;
-
-		if(mCaFilename.startsWith(INLINE_TAG))
-			inStream = new ByteArrayInputStream(mCaFilename.replace(INLINE_TAG,"").getBytes());
-		else 
-			inStream = new FileInputStream(mCaFilename);
-
-		return certFact.generateCertificate(inStream);
-	}
 
 
 	//! Return an error if somethign is wrong
@@ -680,6 +669,8 @@ public class VpnProfile implements  Serializable{
 		return R.string.no_error_found;
 
 	}
+
+
 
 	//! Openvpn asks for a "Private Key", this should be pkcs12 key
 	//

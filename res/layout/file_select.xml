@@ -51,5 +51,17 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:text="@string/file_nothing_selected" />
-</RelativeLayout>
 
+    <TextView
+        android:id="@+id/file_selected_description"
+        android:layout_width="wrap_content"
+        android:textIsSelectable="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/file_selected_item"
+        android:layout_marginLeft="16dip"
+        android:layout_toLeftOf="@+id/file_select_button"
+        android:ellipsize="end"
+        android:singleLine="true" />
+
+</RelativeLayout>

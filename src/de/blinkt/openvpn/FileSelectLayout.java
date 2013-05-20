@@ -1,5 +1,6 @@
 package de.blinkt.openvpn;
 
+import de.blinkt.openvpn.core.X509Utils;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -22,19 +23,21 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 	private boolean mBase64Encode;
 	private String mTitle;
 	private boolean mShowClear;
+	private TextView mDataDetails;
 
 	public FileSelectLayout( Context context,AttributeSet attrset) {
 		super(context,attrset);
 		inflate(getContext(), R.layout.file_select, this);
-		
+
 		TypedArray ta = context.obtainStyledAttributes(attrset,R.styleable.FileSelectLayout);
-		
+
 		mTitle = ta.getString(R.styleable.FileSelectLayout_title);
-		
+
 		TextView tview = (TextView) findViewById(R.id.file_title);
 		tview.setText(mTitle);
-		
+
 		mDataView = (TextView) findViewById(R.id.file_selected_item);
+		mDataDetails = (TextView) findViewById(R.id.file_selected_description);
 		mSelectButton = (Button) findViewById(R.id.file_select_button);
 		mSelectButton.setOnClickListener(this);
 
@@ -46,7 +49,7 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 		mTaskId = i;
 		mFragment = fragment;
 	}
-	
+
 	public void getCertificateFileDialog() {
 		Intent startFC = new Intent(getContext(),FileSelect.class);
 		startFC.putExtra(FileSelect.START_DATA, mData);
@@ -58,20 +61,24 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 		mFragment.startActivityForResult(startFC,mTaskId);
 	}
 
-	
+
 	public String getData() {
 		return mData;
 	}
 
 	public void setData(String data) {
 		mData = data;
-		if(data==null) 
+		if(data==null) { 
 			mDataView.setText(mFragment.getString(R.string.no_data));
-		else if(mData.startsWith(VpnProfile.INLINE_TAG))
-			mDataView.setText(R.string.inline_file_data);
-		else
-			mDataView.setText(data);
-		
+			mDataDetails.setText("");
+		}else {
+			if(mData.startsWith(VpnProfile.INLINE_TAG))
+				mDataView.setText(R.string.inline_file_data);
+			else
+				mDataView.setText(data);
+			mDataDetails.setText(X509Utils.getCertificateFriendlyName(data));
+		}
+
 	}
 
 	@Override
@@ -88,5 +95,5 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 	public void setShowClear() {
 		mShowClear=true;
 	}
-	
+
 }

@@ -34,6 +34,7 @@ public class OpenVPNThread implements Runnable {
 		mArgv = argv;
 		mNativeDir = nativelibdir;
 		mService = service;
+		mProcessEnv = processEnv; 
 	}
 	
 	public void stopProcess() {
@@ -54,7 +55,8 @@ public class OpenVPNThread implements Runnable {
 		} finally {
 			int exitvalue = 0;
 			try {
-				 exitvalue = mProcess.waitFor();
+				if (mProcess!=null)
+					exitvalue = mProcess.waitFor();
 			} catch ( IllegalThreadStateException ite) {
 				OpenVPN.logError("Illegal Thread state: " + ite.getLocalizedMessage());
 			} catch (InterruptedException ie) {

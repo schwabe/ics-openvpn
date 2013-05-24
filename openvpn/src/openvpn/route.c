@@ -503,6 +503,7 @@ route_list_add_vpn_gateway (struct route_list *rl,
 			    struct env_set *es,
 			    const in_addr_t addr)
 {
+  ASSERT(rl);
   rl->spec.remote_endpoint = addr;
   rl->spec.flags |= RTSA_REMOTE_ENDPOINT;
   setenv_route_addr (es, "vpn_gateway", rl->spec.remote_endpoint, -1);
@@ -1343,15 +1344,10 @@ add_route (struct route *r,
   status = openvpn_execve_check (&argv, es, 0, "ERROR: Linux route add command failed");
 
 #elif defined (TARGET_ANDROID)
+  struct buffer out = alloc_buf_gc (64, &gc);
 
-    struct user_pass up;    
-    struct buffer out = alloc_buf_gc (64, &gc);
-
-    buf_printf (&out, "%s %s", network, netmask);
-
-    strcpy(up.username, buf_bptr(&out));
-    management_query_user_pass(management, &up , "ROUTE", GET_USER_PASS_NEED_OK,(void*) 0);
-
+  buf_printf (&out, "%s %s", network, netmask);
+  management_android_control (management, "ROUTE", buf_bptr(&out));
 
 #elif defined (WIN32)
   {
@@ -1628,13 +1624,11 @@ add_route_ipv6 (struct route_ipv6 *r6, const struct tuntap *tt, unsigned int fla
   status = openvpn_execve_check (&argv, es, 0, "ERROR: Linux route -6/-A inet6 add command failed");
 
 #elif defined (TARGET_ANDROID)
-    struct user_pass up;    
     struct buffer out = alloc_buf_gc (64, &gc);
-    
+
     buf_printf (&out, "%s/%d", network, r6->netbits);
-    
-    strcpy(up.username, buf_bptr(&out));
-    management_query_user_pass(management, &up , "ROUTE6", GET_USER_PASS_NEED_OK,(void*) 0);
+
+    management_android_control (management, "ROUTE6", buf_bptr(&out));
 
 #elif defined (WIN32)
 

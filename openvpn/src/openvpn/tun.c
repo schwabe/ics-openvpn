@@ -773,39 +773,33 @@ do_ifconfig (struct tuntap *tt,
 
 #endif /*ENABLE_IPROUTE*/
 #elif defined(TARGET_ANDROID)
-        
-        
-        if (do_ipv6) {
-            struct user_pass up6;    
-            struct buffer out6 = alloc_buf_gc (64, &gc);
-            buf_printf (&out6, "%s/%d", ifconfig_ipv6_local,tt->netbits_ipv6);
-            strcpy(up6.username, buf_bptr(&out6));
-            management_query_user_pass(management, &up6 , "IFCONFIG6", GET_USER_PASS_NEED_OK,(void*) 0);
-        }
 
-        struct user_pass up;    
-        struct buffer out = alloc_buf_gc (64, &gc);
-        char* top;
-        switch(tt->topology) {
-            case TOP_NET30:
-                top = "net30";
-                break;
-            case TOP_P2P:
-                top="p2p";
-                break;
-            case TOP_SUBNET:
-                top="subnet";
-                break;
-            default:
-                top="undef";
-        }
-        
-        buf_printf (&out, "%s %s %d %s", ifconfig_local, ifconfig_remote_netmask, tun_mtu,top);
-        strcpy(up.username, buf_bptr(&out));
-        management_query_user_pass(management, &up , "IFCONFIG", GET_USER_PASS_NEED_OK,(void*) 0);
+      if (do_ipv6) {
+          struct buffer out6 = alloc_buf_gc (64, &gc);
+          buf_printf (&out6, "%s/%d", ifconfig_ipv6_local,tt->netbits_ipv6);
+          management_android_control(management, "IFCONFIG6",buf_bptr(&out6));
+      }
 
+      struct buffer out = alloc_buf_gc (64, &gc);
 
-        
+      char* top;
+      switch(tt->topology) {
+      case TOP_NET30:
+          top="net30";
+          break;
+      case TOP_P2P:
+          top="p2p";
+          break;
+      case TOP_SUBNET:
+          top="subnet";
+          break;
+      default:
+          top="undef";
+      }
+
+      buf_printf (&out, "%s %s %d %s", ifconfig_local, ifconfig_remote_netmask, tun_mtu, top);
+      management_android_control (management, "IFCONFIG", buf_bptr(&out));
+
 #elif defined(TARGET_SOLARIS)
 
       /* Solaris 2.6 (and 7?) cannot set all parameters in one go...
@@ -1414,33 +1408,33 @@ close_tun_generic (struct tuntap *tt)
 void
 open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tuntap *tt)
 {
-    int i;
-    struct user_pass up;
-    struct gc_arena gc = gc_new ();
-    
-    for (i = 0; i < tt->options.dns_len; ++i) {
-        strcpy(up.username, print_in_addr_t(tt->options.dns[i], 0, &gc));
-        management_query_user_pass(management, &up , "DNSSERVER", GET_USER_PASS_NEED_OK,(void*) 0);
-    }
+#define ANDROID_TUNNAME "vpnservice-tun"
+  int i;
+  struct user_pass up;
+  struct gc_arena gc = gc_new ();
+  bool opentun;
 
-    if(tt->options.domain) {
-        strcpy(up.username , tt->options.domain);
-        management_query_user_pass(management, &up , "DNSDOMAIN", GET_USER_PASS_NEED_OK,(void*) 0);
-    }
-    
-    strcpy(up.username , dev);
-    management_query_user_pass(management, &up , "OPENTUN", GET_USER_PASS_NEED_OK,(void*) 0);
+  for (i = 0; i < tt->options.dns_len; ++i) {
+    management_android_control (management, "DNSSERVER",
+                                print_in_addr_t(tt->options.dns[i], 0, &gc));
+  }
 
-    tt->fd = management->connection.lastfdreceived;
-    management->connection.lastfdreceived=-1;
-    
-    if( (tt->fd < 0) || ! (strcmp("ok",up.password)==0)) {
-        msg (M_ERR, "ERROR: Cannot open TUN");
-    }
-    /* Set the actual name to a dummy name to enable scripts */
-    tt->actual_name = (char *) malloc(32);
-    strncpy(tt->actual_name, "vpnservice-tun",32);
-    gc_free (&gc);
+  if(tt->options.domain)
+    management_android_control (management, "DNSDOMAIN", tt->options.domain);
+
+  opentun = management_android_control (management, "OPENTUN", dev);
+
+  /* Pick up the fd from management interface after calling the OPENTUN command */
+  tt->fd = management->connection.lastfdreceived;
+  management->connection.lastfdreceived=-1;
+
+  /* Set the actual name to a dummy name */
+  tt->actual_name = string_alloc (ANDROID_TUNNAME, NULL);
+
+  if ((tt->fd < 0) || !opentun)
+    msg (M_ERR, "ERROR: Cannot open TUN");
+
+  gc_free (&gc);
 }
 
 void

@@ -64,6 +64,9 @@
 
 const char title_string[] =
   PACKAGE_STRING
+#ifdef CONFIGURE_GIT_REVISION
+        " [git:" CONFIGURE_GIT_REVISION CONFIGURE_GIT_FLAGS "]"
+#endif
   " " TARGET_ALIAS
 #ifdef ENABLE_CRYPTO
 #ifdef ENABLE_SSL
@@ -1132,7 +1135,7 @@ show_tuntap_options (const struct tuntap_options *o)
 #endif
 #endif
 
-#if defined(WIN32) || defined(TARGET_ANDROID) 
+#if defined(WIN32) || defined(TARGET_ANDROID)
 static void
 dhcp_option_address_parse (const char *name, const char *parm, in_addr_t *array, int *len, int msglevel)
 {
@@ -3409,9 +3412,6 @@ usage_version (void)
 #endif
 #ifdef CONFIGURE_SPECIAL_BUILD
   msg (M_INFO|M_NOPREFIX, "special build: %s", CONFIGURE_SPECIAL_BUILD);
-#endif
-#ifdef CONFIGURE_GIT_REVISION
-  msg (M_INFO|M_NOPREFIX, "git revision: %s", CONFIGURE_GIT_REVISION);
 #endif
 #endif
   openvpn_exit (OPENVPN_EXIT_STATUS_USAGE); /* exit point */

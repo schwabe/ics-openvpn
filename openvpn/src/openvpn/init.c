@@ -1156,13 +1156,14 @@ do_init_traffic_shaper (struct context *c)
 }
 
 /*
- * Allocate a route list structure if at least one
- * --route option was specified.
+ * Allocate route list structures for IPv4 and IPv6
+ * (we do this for IPv4 even if no --route option has been seen, as other
+ * parts of OpenVPN might want to fill the route-list with info, e.g. DHCP)
  */
 static void
 do_alloc_route_list (struct context *c)
 {
-  if (c->options.routes && !c->c1.route_list)
+  if (!c->c1.route_list)
     c->c1.route_list = new_route_list (c->options.max_routes, &c->gc);
   if (c->options.routes_ipv6 && !c->c1.route_ipv6_list)
     c->c1.route_ipv6_list = new_route_ipv6_list (c->options.max_routes, &c->gc);
@@ -1420,15 +1421,15 @@ do_open_tun (struct context *c)
   if (!c->c1.tuntap)
     {
 #endif
-      
+
 #ifdef TARGET_ANDROID
       /* If we emulate persist-tun on android we still have to open a new tun and
          then close the old */
       int oldtunfd=-1;
-      if(c->c1.tuntap)
+      if (c->c1.tuntap)
           oldtunfd = c->c1.tuntap->fd;
 #endif
-        
+
       /* initialize (but do not open) tun/tap object */
       do_init_tun (c);
 
@@ -1455,17 +1456,17 @@ do_open_tun (struct context *c)
 	}
 
       /* possibly add routes */
-      if(ifconfig_order() == ROUTE_BEFORE_TUN) {
-		  /* Ignore route_delay, would cause ROUTE_BEFORE_TUN to be ignored */
-		  do_route (&c->options, c->c1.route_list, c->c1.route_ipv6_list,
-					c->c1.tuntap, c->plugins, c->c2.es);
-    }
+      if (route_order() == ROUTE_BEFORE_TUN) {
+        /* Ignore route_delay, would cause ROUTE_BEFORE_TUN to be ignored */
+        do_route (&c->options, c->c1.route_list, c->c1.route_ipv6_list,
+                  c->c1.tuntap, c->plugins, c->c2.es);
+      }
 
       /* open the tun device */
       open_tun (c->options.dev, c->options.dev_type, c->options.dev_node,
 		c->c1.tuntap);
 #ifdef TARGET_ANDROID
-      if(oldtunfd>=0)
+      if (oldtunfd>=0)
         close(oldtunfd);
 #endif
       /* set the hardware address */
@@ -1495,7 +1496,7 @@ do_open_tun (struct context *c)
 		   c->c2.es);
 
       /* possibly add routes */
-      if ((ifconfig_order() == ROUTE_AFTER_TUN) && (!c->options.route_delay_defined))
+      if ((route_order() == ROUTE_AFTER_TUN) && (!c->options.route_delay_defined))
 	do_route (&c->options, c->c1.route_list, c->c1.route_ipv6_list,
 		  c->c1.tuntap, c->plugins, c->c2.es);
 
@@ -1705,7 +1706,7 @@ do_up (struct context *c, bool pulled_options, unsigned int option_types_found)
 #endif
 
 	  /* if --route-delay was specified, start timer */
-	  if ((ifconfig_order() == ROUTE_AFTER_TUN) && c->options.route_delay_defined)
+	  if ((route_order() == ROUTE_AFTER_TUN) && c->options.route_delay_defined)
 	    {
 	      event_timeout_init (&c->c2.route_wakeup, c->options.route_delay, now);
 	      event_timeout_init (&c->c2.route_wakeup_expire, c->options.route_delay + c->options.route_delay_window, now);
@@ -2544,6 +2545,12 @@ do_option_warnings (struct context *c)
     msg (M_WARN, "NOTE: --connect-timeout option is not supported on this OS");
 #endif
 
+  if (script_security >= SSEC_SCRIPTS)
+    msg (M_WARN, "NOTE: the current --script-security setting may allow this configuration to call user-defined scripts");
+  else if (script_security >= SSEC_PW_ENV)
+    msg (M_WARN, "WARNING: the current --script-security setting may allow passwords to be passed to scripts via environmental variables");
+  else
+    msg (M_WARN, "NOTE: " PACKAGE_NAME " 2.1 requires '--script-security 2' or higher to call user-defined scripts or executables");
 }
 
 static void
@@ -3681,10 +3688,6 @@ inherit_context_child (struct context *dest,
       dest->c2.link_socket_info->lsa = &dest->c1.link_socket_addr;
       dest->c2.link_socket_info->connection_established = false;
     }
-
-#ifdef USE_COMP
-  dest->c2.comp_context = NULL;
-#endif
 }
 
 void

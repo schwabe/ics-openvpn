@@ -404,7 +404,6 @@ void
 assert_failed (const char *filename, int line)
 {
 #ifdef GOOGLE_BREAKPAD
-    msg (M_NONFATAL, "Assertion failed at %s:%d", filename, line);
     breakpad_dodump();
 #endif
   msg (M_FATAL, "Assertion failed at %s:%d", filename, line);

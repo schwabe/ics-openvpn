@@ -673,6 +673,20 @@ addrlist_match (const struct openvpn_sockaddr *a1, const struct addrinfo *addrli
   return false;
 }
 
+static inline in_addr_t
+addr_host (const struct openvpn_sockaddr *addr)
+{
+  /* 
+   * "public" addr returned is checked against ifconfig for
+   * possible clash: non sense for now given
+   * that we do ifconfig only IPv4
+   */
+  if(addr->addr.sa.sa_family != AF_INET)
+    return 0;
+  return ntohl (addr->addr.in4.sin_addr.s_addr);
+}
+
+
 static inline bool
 addrlist_port_match (const struct openvpn_sockaddr *a1, const struct addrinfo *a2)
 {

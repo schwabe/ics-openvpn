@@ -172,7 +172,7 @@ openvpn_getaddrinfo (unsigned int flags,
   CLEAR(hints);
   hints.ai_family = ai_family;
   hints.ai_flags = AI_NUMERICHOST;
-  hints.ai_socktype = SOCK_STREAM;
+
   
   if(flags & GETADDR_PASSIVE)
       hints.ai_flags |= AI_PASSIVE;
@@ -697,20 +697,19 @@ create_socket (struct link_socket *sock)
 #ifdef TARGET_ANDROID
 static void protect_fd_nonlocal (int fd, struct sockaddr* addr)
 {
-    if (addr_local (addr)) {
-        msg(M_DEBUG, "Address is local, not protecting socket fd %d", fd);
-        return;
-    }
-    
-    struct user_pass up;
-    strcpy(up.username ,__func__);
-    management->connection.fdtosend = fd;
-    msg(M_DEBUG, "Protecting socket fd %d", fd);
-    management_query_user_pass(management, &up , "PROTECTFD", GET_USER_PASS_NEED_OK,(void*) 0);
+  /* pass socket FD to management interface to pass on to VPNService API
+   * as "protected socket" (exempt from being routed into tunnel)
+   */
+  if (addr_local (addr)) {
+    msg(M_DEBUG, "Address is local, not protecting socket fd %d", fd);
+    return;
+  }
 
+  msg(M_DEBUG, "Protecting socket fd %d", fd);
+  management->connection.fdtosend = fd;
+  management_android_control (management, "PROTECTFD", __func__);
 }
 #endif
-    
 
 /*
  * Functions used for establishing a TCP stream connection.
@@ -933,10 +932,12 @@ openvpn_connect (socket_descriptor_t sd,
 {
   int status = 0;
 
+#ifdef TARGET_ANDROID
+  protect_fd_nonlocal(sd, remote);
+#endif
+
 #ifdef CONNECT_NONBLOCK
   set_nonblock (sd);
-
-  protect_fd_nonlocal(sd, remote);
   status = connect (sd, remote, af_addr_size(remote->sa_family));
   if (status)
     status = openvpn_errno ();
@@ -1786,7 +1787,9 @@ link_socket_init_phase2 (struct link_socket *sock,
               phase2_socks_client (sock, sig_info);
 #endif
             }
+#ifdef TARGET_ANDROID
           protect_fd_nonlocal (sock->sd, &sock->info.lsa->actual.dest.addr.sa);
+#endif
         }
 
       if (sig_info && sig_info->signal_received)
@@ -2772,7 +2775,7 @@ link_socket_read_udp_posix (struct link_socket *sock,
   ASSERT (buf_safe (buf, maxsize));
 #if ENABLE_IP_PKTINFO
   /* Both PROTO_UDPv4 and PROTO_UDPv6 */
-  if (proto_is_udp(sock->info.proto) && sock->sockflags & SF_USE_IP_PKTINFO)
+  if (sock->info.proto == PROTO_UDP && sock->sockflags & SF_USE_IP_PKTINFO)
     fromlen = link_socket_read_udp_posix_recvmsg (sock, buf, maxsize, from);
   else
 #endif
@@ -2919,7 +2922,7 @@ socket_recv_queue (struct link_socket *sock, int maxsize)
       if (proto_is_udp(sock->info.proto))
 	{
 	  sock->reads.addr_defined = true;
-	  if (sock->info.proto == PROTO_UDPv6)
+	  if (sock->info.af == AF_INET)
 	    sock->reads.addrlen = sizeof (sock->reads.addr6);
 	  else
 	    sock->reads.addrlen = sizeof (sock->reads.addr);
@@ -3018,7 +3021,7 @@ socket_send_queue (struct link_socket *sock, struct buffer *buf, const struct li
 	{
 	  /* set destination address for UDP writes */
 	  sock->writes.addr_defined = true;
-	  if (sock->info.proto == PROTO_UDPv6)
+	  if (sock->info.af == AF_INET)
 	    {
 	      sock->writes.addr6 = to->dest.addr.in6;
 	      sock->writes.addrlen = sizeof (sock->writes.addr6);

@@ -2,6 +2,7 @@ obj
 bin
 libs
 gen
+build
 openvpn/.git
 openvpn/autom4te.cache
 openvpn/aclocal.m4
@@ -68,3 +69,5 @@ polarssl
 local.properties
 proguard-project.txt
 build.xml
+cache.properties
+.gradle

@@ -33,4 +33,21 @@ android {
 
         instrumentTest.setRoot('tests')
     }
+
+    signingConfigs {
+        release {
+            storeFile file("/Users/arne/software/android.keystore")
+            storePassword "$System.env.ICSOPENVPNSIGNPW"
+            keyAlias "singkey"
+            keyPassword "$System.env.ICSOPENVPNSIGNPW"
+        }
+    }
 }
+
+//http://stackoverflow.com/questions/16683775/include-so-library-in-apk-in-android-studio
+
+tasks.withType(com.android.build.gradle.tasks.PackageApplication) { pkgTask ->
+    pkgTask.jniDir new File(buildDir, 'native-libs')
+}
+
+clean.dependsOn 'cleanCopyNativeLibs'

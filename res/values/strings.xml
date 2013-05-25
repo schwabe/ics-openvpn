@@ -278,5 +278,9 @@
     <string name="no_external_app_allowed">No app allowed to use external API</string>
     <string name="allowed_apps">Allowed apps: %s</string>
     <string name="clearappsdialog">Clear list of allowed external apps?\nCurrent list of allowed apps:\n\n%s</string>
+    <string name="screenoff_summary">"Pause VPN when screen is off and less than 64 kB transferred data in 60s."</string>
+    <string name="screenoff_title">Pause VPN connection after screen off</string>
+    <string name="screenoff_pause">Pausing connection in screen off state: less than %1$s in %2$ss</string>
+    <string name="screen_nopersistenttun">ERROR: Persistent tun not enabled for this VPN. Ignoring option to pause VPN when screen is off</string>
 
 </resources>

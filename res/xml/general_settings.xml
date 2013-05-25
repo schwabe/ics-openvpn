@@ -11,13 +11,6 @@
         android:key="showlogwindow"
         android:summary="@string/show_log_summary"
         android:title="@string/show_log_window" />
-    <!--
-          <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="statusafterconnect"
-        android:summary="@string/keppstatus_summary"
-        android:title="@string/keepstatus" />
-    -->
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="usesystemproxy"
@@ -28,11 +21,17 @@
         android:key="restartvpnonboot"
         android:summary="@string/onbootrestartsummary"
         android:title="@string/onbootrestart" />
+    
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="screenoff"
+        android:summary="@string/screenoff_summary"
+        android:title="@string/screenoff_title" />
 
     <Preference
         android:key="clearapi"
-        android:title="Clear allowed external apps"
-        android:persistent="false" />
+        android:persistent="false"
+        android:title="Clear allowed external apps" />
 
     <PreferenceCategory android:title="Device specifics Hacks" >
         <CheckBoxPreference

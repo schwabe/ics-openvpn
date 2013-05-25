@@ -59,7 +59,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	private int mMtu;
 	private String mLocalIPv6=null;
-	private NetworkStateReceiver mNetworkStateReceiver;
+	private DeviceStateReceiver mDeviceStateReceiver;
 
 	private boolean mDisplayBytecount=false;
 
@@ -109,7 +109,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	private void endVpnService() {
 		mProcessThread=null;
 		OpenVPN.removeByteCountListener(this);
-		unregisterNetworkStateReceiver();
+		unregisterDeviceStateReceiver();
 		ProfileManager.setConntectedVpnProfileDisconnected(this);
 		if(!mStarting) {
 			stopForeground(!mNotificationalwaysVisible);
@@ -226,24 +226,29 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	}
 
-	synchronized void registerNetworkStateReceiver(OpenVPNMangement magnagement) {
+	synchronized void registerDeviceStateReceiver(OpenVPNMangement magnagement) {
 		// Registers BroadcastReceiver to track network connection changes.
-		IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-		mNetworkStateReceiver = new NetworkStateReceiver(magnagement);
-		registerReceiver(mNetworkStateReceiver, filter);
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+		filter.addAction(Intent.ACTION_SCREEN_OFF);
+		filter.addAction(Intent.ACTION_SCREEN_ON);
+		mDeviceStateReceiver = new DeviceStateReceiver(magnagement);
+		registerReceiver(mDeviceStateReceiver, filter);
+		OpenVPN.addByteCountListener(mDeviceStateReceiver);
 	}
 
-	synchronized void unregisterNetworkStateReceiver() {
-		if(mNetworkStateReceiver!=null)
+	synchronized void unregisterDeviceStateReceiver() {
+		if(mDeviceStateReceiver!=null)
 			try {
-				this.unregisterReceiver(mNetworkStateReceiver);
+				OpenVPN.removeByteCountListener(mDeviceStateReceiver);
+				this.unregisterReceiver(mDeviceStateReceiver);
 			} catch (IllegalArgumentException iae) {
 				// I don't know why  this happens:
 				// java.lang.IllegalArgumentException: Receiver not registered: de.blinkt.openvpn.NetworkSateReceiver@41a61a10
 				// Ignore for now ...
 				iae.printStackTrace();
 			}
-		mNetworkStateReceiver=null;
+		mDeviceStateReceiver=null;
 	}
 
 
@@ -342,7 +347,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
 		mProcessThread.start();
 
-		registerNetworkStateReceiver(mManagement);
+		if(mDeviceStateReceiver!=null)
+			unregisterDeviceStateReceiver();
+		
+		registerDeviceStateReceiver(mManagement);
 
 
 		ProfileManager.setConnectedVpnProfile(this, mProfile);
@@ -361,8 +369,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 			mProcessThread.interrupt();
 		}
-		if (mNetworkStateReceiver!= null) {
-			this.unregisterReceiver(mNetworkStateReceiver);
+		if (mDeviceStateReceiver!= null) {
+			this.unregisterReceiver(mDeviceStateReceiver);
 		}
 		// Just in case unregister for state
 		OpenVPN.removeStateListener(this);

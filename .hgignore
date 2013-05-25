@@ -65,3 +65,6 @@ google-breakpad/
 id.zip
 ovpn3/boost
 polarssl
+local.properties
+proguard-project.txt
+build.xml

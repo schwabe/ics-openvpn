@@ -19,11 +19,13 @@ interface IOpenVPNAPIService {
 	void startVPN (String inlineconfig);
 	
 	/* This permission framework is used  to avoid confused deputy style attack to the VPN
-	 * calling this will give null if the app is allowed to use the frame and null otherwise */
+	 * calling this will give null if the app is allowed to use the external API and an Intent
+	 * that can be launched to request permissions otherwise */
 	Intent prepare (String packagename);
 	
-	/* Tells the calling app wether we already have permission to avoid calling the activity/flicker */
-	boolean hasPermission();
+	/* Used to trigger to the Android VPN permission dialog (VPNService.prepare()) in advance,
+	 * if this return null OpenVPN for ANdroid already has the permissions */
+	Intent prepareVPNService ();
 
 	/* Disconnect the VPN */
     void disconnect();

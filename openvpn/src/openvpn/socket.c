@@ -695,7 +695,7 @@ create_socket (struct link_socket *sock)
 }
 
 #ifdef TARGET_ANDROID
-static void protect_fd_nonlocal (int fd, struct sockaddr* addr)
+static void protect_fd_nonlocal (int fd, const struct sockaddr* addr)
 {
   /* pass socket FD to management interface to pass on to VPNService API
    * as "protected socket" (exempt from being routed into tunnel)

@@ -34,20 +34,34 @@ android {
         instrumentTest.setRoot('tests')
     }
 
+
     signingConfigs {
+        release
+    }
+
+    buildTypes {
         release {
-            storeFile file("/Users/arne/software/android.keystore")
-            storePassword "$System.env.ICSOPENVPNSIGNPW"
-            keyAlias "singkey"
-            keyPassword "$System.env.ICSOPENVPNSIGNPW"
+            signingConfig signingConfigs.release
         }
     }
+   }
+
+
+// ~/.gradle/gradle.properties 
+if (project.hasProperty('keystoreFile') &&
+        project.hasProperty('keystorePassword') &&
+        project.hasProperty('keystoreAliasPassword')) {
+    android.signingConfigs.release.storeFile = file(keystoreFile)
+    android.signingConfigs.release.storePassword = keystorePassword
+    android.signingConfigs.release.keyPassword = keystoreAliasPassword
+    android.signingConfigs.release.keyAlias = keystoreAlias
+} else {
+    buildTypes.release.signingConfig = null
 }
 
-//http://stackoverflow.com/questions/16683775/include-so-library-in-apk-in-android-studio
 
+//http://stackoverflow.com/questions/16683775/include-so-library-in-apk-in-android-studio
 tasks.withType(com.android.build.gradle.tasks.PackageApplication) { pkgTask ->
     pkgTask.jniDir new File(buildDir, 'native-libs')
 }
 
-clean.dependsOn 'cleanCopyNativeLibs'

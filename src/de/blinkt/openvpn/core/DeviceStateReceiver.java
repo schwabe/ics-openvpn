@@ -68,12 +68,12 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
 		if(windowtraffic < TRAFFIC_LIMIT) {
 			screen = connectState.DISCONNECTED;
-			OpenVPN.logInfo(R.string.screenoff_pause, 
+			OpenVPN.logInfo(R.string.screenoff_pause,
 					OpenVpnService.humanReadableByteCount(TRAFFIC_LIMIT, false), TRAFFIC_WINDOW);
 			mManangement.pause();
 		}
 		Log.i("OpenVPN", String.format("State: %s %s total %d last %d time %d",network.name(), screen.name(),windowtraffic/1024,
-				total, 
+				total,
 				System.currentTimeMillis()/1024));
 
 	}
@@ -88,25 +88,26 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);        
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
 
-		if(ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
-			networkStateChange(context);
-		} else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
-			boolean screenoff = prefs.getBoolean("screenoff", false);
-			
-			if(screenoff && ! ProfileManager.getLastConnectedVpn().mPersistTun) {
-				OpenVPN.logError(R.string.screen_nopersistenttun); 
-			} else if(screenoff) {
-				screen = connectState.PENDINGDISCONNECT;
-				fillTrafficData();
-				if (network == connectState.DISCONNECTED)
-					screen = connectState.DISCONNECTED;
-			}
+        if(ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
+            networkStateChange(context);
+        } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
+            boolean screenoff = prefs.getBoolean("screenoff", false);
+
+            if(screenoff)
+                if(!ProfileManager.getLastConnectedVpn().mPersistTun)
+                    OpenVPN.logError(R.string.screen_nopersistenttun);
+
+            screen = connectState.PENDINGDISCONNECT;
+            fillTrafficData();
+            if (network == connectState.DISCONNECTED)
+                screen = connectState.DISCONNECTED;
+        }
 
 		} else if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
-			// Network was disabled because screen off 
+			// Network was disabled because screen off
 			if (screen == connectState.DISCONNECTED && network == connectState.SHOULDBECONNECTED) {
 				mManangement.resume();
 
@@ -123,7 +124,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
 	public void networkStateChange(Context context) {
 		NetworkInfo networkInfo = getCurrentNetworkInfo(context);
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);        
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		boolean sendusr1 = prefs.getBoolean("netchangereconnect", true);
 
 
@@ -132,7 +133,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 			netstatestring = "not connected";
 		else  {
 			String subtype = networkInfo.getSubtypeName();
-			if(subtype==null) 
+			if(subtype==null)
 				subtype = "";
 			String extrainfo = networkInfo.getExtraInfo();
 			if(extrainfo==null)
@@ -140,7 +141,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
 			/*
 			if(networkInfo.getType()==android.net.ConnectivityManager.TYPE_WIFI) {
-				WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);			
+				WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 				WifiInfo wifiinfo = wifiMgr.getConnectionInfo();
 				extrainfo+=wifiinfo.getBSSID();
 

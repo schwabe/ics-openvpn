@@ -42,9 +42,9 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-      }
+        }
     }
-   }
+}
 
 
 // ~/.gradle/gradle.properties 
@@ -56,7 +56,7 @@ if (project.hasProperty('keystoreFile') &&
     android.signingConfigs.release.keyPassword = keystoreAliasPassword
     android.signingConfigs.release.keyAlias = keystoreAlias
 } else {
-  android.buildTypes.release.signingConfig = null
+    android.buildTypes.release.signingConfig = null
 }
 
 

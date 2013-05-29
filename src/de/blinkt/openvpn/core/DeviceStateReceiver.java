@@ -1,7 +1,5 @@
 package de.blinkt.openvpn.core;
 
-import java.util.LinkedList;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +11,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.core.OpenVPN.ByteCountListener;
+
+import java.util.LinkedList;
 
 public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountListener {
 	private int lastNetwork=-1;
@@ -104,9 +104,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
             fillTrafficData();
             if (network == connectState.DISCONNECTED)
                 screen = connectState.DISCONNECTED;
-        }
-
-		} else if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
+        } else if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
 			// Network was disabled because screen off
 			if (screen == connectState.DISCONNECTED && network == connectState.SHOULDBECONNECTED) {
 				mManangement.resume();
@@ -129,9 +127,9 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
 
 		String netstatestring;
-		if(networkInfo==null)
+		if(networkInfo==null) {
 			netstatestring = "not connected";
-		else  {
+        } else  {
 			String subtype = networkInfo.getSubtypeName();
 			if(subtype==null)
 				subtype = "";
@@ -197,7 +195,6 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 		ConnectivityManager conn =  (ConnectivityManager)
 				context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-		NetworkInfo networkInfo = conn.getActiveNetworkInfo();
-		return networkInfo;
+        return conn.getActiveNetworkInfo();
 	}
 }

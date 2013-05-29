@@ -19,4 +19,3 @@ void android_openvpn_log(int level,const char* prefix,const char* prefix_sep,con
 void Java_de_blinkt_openvpn_core_NativeUtils_jniclose(JNIEnv *env,jclass jo, jint fd) {
 	int ret = close(fd);
 }
-

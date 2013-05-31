@@ -67,6 +67,7 @@
 #include "ssl.h"
 #include "ssl_verify.h"
 #include "ssl_backend.h"
+#include "multi.h"
 
 #include "memdbg.h"
 
@@ -1106,6 +1107,8 @@ tls_multi_free (struct tls_multi *multi, bool clear)
 #ifdef MANAGEMENT_DEF_AUTH
   man_def_auth_set_client_reason(multi, NULL);  
 
+#endif
+#if P2MP_SERVER
   free (multi->peer_info);
 #endif
 
@@ -1775,7 +1778,7 @@ push_peer_info(struct buffer *buf, struct tls_session *session)
   bool ret = false;
 
 #ifdef ENABLE_PUSH_PEER_INFO
-  if (session->opt->push_peer_info) /* write peer info */
+  if (session->opt->push_peer_info_detail > 0)
     {
       struct env_set *es = session->opt->es;
       struct env_item *e;
@@ -1803,25 +1806,28 @@ push_peer_info(struct buffer *buf, struct tls_session *session)
       buf_printf (&out, "IV_PLAT=win\n");
 #endif
 
-      /* push mac addr */
-      {
-	struct route_gateway_info rgi;
-	get_default_gateway (&rgi);
-	if (rgi.flags & RGI_HWADDR_DEFINED)
-	  buf_printf (&out, "IV_HWADDR=%s\n", format_hex_ex (rgi.hwaddr, 6, 0, 1, ":", &gc));
-      }
-
       /* push compression status */
 #ifdef USE_COMP
       comp_generate_peer_info_string(&session->opt->comp_options, &out);
 #endif
 
-      /* push env vars that begin with UV_ */
+      if (session->opt->push_peer_info_detail >= 2)
+        {
+	  /* push mac addr */
+	  struct route_gateway_info rgi;
+	  get_default_gateway (&rgi);
+	  if (rgi.flags & RGI_HWADDR_DEFINED)
+	    buf_printf (&out, "IV_HWADDR=%s\n", format_hex_ex (rgi.hwaddr, 6, 0, 1, ":", &gc));
+        }
+
+      /* push env vars that begin with UV_ and IV_OPENVPN_GUI_VERSION*/
       for (e=es->list; e != NULL; e=e->next)
 	{
 	  if (e->string)
 	    {
-	      if (!strncmp(e->string, "UV_", 3) && buf_safe(&out, strlen(e->string)+1))
+	      if (((strncmp(e->string, "UV_", 3)==0 && session->opt->push_peer_info_detail >= 2)
+		   || (strncmp(e->string,"IV_OPENVPN_GUI_VERSION=",sizeof("IV_OPENVPN_GUI_VERSION=")-1)==0))
+		  && buf_safe(&out, strlen(e->string)+1))
 		buf_printf (&out, "%s\n", e->string);
 	    }
 	}
@@ -1996,6 +2002,7 @@ key_method_2_read (struct buffer *buf, struct tls_multi *multi, struct tls_sessi
 
   struct gc_arena gc = gc_new ();
   char *options;
+  struct user_pass *up;
 
   /* allocate temporary objects */
   ALLOC_ARRAY_CLEAR_GC (options, char, TLS_OPTIONS_LEN, &gc);
@@ -2031,15 +2038,25 @@ key_method_2_read (struct buffer *buf, struct tls_multi *multi, struct tls_sessi
 
   ks->authenticated = false;
 
+  /* always extract username + password fields from buf, even if not
+   * authenticating for it, because otherwise we can't get at the
+   * peer_info data which follows behind
+   */
+  ALLOC_OBJ_CLEAR_GC (up, struct user_pass, &gc);
+  username_status = read_string (buf, up->username, USER_PASS_LEN);
+  password_status = read_string (buf, up->password, USER_PASS_LEN);
+
+#if P2MP_SERVER
+  /* get peer info from control channel */
+  free (multi->peer_info);
+  multi->peer_info = read_string_alloc (buf);
+  if ( multi->peer_info )
+      multi_output_peer_info_env (session->opt->es, multi->peer_info);
+#endif
+
   if (verify_user_pass_enabled(session))
     {
       /* Perform username/password authentication */
-      struct user_pass *up;
-
-      ALLOC_OBJ_CLEAR_GC (up, struct user_pass, &gc);
-      username_status = read_string (buf, up->username, USER_PASS_LEN);
-      password_status = read_string (buf, up->password, USER_PASS_LEN);
-
       if (!username_status || !password_status)
 	{
 	  CLEAR (*up);
@@ -2050,14 +2067,7 @@ key_method_2_read (struct buffer *buf, struct tls_multi *multi, struct tls_sessi
 	    }
 	}
 
-#ifdef MANAGEMENT_DEF_AUTH
-      /* get peer info from control channel */
-      free (multi->peer_info);
-      multi->peer_info = read_string_alloc (buf);
-#endif
-
       verify_user_pass(up, multi, session);
-      CLEAR (*up);
     }
   else
     {
@@ -2070,6 +2080,9 @@ key_method_2_read (struct buffer *buf, struct tls_multi *multi, struct tls_sessi
 	}
       ks->authenticated = true;
     }
+
+  /* clear username and password from memory */
+  CLEAR (*up);
 
   /* Perform final authentication checks */
   if (ks->authenticated)

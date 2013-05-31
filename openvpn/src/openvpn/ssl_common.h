@@ -233,7 +233,7 @@ struct tls_options
   bool disable_occ;
 #endif
 #ifdef ENABLE_PUSH_PEER_INFO
-  bool push_peer_info;
+  int push_peer_info_detail;
 #endif
   int transition_window;
   int handshake_window;
@@ -481,14 +481,16 @@ struct tls_multi
    */
   char *client_reason;
 
+  /* Time of last call to tls_authentication_status */
+  time_t tas_last;
+#endif
+
+#if P2MP_SERVER
   /*
    * A multi-line string of general-purpose info received from peer
    * over control channel.
    */
   char *peer_info;
-
-  /* Time of last call to tls_authentication_status */
-  time_t tas_last;
 #endif
 
   /*

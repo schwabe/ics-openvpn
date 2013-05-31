@@ -1,23 +1,18 @@
 package de.blinkt.openvpn.core;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import android.util.Log;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
+import de.blinkt.openvpn.core.OpenVPN.LogItem;
+
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import android.util.Log;
-import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
-import de.blinkt.openvpn.core.OpenVPN.LogItem;
 
 public class OpenVPNThread implements Runnable {
 	private static final String DUMP_PATH_STRING = "Dump path: ";
@@ -34,7 +29,7 @@ public class OpenVPNThread implements Runnable {
 		mArgv = argv;
 		mNativeDir = nativelibdir;
 		mService = service;
-		mProcessEnv = processEnv; 
+		mProcessEnv = processEnv;
 	}
 	
 	public void stopProcess() {
@@ -86,7 +81,7 @@ public class OpenVPNThread implements Runnable {
 		}
 	}
 	
-	private void startOpenVPNThreadArgs(String[] argv,Map<String, String> env) {
+	private void startOpenVPNThreadArgs(String[] argv, Map<String, String> env) {
 		LinkedList<String> argvlist = new LinkedList<String>();
 		
 		for(String arg:argv)

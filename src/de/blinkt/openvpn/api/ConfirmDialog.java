@@ -79,7 +79,6 @@ CompoundButton.OnCheckedChangeListener, DialogInterface.OnClickListener {
 				
 				@Override
 				public void onShow(DialogInterface dialog) {
-					// TODO Auto-generated method stub
 					mButton = mAlert.getButton(DialogInterface.BUTTON_POSITIVE);
 					mButton.setEnabled(false);
 										

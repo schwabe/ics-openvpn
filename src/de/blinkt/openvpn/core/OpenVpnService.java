@@ -1,13 +1,5 @@
 package de.blinkt.openvpn.core;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Vector;
-
 import android.Manifest.permission;
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -17,19 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.net.ConnectivityManager;
-import android.net.LocalServerSocket;
-import android.net.LocalSocket;
-import android.net.LocalSocketAddress;
-import android.net.VpnService;
-import android.os.Binder;
-import android.os.Build;
+import android.net.*;
+import android.os.*;
 import android.os.Handler.Callback;
-import android.os.IBinder;
-import android.os.Message;
-import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import de.blinkt.openvpn.LogWindow;
 import de.blinkt.openvpn.R;
@@ -37,6 +19,13 @@ import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.OpenVPN.ByteCountListener;
 import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
 import de.blinkt.openvpn.core.OpenVPN.StateListener;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Vector;
 
 public class OpenVpnService extends VpnService implements StateListener, Callback, ByteCountListener {
 	public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";
@@ -46,14 +35,14 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	private Thread mProcessThread=null;
 
-	private Vector<String> mDnslist=new Vector<String>();
+	private final Vector<String> mDnslist=new Vector<String>();
 
 	private VpnProfile mProfile;
 
 	private String mDomain=null;
 
-	private Vector<CIDRIP> mRoutes=new Vector<CIDRIP>();
-	private Vector<String> mRoutesv6=new Vector<String>();
+	private final Vector<CIDRIP> mRoutes=new Vector<CIDRIP>();
+	private final Vector<String> mRoutesv6=new Vector<String>();
 
 	private CIDRIP mLocalIP=null;
 
@@ -331,18 +320,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			mManagement = mOpenVPN3;
 
 
-		} else {
-			HashMap<String, String> env = new HashMap<String, String>();
-			String version="unknown";
-			try {
-				PackageInfo packageinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-				version = packageinfo.versionName;
-			} catch (NameNotFoundException e) {
-			}
-			env.put("UV_ICSOPENVPN_VERSION", version);
-			env.put("UV_ICSOPENVPN_PKG", getPackageName());
-			processThread = new OpenVPNThread(this, argv, env, nativelibdir);
-		}
+        } else {
+            HashMap<String, String> env = new HashMap<String, String>();
+            processThread = new OpenVPNThread(this, argv, env, nativelibdir);
+        }
 
 		mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
 		mProcessThread.start();
@@ -458,8 +439,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		builder.setConfigureIntent(getLogPendingIntent());
 
 		try {
-			ParcelFileDescriptor pfd = builder.establish();
-			return pfd;
+            return builder.establish();
 		} catch (Exception e) {
 			OpenVPN.logMessage(0, "", getString(R.string.tun_open_error));
 			OpenVPN.logMessage(0, "", getString(R.string.error) + e.getLocalizedMessage());

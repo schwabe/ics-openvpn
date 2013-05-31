@@ -1,15 +1,28 @@
 package de.blinkt.openvpn;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.io.StringWriter;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.preference.PreferenceManager;
+import android.security.KeyChain;
+import android.security.KeyChainException;
+import android.util.Base64;
+import de.blinkt.openvpn.core.NativeUtils;
+import de.blinkt.openvpn.core.OpenVPN;
+import de.blinkt.openvpn.core.OpenVpnService;
+import de.blinkt.openvpn.core.X509Utils;
+import org.spongycastle.util.io.pem.PemObject;
+import org.spongycastle.util.io.pem.PemWriter;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.InvalidKeyException;
@@ -17,35 +30,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.Vector;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
-import org.spongycastle.util.io.pem.PemObject;
-import org.spongycastle.util.io.pem.PemWriter;
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.os.Build;
-import android.preference.PreferenceManager;
-import android.security.KeyChain;
-import android.security.KeyChainException;
-import android.util.Base64;
-import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.core.NativeUtils;
-import de.blinkt.openvpn.core.OpenVPN;
-import de.blinkt.openvpn.core.OpenVpnService;
-import de.blinkt.openvpn.core.X509Utils;
 
 public class VpnProfile implements  Serializable{
 	// Note that this class cannot be moved to core where it belongs since 
@@ -198,12 +187,7 @@ public class VpnProfile implements  Serializable{
 		//cfg += "management-signal\n";
 		cfg += "management-query-passwords\n";
 		cfg += "management-hold\n\n";
-
-		/* tmp-dir patched out :) 
-		cfg+="# /tmp does not exist on Android\n";
-		cfg+="tmp-dir ";
-		cfg+=cacheDir.getAbsolutePath();
-		cfg+="\n\n"; */
+        cfg += getVersionEnvString(context);
 
 		cfg+="# Log window is better readable this way\n";
 		cfg+="suppress-timestamps\n";
@@ -440,7 +424,18 @@ public class VpnProfile implements  Serializable{
 		return cfg;
 	}
 
-	//! Put inline data inline and other data as normal escaped filename
+    private String getVersionEnvString(Context c) {
+        String version="unknown";
+        try {
+            PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
+            version = packageinfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+        return  String.format(Locale.US,"setenv IV_OPENVPN_GUI_VERSION \"%s %s\"\n",c.getPackageName(),version);
+
+    }
+
+    //! Put inline data inline and other data as normal escaped filename
 	private String insertFileData(String cfgentry, String filedata) {
 		if(filedata==null) {
 			// TODO: generate good error
@@ -534,10 +529,6 @@ public class VpnProfile implements  Serializable{
 
 		args.add("--config");
 		args.add(cacheDir.getAbsolutePath() + "/" + OVPNCONFIGFILE);
-		// Silences script security warning
-
-		args.add("script-security");
-		args.add("0");
 
 
 		return  (String[]) args.toArray(new String[args.size()]);

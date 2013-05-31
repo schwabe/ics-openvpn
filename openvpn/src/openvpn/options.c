@@ -2714,28 +2714,6 @@ options_postprocess_filechecks (struct options *options)
   errs |= check_file_access (CHKACC_FILE, options->tmp_dir,
                              R_OK|W_OK|X_OK, "Temporary directory (--tmp-dir)");
 
-  /* ** Script hooks that accept an optionally quoted and/or escaped executable path, ** */
-  /* ** optionally followed by arguments ** */
-  errs |= check_cmd_access (options->auth_user_pass_verify_script,
-                            "--auth-user-pass-verify script");
-  errs |= check_cmd_access (options->client_connect_script,
-                            "--client-connect script");
-  errs |= check_cmd_access (options->client_disconnect_script,
-                            "--client-disconnect script");
-  errs |= check_cmd_access (options->tls_verify,
-                            "--tls-verify script");
-  errs |= check_cmd_access (options->up_script,
-                            "--up script");
-  errs |= check_cmd_access (options->down_script,
-                            "--down script");
-  errs |= check_cmd_access (options->ipchange,
-                            "--ipchange script");
-  errs |= check_cmd_access (options->route_script,
-                            "--route-up script");
-  errs |= check_cmd_access (options->route_predown_script,
-                            "--route-pre-down script");
-  errs |= check_cmd_access (options->learn_address_script,
-                            "--learn-address script");
 #endif /* P2MP_SERVER */
 
   if (errs)
@@ -3995,11 +3973,28 @@ msglevel_forward_compatible (struct options *options, const int msglevel)
 }
 
 static void
-warn_multiple_script (const char *script, const char *type) {
-      if (script) {
-	msg (M_WARN, "Multiple --%s scripts defined.  "
-	     "The previously configured script is overridden.", type);
-      }
+set_user_script (struct options *options,
+		 const char **script,
+		 const char *new_script,
+		 const char *type)
+{
+  if (*script) {
+    msg (M_WARN, "Multiple --%s scripts defined.  "
+	 "The previously configured script is overridden.", type);
+  }
+  *script = new_script;
+  options->user_script_used = true;
+
+#ifndef ENABLE_SMALL
+  {
+    char script_name[100];
+    openvpn_snprintf (script_name, sizeof(script_name),
+                      "--%s script", type);
+
+    if (check_cmd_access (*script, script_name))
+      msg (M_USAGE, "Please correct this error.");
+  }
+#endif
 }
 
 
@@ -4442,8 +4437,10 @@ add_option (struct options *options,
       VERIFY_PERMISSION (OPT_P_SCRIPT);
       if (!no_more_than_n_args (msglevel, p, 2, NM_QUOTE_HINT))
 	goto err;
-      warn_multiple_script (options->ipchange, "ipchange");
-      options->ipchange = string_substitute (p[1], ',', ' ', &options->gc);
+      set_user_script (options,
+		       &options->ipchange,
+		       string_substitute (p[1], ',', ' ', &options->gc),
+		       "ipchange");
     }
   else if (streq (p[0], "float"))
     {
@@ -4489,16 +4486,14 @@ add_option (struct options *options,
       VERIFY_PERMISSION (OPT_P_SCRIPT);
       if (!no_more_than_n_args (msglevel, p, 2, NM_QUOTE_HINT))
 	goto err;
-      warn_multiple_script (options->up_script, "up");
-      options->up_script = p[1];
+      set_user_script (options, &options->up_script, p[1], "up");
     }
   else if (streq (p[0], "down") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_SCRIPT);
       if (!no_more_than_n_args (msglevel, p, 2, NM_QUOTE_HINT))
 	goto err;
-      warn_multiple_script (options->down_script, "down");
-      options->down_script = p[1];
+      set_user_script (options, &options->down_script, p[1], "down");
     }
   else if (streq (p[0], "down-pre"))
     {
@@ -4995,8 +4990,7 @@ add_option (struct options *options,
 #ifdef ENABLE_OCC
   else if (streq (p[0], "explicit-exit-notify"))
     {
-      VERIFY_PERMISSION (OPT_P_GENERAL|OPT_P_CONNECTION);
-/*      VERIFY_PERMISSION (OPT_P_EXPLICIT_NOTIFY); */
+      VERIFY_PERMISSION (OPT_P_GENERAL|OPT_P_CONNECTION|OPT_P_EXPLICIT_NOTIFY);
       if (p[1])
 	{
 	  options->ce.explicit_exit_notification = positive_atoi (p[1]);
@@ -5144,16 +5138,17 @@ add_option (struct options *options,
       VERIFY_PERMISSION (OPT_P_SCRIPT);
       if (!no_more_than_n_args (msglevel, p, 2, NM_QUOTE_HINT))
 	goto err;
-      warn_multiple_script (options->route_script, "route-up");
-      options->route_script = p[1];
+      set_user_script (options, &options->route_script, p[1], "route-up");
     }
   else if (streq (p[0], "route-pre-down") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_SCRIPT);
       if (!no_more_than_n_args (msglevel, p, 2, NM_QUOTE_HINT))
 	goto err;
-      warn_multiple_script (options->route_predown_script, "route-pre-down");
-      options->route_predown_script = p[1];
+      set_user_script (options,
+		       &options->route_predown_script,
+		       p[1],
+		       "route-pre-down");
     }
   else if (streq (p[0], "route-noexec"))
     {
@@ -5520,32 +5515,33 @@ add_option (struct options *options,
 	  msg (msglevel, "--auth-user-pass-verify requires a second parameter ('via-env' or 'via-file')");
 	  goto err;
 	}
-      warn_multiple_script (options->auth_user_pass_verify_script, "auth-user-pass-verify");
-      options->auth_user_pass_verify_script = p[1];
+      set_user_script (options,
+		       &options->auth_user_pass_verify_script,
+		       p[1], "auth-user-pass-verify");
     }
   else if (streq (p[0], "client-connect") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_SCRIPT);
       if (!no_more_than_n_args (msglevel, p, 2, NM_QUOTE_HINT))
 	goto err;
-      warn_multiple_script (options->client_connect_script, "client-connect");
-      options->client_connect_script = p[1];
+      set_user_script (options, &options->client_connect_script,
+		       p[1], "client-connect");
     }
   else if (streq (p[0], "client-disconnect") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_SCRIPT);
       if (!no_more_than_n_args (msglevel, p, 2, NM_QUOTE_HINT))
 	goto err;
-      warn_multiple_script (options->client_disconnect_script, "client-disconnect");
-      options->client_disconnect_script = p[1];
+      set_user_script (options, &options->client_disconnect_script,
+		       p[1], "client-disconnect");
     }
   else if (streq (p[0], "learn-address") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_SCRIPT);
       if (!no_more_than_n_args (msglevel, p, 2, NM_QUOTE_HINT))
 	goto err;
-      warn_multiple_script (options->learn_address_script, "learn-address");
-      options->learn_address_script = p[1];
+      set_user_script (options, &options->learn_address_script,
+		       p[1], "learn-address");
     }
   else if (streq (p[0], "tmp-dir") && p[1])
     {
@@ -6481,8 +6477,9 @@ add_option (struct options *options,
       VERIFY_PERMISSION (OPT_P_SCRIPT);
       if (!no_more_than_n_args (msglevel, p, 2, NM_QUOTE_HINT))
 	goto err;
-      warn_multiple_script (options->tls_verify, "tls-verify");
-      options->tls_verify = string_substitute (p[1], ',', ' ', &options->gc);
+      set_user_script (options, &options->tls_verify,
+		       string_substitute (p[1], ',', ' ', &options->gc),
+		       "tls-verify");
     }
 #ifndef ENABLE_CRYPTO_POLARSSL
   else if (streq (p[0], "tls-export-cert") && p[1])

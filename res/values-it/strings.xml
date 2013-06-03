@@ -54,6 +54,7 @@
   <string name="custom_config_summary">Specifica opzioni personalizzate. Utilizzare con cautela!</string>
   <string name="route_rejected">Reindirizzamento (route) rifiutato da Android</string>
   <string name="cancel_connection">Scollega</string>
+  <string name="cancel_connection_long">Disconnettere VPN</string>
   <string name="clear_log">Cancella registro</string>
   <string name="title_cancel">Conferma l\'annullamento</string>
   <string name="cancel_connection_query">Disconnetti la VPN in uso/annulli il tentativo di connessione?</string>
@@ -94,7 +95,9 @@
   <string name="error">"Errore:"</string>
   <string name="clear">Azzera</string>
   <string name="info">Info</string>
+  <string name="last_openvpn_tun_config">Apertura interfaccia tun in corso:</string>
   <string name="local_ip_info">Indirizzi locali - IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
+  <string name="dns_server_info">DNS Server: %1$s, Dominio: %2$s</string>
   <string name="routes_info">Instradamenti (route): %s</string>
   <string name="routes_info6">Instradamenti (route) IPv6: %s</string>
   <string name="ip_not_cidr">Ottenute le informazioni sulle interfacce %1$s e %2$s, assumendo che il secondo indirizzo sia il peer remoto. Utilizzata la maschera /32 per l\'IP locale. La modalità impostata da OpenVPN è \"%3$s\".</string>
@@ -270,4 +273,10 @@ nel bug tracker).&lt;/p&gt;&lt;p&gt;Si è visto che ai firmware ufficiali della 
   <string name="rdn_prefix">Prefisso RDN</string>
   <string name="tls_remote_deprecated">TLS-remote (obsoleto)</string>
   <string name="help_translate">Puoi aiutare nella traduzione visitando http://crowdin.net/project/ics-openvpn/invite</string>
+  <string name="prompt">%1$s tenta di controllare %2$s</string>
+  <string name="remote_warning">Se procedi, concedi all\'applicazione l\'autorizzazione per intercettare tutto il traffico di rete.<b> NON accettare se non consideri l\'applicazione attendibile</b>, altrimenti corri il rischio che i tuoi dati vengano compromessi da programmi software dannosi.</string>
+  <string name="remote_trust">Considero questa applicazione attendibile.</string>
+  <string name="no_external_app_allowed">Nessuna app ha il permesso di usare l\'API esterna</string>
+  <string name="allowed_apps">Apps abilitate;%s</string>
+  <string name="clearappsdialog">Cancellare la lista delle apps esterne autorizzate?\nLista corrente di applicazioni autorizzate:\n\n%s</string>
 </resources>

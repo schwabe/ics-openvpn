@@ -54,6 +54,7 @@
   <string name="custom_config_summary">Määrake kohandatud valikud. Kasutage ettevaatlikult!</string>
   <string name="route_rejected">Androidi poolt keelatud ruutingud</string>
   <string name="cancel_connection">Katkesta ühendus</string>
+  <string name="cancel_connection_long">Katkesta VPN</string>
   <string name="clear_log">Tühjenda logi</string>
   <string name="title_cancel">Loobu kinnitusest</string>
   <string name="cancel_connection_query">Katkesta VPN ühendus/tühista ühendumise katse?</string>
@@ -94,7 +95,9 @@
   <string name="error">"Viga:"</string>
   <string name="clear">Tühjenda</string>
   <string name="info">info</string>
+  <string name="last_openvpn_tun_config">tun liidese avamine:</string>
   <string name="local_ip_info">Lokaalne IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
+  <string name="dns_server_info">DNS server: %1$s, Domeen: %2$s</string>
   <string name="routes_info">Marsruudid: %s</string>
   <string name="routes_info6">IPv6 marsruudid: %s</string>
   <string name="ip_not_cidr">Liidese andmed on %1$s ja %2$s, eeldades et teine aadress on eemalasuva serveri aadress. Lokaalse IP jaoks kasutatakse /32 võrgumaski. OpenVPN teatab režiimiks %3$s\".</string>
@@ -267,4 +270,10 @@
   <string name="rdn_prefix">RDN eesliide</string>
   <string name="tls_remote_deprecated">tls-remote (TAUNITAV)</string>
   <string name="help_translate">Tõlkimisel saate abi pakkuda külastades veebilehte http://crowdin.net/project/ics-openvpn/invite</string>
+  <string name="prompt">%1$s katset et juhtida %2$s</string>
+  <string name="remote_warning">Jätkates annate sellele programmile täieliku kontrolli üle Androidi OpenVPN-i ja samuti õiguse jälgida kogu võrguliiklust. <b> Kui te ei usalda seda programmi, siis ÄRGE NÕUSTUGE. </b> Vastasel juhul riskite te oma andmete privaatsuse või terviklikkuse manipulatsiooniga pahatahtliku tarkvara poolt.\"</string>
+  <string name="remote_trust">Ma usaldan seda programmi.</string>
+  <string name="no_external_app_allowed">Ühelgi programmil pole luba kasutada välist API-t</string>
+  <string name="allowed_apps">Lubatud programmid: %s</string>
+  <string name="clearappsdialog">Kas tühjenda lubatud väliste programmide nimekiri?\nKehtiv lubatud programmide nimekiri:\n\n%s</string>
 </resources>

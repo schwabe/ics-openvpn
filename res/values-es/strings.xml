@@ -54,6 +54,7 @@
   <string name="custom_config_summary">Especificar opciones personalizadas. ¡Use con cuidado!</string>
   <string name="route_rejected">Ruta rechazada por Android</string>
   <string name="cancel_connection">Desconectar</string>
+  <string name="cancel_connection_long">Desconectar VPN</string>
   <string name="clear_log">Limpiar registro</string>
   <string name="title_cancel">Cancelar confirmación</string>
   <string name="cancel_connection_query">¿Desconectar la conexión VPN/cancelar el intento de conexión?</string>
@@ -72,10 +73,10 @@
   <string name="dns">DNS</string>
   <string name="override_dns">Reemplazar la configuración DNS del Servidor</string>
   <string name="dns_override_summary">Usar sus propios servidores DNS</string>
-  <string name="searchdomain">searchDomain</string>
+  <string name="searchdomain">Dominio de busqueda</string>
   <string name="dns1_summary">Servidor DNS a ser usado.</string>
   <string name="dns_server">Servidor DNS</string>
-  <string name="secondary_dns_message">El servidor DNS secundario se utiliza si el servidor DNS normal no puede alcanzarse.</string>
+  <string name="secondary_dns_message">El servidor DNS secundario se utiliza si el servidor DNS normal falla.</string>
   <string name="backup_dns">Servidor DNS de respaldo</string>
   <string name="ignored_pushed_routes">Ignorar rutas obtenidas</string>
   <string name="ignore_routes_summary">Ignorar rutas obtenidas del servidor.</string>
@@ -89,12 +90,14 @@
   <string name="custom_options_title">Opciones personalizadas</string>
   <string name="edit_vpn">Modificar la configuración de VPN</string>
   <string name="remove_vpn_query">¿Eliminar el perfil VPN %s?</string>
-  <string name="tun_error_helpful">En algunas imágenes personalizadas de ICS los permisos sobre /dev/tun podrían ser incorrectos, o el módulo tun podría faltar completamente. Para imágenes de CM9 pruebe la opción \"arreglar la propiedad de /dev/tun\" ubicada en la configuración general</string>
-  <string name="tun_open_error">La apertura de la interfaz tun falĺó</string>
+  <string name="tun_error_helpful">En algunas ROMS personalizadas de ICS los permisos sobre /dev/tun podrían ser incorrectos, o el módulo tun podría faltar. Para imágenes de CM9 pruebe la opción \"arreglar la propiedad de /dev/tun\" ubicada en la configuración general</string>
+  <string name="tun_open_error">No se puede abrir interfaz tun</string>
   <string name="error">"Error: "</string>
-  <string name="clear">Borrar</string>
+  <string name="clear">Limpiar</string>
   <string name="info">información</string>
+  <string name="last_openvpn_tun_config">Abriendo interfaz tun:</string>
   <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
+  <string name="dns_server_info">Servidor DNS : %1$s, Dominio: %2$s</string>
   <string name="routes_info">Rutas: %s</string>
   <string name="routes_info6">Rutas IPv6: %s</string>
   <string name="ip_not_cidr">Información de la interfaz obtenida %1$s and %2$s, asumiendo que la segunda dirección es una dirección equivalente del remoto. Usando una máscara de red /32 para la IP local. El modo dado por OpenVPN es \"%3$s\".</string>
@@ -267,4 +270,10 @@
   <string name="rdn_prefix">Prefijo RDN</string>
   <string name="tls_remote_deprecated">tls-remote (OBSOLETO)</string>
   <string name="help_translate">Tu puedes ayudar traduciendo visitando http://crowdin.net/project/ics-openvpn/invite</string>
+  <string name="prompt">%1$s intentos de controlar %2$s</string>
+  <string name="remote_warning">Para continuar debe permitir a OpenVPN para Android controlar e interceptar todo el tráfico de red. <b> No acepte a menos que confíe en esta aplicación. </b> De lo contrario, usted puede correr el riesgo de comprometer sus datos ante software malicioso.\"</string>
+  <string name="remote_trust">Confío en esta aplicación.</string>
+  <string name="no_external_app_allowed">La aplicación no permite usar API externo</string>
+  <string name="allowed_apps">Aplicaciones autorizadas: %s</string>
+  <string name="clearappsdialog">¿Borrar la lista de aplicaciones externas permitidas?\nLista de aplicaciones permitidas:\n\n%s</string>
 </resources>

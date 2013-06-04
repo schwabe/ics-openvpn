@@ -8,7 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.core.OpenVPN.ByteCountListener;
 
@@ -50,8 +49,6 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
     @Override
     public void updateByteCount(long in, long out, long diffin, long diffout) {
-        Log.i("OpenVPN", String.format("State: %s %s",network.name(), screen.name()));
-
         if (screen!=connectState.PENDINGDISCONNECT)
             return;
 

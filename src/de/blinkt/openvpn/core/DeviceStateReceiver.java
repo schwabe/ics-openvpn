@@ -70,6 +70,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 			screen = connectState.DISCONNECTED;
 			OpenVPN.logInfo(R.string.screenoff_pause,
 					OpenVpnService.humanReadableByteCount(TRAFFIC_LIMIT, false), TRAFFIC_WINDOW);
+
 			mManangement.pause();
 		}
 		Log.i("OpenVPN", String.format("State: %s %s total %d last %d time %d",network.name(), screen.name(),windowtraffic/1024,

@@ -155,7 +155,6 @@
     <string name="converted_profile_i">imported profile %d</string>
     <string name="broken_images">Broken Images</string>
     <string name="broken_images_faq">&lt;p&gt;Official HTC images are known to have a strange routing problem causing traffic not to flow through the tunnel (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; in the bug tracker.)&lt;/p&gt;&lt;p&gt;The official SONY images from Xperia arc S and Xperia Ray have been reported to be missing the VPNService completely from the image. Other Sony images may be affected as well. (See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; in the bug tracker.)&lt;/p&gt;&lt;p&gt;On custom build images the tun module might be missing or the rights of /dev/tun might be wrong. Some CM9 images need the fix ownership option under general settings.&lt;/p&gt;&lt;p&gt;Most important: If you have a broken image, report it to your vendor. The more people report the issue to the vendor the more likely you will get a fix.&lt;/p&gt;</string>
-    <string name="error_empty_username">The username must not be empty.</string>
     <string name="pkcs12_file_encryption_key">PKCS12 File Encryption Key</string>
     <string name="private_key_password">Private Key Password</string>
     <string name="password">Password</string>
@@ -282,5 +281,6 @@
     <string name="screenoff_title">Pause VPN connection after screen off</string>
     <string name="screenoff_pause">Pausing connection in screen off state: less than %1$s in %2$ss</string>
     <string name="screen_nopersistenttun">Warning: Persistent tun not enabled for this VPN. Traffic will use the normal Internet connection when the screen is off.</string>
+    <string name="save_password">Save Password</string>
 
 </resources>

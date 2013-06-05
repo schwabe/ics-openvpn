@@ -63,7 +63,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 	public static final String EXTRA_KEY = "de.blinkt.openvpn.shortcutProfileUUID";
 	public static final String EXTRA_NAME = "de.blinkt.openvpn.shortcutProfileName";
-	public static final String EXTRA_HIDELOG =  "de.blinkt.openvpn.showNoLogWindow";;
+	public static final String EXTRA_HIDELOG =  "de.blinkt.openvpn.showNoLogWindow";
 
 	private static final int START_VPN_PROFILE= 70;
 
@@ -198,12 +198,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 		VpnProfile profile = mPM.getProfileByName(profilename);
 
-		// if (Intent.ACTION_CREATE_SHORTCUT.equals(action)) {	
 		setupShortcut(profile);
 		finish();
-		return;
-		//    }
-
 	}
 
 
@@ -224,6 +220,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
         if (type == R.string.password) {
             ((EditText)userpwlayout.findViewById(R.id.username)).setText(mSelectedProfile.mUsername);
             ((EditText)userpwlayout.findViewById(R.id.password)).setText(mSelectedProfile.mPassword);
+            ((CheckBox)userpwlayout.findViewById(R.id.save_password)).setChecked(!TextUtils.isEmpty(mSelectedProfile.mPassword));
+
             dialog.setView(userpwlayout);
         } else {
     		dialog.setView(entry);
@@ -235,19 +233,17 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
                     public void onClick(DialogInterface dialog, int which) {
 
                         if (type == R.string.password) {
+                            mSelectedProfile.mUsername = ((EditText) userpwlayout.findViewById(R.id.username)).getText().toString();
+
                             String pw = ((EditText) userpwlayout.findViewById(R.id.password)).getText().toString();
-                            String username = ((EditText) userpwlayout.findViewById(R.id.username)).getText().toString();
-                            mSelectedProfile.mUsername = username;
                             if (((CheckBox) userpwlayout.findViewById(R.id.save_password)).isChecked()) {
-                                if (pw !=null && !("".equals(pw)))
-                                    mSelectedProfile.mPassword=pw;
+                                 mSelectedProfile.mPassword=pw;
                             } else {
                                 mSelectedProfile.mPassword=null;
                                 mSelectedProfile.mTransientPW = pw;
                             }
                         } else {
-                            String pw = entry.getText().toString();
-                            mSelectedProfile.mTransientPCKS12PW = pw;
+                            mSelectedProfile.mTransientPCKS12PW = entry.getText().toString();
                         }
                         onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
 
@@ -358,7 +354,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 	}
 
 	private void execeuteSUcmd(String command) {
-		ProcessBuilder pb = new ProcessBuilder(new String[] {"su","-c",command});
+		ProcessBuilder pb = new ProcessBuilder("su","-c",command);
 		try {
 			Process p = pb.start();
 			int ret = p.waitFor();

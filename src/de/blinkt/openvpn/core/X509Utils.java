@@ -1,30 +1,16 @@
 package de.blinkt.openvpn.core;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.Principal;
+import android.text.TextUtils;
+import de.blinkt.openvpn.VpnProfile;
+import org.spongycastle.util.io.pem.PemObject;
+import org.spongycastle.util.io.pem.PemReader;
+
+import javax.security.auth.x500.X500Principal;
+import java.io.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-
-import javax.security.auth.x500.X500Principal;
-
-import org.spongycastle.util.io.pem.PemObject;
-import org.spongycastle.util.io.pem.PemReader;
-
-import android.text.TextUtils;
-
-import de.blinkt.openvpn.VpnProfile;
 
 public class X509Utils {
 	public static Certificate getCertificateFromFile(String certfilename) throws FileNotFoundException, CertificateException {
@@ -63,9 +49,21 @@ public class X509Utils {
 			try {
 				X509Certificate cert = (X509Certificate) getCertificateFromFile(filename);
 				
-				String friendly = cert.getSubjectDN().getName();
-							
-				return friendly;
+				X500Principal principal = (X500Principal) cert.getSubjectDN();
+
+                String friendlyname = principal.getName();
+                System.out.println(friendlyname);
+                // Really evil hack to decode email address
+
+                String[] parts = friendlyname.split(",");
+                for (int i=0;i<parts.length;i++){
+                    String part = parts[i];
+                    if (part.startsWith("1.2.840.113549.1.9.1=#16")) {
+                        parts[i] = "email=" + ia5decode(part.replace("1.2.840.113549.1.9.1=#16", ""));
+                    }
+                }
+                friendlyname = TextUtils.join(",",parts);
+				return friendlyname;
 
 			} catch (Exception e) {
 				OpenVPN.logError("Could not read certificate" + e.getLocalizedMessage());
@@ -73,6 +71,29 @@ public class X509Utils {
 		}
 		return "Could not read/parse certificate";
 	}
+
+    public static boolean isPrintableChar(char c) {
+        Character.UnicodeBlock block = Character.UnicodeBlock.of( c );
+        return (!Character.isISOControl(c)) &&
+                block != null &&
+                block != Character.UnicodeBlock.SPECIALS;
+    }
+
+    private static String ia5decode(String ia5string) {
+        String d = "";
+        for (int i=1;i<ia5string.length();i=i+2) {
+            String hexstr = ia5string.substring(i-1,i+1);
+            char c = (char) Integer.parseInt(hexstr,16);
+            if (isPrintableChar(c)) {
+                d+=c;
+            } else if (i==1 && c==0x12) {
+                ;   // ignore
+            } else {
+                d += "\\x" + hexstr;
+            }
+        }
+        return d;
+    }
 
 
 }

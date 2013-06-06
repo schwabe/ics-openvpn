@@ -17,51 +17,50 @@
 
 <!-- A layout to select a certificate, akin to a file selector on web pages. -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dip"
-    android:gravity="center_vertical" >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dip"
+                android:gravity="center_vertical" >
 
     <Button
-        android:id="@+id/file_select_button"
-        style="@style/accountSetupButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="@string/file_select" />
+            android:id="@+id/file_select_button"
+            style="@style/accountSetupButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/file_select" />
 
     <TextView
-        android:id="@+id/file_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/file_select_button"
-        android:text="@string/client_certificate_title"
-        android:textStyle="bold" />
+            android:id="@+id/file_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/file_select_button"
+            android:text="@string/client_certificate_title"
+            android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/file_selected_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/file_title"
-        android:layout_marginLeft="16dip"
-        android:layout_toLeftOf="@+id/file_select_button"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:text="@string/file_nothing_selected" />
+            android:id="@+id/file_selected_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/file_title"
+            android:layout_marginLeft="16dip"
+            android:layout_toLeftOf="@+id/file_select_button"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/file_nothing_selected" />
 
     <TextView
-        android:id="@+id/file_selected_description"
-        android:layout_width="wrap_content"
-        android:textIsSelectable="true"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/file_selected_item"
-        android:layout_marginLeft="16dip"
-        android:layout_toLeftOf="@+id/file_select_button"
-        android:ellipsize="end"
-        android:singleLine="true" />
+            android:id="@+id/file_selected_description"
+            android:layout_width="wrap_content"
+            android:textIsSelectable="true"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/file_selected_item"
+            android:layout_marginLeft="16dip"
+            android:layout_toLeftOf="@+id/file_select_button"
+            android:ellipsize="end" />
 
 </RelativeLayout>

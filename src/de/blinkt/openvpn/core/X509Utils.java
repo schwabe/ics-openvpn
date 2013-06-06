@@ -48,22 +48,8 @@ public class X509Utils {
 		if(!TextUtils.isEmpty(filename)) {
 			try {
 				X509Certificate cert = (X509Certificate) getCertificateFromFile(filename);
-				
-				X500Principal principal = (X500Principal) cert.getSubjectDN();
 
-                String friendlyname = principal.getName();
-                System.out.println(friendlyname);
-                // Really evil hack to decode email address
-
-                String[] parts = friendlyname.split(",");
-                for (int i=0;i<parts.length;i++){
-                    String part = parts[i];
-                    if (part.startsWith("1.2.840.113549.1.9.1=#16")) {
-                        parts[i] = "email=" + ia5decode(part.replace("1.2.840.113549.1.9.1=#16", ""));
-                    }
-                }
-                friendlyname = TextUtils.join(",",parts);
-				return friendlyname;
+                return getCertificateFriendlyName(cert);
 
 			} catch (Exception e) {
 				OpenVPN.logError("Could not read certificate" + e.getLocalizedMessage());
@@ -71,6 +57,26 @@ public class X509Utils {
 		}
 		return "Could not read/parse certificate";
 	}
+
+    public static String getCertificateFriendlyName(X509Certificate cert) {
+        X500Principal principal = (X500Principal) cert.getSubjectDN();
+
+        String friendlyName = principal.getName();
+        System.out.println(friendlyName);
+
+        // Really evil hack to decode email address
+        // See: http://code.google.com/p/android/issues/detail?id=21531
+
+        String[] parts = friendlyName.split(",");
+        for (int i=0;i<parts.length;i++){
+            String part = parts[i];
+            if (part.startsWith("1.2.840.113549.1.9.1=#16")) {
+                parts[i] = "email=" + ia5decode(part.replace("1.2.840.113549.1.9.1=#16", ""));
+            }
+        }
+        friendlyName = TextUtils.join(",", parts);
+        return friendlyName;
+    }
 
     public static boolean isPrintableChar(char c) {
         Character.UnicodeBlock block = Character.UnicodeBlock.of( c );

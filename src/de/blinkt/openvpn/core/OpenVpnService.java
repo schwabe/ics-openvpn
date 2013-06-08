@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
 
+import static de.blinkt.openvpn.core.OpenVPN.ConnectionStatus.*;
+
 public class OpenVpnService extends VpnService implements StateListener, Callback, ByteCountListener {
 	public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";
 	public static final String START_SERVICE_STICKY = "de.blinkt.openvpn.START_SERVICE_STICKY";
@@ -115,7 +117,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
 
-		int icon = R.drawable.ic_notification_icon;
+		int icon = getIconByLevel(level);
+
 		android.app.Notification.Builder nbuilder = new Notification.Builder(this);
 
 		if(mProfile!=null)
@@ -127,7 +130,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		nbuilder.setOnlyAlertOnce(true);
 		nbuilder.setOngoing(true);
 		nbuilder.setContentIntent(getLogPendingIntent());
-		nbuilder.setSmallIcon(icon,level.level);
+		nbuilder.setSmallIcon(icon);
+
 		if(when !=0)
 			nbuilder.setWhen(when);
 
@@ -145,8 +149,28 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		startForeground(OPENVPN_STATUS, notification);
 	}
 
+    private int getIconByLevel(ConnectionStatus level) {
+       switch (level) {
+           case LEVEL_CONNECTED:
+           case UNKNOWN_LEVEL:
+               return R.drawable.ic_stat_vpn;
+           case LEVEL_AUTH_FAILED:
+           case LEVEL_NONETWORK:
+           case LEVEL_NOTCONNECTED:
+               return R.drawable.ic_stat_vpn_offline;
+           case LEVEL_CONNECTING_NO_SERVER_REPLY_YET:
+           case LEVEL_WAITING_FOR_USER_INPUT:
+               return R.drawable.ic_stat_vpn_outline;
+           case LEVEL_CONNECTING_SERVER_REPLIED:
+               return R.drawable.ic_stat_vpn_empty_halo;
+           default:
+               return R.drawable.ic_stat_vpn;
 
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+       }
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private void jbNotificationExtras(boolean lowpriority,
 			android.app.Notification.Builder nbuilder) {
 		try {
@@ -268,7 +292,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		String startTitle = getString(R.string.start_vpn_title, mProfile.mName);
 		String startTicker = getString(R.string.start_vpn_ticker, mProfile.mName);
 		showNotification(startTitle, startTicker,
-				false,0,ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
+				false,0, LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
 
 		// Set a flag that we are starting a new VPN
 		mStarting=true;
@@ -542,11 +566,11 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		// Display byte count only after being connected
 
 		{
-			if (level == ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT) {
+			if (level == LEVEL_WAITING_FOR_USER_INPUT) {
 				// The user is presented a dialog of some kind, no need to inform the user 
 				// with a notifcation
 				return;
-			} else if(level == ConnectionStatus.LEVEL_CONNECTED) {
+			} else if(level == LEVEL_CONNECTED) {
 				mDisplayBytecount = true;
 				mConnecttime = System.currentTimeMillis();
 			} else {
@@ -580,7 +604,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 					humanReadableByteCount(diffout/OpenVPNMangement.mBytecountinterval, true));
 
 			boolean lowpriority = !mNotificationalwaysVisible;
-			showNotification(netstat,null,lowpriority,mConnecttime, ConnectionStatus.LEVEL_CONNECTED);
+			showNotification(netstat,null,lowpriority,mConnecttime, LEVEL_CONNECTED);
 		}
 
 	}

@@ -1,16 +1,5 @@
 package de.blinkt.openvpn.core;
 
-import java.io.ByteArrayInputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Locale;
-import java.util.Vector;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -21,6 +10,17 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import de.blinkt.openvpn.R;
+
+import java.io.ByteArrayInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Locale;
+import java.util.Vector;
 
 public class OpenVPN {
 
@@ -50,7 +50,7 @@ public class OpenVPN {
 		LEVEL_CONNECTING_NO_SERVER_REPLY_YET (2),
 		LEVEL_CONNECTED (0), UNKNOWN_LEVEL(-1);
 
-		public final int level;
+		private final int level;
 
 		ConnectionStatus(int level){
 			this.level = level;

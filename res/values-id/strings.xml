@@ -57,8 +57,6 @@
   <string name="title_cancel">Batal Konfirmasi</string>
   <string name="cancel_connection_query">Putuskan sambungan VPN/Batalkan usaha menyambungkan VPN?</string>
   <string name="remove_vpn">Singkirkan VPN</string>
-  <string name="check_remote_tlscert">Periksa apakah server memakai sertifikat TLS</string>
-  <string name="check_remote_tlscert_title">Kecuali server TLS </string>
   <string name="remote_tlscn_check_title">Cek nama sertifikat Host</string>
   <string name="tls_key_auth">Aktifkan otentifikasi kunci TLS</string>
   <string name="tls_auth_file">Berkas otintikasi TLS</string>
@@ -110,7 +108,6 @@
   <string name="copying_log_entries">Menyalin catatan</string>
   <string name="faq_copying">Untuk menyalin satu catatan masuk, Tekan dan tahan di catatan masuk. Untuk meyanlin\mengirim seluruh catatan, gunakan opsi Kirim Log. Gunakan tombol perangkat keras jika tidak terlihat di GUI.</string>
   <string name="faq_shortcut">Jalan pintas memulai</string>
-  <string name="faq_howto_shortcut">Anda dapat menempatkan jalan pintas untuk memulai OpenVPN pada desktop Anda. Tergantung pada program homescreen Anda, Anda harus menambahkan jalan pintas atau widget.</string>
   <string name="no_vpn_support_image">Gambar Anda tidak mendukung VPNService API, maaf:(</string>
   <string name="encryption">Enkripsi</string>
   <string name="cipher_dialog_title">Masukkan metode enkripsi</string>
@@ -128,7 +125,6 @@
   <string name="add_profile">Tambah Profil</string>
   <string name="import_could_not_open">Tidak dapat menemukan berkas %1$s yang disebut dalam berkas konfigurasi</string>
   <string name="importing_config">Mengambil berkas konfigurasi dari sumber %1$s</string>
-  <string name="import_warning_custom_options">Konfigurasi Anda memiliki beberapa pilihan konfigurasi yang tidak bisa diuraikan. Pilihan ini ditambahkan sebagai opsi konfigurasi buatan manual. Konfigurasi manual ditampilkan di bawah ini:</string>
   <string name="import_done">Berkas konfigurasi selesai dibaca</string>
   <string name="nobind_summary">Jangan kaitkan ke alamat dan port lokal</string>
   <string name="no_bind">Tidak ada ikatan lokal</string>
@@ -144,8 +140,6 @@
   <string name="converted_profile">Profil yang diambil</string>
   <string name="converted_profile_i">profil yang diambil %d</string>
   <string name="broken_images">Gambar rusak</string>
-  <string name="broken_images_faq">&lt;p&gt; Gambar resmi HTC dikenal memiliki masalah rute yang aneh yang menyebabkan lalu lintas tidak akan mengalir melalui terowongan (lihat juga &lt; href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\" &gt; masalah 18 &lt;/a&gt; dalam bug tracker.)&lt;/p&gt; &lt;p&gt; Gambar resmi SONY Xperia arc S dan Xperia Ray telah dilaporkan tidak punya VPNService sama sekali. Gambar Sony lainnya mungkin terpengaruh juga. (Lihat juga &lt; href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\" &gt; masalah 29 &lt;/a&gt; dalam bug tracker.)&lt;/p&gt; &lt;p&gt; pada custom membangun gambar modul tun mungkin hilang atau hak-hak/dev/tun mungkin salah. Beberapa gambar CM9 perlu memperbaiki kepemilikan pilihan di bawah pengaturan Umum. &lt;/p&gt; &lt;p&gt; yang paling penting: jika Anda memiliki citra rusak, laporkan pada vendor Anda. Semakin banyak orang melaporkan masalah ke vendor semakin besar kemungkinan Anda akan mendapatkan perbaikan. &lt;/p&gt;</string>
-  <string name="error_empty_username">Nama pengguna tidak boleh kosong.</string>
   <string name="pkcs12_file_encryption_key">Berkas kunci enkripsi PKCS12</string>
   <string name="private_key_password">Sandi kunci pribadi</string>
   <string name="password">Sandi</string>
@@ -177,7 +171,6 @@
   <string name="obscure">Mengaburkan pengaturan OpenVPN. Biasanya tidak diperlukan.</string>
   <string name="advanced">Lanjutan</string>
   <string name="export_config_title">Konfigurasi ICS Openvpn</string>
-  <string name="warn_no_dns">Tidak ada server DNS yang digunakan. Resolusi nama mungkin tidak bisa bekerja. Pertimbangkan seting server DNS yang diatur sendiri </string>
   <string name="dns_add_error">Tak bisa menambahkan Server DNS \"%1$s\", ditolak oleh sistem: %2$s</string>
   <string name="faq_howto">&lt;p&gt; Ambil konfigurasi yang dapat berjalan (diuji pada komputer Anda atau download dari penyedia/organisasi) &lt;/p&gt; &lt;p&gt; Satu file(berkas) saja tanpa tambahan berkas pem/pks12. Anda dapat kirim imel berkas dan membuka lampirannya. Jika Anda memiliki beberapa berkas, salin ke sd-card &lt;/p&gt; &lt;p&gt; klik pada lampiran imel atau gunakan ikon folder dalam daftar vpn untuk mengimpor berkas konfigurasi &lt;/p&gt; &lt;p&gt; jika ada  berkas yang kurang, salin file hilang ke sd-card. &lt;/p&gt; &lt;p&gt; klik pada simbol Simpan untuk menambahkan VPN yang diimpor ke daftar VPN &lt;/p&gt; &lt;p &gt; Connect VPN dengan mengklik nama VPN &lt;/p&gt; &lt;p&gt; jika ada kesalahan atau peringatan di catatan, coba pahami peringatannya dan coba untuk memperbaikinya &lt;/p&gt; </string>
   <string name="faq_howto_title">Mulai Cepat</string>
@@ -203,7 +196,6 @@
   <string name="vpn_import_hint">Gunakan ikon &lt; img src = \"ic_menu_archive\" / &gt; untuk mengimpor profil (.ovpn atau .conf) yang ada dari sdcard Anda.</string>
   <string name="faq_hint">Pastikan untuk juga memeriksa FAQ. Ada petunjuk untuk memudahkan anda.</string>
   <string name="faq_routing_title">Konfigurasi rute\antarmuka</string>
-  <string name="faq_routing">Konfigurasi Perutean dan antarmuka tidak dilakukan melalui perintah tradisional ifconfig/route tapi menggunakan VPNService API. Ini menghasilkan konfigurasi perutean berbeda daripada pada OS lain. Konfigurasi hanya terdiri dari IP antarmuka terowongan dan jaringan yang harus dialihkan melalui antarmuka ini. Terutama tidak ada alamat peer partner atau alamat gateway diperlukan. Rute khusus untuk mencapai Server VPN (misalnya ditambahkan ketika menggunakan redirect-gateway) juga tidak diperlukan. Aplikasi akibatnya akan mengabaikan pengaturan ini ketika mengimpor konfigurasi. App memastikan dengan VPNService API bahwa sambungan ke server yang tidak diarahkan melalui terowongan VPN. Karena hanya jaringan tertentu yang akan dialihkan melalui terowongan, rute tambahan yang tidak menunjuk ke terowongan juga tidak didukung. (misalnya rute x.x.x.x y.y.y.y net_gateway). Tombol Tampilkan Informasi dalam layar catatan menunjukkan konfigurasi jaringan VPNService yang digunakan.</string>
   <string name="persisttun_summary">Jangan kembali ke status tidak ada koneksi VPN ketika OpenVPN mencoba terhubung kembali.</string>
   <string name="persistent_tun_title">Paksa mode TUN</string>
   <string name="openvpn_log">Catatan OpenVPN</string>

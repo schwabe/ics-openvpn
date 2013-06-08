@@ -59,8 +59,8 @@
   <string name="title_cancel">Cancelar confirmación</string>
   <string name="cancel_connection_query">¿Desconectar la conexión VPN/cancelar el intento de conexión?</string>
   <string name="remove_vpn">Eliminar VPN</string>
-  <string name="check_remote_tlscert">Comprueba si el servidor utiliza un certificado de servidor TLS</string>
-  <string name="check_remote_tlscert_title">Excepto servidor TLS</string>
+  <string name="check_remote_tlscert">Comprueba si el servidor utiliza un certificado con las extensiones TLS de servidor (--remote-cert-tls server)</string>
+  <string name="check_remote_tlscert_title">Espere certificado de servidor TLS</string>
   <string name="remote_tlscn_check_summary">Checar el sujeto del DN del Certificado del Servidor Remoto</string>
   <string name="remote_tlscn_check_title">Comprobación del certificado de nombre de host</string>
   <string name="enter_tlscn_dialog">Especifica el chequeo usado para verificar el DN del certificado remoto (ej. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nEspecifica el DN completo o el RDN (openvpn.blinkt.de en el ejemplo) o un prefijo RDN para la verificación.\n\nCuando se usa un prefijo RDN como \"Server\" este coincide también con \"Server-1\" y \"Server-2\"\n\nDejando el campo de texto vacío verificara el RDN contra el nombre host del servidor.\n\nPara más detalles ve la página de manual (manpage) de OpenVPN 2.3.1+ en --verify-x509-name</string>
@@ -117,7 +117,7 @@
   <string name="copying_log_entries">Copiar las entradas del registro</string>
   <string name="faq_copying">Para copiar una sola entrada de registro presione y mantenga pulsado sobre la entrada del registro. Para copiar y enviar el registro completo use la opción Enviar registro. Utilice el botón fisico de menú si no visible en la interfaz.</string>
   <string name="faq_shortcut">Acceso directo para iniciar</string>
-  <string name="faq_howto_shortcut">Puede colocar un acceso directo para iniciar OpenVPN en el escritorio. Dependiendo del programa de la pantalla de inicio tiene que añadir un acceso directo o un widget.</string>
+  <string name="faq_howto_shortcut">Puede colocar un acceso directo para iniciar OpenVPN desde el escritorio. Dependiendo del launcher tiene que añadir un acceso directo o un widget.</string>
   <string name="no_vpn_support_image">Su imagen no es compatible con la API de VPNService, lo siento :(</string>
   <string name="encryption">Cifrado</string>
   <string name="cipher_dialog_title">Especifique el método de cifrado</string>
@@ -137,7 +137,7 @@
   <string name="add_profile">Agregar perfil</string>
   <string name="import_could_not_open">No se pudo encontrar el archivo %1$s mencionado en el archivo de configuracion importado</string>
   <string name="importing_config">Importando archivo de configuración del origen %1$s</string>
-  <string name="import_warning_custom_options">Su configuración tiene algunas opciones de configuración que pueden ser analizadas. Estas opciones se agregaron como opciones de configuración personalizadas. A continuación se muestra la configuración personalizada:</string>
+  <string name="import_warning_custom_options">Su configuración tiene algunas opciones de configuración que no están establecidas en la interfaz de usuario . Estas opciones fueron agregadas como opciones de configuración personalizadas. A continuación se muestra la configuración personalizada:</string>
   <string name="import_done">Se termino de leer el archivo de configuracion.</string>
   <string name="nobind_summary">No enlazar con el puerto y la dirección local</string>
   <string name="no_bind">Ningún enlace local</string>
@@ -153,8 +153,6 @@
   <string name="converted_profile">perfil importado</string>
   <string name="converted_profile_i">perfil importado %d</string>
   <string name="broken_images">Imágenes rotas</string>
-  <string name="broken_images_faq">&lt;p&gt;Las imágenes oficiales de HTC son conocidas por tener un extraño problema de ruteo causando que el tráfico no fluya a través del túnel (Mira también &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; en el sistema de seguimiento de errores.)&lt;/p&gt;&lt;p&gt;Las imágenes oficiales de SONY del Xperia arc S y el Xperia Ray han sido reportadas por no tener el VPNService completamente en la imagen. Otras imágenes de Sony podrían estar afectadas. (Mira también  &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; en el sistema de seguimiento de errores.)&lt;/p&gt;&lt;p&gt;En ROMs personalizadas el modulo tun podría faltar o los permisos de /dev/tun podrían ser incorrectos. Algunas imágenes de CM9 necesitan la opción de arreglo de propietario que está en las preferencias.&lt;/p&gt;&lt;p&gt;Mas importante: Si tienes una imagen rota, repórtalo a tu proveedor. Entre más personas reporten el problema al proveedor es más posible que consigas una solución.&lt;/p&gt;</string>
-  <string name="error_empty_username">El nombre de usuario no debe estar vacío.</string>
   <string name="pkcs12_file_encryption_key">Clave PKCS12 de cifrado de archivos</string>
   <string name="private_key_password">Contraseña de clave privada</string>
   <string name="password">Contraseña</string>
@@ -187,7 +185,7 @@
   <string name="obscure">Configuraciones oscuras de OpenVPN. Normalmente no se necesitan.</string>
   <string name="advanced">Avanzado</string>
   <string name="export_config_title">Configuracion Openvpn de ICS</string>
-  <string name="warn_no_dns">Sin servidores DNS utilizados. La resolución de nombres puede que no funcione. Considere configurar servidores DNS personalizados</string>
+  <string name="warn_no_dns">No hay servidores DNS a utilizar. La Resolución de nombres puede no funcionar. Considere configurar servidores DNS personalizados. Tenga en cuenta que Android sigue usando la configuración de proxy especificada para su conexión móvil/Wi-Fi cuando no hay servidores DNS establecidos.</string>
   <string name="dns_add_error">No se puede agregar el servidor DNS \"%1$s\", rechazado por el sistema: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Obtén una configuración funcionando (probada en tu computadora o descargada de tu proveedor/organización)&lt;/p&gt;&lt;p&gt;Si es un solo archivo sin archivos pem/pks12 puedes enviar en un correo tu mismo el archivo y abrir el adjunto. Si tienes varios archivos ponlos en tu tarjeta SD.&lt;/p&gt;&lt;p&gt;Da clic en el adjunto de tu correo/Usa el icono de carpeta en la lista de VPN para importar el archivo de configuración &lt;/p&gt;&lt;p&gt;Si hay errores de archivos faltantes pon los archivos que faltan en tu tarjeta SD.&lt;/p&gt;&lt;p&gt;Da clic en el símbolo de guardar para agregar la VPN importada a tu lista de VPN&lt;/p&gt;&lt;p&gt;Conéctate a la VPN dando clic en el nombre de la VPN&lt;/p&gt;&lt;p&gt;Si hay errores o advertencias en el registro intenta comprender los errores/advertencias e intenta solucionarlos&lt;/p&gt;</string>
   <string name="faq_howto_title">Inicio rápido</string>
@@ -213,13 +211,11 @@
   <string name="vpn_import_hint">Use el icono &lt;img src=\"ic_menu_archive\"/&gt; para importar un perfil existente (.ovpn or .conf) de tu tarjeta.</string>
   <string name="faq_hint">Asegúrese de checar también las preguntas frecuentes. Hay una guía de inicio rápido.</string>
   <string name="faq_routing_title">Configuración de enrutamiento o interfaz</string>
-  <string name="faq_routing">La configuración de interfaz y enrutamiento no es hecha con el tradicional comando ifconfig/route si no que se usa la API VPNService. Esto resulta en una forma diferente  de enrutamiento que en otros sistemas operativos. La configuración solo consiste de la IP de la interfaz del túnel y las redes que deberían ser enrutadas sobre esta interfaz. Especialmente no se necesita la dirección asociada de pares ni la dirección de puerta de enlace. Las rutas especiales para alcanzar al servidor VPN (por ejemplo las agregadas cuando se usa redirect-gateway) tampoco son necesarias. La aplicación por consiguiente ignorara esas preferencias cuando importe una configuración. La aplicación se asegurara con la API VPNService que la conexión al servidor no sea enrutadas por el túnel VPN. Ya que solo especificando redes para ser enrutadas por el túnel es soportado. Las rutas extras que no apunten al túnel tampoco son soportadas (ej. route x.x.x.x y.y.y.y net_gateway).El botón mostrar información en la ventana de registro muestra la configuración actual de la configuración de red de VPNService.</string>
   <string name="persisttun_summary">No regresar a modo sin conexión VPN cuando OpenVPN esta volviendose a conectar.</string>
   <string name="persistent_tun_title">Tun persistente</string>
   <string name="openvpn_log">Registro de OpenVPN</string>
   <string name="import_config">Importar configuración de OpenVPN</string>
   <string name="battery_consumption_title">Consumo de batería</string>
-  <string name="baterry_consumption">En pruebas personales la razón principal del alto consumo de batería de OpenVPN son los paquetes de sobrevivencia (keepalive). La mayoría de servidores de OpenVPN tienen una configuración como \'keepalive 10 60\' que se traduce en un paquete de keepalive del cliente al servidor y viceversa cada diez segundos. lt;pgt; Si bien estos paquetes son pequeños y no utilizan mucho tráfico, mantienen la red móvil ocupada e incrementan el consumo de energía.  (Mira también &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Esta configuración de sobrevivencia no puede ser cambiada en el cliente. Sólo el administrador de sistemas de OpenVPN puede cambiar esta configuración. lt;pgt; Desafortunadamente, usar una sobrevivencia mayor a 60 segundos con UDP ocasiona problemas con algunas puertas de entrada NAT las cuales terminan una conexión después de un tiempo de espera corto (60s en mis pruebas). Usar TCP con un tiempo de sobrevivencia largo funciona pero genera el problema de TCP sobre TCP. (Ver &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Ide&lt;/a&gt;)</string>
   <string name="faq_tethering">La funcionalidad de Tethering de Android (sobre WiFi, USB o Bluetooth) y la API del servicio de VPN (utilizada por esta aplicación) no pueden trabajar juntas. Para más detalles vea el &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;problema #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN y Tethering</string>
   <string name="connection_retries">Reintentos de conexión</string>
@@ -276,4 +272,9 @@
   <string name="no_external_app_allowed">La aplicación no permite usar API externo</string>
   <string name="allowed_apps">Aplicaciones autorizadas: %s</string>
   <string name="clearappsdialog">¿Borrar la lista de aplicaciones externas permitidas?\nLista de aplicaciones permitidas:\n\n%s</string>
+  <string name="screenoff_summary">Pausa la VPN cuando la pantalla está apagada y se transfieren menos de 64 Kb de datos en 60 segundos. Cuando la opción \"TUN persistente\" está habilitada, pausar la VPN dejará tu dispositivo sin conexión a la red. Sin la opción \"TUN persistente\" el dispositivo carecerá de la conexión/protección de la VPN.</string>
+  <string name="screenoff_title">Pausar conexión de VPN cuando se apaga la pantalla</string>
+  <string name="screenoff_pause">Conexión en pausa si el estado de la pantalla es apagado: menos de %1$s en %2$ss</string>
+  <string name="screen_nopersistenttun">Advertencia: TUN persistente no habilitado para esta VPN. El tráfico usará la conexión normal a Internet cuando la pantalla esté apagada.</string>
+  <string name="save_password">Guardar contraseña</string>
 </resources>

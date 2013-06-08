@@ -59,8 +59,8 @@
   <string name="title_cancel">Loobu kinnitusest</string>
   <string name="cancel_connection_query">Katkesta VPN ühendus/tühista ühendumise katse?</string>
   <string name="remove_vpn">Eemalda VPN</string>
-  <string name="check_remote_tlscert">Kontrollib kas server kasutab TLS serverisertifikaati</string>
-  <string name="check_remote_tlscert_title">Välista TLS server</string>
+  <string name="check_remote_tlscert">Kontrollitakse, kas server kasutab sertifikaati koos TLS Server laiendustega (--remote-cert-tls server)</string>
+  <string name="check_remote_tlscert_title">Oodata TLS serveri sertifikaati</string>
   <string name="remote_tlscn_check_summary">Kontrollib eemalasuva serveri sertifikaadi subjekti DN\'i</string>
   <string name="remote_tlscn_check_title">Sertifikaadi domeeninime kontroll</string>
   <string name="enter_tlscn_dialog">Määrake meetod millega kontrollida eemalasuva sertifikaadi DN (n.: C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nMäärata saab kas täieliku DN, RDN (openvpn.blinkt.de eelmises näites) või eesliitega RDN kontrolli.\n\nRDN eesliite kasutamisel vastab sellele nii \"Server\", \"Server-1\" kui ka \"Server-2\"\n\nTekstivälja tühjaks jätmisel kontrollitakse kas RDN  on vastavuses serveri nimega.\n\nDetailsema info leiate OpenVPN 2.3.1+ käsiraamatust —kinnita-x509-nimi all</string>
@@ -117,7 +117,7 @@
   <string name="copying_log_entries">Logikirjete kopeerimine</string>
   <string name="faq_copying">Ühe logikirje kopeerimiseks vajuta ja hoia sellel kirjel. Kogu logi kopeerimiseks/saatmiseks kasuta Saada Logi valikut. Kui see valik puudub GUI all, siis kasuta riistvaralist menüünuppu.</string>
   <string name="faq_shortcut">Kiirkäivitus</string>
-  <string name="faq_howto_shortcut">OpenVPN kiirkäivituse võib tuua ka töölauale. Sõltuvalt teie seadme ekraanihalduri programmist tuleb lisada kas kiirkäivitusikoon või widget.</string>
+  <string name="faq_howto_shortcut">Saate paigaldada seadme töölauale OpenVPN kiirkäivituse. Selleks tuleb sõltuvalt teie seadme ekraanihalduri programmist kasutada kas kiirkäivitusikooni või vidinat.</string>
   <string name="no_vpn_support_image">Teie süsteemitarkvara ei toeta VPNService API\'t, vabandame :(</string>
   <string name="encryption">Krüpteerimine</string>
   <string name="cipher_dialog_title">Vali krüpteerimismeetod</string>
@@ -137,7 +137,7 @@
   <string name="add_profile">lisa profiil</string>
   <string name="import_could_not_open">Ei õnnestunud leida imporditavas konfiguratsioonifailis mainitud faili: %1$s</string>
   <string name="importing_config">Allikast %1$s imporditakse konfiguratsioonifaili</string>
-  <string name="import_warning_custom_options">Teie konfiguratsioonis on mõned süntaktilisele analüüsile allumatud valikuid. Leitud valikud lisati kohandatud seadistusvalikutena. Kohandatud konfiguratiooni leiate allpool:</string>
+  <string name="import_warning_custom_options">Teie konfiguratsioon sisaldas seadistusi mida ei saa liigitada ühegi graafilise kasutajaliidese poolt pakutava seadistuse alla. Need valikud lisati kui kohandatud seadistusvalikud. Kohandatud konfiguratsiooni kuvatakse allpool:</string>
   <string name="import_done">Konfiguratsioonifail loetud.</string>
   <string name="nobind_summary">Ära seo lokaalse aadressi ja pordiga</string>
   <string name="no_bind">Lokaalne sidumine puudub</string>
@@ -153,8 +153,7 @@
   <string name="converted_profile">imporditud profiil</string>
   <string name="converted_profile_i">imporditud profiil %d</string>
   <string name="broken_images">Probleemsed Androidi püsivara versioonid</string>
-  <string name="broken_images_faq">&lt;p&gt;Ametlikel HTC versioonidel teatakse olevat kummaline marsruutimisprobleem mille tulemusel ei liigu andmevoog läbi tunneli (Vaata ka &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; veahalduses.)&lt;/p&gt;&lt;p&gt;Ametlike SONY versioonid Xperia arc S ja Xperia Ray puhul on raporteeritud ka täielikku VPNService API puudumist. Ka teised Sony tarkvaraversioonid võivad olla mõjutatud samast probleemist. (Vaata &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; veahalduses.)&lt;/p&gt;&lt;p&gt;Kohandatud tarkvaraversioonides võib puududa tun moodul või /dev/tun õigused võivad olla valed. Mõned CM9 versioonid nõuavad üldseadistuste alt õiguste parandamise valiku kasutamist.&lt;/p&gt;&lt;p&gt;Aga mis kõige olulisem: kui teil juhtub olema vigane tarkvaraversioon, siis teatage sellest oma tarnijale. Mida rohkem kliente tarnijat seadme probleemidest teavitab, seda suurema tõenäosusega tehakse seadme tarkvara ka korda.&lt;/p&gt;</string>
-  <string name="error_empty_username">Kasutajanimi peab olema määratud.</string>
+  <string name="broken_images_faq">&lt;p&gt;Ametlikel HTC versioonidel teatakse olevat kummaline marsruutimisprobleem, mille tulemusel ei liigu andmevoog läbi tunneli (Vaata ka &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; veahalduses.)&lt;/p&gt;&lt;p&gt;Ametlike vanemate SONY Xperia arc S ja Xperia Ray versioonide puhul on raporteeritud ka täielikku VPNService API puudumist. (Vaata ka &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; veahalduses.)&lt;/p&gt;&lt;p&gt;Kohandatud tarkvaraversioonides võib puududa tun moodul või /dev/tun õigused võivad olla valed. Mõned CM9 versioonid nõuavad \"seadmespetsiifiliste häkkide\" alt \"õiguste parandamise\" valiku kasutamist.&lt;/p&gt;&lt;p&gt;Aga mis kõige olulisem: kui teil juhtub olema vigane tarkvaraversioon, siis teatage sellest oma tarnijale. Mida rohkem kliente tarnijat seadme probleemidest teavitab, seda suurema tõenäosusega tehakse seadme tarkvara ka korda.&lt;/p&gt;</string>
   <string name="pkcs12_file_encryption_key">PKCS12 faili krüpteerimisvõti</string>
   <string name="private_key_password">Privaatse võtme salasõna</string>
   <string name="password">Salasõna</string>
@@ -187,7 +186,7 @@
   <string name="obscure">Harvaesinevad OpenVPN seaded. Tavaliselt ebavajalikud.</string>
   <string name="advanced">Põhjalikum</string>
   <string name="export_config_title">ICS OpenVPN konfiguratsioon</string>
-  <string name="warn_no_dns">Ühtegi DNS serverit ei kasutata. Nimelahendus ei pruugi töötada. Vae kohandatud DNS serveri kasutust</string>
+  <string name="warn_no_dns">Kasutuses pole ühtegi DNS serverit. Nimelahendus ei pruugi töötada. Kaaluge kohandatud DNS serverite konfiguratsiooni. Pange tähele et DNS seadete puudumisel jätkab Android teie mobiilse/Wi-Fi proxy seadete kasutamist.</string>
   <string name="dns_add_error">DNS serveri \"%1$s\" lisamine ebaõnnestus, süsteemi poolt keelduti: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Hankige töötav konfiguratsioon (kas arvutis järele proovitud või alla laetud võrguteenusepakkuja/organisatsiooni veebilehelt)&lt;/p&gt;&lt;p&gt;Kui tegu on ainult ühe failiga millega ei kaasne pem/pkcs12 faile, siis saad selle saata e-kirjas manusena iseendale. Kui faile on mitu, saab need kopeerida sdcard peale.&lt;/p&gt;&lt;p&gt;Kliki saabunud e-kirja manusele ja kasuta konfiguratsiooni importimiseks vpn kaustaikooni.&lt;/p&gt;&lt;p&gt;Kui siiski esineb puuduvatele failidele viitavaid vigu, siis kopeeri puuduvad failid sdcard peale.&lt;/p&gt;&lt;p&gt;Imporditud VPN lisamiseks ühenduste nimekirjale, klikkige salvestussümbolile.&lt;/p&gt;&lt;p&gt;VPN ühenduse loomiseks kliki loodud VPN ühenduse nimele.&lt;/p&gt;&lt;p&gt;Ekraanil nähtav logi lihtsustab esineda võivate probleemide/vigade lahendamist.&lt;/p&gt; </string>
   <string name="faq_howto_title">Kasutamise lühijuhend</string>
@@ -213,13 +212,13 @@
   <string name="vpn_import_hint">Kasuta olemasoleva (.ovpn või .conf) profiili importimiseks sdcard pealt &lt;img src=\"ic_menu_archive\"/&gt; ikooni.</string>
   <string name="faq_hint">Kindlasti vaata KKK\'d. See sisaldab ka alustamise lühijuhendit.</string>
   <string name="faq_routing_title">Marsruutimine ja võrguliidese konfigureerimine</string>
-  <string name="faq_routing">Marsruutimine ja liidese seadistamine ei toimu traditsiooniliste ifconfig/route käskudega vaid VPNService API abil. Tulemuseks on teistest OS\'dest erinev marsruutimise konfiguratsioon. Konfiguratsioonis on kirjed ainult tunneli-liidese IP jaoks ja nende võrkude kirjeldused mis peavad olema marsruuditud läbi selle liidese. Täpsemalt, pole vaja kirjeldada ei teise poole aadressi ega ruuterit. Spetsiaalsed ruutingukirjed VPN serveriga kontakteerumiseks (nagu näiteks redirect-gateway kasutamisel) ei ole samuti vajalikud. Seetõttu ignoreeritakse konfiguratsiooni importimisel neid kirjeid. Programm kindlustab VPNService API abil et VPN serveriga kontakteerumist nõudvaid ühendusi ei ruudita läbi VPN tunneli. Kuna toetatud on ainult tunneldatavate võrkude marsruudid, siis ei saa kirjeldada ka ruutinguid mis ei suuna liiklust läbi tunneli. (nt. route x.x.x.x y.y.y.y net_gateway). \'Näita ühenduse andmeid\' nupp logiaknas näitab kehtivat VPNService võrgukonfiguratsiooni.</string>
+  <string name="faq_routing">Ruutingu ja võrguliideste seadistust ei tehta mitte traditsiooniliste ifconfig/route käskudega vaid VPNService API abil. Tulemuseks on teistest operatsioonisüsteemidest erinev ruutingu seadistus. Seadistuses on määratud tunneliliidese IP aadress ja need võrgud, mille kasutus peab toimuma üle tunneli. Täpsemalt: pole vaja määrata ei tunneliserveri ega lüüsi aadressi. Pole vaja ka VPN serverini ühenduse loomise eriruutinguid (näiteks need mida lisatakse redirect-gateway abil). Sellest lähtuvalt käesolev app lihtsalt ignoreerib neid seadeid. App kindlustab VPNService API vahenditega et otseühendust VPN serverisse ei ruuditaks läbi tunneli. Kuna seadistustes on toetatud ainult tunneli kaudu ruuditavate võrkude määratlused siis lisamarsruudid, mis ei osuta tunnelile, ei ole samuti toetatud. (n. route x.x.x.x y.y.y.y net_gateway). Logiaken peegeldab peale VPN ühenduse loomist kehtivat VPNService seadistust. </string>
   <string name="persisttun_summary">Ära taasta otseühendust kui OpenVPN on taasühendumas.</string>
   <string name="persistent_tun_title">Katkematu tun</string>
   <string name="openvpn_log">OpenVPN Logi</string>
   <string name="import_config">Impordi OpenVPN konfiguratsioon</string>
   <string name="battery_consumption_title">Akukasutus</string>
-  <string name="baterry_consumption">Minu isiklike testide põhjal kulutavad akut peamiselt OpenVPN ülalhoide (keepalive) paketid. Enamik OpenVPN serverieid kasutab direktiivi \'keepalive 10 60\' mis määrab kliendilt serverile ja serverilt kliendile saadetavate keepalive pakettide intervalliks 10 sekundit. &lt;p&gt; Ehkki ülalhoidepaketid on väikesed ja ei põhjusta märgatavat võrguliiklust, ei lase nad mobiilse ühenduse raadiovõrgukiibil lülituda energiasäästurežiimi. (Vaata ka &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Nimetatud ülalhoidepaketi seadistused ei ole kliendi poolt muudetavad ja neid seadistusi saab muuta ainult OpenVPN serveri süsteemiadministraator. &lt;p&gt; Kahjuks esineb üle 60 sekundi pikkuse keepalive puhul probleeme UDP protokolliga üle mõnede NAT võrguväratite, mis eemaldavad UDP ühenduste olekuinfo väga lühikese aja jooksul (minu testides 60s). TCP protokolliga seda probleemi ei esine, kuid kaasneb TCP üle TCP tunneldamise probleem. (Vaata &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Miks TCP üle TCP on halb mõte&lt;/a&gt;)</string>
+  <string name="baterry_consumption">Minu isiklike testide põhjal kulutavad akut peamiselt OpenVPN ülalhoide (keepalive) paketid. Enamik OpenVPN serverieid kasutab sarnast direktiivi nagu \'keepalive 10 60\' mis määrab kliendilt serverile ja serverilt kliendile saadetavate keepalive pakettide intervalliks 10 sekundit. &lt;p&gt; Ehkki ülalhoidepaketid on väikesed ja ei põhjusta märgatavat võrguliiklust, ei lase nad mobiilse ühenduse raadiovõrgukiibil lülituda energiasäästurežiimi. (Vaata ka &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Nimetatud ülalhoidepaketi seadistused ei ole kliendi poolt muudetavad ja neid seadistusi saab muuta ainult OpenVPN serveri süsteemiadministraator. &lt;p&gt; Kahjuks esineb üle 60 sekundi pikkuse keepalive puhul probleeme UDP protokolliga üle mõnede NAT võrguväratite ühenduse aegumise tõttu. TCP protokolliga seda probleemi ei esine, kuid TCP üle TCP tunnel töötab üüratult viletsasti üle kõrge paketikaoga linkide. (Vaata &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Miks TCP üle TCP on halb mõte&lt;/a&gt;)</string>
   <string name="faq_tethering">Android Tethering (üle WiFi, USB või Bluetoothi) ja VPNService API (mida käesolev programm kasutab) ei ole koos kasutatavad. Täpsemad detailid leiad &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;issue #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN ja tether</string>
   <string name="connection_retries">Ühendumise korduskatseid</string>
@@ -276,4 +275,9 @@
   <string name="no_external_app_allowed">Ühelgi programmil pole luba kasutada välist API-t</string>
   <string name="allowed_apps">Lubatud programmid: %s</string>
   <string name="clearappsdialog">Kas tühjenda lubatud väliste programmide nimekiri?\nKehtiv lubatud programmide nimekiri:\n\n%s</string>
+  <string name="screenoff_summary">\"Peata VPN kui ekraan on välja lülitatud ja viimase 60s jooksul on üle kantud alla 64kB anmeid. Kui \"Katkematu Tun\" valik on sees, siis jätab VPN peatamine teie seadme ilma võrguühenduseta. \"Katkematu Tun\" valikuta ei ole aga seadmel VPN ühendust/kaitset.</string>
+  <string name="screenoff_title">Peata VPN ühendus peale ekraani välja lülitamist</string>
+  <string name="screenoff_pause">Ühenduse peatamine väljalülitatud ekraani korral: vähem kui %1$s %2$ss jooksul</string>
+  <string name="screen_nopersistenttun">Hoiatus: Katkematu tun ei ole sellel seadmel sisse lülitatud. Andmed liiguvad ekraani välja lülitamisel tavalise Internetiühenduse kaudu.</string>
+  <string name="save_password">Salvesta parool</string>
 </resources>

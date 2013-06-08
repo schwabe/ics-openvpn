@@ -15,10 +15,12 @@ dependencies {
 android {
     compileSdkVersion 17
     buildToolsVersion "17"
-
+    
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 17
+        versionCode = 68
+        versionName = "0.5.38"
     }
     sourceSets {
         main {

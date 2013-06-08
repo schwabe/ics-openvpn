@@ -59,8 +59,6 @@
   <string name="title_cancel">キャンセルの確認</string>
   <string name="cancel_connection_query">接続中または試行中の接続をキャンセルしますか？</string>
   <string name="remove_vpn">VPN を削除</string>
-  <string name="check_remote_tlscert">サーバがTLSサーバ証明書を使用する場合はチェックします。</string>
-  <string name="check_remote_tlscert_title">TLS サーバーを除く</string>
   <string name="remote_tlscn_check_summary">リモートサーバー証明書の所有者識別子(Subject DN)を確認します。</string>
   <string name="remote_tlscn_check_title">証明書のホスト名を確認する</string>
   <string name="enter_tlscn_dialog">リモート証明書の照合に使用する識別名(DN)を指定します。(例: C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\n完全な識別名(DN)または相対識別名(RDN)、あるいは相対識別名のプリフィクスを指定します。\n\nたとえば相対識別名のプリフィクスとして\"Server\"を指定すると、\"Server-1\"と\"Server-2\"にマッチします。\n\n空欄にした場合は相対識別名とサーバのホスト名をチェックします。\n\n詳細についてはOpenVPN 2.3.1以降のマニュアルの「--verify-x509-name」の項を参照してください。</string>
@@ -138,7 +136,7 @@
   <string name="add_profile">プロファイルの追加</string>
   <string name="import_could_not_open">インポートされた構成ファイルに記載されたファイル %1$s が見つかりません。</string>
   <string name="importing_config">構成ファイルを%1$sからインポートしています。</string>
-  <string name="import_warning_custom_options">いくつかの設定が解析されました。これらはカスタムオプションとして設定に追加されています。カスタムオプションは以下の通りです。</string>
+  <string name="import_warning_custom_options">ユーザインターフェースにマッピングされていないいくつかの設定項目があります。それらの設定はカスタムオプションとして追加されます。カスタムオプションを以下に表示します。</string>
   <string name="import_done">構成ファイルの読み取り終了。</string>
   <string name="nobind_summary">ローカル アドレスとポートにバインドを行いません。</string>
   <string name="no_bind">ローカルバインドしない</string>
@@ -159,12 +157,6 @@ SDカード上のデータは本質的に無防備です。すべてのアプリ
   <string name="converted_profile">インポートされたプロファイル</string>
   <string name="converted_profile_i">インポートされたプロファイル %d</string>
   <string name="broken_images">壊れたイメージ</string>
-  <string name="broken_images_faq">&lt;p&gt;HTCの公式OSイメージはトンネルにトラフィックを流せないという奇妙な経路問題を抱えています。(詳しくはバグトラッカーを参照 &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt;)&lt;/p&gt;
-&lt;p&gt;SONYの公式OSイメージのうちXperia arc SとXperia Rayでは、VPNServiceが含まれていないと報告されています。その他の公式OSイメージにも同様の影響があるかもしれません。(詳しくはバグトラッカーを参照 &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt;)&lt;/p&gt;
-&lt;p&gt;カスタムビルドのOSイメージの場合、TUNモジュールが含まれていなかったり、/dev/tunの権限が間違っていることがあります。いくつかのCM9のイメージでは全般設定で所有権の修正を行う必要があります。&lt;/p&gt;
-&lt;p&gt;最も重要なこと：もしおかしなOSイメージがあったら、製作者に問題を報告してください。より多くの人が問題を製作者に報告すれば、問題は修正されるでしょう。&lt;/p&gt;
-</string>
-  <string name="error_empty_username">ユーザ名を空に設定することはできません</string>
   <string name="pkcs12_file_encryption_key">PKCS12ファイルの暗号化キー</string>
   <string name="private_key_password">秘密鍵のパスワード</string>
   <string name="password">パスワード</string>
@@ -199,7 +191,7 @@ Androidはあなた自身の安全性のために、これらを迂回できな�
   <string name="obscure">特殊なOpenVPNの設定。通常は必要ありません</string>
   <string name="advanced">高度</string>
   <string name="export_config_title">ICSのOpenVPN設定</string>
-  <string name="warn_no_dns">使用されている DNS サーバーはありません。名前解決は動作しません。DNSサーバーの設定を見直してください。</string>
+  <string name="warn_no_dns">DNSサーバーが使用されていません。名前解決が動作しない可能性があります。カスタムDNSの設定を検討してください。また、DNSが指定されていない場合Androidはモバイル回線/WiFi接続に設定したプロキシを使用し続けることにも注意してください。</string>
   <string name="dns_add_error">DNSサーバ \"%1$s\" の追加に失敗しました。%2$sに拒否されました。</string>
   <string name="faq_howto">&lt;p&gt;動作確認済の設定ファイルを入手します。(あなたのコンピュータでテスト済のものや、プロバイダや会社などの組織からダウンロードしたもの)&lt;/p&gt;
 &lt;p&gt;もしそれが単一のファイルでpemやpks12ファイルを伴わないなら、自分宛のメールに添付して送付し、それを開いてください。もし複数のファイルで構成されているならSDカードに格納してください。&lt;/p&gt;
@@ -238,21 +230,11 @@ OpenVPNの接続を保証するためには、アプリケーションを高い�
   <string name="vpn_import_hint">SDカードからプロファイル(.ovpnや.conf)をインポートするには &lt;img src=\"ic_menu_archive\"/&gt; のアイコンを使用します。</string>
   <string name="faq_hint">FAQを確認してください。クイックスタートガイドがあります。</string>
   <string name="faq_routing_title">経路情報／インターフェース設定</string>
-  <string name="faq_routing">経路設定とインターフェース設定は伝統的なifconfig/routeコマンドでは行われず、VPNService APIを使用して行われます。
-この結果は、ほかのOSの経路設定とは異なります。
-設定はトンネルのIPのみで成立し、ネットワークへの経路設定はこのインターフェースを通して行われます。
-とりわけ、ピアパートナーやゲートウェイアドレスを必要としません。
-VPNサーバへの特別な経路(たとえばリダイレクトゲートウェイ)は必要ありません。
-従って、OpenVPNは設定のインポート時に、これらの設定を無視します。
-VPNService APIを使用してサーバに接続するアプリケーションはVPNトンネルを経路設定していなくても保証されます。
-トンネルを指定しないその他の経路設定はサポートされません。(たとえば route x.x.x.x y.y.y.y net_gateway)
-ログウィンドウの情報表示ボタンは、現在のVPNServiceのネットワーク設定を表示します。</string>
   <string name="persisttun_summary">OpenVPNが再接続試行中は、VPNなし状態を報告しません。</string>
   <string name="persistent_tun_title">永続的なTUNデバイス</string>
   <string name="openvpn_log">OpenVPN のログ</string>
   <string name="import_config">OpenVPN の構成のインポート</string>
   <string name="battery_consumption_title">バッテリー消費量</string>
-  <string name="baterry_consumption">個人的な検証では、OpenVPNがバッテリを多く消費する主な原因はkeepaliveパケットです。 大部分のOpenVPNサーバは\'keepalive 10 60\'のような設定を持っており、これは10秒ごとにサーバとクライアントで相互にkeepaliveパケットを送信しあうことを意味します。 &lt;p&gt;これらのパケットは小さく多くの帯域は使用しませんが、モバイル回線機能を常に稼動させ続け電力消費を増大させます。 &lt;p&gt;(参考 &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)このkeepalive設定はクライアント側からは変更できません。OpenVPNのシステム管理者のみが変更可能です。 &lt;p&gt; 残念なことに、60秒より大きな間隔のUDP keepaliveはいくつかのNATゲートウェイにおいては接続状態が維持できず、それより短い時間でタイムアウトします(検証では60秒)。 TCP keepaliveと長いタイムアウト時間は動作しますが、TCP over TCP問題を引き起こします。(詳細は&lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;なぜTCP over TCPは悪いアイディアなのか&lt;/a&gt;を参照)</string>
   <string name="faq_tethering">Androidのテザリング機能(WiFi, USB, Bluetooth経由)とVPNService API(このプログラムから使用する機能)は同時に利用できません。詳細については&lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;issue #34&lt;/a&gt;を参照</string>
   <string name="vpn_tethering_title">VPN とテザリング</string>
   <string name="connection_retries">接続の再試行回数</string>
@@ -309,4 +291,8 @@ VPNService APIを使用してサーバに接続するアプリケーションは
   <string name="no_external_app_allowed">外部APIの使用を許可されたアプリはありません</string>
   <string name="allowed_apps">許可アプリ: %s</string>
   <string name="clearappsdialog">許可アプリの一覧をクリアしますか?\n現在の許可アプリ一覧:\n\n%s</string>
+  <string name="screenoff_summary">スクリーンがオフかつ60秒で64kB以下のデータ転送量の場合、VPN通信を中断します。「永続的なTUN」設定が有効な場合、VPN接続が中断されると通信ができなくなります。「永続的なTUN」を無効にすると、VPNによる接続保護は行われなくなります。</string>
+  <string name="screenoff_title">画面オフ後にVPN接続を中断する</string>
+  <string name="screen_nopersistenttun">警告: このVPN接続には永続的なTUNが設定されていません。スクリーンオフ後の通信は通常のインターネット接続を使用します。</string>
+  <string name="save_password">パスワードを保存</string>
 </resources>

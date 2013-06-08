@@ -45,7 +45,6 @@
   <string name="title_cancel">Annuleer bevestiging</string>
   <string name="cancel_connection_query">Sluit de verbonden VPN af/annuleer de verbindingspoging?</string>
   <string name="remove_vpn">VPN wissen</string>
-  <string name="check_remote_tlscert">Checkt of de server een TLS server certificaat gebruikt.</string>
   <string name="remote_tlscn_check_title">Controleer Certificaat Hostname</string>
   <string name="tls_auth_file">TLS Auth Bestand</string>
   <string name="pull_on_summary">Vraag IP adres, routes en timing opties van de server.</string>
@@ -88,7 +87,6 @@
   <string name="converted_profile">Geïmporteerd profiel</string>
   <string name="converted_profile_i">Geïmporteerd profiel %d</string>
   <string name="broken_images">Niet Werkende Afbeeldingen</string>
-  <string name="error_empty_username">De gebruikersnaam moet niet leeg zijn.</string>
   <string name="pkcs12_file_encryption_key">PKCS12 Bestand Encryptie Sleutel</string>
   <string name="private_key_password">Privé Sleutel Wachtwoord</string>
   <string name="password">Wachtwoord</string>

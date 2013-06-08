@@ -59,8 +59,6 @@
   <string name="title_cancel">Anuluj potwierdzenie</string>
   <string name="cancel_connection_query">Odłącz podłączone VPN / zrezygnować z próby połączenia?</string>
   <string name="remove_vpn">Usuń VPN</string>
-  <string name="check_remote_tlscert">Sprawdza, czy serwer używa certyfikatu serwera TLS</string>
-  <string name="check_remote_tlscert_title">Z wyjątkiem TLS serwer</string>
   <string name="tls_key_auth">Włącza uwierzytelnianie kluczem TLS</string>
   <string name="tls_auth_file">Plik TLS</string>
   <string name="use_pull">Pobierz ustawienia</string>
@@ -96,8 +94,8 @@
   <string name="faq_tap_mode">Tryb TAP nie jest możliwy z nierootwanym API VPN. Dlatego ta aplikacja nie zapewnia wsparcia TAP</string>
   <string name="tap_faq2">Znowu. Żartujesz sobie? Tryb tap jest naprawdę nie wspierany, a wysyłanie więcej maili o to czy będzie wsparcie wcale nie pomoże.</string>
   <string name="faq">FAQ</string>
+  <string name="copying_log_entries">Kopiowanie wpisów dziennika</string>
   <string name="faq_shortcut">Skrót do startu</string>
-  <string name="faq_howto_shortcut">Możesz utworzyć skrót, aby uruchamiać OpenVPN z pulpitu. W zależności od twojego programu ekranu głównego musisz dodać skrót lub widget.</string>
   <string name="no_vpn_support_image">Twój obraz nie wspiera API VPN, przepraszamy ;(</string>
   <string name="encryption">Szyfrowanie</string>
   <string name="cipher_dialog_title">Wprowadź metodę szyfrowania</string>
@@ -119,7 +117,6 @@
   <string name="import_vpn">Importuj</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="error_empty_username">Nazwa użytkownika nie może być pusta.</string>
   <string name="pkcs12_file_encryption_key">Klucz pliku PKCS12</string>
   <string name="private_key_password">Hasło klucza prywatnego</string>
   <string name="password">Hasło</string>
@@ -128,6 +125,7 @@
   <string name="generalsettings">Ustawienia</string>
   <string name="generated_config_summary">Pokazuje wygenerowany plik konfiguracji OpenVPN</string>
   <string name="edit_profile_title">Edycja \"%s\"</string>
+  <string name="building_configration">Tworzenie konfiguracji...</string>
   <string name="netchange_summary">Włączenie tej opcji spowoduje ponowne połączenie jeśli stan sieci się zmienił (np. z WiFi na GSM)</string>
   <string name="netchange">Połącz ponownie przy zmianie sieci</string>
   <string name="netstatus">Status sieci: %s</string>
@@ -139,6 +137,7 @@
   <string name="basic">Podstawowe</string>
   <string name="routing">Routing</string>
   <string name="advanced">Zaawansowane</string>
+  <string name="export_config_title">Konfiguracja ICS Openvpn</string>
   <string name="dns_add_error">Nie można dodać serwera DNS \"%1$s\", odrzucone przez system: %2$s</string>
   <string name="faq_howto_title">Szybki start</string>
   <string name="setting_loadtun_summary">Próba załadowania modułu tun.ko kernel przez próbą połączenia. Potrzeba rootowanych urządzeń.</string>
@@ -170,10 +169,17 @@
   <string name="session_ipv4string">%1$s-%2$s</string>
   <string name="state_connecting">Łączę</string>
   <string name="state_wait">Czekam na odpowiedź serwera</string>
+  <string name="state_auth">Uwierzytelnianie</string>
+  <string name="state_get_config">Pobieranie konfiguracji klienta</string>
+  <string name="state_assign_ip">Przypisywanie adresów IP</string>
   <string name="state_add_routes">Dodaję trasy</string>
   <string name="state_connected">Połączony</string>
   <string name="state_disconnected">Odłączony</string>
   <string name="state_reconnecting">Łączę ponownie</string>
+  <string name="state_exiting">Zamykanie</string>
+  <string name="state_noprocess">Nie działa</string>
+  <string name="state_resolve">Rozpoznwanie nazw hostów</string>
+  <string name="state_tcp_connect">Łączenie (TCP)</string>
   <string name="state_auth_failed">Błąd autentykacji</string>
   <string name="state_nonetwork">Czekam na sieć</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
@@ -181,9 +187,21 @@
   <string name="start_vpn_title">Łączę z VPN %s</string>
   <string name="start_vpn_ticker">Łączę z VPN %s</string>
   <string name="jelly_keystore_alphanumeric_bug">Niektóre wersje Androida 4.1 mają problemy, jeśli nazwa certyfikatu zawiera niealfanumeryczne znaki (spacje, podkreślenia, myślniki). Spróbuj zaimportować certyfikat bez znaków specjalnych</string>
+  <string name="packet_auth">Pakiety uwierzytelniania</string>
+  <string name="auth_dialog_title">Wpisz metodę uwierzytelniania pakietów</string>
+  <string name="mobile_info_extended">Działa na %1$s (%2$s) %3$s, Android API %4$d, wersja %5$s, %6$s</string>
+  <string name="built_by">zbudowany przez %s</string>
+  <string name="make_selection_inline">Skopiuj do profilu</string>
+  <string name="crashdump">Zrzut</string>
   <string name="add">Dodaj</string>
   <string name="send_config">Prześlij plik konfiguracyjny</string>
+  <string name="complete_dn">Kompletny DN</string>
+  <string name="remotetlsnote">Zaimportowana konfiguracja używa przestarzałej opcji tls-remote, która używa innego formatu DN.</string>
+  <string name="rdn">RDN (bieżąca nazwa)</string>
+  <string name="rdn_prefix">Prefiks RDN</string>
+  <string name="tls_remote_deprecated">tls-remote (PRZESTARZAŁE)</string>
   <string name="help_translate">Możesz pomóc w tłumaczeniu odwiedzająć http://crowdin.net/project/ics-openvpn/invite</string>
+  <string name="remote_warning">Akceptując, dajesz aplikacji uprawnienia do pełnego kontrolowania przez OpenVPN całego ruchu sieciowego. <b>Nie akceptuj, jeżeli nie ufasz aplikacji w pełni. </b> W przeciwnym razie istnieje ryzyko przejęcia danych przez złośliwe oprogramowanie. </string>
   <string name="remote_trust">Ufam tej aplikacji.</string>
   <string name="clearappsdialog">Wyczyścić listę dozwolonych aplikacji?\nObecna lista dozwolonych aplikacji:\n\n%s</string>
 </resources>

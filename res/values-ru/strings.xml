@@ -24,7 +24,7 @@
   <string name="pkcs12pwquery">Пароль для PKCS12</string>
   <string name="file_select">Выбрать…</string>
   <string name="file_nothing_selected">Вы должны выбрать файл</string>
-  <string name="useTLSAuth">Использовать авторизацию TLS</string>
+  <string name="useTLSAuth">Использовать аутентификацию TLS</string>
   <string name="tls_direction">TLS Direction</string>
   <string name="ipv6_dialog_tile">Введите адрес/маску подсети IPv6 в формате CIDR (например 2000:dd::23/64)</string>
   <string name="ipv4_dialog_title">Введите адрес/маску подсети IPv4 в формате CIDR (например 1.2.3.4/24)</string>
@@ -59,8 +59,8 @@
   <string name="title_cancel">Подтверждение отмены</string>
   <string name="cancel_connection_query">Отключение активных VPN/Отмена попыток подключения?</string>
   <string name="remove_vpn">Удалить VPN</string>
-  <string name="check_remote_tlscert">Проверять, использует ли сервер сертификат TLS</string>
-  <string name="check_remote_tlscert_title">Исключить TLS на сервере</string>
+  <string name="check_remote_tlscert">Проверяет, использует ли сервер сертификаты TLS (--remote-cert-tls server)</string>
+  <string name="check_remote_tlscert_title">Ожидать сертификата TLS от сервера</string>
   <string name="remote_tlscn_check_summary">Проверка DN объекта удаленного сертификата</string>
   <string name="remote_tlscn_check_title">Проверка имени хоста сертификата</string>
   <string name="enter_tlscn_dialog">Переключатель способа проверки DN сертификата (e.g. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nВозможные значения: полный DN, RDN (для примера openvpn.blinkt.de) или только преффикс RDN для проверки.\n\nПри использовании преффикса RDN, например \"Server\", значения будут \"Server-1\", \"Server-2\" и т.д.\n\nПри пустом текстовом поле проверка будет проводиться по имени хоста.\n\nДля подробностей смотрите руководство для OpenVPN 2.3.1+, раздел —verify-x509-name</string>
@@ -117,7 +117,7 @@
   <string name="copying_log_entries">Копирование записей лога</string>
   <string name="faq_copying">Для копирования одного элемента журнала необходимо нажать и удерживать. Для копирования/передачи всего файла журнала используйте опцию \"Отправить файл журнала\". Используйте hardware кнопку меню, если вы не в графическом интерфейсе.</string>
   <string name="faq_shortcut">Ярлык для запуска</string>
-  <string name="faq_howto_shortcut">Вы можете поместить ярлык для запуска OpenVPN на рабочий стол. В зависимости от вашего окружения необходимо добавить ярлык или виджет.</string>
+  <string name="faq_howto_shortcut">Вы можете создать ярлык для запуска OpenVPN на рабочем столе. В зависимости от вашего окружения необходимо добавить ярлык или виджет.</string>
   <string name="no_vpn_support_image">Ваша прошивка не поддерживает VPNService API, извините :(</string>
   <string name="encryption">Шифрование</string>
   <string name="cipher_dialog_title">Укажите метод шифрования</string>
@@ -137,7 +137,7 @@
   <string name="add_profile">добавить конфигурацию</string>
   <string name="import_could_not_open">Не удалось найти файл %1$s, указанный в файле конфигурации</string>
   <string name="importing_config">Импорт файла конфигурации из исходного %1$s</string>
-  <string name="import_warning_custom_options">Ваша конфигурация имела несколько директив, которые не поняты программой. Эти директивы были добавлены в дополнительные параметры пользовательской конфигурации. Пользовательская конфигурация отображена ниже:</string>
+  <string name="import_warning_custom_options">Ваша конфигурация имел несколько параметров, которые не входят в параметры стандартной конфигурации. Эти параметры были вынесены в пользовательскую конфигурацию. Пользовательская конфигурация отображается ниже:</string>
   <string name="import_done">Файла конфигурации успешно прочитан.</string>
   <string name="nobind_summary">Не привязываться к локальному адресу и порту</string>
   <string name="no_bind">Не использовать привязки</string>
@@ -153,8 +153,7 @@
   <string name="converted_profile">импортируемый профиль</string>
   <string name="converted_profile_i">импортируемый профиль %d</string>
   <string name="broken_images">Сломанные прошивки</string>
-  <string name="broken_images_faq">&lt;p&gt;Извествно, что официальные прошивки HTC имеют странные проблемы с марщрутизацией, вызванной тем, что трафик не идёт через тунель (см. также &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; в баг-трекере)&lt;/p&gt;&lt;p&gt; Также сообщалось, что в официальных прошивках SONY от Xperia arc S и Xperia Ray полностью отсутствует сервис VPNService. Также и другие прошивки от Sony могут иметь такие же проблемы. (см. также &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; в баг-трекере)&lt;/p&gt;&lt;p&gt;В некоторых встроенных прошивках модуль tun может отсутствовать или иметь не правильные права файла-устройства /dev/tun. Некоторые CM9 прошивки могут требовать исправлений опции прав в главных настройках.&lt;/p&gt;&lt;p&gt;Важная информация: Если у вас прошивка с указанными проблемами, сообщите об этом производителю устройства. Чем больше пользователей сообщит о проблеме производителю, тем более шансов, что этот производитель соизволит убрать свои косяки.&lt;/p&gt;</string>
-  <string name="error_empty_username">Имя пользователя не должно быть пустым.</string>
+  <string name="broken_images_faq">&lt;p&gt;Извествно, что официальные прошивки HTC имеют странные проблемы с маршрутизацией, приводящей к тому, что трафик не идёт через туннель (см. &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; в баг-трекере).&lt;/p&gt;&lt;p&gt;Также сообщалось, что в старых официальных прошивках SONY от Xperia Arc S и Xperia Ray полностью отсутствует сервис VPNService (см. &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; в баг-трекере).&lt;/p&gt;&lt;p&gt;В некоторых встроенных прошивках модуль tun может отсутствовать или иметь неправильные права на файл устройства /dev/tun. Некоторые CM9 прошивки могут требовать исправлений опции прав в главных настройках.&lt;/p&gt;&lt;p&gt;И самое главное: Если у вас прошивка с указанными проблемами, сообщите об этом производителю устройства. Чем больше пользователей сообщит о проблеме, тем больше шансов, что этот производитель исправит прошивку.&lt;/p&gt;</string>
   <string name="pkcs12_file_encryption_key">Файл PKCS12-ключа</string>
   <string name="private_key_password">Пароль закрытого ключа</string>
   <string name="password">Пароль</string>
@@ -187,7 +186,7 @@
   <string name="obscure">Скрытые параметры OpenVPN. Обычно не требуются.</string>
   <string name="advanced">Расширенные</string>
   <string name="export_config_title">ICS Openvpn конфигурация</string>
-  <string name="warn_no_dns">DNS-серверы не используются. Разрешение имен может не работать. Рассмотрите возможность указания DNS-серверов</string>
+  <string name="warn_no_dns">Серверы DNS не используются. Разрешение имен может не работать. Рассмотрите возможность установки пользовательских DNS-серверов. Также обратите внимание, что Android будет продолжать использовать параметры, указанные для вашего мобильного/Wi-Fi соединения, если не указаны DNS-серверы.</string>
   <string name="dns_add_error">Не удалось добавить DNS-сервер \"%1$s\", отклонен системой: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Используйте готовую конфигурацию (протестированную на вашем компьютере или полученную от вашего провайдера)&lt;/p&gt;&lt;p&gt;Если это простой файл без pem/pks12 вы можете отправить его по email на свое устройство. Если же это несколько файлов, вы можете использовать их со своей карты памяти.&lt;/p&gt;&lt;p&gt;Просто кликните на .conf файл или выберите его с помощью меню в программе для импорта конфигурации&lt;/p&gt;&lt;p&gt;Если программа выдаст ошибку о нехватке некоторых файлов, просто поместите эти файлы на карту памяти&lt;/p&gt;&lt;p&gt;Нажмите кнопку сохранения для добавления импортируемой конфигурации в программу&lt;/p&gt;&lt;p&gt;Запустите ваш VPN-тоннель нажав на его название в списке&lt;/p&gt;&lt;p&gt;Если при запуске возникли ошибки попробуйте разобраться и устранить их.&lt;/p&gt; </string>
   <string name="faq_howto_title">Быстрый старт</string>
@@ -202,24 +201,24 @@
   <string name="onbootrestartsummary">OpenVPN будет переподключаться, если он был активен в момент выключения/перезагрузки. Пожалуйста, прочтите FAQ перед тем, как использовать эту настройку.</string>
   <string name="onbootrestart">Переподключение после перезагрузки</string>
   <string name="ignore">Игнорировать</string>
-  <string name="restart">Перезагрузка</string>
-  <string name="restart_vpn_after_change">Изменения конфигурации применяются после перезапуска VPN. (Пере)запустить VPN теперь?</string>
+  <string name="restart">Перезапуск</string>
+  <string name="restart_vpn_after_change">Изменения конфигурации применяются после перезапуска VPN. (Пере)запустить VPN сейчас?</string>
   <string name="configuration_changed">Конфигурация изменена</string>
   <string name="log_no_last_vpn">Не удалось определить последний используемый профиль для редактирования</string>
   <string name="faq_duplicate_notification_title">Дублирующиеся уведомления</string>
-  <string name="faq_duplicate_notification">Если в Android возникает нехватка оперативной памяти (RAM), ненужные службы и приложения останавливаются. Из-за этого прерывается установленное VPN-соединение. Чтобы избежать этого, приложение нужно запускать с повышенным приоритетом. Для запуска с высоким приоритетом приложение должно вывести предупреждение. The key notification icon is imposed by the system as described in the previous FAQ entry. It does not count as app notification for purpose of running with higher priority.</string>
+  <string name="faq_duplicate_notification">Если в Android возникает нехватка оперативной памяти (RAM), ненужные службы и приложения останавливаются. Из-за этого прерывается установленное VPN-соединение. Чтобы избежать этого, приложение нужно запускать с повышенным приоритетом. Для запуска с высоким приоритетом приложение должно вывести предупреждение. Основная иконка приложения будет закреплена наверху панели уведомлений самой системой, как описано в предыдущем вопросе. Она не является собственно уведомлением, это ограничение распространяется на все приложения, запущенные с высоким приоритетом.</string>
   <string name="no_vpn_profiles_defined">Профили VPN не указаны.</string>
   <string name="add_new_vpn_hint">Используйте &lt;img src=\"ic_menu_add\"/&gt; иконку для добавления нового VPN</string>
   <string name="vpn_import_hint">Используйте &lt;img src=\"ic_menu_archive\"/&gt; кнопку для импорта существующих профилей (.ovpn or .conf) с вашей карты памяти.</string>
   <string name="faq_hint">Не забудьте заглянуть в FAQ. Также имеется краткое руководство.</string>
   <string name="faq_routing_title">Конфигурация маршрутизации/интерфейса</string>
-  <string name="faq_routing">Маршрутизация и конфигурация интерфейса не сделаны через традиционную ifconfig/route команду, а используют VPNService API. Это сделано по причине того, что конфигурирование маршрутизации отличаются в разных операционных системах. Конфигурация состоит только из IP интерфейса тунеллирования и сетей, которые должны маршрутизироваться через этот интерфейс. Особенно не требуется адрес канала (peer) или адрес шлюза. Специальные марщруты для достижения VPN сервера (для примера, добавленные, когда использован redirect-gateway) больше не требуются. Следовательно, приложение будет игнорировать эти установки при импорте конфигурации. Такое поведение с использованием VPNService API гарантирует, что соединение до сервера не будет маршрутизироваться  в VPN тунель. Поскольку поддерживаются только такие сети, которые маршрутизируются через тунель, маршруты, которые не указывают на тунель, не могут  поддерживаться (например route x.x.x.x y.y.y.y net_gateway). Кнопка \"Показать информацию\" в окне журнала показывает текущую сетевую конфигурацию VPNService.</string>
+  <string name="faq_routing">Настройка интерфейса и маршрутизации происходит не привычными ifconfig/route, а через VPNService API. Это приводит к несколько отличающейся настройке маршрутизации, нежели в других ОС. Конфигурация состоит только из IP туннельного интерфейса и сетей, которые должны быть маршрутизированы через этот туннель. Указание адреса источника и шлюза не требуется. Указывать особые настройки для доступа к VPN-серверу (например, которые задаются в redirect-gateway) тоже не требуются. При импорте конфигурационного файла, эти настройки будут проигнорированы. Приложение использует VPNService API для проверки того, что соединение до сервера не будет проходить через VPN туннель. Маршруты, которые направляют трафик вне туннеля, также не поддерживаются (например route x.x.x.x y.y.y.y net_gateway). Окно лога показывает текущую конфигурацию VPNService во время установки соединения. </string>
   <string name="persisttun_summary">Не открывать диалог, когда происходит переподключение VPN.</string>
-  <string name="persistent_tun_title">Стойкость tun</string>
+  <string name="persistent_tun_title">Постоянный tun</string>
   <string name="openvpn_log">OpenVPN Журнал</string>
   <string name="import_config">Импорт конфигурации OpenVPN</string>
   <string name="battery_consumption_title">Потребление батареи</string>
-  <string name="baterry_consumption">В моих тестах, главным источником высокого потребления электроэнергии батареи были keepalive пакеты. Большинство OpenVPN-серверов содержат директиву вроде \'keepalive 10 60\', которая отправляет keepalive-пакет с клиента на сервер и с сервера на клиент каждые 10 секунд. &lt;p&gt; Хоть эти пакеты и маленькие и не расходуют много трафика, они заставляют радиомодуль потреблять много энергии. (см. &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Настройки keepalive не могут быть изменены на клиенте, это может сделать только системный администратор OpenVPN.&lt;p&gt; К сожалению, использование keepalive более, чем 60 секунд с udp, может вносить проблемы с некоторыми типами NAT, которые удаляют информацию о соединении через короткое время (в моем случае, это было 60 секунд). Использование TCP с большим keepalive-таймаутом будет работать, но появляется проблема TCP через TCP (см. &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Ide&lt;/a&gt;)</string>
+  <string name="baterry_consumption">В моих тестах, главным источником высокого потребления электроэнергии батареи были keepalive пакеты. Большинство OpenVPN-серверов содержат директиву вроде \'keepalive 10 60\', которая отправляет keepalive-пакет с клиента на сервер и с сервера на клиент каждые 10 секунд. &lt;p&gt; Хоть эти пакеты и маленькие и не расходуют много трафика, они заставляют радиомодуль потреблять много энергии. (см. &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Настройки keepalive не могут быть изменены на клиенте, это может сделать только системный администратор OpenVPN.lt;pgt; К сожалению, использование keepalive более, чем 60 секунд с UDP, может вносить проблемы с некоторыми типами NAT, которые удаляют информацию о соединении через короткое время (в моем случае, это было 60 секунд). Использование TCP с большим keepalive-таймаутом будет работать, но производительность туннелирования TCP через TCP в сетях с высокой вероятностью потери пакета крайне низкая (см. &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;).</string>
   <string name="faq_tethering">Тетеринг функция Android (через WiFi, USB или Bluetooth) и VPNService API (используемое этой программой) не работают вместе. Подробней в &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;проблеме №34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN и Tethering</string>
   <string name="connection_retries">Попытки подключения</string>
@@ -239,7 +238,7 @@
   <string name="state_assign_ip">Назначение IP-адресов</string>
   <string name="state_add_routes">Добавление маршрутов</string>
   <string name="state_connected">Подключено</string>
-  <string name="state_disconnected">Отключение</string>
+  <string name="state_disconnected">Отключиться</string>
   <string name="state_reconnecting">Повторное подключение</string>
   <string name="state_exiting">Выход</string>
   <string name="state_noprocess">Не запущено</string>
@@ -267,13 +266,18 @@
   <string name="complete_dn">Полное DN</string>
   <string name="remotetlsnote">Импортированнаяе конфигурация использует устаревшую опцию tls-remote которая имеет другой формат DN.</string>
   <string name="rdn">RDN (полное имя)</string>
-  <string name="rdn_prefix">Преффикс RDN</string>
+  <string name="rdn_prefix">Префикс RDN</string>
   <string name="tls_remote_deprecated">tls-remote (УСТАРЕВШЕЕ)</string>
   <string name="help_translate">Вы можете улучшить перевод, посетив http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s пытается управлять %2$s</string>
-  <string name="remote_warning">Продолжая, вы даете приложению права на управление \"OpenVPN для Android\" и перехват всего сетевого траффика. <b> Не продолжайте, если не доверяете полностью этому приложению. </b> В противном случае вы рискуете утечкой  и использованием ваших данных злоумышленниками.</string>
+  <string name="remote_warning">Продолжая, вы даете приложению права на управление \"OpenVPN для Android\" и перехват всего сетевого трафика. <b> Не продолжайте, если не доверяете полностью этому приложению. </b> В противном случае вы рискуете утечкой  и использованием ваших данных злоумышленниками.</string>
   <string name="remote_trust">Я доверяю этому приложению.</string>
   <string name="no_external_app_allowed">Нет приложений, авторизованных для внешнего API</string>
   <string name="allowed_apps">Авторизованные приложения: %s</string>
   <string name="clearappsdialog">Очистить список авторизованных внешних приложений?\nСписок разрешенных приложений:\n\n%s</string>
+  <string name="screenoff_summary">VPN-соединение приостанавливается, если экран выключен или объем данных меньше 64kb за 60сек. Если включена опция \"Удержание соединения\", VPN-соединение будет постоянно активным. Без этого параметра оно будет приостанавливаться при этих условиях..</string>
+  <string name="screenoff_title">Приостановить VPN-соединение при выключенном экране</string>
+  <string name="screenoff_pause">Приостановка соединения при выключенном экране: меньше, чем  %1$s за %2$sс</string>
+  <string name="screen_nopersistenttun">Внимание: постоянный tun не включен для этого VPN. Трафик будет проходить через обычный доступ в Интернет, когда экран выключен.</string>
+  <string name="save_password">Сохранить пароль</string>
 </resources>

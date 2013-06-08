@@ -87,7 +87,6 @@
   <string name="converted_profile">importert profil</string>
   <string name="converted_profile_i">importert profilen %d</string>
   <string name="broken_images">Ødelagte bilder</string>
-  <string name="error_empty_username">Brukernavnet kan ikke være tomt.</string>
   <string name="pkcs12_file_encryption_key">PKCS12 Filkrypteringsnøkkel</string>
   <string name="private_key_password">Privat nøkkel passord</string>
   <string name="password">Passord</string>

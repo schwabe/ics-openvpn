@@ -2,13 +2,13 @@
     <!--  connected -->
   <item android:maxLevel="0" android:drawable="@drawable/ic_stat_vpn" />
   <!--  connecting, server reply -->
-  <item android:maxLevel="1" android:drawable="@drawable/ic_stat_vpn_more_halo" />
+  <item android:maxLevel="1" android:drawable="@drawable/ic_stat_vpn_empty_halo" />
   <!--  connecting, no server rply yet -->
-  <item android:maxLevel="2" android:drawable="@drawable/ic_stat_vpn_minimal_halo" />
+  <item android:maxLevel="2" android:drawable="@drawable/ic_stat_vpn_outline" />
   <!--  no useable network -->
   <item android:maxLevel="3" android:drawable="@drawable/ic_stat_vpn_offline" />
 	<!--  Authentication failed -->
-  <item android:maxLevel="4" android:drawable="@drawable/ic_stat_vpn_more_halo" />
+  <item android:maxLevel="4" android:drawable="@drawable/ic_stat_vpn_empty_halo" />
     <!--  client not running, not used  -->
   <item android:maxLevel="5" android:drawable="@drawable/ic_stat_vpn_offline" />
  </level-list>

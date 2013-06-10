@@ -54,10 +54,13 @@
   <string name="custom_config_summary">Specificaţi opţiunile particularizate. Folosiţi cu grijă!</string>
   <string name="route_rejected">Rută respinsă de Android</string>
   <string name="cancel_connection">Deconectaţi</string>
+  <string name="cancel_connection_long">Deconectați VPN</string>
   <string name="clear_log">Golire jurnal</string>
   <string name="title_cancel">Anulare confirmare</string>
   <string name="cancel_connection_query">Deconectaţi VPN-ul conectat/anulaţi încercarea de conectare?</string>
   <string name="remove_vpn">Elimina VPN</string>
+  <string name="check_remote_tlscert">Verifică dacă serverul utilizează un certificat cu extensii TLS Server (--remote-cert-tls server)</string>
+  <string name="check_remote_tlscert_title">Aşteptă certificat de server TLS</string>
   <string name="remote_tlscn_check_summary">Verifică Remote Server Certificate Subject DN</string>
   <string name="remote_tlscn_check_title">Verficare hostname certificat</string>
   <string name="enter_tlscn_dialog">Specifică verificarea ce va fi utilizată pentru certificatul DN (e.g. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nSpecifică DN complet sau RDN (openvpn.blinkt.de in exemplu) sau un prefix RDN pentru verificare.\n\nCând folosiți prefix RDN \"Server\" face match si cu \"Server-1\" și \"Server-2\"\n\nDacă lăsați câmpul gol se va verifica RDN contra hostaname-ul serverului.\n\nPentru mai multe detalii verificați manualul OpenVPN 2.3.1+ la —verify-x509-name</string>
@@ -92,7 +95,9 @@
   <string name="error">"Eroare:"</string>
   <string name="clear">Goleşte</string>
   <string name="info">info</string>
+  <string name="last_openvpn_tun_config">Se deschide interfața tun:</string>
   <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
+  <string name="dns_server_info">Server DNS: %1$s, Domeniu: %2$s</string>
   <string name="routes_info">Rute: %s</string>
   <string name="routes_info6">Rute IPv6: %s</string>
   <string name="ip_not_cidr">S-au primit informaţiile despre interfaţă %1$s şi %2$s, presupun că a doua adresă este adresa peer a serverlui remote. Folosesc netmask /32 pentru IP local. Modul dat de OpenVPN este \"%3$s\".</string>
@@ -112,6 +117,7 @@
   <string name="copying_log_entries">Copiere linii jurnal</string>
   <string name="faq_copying">Pentru a copia o singură linie din jurnal apăsaţi şi menţineţi apăsat pe acea linie. Pentru a copia/trimite întreg jurnalul folosiţi opţiunea Trimite Jurnal. Folosiţi butonul de meniu hardware dacă nu este vizibil în GUI.</string>
   <string name="faq_shortcut">Shortcut pornire</string>
+  <string name="faq_howto_shortcut">Puteţi plasa o scurtătură pe desktop pentru a lansa OpenVPN. În funcţie de programul homescreen trebuie să adăugaţi fie o scurtătură fie un widget.</string>
   <string name="no_vpn_support_image">Imaginea dvs. nu suportă API-ul VPNService, îmi pare rău :(</string>
   <string name="encryption">Criptare</string>
   <string name="cipher_dialog_title">Alegeţi metoda de criptare</string>
@@ -131,6 +137,7 @@
   <string name="add_profile">Adaugă profil</string>
   <string name="import_could_not_open">Imposibil de găsit fișierul %1$s menţionat în fişierul de configurare importat</string>
   <string name="importing_config">Import fişierul de configurare din sursa %1$s</string>
+  <string name="import_warning_custom_options">Configurația avut câteva opțiuni de configurare care nu sunt mapate la configurații UI. Aceste opțiuni au fost adăugate ca opțiuni de configurare personalizate. Configurația personalizată este afișată mai jos:</string>
   <string name="import_done">S-a terminat citirea fişierului de configurare.</string>
   <string name="nobind_summary">Nu face bind la adresa şi portul local</string>
   <string name="no_bind">Fără binding local</string>
@@ -146,6 +153,7 @@
   <string name="converted_profile">profil importat</string>
   <string name="converted_profile_i">profil importat %d</string>
   <string name="broken_images">Imagini defecte</string>
+  <string name="broken_images_faq">&lt;p&gt;Este cunoscut faptul ca imaginile HTC oficiale au o problemă ciudată de rutare ce nu permite traficului să treacă prin tunel (citiţi şi &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Problema 18&lt;/a&gt;în bug tracker.)&lt;/p&gt;&lt;p&gt;S-a raportat că VPNService lipseşte complet din imaginile oficiale SONY mai vechi pentru Xperia arc S şi Xperia Ray. (citiţi şi &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Problema 29&lt;/a&gt; în bug tracker.)&lt;/p&gt;&lt;p&gt;În imaginile particularizate modulul tun poate lipsi sau drepturile pentru /dev/tun pot fi greşite. Unele imagini CM9 au nevoie de opţiunea de reparare a drepturilor din setările generale.&lt;/p&gt;&lt;p&gt;Important: dacă aveţi o imagine defectă raportaţi-o fabricantului. Cu cât mai mulţi utilizatori raportează problema fabricantului cu atât este mai posibil ca el să o remedieze.&lt;/p&gt;</string>
   <string name="pkcs12_file_encryption_key">Cheie criptare fişier PKCS12</string>
   <string name="private_key_password">Parola cheie privată</string>
   <string name="password">Parola</string>
@@ -178,6 +186,7 @@
   <string name="obscure">Setări obscure pentru OpenVPN. În mod normal nu sunt necesare.</string>
   <string name="advanced">Avansate</string>
   <string name="export_config_title">Configurare Openvpn ICS</string>
+  <string name="warn_no_dns">Nici un server DNS utilizat. Rezolvarea de nume poate să nu funcționeze. Luați în considerare stabilirea unor servere DNS personalizate. Vă rugăm, de asemenea, rețineți că Android va continua să utilizeze setările proxy specificate pentru conexiunea mobilă/Wi-Fi atunci când nu sunt stabilite servere DNS.</string>
   <string name="dns_add_error">Nu s-a putut adăuga serverul DNS \"%1$s\", respins de sistem: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Obţineţi o configurare funcţională (testată pe calculatorul dvs. sau descărcată de la provider/companie)&lt;/p&gt;&lt;p&gt;Dacă este un singur fişier fără alte fişiere pem/pks12 puteţi să vă trimiteţi fişierul prin email şi să deschideţi ataşamentul. Daca aveţi fişiere multiple le puteţi pune pe cardul sd.&lt;/p&gt;&lt;p&gt;Click pe ataşamentul email/Folosiţi icoana director din lista de vpn-ri pentru a importa fişierul de configurare.&lt;/p&gt;&lt;p&gt;Dacă sunt erori despre fişiere lipsă le puteţi pune pe cardul sd.&lt;/p&gt;&lt;p&gt;Click pe simbolul de salvare pentru a adăuga VPN-ul importat în lista dvs. de VPN-uri&lt;/p&gt;&lt;p&gt;Conectaţi VPN-ul dând click pe numele VPN-ului&lt;/p&gt;&lt;p&gt;Dacă sunt erori/avertismente în jurnal încercaţi să le înţelegeţi şi să le reparaţi&lt;/p&gt; </string>
   <string name="faq_howto_title">Pornire rapidă</string>
@@ -203,11 +212,13 @@
   <string name="vpn_import_hint">Folosiţi icoana &lt;img src=\"ic_menu_archive\"/&gt; pentru a importa un profil existent (.ovpn sau .conf) de pe cardul sd.</string>
   <string name="faq_hint">Verificaţi şi FAQ. Acolo este ghid rapid de utilizare.</string>
   <string name="faq_routing_title">Configurare Rutare/Interfaţă</string>
+  <string name="faq_routing">Configurarea rutării şi a interfeţei nu se face folosind comenzile ifconfig/route tradiţionale ci se foloseşte API-ul VPNService. Astfel rezultă o configurarea a rutării diferită ca în cazul altor OS-uri. Configurarea constă doar în interfaţa IP tunel şi a reţelelor ce trebuie rutate prin ea. În mod special nu este necesară o adresă partener sau adresă gateway. Nu sunt necesare nici rutele speciale pentr a ajunge la serverul VPN (de exemplu cu un gateway de redirectare)  Aplicaţia va ignora astfel aceste setări la importarea unei configurări. Aplicaţia se asigură cu API-ul VPNService că nu se rutează prin tunel conexiunea cu care se ajunge la server. Deoarece este suportată doar specificarea reţelelelor ce trebuiesc rutate prin tunel rutele extra ce nu pointează către tunel nu sunt suportate. (e.g. route x.x.x.x y.y.y.y net_gateway). Fereastra jurnal arată configurarea curentă a VPNService la stabilirea unei conexiuni. </string>
   <string name="persisttun_summary">Nu reveni la nici o conexiune VPN câtă vreme OpenVPN se reconectează.</string>
   <string name="persistent_tun_title">Tun persistent</string>
   <string name="openvpn_log">jurnal OpenVPN</string>
   <string name="import_config">Import configurare OpenVPN</string>
   <string name="battery_consumption_title">Consum baterie</string>
+  <string name="baterry_consumption">În cadrul testelor mele personale principalul motiv pentru consumul ridicat de baterie al OpenVPN sunt pachetele keepalive. Majoritatea serverelor OpenVPN au în configurare o directivă cum ar fi \'keepalive 10 60\' ce face ca şi clientul să schimbe cu serverul pachete keepalive  la fiecare 10 secunde.&lt;p&gt; Chiar dacă aceste pachete sunt mici şi nu folosesc trafic, ele menţin radioul mobil activ şi cresc consumul de energie. (Citiţi şi &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt;Această setare keepalive nu poate fi schimbată de client. Doar administratorul serverului OpenVPN o poate schimba.&lt;p&gt; Din păcate o valoare mai mare de 60 de secunde a keepalive cu UDP poate face ca unele gateway-uri NAT să termine conexiunea după un timp scurt. Folosind TCP cu valori lungi de keepalive funcţionează dar rularea unui tunel TCP peste o conexiune TCP funcţionează foarte slab în cazul conexiunilor cu pierderi mari de pachete. (Citiţi &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Ide&lt;/a&gt;)</string>
   <string name="faq_tethering">Funcţia Android Tether (folosind WiFi, USB sau Bluetooth) şi API-ul VPNService (folosit de acest program) nu funcţionează împreună. Pentru mai multe detalii vizitaţi &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;issue #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN şi Tethering</string>
   <string name="connection_retries">Reîncercări conectare</string>
@@ -258,7 +269,15 @@
   <string name="rdn_prefix">Prefix RDN</string>
   <string name="tls_remote_deprecated">tls-remote (ÎNVECHIT)</string>
   <string name="help_translate">Puteţi ajuta la traducere vizitând http://crowdin.net/project/ics-openvpn/invite</string>
+  <string name="prompt">%1$s încercări de a controla %2$s</string>
+  <string name="remote_warning">Continuând, daţi permisiunea aplicaţiei de a controla complet OpenVPN pentru Android și de a intercepta tot traficul de rețea. <b>Nu acceptaţi decât dacă aveți încredere în aplicație</b> În caz contrar, riscaţi să aveţi datele compromise de software maliţios.\"</string>
   <string name="remote_trust">Am încredere în această aplicaţie.</string>
+  <string name="no_external_app_allowed">Nici o aplicaţie nu are permisiunea de a folosi API-ul extern</string>
   <string name="allowed_apps">Aplicaţii permise: %s</string>
+  <string name="clearappsdialog">Şterge lista aplicaţilor permise?\nLista curentă a aplicaţilor ce au permisiune:\n\n%s</string>
+  <string name="screenoff_summary">\"Suspendă VPN atunci când ecranul este oprit şi au fost transferaţi mai puţin de 64 kB în 60s. Când \"Tun persistent\" este activat suspendarea conexiunii VPN va lăsa aparatul dvs. FĂRĂ conexiune la reţea. Fără opţiunea \"Tun persistent\" aparatul nu va beneficia de conexiune/protecţie VPN.</string>
+  <string name="screenoff_title">Suspendă conexiunea VPN după închiderea ecranului</string>
+  <string name="screenoff_pause">Se suspendă conexiunea în starea ecran oprit: mai puţin de %1$s în %2$s</string>
+  <string name="screen_nopersistenttun">Atenție: TUN persistent nu este activat pentru acest VPN. Traficul va utiliza conexiunea Internet normala atunci când ecranul este oprit.</string>
   <string name="save_password">Salvare parola</string>
 </resources>

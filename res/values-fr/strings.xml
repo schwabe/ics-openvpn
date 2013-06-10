@@ -59,6 +59,7 @@
   <string name="title_cancel">"Annuler la confirmation"</string>
   <string name="cancel_connection_query">"Déconnecter le VPN connecté / annuler la tentative de connexion ?"</string>
   <string name="remove_vpn">"Retirer le VPN"</string>
+  <string name="check_remote_tlscert_title">Attendre un certificat de serveur TLS</string>
   <string name="remote_tlscn_check_title">"Vérification du certificat de l\'hôte"</string>
   <string name="tls_key_auth">"Activer l\'authentification par clé TLS"</string>
   <string name="tls_auth_file">"Fichier d\'authentification TLS"</string>
@@ -257,14 +258,17 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="add">Ajouter</string>
   <string name="send_config">Envoyer le fichier de config</string>
   <string name="complete_dn">DN complet</string>
+  <string name="remotetlsnote">La configuration que vous avez importée utilise l\'option désuette tls-remote qui utilise un format de DN différent.</string>
   <string name="rdn">RDN (nom commun)</string>
   <string name="rdn_prefix">Préfixe RDN</string>
   <string name="tls_remote_deprecated">tl-remote (OBSOLETE)</string>
   <string name="help_translate">Vous pouvez aider à traduire en visitant http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s essais de controler %2$s</string>
+  <string name="remote_warning">En continuant vous donnerez la permission a l\'application de contrôler complètement OpenVPN pour Android et d\'intercepter tout le trafic réseau. <b> N\'acceptez que si vous faite confiance à l\'application. </b> Sinon vous vous exposez au risque de voir vos données compromises par une application malicieuse.</string>
   <string name="remote_trust">Faire confiance à cette application.</string>
   <string name="no_external_app_allowed">Aucune appli. autorisée pour utiliser l\'API externe</string>
   <string name="allowed_apps">Applications autorisées: %s</string>
   <string name="clearappsdialog">Effacer la liste des appli. externes?\nListe des appli. autorisées:\n\n%s</string>
   <string name="screenoff_title">Mettre la connection VPN en pause à l\'exctinction de l\'écran</string>
+  <string name="save_password">Enregistrer le mot de passe</string>
 </resources>

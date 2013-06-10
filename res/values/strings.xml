@@ -122,7 +122,7 @@
     <string name="no_vpn_support_image">Your image does not support the VPNService API, sorry :(</string>
     <string name="encryption">Encryption</string>
     <string name="cipher_dialog_title">Enter encryption method</string>
-    <string name="chipher_dialog_message">Enter the encryption cipher alogithm used by OpenVPN. Leave empty to use default cipher.</string>
+    <string name="chipher_dialog_message">Enter the encryption cipher algorithm used by OpenVPN. Leave empty to use default cipher.</string>
     <string name="auth_dialog_message">Enter the authentication digest used for OpenVPN. Leave empty to use default digest.</string>
     <string name="settings_auth">Authentication/Encryption</string>
     <string name="file_explorer_tab">File Explorer</string>
@@ -270,7 +270,6 @@
     <string name="rdn_prefix">RDN prefix</string>
     <string name="tls_remote_deprecated">tls-remote (DEPRECATED)</string>
     <string name="help_translate">You can help translating by visiting http://crowdin.net/project/ics-openvpn/invite</string>
-    <!-- Dialog title to identify the request from a VPN application. [CHAR LIMIT=60] -->
     <string name="prompt">%1$s attempts to control %2$s</string>
     <string name="remote_warning">By proceeding, you are giving the application permission to completely control OpenVPN for Android and to intercept all network traffic. <b> Do NOT accept unless you trust the application. </b> Otherwise, you run the risk of having your data compromised by malicious software."</string>
     <string name="remote_trust">I trust this application.</string>

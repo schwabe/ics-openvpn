@@ -71,3 +71,4 @@ proguard-project.txt
 build.xml
 cache.properties
 .gradle
+.idea

@@ -32,7 +32,7 @@ def getString(strid,lang):
 def genPage(faqdom,lang):
     out =""
     
-    out+="#summary %s\n" % getString("faq_summary",lang)
+    #out+="#summary %s\n" % getString("faq_summary",lang)
     out+= header
 
     for xmld in faqdom.firstChild.childNodes:

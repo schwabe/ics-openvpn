@@ -22,6 +22,18 @@ Use eclipse with android plugins to build the project.
 
 FAQ
 
+Q: Why are you not answering my questions about modifying ics-openvpn/why do not help build my app on top 
+   of ics-openvpn? I thought this is open source.
+
+A: There are many people building/wanting to build commercial VPN clients on top of my of my client. These
+   client often do not even honour the license my app or the license of OpenVPN. Even if these modified
+   software does honour the license I don't like doing upaid work/giving advise for free to commerical
+   software developers. 
+   
+   If you have a legitimate non commerical open source project I will gladly help you but please understand
+   my initial reservations.
+   
+
 Q: How is the OpenVPN version different from normal OpenVPN
 
 A: OpenVPN for Android uses a OpenVPN 2.3 master branch + Android patches + dual stack client patches. 

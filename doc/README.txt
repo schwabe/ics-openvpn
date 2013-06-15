@@ -10,15 +10,11 @@ svn co http://google-breakpad.googlecode.com/svn/trunk/ google-breakpad
 
 
 - Install sdk
-- Install ndk (Version 8d gives strange linker errors, use 8b for now)
+- Install ndk (Versions 8c+ give strange linker errors, use 8b for now)
 - Make sure that ndk-build is in your build path.
 
 Do ./misc/build-native.(sh|bat) in the root directory of the project.
-You may need to refresh the project and clean the project in eclipse
- to have the libraries included the resulting apk.
-
-Use eclipse with android plugins to build the project.
-
+After that build the project using gradle build. 
 
 FAQ
 

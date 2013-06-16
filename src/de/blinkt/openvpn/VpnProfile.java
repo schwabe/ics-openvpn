@@ -76,8 +76,8 @@ public class VpnProfile implements  Serializable{
 	public transient boolean profileDleted=false;
 
 
-	public static String DEFAULT_DNS1="131.234.137.23";
-	public static String DEFAULT_DNS2="131.234.137.24";
+	public static String DEFAULT_DNS1="8.8.8.8";
+	public static String DEFAULT_DNS2="8.8.4.4";
 
 	// Public attributes, since I got mad with getter/setter
 	// set members to default values

@@ -1,6 +1,6 @@
 package de.blinkt.openvpn.core;
 
-public interface OpenVPNMangement {
+public interface OpenVPNManagement {
 	int mBytecountinterval=2;
 
 	void reconnect();

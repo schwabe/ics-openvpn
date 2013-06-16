@@ -20,7 +20,6 @@ import de.blinkt.openvpn.core.OpenVPN.ByteCountListener;
 import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
 import de.blinkt.openvpn.core.OpenVPN.StateListener;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -63,12 +62,12 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	public static final int PROTECT_FD = 0;
 
-	private static boolean mNotificationalwaysVisible=false;
+	private static boolean mNotificationAlwaysVisible =false;
 
 	private final IBinder mBinder = new LocalBinder();
 	private boolean mOvpn3;
-	private Thread mSocketManagerThread;
-	private OpenVPNMangement mManagement;
+    
+	private OpenVPNManagement mManagement;
 
 	public class LocalBinder extends Binder {
 		public OpenVpnService getService() {
@@ -103,9 +102,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		unregisterDeviceStateReceiver();
 		ProfileManager.setConntectedVpnProfileDisconnected(this);
 		if(!mStarting) {
-			stopForeground(!mNotificationalwaysVisible);
+			stopForeground(!mNotificationAlwaysVisible);
 
-			if( !mNotificationalwaysVisible) {
+			if( !mNotificationAlwaysVisible) {
 				stopSelf();
 				OpenVPN.removeStateListener(this);
 			}
@@ -207,39 +206,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 	}
 
-
-	private LocalServerSocket openManagmentInterface(int tries) {
-		// Could take a while to open connection
-		String socketname = (getCacheDir().getAbsolutePath() + "/" +  "mgmtsocket");
-		// The sock is transfered to the LocalServerSocket, ignore warning
-		@SuppressWarnings("resource")
-		LocalSocket sock = new LocalSocket();
-
-		while(tries > 0 && !sock.isConnected()) {
-			try {
-				sock.bind(new LocalSocketAddress(socketname,
-						LocalSocketAddress.Namespace.FILESYSTEM));
-			} catch (IOException e) {
-				// wait 300 ms before retrying
-				try { Thread.sleep(300);
-				} catch (InterruptedException e1) {}
-
-			} 
-			tries--;
-		}
-
-		try {
-			LocalServerSocket lss = new LocalServerSocket(sock.getFileDescriptor());
-			return lss;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-
-
-	}
-
-	synchronized void registerDeviceStateReceiver(OpenVPNMangement magnagement) {
+	synchronized void registerDeviceStateReceiver(OpenVPNManagement magnagement) {
 		// Registers BroadcastReceiver to track network connection changes.
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -269,7 +236,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
 		if(intent != null && intent.getBooleanExtra(ALWAYS_SHOW_NOTIFICATION, false))
-			mNotificationalwaysVisible=true;
+			mNotificationAlwaysVisible =true;
 
 		OpenVPN.addStateListener(this);
 		OpenVPN.addByteCountListener(this);
@@ -316,21 +283,21 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		mStarting=false;
 
 
-		// Open the Management Interface
-		if(!mOvpn3) {
-			LocalServerSocket mgmtsocket = openManagmentInterface(8);
+        // Open the Management Interface
+        if (!mOvpn3) {
 
-			if(mgmtsocket!=null) {
-				// start a Thread that handles incoming messages of the managment socket
-				OpenVpnManagementThread ovpnmgmthread = new OpenVpnManagementThread(mProfile,mgmtsocket,this);
-				mSocketManagerThread = new Thread(ovpnmgmthread,"OpenVPNMgmtThread");
-				mSocketManagerThread.start();
-				mManagement= ovpnmgmthread;
-				OpenVPN.logInfo("started Socket Thread");
-			}
-		}
+            // start a Thread that handles incoming messages of the managment socket
+            OpenVpnManagementThread ovpnManagementThread = new OpenVpnManagementThread(mProfile, this);
+            if (ovpnManagementThread.openManagementInterface(this)) {
 
-		// Start a new session by creating a new thread.
+                Thread mSocketManagerThread = new Thread(ovpnManagementThread, "OpenVPNManagementThread");
+                mSocketManagerThread.start();
+                mManagement = ovpnManagementThread;
+                OpenVPN.logInfo("started Socket Thread");
+            }
+        }
+
+        // Start a new session by creating a new thread.
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
 
 		mOvpn3 = prefs.getBoolean("ovpn3", false);
@@ -339,7 +306,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		Runnable processThread;
 		if(mOvpn3) {
 
-			OpenVPNMangement mOpenVPN3 = instantiateOpenVPN3Core();
+			OpenVPNManagement mOpenVPN3 = instantiateOpenVPN3Core();
 			processThread = (Runnable) mOpenVPN3;
 			mManagement = mOpenVPN3;
 
@@ -363,7 +330,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		return START_NOT_STICKY;
 	}
 
-	private OpenVPNMangement instantiateOpenVPN3Core() {
+	private OpenVPNManagement instantiateOpenVPN3Core() {
 		return null;
 	}
 
@@ -560,7 +527,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		// If the process is not running, ignore any state, 
 		// Notification should be invisible in this state
 		doSendBroadcast(state, level);
-		if(mProcessThread==null && !mNotificationalwaysVisible)
+		if(mProcessThread==null && !mNotificationAlwaysVisible)
 			return;
 
 		// Display byte count only after being connected
@@ -599,11 +566,11 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		if(mDisplayBytecount) {
 			String netstat = String.format(getString(R.string.statusline_bytecount),
 					humanReadableByteCount(in, false),
-					humanReadableByteCount(diffin/OpenVPNMangement.mBytecountinterval, true),
+					humanReadableByteCount(diffin/ OpenVPNManagement.mBytecountinterval, true),
 					humanReadableByteCount(out, false),
-					humanReadableByteCount(diffout/OpenVPNMangement.mBytecountinterval, true));
+					humanReadableByteCount(diffout/ OpenVPNManagement.mBytecountinterval, true));
 
-			boolean lowpriority = !mNotificationalwaysVisible;
+			boolean lowpriority = !mNotificationAlwaysVisible;
 			showNotification(netstat,null,lowpriority,mConnecttime, LEVEL_CONNECTED);
 		}
 
@@ -636,7 +603,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		}
 	}
 
-	public OpenVPNMangement getManagement() {
+	public OpenVPNManagement getManagement() {
 		return mManagement;
 	}
 }

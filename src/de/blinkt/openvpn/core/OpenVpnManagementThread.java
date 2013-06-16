@@ -11,9 +11,11 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Vector;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
+import android.net.LocalSocketAddress;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -21,23 +23,23 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
 
-public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
+public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 	private static final String TAG = "openvpn";
 	private LocalSocket mSocket;
 	private VpnProfile mProfile;
 	private OpenVpnService mOpenVPNService;
 	private LinkedList<FileDescriptor> mFDList=new LinkedList<FileDescriptor>();
-	private LocalServerSocket mServerSocket;
+    private LocalServerSocket mServerSocket;
 	private boolean mReleaseHold=true;
 	private boolean mWaitingForRelease=false;
 	private long mLastHoldRelease=0; 
 
 	private static Vector<OpenVpnManagementThread> active=new Vector<OpenVpnManagementThread>();
+    private LocalSocket mServerSocketLocal;
 
-	public OpenVpnManagementThread(VpnProfile profile, LocalServerSocket mgmtsocket, OpenVpnService openVpnService) {
+    public OpenVpnManagementThread(VpnProfile profile, OpenVpnService openVpnService) {
 		mProfile = profile;
-		mServerSocket = mgmtsocket;
 		mOpenVPNService = openVpnService;
 		
 
@@ -48,7 +50,42 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
 
 	}
 
-	static {
+    public boolean openManagementInterface(Context c) {
+        // Could take a while to open connection
+        int tries=8;
+
+        String socketName = (c.getCacheDir().getAbsolutePath() + "/" +  "mgmtsocket");
+        // The mServerSocketLocal is transferred to the LocalServerSocket, ignore warning
+
+        mServerSocketLocal = new LocalSocket();
+
+        while(tries > 0 && !mServerSocketLocal.isConnected()) {
+            try {
+                mServerSocketLocal.bind(new LocalSocketAddress(socketName,
+                        LocalSocketAddress.Namespace.FILESYSTEM));
+            } catch (IOException e) {
+                // wait 300 ms before retrying
+                try { Thread.sleep(300);
+                } catch (InterruptedException e1) {}
+
+            }
+            tries--;
+        }
+
+        try {
+
+            mServerSocket = new LocalServerSocket(mServerSocketLocal.getFileDescriptor());
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+
+    }
+
+
+    static {
 		System.loadLibrary("opvpnutil");
 	}
 
@@ -77,6 +114,11 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNMangement {
 			// Wait for a client to connect
 			mSocket= mServerSocket.accept();
 			InputStream instream = mSocket.getInputStream();
+            // Close the management socket after client connected
+
+            mServerSocket.close();
+            // Closing one of the two sockets also closes the other
+            //mServerSocketLocal.close();
 
 			while(true) {
 				int numbytesread = instream.read(buffer);

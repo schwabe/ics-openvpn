@@ -15,7 +15,7 @@ import java.util.LinkedList;
 
 public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountListener {
     private int lastNetwork=-1;
-    private OpenVPNMangement mManangement;
+    private OpenVPNManagement mManangement;
 
     // Window time in s
     private final int TRAFFIC_WINDOW = 60;
@@ -74,7 +74,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
 
 
-    public DeviceStateReceiver(OpenVPNMangement magnagement) {
+    public DeviceStateReceiver(OpenVPNManagement magnagement) {
         super();
         mManangement = magnagement;
     }

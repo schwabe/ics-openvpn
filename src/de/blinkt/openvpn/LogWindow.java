@@ -1,21 +1,8 @@
 package de.blinkt.openvpn;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Vector;
-
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.ListActivity;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.content.Intent;
-import android.content.ServiceConnection;
+import android.content.*;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,17 +10,9 @@ import android.os.Handler.Callback;
 import android.os.IBinder;
 import android.os.Message;
 import android.text.format.DateFormat;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.view.*;
+import android.widget.*;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 import de.blinkt.openvpn.core.OpenVPN;
 import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
 import de.blinkt.openvpn.core.OpenVPN.LogItem;
@@ -42,6 +21,11 @@ import de.blinkt.openvpn.core.OpenVPN.StateListener;
 import de.blinkt.openvpn.core.OpenVpnService;
 import de.blinkt.openvpn.core.OpenVpnService.LocalBinder;
 import de.blinkt.openvpn.core.ProfileManager;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Vector;
 
 public class LogWindow extends ListActivity implements StateListener  {
 	private static final String LOGTIMEFORMAT = "logtimeformat";
@@ -259,28 +243,32 @@ public class LogWindow extends ListActivity implements StateListener  {
 	private LogWindowListAdapter ladapter;
 	private TextView mSpeedView;
 
+    private void showDisconnectDialog(final OpenVpnService service) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.title_cancel);
+        builder.setMessage(R.string.cancel_connection_query);
+        builder.setNegativeButton(android.R.string.no, null);
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-	@Override
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ProfileManager.setConntectedVpnProfileDisconnected(LogWindow.this);
+                if(service.getManagement()!=null)
+                    service.getManagement().stopVPN();
+            }
+        });
+
+        builder.show();
+    }
+
+
+    @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId()==R.id.clearlog) {
 			ladapter.clearLog();
 			return true;
 		} else if(item.getItemId()==R.id.cancel){
-			Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle(R.string.title_cancel);
-			builder.setMessage(R.string.cancel_connection_query);
-			builder.setNegativeButton(android.R.string.no, null);
-			builder.setPositiveButton(android.R.string.yes, new OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					ProfileManager.setConntectedVpnProfileDisconnected(getApplicationContext());
-					if(mService.getManagement()!=null)
-						mService.getManagement().stopVPN();
-				}
-			});
-
-			builder.show();
+            showDisconnectDialog(mService);
 			return true;
 		} else if(item.getItemId()==R.id.send) {
 			ladapter.shareLog();
@@ -313,7 +301,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 	}
 
 
-	@Override
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.logmenu, menu);
@@ -325,9 +313,21 @@ public class LogWindow extends ListActivity implements StateListener  {
 	protected void onResume() {
 		super.onResume();
 		OpenVPN.addStateListener(this);
-	}
 
-	@Override
+        if (getIntent() !=null && OpenVpnService.DISCONNECT_VPN.equals(getIntent().getAction()))
+            showDisconnectDialog(mService);
+
+        setIntent(null);
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
+    @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == START_VPN_CONFIG && resultCode==RESULT_OK) {
 			String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
@@ -402,7 +402,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 	}
 
-	@Override
+    @Override
 	public void updateState(final String status,final String logmessage, final int resid, final ConnectionStatus level) {
 		runOnUiThread(new Runnable() {
 

@@ -9,7 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.*;
+import android.net.ConnectivityManager;
+import android.net.VpnService;
 import android.os.*;
 import android.os.Handler.Callback;
 import android.preference.PreferenceManager;
@@ -33,8 +34,12 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	public static final String START_SERVICE_STICKY = "de.blinkt.openvpn.START_SERVICE_STICKY";
 	public static final String ALWAYS_SHOW_NOTIFICATION = "de.blinkt.openvpn.NOTIFICATION_ALWAYS_VISIBLE";
 
+    public static final String DISCONNECT_VPN = "de.blinkt.openvpn.DISCONNECT_VPN";
+    private static final String PAUSE_VPN = "de.blinkt.openvpn.PAUSE_VPN";
+    private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
 
-	private Thread mProcessThread=null;
+
+    private Thread mProcessThread=null;
 
 	private final Vector<String> mDnslist=new Vector<String>();
 
@@ -59,8 +64,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 
 	private static final int OPENVPN_STATUS = 1;
-
-	public static final int PROTECT_FD = 0;
 
 	private static boolean mNotificationAlwaysVisible =false;
 
@@ -111,12 +114,12 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		}
 	}
 
-	private void showNotification(String msg, String tickerText, boolean lowpriority, long when, ConnectionStatus level) {
+	private void showNotification(String msg, String tickerText, boolean lowpriority, long when, ConnectionStatus status) {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
 
-		int icon = getIconByLevel(level);
+		int icon = getIconByConnectionStatus(status);
 
 		android.app.Notification.Builder nbuilder = new Notification.Builder(this);
 
@@ -130,6 +133,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		nbuilder.setOngoing(true);
 		nbuilder.setContentIntent(getLogPendingIntent());
 		nbuilder.setSmallIcon(icon);
+
 
 		if(when !=0)
 			nbuilder.setWhen(when);
@@ -148,7 +152,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		startForeground(OPENVPN_STATUS, notification);
 	}
 
-    private int getIconByLevel(ConnectionStatus level) {
+    private int getIconByConnectionStatus(ConnectionStatus level) {
        switch (level) {
            case LEVEL_CONNECTED:
            case UNKNOWN_LEVEL:
@@ -162,6 +166,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
                return R.drawable.ic_stat_vpn_outline;
            case LEVEL_CONNECTING_SERVER_REPLIED:
                return R.drawable.ic_stat_vpn_empty_halo;
+           case LEVEL_VPNPAUSED:
+               return android.R.drawable.ic_media_pause;
            default:
                return R.drawable.ic_stat_vpn;
 
@@ -181,17 +187,39 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 				Method setUsesChronometer = nbuilder.getClass().getMethod("setUsesChronometer", boolean.class);
 				setUsesChronometer.invoke(nbuilder,true);
 
-				/*				PendingIntent cancelconnet=null;
-
-				nbuilder.addAction(android.R.drawable.ic_menu_close_clear_cancel, 
-						getString(R.string.cancel_connection),cancelconnet); */
 			}
 
-			//ignore exception
+            Intent disconnectVPN = new Intent(this,LogWindow.class);
+            disconnectVPN.setAction(DISCONNECT_VPN);
+            PendingIntent disconnectPendingIntent = PendingIntent.getActivity(this, 0, disconnectVPN, 0);
+
+            nbuilder.addAction(android.R.drawable.ic_menu_close_clear_cancel,
+                    getString(R.string.cancel_connection),disconnectPendingIntent);
+
+            Intent pauseVPN = new Intent(this,OpenVpnService.class);
+            if (mDeviceStateReceiver == null || !mDeviceStateReceiver.isUserPaused()) {
+                pauseVPN.setAction(PAUSE_VPN);
+                PendingIntent pauseVPNPending = PendingIntent.getService(this,0,pauseVPN,0);
+                nbuilder.addAction(android.R.drawable.ic_media_pause,
+                        getString(R.string.pauseVPN), pauseVPNPending);
+
+            } else {
+                pauseVPN.setAction(RESUME_VPN);
+                PendingIntent resumeVPNPending = PendingIntent.getService(this,0,pauseVPN,0);
+                nbuilder.addAction(android.R.drawable.ic_media_play,
+                        getString(R.string.resumevpn), resumeVPNPending);
+            }
+
+
+            //ignore exception
 		} catch (NoSuchMethodException nsm) {
+            nsm.printStackTrace();
 		} catch (IllegalArgumentException e) {
+            e.printStackTrace();
 		} catch (IllegalAccessException e) {
+            e.printStackTrace();
 		} catch (InvocationTargetException e) {
+            e.printStackTrace();
 		}
 
 	}
@@ -241,7 +269,22 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		OpenVPN.addStateListener(this);
 		OpenVPN.addByteCountListener(this);
 
-		if(intent != null && intent.getAction() !=null &&intent.getAction().equals(START_SERVICE))
+        if(intent != null && intent.getAction() !=null &&intent.getAction().equals(PAUSE_VPN))
+        {
+            if(mDeviceStateReceiver!=null)
+                mDeviceStateReceiver.userPause(true);
+            return START_NOT_STICKY;
+        }
+
+        if(intent != null && intent.getAction() !=null &&intent.getAction().equals(RESUME_VPN))
+        {
+            if(mDeviceStateReceiver!=null)
+                mDeviceStateReceiver.userPause(false);
+            return START_NOT_STICKY;
+        }
+
+
+        if(intent != null && intent.getAction() !=null &&intent.getAction().equals(START_SERVICE))
 			return START_NOT_STICKY;
 		if(intent != null && intent.getAction() !=null &&intent.getAction().equals(START_SERVICE_STICKY)) {
 			return START_REDELIVER_INTENT;
@@ -566,9 +609,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		if(mDisplayBytecount) {
 			String netstat = String.format(getString(R.string.statusline_bytecount),
 					humanReadableByteCount(in, false),
-					humanReadableByteCount(diffin/ OpenVPNManagement.mBytecountinterval, true),
+					humanReadableByteCount(diffin/ OpenVPNManagement.mBytecountInterval, true),
 					humanReadableByteCount(out, false),
-					humanReadableByteCount(diffout/ OpenVPNManagement.mBytecountinterval, true));
+					humanReadableByteCount(diffout/ OpenVPNManagement.mBytecountInterval, true));
 
 			boolean lowpriority = !mNotificationAlwaysVisible;
 			showNotification(netstat,null,lowpriority,mConnecttime, LEVEL_CONNECTED);

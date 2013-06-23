@@ -76,7 +76,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 	}
 
 	private final IOpenVPNAPIService.Stub mBinder = new IOpenVPNAPIService.Stub() {
-		private boolean checkOpenVPNPermission()  throws SecurityRemoteException{
+
+        private void checkOpenVPNPermission()  throws SecurityRemoteException{
 			PackageManager pm = getPackageManager();
 
 			for (String apppackage:mExtAppDb.getExtAppList()) {
@@ -84,7 +85,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 				try {
 					app = pm.getApplicationInfo(apppackage, 0);
 					if (Binder.getCallingUid() == app.uid) {
-						return true;
+						return;
 					}
 				} catch (NameNotFoundException e) {
 					// App not found. Remove it from the list
@@ -299,7 +300,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 				{
 			broadcastItem.newStatus(um.vpnUUID, um.state, um.logmessage, um.level.name());
 				}
-	};
+	}
 
 
 }

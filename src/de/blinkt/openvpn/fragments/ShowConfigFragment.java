@@ -53,9 +53,9 @@ public class ShowConfigFragment extends Fragment {
 				});
 				
 				
-			};
+			}
 		}.start();
-	};
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

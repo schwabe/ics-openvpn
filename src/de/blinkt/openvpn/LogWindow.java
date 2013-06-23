@@ -23,6 +23,7 @@ import de.blinkt.openvpn.core.OpenVpnService.LocalBinder;
 import de.blinkt.openvpn.core.ProfileManager;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Vector;
@@ -58,7 +59,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 		private static final int MESSAGE_CLEARLOG = 1;
 		
-		private static final int MESSAGE_NEWTS = 1;
+		private static final int MESSAGE_NEWTS = 2;
 
 		private Vector<LogItem> myEntries=new Vector<LogItem>();
 
@@ -83,9 +84,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 		private void initLogBuffer() {
 			myEntries.clear();
-			for (LogItem litem : OpenVPN.getlogbuffer()) {
-				myEntries.add(litem);
-			}
+            Collections.addAll(myEntries, OpenVPN.getlogbuffer());
 		}
 
 		String getLogStr() {
@@ -189,6 +188,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 		@Override
 		public void newLog(LogItem logmessage) {
 			Message msg = Message.obtain();
+            assert (msg!=null);
 			msg.what=MESSAGE_NEWLOG;
 			Bundle mbundle=new Bundle();
 			mbundle.putParcelable("logmessage", logmessage);

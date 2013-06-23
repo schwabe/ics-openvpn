@@ -3,6 +3,7 @@ package de.blinkt.openvpn.core;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
@@ -64,8 +65,7 @@ public class ConfigParser {
 		String meta = line.split("#\\sOVPN_ACCESS_SERVER_", 2)[1];
 		String[] parts = meta.split("=",2);
 		Vector<String> rval = new Vector<String>();
-		for(String p:parts)
-			rval.add(p);
+        Collections.addAll(rval, parts);
 		return rval;
 
 	}
@@ -359,7 +359,7 @@ public class ConfigParser {
 
 		Vector<String> proto = getOption("proto", 1,1);
 		if(proto!=null){
-			np.mUseUdp=isUdpProto(proto.get(1));;
+			np.mUseUdp=isUdpProto(proto.get(1));
 		}
 
 		// Parse remote config

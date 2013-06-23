@@ -354,7 +354,7 @@ public class OpenVPN {
 
 		// The stoned way of java to return an array from a vector
 		// brought to you by eclipse auto complete
-		return (LogItem[]) logbuffer.toArray(new LogItem[logbuffer.size()]);
+		return logbuffer.toArray(new LogItem[logbuffer.size()]);
 
 	}
 

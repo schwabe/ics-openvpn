@@ -26,9 +26,8 @@ public class ExternalAppDatabase {
 	}
 
 	public Set<String> getExtAppList() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);        
-		Set<String> allowedapps = prefs.getStringSet(PREFERENCES_KEY, new HashSet<String>());
-		return allowedapps;
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return prefs.getStringSet(PREFERENCES_KEY, new HashSet<String>());
 	}
 	
 	void addApp(String packagename)

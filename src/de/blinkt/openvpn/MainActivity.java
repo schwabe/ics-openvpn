@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
 			bar.addTab(sendDump);
 		}
 		
-	};
+	}
 
 	protected class TabListener<T extends Fragment> implements ActionBar.TabListener
 	{

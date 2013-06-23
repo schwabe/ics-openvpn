@@ -8,10 +8,7 @@ import de.blinkt.openvpn.core.OpenVPN.LogItem;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 public class OpenVPNThread implements Runnable {
@@ -83,9 +80,8 @@ public class OpenVPNThread implements Runnable {
 	
 	private void startOpenVPNThreadArgs(String[] argv, Map<String, String> env) {
 		LinkedList<String> argvlist = new LinkedList<String>();
-		
-		for(String arg:argv)
-			argvlist.add(arg);
+
+        Collections.addAll(argvlist, argv);
 	
 		ProcessBuilder pb = new ProcessBuilder(argvlist);
 		// Hack O rama

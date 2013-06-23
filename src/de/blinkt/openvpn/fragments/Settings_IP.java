@@ -113,10 +113,8 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 			mOverrideDNS.setEnabled(mUsePull.isChecked());
 			if(!mUsePull.isChecked())
 				enabled =true;
-			else if (mOverrideDNS.isChecked())
-				enabled = true;
 			else
-				enabled = false;
+                enabled = mOverrideDNS.isChecked();
 
 			mDNS1.setEnabled(enabled);
 			mDNS2.setEnabled(enabled);

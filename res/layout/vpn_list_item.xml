@@ -37,7 +37,7 @@
             android:orientation="vertical" />
 
                <TextView
-                android:id="@+android:id/vpn_item_title"
+                android:id="@+id/vpn_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"

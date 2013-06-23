@@ -92,7 +92,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 		if(mTLSAuthDirection.getValue()==null)
 			mProfile.mTLSAuthDirection=null;
 		else
-			mProfile.mTLSAuthDirection = mTLSAuthDirection.getValue().toString();
+			mProfile.mTLSAuthDirection = mTLSAuthDirection.getValue();
 
 		if(mCipher.getText()==null)
 			mProfile.mCipher=null;

@@ -490,7 +490,6 @@ tls_ctx_load_priv_file (struct tls_root_ctx *ctx, const char *priv_key_file,
     const char *priv_key_file_inline
     )
 {
-  int status;
   SSL_CTX *ssl_ctx = NULL;
   BIO *in = NULL;
   EVP_PKEY *pkey = NULL;
@@ -1015,7 +1014,7 @@ bio_read (BIO *bio, struct buffer *buf, int maxlen, const char *desc)
 }
 
 void
-key_state_ssl_init(struct key_state_ssl *ks_ssl, const struct tls_root_ctx *ssl_ctx, bool is_server, void *session)
+key_state_ssl_init(struct key_state_ssl *ks_ssl, const struct tls_root_ctx *ssl_ctx, bool is_server, struct tls_session *session)
 {
   ASSERT(NULL != ssl_ctx);
   ASSERT(ks_ssl);
@@ -1193,7 +1192,6 @@ show_available_tls_ciphers ()
   SSL_CTX *ctx;
   SSL *ssl;
   const char *cipher_name;
-  const char *print_name;
   const tls_cipher_name_pair *pair;
   int priority = 0;
 

@@ -41,21 +41,17 @@ public class OpenVPN {
 
 
 
-	public enum ConnectionStatus {
-		LEVEL_NONETWORK (3),
-		LEVEL_NOTCONNECTED  (4),
-		LEVEL_AUTH_FAILED (5),
-		LEVEL_WAITING_FOR_USER_INPUT (6),
-		LEVEL_CONNECTING_SERVER_REPLIED ( 1),
-		LEVEL_CONNECTING_NO_SERVER_REPLY_YET (2),
-		LEVEL_CONNECTED (0), UNKNOWN_LEVEL(-1);
-
-		private final int level;
-
-		ConnectionStatus(int level){
-			this.level = level;
-		}
-	}
+    public enum ConnectionStatus {
+        LEVEL_CONNECTED,
+        LEVEL_VPNPAUSED,
+        LEVEL_CONNECTING_SERVER_REPLIED,
+        LEVEL_CONNECTING_NO_SERVER_REPLY_YET,
+        LEVEL_NONETWORK,
+		LEVEL_NOTCONNECTED,
+		LEVEL_AUTH_FAILED,
+		LEVEL_WAITING_FOR_USER_INPUT,
+		UNKNOWN_LEVEL
+    }
 
 	public static final byte[] officalkey = {-58, -42, -44, -106, 90, -88, -87, -88, -52, -124, 84, 117, 66, 79, -112, -111, -46, 86, -37, 109};
 	public static final byte[] officaldebugkey = {-99, -69, 45, 71, 114, -116, 82, 66, -99, -122, 50, -70, -56, -111, 98, -35, -65, 105, 82, 43};
@@ -305,7 +301,22 @@ public class OpenVPN {
 
 	}
 
-	private static ConnectionStatus getLevel(String state){
+    public static void updateStatePause(OpenVPNManagement.pauseReason pauseReason) {
+        switch (pauseReason) {
+            case noNetwork:
+                OpenVPN.updateStateString("NONETWORK", "", R.string.state_nonetwork, ConnectionStatus.LEVEL_NONETWORK);
+                break;
+            case screenOff:
+                OpenVPN.updateStateString("SCREENOFF", "", R.string.state_screenoff, ConnectionStatus.LEVEL_VPNPAUSED);
+                break;
+            case userPause:
+                OpenVPN.updateStateString("USERPAUSE", "", R.string.state_userpause, ConnectionStatus.LEVEL_VPNPAUSED);
+                break;
+        }
+
+    }
+
+    private static ConnectionStatus getLevel(String state){
 		String[] noreplyet = {"CONNECTING","WAIT", "RECONNECTING", "RESOLVE", "TCP_CONNECT"}; 
 		String[] reply = {"AUTH","GET_CONFIG","ASSIGN_IP","ADD_ROUTES"};
 		String[] connected = {"CONNECTED"};

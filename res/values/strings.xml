@@ -281,5 +281,9 @@
     <string name="screenoff_pause">Pausing connection in screen off state: less than %1$s in %2$ss</string>
     <string name="screen_nopersistenttun">Warning: Persistent tun not enabled for this VPN. Traffic will use the normal Internet connection when the screen is off.</string>
     <string name="save_password">Save Password</string>
+    <string name="pauseVPN">Pause VPN</string>
+    <string name="resumevpn">Resume VPN</string>
+    <string name="state_userpause">VPN pause requested by user</string>
+    <string name="state_screenoff">VPN paused - screen off</string>
 
 </resources>

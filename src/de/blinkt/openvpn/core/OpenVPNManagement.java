@@ -1,11 +1,17 @@
 package de.blinkt.openvpn.core;
 
 public interface OpenVPNManagement {
-	int mBytecountinterval=2;
+    enum pauseReason {
+        noNetwork,
+        userPause,
+        screenOff
+    }
+
+	int mBytecountInterval =2;
 
 	void reconnect();
 
-	void pause();
+	void pause(pauseReason reason);
 
 	void resume();
 

@@ -12,10 +12,7 @@ public class APIVpnProfile implements Parcelable {
 	public APIVpnProfile(Parcel in) {
 		mUUID = in.readString();
 		mName = in.readString();
-		if(in.readInt()==0)
-			mUserEditable=false;
-		else
-			mUserEditable=true;
+        mUserEditable = in.readInt() != 0;
 	}
 
 	public APIVpnProfile(String uuidString, String name, boolean userEditable) {

@@ -13,12 +13,6 @@ import de.blinkt.openvpn.R;
 public class FaqFragment extends Fragment  {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-       
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
     		Bundle savedInstanceState) {
     	View v= inflater.inflate(R.layout.faq, container, false);

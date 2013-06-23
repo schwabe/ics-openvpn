@@ -59,7 +59,7 @@ public class FileSelectionFragment extends ListFragment {
 
 		mInlineImport = (CheckBox) v.findViewById(R.id.doinline);
 
-		if(mHideImport== true) {
+		if(mHideImport) {
 			mInlineImport.setVisibility(View.GONE);
 			mInlineImport.setChecked(false);
 		}
@@ -94,9 +94,6 @@ public class FileSelectionFragment extends ListFragment {
 			mClearButton.setVisibility(View.GONE);
 			mClearButton.setEnabled(false);
 		}
-
-
-
 
 		return v;
 	}

@@ -449,7 +449,7 @@ public class VpnProfile implements  Serializable{
 	}
 
 	private boolean nonNull(String val) {
-		if(val == null || val.equals("")) 
+		if(val == null || val.equals(""))
 			return false;
 		else
 			return true;
@@ -531,7 +531,7 @@ public class VpnProfile implements  Serializable{
 		args.add(cacheDir.getAbsolutePath() + "/" + OVPNCONFIGFILE);
 
 
-		return  (String[]) args.toArray(new String[args.size()]);
+		return args.toArray(new String[args.size()]);
 	}
 
 	public Intent prepareIntent(Context context) {
@@ -584,11 +584,11 @@ public class VpnProfile implements  Serializable{
 				try {
 					Certificate cacert = X509Utils.getCertificateFromFile(mCaFilename);
 					X509Certificate[] newcachain = new X509Certificate[cachain.length+1];
-					for(int i=0;i<cachain.length;i++)
-						newcachain[i]=cachain[i];
+                    System.arraycopy(cachain, 0, newcachain, 0, cachain.length);
 
 					newcachain[cachain.length-1]=(X509Certificate) cacert;
 
+                    cachain=newcachain;
 				} catch (Exception e) {
 					OpenVPN.logError("Could not read CA certificate" + e.getLocalizedMessage());
 				}

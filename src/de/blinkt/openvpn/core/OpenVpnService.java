@@ -68,7 +68,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 	private static boolean mNotificationAlwaysVisible =false;
 
 	private final IBinder mBinder = new LocalBinder();
-	private boolean mOvpn3;
+	private boolean mOvpn3 = false;
     
 	private OpenVPNManagement mManagement;
 
@@ -269,14 +269,14 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		OpenVPN.addStateListener(this);
 		OpenVPN.addByteCountListener(this);
 
-        if(intent != null && intent.getAction() !=null &&intent.getAction().equals(PAUSE_VPN))
+        if(intent != null && PAUSE_VPN.equals(intent.getAction()))
         {
             if(mDeviceStateReceiver!=null)
                 mDeviceStateReceiver.userPause(true);
             return START_NOT_STICKY;
         }
 
-        if(intent != null && intent.getAction() !=null &&intent.getAction().equals(RESUME_VPN))
+        if(intent != null && RESUME_VPN.equals(intent.getAction()))
         {
             if(mDeviceStateReceiver!=null)
                 mDeviceStateReceiver.userPause(false);
@@ -284,12 +284,13 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         }
 
 
-        if(intent != null && intent.getAction() !=null &&intent.getAction().equals(START_SERVICE))
+        if(intent != null && START_SERVICE.equals(intent.getAction()))
 			return START_NOT_STICKY;
-		if(intent != null && intent.getAction() !=null &&intent.getAction().equals(START_SERVICE_STICKY)) {
+		if(intent != null && START_SERVICE_STICKY.equals(intent.getAction())) {
 			return START_REDELIVER_INTENT;
 		}
 
+        assert(intent!=null);
 
 		// Extract information from the intent.
 		String prefix = getPackageName();
@@ -312,6 +313,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
+                e.printStackTrace();
 			}
 
 
@@ -320,6 +322,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
+                e.printStackTrace();
 			}
 		}
 		// An old running VPN should now be exited
@@ -512,11 +515,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		}
 	}
 
-
-	public void addRoute(CIDRIP route)
-	{
-		mRoutes.add(route );
-	}
 	public void addRoute(String dest, String mask) {
 		CIDRIP route = new CIDRIP(dest, mask);		
 		if(route.len == 32 && !mask.equals("255.255.255.255")) {
@@ -537,7 +535,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		mMtu=mtu;
 	}
 
-	public void setLocalIP(CIDRIP cdrip)
+    public void setLocalIP(CIDRIP cdrip)
 	{
 		mLocalIP=cdrip;
 	}

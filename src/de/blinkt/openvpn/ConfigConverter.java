@@ -383,8 +383,6 @@ public class ConfigConverter extends ListActivity {
 				}
 			} 
 		} 
-
-		return;
 	}
 
 	private void log(String logmessage) {

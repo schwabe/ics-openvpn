@@ -26,7 +26,7 @@ public class X509Utils {
 		return certFact.generateCertificate(inStream);
 	}
 
-	public static PemObject readPemObjectFromFile (String keyfilename) throws CertificateException, IOException {
+	public static PemObject readPemObjectFromFile (String keyfilename) throws IOException {
 
 		Reader inStream;
 

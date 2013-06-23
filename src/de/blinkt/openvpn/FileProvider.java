@@ -94,8 +94,7 @@ implements PipeDataWriter<InputStream> {
 					openPipeHelper(uri, null, null, is, this), 0,
 					dumpfile.length());
 		} catch (IOException e) {
-			FileNotFoundException fnf = new FileNotFoundException("Unable to open minidump " + uri);
-			throw fnf;
+            throw new FileNotFoundException("Unable to open minidump " + uri);
 		}
 	}
 
@@ -110,8 +109,7 @@ implements PipeDataWriter<InputStream> {
 		if (!path.matches("^[0-9a-z-.]*(dmp|dmp.log)$"))
 			throw new FileNotFoundException("url not in expect format " + uri);
 		File cachedir = getContext().getCacheDir();
-		File dumpfile = new File(cachedir,path);
-		return dumpfile;
+        return new File(cachedir,path);
 	}
 
 	@Override

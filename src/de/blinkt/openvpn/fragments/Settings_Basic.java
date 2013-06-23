@@ -144,12 +144,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	}
 
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-	}
-
-	@Override
+    @Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		if (parent == mType) {
 			changeType(position);

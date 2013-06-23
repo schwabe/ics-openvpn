@@ -76,10 +76,8 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 
 	private boolean isTunModuleAvailable() {
 		// Check if the tun module exists on the file system
-		if(new File("/system/lib/modules/tun.ko").length() > 10)
-			return true;
-		return false;
-	}
+        return new File("/system/lib/modules/tun.ko").length() > 10;
+    }
 
 	@Override
 	public boolean onPreferenceClick(Preference preference) { 

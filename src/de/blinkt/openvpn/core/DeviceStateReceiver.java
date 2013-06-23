@@ -124,7 +124,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
             /* should be connected has changed because the screen is on now, connect the VPN */
             if (shouldBeConnected() != connected)
                 mManagement.resume();
-            else
+            else if (!shouldBeConnected())
                 /*Update the reason why we are still paused */
                 mManagement.pause(getPauseReason());
 
@@ -224,7 +224,10 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         if (screen == connectState.DISCONNECTED)
             return pauseReason.screenOff;
 
-        return pauseReason.noNetwork;
+        if (network == connectState.DISCONNECTED)
+            return pauseReason.noNetwork;
+
+        assert(false);
     }
 
     private NetworkInfo getCurrentNetworkInfo(Context context) {

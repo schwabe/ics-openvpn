@@ -67,6 +67,7 @@
   <string name="dns_override_summary">Użyj własnych serwerów DNS</string>
   <string name="dns1_summary">Używany serwer DNS.</string>
   <string name="dns_server">Serwer DNS</string>
+  <string name="secondary_dns_message">Pomocniczy serwer DNS używany, jeśli normalny serwer DNS jest nieosiągalny.</string>
   <string name="backup_dns">Zapasowy serwer DNS</string>
   <string name="ignored_pushed_routes">Ignoruj trasy</string>
   <string name="ignore_routes_summary">Ignoruj trasy serwera.</string>
@@ -158,15 +159,20 @@
   <string name="faq_duplicate_notification_title">Podwójne powiadomienia</string>
   <string name="no_vpn_profiles_defined">Nie zdefiniowano żadnego profilu.</string>
   <string name="faq_routing_title">Konfiguracja trasy/interfejsu</string>
+  <string name="persistent_tun_title">Persistent tun</string>
   <string name="openvpn_log">Log OpenVPN</string>
+  <string name="import_config">Importuj konfigurację OpenVPN</string>
   <string name="battery_consumption_title">Zużycie baterii</string>
   <string name="connection_retries">Próby połączenia</string>
+  <string name="reconnection_settings">Ustawienia ponownego połączenia</string>
+  <string name="connectretrymessage">Liczba sekund oczekiwania między próbami połączenia.</string>
   <string name="connectretrywait">Sekundy pomiędzy połączeniami</string>
   <string name="minidump_generated">OpenVPN niespodziewanie uległ awarii. Proszę rozważ użycie opcji wyślij Minidump w głównym menu</string>
   <string name="send_minidump">Wyślij minidump do autora</string>
   <string name="send_minidump_summary">Wysyłam informacje debuggera o ostatniej awarii aplikacji do twórcy</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="session_ipv4string">%1$s-%2$s</string>
+  <string name="session_ipv6string">%1$s-%3$s,%2$s</string>
   <string name="state_connecting">Łączę</string>
   <string name="state_wait">Czekam na odpowiedź serwera</string>
   <string name="state_auth">Uwierzytelnianie</string>
@@ -191,6 +197,8 @@
   <string name="auth_dialog_title">Wpisz metodę uwierzytelniania pakietów</string>
   <string name="mobile_info_extended">Działa na %1$s (%2$s) %3$s, Android API %4$d, wersja %5$s, %6$s</string>
   <string name="built_by">zbudowany przez %s</string>
+  <string name="debug_build">Kompilacja z debugiem</string>
+  <string name="official_build">Oficjalna kompilacja</string>
   <string name="make_selection_inline">Skopiuj do profilu</string>
   <string name="crashdump">Zrzut</string>
   <string name="add">Dodaj</string>
@@ -201,7 +209,15 @@
   <string name="rdn_prefix">Prefiks RDN</string>
   <string name="tls_remote_deprecated">tls-remote (PRZESTARZAŁE)</string>
   <string name="help_translate">Możesz pomóc w tłumaczeniu odwiedzająć http://crowdin.net/project/ics-openvpn/invite</string>
+  <string name="prompt">%1$s próby kontroli %2$s</string>
   <string name="remote_warning">Akceptując, dajesz aplikacji uprawnienia do pełnego kontrolowania przez OpenVPN całego ruchu sieciowego. <b>Nie akceptuj, jeżeli nie ufasz aplikacji w pełni. </b> W przeciwnym razie istnieje ryzyko przejęcia danych przez złośliwe oprogramowanie. </string>
   <string name="remote_trust">Ufam tej aplikacji.</string>
+  <string name="no_external_app_allowed">Żadna aplikacja nie ma pozwolenia do używania zewnętrznego API</string>
+  <string name="allowed_apps">Dozwolone aplikacje: %s</string>
   <string name="clearappsdialog">Wyczyścić listę dozwolonych aplikacji?\nObecna lista dozwolonych aplikacji:\n\n%s</string>
+  <string name="screenoff_summary">\"Wstrzymaj VPN kiedy wyświetlacz jest wyłączony i mniej niż 64kB danych przetransmitowano w 60s. Kiedy opcja \"Persistent Tun\" jest włączona wstrzymanie VPN zostawi twoje urządzenie bez połączenia. Bez opcji \"Persistent Tun\" urządzenie nie będzie miało połączenia/ochrony VPN.</string>
+  <string name="screenoff_title">Wstrzymaj połączenie VPN po wyłączeniu wyświetlacza</string>
+  <string name="screenoff_pause">Wstrzymanie połączenia na wyłączonym ekranie: w mniej niż %1$s na %2$ss</string>
+  <string name="screen_nopersistenttun">Ostrzeżenie. Persistent tun nie włączone dla tego VPN. Połączenie będzie generować ruch normalnego połączenia przy wyłączonym ekranie.</string>
+  <string name="save_password">Zapisz hasło</string>
 </resources>

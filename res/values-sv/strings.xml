@@ -59,6 +59,8 @@
   <string name="title_cancel">Avbryt bekräftelse</string>
   <string name="cancel_connection_query">Koppla från det anslutna VPN/Avbryt anslutningen?</string>
   <string name="remove_vpn">Ta bort VPN</string>
+  <string name="check_remote_tlscert">Kontrollerar om servern använder ett certifikat med TLS server tillägg (--remote-cert-tls server)</string>
+  <string name="check_remote_tlscert_title">Förvänta TLS servercertifikat</string>
   <string name="remote_tlscn_check_summary">Verifierar Remote Server Certificate Subject DN</string>
   <string name="remote_tlscn_check_title">Certifikat Hostname kontroll</string>
   <string name="enter_tlscn_dialog">Ange den kontroll som används för att verifiera Fjärrcertifikat DN (e.g. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nSpecificera en komplett DN eller RDN (openvpn.blinkt.de i exemplet) eller ett RDN prefix för verifiering.\n\nOm RDN prefix används matchar \"Server\" både \"Server-1\" och \"Server-2\" \n\nLämnas textfältet tomt matchas RDN mot server hostname.\n\nFor mer information se OpenVPN 2.3.1+ manpage under —verify-x509-name</string>
@@ -115,6 +117,7 @@
   <string name="copying_log_entries">Kopierar loggposter</string>
   <string name="faq_copying">För att kopiera en enda logg post tryck och håll på loggposten. Om du vill kopiera/skicka hela loggen använd alternativet Skicka loggen. Använd hårdvarumenyknappen om menyn inte syns i GUI.</string>
   <string name="faq_shortcut">Genväg för att starta</string>
+  <string name="faq_howto_shortcut">Du kan placera en genväg för att starta OpenVPN på skrivbordet. Beroende på ditt hemskärmsprogram måste du lägga till antingen en genväg eller en widget.</string>
   <string name="no_vpn_support_image">Din ROM stöder inte VPNService API, ledsen :(</string>
   <string name="encryption">Kryptering</string>
   <string name="cipher_dialog_title">Ange krypteringsmetod</string>
@@ -134,6 +137,7 @@
   <string name="add_profile">lägg till profil</string>
   <string name="import_could_not_open">Kunde inte hitta filen %1$s som omnämns i den importerade konfigurationsfilen</string>
   <string name="importing_config">Importerar konfigurationsfilen från %1$s</string>
+  <string name="import_warning_custom_options">Din konfiguration hade några konfigurationsalternativ som inte är kopplade till UI konfigurationer. Dessa alternativ lades till som anpassade konfigurationsalternativ. Den anpassade konfigurationen visas nedan:</string>
   <string name="import_done">Färdig med att läsa konfigurationsfilen.</string>
   <string name="nobind_summary">Bind inte till lokal adress och port</string>
   <string name="no_bind">Ingen lokal bindning</string>
@@ -149,6 +153,7 @@
   <string name="converted_profile">importerad profil</string>
   <string name="converted_profile_i">importerad profil %d</string>
   <string name="broken_images">Trasiga ROM</string>
+  <string name="broken_images_faq">lt;pgt;Officiella HTC ROM är kända för att ha ett konstigt rutt problem som orsakar att trafik inte går genom tunneln (Se även &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Ärende 18&lt;/a&gt; i äredehanteringen.)&lt;/p&gt;&lt;p&gt;Äldre officiella SONY ROM för Xperia Arc S och Xperia Ray har rapporterats sakna VPNService helt. (Se även &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Ärende 29&lt;/a&gt; i ärendehanteringen.)&lt;/p&gt;&lt;p&gt;I anpassade/modifierade ROM kan tun modulen saknas eller rättigheterna på /dev/tun kan vara fel. Vissa CM9 ROM behöver alternativet \"Fixa ägande\" under \"Modellanpassade hack\" ikryssat.&lt;/p&gt;&lt;p&gt;Viktigt: Om du har en trasig ROM, rapportera det till din leverantör. Ju fler människor som rapportera problemet till leverantören desto mer sannolikt är det att det kommer en rättning.&lt;/p&gt;</string>
   <string name="pkcs12_file_encryption_key">Krypteringsnyckel för PKCS12-filen</string>
   <string name="private_key_password">Lösenord för privat nyckel</string>
   <string name="password">Lösenord</string>
@@ -181,6 +186,7 @@
   <string name="obscure">Obskyra OpenVPN inställningar. Behövs normalt inte.</string>
   <string name="advanced">Avancerad</string>
   <string name="export_config_title">ICS OpenVPN konfiguration</string>
+  <string name="warn_no_dns">Inga DNS-servrar används. Namnuppslag kommer kanske inte fungera. Överväg att namnge egna DNS-servrar. Observera även att Android kommer att fortsätta att använda dina proxyinställningar som anges för din mobildata/Wi-Fi-anslutning när inga DNS-servrar är konfigurerade.</string>
   <string name="dns_add_error">Kunde inte lägga till DNS-servern \"%1$s\", förkastades av systemet: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Hämta en fungerande konfiguration (testad på din dator eller nerladdad från din leverantör/organisation)&lt;/p&gt;&lt;p&gt;Om det är en enda fil utan extra pem/pks12 filer kan du maila den till dig själv och öppna den bifogade filen. Om du har flera filer lägg dem på ditt sd-kort.&lt;/p&gt;&lt;p&gt;Klicka på den i mailet bifogade filen/Användning mappikonen i VPN-listan för att importera konfigurationsfilen&lt;/p&gt;&lt;p&gt;Om det ger fel ang. saknade filer lägg dessa på ditt sd-kort.&lt;/p&gt;&lt;p&gt;Klicka på spara symbolen för att lägga till den importerade konfigurationen i VPN-listan&lt;/p&gt;&lt;p&gt;Anslut din VPN genom att klicka på konfigurationsnamnet&lt;/p&gt;&lt;p&gt;Om det finns fel eller varningar i loggen försöka förstå dessa varningar/fel och försök att åtgärda dem&lt;/p&gt; </string>
   <string name="faq_howto_title">Snabbstart</string>
@@ -206,6 +212,7 @@
   <string name="vpn_import_hint">Använd &lt;img src=\"ic_menu_archive\"/&gt; ikonen för att importera en befintlig (.ovpn eller .conf) profil från ditt sd-kort.</string>
   <string name="faq_hint">Tänk på att titta i FAQ\'n. Där finns en snabbstartguide.</string>
   <string name="faq_routing_title">Konfiguration för rutter/gränssnitt</string>
+  <string name="faq_routing">Rutt och gränssnitts konfiguration görs inte via det traditionella ifconfig/route-kommandot utan med hjälp av VPNService API. Detta resulterar i en anorlunda ruttkonfiguration än på andra operativsystem. Konfigurationen består endast av IP-nummret för tunnel gränssnittet och de nätverk som ska ruttas över gränssnittet. Speciellt behövs ingen särskild peer partner adress eller gateway-adress. Särskilda rutter för att nå VPN-servern (tillagda exempelvis när du använder omdirigering-gateway) behövs inte heller. Applikationen kommer konsekvent att ignorera dessa inställningar när du importerar en konfiguration. Appen säkerställer med hjälp av VPNService API att anslutningen till servern inte ruttas via VPN-tunneln. Eftersom endast specificering av nätverk som ska skickas via tunneln stöds så stöds inte extra rutter som inte pekar på tunneln heller. (t.ex. rutten x.x.x.x y.y.y.y net_gateway). Loggfönstret visar den aktuella konfigurationen för VPNService under upprättandet av en anslutning. </string>
   <string name="persisttun_summary">Fall inte tillbaka till ingen VPN-anslutning när OpenVPN återansluter.</string>
   <string name="persistent_tun_title">Ihållande tun</string>
   <string name="openvpn_log">OpenVPN Log</string>
@@ -267,4 +274,8 @@
   <string name="no_external_app_allowed">Ingen app får använda externa API</string>
   <string name="allowed_apps">Tillåtna apps: %s</string>
   <string name="clearappsdialog">Rensa lista över tillåtna externa apps? \nNuvarande lista över tillåtna apps:\n\n%s</string>
+  <string name="screenoff_title">Pausa VPN-anslutningen efter att skärmen stängts av</string>
+  <string name="screenoff_pause">Pausa anslutning när skärmen är avstängd: mindre än %1$s i %2$ss</string>
+  <string name="screen_nopersistenttun">Varning: Permanent tun är inte aktiverat för denna VPN. Trafiken kommer att använda den normala Internet-anslutning när skärmen är avstängd.</string>
+  <string name="save_password">Spara lösenord</string>
 </resources>

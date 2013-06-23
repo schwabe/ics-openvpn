@@ -228,6 +228,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
             return pauseReason.noNetwork;
 
         assert(false);
+        return pauseReason.userPause;
     }
 
     private NetworkInfo getCurrentNetworkInfo(Context context) {

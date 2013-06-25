@@ -11,6 +11,8 @@
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
         <option name="GRADLE_PROJECT_PATH" value=":" />
+        <option name="PROJECT_ABSOLUTE_PATH" value="$MODULE_DIR$" />
+        <option name="GRADLE_HOME_DIR_PATH" />
       </configuration>
     </facet>
   </component>

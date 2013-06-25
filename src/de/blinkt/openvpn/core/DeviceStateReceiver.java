@@ -227,7 +227,6 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         if (network == connectState.DISCONNECTED)
             return pauseReason.noNetwork;
 
-        assert(false);
         return pauseReason.userPause;
     }
 

@@ -38,14 +38,8 @@ public abstract class OpenVpnPreferencesFragment extends PreferenceFragment {
 			loadSettings();
 		}
 	}
-	
-	@Override
-	public void onStop() {
-		// TODO Auto-generated method stub
-		super.onStop();
-	}
-	
-	@Override
+
+    @Override
 	public void onSaveInstanceState (Bundle outState) {
 		super.onSaveInstanceState(outState);
 		saveSettings();

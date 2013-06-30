@@ -155,7 +155,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     private int getIconByConnectionStatus(ConnectionStatus level) {
        switch (level) {
            case LEVEL_CONNECTED:
-           case UNKNOWN_LEVEL:
                return R.drawable.ic_stat_vpn;
            case LEVEL_AUTH_FAILED:
            case LEVEL_NONETWORK:
@@ -168,6 +167,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
                return R.drawable.ic_stat_vpn_empty_halo;
            case LEVEL_VPNPAUSED:
                return android.R.drawable.ic_media_pause;
+           case UNKNOWN_LEVEL:
            default:
                return R.drawable.ic_stat_vpn;
 
@@ -228,7 +228,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		// Let the configure Button show the Log
 		Intent intent = new Intent(getBaseContext(),LogWindow.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-		PendingIntent startLW = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+		PendingIntent startLW = PendingIntent.getActivity(this, 0, intent, 0);
 		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 		return startLW;
 
@@ -373,8 +373,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 		ProfileManager.setConnectedVpnProfile(this, mProfile);
 
-		return START_NOT_STICKY;
-	}
+        return START_NOT_STICKY;
+    }
 
 	private OpenVPNManagement instantiateOpenVPN3Core() {
 		return null;

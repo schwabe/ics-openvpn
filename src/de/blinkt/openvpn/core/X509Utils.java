@@ -18,10 +18,18 @@ public class X509Utils {
 
 		InputStream inStream;
 
-		if(certfilename.startsWith(VpnProfile.INLINE_TAG))
-			inStream = new ByteArrayInputStream(certfilename.replace(VpnProfile.INLINE_TAG,"").getBytes());
-		else 
+		if(certfilename.startsWith(VpnProfile.INLINE_TAG)) {
+            // The java certifcate reader is ... kind of stupid
+            // It does NOT ignore chars before the --BEGIN ...
+            int subIndex = certfilename.indexOf("-----BEGIN CERTIFICATE-----");
+            subIndex = Math.max(0,subIndex);
+			inStream = new ByteArrayInputStream(certfilename.substring(subIndex).getBytes());
+
+
+        } else {
 			inStream = new FileInputStream(certfilename);
+        }
+
 
 		return certFact.generateCertificate(inStream);
 	}
@@ -55,7 +63,7 @@ public class X509Utils {
 				OpenVPN.logError("Could not read certificate" + e.getLocalizedMessage());
 			}
 		}
-		return "Could not read/parse certificate";
+		return "Cannot display certificate information";
 	}
 
     public static String getCertificateFriendlyName(X509Certificate cert) {

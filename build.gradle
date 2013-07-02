@@ -17,7 +17,7 @@ android {
     buildToolsVersion "17"
     
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 14
         targetSdkVersion 17
         versionCode = 70
         versionName = "0.5.38.2"

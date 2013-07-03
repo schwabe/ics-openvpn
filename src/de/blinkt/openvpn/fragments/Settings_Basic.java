@@ -131,7 +131,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		if (result == Activity.RESULT_OK && request >= CHOOSE_FILE_OFFSET) {
 			String filedata = data.getStringExtra(FileSelect.RESULT_DATA);
 			FileSelectLayout fsl = fileselects.get(request);
-			fsl.setData(filedata);
+			fsl.setData(filedata, getActivity());
 
 			savePreferences();
 
@@ -207,16 +207,16 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 	private void loadPreferences() {
 		mProfileName.setText(mProfile.mName);
-		mClientCert.setData(mProfile.mClientCertFilename);
-		mClientKey.setData(mProfile.mClientKeyFilename);
-		mCaCert.setData(mProfile.mCaFilename);
+		mClientCert.setData(mProfile.mClientCertFilename, getActivity());
+		mClientKey.setData(mProfile.mClientKeyFilename, getActivity());
+		mCaCert.setData(mProfile.mCaFilename, getActivity());
 
 		mUseLzo.setChecked(mProfile.mUseLzo);
 		mServerPort.setText(mProfile.mServerPort);
 		mServerAddress.setText(mProfile.mServerName);
 		mTcpUdp.setChecked(mProfile.mUseUdp);
 		mType.setSelection(mProfile.mAuthenticationType);
-		mpkcs12.setData(mProfile.mPKCS12Filename);
+		mpkcs12.setData(mProfile.mPKCS12Filename, getActivity());
 		mPKCS12Password.setText(mProfile.mPKCS12Password);
 		mUserName.setText(mProfile.mUsername);
 		mPassword.setText(mProfile.mPassword);

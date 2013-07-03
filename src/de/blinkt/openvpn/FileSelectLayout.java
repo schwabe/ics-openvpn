@@ -66,7 +66,7 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 		return mData;
 	}
 
-	public void setData(String data) {
+	public void setData(String data, Context c) {
 		mData = data;
 		if(data==null) { 
 			mDataView.setText(mFragment.getString(R.string.no_data));
@@ -76,7 +76,7 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 				mDataView.setText(R.string.inline_file_data);
 			else
 				mDataView.setText(data);
-			mDataDetails.setText(X509Utils.getCertificateFriendlyName(data));
+			mDataDetails.setText(X509Utils.getCertificateFriendlyName(c,data));
 		}
 
 	}

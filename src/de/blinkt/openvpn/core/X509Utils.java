@@ -1,6 +1,9 @@
 package de.blinkt.openvpn.core;
 
+import android.content.Context;
 import android.text.TextUtils;
+
+import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import org.spongycastle.util.io.pem.PemObject;
 import org.spongycastle.util.io.pem.PemReader;
@@ -52,7 +55,7 @@ public class X509Utils {
 
 
 
-	public static String getCertificateFriendlyName (String filename) {
+	public static String getCertificateFriendlyName (Context c, String filename) {
 		if(!TextUtils.isEmpty(filename)) {
 			try {
 				X509Certificate cert = (X509Certificate) getCertificateFromFile(filename);
@@ -63,7 +66,7 @@ public class X509Utils {
 				OpenVPN.logError("Could not read certificate" + e.getLocalizedMessage());
 			}
 		}
-		return "Cannot display certificate information";
+		return c.getString(R.string.cannotparsecert);
 	}
 
     public static String getCertificateFriendlyName(X509Certificate cert) {

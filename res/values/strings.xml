@@ -285,5 +285,9 @@
     <string name="resumevpn">Resume VPN</string>
     <string name="state_userpause">VPN pause requested by user</string>
     <string name="state_screenoff">VPN paused - screen off</string>
+    <string name="device_specific">Device specifics Hacks</string>
+    <string name="cannotparsecert">Cannot display certificate information</string>
+    <string name="appbehaviour">Application behaviour</string>
+    <string name="vpnbehaviour">VPN behaviour</string>
 
 </resources>

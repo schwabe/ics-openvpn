@@ -121,7 +121,6 @@
   <string name="no_vpn_support_image">Teie süsteemitarkvara ei toeta VPNService API\'t, vabandame :(</string>
   <string name="encryption">Krüpteerimine</string>
   <string name="cipher_dialog_title">Vali krüpteerimismeetod</string>
-  <string name="chipher_dialog_message">Sisestage OpenVPN poolt kasutatav krüptošifri algoritm. Tühi väli tähendab vaikešifrit.</string>
   <string name="auth_dialog_message">Sisestage OpenVPN poolt kasutatav autentimise räsifunktsioon. Tühi väli tähendab vaikeräsi.</string>
   <string name="settings_auth">Autentimine/Krüpteerimine</string>
   <string name="file_explorer_tab">Failihaldur</string>

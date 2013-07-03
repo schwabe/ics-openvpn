@@ -100,7 +100,6 @@
   <string name="no_vpn_support_image">Twój obraz nie wspiera API VPN, przepraszamy ;(</string>
   <string name="encryption">Szyfrowanie</string>
   <string name="cipher_dialog_title">Wprowadź metodę szyfrowania</string>
-  <string name="chipher_dialog_message">Wprowadź algorytm szyfru szyfrowania używanego przez OpenVPN. Zostaw puste dla domyślnego.</string>
   <string name="settings_auth">Uwierzytelnianie/Szyfrowanie</string>
   <string name="file_explorer_tab">Manager plików</string>
   <string name="error_importing_file">Błąd importu pliku</string>

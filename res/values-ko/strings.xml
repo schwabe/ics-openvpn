@@ -121,7 +121,6 @@
   <string name="no_vpn_support_image">당신의 이미지는 VPNService API를 지원 하지 않습니다, 죄송 합니다:(</string>
   <string name="encryption">암호화</string>
   <string name="cipher_dialog_title">입력 암호화 방법</string>
-  <string name="chipher_dialog_message">OpenVPN이 사용할 암호화 암호 알고리즘을 입력 합니다. 기본 암호를 사용하려면 빈 공간으로 두십시오.</string>
   <string name="auth_dialog_message">OpenVPN이 사용할 인증 다이제스트를 입력 합니다. 기본 다이제스트를 사용하려면 빈 공간으로 두십시오.</string>
   <string name="settings_auth">인증/암호화</string>
   <string name="file_explorer_tab">파일 탐색기</string>

@@ -120,7 +120,6 @@
   <string name="no_vpn_support_image">申し訳ありませんが、お使いの環境ではVPNサービスがサポートされていません。</string>
   <string name="encryption">暗号化</string>
   <string name="cipher_dialog_title">暗号化方式を入力</string>
-  <string name="chipher_dialog_message">OpenVPNが暗号化に使用する暗号方式を入力してください。空欄にするとデフォルトを使用します。</string>
   <string name="auth_dialog_message">OpenVPNが使用する認証ダイジェストを入力します。空欄にするとデフォルトのダイジェストを使用します。</string>
   <string name="settings_auth">認証/暗号化</string>
   <string name="file_explorer_tab">ファイルを選択</string>

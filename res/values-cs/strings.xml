@@ -121,7 +121,6 @@
   <string name="no_vpn_support_image">Tvůj obrázek není podporovaný rozhraním VPNService, je mi líto :-(</string>
   <string name="encryption">Šifrování</string>
   <string name="cipher_dialog_title">Zadej šifrovací metodu</string>
-  <string name="chipher_dialog_message">Zadej šifrovací algoritmus. Ponech prázdné pro výchozí šifru.</string>
   <string name="auth_dialog_message">Zadej algoritmus pro autentizaci. Nech prázdné pro výchozí algoritmus.</string>
   <string name="settings_auth">Autentizace/Šifrování</string>
   <string name="file_explorer_tab">Prohlížeč souború</string>

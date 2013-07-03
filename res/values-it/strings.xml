@@ -119,7 +119,6 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
   <string name="no_vpn_support_image">La tua immagine non è supportata dal VPNService API, mi dispiace :(</string>
   <string name="encryption">Crittografia</string>
   <string name="cipher_dialog_title">Inserire il metodo di crittografia</string>
-  <string name="chipher_dialog_message">Inserisci l\'algoritmo di cifratura cipher usato da OpenVPN. Lascia bianco per usare quello di default.</string>
   <string name="auth_dialog_message">Inserisci l\'algoritmo di cifratura digest usato da OpenVPN. Lascia bianco per usare quello di default.</string>
   <string name="settings_auth">Autenticazione/crittografia</string>
   <string name="file_explorer_tab">Esplora risorse</string>

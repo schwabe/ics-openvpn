@@ -280,4 +280,12 @@
   <string name="screenoff_pause">Pausiere VPN Verbindung da weniger als %1$s in %2$ss.</string>
   <string name="screen_nopersistenttun">Warnung: Persistentes tun Device für dieses VPN nicht aktiviert. Der Netzwerkverkehr nutzt die normale Internet Verbindung, wenn der Bildschirm aus ist.</string>
   <string name="save_password">Passwort merken</string>
+  <string name="pauseVPN">VPN pausieren</string>
+  <string name="resumevpn">VPN fortsetzen</string>
+  <string name="state_userpause">VPN Verbindung durch Benutzer pausiert</string>
+  <string name="state_screenoff">VPN pausiert wegen Inaktitvität pausiert (Bildschirm aus)</string>
+  <string name="device_specific">Geräte spezifische Hacks</string>
+  <string name="cannotparsecert">Kann Zertifikatsinformationen nicht anzeigen.</string>
+  <string name="appbehaviour">Anwendung</string>
+  <string name="vpnbehaviour">VPN</string>
 </resources>

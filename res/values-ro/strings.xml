@@ -121,7 +121,6 @@
   <string name="no_vpn_support_image">Imaginea dvs. nu suportă API-ul VPNService, îmi pare rău :(</string>
   <string name="encryption">Criptare</string>
   <string name="cipher_dialog_title">Alegeţi metoda de criptare</string>
-  <string name="chipher_dialog_message">Introduceţi algoritmul pentru cifrul folosit de OpenVPN. Lăsaţi liber pentru a folosi cifrul predefinit.</string>
   <string name="auth_dialog_message">Introduceţi autentificarea digest ce este folosită de OpenVPN. Lăsaţi gol pentru digest predefinit.</string>
   <string name="settings_auth">Autentificare/criptare</string>
   <string name="file_explorer_tab">File Explorer</string>

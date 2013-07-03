@@ -121,7 +121,6 @@
   <string name="no_vpn_support_image">Din ROM stöder inte VPNService API, ledsen :(</string>
   <string name="encryption">Kryptering</string>
   <string name="cipher_dialog_title">Ange krypteringsmetod</string>
-  <string name="chipher_dialog_message">Ange den krypteringsalogritm som skall användas av OpenVPN. Lämna tomt för att använda standardalgoritm.</string>
   <string name="auth_dialog_message">Ange den autentiserings digest som används för OpenVPN. Lämna tom för att använda standard digest.</string>
   <string name="settings_auth">Autentisering/kryptering</string>
   <string name="file_explorer_tab">Filutforskare</string>

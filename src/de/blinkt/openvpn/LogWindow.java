@@ -243,7 +243,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 	private LogWindowListAdapter ladapter;
 	private TextView mSpeedView;
 
-    private void showDisconnectDialog(final OpenVpnService service) {
+    private void showDisconnectDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.title_cancel);
         builder.setMessage(R.string.cancel_connection_query);
@@ -253,8 +253,8 @@ public class LogWindow extends ListActivity implements StateListener  {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ProfileManager.setConntectedVpnProfileDisconnected(LogWindow.this);
-                if(service.getManagement()!=null)
-                    service.getManagement().stopVPN();
+                if (mService != null && mService.getManagement() != null)
+                    mService.getManagement().stopVPN();
             }
         });
 
@@ -268,9 +268,9 @@ public class LogWindow extends ListActivity implements StateListener  {
 			ladapter.clearLog();
 			return true;
 		} else if(item.getItemId()==R.id.cancel){
-            showDisconnectDialog(mService);
-			return true;
-		} else if(item.getItemId()==R.id.send) {
+            showDisconnectDialog();
+            return true;
+        } else if(item.getItemId()==R.id.send) {
 			ladapter.shareLog();
 		} else if(item.getItemId()==R.id.edit_vpn) {
 			VpnProfile lastConnectedprofile = ProfileManager.getLastConnectedVpn();
@@ -313,9 +313,14 @@ public class LogWindow extends ListActivity implements StateListener  {
 	protected void onResume() {
 		super.onResume();
 		OpenVPN.addStateListener(this);
+        Intent intent = new Intent(this, OpenVpnService.class);
+        intent.setAction(OpenVpnService.START_SERVICE);
+
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
 
         if (getIntent() !=null && OpenVpnService.DISCONNECT_VPN.equals(getIntent().getAction()))
-            showDisconnectDialog(mService);
+            showDisconnectDialog();
 
         setIntent(null);
 
@@ -363,11 +368,12 @@ public class LogWindow extends ListActivity implements StateListener  {
 	protected void onStop() {
 		super.onStop();
 		OpenVPN.removeStateListener(this);
-		getPreferences(0).edit().putInt(LOGTIMEFORMAT, ladapter.mTimeFormat).apply();
+        unbindService(mConnection);
+        getPreferences(0).edit().putInt(LOGTIMEFORMAT, ladapter.mTimeFormat).apply();
 
-	}
+    }
 
-	@Override
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -395,12 +401,8 @@ public class LogWindow extends ListActivity implements StateListener  {
 		mSpeedView = (TextView) findViewById(R.id.speed);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent intent = new Intent(getBaseContext(), OpenVpnService.class);
-        intent.setAction(OpenVpnService.START_SERVICE);
+    }
 
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
-	}
 
     @Override
 	public void updateState(final String status,final String logmessage, final int resid, final ConnectionStatus level) {
@@ -422,7 +424,6 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 	@Override
 	protected void onDestroy() {
-		unbindService(mConnection);
 		OpenVPN.removeLogListener(ladapter);
 		super.onDestroy();
 	}

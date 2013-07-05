@@ -1,5 +1,7 @@
 package de.blinkt.openvpn.core;
 
+import de.blinkt.openvpn.VpnProfile;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -7,8 +9,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
-
-import de.blinkt.openvpn.VpnProfile;
 
 //! Openvpn Config FIle Parser, probably not 100% accurate but close enough
 
@@ -241,9 +241,10 @@ public class ConfigParser {
 			"dhcp-release",
 			"dhcp-renew",
 			"dh",
-			"ip-win32",
-			"management-hold",
-			"management",
+            "group",
+            "ip-win32",
+            "management-hold",
+            "management",
 			"management-query-passwords",
 			"pause-exit",
 			"persist-key",
@@ -259,11 +260,12 @@ public class ConfigParser {
 			"tmp-dir",
 			"tun-ipv6",
 			"topology",
-			"win-sys",
-	};
+            "user",
+            "win-sys",
+    };
 
 
-	// This method is far too long
+    // This method is far too long
 	public VpnProfile convertProfile() throws ConfigParseError{
 		boolean noauthtypeset=true;
 		VpnProfile np = new VpnProfile(CONVERTED_PROFILE);
@@ -336,12 +338,12 @@ public class ConfigParser {
 		Vector<String> dev =getOption("dev",1,1);
 		Vector<String> devtype =getOption("dev-type",1,1);
 
-		if( (devtype !=null && devtype.get(1).equals("tun")) ||  
-				(dev!=null && dev.get(1).startsWith("tun")) || 
-				(devtype ==null && dev == null) ) {
-			//everything okay 
-		} else {
-			throw new ConfigParseError("Sorry. Only tun mode is supported. See the FAQ for more detail");
+        if ((devtype != null && devtype.get(1).equals("tun")) ||
+                (dev != null && dev.get(1).startsWith("tun")) ||
+                (devtype == null && dev == null)) {
+            //everything okay
+        } else {
+            throw new ConfigParseError("Sorry. Only tun mode is supported. See the FAQ for more detail");
 		}
 
 

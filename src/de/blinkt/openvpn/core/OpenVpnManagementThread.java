@@ -8,6 +8,9 @@ import android.net.LocalSocketAddress;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import org.jetbrains.annotations.NotNull;
+
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
@@ -53,8 +56,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 	}
 
-
-    public boolean openManagementInterface(Context c) {
+    public boolean openManagementInterface(@NotNull Context c) {
         // Could take a while to open connection
         int tries=8;
 
@@ -109,7 +111,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 	@Override
 	public void run() {
-		Log.i(TAG, "Managment Socket Thread started");
 		byte [] buffer  =new byte[2048];
 		//	mSocket.setSoTimeout(5); // Setting a timeout cannot be that bad
 
@@ -213,9 +214,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 
 			if(cmd.equals("INFO")) {
-				// Ignore greeting from mgmt
-				//logStatusMessage(command);
-                ;
+				/* Ignore greeting from management */
+                return;
 			}else if (cmd.equals("PASSWORD")) {
 				processPWCommand(argument);
 			} else if (cmd.equals("HOLD")) {
@@ -241,8 +241,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 				Log.i(TAG, "Got unrecognized command" + command);
 			}
 		} else if (command.startsWith("SUCCESS:")) {
-            ;
-			// ignore
+			/* Ignore this kind of message too */
+            return;
 		} else {
 			Log.i(TAG, "Got unrecognized line from managment" + command);
 			OpenVPN.logMessage(0, "MGMT:", "Got unrecognized line from management:" + command);

@@ -9,13 +9,18 @@ buildscript {
 
 apply plugin: 'android'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
+    compile 'com.intellij:annotations:12.0'
 }
 
 android {
     compileSdkVersion 17
     buildToolsVersion "17"
-    
+
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 17
@@ -48,8 +53,7 @@ android {
     }
 }
 
-
-// ~/.gradle/gradle.properties 
+// ~/.gradle/gradle.properties
 if (project.hasProperty('keystoreFile') &&
         project.hasProperty('keystorePassword') &&
         project.hasProperty('keystoreAliasPassword')) {
@@ -60,7 +64,6 @@ if (project.hasProperty('keystoreFile') &&
 } else {
     android.buildTypes.release.signingConfig = null
 }
-
 
 //http://stackoverflow.com/questions/16683775/include-so-library-in-apk-in-android-studio
 tasks.withType(com.android.build.gradle.tasks.PackageApplication) { pkgTask ->

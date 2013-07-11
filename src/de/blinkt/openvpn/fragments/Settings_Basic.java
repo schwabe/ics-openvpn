@@ -29,6 +29,10 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.R.id;
 import de.blinkt.openvpn.core.ProfileManager;
+import de.blinkt.openvpn.core.X509Utils;
+
+import java.io.IOException;
+import java.security.cert.X509Certificate;
 
 public class Settings_Basic extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback {
 	private static final int CHOOSE_FILE_OFFSET = 1000;
@@ -42,6 +46,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	private FileSelectLayout mCaCert;
 	private FileSelectLayout mClientKey;
 	private TextView mAliasName;
+    private TextView mAliasCertificate;
 	private CheckBox mUseLzo;
 	private ToggleButton mTcpUdp;
 	private Spinner mType;
@@ -58,12 +63,12 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	private SparseArray<FileSelectLayout> fileselects = new SparseArray<FileSelectLayout>();
 
 
-	private void addFileSelectLayout (FileSelectLayout fsl) {
+
+    private void addFileSelectLayout (FileSelectLayout fsl) {
 		int i = fileselects.size() + CHOOSE_FILE_OFFSET;
 		fileselects.put(i, fsl);
 		fsl.setFragment(this,i);
 	}
-
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,6 +76,34 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mProfile=ProfileManager.get(profileuuid);
 		getActivity().setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
 	}
+
+
+    private void setKeystoreCertficate()
+    {
+        new Thread() {
+            public void run() {
+                String certstr;
+                try {
+
+
+                    X509Certificate cert = KeyChain.getCertificateChain(getActivity(), mProfile.mAlias)[0];
+                    certstr=X509Utils.getCertificateFriendlyName(cert);
+                } catch (Exception e) {
+                    certstr="Could not get certificate from Keystore";
+                }
+
+                final String certStringCopy=certstr;
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        mAliasCertificate.setText(certStringCopy);
+                    }
+                });
+
+            }
+        }.start();
+    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,6 +123,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mType = (Spinner) mView.findViewById(R.id.type);
 		mPKCS12Password = (TextView) mView.findViewById(R.id.pkcs12password);
 		mAliasName = (TextView) mView.findViewById(R.id.aliasname);
+        mAliasCertificate = (TextView) mView.findViewById(id.alias_certificate);
 
 		mUserName = (EditText) mView.findViewById(R.id.auth_username);
 		mPassword = (EditText) mView.findViewById(R.id.auth_password);
@@ -252,8 +286,11 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	private void setAlias() {
 		if(mProfile.mAlias == null) {
 			mAliasName.setText(R.string.client_no_certificate);
+            mAliasCertificate.setText("");
 		} else {
+            mAliasCertificate.setText("Loading certificate from Keystore...");
 			mAliasName.setText(mProfile.mAlias);
+            setKeystoreCertficate();
 		}
 	}
 

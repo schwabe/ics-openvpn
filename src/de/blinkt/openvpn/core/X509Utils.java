@@ -8,12 +8,16 @@ import de.blinkt.openvpn.VpnProfile;
 import org.spongycastle.util.io.pem.PemObject;
 import org.spongycastle.util.io.pem.PemReader;
 
+
 import javax.security.auth.x500.X500Principal;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.Hashtable;
 
 public class X509Utils {
 	public static Certificate getCertificateFromFile(String certfilename) throws FileNotFoundException, CertificateException {
@@ -70,10 +74,42 @@ public class X509Utils {
 	}
 
     public static String getCertificateFriendlyName(X509Certificate cert) {
-        X500Principal principal = (X500Principal) cert.getSubjectDN();
+        X500Principal principal = cert.getSubjectX500Principal();
+        byte[] encodedSubject = principal.getEncoded();
+        String friendlyName=null;
 
-        String friendlyName = principal.getName();
-        System.out.println(friendlyName);
+        /* Hack so we do not have to ship a whole Spongy/bouncycastle */
+        try {
+            Class X509NameClass = Class.forName("com.android.org.bouncycastle.asn1.x509.X509Name");
+            Method getInstance = X509NameClass.getMethod("getInstance",Object.class);
+
+            Hashtable defaultSymbols = (Hashtable) X509NameClass.getField("DefaultSymbols").get(X509NameClass);
+
+            if (!defaultSymbols.containsKey("1.2.840.113549.1.9.1"))
+                defaultSymbols.put("1.2.840.113549.1.9.1","eMail");
+
+            Object subjectName = getInstance.invoke(X509NameClass, encodedSubject);
+
+            Method toString = X509NameClass.getMethod("toString",boolean.class,Hashtable.class);
+
+            friendlyName= (String) toString.invoke(subjectName,true,defaultSymbols);
+                    
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+        /* Fallback if the reflection method did not work */
+        if(friendlyName==null)
+            friendlyName = principal.getName();
+
 
         // Really evil hack to decode email address
         // See: http://code.google.com/p/android/issues/detail?id=21531

@@ -573,12 +573,6 @@ public class VpnProfile implements  Serializable{
 			if(cachain.length <= 1 && !nonNull(mCaFilename))
 				OpenVPN.logMessage(0, "", context.getString(R.string.keychain_nocacert));
 
-			for(X509Certificate cert:cachain) {
-				OpenVPN.logInfo(R.string.cert_from_keystore,X509Utils.getCertificateFriendlyName(cert));
-			}
-
-
-
 
 			if(nonNull(mCaFilename)) {
 				try {

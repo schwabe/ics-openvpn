@@ -75,6 +75,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="annotations-12.0" level="project" />
   </component>
 </module>
 

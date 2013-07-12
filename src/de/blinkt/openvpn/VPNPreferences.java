@@ -20,10 +20,7 @@ public class VPNPreferences extends PreferenceActivity {
 
 	public VPNPreferences() {
 		super();
-
 	}
-
-
 
 
 	@Override
@@ -79,6 +76,7 @@ public class VPNPreferences extends PreferenceActivity {
 		}
 		super.onCreate(savedInstanceState);
 	}
+
 
 
 	@Override

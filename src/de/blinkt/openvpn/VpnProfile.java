@@ -247,10 +247,10 @@ public class VpnProfile implements Serializable {
                     String[] ks = getKeyStoreCertificates(context);
                     cfg += "### From Keystore ####\n";
                     if (ks != null) {
-                        cfg += "<ca>\n" + ks[0] + "</ca>\n";
+                        cfg += "<ca>\n" + ks[0] + "\n</ca>\n";
                         if (ks[1] != null)
-                            cfg += "<extra-certs>\n" + ks[1] + "<extra-certs>\n";
-                        cfg += "<cert>\n" + ks[2] + "</cert>\n";
+                            cfg += "<extra-certs>\n" + ks[1] + "\n<extra-certs>\n";
+                        cfg += "<cert>\n" + ks[2] + "\n</cert>\n";
                         cfg += "management-external-key\n";
                     } else {
                         cfg += context.getString(R.string.keychain_access) + "\n";

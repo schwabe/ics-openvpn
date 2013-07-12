@@ -131,6 +131,7 @@
                 android:id="@+id/keyselect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                blinkt:certificate="false"
                 blinkt:title="@string/client_key_title" />
 
             <LinearLayout
@@ -168,6 +169,7 @@
                 android:id="@+id/pkcs12select"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                blinkt:certificate="false"
                 blinkt:title="@string/client_pkcs12_title" />
 
             <TextView

@@ -15,7 +15,8 @@ import android.widget.TextView;
 
 public class FileSelectLayout extends LinearLayout implements OnClickListener {
 
-	private TextView mDataView;
+    private final boolean mIsCertificate;
+    private TextView mDataView;
 	private String mData;
 	private Fragment mFragment;
 	private int mTaskId;
@@ -25,13 +26,14 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 	private boolean mShowClear;
 	private TextView mDataDetails;
 
-	public FileSelectLayout( Context context,AttributeSet attrset) {
+	public FileSelectLayout( Context context, AttributeSet attrset) {
 		super(context,attrset);
 		inflate(getContext(), R.layout.file_select, this);
 
-		TypedArray ta = context.obtainStyledAttributes(attrset,R.styleable.FileSelectLayout);
+		TypedArray ta = context.obtainStyledAttributes(attrset, R.styleable.FileSelectLayout);
 
 		mTitle = ta.getString(R.styleable.FileSelectLayout_title);
+        mIsCertificate = ta.getBoolean(R.styleable.FileSelectLayout_certificate,true);
 
 		TextView tview = (TextView) findViewById(R.id.file_title);
 		tview.setText(mTitle);
@@ -76,7 +78,8 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 				mDataView.setText(R.string.inline_file_data);
 			else
 				mDataView.setText(data);
-			mDataDetails.setText(X509Utils.getCertificateFriendlyName(c,data));
+            if(mIsCertificate)
+			    mDataDetails.setText(X509Utils.getCertificateFriendlyName(c,data));
 		}
 
 	}

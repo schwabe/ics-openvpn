@@ -16,6 +16,8 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />
 
+    <!-- Copy the <permission> block to your app when using the REMOTE API. Otherwise OpenVPN for
+        Android needs to be installed first -->
     <permission
         android:name="de.blinkt.openvpn.REMOTE_API"
         android:description="@string/permission_description"
@@ -65,12 +67,14 @@
         </service>
 
         <activity
+            android:permission="de.blinkt.openvpn.REMOTE_API"
             android:name=".api.GrantPermissionsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
+            android:permission="de.blinkt.openvpn.REMOTE_API"
             android:name=".api.ConfirmDialog" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

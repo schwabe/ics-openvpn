@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="de.blinkt.openvpn">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" android:require="true" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:require="true"/>
     <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" android:require="false"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:require="false" />
 
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="18" />
 
     <!-- Copy the <permission> block to your app when using the REMOTE API. Otherwise OpenVPN for
         Android needs to be installed first -->
@@ -155,6 +155,14 @@
             android:exported="true"
             android:grantUriPermissions="true"
             tools:ignore="ExportedContentProvider" />
+
+        <!--
+        <receiver android:name="core.GetRestrictionReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.GET_RESTRICTION_ENTRIES" />
+            </intent-filter>
+        </receiver>
+        -->
     </application>
 
 </manifest>

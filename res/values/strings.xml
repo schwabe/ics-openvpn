@@ -289,5 +289,6 @@
     <string name="cannotparsecert">Cannot display certificate information</string>
     <string name="appbehaviour">Application behaviour</string>
     <string name="vpnbehaviour">VPN behaviour</string>
+    <string name="allow_vpn_changes">Allow changes to VPN Profiles</string>
 
 </resources>

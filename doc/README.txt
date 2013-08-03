@@ -14,7 +14,8 @@ svn co http://google-breakpad.googlecode.com/svn/trunk/ google-breakpad
 - Make sure that ndk-build is in your build path.
 
 Do ./misc/build-native.(sh|bat) in the root directory of the project.
-After that build the project using gradle build. 
+After that build the project using "gradle build" (Or use Android Studio). 
+Building with Eclipse *might* still work but has not beeen teseted for a long time.
 
 FAQ
 

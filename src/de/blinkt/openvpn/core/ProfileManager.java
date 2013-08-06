@@ -36,7 +36,7 @@ public class ProfileManager {
 	private static VpnProfile tmpprofile=null;
 
 
-	public static VpnProfile get(String key) {
+	private static VpnProfile get(String key) {
 		if (tmpprofile!=null && tmpprofile.getUUIDString().equals(key))
 			return tmpprofile;
 			

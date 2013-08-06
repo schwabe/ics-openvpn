@@ -73,7 +73,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		String profileuuid =getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		mProfile=ProfileManager.get(profileuuid);
+		mProfile=ProfileManager.get(getActivity(),profileuuid);
 		getActivity().setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
 	}
 
@@ -155,7 +155,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	public void onStart() {
 		super.onStart();
 		String profileuuid =getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		mProfile=ProfileManager.get(profileuuid);
+		mProfile=ProfileManager.get(getActivity(),profileuuid);
 		loadPreferences();
 
 	}

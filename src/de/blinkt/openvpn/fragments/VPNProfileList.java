@@ -279,7 +279,7 @@ public class VPNProfileList extends ListFragment {
 		if (requestCode == START_VPN_CONFIG) {
 			String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
 
-			VpnProfile profile = ProfileManager.get(configuredVPN);
+			VpnProfile profile = ProfileManager.get(getActivity(),configuredVPN);
 			getPM().saveProfile(getActivity(), profile);
 			// Name could be modified, reset List adapter
 			setListAdapter();
@@ -293,7 +293,7 @@ public class VPNProfileList extends ListFragment {
 			startActivityForResult(startImport, IMPORT_PROFILE);
 		} else if(requestCode == IMPORT_PROFILE) {
 			String profileUUID = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
-			mArrayadapter.add(ProfileManager.get(profileUUID));
+			mArrayadapter.add(ProfileManager.get(getActivity(), profileUUID));
 		}
 
 	}

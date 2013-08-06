@@ -337,7 +337,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 		if (requestCode == START_VPN_CONFIG && resultCode==RESULT_OK) {
 			String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
 
-			final VpnProfile profile = ProfileManager.get(configuredVPN);
+			final VpnProfile profile = ProfileManager.get(this,configuredVPN);
 			ProfileManager.getInstance(this).saveProfile(this, profile);
 			// Name could be modified, reset List adapter
 

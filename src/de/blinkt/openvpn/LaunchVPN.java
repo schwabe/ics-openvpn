@@ -99,7 +99,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			String shortcutName = intent.getStringExtra( EXTRA_NAME);
 			mhideLog = intent.getBooleanExtra(EXTRA_HIDELOG, false);
 
-			VpnProfile profileToConnect = ProfileManager.get(shortcutUUID);
+			VpnProfile profileToConnect = ProfileManager.get(this,shortcutUUID);
 			if(shortcutName != null && profileToConnect ==null)
 				profileToConnect = ProfileManager.getInstance(this).getProfileByName(shortcutName);
 

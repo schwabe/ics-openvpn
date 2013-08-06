@@ -20,7 +20,7 @@ public class ShowConfigFragment extends Fragment {
 	public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
 	{
 		String profileUUID = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		final VpnProfile vp = ProfileManager.get(profileUUID);
+		final VpnProfile vp = ProfileManager.get(getActivity(),profileUUID);
 		View v=inflater.inflate(R.layout.viewconfig, container,false);
 		final TextView cv = (TextView) v.findViewById(R.id.configview);
 		

@@ -140,7 +140,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
 
 		// Try to set the priority available since API 16 (Jellybean)
-		jbNotificationExtras(lowpriority, nbuilder);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+		    jbNotificationExtras(lowpriority, nbuilder);
+
 		if(tickerText!=null && !tickerText.equals(""))
 			nbuilder.setTicker(tickerText);
 
@@ -298,7 +300,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 		String nativelibdir = intent.getStringExtra(prefix + ".nativelib");
 		String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
 
-		mProfile = ProfileManager.get(profileUUID);
+		mProfile = ProfileManager.get(this,profileUUID);
 
 		String startTitle = getString(R.string.start_vpn_title, mProfile.mName);
 		String startTicker = getString(R.string.start_vpn_ticker, mProfile.mName);

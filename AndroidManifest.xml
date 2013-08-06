@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="de.blinkt.openvpn">
 
-    <uses-permission android:name="android.permission.INTERNET" android:require="true" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" android:require="true"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" android:require="false"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:require="false" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 

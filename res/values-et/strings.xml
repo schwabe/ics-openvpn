@@ -121,6 +121,7 @@
   <string name="no_vpn_support_image">Teie süsteemitarkvara ei toeta VPNService API\'t, vabandame :(</string>
   <string name="encryption">Krüpteerimine</string>
   <string name="cipher_dialog_title">Vali krüpteerimismeetod</string>
+  <string name="chipher_dialog_message">Sisestage OpenVPN poolt kasutatav krüptošifri algoritm. Tühi väli tähendab vaikešifrit.</string>
   <string name="auth_dialog_message">Sisestage OpenVPN poolt kasutatav autentimise räsifunktsioon. Tühi väli tähendab vaikeräsi.</string>
   <string name="settings_auth">Autentimine/Krüpteerimine</string>
   <string name="file_explorer_tab">Failihaldur</string>
@@ -279,4 +280,12 @@
   <string name="screenoff_pause">Ühenduse peatamine väljalülitatud ekraani korral: vähem kui %1$s %2$ss jooksul</string>
   <string name="screen_nopersistenttun">Hoiatus: Katkematu tun ei ole sellel seadmel sisse lülitatud. Andmed liiguvad ekraani välja lülitamisel tavalise Internetiühenduse kaudu.</string>
   <string name="save_password">Salvesta parool</string>
+  <string name="pauseVPN">Peata VPN</string>
+  <string name="resumevpn">Jätka VPN</string>
+  <string name="state_userpause">Kasutaja nõudis VPN peatamist</string>
+  <string name="state_screenoff">VPN peatatud - ekraan väljas</string>
+  <string name="device_specific">Seadmespetsiifilised häkid</string>
+  <string name="cannotparsecert">Sertifikaadiinfo kuvamine ei õnnestu</string>
+  <string name="appbehaviour">Rakenduse käitumine</string>
+  <string name="vpnbehaviour">VPN käitumine</string>
 </resources>

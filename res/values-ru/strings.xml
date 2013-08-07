@@ -279,4 +279,5 @@
   <string name="screenoff_pause">Приостановка соединения при выключенном экране: меньше, чем  %1$s за %2$sс</string>
   <string name="screen_nopersistenttun">Внимание: постоянный tun не включен для этого VPN. Трафик будет проходить через обычный доступ в Интернет, когда экран выключен.</string>
   <string name="save_password">Сохранить пароль</string>
+  <string name="cannotparsecert">Не удается отобразить сведения о сертификате</string>
 </resources>

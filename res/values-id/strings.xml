@@ -19,6 +19,7 @@
   <string name="copyright_guicode">Kode program dan perekam masalah tersedia di</string>
   <string name="copyright_others">Aplikasi memakai komponen berikut; lihat kode program untuk lebih jelas mengenai lisensi</string>
   <string name="about">Tentang…</string>
+  <string name="vpn_list_title">Profil</string>
   <string name="vpn_type">Tipe</string>
   <string name="pkcs12pwquery">Password PKCS12</string>
   <string name="file_select">Pilih…</string>
@@ -53,11 +54,17 @@
   <string name="custom_config_summary">Tentukan seting buatan. Gunakan hati-hati</string>
   <string name="route_rejected">Rute ditolak Android</string>
   <string name="cancel_connection">Putus</string>
+  <string name="cancel_connection_long">Memutuskan sambungan VPN</string>
   <string name="clear_log">Bersihkan catatan</string>
   <string name="title_cancel">Batal Konfirmasi</string>
   <string name="cancel_connection_query">Putuskan sambungan VPN/Batalkan usaha menyambungkan VPN?</string>
   <string name="remove_vpn">Singkirkan VPN</string>
+  <string name="check_remote_tlscert">Memeriksa apakah server menggunakan sertifikat dengan ekstensi TLS Server (--server remote-cert-tls)</string>
+  <string name="check_remote_tlscert_title">Mengharapkan sertifikat server TLS</string>
+  <string name="remote_tlscn_check_summary">Memeriksa sertifikat Remote Server Subjek DN</string>
   <string name="remote_tlscn_check_title">Cek nama sertifikat Host</string>
+  <string name="enter_tlscn_dialog">Tentukan nilai ynag digunakan untuk memverifikasi sertifikat remote DN (misal C=nama perusahaan, L=Kota lokasi, OU=nama departemen perusahaan, CN=openvpn.blinkt.de. Tentukan DN atau RDN yang lengkap (dalam contoh : openvpn.blinkt.de) atau sebuah awalan RDN untuk verifikasi. Saat memakai RDN awalan \"server\" cocok dengan \"server-1\" dan \"server-2\". Mengosongkan field akan membuat RDN diperiksa dengan nama host server. Lebih jelasnya lihat OpenVPN 2.3.1 manpage di bagian -verify-x509-name</string>
+  <string name="enter_tlscn_title">Subyek sertifikat remote</string>
   <string name="tls_key_auth">Aktifkan otentifikasi kunci TLS</string>
   <string name="tls_auth_file">Berkas otintikasi TLS</string>
   <string name="pull_on_summary">Meminta pilihan alamat IP, rute dan waktu dari server.</string>
@@ -88,7 +95,9 @@
   <string name="error">"Kesalahan: "</string>
   <string name="clear">Bersihkan</string>
   <string name="info">Info</string>
+  <string name="last_openvpn_tun_config">Membuka interface tun :</string>
   <string name="local_ip_info">IPv4 lokal : %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
+  <string name="dns_server_info">DNS Server: %1$s, Domain: %2$s</string>
   <string name="routes_info">Rute: %s</string>
   <string name="routes_info6">Rute IPv6: %s</string>
   <string name="ip_not_cidr">Memilki informasi antarmuka %1$s dan %2$s, asumsi alamat kedua adalah alamat remote. Menggunakan netmask /32 untuk IP lokal. Mode yang diberikan oleh OpenVPN adalah \"%3$s\".</string>
@@ -108,9 +117,12 @@
   <string name="copying_log_entries">Menyalin catatan</string>
   <string name="faq_copying">Untuk menyalin satu catatan masuk, Tekan dan tahan di catatan masuk. Untuk meyanlin\mengirim seluruh catatan, gunakan opsi Kirim Log. Gunakan tombol perangkat keras jika tidak terlihat di GUI.</string>
   <string name="faq_shortcut">Jalan pintas memulai</string>
+  <string name="faq_howto_shortcut">Anda dapat menempatkan jalan pintas untuk memulai OpenVPN pada desktop Anda. Tergantung pada program homescreen Anda, Anda harus menambahkan jalan pintas atau widget.</string>
   <string name="no_vpn_support_image">Gambar Anda tidak mendukung VPNService API, maaf:(</string>
   <string name="encryption">Enkripsi</string>
   <string name="cipher_dialog_title">Masukkan metode enkripsi</string>
+  <string name="chipher_dialog_message">Masukkan sandi enkripsi algoritma yang digunakan oleh OpenVPN. Biarkan kosong untuk menggunakan sandi default.</string>
+  <string name="auth_dialog_message">Masukkan digest otentikasi yang digunakan OpenVPN. Biarkan kosong untuk menggunakan standar digest.</string>
   <string name="settings_auth">Otentikasi/Enkripsi</string>
   <string name="file_explorer_tab">Penjelajah berkas</string>
   <string name="inline_file_tab">Inline File</string>
@@ -125,6 +137,7 @@
   <string name="add_profile">Tambah Profil</string>
   <string name="import_could_not_open">Tidak dapat menemukan berkas %1$s yang disebut dalam berkas konfigurasi</string>
   <string name="importing_config">Mengambil berkas konfigurasi dari sumber %1$s</string>
+  <string name="import_warning_custom_options">Konfigurasi Anda memiliki beberapa pilihan konfigurasi yang tidak dipetakan ke konfigurasi UI. Pilihan ini ditambahkan sebagai opsi konfigurasi kustom. Konfigurasi kustom ditampilkan di bawah ini:</string>
   <string name="import_done">Berkas konfigurasi selesai dibaca</string>
   <string name="nobind_summary">Jangan kaitkan ke alamat dan port lokal</string>
   <string name="no_bind">Tidak ada ikatan lokal</string>
@@ -140,12 +153,14 @@
   <string name="converted_profile">Profil yang diambil</string>
   <string name="converted_profile_i">profil yang diambil %d</string>
   <string name="broken_images">Gambar rusak</string>
+  <string name="broken_images_faq">Image HTC yang resmi diketahui memiliki masalah routing yang ganjilyang menyebabkan trafik data tidak melalui tunnel (Lihat di &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; di bagian bug tracker.))&lt;/p&gt;&lt;p&gt; Image SONY resmi yang lama dari Xperia Arc S and Xperia Ray telah dilaporkan tidak memiliki VPNService dalam Imagenya.  (Lihat juga  &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; di bagian bug tracker.))&lt;/p&gt;&lt;p&gt;Pada image yang dibuat non resmi, modul TUN mungkin tak ada atau hak /dev/tun mungkin salah. Beberapa image CM9 memerlukan pilihan \"Fix ownership\" di bagian \"Device specific hacks\" diaktfikan. .&lt;/p&gt;&lt;p&gt; Lebih penting lagi, jika device anda memiliki image android yang lengkap, laporkan pada vendor anda. Semakin banyak laporan masuk, semakin tinggi kemungkinan vendor melakukan perbaikan.&lt;/p&gt;</string>
   <string name="pkcs12_file_encryption_key">Berkas kunci enkripsi PKCS12</string>
   <string name="private_key_password">Sandi kunci pribadi</string>
   <string name="password">Sandi</string>
   <string name="file_icon">ikon berkas</string>
   <string name="tls_authentication">Otentikasi TLS</string>
   <string name="generated_config">Konfigurasi Dibuat</string>
+  <string name="generalsettings">Pengaturan</string>
   <string name="owner_fix_summary">Mencoba menetapkan pemilik /dev/tun ke sistem. Beberapa gambar CM9 memerlukan ini untuk membuat API VPNService bekerja. Memerlukan akses Root.</string>
   <string name="owner_fix">Perbaiki kepemilikan /dev/tun</string>
   <string name="generated_config_summary">Tunjukkan berkas konfigurasi OpenVPN yang dibuat</string>
@@ -171,6 +186,7 @@
   <string name="obscure">Mengaburkan pengaturan OpenVPN. Biasanya tidak diperlukan.</string>
   <string name="advanced">Lanjutan</string>
   <string name="export_config_title">Konfigurasi ICS Openvpn</string>
+  <string name="warn_no_dns">Tidak DNS server yang digunakan. Name Resolution mungkin akan gagal bekerja. Pertimbangkan pengaturan server DNS. Harap dicatat Android akan terus memakai pengaturan proxy untuk koneksi mobile/wifi saat tidak ada server DNS diatur.</string>
   <string name="dns_add_error">Tak bisa menambahkan Server DNS \"%1$s\", ditolak oleh sistem: %2$s</string>
   <string name="faq_howto">&lt;p&gt; Ambil konfigurasi yang dapat berjalan (diuji pada komputer Anda atau download dari penyedia/organisasi) &lt;/p&gt; &lt;p&gt; Satu file(berkas) saja tanpa tambahan berkas pem/pks12. Anda dapat kirim imel berkas dan membuka lampirannya. Jika Anda memiliki beberapa berkas, salin ke sd-card &lt;/p&gt; &lt;p&gt; klik pada lampiran imel atau gunakan ikon folder dalam daftar vpn untuk mengimpor berkas konfigurasi &lt;/p&gt; &lt;p&gt; jika ada  berkas yang kurang, salin file hilang ke sd-card. &lt;/p&gt; &lt;p&gt; klik pada simbol Simpan untuk menambahkan VPN yang diimpor ke daftar VPN &lt;/p&gt; &lt;p &gt; Connect VPN dengan mengklik nama VPN &lt;/p&gt; &lt;p&gt; jika ada kesalahan atau peringatan di catatan, coba pahami peringatannya dan coba untuk memperbaikinya &lt;/p&gt; </string>
   <string name="faq_howto_title">Mulai Cepat</string>
@@ -196,11 +212,13 @@
   <string name="vpn_import_hint">Gunakan ikon &lt; img src = \"ic_menu_archive\" / &gt; untuk mengimpor profil (.ovpn atau .conf) yang ada dari sdcard Anda.</string>
   <string name="faq_hint">Pastikan untuk juga memeriksa FAQ. Ada petunjuk untuk memudahkan anda.</string>
   <string name="faq_routing_title">Konfigurasi rute\antarmuka</string>
+  <string name="faq_routing">Konfigurasi routing dan antar muka tidak dibuat memakai ifconfig/route tradisional tapi memaka API VPNservice. Menyebabkan konfigurasi routing yang berbeda di OS berbeda. Konfigurasi hanya terdiri dari IP milik tunnel antarmuka dan jaringan yang seharusnya dirutekan melalui antarmuka ini. Terlebih tidak ada alamat gateway atau peer rekanan yang dibutuhkan. Rute khusus untuk menjangkau server VPN (untu contoh tambahkan saat memakai redirect-gateway) juga tak diperlukan. Aplikasi akan mengabaikan seting ini saat mengimpor sebuah konfigurasi. Aplikasi memastikan dengan API VPNService bahwa koneksi menuju server tidak dirutekan melalui tunnel VPN. Dengan hanya menentukan jaringan dirutekan melalu tunnel, rute lainnya yang tidak ditentukan melalui tunnel juga tak dapat didukung. (e.g. route x.x.x.x y.y.y.y net_gateway). Jendela catatan menunjukkan konfigurasi terkini VPNService sejak menyediakan layanan koneksi.</string>
   <string name="persisttun_summary">Jangan kembali ke status tidak ada koneksi VPN ketika OpenVPN mencoba terhubung kembali.</string>
   <string name="persistent_tun_title">Paksa mode TUN</string>
   <string name="openvpn_log">Catatan OpenVPN</string>
   <string name="import_config">Ambil konfigurasi VPN</string>
   <string name="battery_consumption_title">Konsumsi baterai</string>
+  <string name="baterry_consumption">Berdasarkan tes pribadi, alasan utama tingginya konsumsi baterai oleh OpenVPN adalah paket keepalive. Sebagian besar server OpenVPN memiliki parameter konfigurasi seperti \'keepalive 10 60\' yang membuat klien dan server bertukar paket keepalive setiap 10 detik. &lt;p&gt; Dengan kecilnya paket ini dan tidak memakai trafik terlalu banyak, mereka menjaga jaringan radio mobile tetap sibuk dan meningkatkan konsumsi energi.  (See also &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Seting keepalive ini tidak bisa dirubah di klien. Hanya Admin sistem OpenVPN yang dapat merubah seting ini. &lt;p&gt;  Sayangnya membuat keepalive lebih besar dari 60 detik tanpa UDP dapat membuat beberapa gateway NAT memutus koneksi karena anggapan tidak ada aktifitas pada periode tertentu (timeout). Memakai TCP dengan waktu timeout lebih lama dapat bekerja, tapi membuat tunnel TCP di jalur TCP menyebabkan koneksi yang buruk dan tingginya angka kehilangan paket data ((See &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
   <string name="faq_tethering">Fitur penggandengan Android (melalui WiFi, USB atau Bluetooth) dan API VPNService (digunakan oleh program ini) tidak bekerja bersama-sama. Untuk keterangan lanjut lihat &lt; href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\" &gt; mengeluarkan #34 &lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN dan penarikan</string>
   <string name="connection_retries">Mengulang koneksi</string>
@@ -209,6 +227,7 @@
   <string name="connectretrywait">Detik antar koneksi</string>
   <string name="minidump_generated">OpenVPN crash tak terduga. Silakan mempertimbangkan mengirim menggunakan pilihan Minidump di Menu Utama</string>
   <string name="send_minidump">Mengirim MiniDump untuk pengembang</string>
+  <string name="send_minidump_summary">Mengirim informasi debug tentang kegagalan aplikasi yang terakhir ke pengembang</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="session_ipv4string">%1$s - %2$s</string>
   <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
@@ -219,6 +238,7 @@
   <string name="state_assign_ip">Menetapkan alamat IP</string>
   <string name="state_add_routes">Menambahkan rute</string>
   <string name="state_connected">Terhubung</string>
+  <string name="state_disconnected">Putus</string>
   <string name="state_reconnecting">Menghubungkan kembali</string>
   <string name="state_exiting">Keluar</string>
   <string name="state_noprocess">Tidak berjalan</string>
@@ -226,4 +246,46 @@
   <string name="state_tcp_connect">Menghubungkan (TCP)</string>
   <string name="state_auth_failed">Otentifikasi gagal</string>
   <string name="state_nonetwork">Menunggu jaringan yang dapat dipakai</string>
+  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
+  <string name="notifcation_title_notconnect">Tidak terhubung</string>
+  <string name="start_vpn_title">Menghubungkan ke VPN %s</string>
+  <string name="start_vpn_ticker">Menghubungkan ke VPN %s</string>
+  <string name="jelly_keystore_alphanumeric_bug">Beberapa versi Android 4.1 memiliki masalah jika nama sertifikat keystore berisi karakter non alfanumerik (seperti spasi, garis bawah atau tanda hubung). Cobalah import ulang sertifikat tanpa karakter khusus</string>
+  <string name="encryption_cipher">Enkripsi sandi</string>
+  <string name="packet_auth">Otentikasi paket</string>
+  <string name="auth_dialog_title">Masukkan metode otentikasi paket</string>
+  <string name="toggle_timestamps">Toggle cap waktu</string>
+  <string name="mobile_info_extended">Berjalan pada Android API %4$d, versi %5$s %1$s (%2$s) %3$s, %6$s</string>
+  <string name="built_by">dibangun oleh %s</string>
+  <string name="debug_build">Pengembangan debug</string>
+  <string name="official_build">Build Resmi</string>
+  <string name="make_selection_inline">Salin ke profil</string>
+  <string name="crashdump">Data saat terjadi crash</string>
+  <string name="add">Tambahkan</string>
+  <string name="send_config">Mengirim config file</string>
+  <string name="complete_dn">DN lengkap</string>
+  <string name="remotetlsnote">Konfigurasi yang diimpor menggunakan opsi tls-remote DEPRECATED tua dengan menggunakan format DN yang berbeda.</string>
+  <string name="rdn">RDN (nama umum)</string>
+  <string name="rdn_prefix">RDN awalan</string>
+  <string name="tls_remote_deprecated">TLS-remote (DEPRECATED)</string>
+  <string name="help_translate">Anda dapat membantu menerjemahkan dengan mengunjungi http://crowdin.net/project/ics-openvpn/invite</string>
+  <string name="prompt">%1$s berusaha mengendalikan %2$s</string>
+  <string name="remote_warning">Dengan melanjutkan, Anda memberi izin aplikasi untuk sepenuhnya mengontrol OpenVPN untuk Android dan untuk mencegat semua lalu lintas jaringan. <b>Jangan terima kecuali Anda mempercayai aplikasi.</b> Jika tidak, data Anda beresiko diambil oleh perangkat lunak jahat.\"</string>
+  <string name="remote_trust">Saya percaya aplikasi ini.</string>
+  <string name="no_external_app_allowed">App tidak diizinkan untuk menggunakan API eksternal</string>
+  <string name="allowed_apps">apps yang diijinkan : %s</string>
+  <string name="clearappsdialog">Hapus daftar aplikasi eksternal yang dibolehkan? \nDaftar apps yang dibolehkan terkini:\n\n%s </string>
+  <string name="screenoff_summary">\"Pause VPN ketika layar off dan data yang ditransfer dalam 60 detik kurang dari 64kB. Ketika opsi \"Persistent Tun\" diaktifkan, memberhentikan VPN akan membuat perangkat Anda tidak memiliki koneksi jaringan. Jika tidak memakai \"Persistent Tun\" maka perangkat akan menampilkan Tidak ada koneksi VPN.</string>
+  <string name="screenoff_title">Sambungan VPN jeda setelah layar mati</string>
+  <string name="screenoff_pause">Hentikan sambungan dalam kondisi layar mati: kurang dari %1$s dalam %2$ss</string>
+  <string name="screen_nopersistenttun">Peringatan: Pemaksaan tun tidak diaktifkan untuk VPN ini. Lalu lintas akan menggunakan koneksi Internet normal ketika layar dimatikan.</string>
+  <string name="save_password">Menyimpan sandi</string>
+  <string name="pauseVPN">Jeda VPN</string>
+  <string name="resumevpn">Lanjutkan VPN</string>
+  <string name="state_userpause">Pause VPN diminta oleh pengguna</string>
+  <string name="state_screenoff">VPN dijeda - layar off</string>
+  <string name="device_specific">Perangkat dengan spesifikasi Hacks</string>
+  <string name="cannotparsecert">Tidak dapat menampilkan informasi sertifikat</string>
+  <string name="appbehaviour">Prilaku Aplikasi</string>
+  <string name="vpnbehaviour">Prilaku VPN</string>
 </resources>

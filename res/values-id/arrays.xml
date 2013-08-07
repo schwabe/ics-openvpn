@@ -17,7 +17,7 @@
     <item>Tidak\Belum ditentukan</item>
   </string-array>
   <string-array name="verb_entries">
-    <item>0 - No logging</item>
+    <item>0 - Tidak ada catatan</item>
     <item>2 -  Catatan standar</item>
     <item>2 - Catatan lengkap</item>
     <item>3</item>

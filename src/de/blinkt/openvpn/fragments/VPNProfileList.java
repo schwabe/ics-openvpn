@@ -1,9 +1,5 @@
 package de.blinkt.openvpn.fragments;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.TreeSet;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListFragment;
@@ -15,24 +11,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Html.ImageGetter;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import de.blinkt.openvpn.ConfigConverter;
-import de.blinkt.openvpn.FileSelect;
-import de.blinkt.openvpn.LaunchVPN;
-import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.VPNPreferences;
-import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.*;
 import de.blinkt.openvpn.core.ProfileManager;
+
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.TreeSet;
 
 public class VPNProfileList extends ListFragment {
 
@@ -126,8 +116,8 @@ public class VPNProfileList extends ListFragment {
 
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.vpn_profile_list, container,false);
 
 		TextView newvpntext = (TextView) v.findViewById(R.id.add_new_vpn_hint);
@@ -150,24 +140,38 @@ public class VPNProfileList extends ListFragment {
 		setListAdapter();
 	}
 
-	class VpnProfileNameComperator implements Comparator<VpnProfile> {
+    static class VpnProfileNameComparator implements Comparator<VpnProfile> {
 
-		@Override
-		public int compare(VpnProfile lhs, VpnProfile rhs) {
-			return lhs.mName.compareTo(rhs.mName);
-		}
+        @Override
+        public int compare(VpnProfile lhs, VpnProfile rhs) {
+            if (lhs == rhs)
+                // Catches also both null
+                return 0;
 
-	}
+            if (lhs == null)
+                return -1;
+            if (rhs == null)
+                return 1;
+
+            if (lhs.mName == null)
+                return -1;
+            if (rhs.mName == null)
+                return 1;
+
+            return lhs.mName.compareTo(rhs.mName);
+        }
+
+    }
 
 	private void setListAdapter() {
 		mArrayadapter = new VPNArrayAdapter(getActivity(),R.layout.vpn_list_item,R.id.vpn_item_title);
 		Collection<VpnProfile> allvpn = getPM().getProfiles();
 
-		TreeSet<VpnProfile> sortedset = new TreeSet<VpnProfile>(new VpnProfileNameComperator()); 
-		sortedset.addAll(allvpn);
-		mArrayadapter.addAll(sortedset);
+        TreeSet<VpnProfile> sortedset = new TreeSet<VpnProfile>(new VpnProfileNameComparator());
+        sortedset.addAll(allvpn);
+        mArrayadapter.addAll(sortedset);
 
-		setListAdapter(mArrayadapter);
+        setListAdapter(mArrayadapter);
 	}
 
 

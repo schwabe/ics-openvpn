@@ -6,6 +6,7 @@ import android.app.AlertDialog.Builder;
 import android.app.Fragment;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
@@ -82,12 +83,17 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
     {
         new Thread() {
             public void run() {
-                String certstr;
+                String certstr="";
                 try {
-
-
                     X509Certificate cert = KeyChain.getCertificateChain(getActivity(), mProfile.mAlias)[0];
-                    certstr=X509Utils.getCertificateFriendlyName(cert);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                        String algorithm=  KeyChain.getPrivateKey(getActivity(),mProfile.mAlias).getAlgorithm();
+                        if (KeyChain.isBoundKeyAlgorithm(algorithm))
+                            certstr+=getString(R.string.hwkeychain);
+                    }
+
+                    certstr+=X509Utils.getCertificateFriendlyName(cert);
                 } catch (Exception e) {
                     certstr="Could not get certificate from Keystore";
                 }

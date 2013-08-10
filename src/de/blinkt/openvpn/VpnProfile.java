@@ -249,7 +249,7 @@ public class VpnProfile implements Serializable {
                     if (ks != null) {
                         cfg += "<ca>\n" + ks[0] + "\n</ca>\n";
                         if (ks[1] != null)
-                            cfg += "<extra-certs>\n" + ks[1] + "\n<extra-certs>\n";
+                            cfg += "<extra-certs>\n" + ks[1] + "\n</extra-certs>\n";
                         cfg += "<cert>\n" + ks[2] + "\n</cert>\n";
                         cfg += "management-external-key\n";
                     } else {

@@ -804,6 +804,17 @@ also specify
 or
 .B \-\-dev-type tap.
 
+Under Mac OS X this option can be used to specify the default tun
+implementation. Using
+.B \-\-dev\-node utun
+forces usage of the native Darwin tun kernel support. Use
+.B \-\-dev\-node utunN
+to select a specific utun instance. To force using the tun.kext (/dev/tunX) use
+.B \-\-dev\-node tun
+. When not specifying a
+.B \-\-dev\-node
+option openvpn will first try to open utun, and fall back to tun.kext.
+
 On Windows systems, select the TAP-Win32 adapter which
 is named
 .B node
@@ -1879,6 +1890,11 @@ reasons for having OpenVPN fail if it detects problems in a
 config file.  Having said that, there are valid reasons for wanting
 new software features to gracefully degrade when encountered by
 older software versions.
+
+It is also possible to tag a single directive so as not to trigger
+a fatal error if the directive isn't recognized.  To do this,
+prepend the following before the directive:
+.B setenv opt
 .\"*********************************************************
 .TP
 .B \-\-setenv-safe name value
@@ -4234,6 +4250,15 @@ when you built your peer's certificate (see
 above).
 .\"*********************************************************
 .TP
+.B \-\-tls-version-min version ['or-highest']
+Sets the minimum
+TLS version we will accept from the peer (default is "1.0").
+Examples for version
+include "1.0", "1.1", or "1.2".  If 'or-highest' is specified
+and version is not recognized, we will only accept the highest TLS
+version supported by the local SSL implementation.
+.\"*********************************************************
+.TP
 .B \-\-pkcs12 file
 Specify a PKCS #12 file containing local private key,
 local certificate, and root CA certificate.
@@ -5962,6 +5987,16 @@ Client connection timestamp, formatted as a unix integer
 date/time value.
 Set prior to execution of the
 .B \-\-client-connect
+script.
+.\"*********************************************************
+.TP
+.B tls_digest_{n}
+Contains the certificate SHA1 fingerprint/digest hash value,
+where
+.B n
+is the verification level.  Only set for TLS connections.  Set prior
+to execution of
+.B \-\-tls-verify
 script.
 .\"*********************************************************
 .TP

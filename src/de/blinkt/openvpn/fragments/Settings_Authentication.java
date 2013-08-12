@@ -149,13 +149,14 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 		return ret + dn;
 	}
 
-	void startFileDialog() {
-		Intent startFC = new Intent(getActivity(),FileSelect.class);
-		startFC.putExtra(FileSelect.START_DATA, Environment.getExternalStorageDirectory().getPath());
+    void startFileDialog() {
+        Intent startFC = new Intent(getActivity(), FileSelect.class);
+        startFC.putExtra(FileSelect.START_DATA, mTlsAuthFileData);
+        startFC.putExtra(FileSelect.WINDOW_TITLE, R.string.tls_auth_file);
+        startActivityForResult(startFC, SELECT_TLS_FILE);
+    }
 
-		startActivityForResult(startFC,SELECT_TLS_FILE);
-	}
-	@Override
+    @Override
 	public boolean onPreferenceClick(Preference preference) {
 		startFileDialog();
 		return true;

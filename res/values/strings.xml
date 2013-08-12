@@ -438,5 +438,6 @@
     <string name="vpnbehaviour">VPN behaviour</string>
     <string name="allow_vpn_changes">Allow changes to VPN Profiles</string>
     <string name="hwkeychain">Hardware Keystore:</string>
+    <string name="permission_icon_app">Icon of app trying to use OpenVPN for Android</string>
 
 </resources>

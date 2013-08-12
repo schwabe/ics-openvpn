@@ -1,10 +1,12 @@
 package de.blinkt.openvpn.core;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.RestrictionEntry;
+import android.os.Build;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import de.blinkt.openvpn.R;
 /**
  * Created by arne on 25.07.13.
  */
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class GetRestrictionReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {

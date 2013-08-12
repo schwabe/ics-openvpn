@@ -624,3 +624,4 @@
 
 // Workaround for bionc
 #define IPPROTO_IP IPPROTO_IP
+#define IPPROTO_TCP IPPROTO_TCP

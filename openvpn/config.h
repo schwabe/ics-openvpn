@@ -620,3 +620,7 @@
 #define HAVE_LZO_LZO1X_H 1
 #define HAVE_SYS_TIME_H 1
 #define HAVE_TIME_H 1
+
+
+// Workaround for bionc
+#define IPPROTO_IP IPPROTO_IP

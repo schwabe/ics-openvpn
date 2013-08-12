@@ -177,13 +177,13 @@ public class FileSelectionFragment extends ListFragment {
 				// se ha um filtro de formatos, utiliza-o
 				if (formatFilter != null) {
 					boolean contains = false;
-					for (int i = 0; i < formatFilter.length; i++) {
-						final String formatLwr = formatFilter[i].toLowerCase(Locale.getDefault());
-						if (fileNameLwr.endsWith(formatLwr)) {
-							contains = true;
-							break;
-						}
-					}
+                    for (String aFormatFilter : formatFilter) {
+                        final String formatLwr = aFormatFilter.toLowerCase(Locale.getDefault());
+                        if (fileNameLwr.endsWith(formatLwr)) {
+                            contains = true;
+                            break;
+                        }
+                    }
 					if (contains) {
 						filesMap.put(fileName, fileName);
 						filesPathMap.put(fileName, file.getPath());

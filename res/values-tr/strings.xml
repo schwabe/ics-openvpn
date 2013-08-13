@@ -98,7 +98,7 @@
   <string name="info">bilgi</string>
   <string name="last_openvpn_tun_config">Açılış tun arabirimi:</string>
   <string name="local_ip_info">Yerel IPv4: %1$s/%2$d IPv6: %3$ s MTU: %4$ </string>
-  <string name="dns_server_info">DNS sunucusu: %1$ s, etki alanı: %1 %2$</string>
+  <string name="dns_server_info">DNS sunucusu: %1$s, etki alanı: %2$s</string>
   <string name="routes_info">Güzergah: %s</string>
   <string name="routes_info6">IPv6 yönlendirir: %s</string>
   <string name="ip_not_cidr">Arabirim bilgileri %1$s ve %2$s var, tabii ikinci eş adresi uzaktan adresidir. /32 Kullanarak için yerel IP ağ maskesi. OpenVPN tarafından verilen \"%3$s\" modudur.</string>
@@ -198,7 +198,7 @@
   <string name="using_proxy">Proxy %1$s %2$d kullanarak</string>
   <string name="use_system_proxy">Sistem proxy kullanımı</string>
   <string name="use_system_proxy_summary">Sistem geniş yapılandırma HTTP/HTTPS proxy için bağlanmak için kullanın.</string>
-  <string name="donatewithpaypal">Şunları yapabilirsiniz &lt; href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS &amp; amp; cmd = _Yanları-xclick\" &gt; &lt;/a&gt; PayPal ile bağış </string>
+  <string name="donatewithpaypal">Şunları yapabilirsiniz &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;PayPal ile bağış &lt;/a&gt; </string>
   <string name="onbootrestartsummary">Sistem yeniden başlatma/kapatma üzerinde etkin OpenVPN bir VPN yeniden bağlanır. Bu seçeneği kullanmadan önce bağlantı uyarı SSS okuyun.</string>
   <string name="onbootrestart">Yeniden başlatmada tekrar bağlan</string>
   <string name="ignore">Yoksay</string>

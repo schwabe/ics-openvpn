@@ -59,8 +59,8 @@
   <string name="title_cancel">Zrušit potvrzení</string>
   <string name="cancel_connection_query">Odpojit/Zrušit připojování?</string>
   <string name="remove_vpn">Odstranit VPN</string>
-  <string name="check_remote_tlscert">Kontrolovat, zda server používá certifikát s rozšířením TLS Server (- remote-cert-tls server)</string>
-  <string name="check_remote_tlscert_title">Očekávat TLS certifikát serveru</string>
+  <string name="check_remote_tlscert">Kontrolovat, zda server používá certifikát s rozšířením TLS Server (--remote-cert-tls server)</string>
+  <string name="check_remote_tlscert_title">Očekávat serverový TLS certifikát</string>
   <string name="remote_tlscn_check_summary">Kontrola DN v certifikátu vzdáleného serveru</string>
   <string name="remote_tlscn_check_title">Ověření jména certifikátu</string>
   <string name="enter_tlscn_dialog">Specifikuj způsob kontroly DN v certifikátu vzdáleného serveru (př. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nSpecifikuj kompletní DN nebo RDN (openvpn.blinkt.de v příkladu) nebo RDN prefix pro verifikaci.\n\nPři použití RDN prefixu, \"Server\" sedí na \"Server-1\" i \"Server-2\"\n\nJe-li RDN pole prázdné, kontroluje se proti jménu serveru.\n\nPro více detailů, viz manuálová stránka OpenVPN 2.3.1+, přepínač —verify-x509-name</string>
@@ -117,10 +117,11 @@
   <string name="copying_log_entries">Kopírování záznamů z logu</string>
   <string name="faq_copying">Pro zkopírování jednoho záznamu stačí dlouze zmáčknout požadovaný záznam. Pro zkopírování/odeslání celého logu použij možnost Odeslat soubor s logem. Pokud není tlačítko viditené v uživatelském rozhraní, zkus použít to hardwarové.</string>
   <string name="faq_shortcut">Zkratka na spuštění</string>
-  <string name="faq_howto_shortcut">Můžeš umístit zástupce pro spuštění OpenVPN na pracovní plochu. V závislosti na programu úvodní obrazovky  budeš muset přidat buď zástupce nebo widget.</string>
+  <string name="faq_howto_shortcut">Můžeš umístit zástupce pro spuštění OpenVPN na plochu. V závislosti na úvodní obrazovce budeš muset přidat buď zástupce nebo widget.</string>
   <string name="no_vpn_support_image">Tvůj obrázek není podporovaný rozhraním VPNService, je mi líto :-(</string>
   <string name="encryption">Šifrování</string>
   <string name="cipher_dialog_title">Zadej šifrovací metodu</string>
+  <string name="chipher_dialog_message">Zadej šifrovací algoritmus. Ponech prázdné pro výchozí šifru.</string>
   <string name="auth_dialog_message">Zadej algoritmus pro autentizaci. Nech prázdné pro výchozí algoritmus.</string>
   <string name="settings_auth">Autentizace/Šifrování</string>
   <string name="file_explorer_tab">Prohlížeč souború</string>
@@ -185,7 +186,7 @@
   <string name="obscure">Skryté OpenVPN volby. Normálně nejsou nutné.</string>
   <string name="advanced">Pokročilé</string>
   <string name="export_config_title">ICS OpenVPN nastavení</string>
-  <string name="warn_no_dns">Žádné servery DNS nejsou použity. Překlad jmen nemusí fungovat. Zvaž nastavení vlastních DNS serverů. Též dbejte na to, že Android bude nadále používat nastavení proxy určené pro mobilní/Wi-Fi připojení, pokud nejsou nastaveny žádné servery DNS.</string>
+  <string name="warn_no_dns">Žádné DNS servery nejsou použity. Překlad jmen nemusí fungovat. Zvaž nastavení vlastních DNS serverů. Též dbej na to, že Android bude nadále používat nastavení proxy určené pro mobilní/Wi-Fi připojení, pokud nejsou nastaveny žádné servery DNS.</string>
   <string name="dns_add_error">Nemohu přidat DNS server \"%1$s\", odmítnuto systémem: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Získej fungující nastavení (otestované na tvém počítači nebo stažené od poskytovatele/zaměstnavatele).&lt;/p&gt;&lt;p&gt;Pokud je to jeden soubor bez extra pem/pks12 souborů, můžeš ho poslat emailem jako přílohu. Pokud je souborů více, ulož je na SD kartu.&lt;/p&gt;&lt;p&gt;Klepni na přilohu mailu/Použij ikonu adresáře v seznamu VPN pro import nastavení.&lt;/p&gt;&lt;p&gt;Pokud se zobrazí chyby o chybějících souborech, ulož je na SD kartu.&lt;/p&gt;&lt;p&gt;Pro přidání importované VPN do seznamu, klepni na symbol pro uložení.&lt;/p&gt;&lt;p&gt;Pro připojení k VPN klepni na její jméno.&lt;/p&gt;&lt;p&gt;Pokud se v logu objeví varování nebo chyby, pokus se jim porozumět a opravit nastavení.&lt;/p&gt; </string>
   <string name="faq_howto_title">Rychlý start</string>
@@ -279,4 +280,12 @@
   <string name="screenoff_pause">Pozastavit připojení při vypnuté obrazovce: méně než %1$s za %2$s vteřin</string>
   <string name="screen_nopersistenttun">Varování: \"Trvalý TUN\" není pro tuto VPN povolen. Provoz použije při vypnuté obrazovce normální internetové připojení.</string>
   <string name="save_password">Uložit heslo</string>
+  <string name="pauseVPN">Pozastavit VPN</string>
+  <string name="resumevpn">Obnovit VPN</string>
+  <string name="state_userpause">Pozastavení VPN vyžádáno uživatelem</string>
+  <string name="state_screenoff">VPN pozastaveno - vypnutá obrazovka</string>
+  <string name="device_specific">Hacky specifické pro zařízení</string>
+  <string name="cannotparsecert">Nelze zobrazit informace o certifikátu</string>
+  <string name="appbehaviour">Chování aplikace</string>
+  <string name="vpnbehaviour">Chování VPN</string>
 </resources>

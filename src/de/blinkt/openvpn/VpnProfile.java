@@ -140,7 +140,7 @@ public class VpnProfile implements Serializable {
     }
 
     public void clearDefaults() {
-        mServerName = "unkown";
+        mServerName = "unknown";
         mUsePull = false;
         mUseLzo = false;
         mUseDefaultRoute = false;
@@ -155,6 +155,8 @@ public class VpnProfile implements Serializable {
     }
 
     public String getName() {
+        if (mName==null)
+            return "No profile name";
         return mName;
     }
 

@@ -157,7 +157,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
     }
 
     @Override
-	public boolean P(Preference preference) {
+	public boolean onPreferenceClick(Preference preference) {
 		startFileDialog();
 		return true;
 

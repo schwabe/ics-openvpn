@@ -21,11 +21,8 @@ public class FaqFragment extends Fragment  {
     	insertHtmlEntry(v,R.id.faq_howto,R.string.faq_howto);
     	insertHtmlEntry(v, R.id.baterry_consumption, R.string.baterry_consumption);  
     	insertHtmlEntry(v, R.id.faq_tethering, R.string.faq_tethering);
-		
+        insertHtmlEntry(v, R.id.faq_vpndialog43, R.string.faq_vpndialog43);
 		return v;
-		
-		
-
     }
 
 	private void insertHtmlEntry (View v, int viewId, int stringId) {

@@ -21,6 +21,14 @@
             tools:ignore="SelectableText" />
 
         <TextView
+                style="@style/faqhead"
+                android:text="@string/faq_vpndialog43_title" />
+
+        <TextView
+                android:id="@+id/faq_vpndialog43"
+                style="@style/faqitem" />
+
+        <TextView
             style="@style/faqhead"
             android:text="@string/faq_system_dialogs_title" />
 

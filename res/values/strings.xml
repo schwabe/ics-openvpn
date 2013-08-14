@@ -292,6 +292,6 @@
     <string name="allow_vpn_changes">Allow changes to VPN Profiles</string>
     <string name="hwkeychain">Hardware Keystore:</string>
     <string name="permission_icon_app">Icon of app trying to use OpenVPN for Android</string>
-    <string name="faq_vpndialog43">"Starting with Android 4.3 the VPN confirmation is guarded against \"overlaying apps\". If you have an app that uses overlays it may cause this behaviour. If you find an offending app contact the author of the app. This problem affect all VPN applications on Android 4.3 and later. See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\">Issue 185&lt;a> for additional details"</string>
+    <string name="faq_vpndialog43">"Starting with Android 4.3 the VPN confirmation is guarded against \"overlaying apps\". This results in the dialog not reacting to touch input. If you have an app that uses overlays it may cause this behaviour. If you find an offending app contact the author of the app. This problem affect all VPN applications on Android 4.3 and later. See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\">Issue 185&lt;a> for additional details"</string>
     <string name="faq_vpndialog43_title">Vpn Confirm Dialog on Android 4.3 and later</string>
 </resources>

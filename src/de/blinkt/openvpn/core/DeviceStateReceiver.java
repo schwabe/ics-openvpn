@@ -105,9 +105,9 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
             networkStateChange(context);
         } else if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
-            boolean screenOff = prefs.getBoolean("screenoff", false);
+            boolean screenOffPause = prefs.getBoolean("screenoff", false);
 
-            if (screenOff) {
+            if (screenOffPause) {
                 if (!ProfileManager.getLastConnectedVpn().mPersistTun)
                     OpenVPN.logError(R.string.screen_nopersistenttun);
 

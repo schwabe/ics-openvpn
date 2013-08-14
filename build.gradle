@@ -24,9 +24,10 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 18
-        versionCode = 73
-        versionName = "0.5.40.1"
+        versionCode = 74
+        versionName = "0.5.41"
     }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

@@ -449,7 +449,7 @@ public class VpnProfile implements Serializable {
         for (String route : mCustomRoutes.split("[\n \t]")) {
             if (!route.equals("")) {
                 String cidrroute = cidrToIPAndNetmask(route);
-                if (cidrRoutes == null)
+                if (cidrroute == null)
                     return null;
 
                 cidrRoutes.add(cidrroute);
@@ -806,8 +806,6 @@ public class VpnProfile implements Serializable {
     private String processSignJellyBeans(PrivateKey privkey, byte[] data) {
         Exception err = null;
         try {
-            Method[] allm = privkey.getClass().getSuperclass().getDeclaredMethods();
-            System.out.println(allm);
             Method getKey = privkey.getClass().getSuperclass().getDeclaredMethod("getOpenSSLKey");
             getKey.setAccessible(true);
 

@@ -188,6 +188,7 @@
   <string name="export_config_title">ICS OpenVPN Konfiguration</string>
   <string name="warn_no_dns">Es werden keine DNS Server für die VPN Verbindung genutzt. Die Namensauflösung wird möglicherweise nicht funktionieren. Ziehen Sie in Erwähung selbst DNS Server in den Optionen zu setzen. Beachten Sie weiterhin, dass Android die Proxyeinstellungen für Handy/WLAN weiterhin benutzt, falls keine DNS Server für das VPN festgelegt sind.</string>
   <string name="dns_add_error">Konnte den DNS Server \"%1$s\" nicht hinzufügen, da das System ihn zurückweist mit %2$s</string>
+  <string name="ip_add_error">Konnte nicht die IP Adresse \"%1$s\" nicht setzen. Fehlermeldung des Systems: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Benutzen Sie eine funktionierende Konfiguration (getestet auf einem Computer, oder von Ihrer Organisation/Ihrem Provider bereitgestellt)&lt;/p&gt;&lt;p&gt;Falls Sie nur eine einzelne Datei benötigen, können Sie sich diese als Email-Anhang zuschicken. Falls Ihre OpenVPN Konfiguration aus mehreren Dateien besteht, müssen Sie alle Dateien auf die SD Karte kopieren.&lt;/p&gt;&lt;p&gt;Klicken Sie auf den Email Anhang im Android Mail Programm bzw. benutzen Sie das Ordner Symbol in der VPN Liste und wählen Sie die .ovpn bzw. .conf Konfigurationsdatei aus.&lt;/p&gt;&lt;p&gt;Falls der Import fehlende Dateien anmerkt, kopieren Sie diese auf die SD Karte und starten den Import erneut.&lt;/p&gt;&lt;p&gt;Benutzen Sie anschließend das Speichern Symbol um das VPN zur VPN Liste hinzuzufügen&lt;/p&gt;&lt;p&gt;Tippen Sie den Namen des VPNs an, um das VPN zu starten&lt;/p&gt;&lt;p&gt;Achten Sie auf Fehler und Warnungen im Verbindungslog.&lt;/p&gt; </string>
   <string name="faq_howto_title">Schnellstart</string>
   <string name="setting_loadtun_summary">Versuche das tun.ko Kernel Modul zu laden. Benötigt root.</string>
@@ -270,7 +271,7 @@
   <string name="tls_remote_deprecated">tls-remote (VERALTET)</string>
   <string name="help_translate">Sie können helfen die Übersetzung zu verbessern auf der Website http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s versucht %2$s zu steuern</string>
-  <string name="remote_warning">Wenn Sie fortfahren, gestatten Sie der App OpenVPN für Android komplett zu kontrollieren und den gesamten Netzwerkverkehr abzufangen. <b> Akzeptieren Sie nur, wenn Sie der App vertrauen. </b> Anderenfalls riskieren Sie, dass Ihre Daten von schädlicher Software manipuliert werden.</string>
+  <string name="remote_warning">Wenn Sie fortfahren, gestatten Sie der App OpenVPN für Android komplett zu kontrollieren und den gesamten Netzwerkverkehr abzufangen. <b> Akzeptieren Sie nur, wenn Sie der App vertrauen. </b> Anderenfalls riskieren Sie, dass Ihre Daten von schädlicher Software manipuliert werden</string>
   <string name="remote_trust">Ich vertraue dieser App.</string>
   <string name="no_external_app_allowed">Keine App für die Verwendung der API freigegeben</string>
   <string name="allowed_apps">Freigegebene Apps: %s</string>
@@ -288,4 +289,9 @@
   <string name="cannotparsecert">Kann Zertifikatsinformationen nicht anzeigen.</string>
   <string name="appbehaviour">Anwendung</string>
   <string name="vpnbehaviour">VPN</string>
+  <string name="allow_vpn_changes">Änderungen an VPN-profilen zulassen</string>
+  <string name="hwkeychain">Im Hardware Keystore gespeichert:</string>
+  <string name="permission_icon_app">Symbol der Anwendung, die versucht OpenVPN für Android zu kontrollieren</string>
+  <string name="faq_vpndialog43">Beginnend mit Android 4.3 wird der VPN-Bestätigungsdialog vor \"überlappenden Anwendungen\" geschützt. Dadurch kann es vorkommen, dass der Dialog nicht auf Eingaben reagiert. Eine Anwendung benutzen, die Overlays verwendet, kann es dieses Verhalten verursachen. Sollten Sie die verursachende Anwendung finden, kontaktieren Sie dessen Author. Dieses Problem betrifft alle VPN-Anwendungen ab Android 4.3. Siehe auch &lt; a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\" &gt; Issue 185 &lt;a&gt; für zusätzliche Details \"</string>
+  <string name="faq_vpndialog43_title">VPN-Bestätigungsdialog ab Android 4.3</string>
 </resources>

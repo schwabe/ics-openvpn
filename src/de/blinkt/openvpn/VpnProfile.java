@@ -415,6 +415,7 @@ public class VpnProfile implements Serializable {
             PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
             version = packageinfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
         return String.format(Locale.US, "setenv IV_OPENVPN_GUI_VERSION \"%s %s\"\n", c.getPackageName(), version);
 
@@ -544,7 +545,7 @@ public class VpnProfile implements Serializable {
 
     String[] getKeyStoreCertificates(Context context) {
         PrivateKey privateKey = null;
-        X509Certificate[] cachain = null;
+        X509Certificate[] cachain;
         try {
             privateKey = KeyChain.getPrivateKey(context, mAlias);
             mPrivateKey = privateKey;
@@ -764,7 +765,7 @@ public class VpnProfile implements Serializable {
 
     public String getSignedData(String b64data) {
         PrivateKey privkey = getKeystoreKey();
-        Exception err = null;
+        Exception err;
 
         byte[] data = Base64.decode(b64data, Base64.DEFAULT);
 
@@ -796,15 +797,15 @@ public class VpnProfile implements Serializable {
         } catch (BadPaddingException e) {
             err = e;
         }
-        if (err != null) {
-            OpenVPN.logError(R.string.error_rsa_sign, err.getClass().toString(), err.getLocalizedMessage());
-        }
+
+        OpenVPN.logError(R.string.error_rsa_sign, err.getClass().toString(), err.getLocalizedMessage());
+
         return null;
 
     }
 
     private String processSignJellyBeans(PrivateKey privkey, byte[] data) {
-        Exception err = null;
+        Exception err;
         try {
             Method getKey = privkey.getClass().getSuperclass().getDeclaredMethod("getOpenSSLKey");
             getKey.setAccessible(true);
@@ -835,9 +836,8 @@ public class VpnProfile implements Serializable {
         } catch (InvalidKeyException e) {
             err = e;
         }
-        if (err != null) {
-            OpenVPN.logError(R.string.error_rsa_sign, err.getClass().toString(), err.getLocalizedMessage());
-        }
+        OpenVPN.logError(R.string.error_rsa_sign, err.getClass().toString(), err.getLocalizedMessage());
+
         return null;
 
     }

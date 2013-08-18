@@ -1191,7 +1191,6 @@ resolve_remote (struct link_socket *sock,
 	      unsigned int flags = sf2gaf(GETADDR_RESOLVE|GETADDR_UPDATE_MANAGEMENT_STATE, sock->sockflags);
 	      int retry = 0;
 	      int status = -1;
-              
               if (proto_is_dgram(sock->info.proto))
                   flags |= GETADDR_DATAGRAM;
 

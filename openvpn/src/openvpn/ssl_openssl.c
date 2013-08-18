@@ -242,8 +242,7 @@ tls_ctx_restrict_ciphers(struct tls_root_ctx *ctx, const char *ciphers)
 
   const tls_cipher_name_pair *cipher_pair;
 
-  const size_t openssl_ciphers_size = 4096;
-  char openssl_ciphers[openssl_ciphers_size];
+  char openssl_ciphers[4096];
   size_t openssl_ciphers_len = 0;
   openssl_ciphers[0] = '\0';
 
@@ -282,8 +281,8 @@ tls_ctx_restrict_ciphers(struct tls_root_ctx *ctx, const char *ciphers)
 	}
 
       // Make sure new cipher name fits in cipher string
-      if (((openssl_ciphers_size-1) - openssl_ciphers_len) < current_cipher_len) {
-	msg(M_SSLERR, "Failed to set restricted TLS cipher list, too long (>%zu).", openssl_ciphers_size-1);
+      if (((sizeof(openssl_ciphers)-1) - openssl_ciphers_len) < current_cipher_len) {
+	msg(M_SSLERR, "Failed to set restricted TLS cipher list, too long (>%d).", (int)sizeof(openssl_ciphers)-1);
       }
 
       // Concatenate cipher name to OpenSSL cipher string
@@ -413,14 +412,32 @@ tls_ctx_load_pkcs12(struct tls_root_ctx *ctx, const char *pkcs12_file,
   /* Set Certificate Verification chain */
   if (load_ca_file)
    {
+     /* Add CAs from PKCS12 to the cert store and mark them as trusted. 
+      * They're also used to fill in the chain of intermediate certs as
+      * necessary.
+      */
      if (ca && sk_X509_num(ca))
       {
 	for (i = 0; i < sk_X509_num(ca); i++)
 	  {
-	      if (!X509_STORE_add_cert(ctx->ctx->cert_store,sk_X509_value(ca, i)))
+	    if (!X509_STORE_add_cert(ctx->ctx->cert_store,sk_X509_value(ca, i)))
 	      msg (M_SSLERR, "Cannot add certificate to certificate chain (X509_STORE_add_cert)");
 	    if (!SSL_CTX_add_client_CA(ctx->ctx, sk_X509_value(ca, i)))
 	      msg (M_SSLERR, "Cannot add certificate to client CA list (SSL_CTX_add_client_CA)");
+	  }
+      }
+   } else {
+     /* If trusted CA certs were loaded from a PEM file, and we ignore the
+      * ones in PKCS12, do load PKCS12-provided certs to the client extra
+      * certs chain just in case they include intermediate CAs needed to
+      * prove my identity to the other end. This does not make them trusted.
+      */
+     if (ca && sk_X509_num(ca))
+      {
+	for (i = 0; i < sk_X509_num(ca); i++)
+	  {
+	    if (!SSL_CTX_add_extra_chain_cert(ctx->ctx,sk_X509_value(ca, i)))
+	      msg (M_SSLERR, "Cannot add extra certificate to chain (SSL_CTX_add_extra_chain_cert)");
 	  }
       }
    }

@@ -11,6 +11,8 @@ import android.preference.PreferenceManager;
 import android.security.KeyChain;
 import android.security.KeyChainException;
 import android.util.Base64;
+import android.widget.Toast;
+
 import de.blinkt.openvpn.core.NativeUtils;
 import de.blinkt.openvpn.core.OpenVPN;
 import de.blinkt.openvpn.core.OpenVpnService;
@@ -544,6 +546,10 @@ public class VpnProfile implements Serializable {
     }
 
     String[] getKeyStoreCertificates(Context context) {
+        return getKeyStoreCertificates(context, 5);
+    }
+
+    String[] getKeyStoreCertificates(Context context,int tries) {
         PrivateKey privateKey = null;
         X509Certificate[] cachain;
         try {
@@ -625,6 +631,16 @@ public class VpnProfile implements Serializable {
                     OpenVPN.logError(R.string.jelly_keystore_alphanumeric_bug);
                 }
             }
+        } catch (AssertionError e) {
+            if (tries ==0)
+                return null;
+            Toast.makeText(context, String.format("Failure getting Keystore Keys (%s), retrying",e.getLocalizedMessage()),Toast.LENGTH_LONG).show();
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            return getKeyStoreCertificates(context, tries-1);
         }
         return null;
     }

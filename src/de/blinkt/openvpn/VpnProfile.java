@@ -14,7 +14,7 @@ import android.util.Base64;
 import android.widget.Toast;
 
 import de.blinkt.openvpn.core.NativeUtils;
-import de.blinkt.openvpn.core.OpenVPN;
+import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.OpenVpnService;
 import de.blinkt.openvpn.core.X509Utils;
 import org.spongycastle.util.io.pem.PemObject;
@@ -549,7 +549,7 @@ public class VpnProfile implements Serializable {
         return getKeyStoreCertificates(context, 5);
     }
 
-    String[] getKeyStoreCertificates(Context context,int tries) {
+    synchronized String[] getKeyStoreCertificates(Context context,int tries) {
         PrivateKey privateKey = null;
         X509Certificate[] cachain;
         try {
@@ -561,7 +561,7 @@ public class VpnProfile implements Serializable {
 
             cachain = KeyChain.getCertificateChain(context, mAlias);
             if (cachain.length <= 1 && !nonNull(mCaFilename)) {
-                OpenVPN.logMessage(0, "", context.getString(R.string.keychain_nocacert));
+                VpnStatus.logMessage(0, "", context.getString(R.string.keychain_nocacert));
             } else {
                 StringWriter ksStringWriter = new StringWriter();
 
@@ -587,7 +587,7 @@ public class VpnProfile implements Serializable {
                     caout= caoutWriter.toString();
 
                 } catch (Exception e) {
-                    OpenVPN.logError("Could not read CA certificate" + e.getLocalizedMessage());
+                    VpnStatus.logError("Could not read CA certificate" + e.getLocalizedMessage());
                 }
             }
 
@@ -625,10 +625,10 @@ public class VpnProfile implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (KeyChainException e) {
-            OpenVPN.logMessage(0, "", context.getString(R.string.keychain_access));
+            VpnStatus.logMessage(0, "", context.getString(R.string.keychain_access));
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
                 if (!mAlias.matches("^[a-zA-Z0-9]$")) {
-                    OpenVPN.logError(R.string.jelly_keystore_alphanumeric_bug);
+                    VpnStatus.logError(R.string.jelly_keystore_alphanumeric_bug);
                 }
             }
         } catch (AssertionError e) {
@@ -814,7 +814,7 @@ public class VpnProfile implements Serializable {
             err = e;
         }
 
-        OpenVPN.logError(R.string.error_rsa_sign, err.getClass().toString(), err.getLocalizedMessage());
+        VpnStatus.logError(R.string.error_rsa_sign, err.getClass().toString(), err.getLocalizedMessage());
 
         return null;
 
@@ -852,7 +852,7 @@ public class VpnProfile implements Serializable {
         } catch (InvalidKeyException e) {
             err = e;
         }
-        OpenVPN.logError(R.string.error_rsa_sign, err.getClass().toString(), err.getLocalizedMessage());
+        VpnStatus.logError(R.string.error_rsa_sign, err.getClass().toString(), err.getLocalizedMessage());
 
         return null;
 

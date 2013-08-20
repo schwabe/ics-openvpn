@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
+import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -131,7 +131,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 				try {
 					fds = mSocket.getAncillaryFileDescriptors();
 				} catch (IOException e) {
-					OpenVPN.logMessage(0, "", "Error reading fds from socket" + e.getLocalizedMessage());
+					VpnStatus.logMessage(0, "", "Error reading fds from socket" + e.getLocalizedMessage());
 					e.printStackTrace();
 				}
 				if(fds!=null){
@@ -182,7 +182,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
         exp.printStackTrace();
         Log.d("Openvpn", "Failed to retrieve fd from socket: " + fd);
-        OpenVPN.logMessage(0, "", "Failed to retrieve fd from socket: " + exp.getLocalizedMessage());
+        VpnStatus.logMessage(0, "", "Failed to retrieve fd from socket: " + exp.getLocalizedMessage());
 	}
 
 	private String processInput(String pendingInput) {
@@ -228,11 +228,11 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 				// 0 unix time stamp
 				// 1 log level N,I,E etc.
 				// 2 log message
-				OpenVPN.logMessage(0, "",  args[2]);
+				VpnStatus.logMessage(0, "", args[2]);
 			} else if (cmd.equals("RSA_SIGN")) {
 				processSignCommand(argument);
 			} else {
-				OpenVPN.logMessage(0, "MGMT:", "Got unrecognized command" + command);
+				VpnStatus.logMessage(0, "MGMT:", "Got unrecognized command" + command);
 				Log.i(TAG, "Got unrecognized command" + command);
 			}
 		} else if (command.startsWith("SUCCESS:")) {
@@ -240,7 +240,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             return;
 		} else {
 			Log.i(TAG, "Got unrecognized line from managment" + command);
-			OpenVPN.logMessage(0, "MGMT:", "Got unrecognized line from management:" + command);
+			VpnStatus.logMessage(0, "MGMT:", "Got unrecognized line from management:" + command);
 		}
 	}
 	private void handleHold() {
@@ -249,7 +249,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		} else { 
 			mWaitingForRelease=true;
 
-            OpenVPN.updateStatePause(lastPauseReason);
+            VpnStatus.updateStatePause(lastPauseReason);
 
 
 		}
@@ -292,7 +292,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		if(proxyaddr instanceof InetSocketAddress ){
 			InetSocketAddress isa = (InetSocketAddress) proxyaddr;
 			
-			OpenVPN.logInfo(R.string.using_proxy, isa.getHostName(),isa.getPort());
+			VpnStatus.logInfo(R.string.using_proxy, isa.getHostName(), isa.getPort());
 			
 			String proxycmd = String.format(Locale.ENGLISH,"proxy HTTP %s %d\n", isa.getHostName(),isa.getPort());
 			managmentCommand(proxycmd);
@@ -305,9 +305,9 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		String[] args = argument.split(",",3);
 		String currentstate = args[1];
 		if(args[2].equals(",,"))
-			OpenVPN.updateStateString(currentstate,"");
+			VpnStatus.updateStateString(currentstate, "");
 		else
-			OpenVPN.updateStateString(currentstate,args[2]);
+			VpnStatus.updateStateString(currentstate, args[2]);
 	}
 
 
@@ -317,7 +317,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		long in = Long.parseLong(argument.substring(0, comma));
 		long out = Long.parseLong(argument.substring(comma+1));
 
-		OpenVPN.updateByteCount(in,out);
+		VpnStatus.updateByteCount(in, out);
 		
 	}
 
@@ -373,7 +373,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		if(!extra.equals("tun")) {
 			// We only support tun
 			String errmsg = String.format("Devicetype %s requested, but only tun is possible with the Android API, sorry!",extra);
-			OpenVPN.logMessage(0, "", errmsg );
+			VpnStatus.logMessage(0, "", errmsg);
 
 			return false;
 		}
@@ -416,7 +416,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		} catch (IOException e) {
 			exp =e;
 		}
-        OpenVPN.logMessage(0, "", "Could not send fd over socket:" + exp.getLocalizedMessage());
+        VpnStatus.logMessage(0, "", "Could not send fd over socket:" + exp.getLocalizedMessage());
         exp.printStackTrace();
 
         return false;
@@ -439,7 +439,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 				return;
 			}
 		} catch (StringIndexOutOfBoundsException sioob) {
-			OpenVPN.logMessage(0, "", "Could not parse management Password command: "  + argument);
+			VpnStatus.logMessage(0, "", "Could not parse management Password command: " + argument);
 			return;
 		}
 
@@ -457,7 +457,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 			String cmd = String.format("password '%s' %s\n", needed, VpnProfile.openVpnEscape(pw));
 			managmentCommand(cmd);
 		} else {
-			OpenVPN.logMessage(0, OpenVPN.MANAGMENT_PREFIX, String.format("Openvpn requires Authentication type '%s' but no password/key information available", needed));
+			VpnStatus.logMessage(0, VpnStatus.MANAGMENT_PREFIX, String.format("Openvpn requires Authentication type '%s' but no password/key information available", needed));
 		}
 
 	}
@@ -466,7 +466,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 
 	private void proccessPWFailed(String needed, String args) {
-		OpenVPN.updateStateString("AUTH_FAILED", needed + args,R.string.state_auth_failed,ConnectionStatus.LEVEL_AUTH_FAILED);
+		VpnStatus.updateStateString("AUTH_FAILED", needed + args, R.string.state_auth_failed, ConnectionStatus.LEVEL_AUTH_FAILED);
 	}
 
 
@@ -493,7 +493,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         else
             // If signalusr1 is called update the state string
             // if there is another for stopping
-            OpenVPN.updateStatePause(lastPauseReason);
+            VpnStatus.updateStatePause(lastPauseReason);
 	}
 
 	public void reconnect() {

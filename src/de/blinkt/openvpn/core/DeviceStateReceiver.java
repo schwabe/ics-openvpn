@@ -9,7 +9,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.preference.PreferenceManager;
 import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.core.OpenVPN.ByteCountListener;
+import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 
 import java.util.LinkedList;
 
@@ -67,7 +67,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
         if (windowtraffic < TRAFFIC_LIMIT) {
             screen = connectState.DISCONNECTED;
-            OpenVPN.logInfo(R.string.screenoff_pause,
+            VpnStatus.logInfo(R.string.screenoff_pause,
                     OpenVpnService.humanReadableByteCount(TRAFFIC_LIMIT, false), TRAFFIC_WINDOW);
 
             mManagement.pause(getPauseReason());
@@ -109,7 +109,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
             if (screenOffPause) {
                 if (!ProfileManager.getLastConnectedVpn().mPersistTun)
-                    OpenVPN.logError(R.string.screen_nopersistenttun);
+                    VpnStatus.logError(R.string.screen_nopersistenttun);
 
                 screen = connectState.PENDINGDISCONNECT;
                 fillTrafficData();
@@ -203,7 +203,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
 
         if (!netstatestring.equals(lastStateMsg))
-            OpenVPN.logInfo(R.string.netstatus, netstatestring);
+            VpnStatus.logInfo(R.string.netstatus, netstatestring);
         lastStateMsg = netstatestring;
 
     }

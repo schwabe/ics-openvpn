@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.core.OpenVPN;
+import de.blinkt.openvpn.core.VpnStatus;
 
 public class SendDumpFragment extends Fragment  {
 
@@ -61,7 +61,7 @@ public class SendDumpFragment extends Fragment  {
 
 		File ldump = getLastestDump(getActivity());
 		if(ldump==null) {
-			OpenVPN.logError("No Minidump found!");
+			VpnStatus.logError("No Minidump found!");
 		}
 
 		uris.add(Uri.parse("content://de.blinkt.openvpn.FileProvider/" + ldump.getName()));

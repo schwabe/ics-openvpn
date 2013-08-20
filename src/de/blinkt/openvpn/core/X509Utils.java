@@ -67,7 +67,7 @@ public class X509Utils {
                 return getCertificateFriendlyName(cert);
 
 			} catch (Exception e) {
-				OpenVPN.logError("Could not read certificate" + e.getLocalizedMessage());
+				VpnStatus.logError("Could not read certificate" + e.getLocalizedMessage());
 			}
 		}
 		return c.getString(R.string.cannotparsecert);

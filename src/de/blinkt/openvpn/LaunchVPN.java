@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.text.InputType;
-import android.text.Layout;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -26,11 +25,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import de.blinkt.openvpn.core.OpenVPN;
-import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
+import de.blinkt.openvpn.core.VpnStatus;
+import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 
@@ -104,7 +102,7 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 				profileToConnect = ProfileManager.getInstance(this).getProfileByName(shortcutName);
 
 			if(profileToConnect ==null) {
-				OpenVPN.logError(R.string.shortcut_profile_notfound);
+				VpnStatus.logError(R.string.shortcut_profile_notfound);
 				// show Log window to display error
 				showLogWindow();
 				finish();
@@ -254,8 +252,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 				new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				OpenVPN.updateStateString("USER_VPN_PASSWORD_CANCELLED", "", R.string.state_user_vpn_password_cancelled, 
-						ConnectionStatus.LEVEL_NOTCONNECTED);
+				VpnStatus.updateStateString("USER_VPN_PASSWORD_CANCELLED", "", R.string.state_user_vpn_password_cancelled,
+                        ConnectionStatus.LEVEL_NOTCONNECTED);
 				finish();
 			}
 		});
@@ -271,8 +269,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 			if(resultCode == Activity.RESULT_OK) {
 				int needpw = mSelectedProfile.needUserPWInput();
 				if(needpw !=0) {
-					OpenVPN.updateStateString("USER_VPN_PASSWORD", "", R.string.state_user_vpn_password,
-							ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
+					VpnStatus.updateStateString("USER_VPN_PASSWORD", "", R.string.state_user_vpn_password,
+                            ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
 					askForPW(needpw);
 				} else {
 					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
@@ -284,8 +282,8 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 				}
 			} else if (resultCode == Activity.RESULT_CANCELED) {
 				// User does not want us to start, so we just vanish
-				OpenVPN.updateStateString("USER_VPN_PERMISSION_CANCELLED", "", R.string.state_user_vpn_permission_cancelled, 
-						ConnectionStatus.LEVEL_NOTCONNECTED);
+				VpnStatus.updateStateString("USER_VPN_PERMISSION_CANCELLED", "", R.string.state_user_vpn_permission_cancelled,
+                        ConnectionStatus.LEVEL_NOTCONNECTED);
 
 				finish();
 			}
@@ -336,15 +334,15 @@ public class LaunchVPN extends ListActivity implements OnItemClickListener {
 
 
 		if (intent != null) {
-			OpenVPN.updateStateString("USER_VPN_PERMISSION", "", R.string.state_user_vpn_password,
-					ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
+			VpnStatus.updateStateString("USER_VPN_PERMISSION", "", R.string.state_user_vpn_password,
+                    ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
 			// Start the query
 			try {
 				startActivityForResult(intent, START_VPN_PROFILE);
 			} catch (ActivityNotFoundException ane) {
 				// Shame on you Sony! At least one user reported that 
 				// an official Sony Xperia Arc S image triggers this exception
-				OpenVPN.logError(R.string.no_vpn_support_image);
+				VpnStatus.logError(R.string.no_vpn_support_image);
 				showLogWindow();
 			}
 		} else {

@@ -3,8 +3,8 @@ package de.blinkt.openvpn.core;
 import android.util.Log;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
-import de.blinkt.openvpn.core.OpenVPN.LogItem;
+import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
+import de.blinkt.openvpn.core.VpnStatus.LogItem;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -50,26 +50,26 @@ public class OpenVPNThread implements Runnable {
 				if (mProcess!=null)
 					exitvalue = mProcess.waitFor();
 			} catch ( IllegalThreadStateException ite) {
-				OpenVPN.logError("Illegal Thread state: " + ite.getLocalizedMessage());
+				VpnStatus.logError("Illegal Thread state: " + ite.getLocalizedMessage());
 			} catch (InterruptedException ie) {
-				OpenVPN.logError("InterruptedException: " + ie.getLocalizedMessage());
+				VpnStatus.logError("InterruptedException: " + ie.getLocalizedMessage());
 			}
 			if( exitvalue != 0)
-				OpenVPN.logError("Process exited with exit value " + exitvalue);
+				VpnStatus.logError("Process exited with exit value " + exitvalue);
 			
-			OpenVPN.updateStateString("NOPROCESS","No process running.", R.string.state_noprocess,ConnectionStatus.LEVEL_NOTCONNECTED);
+			VpnStatus.updateStateString("NOPROCESS", "No process running.", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
 			if(mDumpPath!=null) {
 				try {
 					BufferedWriter logout = new BufferedWriter(new FileWriter(mDumpPath + ".log"));
 					SimpleDateFormat timeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.GERMAN);
-					for(LogItem li :OpenVPN.getlogbuffer()){
+					for(LogItem li : VpnStatus.getlogbuffer()){
 						String time = timeformat.format(new Date(li.getLogtime()));
 						logout.write(time +" " + li.getString(mService) + "\n");
 					}
 					logout.close();
-					OpenVPN.logError(R.string.minidump_generated);
+					VpnStatus.logError(R.string.minidump_generated);
 				} catch (IOException e) {
-					OpenVPN.logError("Writing minidump log: " +e.getLocalizedMessage());
+					VpnStatus.logError("Writing minidump log: " + e.getLocalizedMessage());
 				}
 			}
 
@@ -111,12 +111,12 @@ public class OpenVPNThread implements Runnable {
 					mDumpPath = logline.substring(DUMP_PATH_STRING.length());
 					
 
-				OpenVPN.logMessage(0, "P:", logline);
+				VpnStatus.logMessage(0, "P:", logline);
 			}
 			
 		
 		} catch (IOException e) {
-			OpenVPN.logMessage(0, "", "Error reading from output of OpenVPN process"+ e.getLocalizedMessage());
+			VpnStatus.logMessage(0, "", "Error reading from output of OpenVPN process" + e.getLocalizedMessage());
 			e.printStackTrace();
 			stopProcess();
 		}

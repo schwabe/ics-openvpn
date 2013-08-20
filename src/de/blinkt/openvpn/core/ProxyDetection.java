@@ -27,9 +27,9 @@ public class ProxyDetection {
 			}
 			
 		} catch (MalformedURLException e) {
-			OpenVPN.logError(R.string.getproxy_error,e.getLocalizedMessage());
+			VpnStatus.logError(R.string.getproxy_error, e.getLocalizedMessage());
 		} catch (URISyntaxException e) {
-			OpenVPN.logError(R.string.getproxy_error,e.getLocalizedMessage());
+			VpnStatus.logError(R.string.getproxy_error, e.getLocalizedMessage());
 		}
 		return null;
 	}

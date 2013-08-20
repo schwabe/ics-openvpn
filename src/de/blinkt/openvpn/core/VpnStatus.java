@@ -20,9 +20,10 @@ import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.UnknownFormatConversionException;
 import java.util.Vector;
 
-public class OpenVPN {
+public class VpnStatus {
 
 
 	public static LinkedList<LogItem> logbuffer;
@@ -61,9 +62,9 @@ public class OpenVPN {
 
 	static {
 		logbuffer  = new LinkedList<LogItem>();
-		logListener = new Vector<OpenVPN.LogListener>();
-		stateListener = new Vector<OpenVPN.StateListener>();
-		byteCountListener = new Vector<OpenVPN.ByteCountListener>();
+		logListener = new Vector<VpnStatus.LogListener>();
+		stateListener = new Vector<VpnStatus.StateListener>();
+		byteCountListener = new Vector<VpnStatus.ByteCountListener>();
 		logInformation();
 	}
 
@@ -142,6 +143,7 @@ public class OpenVPN {
 		}
 
 		public String getString(Context c) {
+            try {
 			if(mMessage !=null) {
 				return mMessage;
 			} else {
@@ -161,6 +163,12 @@ public class OpenVPN {
 					return str;
 				}
 			}
+            } catch (UnknownFormatConversionException e) {
+                if (c != null)
+                    throw new UnknownFormatConversionException(e.getLocalizedMessage() + getString(null));
+                else
+                    throw e;
+            }
 		}
 		
 		// The lint is wrong here 
@@ -304,13 +312,13 @@ public class OpenVPN {
     public static void updateStatePause(OpenVPNManagement.pauseReason pauseReason) {
         switch (pauseReason) {
             case noNetwork:
-                OpenVPN.updateStateString("NONETWORK", "", R.string.state_nonetwork, ConnectionStatus.LEVEL_NONETWORK);
+                VpnStatus.updateStateString("NONETWORK", "", R.string.state_nonetwork, ConnectionStatus.LEVEL_NONETWORK);
                 break;
             case screenOff:
-                OpenVPN.updateStateString("SCREENOFF", "", R.string.state_screenoff, ConnectionStatus.LEVEL_VPNPAUSED);
+                VpnStatus.updateStateString("SCREENOFF", "", R.string.state_screenoff, ConnectionStatus.LEVEL_VPNPAUSED);
                 break;
             case userPause:
-                OpenVPN.updateStateString("USERPAUSE", "", R.string.state_userpause, ConnectionStatus.LEVEL_VPNPAUSED);
+                VpnStatus.updateStateString("USERPAUSE", "", R.string.state_userpause, ConnectionStatus.LEVEL_VPNPAUSED);
                 break;
         }
 

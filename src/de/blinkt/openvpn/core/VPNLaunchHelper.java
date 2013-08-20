@@ -26,7 +26,7 @@ public class VPNLaunchHelper {
 				mvpn = context.getAssets().open("minivpn." + Build.CPU_ABI);
 			}
 			catch (IOException errabi) {
-				OpenVPN.logInfo("Failed getting assets for archicture " + Build.CPU_ABI);
+				VpnStatus.logInfo("Failed getting assets for archicture " + Build.CPU_ABI);
 				e2=errabi;
 				mvpn = context.getAssets().open("minivpn." + Build.CPU_ABI2);
 				
@@ -45,7 +45,7 @@ public class VPNLaunchHelper {
 			fout.close();
 
 			if(!mvpnout.setExecutable(true)) {
-				OpenVPN.logMessage(0, "","Failed to set minivpn executable");
+				VpnStatus.logMessage(0, "", "Failed to set minivpn executable");
 				return false;
 			}
 				
@@ -53,8 +53,8 @@ public class VPNLaunchHelper {
 			return true;
 		} catch (IOException e) {
 			if(e2!=null)
-				OpenVPN.logMessage(0, "",e2.getLocalizedMessage());
-			OpenVPN.logMessage(0, "",e.getLocalizedMessage());
+				VpnStatus.logMessage(0, "", e2.getLocalizedMessage());
+			VpnStatus.logMessage(0, "", e.getLocalizedMessage());
 			e.printStackTrace();
 			return false;
 		}
@@ -63,10 +63,10 @@ public class VPNLaunchHelper {
 
 	public static void startOpenVpn(VpnProfile startprofile, Context context) {
 		if(!writeMiniVPN(context)) {
-			OpenVPN.logMessage(0, "", "Error writing minivpn binary");
+			VpnStatus.logMessage(0, "", "Error writing minivpn binary");
 			return;
 		}
-		OpenVPN.logMessage(0, "", context.getString(R.string.building_configration));
+		VpnStatus.logMessage(0, "", context.getString(R.string.building_configration));
 
 		Intent startVPN = startprofile.prepareIntent(context);
 		if(startVPN!=null)

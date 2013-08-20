@@ -25,9 +25,9 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
 import de.blinkt.openvpn.core.ConfigParser.ConfigParseError;
-import de.blinkt.openvpn.core.OpenVPN;
-import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
-import de.blinkt.openvpn.core.OpenVPN.StateListener;
+import de.blinkt.openvpn.core.VpnStatus;
+import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
+import de.blinkt.openvpn.core.VpnStatus.StateListener;
 import de.blinkt.openvpn.core.OpenVpnService;
 import de.blinkt.openvpn.core.OpenVpnService.LocalBinder;
 import de.blinkt.openvpn.core.ProfileManager;
@@ -65,7 +65,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		OpenVPN.addStateListener(this);
+		VpnStatus.addStateListener(this);
 		mExtAppDb = new ExternalAppDatabase(this);
 
 		Intent intent = new Intent(getBaseContext(), OpenVpnService.class);
@@ -231,7 +231,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 		super.onDestroy();
 		mCallbacks.kill();
 		unbindService(mConnection);
-		OpenVPN.removeStateListener(this);
+		VpnStatus.removeStateListener(this);
 	}
 
 	class UpdateMessage {

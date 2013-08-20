@@ -13,11 +13,11 @@ import android.text.format.DateFormat;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.OnItemLongClickListener;
-import de.blinkt.openvpn.core.OpenVPN;
-import de.blinkt.openvpn.core.OpenVPN.ConnectionStatus;
-import de.blinkt.openvpn.core.OpenVPN.LogItem;
-import de.blinkt.openvpn.core.OpenVPN.LogListener;
-import de.blinkt.openvpn.core.OpenVPN.StateListener;
+import de.blinkt.openvpn.core.VpnStatus;
+import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
+import de.blinkt.openvpn.core.VpnStatus.LogItem;
+import de.blinkt.openvpn.core.VpnStatus.LogListener;
+import de.blinkt.openvpn.core.VpnStatus.StateListener;
 import de.blinkt.openvpn.core.OpenVpnService;
 import de.blinkt.openvpn.core.OpenVpnService.LocalBinder;
 import de.blinkt.openvpn.core.ProfileManager;
@@ -77,14 +77,14 @@ public class LogWindow extends ListActivity implements StateListener  {
 				mHandler = new Handler(this);
 			}
 
-			OpenVPN.addLogListener(this);
+			VpnStatus.addLogListener(this);
 		}
 
 
 
 		private void initLogBuffer() {
 			myEntries.clear();
-            Collections.addAll(myEntries, OpenVPN.getlogbuffer());
+            Collections.addAll(myEntries, VpnStatus.getlogbuffer());
 		}
 
 		String getLogStr() {
@@ -224,8 +224,8 @@ public class LogWindow extends ListActivity implements StateListener  {
 		void clearLog() {
 			// Actually is probably called from GUI Thread as result of the user 
 			// pressing a button. But better safe than sorry
-			OpenVPN.clearLog();
-			OpenVPN.logMessage(0,"","Log cleared.");
+			VpnStatus.clearLog();
+			VpnStatus.logMessage(0, "", "Log cleared.");
 			mHandler.sendEmptyMessage(MESSAGE_CLEARLOG);
 		}
 
@@ -312,7 +312,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		OpenVPN.addStateListener(this);
+		VpnStatus.addStateListener(this);
         Intent intent = new Intent(this, OpenVpnService.class);
         intent.setAction(OpenVpnService.START_SERVICE);
 
@@ -367,7 +367,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		OpenVPN.removeStateListener(this);
+		VpnStatus.removeStateListener(this);
         unbindService(mConnection);
         getPreferences(0).edit().putInt(LOGTIMEFORMAT, ladapter.mTimeFormat).apply();
 
@@ -424,7 +424,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 	@Override
 	protected void onDestroy() {
-		OpenVPN.removeLogListener(ladapter);
+		VpnStatus.removeLogListener(ladapter);
 		super.onDestroy();
 	}
 

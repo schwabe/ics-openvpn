@@ -18,6 +18,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
+import java.util.FormatFlagsConversionMismatchException;
 import java.util.LinkedList;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
@@ -166,6 +167,11 @@ public class VpnStatus {
             } catch (UnknownFormatConversionException e) {
                 if (c != null)
                     throw new UnknownFormatConversionException(e.getLocalizedMessage() + getString(null));
+                else
+                    throw e;
+            } catch (java.util.FormatFlagsConversionMismatchException e) {
+                if (c != null)
+                    throw new FormatFlagsConversionMismatchException(e.getLocalizedMessage() + getString(null),e.getConversion());
                 else
                     throw e;
             }

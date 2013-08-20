@@ -99,6 +99,20 @@ def main():
             faq= genPage(faqdom,lang)
             open("%s/FAQ.wiki" % langdir,"w").write(faq.encode("utf-8"))
 
+            checkFormatString(lang)
 
+def checkFormatString(lang):
+    for strid in strres["default"]:
+        ostr = getString(strid,"default")
+        tstr = getString(strid,lang)
+
+
+        for f in ["%s", "%d", "%f"] + ["%%%d$s" % d for d in range(0,10)] + ["%%%d$d" % d for d in range(0,10)]:
+            ino = ostr.find(f)==-1
+            int = tstr.find(f)==-1
+
+            if ino != int:
+                print "Mismatch",strid,f,ostr,tstr
+                
 if __name__=="__main__":
     main()

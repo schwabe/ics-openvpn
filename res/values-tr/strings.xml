@@ -90,14 +90,14 @@
   <string name="float_title">Herhangi bir IP kimlik doğrulaması paketlerini sağlar</string>
   <string name="custom_options_title">Özel Seçenekler</string>
   <string name="edit_vpn">VPN Ayarlarını düzenle</string>
-  <string name="remove_vpn_query">VPN profilleri kaldırılsın mı?</string>
+  <string name="remove_vpn_query">VPN profilleri kaldırılsın mı \'%s\'?</string>
   <string name="tun_error_helpful">Bazı özel ICS görüntülerde / dev / tun üzerinde izni yanlış olabilir, ya da tun modülünü tamamen eksik olabilir. CM9 görüntüleri genel ayarlar altında düzeltme mülkiyet seçeneğini deneyin</string>
   <string name="tun_open_error">Tun arayüzü açılamadı</string>
   <string name="error">"Hata:"</string>
   <string name="clear">Temizle</string>
   <string name="info">bilgi</string>
   <string name="last_openvpn_tun_config">Açılış tun arabirimi:</string>
-  <string name="local_ip_info">Yerel IPv4: %1$s/%2$d IPv6: %3$ s MTU: %4$ </string>
+  <string name="local_ip_info">Yerel IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS sunucusu: %1$s, etki alanı: %2$s</string>
   <string name="routes_info">Güzergah: %s</string>
   <string name="routes_info6">IPv6 yönlendirir: %s</string>
@@ -170,7 +170,7 @@
   <string name="netchange_summary">Ağ durumu (örneğin WiFi üzerinden cep telefonlarına/cep) değiştirdiyseniz bu seçeneği açmak yeniden bağlantı zorlar</string>
   <string name="netchange">Ağ değişikliği üzerinde yeniden bağlan</string>
   <string name="cert_from_keystore">\'%s\' sertifika deposu var</string>
-  <string name="netstatus">Ağ Durumu:%</string>
+  <string name="netstatus">Ağ Durumu: %s</string>
   <string name="extracahint">Sertifika yetkilisi sertifikası genellikle Android deposunun döndürülür. Sertifika doğrulama hataları alırsanız ayrı bir sertifika belirtin.</string>
   <string name="select_file">Seçin</string>
   <string name="keychain_nocacert">Hayır CA sertifikasını okurken Android deposunu döndürdü. Kimlik doğrulama muhtemelen başarısız olur.</string>
@@ -189,6 +189,7 @@
   <string name="export_config_title">ICS Opnvpn Yapılandırma</string>
   <string name="warn_no_dns">Kullanılan DNS sunucusu yok. Ad çözümlemesi çalışmıyor olabilir. Özel DNS sunucularını ayarlamayı düşünün. Ayrıca Android cep/Wi-Fi bağlantınız için DNS sunucusu ayarlandığında belirtilen proxy ayarlarını kullanmaya devam unutmayın.</string>
   <string name="dns_add_error">DNS sunucusu sistem tarafından reddedilen %1$s, eklenemedi: %2$s</string>
+  <string name="ip_add_error">IP adresi \"%1$s\" sistem tarafından reddedildi, yapılandıramadı: %2$s</string>
   <string name="faq_howto">(bilgisayarınızdaki veya sağlayıcı/organizasyon yüklenebilir test) bir çalışma config &lt;p&gt; olsun &lt;/p&gt; &lt;p&gt; Hayır hiçbir ilave pem/pks12 ile tek bir dosya dosyaları ise dosyayı kendiniz e-posta ve eki açın. Birden çok dosya varsa koymak onları üstünde senin sd kartı &lt;/p&gt; &lt;p&gt; e-posta eki/kullanım üzerinde klasör simgesini tıklatın, sd eksik dosyaları koyun dosyaları eksik hakkında hatalar varsa config dosyasının &lt;/p&gt; &lt;p&gt; almak için vpn listedeki kayıt tıklayın kartı &lt;/p&gt; &lt;p&gt; sembol alınan VPN &lt;/p&gt; VPN listenize eklemek için &lt;p &gt; VPN varsa hata veya uyarılar günlüğüne uyarı/hata anlamak ve onları &lt;/p&gt; gidermek çalışın VPN &lt;/p&gt; &lt;p&gt; adını tıklatarak bağlanmak </string>
   <string name="faq_howto_title">Hızlı Başlangıç</string>
   <string name="setting_loadtun_summary">Bağlanmayı denemeden önce tun.ko çekirdek modülü yüklemek deneyin. İhtiyaçlarını köklü cihazlar.</string>
@@ -249,8 +250,8 @@
   <string name="state_nonetwork">Kullanılabilir ağ için bekleniyor</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
   <string name="notifcation_title_notconnect">Bağlı değil</string>
-  <string name="start_vpn_title">%S VPN bağlanıyor</string>
-  <string name="start_vpn_ticker">%S VPN bağlanıyor</string>
+  <string name="start_vpn_title">%s VPN bağlanıyor</string>
+  <string name="start_vpn_ticker">%s VPN bağlanıyor</string>
   <string name="jelly_keystore_alphanumeric_bug">Sertifika deposunun adını (gibi alanlarda, alt çizgi veya tire) sigara alfasayısal karakterler içeriyorsa, bazı yorum-in Android 4.1 sorunları var. Özel karakter içermeyen sertifika yeniden ithalat çalışın</string>
   <string name="encryption_cipher">Şifre şifresi</string>
   <string name="packet_auth">Paket kimlik doğrulama</string>
@@ -289,4 +290,10 @@
   <string name="cannotparsecert">Sertifika bilgilerini görüntüleyemiyor</string>
   <string name="appbehaviour">Uygulama davranış</string>
   <string name="vpnbehaviour">VPN davranış</string>
+  <string name="allow_vpn_changes">VPN Profillerinin değiştirilmesine izin ver
+</string>
+  <string name="hwkeychain">Donanım deposu:</string>
+  <string name="permission_icon_app">Uygulama simgesi Android için OpenVPN kullanmaya çalışıyor</string>
+  <string name="faq_vpndialog43">"Android 4.3 ile VPN onay başlayan\"overlaying apps\"karşı korunuyor. Bu giriş dokunmaya tepki değil iletişim kutusunda olur. Bindirmeleri kullanan bir uygulama varsa, bu davranışa neden olabilir. Kusurlu bir app temas yazar app bulursanız. Bu sorun tüm VPN uygulamaları Android 4.3 ve daha sonra etkiler. Ayrıca bkz: &lt; bir href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\" &gt; sayı 185 &lt;a&gt; ek ayrıntılar için "</string>
+  <string name="faq_vpndialog43_title">VPN Onayla iletişim Android 4.3 ve üstü</string>
 </resources>

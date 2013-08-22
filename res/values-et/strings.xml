@@ -188,6 +188,7 @@
   <string name="export_config_title">ICS OpenVPN konfiguratsioon</string>
   <string name="warn_no_dns">Kasutuses pole ühtegi DNS serverit. Nimelahendus ei pruugi töötada. Kaaluge kohandatud DNS serverite konfiguratsiooni. Pange tähele et DNS seadete puudumisel jätkab Android teie mobiilse/Wi-Fi proxy seadete kasutamist.</string>
   <string name="dns_add_error">DNS serveri \"%1$s\" lisamine ebaõnnestus, süsteemi poolt keelduti: %2$s</string>
+  <string name="ip_add_error">IP aadressi \"%1$s\" seadistamine ei õnnestunud, süsteemi poolt välja praagitud: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Hankige töötav konfiguratsioon (kas arvutis järele proovitud või alla laetud võrguteenusepakkuja/organisatsiooni veebilehelt)&lt;/p&gt;&lt;p&gt;Kui tegu on ainult ühe failiga millega ei kaasne pem/pkcs12 faile, siis saad selle saata e-kirjas manusena iseendale. Kui faile on mitu, saab need kopeerida sdcard peale.&lt;/p&gt;&lt;p&gt;Kliki saabunud e-kirja manusele ja kasuta konfiguratsiooni importimiseks vpn kaustaikooni.&lt;/p&gt;&lt;p&gt;Kui siiski esineb puuduvatele failidele viitavaid vigu, siis kopeeri puuduvad failid sdcard peale.&lt;/p&gt;&lt;p&gt;Imporditud VPN lisamiseks ühenduste nimekirjale, klikkige salvestussümbolile.&lt;/p&gt;&lt;p&gt;VPN ühenduse loomiseks kliki loodud VPN ühenduse nimele.&lt;/p&gt;&lt;p&gt;Ekraanil nähtav logi lihtsustab esineda võivate probleemide/vigade lahendamist.&lt;/p&gt; </string>
   <string name="faq_howto_title">Kasutamise lühijuhend</string>
   <string name="setting_loadtun_summary">Proovi enne ühendumist laadida tun.ko tuumamoodul. Nõuab ruuditud seadet.</string>
@@ -270,7 +271,7 @@
   <string name="tls_remote_deprecated">tls-remote (TAUNITAV)</string>
   <string name="help_translate">Tõlkimisel saate abi pakkuda külastades veebilehte http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s katset et juhtida %2$s</string>
-  <string name="remote_warning">Jätkates annate sellele programmile täieliku kontrolli üle Androidi OpenVPN-i ja samuti õiguse jälgida kogu võrguliiklust. <b> Kui te ei usalda seda programmi, siis ÄRGE NÕUSTUGE. </b> Vastasel juhul riskite te oma andmete privaatsuse või terviklikkuse manipulatsiooniga pahatahtliku tarkvara poolt.\"</string>
+  <string name="remote_warning">Jätkates annate sellele programmile täieliku kontrolli üle Androidi OpenVPN-i ja samuti õiguse jälgida kogu võrguliiklust. <b> Kui te ei usalda seda programmi, siis ÄRGE NÕUSTUGE. </b> Vastasel juhul seate oma andmed pahatahtliku tarkvara poolt ohtu.\"</string>
   <string name="remote_trust">Ma usaldan seda programmi.</string>
   <string name="no_external_app_allowed">Ühelgi programmil pole luba kasutada välist API-t</string>
   <string name="allowed_apps">Lubatud programmid: %s</string>
@@ -288,4 +289,9 @@
   <string name="cannotparsecert">Sertifikaadiinfo kuvamine ei õnnestu</string>
   <string name="appbehaviour">Rakenduse käitumine</string>
   <string name="vpnbehaviour">VPN käitumine</string>
+  <string name="allow_vpn_changes">Luba muudatused VPN profiilides</string>
+  <string name="hwkeychain">Riistvaraline võtmehoidla:</string>
+  <string name="permission_icon_app">\'OpenVPN Androidile\' üritatakse kasutada programmi ikooni poolt</string>
+  <string name="faq_vpndialog43">"Alates Android 4.3 versioonist kaitstakse VPN kinnitust \"kattuvate programmide\" eest. Selle tulemusena ei reageeri dialoog puutesisendile. Võite sattuda sellisele probleemile kui teil on programm, mis kasutab kattumist. Leides sellise häiriva programmi, teavitage sellest programmi autorit. Nimetatud probleem mõjutab kõiki VPN programme alates Android 4.3 versioonist. Lisadetailid:  &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\"&gt; teema 185&lt;/a&gt;"</string>
+  <string name="faq_vpndialog43_title">Android 4.3 (ja hilisemate) VPN kinnitusdialoog</string>
 </resources>

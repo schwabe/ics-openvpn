@@ -263,7 +263,6 @@ Effettuata la lettura del file di configurazione</string>
   <string name="tls_remote_deprecated">TLS-remote (obsoleto)</string>
   <string name="help_translate">Puoi aiutare nella traduzione visitando http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s tenta di controllare %2$s</string>
-  <string name="remote_warning">Se procedi, concedi all\'applicazione l\'autorizzazione per intercettare tutto il traffico di rete.<b> NON accettare se non consideri l\'applicazione attendibile</b>, altrimenti corri il rischio che i tuoi dati vengano compromessi da programmi software dannosi.</string>
   <string name="remote_trust">Considero questa applicazione attendibile.</string>
   <string name="no_external_app_allowed">Nessuna app ha il permesso di usare l\'API esterna</string>
   <string name="allowed_apps">Apps abilitate;%s</string>

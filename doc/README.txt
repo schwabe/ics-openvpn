@@ -1,4 +1,8 @@
-This is my first Android project, so some things may be done in a completely stupid way.
+ATTENTION
+================
+Before doing anything please read the first FAQ point in this file, espically if 
+you planing to build commercial software from this client. Also make sure you
+understand the licenses of the code. When in doubt mail me about it.
 
 See  the file todo.txt for ideas/not yet implemented features (and the bug tracker).
 

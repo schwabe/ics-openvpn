@@ -263,7 +263,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="tls_remote_deprecated">tl-remote (OBSOLETE)</string>
   <string name="help_translate">Vous pouvez aider à traduire en visitant http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s essais de controler %2$s</string>
-  <string name="remote_warning">En continuant vous donnerez la permission a l\'application de contrôler complètement OpenVPN pour Android et d\'intercepter tout le trafic réseau. <b> N\'acceptez que si vous faite confiance à l\'application. </b> Sinon vous vous exposez au risque de voir vos données compromises par une application malicieuse.</string>
   <string name="remote_trust">Faire confiance à cette application.</string>
   <string name="no_external_app_allowed">Aucune appli. autorisée pour utiliser l\'API externe</string>
   <string name="allowed_apps">Applications autorisées: %s</string>

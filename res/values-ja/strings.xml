@@ -166,7 +166,7 @@ SDカード上のデータは本質的に無防備です。すべてのアプリ
   <string name="owner_fix_summary">システムに/dev/tunの所有者を設定します。いくつかのCM9のイメージでVPNService APIを動作させるために必要です。root権限が必要です。</string>
   <string name="owner_fix">/dev/tun の所有権を修正</string>
   <string name="generated_config_summary">生成された OpenVPN の構成ファイルを表示します</string>
-  <string name="edit_profile_title">\"%S\"の編集</string>
+  <string name="edit_profile_title">\"%s\"の編集</string>
   <string name="building_configration">構成中・・・</string>
   <string name="netchange_summary">この設定を有効にすると、ネットワークの状態変化時(WiFi／モバイル)に再接続を行います。</string>
   <string name="netchange">ネットワーク変化時に再接続</string>

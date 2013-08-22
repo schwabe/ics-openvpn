@@ -270,7 +270,6 @@
   <string name="tls_remote_deprecated">TLS-remote (DEPRECATED)</string>
   <string name="help_translate">Anda dapat membantu menerjemahkan dengan mengunjungi http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s berusaha mengendalikan %2$s</string>
-  <string name="remote_warning">Dengan melanjutkan, Anda memberi izin aplikasi untuk sepenuhnya mengontrol OpenVPN untuk Android dan untuk mencegat semua lalu lintas jaringan. <b>Jangan terima kecuali Anda mempercayai aplikasi.</b> Jika tidak, data Anda beresiko diambil oleh perangkat lunak jahat.\"</string>
   <string name="remote_trust">Saya percaya aplikasi ini.</string>
   <string name="no_external_app_allowed">App tidak diizinkan untuk menggunakan API eksternal</string>
   <string name="allowed_apps">apps yang diijinkan : %s</string>

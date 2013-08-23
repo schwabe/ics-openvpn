@@ -269,7 +269,6 @@
   <string name="tls_remote_deprecated">tls-remote (지원 되지 않음)</string>
   <string name="help_translate">http://crowdin.net/project/ics-openvpn/invite를 방문 하여 번역을 도울 수 있습니다</string>
   <string name="prompt">%1$s 이(가) %2$s 을(를) 제어하려고 시도</string>
-  <string name="remote_warning">다음 진행으로, 당신은 응용프로그램에게 안드로이드에 대한 OpenVPN의 완벽한 제어권과 모든 네트워크 트래픽을 가로챌 수 있는 권한을 허락합니다. <b>앱을 신뢰하지 않는다면 허락하지 마십시오.</b> 그렇지 않으면, 당신은 당신의 데이터를 악성 소프트웨어에게 빼앗길 수 있습니다.\"</string>
   <string name="remote_trust">나는 이 프로그램을 신뢰합니다.</string>
   <string name="no_external_app_allowed">어떤 응용 프로그램도 외부 API를 사용할 수 없습니다</string>
   <string name="allowed_apps">허용된 앱: %s</string>

@@ -209,7 +209,6 @@
   <string name="tls_remote_deprecated">tls-remote (PRZESTARZAŁE)</string>
   <string name="help_translate">Możesz pomóc w tłumaczeniu odwiedzająć http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s próby kontroli %2$s</string>
-  <string name="remote_warning">Akceptując, dajesz aplikacji uprawnienia do pełnego kontrolowania przez OpenVPN całego ruchu sieciowego. <b>Nie akceptuj, jeżeli nie ufasz aplikacji w pełni. </b> W przeciwnym razie istnieje ryzyko przejęcia danych przez złośliwe oprogramowanie. </string>
   <string name="remote_trust">Ufam tej aplikacji.</string>
   <string name="no_external_app_allowed">Żadna aplikacja nie ma pozwolenia do używania zewnętrznego API</string>
   <string name="allowed_apps">Dozwolone aplikacje: %s</string>

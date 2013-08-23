@@ -1,0 +1,30 @@
+V/TEEKeyMaster(  131): Closing subsession 0x404fd468: 0x0
+E/ActivityThread(18919): Activity de.blinkt.openvpn.LaunchVPN has leaked ServiceConnection android.security.KeyChain$1@42145e30 that was originally bound here
+E/ActivityThread(18919): android.app.ServiceConnectionLeaked: Activity de.blinkt.openvpn.LaunchVPN has leaked ServiceConnection android.security.KeyChain$1@42145e30 that was originally bound here
+E/ActivityThread(18919):                                      at android.app.LoadedApk$ServiceDispatcher.<init>(LoadedApk.java:974)
+E/ActivityThread(18919):                                      at android.app.LoadedApk.getServiceDispatcher(LoadedApk.java:868)
+E/ActivityThread(18919):                                      at android.app.ContextImpl.bindServiceAsUser(ContextImpl.java:1452)
+E/ActivityThread(18919):                                      at android.app.ContextImpl.bindService(ContextImpl.java:1440)
+E/ActivityThread(18919):                                      at android.security.KeyChain.bind(KeyChain.java:444)
+E/ActivityThread(18919):                                      at android.security.KeyChain.getCertificateChain(KeyChain.java:336)
+E/ActivityThread(18919):                                      at de.blinkt.openvpn.VpnProfile.getKeyStoreCertificates(VpnProfile.java:562)
+E/ActivityThread(18919):                                      at de.blinkt.openvpn.VpnProfile.getKeyStoreCertificates(VpnProfile.java:549)
+E/ActivityThread(18919):                                      at de.blinkt.openvpn.VpnProfile.getConfigFile(VpnProfile.java:251)
+E/ActivityThread(18919):                                      at de.blinkt.openvpn.VpnProfile.prepareIntent(VpnProfile.java:538)
+E/ActivityThread(18919):                                      at de.blinkt.openvpn.core.VPNLaunchHelper.startOpenVpn(VPNLaunchHelper.java:71)
+E/ActivityThread(18919):                                      at de.blinkt.openvpn.LaunchVPN$startOpenVpnThread.run(LaunchVPN.java:374)
+W/ActivityManager(  443): Unbind failed: could not find connection for android.os.BinderProxy@4277f580
+W/dalvikvm(18919): threadid=16: thread exiting with uncaught exception (group=0x419bd700)
+E/AndroidRuntime(18919): FATAL EXCEPTION: Thread-738
+E/AndroidRuntime(18919): java.lang.IllegalArgumentException: Service not registered: android.security.KeyChain$1@42145e30
+E/AndroidRuntime(18919):                                     at android.app.LoadedApk.forgetServiceDispatcher(LoadedApk.java:926)
+E/AndroidRuntime(18919):                                     at android.app.ContextImpl.unbindService(ContextImpl.java:1485)
+E/AndroidRuntime(18919):                                     at android.security.KeyChain$KeyChainConnection.close(KeyChain.java:412)
+E/AndroidRuntime(18919):                                     at android.security.KeyChain.getCertificateChain(KeyChain.java:355)
+E/AndroidRuntime(18919):                                     at de.blinkt.openvpn.VpnProfile.getKeyStoreCertificates(VpnProfile.java:562)
+E/AndroidRuntime(18919):                                     at de.blinkt.openvpn.VpnProfile.getKeyStoreCertificates(VpnProfile.java:549)
+E/AndroidRuntime(18919):                                     at de.blinkt.openvpn.VpnProfile.getConfigFile(VpnProfile.java:251)
+E/AndroidRuntime(18919):                                     at de.blinkt.openvpn.VpnProfile.prepareIntent(VpnProfile.java:538)
+E/AndroidRuntime(18919):                                     at de.blinkt.openvpn.core.VPNLaunchHelper.startOpenVpn(VPNLaunchHelper.java:71)
+E/AndroidRuntime(18919):                                     at de.blinkt.openvpn.LaunchVPN$startOpenVpnThread.run(LaunchVPN.java:374)
+W/ActivityManager(  443):   Force finishing activity de.blinkt.openvpn/.LogWindow

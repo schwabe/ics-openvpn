@@ -16,7 +16,7 @@
   <string name="client_pkcs12_title">PKCS12ファイル</string>
   <string name="ca_title">CA 証明書</string>
   <string name="no_certificate">証明書を選択する必要があります。</string>
-  <string name="copyright_guicode">ソースコードと問題管理は以下で： http://code.google.com/p/ics-openvpn/</string>
+  <string name="copyright_guicode">ソースコードと問題管理はここにあります： http://code.google.com/p/ics-openvpn/</string>
   <string name="copyright_others">プログラムは、次のコンポーネントを使用します。完全な詳細についてはソース上のライセンスを参照してください。</string>
   <string name="about">バージョン情報</string>
   <string name="vpn_list_title">プロファイル</string>
@@ -285,7 +285,6 @@ OpenVPNの接続を保証するためには、アプリケーションを高い�
   <string name="tls_remote_deprecated"> tls-remote (非推奨)</string>
   <string name="help_translate">翻訳作業を手伝っていただける方は次のURLへ http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s は %2$s を制御しようとしています。</string>
-  <string name="remote_warning">このまま進むと、あなたはOpenVPN for Androidの完全な制御とすべての通信を傍受する権限をアプリケーションに対し与えることになります。<b>アプリケーションが信頼できない限り、承諾しないでください。</b>さもないと、あなたのデータがマルウェアにより漏洩させられる危険があります。</string>
   <string name="remote_trust">私はこのアプリケーションを信頼します</string>
   <string name="no_external_app_allowed">外部APIの使用を許可されたアプリはありません</string>
   <string name="allowed_apps">許可アプリ: %s</string>
@@ -294,4 +293,12 @@ OpenVPNの接続を保証するためには、アプリケーションを高い�
   <string name="screenoff_title">画面オフ後にVPN接続を中断する</string>
   <string name="screen_nopersistenttun">警告: このVPN接続には永続的なTUNが設定されていません。スクリーンオフ後の通信は通常のインターネット接続を使用します。</string>
   <string name="save_password">パスワードを保存</string>
+  <string name="pauseVPN">VPN一時停止</string>
+  <string name="resumevpn">VPN再開</string>
+  <string name="state_userpause">ユーザによってVPN一時停止が要求されました</string>
+  <string name="state_screenoff">VPN一時停止中 - screenオフ</string>
+  <string name="device_specific">デバイス固有のhacks</string>
+  <string name="cannotparsecert">証明書の情報が表示できません。</string>
+  <string name="appbehaviour">アプリケーションの挙動</string>
+  <string name="faq_vpndialog43_title">Android 4.3以降用VPN確認ダイアログ</string>
 </resources>

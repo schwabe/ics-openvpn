@@ -268,7 +268,6 @@
   <string name="tls_remote_deprecated">TLS-remote (ej längre i bruk)</string>
   <string name="help_translate">Du kan hjälpa till med översättningen genom att besöka http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s försöker styra %2$s</string>
-  <string name="remote_warning">Genom att fortsätta ger du applikationen tilstånd att fullständigt styra OpenVPM för Android och att avlyssna all nätverkstrafik. <b>Acceptera INTE om du inte litar på applikationen.</b> Annars riskerar du att din data äventyras av skadlig programvara.\"</string>
   <string name="remote_trust">Jag litar på denna applikation.</string>
   <string name="no_external_app_allowed">Ingen app får använda externa API</string>
   <string name="allowed_apps">Tillåtna apps: %s</string>

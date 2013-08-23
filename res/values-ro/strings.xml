@@ -269,7 +269,6 @@
   <string name="tls_remote_deprecated">tls-remote (ÎNVECHIT)</string>
   <string name="help_translate">Puteţi ajuta la traducere vizitând http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s încercări de a controla %2$s</string>
-  <string name="remote_warning">Continuând, daţi permisiunea aplicaţiei de a controla complet OpenVPN pentru Android și de a intercepta tot traficul de rețea. <b>Nu acceptaţi decât dacă aveți încredere în aplicație</b> În caz contrar, riscaţi să aveţi datele compromise de software maliţios.\"</string>
   <string name="remote_trust">Am încredere în această aplicaţie.</string>
   <string name="no_external_app_allowed">Nici o aplicaţie nu are permisiunea de a folosi API-ul extern</string>
   <string name="allowed_apps">Aplicaţii permise: %s</string>

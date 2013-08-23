@@ -266,7 +266,6 @@
   <string name="tls_remote_deprecated">tls-remote (OBSOLETO)</string>
   <string name="help_translate">Tu puedes ayudar traduciendo visitando http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s intentos de controlar %2$s</string>
-  <string name="remote_warning">Para continuar debe permitir a OpenVPN para Android controlar e interceptar todo el tráfico de red. <b> No acepte a menos que confíe en esta aplicación. </b> De lo contrario, usted puede correr el riesgo de comprometer sus datos ante software malicioso.\"</string>
   <string name="remote_trust">Confío en esta aplicación.</string>
   <string name="no_external_app_allowed">La aplicación no permite usar API externo</string>
   <string name="allowed_apps">Aplicaciones autorizadas: %s</string>

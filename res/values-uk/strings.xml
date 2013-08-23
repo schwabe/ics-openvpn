@@ -269,7 +269,6 @@
   <string name="tls_remote_deprecated">tls-remote (ЗАСТАРІЛЕ)</string>
   <string name="help_translate">Ви можете допомогти в перекладі, відвідавши http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s спроб контролювати %2$s</string>
-  <string name="remote_warning">Продовжуючи, ви даєте дозвіл на застосування повного контролю OpenVPN для Android і щоб перехоплювати всі мережевого трафіку. <b>Не приймайте, тільки якщо ви не довіряєте програмі.</b> В іншому випадку ви ризикуєте мати скомпрометовані шкідливим програмним забезпеченням дані.\"</string>
   <string name="remote_trust">Я довіряю цьому додатку.</string>
   <string name="no_external_app_allowed">Не дозволяється використовувати зовнішнє API</string>
   <string name="allowed_apps">Дозволенi додатки: %s</string>

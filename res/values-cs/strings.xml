@@ -270,7 +270,6 @@
   <string name="tls_remote_deprecated">tls-remote (ZASTARALÉ)</string>
   <string name="help_translate">Můžeš pomoci s překladem, navštiv http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s se pokouší o kontrolu %2$s</string>
-  <string name="remote_warning">Pokračováním dáváš aplikaci oprávnění pro kompletní kontrolu OpenVPN a k zachytávání veškerého síťového provozu. <b>Nepotvrzuj, pokud nevěříš aplikaci.</b> V opačném případě riskuješ napadení nebezpečným softwarem.</string>
   <string name="remote_trust">Věřím této aplikaci.</string>
   <string name="no_external_app_allowed">Žádné aplikaci není povoleno použít externí API</string>
   <string name="allowed_apps">Povolené aplikace: %s</string>

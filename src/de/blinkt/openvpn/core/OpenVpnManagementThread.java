@@ -504,9 +504,15 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 	private void processSignCommand(String b64data) {
 
 		String signed_string = mProfile.getSignedData(b64data);
-		managmentCommand("rsa-sig\n");
+        if(signed_string==null) {
+            managmentCommand("rsa-sig\n");
+            managmentCommand("\nEND\n");
+            stopOpenVPN();
+            return;
+        }
+        managmentCommand("rsa-sig\n");
 		managmentCommand(signed_string);
-		managmentCommand("\nEND\n");
+        managmentCommand("\nEND\n");
 	}
 
 	@Override

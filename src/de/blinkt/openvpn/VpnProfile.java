@@ -838,6 +838,7 @@ public class VpnProfile implements Serializable {
             int pkey = (Integer) getPkeyContext.invoke(opensslkey);
             getPkeyContext.setAccessible(false);
 
+            // 112 with TLS 1.2 (172 back with 4.3), 36 with TLS 1.0
             byte[] signed_bytes = NativeUtils.rsasign(data, pkey);
             return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
 

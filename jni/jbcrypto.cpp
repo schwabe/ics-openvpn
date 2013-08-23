@@ -40,7 +40,7 @@ int jniThrowException(JNIEnv* env, const char* className, const char* msg) {
     return 0;
 }
 
-
+static char opensslerr[1024];
 jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsasign (JNIEnv* env, jclass, jbyteArray from, jint pkeyRef) {
 
 	//	EVP_MD_CTX* ctx = reinterpret_cast<EVP_MD_CTX*>(ctxRef);
@@ -58,7 +58,7 @@ jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsasign (JNIEnv* env, jclass,
 	if(data==NULL )
 		jniThrowException(env, "java/lang/NullPointerException", "data is null");
 
-	unsigned int siglen;
+    int siglen;
 	unsigned char* sigret = (unsigned char*)malloc(RSA_size(pkey->pkey.rsa));
 
 
@@ -66,11 +66,16 @@ jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsasign (JNIEnv* env, jclass,
 	//           unsigned char *sigret, unsigned int *siglen, RSA *rsa);
 
 	// adapted from s3_clnt.c
-	if (RSA_sign(NID_md5_sha1, (unsigned char*) data, datalen,
-			sigret, &siglen, pkey->pkey.rsa) <= 0 )
+    /*	if (RSA_sign(NID_md5_sha1, (unsigned char*) data, datalen,
+        sigret, &siglen, pkey->pkey.rsa) <= 0 ) */
+
+    siglen = RSA_private_encrypt(datalen,(unsigned char*) data,sigret,pkey->pkey.rsa,RSA_PKCS1_PADDING);
+
+    if (siglen < 0)
 	{
 
-		jniThrowException(env, "java/security/InvalidKeyException", "rsa_sign went wrong, see logcat");
+        ERR_error_string_n(ERR_get_error(), opensslerr ,1024);
+		jniThrowException(env, "java/security/InvalidKeyException", opensslerr);
 
 		ERR_print_errors_fp(stderr);
 		return NULL;

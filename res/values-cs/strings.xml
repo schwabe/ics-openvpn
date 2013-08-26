@@ -188,6 +188,7 @@
   <string name="export_config_title">ICS OpenVPN nastavení</string>
   <string name="warn_no_dns">Žádné DNS servery nejsou použity. Překlad jmen nemusí fungovat. Zvaž nastavení vlastních DNS serverů. Též dbej na to, že Android bude nadále používat nastavení proxy určené pro mobilní/Wi-Fi připojení, pokud nejsou nastaveny žádné servery DNS.</string>
   <string name="dns_add_error">Nemohu přidat DNS server \"%1$s\", odmítnuto systémem: %2$s</string>
+  <string name="ip_add_error">Nelze nastavit IP adresu \"%1$s\", odmítnuto systémem: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Získej fungující nastavení (otestované na tvém počítači nebo stažené od poskytovatele/zaměstnavatele).&lt;/p&gt;&lt;p&gt;Pokud je to jeden soubor bez extra pem/pks12 souborů, můžeš ho poslat emailem jako přílohu. Pokud je souborů více, ulož je na SD kartu.&lt;/p&gt;&lt;p&gt;Klepni na přilohu mailu/Použij ikonu adresáře v seznamu VPN pro import nastavení.&lt;/p&gt;&lt;p&gt;Pokud se zobrazí chyby o chybějících souborech, ulož je na SD kartu.&lt;/p&gt;&lt;p&gt;Pro přidání importované VPN do seznamu, klepni na symbol pro uložení.&lt;/p&gt;&lt;p&gt;Pro připojení k VPN klepni na její jméno.&lt;/p&gt;&lt;p&gt;Pokud se v logu objeví varování nebo chyby, pokus se jim porozumět a opravit nastavení.&lt;/p&gt; </string>
   <string name="faq_howto_title">Rychlý start</string>
   <string name="setting_loadtun_summary">pokus se nahrát jaderný modul tun.ko před pokusem o připojení. Vyžaduje rootnuté zařízení.</string>
@@ -270,6 +271,7 @@
   <string name="tls_remote_deprecated">tls-remote (ZASTARALÉ)</string>
   <string name="help_translate">Můžeš pomoci s překladem, navštiv http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s se pokouší o kontrolu %2$s</string>
+  <string name="remote_warning">Pokračováním dáváš aplikaci oprávnění pro kompletní kontrolu OpenVPN a k zachytávání veškerého síťového provozu. <b>Nepotvrzuj, pokud nevěříš aplikaci.</b> V opačném případě riskuješ napadení nebezpečným softwarem</string>
   <string name="remote_trust">Věřím této aplikaci.</string>
   <string name="no_external_app_allowed">Žádné aplikaci není povoleno použít externí API</string>
   <string name="allowed_apps">Povolené aplikace: %s</string>
@@ -287,4 +289,9 @@
   <string name="cannotparsecert">Nelze zobrazit informace o certifikátu</string>
   <string name="appbehaviour">Chování aplikace</string>
   <string name="vpnbehaviour">Chování VPN</string>
+  <string name="allow_vpn_changes">Povolit změny VPN profilů</string>
+  <string name="hwkeychain">Hardwarové úložiště:</string>
+  <string name="permission_icon_app">Ikona aplikace snažící se použít OpenVPN pro Android</string>
+  <string name="faq_vpndialog43">"Počínaje Androidem 4.3, VPN konfirmace je chráněná proti \"překryvným aplikacím\". Výsledkem je dialog nereagující na dotyk. Pokud máš aplikaci používající překryv, může to způsobit toto chování. Pokud nalezneš škodlivou aplikaci, kontaktuj jejího autora. Tento problém ovlivňuje všechny VPN aplikace na Androidu 4.3 a vyšší. Viz také &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\"&gt;Problém 185&lt;a&gt; pro další detaily."</string>
+  <string name="faq_vpndialog43_title">VPN potvrzovací dialog na Androidu 4.3 a vyšší</string>
 </resources>

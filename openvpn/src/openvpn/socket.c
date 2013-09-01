@@ -1191,6 +1191,7 @@ resolve_remote (struct link_socket *sock,
 	      unsigned int flags = sf2gaf(GETADDR_RESOLVE|GETADDR_UPDATE_MANAGEMENT_STATE, sock->sockflags);
 	      int retry = 0;
 	      int status = -1;
+              struct addrinfo* ai;
               if (proto_is_dgram(sock->info.proto))
                   flags |= GETADDR_DATAGRAM;
 
@@ -1229,20 +1230,20 @@ resolve_remote (struct link_socket *sock,
 		  ASSERT (0);
 		}
 
-		  struct addrinfo* ai;
-		  status = openvpn_getaddrinfo (flags, sock->remote_host, sock->remote_port,
-                                               retry, signal_received, sock->info.af, &ai);
-		  if(status == 0) {
-                          sock->info.lsa->remote_list = ai;
-                          sock->info.lsa->current_remote = ai;
+	      status = openvpn_getaddrinfo (flags, sock->remote_host, sock->remote_port,
+					    retry, signal_received, sock->info.af, &ai);
 
-			  dmsg (D_SOCKET_DEBUG, "RESOLVE_REMOTE flags=0x%04x phase=%d rrs=%d sig=%d status=%d",
-					flags,
-					phase,
-					retry,
-					signal_received ? *signal_received : -1,
-					status);
-		  }
+	      if(status == 0) {
+		sock->info.lsa->remote_list = ai;
+		sock->info.lsa->current_remote = ai;
+
+		dmsg (D_SOCKET_DEBUG, "RESOLVE_REMOTE flags=0x%04x phase=%d rrs=%d sig=%d status=%d",
+		      flags,
+		      phase,
+		      retry,
+		      signal_received ? *signal_received : -1,
+		      status);
+	      }
 	      if (signal_received)
 		{
 		  if (*signal_received)

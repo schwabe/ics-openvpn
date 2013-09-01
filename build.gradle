@@ -39,6 +39,15 @@ android {
             assets.srcDirs = ['assets']
         }
 
+        xposedmodule {
+            manifest.srcFile 'xposed/AndroidManifest.xml'
+            java.srcDirs = ['xposed/src']
+            resources.srcDirs = ['xposed/src']
+            aidl.srcDirs = ['xposed/src']
+            renderscript.srcDirs = ['xposed/src']
+            res.srcDirs = ['xposed/res']
+            assets.srcDirs = ['xposed/assets']
+        }
 
     }
 

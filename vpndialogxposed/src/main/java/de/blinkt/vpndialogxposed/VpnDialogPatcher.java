@@ -36,20 +36,28 @@ public class VpnDialogPatcher implements IXposedHookLoadPackage {
 
                     IConnectivityManager mService = IConnectivityManager.Stub.asInterface(
                             (IBinder) getService.invoke(servicemanager, Context.CONNECTIVITY_SERVICE));
-                            */
 
+                    */
                     Object mService = XposedHelpers.getObjectField(param.thisObject, "mService");
 
                     String mPackage = ((Activity) param.thisObject).getCallingPackage();
 
                      // App is already allowed do nothing
-                    if (mService.prepareVpn(mPackage, null)) {
+                    /*if (mService.prepareVpn(mPackage, null)) {
                         return;
-                    }
+                    }*/
+
+
+                    Class<?>[] prepareVPNsignature = {String.class, String.class};
+                    if((Boolean) XposedHelpers.callMethod(mService,"prepareVpn",prepareVPNsignature,  mPackage,(String)null))
+                        return;
 
                     if (mPackage.equals("de.blinkt.openvpn")) {
-                        mService.prepareVpn(null, mPackage);
+                        //mService.prepareVpn(null, mPackage);
+                        XposedHelpers.callMethod(mService,"prepareVpn",prepareVPNsignature, (String)null,mPackage);
+                        ((Activity) param.thisObject).setResult(Activity.RESULT_OK);
                         Toast.makeText((Context)param.thisObject,"Allowed de.blinkt.openvpn",Toast.LENGTH_LONG).show();
+                        ((Activity) param.thisObject).finish();
                     }
 
                 } catch (Exception e) {

@@ -519,6 +519,7 @@ establish_http_proxy_passthru (struct http_proxy_info *p,
     }
   else
     {
+      int i=0;
       /* format HTTP CONNECT message */
       openvpn_snprintf (buf, sizeof(buf), "CONNECT %s:%s HTTP/%s",
 			host,
@@ -542,6 +543,21 @@ establish_http_proxy_passthru (struct http_proxy_info *p,
 			    p->options.user_agent);
 	  if (!send_line_crlf (sd, buf))
 	    goto error;
+	}
+      /* Send custom headers if provided */
+      while (p->options.custom_headers[i].name)
+	{
+	  if (p->options.custom_headers[i].content)
+	    openvpn_snprintf (buf, sizeof(buf), "%s: %s",
+			      p->options.custom_headers[i].name,
+			      p->options.custom_headers[i].content);
+	  else
+	    openvpn_snprintf (buf, sizeof(buf), "%s",
+			      p->options.custom_headers[i].name);
+	 
+	  if (!send_line_crlf (sd, buf))
+	    goto error;
+	  i++;
 	}
 
       /* auth specified? */

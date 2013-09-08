@@ -4979,6 +4979,35 @@ add_option (struct options *options,
 	{
 	  ho->user_agent = p[2];
 	}
+      else if ((streq (p[1], "EXT1") || streq(p[1], "EXT2") || streq(p[1], "CUSTOM-HEADER"))
+	       && p[2])
+	{
+	  /* In the wild patched versions use both EXT1/2 and CUSTOM-HEADER with either two
+	   * argument or one */
+	  struct http_custom_header *custom_header =NULL;
+	  int i;
+	  
+	  
+	  /* Find the first free header */
+	  for (i=0; i < MAX_CUSTOM_HTTP_HEADER; i++) {
+	    if (!ho->custom_headers[i].name) {
+	      custom_header = &ho->custom_headers[i];
+	      break;
+	    }
+	  }
+	  if (!custom_header)
+	    {
+	      msg (msglevel, "Cannot use more than %d http-proxy-option CUSTOM-HEAER : '%s'", MAX_CUSTOM_HTTP_HEADER, p[1]);
+	    }
+	  else
+	    {
+	      /* We will save p[2] and p[3], the proxy code will detect if 
+	       * p[3] is NULL */
+	      custom_header->name = p[2];
+	      custom_header->content = p[3];
+	    }
+	  
+	}
       else
 	{
 	  msg (msglevel, "Bad http-proxy-option or missing parameter: '%s'", p[1]);

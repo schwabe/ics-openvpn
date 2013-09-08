@@ -278,4 +278,5 @@
   <string name="screenoff_pause">화면이 꺼진 상태에서 일시 중지: %2$ss에서 %1$s 미만</string>
   <string name="screen_nopersistenttun">경고: 이 VPN은 persistent tun이 비활성화 되어있습니다. 화면이 꺼졌을 때 트래픽은 터널을 사용하지 않고 인터넷을 바로 사용합니다.</string>
   <string name="save_password">암호 저장</string>
+  <string name="state_screenoff">VPN 정지 - 화면 끄기</string>
 </resources>

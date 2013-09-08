@@ -269,4 +269,9 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="clearappsdialog">Effacer la liste des appli. externes?\nListe des appli. autorisées:\n\n%s</string>
   <string name="screenoff_title">Mettre la connection VPN en pause à l\'exctinction de l\'écran</string>
   <string name="save_password">Enregistrer le mot de passe</string>
+  <string name="state_screenoff">VPN en pause - écran eteint</string>
+  <string name="cannotparsecert">Ne peut pas afficher les informations de certificat</string>
+  <string name="appbehaviour">Comportement de l\'application</string>
+  <string name="vpnbehaviour">Comportement du VPN</string>
+  <string name="allow_vpn_changes">Autoriser les modifications des profils VPN</string>
 </resources>

@@ -121,6 +121,7 @@
   <string name="no_vpn_support_image">Su imagen no es compatible con la API de VPNService, lo siento :(</string>
   <string name="encryption">Cifrado</string>
   <string name="cipher_dialog_title">Especifique el método de cifrado</string>
+  <string name="chipher_dialog_message">Proporcione el algoritmo de cifrado usado por OpenVPN. Deje en blanco para usar el cifrado de fábrica.</string>
   <string name="auth_dialog_message">Introduce la autenticacion digest usada por OpenVPN. Deja en blanco para usar el digest predeterminado.</string>
   <string name="settings_auth">Autenticación/Cifrado</string>
   <string name="file_explorer_tab">Administrador de archivos</string>
@@ -152,6 +153,7 @@
   <string name="converted_profile">perfil importado</string>
   <string name="converted_profile_i">perfil importado %d</string>
   <string name="broken_images">Imágenes rotas</string>
+  <string name="broken_images_faq">&lt;p&gt;Las imágenes oficiales de HTC son conocidas por tener un extraño problema de enrutamiento, causando que el tráfico no fluya a través del túnel (Ver también &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; en el bug tracker.)&lt;/p&gt;&lt;p&gt; Han reportado que el VPNService hace falta completamente de las imagenes oficiales de SONY más viejas del XPeria Arc S y Xperia Ray. (Ver también &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; en el bug tracker.)&lt;/p&gt;&lt;p&gt;Puede faltar el módulo tun o los permisos de /dev/tun/ pueden estar incorrectos. Algunas imágenes de CM9 necesitan habilitada la opcion \"Fix ownership\" option bajo \"Hacks específicos del dispositivo\".&lt;/p&gt;&lt;p&gt;De mayor importancia: Si tu dispositivo tiene una imágen corrupta de Android, reportalo a tu proveedor. Entre mayor gente reporte el problema al proveedor, mayores son las probabilidades de que lo reparen.&lt;/p&gt;</string>
   <string name="pkcs12_file_encryption_key">Clave PKCS12 de cifrado de archivos</string>
   <string name="private_key_password">Contraseña de clave privada</string>
   <string name="password">Contraseña</string>
@@ -186,6 +188,7 @@
   <string name="export_config_title">Configuracion Openvpn de ICS</string>
   <string name="warn_no_dns">No hay servidores DNS a utilizar. La Resolución de nombres puede no funcionar. Considere configurar servidores DNS personalizados. Tenga en cuenta que Android sigue usando la configuración de proxy especificada para su conexión móvil/Wi-Fi cuando no hay servidores DNS establecidos.</string>
   <string name="dns_add_error">No se puede agregar el servidor DNS \"%1$s\", rechazado por el sistema: %2$s</string>
+  <string name="ip_add_error">No se pudo configurar la dirección IP \"%1$s\", rechazada por el sistema: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Obtén una configuración funcionando (probada en tu computadora o descargada de tu proveedor/organización)&lt;/p&gt;&lt;p&gt;Si es un solo archivo sin archivos pem/pks12 puedes enviar en un correo tu mismo el archivo y abrir el adjunto. Si tienes varios archivos ponlos en tu tarjeta SD.&lt;/p&gt;&lt;p&gt;Da clic en el adjunto de tu correo/Usa el icono de carpeta en la lista de VPN para importar el archivo de configuración &lt;/p&gt;&lt;p&gt;Si hay errores de archivos faltantes pon los archivos que faltan en tu tarjeta SD.&lt;/p&gt;&lt;p&gt;Da clic en el símbolo de guardar para agregar la VPN importada a tu lista de VPN&lt;/p&gt;&lt;p&gt;Conéctate a la VPN dando clic en el nombre de la VPN&lt;/p&gt;&lt;p&gt;Si hay errores o advertencias en el registro intenta comprender los errores/advertencias e intenta solucionarlos&lt;/p&gt;</string>
   <string name="faq_howto_title">Inicio rápido</string>
   <string name="setting_loadtun_summary">Intente cargar el módulo del kernel tun.ko antes de intentar conectarse. Necesita dispositivos rooteados.</string>
@@ -210,11 +213,13 @@
   <string name="vpn_import_hint">Use el icono &lt;img src=\"ic_menu_archive\"/&gt; para importar un perfil existente (.ovpn or .conf) de tu tarjeta.</string>
   <string name="faq_hint">Asegúrese de checar también las preguntas frecuentes. Hay una guía de inicio rápido.</string>
   <string name="faq_routing_title">Configuración de enrutamiento o interfaz</string>
+  <string name="faq_routing">El enrutamiento y la configuración de la interfaz no se hace mediante los comandos tradicionales ifconfig/route sino usando el API VPNService. Esto resulta en una configuración de enrutamiento diferente a otros Sistemas operativos. La configuración sólo consiste en la IP de la interfaz túnel y las redes que deben ser enrutadas sobre dicha interfaz. No se necesitan direcciones peer parner o de puerta de enlace. Tompoco son necesarias rutas especiales para alcanzar al servidor VPN (por ejemplo, se agregan cuando se usa la opcion \'redirect-gateway\'). La aplicación ignorará consecuentemente estas opciones al importar una configuración. La aplicación se asegura que la conexión al servidor no se realice a través del túnel VPN, gracias al API VPN Service. Debido a que sólo se soporta enrutar ciertas redes mediante el túnel, rutas que no estén apuntando al túnel tampoco serán soportadas (p/e route x.x.x.x y.y.y.y net_gateway). Las ventanas de log muestran la configuración actual del VPNService al haber establecido una conexión. </string>
   <string name="persisttun_summary">No regresar a modo sin conexión VPN cuando OpenVPN esta volviendose a conectar.</string>
   <string name="persistent_tun_title">Tun persistente</string>
   <string name="openvpn_log">Registro de OpenVPN</string>
   <string name="import_config">Importar configuración de OpenVPN</string>
   <string name="battery_consumption_title">Consumo de batería</string>
+  <string name="baterry_consumption">En mis pruebas personales, la mayor razón de el alto consumo de batería de OpenVPN son los paquetes keepalive. La mayoría de los servidores OpenVPN tienen una directiva de configuración como \'keepalive 10 60\' la cual causa que el cliente y el servidor intercambien paquetes cada diez segundos. &lt;p&gt; Mientras estos paquetes sean pequeños y no utilicen mucho tráfico, mantienen la red móvil de radio ocupada e incrementan el consumo de energía. (Ver también &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Dicha configuración keepalive no puede ser cambiada en el cliente. Solo el administrador de OpenVPN puede hacerlo. &lt;p&gt; Infortunadamente, usar un keepalive mayor a 60 segundos con UDP puede causar que algunas puertas de enlace NAT cierren la conexión debido a inactividad. Usar TCP con largos periodos de inactividad keepalive funciona, pero el tuneleo TCP sobre TCP resulta en conexiones extremadamente pobres con alta pérdida de paquetes. (Ver &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
   <string name="faq_tethering">La funcionalidad de Tethering de Android (sobre WiFi, USB o Bluetooth) y la API del servicio de VPN (utilizada por esta aplicación) no pueden trabajar juntas. Para más detalles vea el &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;problema #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN y Tethering</string>
   <string name="connection_retries">Reintentos de conexión</string>
@@ -266,6 +271,7 @@
   <string name="tls_remote_deprecated">tls-remote (OBSOLETO)</string>
   <string name="help_translate">Tu puedes ayudar traduciendo visitando http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s intentos de controlar %2$s</string>
+  <string name="remote_warning">Al proceder, le estás proporcionando permiso a la aplicación para controlar completamente OpenVPN for Android e interceptar todo el tráfico de la red.<b>NO aceptar a menos que confíes en la aplicación.</b> De otro modo, corres el riesgo de que tus datos se vean comprometidos por software malicioso.\"</string>
   <string name="remote_trust">Confío en esta aplicación.</string>
   <string name="no_external_app_allowed">La aplicación no permite usar API externo</string>
   <string name="allowed_apps">Aplicaciones autorizadas: %s</string>
@@ -275,4 +281,17 @@
   <string name="screenoff_pause">Conexión en pausa si el estado de la pantalla es apagado: menos de %1$s en %2$ss</string>
   <string name="screen_nopersistenttun">Advertencia: TUN persistente no habilitado para esta VPN. El tráfico usará la conexión normal a Internet cuando la pantalla esté apagada.</string>
   <string name="save_password">Guardar contraseña</string>
+  <string name="pauseVPN">Pausar VPN</string>
+  <string name="resumevpn">Reanudar VPN</string>
+  <string name="state_userpause">VPN pausado por solicitud del usuario</string>
+  <string name="state_screenoff">VPN pausado - pantalla fuera</string>
+  <string name="device_specific">Hacks específicos del Dispositivo</string>
+  <string name="cannotparsecert">No se puede mostrar la información del certificado</string>
+  <string name="appbehaviour">Comportamiento de la aplicación</string>
+  <string name="vpnbehaviour">Comportamiento de VPN</string>
+  <string name="allow_vpn_changes">Permitir cambios a los perfiles VPN</string>
+  <string name="hwkeychain">Tecla Física:</string>
+  <string name="permission_icon_app">Ícono de la aplicación intentando usar OpenVPN for Android</string>
+  <string name="faq_vpndialog43">"Empezando con Android 4.3, la confirmación de VPN está protegida contra \"aplicaciones superpuestas\". Esto resulta en que la ventana de diálogo no reaccione a los toques de pantalla. Si tienes una aplicación que sea superpuesta, es lo que puede ocasionar este problema. Si encuentras una aplicación ofensiva, contactar al autor de la misma. Este problema afecta a todas las aplicaciones VPN en Android 4.3 y superior. Ver también &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\"&gt;Issue 185&lt;a&gt; para más detalles"</string>
+  <string name="faq_vpndialog43_title">Ventana de diálogo de confirmación VPN en Android 4.3 y superior</string>
 </resources>

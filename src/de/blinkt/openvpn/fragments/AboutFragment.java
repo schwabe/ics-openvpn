@@ -34,7 +34,8 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
     private static final int DONATION_CODE = 12;
     private static final int BILLING_RESPONSE_RESULT_OK = 0;
     private static final String RESPONSE_BUY_INTENT = "BUY_INTENT";
-    private static final String[] donationSkus = { "donation1eur", "donation2eur", "donation5eur", "donation10eur"};
+    private static final String[] donationSkus = { "donation1eur", "donation2eur", "donation5eur", "donation10eur",
+            "donation1337eur","donation23eur","donation25eur",};
     IInAppBillingService mService;
     Hashtable<View, String> viewToProduct = new Hashtable<View, String>();
     ServiceConnection mServiceConn = new ServiceConnection() {

@@ -46,11 +46,23 @@
             android:id="@+id/donatestring"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/donatewithpaypal"
             tools:ignore="SelectableText" />
 
+
+        <TextView
+                android:paddingTop="12sp"
+                android:id="@+id/donategms"
+                android:text="@string/donatePlayStore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:ignore="SelectableText"/>
+
+
         <Space
-            android:layout_width="match_parent"
-            android:layout_height="12sp" />
+                android:layout_width="match_parent"
+                android:layout_height="12sp" />
 
         <TextView
             android:id="@+id/translation"

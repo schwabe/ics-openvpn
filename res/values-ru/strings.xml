@@ -121,6 +121,7 @@
   <string name="no_vpn_support_image">Ваша прошивка не поддерживает VPNService API, извините :(</string>
   <string name="encryption">Шифрование</string>
   <string name="cipher_dialog_title">Укажите метод шифрования</string>
+  <string name="chipher_dialog_message">Укажите алгоритм шифрования, используемый OpenVPN. Оставьте пустым, чтобы использовать шифрование по-умолчанию.</string>
   <string name="auth_dialog_message">Введите the authentication digest для OpenVPN. Оставьте пустым для использования значения по-умолчанию.</string>
   <string name="settings_auth">Авторизация/шифрование</string>
   <string name="file_explorer_tab">Обзор файлов</string>
@@ -187,6 +188,7 @@
   <string name="export_config_title">ICS Openvpn конфигурация</string>
   <string name="warn_no_dns">Серверы DNS не используются. Разрешение имен может не работать. Рассмотрите возможность установки пользовательских DNS-серверов. Также обратите внимание, что Android будет продолжать использовать параметры, указанные для вашего мобильного/Wi-Fi соединения, если не указаны DNS-серверы.</string>
   <string name="dns_add_error">Не удалось добавить DNS-сервер \"%1$s\", отклонен системой: %2$s</string>
+  <string name="ip_add_error">Не удалось настроить IP-адрес \"%1$s\", сообщение системы: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Используйте готовую конфигурацию (протестированную на вашем компьютере или полученную от вашего провайдера)&lt;/p&gt;&lt;p&gt;Если это простой файл без pem/pks12 вы можете отправить его по email на свое устройство. Если же это несколько файлов, вы можете использовать их со своей карты памяти.&lt;/p&gt;&lt;p&gt;Просто кликните на .conf файл или выберите его с помощью меню в программе для импорта конфигурации&lt;/p&gt;&lt;p&gt;Если программа выдаст ошибку о нехватке некоторых файлов, просто поместите эти файлы на карту памяти&lt;/p&gt;&lt;p&gt;Нажмите кнопку сохранения для добавления импортируемой конфигурации в программу&lt;/p&gt;&lt;p&gt;Запустите ваш VPN-тоннель нажав на его название в списке&lt;/p&gt;&lt;p&gt;Если при запуске возникли ошибки попробуйте разобраться и устранить их.&lt;/p&gt; </string>
   <string name="faq_howto_title">Быстрый старт</string>
   <string name="setting_loadtun_summary">Попробуйте загрузить модуль ядра tun.ko прежде чем пытаться подключиться. Требуется root-доступ на устройстве.</string>
@@ -269,6 +271,7 @@
   <string name="tls_remote_deprecated">tls-remote (УСТАРЕВШЕЕ)</string>
   <string name="help_translate">Вы можете улучшить перевод, посетив http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s пытается управлять %2$s</string>
+  <string name="remote_warning">Продолжая, вы даете приложению права на управление \"OpenVPN для Android\" и перехват всего сетевого трафика. <b> Не продолжайте, если не доверяете полностью этому приложению. </b> В противном случае вы рискуете утечкой  и использованием ваших данных злоумышленниками.</string>
   <string name="remote_trust">Я доверяю этому приложению.</string>
   <string name="no_external_app_allowed">Нет приложений, авторизованных для внешнего API</string>
   <string name="allowed_apps">Авторизованные приложения: %s</string>
@@ -278,5 +281,12 @@
   <string name="screenoff_pause">Приостановка соединения при выключенном экране: меньше, чем  %1$s за %2$sс</string>
   <string name="screen_nopersistenttun">Внимание: постоянный tun не включен для этого VPN. Трафик будет проходить через обычный доступ в Интернет, когда экран выключен.</string>
   <string name="save_password">Сохранить пароль</string>
+  <string name="pauseVPN">Приостановить VPN</string>
+  <string name="resumevpn">Продолжить VPN</string>
+  <string name="state_userpause">VPN приостановлен по запросу пользователя</string>
+  <string name="state_screenoff">VPN приостановлен - выкл. экран</string>
   <string name="cannotparsecert">Не удается отобразить сведения о сертификате</string>
+  <string name="allow_vpn_changes">Разрешить изменение VPN-профилей</string>
+  <string name="hwkeychain">Аппаратное хранилище ключей:</string>
+  <string name="faq_vpndialog43_title">Окно подтверждения VPN для Android 4.3 и позже</string>
 </resources>

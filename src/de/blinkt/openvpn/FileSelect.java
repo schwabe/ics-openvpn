@@ -155,7 +155,8 @@ public class FileSelect extends Activity {
 		InputStream input = new FileInputStream(file);
 
 		long len= file.length();
-
+        if (len > VpnProfile.MAX_EMBED_FILE_SIZE)
+            throw new IOException("selected file size too big to embed into profile");
 
 		// Create the byte array to hold the data
 		byte[] bytes = new byte[(int) len];

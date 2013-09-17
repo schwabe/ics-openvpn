@@ -44,6 +44,19 @@ public class VpnProfile implements Serializable {
     // The Serializable documentation mentions that class name change are possible
     // but the how is unclear
     //
+    transient static final long MAX_EMBED_FILE_SIZE = 2048*1024; // 2048kB
+    // Don't change this, not all parts of the program use this constant
+    public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
+    public static final String INLINE_TAG = "[[INLINE]]";
+    public static final String MINIVPN = "miniopenvpn";
+    private static final long serialVersionUID = 7085688938959334563L;
+    private static final String OVPNCONFIGFILE = "android.conf";
+    public static String DEFAULT_DNS1 = "8.8.8.8";
+    public static String DEFAULT_DNS2 = "8.8.4.4";
+
+    public transient String mTransientPW = null;
+    public transient String mTransientPCKS12PW = null;
+
 
     public static final int TYPE_CERTIFICATES = 0;
     public static final int TYPE_PKCS12 = 1;
@@ -58,16 +71,6 @@ public class VpnProfile implements Serializable {
     public static final int X509_VERIFY_TLSREMOTE_DN = 2;
     public static final int X509_VERIFY_TLSREMOTE_RDN = 3;
     public static final int X509_VERIFY_TLSREMOTE_RDN_PREFIX = 4;
-    // Don't change this, not all parts of the program use this constant
-    public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
-    public static final String INLINE_TAG = "[[INLINE]]";
-    public static final String MINIVPN = "miniopenvpn";
-    private static final long serialVersionUID = 7085688938959334563L;
-    private static final String OVPNCONFIGFILE = "android.conf";
-    public static String DEFAULT_DNS1 = "8.8.8.8";
-    public static String DEFAULT_DNS2 = "8.8.4.4";
-    public transient String mTransientPW = null;
-    public transient String mTransientPCKS12PW = null;
     // variable named wrong and should haven beeen transient
     // but needs to keep wrong name to guarante loading of old
     // profiles

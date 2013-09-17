@@ -111,13 +111,15 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
 
             final ArrayList<String> responseList = skuDetails.getStringArrayList("DETAILS_LIST");
 
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    createPlayBuyOptions(ownedSkus, responseList);
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        createPlayBuyOptions(ownedSkus, responseList);
 
-                }
-            });
+                    }
+                });
+            }
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -274,6 +276,11 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        if (mService!=null)
+            initGooglePlayDonation();
+    }
 
     @Override
     public void onClick(View v) {

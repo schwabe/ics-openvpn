@@ -35,7 +35,7 @@ public class ConfigConverter extends ListActivity {
 
 	public static final String IMPORT_PROFILE = "de.blinkt.openvpn.IMPORT_PROFILE";
 
-	private VpnProfile mResult;
+    private VpnProfile mResult;
 	private ArrayAdapter<String> mArrayAdapter;
 
 	private List<String> mPathsegments;
@@ -306,7 +306,8 @@ public class ConfigConverter extends ListActivity {
 		InputStream input = new FileInputStream(file);
 
 		long len= file.length();
-
+        if (len > VpnProfile.MAX_EMBED_FILE_SIZE)
+            throw new IOException("File size of file to import too large.");
 
 		// Create the byte array to hold the data
 		byte[] bytes = new byte[(int) len];

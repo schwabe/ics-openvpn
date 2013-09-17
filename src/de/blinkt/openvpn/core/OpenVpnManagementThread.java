@@ -93,7 +93,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     }
 
 	public void managmentCommand(String cmd) {
-		if(mSocket!=null) {
+		if(mSocket!=null && mSocket.getOutputStream() !=null) {
 			try {
 				mSocket.getOutputStream().write(cmd.getBytes());
 				mSocket.getOutputStream().flush();

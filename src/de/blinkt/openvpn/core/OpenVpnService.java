@@ -389,7 +389,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         Builder builder = new Builder();
 
         if (mLocalIP == null && mLocalIPv6 == null) {
-            VpnStatus.logMessage(0, "", getString(R.string.opentun_no_ipaddr));
+            VpnStatus.logError(getString(R.string.opentun_no_ipaddr));
             return null;
         }
 
@@ -430,7 +430,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             try {
                 builder.addRoute(route.mIp, route.len);
             } catch (IllegalArgumentException ia) {
-                VpnStatus.logMessage(0, "", getString(R.string.route_rejected) + route + " " + ia.getLocalizedMessage());
+                VpnStatus.logError(getString(R.string.route_rejected) + route + " " + ia.getLocalizedMessage());
             }
         }
 
@@ -439,7 +439,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
                 String[] v6parts = v6route.split("/");
                 builder.addRoute(v6parts[0], Integer.parseInt(v6parts[1]));
             } catch (IllegalArgumentException ia) {
-                VpnStatus.logMessage(0, "", getString(R.string.route_rejected) + v6route + " " + ia.getLocalizedMessage());
+                VpnStatus.logError(getString(R.string.route_rejected) + v6route + " " + ia.getLocalizedMessage());
             }
         }
 
@@ -477,9 +477,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         try {
             return builder.establish();
         } catch (Exception e) {
-            VpnStatus.logMessage(0, "", getString(R.string.tun_open_error));
-            VpnStatus.logMessage(0, "", getString(R.string.error) + e.getLocalizedMessage());
-            VpnStatus.logMessage(0, "", getString(R.string.tun_error_helpful));
+            VpnStatus.logError(R.string.tun_open_error);
+            VpnStatus.logError(getString(R.string.error) + e.getLocalizedMessage());
+            VpnStatus.logError(R.string.tun_error_helpful);
             return null;
         }
 
@@ -510,11 +510,11 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     public void addRoute(String dest, String mask) {
         CIDRIP route = new CIDRIP(dest, mask);
         if (route.len == 32 && !mask.equals("255.255.255.255")) {
-            VpnStatus.logMessage(0, "", getString(R.string.route_not_cidr, dest, mask));
+            VpnStatus.logWarning(R.string.route_not_cidr, dest, mask);
         }
 
         if (route.normalise())
-            VpnStatus.logMessage(0, "", getString(R.string.route_not_netip, dest, route.len, route.mIp));
+            VpnStatus.logWarning(R.string.route_not_netip, dest, route.len, route.mIp);
 
         mRoutes.add(route);
     }
@@ -544,7 +544,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
                 else
                     mLocalIP.len = 31;
             } else {
-                VpnStatus.logMessage(0, "", getString(R.string.ip_not_cidr, local, netmask, mode));
+                VpnStatus.logWarning(R.string.ip_not_cidr, local, netmask, mode);
             }
         }
     }

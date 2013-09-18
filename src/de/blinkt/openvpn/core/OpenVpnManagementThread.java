@@ -93,14 +93,14 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     }
 
 	public void managmentCommand(String cmd) {
-		if(mSocket!=null && mSocket.getOutputStream() !=null) {
-			try {
+        try {
+		    if(mSocket!=null && mSocket.getOutputStream() !=null) {
 				mSocket.getOutputStream().write(cmd.getBytes());
 				mSocket.getOutputStream().flush();
-			} catch (IOException e) {
-				// Ignore socket stack traces
 			}
-		}
+        }catch (IOException e) {
+				// Ignore socket stack traces
+        }
 	}
 
 
@@ -131,7 +131,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 				try {
 					fds = mSocket.getAncillaryFileDescriptors();
 				} catch (IOException e) {
-					VpnStatus.logMessage(0, "", "Error reading fds from socket" + e.getLocalizedMessage());
+					VpnStatus.logError("Error reading fds from socket" + e.getLocalizedMessage());
 					e.printStackTrace();
 				}
 				if(fds!=null){
@@ -182,7 +182,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
         exp.printStackTrace();
         Log.d("Openvpn", "Failed to retrieve fd from socket: " + fd);
-        VpnStatus.logMessage(0, "", "Failed to retrieve fd from socket: " + exp.getLocalizedMessage());
+        VpnStatus.logError("Failed to retrieve fd from socket: " + exp.getLocalizedMessage());
 	}
 
 	private String processInput(String pendingInput) {
@@ -228,11 +228,11 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 				// 0 unix time stamp
 				// 1 log level N,I,E etc.
 				// 2 log message
-				VpnStatus.logMessage(0, "", args[2]);
+				VpnStatus.logWarning( args[2]);
 			} else if (cmd.equals("RSA_SIGN")) {
 				processSignCommand(argument);
 			} else {
-				VpnStatus.logMessage(0, "MGMT:", "Got unrecognized command" + command);
+				VpnStatus.logWarning("MGMT: Got unrecognized command" + command);
 				Log.i(TAG, "Got unrecognized command" + command);
 			}
 		} else if (command.startsWith("SUCCESS:")) {
@@ -240,7 +240,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             return;
 		} else {
 			Log.i(TAG, "Got unrecognized line from managment" + command);
-			VpnStatus.logMessage(0, "MGMT:", "Got unrecognized line from management:" + command);
+			VpnStatus.logWarning("MGMT: Got unrecognized line from management:" + command);
 		}
 	}
 	private void handleHold() {
@@ -372,8 +372,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		Exception exp;
 		if(!extra.equals("tun")) {
 			// We only support tun
-			String errmsg = String.format("Devicetype %s requested, but only tun is possible with the Android API, sorry!",extra);
-			VpnStatus.logMessage(0, "", errmsg);
+			VpnStatus.logError(String.format("Device type %s requested, but only tun is possible with the Android API, sorry!",extra));
 
 			return false;
 		}
@@ -416,7 +415,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		} catch (IOException e) {
 			exp =e;
 		}
-        VpnStatus.logMessage(0, "", "Could not send fd over socket:" + exp.getLocalizedMessage());
+        VpnStatus.logError("Could not send fd over socket:" + exp.getLocalizedMessage());
         exp.printStackTrace();
 
         return false;
@@ -439,7 +438,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 				return;
 			}
 		} catch (StringIndexOutOfBoundsException sioob) {
-			VpnStatus.logMessage(0, "", "Could not parse management Password command: " + argument);
+			VpnStatus.logError("Could not parse management Password command: " + argument);
 			return;
 		}
 
@@ -457,7 +456,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 			String cmd = String.format("password '%s' %s\n", needed, VpnProfile.openVpnEscape(pw));
 			managmentCommand(cmd);
 		} else {
-			VpnStatus.logMessage(0, VpnStatus.MANAGMENT_PREFIX, String.format("Openvpn requires Authentication type '%s' but no password/key information available", needed));
+			VpnStatus.logError(String.format("Openvpn requires Authentication type '%s' but no password/key information available", needed));
 		}
 
 	}

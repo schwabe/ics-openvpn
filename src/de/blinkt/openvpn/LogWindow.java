@@ -225,7 +225,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 			// Actually is probably called from GUI Thread as result of the user 
 			// pressing a button. But better safe than sorry
 			VpnStatus.clearLog();
-			VpnStatus.logMessage(0, "", "Log cleared.");
+			VpnStatus.logInfo(R.string.logCleared);
 			mHandler.sendEmptyMessage(MESSAGE_CLEARLOG);
 		}
 

@@ -111,12 +111,12 @@ public class OpenVPNThread implements Runnable {
 					mDumpPath = logline.substring(DUMP_PATH_STRING.length());
 					
 
-				VpnStatus.logMessage(0, "P:", logline);
+				VpnStatus.logInfo("P:" + logline);
 			}
 			
 		
 		} catch (IOException e) {
-			VpnStatus.logMessage(0, "", "Error reading from output of OpenVPN process" + e.getLocalizedMessage());
+			VpnStatus.logError("Error reading from output of OpenVPN process" + e.getLocalizedMessage());
 			e.printStackTrace();
 			stopProcess();
 		}

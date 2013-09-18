@@ -45,7 +45,7 @@ public class VPNLaunchHelper {
 			fout.close();
 
 			if(!mvpnout.setExecutable(true)) {
-				VpnStatus.logMessage(0, "", "Failed to set minivpn executable");
+				VpnStatus.logError("Failed to set minivpn executable");
 				return false;
 			}
 				
@@ -53,8 +53,8 @@ public class VPNLaunchHelper {
 			return true;
 		} catch (IOException e) {
 			if(e2!=null)
-				VpnStatus.logMessage(0, "", e2.getLocalizedMessage());
-			VpnStatus.logMessage(0, "", e.getLocalizedMessage());
+				VpnStatus.logError( e2.getLocalizedMessage());
+			VpnStatus.logError(e.getLocalizedMessage());
 			e.printStackTrace();
 			return false;
 		}
@@ -63,10 +63,11 @@ public class VPNLaunchHelper {
 
 	public static void startOpenVpn(VpnProfile startprofile, Context context) {
 		if(!writeMiniVPN(context)) {
-			VpnStatus.logMessage(0, "", "Error writing minivpn binary");
+			VpnStatus.logError("Error writing minivpn binary");
 			return;
 		}
-		VpnStatus.logMessage(0, "", context.getString(R.string.building_configration));
+
+		VpnStatus.logInfo(R.string.building_configration);
 
 		Intent startVPN = startprofile.prepareIntent(context);
 		if(startVPN!=null)

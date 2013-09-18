@@ -42,7 +42,6 @@ public class VpnStatus {
 	private static long mlastByteCount[]={0,0,0,0};
 
 
-
     public enum ConnectionStatus {
         LEVEL_CONNECTED,
         LEVEL_VPNPAUSED,
@@ -53,6 +52,31 @@ public class VpnStatus {
 		LEVEL_AUTH_FAILED,
 		LEVEL_WAITING_FOR_USER_INPUT,
 		UNKNOWN_LEVEL
+    }
+
+    public enum LogLevel {
+        INFO(1),
+        ERROR(2),
+        WARNING(3),
+        VERBOSE(4);
+
+        protected int mValue;
+        LogLevel(int value) {
+            mValue = value;
+        }
+
+        public int getInt() {
+            return mValue;
+        }
+
+        public static LogLevel getEnumByValue(int value) {
+            switch (value) {
+                case 1:   return INFO;
+                case 2:   return ERROR;
+                case 3: return WARNING;
+                default:  return null;
+            }
+        }
     }
 
 	public static final byte[] officalkey = {-58, -42, -44, -106, 90, -88, -87, -88, -52, -124, 84, 117, 66, 79, -112, -111, -46, 86, -37, 109};
@@ -71,18 +95,16 @@ public class VpnStatus {
 
 
 	public static class LogItem implements Parcelable {
-		public static final int ERROR = 1;
-		public static final int INFO = 2;
-		public static final int VERBOSE = 3;
+
 
 		private Object [] mArgs = null;
 		private String mMessage = null;
 		private int mRessourceId;
 		// Default log priority
-		int mLevel = INFO;
+		LogLevel mLevel = LogLevel.INFO;
 		private long logtime = System.currentTimeMillis();
 
-		public LogItem(int ressourceId, Object[] args) {
+		private LogItem(int ressourceId, Object[] args) {
 			mRessourceId = ressourceId;
 			mArgs = args;
 		}
@@ -93,20 +115,20 @@ public class VpnStatus {
 		}
 
 
-		@Override
-		public void writeToParcel(Parcel dest, int flags) {
-			dest.writeArray(mArgs);
-			dest.writeString(mMessage);
-			dest.writeInt(mRessourceId);
-			dest.writeInt(mLevel);
-			dest.writeLong(logtime);
-		}
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeArray(mArgs);
+            dest.writeString(mMessage);
+            dest.writeInt(mRessourceId);
+            dest.writeInt(mLevel.getInt());
+            dest.writeLong(logtime);
+        }
 
 		public LogItem(Parcel in) {
 			mArgs = in.readArray(Object.class.getClassLoader());
 			mMessage = in.readString();
 			mRessourceId = in.readInt();
-			mLevel = in.readInt();
+			mLevel = LogLevel.getEnumByValue(in.readInt());
 			logtime = in.readLong();
 		}
 
@@ -121,24 +143,20 @@ public class VpnStatus {
 			}
 		};
 
-		public LogItem(int loglevel,int ressourceId, Object[] args) {
+		public LogItem(LogLevel loglevel,int ressourceId, Object[] args) {
 			mRessourceId = ressourceId;
 			mArgs = args;
 			mLevel = loglevel;
 		}
 
 
-		public LogItem(String message) {
-			mMessage = message;
-		}
-
-		public LogItem(int loglevel, String msg) {
+		public LogItem(LogLevel loglevel, String msg) {
 			mLevel = loglevel;
 			mMessage = msg;
 		}
 
 
-		public LogItem(int loglevel, int ressourceId) {
+		public LogItem(LogLevel loglevel, int ressourceId) {
 			mRessourceId =ressourceId;
 			mLevel = loglevel;
 		}
@@ -242,9 +260,9 @@ public class VpnStatus {
 		void updateByteCount(long in, long out, long diffin, long diffout);
 	}
 
-	public synchronized static void logMessage(int level,String prefix, String message)
+	public synchronized static void logMessage(LogLevel level,String prefix, String message)
 	{
-		newlogItem(new LogItem(prefix +  message));
+		newLogItem(new LogItem(level, prefix + message));
 
 	}
 
@@ -390,14 +408,14 @@ public class VpnStatus {
 	}
 
 	public static void logInfo(String message) {
-		newlogItem(new LogItem(LogItem.INFO, message));
+		newLogItem(new LogItem(LogLevel.INFO, message));
 	}
 
-	public static void logInfo(int ressourceId, Object... args) {
-		newlogItem(new LogItem(LogItem.INFO, ressourceId, args));
+	public static void logInfo(int resourceId, Object... args) {
+		newLogItem(new LogItem(LogLevel.INFO, resourceId, args));
 	}
 
-	private synchronized static void newlogItem(LogItem logItem) {
+	private synchronized static void newLogItem(LogItem logItem) {
 		logbuffer.addLast(logItem);
 		if(logbuffer.size()>MAXLOGENTRIES)
 			logbuffer.removeFirst();
@@ -408,28 +426,37 @@ public class VpnStatus {
 	}
 
 	public static void logError(String msg) {
-		newlogItem(new LogItem(LogItem.ERROR, msg));
+		newLogItem(new LogItem(LogLevel.ERROR, msg));
 
 	}
 
-	public static void logError(int ressourceId) {
-		newlogItem(new LogItem(LogItem.ERROR, ressourceId));
+    public static void logWarning(int resourceId, Object... args) {
+        newLogItem(new LogItem(LogLevel.WARNING, resourceId, args));
+    }
+
+    public static void logWarning(String msg) {
+        newLogItem(new LogItem(LogLevel.WARNING, msg));
+    }
+
+
+    public static void logError(int resourceId) {
+		newLogItem(new LogItem(LogLevel.ERROR, resourceId));
 	}
-	public static void logError(int ressourceId, Object... args) {
-		newlogItem(new LogItem(LogItem.ERROR, ressourceId,args));
+	public static void logError(int resourceId, Object... args) {
+		newLogItem(new LogItem(LogLevel.ERROR, resourceId, args));
 	}
 
 	public static synchronized void updateByteCount(long in, long out) {
 		long lastIn = mlastByteCount[0];
 		long lastOut = mlastByteCount[1];
-		long diffin = mlastByteCount[2] = in - lastIn;
-		long diffout = mlastByteCount[3] = out - lastOut;
+		long diffIn = mlastByteCount[2] = in - lastIn;
+		long diffOut = mlastByteCount[3] = out - lastOut;
 		
 		
 
-		mlastByteCount = new long[] {in,out,diffin,diffout};
+		mlastByteCount = new long[] {in,out,diffIn,diffOut};
 		for(ByteCountListener bcl:byteCountListener){
-			bcl.updateByteCount(in, out, diffin,diffout);
+			bcl.updateByteCount(in, out, diffIn,diffOut);
 		}
 	}
 

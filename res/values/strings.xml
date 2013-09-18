@@ -296,4 +296,5 @@
     <string name="faq_vpndialog43_title">Vpn Confirm Dialog on Android 4.3 and later</string>
     <string name="donatePlayStore">Alternatively you can send me a donation with the Play Store:</string>
     <string name="thanks_for_donation">Thanks for donating %s!</string>
+    <string name="logCleared">Log cleared.</string>
 </resources>

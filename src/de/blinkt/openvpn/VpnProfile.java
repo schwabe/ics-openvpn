@@ -564,7 +564,7 @@ public class VpnProfile implements Serializable {
 
             cachain = KeyChain.getCertificateChain(context, mAlias);
             if (cachain.length <= 1 && !nonNull(mCaFilename)) {
-                VpnStatus.logMessage(0, "", context.getString(R.string.keychain_nocacert));
+                VpnStatus.logMessage(VpnStatus.LogLevel.ERROR, "", context.getString(R.string.keychain_nocacert));
             } else {
                 StringWriter ksStringWriter = new StringWriter();
 
@@ -628,7 +628,7 @@ public class VpnProfile implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (KeyChainException e) {
-            VpnStatus.logMessage(0, "", context.getString(R.string.keychain_access));
+            VpnStatus.logError(R.string.keychain_access);
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
                 if (!mAlias.matches("^[a-zA-Z0-9]$")) {
                     VpnStatus.logError(R.string.jelly_keystore_alphanumeric_bug);

@@ -1434,7 +1434,6 @@ link_socket_init_phase1 (struct link_socket *sock,
   /* or in Socks proxy mode? */
   else if (sock->socks_proxy)
     {
-      ASSERT (sock->info.af == AF_INET);
       ASSERT (!sock->inetd);
 
       /* the proxy server */
@@ -1699,7 +1698,11 @@ phase2_socks_client (struct link_socket *sock, struct signal_info *sig_info)
     
     addr_zero_host(&sock->info.lsa->actual.dest);
     if (sock->info.lsa->remote_list)
+      {
         freeaddrinfo(sock->info.lsa->remote_list);
+	sock->info.lsa->current_remote = NULL;
+	sock->info.lsa->remote_list = NULL;
+      }
     
     resolve_remote (sock, 1, NULL, &sig_info->signal_received);
     

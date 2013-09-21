@@ -278,9 +278,11 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         if (mService!=null)
             initGooglePlayDonation();
     }
+
 
     @Override
     public void onClick(View v) {

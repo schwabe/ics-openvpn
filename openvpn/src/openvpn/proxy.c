@@ -501,7 +501,7 @@ add_proxy_header (struct http_proxy_info *p,
   
   /* Check if any of the custom headers already provides Host: */
   i=0;
-  while (p->options.custom_headers[i].name)
+  for  (i=0; i < MAX_CUSTOM_HTTP_HEADER && p->options.custom_headers[i].name;i++)
     {
       if(
 	 ((!strcasecmp(p->options.custom_headers[i].name, "Host")) && 
@@ -532,12 +532,11 @@ add_proxy_header (struct http_proxy_info *p,
 	return false;
     }
 
-  /* 
+  /*
    * Send custom headers if provided
    * If content is NULL whole header is in name
    */
-  i=0;
-  while (p->options.custom_headers[i].name)
+  for  (i=0; i < MAX_CUSTOM_HTTP_HEADER && p->options.custom_headers[i].name;i++)
     {
       if (p->options.custom_headers[i].content)
 	openvpn_snprintf (buf, sizeof(buf), "%s: %s",

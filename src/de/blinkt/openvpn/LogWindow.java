@@ -4,12 +4,16 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.*;
 import android.database.DataSetObserver;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.IBinder;
 import android.os.Message;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.format.DateFormat;
+import android.text.style.ImageSpan;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -72,7 +76,6 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 		public LogWindowListAdapter() {
 			initLogBuffer();
-
 			if (mHandler == null) {
 				mHandler = new Handler(this);
 			}
@@ -145,6 +148,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 			
 			LogItem le = myEntries.get(position);
 			String msg = le.getString(LogWindow.this);
+            String time ="";
 			if (mTimeFormat != 0) {
 				Date d = new Date(le.getLogtime());
 				java.text.DateFormat timeformat;
@@ -152,14 +156,49 @@ public class LogWindow extends ListActivity implements StateListener  {
 					timeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
 				else
 					timeformat = DateFormat.getTimeFormat(LogWindow.this);
-				String time = timeformat.format(d);
-				msg =  time + " " + msg;
+				 time = timeformat.format(d);
+
 			}
-			v.setText(msg);
+            msg =  time + " " + msg;
+
+            int spanStart = time.length();
+
+            SpannableString t = new SpannableString(msg);
+
+            //t.setSpan(getSpanImage(le,(int)v.getTextSize()),spanStart,spanStart+1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+			v.setText(t);
 			return v;
 		}
 
-		@Override
+        private ImageSpan getSpanImage(LogItem li, int imageSize) {
+            int imageRes = android.R.drawable.ic_menu_call;
+
+            switch (li.getLogLevel()) {
+                case ERROR:
+                    imageRes = android.R.drawable.ic_notification_clear_all;
+                    break;
+                case INFO:
+                    imageRes = android.R.drawable.ic_menu_compass;
+                    break;
+                case VERBOSE:
+                    imageRes = android.R.drawable.ic_menu_info_details;
+                    break;
+                case WARNING:
+                    imageRes = android.R.drawable.ic_menu_camera;
+                    break;
+            }
+
+            Drawable d = getResources().getDrawable(imageRes);
+
+
+            //d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            d.setBounds(0, 0, imageSize, imageSize);
+            ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BOTTOM);
+
+            return span;
+        }
+
+        @Override
 		public int getItemViewType(int position) {
 			return 0;
 		}

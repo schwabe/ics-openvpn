@@ -193,9 +193,15 @@ public class VpnStatus {
                 else
                     throw e;
             }
+
 		}
-		
-		// The lint is wrong here 
+
+        public LogLevel getLogLevel()
+        {
+            return mLevel;
+        }
+
+        // The lint is wrong here
 		@SuppressLint("StringFormatMatches")
 		private String getMobileInfoString(Context c) {
 			c.getPackageManager();

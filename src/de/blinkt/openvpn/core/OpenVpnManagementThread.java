@@ -224,11 +224,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 			} else if (cmd.equals("PROXY")) {
 				processProxyCMD(argument);
 			} else if (cmd.equals("LOG")) {
-				String[] args = argument.split(",",3);
-				// 0 unix time stamp
-				// 1 log level N,I,E etc.
-				// 2 log message
-				VpnStatus.logWarning( args[2]);
+                 processLogMessage(argument);
 			} else if (cmd.equals("RSA_SIGN")) {
 				processSignCommand(argument);
 			} else {
@@ -243,7 +239,38 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 			VpnStatus.logWarning("MGMT: Got unrecognized line from management:" + command);
 		}
 	}
-	private void handleHold() {
+
+    private void processLogMessage(String argument) {
+        String[] args = argument.split(",",3);
+        // 0 unix time stamp
+        // 1 log level N,I,E etc.
+                /*
+                  (b) zero or more message flags in a single string:
+          I -- informational
+          F -- fatal error
+          N -- non-fatal error
+          W -- warning
+          D -- debug, and
+                 */
+        // 2 log message
+
+        VpnStatus.LogLevel level;
+        if (args[1].equals("I")) {
+            level = VpnStatus.LogLevel.INFO;
+        } else if (args[1].equals("W")) {
+            level = VpnStatus.LogLevel.WARNING;
+        } else if (args[1].equals("D")) {
+            level = VpnStatus.LogLevel.VERBOSE;
+        } else if (args[1].equals("F")) {
+            level = VpnStatus.LogLevel.ERROR;
+        } else {
+            level = VpnStatus.LogLevel.INFO;
+        }
+
+        VpnStatus.logMessage(level,"P:", args[2]);
+    }
+
+    private void handleHold() {
 		if(mReleaseHold) {
 			releaseHoldCmd();
 		} else { 

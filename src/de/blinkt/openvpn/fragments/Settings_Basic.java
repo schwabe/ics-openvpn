@@ -95,7 +95,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
                     certstr+=X509Utils.getCertificateFriendlyName(cert);
                 } catch (Exception e) {
-                    certstr="Could not get certificate from Keystore";
+                    certstr="Could not get certificate from Keystore: " +e.getLocalizedMessage();
                 }
 
                 final String certStringCopy=certstr;

@@ -51,6 +51,7 @@ public class VpnProfile implements Serializable {
     public static final String MINIVPN = "miniopenvpn";
     private static final long serialVersionUID = 7085688938959334563L;
     private static final String OVPNCONFIGFILE = "android.conf";
+    static final int MAXLOGLEVEL = 4;
     public static String DEFAULT_DNS1 = "8.8.8.8";
     public static String DEFAULT_DNS2 = "8.8.4.4";
 
@@ -109,7 +110,7 @@ public class VpnProfile implements Serializable {
     public boolean mUseFloat = false;
     public boolean mUseCustomConfig = false;
     public String mCustomConfigOptions = "";
-    public String mVerb = "1";
+    public String mVerb = "1";  //ignored
     public String mCipher = "";
     public boolean mNobind = false;
     public boolean mUseDefaultRoutev6 = true;
@@ -183,8 +184,7 @@ public class VpnProfile implements Serializable {
         cfg += "management-hold\n\n";
         cfg += getVersionEnvString(context);
 
-        cfg += "# Log window is better readable this way\n";
-        cfg += "suppress-timestamps\n";
+        cfg += "parsable-output\n";
 
 
         boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
@@ -197,7 +197,8 @@ public class VpnProfile implements Serializable {
             cfg += "tls-client\n";
 
 
-        cfg += "verb " + mVerb + "\n";
+        //cfg += "verb " + mVerb + "\n";
+        cfg += "verb " + MAXLOGLEVEL + "\n";
 
         if (mConnectRetryMax == null) {
             mConnectRetryMax = "5";

@@ -247,6 +247,7 @@ public class ConfigParser {
             "management",
 			"management-query-passwords",
 			"pause-exit",
+            "parsable-output",
 			"persist-key",
 			"register-dns",
 			"route-delay",

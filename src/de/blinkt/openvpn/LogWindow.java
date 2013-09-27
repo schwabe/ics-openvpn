@@ -1,5 +1,9 @@
 package de.blinkt.openvpn;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.*;
@@ -11,10 +15,12 @@ import android.os.Handler.Callback;
 import android.os.IBinder;
 import android.os.Message;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.format.DateFormat;
 import android.text.style.ImageSpan;
 import android.view.*;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.*;
 import android.widget.AdapterView.OnItemLongClickListener;
 import de.blinkt.openvpn.core.VpnStatus;
@@ -32,12 +38,12 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Vector;
 
-public class LogWindow extends ListActivity implements StateListener  {
+public class LogWindow extends ListActivity implements StateListener, SeekBar.OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener {
 	private static final String LOGTIMEFORMAT = "logtimeformat";
 	private static final int START_VPN_CONFIG = 0;
-	protected OpenVpnService mService;
+    private static final String VERBOSITYLEVEL = "verbositylevel";
+    protected OpenVpnService mService;
 	private ServiceConnection mConnection = new ServiceConnection() {
-
 
 
 		@Override
@@ -54,27 +60,69 @@ public class LogWindow extends ListActivity implements StateListener  {
 		}
 
 	};
+    private SeekBar mLogLevelSlider;
+    private LinearLayout mOptionsLayout;
+    private RadioGroup mTimeRadioGroup;
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        ladapter.setLogLevel(progress+1);
+        Toast.makeText(this,"Loglevel set to " + ladapter.mLogLevel,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+            case R.id.radioISO:
+                ladapter.setTimeFormat(LogWindowListAdapter.TIME_FORMAT_ISO);
+                break;
+            case R.id.radioNone:
+                ladapter.setTimeFormat(LogWindowListAdapter.TIME_FORMAT_NONE);
+                break;
+            case R.id.radioShort:
+                ladapter.setTimeFormat(LogWindowListAdapter.TIME_FORMAT_SHORT);
+                break;
+
+        }
+    }
 
 
+    class LogWindowListAdapter implements ListAdapter, LogListener, Callback {
 
-	class LogWindowListAdapter implements ListAdapter, LogListener, Callback {
-
-		private static final int MESSAGE_NEWLOG = 0;
+        private static final int MESSAGE_NEWLOG = 0;
 
 		private static final int MESSAGE_CLEARLOG = 1;
-		
-		private static final int MESSAGE_NEWTS = 2;
 
-		private Vector<LogItem> myEntries=new Vector<LogItem>();
+        private static final int MESSAGE_NEWTS = 2;
+        private static final int MESSAGE_NEWLOGLEVEL = 3;
+
+        public static final int TIME_FORMAT_NONE = 0;
+        public static final int TIME_FORMAT_SHORT = 1;
+        public static final int TIME_FORMAT_ISO = 2;
+
+        private Vector<LogItem> allEntries=new Vector<LogItem>();
+
+        private Vector<LogItem> currentLevelEntries=new Vector<LogItem>();
 
 		private Handler mHandler;
 
 		private Vector<DataSetObserver> observers=new Vector<DataSetObserver>();
 
 		private int mTimeFormat=0;
+        private int mLogLevel=3;
 
 
-		public LogWindowListAdapter() {
+        public LogWindowListAdapter() {
 			initLogBuffer();
 			if (mHandler == null) {
 				mHandler = new Handler(this);
@@ -86,13 +134,14 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 
 		private void initLogBuffer() {
-			myEntries.clear();
-            Collections.addAll(myEntries, VpnStatus.getlogbuffer());
+			allEntries.clear();
+            Collections.addAll(allEntries, VpnStatus.getlogbuffer());
+            initCurrentMessages();
 		}
 
 		String getLogStr() {
 			String str = "";
-			for(LogItem entry:myEntries) {
+			for(LogItem entry:allEntries) {
 				str+=entry.getString(LogWindow.this) + '\n';
 			}
 			return str;
@@ -120,17 +169,17 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 		@Override
 		public int getCount() {
-			return myEntries.size();
+			return currentLevelEntries.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			return myEntries.get(position);
+			return currentLevelEntries.get(position);
 		}
 
 		@Override
 		public long getItemId(int position) {
-			return position;
+			return currentLevelEntries.get(position).hashCode();
 		}
 
 		@Override
@@ -146,20 +195,20 @@ public class LogWindow extends ListActivity implements StateListener  {
 			else
 				v = (TextView) convertView;
 			
-			LogItem le = myEntries.get(position);
+			LogItem le = currentLevelEntries.get(position);
 			String msg = le.getString(LogWindow.this);
             String time ="";
-			if (mTimeFormat != 0) {
+			if (mTimeFormat != TIME_FORMAT_NONE) {
 				Date d = new Date(le.getLogtime());
 				java.text.DateFormat timeformat;
-				if (mTimeFormat==2) 
+				if (mTimeFormat== TIME_FORMAT_ISO)
 					timeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
 				else
 					timeformat = DateFormat.getTimeFormat(LogWindow.this);
 				 time = timeformat.format(d);
 
 			}
-            msg =  time + " " + msg;
+            msg =  time + " " + le.getVerbosityLevel() + " " +  msg;
 
             int spanStart = time.length();
 
@@ -210,7 +259,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 		@Override
 		public boolean isEmpty() {
-			return myEntries.isEmpty();
+			return currentLevelEntries.isEmpty();
 
 		}
 
@@ -229,9 +278,9 @@ public class LogWindow extends ListActivity implements StateListener  {
 			Message msg = Message.obtain();
             assert (msg!=null);
 			msg.what=MESSAGE_NEWLOG;
-			Bundle mbundle=new Bundle();
-			mbundle.putParcelable("logmessage", logmessage);
-			msg.setData(mbundle);
+			Bundle bundle=new Bundle();
+			bundle.putParcelable("logmessage", logmessage);
+			msg.setData(bundle);
 			mHandler.sendMessage(msg);
 		}
 
@@ -241,26 +290,55 @@ public class LogWindow extends ListActivity implements StateListener  {
 			if(msg.what==MESSAGE_NEWLOG) {
 
 				LogItem logmessage = msg.getData().getParcelable("logmessage");
-				myEntries.add(logmessage);
-
-				for (DataSetObserver observer : observers) {
-					observer.onChanged();
-				}
-			} else if (msg.what == MESSAGE_CLEARLOG) {
-				initLogBuffer();
-				for (DataSetObserver observer : observers) {
-					observer.onInvalidated();
-				}
+                if(addLogMessage(logmessage))
+                    for (DataSetObserver observer : observers) {
+                        observer.onChanged();
+                    }
+            } else if (msg.what == MESSAGE_CLEARLOG) {
+                for (DataSetObserver observer : observers) {
+                    observer.onInvalidated();
+                }
+                initLogBuffer();
 			}  else if (msg.what == MESSAGE_NEWTS) {
 				for (DataSetObserver observer : observers) {
 					observer.onInvalidated();
 				}
-			}
+			} else if (msg.what == MESSAGE_NEWLOGLEVEL) {
+                initCurrentMessages();
+
+                for (DataSetObserver observer: observers) {
+                    observer.onChanged();
+                }
+
+            }
 
 			return true;
 		}
 
-		void clearLog() {
+        private void initCurrentMessages() {
+            currentLevelEntries.clear();
+            for(LogItem li: allEntries) {
+                if (li.getVerbosityLevel() <= mLogLevel)
+                    currentLevelEntries.add(li);
+            }
+        }
+
+        /**
+         *
+         * @param logmessage
+         * @return True if the current entries have changed
+         */
+        private boolean addLogMessage(LogItem logmessage) {
+            allEntries.add(logmessage);
+            if (logmessage.getVerbosityLevel() <= mLogLevel) {
+                 currentLevelEntries.add(logmessage);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        void clearLog() {
 			// Actually is probably called from GUI Thread as result of the user 
 			// pressing a button. But better safe than sorry
 			VpnStatus.clearLog();
@@ -270,10 +348,15 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 
 
-		public void nextTimeFormat() {
-			mTimeFormat= (mTimeFormat+ 1) % 3;
+		public void setTimeFormat(int newTimeFormat) {
+			mTimeFormat= newTimeFormat;
 			mHandler.sendEmptyMessage(MESSAGE_NEWTS);
 		}
+
+        public void setLogLevel(int logLevel) {
+            mLogLevel = logLevel;
+            mHandler.sendEmptyMessage(MESSAGE_NEWLOGLEVEL);
+        }
 		
 	}
 
@@ -322,7 +405,7 @@ public class LogWindow extends ListActivity implements StateListener  {
 				Toast.makeText(this, R.string.log_no_last_vpn, Toast.LENGTH_LONG).show();
 			}
 		} else if(item.getItemId() == R.id.toggle_time) {
-			ladapter.nextTimeFormat();
+			showHideOptionsPanel();
 		} else if(item.getItemId() == android.R.id.home) {
 			// This is called when the Home (Up) button is pressed
 			// in the Action Bar.
@@ -338,6 +421,36 @@ public class LogWindow extends ListActivity implements StateListener  {
 		return super.onOptionsItemSelected(item);
 
 	}
+
+    private void showHideOptionsPanel() {
+        boolean optionsVisible = (mOptionsLayout.getVisibility() != View.GONE);
+
+        ObjectAnimator anim;
+        if (optionsVisible) {
+            anim = ObjectAnimator.ofInt(mOptionsLayout,"alpha",0, mOptionsLayout.getHeight());
+            anim.addListener(collapseListener);
+
+        } else {
+            mOptionsLayout.setVisibility(View.VISIBLE);
+            anim = ObjectAnimator.ofInt(mOptionsLayout,"alpha", mOptionsLayout.getHeight(),0);
+            //anim = new TranslateAnimation(0.0f, 0.0f, mOptionsLayout.getHeight(), 0.0f);
+
+        }
+
+        //anim.setInterpolator(new AccelerateInterpolator(1.0f));
+        //anim.setDuration(300);
+        //mOptionsLayout.startAnimation(anim);
+        anim.start();
+
+    }
+
+    AnimatorListenerAdapter collapseListener = new AnimatorListenerAdapter() {
+        @Override
+        public void onAnimationEnd(Animator animator) {
+            mOptionsLayout.setVisibility(View.GONE);
+        }
+
+    };
 
 
     @Override
@@ -408,7 +521,8 @@ public class LogWindow extends ListActivity implements StateListener  {
 		super.onStop();
 		VpnStatus.removeStateListener(this);
         unbindService(mConnection);
-        getPreferences(0).edit().putInt(LOGTIMEFORMAT, ladapter.mTimeFormat).apply();
+        getPreferences(0).edit().putInt(LOGTIMEFORMAT, ladapter.mTimeFormat)
+                                .putInt(VERBOSITYLEVEL, ladapter.mLogLevel).apply();
 
     }
 
@@ -419,7 +533,10 @@ public class LogWindow extends ListActivity implements StateListener  {
 		setContentView(R.layout.logwindow);
 		ListView lv = getListView();
 
-		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+
+
+        lv.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
@@ -435,10 +552,32 @@ public class LogWindow extends ListActivity implements StateListener  {
 
 		ladapter = new LogWindowListAdapter();
 		ladapter.mTimeFormat = getPreferences(0).getInt(LOGTIMEFORMAT, 0);
-		lv.setAdapter(ladapter);
+        int loglevel = getPreferences(0).getInt(VERBOSITYLEVEL, 0);
+        ladapter.setLogLevel(loglevel);
+
+        lv.setAdapter(ladapter);
+
+        mTimeRadioGroup = (RadioGroup) findViewById(R.id.timeFormatRadioGroup);
+        mTimeRadioGroup.setOnCheckedChangeListener(this);
+
+        if(ladapter.mTimeFormat== LogWindowListAdapter.TIME_FORMAT_ISO) {
+            mTimeRadioGroup.check(R.id.radioISO);
+        } else if (ladapter.mTimeFormat == LogWindowListAdapter.TIME_FORMAT_NONE) {
+            mTimeRadioGroup.check(R.id.radioNone);
+        } else if (ladapter.mTimeFormat == LogWindowListAdapter.TIME_FORMAT_SHORT) {
+            mTimeRadioGroup.check(R.id.radioShort);
+        }
 
 		mSpeedView = (TextView) findViewById(R.id.speed);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mOptionsLayout = (LinearLayout) findViewById(R.id.logOptionsLayout);
+        mLogLevelSlider = (SeekBar) findViewById(R.id.LogLevelSlider);
+        mLogLevelSlider.setMax(VpnProfile.MAXLOGLEVEL-1);
+        mLogLevelSlider.setProgress(loglevel-1);
+
+        mLogLevelSlider.setOnSeekBarChangeListener(this);
+
 
     }
 

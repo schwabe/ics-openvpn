@@ -202,7 +202,10 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 
 	private void processCommand(String command) {
-		if (command.startsWith(">") && command.contains(":")) {
+        Log.i(TAG, "Line from managment" + command);
+
+
+        if (command.startsWith(">") && command.contains(":")) {
 			String[] parts = command.split(":",2);
 			String cmd = parts[0].substring(1);
 			String argument = parts[1];
@@ -241,7 +244,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 	}
 
     private void processLogMessage(String argument) {
-        String[] args = argument.split(",",3);
+        String[] args = argument.split(",",4);
         // 0 unix time stamp
         // 1 log level N,I,E etc.
                 /*
@@ -253,6 +256,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
           D -- debug, and
                  */
         // 2 log message
+
+        Log.d("OpenVPN", argument);
 
         VpnStatus.LogLevel level;
         if (args[1].equals("I")) {
@@ -267,7 +272,9 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             level = VpnStatus.LogLevel.INFO;
         }
 
-        VpnStatus.logMessage(level,"P:", args[2]);
+        int ovpnlevel = Integer.parseInt(args[2]) & 0x0F;
+
+        VpnStatus.logMessageOpenVPN(level,ovpnlevel, args[3]);
     }
 
     private void handleHold() {
@@ -294,7 +301,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		mLastHoldRelease  = System.currentTimeMillis();
 		managmentCommand("hold release\n");
 		managmentCommand("bytecount " + mBytecountInterval + "\n");
-		managmentCommand("state on\n");
+        managmentCommand("state on\n");
+        //managmentCommand("log on all\n");
 	}
 	
 	public void releaseHold() {

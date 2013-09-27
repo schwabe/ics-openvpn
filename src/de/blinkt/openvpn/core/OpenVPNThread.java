@@ -10,11 +10,17 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class OpenVPNThread implements Runnable {
-	private static final String DUMP_PATH_STRING = "Dump path: ";
+    private static final String DUMP_PATH_STRING = "Dump path: ";
 	private static final String TAG = "OpenVPN";
-	private String[] mArgv;
+    public static final int M_FATAL = (1 << 4);
+    public static final int M_NONFATAL = (1 << 5);
+    public static final int M_WARN = (1 << 6);
+    public static final int M_DEBUG = (1 << 7);
+    private String[] mArgv;
 	private Process mProcess;
 	private String mNativeDir;
 	private OpenVpnService mService;
@@ -111,7 +117,31 @@ public class OpenVPNThread implements Runnable {
 					mDumpPath = logline.substring(DUMP_PATH_STRING.length());
 					
 
-				VpnStatus.logInfo("P:" + logline);
+                // 1380308330.240114 18000002 Send to HTTP proxy: 'X-Online-Host: bla.blabla.com'
+
+                Pattern p = Pattern.compile("(\\d+).(\\d+) ([0-9a-f])+ (.*)");
+                Matcher m = p.matcher(logline);
+                if(m.matches()) {
+                    int flags = Integer.parseInt(m.group(3),16);
+                    String msg = m.group(4);
+                    int logLevel = flags & 0x0F;
+
+                    VpnStatus.LogLevel logStatus = VpnStatus.LogLevel.INFO;
+
+                    if ((flags & M_FATAL) != 0)
+                        logStatus = VpnStatus.LogLevel.ERROR;
+                    else if ((flags & M_NONFATAL)!=0)
+                        logStatus = VpnStatus.LogLevel.WARNING;
+                    else if ((flags & M_WARN)!=0)
+                        logStatus = VpnStatus.LogLevel.WARNING;
+                    else if ((flags & M_DEBUG)!=0)
+                        logStatus = VpnStatus.LogLevel.VERBOSE;
+
+
+                    VpnStatus.logMessageOpenVPN(logStatus,logLevel,msg);
+                } else {
+                    VpnStatus.logInfo("P:" + logline);
+                }
 			}
 			
 		

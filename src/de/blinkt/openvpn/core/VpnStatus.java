@@ -42,6 +42,7 @@ public class VpnStatus {
 	private static long mlastByteCount[]={0,0,0,0};
 
 
+
     public enum ConnectionStatus {
         LEVEL_CONNECTED,
         LEVEL_VPNPAUSED,
@@ -55,10 +56,10 @@ public class VpnStatus {
     }
 
     public enum LogLevel {
-        INFO(1),
-        ERROR(2),
-        WARNING(3),
-        VERBOSE(4);
+        INFO(2),
+        ERROR(-2),
+        WARNING(1),
+        VERBOSE(3);
 
         protected int mValue;
         LogLevel(int value) {
@@ -103,13 +104,20 @@ public class VpnStatus {
 		// Default log priority
 		LogLevel mLevel = LogLevel.INFO;
 		private long logtime = System.currentTimeMillis();
+        private int mVerbosityLevel = -1;
 
 		private LogItem(int ressourceId, Object[] args) {
 			mRessourceId = ressourceId;
 			mArgs = args;
 		}
 
-		@Override
+        public LogItem(LogLevel level, int verblevel, String message) {
+            mMessage=message;
+            mLevel = level;
+            mVerbosityLevel = verblevel;
+        }
+
+        @Override
 		public int describeContents() {
 			return 0;
 		}
@@ -121,6 +129,8 @@ public class VpnStatus {
             dest.writeString(mMessage);
             dest.writeInt(mRessourceId);
             dest.writeInt(mLevel.getInt());
+            dest.writeInt(mVerbosityLevel);
+
             dest.writeLong(logtime);
         }
 
@@ -129,6 +139,7 @@ public class VpnStatus {
 			mMessage = in.readString();
 			mRessourceId = in.readInt();
 			mLevel = LogLevel.getEnumByValue(in.readInt());
+            mVerbosityLevel = in.readInt();
 			logtime = in.readLong();
 		}
 
@@ -247,7 +258,15 @@ public class VpnStatus {
 		}
 
 
-	}
+        public int getVerbosityLevel() {
+            if (mVerbosityLevel==-1) {
+                // Hack:
+                // For message not from OpenVPN, report the status level as log level
+                return mLevel.getInt();
+            }
+            return mVerbosityLevel;
+        }
+    }
 
 	private static final int MAXLOGENTRIES = 500;
 
@@ -278,8 +297,6 @@ public class VpnStatus {
 	}
 
 	private static void logInformation() {
-
-
 		logInfo(R.string.mobile_info,Build.MODEL, Build.BOARD,Build.BRAND,Build.VERSION.SDK_INT);
 	}
 
@@ -452,7 +469,13 @@ public class VpnStatus {
 		newLogItem(new LogItem(LogLevel.ERROR, resourceId, args));
 	}
 
-	public static synchronized void updateByteCount(long in, long out) {
+    public static void logMessageOpenVPN(LogLevel level, int ovpnlevel, String message) {
+        newLogItem(new LogItem(level, ovpnlevel, message));
+
+    }
+
+
+    public static synchronized void updateByteCount(long in, long out) {
 		long lastIn = mlastByteCount[0];
 		long lastOut = mlastByteCount[1];
 		long diffIn = mlastByteCount[2] = in - lastIn;

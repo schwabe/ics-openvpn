@@ -427,12 +427,12 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 
         ObjectAnimator anim;
         if (optionsVisible) {
-            anim = ObjectAnimator.ofInt(mOptionsLayout,"alpha",0, mOptionsLayout.getHeight());
+            anim = ObjectAnimator.ofFloat(mOptionsLayout,"alpha",1.0f, 0f);
             anim.addListener(collapseListener);
 
         } else {
             mOptionsLayout.setVisibility(View.VISIBLE);
-            anim = ObjectAnimator.ofInt(mOptionsLayout,"alpha", mOptionsLayout.getHeight(),0);
+            anim = ObjectAnimator.ofFloat(mOptionsLayout,"alpha", 0f, 1.0f);
             //anim = new TranslateAnimation(0.0f, 0.0f, mOptionsLayout.getHeight(), 0.0f);
 
         }

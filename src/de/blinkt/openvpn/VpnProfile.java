@@ -51,7 +51,7 @@ public class VpnProfile implements Serializable {
     public static final String MINIVPN = "miniopenvpn";
     private static final long serialVersionUID = 7085688938959334563L;
     private static final String OVPNCONFIGFILE = "android.conf";
-    static final int MAXLOGLEVEL = 4;
+    public static final int MAXLOGLEVEL = 4;
     public static String DEFAULT_DNS1 = "8.8.8.8";
     public static String DEFAULT_DNS2 = "8.8.4.4";
 

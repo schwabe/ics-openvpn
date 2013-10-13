@@ -34,6 +34,11 @@
         <activity
             android:name=".VPNPreferences"
             android:windowSoftInputMode="stateHidden" />
+
+        <activity
+                android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"
+                android:name=".DisconnectVPN" />
+
         <activity
             android:name=".LogWindow"
             android:allowTaskReparenting="true"

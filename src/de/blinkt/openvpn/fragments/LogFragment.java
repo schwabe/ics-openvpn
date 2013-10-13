@@ -385,23 +385,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 	private LogWindowListAdapter ladapter;
 	private TextView mSpeedView;
 
-    private void showDisconnectDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.title_cancel);
-        builder.setMessage(R.string.cancel_connection_query);
-        builder.setNegativeButton(android.R.string.no, null);
-        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ProfileManager.setConntectedVpnProfileDisconnected(getActivity());
-                if (mService != null && mService.getManagement() != null)
-                    mService.getManagement().stopVPN();
-            }
-        });
-
-        builder.show();
-    }
 
 
     @Override
@@ -410,7 +394,8 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 			ladapter.clearLog();
 			return true;
 		} else if(item.getItemId()==R.id.cancel){
-            showDisconnectDialog();
+            Intent intent = new Intent(getActivity(),DisconnectVPN.class);
+            startActivity(intent);
             return true;
         } else if(item.getItemId()==R.id.send) {
 			ladapter.shareLog();
@@ -492,19 +477,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
 
-        // TODO: FIXME: Restore disconnect ability, own Activity?!
-        /*
-        if (getIntent() !=null && OpenVpnService.DISCONNECT_VPN.equals(getIntent().getAction()))
-            showDisconnectDialog();
 
-        setIntent(null);
-
-        @Override
-        protected void onNewIntent(Intent intent) {
-            super.onNewIntent(intent);
-            setIntent(intent);
-        }
-     */
     }
 
 
@@ -575,7 +548,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.log_fragment,container,false);
+        View v = inflater.inflate(R.layout.log_fragment, container, false);
 
         setHasOptionsMenu(true);
 

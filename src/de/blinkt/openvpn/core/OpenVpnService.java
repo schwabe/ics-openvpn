@@ -14,6 +14,7 @@ import android.net.VpnService;
 import android.os.*;
 import android.os.Handler.Callback;
 import android.preference.PreferenceManager;
+import de.blinkt.openvpn.DisconnectVPN;
 import de.blinkt.openvpn.LogWindow;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -182,7 +183,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
             }
 
-            Intent disconnectVPN = new Intent(this, LogWindow.class);
+            Intent disconnectVPN = new Intent(this, DisconnectVPN.class);
             disconnectVPN.setAction(DISCONNECT_VPN);
             PendingIntent disconnectPendingIntent = PendingIntent.getActivity(this, 0, disconnectVPN, 0);
 

@@ -1,63 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <LinearLayout
-            android:orientation="vertical"
-            android:id="@+id/logOptionsLayout"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/log_verbosity_level"/>
-
-        <SeekBar
-                android:id="@+id/LogLevelSlider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:max="5"
-                android:indeterminate="false"/>
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Timestamps"/>
-
-        <RadioGroup
-                android:id="@+id/timeFormatRadioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-            <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="None"
-                    android:id="@+id/radioNone"
-                    />
-
-            <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Short"
-                    android:id="@+id/radioShort"
-                />
-            <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ISO"
-                    android:id="@+id/radioISO"
-                    />
-
-
-        </RadioGroup>
-    </LinearLayout>
+    <include layout="@layout/log_silders"/>
 
     <TextView
             android:text="@string/speed_waiting"

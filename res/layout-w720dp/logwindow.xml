@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".LogWindow">
+
+    <LinearLayout
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+        <LinearLayout
+                android:minWidth="300dp"
+
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            <include layout="@layout/log_silders"/>
+
+            <Space
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+
+            <TextView
+                    android:text="Upload"
+                    style="@style/logWindowStatusTitle"/>
+
+            <TextView
+                    style="@style/logWindowStatusText"
+                    android:id="@+id/speedUp"
+                    tools:text="4 Mbit/s 6.7 GB"/>
+
+            <TextView
+                    android:text="Download"
+                    style="@style/logWindowStatusTitle"/>
+
+            <TextView
+                    style="@style/logWindowStatusText"
+                    android:id="@+id/speedDown"
+                    tools:text="2 Mbit/s 4.7 GB"/>
+
+
+            <Space
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:text="Vpn Status"
+                style="@style/logWindowStatusTitle"/>
+
+            <TextView
+                    android:id="@+id/speedStatus"
+                    tools:text="Connected"
+                    style="@style/logWindowStatusText"/>/
+
+
+        </LinearLayout>
+
+
+    <ListView
+            android:id="@android:id/list"
+            android:transcriptMode="normal"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</LinearLayout>

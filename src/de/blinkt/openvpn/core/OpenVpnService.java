@@ -593,13 +593,13 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     }
 
     @Override
-    public void updateByteCount(long in, long out, long diffin, long diffout) {
+    public void updateByteCount(long in, long out, long diffIn, long diffOut) {
         if (mDisplayBytecount) {
             String netstat = String.format(getString(R.string.statusline_bytecount),
                     humanReadableByteCount(in, false),
-                    humanReadableByteCount(diffin / OpenVPNManagement.mBytecountInterval, true),
+                    humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true),
                     humanReadableByteCount(out, false),
-                    humanReadableByteCount(diffout / OpenVPNManagement.mBytecountInterval, true));
+                    humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true));
 
             boolean lowpriority = !mNotificationAlwaysVisible;
             showNotification(netstat, null, lowpriority, mConnecttime, LEVEL_CONNECTED);

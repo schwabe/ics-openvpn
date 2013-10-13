@@ -282,7 +282,7 @@ public class VpnStatus {
 	}
 
 	public interface ByteCountListener {
-		void updateByteCount(long in, long out, long diffin, long diffout);
+		void updateByteCount(long in, long out, long diffIn, long diffOut);
 	}
 
 	public synchronized static void logMessage(LogLevel level,String prefix, String message)

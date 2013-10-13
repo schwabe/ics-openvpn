@@ -1,11 +1,9 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.app.AlertDialog;
-import android.app.ListActivity;
+import android.app.*;
 import android.content.*;
 import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
@@ -18,11 +16,9 @@ import android.text.SpannableString;
 import android.text.format.DateFormat;
 import android.text.style.ImageSpan;
 import android.view.*;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.*;
 import android.widget.AdapterView.OnItemLongClickListener;
+import de.blinkt.openvpn.*;
 import de.blinkt.openvpn.core.OpenVPNManagement;
 import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
@@ -32,6 +28,7 @@ import de.blinkt.openvpn.core.VpnStatus.StateListener;
 import de.blinkt.openvpn.core.OpenVpnService;
 import de.blinkt.openvpn.core.OpenVpnService.LocalBinder;
 import de.blinkt.openvpn.core.ProfileManager;
+import org.jetbrains.annotations.Nullable;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -41,7 +38,7 @@ import java.util.Vector;
 
 import static de.blinkt.openvpn.core.OpenVpnService.humanReadableByteCount;
 
-public class LogWindow extends ListActivity implements StateListener, SeekBar.OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener, VpnStatus.ByteCountListener {
+public class LogFragment extends ListFragment implements StateListener, SeekBar.OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener, VpnStatus.ByteCountListener {
 	private static final String LOGTIMEFORMAT = "logtimeformat";
 	private static final int START_VPN_CONFIG = 0;
     private static final String VERBOSITYLEVEL = "verbositylevel";
@@ -102,13 +99,13 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
     }
 
     @Override
-    public void updateByteCount(long in, long out, long diffin, long diffout) {
+    public void updateByteCount(long in, long out, long diffIn, long diffOut) {
         //%2$s/s %1$s - ↑%4$s/s %3$s
-        final String down = String.format("%s/s %s", humanReadableByteCount(in, false), humanReadableByteCount(diffin / OpenVPNManagement.mBytecountInterval, true));
-        final String up = String.format("%s/s %s", humanReadableByteCount(out, false), humanReadableByteCount(diffout / OpenVPNManagement.mBytecountInterval, true));
+        final String down = String.format("%2$s/s %1$s", humanReadableByteCount(in, false), humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true));
+        final String up = String.format("%2$s/s %1$s", humanReadableByteCount(out, false), humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true));
 
         if(mUpStatus!=null && mDownStatus!=null) {
-            runOnUiThread(new Runnable() {
+            getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     mUpStatus.setText(up);
@@ -165,7 +162,7 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 		String getLogStr() {
 			String str = "";
 			for(LogItem entry:allEntries) {
-				str+=entry.getString(LogWindow.this) + '\n';
+				str+=entry.getString(getActivity()) + '\n';
 			}
 			return str;
 		}
@@ -214,12 +211,12 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 		public View getView(int position, View convertView, ViewGroup parent) {
 			TextView v;
 			if(convertView==null)
-				v = new TextView(getBaseContext());
+				v = new TextView(getActivity());
 			else
 				v = (TextView) convertView;
 			
 			LogItem le = currentLevelEntries.get(position);
-			String msg = le.getString(LogWindow.this);
+			String msg = le.getString(getActivity());
             String time ="";
 			if (mTimeFormat != TIME_FORMAT_NONE) {
 				Date d = new Date(le.getLogtime());
@@ -227,7 +224,7 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 				if (mTimeFormat== TIME_FORMAT_ISO)
 					timeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
 				else
-					timeformat = DateFormat.getTimeFormat(LogWindow.this);
+					timeformat = DateFormat.getTimeFormat(getActivity());
 				 time = timeformat.format(d);
 
 			}
@@ -297,12 +294,12 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 		}
 
 		@Override
-		public void newLog(LogItem logmessage) {
+		public void newLog(LogItem logMessage) {
 			Message msg = Message.obtain();
             assert (msg!=null);
 			msg.what=MESSAGE_NEWLOG;
 			Bundle bundle=new Bundle();
-			bundle.putParcelable("logmessage", logmessage);
+			bundle.putParcelable("logmessage", logMessage);
 			msg.setData(bundle);
 			mHandler.sendMessage(msg);
 		}
@@ -312,8 +309,8 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 			// We have been called
 			if(msg.what==MESSAGE_NEWLOG) {
 
-				LogItem logmessage = msg.getData().getParcelable("logmessage");
-                if(addLogMessage(logmessage))
+				LogItem logMessage = msg.getData().getParcelable("logmessage");
+                if(addLogMessage(logMessage))
                     for (DataSetObserver observer : observers) {
                         observer.onChanged();
                     }
@@ -389,7 +386,7 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 	private TextView mSpeedView;
 
     private void showDisconnectDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.title_cancel);
         builder.setMessage(R.string.cancel_connection_query);
         builder.setNegativeButton(android.R.string.no, null);
@@ -397,7 +394,7 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ProfileManager.setConntectedVpnProfileDisconnected(LogWindow.this);
+                ProfileManager.setConntectedVpnProfileDisconnected(getActivity());
                 if (mService != null && mService.getManagement() != null)
                     mService.getManagement().stopVPN();
             }
@@ -421,23 +418,23 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 			VpnProfile lastConnectedprofile = ProfileManager.getLastConnectedVpn();
 
 			if(lastConnectedprofile!=null) {
-				Intent vprefintent = new Intent(this,VPNPreferences.class)
+				Intent vprefintent = new Intent(getActivity(),VPNPreferences.class)
 				.putExtra(VpnProfile.EXTRA_PROFILEUUID,lastConnectedprofile.getUUIDString());
 				startActivityForResult(vprefintent,START_VPN_CONFIG);
 			} else {
-				Toast.makeText(this, R.string.log_no_last_vpn, Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), R.string.log_no_last_vpn, Toast.LENGTH_LONG).show();
 			}
 		} else if(item.getItemId() == R.id.toggle_time) {
 			showHideOptionsPanel();
 		} else if(item.getItemId() == android.R.id.home) {
 			// This is called when the Home (Up) button is pressed
 			// in the Action Bar.
-			Intent parentActivityIntent = new Intent(this, MainActivity.class);
+			Intent parentActivityIntent = new Intent(getActivity(), MainActivity.class);
 			parentActivityIntent.addFlags(
 					Intent.FLAG_ACTIVITY_CLEAR_TOP |
 					Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(parentActivityIntent);
-			finish();
+			getActivity().finish();
 			return true;
 
 		}
@@ -477,50 +474,50 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 
 
     @Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.logmenu, menu);
         if (getResources().getBoolean(R.bool.logSildersAlwaysVisible))
             menu.removeItem(R.id.toggle_time);
-
-		return true;
 	}
 
 
 	@Override
-	protected void onResume() {
+    public void onResume() {
 		super.onResume();
 		VpnStatus.addStateListener(this);
         VpnStatus.addByteCountListener(this);
-        Intent intent = new Intent(this, OpenVpnService.class);
+        Intent intent = new Intent(getActivity(), OpenVpnService.class);
         intent.setAction(OpenVpnService.START_SERVICE);
 
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
 
+        // TODO: FIXME: Restore disconnect ability, own Activity?!
+        /*
         if (getIntent() !=null && OpenVpnService.DISCONNECT_VPN.equals(getIntent().getAction()))
             showDisconnectDialog();
 
         setIntent(null);
 
+        @Override
+        protected void onNewIntent(Intent intent) {
+            super.onNewIntent(intent);
+            setIntent(intent);
+        }
+     */
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-    }
 
     @Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == START_VPN_CONFIG && resultCode==RESULT_OK) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == START_VPN_CONFIG && resultCode== Activity.RESULT_OK) {
 			String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
 
-			final VpnProfile profile = ProfileManager.get(this,configuredVPN);
-			ProfileManager.getInstance(this).saveProfile(this, profile);
+			final VpnProfile profile = ProfileManager.get(getActivity(),configuredVPN);
+			ProfileManager.getInstance(getActivity()).saveProfile(getActivity(), profile);
 			// Name could be modified, reset List adapter
 
-			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+			AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 			dialog.setTitle(R.string.configuration_changed);
 			dialog.setMessage(R.string.restart_vpn_after_change);
 
@@ -529,7 +526,7 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 					new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					Intent intent = new Intent(getBaseContext(), LaunchVPN.class);
+					Intent intent = new Intent(getActivity(), LaunchVPN.class);
 					intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
 					intent.setAction(Intent.ACTION_MAIN);
 					startActivity(intent);
@@ -544,48 +541,52 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 	}
 
 	@Override
-	protected void onStop() {
+    public void onStop() {
 		super.onStop();
 		VpnStatus.removeStateListener(this);
         VpnStatus.removeByteCountListener(this);
-        unbindService(mConnection);
-        getPreferences(0).edit().putInt(LOGTIMEFORMAT, ladapter.mTimeFormat)
+        getActivity().unbindService(mConnection);
+        getActivity().getPreferences(0).edit().putInt(LOGTIMEFORMAT, ladapter.mTimeFormat)
                                 .putInt(VERBOSITYLEVEL, ladapter.mLogLevel).apply();
 
     }
 
+
     @Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.logwindow);
-		ListView lv = getListView();
-
-
-
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ListView lv = getListView();
 
         lv.setOnItemLongClickListener(new OnItemLongClickListener() {
 
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				ClipboardManager clipboard = (ClipboardManager)
-						getSystemService(Context.CLIPBOARD_SERVICE);
-				ClipData clip = ClipData.newPlainText("Log Entry",((TextView) view).getText());
-				clipboard.setPrimaryClip(clip);
-				Toast.makeText(getBaseContext(), R.string.copied_entry, Toast.LENGTH_SHORT).show();
-				return true;
-			}
-		});
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                ClipboardManager clipboard = (ClipboardManager)
+                        getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Log Entry",((TextView) view).getText());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getActivity(), R.string.copied_entry, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+    }
 
-		ladapter = new LogWindowListAdapter();
-		ladapter.mTimeFormat = getPreferences(0).getInt(LOGTIMEFORMAT, 0);
-        int loglevel = getPreferences(0).getInt(VERBOSITYLEVEL, 0);
-        ladapter.setLogLevel(loglevel);
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.log_fragment,container,false);
 
-        lv.setAdapter(ladapter);
+        setHasOptionsMenu(true);
 
-        mTimeRadioGroup = (RadioGroup) findViewById(R.id.timeFormatRadioGroup);
+        ladapter = new LogWindowListAdapter();
+        ladapter.mTimeFormat = getActivity().getPreferences(0).getInt(LOGTIMEFORMAT, 0);
+        int logLevel = getActivity().getPreferences(0).getInt(VERBOSITYLEVEL, 0);
+        ladapter.setLogLevel(logLevel);
+
+        setListAdapter(ladapter);
+
+        mTimeRadioGroup = (RadioGroup) v.findViewById(R.id.timeFormatRadioGroup);
         mTimeRadioGroup.setOnCheckedChangeListener(this);
 
         if(ladapter.mTimeFormat== LogWindowListAdapter.TIME_FORMAT_ISO) {
@@ -596,49 +597,57 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
             mTimeRadioGroup.check(R.id.radioShort);
         }
 
-		mSpeedView = (TextView) findViewById(R.id.speed);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+        mSpeedView = (TextView) v.findViewById(R.id.speed);
 
-        mOptionsLayout = (LinearLayout) findViewById(R.id.logOptionsLayout);
-        mLogLevelSlider = (SeekBar) findViewById(R.id.LogLevelSlider);
+        mOptionsLayout = (LinearLayout) v.findViewById(R.id.logOptionsLayout);
+        mLogLevelSlider = (SeekBar) v.findViewById(R.id.LogLevelSlider);
         mLogLevelSlider.setMax(VpnProfile.MAXLOGLEVEL-1);
-        mLogLevelSlider.setProgress(loglevel-1);
+        mLogLevelSlider.setProgress(logLevel-1);
 
         mLogLevelSlider.setOnSeekBarChangeListener(this);
 
         if(getResources().getBoolean(R.bool.logSildersAlwaysVisible))
             mOptionsLayout.setVisibility(View.VISIBLE);
 
-        mUpStatus = (TextView) findViewById(R.id.speedUp);
-        mDownStatus = (TextView) findViewById(R.id.speedDown);
-        mConnectStatus = (TextView) findViewById(R.id.speedStatus);
+        mUpStatus = (TextView) v.findViewById(R.id.speedUp);
+        mDownStatus = (TextView) v.findViewById(R.id.speedDown);
+        mConnectStatus = (TextView) v.findViewById(R.id.speedStatus);
+        return v;
+    }
+
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
 
     @Override
 	public void updateState(final String status,final String logMessage, final int resId, final ConnectionStatus level) {
-		runOnUiThread(new Runnable() {
+		getActivity().runOnUiThread(new Runnable() {
 
-			@Override
-			public void run() {
-				String prefix=getString(resId) + ":";
-				if (status.equals("BYTECOUNT") || status.equals("NOPROCESS") )
-					prefix="";
-				if (resId==R.string.unknown_state)
-					prefix+=status;
-                if(mSpeedView!=null)
-				    mSpeedView.setText(prefix + logMessage);
+            @Override
+            public void run() {
+                String prefix = getString(resId) + ":";
+                if (status.equals("BYTECOUNT") || status.equals("NOPROCESS"))
+                    prefix = "";
+                if (resId == R.string.unknown_state)
+                    prefix += status;
+                if (mSpeedView != null)
+                    mSpeedView.setText(prefix + logMessage);
 
-                if(mConnectStatus!=null)
+                if (mConnectStatus != null)
                     mConnectStatus.setText(getString(resId));
-			}
-		});
+            }
+        });
 
 	}
 
 
 	@Override
-	protected void onDestroy() {
+    public void onDestroy() {
 		VpnStatus.removeLogListener(ladapter);
 		super.onDestroy();
 	}

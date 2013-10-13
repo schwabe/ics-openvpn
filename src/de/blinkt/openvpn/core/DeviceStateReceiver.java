@@ -50,11 +50,11 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
     LinkedList<Datapoint> trafficdata = new LinkedList<DeviceStateReceiver.Datapoint>();
 
     @Override
-    public void updateByteCount(long in, long out, long diffin, long diffout) {
+    public void updateByteCount(long in, long out, long diffIn, long diffOut) {
         if (screen != connectState.PENDINGDISCONNECT)
             return;
 
-        long total = diffin + diffout;
+        long total = diffIn + diffOut;
         trafficdata.add(new Datapoint(System.currentTimeMillis(), total));
 
         while (trafficdata.getFirst().timestamp <= (System.currentTimeMillis() - TRAFFIC_WINDOW * 1000)) {

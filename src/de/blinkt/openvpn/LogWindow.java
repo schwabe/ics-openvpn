@@ -23,6 +23,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.*;
 import android.widget.AdapterView.OnItemLongClickListener;
+import de.blinkt.openvpn.core.OpenVPNManagement;
 import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 import de.blinkt.openvpn.core.VpnStatus.LogItem;
@@ -38,7 +39,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Vector;
 
-public class LogWindow extends ListActivity implements StateListener, SeekBar.OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener {
+import static de.blinkt.openvpn.core.OpenVpnService.humanReadableByteCount;
+
+public class LogWindow extends ListActivity implements StateListener, SeekBar.OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener, VpnStatus.ByteCountListener {
 	private static final String LOGTIMEFORMAT = "logtimeformat";
 	private static final int START_VPN_CONFIG = 0;
     private static final String VERBOSITYLEVEL = "verbositylevel";
@@ -63,11 +66,13 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
     private SeekBar mLogLevelSlider;
     private LinearLayout mOptionsLayout;
     private RadioGroup mTimeRadioGroup;
+    private TextView mUpStatus;
+    private TextView mDownStatus;
+    private TextView mConnectStatus;
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         ladapter.setLogLevel(progress+1);
-        Toast.makeText(this,"Loglevel set to " + ladapter.mLogLevel,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -94,6 +99,24 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
                 break;
 
         }
+    }
+
+    @Override
+    public void updateByteCount(long in, long out, long diffin, long diffout) {
+        //%2$s/s %1$s - ↑%4$s/s %3$s
+        final String down = String.format("%s/s %s", humanReadableByteCount(in, false), humanReadableByteCount(diffin / OpenVPNManagement.mBytecountInterval, true));
+        final String up = String.format("%s/s %s", humanReadableByteCount(out, false), humanReadableByteCount(diffout / OpenVPNManagement.mBytecountInterval, true));
+
+        if(mUpStatus!=null && mDownStatus!=null) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mUpStatus.setText(up);
+                    mDownStatus.setText(down);
+                }
+            });
+        }
+
     }
 
 
@@ -179,7 +202,7 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 
 		@Override
 		public long getItemId(int position) {
-			return currentLevelEntries.get(position).hashCode();
+			return ((Object)currentLevelEntries.get(position)).hashCode();
 		}
 
 		@Override
@@ -457,6 +480,9 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.logmenu, menu);
+        if (getResources().getBoolean(R.bool.logSildersAlwaysVisible))
+            menu.removeItem(R.id.toggle_time);
+
 		return true;
 	}
 
@@ -465,6 +491,7 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 	protected void onResume() {
 		super.onResume();
 		VpnStatus.addStateListener(this);
+        VpnStatus.addByteCountListener(this);
         Intent intent = new Intent(this, OpenVpnService.class);
         intent.setAction(OpenVpnService.START_SERVICE);
 
@@ -520,6 +547,7 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 	protected void onStop() {
 		super.onStop();
 		VpnStatus.removeStateListener(this);
+        VpnStatus.removeByteCountListener(this);
         unbindService(mConnection);
         getPreferences(0).edit().putInt(LOGTIMEFORMAT, ladapter.mTimeFormat)
                                 .putInt(VERBOSITYLEVEL, ladapter.mLogLevel).apply();
@@ -578,22 +606,31 @@ public class LogWindow extends ListActivity implements StateListener, SeekBar.On
 
         mLogLevelSlider.setOnSeekBarChangeListener(this);
 
+        if(getResources().getBoolean(R.bool.logSildersAlwaysVisible))
+            mOptionsLayout.setVisibility(View.VISIBLE);
 
+        mUpStatus = (TextView) findViewById(R.id.speedUp);
+        mDownStatus = (TextView) findViewById(R.id.speedDown);
+        mConnectStatus = (TextView) findViewById(R.id.speedStatus);
     }
 
 
     @Override
-	public void updateState(final String status,final String logmessage, final int resid, final ConnectionStatus level) {
+	public void updateState(final String status,final String logMessage, final int resId, final ConnectionStatus level) {
 		runOnUiThread(new Runnable() {
 
 			@Override
 			public void run() {
-				String prefix=getString(resid) + ":";
+				String prefix=getString(resId) + ":";
 				if (status.equals("BYTECOUNT") || status.equals("NOPROCESS") )
 					prefix="";
-				if (resid==R.string.unknown_state)
+				if (resId==R.string.unknown_state)
 					prefix+=status;
-				mSpeedView.setText(prefix + logmessage);
+                if(mSpeedView!=null)
+				    mSpeedView.setText(prefix + logMessage);
+
+                if(mConnectStatus!=null)
+                    mConnectStatus.setText(getString(resId));
 			}
 		});
 

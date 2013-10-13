@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="paddingItemsSidebarLog">20dp</dimen>
+    <dimen name="stdpadding">8dp</dimen>
+    <bool name="logSildersAlwaysVisible">false</bool>
+
+</resources>

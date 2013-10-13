@@ -27,6 +27,7 @@
 
     <application
         android:allowBackup="true"
+        android:theme="@android:style/Theme.DeviceDefault.Light"
         android:icon="@drawable/icon"
         android:label="@string/app"
         android:supportsRtl="true" >

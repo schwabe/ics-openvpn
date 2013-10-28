@@ -553,9 +553,16 @@ public class VpnProfile implements Serializable {
         return getKeyStoreCertificates(context, 5);
     }
 
+    class NoCertReturnedException extends Exception {
+        public NoCertReturnedException (String msg) {
+            super(msg);
+        }
+    }
+
     synchronized String[] getKeyStoreCertificates(Context context,int tries) {
         PrivateKey privateKey = null;
         X509Certificate[] cachain;
+        Exception exp=null;
         try {
             privateKey = KeyChain.getPrivateKey(context, mAlias);
             mPrivateKey = privateKey;
@@ -564,6 +571,9 @@ public class VpnProfile implements Serializable {
 
 
             cachain = KeyChain.getCertificateChain(context, mAlias);
+            if(cachain == null)
+                throw new NoCertReturnedException("No certificate returned from Keystore");
+
             if (cachain.length <= 1 && !nonNull(mCaFilename)) {
                 VpnStatus.logMessage(VpnStatus.LogLevel.ERROR, "", context.getString(R.string.keychain_nocacert));
             } else {
@@ -621,30 +631,38 @@ public class VpnProfile implements Serializable {
 
             return new String[]{ca, extra, user};
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            exp=e;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            exp=e;
         } catch (CertificateException e) {
-            e.printStackTrace();
+            exp=e;
         } catch (IOException e) {
-            e.printStackTrace();
+            exp=e;
         } catch (KeyChainException e) {
+            exp=e;
+        } catch (NoCertReturnedException e) {
+            exp =e;
+        } catch (AssertionError e) {
+            if (tries ==0)
+                return null;
+            Toast.makeText(context, String.format("Failure getting Keystore Keys (%s), retrying",e.getLocalizedMessage()),Toast.LENGTH_LONG).show();
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            return getKeyStoreCertificates(context, tries-1);
+        }
+        if (exp != null) {
+            exp.printStackTrace();
+            VpnStatus.logError(R.string.keyChainAccessError, exp.getLocalizedMessage());
+
             VpnStatus.logError(R.string.keychain_access);
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
                 if (!mAlias.matches("^[a-zA-Z0-9]$")) {
                     VpnStatus.logError(R.string.jelly_keystore_alphanumeric_bug);
                 }
             }
-        } catch (AssertionError e) {
-            if (tries ==0)
-                return null;
-            Toast.makeText(context, String.format("Failure getting Keystore Keys (%s), retrying",e.getLocalizedMessage()),Toast.LENGTH_LONG).show();
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-            }
-            return getKeyStoreCertificates(context, tries-1);
         }
         return null;
     }

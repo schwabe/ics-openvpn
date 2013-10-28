@@ -298,4 +298,5 @@
     <string name="thanks_for_donation">Thanks for donating %s!</string>
     <string name="logCleared">Log cleared.</string>
     <string name="show_password">Show password</string>
+    <string name="keyChainAccessError">KeyChain Access error: %s</string>
 </resources>

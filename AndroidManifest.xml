@@ -14,7 +14,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <!-- Copy the <permission> block to your app when using the REMOTE API. Otherwise OpenVPN for
         Android needs to be installed first -->

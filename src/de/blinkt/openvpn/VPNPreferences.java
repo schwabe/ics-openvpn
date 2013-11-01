@@ -2,9 +2,11 @@ package de.blinkt.openvpn;
 
 import java.util.List;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.view.Menu;
@@ -23,7 +25,13 @@ public class VPNPreferences extends PreferenceActivity {
 	}
 
 
-	@Override
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @Override
+    protected boolean isValidFragment(String fragmentName) {
+        return true;
+    }
+
+    @Override
 	protected void onStop() {
 		super.onStop();
 	}

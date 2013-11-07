@@ -480,7 +480,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         } catch (Exception e) {
             VpnStatus.logError(R.string.tun_open_error);
             VpnStatus.logError(getString(R.string.error) + e.getLocalizedMessage());
-            VpnStatus.logError(R.string.tun_error_helpful);
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                VpnStatus.logError(R.string.tun_error_helpful);
+            }
             return null;
         }
 

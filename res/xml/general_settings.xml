@@ -40,7 +40,7 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/device_specific">
+    <PreferenceCategory android:title="@string/device_specific" android:key="device_hacks">
         <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="useCM9Fix"

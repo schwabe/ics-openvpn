@@ -9,9 +9,12 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.api.ExternalAppDatabase;
@@ -28,13 +31,28 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.general_settings);
 
-		Preference loadtun = findPreference("loadTunModule");
-		if(!isTunModuleAvailable())
+
+        PreferenceCategory devHacks = (PreferenceCategory) findPreference("device_hacks");
+
+
+        Preference loadtun = findPreference("loadTunModule");
+		if(!isTunModuleAvailable()) {
 			loadtun.setEnabled(false);
+            devHacks.removePreference(loadtun);
+        }
+
+        CheckBoxPreference cm9hack = (CheckBoxPreference) findPreference("useCM9Fix");
+        if (!cm9hack.isChecked() && (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1)) {
+            devHacks.removePreference(cm9hack);
+        }
 
 		mExtapp = new ExternalAppDatabase(getActivity());
 		Preference clearapi = findPreference("clearapi");
 		clearapi.setOnPreferenceClickListener(this);
+
+
+        if(devHacks.getPreferenceCount()==0)
+            getPreferenceScreen().removePreference(devHacks);
 
 		setClearApiSummary();
 	}

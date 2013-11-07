@@ -14,6 +14,7 @@ public class SeekBarTicks extends SeekBar {
     private Paint mTickPaint;
     private float mTickHeight;
 
+    private float tickHeightRatio = 0.6f;
 
     public SeekBarTicks(Context context, AttributeSet attrs) {
         super (context, attrs);
@@ -37,7 +38,7 @@ public class SeekBarTicks extends SeekBar {
                 new int[] { android.R.attr.secondaryProgress }, defStyle, 0);
 
 
-        int tickColor = a.getColor(0, android.R.color.white);
+        int tickColor = a.getColor(0, android.R.color.black);
         mTickPaint = new Paint();
         mTickPaint.setColor( context.getResources().getColor(tickColor));
         a.recycle();
@@ -53,11 +54,16 @@ public class SeekBarTicks extends SeekBar {
     private void drawTicks(Canvas canvas) {
 
         final int available = getWidth() - getPaddingLeft() - getPaddingRight();
+        final int availableHeight = getHeight() - getPaddingBottom() - getPaddingTop();
+
+        int extrapadding = (int) ((availableHeight- (availableHeight * tickHeightRatio))/2);
+
         int tickSpacing = available / (getMax() );
 
         for (int i = 1; i < getMax(); i++) {
             final float x = getPaddingLeft() + i * tickSpacing;
-            canvas.drawLine(x, getPaddingTop(), x, getHeight()-getPaddingBottom(), mTickPaint);
+
+            canvas.drawLine(x, getPaddingTop()+extrapadding, x, getHeight()-getPaddingBottom()-extrapadding, mTickPaint);
         }
     }
 }

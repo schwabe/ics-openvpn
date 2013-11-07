@@ -642,6 +642,8 @@ public class VpnProfile implements Serializable {
             exp=e;
         } catch (NoCertReturnedException e) {
             exp =e;
+        } catch (IllegalArgumentException e) {
+            exp =e;
         } catch (AssertionError e) {
             if (tries ==0)
                 return null;

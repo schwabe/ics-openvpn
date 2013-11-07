@@ -33,10 +33,12 @@ public class VPNProfileList extends ListFragment {
 	private static final int START_VPN_CONFIG = 92;
 	private static final int SELECT_PROFILE = 43;
 	private static final int IMPORT_PROFILE = 231;
+    private static final int FILE_PICKER_RESULT = 392;
 
 	private static final int MENU_IMPORT_PROFILE = Menu.FIRST +1;
 
-	class VPNArrayAdapter extends ArrayAdapter<VpnProfile> {
+
+    class VPNArrayAdapter extends ArrayAdapter<VpnProfile> {
 
 		public VPNArrayAdapter(Context context, int resource,
 				int textViewResourceId) {
@@ -199,14 +201,22 @@ public class VPNProfileList extends ListFragment {
 			onAddProfileClicked();
 			return true;
 		} else if (itemId == MENU_IMPORT_PROFILE) {
-			startImportConfig();
+			//startImportConfig();
+            startFilePicker();
 			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void startImportConfig() {
+    private void startFilePicker() {
+        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        i.addCategory(Intent.CATEGORY_OPENABLE);
+        i.setType("application/x-openvpn-profile");
+        startActivityForResult(i,FILE_PICKER_RESULT);
+    }
+
+    private void startImportConfig() {
 		Intent intent = new Intent(getActivity(),FileSelect.class);
 		intent.putExtra(FileSelect.NO_INLINE_SELECTION, true);
 		intent.putExtra(FileSelect.WINDOW_TITLE, R.string.import_configuration_file);

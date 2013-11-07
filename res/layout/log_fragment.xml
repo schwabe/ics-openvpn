@@ -5,7 +5,12 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <include layout="@layout/log_silders"/>
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+        <include layout="@layout/log_silders"/>
+    </LinearLayout>
 
     <TextView
             android:text="@string/speed_waiting"

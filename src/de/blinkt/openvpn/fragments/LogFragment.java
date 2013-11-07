@@ -60,6 +60,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 		}
 
 	};
+
     private SeekBar mLogLevelSlider;
     private LinearLayout mOptionsLayout;
     private RadioGroup mTimeRadioGroup;
@@ -74,12 +75,10 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-
     }
 
     @Override
@@ -225,10 +224,10 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 					timeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
 				else
 					timeformat = DateFormat.getTimeFormat(getActivity());
-				 time = timeformat.format(d);
+				 time = timeformat.format(d) + " ";
 
 			}
-            msg =  time + " " + le.getVerbosityLevel() + " " +  msg;
+            msg =  time +  msg;
 
             int spanStart = time.length();
 
@@ -518,7 +517,9 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 		super.onStop();
 		VpnStatus.removeStateListener(this);
         VpnStatus.removeByteCountListener(this);
-        getActivity().unbindService(mConnection);
+
+        if(mService!=null)
+            getActivity().unbindService(mConnection);
         getActivity().getPreferences(0).edit().putInt(LOGTIMEFORMAT, ladapter.mTimeFormat)
                                 .putInt(VERBOSITYLEVEL, ladapter.mLogLevel).apply();
 

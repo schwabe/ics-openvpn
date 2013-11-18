@@ -647,7 +647,7 @@ public class VpnProfile implements Serializable {
         } catch (AssertionError e) {
             if (tries ==0)
                 return null;
-            Toast.makeText(context, String.format("Failure getting Keystore Keys (%s), retrying",e.getLocalizedMessage()),Toast.LENGTH_LONG).show();
+            VpnStatus.logError(String.format("Failure getting Keystore Keys (%s), retrying",e.getLocalizedMessage()));
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e1) {

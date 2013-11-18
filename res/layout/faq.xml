@@ -18,6 +18,7 @@
         <TextView
             android:id="@+id/faq_howto"
             style="@style/faqitem"
+            tools:text="@string/faq_howto"
             tools:ignore="SelectableText" />
 
         <TextView
@@ -25,6 +26,7 @@
                 android:text="@string/faq_vpndialog43_title" />
 
         <TextView
+                tools:text="@string/faq_vpndialog43"
                 android:id="@+id/faq_vpndialog43"
                 style="@style/faqitem" />
 
@@ -50,6 +52,7 @@
 
         <TextView
             android:id="@+id/baterry_consumption"
+            tools:text="@string/baterry_consumption"
             style="@style/faqitem"
             tools:ignore="SelectableText" />
 
@@ -68,6 +71,7 @@
         <TextView
             android:id="@+id/faq_tethering"
             style="@style/faqitem"
+            tools:text="@string/faq_tethering"
             tools:ignore="SelectableText" />
 
         <TextView

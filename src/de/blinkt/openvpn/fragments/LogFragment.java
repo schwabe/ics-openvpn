@@ -103,14 +103,16 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         final String down = String.format("%2$s/s %1$s", humanReadableByteCount(in, false), humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true));
         final String up = String.format("%2$s/s %1$s", humanReadableByteCount(out, false), humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true));
 
-        if(mUpStatus!=null && mDownStatus!=null) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mUpStatus.setText(up);
-                    mDownStatus.setText(down);
-                }
-            });
+        if (mUpStatus != null && mDownStatus != null) {
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mUpStatus.setText(up);
+                        mDownStatus.setText(down);
+                    }
+                });
+            }
         }
 
     }

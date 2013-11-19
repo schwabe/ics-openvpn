@@ -137,6 +137,9 @@ public class OpenVPNThread implements Runnable {
                     else if ((flags & M_DEBUG)!=0)
                         logStatus = VpnStatus.LogLevel.VERBOSE;
 
+                    if (msg.startsWith("MANAGEMENT: CMD"))
+                        logLevel = Math.max(4, logLevel);
+
 
                     VpnStatus.logMessageOpenVPN(logStatus,logLevel,msg);
                 } else {

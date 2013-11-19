@@ -489,37 +489,50 @@ http_proxy_close (struct http_proxy_info *hp)
 }
 
 bool
-add_proxy_header (struct http_proxy_info *p,
+add_proxy_headers (struct http_proxy_info *p,
 		  socket_descriptor_t sd, /* already open to proxy */
 		  const char *host,	  /* openvpn server remote */
-		  const char *port	  /* openvpn server port */
+		  const char* port	  /* openvpn server port */
 		  )
 {
   char buf[512];
   int i;
-  bool hostheadercustom=false;
-  
-  /* Check if any of the custom headers already provides Host: */
-  i=0;
+  bool host_header_sent=false;
+
+  /*
+   * Send custom headers if provided
+   * If content is NULL the whole header is in name
+   * Also remember if we already sent a Host: header
+   */
   for  (i=0; i < MAX_CUSTOM_HTTP_HEADER && p->options.custom_headers[i].name;i++)
     {
-      if(
-	 ((!strcasecmp(p->options.custom_headers[i].name, "Host")) && 
-	  (p->options.custom_headers[i].content))
-	 ||
-	 ((!strncasecmp(p->options.custom_headers[i].name, "Host:", 5)) && 
-	  p->options.custom_headers[i].content == NULL)
-	 )
-	hostheadercustom=true;
-      i++;
+      if (p->options.custom_headers[i].content)
+	{
+	  openvpn_snprintf (buf, sizeof(buf), "%s: %s",
+			    p->options.custom_headers[i].name,
+			    p->options.custom_headers[i].content);
+	  if (!strcasecmp(p->options.custom_headers[i].name, "Host"))
+	      host_header_sent=true;
+	}
+      else
+	{
+	  openvpn_snprintf (buf, sizeof(buf), "%s",
+			    p->options.custom_headers[i].name);
+	  if (!strncasecmp(p->options.custom_headers[i].name, "Host:", 5))
+	      host_header_sent=true;
+	}
+
+      msg (D_PROXY, "Send to HTTP proxy: '%s'", buf);
+      if (!send_line_crlf (sd, buf))
+	return false;
     }
 
-  if (!hostheadercustom) 
+  if (!host_header_sent)
     {
-    openvpn_snprintf (buf, sizeof(buf), "Host: %s", host);
-    msg (D_PROXY, "Send to HTTP proxy: '%s'", buf);
-    if (!send_line_crlf(sd, buf))
-      return false;
+      openvpn_snprintf (buf, sizeof(buf), "Host: %s", host);
+      msg (D_PROXY, "Send to HTTP proxy: '%s'", buf);
+      if (!send_line_crlf(sd, buf))
+        return false;
     }
 
   /* send User-Agent string if provided */
@@ -530,26 +543,6 @@ add_proxy_header (struct http_proxy_info *p,
       msg (D_PROXY, "Send to HTTP proxy: '%s'", buf);
       if (!send_line_crlf (sd, buf))
 	return false;
-    }
-
-  /*
-   * Send custom headers if provided
-   * If content is NULL whole header is in name
-   */
-  for  (i=0; i < MAX_CUSTOM_HTTP_HEADER && p->options.custom_headers[i].name;i++)
-    {
-      if (p->options.custom_headers[i].content)
-	openvpn_snprintf (buf, sizeof(buf), "%s: %s",
-			  p->options.custom_headers[i].name,
-			  p->options.custom_headers[i].content);
-      else
-	openvpn_snprintf (buf, sizeof(buf), "%s",
-			  p->options.custom_headers[i].name);
-
-      msg (D_PROXY, "Send to HTTP proxy: '%s'", buf);
-      if (!send_line_crlf (sd, buf))
-	return false;
-      i++;
     }
 
   return true;
@@ -598,9 +591,9 @@ establish_http_proxy_passthru (struct http_proxy_info *p,
       /* send HTTP CONNECT message to proxy */
       if (!send_line_crlf (sd, buf))
 	goto error;
-      
-      if(!add_proxy_header (p, sd, host, port))
-        goto error;
+
+      if (!add_proxy_headers (p, sd, host, port))
+	goto error;
 
       /* auth specified? */
       switch (p->auth_method)
@@ -715,9 +708,8 @@ establish_http_proxy_passthru (struct http_proxy_info *p,
           if (!send_line_crlf (sd, buf))
             goto error;
 
-          
           /* send HOST etc, */
-	  if(!add_proxy_header (p, sd, host, port))
+	  if (!add_proxy_headers (p, sd, host, port))
 	    goto error;
 
 	  msg (D_PROXY, "Attempting NTLM Proxy-Authorization phase 3");
@@ -826,8 +818,8 @@ establish_http_proxy_passthru (struct http_proxy_info *p,
 		goto error;
 
 	      /* send HOST etc, */
-              if(!add_proxy_header (p, sd, host, port))
-                goto error;
+	      if (!add_proxy_headers (p, sd, host, port))
+		goto error;
 
 	      /* send digest response */
 	      openvpn_snprintf (buf, sizeof(buf), "Proxy-Authorization: Digest username=\"%s\", realm=\"%s\", nonce=\"%s\", uri=\"%s\", qop=%s, nc=%s, cnonce=\"%s\", response=\"%s\"%s",

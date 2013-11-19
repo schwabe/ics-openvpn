@@ -284,6 +284,7 @@ static void
 init_connection_list (struct context *c)
 {
   struct connection_list *l = c->options.connection_list;
+
   l->current = -1;
   if (c->options.remote_random)
     {
@@ -1425,10 +1426,10 @@ do_open_tun (struct context *c)
 
 #ifdef TARGET_ANDROID
       /* If we emulate persist-tun on android we still have to open a new tun and
-         then close the old */
+       * then close the old */
       int oldtunfd=-1;
       if (c->c1.tuntap)
-          oldtunfd = c->c1.tuntap->fd;
+	oldtunfd = c->c1.tuntap->fd;
 #endif
 
       /* initialize (but do not open) tun/tap object */
@@ -1462,14 +1463,14 @@ do_open_tun (struct context *c)
         do_route (&c->options, c->c1.route_list, c->c1.route_ipv6_list,
                   c->c1.tuntap, c->plugins, c->c2.es);
       }
-
+#ifdef TARGET_ANDROID
+	/* Store the old fd inside the fd so open_tun can use it */
+	c->c1.tuntap->fd = oldtunfd;
+#endif
       /* open the tun device */
       open_tun (c->options.dev, c->options.dev_type, c->options.dev_node,
 		c->c1.tuntap);
-#ifdef TARGET_ANDROID
-      if (oldtunfd>=0)
-        close(oldtunfd);
-#endif
+
       /* set the hardware address */
       if (c->options.lladdr)
 	  set_lladdr(c->c1.tuntap->actual_name, c->options.lladdr, c->c2.es);
@@ -1580,7 +1581,7 @@ do_close_tun (struct context *c, bool force)
 
 	  /* delete any routes we added */
 	  if (c->c1.route_list || c->c1.route_ipv6_list )
-            {
+           {
               run_up_down (c->options.route_predown_script,
                            c->plugins,
                            OPENVPN_PLUGIN_ROUTE_PREDOWN,
@@ -2688,7 +2689,8 @@ do_init_socket_1 (struct context *c, const int mode)
 			   c->options.ce.remote,
 			   c->options.ce.remote_port,
 			   c->options.ce.proto,
-         c->options.ce.af,
+			   c->options.ce.af,
+			   c->options.ce.bind_ipv6_only,
 			   mode,
 			   c->c2.accept_from,
 #ifdef ENABLE_HTTP_PROXY

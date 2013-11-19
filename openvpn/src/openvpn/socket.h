@@ -118,6 +118,7 @@ struct link_socket_info
   bool remote_float;  
   int proto;                    /* Protocol (PROTO_x defined below) */
   sa_family_t af;                       /* Address family like AF_INET, AF_INET6 or AF_UNSPEC*/
+  bool bind_ipv6_only;
   int mtu_changed;              /* Set to true when mtu value is changed */
 };
 
@@ -289,7 +290,8 @@ struct link_socket *link_socket_new (void);
 void socket_bind (socket_descriptor_t sd,
 		  struct addrinfo *local,
                   int af_family,
-		  const char *prefix);
+		  const char *prefix,
+                  bool ipv6only);
 
 int openvpn_connect (socket_descriptor_t sd,
 		     const struct sockaddr *remote,
@@ -308,6 +310,7 @@ link_socket_init_phase1 (struct link_socket *sock,
 			 const char *remote_port,
 			 int proto,
        sa_family_t af,
+                         bool bind_ipv6_only,
 			 int mode,
 			 const struct link_socket *accept_from,
 #ifdef ENABLE_HTTP_PROXY
@@ -600,14 +603,14 @@ static inline bool
 addr_local (const struct sockaddr *addr)
 {
     if (!addr)
-        return false;
+	return false;
     switch (addr->sa_family) {
-        case AF_INET:
-            return ((const struct sockaddr_in*)addr)->sin_addr.s_addr == htonl(INADDR_LOOPBACK);
-        case AF_INET6:
-            return  IN6_IS_ADDR_LOOPBACK(&((const struct sockaddr_in6*)addr)->sin6_addr);
-        default:
-            return false;
+	case AF_INET:
+	    return ((const struct sockaddr_in*)addr)->sin_addr.s_addr == htonl(INADDR_LOOPBACK);
+	case AF_INET6:
+	    return  IN6_IS_ADDR_LOOPBACK(&((const struct sockaddr_in6*)addr)->sin6_addr);
+	default:
+	    return false;
     }
 }
 
@@ -853,7 +856,7 @@ link_socket_verify_incoming_addr (struct buffer *buf,
 	case AF_INET:
 	  if (!link_socket_actual_defined (from_addr))
 	    return false;
-	  if (info->remote_float || !info->lsa->remote_list)
+	  if (info->remote_float || (!info->lsa->remote_list))
 	    return true;
 	  if (addrlist_match_proto (&from_addr->dest, info->lsa->remote_list, info->proto))
 	    return true;
@@ -892,13 +895,14 @@ link_socket_set_outgoing_addr (const struct buffer *buf,
     {
       struct link_socket_addr *lsa = info->lsa;
       if (
-	  /* new or changed address? */
-	  (!info->connection_established
-	   || !addr_match_proto (&act->dest, &lsa->actual.dest, info->proto))
-	  /* address undef or address == remote or --float */
-	  && (info->remote_float
-	      || !lsa->remote_list)
-	      || addrlist_match_proto (&act->dest, lsa->remote_list, info->proto)
+	  (
+	   /* new or changed address? */
+	   (!info->connection_established
+	    || !addr_match_proto (&act->dest, &lsa->actual.dest, info->proto))
+	   /* address undef or address == remote or --float */
+	   && (info->remote_float
+	       || !lsa->remote_list))
+	  || addrlist_match_proto (&act->dest, lsa->remote_list, info->proto)
 	  )
 	{
 	  link_socket_connection_initiated (buf, info, act, common_name, es);

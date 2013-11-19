@@ -408,20 +408,18 @@ proxy_entry_new (struct proxy_connection **list,
 		 struct buffer *initial_data,
 		 const char *journal_dir)
 {
-  struct openvpn_sockaddr osaddr;
   socket_descriptor_t sd_server;
   int status;
   struct proxy_connection *pc;
   struct proxy_connection *cp;
 
   /* connect to port share server */
-  osaddr.addr.in4 = server_addr;
   if ((sd_server = socket (PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
     {
       msg (M_WARN|M_ERRNO, "PORT SHARE PROXY: cannot create socket");
       return false;
     }
-  status = openvpn_connect (sd_server, &osaddr, 5, NULL);
+  status = openvpn_connect (sd_server,(const struct sockaddr*)  &server_addr, 5, NULL);
   if (status)
     {
       msg (M_WARN, "PORT SHARE PROXY: connect to port-share server failed");

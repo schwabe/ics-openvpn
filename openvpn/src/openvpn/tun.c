@@ -466,7 +466,7 @@ init_tun (const char *dev,       /* --dev option */
        */
       if (strict_warn)
 	{
-          struct addrinfo *curele;
+	  struct addrinfo *curele;
 	  ifconfig_sanity_check (tt->type == DEV_TYPE_TUN, tt->remote_netmask, tt->topology);
 
 	  /*
@@ -483,14 +483,14 @@ init_tun (const char *dev,       /* --dev option */
 			    tt->remote_netmask);
           }
 
-          for(curele=remote_public;curele;curele=curele->ai_next) {
-            if(curele->ai_family == AF_INET)
-              check_addr_clash ("remote",
-                                tt->type,
-                                ((struct sockaddr_in*)curele->ai_addr)->sin_addr.s_addr,
-			        tt->local,
-			        tt->remote_netmask);
-          }
+	  for (curele=remote_public;curele;curele=curele->ai_next) {
+	    if (curele->ai_family == AF_INET)
+	      check_addr_clash ("remote",
+				tt->type,
+				((struct sockaddr_in*)curele->ai_addr)->sin_addr.s_addr,
+				tt->local,
+				tt->remote_netmask);
+         }
 
 	  if (tt->type == DEV_TYPE_TAP || (tt->type == DEV_TYPE_TUN && tt->topology == TOP_SUBNET))
 	    check_subnet_conflict (tt->local, tt->remote_netmask, "TUN/TAP adapter");
@@ -1501,19 +1501,38 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
   struct gc_arena gc = gc_new ();
   bool opentun;
 
+  int oldtunfd = tt->fd;
+
   for (i = 0; i < tt->options.dns_len; ++i) {
     management_android_control (management, "DNSSERVER",
-                                print_in_addr_t(tt->options.dns[i], 0, &gc));
+				print_in_addr_t(tt->options.dns[i], 0, &gc));
   }
 
   if(tt->options.domain)
     management_android_control (management, "DNSDOMAIN", tt->options.domain);
 
-  opentun = management_android_control (management, "OPENTUN", dev);
+  int android_method = managment_android_persisttun_action (management);
 
-  /* Pick up the fd from management interface after calling the OPENTUN command */
-  tt->fd = management->connection.lastfdreceived;
-  management->connection.lastfdreceived=-1;
+  /* Android 4.4 workaround */
+  if (oldtunfd >=0 && android_method == ANDROID_OPEN_AFTER_CLOSE)
+    {
+      close(oldtunfd);
+      openvpn_sleep(2);
+    }
+
+  if (oldtunfd >=0  && android_method == ANDROID_KEEP_OLD_TUN) {
+    /* keep the old fd */
+    opentun = true;
+  } else {
+    opentun = management_android_control (management, "OPENTUN", dev);
+    /* Pick up the fd from management interface after calling the 
+     * OPENTUN command */
+    tt->fd = management->connection.lastfdreceived;
+    management->connection.lastfdreceived=-1;
+  }
+
+  if (oldtunfd>=0 && android_method == ANDROID_OPEN_BEFORE_CLOSE)
+    close(oldtunfd);
 
   /* Set the actual name to a dummy name */
   tt->actual_name = string_alloc (ANDROID_TUNNAME, NULL);
@@ -3148,9 +3167,9 @@ get_panel_reg (struct gc_arena *gc)
       char enum_name[256];
       char connection_string[256];
       HKEY connection_key;
-      char name_data[256];
+      WCHAR name_data[256];
       DWORD name_type;
-      const char name_string[] = "Name";
+      const WCHAR name_string[] = L"Name";
 
       len = sizeof (enum_name);
       status = RegEnumKeyEx(
@@ -3184,12 +3203,12 @@ get_panel_reg (struct gc_arena *gc)
       else
 	{
 	  len = sizeof (name_data);
-	  status = RegQueryValueEx(
+	  status = RegQueryValueExW(
 				   connection_key,
 				   name_string,
 				   NULL,
 				   &name_type,
-				   name_data,
+				   (LPBYTE) name_data,
 				   &len);
 
 	  if (status != ERROR_SUCCESS || name_type != REG_SZ)
@@ -3197,10 +3216,15 @@ get_panel_reg (struct gc_arena *gc)
 		 NETWORK_CONNECTIONS_KEY, connection_string, name_string);
 	  else
 	    {
+              int n;
+              LPSTR name;
 	      struct panel_reg *reg;
 
 	      ALLOC_OBJ_CLEAR_GC (reg, struct panel_reg, gc);
-	      reg->name = string_alloc (name_data, gc);
+              n = WideCharToMultiByte (CP_UTF8, 0, name_data, -1, NULL, 0, NULL, NULL);
+              name = gc_malloc (n, false, gc);
+              WideCharToMultiByte (CP_UTF8, 0, name_data, -1, name, n, NULL, NULL);
+              reg->name = name;
 	      reg->guid = string_alloc (enum_name, gc);
 		      
 	      /* link into return list */
@@ -3410,7 +3434,7 @@ static void
 at_least_one_tap_win (const struct tap_reg *tap_reg)
 {
   if (!tap_reg)
-    msg (M_FATAL, "There are no TAP-Windows adapters on this system.  You should be able to create a TAP-Windows adapter by going to Start -> All Programs -> " PACKAGE_NAME " -> Add a new TAP-Windows virtual ethernet adapter.");
+    msg (M_FATAL, "There are no TAP-Windows adapters on this system.  You should be able to create a TAP-Windows adapter by going to Start -> All Programs -> TAP-Windows -> Utilities -> Add a new TAP-Windows virtual ethernet adapter.");
 }
 
 /*

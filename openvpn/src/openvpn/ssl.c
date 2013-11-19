@@ -64,7 +64,6 @@
 #include "ssl.h"
 #include "ssl_verify.h"
 #include "ssl_backend.h"
-#include "multi.h"
 
 #include "memdbg.h"
 
@@ -1837,7 +1836,7 @@ push_peer_info(struct buffer *buf, struct tls_session *session)
 	    buf_printf (&out, "IV_HWADDR=%s\n", format_hex_ex (rgi.hwaddr, 6, 0, 1, ":", &gc));
         }
 
-      /* push env vars that begin with UV_ and IV_OPENVPN_GUI_VERSION*/
+      /* push env vars that begin with UV_ and IV_OPENVPN_GUI_VERSION */
       for (e=es->list; e != NULL; e=e->next)
 	{
 	  if (e->string)

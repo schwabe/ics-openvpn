@@ -780,6 +780,7 @@ init_options (struct options *o, const bool init_gc)
   o->topology = TOP_NET30;
   o->ce.proto = PROTO_UDP;
   o->ce.af = AF_UNSPEC;
+  o->ce.bind_local=false;
   o->ce.connect_retry_seconds = 5;
   o->ce.connect_timeout = 10;
   o->connect_retry_max = 0;
@@ -2037,8 +2038,12 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
       if (ce->socks_proxy_server)
 	msg (M_USAGE, "--socks-proxy cannot be used with --mode server");
 #endif
-      if (options->connection_list)
-	msg (M_USAGE, "<connection> cannot be used with --mode server");
+      /* <connection> blocks force to have a remote embedded, so we check for the 
+       * --remote and bail out if it  is present */
+       if (options->connection_list->len >1 ||
+                  options->connection_list->array[0]->remote)
+          msg (M_USAGE, "<connection> cannot be used with --mode server");
+
 #if 0
       if (options->tun_ipv6)
 	msg (M_USAGE, "--tun-ipv6 cannot be used with --mode server");
@@ -4446,14 +4451,14 @@ add_option (struct options *options,
 	  if (p[3])
 	    {
 	      const int proto = ascii2proto (p[3]);
-        const sa_family_t af = ascii2af (p[3]);
+	      const sa_family_t af = ascii2af (p[3]);
 	      if (proto < 0)
 		{
 		  msg (msglevel, "remote: bad protocol associated with host %s: '%s'", p[1], p[3]);
 		  goto err;
 		}
 	      re.proto = proto;
-        re.af = af;
+	      re.af = af;
 	    }
 	}
       if (permission_mask & OPT_P_GENERAL)
@@ -4875,6 +4880,9 @@ add_option (struct options *options,
     {
       VERIFY_PERMISSION (OPT_P_GENERAL|OPT_P_CONNECTION);
       options->ce.bind_defined = true;
+      if (p[1] && streq (p[1], "ipv6only"))
+          options->ce.bind_ipv6_only=true;
+
     }
   else if (streq (p[0], "nobind"))
     {
@@ -5000,10 +5008,10 @@ add_option (struct options *options,
       else if ((streq (p[1], "EXT1") || streq(p[1], "EXT2") || streq(p[1], "CUSTOM-HEADER"))
 	       && p[2])
 	{
-	  /* In the wild patched versions use both EXT1/2 and CUSTOM-HEADER with either two
-	   * argument or one */
+	  /* In the wild patched versions use both EXT1/2 and CUSTOM-HEADER
+	   * with either two argument or one */
 
-	  struct http_custom_header *custom_header =NULL;
+	  struct http_custom_header *custom_header = NULL;
 	  int i;
 	  /* Find the first free header */
 	  for (i=0; i < MAX_CUSTOM_HTTP_HEADER; i++) {
@@ -5014,11 +5022,11 @@ add_option (struct options *options,
 	  }
 	  if (!custom_header)
 	    {
-	      msg (msglevel, "Cannot use more than %d http-proxy-option CUSTOM-HEAER : '%s'", MAX_CUSTOM_HTTP_HEADER, p[1]);
+	      msg (msglevel, "Cannot use more than %d http-proxy-option CUSTOM-HEADER : '%s'", MAX_CUSTOM_HTTP_HEADER, p[1]);
 	    }
 	  else
 	    {
-	      /* We will save p[2] and p[3], the proxy code will detect if 
+	      /* We will save p[2] and p[3], the proxy code will detect if
 	       * p[3] is NULL */
 	      custom_header->name = p[2];
 	      custom_header->content = p[3];

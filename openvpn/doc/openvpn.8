@@ -221,6 +221,9 @@ options.
 indicates the protocol to use when connecting with the
 remote, and may be "tcp" or "udp".
 
+For forcing IPv4 or IPv6 connection suffix tcp or udp 
+with 4/6 like udp4/udp6/tcp4/tcp6.
+
 The client will move on to the next host in the list,
 in the event of connection failure.
 Note that at any given time, the OpenVPN client
@@ -553,19 +556,22 @@ Set HTTP "User-Agent" string to
 .B user-agent.
 
 .B CUSTOM\-HEADER name content \-\-
-Adds the custom Header with 
+Adds the custom Header with
 .B name
-as name and 
+as name and
 .B content
 as the content of the custom HTTP header.
 .\"*********************************************************
 .TP
-.B \-\-socks-proxy server [port]
+.B \-\-socks-proxy server [port] [authfile]
 Connect to remote host through a Socks5 proxy at address
 .B server
 and port
 .B port
 (default=1080).
+.B authfile
+(optional) is a file containing a username and password on 2 lines, or
+"stdin" to prompt from console.
 .\"*********************************************************
 .TP
 .B \-\-socks-proxy-retry
@@ -678,7 +684,7 @@ TCP/UDP port number or name for bind.
 TCP/UDP port number or name for remote.
 .\"*********************************************************
 .TP
-.B \-\-bind
+.B \-\-bind [ipv6only]
 Bind to local address and port. This is the default unless any of 
 .B \-\-proto tcp-client
 ,
@@ -686,6 +692,12 @@ Bind to local address and port. This is the default unless any of
 or
 .B \-\-socks-proxy
 are used.
+
+If the 
+.B \-\-ipv6only
+keyword is present OpenVPN will bind only to IPv6 (as oposed
+to IPv6 and IPv4) when a IPv6 socket is opened.
+
 .\"*********************************************************
 .TP
 .B \-\-nobind

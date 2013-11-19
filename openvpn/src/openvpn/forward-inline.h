@@ -228,7 +228,6 @@ context_reschedule_sec (struct context *c, int sec)
 static inline struct link_socket_info *
 get_link_socket_info (struct context *c)
 {
-
   if (c->c2.link_socket_info)
     return c->c2.link_socket_info;
   else

@@ -1570,7 +1570,7 @@ man_listen (struct management *man)
 	{
 	  man->connection.sd_top = create_socket_tcp (AF_INET);
 	  socket_bind (man->connection.sd_top, man->settings.local,
-                       AF_INET, "MANAGEMENT");
+                       AF_INET, "MANAGEMENT", true);
 	}
 
       /*
@@ -1864,6 +1864,31 @@ bool management_android_control (struct management *man, const char *command, co
   management_query_user_pass(management, &up , command, GET_USER_PASS_NEED_OK,(void*) 0);
   return strcmp ("ok", up.password)==0;
 }
+
+/*
+ * In Android 4.4 it is not possible to open a new tun device and then close the
+ * old tun device without breaking the whole VPNService stack until the device
+ * is reported. This management method ask the UI what method should be taken to
+ * ensure the optimal solution for the situation
+ */
+int managment_android_persisttun_action (struct management *man)
+{
+  struct user_pass up;
+  CLEAR(up);
+  strcpy(up.username,"tunmethod");
+  management_query_user_pass(management, &up , "PERSIST_TUN_ACTION",
+			     GET_USER_PASS_NEED_OK,(void*) 0);
+  if (!strcmp("NOACTION", up.password))
+    return ANDROID_KEEP_OLD_TUN;
+  else if (!strcmp ("OPEN_AFTER_CLOSE", up.password))
+    return ANDROID_OPEN_AFTER_CLOSE;
+  else if (!strcmp ("OPEN_BEFORE_CLOSE", up.password))
+    return ANDROID_OPEN_BEFORE_CLOSE;
+  else
+    ASSERT (0);
+}
+
+
 #endif
 
 static int

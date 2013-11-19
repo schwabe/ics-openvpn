@@ -273,8 +273,12 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         }
 
         int ovpnlevel = Integer.parseInt(args[2]) & 0x0F;
+        String msg = args[3];
 
-        VpnStatus.logMessageOpenVPN(level,ovpnlevel, args[3]);
+        if (msg.startsWith("MANAGEMENT: CMD"))
+            ovpnlevel = Math.max(4, ovpnlevel);
+
+        VpnStatus.logMessageOpenVPN(level,ovpnlevel, msg);
     }
 
     private void handleHold() {
@@ -387,7 +391,10 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		} else if (needed.equals("IFCONFIG6")) {
 			mOpenVPNService.setLocalIPv6(extra);
 
-		} else if (needed.equals("OPENTUN")) {
+		} else if (needed.equals("PERSIST_TUN_ACTION")) {
+            // check if tun cfg stayed the same
+            status = mOpenVPNService.getTunReopenStatus();
+        } else if (needed.equals("OPENTUN")) {
 			if(sendTunFD(needed,extra))
 				return;
 			else

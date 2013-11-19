@@ -14,6 +14,7 @@ import android.net.VpnService;
 import android.os.*;
 import android.os.Handler.Callback;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import de.blinkt.openvpn.DisconnectVPN;
 import de.blinkt.openvpn.LogWindow;
 import de.blinkt.openvpn.R;
@@ -24,6 +25,7 @@ import de.blinkt.openvpn.core.VpnStatus.StateListener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
@@ -55,6 +57,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     private long mConnecttime;
     private boolean mOvpn3 = false;
     private OpenVPNManagement mManagement;
+    private String mLastTunCfg;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean mbit) {
@@ -386,6 +389,24 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
     }
 
+    private String getTunConfigString()
+    {
+        // The format of the string is not important, only that
+        // two identical configurations produce the same result
+        String cfg="TUNCFG UNQIUE STRING ips:";
+
+        if (mLocalIP!=null)
+            cfg+=mLocalIP.toString();
+        if (mLocalIPv6!=null)
+            cfg+=mLocalIPv6.toString();
+
+        cfg+= "routes: " + TextUtils.join("|",mRoutes) + TextUtils.join("|",mRoutesv6);
+        cfg+= "dns: " + TextUtils.join("|",mDnslist);
+        cfg+= "domain: " + mDomain;
+        cfg+= "mtu: " + mMtu;
+        return cfg;
+    }
+
     public ParcelFileDescriptor openTun() {
         Builder builder = new Builder();
 
@@ -464,6 +485,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         // No DNS Server, log a warning
         if (mDnslist.size() == 0)
             VpnStatus.logInfo(R.string.warn_no_dns);
+
+        mLastTunCfg = getTunConfigString();
 
         // Reset information
         mDnslist.clear();
@@ -623,6 +646,16 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
     public OpenVPNManagement getManagement() {
         return mManagement;
+    }
+
+    public String getTunReopenStatus() {
+        String currentConfiguration = getTunConfigString();
+        if(currentConfiguration.equals(mLastTunCfg))
+            return "NOACTION";
+        else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            return "OPEN_AFTER_CLOSE";
+        else
+            return "OPEN_BEFORE_CLOSE";
     }
 
     public class LocalBinder extends Binder {

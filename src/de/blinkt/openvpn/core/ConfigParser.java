@@ -360,7 +360,12 @@ public class ConfigParser {
 			np.mServerPort = port.get(1);
 		}
 
-		Vector<String> proto = getOption("proto", 1,1);
+        Vector<String> rport = getOption("rport", 1,1);
+        if(port!=null){
+            np.mServerPort = port.get(1);
+        }
+
+        Vector<String> proto = getOption("proto", 1,1);
 		if(proto!=null){
 			np.mUseUdp=isUdpProto(proto.get(1));
 		}

@@ -3,6 +3,7 @@ package de.blinkt.openvpn;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import de.blinkt.openvpn.fragments.LogFragment;
 
 /**
  * Created by arne on 13.10.13.
@@ -13,6 +14,12 @@ public class LogWindow extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_window);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(R.id.container, new LogFragment())
+                    .commit();
+        }
 
     }
 

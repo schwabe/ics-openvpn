@@ -17,14 +17,6 @@
 </item>
     <item>Belirtilmemiş</item>
   </string-array>
-  <string-array name="verb_entries">
-    <item>0 - Kayıt yok</item>
-    <item>1- Varsayılan kayıt</item>
-    <item>2 - Daha ayrıntılı Kayıt</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5 - Hata Ayıklama</item>
-  </string-array>
   <string-array name="crm_entries">
     <item>No reconnection retries</item>
     <item>One reconnection retry</item>

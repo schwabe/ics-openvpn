@@ -44,6 +44,7 @@
   <string name="config_error_found">Fout in de configuratie</string>
   <string name="ipv4_format_error">Fout bij inlezen van IPv4-adres</string>
   <string name="custom_route_format_error">Fout bij inlezen van aangepaste routes</string>
+  <string name="pw_query_hint">(vrij laten voor query op aanvraag)</string>
   <string name="vpn_shortcut">Open VPN shortcut</string>
   <string name="vpn_launch_title">Met VPN verbinden</string>
   <string name="shortcut_profile_notfound">Het profiel zoals aangegeven in de snelkoppeling kon niet gevonden worden.</string>
@@ -58,12 +59,15 @@
   <string name="title_cancel">Annuleer bevestiging</string>
   <string name="cancel_connection_query">Sluit de verbonden VPN af/annuleer de verbindingspoging?</string>
   <string name="remove_vpn">VPN wissen</string>
+  <string name="check_remote_tlscert">Controleert of de server een certificaat met TLS Server extensions gebruikt (--remote-cert-tls server)</string>
   <string name="check_remote_tlscert_title">Verwacht TLS server-certificaat</string>
   <string name="remote_tlscn_check_summary">Controleert de externe server certificaathouder</string>
   <string name="remote_tlscn_check_title">Controleer Certificaat Hostname</string>
   <string name="enter_tlscn_title">Externe certificaathouder</string>
+  <string name="tls_key_auth">Activeert TLS Key verificatie</string>
   <string name="tls_auth_file">TLS Auth Bestand</string>
   <string name="pull_on_summary">Vraag IP adres, routes en timing opties van de server.</string>
+  <string name="pull_off_summary">De server vraagt geen informatie op. Instellingen moeten onderaan worden gespecificeerd.</string>
   <string name="use_pull">Pull Instellingen</string>
   <string name="dns">DNS</string>
   <string name="override_dns">DNS Instellingen van Server Overschrijven</string>
@@ -97,6 +101,12 @@
   <string name="faq">Veelgestelde vragen </string>
   <string name="encryption">Codering</string>
   <string name="cipher_dialog_title">Codering methode</string>
+  <string name="menu_import_short">Import</string>
+  <string name="add_profile">Profiel toevoegen</string>
+  <string name="import_could_not_open">Kon het bestand %1$s, zoals aangegeven in de geïmporteerde configuratie niet vinden</string>
+  <string name="importing_config">Geïmporteerde configuratie bestand uit %1$s</string>
+  <string name="import_done">Lezen van configuratie bestand afgesloten.</string>
+  <string name="no_bind">Geen locale binding</string>
   <string name="import_configuration_file">configuratie bestand importeren</string>
   <string name="faq_security_title">Beveiligingsoverwegingen</string>
   <string name="import_vpn">Importeren</string>

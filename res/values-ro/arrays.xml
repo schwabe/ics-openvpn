@@ -16,14 +16,6 @@
     <item>1</item>
     <item>Nespecificat</item>
   </string-array>
-  <string-array name="verb_entries">
-    <item>0 - Nici o logare</item>
-    <item>1 - Jurnal implicit</item>
-    <item>2 - Jurnal mai detaliat</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5 - Jurnal debug</item>
-  </string-array>
   <string-array name="crm_entries">
     <item>No reconnection retries</item>
     <item>One reconnection retry</item>

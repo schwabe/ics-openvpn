@@ -16,14 +16,6 @@
     <item>1</item>
     <item>Sense especificar</item>
   </string-array>
-  <string-array name="verb_entries">
-    <item>0 - No logging</item>
-    <item>1 - Registre per defecte</item>
-    <item>2 - Registre extens</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5 - Registre de depuració</item>
-  </string-array>
   <string-array name="crm_entries">
     <item>No reconnection retries</item>
     <item>One reconnection retry</item>

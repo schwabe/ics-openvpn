@@ -28,13 +28,9 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 		mUseFloat = (CheckBoxPreference) findPreference("useFloat");
 		mUseCustomConfig = (CheckBoxPreference) findPreference("enableCustomOptions");
 		mCustomConfig = (EditTextPreference) findPreference("customOptions");
-		mLogverbosity = (ListPreference) findPreference("verblevel");
 		mPersistent = (CheckBoxPreference) findPreference("usePersistTun");
 		mConnectretrymax = (ListPreference) findPreference("connectretrymax");
 		mConnectretry = (EditTextPreference) findPreference("connectretry");
-
-		mLogverbosity.setOnPreferenceChangeListener(this);
-		mLogverbosity.setSummary("%s");
 		
 		mConnectretrymax.setOnPreferenceChangeListener(this);
 		mConnectretrymax.setSummary("%s");
@@ -53,9 +49,6 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 		mCustomConfig.setText(mProfile.mCustomConfigOptions);
 		mPersistent.setChecked(mProfile.mPersistTun);
 		
-		mLogverbosity.setValue(mProfile.mVerb);
-		onPreferenceChange(mLogverbosity, mProfile.mVerb);
-		
 		mConnectretrymax.setValue(mProfile.mConnectRetryMax);
 		onPreferenceChange(mConnectretrymax, mProfile.mConnectRetryMax);
 				
@@ -69,7 +62,6 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 		mProfile.mUseFloat = mUseFloat.isChecked();
 		mProfile.mUseCustomConfig = mUseCustomConfig.isChecked();
 		mProfile.mCustomConfigOptions = mCustomConfig.getText();
-		mProfile.mVerb = mLogverbosity.getValue();
 		mProfile.mConnectRetryMax = mConnectretrymax.getValue();
 		mProfile.mPersistTun = mPersistent.isChecked();
 		mProfile.mConnectRetry = mConnectretry.getText();
@@ -78,21 +70,7 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 	
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		if(preference==mLogverbosity) {
-			// Catch old version problem
-			if(newValue==null){
-				newValue="1";
-			}
-			mLogverbosity.setDefaultValue(newValue);
-			//This is idiotic. 
-			int i =Integer.parseInt((String) newValue);
-			
-			// verb >= 5 is not supported by the chooser
-			if(i < mLogverbosity.getEntries().length )
-				mLogverbosity.setSummary(mLogverbosity.getEntries()[i]);
-			else
-				mLogverbosity.setSummary(String.format("debug verbosity: %d",i));
-		} else if (preference == mConnectretrymax) {
+	     if (preference == mConnectretrymax) {
 			if(newValue==null) {
 				newValue="5";
 			}

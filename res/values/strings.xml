@@ -299,4 +299,11 @@
     <string name="logCleared">Log cleared.</string>
     <string name="show_password">Show password</string>
     <string name="keyChainAccessError">KeyChain Access error: %s</string>
+    <string name="timestamp_short">Short</string>
+    <string name="timestamp_iso">ISO</string>
+    <string name="timestamps">Timestamps</string>
+    <string name="timestamps_none">None</string>
+    <string name="uploaded_data">Upload</string>
+    <string name="downloaded_data">Download</string>
+    <string name="vpn_status">Vpn Status</string>
 </resources>

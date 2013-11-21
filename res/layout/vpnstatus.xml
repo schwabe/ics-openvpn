@@ -9,7 +9,7 @@
 
 
     <TextView
-            android:text="Upload"
+            android:text="@string/uploaded_data"
             style="@style/logWindowStatusTitle"/>
 
     <TextView
@@ -18,7 +18,7 @@
             tools:text="4 Mbit/s 6.7 GB"/>
 
     <TextView
-            android:text="Download"
+            android:text="@string/downloaded_data"
             style="@style/logWindowStatusTitle"/>
 
     <TextView
@@ -34,7 +34,7 @@
 
 
     <TextView
-            android:text="Vpn Status"
+            android:text="@string/vpn_status"
             style="@style/logWindowStatusTitle"/>
 
     <TextView

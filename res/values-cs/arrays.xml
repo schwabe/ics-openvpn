@@ -16,14 +16,6 @@
     <item>1 (klient)</item>
     <item>Nespecifikováno</item>
   </string-array>
-  <string-array name="verb_entries">
-    <item>0 - Žádné logování</item>
-    <item>1 - Defaultní logování</item>
-    <item>2 - Podrobnější logování</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5 - Debug logování</item>
-  </string-array>
   <string-array name="crm_entries">
     <item>Opětovně nepřipojovat</item>
     <item>Jeden pokus o připojení</item>

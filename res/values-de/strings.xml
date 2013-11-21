@@ -294,4 +294,16 @@
   <string name="permission_icon_app">Symbol der Anwendung, die versucht OpenVPN für Android zu kontrollieren</string>
   <string name="faq_vpndialog43">Beginnend mit Android 4.3 wird der VPN-Bestätigungsdialog vor \"überlappenden Anwendungen\" geschützt. Dadurch kann es vorkommen, dass der Dialog nicht auf Eingaben reagiert. Eine Anwendung benutzen, die Overlays verwendet, kann es dieses Verhalten verursachen. Sollten Sie die verursachende Anwendung finden, kontaktieren Sie dessen Author. Dieses Problem betrifft alle VPN-Anwendungen ab Android 4.3. Siehe auch &lt; a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\" &gt; Issue 185 &lt;a&gt; für zusätzliche Details \"</string>
   <string name="faq_vpndialog43_title">VPN-Bestätigungsdialog ab Android 4.3</string>
+  <string name="donatePlayStore">Alternativ können Sie mir per Play Store Geld zukommen lassen:</string>
+  <string name="thanks_for_donation">Vielen Dank für die %s Spende!</string>
+  <string name="logCleared">Protokoll gelöscht.</string>
+  <string name="show_password">Passwort anzeigen</string>
+  <string name="keyChainAccessError">KeyChain Zugriffsfehler: %s</string>
+  <string name="timestamp_short">Kurze</string>
+  <string name="timestamp_iso">ISO</string>
+  <string name="timestamps">Zeitstempel</string>
+  <string name="timestamps_none">Keine</string>
+  <string name="uploaded_data">Hochgeladen</string>
+  <string name="downloaded_data">Heruntergeladen</string>
+  <string name="vpn_status">VPN-Status</string>
 </resources>

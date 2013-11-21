@@ -24,6 +24,18 @@ else
     exit 77
 fi
 
+# Check for external dependencies
+which fping > /dev/null
+if [ $? -ne 0 ]; then
+    echo "$0: fping is not available in \$PATH" >&2
+    exit 77
+fi
+which fping6 > /dev/null
+if [ $? -ne 0 ]; then
+    echo "$0: fping6 is not available in \$PATH" >&2
+    exit 77
+fi
+
 if [ ! -x "${top_builddir}/src/openvpn/openvpn" ]
 then
     echo "no (executable) openvpn binary in current build tree. FAIL." >&2
@@ -209,6 +221,8 @@ SUMMARY_FAIL=
 for SUF in $TEST_RUN_LIST
 do
     # get config variables
+    eval test_prep=\"\$PREPARE_$SUF\"
+    eval test_cleanup=\"\$CLEANUP_$SUF\"
     eval test_run_title=\"\$RUN_TITLE_$SUF\"
     eval openvpn_conf=\"\$OPENVPN_CONF_$SUF\"
     eval expect_ifconfig4=\"\$EXPECT_IFCONFIG4_$SUF\"
@@ -218,6 +232,11 @@ do
 
     echo -e "\n### test run $SUF: '$test_run_title' ###\n"
     fail_count=0
+
+    if [ -n "$test_prep" ]; then
+        echo -e "running preparation: '$test_prep'"
+        eval $test_prep
+    fi
 
     echo "save pre-openvpn ifconfig + route"
     get_ifconfig_route >$LOGDIR/$SUF:ifconfig_route_pre.txt
@@ -304,6 +323,12 @@ do
 	SUMMARY_FAIL="$SUMMARY_FAIL $SUF"
 	exit_code=30
     fi
+
+    if [ -n "$test_cleanup" ]; then
+        echo -e "cleaning up: '$test_cleanup'"
+        eval $test_cleanup
+    fi
+
 done
 
 if [ -z "$SUMMARY_OK" ] ; then SUMMARY_OK=" none"; fi

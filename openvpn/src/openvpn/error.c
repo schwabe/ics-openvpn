@@ -163,18 +163,17 @@ set_suppress_timestamps (bool suppressed)
 }
 
 void
-set_parsable_output (bool parsable)
+set_machine_readable_output (bool parsable)
 {
-  parsable_output = parsable;
+  machine_readable_output = parsable;
 }
-
 
 void
 error_reset ()
 {
   use_syslog = std_redir = false;
   suppress_timestamps = false;
-  parsable_output = false;
+  machine_readable_output = false;
   x_debug_level = 1;
   mute_cutoff = 0;
   mute_count = 0;
@@ -346,7 +345,7 @@ void x_msg_va (const unsigned int flags, const char *format, va_list arglist)
 	  FILE *fp = msg_fp(flags);
 	  const bool show_usec = check_debug_level (DEBUG_LEVEL_USEC_TIME);
 
-	  if (parsable_output)
+	  if (machine_readable_output)
 	    {
 	      struct timeval tv;
 	      gettimeofday (&tv, NULL);

@@ -2,12 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Obscure Settings" >
 
-    <ListPreference
-        android:entries="@array/verb_entries"
-        android:entryValues="@array/verb_values"
-        android:key="verblevel"
-        android:persistent="false"
-        android:title="@string/log_verbosity_level" />
 
     <CheckBoxPreference
         android:key="useRandomHostname"

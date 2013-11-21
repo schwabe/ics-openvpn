@@ -16,14 +16,6 @@
         <item>1</item>
         <item>Unspecified</item>
     </string-array>
-    <string-array name="verb_entries">
-        <item>0 - No logging</item>
-        <item>1 - Default logging</item>
-        <item>2 - More verbose logging</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5 - Debug logging</item>
-    </string-array>
     <string-array name="crm_entries">
         <item>No reconnection retries</item>
         <item>One reconnection retry</item>

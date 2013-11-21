@@ -201,8 +201,8 @@ public class VPNProfileList extends ListFragment {
 			onAddProfileClicked();
 			return true;
 		} else if (itemId == MENU_IMPORT_PROFILE) {
-			//startImportConfig();
-            startFilePicker();
+			startImportConfig();
+            //startFilePicker();
 			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
@@ -212,8 +212,8 @@ public class VPNProfileList extends ListFragment {
     private void startFilePicker() {
         Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
-        i.setType("application/x-openvpn-profile");
-        startActivityForResult(i,FILE_PICKER_RESULT);
+        i.setType("*/*");
+        startActivityForResult(i, FILE_PICKER_RESULT);
     }
 
     private void startImportConfig() {
@@ -261,17 +261,12 @@ public class VPNProfileList extends ListFragment {
 
 	}
 
-
 	private void addProfile(VpnProfile profile) {
 		getPM().addProfile(profile);
 		getPM().saveProfileList(getActivity());
 		getPM().saveProfile(getActivity(),profile);
 		mArrayadapter.add(profile);
 	}
-
-
-
-
 
 	private ProfileManager getPM() {
 		return ProfileManager.getInstance(getActivity());
@@ -299,21 +294,31 @@ public class VPNProfileList extends ListFragment {
 			setListAdapter();
 
 		} else if(requestCode== SELECT_PROFILE) {
-			String filedata = data.getStringExtra(FileSelect.RESULT_DATA);
-			Intent startImport = new Intent(getActivity(),ConfigConverter.class);
-			startImport.setAction(ConfigConverter.IMPORT_PROFILE);
-			Uri uri = new Uri.Builder().path(filedata).scheme("file").build();
-			startImport.setData(uri);
-			startActivityForResult(startImport, IMPORT_PROFILE);
+            String fileData = data.getStringExtra(FileSelect.RESULT_DATA);
+            Uri uri = new Uri.Builder().path(fileData).scheme("file").build();
+
+            startConfigImport(uri);
 		} else if(requestCode == IMPORT_PROFILE) {
 			String profileUUID = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
 			mArrayadapter.add(ProfileManager.get(getActivity(), profileUUID));
-		}
+		} else if(resultCode == FILE_PICKER_RESULT) {
+            if (data != null) {
+                Uri uri = data.getData();
+                startConfigImport(uri);
+            }
+        }
 
 	}
 
+    private void startConfigImport(Uri uri) {
+        Intent startImport = new Intent(getActivity(),ConfigConverter.class);
+        startImport.setAction(ConfigConverter.IMPORT_PROFILE);
+        startImport.setData(uri);
+        startActivityForResult(startImport, IMPORT_PROFILE);
+    }
 
-	private void editVPN(VpnProfile profile) {
+
+    private void editVPN(VpnProfile profile) {
 		mEditProfile =profile;
 		Intent vprefintent = new Intent(getActivity(),VPNPreferences.class)
 		.putExtra(getActivity().getPackageName() + ".profileUUID", profile.getUUID().toString());

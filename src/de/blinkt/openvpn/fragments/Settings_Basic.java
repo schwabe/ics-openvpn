@@ -1,5 +1,6 @@
 package de.blinkt.openvpn.fragments;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -88,9 +89,10 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
                     X509Certificate cert = KeyChain.getCertificateChain(getActivity(), mProfile.mAlias)[0];
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        String algorithm=  KeyChain.getPrivateKey(getActivity(),mProfile.mAlias).getAlgorithm();
-                        if (KeyChain.isBoundKeyAlgorithm(algorithm))
-                            certstr+=getString(R.string.hwkeychain);
+                            String algorithm=  KeyChain.getPrivateKey(getActivity(),mProfile.mAlias).getAlgorithm();
+                            if (KeyChain.isBoundKeyAlgorithm(algorithm))
+                                certstr+=getString(R.string.hwkeychain);
+
                     }
 
                     certstr+=X509Utils.getCertificateFriendlyName(cert);

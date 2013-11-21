@@ -27,7 +27,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Timestamps"/>
+            android:text="@string/timestamps"/>
 
     <RadioGroup
             android:id="@+id/timeFormatRadioGroup"
@@ -38,21 +38,21 @@
         <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="None"
+                android:text="@string/timestamps_none"
                 android:id="@+id/radioNone"
                 />
 
         <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Short"
+                android:text="@string/timestamp_short"
                 android:id="@+id/radioShort"
                 />
 
         <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ISO"
+                android:text="@string/timestamp_iso"
                 android:id="@+id/radioISO"
                 />
 

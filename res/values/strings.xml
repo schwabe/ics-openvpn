@@ -306,4 +306,5 @@
     <string name="uploaded_data">Upload</string>
     <string name="downloaded_data">Download</string>
     <string name="vpn_status">Vpn Status</string>
+    <string name="logview_options">View options</string>
 </resources>

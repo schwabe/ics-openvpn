@@ -1,5 +1,6 @@
 package de.blinkt.openvpn.fragments;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListFragment;
@@ -8,11 +9,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.view.*;
 import android.view.View.OnClickListener;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,6 +26,7 @@ import de.blinkt.openvpn.core.ProfileManager;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class VPNProfileList extends ListFragment {
@@ -201,19 +206,43 @@ public class VPNProfileList extends ListFragment {
 			onAddProfileClicked();
 			return true;
 		} else if (itemId == MENU_IMPORT_PROFILE) {
-			startImportConfig();
-            //startFilePicker();
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                startFilePicker();
+            else
+			    startImportConfig();
+
 			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void startFilePicker() {
         Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
-        i.setType("*/*");
-        startActivityForResult(i, FILE_PICKER_RESULT);
+        i.setType("application/x-openvpn-profile");
+
+
+        TreeSet<String> supportedMimeTypes = new TreeSet<String>();
+        supportedMimeTypes.add("application/x-openvpn-profile");
+        supportedMimeTypes.add("application/openvpn-profile");
+        supportedMimeTypes.add("application/ovpn");
+
+        MimeTypeMap mtm = MimeTypeMap.getSingleton();
+
+        for(String ext: new String[] {"ovpn", "conf"}) {
+            String mimeType = mtm.getMimeTypeFromExtension(ext);
+            if(mimeType!=null)
+                supportedMimeTypes.add(mimeType);
+            else
+                supportedMimeTypes.add("application/octet-stream");
+        }
+
+
+
+        i.putExtra(Intent.EXTRA_MIME_TYPES, supportedMimeTypes.toArray(new String[supportedMimeTypes.size()]));
+       startActivityForResult(i, FILE_PICKER_RESULT);
     }
 
     private void startImportConfig() {
@@ -301,7 +330,7 @@ public class VPNProfileList extends ListFragment {
 		} else if(requestCode == IMPORT_PROFILE) {
 			String profileUUID = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
 			mArrayadapter.add(ProfileManager.get(getActivity(), profileUUID));
-		} else if(resultCode == FILE_PICKER_RESULT) {
+		} else if(requestCode == FILE_PICKER_RESULT) {
             if (data != null) {
                 Uri uri = data.getData();
                 startConfigImport(uri);

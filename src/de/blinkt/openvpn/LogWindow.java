@@ -23,7 +23,6 @@ public class LogWindow extends Activity {
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);

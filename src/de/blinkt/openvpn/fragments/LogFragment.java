@@ -339,7 +339,8 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         private void initCurrentMessages() {
             currentLevelEntries.clear();
             for(LogItem li: allEntries) {
-                if (li.getVerbosityLevel() <= mLogLevel)
+                if (li.getVerbosityLevel() <= mLogLevel ||
+                        li.getVerbosityLevel() >= VpnProfile.MAXLOGLEVEL)
                     currentLevelEntries.add(li);
             }
         }

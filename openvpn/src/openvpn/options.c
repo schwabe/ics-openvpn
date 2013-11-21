@@ -342,7 +342,7 @@ static const char usage_message[] =
   "--log file      : Output log to file which is created/truncated on open.\n"
   "--log-append file : Append log to file, or create file if nonexistent.\n"
   "--suppress-timestamps : Don't log timestamps to stdout/stderr.\n"
-  "--parsable-output : Always log timestamp, message flags to stdout/stderr.\n"
+  "--machine-readable-output : Always log timestamp, message flags to stdout/stderr.\n"
   "--writepid file : Write main process ID to file.\n"
   "--nice n        : Change process priority (>0 = lower, <0 = higher).\n"
   "--echo [parms ...] : Echo parameters to log output.\n"
@@ -4665,11 +4665,11 @@ add_option (struct options *options,
       options->suppress_timestamps = true;
       set_suppress_timestamps(true);
     }
-  else if (streq (p[0], "parsable-output"))
+  else if (streq (p[0], "machine-readable-output"))
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
-      options->parsable_output = true;
-      set_parsable_output(true);
+      options->machine_readable_output = true;
+      set_machine_readable_output(true);
     }
   else if (streq (p[0], "log-append") && p[1])
     {

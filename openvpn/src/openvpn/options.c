@@ -1512,7 +1512,7 @@ show_settings (const struct options *o)
   SHOW_INT (inetd);
   SHOW_BOOL (log);
   SHOW_BOOL (suppress_timestamps);
-  SHOW_BOOL (parsable_output);
+  SHOW_BOOL (machine_readable_output);
   SHOW_INT (nice);
   SHOW_INT (verbosity);
   SHOW_INT (mute);

@@ -88,7 +88,7 @@ static bool use_syslog;     /* GLOBAL */
 
 /* Should stdout/stderr be be parsable and always be prefixed with time
  * and message flags */
-static bool parsable_output;   /* GLOBAL */
+static bool machine_readable_output;   /* GLOBAL */
 
 /* Should timestamps be included on messages to stdout/stderr? */
 static bool suppress_timestamps; /* GLOBAL */
@@ -350,14 +350,14 @@ void x_msg_va (const unsigned int flags, const char *format, va_list arglist)
 	      struct timeval tv;
 	      gettimeofday (&tv, NULL);
 
-	      fprintf (fp, "%ld.%06d %x %s%s%s%s",
+	      fprintf (fp, "%lu.%06lu %x %s%s%s%s",
 		       tv.tv_sec,
 		       tv.tv_usec,
 		       flags,
 		       prefix,
 		       prefix_sep,
 		       m1,
-		       (flags&M_NOLF) ? "" : "\n");
+		       "\n");
 
 	    }
 	  else if ((flags & M_NOPREFIX) || suppress_timestamps)

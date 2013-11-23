@@ -7,6 +7,7 @@
  *
  *  Copyright (C) 2002-2010 OpenVPN Technologies, Inc. <sales@openvpn.net>
  *  Copyright (C) 2010 Fox Crypto B.V. <openvpn@fox-it.com>
+ *  Copyright (C) 2006-2010, Brainspark B.V.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License version 2
@@ -120,6 +121,10 @@ tls_ctx_free(struct tls_root_ctx *ctx)
 	  pkcs11_priv_key_free(ctx->priv_key_pkcs11);
 	  free(ctx->priv_key_pkcs11);
       }
+#endif
+#if defined(MANAGMENT_EXTERNAL_KEY)
+      if (ctx->external_key != NULL)
+          free(ctx->external_key);
 #endif
 
       if (ctx->allowed_ciphers)
@@ -237,13 +242,10 @@ tls_ctx_load_cryptoapi(struct tls_root_ctx *ctx, const char *cryptoapi_cert)
 
 void
 tls_ctx_load_cert_file (struct tls_root_ctx *ctx, const char *cert_file,
-    const char *cert_file_inline,
-    openvpn_x509_cert_t **x509
+    const char *cert_file_inline
     )
 {
   ASSERT(NULL != ctx);
-  if (NULL != x509)
-    ASSERT(NULL == *x509);
 
   if (!strcmp (cert_file, INLINE_FILE_TAG) && cert_file_inline)
     {
@@ -256,16 +258,6 @@ tls_ctx_load_cert_file (struct tls_root_ctx *ctx, const char *cert_file,
       if (0 != x509parse_crtfile(ctx->crt_chain, cert_file))
 	msg (M_FATAL, "Cannot load certificate file %s", cert_file);
     }
-  if (x509)
-    {
-      *x509 = ctx->crt_chain;
-    }
-}
-
-void
-tls_ctx_free_cert_file (openvpn_x509_cert_t *x509)
-{
-  x509_free(x509);
 }
 
 int
@@ -322,13 +314,156 @@ tls_ctx_load_priv_file (struct tls_root_ctx *ctx, const char *priv_key_file,
 
 #ifdef MANAGMENT_EXTERNAL_KEY
 
+
+struct external_context {
+  size_t signature_length;
+};
+
 int
-tls_ctx_use_external_private_key (struct tls_root_ctx *ctx, openvpn_x509_cert_t *cert)
+tls_ctx_use_external_private_key (struct tls_root_ctx *ctx,
+    const char *cert_file, const char *cert_file_inline)
 {
-  msg(M_FATAL, "Use of management external keys not yet supported for PolarSSL.");
-  return false;
+  ASSERT(NULL != ctx);
+
+  tls_ctx_load_cert_file(ctx, cert_file, cert_file_inline);
+
+  if (ctx->crt_chain == NULL)
+    return 0;
+
+  /* Most of the initialization happens in key_state_ssl_init() */
+  ALLOC_OBJ_CLEAR (ctx->external_key, struct external_context);
+  ctx->external_key->signature_length = ctx->crt_chain->rsa.len;
+
+  return 1;
 }
 
+static inline int external_pkcs1_sign( void *ctx_voidptr,
+    int (*f_rng)(void *, unsigned char *, size_t), void *p_rng, int mode,
+    int hash_id, unsigned int hashlen, const unsigned char *hash,
+    unsigned char *sig )
+{
+  struct external_context * const ctx = ctx_voidptr;
+  char *in_b64 = NULL;
+  char *out_b64 = NULL;
+  int rv;
+  unsigned char * const p = sig;
+  size_t asn_len;
+
+  ASSERT(NULL != ctx);
+
+  if (RSA_PRIVATE != mode)
+    {
+      rv = POLARSSL_ERR_RSA_BAD_INPUT_DATA;
+      goto done;
+    }
+
+  /*
+   * Support a wide range of hashes. TLSv1.1 and before only need SIG_RSA_RAW,
+   * but TLSv1.2 needs the full suite of hashes.
+   *
+   * This code has been taken from PolarSSL pkcs11_sign(), under the GPLv2.0+.
+   */
+  switch( hash_id )
+  {
+      case SIG_RSA_RAW:
+          asn_len = 0;
+          memcpy( p, hash, hashlen );
+          break;
+
+      case SIG_RSA_MD2:
+          asn_len = OID_SIZE(ASN1_HASH_MDX);
+          memcpy( p, ASN1_HASH_MDX, asn_len );
+          memcpy( p + asn_len, hash, hashlen );
+          p[13] = 2; break;
+
+      case SIG_RSA_MD4:
+          asn_len = OID_SIZE(ASN1_HASH_MDX);
+          memcpy( p, ASN1_HASH_MDX, asn_len );
+          memcpy( p + asn_len, hash, hashlen );
+          p[13] = 4; break;
+
+      case SIG_RSA_MD5:
+          asn_len = OID_SIZE(ASN1_HASH_MDX);
+          memcpy( p, ASN1_HASH_MDX, asn_len );
+          memcpy( p + asn_len, hash, hashlen );
+          p[13] = 5; break;
+
+      case SIG_RSA_SHA1:
+          asn_len = OID_SIZE(ASN1_HASH_SHA1);
+          memcpy( p, ASN1_HASH_SHA1, asn_len );
+          memcpy( p + 15, hash, hashlen );
+          break;
+
+      case SIG_RSA_SHA224:
+          asn_len = OID_SIZE(ASN1_HASH_SHA2X);
+          memcpy( p, ASN1_HASH_SHA2X, asn_len );
+          memcpy( p + asn_len, hash, hashlen );
+          p[1] += hashlen; p[14] = 4; p[18] += hashlen; break;
+
+      case SIG_RSA_SHA256:
+          asn_len = OID_SIZE(ASN1_HASH_SHA2X);
+          memcpy( p, ASN1_HASH_SHA2X, asn_len );
+          memcpy( p + asn_len, hash, hashlen );
+          p[1] += hashlen; p[14] = 1; p[18] += hashlen; break;
+
+      case SIG_RSA_SHA384:
+          asn_len = OID_SIZE(ASN1_HASH_SHA2X);
+          memcpy( p, ASN1_HASH_SHA2X, asn_len );
+          memcpy( p + asn_len, hash, hashlen );
+          p[1] += hashlen; p[14] = 2; p[18] += hashlen; break;
+
+      case SIG_RSA_SHA512:
+          asn_len = OID_SIZE(ASN1_HASH_SHA2X);
+          memcpy( p, ASN1_HASH_SHA2X, asn_len );
+          memcpy( p + asn_len, hash, hashlen );
+          p[1] += hashlen; p[14] = 3; p[18] += hashlen; break;
+
+  /* End of copy */
+      default:
+          rv = POLARSSL_ERR_RSA_BAD_INPUT_DATA;
+	  goto done;
+  }
+
+  /* convert 'from' to base64 */
+  if (openvpn_base64_encode (sig, asn_len + hashlen, &in_b64) <= 0)
+    {
+      rv = POLARSSL_ERR_RSA_BAD_INPUT_DATA;
+      goto done;
+    }
+
+  /* call MI for signature */
+  if (management)
+    out_b64 = management_query_rsa_sig (management, in_b64);
+  if (!out_b64)
+    {
+      rv = POLARSSL_ERR_RSA_PRIVATE_FAILED;
+      goto done;
+    }
+
+  /* decode base64 signature to binary and verify length */
+  if ( openvpn_base64_decode (out_b64, sig, ctx->signature_length) !=
+       ctx->signature_length )
+    {
+      rv = POLARSSL_ERR_RSA_PRIVATE_FAILED;
+      goto done;
+    }
+
+  rv = 0;
+
+ done:
+  if (in_b64)
+    free (in_b64);
+  if (out_b64)
+    free (out_b64);
+  return rv;
+}
+
+static inline size_t external_key_len(void *vctx)
+{
+  struct external_context * const ctx = vctx;
+
+  return ctx->signature_length;
+}
 #endif
 
 void tls_ctx_load_ca (struct tls_root_ctx *ctx, const char *ca_file,
@@ -540,6 +675,13 @@ void key_state_ssl_init(struct key_state_ssl *ks_ssl,
 	ssl_set_own_cert_alt( ks_ssl->ctx, ssl_ctx->crt_chain,
 	    ssl_ctx->priv_key_pkcs11, ssl_pkcs11_decrypt, ssl_pkcs11_sign,
 	    ssl_pkcs11_key_len );
+      else
+#endif
+#if defined(MANAGMENT_EXTERNAL_KEY)
+      if (ssl_ctx->external_key != NULL)
+        ssl_set_own_cert_alt( ks_ssl->ctx, ssl_ctx->crt_chain,
+	   ssl_ctx->external_key, NULL, external_pkcs1_sign,
+	   external_key_len );
       else
 #endif
 	ssl_set_own_cert( ks_ssl->ctx, ssl_ctx->crt_chain, ssl_ctx->priv_key );

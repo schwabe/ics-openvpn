@@ -184,7 +184,7 @@ public class VpnProfile implements Serializable {
         cfg += "management-hold\n\n";
         cfg += getVersionEnvString(context);
 
-        cfg += "parsable-output\n";
+        cfg += "machine-readable-output\n";
 
 
         boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);

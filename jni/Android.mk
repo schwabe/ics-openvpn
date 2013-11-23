@@ -16,7 +16,9 @@ WITH_BREAKPAD=0
 endif
 
 
-#include polarssl/Android.mk
+ifeq ($(USE_POLAR),1)
+	include polarssl/Android.mk
+endif
 
 include openvpn/Android.mk
 

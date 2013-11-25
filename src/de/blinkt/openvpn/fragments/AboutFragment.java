@@ -19,6 +19,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 import com.android.vending.billing.IInAppBillingService;
 import de.blinkt.openvpn.R;
@@ -272,6 +273,10 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
             translation.setText("");
         else
             translation.setText(R.string.translationby);
+
+        WebView wv = (WebView)v.findViewById(R.id.webView);
+        wv.loadUrl("file:///android_asset/full_licenses.html");
+
         return v;
     }
 

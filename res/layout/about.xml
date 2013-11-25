@@ -172,6 +172,20 @@
             android:layout_height="wrap_content"
             android:text="@string/copyright_bouncycastle" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Full licenses"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/webView"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
 </ScrollView>

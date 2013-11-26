@@ -155,7 +155,7 @@ openvpn_getaddrinfo (unsigned int flags,
     print_hostname = hostname;
   else
     print_hostname = "undefined";
-    
+
   if(servname)
     print_servname = servname;
   else
@@ -173,10 +173,9 @@ openvpn_getaddrinfo (unsigned int flags,
   hints.ai_family = ai_family;
   hints.ai_flags = AI_NUMERICHOST;
 
-  
   if(flags & GETADDR_PASSIVE)
       hints.ai_flags |= AI_PASSIVE;
-    
+
   if(flags & GETADDR_DATAGRAM)
       hints.ai_socktype = SOCK_DGRAM;
   else
@@ -192,7 +191,7 @@ openvpn_getaddrinfo (unsigned int flags,
             ((resolve_retry_seconds + 4)/ fail_wait_interval);
       const char *fmt;
       int level = 0;
-      
+
       fmt = "RESOLVE: Cannot resolve host address: %s:%s (%s)";
       if ((flags & GETADDR_MENTION_RESOLVE_RETRY)
           && !resolve_retry_seconds)
@@ -2266,10 +2265,10 @@ print_sockaddr_ex (const struct sockaddr *sa,
     {
       if (separator)
         buf_puts (&out, separator);
-		
+
       buf_puts (&out, servname);
     }
-	
+
   return BSTR (&out);
 }
 
@@ -2550,7 +2549,7 @@ proto2ascii (int proto, sa_family_t af, bool display_form)
   unsigned int i;
   for (i = 0; i < SIZE (proto_names); ++i)
     {
-      if(proto_names[i].proto_af == af && proto_names[i].proto == proto) 
+      if(proto_names[i].proto_af == af && proto_names[i].proto == proto)
         {
           if(display_form)
               return proto_names[i].display_form;
@@ -2578,7 +2577,7 @@ proto2ascii_all (struct gc_arena *gc)
 }
 
 int
-addr_guess_family(sa_family_t af, const char *name) 
+addr_guess_family(sa_family_t af, const char *name)
 {
   unsigned short ret;
   if (af)
@@ -2630,10 +2629,12 @@ proto_remote (int proto, bool remote)
   ASSERT (proto >= 0 && proto < PROTO_N);
   if (proto == PROTO_UDP)
 	return "UDPv4";
-  
-  if ( (remote && proto == PROTO_TCP_CLIENT) || proto == PROTO_TCP_SERVER)
+
+  if ( (remote && proto == PROTO_TCP_CLIENT) ||
+       (!remote && proto == PROTO_TCP_SERVER))
 	return "TCPv4_SERVER";
-  if ( (remote && proto == PROTO_TCP_SERVER) || proto == PROTO_TCP_CLIENT)
+  if ( (remote && proto == PROTO_TCP_SERVER) ||
+       (!remote && proto == PROTO_TCP_CLIENT))
 	return "TCPv4_CLIENT";
 
   ASSERT (0);
@@ -2936,9 +2937,9 @@ socket_recv_queue (struct link_socket *sock, int maxsize)
 	{
 	  sock->reads.addr_defined = true;
 	  if (sock->info.af == AF_INET)
-	    sock->reads.addrlen = sizeof (sock->reads.addr6);
-	  else
 	    sock->reads.addrlen = sizeof (sock->reads.addr);
+	  else
+	    sock->reads.addrlen = sizeof (sock->reads.addr6);
 	  status = WSARecvFrom(
 			       sock->sd,
 			       wsabuf,
@@ -3034,7 +3035,7 @@ socket_send_queue (struct link_socket *sock, struct buffer *buf, const struct li
 	{
 	  /* set destination address for UDP writes */
 	  sock->writes.addr_defined = true;
-	  if (sock->info.af == AF_INET)
+	  if (sock->info.af == AF_INET6)
 	    {
 	      sock->writes.addr6 = to->dest.addr.in6;
 	      sock->writes.addrlen = sizeof (sock->writes.addr6);

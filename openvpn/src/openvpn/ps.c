@@ -801,7 +801,7 @@ port_share_open (const char *host,
   /*
    * Get host's IP address
    */
-  
+
   status = openvpn_getaddrinfo (GETADDR_RESOLVE|GETADDR_HOST_ORDER|GETADDR_FATAL,
                                  host, port,  0, NULL, AF_INET, &ai);
   ASSERT (status==0);

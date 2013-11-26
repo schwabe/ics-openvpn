@@ -2389,7 +2389,7 @@ options_postprocess_mutate_ce (struct options *o, struct connection_entry *ce)
   /* if protocol forcing is enabled, disable all protocols except for the forced one */
   if (o->proto_force >= 0 && o->proto_force != ce->proto)
     ce->flags |= CE_DISABLED;
-    
+
   /*
    * If --mssfix is supplied without a parameter, default
    * it to --fragment value, if --fragment is specified.

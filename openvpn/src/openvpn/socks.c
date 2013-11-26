@@ -396,7 +396,7 @@ port_from_servname(const char* servname)
     port = atoi(servname);
     if(port >0 && port < 65536)
         return port;
-    
+
     struct  servent* service;
     service = getservbyname(servname, NULL);
     if(service)
@@ -436,7 +436,7 @@ establish_socks_proxy_passthru (struct socks_proxy_info *p,
       msg (D_LINK_ERRORS, "establish_socks_proxy_passthrough: Cannot convert %s to port number", servname);
       goto error;
     }
-    
+
   buf[5 + len] = (char) (port >> 8);
   buf[5 + len + 1] = (char) (port & 0xff);
 
@@ -448,7 +448,7 @@ establish_socks_proxy_passthru (struct socks_proxy_info *p,
 	goto error;
       }
   }
-    
+
 
   /* receive reply from Socks proxy and discard */
   if (!recv_socks_reply (sd, NULL, signal_received))

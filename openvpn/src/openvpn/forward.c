@@ -1122,7 +1122,7 @@ process_outgoing_link (struct context *c)
 	    fprintf (stderr, "W");
 #endif
 	  msg (D_LINK_RW, "%s WRITE [%d] to %s: %s",
-	       proto2ascii (c->c2.link_socket->info.proto, c->c2.link_socket->info.proto, true),
+	       proto2ascii (c->c2.link_socket->info.proto, c->c2.link_socket->info.af, true),
 	       BLEN (&c->c2.to_link),
 	       print_link_socket_actual (c->c2.to_link_addr, &gc),
 	       PROTO_DUMP (&c->c2.to_link, &gc));

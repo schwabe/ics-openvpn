@@ -188,7 +188,7 @@ public class ConfigConverter extends ListActivity {
 		if(mResult.mName!=null && !ConfigParser.CONVERTED_PROFILE.equals(mResult.mName))
 			newname=mResult.mName;
 			
-		while(vpl.getProfileByName(newname)!=null) {
+		while(newname==null || vpl.getProfileByName(newname)!=null) {
 			i++;
 			if(i==1)
 				newname = getString(R.string.converted_profile);
@@ -368,7 +368,10 @@ public class ConfigConverter extends ListActivity {
 				//log(R.string.import_experimental);
 				log(R.string.importing_config,data.toString());
 				try {
-					if(data.getScheme().equals("file")) {
+					if(data.getScheme().equals("file") ||
+                            data.getLastPathSegment().endsWith(".ovpn") ||
+                            data.getLastPathSegment().endsWith(".conf"))
+                    {
 						mPossibleName = data.getLastPathSegment();
 						if(mPossibleName!=null){
 							mPossibleName =mPossibleName.replace(".ovpn", "");

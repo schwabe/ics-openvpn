@@ -16,10 +16,12 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:minHeight="?android:attr/listPreferredItemHeight" >
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:focusable="false">
 
     <LinearLayout
         android:id="@+id/vpn_list_item_left"
@@ -27,7 +29,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        android:focusable="true">
 
         <LinearLayout
             android:id="@android:id/widget_frame"
@@ -38,6 +41,7 @@
 
                <TextView
                 android:id="@+id/vpn_item_title"
+                tools:text="Vpn Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
@@ -64,6 +68,7 @@
         android:contentDescription="@string/configure_the_vpn"
         android:paddingLeft="15dip"
         android:paddingRight="?android:attr/scrollbarSize"
-        android:src="@drawable/ic_sysbar_quicksettings" />
+        android:src="@drawable/ic_sysbar_quicksettings"
+        android:focusable="true"/>
 
 </LinearLayout>

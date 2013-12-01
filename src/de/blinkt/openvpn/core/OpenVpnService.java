@@ -256,6 +256,12 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         mDeviceStateReceiver = null;
     }
 
+    public void userPause (boolean shouldBePaused)
+    {
+        if (mDeviceStateReceiver != null)
+            mDeviceStateReceiver.userPause(shouldBePaused);
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 

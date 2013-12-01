@@ -217,6 +217,21 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             if (mService != null && mService.getManagement() != null)
                 mService.getManagement().stopVPN();
         }
+
+        @Override
+        public void pause() throws RemoteException {
+            checkOpenVPNPermission();
+            if (mService != null)
+                mService.userPause(true);
+        }
+
+        @Override
+        public void resume() throws RemoteException {
+            checkOpenVPNPermission();
+            if (mService != null)
+                mService.userPause(false);
+
+        }
     };
 
 

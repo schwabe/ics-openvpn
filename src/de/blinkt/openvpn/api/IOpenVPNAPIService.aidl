@@ -30,6 +30,12 @@ interface IOpenVPNAPIService {
 
 	/* Disconnect the VPN */
     void disconnect();
+
+    /* Pause the VPN (same as using the pause feature in the notifcation bar) */
+    void pause();
+
+    /* Resume the VPN (same as using the pause feature in the notifcation bar) */
+    void resume();
     
     /**
       * Registers to receive OpenVPN Status Updates

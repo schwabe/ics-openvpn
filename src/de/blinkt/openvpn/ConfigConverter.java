@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 
@@ -20,6 +21,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -247,13 +249,23 @@ public class ConfigConverter extends ListActivity {
 		File sdcard = Environment.getExternalStorageDirectory();
 		File root = new File("/");
 
-		Vector<File> dirlist = new Vector<File>();
+		HashSet<File> dirlist = new HashSet<File>();
 
 		for(int i=mPathsegments.size()-1;i >=0 ;i--){
 			String path = "";
 			for (int j = 0;j<=i;j++) {
 				path += "/" + mPathsegments.get(j);
 			}
+            // Do a little hackish dance for the Android File Importer
+            // /document/primary:ovpn/openvpn-imt.conf
+
+            if (path.indexOf(':')!=-1) {
+                String possibleDir = path.substring(path.indexOf(':')+1,path.length());
+                possibleDir.substring(0,possibleDir.lastIndexOf('/'));
+                dirlist.add(new File(sdcard,possibleDir));
+
+
+            }
 			dirlist.add(new File(path));
 		}
 		dirlist.add(sdcard);
@@ -373,7 +385,10 @@ public class ConfigConverter extends ListActivity {
                             data.getLastPathSegment().endsWith(".conf"))
                     {
 						mPossibleName = data.getLastPathSegment();
-						if(mPossibleName!=null){
+                        if (mPossibleName.lastIndexOf('/')!=-1)
+                            mPossibleName = mPossibleName.substring(mPossibleName.lastIndexOf('/')+1);
+
+                        if(mPossibleName!=null){
 							mPossibleName =mPossibleName.replace(".ovpn", "");
 							mPossibleName =mPossibleName.replace(".conf", "");
 						}

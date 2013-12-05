@@ -328,6 +328,12 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         // An old running VPN should now be exited
         mStarting = false;
 
+        // Start a new session by creating a new thread.
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        mOvpn3 = prefs.getBoolean("ovpn3", false);
+        mOvpn3 = false;
+
 
         // Open the Management Interface
         if (!mOvpn3) {
@@ -340,14 +346,12 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
                 mSocketManagerThread.start();
                 mManagement = ovpnManagementThread;
                 VpnStatus.logInfo("started Socket Thread");
+            } else {
+                return START_NOT_STICKY;
             }
         }
 
-        // Start a new session by creating a new thread.
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        mOvpn3 = prefs.getBoolean("ovpn3", false);
-        mOvpn3 = false;
 
         Runnable processThread;
         if (mOvpn3) {

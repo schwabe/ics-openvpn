@@ -2611,7 +2611,7 @@ management_post_tunnel_open (struct management *man, const in_addr_t tun_local_i
       /* listen on our local TUN/TAP IP address */
       struct in_addr ia;
       int ret;
-      
+
       ia.s_addr = htonl(tun_local_ip);
       ret = openvpn_getaddrinfo(0, inet_ntoa(ia), NULL, 0, NULL,
                                 AF_INET, &man->settings.local);

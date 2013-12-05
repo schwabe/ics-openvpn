@@ -780,7 +780,7 @@ init_options (struct options *o, const bool init_gc)
   o->topology = TOP_NET30;
   o->ce.proto = PROTO_UDP;
   o->ce.af = AF_UNSPEC;
-  o->ce.bind_local=false;
+  o->ce.bind_ipv6_only = false;
   o->ce.connect_retry_seconds = 5;
   o->ce.connect_timeout = 10;
   o->connect_retry_max = 0;
@@ -796,6 +796,7 @@ init_options (struct options *o, const bool init_gc)
   o->route_delay_window = 30;
   o->max_routes = MAX_ROUTES_DEFAULT;
   o->resolve_retry_seconds = RESOLV_RETRY_INFINITE;
+  o->resolve_in_advance = false;
   o->proto_force = -1;
 #ifdef ENABLE_OCC
   o->occ = true;
@@ -1369,6 +1370,7 @@ show_connection_entry (const struct connection_entry *o)
   SHOW_BOOL (remote_float);
   SHOW_BOOL (bind_defined);
   SHOW_BOOL (bind_local);
+  SHOW_BOOL (bind_ipv6_only);
   SHOW_INT (connect_retry_seconds);
   SHOW_INT (connect_timeout);
 
@@ -1494,6 +1496,7 @@ show_settings (const struct options *o)
 #endif
 
   SHOW_INT (resolve_retry_seconds);
+  SHOW_BOOL (resolve_in_advance);
 
   SHOW_STR (username);
   SHOW_STR (groupname);
@@ -2038,7 +2041,7 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
       if (ce->socks_proxy_server)
 	msg (M_USAGE, "--socks-proxy cannot be used with --mode server");
 #endif
-      /* <connection> blocks force to have a remote embedded, so we check for the 
+      /* <connection> blocks force to have a remote embedded, so we check for the
        * --remote and bail out if it  is present */
        if (options->connection_list->len >1 ||
                   options->connection_list->array[0]->remote)
@@ -2486,6 +2489,7 @@ options_postprocess_verify (const struct options *o)
 static void
 options_postprocess_mutate (struct options *o)
 {
+  int i;
   /*
    * Process helper-type options which map to other, more complex
    * sequences of options.
@@ -2502,13 +2506,12 @@ options_postprocess_mutate (struct options *o)
        * Convert remotes into connection list
        */
       const struct remote_list *rl = o->remote_list;
-      int i;
       for (i = 0; i < rl->len; ++i)
         {
           const struct remote_entry *re = rl->array[i];
           struct connection_entry ce = o->ce;
           struct connection_entry *ace;
-          
+
           ASSERT (re->remote);
           connection_entry_load_re (&ce, re);
           ace = alloc_connection_entry (o, M_USAGE);
@@ -2525,10 +2528,9 @@ options_postprocess_mutate (struct options *o)
     }
 
   ASSERT (o->connection_list);
-  int i;
   for (i = 0; i < o->connection_list->len; ++i)
 	options_postprocess_mutate_ce (o, o->connection_list->array[i]);
-  
+
 #if HTTP_PROXY_OVERRIDE
   if (o->http_proxy_override)
 	options_postprocess_http_proxy_override(o);
@@ -4480,6 +4482,15 @@ add_option (struct options *options,
 	options->resolve_retry_seconds = RESOLV_RETRY_INFINITE;
       else
 	options->resolve_retry_seconds = positive_atoi (p[1]);
+    }
+  else if (streq (p[0], "preresolve") || streq (p[0], "ip-remote-hint"))
+    {
+      VERIFY_PERMISSION (OPT_P_GENERAL);
+      options->resolve_in_advance = true;
+      /* Note the ip-remote-hint and the argument p[1] are for
+	 backward compatibility */
+      if (p[1])
+	options->ip_remote_hint=p[1];
     }
   else if (streq (p[0], "connect-retry") && p[1])
     {

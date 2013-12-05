@@ -473,8 +473,8 @@ init_tun (const char *dev,       /* --dev option */
 	   * If local_public or remote_public addresses are defined,
 	   * make sure they do not clash with our virtual subnet.
 	   */
-          
-          for(curele=remote_public;curele;curele=curele->ai_next) {
+
+          for(curele=local_public;curele;curele=curele->ai_next) {
             if(curele->ai_family == AF_INET)
               check_addr_clash ("local",
 			    tt->type,

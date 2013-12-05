@@ -391,8 +391,8 @@ public class VpnProfile implements Serializable {
 
         if (mPersistTun) {
             cfg += "persist-tun\n";
-            cfg += "# persist-tun also sets persist-remote-ip to avoid DNS resolve problem\n";
-            cfg += "persist-remote-ip\n";
+            cfg += "# persist-tun also enables pre resolving to avoid DNS resolve problem\n";
+            cfg += "preresolve\n";
         }
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);

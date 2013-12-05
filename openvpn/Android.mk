@@ -26,6 +26,8 @@ endif
 
 LOCAL_MODULE = openvpn
 
+
+
 LOCAL_SRC_FILES:= \
 	src/compat/compat-basename.c \
 	src/compat/compat-daemon.c \
@@ -102,7 +104,8 @@ LOCAL_SRC_FILES:= \
 	src/openvpn/tun.c \
 	src/openvpn/snappy.c \
 	src/openvpn/comp.c \
-	src/openvpn/compstub.c
+	src/openvpn/compstub.c 
+
 
 ifeq ($(WITH_BREAKPAD),1)
 LOCAL_SRC_FILES+=src/openvpn/breakpad.cpp

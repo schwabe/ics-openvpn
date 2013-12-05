@@ -130,6 +130,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         public static final int TIME_FORMAT_NONE = 0;
         public static final int TIME_FORMAT_SHORT = 1;
         public static final int TIME_FORMAT_ISO = 2;
+        private static final int MAX_STORED_LOG_ENTRIES = 1000;
 
         private Vector<LogItem> allEntries=new Vector<LogItem>();
 
@@ -163,7 +164,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 		String getLogStr() {
 			String str = "";
 			for(LogItem entry:allEntries) {
-				str+=entry.getString(getActivity()) + '\n';
+				str+=getTime(entry, TIME_FORMAT_ISO) + entry.getString(getActivity()) + '\n';
 			}
 			return str;
 		}
@@ -218,17 +219,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 			
 			LogItem le = currentLevelEntries.get(position);
 			String msg = le.getString(getActivity());
-            String time ="";
-			if (mTimeFormat != TIME_FORMAT_NONE) {
-				Date d = new Date(le.getLogtime());
-				java.text.DateFormat timeformat;
-				if (mTimeFormat== TIME_FORMAT_ISO)
-					timeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
-				else
-					timeformat = DateFormat.getTimeFormat(getActivity());
-				 time = timeformat.format(d) + " ";
-
-			}
+            String time = getTime(le, mTimeFormat);
             msg =  time +  msg;
 
             int spanStart = time.length();
@@ -239,6 +230,23 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 			v.setText(t);
 			return v;
 		}
+
+        private String getTime(LogItem le, int time) {
+            if (time != TIME_FORMAT_NONE) {
+                Date d = new Date(le.getLogtime());
+                java.text.DateFormat timeformat;
+                if (time== TIME_FORMAT_ISO)
+                    timeformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                else
+                    timeformat = DateFormat.getTimeFormat(getActivity());
+
+                return timeformat.format(d) + " ";
+
+            } else {
+                return "";
+            }
+
+        }
 
         private ImageSpan getSpanImage(LogItem li, int imageSize) {
             int imageRes = android.R.drawable.ic_menu_call;
@@ -352,11 +360,22 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
          */
         private boolean addLogMessage(LogItem logmessage) {
             allEntries.add(logmessage);
-            if (logmessage.getVerbosityLevel() <= mLogLevel) {
-                 currentLevelEntries.add(logmessage);
+
+            if (allEntries.size() > MAX_STORED_LOG_ENTRIES) {
+                Vector<LogItem> oldAllEntries = allEntries;
+                allEntries = new Vector<LogItem>(allEntries.size());
+                for (int i=50;i<oldAllEntries.size();i++) {
+                    allEntries.add(oldAllEntries.elementAt(i));
+                }
+                initCurrentMessages();
                 return true;
             } else {
-                return false;
+                if (logmessage.getVerbosityLevel() <= mLogLevel) {
+                    currentLevelEntries.add(logmessage);
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
 

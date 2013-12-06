@@ -602,13 +602,17 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 
         mLogLevelSlider.setOnSeekBarChangeListener(this);
 
-        if(getResources().getBoolean(R.bool.logSildersAlwaysVisible))
-            mOptionsLayout.setVisibility(View.VISIBLE);
-
         mUpStatus = (TextView) v.findViewById(R.id.speedUp);
         mDownStatus = (TextView) v.findViewById(R.id.speedDown);
         mConnectStatus = (TextView) v.findViewById(R.id.speedStatus);
         return v;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(getResources().getBoolean(R.bool.logSildersAlwaysVisible))
+            mOptionsLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -147,16 +147,15 @@
         </activity>
 
 
-        <activity-alias
+        <activity
             android:name=".app.CreateShortcuts"
             android:label="@string/vpn_shortcut"
-            android:theme="@android:style/Theme.DeviceDefault.Light.DialogWhenLarge"
-            android:targetActivity=".LaunchVPN" >
+            android:theme="@android:style/Theme.DeviceDefault.Light.DialogWhenLarge" >
             <intent-filter>
                 <action android:name="android.intent.action.CREATE_SHORTCUT" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity-alias>
+        </activity>
 
         <provider
             android:name=".FileProvider"

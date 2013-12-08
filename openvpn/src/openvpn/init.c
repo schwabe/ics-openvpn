@@ -306,11 +306,10 @@ init_connection_list (struct context *c)
 /*
  * Clear the remote address list
  */
-static void clear_remote_addrlist (struct link_socket_addr *lsa, bool freeaddr)
+static void clear_remote_addrlist (struct link_socket_addr *lsa, bool free)
 {
-    if (lsa->remote_list && freeaddr) {
-        freeaddrinfo(lsa->remote_list);
-    }
+    if (lsa->remote_list && free)
+      freeaddrinfo(lsa->remote_list);
     lsa->remote_list = NULL;
     lsa->current_remote = NULL;
 }
@@ -349,11 +348,15 @@ next_connection_entry (struct context *c)
              * remote existed
              */
             if (!c->options.persist_remote_ip)
-                clear_remote_addrlist (&c->c1.link_socket_addr, !c->options.resolve_in_advance);
+	      {
+		/* close_instance should have cleared the addrinfo objects */
+		ASSERT (c->c1.link_socket_addr.current_remote == NULL);
+		ASSERT (c->c1.link_socket_addr.remote_list == NULL);
+	      }
             else
                 c->c1.link_socket_addr.current_remote =
                 c->c1.link_socket_addr.remote_list;
-            
+
             /*
              * Increase the number of connection attempts
              * If this is connect-retry-max * size(l)
@@ -2920,7 +2923,8 @@ do_close_link_socket (struct context *c)
 
   if (!(c->sig->signal_received == SIGUSR1 && c->options.persist_local_ip)) {
     if (c->c1.link_socket_addr.bind_local && !c->options.resolve_in_advance)
-        freeaddrinfo(c->c1.link_socket_addr.bind_local);
+	freeaddrinfo(c->c1.link_socket_addr.bind_local);
+
     c->c1.link_socket_addr.bind_local=NULL;
   }
 }

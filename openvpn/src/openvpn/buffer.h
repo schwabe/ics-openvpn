@@ -91,6 +91,18 @@ struct gc_entry
                                  *   linked list. */
 };
 
+/**
+ * Gargabe collection entry for a specially allocated structure that needs
+ * a custom free function to be freed like struct addrinfo 
+ *
+ */
+struct gc_entry_special
+{
+  struct gc_entry_special *next;
+  void (*free_fnc)(void*);
+  void *addr;
+};
+
 
 /**
  * Garbage collection arena used to keep track of dynamically allocated
@@ -106,6 +118,7 @@ struct gc_arena
 {
   struct gc_entry *list;        /**< First element of the linked list of
                                  *   \c gc_entry structures. */
+  struct gc_entry_special *list_special;
 };
 
 
@@ -153,7 +166,6 @@ char *string_alloc_debug (const char *str, struct gc_arena *gc, const char *file
 struct buffer string_alloc_buf_debug (const char *str, struct gc_arena *gc, const char *file, int line);
 
 #else
-
 struct buffer alloc_buf (size_t size);
 struct buffer alloc_buf_gc (size_t size, struct gc_arena *gc); /* allocate buffer with garbage collection */
 struct buffer clone_buf (const struct buffer* buf);
@@ -162,6 +174,9 @@ char *string_alloc (const char *str, struct gc_arena *gc);
 struct buffer string_alloc_buf (const char *str, struct gc_arena *gc);
 
 #endif
+
+void gc_addspecial (void *addr, void (*free_function)(void*), struct gc_arena *a);
+
 
 #ifdef BUF_INIT_TRACKING
 #define buf_init(buf, offset) buf_init_debug (buf, offset, __FILE__, __LINE__)
@@ -172,6 +187,11 @@ bool buf_init_debug (struct buffer *buf, int offset, const char *file, int line)
 
 
 /* inline functions */
+inline static void
+gc_freeaddrinfo_callback (void *addr)
+{
+  freeaddrinfo((struct addrinfo*) addr);
+}
 
 static inline bool
 buf_defined (const struct buffer *buf)
@@ -778,6 +798,7 @@ void character_class_debug (void);
 void gc_transfer (struct gc_arena *dest, struct gc_arena *src);
 
 void x_gc_free (struct gc_arena *a);
+void x_gc_freespecial (struct gc_arena *a);
 
 static inline bool
 gc_defined (struct gc_arena *a)
@@ -789,6 +810,7 @@ static inline void
 gc_init (struct gc_arena *a)
 {
   a->list = NULL;
+  a->list_special = NULL;
 }
 
 static inline void
@@ -801,7 +823,7 @@ static inline struct gc_arena
 gc_new (void)
 {
   struct gc_arena ret;
-  ret.list = NULL;
+  gc_init (&ret);
   return ret;
 }
 
@@ -810,6 +832,8 @@ gc_free (struct gc_arena *a)
 {
   if (a->list)
     x_gc_free (a);
+  if (a->list_special)
+    x_gc_freespecial(a);
 }
 
 static inline void

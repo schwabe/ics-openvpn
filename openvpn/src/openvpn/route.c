@@ -659,6 +659,7 @@ init_route_list (struct route_list *rl,
 	else
 	  {
             struct addrinfo* curele;
+            gc_addspecial(netlist, &gc_freeaddrinfo_callback, &gc);
             for (curele	= netlist; curele; curele = curele->ai_next)
 	      {
 		if (j < rl->capacity)
@@ -675,7 +676,6 @@ init_route_list (struct route_list *rl,
 		      }
 		  }
 	      }
-            freeaddrinfo(netlist);
 	  }
       }
     rl->n = j;

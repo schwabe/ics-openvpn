@@ -146,30 +146,33 @@ do_preresolve(struct context *c)
 
     if (! ce->preresolved_remote)
       {
-        status = openvpn_getaddrinfo (flags, remote, ce->remote_port,
-				  c->options.resolve_retry_seconds, NULL,
-				  ce->af, &ce->preresolved_remote);
+	status = openvpn_getaddrinfo (flags, remote, ce->remote_port,
+				      c->options.resolve_retry_seconds, NULL,
+				      ce->af, &ce->preresolved_remote);
 
-    if (status != 0)
-      goto err;
+	if (status != 0)
+	  goto err;
+	gc_addspecial (ce->preresolved_remote, &gc_freeaddrinfo_callback, &c->gc);
       }
 
     flags |= GETADDR_PASSIVE;
-      if (ce->bind_local && !ce->preresolved_local)
-        {
-        status = openvpn_getaddrinfo (flags, ce->local, ce->local_port,
-                                      c->options.resolve_retry_seconds, NULL,
-                                      ce->af, &ce->preresolved_local);
+    if (ce->bind_local && !ce->preresolved_local)
+      {
+	status = openvpn_getaddrinfo (flags, ce->local, ce->local_port,
+				      c->options.resolve_retry_seconds, NULL,
+				      ce->af, &ce->preresolved_local);
 
-    if (status != 0)
-      goto err;
+	if (status != 0)
+	  goto err;
+	gc_addspecial (ce->preresolved_local, &gc_freeaddrinfo_callback, &c->gc);
+
       }
 
   }
   return;
 
-  err:
-    throw_signal_soft (SIGUSR1, "Preresolving failed");
+ err:
+  throw_signal_soft (SIGHUP, "Preresolving failed");
 }
 
 /*
@@ -2640,30 +2643,6 @@ proto2ascii_all (struct gc_arena *gc)
   return BSTR (&out);
 }
 
-int
-addr_guess_family(sa_family_t af, const char *name)
-{
-  unsigned short ret;
-  if (af)
-    {
-      return af;	/* already stamped */
-    } 
-  else
-    {
-      struct addrinfo hints , *ai;
-      int err;
-      CLEAR(hints);
-      hints.ai_flags = AI_NUMERICHOST;
-      err = getaddrinfo(name, NULL, &hints, &ai);
-      if ( 0 == err )
-	{
-	  ret=ai->ai_family;
-	  freeaddrinfo(ai);
-	  return ret;
-	}
-    }
-  return AF_INET;	/* default */
-}
 const char *
 addr_family_name (int af) 
 {

@@ -67,6 +67,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     private TextView mUpStatus;
     private TextView mDownStatus;
     private TextView mConnectStatus;
+    private boolean mShowOptionsLayout;
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -608,10 +609,25 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         mUpStatus = (TextView) v.findViewById(R.id.speedUp);
         mDownStatus = (TextView) v.findViewById(R.id.speedDown);
         mConnectStatus = (TextView) v.findViewById(R.id.speedStatus);
+        if (mShowOptionsLayout)
+            mOptionsLayout.setVisibility(View.VISIBLE);
         return v;
     }
 
     @Override
+<<<<<<< mine
+=======
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(getResources().getBoolean(R.bool.logSildersAlwaysVisible)) {
+            mShowOptionsLayout=true;
+            if (mOptionsLayout!= null)
+                mOptionsLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+>>>>>>> theirs
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 

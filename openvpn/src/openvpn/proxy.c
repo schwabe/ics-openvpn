@@ -478,6 +478,8 @@ http_proxy_new (const struct http_proxy_options *o)
     msg (M_FATAL, "Sorry, this version of " PACKAGE_NAME " was built without NTLM Proxy support.");
 #endif
 
+  p->preresoveld_proxy = o->preresolved_proxy;
+
   p->defined = true;
   return p;
 }

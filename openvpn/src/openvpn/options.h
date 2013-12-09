@@ -93,8 +93,6 @@ struct connection_entry
   const char *remote_port;
   const char *local;
   const char *remote;
-  struct addrinfo *preresolved_remote;
-  struct addrinfo *preresolved_local;
   bool remote_float;
   bool bind_defined;
   bool bind_ipv6_only;

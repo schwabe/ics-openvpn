@@ -59,6 +59,7 @@ struct http_proxy_options {
   const char *auth_file;
   const char *http_version;
   const char *user_agent;
+  struct addrinfo *preresolved_proxy;
   struct http_custom_header custom_headers[MAX_CUSTOM_HTTP_HEADER];
 };
 
@@ -73,6 +74,7 @@ struct http_proxy_info {
   int auth_method;
   struct http_proxy_options options;
   struct user_pass up;
+  struct addrinfo* preresoveld_proxy;
   char *proxy_authenticate;
   bool queried_creds;
 };

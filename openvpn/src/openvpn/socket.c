@@ -242,7 +242,7 @@ do_preresolve(struct context *c)
     if (! ce->http_proxy_options)
       {
 	status = do_preresolve_host (c, remote, ce->remote_port, ce->af, flags);
-	if (!status)
+	if (status != 0)
 	  goto err;
       }
 

@@ -138,7 +138,7 @@
   <string name="import_could_not_open">No se pudo encontrar el archivo %1$s mencionado en el archivo de configuracion importado</string>
   <string name="importing_config">Importando archivo de configuración del origen %1$s</string>
   <string name="import_warning_custom_options">Su configuración tiene algunas opciones de configuración que no están establecidas en la interfaz de usuario . Estas opciones fueron agregadas como opciones de configuración personalizadas. A continuación se muestra la configuración personalizada:</string>
-  <string name="import_done">Se termino de leer el archivo de configuracion.</string>
+  <string name="import_done">Se termino de leer el archivo de configuración.</string>
   <string name="nobind_summary">No enlazar con el puerto y la dirección local</string>
   <string name="no_bind">Ningún enlace local</string>
   <string name="import_configuration_file">Importar archivo de configuracion</string>
@@ -294,4 +294,15 @@
   <string name="permission_icon_app">Ícono de la aplicación intentando usar OpenVPN for Android</string>
   <string name="faq_vpndialog43">"Empezando con Android 4.3, la confirmación de VPN está protegida contra \"aplicaciones superpuestas\". Esto resulta en que la ventana de diálogo no reaccione a los toques de pantalla. Si tienes una aplicación que sea superpuesta, es lo que puede ocasionar este problema. Si encuentras una aplicación ofensiva, contactar al autor de la misma. Este problema afecta a todas las aplicaciones VPN en Android 4.3 y superior. Ver también &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\"&gt;Issue 185&lt;a&gt; para más detalles"</string>
   <string name="faq_vpndialog43_title">Ventana de diálogo de confirmación VPN en Android 4.3 y superior</string>
+  <string name="donatePlayStore">Alternativamente usted puede enviar una donación con el Play Store:</string>
+  <string name="thanks_for_donation">Gracias por su donación %s!</string>
+  <string name="logCleared">Registro borrado.</string>
+  <string name="show_password">Mostrar contraseña</string>
+  <string name="timestamp_short">Corto</string>
+  <string name="timestamp_iso">ISO</string>
+  <string name="timestamps">Marcas de tiempo</string>
+  <string name="timestamps_none">Ninguno</string>
+  <string name="uploaded_data">Subir</string>
+  <string name="downloaded_data">Descargar</string>
+  <string name="vpn_status">Estado de VPN</string>
 </resources>

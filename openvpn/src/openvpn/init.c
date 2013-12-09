@@ -130,16 +130,25 @@ management_callback_proxy_cmd (void *arg, const char **p)
 #ifndef ENABLE_HTTP_PROXY
           msg (M_WARN, "HTTP proxy support is not available");
 #else
-          struct http_proxy_options *ho;
-          if (ce->proto != PROTO_TCP && ce->proto != PROTO_TCP_CLIENT )            {
+          struct http_proxy_options *ho, *oldho;
+         if (ce->proto != PROTO_TCP && ce->proto != PROTO_TCP_CLIENT )            {
               msg (M_WARN, "HTTP proxy support only works for TCP based connections");
               return false;
             }
+	  oldho = ce->http_proxy_options;
           ho = init_http_proxy_options_once (&ce->http_proxy_options, gc);
           ho->server = string_alloc (p[2], gc);
           ho->port = string_alloc (p[3], gc);
           ho->retry = true;
           ho->auth_retry = (p[4] && streq (p[4], "nct") ? PAR_NCT : PAR_ALL);
+
+	  /* Save the old preresolved addrinfo we are using the same proxy again */
+	  if (oldho &&
+	      oldho->preresolved_proxy &&
+	      streq(oldho->server, ho->server) &&
+	      streq(oldho->port, ho->port))
+	    ho->preresolved_proxy = oldho->preresolved_proxy;
+
           ret = true;
 #endif
         }
@@ -2690,10 +2699,9 @@ do_init_socket_1 (struct context *c, const int mode)
   link_socket_init_phase1 (c->c2.link_socket,
 			   c->options.ce.local,
 			   c->options.ce.local_port,
-			   c->options.ce.preresolved_local,
 			   c->options.ce.remote,
 			   c->options.ce.remote_port,
-			   c->options.ce.preresolved_remote,
+			   c->c1.preresolved,
 			   c->options.ce.proto,
 			   c->options.ce.af,
 			   c->options.ce.bind_ipv6_only,

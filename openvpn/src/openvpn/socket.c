@@ -118,20 +118,114 @@ getaddr (unsigned int flags,
   }
 }
 
+static inline bool
+streqnull (const char* a, const char* b)
+{
+  if (a == NULL && b == NULL)
+    return true;
+  else if (a == NULL || b == NULL)
+    return false;
+  else
+    return streq (a, b);
+}
+
+static int
+get_preresolved_host (struct preresovled_host* preresolved,
+		      const char* hostname,
+		      const char* servname,
+		      int ai_family,
+		      int resolve_flags,
+		      struct addrinfo **ai)
+{
+  struct preresovled_host *ph;
+  int flags;
+
+  /* Only use flags that are relevant for the structure */
+  flags = resolve_flags & GETADDR_PRERESOLVE_MASK;
+
+  for (ph = preresolved; ph ; ph = ph->next)
+    {
+      if (streqnull (ph->hostname, hostname) &&
+	  streqnull (ph->servname, servname) &&
+	  ph->ai_family == ai_family &&
+	  ph->flags == flags)
+	{
+	  *ai = ph->ai;
+	  return 0;
+	}
+    }
+  return -1;
+}
+
+
+static int
+do_preresolve_host (struct context *c,
+		    const char *hostname,
+		    const char *servname,
+		    const int af,
+		    const int flags)
+{
+  struct addrinfo *ai;
+  if (get_preresolved_host(c->c1.preresolved,
+			   hostname,
+			     servname,
+			     af,
+			     flags,
+			   &ai))
+    {
+      int status;
+      status = openvpn_getaddrinfo (flags, hostname, servname,
+				    c->options.resolve_retry_seconds, NULL,
+				    af, &ai);
+      if (status == 0)
+	{
+	  struct preresovled_host *ph;
+
+	  ALLOC_OBJ_CLEAR_GC (ph, struct preresovled_host, &c->gc);
+	  ph->ai = ai;
+	  ph->hostname = hostname;
+	  ph->servname = servname;
+	  ph->flags = flags & GETADDR_PRERESOLVE_MASK;
+
+	  if (!c->c1.preresolved)
+	    c->c1.preresolved = ph;
+	  else
+	    {
+	      struct preresovled_host *prev = c->c1.preresolved;
+	      while (prev->next)
+		prev = prev->next;
+	      prev->next = ph;
+	    }
+
+	  gc_addspecial (ai, &gc_freeaddrinfo_callback, &c->gc);
+
+	}
+      return status;
+    }
+  else
+    {
+      /* already in preresolved list, return success */
+      return 0;
+    }
+}
 
 void
 do_preresolve(struct context *c)
 {
   int i;
   struct connection_list *l = c->options.connection_list;
+  const unsigned int preresolve_flags = GETADDR_RESOLVE|
+    GETADDR_UPDATE_MANAGEMENT_STATE|
+    GETADDR_MENTION_RESOLVE_RETRY|
+    GETADDR_FATAL;
 
 
   for (i = 0; i < l->len; ++i) {
     int status;
     const char *remote;
+    int flags = preresolve_flags;
+
     struct connection_entry* ce = c->options.connection_list->array[i];
-    unsigned int flags = GETADDR_RESOLVE|GETADDR_UPDATE_MANAGEMENT_STATE|
-      GETADDR_MENTION_RESOLVE_RETRY|GETADDR_FATAL;
 
     if (proto_is_dgram(ce->proto))
       flags |= GETADDR_DATAGRAM;
@@ -144,28 +238,45 @@ do_preresolve(struct context *c)
     else
       remote = ce->remote;
 
-    if (! ce->preresolved_remote)
+    /* HTTP remote hostname does not need to be resolved */
+    if (! ce->http_proxy_options)
       {
-	status = openvpn_getaddrinfo (flags, remote, ce->remote_port,
-				      c->options.resolve_retry_seconds, NULL,
-				      ce->af, &ce->preresolved_remote);
-
-	if (status != 0)
+	status = do_preresolve_host (c, remote, ce->remote_port, ce->af, flags);
+	if (!status)
 	  goto err;
-	gc_addspecial (ce->preresolved_remote, &gc_freeaddrinfo_callback, &c->gc);
       }
 
     flags |= GETADDR_PASSIVE;
-    if (ce->bind_local && !ce->preresolved_local)
+
+    if (ce->bind_local)
       {
-	status = openvpn_getaddrinfo (flags, ce->local, ce->local_port,
-				      c->options.resolve_retry_seconds, NULL,
-				      ce->af, &ce->preresolved_local);
+	status = do_preresolve_host (c, ce->local, ce->local_port, ce->af, flags);
+	if (status != 0)
+	  goto err;
+
+      }
+    /* Preresolve proxy */
+    if (ce->http_proxy_options)
+      {
+	status = do_preresolve_host(c,
+				    ce->http_proxy_options->server,
+				    ce->http_proxy_options->port,
+				    ce->af,
+				    preresolve_flags);
 
 	if (status != 0)
 	  goto err;
-	gc_addspecial (ce->preresolved_local, &gc_freeaddrinfo_callback, &c->gc);
+      }
 
+    if (ce->socks_proxy_server)
+      {
+	status = do_preresolve_host (c,
+				     ce->socks_proxy_server,
+				     ce->socks_proxy_port,
+				     ce->af,
+				     flags);
+	if (status != 0)
+	  goto err;
       }
 
   }
@@ -1211,12 +1322,14 @@ resolve_bind_local (struct link_socket *sock, const sa_family_t af)
 	flags |= GETADDR_DATAGRAM;
 
       /* will return AF_{INET|INET6}from local_host */
-      if (sock->preresolved_local)
-	{
-	  status=0;
-	  sock->info.lsa->bind_local=sock->preresolved_local;
-	}
-      else
+      status = get_preresolved_host (sock->preresolved,
+				     sock->local_host,
+				     sock->local_port,
+				     af,
+				     flags,
+				     &sock->info.lsa->bind_local);
+
+      if (status)
 	status = openvpn_getaddrinfo(flags, sock->local_host, sock->local_port, 0,
 				   NULL, af, &sock->info.lsa->bind_local);
 
@@ -1302,12 +1415,13 @@ resolve_remote (struct link_socket *sock,
 	      ASSERT (0);
 	    }
 
-	  if (sock->preresolved_remote)
-	    {
-	      status = 0;
-	      ai = sock->preresolved_remote;
-	    }
-	  else
+
+	  status = get_preresolved_host (sock->preresolved,
+					 sock->remote_host,
+					 sock->remote_port,
+					 sock->info.af,
+					 flags, &ai);
+	  if (status)
 	    status = openvpn_getaddrinfo (flags, sock->remote_host, sock->remote_port,
 					  retry, signal_received, sock->info.af, &ai);
 
@@ -1412,10 +1526,9 @@ void
 link_socket_init_phase1 (struct link_socket *sock,
 			 const char *local_host,
 			 const char *local_port,
-			 struct addrinfo *local_preresolved,
 			 const char *remote_host,
 			 const char *remote_port,
-			 struct addrinfo *remote_preresolved,
+			 struct preresovled_host *preresolved,
 			 int proto,
 			 sa_family_t af,
 			 bool bind_ipv6_only,
@@ -1448,10 +1561,9 @@ link_socket_init_phase1 (struct link_socket *sock,
 
   sock->local_host = local_host;
   sock->local_port = local_port;
-  sock->preresolved_local = local_preresolved;
   sock->remote_host = remote_host;
   sock->remote_port = remote_port;
-  sock->preresolved_remote = remote_preresolved;
+  sock->preresolved = preresolved;
 
 #ifdef ENABLE_HTTP_PROXY
   sock->http_proxy = http_proxy;

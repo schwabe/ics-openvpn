@@ -615,8 +615,6 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     }
 
     @Override
-<<<<<<< mine
-=======
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if(getResources().getBoolean(R.bool.logSildersAlwaysVisible)) {
@@ -627,7 +625,6 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     }
 
     @Override
->>>>>>> theirs
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 

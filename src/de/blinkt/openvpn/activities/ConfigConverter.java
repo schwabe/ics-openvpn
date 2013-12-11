@@ -1,5 +1,5 @@
 
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.activities;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,6 +29,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
 import de.blinkt.openvpn.core.ConfigParser.ConfigParseError;
 import de.blinkt.openvpn.core.ProfileManager;

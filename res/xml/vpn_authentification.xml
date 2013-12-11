@@ -10,7 +10,7 @@
         android:summary="@string/remote_tlscn_check_summary"
         android:title="@string/remote_tlscn_check_title" />
 
-    <de.blinkt.openvpn.RemoteCNPreference
+    <de.blinkt.openvpn.views.RemoteCNPreference
         android:dependency="checkRemoteCN"
         android:key="remotecn"
         android:title="@string/enter_tlscn_title" />

@@ -1,4 +1,4 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.activities;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+
+import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.fragments.*;
 
 

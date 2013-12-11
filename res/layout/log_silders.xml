@@ -17,7 +17,7 @@
             android:text="@string/log_verbosity_level"/>
 
 
-    <de.blinkt.openvpn.fragments.SeekBarTicks
+    <de.blinkt.openvpn.views.SeekBarTicks
             android:id="@+id/LogLevelSlider"
             android:layout_width="300dp"
             android:layout_height="wrap_content"

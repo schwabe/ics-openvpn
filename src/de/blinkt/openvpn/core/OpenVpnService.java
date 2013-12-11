@@ -15,8 +15,8 @@ import android.os.*;
 import android.os.Handler.Callback;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import de.blinkt.openvpn.DisconnectVPN;
-import de.blinkt.openvpn.LogWindow;
+import de.blinkt.openvpn.activities.DisconnectVPN;
+import de.blinkt.openvpn.activities.LogWindow;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
@@ -25,7 +25,6 @@ import de.blinkt.openvpn.core.VpnStatus.StateListener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;

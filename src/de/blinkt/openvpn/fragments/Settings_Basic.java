@@ -1,6 +1,5 @@
 package de.blinkt.openvpn.fragments;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -25,15 +24,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-import de.blinkt.openvpn.FileSelect;
-import de.blinkt.openvpn.FileSelectLayout;
+import de.blinkt.openvpn.activities.FileSelect;
+import de.blinkt.openvpn.views.FileSelectLayout;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.R.id;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.X509Utils;
 
-import java.io.IOException;
 import java.security.cert.X509Certificate;
 
 public class Settings_Basic extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback {

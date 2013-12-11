@@ -19,6 +19,8 @@ import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.OnItemLongClickListener;
 import de.blinkt.openvpn.*;
+import de.blinkt.openvpn.activities.DisconnectVPN;
+import de.blinkt.openvpn.activities.MainActivity;
 import de.blinkt.openvpn.core.OpenVPNManagement;
 import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;

@@ -1,4 +1,4 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.views;
 
 import android.content.Context;
 import android.preference.DialogPreference;
@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 
 public class RemoteCNPreference extends DialogPreference {
 
@@ -85,7 +88,7 @@ public class RemoteCNPreference extends DialogPreference {
 		authtypes.add(getContext().getString(R.string.complete_dn));
 		authtypes.add(getContext().getString(R.string.rdn));
 		authtypes.add(getContext().getString(R.string.rdn_prefix));
-		if ((mDNType == VpnProfile.X509_VERIFY_TLSREMOTE || mDNType == VpnProfile.X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING) 
+		if ((mDNType == VpnProfile.X509_VERIFY_TLSREMOTE || mDNType == VpnProfile.X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING)
 				&& !(mDn==null || "".equals(mDn))) {
 			authtypes.add(getContext().getString(R.string.tls_remote_deprecated));
 			mRemoteTLSNote.setVisibility(View.VISIBLE);

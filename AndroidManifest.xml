@@ -32,7 +32,7 @@
         android:label="@string/app"
         android:supportsRtl="true" >
         <activity
-            android:name=".VPNPreferences"
+            android:name=".activities.VPNPreferences"
             android:windowSoftInputMode="stateHidden" />
 
         <activity

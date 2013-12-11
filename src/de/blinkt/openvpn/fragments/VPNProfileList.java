@@ -23,6 +23,7 @@ import android.widget.Toast;
 import de.blinkt.openvpn.*;
 import de.blinkt.openvpn.activities.ConfigConverter;
 import de.blinkt.openvpn.activities.FileSelect;
+import de.blinkt.openvpn.activities.VPNPreferences;
 import de.blinkt.openvpn.core.ProfileManager;
 
 import java.util.Collection;

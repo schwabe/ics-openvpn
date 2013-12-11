@@ -1,23 +1,39 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.activities;
 
 import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
+import de.blinkt.openvpn.fragments.Settings_Authentication;
+import de.blinkt.openvpn.fragments.Settings_Basic;
+import de.blinkt.openvpn.fragments.Settings_IP;
+import de.blinkt.openvpn.fragments.Settings_Obscure;
+import de.blinkt.openvpn.fragments.Settings_Routing;
+import de.blinkt.openvpn.fragments.ShowConfigFragment;
 import de.blinkt.openvpn.fragments.VPNProfileList;
 
 
 public class VPNPreferences extends PreferenceActivity {
 
-	private String mProfileUUID;
+    static final Class validFragments[] = new Class[] {
+        Settings_Authentication.class, Settings_Basic.class, Settings_IP.class,
+            Settings_Obscure.class, Settings_Routing.class, ShowConfigFragment.class
+    };
+
+    private String mProfileUUID;
 	private VpnProfile mProfile;
 
 	public VPNPreferences() {
@@ -28,7 +44,11 @@ public class VPNPreferences extends PreferenceActivity {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     protected boolean isValidFragment(String fragmentName) {
-        return true;
+        for (Class c: validFragments)
+            if (c.getName().equals(fragmentName))
+                return true;
+        return false;
+
     }
 
     @Override

@@ -3,7 +3,6 @@ package de.blinkt.openvpn.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -12,9 +11,9 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.SwitchPreference;
 import android.util.Pair;
-import de.blinkt.openvpn.FileSelect;
+import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.RemoteCNPreference;
+import de.blinkt.openvpn.views.RemoteCNPreference;
 import de.blinkt.openvpn.VpnProfile;
 
 

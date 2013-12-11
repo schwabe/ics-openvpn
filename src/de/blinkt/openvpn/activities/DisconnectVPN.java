@@ -1,9 +1,11 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
 import android.os.IBinder;
+
+import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.core.OpenVpnService;
 import de.blinkt.openvpn.core.ProfileManager;
 

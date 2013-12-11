@@ -11,7 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.view.*;
@@ -22,13 +21,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.blinkt.openvpn.*;
+import de.blinkt.openvpn.activities.ConfigConverter;
+import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.core.ProfileManager;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Set;
 import java.util.TreeSet;
-import java.util.prefs.Preferences;
 
 public class VPNProfileList extends ListFragment {
 

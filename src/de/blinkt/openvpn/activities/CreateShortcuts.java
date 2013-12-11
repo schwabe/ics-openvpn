@@ -1,4 +1,4 @@
-package de.blinkt.openvpn.app;
+package de.blinkt.openvpn.activities;
 
 import android.app.ListActivity;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package de.blinkt.openvpn.fragments;
+package de.blinkt.openvpn.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;

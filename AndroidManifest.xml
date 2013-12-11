@@ -37,16 +37,16 @@
 
         <activity
                 android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"
-                android:name=".DisconnectVPN" />
+                android:name=".activities.DisconnectVPN" />
 
         <activity
-            android:name=".LogWindow"
+            android:name=".activities.LogWindow"
             android:allowTaskReparenting="true"
             android:label="@string/openvpn_log"
             android:launchMode="singleTask" />
-        <activity android:name=".FileSelect" />
+        <activity android:name=".activities.FileSelect" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:uiOptions="splitActionBarWhenNarrow"
             tools:ignore="ExportedActivity" >
             <intent-filter>
@@ -94,7 +94,7 @@
         </receiver>
 
         <activity
-            android:name=".ConfigConverter"
+            android:name=".activities.ConfigConverter"
             android:label="Convert Config File"
             android:uiOptions="splitActionBarWhenNarrow"
             tools:ignore="ExportedActivity" >
@@ -148,7 +148,7 @@
 
 
         <activity
-            android:name=".app.CreateShortcuts"
+            android:name=".activities.CreateShortcuts"
             android:label="@string/vpn_shortcut"
             android:theme="@android:style/Theme.DeviceDefault.Light.DialogWhenLarge" >
             <intent-filter>

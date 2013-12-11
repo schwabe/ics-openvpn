@@ -107,7 +107,7 @@
             android:orientation="vertical"
             android:visibility="gone" >
 
-            <de.blinkt.openvpn.FileSelectLayout
+            <de.blinkt.openvpn.views.FileSelectLayout
                 android:id="@+id/caselect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,13 +121,13 @@
             android:orientation="vertical"
             android:visibility="gone" >
 
-            <de.blinkt.openvpn.FileSelectLayout
+            <de.blinkt.openvpn.views.FileSelectLayout
                 android:id="@+id/certselect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 blinkt:title="@string/client_certificate_title" />
 
-            <de.blinkt.openvpn.FileSelectLayout
+            <de.blinkt.openvpn.views.FileSelectLayout
                 android:id="@+id/keyselect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
             android:orientation="vertical"
             android:visibility="gone" >
 
-            <de.blinkt.openvpn.FileSelectLayout
+            <de.blinkt.openvpn.views.FileSelectLayout
                 android:id="@+id/pkcs12select"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

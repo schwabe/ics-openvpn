@@ -1,4 +1,4 @@
-package de.blinkt.openvpn;
+package de.blinkt.openvpn.activities;
 
 
 import java.io.File;
@@ -18,6 +18,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Base64;
+
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.fragments.FileSelectionFragment;
 import de.blinkt.openvpn.fragments.InlineFileTab;
 

@@ -19,7 +19,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import de.blinkt.openvpn.FileSelect;
+import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.R;
 
 public class FileSelectionFragment extends ListFragment {

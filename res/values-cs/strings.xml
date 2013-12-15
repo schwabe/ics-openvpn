@@ -294,4 +294,16 @@
   <string name="permission_icon_app">Ikona aplikace snažící se použít OpenVPN pro Android</string>
   <string name="faq_vpndialog43">"Počínaje Androidem 4.3, VPN konfirmace je chráněná proti \"překryvným aplikacím\". Výsledkem je dialog nereagující na dotyk. Pokud máš aplikaci používající překryv, může to způsobit toto chování. Pokud nalezneš škodlivou aplikaci, kontaktuj jejího autora. Tento problém ovlivňuje všechny VPN aplikace na Androidu 4.3 a vyšší. Viz také &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\"&gt;Problém 185&lt;a&gt; pro další detaily."</string>
   <string name="faq_vpndialog43_title">VPN potvrzovací dialog na Androidu 4.3 a vyšší</string>
+  <string name="donatePlayStore">Případně mě můžete sponzorovat přes Play Store:</string>
+  <string name="thanks_for_donation">Díky za sponzorováni %s!</string>
+  <string name="logCleared">Log vyčištěn.</string>
+  <string name="show_password">Ukázat heslo</string>
+  <string name="keyChainAccessError">Chyba přístupu ke KeyChain: %s</string>
+  <string name="timestamp_short">Krátký</string>
+  <string name="timestamp_iso">ISO</string>
+  <string name="timestamps">Časové značky</string>
+  <string name="timestamps_none">Žádný</string>
+  <string name="uploaded_data">Nahrávání</string>
+  <string name="downloaded_data">Stahování</string>
+  <string name="vpn_status">VPN stav</string>
 </resources>

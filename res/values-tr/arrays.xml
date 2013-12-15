@@ -5,11 +5,11 @@
     <item>Sertifikalar</item>
     <item>PCKCS12 Dosyası</item>
     <item>Android Sertifikası</item>
-    <item>Kullanıcı Adı/Şifre</item>
-    <item>Statik Tuşlar</item>
-    <item>Kullanıcı/Şifre + Sertifikalar</item>
-    <item>Kullanıcı/PW + PKCS12 </item>
-    <item>Kullanıcı/PW + Android</item>
+    <item>Kullanıcı Adı/Parola</item>
+    <item>Statik Anahtarlar(Şifre)</item>
+    <item>Kullanıcı/Parola + Sertifikalar</item>
+    <item>Kullanıcı/Parola + PKCS12 </item>
+    <item>Kullanıcı/Parola + Android</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item>0</item>

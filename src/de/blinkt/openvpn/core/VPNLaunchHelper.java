@@ -53,9 +53,9 @@ public class VPNLaunchHelper {
 			return true;
 		} catch (IOException e) {
 			if(e2!=null)
-				VpnStatus.logError( e2.getLocalizedMessage());
-			VpnStatus.logError(e.getLocalizedMessage());
-			e.printStackTrace();
+				VpnStatus.logException(e2);
+			VpnStatus.logException(e);
+
 			return false;
 		}
 	}

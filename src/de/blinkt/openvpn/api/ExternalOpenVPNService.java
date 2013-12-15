@@ -90,7 +90,6 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                 } catch (NameNotFoundException e) {
                     // App not found. Remove it from the list
                     mExtAppDb.removeApp(apppackage);
-                    e.printStackTrace();
                 }
 
             }
@@ -156,10 +155,10 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                 ProfileManager pm = ProfileManager.getInstance(getBaseContext());
                 pm.addProfile(vp);
             } catch (IOException e) {
-                e.printStackTrace();
+                VpnStatus.logException(e);
                 return false;
             } catch (ConfigParseError e) {
-                e.printStackTrace();
+                VpnStatus.logException(e);
                 return false;
             }
 

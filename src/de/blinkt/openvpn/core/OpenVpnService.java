@@ -209,13 +209,13 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
             //ignore exception
         } catch (NoSuchMethodException nsm) {
-            nsm.printStackTrace();
+            VpnStatus.logException(nsm);
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            VpnStatus.logException(e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            VpnStatus.logException(e);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            VpnStatus.logException(e);
         }
 
     }
@@ -312,7 +312,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
             }
 
 
@@ -321,7 +320,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
         // An old running VPN should now be exited

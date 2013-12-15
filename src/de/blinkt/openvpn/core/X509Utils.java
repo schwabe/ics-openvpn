@@ -79,6 +79,7 @@ public class X509Utils {
         String friendlyName=null;
 
         /* Hack so we do not have to ship a whole Spongy/bouncycastle */
+        Exception exp=null;
         try {
             Class X509NameClass = Class.forName("com.android.org.bouncycastle.asn1.x509.X509Name");
             Method getInstance = X509NameClass.getMethod("getInstance",Object.class);
@@ -95,16 +96,18 @@ public class X509Utils {
             friendlyName= (String) toString.invoke(subjectName,true,defaultSymbols);
                     
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            exp =e ;
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            exp =e;
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            exp =e;
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            exp =e;
         } catch (NoSuchFieldException e) {
-            e.printStackTrace();
+            exp =e;
         }
+        if (exp!=null)
+            VpnStatus.logException("Getting X509 Name from certificate", exp);
 
         /* Fallback if the reflection method did not work */
         if(friendlyName==null)

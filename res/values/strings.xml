@@ -307,4 +307,6 @@
     <string name="downloaded_data">Download</string>
     <string name="vpn_status">Vpn Status</string>
     <string name="logview_options">View options</string>
+    <string name="unhandled_exception">Unhandled exception: %1$s\n\n%2$s</string>
+    <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
 </resources>

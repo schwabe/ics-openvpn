@@ -273,9 +273,10 @@ public class LaunchVPN extends Activity {
 			if(ret ==0)
 				mCmfixed=true;
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+            VpnStatus.logException("SU command", e);
+
 		} catch (IOException e) {
-			e.printStackTrace();
+            VpnStatus.logException("SU command", e);
 		}
 	}
 

@@ -136,7 +136,7 @@
         <activity
             android:name=".LaunchVPN"
             android:label="@string/vpn_launch_title"
-
+            android:excludeFromRecents="true"
             android:theme="@android:style/Theme.DeviceDefault.Light.Panel"
             tools:ignore="ExportedActivity" >
             <intent-filter>
@@ -150,6 +150,7 @@
         <activity
             android:name=".activities.CreateShortcuts"
             android:label="@string/vpn_shortcut"
+            android:excludeFromRecents="true"
             android:theme="@android:style/Theme.DeviceDefault.Light.DialogWhenLarge" >
             <intent-filter>
                 <action android:name="android.intent.action.CREATE_SHORTCUT" />

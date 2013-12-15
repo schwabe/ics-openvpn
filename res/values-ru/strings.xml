@@ -286,7 +286,15 @@
   <string name="state_userpause">VPN приостановлен по запросу пользователя</string>
   <string name="state_screenoff">VPN приостановлен - выкл. экран</string>
   <string name="cannotparsecert">Не удается отобразить сведения о сертификате</string>
+  <string name="appbehaviour">Поведение приложения</string>
+  <string name="vpnbehaviour">Поведение VPN</string>
   <string name="allow_vpn_changes">Разрешить изменение VPN-профилей</string>
   <string name="hwkeychain">Аппаратное хранилище ключей:</string>
   <string name="faq_vpndialog43_title">Окно подтверждения VPN для Android 4.3 и позже</string>
+  <string name="thanks_for_donation">Спасибо за пожертвование %s!</string>
+  <string name="logCleared">Журнал очищен.</string>
+  <string name="show_password">Показать пароль</string>
+  <string name="uploaded_data">Выгружено</string>
+  <string name="downloaded_data">Загружено</string>
+  <string name="vpn_status">Статус VPN</string>
 </resources>

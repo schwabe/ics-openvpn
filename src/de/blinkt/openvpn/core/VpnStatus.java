@@ -12,6 +12,9 @@ import android.os.Parcelable;
 import de.blinkt.openvpn.R;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
@@ -41,6 +44,25 @@ public class VpnStatus {
 
 	private static long mlastByteCount[]={0,0,0,0};
 
+    public static void logException(LogLevel ll, String context,  Exception e) {
+        StringWriter sw = new StringWriter();
+        e.printStackTrace(new PrintWriter(sw));
+        LogItem li;
+        if (context !=null) {
+            li = new LogItem(ll, R.string.unhandled_exception_context, e.getMessage(), sw.toString(), context);
+        } else {
+            li = new LogItem(ll, R.string.unhandled_exception, e.getMessage(), sw.toString());
+        }
+        newLogItem(li);
+    }
+
+    public static void logException(Exception e) {
+        logException(LogLevel.ERROR, null, e);
+    }
+
+    public static void logException(String context, Exception e) {
+        logException(LogLevel.ERROR, context, e);
+    }
 
 
     public enum ConnectionStatus {
@@ -154,11 +176,11 @@ public class VpnStatus {
 			}
 		};
 
-		public LogItem(LogLevel loglevel,int ressourceId, Object[] args) {
-			mRessourceId = ressourceId;
-			mArgs = args;
-			mLevel = loglevel;
-		}
+        public LogItem(LogLevel loglevel,int ressourceId, Object... args) {
+            mRessourceId = ressourceId;
+            mArgs =args;
+            mLevel = loglevel;
+        }
 
 
 		public LogItem(LogLevel loglevel, String msg) {

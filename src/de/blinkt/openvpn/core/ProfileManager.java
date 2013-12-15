@@ -145,13 +145,11 @@ public class ProfileManager {
 			vpnfile.close();
 		} catch (FileNotFoundException e) {
 
-			e.printStackTrace();
+            VpnStatus.logException("saving VPN profile", e);
 			throw new RuntimeException(e);
 		} catch (IOException e) {
-
-			e.printStackTrace();
+            VpnStatus.logException("saving VPN profile", e);
 			throw new RuntimeException(e);
-
 		}
 	}
 	
@@ -186,7 +184,7 @@ public class ProfileManager {
 				exp=e;
 			}
 			if(exp!=null) {
-				exp.printStackTrace();
+			    VpnStatus.logException("Loading VPN List",exp);
 			}
 		}
 	}

@@ -73,7 +73,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 // wait 300 ms before retrying
                 try { Thread.sleep(300);
                 } catch (InterruptedException e1) {
-                    e1.printStackTrace();
                 }
 
             }
@@ -85,7 +84,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             mServerSocket = new LocalServerSocket(mServerSocketLocal.getFileDescriptor());
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            VpnStatus.logException(e);
         }
         return false;
 
@@ -131,8 +130,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 				try {
 					fds = mSocket.getAncillaryFileDescriptors();
 				} catch (IOException e) {
-					VpnStatus.logError("Error reading fds from socket" + e.getLocalizedMessage());
-					e.printStackTrace();
+					VpnStatus.logException("Error reading fds from socket", e);
 				}
 				if(fds!=null){
                     Collections.addAll(mFDList, fds);
@@ -148,7 +146,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			VpnStatus.logException(e);
 		}
 		active.remove(this);
 	}
@@ -180,9 +178,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 			exp =e;
 		}
 
-        exp.printStackTrace();
         Log.d("Openvpn", "Failed to retrieve fd from socket: " + fd);
-        VpnStatus.logError("Failed to retrieve fd from socket: " + exp.getLocalizedMessage());
+        VpnStatus.logException("Failed to retrieve fd from socket", exp);
 	}
 
 	private String processInput(String pendingInput) {
@@ -297,7 +294,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
-                e.printStackTrace();
             }
 			
 		}
@@ -457,8 +453,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		} catch (IOException e) {
 			exp =e;
 		}
-        VpnStatus.logError("Could not send fd over socket:" + exp.getLocalizedMessage());
-        exp.printStackTrace();
+        VpnStatus.logException("Could not send fd over socket" , exp);
 
         return false;
 	}

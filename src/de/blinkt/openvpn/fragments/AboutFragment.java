@@ -23,6 +23,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 import com.android.vending.billing.IInAppBillingService;
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.core.VpnStatus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -123,7 +124,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
             }
 
         } catch (RemoteException e) {
-            e.printStackTrace();
+            VpnStatus.logException(e);
         }
     }
 
@@ -196,7 +197,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+            VpnStatus.logException("Parsing Play Store IAP",e);
         }
 
     }
@@ -230,9 +231,9 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
             }
 
         } catch (RemoteException e) {
-            e.printStackTrace();
+            VpnStatus.logException(e);
         } catch (IntentSender.SendIntentException e) {
-            e.printStackTrace();
+            VpnStatus.logException(e);
         }
     }
 

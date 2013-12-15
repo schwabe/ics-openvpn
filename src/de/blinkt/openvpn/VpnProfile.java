@@ -421,7 +421,7 @@ public class VpnProfile implements Serializable {
             PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
             version = packageinfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            VpnStatus.logException(e);
         }
         return String.format(Locale.US, "setenv IV_OPENVPN_GUI_VERSION \"%s %s\"\n", c.getPackageName(), version);
 
@@ -543,7 +543,7 @@ public class VpnProfile implements Serializable {
             cfg.flush();
             cfg.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            VpnStatus.logException(e);
         }
 
         return intent;
@@ -651,7 +651,7 @@ public class VpnProfile implements Serializable {
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e1) {
-                e1.printStackTrace();
+                VpnStatus.logException(e1);
             }
             return getKeyStoreCertificates(context, tries-1);
         }

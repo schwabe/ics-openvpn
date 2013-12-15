@@ -48,7 +48,7 @@ public class OpenVPNThread implements Runnable {
 			startOpenVPNThreadArgs(mArgv, mProcessEnv);
 			Log.i(TAG, "Giving up");
 		} catch (Exception e) {
-			e.printStackTrace();
+            VpnStatus.logException("Starting OpenVPN Thread" ,e);
 			Log.e(TAG, "OpenVPNThread Got " + e.toString());
 		} finally {
 			int exitvalue = 0;
@@ -149,8 +149,7 @@ public class OpenVPNThread implements Runnable {
 			
 		
 		} catch (IOException e) {
-			VpnStatus.logError("Error reading from output of OpenVPN process" + e.getLocalizedMessage());
-			e.printStackTrace();
+			VpnStatus.logException("Error reading from output of OpenVPN process" , e);
 			stopProcess();
 		}
 		

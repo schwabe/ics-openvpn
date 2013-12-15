@@ -220,7 +220,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="openvpn_log">Log OpenVPN</string>
   <string name="import_config">"Importer une configuration OpenVPN"</string>
   <string name="battery_consumption_title">"Consommation de la batterie"</string>
-  <string name="baterry_consumption">Dans mes tests personnels la principale raison de la forte consommation de batterie avec OpenVPN sont les paquets keepalive. La plupart des serveurs OpenVPN ont une directive de configuration comme «keepalive 10 60 \'qui provoque le client et le serveur de paquets keepalive change toutes les dix secondes. <p> Bien que ces paquets soient petits et n\'utilisent plus de trafic, ils gardent le réseau de téléphonie mobile occupé et augmentent la consommation d\'énergie. (Voir aussi <a Radio State Machine | Développeurs Android </ a>) <p> Ce paramètre de keepalive ne peut pas être modifié sur le client. Seul l\'administrateur système de l\'OpenVPN peut changer le réglage. <p> Malheureusement utiliser un keepalive supérieur à 60 secondes avec UDP peut inciter des passerelles NAT à abandonner la connexion en raison d\'un délai d\'inactivité. Utilisation de TCP avec un long délai d\'attente de keepalive fonctionne, mais le tunnel TCP sur TCP fonctionne extrêmement mal sur les connexions avec une forte perte de paquets. (Voir <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html"> Pourquoi TCP sur TCP est une mauvaise idée </ a>)</string>
   <string name="faq_tethering">La fonctionnalité de Tethering Android (sur WiFi, USB ou Bluetooth) et l\'API VPNService (utilisé par ce programme) ne fonctionnent pas ensemble. Pour plus de détails, voir la &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\" &gt; page #34 &lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN et Tethering</string>
   <string name="connection_retries">"Tentatives de connexion"</string>
@@ -292,8 +291,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="vpnbehaviour">Comportement du VPN</string>
   <string name="allow_vpn_changes">Autoriser les modifications des profils VPN</string>
   <string name="hwkeychain">Magasin de stockage des clés:</string>
-  <string name="permission_icon_app">L\'Icône de l\'application essaie d\'utiliser OpenVPN pour Android</string>
-  <string name="faq_vpndialog43">«À partir de Android 4.3, la confirmation VPN est protégée des \"applications recmultiples \". Cela se traduit par une boîte de dialogue ne réagissant pas à la saisie tactile. Si vous avez une application qui utilise des superpositions, cela peut causer ce comportement. Si vous trouvez l\'application bloquante, contactez l\'auteur de l\'application. Ce problème affecte toutes les applications VPN sur Android 4.3 et plus. Voir aussi <a émission href="http://code.google.com/p/ics-openvpn/issues/detail?id=185"> 185 <a> pour plus de détails \"</string>
   <string name="faq_vpndialog43_title">Confirmation du dialogue Vpn sur Android 4.3 et plus</string>
   <string name="donatePlayStore">Sinon, vous pouvez m\'envoyer un don avec le Play Store:</string>
   <string name="thanks_for_donation">Merci pour le don de %s !</string>

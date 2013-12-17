@@ -33,7 +33,8 @@
         android:supportsRtl="true" >
         <activity
             android:name=".activities.VPNPreferences"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:exported="false"/>
 
         <activity
                 android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"

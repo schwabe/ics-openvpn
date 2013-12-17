@@ -22,6 +22,7 @@ public class FaqFragment extends Fragment  {
     	insertHtmlEntry(v, R.id.baterry_consumption, R.string.baterry_consumption);  
     	insertHtmlEntry(v, R.id.faq_tethering, R.string.faq_tethering);
         insertHtmlEntry(v, R.id.faq_vpndialog43, R.string.faq_vpndialog43);
+        insertHtmlEntry(v, R.id.faq_system_dialog_xposed, R.string.faq_system_dialog_xposed);
 		return v;
     }
 
@@ -29,6 +30,7 @@ public class FaqFragment extends Fragment  {
 		TextView faqitem = (TextView) v.findViewById(viewId);
     	faqitem.setText(Html.fromHtml(getActivity().getString(stringId)));
     	faqitem.setMovementMethod(LinkMovementMethod.getInstance());
+
 	}
 
 }

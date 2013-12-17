@@ -39,6 +39,11 @@
             android:text="@string/faq_system_dialogs" />
 
         <TextView
+            style="@style/faqitem"
+            tools:text="@string/faq_system_dialog_xposed"
+            android:id="@+id/faq_system_dialog_xposed"/>
+
+        <TextView
             style="@style/faqhead"
             android:text="@string/faq_duplicate_notification_title" />
 

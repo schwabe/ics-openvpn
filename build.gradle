@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.+'
+        classpath 'com.android.tools.build:gradle:0.7.+'
     }
 }
 
@@ -61,6 +61,11 @@ android {
         release
     }
 
+    lintOptions {
+        disable 'MissingTranslation', 'Typos'
+        enable 'IconExpectedSize'
+    }
+
     buildTypes {
         release {
             signingConfig signingConfigs.release
@@ -80,8 +85,8 @@ if (project.hasProperty('keystoreFile') &&
     android.buildTypes.release.signingConfig = null
 }
 
-//http://stackoverflow.com/questions/16683775/include-so-library-in-apk-in-android-studio
 tasks.withType(com.android.build.gradle.tasks.PackageApplication) { pkgTask ->
-    pkgTask.jniDir new File(buildDir, 'native-libs')
+    pkgTask.jniFolders = new HashSet<File>()
+    pkgTask.jniFolders.add(new File(buildDir, 'native-libs'))
 }
 

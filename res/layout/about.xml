@@ -178,7 +178,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Full licenses"
+            android:text="@string/full_licenses"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <WebView

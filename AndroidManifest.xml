@@ -30,6 +30,7 @@
         android:theme="@android:style/Theme.DeviceDefault.Light"
         android:icon="@drawable/icon"
         android:label="@string/app"
+        android:name=".core.ICSOpenVPNApplication"
         android:supportsRtl="true" >
         <activity
             android:name=".activities.VPNPreferences"

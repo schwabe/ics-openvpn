@@ -94,7 +94,6 @@
   <string name="tun_open_error">未能打开 tun 模块</string>
   <string name="error">错误</string>
   <string name="clear">清除</string>
-  <string name="info">信息</string>
   <string name="last_openvpn_tun_config">正在打开 tun 设备：</string>
   <string name="local_ip_info">本地 IPv4： %1$s/%2$d IPv6： %3$s MTU： %4$d</string>
   <string name="dns_server_info">DNS 服务器: %1$s, 域名: %2$s</string>
@@ -168,7 +167,6 @@
   <string name="building_configration">正在生成配置</string>
   <string name="netchange_summary">启用该选项以在网络变化(例如从蜂窝数据到 WiFi)时强制重新连接</string>
   <string name="netchange">当转换网络时重新连接</string>
-  <string name="cert_from_keystore">从密钥库中获取证书 \'%s\'</string>
   <string name="netstatus">网络状态： %s</string>
   <string name="extracahint">Android 密钥库通常会自带 CA 证书。如果您获取的证书发生验证错误，请单独指定一个证书。</string>
   <string name="select_file">选择</string>
@@ -255,7 +253,6 @@
   <string name="encryption_cipher">加密算法(cipher)</string>
   <string name="packet_auth">数据包验证</string>
   <string name="auth_dialog_title">数据包验证方式</string>
-  <string name="toggle_timestamps">切换时间戳</string>
   <string name="mobile_info_extended">当前运行环境 %1$s (%2$s) %3$s，Android API %4$d，版本 %5$s，%6$s</string>
   <string name="built_by">由 %s 构建</string>
   <string name="debug_build">调试版本</string>

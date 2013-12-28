@@ -233,6 +233,11 @@ public class VPNProfileList extends ListFragment {
         supportedMimeTypes.add("application/openvpn-profile");
         supportedMimeTypes.add("application/ovpn");
 
+
+        // Webservers unfortunately report this for .conf files sometimes
+        supportedMimeTypes.add("text/plain");
+        supportedMimeTypes.add("application/conf");
+
         MimeTypeMap mtm = MimeTypeMap.getSingleton();
 
         for(String ext: new String[] {"ovpn", "conf"}) {

@@ -84,7 +84,6 @@
   <string name="tun_open_error">無法開啟Tun網絡介面</string>
   <string name="error">"錯誤: "</string>
   <string name="clear">清除</string>
-  <string name="info">資訊</string>
   <string name="local_ip_info">本地IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="routes_info">路徑: %s</string>
   <string name="routes_info6">IPv6路由: %s</string>
@@ -121,7 +120,6 @@
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
   <string name="speed_waiting">等待狀態訊息…</string>
-  <string name="error_empty_username">使用者名稱不能為空。</string>
   <string name="pkcs12_file_encryption_key">PKCS12檔加密金鑰</string>
   <string name="private_key_password">私密金鑰密碼</string>
   <string name="password">密碼</string>

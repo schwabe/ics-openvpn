@@ -247,7 +247,7 @@ public class ConfigParser {
             "management",
 			"management-query-passwords",
 			"pause-exit",
-            "parsable-output",
+            "machine-readable-output",
 			"persist-key",
 			"register-dns",
 			"route-delay",
@@ -263,6 +263,34 @@ public class ConfigParser {
 			"topology",
             "user",
             "win-sys",
+    };
+
+    final String[] connectionOptions = {
+            "local",
+            "remote",
+            "float",
+            "port",
+//            "connect-retry",
+            "connect-timeout",
+            "connect-retry-max",
+            "link-mtu",
+            "tun-mtu",
+            "tun-mtu-extra",
+            "fragment",
+            "mtu-disc",
+            "local-port",
+            "remote-port",
+            "bind",
+            "nobind",
+            "proto",
+            "http-proxy",
+            "http-proxy-retry",
+            "http-proxy-timeout",
+            "http-proxy-option",
+            "socks-proxy",
+            "socks-proxy-retry",
+            "explicit-exit-notify",
+            "mssfix"
     };
 
 

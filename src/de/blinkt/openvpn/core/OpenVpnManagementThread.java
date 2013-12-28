@@ -179,7 +179,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		}
 
         Log.d("Openvpn", "Failed to retrieve fd from socket: " + fd);
-        VpnStatus.logException("Failed to retrieve fd from socket", exp);
+        VpnStatus.logException("Failed to retrieve fd from socket (" + fd + ")" , exp);
 	}
 
 	private String processInput(String pendingInput) {
@@ -199,7 +199,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 
 	private void processCommand(String command) {
-        Log.i(TAG, "Line from managment" + command);
+        //Log.i(TAG, "Line from managment" + command);
 
 
         if (command.startsWith(">") && command.contains(":")) {
@@ -429,7 +429,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 			FileDescriptor[] fds = {fdtosend};
 			mSocket.setFileDescriptorsForSend(fds);
 
-			Log.d("Openvpn", "Sending FD tosocket: " + fdtosend + " " + fdint + "  " + pfd);
 			// Trigger a send so we can close the fd on our side of the channel
 			// The API documentation fails to mention that it will not reset the file descriptor to
 			// be send and will happily send the file descriptor on every write ...

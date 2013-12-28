@@ -81,7 +81,8 @@ public class VpnStatus {
         INFO(2),
         ERROR(-2),
         WARNING(1),
-        VERBOSE(3);
+        VERBOSE(3),
+        DEBUG(4);
 
         protected int mValue;
         LogLevel(int value) {
@@ -97,6 +98,7 @@ public class VpnStatus {
                 case 1:   return INFO;
                 case 2:   return ERROR;
                 case 3: return WARNING;
+                case 4: return DEBUG;
                 default:  return null;
             }
         }
@@ -450,6 +452,7 @@ public class VpnStatus {
 		for (StateListener sl : stateListener) {
 			sl.updateState(state,msg,resid,level);
 		}
+        newLogItem(new LogItem((LogLevel.DEBUG), String.format("New OpenVPN Status (%s->%s): %s",state,level.toString(),msg)));
 	}
 
 	public static void logInfo(String message) {

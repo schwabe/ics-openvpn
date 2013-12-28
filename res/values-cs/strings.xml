@@ -94,7 +94,6 @@
   <string name="tun_open_error">Chyba při otvírání tun zařízení</string>
   <string name="error">"Chyba: "</string>
   <string name="clear">Vymazat</string>
-  <string name="info">info</string>
   <string name="last_openvpn_tun_config">Otevření rozhraní tun:</string>
   <string name="local_ip_info">Místní IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS server: %1$s, Doména: %2$s</string>
@@ -168,7 +167,6 @@
   <string name="building_configration">Vytvářím konfiguraci…</string>
   <string name="netchange_summary">Zapnutím této volby bude vynuceno opětovné připojení, pokud se změní stav sítě (např. z WiFi na mobilní síť a zpět)</string>
   <string name="netchange">Opětovně připojit při změně sítě</string>
-  <string name="cert_from_keystore">Získán certifikát \'%s\' z úložiště</string>
   <string name="netstatus">Stav sítě: %s</string>
   <string name="extracahint">CA certifikát je obvykle získán z Androidího úložiště. Zadej samostatný certifikát, pokud dostáváš chybu při verifikaci.</string>
   <string name="select_file">Vyber</string>
@@ -255,7 +253,6 @@
   <string name="encryption_cipher">Šifrovací algoritmus</string>
   <string name="packet_auth">Ověřování paketů</string>
   <string name="auth_dialog_title">Zadej způsob ověřování paketů</string>
-  <string name="toggle_timestamps">Přepnout časové značky</string>
   <string name="mobile_info_extended">Běží na %1$s (%2$s) %3$s, Android API %4$d, verze %5$s, %6$s</string>
   <string name="built_by">sestaveno od %s</string>
   <string name="debug_build">ladící verze</string>

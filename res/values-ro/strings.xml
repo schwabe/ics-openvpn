@@ -94,7 +94,6 @@
   <string name="tun_open_error">Eroare deschidere interfaţa tun</string>
   <string name="error">"Eroare:"</string>
   <string name="clear">Goleşte</string>
-  <string name="info">info</string>
   <string name="last_openvpn_tun_config">Se deschide interfața tun:</string>
   <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">Server DNS: %1$s, Domeniu: %2$s</string>
@@ -167,7 +166,6 @@
   <string name="building_configration">Se generează configurarea…</string>
   <string name="netchange_summary">Activând această opţiune forţaţi o reconectare dacă se schimbă starea de reţea (e.g. WiFi la/de la mobil)</string>
   <string name="netchange">Reconectare la schimbare reţea</string>
-  <string name="cert_from_keystore">Am primit certificatul \'%s\' din Keystore</string>
   <string name="netstatus">Statutus reţea: %s</string>
   <string name="extracahint">Certificatul CA este în mod normal returnat de Android Keystore. Specificaţi un certificat separat dacă observaţi erori de verificare a certificatului.</string>
   <string name="select_file">Selectare</string>
@@ -253,7 +251,6 @@
   <string name="encryption_cipher">Cifru criptare</string>
   <string name="packet_auth">Autentificare pachete</string>
   <string name="auth_dialog_title">Introduceţi metoda de autentificare de pachete</string>
-  <string name="toggle_timestamps">Activează timestamps</string>
   <string name="mobile_info_extended">Rulează pe %1$s (%2$s) %3$s, Android API %4$d, versiunea %5$s, %6$s</string>
   <string name="built_by">compilat de %s</string>
   <string name="debug_build">versiune debug</string>

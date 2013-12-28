@@ -94,7 +94,6 @@
     <string name="tun_open_error">Failed to open the tun interface</string>
     <string name="error">"Error: "</string>
     <string name="clear">Clear</string>
-    <string name="info">info</string>
     <string name="last_openvpn_tun_config">Opening tun interface:</string>
     <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
     <string name="dns_server_info">DNS Server: %1$s, Domain: %2$s</string>
@@ -115,7 +114,7 @@
     <string name="tap_faq3">A third time? Actually, one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would also have to implement ARP and possibly a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.</string>
     <string name="faq">FAQ</string>
     <string name="copying_log_entries">Copying log entries</string>
-    <string name="faq_copying">To copy a single log entry press and and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the GUI.</string>
+    <string name="faq_copying">To copy a single log entry press and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button if not visible in the GUI.</string>
     <string name="faq_shortcut">Shortcut to start</string>
     <string name="faq_howto_shortcut">You can place a shortcut to start OpenVPN on your desktop. Depending on your homescreen program you will have to add either a shortcut or a widget.</string>
     <string name="no_vpn_support_image">Your image does not support the VPNService API, sorry :(</string>
@@ -168,7 +167,6 @@
     <string name="building_configration">Building configuration…</string>
     <string name="netchange_summary">Turning this option on will force a reconnect if the network state is changed (e.g. WiFi to/from mobile)</string>
     <string name="netchange">Reconnect on network change</string>
-    <string name="cert_from_keystore">Got certificate \'%s\' from Keystore</string>
     <string name="netstatus">Network Status: %s</string>
     <string name="extracahint">The CA cert is usually returned from the Android Keystore. Specify a separate certificate if you get certificate verification errors.</string>
     <string name="select_file">Select</string>
@@ -255,7 +253,6 @@
     <string name="encryption_cipher">Encryption cipher</string>
     <string name="packet_auth">Packets authentication</string>
     <string name="auth_dialog_title">Enter packet authentication method</string>
-    <string name="toggle_timestamps">Toggle timestamps</string>
     <string name="mobile_info_extended">Running on %1$s (%2$s) %3$s, Android API %4$d, version %5$s, %6$s</string>
     <string name="built_by">built by %s</string>
     <string name="debug_build">debug build</string>
@@ -310,4 +307,5 @@
     <string name="unhandled_exception">Unhandled exception: %1$s\n\n%2$s</string>
     <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
     <string name="faq_system_dialog_xposed">If you have rooted your Android device you can install the &lt;a href=\"http://xposed.info/\"&gt;Xposed framework&lt;/a&gt; and a the &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN Dialog confirm module&lt;/a&gt; at your own risk"</string>
+    <string name="full_licenses">Full licenses</string>
 </resources>

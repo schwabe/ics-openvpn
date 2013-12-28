@@ -94,7 +94,6 @@
   <string name="tun_open_error">Tun liidese avamine ebaõnnestus</string>
   <string name="error">"Viga:"</string>
   <string name="clear">Tühjenda</string>
-  <string name="info">info</string>
   <string name="last_openvpn_tun_config">tun liidese avamine:</string>
   <string name="local_ip_info">Lokaalne IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS server: %1$s, Domeen: %2$s</string>
@@ -168,7 +167,6 @@
   <string name="building_configration">Koostatakse konfiguratsiooni…</string>
   <string name="netchange_summary">Selle valiku aktiveerimine kutsub esile VPN uuestiühendumise kui võrgu olek muutub (nt. WIFI peale/pealt mobiilile)</string>
   <string name="netchange">Uuestiühendus võrgu oleku muutumisel</string>
-  <string name="cert_from_keystore">Saadud sertifikaat \'%s\' võtmehoidlast</string>
   <string name="netstatus">Võrgu olek: %s</string>
   <string name="extracahint">CA sertifikaat saadakse tavaliselt Androidi võtmehoidlast. Kui sertifikaadi kontrollimisel esineb probleeme, siis määrake palun sertifikaat ise.</string>
   <string name="select_file">Vali</string>
@@ -255,7 +253,6 @@
   <string name="encryption_cipher">Krüptošiffer</string>
   <string name="packet_auth">Pakettide autentimine</string>
   <string name="auth_dialog_title">Sisestage pakettide autentimismeetod</string>
-  <string name="toggle_timestamps">Vaheta ajatempleid</string>
   <string name="mobile_info_extended">Töötab seadmel %1$s (%2$s) %3$s, Android API %4$d, versioon %5$s, %6$s</string>
   <string name="built_by">Kompileerija: %s</string>
   <string name="debug_build">Silumisversioon</string>
@@ -294,4 +291,16 @@
   <string name="permission_icon_app">\'OpenVPN Androidile\' üritatakse kasutada programmi ikooni poolt</string>
   <string name="faq_vpndialog43">"Alates Android 4.3 versioonist kaitstakse VPN kinnitust \"kattuvate programmide\" eest. Selle tulemusena ei reageeri dialoog puutesisendile. Võite sattuda sellisele probleemile kui teil on programm, mis kasutab kattumist. Leides sellise häiriva programmi, teavitage sellest programmi autorit. Nimetatud probleem mõjutab kõiki VPN programme alates Android 4.3 versioonist. Lisadetailid:  &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\"&gt; teema 185&lt;/a&gt;"</string>
   <string name="faq_vpndialog43_title">Android 4.3 (ja hilisemate) VPN kinnitusdialoog</string>
+  <string name="donatePlayStore">Võite saata mulle annetusena raha ka Play Store kaudu:</string>
+  <string name="thanks_for_donation">Aitäh annetatud %s eest!</string>
+  <string name="logCleared">Logi tühjendatud.</string>
+  <string name="show_password">Näita salasõna</string>
+  <string name="keyChainAccessError">Viga KeyChain poole pöördumisel: %s</string>
+  <string name="timestamp_short">Lühike</string>
+  <string name="timestamp_iso">ISO</string>
+  <string name="timestamps">Ajatemplid</string>
+  <string name="timestamps_none">Ükski</string>
+  <string name="uploaded_data">Üleslaadimine</string>
+  <string name="downloaded_data">Allalaadimine</string>
+  <string name="vpn_status">Vpn olek</string>
 </resources>

@@ -94,7 +94,6 @@
   <string name="tun_open_error">Tun 인터페이스를 열지 못했습니다</string>
   <string name="error">"오류:"</string>
   <string name="clear">지우기</string>
-  <string name="info">정보</string>
   <string name="last_openvpn_tun_config">TUN 인터페이스 열기:</string>
   <string name="local_ip_info">로컬 IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS 서버: %1$s, 도메인: %2$s</string>
@@ -167,7 +166,6 @@
   <string name="building_configration">설정 만드는중…</string>
   <string name="netchange_summary">이 기능을 사용하면 네트워크 상태 변환시 강제로 재접속을 합니다 (예. WIFI 로/에서 모바일)</string>
   <string name="netchange">네트워크 변화시 재접속</string>
-  <string name="cert_from_keystore">Keystore에서 인증서 \'%s\'  받음</string>
   <string name="netstatus">네트워크 상태: %s</string>
   <string name="extracahint">CA 인증서는 일반적으로 안드로이드 Keystore에 있는것을 사용합니다. 인증서 오류 발생시 벌도의 인증서를 지정하세요.</string>
   <string name="select_file">선택</string>
@@ -253,7 +251,6 @@
   <string name="encryption_cipher">암호화 암호</string>
   <string name="packet_auth">패킷 인증</string>
   <string name="auth_dialog_title">패킷 인증 방법을 입력한다</string>
-  <string name="toggle_timestamps">타임 스탬프 사용 미사용</string>
   <string name="mobile_info_extended">%1$s (%2$s) %3$s, 안드로이드 API %4$d, 버전 %5$s, %6$s에서 실행</string>
   <string name="built_by">개발자 %s</string>
   <string name="debug_build">디버그 빌드</string>

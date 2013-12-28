@@ -59,6 +59,8 @@
   <string name="title_cancel">Conferma l\'annullamento</string>
   <string name="cancel_connection_query">Disconnetti la VPN in uso/annulli il tentativo di connessione?</string>
   <string name="remove_vpn">Rimuovi VPN</string>
+  <string name="check_remote_tlscert">Controlla se il server utilizza un certificato con estensioni TLS (--remote-cert-tls server)</string>
+  <string name="check_remote_tlscert_title">Attesa di un certificato server TLS</string>
   <string name="remote_tlscn_check_summary">Controlla il soggetto DN del certificato del server remoto</string>
   <string name="remote_tlscn_check_title">Verifica il certificato dell\'Host</string>
   <string name="enter_tlscn_dialog">Specifica il controllo da effettuare per verificare il certificato DN remoto  (e.g. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nPer verifica specifica il DN o RDN completo (nell\'esempio openvpn.blinkt.de) oppure un prefisso RDN.\n\nQuando usi un prefisso RDN \"Server\" è valido per \"Server-1\" e \"Server-2\"\n\nLasciando la casella vuota verrà controllato l\'RDN con l\'hostname del server.\n\nPer maggiori informazioni consulta la manpage di OpenVPN 2.3.1+ sotto la voce  —verify-x509-name</string>
@@ -92,7 +94,6 @@
   <string name="tun_open_error">Impossibile accedere all\'interfaccia tun</string>
   <string name="error">"Errore:"</string>
   <string name="clear">Azzera</string>
-  <string name="info">Info</string>
   <string name="last_openvpn_tun_config">Apertura interfaccia tun in corso:</string>
   <string name="local_ip_info">Indirizzi locali - IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS Server: %1$s, Dominio: %2$s</string>
@@ -116,9 +117,11 @@
   <string name="faq_copying">Per copiare una singola voce del log, premi e mantieni sulla voce del log. Per copiare/inviare l\'intero log usa l\'opzione \"Manda log\".
 Usa il tasto hardware Menù se non è visibile nella GUI.</string>
   <string name="faq_shortcut">Scorciatoia per l\'avvio</string>
+  <string name="faq_howto_shortcut">È possibile inserire un collegamento per avviare OpenVPN dal desktop. A seconda del vostro launcher dovrete aggiungere un collegamento o un widget.</string>
   <string name="no_vpn_support_image">La tua immagine non è supportata dal VPNService API, mi dispiace :(</string>
   <string name="encryption">Crittografia</string>
   <string name="cipher_dialog_title">Inserire il metodo di crittografia</string>
+  <string name="chipher_dialog_message">Inserisci l\'algoritmo di cifratura cipher usato da OpenVPN. Lasciare vuoto per usare quello di default.</string>
   <string name="auth_dialog_message">Inserisci l\'algoritmo di cifratura digest usato da OpenVPN. Lascia bianco per usare quello di default.</string>
   <string name="settings_auth">Autenticazione/crittografia</string>
   <string name="file_explorer_tab">Esplora risorse</string>
@@ -164,7 +167,6 @@ Effettuata la lettura del file di configurazione</string>
   <string name="building_configration">Configurazione in corso…</string>
   <string name="netchange_summary">Selezionando questa opzione verrà forzata una riconnessione se lo stato della rete cambia (da WIFI a cellulare e viceversa)</string>
   <string name="netchange">Riconnetti in caso cambi la rete</string>
-  <string name="cert_from_keystore">Ottenuto il certificato \'%s\' dal Keystore</string>
   <string name="netstatus">Stato della rete: %s</string>
   <string name="extracahint">Il certificato della CA è solitamente prelevato dal Keystore di Android. Indica un certificato differente se si generano errori di verifica del certificato.</string>
   <string name="select_file">Selezionare</string>
@@ -182,6 +184,7 @@ Effettuata la lettura del file di configurazione</string>
   <string name="obscure">Impostazioni avanzate di OpenVPN. Normalmente non necessarie.</string>
   <string name="advanced">Avanzate</string>
   <string name="export_config_title">Configurazione OpenVPN ICS</string>
+  <string name="warn_no_dns">Nessun server DNS verrà utilizzato. La risoluzione dei nomi potrebbe non funzionare. Provare a impostare i server DNS personalizzati. Si prega di notare, che Android utilizzerà le impostazioni del proxy specificate per la connessione Wi-Fi, quando non viene impostato alcun server DNS.</string>
   <string name="dns_add_error">Impossibile aggiungere il server DNS \"%1$s\", respinto dal sistema: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Ottieni una configurazione funzionante (testata sul tuo computer o fornita dal tuo provider o dalla tua ditta).&lt;/p&gt;&lt;p&gt;Se si tratta di un singolo file senza ulteriori file tipo pem/pkcs12, puoi spedire il file a te stesso via email ed aprire l\'allegato. Se hai più file, salvali sulla scheda SD.&lt;/p&gt;&lt;p&gt;Clicca sull\'allegato dell\'email oppure utilizza l\'icona della cartella nell\'elenco delle VPN per importare il file di configurazione.&lt;/p&gt;&lt;p&gt;Se compaiono degli errori relativi a file non trovati, copia i file mancanti sulla tua scheda SD.&lt;/p&gt;&lt;p&gt;Clicca sull\'icona di salvataggio per aggiungere la VPN importata nell\'elenco delle tue VPN.&lt;/p&gt;&lt;p&gt;Connettiti alla VPN cliccando sul nome della VPN.&lt;/p&gt;&lt;p&gt;Se compaiono degli errori o degli avvertimenti nei log, si consiglia di non ignorarli, ma di cercare delle soluzioni.&lt;/p&gt; </string>
   <string name="faq_howto_title">Guida rapida</string>
@@ -247,7 +250,6 @@ Effettuata la lettura del file di configurazione</string>
   <string name="encryption_cipher">Algoritmo di crittografia</string>
   <string name="packet_auth">Autenticazione pacchetti</string>
   <string name="auth_dialog_title">Seleziona il metodo di autenticazione dei pacchetti</string>
-  <string name="toggle_timestamps">Mostra/Nascondi ora</string>
   <string name="mobile_info_extended">In esecuzione su %1$s (%2$s) %3$s, Android API %4$d, versione %5$s, %6$s</string>
   <string name="built_by">compilato da %s</string>
   <string name="debug_build">versione di debug</string>
@@ -267,4 +269,16 @@ Effettuata la lettura del file di configurazione</string>
   <string name="no_external_app_allowed">Nessuna app ha il permesso di usare l\'API esterna</string>
   <string name="allowed_apps">Apps abilitate;%s</string>
   <string name="clearappsdialog">Cancellare la lista delle apps esterne autorizzate?\nLista corrente di applicazioni autorizzate:\n\n%s</string>
+  <string name="save_password">Salva la Password</string>
+  <string name="pauseVPN">Pausa della VPN</string>
+  <string name="resumevpn">Ricollega la VPN</string>
+  <string name="allow_vpn_changes">Abilita modifiche ai profili VPN</string>
+  <string name="thanks_for_donation">Grazie per la donazione di %s!</string>
+  <string name="show_password">Mostra password</string>
+  <string name="timestamp_short">Breve</string>
+  <string name="timestamp_iso">ISO</string>
+  <string name="timestamps_none">Nulla</string>
+  <string name="uploaded_data">Upload</string>
+  <string name="downloaded_data">Download</string>
+  <string name="vpn_status">Stato VPN</string>
 </resources>

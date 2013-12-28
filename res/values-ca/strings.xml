@@ -53,7 +53,6 @@
   <string name="edit_vpn">Edita la configuració VPN</string>
   <string name="error">"Error: "</string>
   <string name="clear">Neteja</string>
-  <string name="info">info</string>
   <string name="routes_info">Rutes: %s</string>
   <string name="routes_info6">Rutes IPv6: %s</string>
   <string name="send_logfile">Envia el fitxer de registre</string>

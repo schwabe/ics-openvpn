@@ -94,7 +94,6 @@
   <string name="tun_open_error">No se puede abrir interfaz tun</string>
   <string name="error">"Error: "</string>
   <string name="clear">Limpiar</string>
-  <string name="info">información</string>
   <string name="last_openvpn_tun_config">Abriendo interfaz tun:</string>
   <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">Servidor DNS : %1$s, Dominio: %2$s</string>
@@ -168,7 +167,6 @@
   <string name="building_configration">Construyendo configuracion…</string>
   <string name="netchange_summary">Turning this option on will force a reconnect if the network state is changed (e.g. WiFi to/from mobile)</string>
   <string name="netchange">Reconectar en cambio de red</string>
-  <string name="cert_from_keystore">Conseguido el certificado de \'%s\' de almacén de claves</string>
   <string name="netstatus">Estado de la red: %s</string>
   <string name="extracahint">El certificado de la CA usualmente es recuperado del almacén de claves de Android. Especifique un certificado diferente si obtiene errores de verificación de certificado.</string>
   <string name="select_file">Seleccionar</string>
@@ -255,7 +253,6 @@
   <string name="encryption_cipher">Algoritmo de encriptación</string>
   <string name="packet_auth">Autenticación de paquetes</string>
   <string name="auth_dialog_title">Introduzca método de autenticación de paquetes</string>
-  <string name="toggle_timestamps">Alternar formato de fecha</string>
   <string name="mobile_info_extended">Corriendo sobre %1$s (%2$s) %3$s, API Android %4$d, versión %5$s, %6$s</string>
   <string name="built_by">compilado por %s</string>
   <string name="debug_build">versión de depuración</string>

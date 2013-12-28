@@ -86,7 +86,6 @@
   <string name="tun_open_error">Nie można otworzyć interfejsu tun</string>
   <string name="error">"Błąd:"</string>
   <string name="clear">Czyść</string>
-  <string name="info">Informacje</string>
   <string name="last_openvpn_tun_config">Otwieram interfejs tun:</string>
   <string name="local_ip_info">Lokalne IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">Serwer DNS: %1$s, Domena: %2$s</string>
@@ -143,7 +142,6 @@
   <string name="building_configration">Tworzenie konfiguracji...</string>
   <string name="netchange_summary">Włączenie tej opcji spowoduje ponowne połączenie jeśli stan sieci się zmienił (np. z WiFi na GSM)</string>
   <string name="netchange">Połącz ponownie przy zmianie sieci</string>
-  <string name="cert_from_keystore">Uzyskano certyfikat \'%s\' z bazy kluczy</string>
   <string name="netstatus">Status sieci: %s</string>
   <string name="select_file">Wybierz</string>
   <string name="show_log_window">Pokaż okno loga</string>

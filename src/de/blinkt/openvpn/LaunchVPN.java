@@ -248,7 +248,7 @@ public class LaunchVPN extends Activity {
 
 
 		if (intent != null) {
-			VpnStatus.updateStateString("USER_VPN_PERMISSION", "", R.string.state_user_vpn_password,
+			VpnStatus.updateStateString("USER_VPN_PERMISSION", "", R.string.state_user_vpn_permission,
                     ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
 			// Start the query
 			try {

@@ -1,5 +1,6 @@
 package de.blinkt.openvpn.fragments;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -13,6 +14,7 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
+import android.security.KeyChainException;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,10 +89,10 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
                     X509Certificate cert = KeyChain.getCertificateChain(getActivity(), mProfile.mAlias)[0];
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                            String algorithm=  KeyChain.getPrivateKey(getActivity(),mProfile.mAlias).getAlgorithm();
-                            if (KeyChain.isBoundKeyAlgorithm(algorithm))
+                        {
+                            if (isInHardwareKeystore())
                                 certstr+=getString(R.string.hwkeychain);
-
+                        }
                     }
 
                     certstr+=X509Utils.getCertificateFriendlyName(cert);
@@ -111,7 +113,13 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
         }.start();
     }
 
-	@Override
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    private boolean isInHardwareKeystore() throws KeyChainException, InterruptedException {
+        String algorithm = KeyChain.getPrivateKey(getActivity(), mProfile.mAlias).getAlgorithm();
+        return KeyChain.isBoundKeyAlgorithm(algorithm);
+    }
+
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 

@@ -16,6 +16,7 @@
             android:text="@string/speed_waiting"
             android:singleLine="true"
             android:id="@+id/speed"
+            tools:ignore="InconsistentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

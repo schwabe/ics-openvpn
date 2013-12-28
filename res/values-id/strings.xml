@@ -94,7 +94,6 @@
   <string name="tun_open_error">Gagal membuka layanan antarmuka TUN</string>
   <string name="error">"Kesalahan: "</string>
   <string name="clear">Bersihkan</string>
-  <string name="info">Info</string>
   <string name="last_openvpn_tun_config">Membuka interface tun :</string>
   <string name="local_ip_info">IPv4 lokal : %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS Server: %1$s, Domain: %2$s</string>
@@ -168,7 +167,6 @@
   <string name="building_configration">Membuat konfigurasi…</string>
   <string name="netchange_summary">Menyalakan pilihan ini akan memaksa menyambung kembali jika keadaan jaringan berubah (misalnya WiFi dari mobile)</string>
   <string name="netchange">Koneksi ulang saat ganti jaringan</string>
-  <string name="cert_from_keystore">Sertifikat didapatkan \'%s\' dari Keystore</string>
   <string name="netstatus">Status jaringan: %s</string>
   <string name="extracahint">Sertifikat CA biasanya kembali dari Android Keystore. Tentukan sertifikat terpisah jika Anda mendapatkan kesalahan verifikasi sertifikat.</string>
   <string name="select_file">Pilih</string>
@@ -254,7 +252,6 @@
   <string name="encryption_cipher">Enkripsi sandi</string>
   <string name="packet_auth">Otentikasi paket</string>
   <string name="auth_dialog_title">Masukkan metode otentikasi paket</string>
-  <string name="toggle_timestamps">Toggle cap waktu</string>
   <string name="mobile_info_extended">Berjalan pada Android API %4$d, versi %5$s %1$s (%2$s) %3$s, %6$s</string>
   <string name="built_by">dibangun oleh %s</string>
   <string name="debug_build">Pengembangan debug</string>

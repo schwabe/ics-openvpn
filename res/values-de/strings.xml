@@ -42,7 +42,7 @@
   <string name="no_keystore_cert_selected">Kein Benutzerzertifikat ausgewählt</string>
   <string name="no_error_found">Kein Fehler.</string>
   <string name="config_error_found">Fehler in der Konfiguration</string>
-  <string name="ipv4_format_error">Kann die die IPv4 Adresse nicht parsen</string>
+  <string name="ipv4_format_error">Kann die IPv4 Adresse nicht parsen</string>
   <string name="custom_route_format_error">Kann die manuell angegeben Routen nicht parsen</string>
   <string name="pw_query_hint">(Leer lassen um nicht zu speichern)</string>
   <string name="vpn_shortcut">OpenVPN Verknüpfung</string>
@@ -63,7 +63,7 @@
   <string name="check_remote_tlscert_title">TLS-Serverzertifikat erwarten</string>
   <string name="remote_tlscn_check_summary">Server Zertifikatssubjekt überprüfen</string>
   <string name="remote_tlscn_check_title">Zertifikat Namen überprüfen</string>
-  <string name="enter_tlscn_dialog">Spezifizieren Sie die Methode mit der der DN des Serverzertifikates (z. B. C=DE, L=Paderborn, OU=Avian IP-Carrier, CN=openvpn.blinkt.de) überprüft wird.\n\nSie können den vollständigen DN oder den RDN (openvpn.blinkt.de im Beispiel) oder ein RDN-Präfix angeben.\n\nDer RDN Präfix \"Server\" erlaubt z.B. \"Server-1\" und \"Server-2\" \n\nWenn Sie das Eingabefeld leer lassen, wird der RDN gegen den Servernamen geprüft.\n\n Für weitere Details sehen Sie die Manpage von OpenVPN 2.3.1+  unter  —verify-x509-name</string>
+  <string name="enter_tlscn_dialog">Spezifizieren Sie die Methode mit welcher der DN des Serverzertifikates (z. B. C=DE, L=Paderborn, OU=Avian IP-Carrier, CN=openvpn.blinkt.de) überprüft wird.\n\nSie können den vollständigen DN oder den RDN (openvpn.blinkt.de im Beispiel) oder ein RDN-Präfix angeben.\n\nDer RDN Präfix \"Server\" erlaubt z.B. \"Server-1\" und \"Server-2\" \n\nWenn Sie das Eingabefeld leer lassen, wird der RDN gegen den Servernamen geprüft.\n\n Für weitere Details sehen Sie die Manpage von OpenVPN 2.3.1+  unter  —verify-x509-name</string>
   <string name="enter_tlscn_title">Serverzertifikat Subject</string>
   <string name="tls_key_auth">Benutzte TLS Schlüssel Authentifizierung</string>
   <string name="tls_auth_file">TLS Auth Datei</string>
@@ -94,7 +94,6 @@
   <string name="tun_open_error">Das Öffnen des tun Interfaces ist katastrophal gescheitert</string>
   <string name="error">"Fehler: "</string>
   <string name="clear">Clear</string>
-  <string name="info">Info</string>
   <string name="last_openvpn_tun_config">Öffne tun Netzwerkinterface:</string>
   <string name="local_ip_info">Lokale IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS-Server: %1$s, Domäne: %2$s</string>
@@ -143,7 +142,7 @@
   <string name="no_bind">Kein lokales Binden</string>
   <string name="import_configuration_file">Importiere Konfigurationsdatei</string>
   <string name="faq_security_title">Bemerkungen zur Sicherheit</string>
-  <string name="faq_security">Da OpenVPN sicherheitsrelevant sein sein sind einige Worte zur Sicherheit der Anwendung angebracht. Alle Daten, die sich auf der SD Karte befinden sind als absolut unsicher anzusehen. Jede Anwendung kann diese lesen. (Diese Anwendung braucht zum Beispiel keine SD Karten Berechtigung). Die restlichen Konfiguration dieser Anwendung kann nur von der Anwendung selbst gelesen werden. Wenn die Option genutzt wird, dass die Zertifikate und Schlüssel eingebettet werden, werden diese im VPN Profil gespeichert. Die VPN Profile sind nur von der Anwendung selbst lesbar. (Vergessen Sie nicht die ursprünglichen Zertifikate/Schlüssel von der SD Karte zu löschen). Die Daten die Anwendung selbst speichert sind unverschlüsselt. Es besteht die Möglichkeit diese mittels \"rooten\" des Telefons/Tablets oder anderen Schwachstellend diese Daten auszulesen. Gespeicherte Passwörter werden auch im Klartext gespeichert. Es wird dringend empfohlen die Zertifikate in dem Android Keystore zu speichern.\"</string>
+  <string name="faq_security">Da OpenVPN sicherheitsrelevant ist, sind einige Worte zur Sicherheit der Anwendung angebracht. Alle Daten, die sich auf der SD Karte befinden sind als absolut unsicher anzusehen. Jede Anwendung kann diese lesen. (Diese Anwendung braucht zum Beispiel keine SD Karten Berechtigung). Die restlichen Konfiguration dieser Anwendung kann nur von der Anwendung selbst gelesen werden. Wenn die Option genutzt wird, dass die Zertifikate und Schlüssel eingebettet werden, werden diese im VPN Profil gespeichert. Die VPN Profile sind nur von der Anwendung selbst lesbar. (Vergessen Sie nicht die ursprünglichen Zertifikate/Schlüssel von der SD Karte zu löschen). Die Daten die Anwendung selbst speichert sind unverschlüsselt. Es besteht die Möglichkeit diese mittels \"rooten\" des Telefons/Tablets oder anderen Schwachstellend diese Daten auszulesen. Gespeicherte Passwörter werden auch im Klartext gespeichert. Es wird dringend empfohlen die Zertifikate in dem Android Keystore zu speichern.\"</string>
   <string name="import_vpn">Importieren</string>
   <string name="broken_image_cert_title">Fehler beim Anzeigen des Zertifikatsauswahlbildschirmes</string>
   <string name="broken_image_cert">Android hat einen Fehler beim  Anzeigen des Zertifikat Dialog gemeldet. Dies sollte nie passieren, da dies ein Standard Feature von Android 4.0+ ist. Eventuell ist Unterstützung von Zertifikaten in Ihrer Firmware fehlerhaft</string>
@@ -168,7 +167,6 @@
   <string name="building_configration">Generiere OpenVPN Konfiguration…</string>
   <string name="netchange_summary">Aktivieren dieser Option zwingt OpenVPN dazu, beim Wechsel des Netzwerkes (WLAN zu Mobilfunk und umgekehrt), neu zu verbinden</string>
   <string name="netchange">Netzwerkänderungen beachten</string>
-  <string name="cert_from_keystore">Zertifikat (KeyStore): \'%s\' </string>
   <string name="netstatus">Netzwerkstatus: %s</string>
   <string name="extracahint">Das CA Zertifikat wird meist aus dem Zertifikatsspeicher automatisch ausgewählt. Sollte dies nicht funktionieren und Sie Verifizierungsprobleme erhalten(self signed certificate), wählen Sie manuell ein Zertifikat aus.</string>
   <string name="select_file">Auswählen</string>
@@ -255,7 +253,6 @@
   <string name="encryption_cipher">Verschlüsslungsalgorithmus</string>
   <string name="packet_auth">Packetauthentifizierung</string>
   <string name="auth_dialog_title">Geben Sie den Authentifizierungsalgorithmus an</string>
-  <string name="toggle_timestamps">Zeitstempel</string>
   <string name="mobile_info_extended">Modell %1$s (%2$s) %3$s, Android API %4$d, version %5$s, %6$s</string>
   <string name="built_by">compiliert von %s</string>
   <string name="debug_build">Testversion</string>
@@ -306,4 +303,8 @@
   <string name="uploaded_data">Hochgeladen</string>
   <string name="downloaded_data">Heruntergeladen</string>
   <string name="vpn_status">VPN-Status</string>
+  <string name="logview_options">Ansichtsoptionen</string>
+  <string name="unhandled_exception">Unbehandelte Ausnahme: %1$s\n\n%2$s</string>
+  <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
+  <string name="full_licenses">Komplette Lizenzen</string>
 </resources>

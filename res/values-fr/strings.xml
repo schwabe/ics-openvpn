@@ -59,12 +59,8 @@
   <string name="title_cancel">"Annuler la confirmation"</string>
   <string name="cancel_connection_query">"Déconnecter le VPN connecté / annuler la tentative de connexion ?"</string>
   <string name="remove_vpn">"Retirer le VPN"</string>
-  <string name="check_remote_tlscert">Vérifie si le serveur utilise un certificat avec des extensions de serveur TLS (- serveur distant-cert-tls)</string>
   <string name="check_remote_tlscert_title">Attendre un certificat de serveur TLS</string>
-  <string name="remote_tlscn_check_summary">Vérifie l\'objet du certificat serveur distant DN</string>
   <string name="remote_tlscn_check_title">"Vérification du certificat de l\'hôte"</string>
-  <string name="enter_tlscn_dialog">Spécifiez le contrôle utilisé pour vérifier le certificat à distance DN (par exemple, C = DE, L = Paderborn, OU = aviaire transporteurs IP, CN = openvpn.blinkt.de) \ n \ nIndiquez le DN complet ou le RDN (openvpn.blinkt.de dans l\'exemple) ou un préfixe RDN pour vérification. \ n \ nEn utilisant préfixe RDN  «Serveur» correspond à «Serveur-1\" et \"serveur 2\" \ n \ nCommencer avec le champ de texte vide vérifiera le RDN avec le nom du serveur. \ n \ nPour plus de détails, voir la page du manuel OpenVPN 2.3.1 - vérifier le nom -x509</string>
-  <string name="enter_tlscn_title">Objet du certificat distant</string>
   <string name="tls_key_auth">"Activer l\'authentification par clé TLS"</string>
   <string name="tls_auth_file">"Fichier d\'authentification TLS"</string>
   <string name="pull_on_summary">"Demande les adresses IP, les règles de redirection et les options de synchronisation du serveur."</string>
@@ -94,7 +90,6 @@
   <string name="tun_open_error">"L\'ouverture de l\'interface Tun a échoué."</string>
   <string name="error">"Erreur: "</string>
   <string name="clear">"Effacer"</string>
-  <string name="info">"infos"</string>
   <string name="last_openvpn_tun_config">Ouverture de l\'interface tun:</string>
   <string name="local_ip_info">"IPv4 locale: %1$s/%2$d IPv6: %3$s MTU: %4$d"</string>
   <string name="dns_server_info">Serveur DNS: %1$s, Domaine: %2$s</string>
@@ -121,7 +116,6 @@
   <string name="no_vpn_support_image">"Votre ROM ne prend pas en charge l\'API VPNService, désolé :("</string>
   <string name="encryption">"Cryptage"</string>
   <string name="cipher_dialog_title">"Entrez la méthode de cryptage"</string>
-  <string name="chipher_dialog_message">Entrer l\'algorithme de chiffrement utilisé par OpenVPN. Laisser vide pour utiliser l\'algorithme par défaut.</string>
   <string name="auth_dialog_message">Entrer le digest à utiliser par OpenVPN pour l\'authentification. Laisser vide pour utiliser l\'algorithme par défaut.</string>
   <string name="settings_auth">"Authentification / Cryptage"</string>
   <string name="file_explorer_tab">"Explorateur de fichiers"</string>
@@ -168,7 +162,6 @@
   <string name="building_configration">"Création de la configuration…"</string>
   <string name="netchange_summary">"L\'activation de cette option forcera l\'appareil à se reconnecter si l\'état du réseau change (ex.: WIFI/Mobile)"</string>
   <string name="netchange">"Reconnexion lors de changement du réseau"</string>
-  <string name="cert_from_keystore">"Certificat \'%s\' obtenu"</string>
   <string name="netstatus">"État du réseau: %s"</string>
   <string name="extracahint">"Le certificat CA est généralement renvoyé par le gestionnaire de clés Android. Spécifiez un certificat distinct si vous obtenez des erreurs de vérification de certificat."</string>
   <string name="select_file">"Sélectionner"</string>
@@ -189,7 +182,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="export_config_title">"Configuration ICS OpenVPN "</string>
   <string name="warn_no_dns">Aucun serveur DNS utilisé. La résolution de noms de domaines peut ne pas fonctionner. Envisager d\'ajouter des serveurs DNS personnalisés. Veuillez également noter que Android va continuer à utiliser vos paramètres de proxy spécifiés pour votre connexion Wi-Fi/mobile lorsque aucun serveur DNS n\'est défini.</string>
   <string name="dns_add_error">"Impossible d\'ajouter le serveur DNS \"%1$s\", rejetés par le système: %2$s"</string>
-  <string name="ip_add_error">Impossible de configurer l\'adresse IP \"%1$s\", rejetée par le système:%2$s</string>
   <string name="faq_howto">"&lt;p&gt;Obtenez une configuration fonctionnelle (testé sur un ordinateur ou téléchargé depuis le site de votre fournisseur/entreprise)&lt;/p&gt;&lt;p&gt;S\'il s\'agit d\'un seul fichier avec aucun fichier Pem/Pks12 supplémentaire, vous pouvez vous envoyer celui par mail et l\'ouvrir directement. Si vous avez plusieurs fichiers de configuration, mettez les sur votre carte SD.&lt;/p&gt;&lt;p&gt;Cliquez sur la pièce jointe de votre e-mail / Utilisez l\'icône du dossier dans la liste des VPN pour importer le fichier de configuration.&lt;/p&gt;&lt;p&gt;Si des erreurs concernant des fichiers manquants apparaissent, veuillez mettre les fichiers manquant sur la carte SD.&lt;/p&gt;&lt;p&gt;Cliquez sur l\'icône \"enregistrer\" pour ajouter le profil VPN importé à la liste.&lt;/p&gt;&lt;p&gt;Connectez le VPN en cliquant sur son nom dans cette liste.&lt;/p&gt;&lt;p&gt;Si vous rencontrez des erreurs ou des avertissements, veuillez lire ce qu\'il y a d\'écrit dans le log pour les corriger.&lt;/p&gt; "</string>
   <string name="faq_howto_title">"Démarrage rapide"</string>
   <string name="setting_loadtun_summary">"Essayez de charger le module du noyau \"tun.ko\" avant d\'essayer de vous connecter. Requiert des droits root."</string>
@@ -214,12 +206,12 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="vpn_import_hint">"Utilisez l\'icône &lt;img src=\"ic_menu_archive\"/&gt; pour importer un fichier profil (.opvpn ou  .conf) de votre carte SD."</string>
   <string name="faq_hint">"Veillez également à consulter la FAQ. Il s\'y trouve un guide de démarrage rapide."</string>
   <string name="faq_routing_title">"Redirections / Configuration de l\'interface"</string>
-  <string name="faq_routing">Le routage et la configuration de l\'interface ne se fait pas via la commande habituelle ifconfig / route, mais en utilisant l\'API VPNService. Il en résulte une configuration de routage différente de celle utilisée par d\'autres systèmes d\'exploitation. La configuration se compose uniquement de l\'adresse IP de l\'interface du tunnel et les réseaux qui doivent être acheminés sur cette interface. Surtout pas d\'adresse nécessaire de partenaire ou d\'adresse de passerelle. Des Itinéraires spéciaux pour atteindre le serveur VPN (par exemple ajoutés lors de l\'utilisation rediriger passerelle) ne sont pas nécessaires non plus. Par conséquent, l\'application va ignorer ces paramètres lors de l\'importation d\'une configuration. Le soft assure avec l\'API VPNService que la connexion au serveur n\'est pas acheminé à travers le tunnel VPN. Seuls les réseaux spécifiés seront acheminés via le tunnel, les rouitages supplémentaires qui ne pointent pas vers le tunnel ne seront pas pris en charge. (Par exemple route xxxx yyyy net_gateway). Les fenêtres du journal montrent la configuration actuelle du VPNService durant l\'établissement d\'une connexion.</string>
   <string name="persisttun_summary">Ne pas couper la connexion VPN lors de la reconnexion d\'OpenVPN.</string>
   <string name="persistent_tun_title">Persistance de l\'interface TUN</string>
   <string name="openvpn_log">Log OpenVPN</string>
   <string name="import_config">"Importer une configuration OpenVPN"</string>
   <string name="battery_consumption_title">"Consommation de la batterie"</string>
+  <string name="baterry_consumption">In my personal tests the main reason for high battery consumption of OpenVPN are the keepalive packets. Most OpenVPN servers have a configuration directive like \'keepalive 10 60\' which causes the client and server to exchange keepalive packets every ten seconds. &lt;p&gt; While these packets are small and do not use much traffic, they keep the mobile radio network busy and increase the energy consumption. (See also &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; This keepalive setting cannot be changed on the client. Only the system administrator of the OpenVPN can change the setting. &lt;p&gt; Unfortunately using a keepalive larger than 60 seconds with UDP can cause some NAT gateways to drop the connection due to an inactivity timeout. Using TCP with a long keepalive timeout works, but tunneling TCP over TCP performs extremely poorly on connections with high packet loss. (See &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
   <string name="faq_tethering">La fonctionnalité de Tethering Android (sur WiFi, USB ou Bluetooth) et l\'API VPNService (utilisé par ce programme) ne fonctionnent pas ensemble. Pour plus de détails, voir la &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\" &gt; page #34 &lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN et Tethering</string>
   <string name="connection_retries">"Tentatives de connexion"</string>
@@ -255,13 +247,11 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="encryption_cipher">Chiffrement de cryptage</string>
   <string name="packet_auth">Authentification des paquets</string>
   <string name="auth_dialog_title">Méthode d\'authentification des paquets</string>
-  <string name="toggle_timestamps">Activer/désactiver les horodateurs</string>
   <string name="mobile_info_extended">Environnement: %1$s (%2$s) %3$s, Android API %4$d, version %5$s, %6$s</string>
   <string name="built_by">compilé par %s</string>
   <string name="debug_build">version de debug</string>
   <string name="official_build">version officielle</string>
   <string name="make_selection_inline">Copier dans le profil</string>
-  <string name="crashdump">Vidage sur incident</string>
   <string name="add">Ajouter</string>
   <string name="send_config">Envoyer le fichier de config</string>
   <string name="complete_dn">DN complet</string>
@@ -271,37 +261,15 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="tls_remote_deprecated">tl-remote (OBSOLETE)</string>
   <string name="help_translate">Vous pouvez aider à traduire en visitant http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s essais de controler %2$s</string>
-  <string name="remote_warning">En continuant vous donnerez la permission à l\'application de contrôler complètement OpenVPN pour Android et d\'intercepter tout le trafic réseau. <b> N\'acceptez que si vous faite confiance à l\'application. </b> Sinon vous vous exposez au risque de voir vos données compromises par une application malicieuse</string>
   <string name="remote_trust">Faire confiance à cette application.</string>
   <string name="no_external_app_allowed">Aucune application n\'est autorisée à utiliser l\'API externe</string>
   <string name="allowed_apps">Applications autorisées: %s</string>
   <string name="clearappsdialog">Effacer la liste des appli. externes?\nListe des appli. autorisées:\n\n%s</string>
-  <string name="screenoff_summary">\"VPN en Pause lorsque l\'écran est éteint et moins de 64 ko données transférées dans 60 secondes. Lorsque l\'option « Persistance Tun \" est activée , mettre en pause le VPN laissera votre appareil sans connectivité réseau. Sans l\'option\" persistante Tun \" le dispositif n\'aura pas connexion/protection VPN .</string>
   <string name="screenoff_title">Mettre la connection VPN en pause à l\'exctinction de l\'écran</string>
-  <string name="screenoff_pause">Pause de connexion avec l\'écran éteint: moins de %1$s en %2$s</string>
-  <string name="screen_nopersistenttun">AVERTISSEMENT : \"Persistent tun\" n\'est pas activé pour ce VPN. Le trafic utilisera la connexion Internet normale lorsque l\'écran est éteint.</string>
   <string name="save_password">Enregistrer le mot de passe</string>
-  <string name="pauseVPN">Pause du VPN</string>
-  <string name="resumevpn">Reprendre VPN</string>
-  <string name="state_userpause">Pause VPN demandé par l\'utilisateur</string>
   <string name="state_screenoff">VPN en pause - écran eteint</string>
-  <string name="device_specific">Hacks spécificifiques de l\'appareil</string>
   <string name="cannotparsecert">Ne peut pas afficher les informations de certificat</string>
   <string name="appbehaviour">Comportement de l\'application</string>
   <string name="vpnbehaviour">Comportement du VPN</string>
   <string name="allow_vpn_changes">Autoriser les modifications des profils VPN</string>
-  <string name="hwkeychain">Magasin de stockage des clés:</string>
-  <string name="faq_vpndialog43_title">Confirmation du dialogue Vpn sur Android 4.3 et plus</string>
-  <string name="donatePlayStore">Sinon, vous pouvez m\'envoyer un don avec le Play Store:</string>
-  <string name="thanks_for_donation">Merci pour le don de %s !</string>
-  <string name="logCleared">Le journal est effacé.</string>
-  <string name="show_password">Affiche le mot de passe</string>
-  <string name="keyChainAccessError">Erreur d\'accès au trousseau de clé : %s</string>
-  <string name="timestamp_short">Court</string>
-  <string name="timestamp_iso">ISO</string>
-  <string name="timestamps">Horodateurs</string>
-  <string name="timestamps_none">Aucun</string>
-  <string name="uploaded_data">Envoyer</string>
-  <string name="downloaded_data">Télécharger</string>
-  <string name="vpn_status">Statut du VPN</string>
 </resources>

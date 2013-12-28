@@ -52,7 +52,6 @@
   <string name="edit_vpn">Rediger VPN-innstillinger</string>
   <string name="error">"Feil:"</string>
   <string name="clear">Fjern</string>
-  <string name="info">info</string>
   <string name="routes_info">Ruter: %s</string>
   <string name="version_info">%1$s %2$s</string>
   <string name="send_logfile">Send loggfilen</string>

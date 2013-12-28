@@ -154,7 +154,6 @@
   <string name="converted_profile_i">已导入配置文件 %d</string>
   <string name="broken_images">图像已损坏</string>
   <string name="broken_images_faq">&lt;p&gt;HTC 的官方固件存在问题，它无法将网络流量转发到隧道接口上（参见（英文网页）： &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; ）&lt;/p&gt;&lt;p&gt;SONY 的 Xperia arc S 机型和 Xperia Ray 机型的固件上没有包含完整的 Android VPN 服务，其他 Sony 手机的固件可能也存在此问题。（参见（英文网页）： &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt;）&lt;/p&gt;&lt;p&gt;在一些民间爱好者制作的固件上，可能缺少 /dev/tun 设备，或者 /dev/tun 的权限不正确。一些 CM9 固件需要设置 /dev/tun 的文件属主。.&lt;/p&gt;&lt;p&gt;重点是，如果你的固件存在问题，请向厂商或者固件制作者报告，如果报告问题的人足够多，就能引起厂商或者固件制作者的注意，他们就会去修复这些问题。&lt;/p&gt;</string>
-  <string name="error_empty_username">用户名不能为空。</string>
   <string name="pkcs12_file_encryption_key">PKCS12 文件加密密钥</string>
   <string name="private_key_password">私钥密码</string>
   <string name="password">密码</string>

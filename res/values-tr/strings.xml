@@ -95,11 +95,10 @@
   <string name="tun_open_error">Tun arayüzü açılamadı</string>
   <string name="error">"Hata:"</string>
   <string name="clear">Temizle</string>
-  <string name="info">bilgi</string>
   <string name="last_openvpn_tun_config">Açılış tun arabirimi:</string>
   <string name="local_ip_info">Yerel IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS sunucusu: %1$s, etki alanı: %2$s</string>
-  <string name="routes_info">Güzergah: %s</string>
+  <string name="routes_info">Güzergâh: %s</string>
   <string name="routes_info6">IPv6 yönlendirir: %s</string>
   <string name="ip_not_cidr">Arabirim bilgileri %1$s ve %2$s var, tabii ikinci eş adresi uzaktan adresidir. /32 Kullanarak için yerel IP ağ maskesi. OpenVPN tarafından verilen \"%3$s\" modudur.</string>
   <string name="route_not_cidr">%1$s ve %2$s olarak IP yolu ile CIDR ağ maskesi, ağ maskesi /32 kullanarak yapamazsınız.</string>
@@ -169,7 +168,6 @@
   <string name="building_configration">Yapılandırma binası ...</string>
   <string name="netchange_summary">Ağ durumu (örneğin WiFi üzerinden cep telefonlarına/cep) değiştirdiyseniz bu seçeneği açmak yeniden bağlantı zorlar</string>
   <string name="netchange">Ağ değişikliği üzerinde yeniden bağlan</string>
-  <string name="cert_from_keystore">\'%s\' sertifika deposu var</string>
   <string name="netstatus">Ağ Durumu: %s</string>
   <string name="extracahint">Sertifika yetkilisi sertifikası genellikle Android deposunun döndürülür. Sertifika doğrulama hataları alırsanız ayrı bir sertifika belirtin.</string>
   <string name="select_file">Seçin</string>
@@ -256,7 +254,6 @@
   <string name="encryption_cipher">Şifre şifresi</string>
   <string name="packet_auth">Paket kimlik doğrulama</string>
   <string name="auth_dialog_title">Paket kimlik doğrulama yöntemini girin</string>
-  <string name="toggle_timestamps">İki durumlu zaman damgaları</string>
   <string name="mobile_info_extended">Çalışan %1$s (%2$s) %3$s, Android API %4$d, sürüm %5$s, %6$s</string>
   <string name="built_by">%s tarafından inşa</string>
   <string name="debug_build">hata ayıklama yapı</string>

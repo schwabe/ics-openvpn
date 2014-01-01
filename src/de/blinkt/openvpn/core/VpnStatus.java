@@ -444,15 +444,26 @@ public class VpnStatus {
 	}
 
 	public synchronized static void updateStateString(String state, String msg, int resid, ConnectionStatus level) {
-		mLaststate= state;
+        // Workound for OpenVPN doing AUTH and wait and being connected
+        // Simply ignore these state
+        if (mLastLevel == ConnectionStatus.LEVEL_CONNECTED &&
+                (state.equals("WAIT") || state.equals("AUTH")))
+        {
+            newLogItem(new LogItem((LogLevel.DEBUG), String.format("Ignoring OpenVPN Status in CONNECTED state (%s->%s): %s",state,level.toString(),msg)));
+            return;
+        }
+
+        mLaststate= state;
 		mLaststatemsg = msg;
 		mLastStateresid = resid;
 		mLastLevel = level;
 
-		for (StateListener sl : stateListener) {
+
+
+        for (StateListener sl : stateListener) {
 			sl.updateState(state,msg,resid,level);
 		}
-        newLogItem(new LogItem((LogLevel.DEBUG), String.format("New OpenVPN Status (%s->%s): %s",state,level.toString(),msg)));
+        //newLogItem(new LogItem((LogLevel.DEBUG), String.format("New OpenVPN Status (%s->%s): %s",state,level.toString(),msg)));
 	}
 
 	public static void logInfo(String message) {

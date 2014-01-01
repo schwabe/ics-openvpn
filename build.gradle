@@ -62,7 +62,7 @@ android {
     }
 
     lintOptions {
-        disable 'MissingTranslation', 'Typos'
+        disable 'MissingTranslation'
         enable 'IconExpectedSize'
     }
 

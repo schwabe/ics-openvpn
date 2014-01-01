@@ -339,6 +339,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 	private void processState(String argument) {
 		String[] args = argument.split(",",3);
 		String currentstate = args[1];
+
 		if(args[2].equals(",,"))
 			VpnStatus.updateStateString(currentstate, "");
 		else

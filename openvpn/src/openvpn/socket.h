@@ -78,13 +78,13 @@ struct openvpn_sockaddr
 };
 
 /* struct to hold preresolved host names */
-struct preresovled_host {
+struct cached_dns_entry {
     const char *hostname;
     const char *servname;
     int ai_family;
     int flags;
     struct addrinfo *ai;
-    struct preresovled_host *next;
+    struct cached_dns_entry *next;
 };
 
 /* actual address of remote, based on source address of received packets */
@@ -198,7 +198,7 @@ struct link_socket
   const char *remote_port;
   const char *local_host;
   const char *local_port;
-  struct preresovled_host *preresolved;
+  struct cached_dns_entry *dns_cache;
   bool bind_local;
 
 # define INETD_NONE   0
@@ -319,7 +319,7 @@ link_socket_init_phase1 (struct link_socket *sock,
 			 const char *local_port,
 			 const char *remote_host,
 			 const char *remote_port,
-			 struct preresovled_host *preresolved,
+			 struct cached_dns_entry *dns_cache,
 			 int proto,
 			 sa_family_t af,
 			 bool bind_ipv6_only,
@@ -528,7 +528,7 @@ bool unix_socket_get_peer_uid_gid (const socket_descriptor_t sd, int *uid, int *
 #define GETADDR_PASSIVE               (1<<10)
 #define GETADDR_DATAGRAM              (1<<11)
 
-#define GETADDR_PRERESOLVE_MASK		GETADDR_DATAGRAM|GETADDR_PASSIVE
+#define GETADDR_CACHE_MASK		GETADDR_DATAGRAM|GETADDR_PASSIVE
 
 in_addr_t getaddr (unsigned int flags,
 		   const char *hostname,

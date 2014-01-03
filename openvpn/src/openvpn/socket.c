@@ -130,20 +130,20 @@ streqnull (const char* a, const char* b)
 }
 
 static int
-get_preresolved_host (struct preresovled_host* preresolved,
+get_cached_dns_entry (struct cached_dns_entry* dns_cache,
 		      const char* hostname,
 		      const char* servname,
 		      int ai_family,
 		      int resolve_flags,
 		      struct addrinfo **ai)
 {
-  struct preresovled_host *ph;
+  struct cached_dns_entry *ph;
   int flags;
 
   /* Only use flags that are relevant for the structure */
-  flags = resolve_flags & GETADDR_PRERESOLVE_MASK;
+  flags = resolve_flags & GETADDR_CACHE_MASK;
 
-  for (ph = preresolved; ph ; ph = ph->next)
+  for (ph = dns_cache; ph ; ph = ph->next)
     {
       if (streqnull (ph->hostname, hostname) &&
 	  streqnull (ph->servname, servname) &&
@@ -166,7 +166,7 @@ do_preresolve_host (struct context *c,
 		    const int flags)
 {
   struct addrinfo *ai;
-  if (get_preresolved_host(c->c1.preresolved,
+  if (get_cached_dns_entry(c->c1.dns_cache,
 			   hostname,
 			     servname,
 			     af,
@@ -179,19 +179,19 @@ do_preresolve_host (struct context *c,
 				    af, &ai);
       if (status == 0)
 	{
-	  struct preresovled_host *ph;
+	  struct cached_dns_entry *ph;
 
-	  ALLOC_OBJ_CLEAR_GC (ph, struct preresovled_host, &c->gc);
+	  ALLOC_OBJ_CLEAR_GC (ph, struct cached_dns_entry, &c->gc);
 	  ph->ai = ai;
 	  ph->hostname = hostname;
 	  ph->servname = servname;
-	  ph->flags = flags & GETADDR_PRERESOLVE_MASK;
+	  ph->flags = flags & GETADDR_CACHE_MASK;
 
-	  if (!c->c1.preresolved)
-	    c->c1.preresolved = ph;
+	  if (!c->c1.dns_cache)
+	    c->c1.dns_cache = ph;
 	  else
 	    {
-	      struct preresovled_host *prev = c->c1.preresolved;
+	      struct cached_dns_entry *prev = c->c1.dns_cache;
 	      while (prev->next)
 		prev = prev->next;
 	      prev->next = ph;
@@ -204,13 +204,13 @@ do_preresolve_host (struct context *c,
     }
   else
     {
-      /* already in preresolved list, return success */
+      /* already in cached dns list, return success */
       return 0;
     }
 }
 
 void
-do_preresolve(struct context *c)
+do_preresolve (struct context *c)
 {
   int i;
   struct connection_list *l = c->options.connection_list;
@@ -220,67 +220,69 @@ do_preresolve(struct context *c)
     GETADDR_FATAL;
 
 
-  for (i = 0; i < l->len; ++i) {
-    int status;
-    const char *remote;
-    int flags = preresolve_flags;
+  for (i = 0; i < l->len; ++i)
+    {
+      int status;
+      const char *remote;
+      int flags = preresolve_flags;
 
-    struct connection_entry* ce = c->options.connection_list->array[i];
+      struct connection_entry* ce = c->options.connection_list->array[i];
 
-    if (proto_is_dgram(ce->proto))
-      flags |= GETADDR_DATAGRAM;
+      if (proto_is_dgram(ce->proto))
+	  flags |= GETADDR_DATAGRAM;
 
-    if (c->options.sockflags & SF_HOST_RANDOMIZE)
-      flags |= GETADDR_RANDOMIZE;
+      if (c->options.sockflags & SF_HOST_RANDOMIZE)
+	  flags |= GETADDR_RANDOMIZE;
 
-    if (c->options.ip_remote_hint)
-      remote = c->options.ip_remote_hint;
-    else
-      remote = ce->remote;
+      if (c->options.ip_remote_hint)
+	  remote = c->options.ip_remote_hint;
+      else
+	  remote = ce->remote;
 
-    /* HTTP remote hostname does not need to be resolved */
-    if (! ce->http_proxy_options)
-      {
-	status = do_preresolve_host (c, remote, ce->remote_port, ce->af, flags);
-	if (status != 0)
-	  goto err;
-      }
+      /* HTTP remote hostname does not need to be resolved */
+      if (! ce->http_proxy_options)
+	{
+	  status = do_preresolve_host (c, remote, ce->remote_port, ce->af, flags);
+	  if (status != 0)
+	      goto err;
+	}
 
-    flags |= GETADDR_PASSIVE;
+      /* Preresolve proxy */
+      if (ce->http_proxy_options)
+	{
+	  status = do_preresolve_host (c,
+				       ce->http_proxy_options->server,
+				       ce->http_proxy_options->port,
+				       ce->af,
+				       preresolve_flags);
 
-    if (ce->bind_local)
-      {
-	status = do_preresolve_host (c, ce->local, ce->local_port, ce->af, flags);
-	if (status != 0)
-	  goto err;
+	  if (status != 0)
+	      goto err;
+	}
 
-      }
-    /* Preresolve proxy */
-    if (ce->http_proxy_options)
-      {
-	status = do_preresolve_host(c,
-				    ce->http_proxy_options->server,
-				    ce->http_proxy_options->port,
-				    ce->af,
-				    preresolve_flags);
+      if (ce->socks_proxy_server)
+	{
+	  status = do_preresolve_host (c,
+				       ce->socks_proxy_server,
+				       ce->socks_proxy_port,
+				       ce->af,
+				       flags);
+	  if (status != 0)
+	      goto err;
+	}
 
-	if (status != 0)
-	  goto err;
-      }
+      if (ce->bind_local)
+	{
+	  flags |= GETADDR_PASSIVE;
+	  flags &= ~GETADDR_RANDOMIZE;
+	  status = do_preresolve_host (c, ce->local, ce->local_port, ce->af, flags);
+	  if (status != 0)
+	      goto err;
 
-    if (ce->socks_proxy_server)
-      {
-	status = do_preresolve_host (c,
-				     ce->socks_proxy_server,
-				     ce->socks_proxy_port,
-				     ce->af,
-				     flags);
-	if (status != 0)
-	  goto err;
-      }
+	}
 
-  }
-  return;
+    }
+    return;
 
  err:
   throw_signal_soft (SIGHUP, "Preresolving failed");
@@ -1083,8 +1085,9 @@ socket_bind (socket_descriptor_t sd,
 
   if (ai_family == AF_INET6)
     {
-      int v6only = ipv6only ? 0: 1;	/* setsockopt must have an "int" */
+      int v6only = ipv6only ? 1: 0;	/* setsockopt must have an "int" */
 
+      msg (M_INFO, "setsockopt(IPV6_V6ONLY=%d)", v6only);
       if (setsockopt(sd, IPPROTO_IPV6, IPV6_V6ONLY, &v6only, sizeof(v6only)))
 	{
 	  msg (M_NONFATAL|M_ERRNO, "Setting IPV6_V6ONLY=%d failed", v6only);
@@ -1322,7 +1325,7 @@ resolve_bind_local (struct link_socket *sock, const sa_family_t af)
 	flags |= GETADDR_DATAGRAM;
 
       /* will return AF_{INET|INET6}from local_host */
-      status = get_preresolved_host (sock->preresolved,
+      status = get_cached_dns_entry (sock->dns_cache,
 				     sock->local_host,
 				     sock->local_port,
 				     af,
@@ -1416,7 +1419,7 @@ resolve_remote (struct link_socket *sock,
 	    }
 
 
-	  status = get_preresolved_host (sock->preresolved,
+	  status = get_cached_dns_entry (sock->dns_cache,
 					 sock->remote_host,
 					 sock->remote_port,
 					 sock->info.af,
@@ -1441,12 +1444,12 @@ resolve_remote (struct link_socket *sock,
 	      if (*signal_received)
 		goto done;
 	    }
-	  if (status!=0)
-	    {
-	      if (signal_received)
-		*signal_received = SIGUSR1;
-	      goto done;
-	    }
+	      if (status!=0)
+		{
+		  if (signal_received)
+		    *signal_received = SIGUSR1;
+		  goto done;
+		}
 	}
     }
   
@@ -1458,15 +1461,15 @@ resolve_remote (struct link_socket *sock,
       if (remote_dynamic)
 	*remote_dynamic = NULL;
     }
-  /*      else, quick hack to fix persistent-remote ....*/
-  {
-    CLEAR (sock->info.lsa->actual);
-    if(sock->info.lsa->current_remote)
-      {
-	set_actual_address (&sock->info.lsa->actual,
-			    sock->info.lsa->current_remote);
-      }
-  }
+  else
+    {
+      CLEAR (sock->info.lsa->actual);
+      if(sock->info.lsa->current_remote)
+	{
+	  set_actual_address (&sock->info.lsa->actual,
+			      sock->info.lsa->current_remote);
+	}
+    }
 
  done:
   gc_free (&gc);
@@ -1506,19 +1509,8 @@ create_new_socket (struct link_socket* sock)
       /* clear destination set by set_actual_address */
       CLEAR(sock->info.lsa->actual.dest);
     }
-
-  /*
-   * Create the socket early if socket should be bound
-   */
-  if (sock->bind_local)
-    {
-      create_socket (sock);
-
-      if (sock->bind_local)
-          bind_local(sock);
-    }
-
 }
+
 
 
 /* bind socket if necessary */
@@ -1528,7 +1520,7 @@ link_socket_init_phase1 (struct link_socket *sock,
 			 const char *local_port,
 			 const char *remote_host,
 			 const char *remote_port,
-			 struct preresovled_host *preresolved,
+			 struct cached_dns_entry *dns_cache,
 			 int proto,
 			 sa_family_t af,
 			 bool bind_ipv6_only,
@@ -1563,7 +1555,7 @@ link_socket_init_phase1 (struct link_socket *sock,
   sock->local_port = local_port;
   sock->remote_host = remote_host;
   sock->remote_port = remote_port;
-  sock->preresolved = preresolved;
+  sock->dns_cache = dns_cache;
 
 #ifdef ENABLE_HTTP_PROXY
   sock->http_proxy = http_proxy;
@@ -1742,6 +1734,7 @@ linksock_print_addr (struct link_socket *sock)
   struct gc_arena gc = gc_new ();
   const int msglevel = (sock->mode == LS_MODE_TCP_ACCEPT_FROM) ? D_INIT_MEDIUM : M_INFO;
 
+  /* print local address */
  if (sock->inetd)
     msg (msglevel, "%s link local: [inetd]", proto2ascii (sock->info.proto, sock->info.af, true));
   else if (sock->bind_local)
@@ -1942,6 +1935,17 @@ link_socket_init_phase2 (struct link_socket *sock,
       /* If socket has not already been created create it now */
       if (sock->sd == SOCKET_UNDEFINED)
 	{
+          /* If we have no --remote and have still not figured out the
+           * protocol family to use we will use the first of the bind */
+          if (sock->bind_local && sock->info.lsa->bind_local
+              && !sock->info.lsa->actual.ai_family && !sock->remote_host)
+          {
+            msg (M_WARN, "Could not determine IPv4/IPv6 protocol. Using %s",
+                 addr_family_name(sock->info.lsa->bind_local->ai_family));
+            set_actual_address(&sock->info.lsa->actual, sock->info.lsa->bind_local);
+
+          }
+
 	  if (sock->info.lsa->actual.ai_family)
 	    {
 	      create_socket (sock);

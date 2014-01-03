@@ -130,25 +130,16 @@ management_callback_proxy_cmd (void *arg, const char **p)
 #ifndef ENABLE_HTTP_PROXY
           msg (M_WARN, "HTTP proxy support is not available");
 #else
-          struct http_proxy_options *ho, *oldho;
+          struct http_proxy_options *ho;
          if (ce->proto != PROTO_TCP && ce->proto != PROTO_TCP_CLIENT )            {
               msg (M_WARN, "HTTP proxy support only works for TCP based connections");
               return false;
             }
-	  oldho = ce->http_proxy_options;
           ho = init_http_proxy_options_once (&ce->http_proxy_options, gc);
           ho->server = string_alloc (p[2], gc);
           ho->port = string_alloc (p[3], gc);
           ho->retry = true;
           ho->auth_retry = (p[4] && streq (p[4], "nct") ? PAR_NCT : PAR_ALL);
-
-	  /* Save the old preresolved addrinfo we are using the same proxy again */
-	  if (oldho &&
-	      oldho->preresolved_proxy &&
-	      streq(oldho->server, ho->server) &&
-	      streq(oldho->port, ho->port))
-	    ho->preresolved_proxy = oldho->preresolved_proxy;
-
           ret = true;
 #endif
         }
@@ -571,8 +562,6 @@ context_init_1 (struct context *c)
  }
 #endif
 
-  if (c->options.resolve_in_advance)
-      do_preresolve(c);
 }
 
 void
@@ -893,7 +882,7 @@ print_openssl_info (const struct options *options)
 	show_available_engines ();
 #ifdef ENABLE_SSL
       if (options->show_tls_ciphers)
-	show_available_tls_ciphers ();
+	show_available_tls_ciphers (options->cipher_list);
 #endif
       return true;
     }
@@ -2701,7 +2690,7 @@ do_init_socket_1 (struct context *c, const int mode)
 			   c->options.ce.local_port,
 			   c->options.ce.remote,
 			   c->options.ce.remote_port,
-			   c->c1.preresolved,
+			   c->c1.dns_cache,
 			   c->options.ce.proto,
 			   c->options.ce.af,
 			   c->options.ce.bind_ipv6_only,
@@ -3376,7 +3365,7 @@ init_instance (struct context *c, const struct env_set *env, const unsigned int 
 
   if (c->options.resolve_in_advance)
     {
-      do_preresolve(c);
+      do_preresolve (c);
       if (IS_SIG (c))
 	goto sig;
     }
@@ -3455,7 +3444,7 @@ init_instance (struct context *c, const struct env_set *env, const unsigned int 
   /* allocate our socket object */
   if (c->mode == CM_P2P || c->mode == CM_TOP || c->mode == CM_CHILD_TCP)
     do_link_socket_new (c);
-    
+
 #ifdef ENABLE_FRAGMENT
   /* initialize internal fragmentation object */
   if (options->ce.fragment && (c->mode == CM_P2P || child))

@@ -35,7 +35,6 @@ LOCAL_SRC_FILES:= \
 	src/compat/compat-gettimeofday.c \
 	src/compat/compat-inet_ntop.c \
 	src/compat/compat-inet_pton.c \
-	src/compat/compat-rsa_generate_key.c \
 	src/openvpn/base64.c \
 	src/openvpn/buffer.c \
 	src/openvpn/clinat.c \
@@ -110,7 +109,6 @@ LOCAL_SRC_FILES:= \
 ifeq ($(WITH_BREAKPAD),1)
 LOCAL_SRC_FILES+=src/openvpn/breakpad.cpp
 endif
-
 
 
 include $(BUILD_SHARED_LIBRARY)

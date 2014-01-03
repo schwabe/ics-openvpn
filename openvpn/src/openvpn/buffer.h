@@ -93,7 +93,7 @@ struct gc_entry
 
 /**
  * Gargabe collection entry for a specially allocated structure that needs
- * a custom free function to be freed like struct addrinfo 
+ * a custom free function to be freed like struct addrinfo
  *
  */
 struct gc_entry_special

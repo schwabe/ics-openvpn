@@ -166,8 +166,8 @@ struct context_1
   /* tunnel session keys */
   struct key_schedule ks;
 
-  /* preresolved host names */
-  struct preresovled_host *preresolved;
+  /* preresolved and cached host names */
+  struct cached_dns_entry *dns_cache;
 
   /* persist crypto sequence number to/from file */
   struct packet_id_persist pid_persist;

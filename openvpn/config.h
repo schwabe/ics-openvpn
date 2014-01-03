@@ -450,7 +450,7 @@
 #define PACKAGE_NAME "OpenVPN"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "OpenVPN 2.4-icsopenvpn"
+#define PACKAGE_STRING "OpenVPN 2.4-icsopenvpn64"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "openvpn"
@@ -620,8 +620,11 @@
 #define HAVE_LZO_LZO1X_H 1
 #define HAVE_SYS_TIME_H 1
 #define HAVE_TIME_H 1
+#define HAVE_CONFIG_VERSION_H 1
+#define PATH_SEPARATOR_STR "/" 
 
 
 // Workaround for bionc
 #define IPPROTO_IP IPPROTO_IP
 #define IPPROTO_TCP IPPROTO_TCP
+

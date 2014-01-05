@@ -35,6 +35,7 @@ LOCAL_SRC_FILES:= \
 	src/compat/compat-gettimeofday.c \
 	src/compat/compat-inet_ntop.c \
 	src/compat/compat-inet_pton.c \
+	src/compat/compat-lz4.c \
 	src/openvpn/base64.c \
 	src/openvpn/buffer.c \
 	src/openvpn/clinat.c \
@@ -102,8 +103,9 @@ LOCAL_SRC_FILES:= \
 	src/openvpn/status.c \
 	src/openvpn/tun.c \
 	src/openvpn/snappy.c \
+	src/openvpn/comp-lz4.c \
 	src/openvpn/comp.c \
-	src/openvpn/compstub.c 
+	src/openvpn/compstub.c \
 
 
 ifeq ($(WITH_BREAKPAD),1)

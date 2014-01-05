@@ -540,6 +540,8 @@
 /* Use LZO compression library */
 #define ENABLE_LZO 1
 #define ENABLE_SNAPPY 1
+#define ENABLE_LZ4 1
+#define NEED_COMPAT_LZ4 1
 
 /* Enable PKCS11 capability */
 /* #undef USE_PKCS11 */

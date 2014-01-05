@@ -2381,7 +2381,7 @@ do_init_frame (struct context *c)
     {
       comp_add_to_extra_frame (&c->c2.frame);
 
-#if !defined(ENABLE_SNAPPY)
+#if !defined(ENABLE_SNAPPY) && !defined(ENABLE_LZ4)
       /*
        * Compression usage affects buffer alignment when non-swapped algs
        * such as LZO is used.
@@ -2396,7 +2396,7 @@ do_init_frame (struct context *c)
        * dispatch if packet is uncompressed) at the cost of requiring
        * decryption output to be written to an unaligned buffer, so
        * it's more of a tradeoff than an optimal solution and we don't
-       * include it when we are doing a modern build with Snappy.
+       * include it when we are doing a modern build with Snappy or LZ4.
        * Strictly speaking, on the server it would be better to execute
        * this code for every connection after we decide the compression
        * method, but currently the frame code doesn't appear to be
@@ -3346,7 +3346,7 @@ init_instance (struct context *c, const struct env_set *env, const unsigned int 
   /* inherit environmental variables */
   if (env)
      do_inherit_env (c, env);
-    
+
   /* signals caught here will abort */
   c->sig->signal_received = 0;
   c->sig->signal_text = NULL;

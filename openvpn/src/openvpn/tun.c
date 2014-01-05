@@ -1525,7 +1525,7 @@ open_tun (const char *dev, const char *dev_type, const char *dev_node, struct tu
     opentun = true;
   } else {
     opentun = management_android_control (management, "OPENTUN", dev);
-    /* Pick up the fd from management interface after calling the 
+    /* Pick up the fd from management interface after calling the
      * OPENTUN command */
     tt->fd = management->connection.lastfdreceived;
     management->connection.lastfdreceived=-1;

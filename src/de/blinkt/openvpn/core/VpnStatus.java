@@ -64,6 +64,9 @@ public class VpnStatus {
         logException(LogLevel.ERROR, context, e);
     }
 
+    private static final int MAXLOGENTRIES = 1000;
+
+    public static final String MANAGMENT_PREFIX = "M:";
 
     public enum ConnectionStatus {
         LEVEL_CONNECTED,
@@ -292,9 +295,6 @@ public class VpnStatus {
         }
     }
 
-	private static final int MAXLOGENTRIES = 500;
-
-	public static final String MANAGMENT_PREFIX = "M:";
 
 
 	public interface LogListener {

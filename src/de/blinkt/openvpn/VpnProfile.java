@@ -423,7 +423,7 @@ public class VpnProfile implements Serializable {
         } catch (PackageManager.NameNotFoundException e) {
             VpnStatus.logException(e);
         }
-        return String.format(Locale.US, "setenv IV_OPENVPN_GUI_VERSION \"%s %s\"\n", c.getPackageName(), version);
+        return String.format(Locale.US, "setenv IV_GUI_VER \"%s %s\"\n", c.getPackageName(), version);
 
     }
 

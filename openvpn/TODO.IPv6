@@ -183,7 +183,7 @@ tun0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1500
 TODO for IPv6 transport support
 -------------------------------
 
-[ Last updated: 03-01-2013. ]
+[ Last updated: 2014-01-03. ]
 
 * All platforms:
   o mgmt console: as currently passes straight in_addr_t bits around
@@ -210,5 +210,6 @@ TODO for IPv6 transport support
 * win32:
   o find out about mapped addresses, as I can't make it work
     with bound at ::1 and connect to 127.0.0.1
-    - Should be fixed by 8832c6c - "Implement listing on IPv4/IPv6 dual socket on all platform"
+    - Should be fixed by 8832c6c - "Implement listing on IPv4/IPv6 dual 
+      socket on all platform"
 

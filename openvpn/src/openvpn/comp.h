@@ -24,7 +24,7 @@
 
 /*
  * Generic compression support.  Currently we support
- * Snappy, LZO 2 and LX4.
+ * Snappy, LZO 2 and LZ4.
  */
 #ifndef OPENVPN_COMP_H
 #define OPENVPN_COMP_H

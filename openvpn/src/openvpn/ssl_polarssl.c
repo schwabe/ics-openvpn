@@ -176,7 +176,7 @@ tls_ctx_restrict_ciphers(struct tls_root_ctx *ctx, const char *ciphers)
   int ciphers_len;
 
   if (NULL == ciphers)
-    return; // Nothing to do
+    return; /* Nothing to do */
 
   ciphers_len = strlen (ciphers);
 
@@ -1043,10 +1043,11 @@ show_available_tls_ciphers (const char *cipher_list)
   struct tls_root_ctx tls_ctx;
   const int *ciphers = ssl_list_ciphersuites();
 
-  if (cipher_list) {
-    tls_ctx_restrict_ciphers(&tls_ctx, cipher_list);
+  tls_ctx_server_new(&tls_ctx);
+  tls_ctx_restrict_ciphers(&tls_ctx, cipher_list);
+
+  if (tls_ctx.allowed_ciphers)
     ciphers = tls_ctx.allowed_ciphers;
-  }
 
 #ifndef ENABLE_SMALL
   printf ("Available TLS Ciphers,\n");
@@ -1059,6 +1060,8 @@ show_available_tls_ciphers (const char *cipher_list)
       ciphers++;
     }
   printf ("\n");
+
+  tls_ctx_free(&tls_ctx);
 }
 
 void

@@ -146,7 +146,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 			}
 		} catch (IOException e) {
-			VpnStatus.logException(e);
+            if (!e.getMessage().equals("socket closed"))
+                VpnStatus.logException(e);
 		}
 		active.remove(this);
 	}

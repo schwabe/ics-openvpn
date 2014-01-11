@@ -71,7 +71,7 @@ public class ConfigParser {
 	}
 
 	private void checkinlinefile(Vector<String> args, BufferedReader br) throws IOException, ConfigParseError {
-		String arg0 = args.get(0);
+		String arg0 = args.get(0).trim();
 		// CHeck for <foo>
 		if(arg0.startsWith("<") && arg0.endsWith(">")) {
 			String argname = arg0.substring(1, arg0.length()-1);
@@ -83,7 +83,7 @@ public class ConfigParser {
 				if(line==null){
 					throw new ConfigParseError(String.format("No endtag </%s> for starttag <%s> found",argname,argname));
 				}
-				if(line.equals(endtag))
+				if(line.trim().equals(endtag))
 					break;
 				else {
 					inlinefile+=line;

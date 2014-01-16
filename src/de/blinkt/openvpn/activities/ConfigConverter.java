@@ -262,14 +262,18 @@ public class ConfigConverter extends ListActivity {
             // Do a little hackish dance for the Android File Importer
             // /document/primary:ovpn/openvpn-imt.conf
 
+
             if (path.indexOf(':')!=-1) {
                 String possibleDir = path.substring(path.indexOf(':')+1,path.length());
-                possibleDir.substring(0,possibleDir.lastIndexOf('/'));
-                dirlist.add(new File(sdcard,possibleDir));
+                possibleDir = possibleDir.substring(0,possibleDir.lastIndexOf('/'));
 
+
+                dirlist.add(new File(sdcard,possibleDir));
 
             }
 			dirlist.add(new File(path));
+
+
 		}
 		dirlist.add(sdcard);
 		dirlist.add(root);

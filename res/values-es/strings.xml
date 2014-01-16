@@ -295,6 +295,7 @@
   <string name="thanks_for_donation">Gracias por su donación %s!</string>
   <string name="logCleared">Registro borrado.</string>
   <string name="show_password">Mostrar contraseña</string>
+  <string name="keyChainAccessError">Error de acceso al llavero: %s</string>
   <string name="timestamp_short">Corto</string>
   <string name="timestamp_iso">ISO</string>
   <string name="timestamps">Marcas de tiempo</string>
@@ -302,4 +303,8 @@
   <string name="uploaded_data">Subir</string>
   <string name="downloaded_data">Descargar</string>
   <string name="vpn_status">Estado de VPN</string>
+  <string name="logview_options">Opciones de visualización</string>
+  <string name="unhandled_exception">Excepcion no controlada: %1$s\n\n%2$s</string>
+  <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
+  <string name="full_licenses">Licencias completas</string>
 </resources>

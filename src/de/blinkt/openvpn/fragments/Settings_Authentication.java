@@ -76,6 +76,16 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 		onPreferenceChange(mCipher, mProfile.mCipher);
 		mAuth.setText(mProfile.mAuth);
 		onPreferenceChange(mAuth, mProfile.mAuth);
+
+        if (mProfile.mAuthenticationType == VpnProfile.TYPE_STATICKEYS) {
+            mExpectTLSCert.setEnabled(false);
+            mCheckRemoteCN.setEnabled(false);
+            mUseTLSAuth.setChecked(true);
+        } else {
+            mExpectTLSCert.setEnabled(true);
+            mCheckRemoteCN.setEnabled(true);
+
+        }
 	}
 
 	@Override

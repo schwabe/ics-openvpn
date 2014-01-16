@@ -238,6 +238,7 @@ public class ConfigConverter extends ListActivity {
 		if (foundfile==null && filename!=null && !filename.equals(""))
 			log(R.string.import_could_not_open,filename);
 
+
 		return foundfile;
 	}
 

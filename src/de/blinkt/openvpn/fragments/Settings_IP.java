@@ -7,6 +7,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 
 public class Settings_IP extends OpenVpnPreferencesFragment implements OnPreferenceChangeListener {
 		private EditTextPreference mIPv4;
@@ -62,14 +63,16 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 			mOverrideDNS.setChecked(mProfile.mOverrideDNS);
 			mSearchdomain.setText(mProfile.mSearchDomain);
 			mNobind.setChecked(mProfile.mNobind);
-			
+            if (mProfile.mAuthenticationType == VpnProfile.TYPE_STATICKEYS)
+                mUsePull.setChecked(false);
+
 			// Sets Summary
 			onPreferenceChange(mIPv4, mIPv4.getText());
 			onPreferenceChange(mIPv6, mIPv6.getText());
 			onPreferenceChange(mDNS1, mDNS1.getText());
 			onPreferenceChange(mDNS2, mDNS2.getText());
 			onPreferenceChange(mSearchdomain, mSearchdomain.getText());
-									
+
 			setDNSState();
 		}
 		

@@ -344,35 +344,36 @@ public class VpnProfile implements Serializable {
 
 
         // Authentication
-        if (mCheckRemoteCN) {
-            if (mRemoteCN == null || mRemoteCN.equals(""))
-                cfg += "verify-x509-name " + mServerName + " name\n";
-            else
-                switch (mX509AuthType) {
+        if (mAuthenticationType != TYPE_STATICKEYS) {
+            if (mCheckRemoteCN) {
+                if (mRemoteCN == null || mRemoteCN.equals(""))
+                    cfg += "verify-x509-name " + mServerName + " name\n";
+                else
+                    switch (mX509AuthType) {
 
-                    // 2.2 style x509 checks
-                    case X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING:
-                        cfg += "compat-names no-remapping\n";
-                    case X509_VERIFY_TLSREMOTE:
-                        cfg += "tls-remote " + openVpnEscape(mRemoteCN) + "\n";
-                        break;
+                        // 2.2 style x509 checks
+                        case X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING:
+                            cfg += "compat-names no-remapping\n";
+                        case X509_VERIFY_TLSREMOTE:
+                            cfg += "tls-remote " + openVpnEscape(mRemoteCN) + "\n";
+                            break;
 
-                    case X509_VERIFY_TLSREMOTE_RDN:
-                        cfg += "verify-x509-name " + openVpnEscape(mRemoteCN) + " name\n";
-                        break;
+                        case X509_VERIFY_TLSREMOTE_RDN:
+                            cfg += "verify-x509-name " + openVpnEscape(mRemoteCN) + " name\n";
+                            break;
 
-                    case X509_VERIFY_TLSREMOTE_RDN_PREFIX:
-                        cfg += "verify-x509-name " + openVpnEscape(mRemoteCN) + " name-prefix\n";
-                        break;
+                        case X509_VERIFY_TLSREMOTE_RDN_PREFIX:
+                            cfg += "verify-x509-name " + openVpnEscape(mRemoteCN) + " name-prefix\n";
+                            break;
 
-                    case X509_VERIFY_TLSREMOTE_DN:
-                        cfg += "verify-x509-name " + openVpnEscape(mRemoteCN) + "\n";
-                        break;
-                }
+                        case X509_VERIFY_TLSREMOTE_DN:
+                            cfg += "verify-x509-name " + openVpnEscape(mRemoteCN) + "\n";
+                            break;
+                    }
+            }
+            if (mExpectTLSCert)
+                cfg += "remote-cert-tls server\n";
         }
-        if (mExpectTLSCert)
-            cfg += "remote-cert-tls server\n";
-
 
         if (nonNull(mCipher)) {
             cfg += "cipher " + mCipher + "\n";
@@ -676,7 +677,7 @@ public class VpnProfile implements Serializable {
                 return R.string.no_keystore_cert_selected;
         }
 
-        if (!mUsePull) {
+        if (!mUsePull || mAuthenticationType == TYPE_STATICKEYS) {
             if (mIPv4Address == null || cidrToIPAndNetmask(mIPv4Address) == null)
                 return R.string.ipv4_format_error;
         }

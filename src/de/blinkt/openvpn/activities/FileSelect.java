@@ -154,7 +154,7 @@ public class FileSelect extends Activity {
 		}
 	}
 
-	private byte[] readBytesFromFile(File file) throws IOException {
+	static private byte[] readBytesFromFile(File file) throws IOException {
 		InputStream input = new FileInputStream(file);
 
 		long len= file.length();

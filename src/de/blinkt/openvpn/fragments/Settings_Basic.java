@@ -40,8 +40,6 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	private static final int CHOOSE_FILE_OFFSET = 1000;
 	private static final int UPDATE_ALIAS = 20;
 
-
-
 	private TextView mServerAddress;
 	private TextView mServerPort;
 	private FileSelectLayout mClientCert;
@@ -66,16 +64,16 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 
 
-    private void addFileSelectLayout (FileSelectLayout fsl) {
+    private void addFileSelectLayout (FileSelectLayout fsl, FileSelectLayout.FileType type) {
 		int i = fileselects.size() + CHOOSE_FILE_OFFSET;
 		fileselects.put(i, fsl);
-		fsl.setFragment(this,i);
+		fsl.setFragment(this,i,type);
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String profileuuid =getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		mProfile=ProfileManager.get(getActivity(),profileuuid);
+		String profileUuid = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
+		mProfile=ProfileManager.get(getActivity(),profileUuid);
 		getActivity().setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
 	}
 
@@ -143,13 +141,10 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mPassword = (EditText) mView.findViewById(R.id.auth_password);
 		mKeyPassword = (EditText) mView.findViewById(R.id.key_password);
 
-
-
-		addFileSelectLayout(mCaCert);
-		addFileSelectLayout(mClientCert);
-		addFileSelectLayout(mClientKey);
-		addFileSelectLayout(mpkcs12);
-		mpkcs12.setBase64Encode();
+		addFileSelectLayout(mCaCert, FileSelectLayout.FileType.CERTIFICATE);
+		addFileSelectLayout(mClientCert, FileSelectLayout.FileType.CERTIFICATE);
+		addFileSelectLayout(mClientKey, FileSelectLayout.FileType.KEYFILE);
+		addFileSelectLayout(mpkcs12, FileSelectLayout.FileType.PKCS12);
 		mCaCert.setShowClear();
 
 		mType.setOnItemSelectedListener(this);
@@ -168,8 +163,8 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	@Override
 	public void onStart() {
 		super.onStart();
-		String profileuuid =getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		mProfile=ProfileManager.get(getActivity(),profileuuid);
+		String profileUuid =getArguments().getString(getActivity().getPackageName() + ".profileUUID");
+		mProfile=ProfileManager.get(getActivity(),profileUuid);
 		loadPreferences();
 
 	}
@@ -177,9 +172,9 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	@Override
 	public void onActivityResult(int request, int result, Intent data) {
 		if (result == Activity.RESULT_OK && request >= CHOOSE_FILE_OFFSET) {
-			String filedata = data.getStringExtra(FileSelect.RESULT_DATA);
+
 			FileSelectLayout fsl = fileselects.get(request);
-			fsl.setData(filedata, getActivity());
+            fsl.parseResponse(data, getActivity());
 
 			savePreferences();
 

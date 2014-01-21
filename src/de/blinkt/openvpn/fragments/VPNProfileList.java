@@ -220,37 +220,7 @@ public class VPNProfileList extends ListFragment {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void startFilePicker() {
-
-
-
-        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        i.addCategory(Intent.CATEGORY_OPENABLE);
-        i.setType("application/x-openvpn-profile");
-
-
-        TreeSet<String> supportedMimeTypes = new TreeSet<String>();
-        supportedMimeTypes.add("application/x-openvpn-profile");
-        supportedMimeTypes.add("application/openvpn-profile");
-        supportedMimeTypes.add("application/ovpn");
-
-
-        // Webservers unfortunately report this for .conf files sometimes
-        supportedMimeTypes.add("text/plain");
-        supportedMimeTypes.add("application/conf");
-
-        MimeTypeMap mtm = MimeTypeMap.getSingleton();
-
-        for(String ext: new String[] {"ovpn", "conf"}) {
-            String mimeType = mtm.getMimeTypeFromExtension(ext);
-            if(mimeType!=null)
-                supportedMimeTypes.add(mimeType);
-            else
-                supportedMimeTypes.add("application/octet-stream");
-        }
-
-
-
-        i.putExtra(Intent.EXTRA_MIME_TYPES, supportedMimeTypes.toArray(new String[supportedMimeTypes.size()]));
+       Intent i = Utils.getFilePickerIntent(Utils.FileType.OVPN_CONFIG);
        startActivityForResult(i, FILE_PICKER_RESULT);
     }
 

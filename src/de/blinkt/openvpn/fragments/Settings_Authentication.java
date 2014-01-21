@@ -2,6 +2,7 @@ package de.blinkt.openvpn.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -19,7 +20,8 @@ import de.blinkt.openvpn.VpnProfile;
 
 public class Settings_Authentication extends OpenVpnPreferencesFragment implements OnPreferenceChangeListener, OnPreferenceClickListener {
 	private static final int SELECT_TLS_FILE = 23223232;
-	private CheckBoxPreference mExpectTLSCert;
+    private static final int SELECT_TLS_FILE_KITKAT = SELECT_TLS_FILE +1;
+    private CheckBoxPreference mExpectTLSCert;
 	private CheckBoxPreference mCheckRemoteCN;
 	private RemoteCNPreference mRemoteCN;
 	private ListPreference mTLSAuthDirection;
@@ -159,10 +161,15 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 	}
 
     void startFileDialog() {
-        Intent startFC = new Intent(getActivity(), FileSelect.class);
-        startFC.putExtra(FileSelect.START_DATA, mTlsAuthFileData);
-        startFC.putExtra(FileSelect.WINDOW_TITLE, R.string.tls_auth_file);
-        startActivityForResult(startFC, SELECT_TLS_FILE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Intent startFC = Utils.getFilePickerIntent (Utils.FileType.TLS_AUTH_FILE);
+            startActivityForResult(startFC, SELECT_TLS_FILE_KITKAT);
+        } else {
+            Intent startFC = new Intent(getActivity(), FileSelect.class);
+            startFC.putExtra(FileSelect.START_DATA, mTlsAuthFileData);
+            startFC.putExtra(FileSelect.WINDOW_TITLE, R.string.tls_auth_file);
+            startActivityForResult(startFC, SELECT_TLS_FILE);
+        }
     }
 
     @Override
@@ -180,7 +187,9 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 			mTlsAuthFileData=result;
 			setTlsAuthSummary(result);
 
-		}
+		}  else if (requestCode == SELECT_TLS_FILE_KITKAT && requestCode == Activity.RESULT_OK) {
+
+        }
 	}
 
 	private void setTlsAuthSummary(String result) {

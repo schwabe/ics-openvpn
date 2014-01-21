@@ -379,9 +379,17 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 			mOpenVPNService.setDomain(extra);
 		} else if (needed.equals("ROUTE")) {
 			String[] routeparts = extra.split(" ");
-			mOpenVPNService.addRoute(routeparts[0], routeparts[1]);
+
+            if(routeparts.length>3) {
+                assert(routeparts[3].equals("dev"));
+                mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], routeparts[4]);
+            }  else {
+                mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], null);
+            }
+
 		} else if (needed.equals("ROUTE6")) {
-			mOpenVPNService.addRoutev6(extra);
+            String[] routeparts = extra.split(" ");
+			mOpenVPNService.addRoutev6(routeparts[0],routeparts[1]);
 		} else if (needed.equals("IFCONFIG")) {
 			String[] ifconfigparts = extra.split(" ");
 			int mtu = Integer.parseInt(ifconfigparts[2]);

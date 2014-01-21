@@ -305,10 +305,10 @@ public class VpnProfile implements Serializable {
         String routes = "";
         int numroutes = 0;
         if (mUseDefaultRoute)
-            routes += "route 0.0.0.0 0.0.0.0\n";
+            routes += "route 0.0.0.0 0.0.0.0 vpn_gateway\n";
         else
             for (String route : getCustomRoutes()) {
-                routes += "route " + route + "\n";
+                routes += "route " + route + "vpn_gateway\n";
                 numroutes++;
             }
 

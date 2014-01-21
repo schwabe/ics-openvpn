@@ -12,7 +12,7 @@ import java.util.Vector;
 
 //! Openvpn Config FIle Parser, probably not 100% accurate but close enough
 
-// And rember, this is valid :)
+// And remember, this is valid :)
 // --<foo>
 // bar
 // </foo>

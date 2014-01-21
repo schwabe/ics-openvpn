@@ -479,7 +479,12 @@ public class VpnStatus {
 		newLogItem(new LogItem(LogLevel.INFO, resourceId, args));
 	}
 
-	private synchronized static void newLogItem(LogItem logItem) {
+    public static void logDebug(int resourceId, Object... args) {
+        newLogItem(new LogItem(LogLevel.DEBUG, resourceId, args));
+    }
+
+
+    private synchronized static void newLogItem(LogItem logItem) {
 		logbuffer.addLast(logItem);
 		if(logbuffer.size()>MAXLOGENTRIES)
 			logbuffer.removeFirst();

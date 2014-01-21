@@ -25,10 +25,15 @@ import de.blinkt.openvpn.core.VpnStatus.StateListener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
 
+import static de.blinkt.openvpn.core.NetworkSpace.*;
 import static de.blinkt.openvpn.core.VpnStatus.ConnectionStatus.*;
 
 public class OpenVpnService extends VpnService implements StateListener, Callback, ByteCountListener {
@@ -41,8 +46,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     private static final int OPENVPN_STATUS = 1;
     private static boolean mNotificationAlwaysVisible = false;
     private final Vector<String> mDnslist = new Vector<String>();
-    private final Vector<CIDRIP> mRoutes = new Vector<CIDRIP>();
-    private final Vector<String> mRoutesv6 = new Vector<String>();
+    private final NetworkSpace mRoutes = new NetworkSpace();
+    private final NetworkSpace mRoutesv6 = new NetworkSpace();
     private final IBinder mBinder = new LocalBinder();
     private Thread mProcessThread = null;
     private VpnProfile mProfile;
@@ -255,8 +260,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         mDeviceStateReceiver = null;
     }
 
-    public void userPause (boolean shouldBePaused)
-    {
+    public void userPause(boolean shouldBePaused) {
         if (mDeviceStateReceiver != null)
             mDeviceStateReceiver.userPause(shouldBePaused);
     }
@@ -349,7 +353,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         }
 
 
-
         Runnable processThread;
         if (mOvpn3) {
 
@@ -396,21 +399,21 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
     }
 
-    private String getTunConfigString()
-    {
+    private String getTunConfigString() {
         // The format of the string is not important, only that
         // two identical configurations produce the same result
-        String cfg="TUNCFG UNQIUE STRING ips:";
+        String cfg = "TUNCFG UNQIUE STRING ips:";
 
-        if (mLocalIP!=null)
-            cfg+=mLocalIP.toString();
-        if (mLocalIPv6!=null)
-            cfg+=mLocalIPv6.toString();
+        if (mLocalIP != null)
+            cfg += mLocalIP.toString();
+        if (mLocalIPv6 != null)
+            cfg += mLocalIPv6.toString();
 
-        cfg+= "routes: " + TextUtils.join("|",mRoutes) + TextUtils.join("|",mRoutesv6);
-        cfg+= "dns: " + TextUtils.join("|",mDnslist);
-        cfg+= "domain: " + mDomain;
-        cfg+= "mtu: " + mMtu;
+        cfg += "routes: " + TextUtils.join("|", mRoutes.getNetworks(true)) + TextUtils.join("|", mRoutesv6.getNetworks(true));
+        cfg += "excl. routes:" + TextUtils.join("|", mRoutes.getNetworks(false)) + TextUtils.join("|", mRoutesv6.getNetworks(false));
+        cfg += "dns: " + TextUtils.join("|", mDnslist);
+        cfg += "domain: " + mDomain;
+        cfg += "mtu: " + mMtu;
         return cfg;
     }
 
@@ -455,20 +458,19 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         builder.setMtu(mMtu);
 
 
-        for (CIDRIP route : mRoutes) {
+        for (NetworkSpace.ipAddress route : mRoutes.getPositiveIPList()) {
             try {
-                builder.addRoute(route.mIp, route.len);
+                builder.addRoute(route.getIPv4Address(), route.networkMask);
             } catch (IllegalArgumentException ia) {
                 VpnStatus.logError(getString(R.string.route_rejected) + route + " " + ia.getLocalizedMessage());
             }
         }
 
-        for (String v6route : mRoutesv6) {
+        for (NetworkSpace.ipAddress route6 : mRoutesv6.getPositiveIPList()) {
             try {
-                String[] v6parts = v6route.split("/");
-                builder.addRoute(v6parts[0], Integer.parseInt(v6parts[1]));
+                builder.addRoute(route6.getIPv6Address(), route6.networkMask);
             } catch (IllegalArgumentException ia) {
-                VpnStatus.logError(getString(R.string.route_rejected) + v6route + " " + ia.getLocalizedMessage());
+                VpnStatus.logError(getString(R.string.route_rejected) + route6 + " " + ia.getLocalizedMessage());
             }
         }
 
@@ -477,9 +479,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
         VpnStatus.logInfo(R.string.last_openvpn_tun_config);
         VpnStatus.logInfo(R.string.local_ip_info, mLocalIP.mIp, mLocalIP.len, mLocalIPv6, mMtu);
-        VpnStatus.logInfo(R.string.dns_server_info, joinString(mDnslist), mDomain);
-        VpnStatus.logInfo(R.string.routes_info, joinString(mRoutes));
-        VpnStatus.logInfo(R.string.routes_info6, joinString(mRoutesv6));
+        VpnStatus.logInfo(R.string.dns_server_info, TextUtils.join(", ", mDnslist), mDomain);
+        VpnStatus.logInfo(R.string.routes_info_incl, TextUtils.join(", ", mRoutes.getNetworks(true)), TextUtils.join(", ", mRoutesv6.getNetworks(true)));
+        VpnStatus.logInfo(R.string.routes_info_excl, TextUtils.join(", ", mRoutes.getNetworks(false)),TextUtils.join(", ", mRoutesv6.getNetworks(false)));
+        VpnStatus.logDebug(R.string.routes_debug, TextUtils.join(", ", mRoutes.getPositiveIPList()), TextUtils.join(", ", mRoutesv6.getPositiveIPList()));
 
         String session = mProfile.mName;
         if (mLocalIP != null && mLocalIPv6 != null)
@@ -518,18 +521,6 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
     }
 
-    // Ugly, but java has no such method
-    private <T> String joinString(Vector<T> vec) {
-        String ret = "";
-        if (vec.size() > 0) {
-            ret = vec.get(0).toString();
-            for (int i = 1; i < vec.size(); i++) {
-                ret = ret + ", " + vec.get(i).toString();
-            }
-        }
-        return ret;
-    }
-
     public void addDNS(String dns) {
         mDnslist.add(dns);
     }
@@ -540,8 +531,17 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         }
     }
 
-    public void addRoute(String dest, String mask) {
+    public void addRoute(String dest, String mask, String gateway, String device) {
         CIDRIP route = new CIDRIP(dest, mask);
+        boolean include = isAndroidTunDevice(device);
+
+        NetworkSpace.ipAddress gatewayIP = new NetworkSpace.ipAddress(new CIDRIP(gateway, 32),false);
+
+        NetworkSpace.ipAddress localNet = new NetworkSpace.ipAddress(mLocalIP,true);
+        if (localNet.containsNet(gatewayIP))
+            include =true;
+
+
         if (route.len == 32 && !mask.equals("255.255.255.255")) {
             VpnStatus.logWarning(R.string.route_not_cidr, dest, mask);
         }
@@ -549,11 +549,30 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         if (route.normalise())
             VpnStatus.logWarning(R.string.route_not_netip, dest, route.len, route.mIp);
 
-        mRoutes.add(route);
+        mRoutes.addIP(route, include);
     }
 
-    public void addRoutev6(String extra) {
-        mRoutesv6.add(extra);
+    public void addRoutev6(String network, String device) {
+        String[] v6parts = network.split("/");
+        boolean included = isAndroidTunDevice(device);
+
+        // Tun is opened after ROUTE6, no device name may be present
+
+        try {
+            Inet6Address ip = (Inet6Address) InetAddress.getAllByName(v6parts[0])[0];
+            int mask = Integer.parseInt(v6parts[1]);
+            mRoutesv6.addIPv6(ip, mask, included);
+
+        } catch (UnknownHostException e) {
+            VpnStatus.logException(e);
+        }
+
+
+    }
+
+    private boolean isAndroidTunDevice(String device) {
+        return device!=null &&
+                (device.startsWith("tun") || "(null)".equals(device) || "vpnservice-tun".equals(device));
     }
 
     public void setMtu(int mtu) {
@@ -657,9 +676,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
     public String getTunReopenStatus() {
         String currentConfiguration = getTunConfigString();
-        if(currentConfiguration.equals(mLastTunCfg))
+        if (currentConfiguration.equals(mLastTunCfg))
             return "NOACTION";
-        else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             return "OPEN_AFTER_CLOSE";
         else
             return "OPEN_BEFORE_CLOSE";

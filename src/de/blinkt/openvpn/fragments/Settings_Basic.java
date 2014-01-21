@@ -26,7 +26,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.views.FileSelectLayout;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -64,7 +63,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 
 
-    private void addFileSelectLayout (FileSelectLayout fsl, FileSelectLayout.FileType type) {
+    private void addFileSelectLayout (FileSelectLayout fsl, Utils.FileType type) {
 		int i = fileselects.size() + CHOOSE_FILE_OFFSET;
 		fileselects.put(i, fsl);
 		fsl.setFragment(this,i,type);
@@ -141,10 +140,10 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mPassword = (EditText) mView.findViewById(R.id.auth_password);
 		mKeyPassword = (EditText) mView.findViewById(R.id.key_password);
 
-		addFileSelectLayout(mCaCert, FileSelectLayout.FileType.CERTIFICATE);
-		addFileSelectLayout(mClientCert, FileSelectLayout.FileType.CERTIFICATE);
-		addFileSelectLayout(mClientKey, FileSelectLayout.FileType.KEYFILE);
-		addFileSelectLayout(mpkcs12, FileSelectLayout.FileType.PKCS12);
+		addFileSelectLayout(mCaCert, Utils.FileType.CERTIFICATE);
+		addFileSelectLayout(mClientCert, Utils.FileType.CERTIFICATE);
+		addFileSelectLayout(mClientKey, Utils.FileType.KEYFILE);
+		addFileSelectLayout(mpkcs12, Utils.FileType.PKCS12);
 		mCaCert.setShowClear();
 
 		mType.setOnItemSelectedListener(this);

@@ -97,8 +97,9 @@
     <string name="last_openvpn_tun_config">Opening tun interface:</string>
     <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
     <string name="dns_server_info">DNS Server: %1$s, Domain: %2$s</string>
-    <string name="routes_info">Routes: %s</string>
-    <string name="routes_info6">Routes IPv6: %s</string>
+    <string name="routes_info_incl">Routes: %1$s %2$s</string>
+    <string name="routes_info_excl">Routes excluded: %1$s %2$s</string>
+    <string name="routes_debug">VpnService routes installed: %1$s %2$s</string>
     <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP. Mode given by OpenVPN is \"%3$s\".</string>
     <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
     <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>

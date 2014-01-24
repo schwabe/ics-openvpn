@@ -52,7 +52,6 @@ assets/minivpn.armeabi-v7a
 assets/minivpn.mips
 assets/minivpn.x86
 openvpn/a.out.dSYM
-openvpn/config-version.h
 openvpn/config.status
 Makefile
 openvpn/libtool

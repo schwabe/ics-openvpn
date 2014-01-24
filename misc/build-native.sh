@@ -1,3 +1,9 @@
+#!/bin/bash
+
+# Exit on errors
+set -e
+
+# Generate git config if the openvpn directory is checked out from git
 if [ -d openvpn/.git ]; then
     GIT=git
     cd openvpn
@@ -17,6 +23,7 @@ if [ -d openvpn/.git ]; then
 fi
 
 ndk-build APP_API=all -j 8
+
 if [ $? = 0 ]; then
 	rm -rf build/native-libs/
 
@@ -36,4 +43,6 @@ if [ $? = 0 ]; then
   	    mkdir -p $builddir
   		cp -v $arch/*.so  $builddir
   	done
+else
+    exit $?
 fi

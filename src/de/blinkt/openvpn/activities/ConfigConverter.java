@@ -1,15 +1,8 @@
 
 package de.blinkt.openvpn.activities;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Vector;
+import java.io.*;
+import java.util.*;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,43 +14,39 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
-import android.text.TextUtils;
 import android.util.Base64;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 
+import android.widget.LinearLayout;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
 import de.blinkt.openvpn.core.ConfigParser.ConfigParseError;
 import de.blinkt.openvpn.core.ProfileManager;
+import de.blinkt.openvpn.fragments.Utils;
+import de.blinkt.openvpn.views.FileSelectLayout;
+import junit.framework.Assert;
 
-public class ConfigConverter extends ListActivity {
+import static de.blinkt.openvpn.views.FileSelectLayout.*;
+
+public class ConfigConverter extends ListActivity implements FileSelectCallback {
 
 	public static final String IMPORT_PROFILE = "de.blinkt.openvpn.IMPORT_PROFILE";
+    private static final int RESULT_INSTALLPKCS12 = 7;
+    private static final int CHOOSE_FILE_OFFSET = 1000;
+    public static final String VPNPROFILE = "vpnProfile";
 
     private VpnProfile mResult;
-	private ArrayAdapter<String> mArrayAdapter;
+	private transient ArrayAdapter<String> mArrayAdapter;
 
-	private List<String> mPathsegments;
+	private transient List<String> mPathsegments;
 
 	private String mAliasName=null;
 
-	private int RESULT_INSTALLPKCS12 = 7;
 
-	private String mPossibleName=null;
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.config_converter);
-	}
-
-
+    private Map<Utils.FileType, FileSelectLayout> fileSelectMap = new HashMap<Utils.FileType, FileSelectLayout>();
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -84,22 +73,76 @@ public class ConfigConverter extends ListActivity {
 
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode==RESULT_INSTALLPKCS12) {
-			if(resultCode==Activity.RESULT_OK) {
-				showCertDialog();
-			}
-		}
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(mResult!=null)
+            outState.putSerializable(VPNPROFILE,mResult);
+        outState.putString("mAliasName", mAliasName);
 
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+        String[] logentries = new String[mArrayAdapter.getCount()];
+        for(int i =0; i < mArrayAdapter.getCount();i++){
+            logentries[i] = mArrayAdapter.getItem(i);
+        }
+        outState.putStringArray("logentries", logentries);
+
+        int[] fileselects = new int[fileSelectMap.size()];
+        int k=0;
+        for (Utils.FileType key :fileSelectMap.keySet()){
+            fileselects[k]=key.getValue();
+            k++;
+        }
+        outState.putIntArray("fileselects",fileselects);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent result) {
+        if (requestCode == RESULT_INSTALLPKCS12 && resultCode == Activity.RESULT_OK) {
+            showCertDialog();
+        }
+
+        if (resultCode == Activity.RESULT_OK && requestCode >= CHOOSE_FILE_OFFSET) {
+            Utils.FileType type = Utils.FileType.getFileTypeByValue(requestCode - CHOOSE_FILE_OFFSET);
+
+
+            FileSelectLayout fs = fileSelectMap.get(type);
+            fs.parseResponse(result, this);
+
+            String data = fs.getData();
+
+             switch (type){
+                 case USERPW_FILE:
+                     ConfigParser.useEmbbedUserAuth(mResult, data);
+                     break;
+                 case PKCS12:
+                     mResult.mPKCS12Filename = data;
+                     break;
+                 case TLS_AUTH_FILE:
+                     mResult.mTLSAuthFilename = data;
+                     break;
+                 case CA_CERTIFICATE:
+                     mResult.mCaFilename = data;
+                     break;
+                 case CLIENT_CERTIFICATE:
+                     mResult.mClientCertFilename = data;
+                     break;
+                 case KEYFILE:
+                     mResult.mClientKeyFilename = data;
+                     break;
+                 default:
+                     Assert.fail();
+             }
+        }
+
+        super.onActivityResult(requestCode, resultCode, result);
+    }
 
 	private void saveProfile() {
 		Intent result = new Intent();
 		ProfileManager vpl = ProfileManager.getInstance(this);
 
-		setUniqueProfileName(vpl);
+
 		vpl.addProfile(mResult);
 		vpl.saveProfile(this, mResult);
 		vpl.saveProfileList(this);
@@ -184,10 +227,13 @@ public class ConfigConverter extends ListActivity {
 
 
 
-	private void setUniqueProfileName(ProfileManager vpl) {
+	private String getUniqueProfileName(String possibleName) {
+
 		int i=0;
 
-		String newname = mPossibleName;
+        ProfileManager vpl = ProfileManager.getInstance(this);
+
+		String newname = possibleName;
 
 		// 	Default to 
 		if(mResult.mName!=null && !ConfigParser.CONVERTED_PROFILE.equals(mResult.mName))
@@ -201,7 +247,7 @@ public class ConfigConverter extends ListActivity {
 				newname = getString(R.string.converted_profile_i,i);
 		}
 
-		mResult.mName=newname;
+		return newname;
 	}
 
 	@Override
@@ -210,12 +256,8 @@ public class ConfigConverter extends ListActivity {
 		inflater.inflate(R.menu.import_menu, menu);
 		return true;
 	}
-	
-	private String embedFile(String filename) {
-		return embedFile(filename, false);		
-	}
 
-	private String embedFile(String filename, boolean base64encode)
+	private String embedFile(String filename, Utils.FileType type)
 	{
 		if(filename==null)
 			return null;
@@ -224,27 +266,75 @@ public class ConfigConverter extends ListActivity {
 		if(filename.startsWith(VpnProfile.INLINE_TAG))
 			return filename;
 
-		File possibleFile = findFile(filename);
+		File possibleFile = findFile(filename, type);
 		if(possibleFile==null)
 			return filename;
 		else
-			return readFileContent(possibleFile,base64encode);
+			return readFileContent(possibleFile,type == Utils.FileType.PKCS12);
 
 	}
 
-	private File findFile(String filename) {
+	private File findFile(String filename, Utils.FileType fileType) {
 		File foundfile =findFileRaw(filename);
 		
-		if (foundfile==null && filename!=null && !filename.equals(""))
+		if (foundfile==null && filename!=null && !filename.equals("")) {
 			log(R.string.import_could_not_open,filename);
+            addFileSelectDialog(fileType);
+        }
 
 
 		return foundfile;
 	}
 
+    private void addFileSelectDialog(Utils.FileType type) {
+        int titleRes = 0;
+        String value=null;
+        switch (type) {
+            case KEYFILE:
+                titleRes = R.string.client_key_title;
+                if (mResult!=null)
+                    value = mResult.mClientKeyFilename;
+                break;
+            case CLIENT_CERTIFICATE:
+                titleRes = R.string.client_certificate_title;
+                if (mResult!=null)
+                    value = mResult.mClientCertFilename;
+                break;
+            case CA_CERTIFICATE:
+                titleRes = R.string.ca_title;
+                if (mResult!=null)
+                    value = mResult.mCaFilename;
+                break;
+            case TLS_AUTH_FILE:
+                titleRes = R.string.tls_auth_file;
+                if (mResult!=null)
+                    value = mResult.mTLSAuthFilename;
+                break;
+            case PKCS12:
+                titleRes = R.string.client_pkcs12_title;
+                if (mResult!=null)
+                    value = mResult.mPKCS12Filename;
+                break;
+        }
+
+        boolean isCert = type == Utils.FileType.CA_CERTIFICATE || type == Utils.FileType.CLIENT_CERTIFICATE;
+        FileSelectLayout fl = new FileSelectLayout(this,getString(titleRes), isCert);
+        fl.setData(value,this);
+        fileSelectMap.put(type,fl);
+        fl.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        ((LinearLayout) findViewById(R.id.config_convert_root)).addView(fl, 1);
+        int i = getFileLayoutOffset(type);
+        fl.setCaller(this, i, type);
+
+    }
+
+    private int getFileLayoutOffset(Utils.FileType type) {
+        return CHOOSE_FILE_OFFSET + type.getValue();
+    }
 
 
-	private File findFileRaw(String filename)
+    private File findFileRaw(String filename)
 	{
 		if(filename == null || filename.equals(""))
 			return null;
@@ -358,65 +448,98 @@ public class ConfigConverter extends ListActivity {
 		}
 			
 		
-		mResult.mCaFilename = embedFile(mResult.mCaFilename);
-		mResult.mClientCertFilename = embedFile(mResult.mClientCertFilename);
-		mResult.mClientKeyFilename = embedFile(mResult.mClientKeyFilename);
-		mResult.mTLSAuthFilename = embedFile(mResult.mTLSAuthFilename);
-		mResult.mPKCS12Filename = embedFile(mResult.mPKCS12Filename,true);
+		mResult.mCaFilename = embedFile(mResult.mCaFilename, Utils.FileType.CA_CERTIFICATE);
+		mResult.mClientCertFilename = embedFile(mResult.mClientCertFilename, Utils.FileType.CLIENT_CERTIFICATE);
+		mResult.mClientKeyFilename = embedFile(mResult.mClientKeyFilename, Utils.FileType.KEYFILE);
+		mResult.mTLSAuthFilename = embedFile(mResult.mTLSAuthFilename, Utils.FileType.TLS_AUTH_FILE);
+		mResult.mPKCS12Filename = embedFile(mResult.mPKCS12Filename, Utils.FileType.PKCS12);
 		
 
 		if(mResult.mUsername == null && mResult.mPassword != null ){
-			String data =embedFile(mResult.mPassword);
-			ConfigParser.useEmbbedUserAuth(mResult, data);			
-		}
+			String data =embedFile(mResult.mPassword, Utils.FileType.USERPW_FILE);
+            ConfigParser.useEmbbedUserAuth(mResult, data);
+        }
 	}
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        setContentView(R.layout.config_converter);
+
+        mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        getListView().setAdapter(mArrayAdapter);
+
+        super.onCreate(savedInstanceState);
+
+
+        if (savedInstanceState !=null && savedInstanceState.containsKey(VPNPROFILE)) {
+            mResult = (VpnProfile) savedInstanceState.getSerializable(VPNPROFILE);
+            mAliasName = savedInstanceState.getString("mAliasName");
+            mArrayAdapter.addAll(savedInstanceState.getStringArray("logentries"));
+            for (int k: savedInstanceState.getIntArray("fileselects")) {
+                addFileSelectDialog(Utils.FileType.getFileTypeByValue(k));
+            }
+
+            return;
+        }
+
+
+
+        final android.content.Intent intent = getIntent ();
+
+        if (intent != null )
+        {
+            final android.net.Uri data = intent.getData ();
+            if (data != null)
+            {
+                //log(R.string.import_experimental);
+                log(R.string.importing_config,data.toString());
+                try {
+                    String possibleName = null;
+                    if(data.getScheme().equals("file") ||
+                            data.getLastPathSegment().endsWith(".ovpn") ||
+                            data.getLastPathSegment().endsWith(".conf"))
+                    {
+                        possibleName = data.getLastPathSegment();
+                        if (possibleName.lastIndexOf('/')!=-1)
+                            possibleName = possibleName.substring(possibleName.lastIndexOf('/')+1);
+
+                        if(possibleName!=null){
+                            possibleName =possibleName.replace(".ovpn", "");
+                            possibleName =possibleName.replace(".conf", "");
+                        }
+                    }
+                    InputStream is = getContentResolver().openInputStream(data);
+                    mPathsegments = data.getPathSegments();
+
+                    doImport(is, possibleName);
+
+                } catch (FileNotFoundException e) {
+                    log(R.string.import_content_resolve_error);
+                }
+            }
+
+            // We parsed the intent, relay on saved instance for restoring
+            setIntent(null);
+        }
+
+
+    }
 
 
 	@Override
 	protected void onStart() {
 		super.onStart();
 
-		mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-		getListView().setAdapter(mArrayAdapter);
-		final android.content.Intent intent = getIntent ();
 
-		if (intent != null)
-		{
-			final android.net.Uri data = intent.getData ();
-			if (data != null)
-			{
-				//log(R.string.import_experimental);
-				log(R.string.importing_config,data.toString());
-				try {
-					if(data.getScheme().equals("file") ||
-                            data.getLastPathSegment().endsWith(".ovpn") ||
-                            data.getLastPathSegment().endsWith(".conf"))
-                    {
-						mPossibleName = data.getLastPathSegment();
-                        if (mPossibleName.lastIndexOf('/')!=-1)
-                            mPossibleName = mPossibleName.substring(mPossibleName.lastIndexOf('/')+1);
 
-                        if(mPossibleName!=null){
-							mPossibleName =mPossibleName.replace(".ovpn", "");
-							mPossibleName =mPossibleName.replace(".conf", "");
-						}
-					}
-					InputStream is = getContentResolver().openInputStream(data);
-					mPathsegments = data.getPathSegments();
-
-					doImport(is);
-				} catch (FileNotFoundException e) {
-					log(R.string.import_content_resolve_error);
-				}
-			} 
-		} 
 	}
 
 	private void log(String logmessage) {
 		mArrayAdapter.add(logmessage);
 	}
 
-	private void doImport(InputStream is) {
+	private void doImport(InputStream is, String newName) {
 		ConfigParser cp = new ConfigParser();
 		try {
 			InputStreamReader isr = new InputStreamReader(is);
@@ -426,7 +549,9 @@ public class ConfigConverter extends ListActivity {
 			mResult = vp;
 			embedFiles();
 			displayWarnings();
-			log(R.string.import_done);
+            mResult.mName = getUniqueProfileName(newName);
+
+            log(R.string.import_done);
 			return;
 
 		} catch (IOException e) {
@@ -462,4 +587,6 @@ public class ConfigConverter extends ListActivity {
 	private void log(int ressourceId, Object... formatArgs) {
 		log(getString(ressourceId,formatArgs));
 	}
+
+
 }

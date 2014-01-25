@@ -87,9 +87,9 @@ public class NetworkSpace {
         public String toString() {
             //String in = included ? "+" : "-";
             if (isV4)
-                return String.format("%s/%d", getIPv4Address(), networkMask);
+                return String.format(Locale.US,"%s/%d", getIPv4Address(), networkMask);
             else
-                return String.format("%s/%d", getIPv6Address(), networkMask);
+                return String.format(Locale.US, "%s/%d", getIPv6Address(), networkMask);
         }
 
         ipAddress(BigInteger baseAddress, int mask, boolean included, boolean isV4) {
@@ -112,7 +112,7 @@ public class NetworkSpace {
             assert (netAddress.longValue() <= 0xffffffffl);
             assert (netAddress.longValue() >= 0);
             long ip = netAddress.longValue();
-            return String.format("%d.%d.%d.%d", (ip >> 24) % 256, (ip >> 16) % 256, (ip >> 8) % 256, ip % 256);
+            return String.format(Locale.US, "%d.%d.%d.%d", (ip >> 24) % 256, (ip >> 16) % 256, (ip >> 8) % 256, ip % 256);
         }
 
         String getIPv6Address() {
@@ -123,7 +123,7 @@ public class NetworkSpace {
 
             Vector<String> parts = new Vector<String>();
             while (r.compareTo(BigInteger.ZERO) == 1) {
-                parts.add(0, String.format("%x", r.mod(BigInteger.valueOf(256)).longValue()));
+                parts.add(0, String.format(Locale.US, "%x", r.mod(BigInteger.valueOf(256)).longValue()));
                 r = r.shiftRight(16);
             }
 

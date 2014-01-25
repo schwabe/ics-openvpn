@@ -90,8 +90,6 @@
   <string name="error">"Fout:"</string>
   <string name="clear">Leeg maken</string>
   <string name="local_ip_info">Lokaal IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-  <string name="routes_info">Routes: %s</string>
-  <string name="routes_info6">Routes IPv6: %s</string>
   <string name="version_info">%1$s %2$s</string>
   <string name="send_logfile">Logboek verzenden</string>
   <string name="send">Verzenden</string>

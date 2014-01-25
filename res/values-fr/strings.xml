@@ -59,6 +59,7 @@
   <string name="title_cancel">"Annuler la confirmation"</string>
   <string name="cancel_connection_query">"Déconnecter le VPN connecté / annuler la tentative de connexion ?"</string>
   <string name="remove_vpn">"Retirer le VPN"</string>
+  <string name="check_remote_tlscert">Vérifier si le serveur utilise des certificats avec les extensions TLS serveur (--remote-cert-tls serveur)</string>
   <string name="check_remote_tlscert_title">Attendre un certificat de serveur TLS</string>
   <string name="remote_tlscn_check_title">"Vérification du certificat de l\'hôte"</string>
   <string name="tls_key_auth">"Activer l\'authentification par clé TLS"</string>
@@ -93,8 +94,6 @@
   <string name="last_openvpn_tun_config">Ouverture de l\'interface tun:</string>
   <string name="local_ip_info">"IPv4 locale: %1$s/%2$d IPv6: %3$s MTU: %4$d"</string>
   <string name="dns_server_info">Serveur DNS: %1$s, Domaine: %2$s</string>
-  <string name="routes_info">"Routes: %s"</string>
-  <string name="routes_info6">"Routes IPv6: %s"</string>
   <string name="ip_not_cidr">"Informations récupérées de l\'interface: %1$s et %2$s , en supposant que la seconde adresse est l\'adresse peer du réseau distant. Utilisation du masque de réseau /32 pour l\'IP locale. Mode donné par OpenVPN: \"%3$s\"."</string>
   <string name="route_not_cidr">"Ne peut pas donner un sens à %1$s et %2$s comme routage IP avec masque réseau de type CIDR, en utilisant /32 comme masque de réseau."</string>
   <string name="route_not_netip">"Règle de redirection corrigée: %1$s / %2$s en %3$s / %2$s"</string>

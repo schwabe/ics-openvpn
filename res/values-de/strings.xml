@@ -97,8 +97,9 @@
   <string name="last_openvpn_tun_config">Öffne tun Netzwerkinterface:</string>
   <string name="local_ip_info">Lokale IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS-Server: %1$s, Domäne: %2$s</string>
-  <string name="routes_info">Routen IPv4: %s</string>
-  <string name="routes_info6">Routen IPv6: %s</string>
+  <string name="routes_info_incl">Routen: %1$s %2$s</string>
+  <string name="routes_info_excl">ausgenommene Routen: %1$s %2$s</string>
+  <string name="routes_debug">Installierte Routen (VpnService): %1$s %2$s</string>
   <string name="ip_not_cidr">Interface Information %1$s und %2$s, nehme an, die zweite Adresse ist die Peer Adresse. Benutze /32 Netzmaske für die lokale IP Adresse. Interface Modus spezifiziert von OpenVPN ist \"%3$s\".</string>
   <string name="route_not_cidr">Die Route %1$s mit der Netzmaske %2$s ist keine Route mit einer CIDR Netzmaske, benutze /32 als Netzmaske.</string>
   <string name="route_not_netip">Route %1$s/%2$s korrigiert zu %3$s/%2$s</string>
@@ -306,5 +307,6 @@
   <string name="logview_options">Ansichtsoptionen</string>
   <string name="unhandled_exception">Unbehandelte Ausnahme: %1$s\n\n%2$s</string>
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
+  <string name="faq_system_dialog_xposed">Wenn Sie ihr Gerät gerootet haben können Sie das &lt;a href=\"http://xposed.info/\"&gt;Xposed Framework&lt;/a&gt; und das &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN Dialog confirm Modul&lt;/a&gt; auf eigene Gefahr installieren.</string>
   <string name="full_licenses">Komplette Lizenzen</string>
 </resources>

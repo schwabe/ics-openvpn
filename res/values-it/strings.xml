@@ -97,8 +97,6 @@
   <string name="last_openvpn_tun_config">Apertura interfaccia tun in corso:</string>
   <string name="local_ip_info">Indirizzi locali - IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS Server: %1$s, Dominio: %2$s</string>
-  <string name="routes_info">Instradamenti (route): %s</string>
-  <string name="routes_info6">Instradamenti (route) IPv6: %s</string>
   <string name="ip_not_cidr">Ottenute le informazioni sulle interfacce %1$s e %2$s, assumendo che il secondo indirizzo sia il peer remoto. Utilizzata la maschera /32 per l\'IP locale. La modalità impostata da OpenVPN è \"%3$s\".</string>
   <string name="route_not_cidr">Impossibile utilizzare %1$s e %2$s come reindirizzamenti IP con la maschera CIDR, è stata quindi usata la maschera /32.</string>
   <string name="route_not_netip">Instradamento %1$s/%2$s corretto con %3$s/%2$s</string>
@@ -137,6 +135,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
   <string name="add_profile">Aggiungi profilo</string>
   <string name="import_could_not_open">Impossibile trovare il file %1$s menzionato nel file di configurazione importato</string>
   <string name="importing_config">Importa il file di configurazione dalla sorgente %1$s</string>
+  <string name="import_warning_custom_options">La tua configurazione usava qualche opzione non mappata sull\'Interfaccia Utente. Queste opzioni sono state quindi aggiunte come personalizzate. La configurazione personalizzata è visualizzata qui sotto:</string>
   <string name="import_done">
 Effettuata la lettura del file di configurazione</string>
   <string name="nobind_summary">Non si vincola all\'indirizzo e alla porta locali (bind)</string>
@@ -153,6 +152,7 @@ Effettuata la lettura del file di configurazione</string>
   <string name="converted_profile">profilo importato</string>
   <string name="converted_profile_i">profilo importato %d</string>
   <string name="broken_images">Firmware bacati</string>
+  <string name="broken_images_faq">&lt;p&gt;E\' noto che le immagini ufficiali di HTC presentano uno strano problema di routing causando per cui il traffico non fluisce nel tunnel (Vedere &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; nella gestione dei bug.)&lt;/p&gt;&lt;p&gt;Le immagini SONY più vecchie per Xperia Arc S e Xperia Ray sono segnalate come completamente mancanti di VPNService. (Vedere anche &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt; Problema 29&lt;/a&gt; nella gestione bug.)&lt;/p&gt;&lt;p&gt; Su immagini personalizzate il modulo tun potrebbe essere mancante oppure i diritti di accesso a /dev/tun potrebbero essere errati. Alcune immagini CM9 hanno bisogno di avere abilitata \'opzione \"Aggiusta proprietà\" nelle \"Opzioni specifiche per il dispositivo\".&lt;/p&gt;&lt;p&gt;Molto importante: se il tuo dispositivo ha un\'immagine Android difettosa, segnalalo al tuo rivenditore. Più persone segnalano un problema al rivenditore, più è probabile che questi lo sistemi.&lt;/p&gt;</string>
   <string name="pkcs12_file_encryption_key">File con la chiave di crittografia PKCS12</string>
   <string name="private_key_password">Password della chiave privata</string>
   <string name="password">Password</string>
@@ -186,6 +186,7 @@ Effettuata la lettura del file di configurazione</string>
   <string name="export_config_title">Configurazione OpenVPN ICS</string>
   <string name="warn_no_dns">Nessun server DNS verrà utilizzato. La risoluzione dei nomi potrebbe non funzionare. Provare a impostare i server DNS personalizzati. Si prega di notare, che Android utilizzerà le impostazioni del proxy specificate per la connessione Wi-Fi, quando non viene impostato alcun server DNS.</string>
   <string name="dns_add_error">Impossibile aggiungere il server DNS \"%1$s\", respinto dal sistema: %2$s</string>
+  <string name="ip_add_error">Non è stato possibile configurare l\'indirizzo IP \"%1$s\", che è stato rifiutato dal sistema: %2$s</string>
   <string name="faq_howto">&lt;p&gt;Ottieni una configurazione funzionante (testata sul tuo computer o fornita dal tuo provider o dalla tua ditta).&lt;/p&gt;&lt;p&gt;Se si tratta di un singolo file senza ulteriori file tipo pem/pkcs12, puoi spedire il file a te stesso via email ed aprire l\'allegato. Se hai più file, salvali sulla scheda SD.&lt;/p&gt;&lt;p&gt;Clicca sull\'allegato dell\'email oppure utilizza l\'icona della cartella nell\'elenco delle VPN per importare il file di configurazione.&lt;/p&gt;&lt;p&gt;Se compaiono degli errori relativi a file non trovati, copia i file mancanti sulla tua scheda SD.&lt;/p&gt;&lt;p&gt;Clicca sull\'icona di salvataggio per aggiungere la VPN importata nell\'elenco delle tue VPN.&lt;/p&gt;&lt;p&gt;Connettiti alla VPN cliccando sul nome della VPN.&lt;/p&gt;&lt;p&gt;Se compaiono degli errori o degli avvertimenti nei log, si consiglia di non ignorarli, ma di cercare delle soluzioni.&lt;/p&gt; </string>
   <string name="faq_howto_title">Guida rapida</string>
   <string name="setting_loadtun_summary">Prova a caricare il modulo tun.ko prima di connettersi. Si devono avere diritti di root sul dispositivo.</string>
@@ -210,11 +211,13 @@ Effettuata la lettura del file di configurazione</string>
   <string name="vpn_import_hint">Usa l\'icona &lt;img src=\"ic_menu_archive\"/&gt; per importare il profilo (.ovpn o .conf) dalla tua scheda SD.</string>
   <string name="faq_hint">Si raccomanda di leggere anche le FAQ. C\'è anche una guida rapida.</string>
   <string name="faq_routing_title">Configurazione dei reindirizzamenti e dell\'interfaccia</string>
+  <string name="faq_routing">Il routing e la configurazione dell\'interfaccia non è fatta tramite il tradizionale comando ifconfig/route ma tramite la API VPNService. Questo determina una configurazione differente rispetto ad altri S.O. La configurazione consiste solo nell\'IP dell\'interfaccia di tunnel e nelle reti che dovrebbero essere ridirette su questa interfaccia. In particolare non è necessario specificare alcun indirizzo del partner o del gateway. Nè sono necessarie rotte particolari per raggiungere il Server VPN (ad esempio quando si usa l\'opzione redirect-gateway). L\'applicazione ignorerà quindi tutte queste impostazioni quando si importa una configurazione. L\'applicazione si assicura con la API VPNService che la connessione al server non venga reindirizzata tramite il tunnel VPN. Dal momento che solo reti specifiche sono supportate per essere reindirizzate tramite il tunner, anche altre rotte che non indirizzano il tunnel non possono essere supportate. (es. route x.x.x.x y.y.y.y net_gateway). La finestra del log mostra la configurazione corrente di VPNService non appena viene stabilita una connessione. </string>
   <string name="persisttun_summary">Non passa allo stato di \"Nessuna connessione VPN\" quando OpenVPN sta eseguendo un tentativo di riconnessione.</string>
   <string name="persistent_tun_title">tun persistente</string>
   <string name="openvpn_log">Log di OpenVPN</string>
   <string name="import_config">Importa configurazione OpenVPN</string>
   <string name="battery_consumption_title">Consumo della batteria</string>
+  <string name="baterry_consumption">Nei miei test personali la ragione principale per l\'alto consumo di batteria con OpenVPN è rappresentata dai pacchetti keepalive. La maggior parte dei server OpneVPN posseggono una direttiva \'keepalive 10 60\' che fa sì che il client e il server scambino dei pacchetti keepalive ogni dieci secondi.&lt;p&gt; Anche se questi pacchetti sono piccoli e non usano molto traffico, essi mantengono impegnata la sezione radio del dispositivo e incrementano il consumo energetico. (Vedere anche &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Questa impostazione keepalive non può essere cambiata lato client. Solo l\'amministratore del server OpenVPN può farlo.&lt;p&gt; Purtroppo usando un keepalive maggiore di 60 secondi con UDP alcuni gateway NAT fanno cadere la connessione per via di un timeout su inattività. Usando TCP con un keepalive lungo il timeout funziona, ma il tunneling su TCP presenta basse prestazioni su connessioni con alta perdita di pacchetti. (Vedere &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
   <string name="faq_tethering">Il Tethering di Android (via WiFi, USB o Bluetooth) e le API del servizio VPN (utilizzate da questo programma) non possono funzionare contemporaneamente. Per maggiori informazioni, vedi &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;il problema #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN e Tethering</string>
   <string name="connection_retries">Tentativi di riconnessione</string>
@@ -265,20 +268,43 @@ Effettuata la lettura del file di configurazione</string>
   <string name="tls_remote_deprecated">TLS-remote (obsoleto)</string>
   <string name="help_translate">Puoi aiutare nella traduzione visitando http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s tenta di controllare %2$s</string>
+  <string name="remote_warning">Se procedi, concedi all\'applicazione l\'autorizzazione per intercettare tutto il traffico di rete.<b> NON accettare se non consideri l\'applicazione attendibile</b>, altrimenti corri il rischio che i tuoi dati vengano compromessi da programmi software dannosi</string>
   <string name="remote_trust">Considero questa applicazione attendibile.</string>
   <string name="no_external_app_allowed">Nessuna app ha il permesso di usare l\'API esterna</string>
   <string name="allowed_apps">Apps abilitate;%s</string>
   <string name="clearappsdialog">Cancellare la lista delle apps esterne autorizzate?\nLista corrente di applicazioni autorizzate:\n\n%s</string>
+  <string name="screenoff_summary">Sospende la VPN quando lo schermo è spento e meno di 64Kb di dati sono trasferiti in 60s.  Quando l\'opzione \"Tun persistente\" è abilitata, la sospensione della VPN lascerà il tuo dispositivo con NESSUNA connettività di rete. Senza l\'opzione \"Tun persistente\" il dispositivo non avrà alcuna connessione/protezione VPN.</string>
+  <string name="screenoff_title">Sospende la connessione VPN dopo lo spegnimento dello schermo</string>
+  <string name="screenoff_pause">Sospensione della connessione nello stato di schermo spento: meno di %1$s in %2$ss</string>
+  <string name="screen_nopersistenttun">Attenzione: \"Tun persistente\" non è abilitato per questa VPN. Quando lo schermo è spento verrà utilizzata la normale connessione internet.</string>
   <string name="save_password">Salva la Password</string>
   <string name="pauseVPN">Pausa della VPN</string>
   <string name="resumevpn">Ricollega la VPN</string>
+  <string name="state_userpause">Sospensione della VPN richiesta dall\'utente</string>
+  <string name="state_screenoff">VPN sospesa - schermo spento</string>
+  <string name="device_specific">Regolazioni specifiche per il dispositivo</string>
+  <string name="cannotparsecert">Non è possibile visualizzare le informazioni del certificato</string>
+  <string name="appbehaviour">Comportamento dell\'applicazione</string>
+  <string name="vpnbehaviour">Comportamento della VPN</string>
   <string name="allow_vpn_changes">Abilita modifiche ai profili VPN</string>
+  <string name="hwkeychain">Raccoglitore chiavi hardware:</string>
+  <string name="permission_icon_app">Un\'icona di applicazione sta tentando di usare OpenVPN per Android</string>
+  <string name="faq_vpndialog43">"A partire da Android 4.3 la conferma della VPN viene salvaguardata da \"applicazioni in overlay\". Questo fa sì che il bottone di dialogo non reagisca allo sfioramento. Se avete un\'applicazione che usa gli overlay, ciò potrebbe causare questo comportamento. Se vi capita di trovare questo tipo di situazione, contattate l\'autore dell\'applicazione. Questo problema affligge tutte le applicazioni VPN da Android 4.3 in poi. Consultare anche &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\"&gt;Issue 185&lt;a&gt; per ulteriori dettagli"</string>
+  <string name="faq_vpndialog43_title">Messaggio di conferma Vpn su Android 4.3 e versioni successive</string>
+  <string name="donatePlayStore">In alternativa, potete inviarmi una donazione con il Play Store:</string>
   <string name="thanks_for_donation">Grazie per la donazione di %s!</string>
+  <string name="logCleared">Registrazioni log cancellate.</string>
   <string name="show_password">Mostra password</string>
+  <string name="keyChainAccessError">Errore di accesso al Gestore Chiavi: %s</string>
   <string name="timestamp_short">Breve</string>
   <string name="timestamp_iso">ISO</string>
+  <string name="timestamps">Indicazione oraria</string>
   <string name="timestamps_none">Nulla</string>
   <string name="uploaded_data">Upload</string>
   <string name="downloaded_data">Download</string>
   <string name="vpn_status">Stato VPN</string>
+  <string name="logview_options">Visualizza opzioni</string>
+  <string name="unhandled_exception">Eccezione non gestita: %1$s\n\n%2$s</string>
+  <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
+  <string name="full_licenses">Licenze complete</string>
 </resources>

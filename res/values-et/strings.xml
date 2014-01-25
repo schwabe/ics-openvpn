@@ -97,8 +97,6 @@
   <string name="last_openvpn_tun_config">tun liidese avamine:</string>
   <string name="local_ip_info">Lokaalne IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS server: %1$s, Domeen: %2$s</string>
-  <string name="routes_info">Marsruudid: %s</string>
-  <string name="routes_info6">IPv6 marsruudid: %s</string>
   <string name="ip_not_cidr">Liidese andmed on %1$s ja %2$s, eeldades et teine aadress on eemalasuva serveri aadress. Lokaalse IP jaoks kasutatakse /32 võrgumaski. OpenVPN teatab režiimiks %3$s\".</string>
   <string name="route_not_cidr">%1$s ja %2$s on mõttetud CIDR võrgumaskiga IP marsruutidest, võrgumaskiks määratakse /32.</string>
   <string name="route_not_netip">%1$s/%2$s marsruut parandatud: %3$s/%2$s</string>
@@ -303,4 +301,8 @@
   <string name="uploaded_data">Üleslaadimine</string>
   <string name="downloaded_data">Allalaadimine</string>
   <string name="vpn_status">Vpn olek</string>
+  <string name="logview_options">Kuva valikud</string>
+  <string name="unhandled_exception">Käsitlematu erand: %1$s\n\n%2$s</string>
+  <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
+  <string name="full_licenses">Kõik litsentsid</string>
 </resources>

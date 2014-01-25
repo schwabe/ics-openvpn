@@ -97,8 +97,6 @@
   <string name="last_openvpn_tun_config">Öppnar tun gränssnittet:</string>
   <string name="local_ip_info">Lokal IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS-Server: %1$s, Domän: %2$s</string>
-  <string name="routes_info">Rutter: %s</string>
-  <string name="routes_info6">Rutter IPv6: %s</string>
   <string name="ip_not_cidr">Fick gränssnitts informationen %1$s och %2$s, förutsätter att andra adressen är peer adressen på fjärrservern. Använder nätmask /32 för lokal IP. Satus på OpenVPN är \"%3$s\".</string>
   <string name="route_not_cidr">Förstår inte %1$s och %2$s som IP rutt med CIDR netmask, där /32 används som nätmask.</string>
   <string name="route_not_netip">Korrigerad rutt %1$s/%2$s till %3$s/%2$s</string>
@@ -147,7 +145,7 @@
   <string name="broken_image_cert">Fick ett undantag när Android 4.0+ dialogrutan för val av certifikat försökte visas. Detta bör aldrig ske eftersom detta en standardfunktion hos Android 4.0+. Kanske är stödet för lagring av certifikat i din Android ROM trasigt</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Väntar på tillstånds meddelande...</string>
+  <string name="speed_waiting">Väntar på tillstånds meddelande…</string>
   <string name="converted_profile">importerad profil</string>
   <string name="converted_profile_i">importerad profil %d</string>
   <string name="broken_images">Trasiga ROM</string>
@@ -163,7 +161,7 @@
   <string name="owner_fix">Fixa ägande av /dev/tun</string>
   <string name="generated_config_summary">Visar den genererade OpenVPN-konfigurationsfilen</string>
   <string name="edit_profile_title">Redigerar \"%s\"</string>
-  <string name="building_configration">Bygger konfiguration...</string>
+  <string name="building_configration">Bygger konfiguration…</string>
   <string name="netchange_summary">Aktivering av detta alternativ kommer att tvinga en återanslutning om nätverksanslutningen ändras (t.ex. WiFi &lt;-> mobildata)</string>
   <string name="netchange">Återanslut vid förändring av nätverksanslutning</string>
   <string name="netstatus">Nätverksstatus: %s</string>

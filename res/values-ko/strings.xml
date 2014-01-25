@@ -277,7 +277,6 @@
   <string name="screen_nopersistenttun">경고: 이 VPN은 persistent tun이 비활성화 되어있습니다. 화면이 꺼졌을 때 트래픽은 터널을 사용하지 않고 인터넷을 바로 사용합니다.</string>
   <string name="save_password">암호 저장</string>
   <string name="pauseVPN">VPN 일시중지</string>
-  <string name="resumevpn">VPN 재개</string>
   <string name="state_userpause">VPN 일시 정지 사용자의 요청</string>
   <string name="state_screenoff">VPN 일시정지됨 - 화면 끄기</string>
   <string name="device_specific">장치 관련 Hacks</string>

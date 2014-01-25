@@ -22,7 +22,7 @@
   <string name="vpn_list_title">Profile</string>
   <string name="vpn_type">Typ</string>
   <string name="pkcs12pwquery">Hasło PKCS12</string>
-  <string name="file_select">Wybierz...</string>
+  <string name="file_select">Wybierz…</string>
   <string name="file_nothing_selected">Wybierz plik</string>
   <string name="useTLSAuth">Użyj uwierzytelniania TLS</string>
   <string name="tls_direction">Kierunek TLS</string>
@@ -89,8 +89,6 @@
   <string name="last_openvpn_tun_config">Otwieram interfejs tun:</string>
   <string name="local_ip_info">Lokalne IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">Serwer DNS: %1$s, Domena: %2$s</string>
-  <string name="routes_info">Trasy: %s</string>
-  <string name="routes_info6">Trasy IPv6: %s</string>
   <string name="version_info">%1$s %2$s</string>
   <string name="send_logfile">Wyślij loga</string>
   <string name="send">Wyślij</string>
@@ -127,7 +125,7 @@
   <string name="import_vpn">Importuj</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Oczekiwanie na wiadomość powitalną...</string>
+  <string name="speed_waiting">Oczekiwanie na wiadomość powitalną…</string>
   <string name="broken_images">Uszkodzone obrazy</string>
   <string name="pkcs12_file_encryption_key">Klucz pliku PKCS12</string>
   <string name="private_key_password">Hasło klucza prywatnego</string>
@@ -139,7 +137,7 @@
   <string name="owner_fix">Popraw uprawnienia do /dev/tun</string>
   <string name="generated_config_summary">Pokazuje wygenerowany plik konfiguracji OpenVPN</string>
   <string name="edit_profile_title">Edycja \"%s\"</string>
-  <string name="building_configration">Tworzenie konfiguracji...</string>
+  <string name="building_configration">Tworzenie konfiguracji…</string>
   <string name="netchange_summary">Włączenie tej opcji spowoduje ponowne połączenie jeśli stan sieci się zmienił (np. z WiFi na GSM)</string>
   <string name="netchange">Połącz ponownie przy zmianie sieci</string>
   <string name="netstatus">Status sieci: %s</string>

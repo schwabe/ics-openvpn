@@ -97,8 +97,6 @@
   <string name="last_openvpn_tun_config">Se deschide interfața tun:</string>
   <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">Server DNS: %1$s, Domeniu: %2$s</string>
-  <string name="routes_info">Rute: %s</string>
-  <string name="routes_info6">Rute IPv6: %s</string>
   <string name="ip_not_cidr">S-au primit informaţiile despre interfaţă %1$s şi %2$s, presupun că a doua adresă este adresa peer a serverlui remote. Folosesc netmask /32 pentru IP local. Modul dat de OpenVPN este \"%3$s\".</string>
   <string name="route_not_cidr">Nu se poate interpreta %1$s şi %2$s ca rute IP cu netmask CIDR, folosesc /32 ca netmask.</string>
   <string name="route_not_netip">Am corectat ruta %1$s/%2$s ca %3$s/%2$s</string>

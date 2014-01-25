@@ -97,8 +97,6 @@
   <string name="last_openvpn_tun_config">Відкриття tun інтерфейсу:</string>
   <string name="local_ip_info">Адреса IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS-сервер: %1$s, Домен: %2$s</string>
-  <string name="routes_info">Маршрути: %s</string>
-  <string name="routes_info6">Маршрути IPv6: %s</string>
   <string name="ip_not_cidr">Отримано інформацію інтерфейсу %1$s і %2$s, друга адреса є віддаленою адресою каналу. Використовується мережева маска /32 для локальної IP-адреси. Режим, встановлений OpenVPN: \"%3$s\".</string>
   <string name="route_not_cidr">Неможливо використовувати вирази %1$s і %2$s як маршрут за стандартом CIDR. використовується /32 як маска підмережі.</string>
   <string name="route_not_netip">Виправлено маршрут з %1$s/%2$s на %3$s/%2$s</string>

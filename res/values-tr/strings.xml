@@ -23,7 +23,7 @@
   <string name="vpn_list_title">Profiller</string>
   <string name="vpn_type">Tür</string>
   <string name="pkcs12pwquery">PKCS12 Şifresi</string>
-  <string name="file_select">Seçiniz... </string>
+  <string name="file_select">Seçiniz…</string>
   <string name="file_nothing_selected">Bir dosya seçmelisiniz</string>
   <string name="useTLSAuth">TLS Kimlik Doğrulamasını Kullan</string>
   <string name="tls_direction">TLS yönü</string>
@@ -98,8 +98,6 @@
   <string name="last_openvpn_tun_config">Açılış tun arabirimi:</string>
   <string name="local_ip_info">Yerel IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS sunucusu: %1$s, etki alanı: %2$s</string>
-  <string name="routes_info">Güzergah: %s</string>
-  <string name="routes_info6">IPv6 yönlendirir: %s</string>
   <string name="ip_not_cidr">Arabirim bilgileri %1$s ve %2$s var, tabii ikinci eş adresi uzaktan adresidir. /32 Kullanarak için yerel IP ağ maskesi. OpenVPN tarafından verilen \"%3$s\" modudur.</string>
   <string name="route_not_cidr">%1$s ve %2$s olarak IP yolu ile CIDR ağ maskesi, ağ maskesi /32 kullanarak yapamazsınız.</string>
   <string name="route_not_netip">Rota %1$s/%2$s %3$s/%2$s için düzeltilmiş</string>
@@ -165,7 +163,7 @@
   <string name="owner_fix">/ Dev / tun sahipliğini düzeltmek</string>
   <string name="generated_config_summary">Oluşturulan OpenVPN yapılandırma dosyası göster</string>
   <string name="edit_profile_title">\"%s\" düzenleme</string>
-  <string name="building_configration">Yapılandırma binası ...</string>
+  <string name="building_configration">Yapılandırma binası…</string>
   <string name="netchange_summary">Ağ durumu (örneğin WiFi üzerinden cep telefonlarına/cep) değiştirdiyseniz bu seçeneği açmak yeniden bağlantı zorlar</string>
   <string name="netchange">Ağ değişikliği üzerinde yeniden bağlan</string>
   <string name="netstatus">Ağ Durumu: %s</string>

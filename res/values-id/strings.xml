@@ -97,8 +97,6 @@
   <string name="last_openvpn_tun_config">Membuka interface tun :</string>
   <string name="local_ip_info">IPv4 lokal : %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS Server: %1$s, Domain: %2$s</string>
-  <string name="routes_info">Rute: %s</string>
-  <string name="routes_info6">Rute IPv6: %s</string>
   <string name="ip_not_cidr">Memilki informasi antarmuka %1$s dan %2$s, asumsi alamat kedua adalah alamat remote. Menggunakan netmask /32 untuk IP lokal. Mode yang diberikan oleh OpenVPN adalah \"%3$s\".</string>
   <string name="route_not_cidr">Tidak masuk akal membuat %1$s dan %2$s sebagai rute IP dengan netmask CIDR, Gunakan /32 sebagai netmask.</string>
   <string name="route_not_netip">rute yang diperbaiki %1$s/%2$s hingga %3$s/%2$s</string>

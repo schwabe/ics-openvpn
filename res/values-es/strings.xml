@@ -97,8 +97,6 @@
   <string name="last_openvpn_tun_config">Abriendo interfaz tun:</string>
   <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">Servidor DNS : %1$s, Dominio: %2$s</string>
-  <string name="routes_info">Rutas: %s</string>
-  <string name="routes_info6">Rutas IPv6: %s</string>
   <string name="ip_not_cidr">Información de la interfaz obtenida %1$s and %2$s, asumiendo que la segunda dirección es una dirección equivalente del remoto. Usando una máscara de red /32 para la IP local. El modo dado por OpenVPN es \"%3$s\".</string>
   <string name="route_not_cidr">No tienen sentido %1$s y %2$s como ruta IP con máscara de red CIDR, usando /32 como máscara de red.</string>
   <string name="route_not_netip">Ruta conectada de %1$s/%2$s a %3$s/%2$s</string>

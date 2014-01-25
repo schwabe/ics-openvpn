@@ -97,8 +97,6 @@
   <string name="last_openvpn_tun_config">TUN 인터페이스 열기:</string>
   <string name="local_ip_info">로컬 IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS 서버: %1$s, 도메인: %2$s</string>
-  <string name="routes_info">라우트: %s</string>
-  <string name="routes_info6">라우트 IPv6: %s</string>
   <string name="ip_not_cidr">인터페이스 정보 %1$s와 %2$s에 있어, 두 번째 주소를 원격 피어 주소로 가정 하겠습니다. 로컬 IP의 넷마스크로는 /32를 사용하겠습니다. OpenVPN에 의해 주어진 모드는 \"%3$s\" 입니다.</string>
   <string name="route_not_cidr">CIDR 넷마스크가 있는 IP 라우트 %1$s 와 %2$s 에 있어서 처리가 불가능합니다. /32를 넷마스크로 사용하겠습니다.</string>
   <string name="route_not_netip">%1$s/%2$s 에서 %3$s/%2$s로 라우트 수정</string>
@@ -273,6 +271,13 @@
   <string name="no_external_app_allowed">어떤 응용 프로그램도 외부 API를 사용할 수 없습니다</string>
   <string name="allowed_apps">허용된 앱: %s</string>
   <string name="clearappsdialog">허용된 외부 앱의 목록을 삭제하겠습니까?\n현재 허용된 외부 앱:\n\n%s</string>
+  <string name="screenoff_summary">\"화면이 꺼져있을때 60초동안 64kB 미만의 데이터가 전송되면 VPN 일시정지. \"Persistent Tun\" 옵션이 활성화되어 있으면 VPN 일시 정지시 당신의 장비는 네트워크가 끊어 집니다. \"Persistent Tun\" 옵션이 없는 경우 장비는 VPN 연결/보호를 잃습니다.  </string>
+  <string name="screenoff_title">화면 꺼짐 후 VPN 연결 일시 정지</string>
+  <string name="screenoff_pause">화면이 꺼진 상태에서 일시 중지: %2$ss에서 %1$s 미만</string>
+  <string name="screen_nopersistenttun">경고: 이 VPN은 persistent tun이 비활성화 되어있습니다. 화면이 꺼졌을 때 트래픽은 터널을 사용하지 않고 인터넷을 바로 사용합니다.</string>
+  <string name="save_password">암호 저장</string>
+  <string name="pauseVPN">VPN 일시중지</string>
+  <string name="resumevpn">VPN 재개</string>
   <string name="state_userpause">VPN 일시 정지 사용자의 요청</string>
   <string name="state_screenoff">VPN 일시정지됨 - 화면 끄기</string>
   <string name="device_specific">장치 관련 Hacks</string>
@@ -280,7 +285,7 @@
   <string name="appbehaviour">응용 프로그램 동작</string>
   <string name="vpnbehaviour">VPN 동작</string>
   <string name="allow_vpn_changes">VPN 프로필에 대한 변경을 허용</string>
-  <string name="hwkeychain">하드웨어 키 스토어:</string>
+  <string name="hwkeychain">하드웨어 키 스토어:</string> -->
   <string name="permission_icon_app">응용 프로그램의 아이콘이 OpenVPN for Android를 사용 하려고함</string>
   <string name="faq_vpndialog43">"안드로이드 4.3부터는 VPN 확인이 \"overlaying apps\"로 부터 보호 받게 됩니다. 따라서 입력창이 터치 입력에 반응하지 않을 수 있습니다. 사용하는 앱중에서 overlay를 사용하는 경우 이러한 문제가 발생될수있습니다. 문제의 앱을 제작한 프로그램어를 연락하십시오. 이 문제는 안드로이드 4.3과 이상의 버전에서 모든 VPN 응용 프로그램에 영향을 줍니다. &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\"&gt;Issue 185&lt;a&gt; 참조"</string>
   <string name="faq_vpndialog43_title">안드로이드 4.3과 이후 버전에서의 VPN 확인 창</string>

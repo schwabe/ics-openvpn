@@ -85,8 +85,6 @@
   <string name="error">"錯誤: "</string>
   <string name="clear">清除</string>
   <string name="local_ip_info">本地IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-  <string name="routes_info">路徑: %s</string>
-  <string name="routes_info6">IPv6路由: %s</string>
   <string name="version_info">%1$s %2$s</string>
   <string name="send_logfile">分享記錄檔</string>
   <string name="send">分享</string>

@@ -1,13 +1,10 @@
 package de.blinkt.openvpn.views;
 
-import android.net.Uri;
-import android.util.Base64;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.X509Utils;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -44,10 +41,17 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
         }
     }
 
-    private final boolean mIsCertificate;
+    public interface FileSelectCallback {
+
+        String getString(int res);
+
+        void startActivityForResult(Intent startFC, int mTaskId);
+    }
+
+    private boolean mIsCertificate;
     private TextView mDataView;
     private String mData;
-    private Fragment mFragment;
+    private FileSelectCallback mFragment;
     private int mTaskId;
     private Button mSelectButton;
     private Utils.FileType fileType;
@@ -57,12 +61,27 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 
     public FileSelectLayout(Context context, AttributeSet attrset) {
         super(context, attrset);
-        inflate(getContext(), R.layout.file_select, this);
 
         TypedArray ta = context.obtainStyledAttributes(attrset, R.styleable.FileSelectLayout);
 
-        mTitle = ta.getString(R.styleable.FileSelectLayout_title);
-        mIsCertificate = ta.getBoolean(R.styleable.FileSelectLayout_certificate, true);
+        setupViews(ta.getString(R.styleable.FileSelectLayout_title), ta.getBoolean(R.styleable.FileSelectLayout_certificate, true));
+
+        ta.recycle();
+    }
+
+    public FileSelectLayout (Context context, String title, boolean isCerticate)
+    {
+        super(context);
+
+        setupViews(title, isCerticate);
+
+    }
+
+    private void setupViews(String title, boolean isCertificate) {
+        inflate(getContext(), R.layout.file_select, this);
+
+        mTitle = title;
+        mIsCertificate = isCertificate;
 
         TextView tview = (TextView) findViewById(R.id.file_title);
         tview.setText(mTitle);
@@ -71,11 +90,10 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
         mDataDetails = (TextView) findViewById(R.id.file_selected_description);
         mSelectButton = (Button) findViewById(R.id.file_select_button);
         mSelectButton.setOnClickListener(this);
-
-        ta.recycle();
     }
 
-    public void setFragment(Fragment fragment, int i, Utils.FileType ft) {
+
+    public void setCaller(FileSelectCallback fragment, int i, Utils.FileType ft) {
         mTaskId = i;
         mFragment = fragment;
         fileType = ft;

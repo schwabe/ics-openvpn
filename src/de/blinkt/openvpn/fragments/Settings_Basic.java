@@ -35,7 +35,7 @@ import de.blinkt.openvpn.core.X509Utils;
 
 import java.security.cert.X509Certificate;
 
-public class Settings_Basic extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback {
+public class Settings_Basic extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback, FileSelectLayout.FileSelectCallback {
 	private static final int CHOOSE_FILE_OFFSET = 1000;
 	private static final int UPDATE_ALIAS = 20;
 
@@ -66,7 +66,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
     private void addFileSelectLayout (FileSelectLayout fsl, Utils.FileType type) {
 		int i = fileselects.size() + CHOOSE_FILE_OFFSET;
 		fileselects.put(i, fsl);
-		fsl.setFragment(this,i,type);
+		fsl.setCaller(this, i, type);
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -140,8 +140,8 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mPassword = (EditText) mView.findViewById(R.id.auth_password);
 		mKeyPassword = (EditText) mView.findViewById(R.id.key_password);
 
-		addFileSelectLayout(mCaCert, Utils.FileType.CERTIFICATE);
-		addFileSelectLayout(mClientCert, Utils.FileType.CERTIFICATE);
+		addFileSelectLayout(mCaCert, Utils.FileType.CA_CERTIFICATE);
+		addFileSelectLayout(mClientCert, Utils.FileType.CLIENT_CERTIFICATE);
 		addFileSelectLayout(mClientKey, Utils.FileType.KEYFILE);
 		addFileSelectLayout(mpkcs12, Utils.FileType.PKCS12);
 		mCaCert.setShowClear();

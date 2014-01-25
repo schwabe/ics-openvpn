@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Base64;
 import android.webkit.MimeTypeMap;
+import junit.framework.Assert;
 
 import java.io.*;
 import java.util.TreeSet;
@@ -28,7 +29,8 @@ public class Utils {
                 extensions.add("p12");
                 extensions.add("pfx");
                 break;
-            case CERTIFICATE:
+            case CLIENT_CERTIFICATE:
+            case CA_CERTIFICATE:
                 i.setType("application/x-pem-file");
                 supportedMimeTypes.add("application/x-x509-ca-cert");
                 supportedMimeTypes.add("application/x-x509-user-cert");
@@ -61,6 +63,9 @@ public class Utils {
                 extensions.add("txt");
                 extensions.add("key");
                 break;
+            case USERPW_FILE:
+                Assert.fail();
+                break;
         }
 
         MimeTypeMap mtm = MimeTypeMap.getSingleton();
@@ -78,11 +83,45 @@ public class Utils {
     }
 
     public enum FileType {
-        PKCS12,
-        CERTIFICATE,
-        OVPN_CONFIG,
-        KEYFILE,
-        TLS_AUTH_FILE
+        PKCS12(0),
+        CLIENT_CERTIFICATE(1),
+        CA_CERTIFICATE(2),
+        OVPN_CONFIG(3),
+        KEYFILE(4),
+        TLS_AUTH_FILE(5),
+        USERPW_FILE(6);
+
+        private int value;
+
+        FileType(int i) {
+            value=i;
+        }
+
+        public static FileType getFileTypeByValue(int value)
+        {
+            switch(value) {
+                case 0:
+                    return PKCS12;
+                case 1:
+                    return CLIENT_CERTIFICATE;
+                case 2:
+                    return CA_CERTIFICATE;
+                case 3:
+                    return OVPN_CONFIG;
+                case 4:
+                    return KEYFILE;
+                case 5:
+                    return TLS_AUTH_FILE;
+                case 6:
+                    return USERPW_FILE;
+                default:
+                    return null;
+            }
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 
     static private byte[] readBytesFromStream(InputStream input) throws IOException {

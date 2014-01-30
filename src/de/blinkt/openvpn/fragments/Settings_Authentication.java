@@ -14,8 +14,11 @@ import android.preference.SwitchPreference;
 import android.util.Pair;
 import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.views.RemoteCNPreference;
 import de.blinkt.openvpn.VpnProfile;
+
+import java.io.IOException;
 
 
 public class Settings_Authentication extends OpenVpnPreferencesFragment implements OnPreferenceChangeListener, OnPreferenceClickListener {
@@ -186,9 +189,13 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 			String result = data.getStringExtra(FileSelect.RESULT_DATA);
 			mTlsAuthFileData=result;
 			setTlsAuthSummary(result);
-
-		}  else if (requestCode == SELECT_TLS_FILE_KITKAT && requestCode == Activity.RESULT_OK) {
-
+		}  else if (requestCode == SELECT_TLS_FILE_KITKAT && resultCode == Activity.RESULT_OK) {
+            try {
+                mTlsAuthFileData= VpnProfile.INLINE_TAG + Utils.getStringFromFilePickerResult(Utils.FileType.TLS_AUTH_FILE,data,getActivity());
+                setTlsAuthSummary(mTlsAuthFileData);
+            } catch (IOException e) {
+                VpnStatus.logException(e);
+            }
         }
 	}
 

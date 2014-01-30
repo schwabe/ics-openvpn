@@ -62,6 +62,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     private boolean mOvpn3 = false;
     private OpenVPNManagement mManagement;
     private String mLastTunCfg;
+    private String mRemoteGW;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean mbit) {
@@ -531,7 +532,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         }
     }
 
-    public void addRoute(String dest, String mask, String gateway, String device) {
+    public void addRoute (String dest, String mask, String gateway, String device) {
         CIDRIP route = new CIDRIP(dest, mask);
         boolean include = isAndroidTunDevice(device);
 
@@ -539,7 +540,11 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
         NetworkSpace.ipAddress localNet = new NetworkSpace.ipAddress(mLocalIP,true);
         if (localNet.containsNet(gatewayIP))
-            include =true;
+            include=true;
+
+        if (gateway!= null &&
+                (gateway.equals("255.255.255.255") || gateway.equals(mRemoteGW)))
+            include=true;
 
 
         if (route.len == 32 && !mask.equals("255.255.255.255")) {
@@ -599,6 +604,12 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
                 VpnStatus.logWarning(R.string.ip_not_cidr, local, netmask, mode);
             }
         }
+
+        if ("p2p".equals(mode))
+            mRemoteGW=netmask;
+        else
+            mRemoteGW=null;
+
     }
 
     public void setLocalIPv6(String ipv6addr) {

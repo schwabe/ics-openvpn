@@ -6,6 +6,12 @@
         android:summary="@string/ignore_routes_summary"
         android:title="@string/ignored_pushed_routes" />
 
+    <CheckBoxPreference
+        android:title="@string/blocklocal_title"
+        android:summary="@string/blocklocal_summary"
+        android:key="unblockLocal"
+    />
+
     <PreferenceCategory android:title="@string/ipv4" >
         <CheckBoxPreference
             android:disableDependentsState="true"

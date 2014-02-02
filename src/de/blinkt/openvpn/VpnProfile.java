@@ -52,6 +52,7 @@ public class VpnProfile implements Serializable {
     private static final long serialVersionUID = 7085688938959334563L;
     private static final String OVPNCONFIGFILE = "android.conf";
     public static final int MAXLOGLEVEL = 4;
+    public static final int CURRENT_PROFILE_VERSION = 2;
     public static String DEFAULT_DNS1 = "8.8.8.8";
     public static String DEFAULT_DNS2 = "8.8.4.4";
 
@@ -126,10 +127,13 @@ public class VpnProfile implements Serializable {
     // Public attributes, since I got mad with getter/setter
     // set members to default values
     private UUID mUuid;
+    public boolean mAllowLocalLAN;
+    private int mProfileVersion;
 
     public VpnProfile(String name) {
         mUuid = UUID.randomUUID();
         mName = name;
+        mProfileVersion = CURRENT_PROFILE_VERSION;
     }
 
     public static String openVpnEscape(String unescaped) {
@@ -153,6 +157,7 @@ public class VpnProfile implements Serializable {
         mUseDefaultRoutev6 = false;
         mExpectTLSCert = false;
         mPersistTun = false;
+        mAllowLocalLAN = true;
     }
 
     public UUID getUUID() {
@@ -164,6 +169,18 @@ public class VpnProfile implements Serializable {
         if (mName==null)
             return "No profile name";
         return mName;
+    }
+
+    public void upgradeProfile(){
+        if(mProfileVersion< 2) {
+            /* default to the behaviour the OS used */
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+                mAllowLocalLAN = true;
+            else
+                mAllowLocalLAN = false;
+        }
+
+        mProfileVersion= CURRENT_PROFILE_VERSION;
     }
 
     public String getConfigFile(Context context, boolean configForOvpn3) {
@@ -311,6 +328,11 @@ public class VpnProfile implements Serializable {
                 routes += "route " + route + "vpn_gateway\n";
                 numroutes++;
             }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT && !mAllowLocalLAN)
+            cfg+="redirect-private block-local\n";
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mAllowLocalLAN)
+            cfg+="redirect-private unblock-local\n";
 
 
         if (mUseDefaultRoutev6)

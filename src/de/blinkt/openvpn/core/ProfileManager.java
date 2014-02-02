@@ -171,7 +171,8 @@ public class ProfileManager {
 				// Sanity check 
 				if(vp==null || vp.mName==null || vp.getUUID()==null)
 					continue;
-				
+
+                vp.upgradeProfile();
 				profiles.put(vp.getUUID().toString(), vp);
 
 			} catch (StreamCorruptedException e) {

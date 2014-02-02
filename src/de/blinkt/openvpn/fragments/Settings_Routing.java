@@ -13,6 +13,7 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 	private EditTextPreference mCustomRoutesv6;
 	private CheckBoxPreference mUseDefaultRoutev6;
 	private CheckBoxPreference mRouteNoPull;
+    private CheckBoxPreference mLocalVPNAccess;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 		mCustomRoutesv6 = (EditTextPreference) findPreference("customRoutesv6");
 		mUseDefaultRoutev6 = (CheckBoxPreference) findPreference("useDefaultRoutev6");
 		mRouteNoPull = (CheckBoxPreference) findPreference("routenopull");
+        mLocalVPNAccess = (CheckBoxPreference) findPreference("unblockLocal");
 
 		mCustomRoutes.setOnPreferenceChangeListener(this);
 		mCustomRoutesv6.setOnPreferenceChangeListener(this);
@@ -42,6 +44,7 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 		mCustomRoutesv6.setText(mProfile.mCustomRoutesv6);
 
 		mRouteNoPull.setChecked(mProfile.mRoutenopull);
+        mLocalVPNAccess.setChecked(mProfile.mAllowLocalLAN);
 
 		// Sets Summary
 		onPreferenceChange(mCustomRoutes, mCustomRoutes.getText());
@@ -57,6 +60,7 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 		mProfile.mCustomRoutes = mCustomRoutes.getText();
 		mProfile.mCustomRoutesv6 = mCustomRoutesv6.getText();
 		mProfile.mRoutenopull = mRouteNoPull.isChecked();
+        mProfile.mAllowLocalLAN =mLocalVPNAccess.isChecked();
 	}
 
 	@Override

@@ -536,6 +536,46 @@ add_block_local_item (struct route_list *rl,
 }
 
 static void
+add_unblock_local (struct route_list *rl)
+{
+  const int rgi_needed = (RGI_ADDR_DEFINED|RGI_NETMASK_DEFINED);
+
+  if (rl->flags & RG_UNBLOCK_LOCAL && rl->n+1 < rl->capacity
+      && (rl->rgi.flags & rgi_needed) == rgi_needed)
+    {
+      /* unblock access to local subnet */
+      struct route_ipv4 r;
+      int i;
+
+      CLEAR(r);
+      r.flags = RT_DEFINED;
+      r.network = rl->rgi.gateway.addr & rl->rgi.gateway.netmask;
+      r.netmask = rl->rgi.gateway.netmask;
+      r.gateway = rl->rgi.gateway.addr;
+      rl->routes[rl->n++] = r;
+
+      /* Additional local networks */
+      for (i = 0; i < rl->rgi.n_addrs; ++i)
+	{
+	  const struct route_gateway_address *gwa = &rl->rgi.addrs[i];
+
+	  /* omit the add/subnet in &rl->rgi which we processed above */
+	  if ((!((rl->rgi.gateway.addr & rl->rgi.gateway.netmask) == (gwa->addr & gwa->netmask)
+		 && rl->rgi.gateway.netmask == gwa->netmask))  && rl->n+1 < rl->capacity)
+	    {
+	      CLEAR(r);
+	      r.flags = RT_DEFINED;
+	      r.network = gwa->addr & gwa->netmask;
+	      r.netmask = gwa->netmask;
+	      r.gateway = gwa->addr;
+	      rl->routes[rl->n++] = r;
+	    }
+	}
+    }
+}
+
+
+static void
 add_block_local (struct route_list *rl)
 {
   const int rgi_needed = (RGI_ADDR_DEFINED|RGI_NETMASK_DEFINED);
@@ -546,8 +586,10 @@ add_block_local (struct route_list *rl)
     {
       size_t i;
 
+#ifndef TARGET_ANDROID
       /* add bypass for gateway addr */
       add_bypass_address (&rl->spec.bypass, rl->rgi.gateway.addr);
+#endif
 
       /* block access to local subnet */
       add_block_local_item (rl, &rl->rgi.gateway, rl->spec.remote_endpoint);
@@ -563,6 +605,8 @@ add_block_local (struct route_list *rl)
 	}
     }
 }
+
+
 
 bool
 init_route_list (struct route_list *rl,
@@ -632,6 +676,8 @@ init_route_list (struct route_list *rl,
 	}
     }
 
+
+  add_unblock_local (rl);
   if (rl->flags & RG_ENABLE)
     {
       add_block_local (rl);
@@ -852,6 +898,7 @@ redirect_default_route_to_vpn (struct route_list *rl, const struct tuntap *tt, u
 	}
       else
 	{
+#ifndef TARGET_ANDROID
 	  bool local = BOOL_CAST(rl->flags & RG_LOCAL);
 	  if (rl->flags & RG_AUTO_LOCAL) {
 	    const int tla = rl->spec.remote_host_local;
@@ -884,6 +931,7 @@ redirect_default_route_to_vpn (struct route_list *rl, const struct tuntap *tt, u
 		dmsg (D_ROUTE, "ROUTE remote_host protocol differs from tunneled");
 	      }
 	    }
+#endif
 
 	  /* route DHCP/DNS server traffic through original default gateway */
 	  add_bypass_routes (&rl->spec.bypass, rl->rgi.gateway.addr, tt, flags, &rl->rgi, es);

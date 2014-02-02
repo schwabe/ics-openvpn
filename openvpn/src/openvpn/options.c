@@ -2076,6 +2076,8 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 #endif
       if (options->routes && (options->routes->flags & RG_ENABLE))
 	msg (M_USAGE, "--redirect-gateway cannot be used with --mode server (however --push \"redirect-gateway\" is fine)");
+      if (options->routes && ((options->routes->flags & RG_BLOCK_LOCAL) && (options->routes->flags & RG_BLOCK_LOCAL)))
+	  msg (M_USAGE, "unblock-local and block-local options of redirect-gateway/redirect-private are mutatlly exclusive");
       if (options->route_delay_defined)
 	msg (M_USAGE, "--route-delay cannot be used with --mode server");
       if (options->up_delay)
@@ -5363,6 +5365,8 @@ add_option (struct options *options,
 	    options->routes->flags |= RG_BYPASS_DNS;
 	  else if (streq (p[j], "block-local"))
 	    options->routes->flags |= RG_BLOCK_LOCAL;
+	  else if (streq (p[j], "unblock-local"))
+	    options->routes->flags |= RG_UNBLOCK_LOCAL;
 	  else
 	    {
 	      msg (msglevel, "unknown --%s flag: %s", p[0], p[j]);

@@ -22,7 +22,7 @@
   <string name="vpn_list_title">Profili</string>
   <string name="vpn_type">Tipo</string>
   <string name="pkcs12pwquery">Password PKCS12</string>
-  <string name="file_select">Seleziona…</string>
+  <string name="file_select">Seleziona&#8230;</string>
   <string name="file_nothing_selected">Devi selezionare un file</string>
   <string name="useTLSAuth">Usa autenticazione TLS</string>
   <string name="tls_direction">Direzione TLS</string>
@@ -148,7 +148,7 @@ Effettuata la lettura del file di configurazione</string>
   <string name="broken_image_cert">Si è incappati in una eccezione tentando di visualizzare la finestra di selezione dei certificati di Android 4.0+. Questo non dovrebbe mai accadere dato che questa è una caratteristica standard di Android 4.0+. Forse il supporto al salvataggio dei certificati del tuo firmware di Android è corrotto.</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">In attesa del messaggio di stato…</string>
+  <string name="speed_waiting">In attesa del messaggio di stato&#8230;</string>
   <string name="converted_profile">profilo importato</string>
   <string name="converted_profile_i">profilo importato %d</string>
   <string name="broken_images">Firmware bacati</string>
@@ -164,7 +164,7 @@ Effettuata la lettura del file di configurazione</string>
   <string name="owner_fix">Correggi i diritti su /dev/tun</string>
   <string name="generated_config_summary">Mostra il file di configurazione di OpenVPN generato</string>
   <string name="edit_profile_title">Modifica \"%s\"</string>
-  <string name="building_configration">Configurazione in corso…</string>
+  <string name="building_configration">Configurazione in corso&#8230;</string>
   <string name="netchange_summary">Selezionando questa opzione verrà forzata una riconnessione se lo stato della rete cambia (da WIFI a cellulare e viceversa)</string>
   <string name="netchange">Riconnetti in caso cambi la rete</string>
   <string name="netstatus">Stato della rete: %s</string>

@@ -22,7 +22,7 @@
   <string name="vpn_list_title">Profile</string>
   <string name="vpn_type">Tip</string>
   <string name="pkcs12pwquery">Parola PKCS12</string>
-  <string name="file_select">Selectaţi…</string>
+  <string name="file_select">Selectaţi&#8230;</string>
   <string name="file_nothing_selected">Trebuie să selectaţi un fişier</string>
   <string name="useTLSAuth">Folosiţi autentificare TLS</string>
   <string name="tls_direction">Direcţie TLS</string>
@@ -145,7 +145,7 @@
   <string name="broken_image_cert">Excepţie la afişarea dialogului Android 4.0+ de selecţie a certificatului. Acest lucru nu ar trebui să se întâmple deoarece este o funcţie standard Android 4.0+. Poate ROM-ul dvs. Android are suportul de stocare a certificatelor defect</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Se aşteaptă mesajul de stare…</string>
+  <string name="speed_waiting">Se aşteaptă mesajul de stare&#8230;</string>
   <string name="converted_profile">profil importat</string>
   <string name="converted_profile_i">profil importat %d</string>
   <string name="broken_images">Imagini defecte</string>
@@ -161,7 +161,7 @@
   <string name="owner_fix">Repară drepturi /dev/tun</string>
   <string name="generated_config_summary">Afişează fişierul de configurare OpenVPN generat</string>
   <string name="edit_profile_title">Editare \"%s\"</string>
-  <string name="building_configration">Se generează configurarea…</string>
+  <string name="building_configration">Se generează configurarea&#8230;</string>
   <string name="netchange_summary">Activând această opţiune forţaţi o reconectare dacă se schimbă starea de reţea (e.g. WiFi la/de la mobil)</string>
   <string name="netchange">Reconectare la schimbare reţea</string>
   <string name="netstatus">Statutus reţea: %s</string>

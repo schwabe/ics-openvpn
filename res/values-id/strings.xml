@@ -22,7 +22,7 @@
   <string name="vpn_list_title">Profil</string>
   <string name="vpn_type">Tipe</string>
   <string name="pkcs12pwquery">Password PKCS12</string>
-  <string name="file_select">Pilih…</string>
+  <string name="file_select">Pilih&#8230;</string>
   <string name="file_nothing_selected">Anda harus memilih berkas (file)</string>
   <string name="useTLSAuth">Pakai otentikasi TLS</string>
   <string name="tls_direction">Pengarah TLS</string>
@@ -146,7 +146,7 @@
   <string name="broken_image_cert">Mendapat pesan kesalahan saat berusaha menampilkan layar pemilihan sertifikat Android 4.0+. Ini seharusnya tidak terjadi karena ini fitur standar Android 4.0 +. Mungkin ROM Android anda yang mengurus penyimpanan sertifikat rusak</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Menunggu pesan status…</string>
+  <string name="speed_waiting">Menunggu pesan status&#8230;</string>
   <string name="converted_profile">Profil yang diambil</string>
   <string name="converted_profile_i">profil yang diambil %d</string>
   <string name="broken_images">Gambar rusak</string>
@@ -162,7 +162,7 @@
   <string name="owner_fix">Perbaiki kepemilikan /dev/tun</string>
   <string name="generated_config_summary">Tunjukkan berkas konfigurasi OpenVPN yang dibuat</string>
   <string name="edit_profile_title">Mengubah \"%s\"</string>
-  <string name="building_configration">Membuat konfigurasi…</string>
+  <string name="building_configration">Membuat konfigurasi&#8230;</string>
   <string name="netchange_summary">Menyalakan pilihan ini akan memaksa menyambung kembali jika keadaan jaringan berubah (misalnya WiFi dari mobile)</string>
   <string name="netchange">Koneksi ulang saat ganti jaringan</string>
   <string name="netstatus">Status jaringan: %s</string>

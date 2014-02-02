@@ -22,7 +22,7 @@
   <string name="vpn_list_title">프로파일</string>
   <string name="vpn_type">유형</string>
   <string name="pkcs12pwquery">PKCS12 암호</string>
-  <string name="file_select">선택…</string>
+  <string name="file_select">선택&#8230;</string>
   <string name="file_nothing_selected">파일을 선택 해야 합니다</string>
   <string name="useTLSAuth">TLS 인증 사용</string>
   <string name="tls_direction">TLS 방향</string>
@@ -146,7 +146,7 @@
   <string name="broken_image_cert">안드로이드 4.0+의 인증서 선택창을 보여주려는 과정에서 예외가 발생됐습니다. 안드로이드 4.0+의 표준 기능임으로 이 같은 일은 일어나면 안됩니다. 어쩌면 인증서 저장소에 대한 귀하의 안드로이드 ROM 지원이 깨졌습니다.</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">상태 메시지를 기다리는 중…</string>
+  <string name="speed_waiting">상태 메시지를 기다리는 중&#8230;</string>
   <string name="converted_profile">가져온 프로파일</string>
   <string name="converted_profile_i">가져온 프로파일 %d</string>
   <string name="broken_images">깨진 이미지</string>
@@ -162,7 +162,7 @@
   <string name="owner_fix">/dev/tun 소유권 문제 해결</string>
   <string name="generated_config_summary">생성된 OpenVPN의 설정 파일 보기</string>
   <string name="edit_profile_title">수정 \"%s\"</string>
-  <string name="building_configration">설정 만드는중…</string>
+  <string name="building_configration">설정 만드는중&#8230;</string>
   <string name="netchange_summary">이 기능을 사용하면 네트워크 상태 변환시 강제로 재접속을 합니다 (예. WIFI 로/에서 모바일)</string>
   <string name="netchange">네트워크 변화시 재접속</string>
   <string name="netstatus">네트워크 상태: %s</string>
@@ -284,7 +284,7 @@
   <string name="appbehaviour">응용 프로그램 동작</string>
   <string name="vpnbehaviour">VPN 동작</string>
   <string name="allow_vpn_changes">VPN 프로필에 대한 변경을 허용</string>
-  <string name="hwkeychain">하드웨어 키 스토어:</string> -->
+  <string name="hwkeychain">하드웨어 키 스토어:</string>
   <string name="permission_icon_app">응용 프로그램의 아이콘이 OpenVPN for Android를 사용 하려고함</string>
   <string name="faq_vpndialog43">"안드로이드 4.3부터는 VPN 확인이 \"overlaying apps\"로 부터 보호 받게 됩니다. 따라서 입력창이 터치 입력에 반응하지 않을 수 있습니다. 사용하는 앱중에서 overlay를 사용하는 경우 이러한 문제가 발생될수있습니다. 문제의 앱을 제작한 프로그램어를 연락하십시오. 이 문제는 안드로이드 4.3과 이상의 버전에서 모든 VPN 응용 프로그램에 영향을 줍니다. &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\"&gt;Issue 185&lt;a&gt; 참조"</string>
   <string name="faq_vpndialog43_title">안드로이드 4.3과 이후 버전에서의 VPN 확인 창</string>

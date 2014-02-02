@@ -22,7 +22,7 @@
   <string name="vpn_list_title">Perfiles</string>
   <string name="vpn_type">Tipo</string>
   <string name="pkcs12pwquery">Contraseña PKCS12</string>
-  <string name="file_select">Seleccionar…</string>
+  <string name="file_select">Seleccionar&#8230;</string>
   <string name="file_nothing_selected">Debe seleccionar un archivo</string>
   <string name="useTLSAuth">Utilizar la autenticación TLS</string>
   <string name="tls_direction">Dirección TLS</string>
@@ -146,7 +146,7 @@
   <string name="broken_image_cert">Se obtuvo una excepción al intentar mostrar el diálogo de selección de certificado de Android 4.0+. Esto nunca debería ocurrir por ser una funcionalidad estándar de Android 4.0+. Quizás el respaldo ROM para almacenamiento de certificados de su Android está arruinado</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Esperando el mensaje de estado…</string>
+  <string name="speed_waiting">Esperando el mensaje de estado&#8230;</string>
   <string name="converted_profile">perfil importado</string>
   <string name="converted_profile_i">perfil importado %d</string>
   <string name="broken_images">Imágenes rotas</string>
@@ -162,7 +162,7 @@
   <string name="owner_fix">Arreglar la propiedad de /dev/tun</string>
   <string name="generated_config_summary">Muestra el archivo de configuración OpenVPN generado</string>
   <string name="edit_profile_title">Editando \"%s\"</string>
-  <string name="building_configration">Construyendo configuracion…</string>
+  <string name="building_configration">Construyendo configuracion&#8230;</string>
   <string name="netchange_summary">Turning this option on will force a reconnect if the network state is changed (e.g. WiFi to/from mobile)</string>
   <string name="netchange">Reconectar en cambio de red</string>
   <string name="netstatus">Estado de la red: %s</string>

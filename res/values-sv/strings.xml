@@ -22,7 +22,7 @@
   <string name="vpn_list_title">Profiler</string>
   <string name="vpn_type">Typ</string>
   <string name="pkcs12pwquery">PKCS12 lösenord</string>
-  <string name="file_select">Välj...</string>
+  <string name="file_select">Välj&#8230;</string>
   <string name="file_nothing_selected">Du måste välja en fil</string>
   <string name="useTLSAuth">Använd TLS-autentisering</string>
   <string name="tls_direction">TLS riktning</string>
@@ -145,7 +145,7 @@
   <string name="broken_image_cert">Fick ett undantag när Android 4.0+ dialogrutan för val av certifikat försökte visas. Detta bör aldrig ske eftersom detta en standardfunktion hos Android 4.0+. Kanske är stödet för lagring av certifikat i din Android ROM trasigt</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Väntar på tillstånds meddelande…</string>
+  <string name="speed_waiting">Väntar på tillstånds meddelande&#8230;</string>
   <string name="converted_profile">importerad profil</string>
   <string name="converted_profile_i">importerad profil %d</string>
   <string name="broken_images">Trasiga ROM</string>
@@ -161,7 +161,7 @@
   <string name="owner_fix">Fixa ägande av /dev/tun</string>
   <string name="generated_config_summary">Visar den genererade OpenVPN-konfigurationsfilen</string>
   <string name="edit_profile_title">Redigerar \"%s\"</string>
-  <string name="building_configration">Bygger konfiguration…</string>
+  <string name="building_configration">Bygger konfiguration&#8230;</string>
   <string name="netchange_summary">Aktivering av detta alternativ kommer att tvinga en återanslutning om nätverksanslutningen ändras (t.ex. WiFi &lt;-> mobildata)</string>
   <string name="netchange">Återanslut vid förändring av nätverksanslutning</string>
   <string name="netstatus">Nätverksstatus: %s</string>

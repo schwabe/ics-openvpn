@@ -22,7 +22,7 @@
   <string name="vpn_list_title">Profiilid</string>
   <string name="vpn_type">Tüüp</string>
   <string name="pkcs12pwquery">PKCS12 salasõna</string>
-  <string name="file_select">Vali…</string>
+  <string name="file_select">Vali&#8230;</string>
   <string name="file_nothing_selected">Valige fail</string>
   <string name="useTLSAuth">Kasuta TLS autentimist</string>
   <string name="tls_direction">TLS suund</string>
@@ -97,6 +97,9 @@
   <string name="last_openvpn_tun_config">tun liidese avamine:</string>
   <string name="local_ip_info">Lokaalne IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS server: %1$s, Domeen: %2$s</string>
+  <string name="routes_info_incl">Marsruudid: %1$s %2$s</string>
+  <string name="routes_info_excl">Välistatud marsruudid: %1$s %2$s</string>
+  <string name="routes_debug">Määratud VpnService marsruudid: %1$s %2$s</string>
   <string name="ip_not_cidr">Liidese andmed on %1$s ja %2$s, eeldades et teine aadress on eemalasuva serveri aadress. Lokaalse IP jaoks kasutatakse /32 võrgumaski. OpenVPN teatab režiimiks %3$s\".</string>
   <string name="route_not_cidr">%1$s ja %2$s on mõttetud CIDR võrgumaskiga IP marsruutidest, võrgumaskiks määratakse /32.</string>
   <string name="route_not_netip">%1$s/%2$s marsruut parandatud: %3$s/%2$s</string>
@@ -146,7 +149,7 @@
   <string name="broken_image_cert">Android 4.0+ sertifikaadivaliku dialoogi näitamise katsel tekkis erandolukord. Seda ei tohiks kunagi juhtuda kuna tegu on Android 4.0+ standardfunktsiooniga. Ehk on teie Androidi sertifikaadihoidla ROM tugi riknenud</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Ootan olekuteadet…</string>
+  <string name="speed_waiting">Ootan olekuteadet&#8230;</string>
   <string name="converted_profile">imporditud profiil</string>
   <string name="converted_profile_i">imporditud profiil %d</string>
   <string name="broken_images">Probleemsed Androidi püsivara versioonid</string>
@@ -162,7 +165,7 @@
   <string name="owner_fix">Korrasta /dev/tun omanikuõigused</string>
   <string name="generated_config_summary">Näitab genereeritud OpenVPN konfiguratsioonifaili</string>
   <string name="edit_profile_title">Redigeeritakse \"%s\"</string>
-  <string name="building_configration">Koostatakse konfiguratsiooni…</string>
+  <string name="building_configration">Koostatakse konfiguratsiooni&#8230;</string>
   <string name="netchange_summary">Selle valiku aktiveerimine kutsub esile VPN uuestiühendumise kui võrgu olek muutub (nt. WIFI peale/pealt mobiilile)</string>
   <string name="netchange">Uuestiühendus võrgu oleku muutumisel</string>
   <string name="netstatus">Võrgu olek: %s</string>
@@ -304,5 +307,6 @@
   <string name="logview_options">Kuva valikud</string>
   <string name="unhandled_exception">Käsitlematu erand: %1$s\n\n%2$s</string>
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
+  <string name="faq_system_dialog_xposed">Kui olete ome Androidiseadme ruutinud, saate paigaldada omal riisikol &lt;a href=\"http://xposed.info/\"&gt;Xposed framework&lt;/a&gt; ja &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN Dialoogi kinnitusmooduli&lt;/a&gt;\"</string>
   <string name="full_licenses">Kõik litsentsid</string>
 </resources>

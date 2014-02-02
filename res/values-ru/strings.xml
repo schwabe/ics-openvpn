@@ -22,7 +22,7 @@
   <string name="vpn_list_title">Профили</string>
   <string name="vpn_type">Тип</string>
   <string name="pkcs12pwquery">Пароль для PKCS12</string>
-  <string name="file_select">Выбрать…</string>
+  <string name="file_select">Выбрать&#8230;</string>
   <string name="file_nothing_selected">Вы должны выбрать файл</string>
   <string name="useTLSAuth">Использовать аутентификацию TLS</string>
   <string name="tls_direction">TLS Direction</string>
@@ -146,7 +146,7 @@
   <string name="broken_image_cert">Произошла ошибка при попытке вызова системного диалога выбора сертификатов Android 4.0+ Этого не должно было случиться на стандартной прошивке. Может быть в вашей прошивке испорчено хранилище сертификатов</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Ожидание сообщения о состоянии…</string>
+  <string name="speed_waiting">Ожидание сообщения о состоянии&#8230;</string>
   <string name="converted_profile">импортируемый профиль</string>
   <string name="converted_profile_i">импортируемый профиль %d</string>
   <string name="broken_images">Сломанные прошивки</string>
@@ -162,7 +162,7 @@
   <string name="owner_fix">Исправить права для /dev/tun</string>
   <string name="generated_config_summary">Показать сгенерированный файл конфигурации OpenVPN</string>
   <string name="edit_profile_title">Правка \"%s\"</string>
-  <string name="building_configration">Создание конфигурации…</string>
+  <string name="building_configration">Создание конфигурации&#8230;</string>
   <string name="netchange_summary">Включение этого параметра заставит переподключиться, если состояние сети изменения (WIFI с мобильного)</string>
   <string name="netchange">Переподключение при изменении сети</string>
   <string name="netstatus">Статус сети: %s</string>

@@ -22,7 +22,7 @@
   <string name="vpn_list_title">Profile</string>
   <string name="vpn_type">Typ</string>
   <string name="pkcs12pwquery">PKCS12 Passwort</string>
-  <string name="file_select">Auswählen…</string>
+  <string name="file_select">Auswählen&#8230;</string>
   <string name="file_nothing_selected">Nichts ausgewählt</string>
   <string name="useTLSAuth">Benutze TLS Authentifizierung</string>
   <string name="tls_direction">TLS Richtung</string>
@@ -149,7 +149,7 @@
   <string name="broken_image_cert">Android hat einen Fehler beim  Anzeigen des Zertifikat Dialog gemeldet. Dies sollte nie passieren, da dies ein Standard Feature von Android 4.0+ ist. Eventuell ist Unterstützung von Zertifikaten in Ihrer Firmware fehlerhaft</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Warte auf OpenVPN Status Nachricht…</string>
+  <string name="speed_waiting">Warte auf OpenVPN Status Nachricht&#8230;</string>
   <string name="converted_profile">Importiertes Profil</string>
   <string name="converted_profile_i">Importiertes Profil %d</string>
   <string name="broken_images">Fehlerhafte Images</string>
@@ -165,7 +165,7 @@
   <string name="owner_fix">/dev/tun Eigentümer setzen.</string>
   <string name="generated_config_summary">Zeigt die generierte Konfigurationsdatei</string>
   <string name="edit_profile_title">Editiere \"%s\"</string>
-  <string name="building_configration">Generiere OpenVPN Konfiguration…</string>
+  <string name="building_configration">Generiere OpenVPN Konfiguration&#8230;</string>
   <string name="netchange_summary">Aktivieren dieser Option zwingt OpenVPN dazu, beim Wechsel des Netzwerkes (WLAN zu Mobilfunk und umgekehrt), neu zu verbinden</string>
   <string name="netchange">Netzwerkänderungen beachten</string>
   <string name="netstatus">Netzwerkstatus: %s</string>
@@ -309,4 +309,6 @@
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
   <string name="faq_system_dialog_xposed">Wenn Sie ihr Gerät gerootet haben können Sie das &lt;a href=\"http://xposed.info/\"&gt;Xposed Framework&lt;/a&gt; und das &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN Dialog confirm Modul&lt;/a&gt; auf eigene Gefahr installieren.</string>
   <string name="full_licenses">Komplette Lizenzen</string>
+  <string name="blocklocal_summary">Netze, die direkt über ein lokales Interfaces erreicht werden können werden nicht über das VPN gerottet. Deaktivieren dieser Option leitet allen Verkehr, der für lokale Netzwerke bestimmt ist, über das VPN.</string>
+  <string name="blocklocal_title">VPN für lokale Netzwerke umgehen</string>
 </resources>

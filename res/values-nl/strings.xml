@@ -22,7 +22,7 @@
   <string name="vpn_list_title">Profielen</string>
   <string name="vpn_type">Type</string>
   <string name="pkcs12pwquery">PKCS12 Wachtwoord</string>
-  <string name="file_select">Selecteer…</string>
+  <string name="file_select">Selecteer&#8230;</string>
   <string name="file_nothing_selected">Je moet een bestand selecteren</string>
   <string name="useTLSAuth">Gebruik TLS autentificatie</string>
   <string name="tls_direction">TLS Richting</string>
@@ -110,7 +110,7 @@
   <string name="broken_image_cert_title">Fout bij het weergeven van de certificaat selectie</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Wachten op status bericht…</string>
+  <string name="speed_waiting">Wachten op status bericht&#8230;</string>
   <string name="converted_profile">Geïmporteerd profiel</string>
   <string name="converted_profile_i">Geïmporteerd profiel %d</string>
   <string name="broken_images">Niet Werkende Afbeeldingen</string>

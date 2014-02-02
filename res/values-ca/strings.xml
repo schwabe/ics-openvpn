@@ -17,7 +17,7 @@
   <string name="about">Quan a</string>
   <string name="vpn_type">Tipus</string>
   <string name="pkcs12pwquery">Contrasenya PKCS12</string>
-  <string name="file_select">Selecciona…</string>
+  <string name="file_select">Selecciona&#8230;</string>
   <string name="useTLSAuth">Utiltiza autenticació TLS</string>
   <string name="tls_direction">Direcció TLS</string>
   <string name="ipv6_dialog_tile">Introduïu l\'adreça/mascara de xarxa IPv6 en format CIDR Format (e.g. 2000:dd::23/64)</string>
@@ -79,7 +79,7 @@
   <string name="import_vpn">Importa</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Esperant el missatge d\'estat…</string>
+  <string name="speed_waiting">Esperant el missatge d\'estat&#8230;</string>
   <string name="converted_profile">Perfil importat</string>
   <string name="converted_profile_i">Perfil importat %d</string>
   <string name="broken_images">Imatges trencades</string>
@@ -91,7 +91,7 @@
   <string name="owner_fix">Corregir els permisos de /dev/tun</string>
   <string name="generated_config_summary">Mostra el fitxer de configuració d\'OpenVPN generat</string>
   <string name="edit_profile_title">Editant \"%s\"</string>
-  <string name="building_configration">Construint la configuració…</string>
+  <string name="building_configration">Construint la configuració&#8230;</string>
   <string name="netchange">Reconecta al canviar de xarxa</string>
   <string name="netstatus">Estat de la xarxa %s</string>
   <string name="select_file">Selecciona</string>

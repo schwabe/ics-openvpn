@@ -22,7 +22,7 @@
   <string name="vpn_list_title">Profily</string>
   <string name="vpn_type">Typ</string>
   <string name="pkcs12pwquery">PKCS12 heslo</string>
-  <string name="file_select">Vyber…</string>
+  <string name="file_select">Vyber&#8230;</string>
   <string name="file_nothing_selected">Je třeba vybrat soubor</string>
   <string name="useTLSAuth">Použij TLS autentikaci</string>
   <string name="tls_direction">TLS řízení</string>
@@ -146,7 +146,7 @@
   <string name="broken_image_cert">Vyjímka při pokusu o zobrazení Android 4.0+ dialogu pro výběr certifikátu. Toto je standardní funkce Androidu 4.0+, takže k této chybě nemělo vůbec dojít, možná je chyba v podpoře certifikátů ve tvém systému</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
-  <string name="speed_waiting">Čekám na zprávu o stavu…</string>
+  <string name="speed_waiting">Čekám na zprávu o stavu&#8230;</string>
   <string name="converted_profile">importovaný profil</string>
   <string name="converted_profile_i">importovaný profil %d</string>
   <string name="broken_images">Rozbité systémy</string>
@@ -162,7 +162,7 @@
   <string name="owner_fix">Opravit vlastnictví /dev/tun</string>
   <string name="generated_config_summary">Zobrazí vygenerované nastavení OpenVPN</string>
   <string name="edit_profile_title">Úprava \"%s\"</string>
-  <string name="building_configration">Vytvářím konfiguraci…</string>
+  <string name="building_configration">Vytvářím konfiguraci&#8230;</string>
   <string name="netchange_summary">Zapnutím této volby bude vynuceno opětovné připojení, pokud se změní stav sítě (např. z WiFi na mobilní síť a zpět)</string>
   <string name="netchange">Opětovně připojit při změně sítě</string>
   <string name="netstatus">Stav sítě: %s</string>

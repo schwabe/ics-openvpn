@@ -1,5 +1,6 @@
 package de.blinkt.openvpn.core;
 
+import android.os.Build;
 import android.text.TextUtils;
 
 import java.math.BigInteger;
@@ -137,12 +138,12 @@ public class NetworkSpace {
     }
 
 
-    TreeSet<ipAddress> ipAddresses = new TreeSet<ipAddress>();
+    TreeSet<ipAddress> mIpAddresses = new TreeSet<ipAddress>();
 
 
     public Collection<ipAddress> getNetworks(boolean included) {
         Vector<ipAddress> ips = new Vector<ipAddress>();
-        for (ipAddress ip : ipAddresses) {
+        for (ipAddress ip : mIpAddresses) {
             if (ip.included == included)
                 ips.add(ip);
         }
@@ -150,21 +151,21 @@ public class NetworkSpace {
     }
 
     public void clear() {
-        ipAddresses.clear();
+        mIpAddresses.clear();
     }
 
 
     void addIP(CIDRIP cidrIp, boolean include) {
 
-        ipAddresses.add(new ipAddress(cidrIp, include));
+        mIpAddresses.add(new ipAddress(cidrIp, include));
     }
 
     void addIPv6(Inet6Address address, int mask, boolean included) {
-        ipAddresses.add(new ipAddress(address, mask, included));
+        mIpAddresses.add(new ipAddress(address, mask, included));
     }
 
     TreeSet<ipAddress> generateIPList() {
-        TreeSet<ipAddress> ipsSorted = new TreeSet<ipAddress>(ipAddresses);
+        TreeSet<ipAddress> ipsSorted = new TreeSet<ipAddress>(mIpAddresses);
         Iterator<ipAddress> it = ipsSorted.iterator();
 
         ipAddress currentNet = null;
@@ -238,6 +239,35 @@ public class NetworkSpace {
             if (ia.included)
                 ips.add(ia);
         }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            // Include postive routes from the original set under < 4.4 since these might overrule the local
+            // network but only if no smaller negative route exists
+            for(ipAddress origIp: mIpAddresses){
+                if (!origIp.included)
+                    continue;
+
+                // The netspace exists
+                if(ipsSorted.contains(origIp))
+                    continue;
+
+                boolean skipIp=false;
+                // If there is any smaller net that is excluded we may not add the positive route back
+                for (ipAddress calculatedIp: ipsSorted) {
+                    if(!calculatedIp.included && origIp.containsNet(calculatedIp)) {
+                        skipIp=true;
+                        break;
+                    }
+                }
+                if (skipIp)
+                    continue;
+
+                // It is safe to include the IP
+                ips.add(origIp);
+            }
+
+        }
+
         return ips;
     }
 

@@ -325,7 +325,7 @@ public class VpnProfile implements Serializable {
             routes += "route 0.0.0.0 0.0.0.0 vpn_gateway\n";
         else
             for (String route : getCustomRoutes()) {
-                routes += "route " + route + "vpn_gateway\n";
+                routes += "route " + route + " vpn_gateway\n";
                 numroutes++;
             }
 

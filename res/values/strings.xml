@@ -83,7 +83,9 @@
     <string name="default_route_summary">Redirects all Traffic over the VPN</string>
     <string name="use_default_title">Use default Route</string>
     <string name="custom_route_message">Enter custom routes. Only enter destination in CIDR format. \"10.0.0.0/8 2002::/16\" would direct the networks 10.0.0.0/8 and 2002::/16 over the VPN.</string>
+    <string name="custom_route_message_excluded">Routes that should NOT be routed over the VPN. Use the same syntax as for included routes.</string>
     <string name="custom_routes_title">Custom Routes</string>
+    <string name="custom_routes_title_excluded">Excluded Networks</string>
     <string name="log_verbosity_level">Log verbosity level</string>
     <string name="float_summary">Allows authenticated packets from any IP</string>
     <string name="float_title">Allow floating server</string>

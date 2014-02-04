@@ -11,7 +11,6 @@ import android.preference.PreferenceManager;
 import android.security.KeyChain;
 import android.security.KeyChainException;
 import android.util.Base64;
-import android.widget.Toast;
 
 import de.blinkt.openvpn.core.NativeUtils;
 import de.blinkt.openvpn.core.VpnStatus;
@@ -129,6 +128,8 @@ public class VpnProfile implements Serializable {
     private UUID mUuid;
     public boolean mAllowLocalLAN;
     private int mProfileVersion;
+    public String mExcludedRoutes;
+    public String mExcludedRoutesv6;
 
     public VpnProfile(String name) {
         mUuid = UUID.randomUUID();
@@ -324,10 +325,16 @@ public class VpnProfile implements Serializable {
         if (mUseDefaultRoute)
             routes += "route 0.0.0.0 0.0.0.0 vpn_gateway\n";
         else
-            for (String route : getCustomRoutes()) {
+        {
+            for (String route : getCustomRoutes(mCustomRoutes)) {
                 routes += "route " + route + " vpn_gateway\n";
                 numroutes++;
             }
+
+            for (String route: getCustomRoutes(mExcludedRoutes)) {
+                routes += "route " + route + " net_gateway";
+            }
+        }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT && !mAllowLocalLAN)
             cfg+="redirect-private block-local\n";
@@ -338,7 +345,7 @@ public class VpnProfile implements Serializable {
         if (mUseDefaultRoutev6)
             cfg += "route-ipv6 ::/0\n";
         else
-            for (String route : getCustomRoutesv6()) {
+            for (String route : getCustomRoutesv6(mCustomRoutesv6)) {
                 routes += "route-ipv6 " + route + "\n";
                 numroutes++;
             }
@@ -346,7 +353,7 @@ public class VpnProfile implements Serializable {
         // Round number to next 100
         if (numroutes > 90) {
             numroutes = ((numroutes / 100) + 1) * 100;
-            cfg += "# Alot of routes are set, increase max-routes\n";
+            cfg += "# A lot of routes are set, increase max-routes\n";
             cfg += "max-routes " + numroutes + "\n";
         }
         cfg += routes;
@@ -470,13 +477,13 @@ public class VpnProfile implements Serializable {
             return true;
     }
 
-    private Collection<String> getCustomRoutes() {
+    private Collection<String> getCustomRoutes(String routes) {
         Vector<String> cidrRoutes = new Vector<String>();
-        if (mCustomRoutes == null) {
+        if (routes == null) {
             // No routes set, return empty vector
             return cidrRoutes;
         }
-        for (String route : mCustomRoutes.split("[\n \t]")) {
+        for (String route : routes.split("[\n \t]")) {
             if (!route.equals("")) {
                 String cidrroute = cidrToIPAndNetmask(route);
                 if (cidrroute == null)
@@ -489,13 +496,13 @@ public class VpnProfile implements Serializable {
         return cidrRoutes;
     }
 
-    private Collection<String> getCustomRoutesv6() {
+    private Collection<String> getCustomRoutesv6(String routes) {
         Vector<String> cidrRoutes = new Vector<String>();
-        if (mCustomRoutesv6 == null) {
+        if (routes == null) {
             // No routes set, return empty vector
             return cidrRoutes;
         }
-        for (String route : mCustomRoutesv6.split("[\n \t]")) {
+        for (String route : routes.split("[\n \t]")) {
             if (!route.equals("")) {
                 cidrRoutes.add(route);
             }
@@ -703,7 +710,7 @@ public class VpnProfile implements Serializable {
             if (mIPv4Address == null || cidrToIPAndNetmask(mIPv4Address) == null)
                 return R.string.ipv4_format_error;
         }
-        if (!mUseDefaultRoute && getCustomRoutes() == null)
+        if (!mUseDefaultRoute && (getCustomRoutes(mCustomRoutes) == null || getCustomRoutes(mExcludedRoutes) ==null))
             return R.string.custom_route_format_error;
 
         // Everything okay

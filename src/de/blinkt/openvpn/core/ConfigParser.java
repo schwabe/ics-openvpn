@@ -322,14 +322,23 @@ public class ConfigParser {
 		Vector<Vector<String>> routes = getAllOption("route", 1, 4);
 		if(routes!=null) {
 			String routeopt = "";
-			for(Vector<String> route:routes){
+            String routeExcluded = "";
+            for(Vector<String> route:routes){
 				String netmask = "255.255.255.255";
-				if(route.size() >= 3)
+                String gateway = "vpn_gateway";
+
+                if(route.size() >= 3)
 					netmask = route.get(2);
+                if (route.size() >= 4)
+                    gateway = route.get(3);
+
 				String net = route.get(1);	
 				try {
 					CIDRIP cidr = new CIDRIP(net, netmask);
-					routeopt+=cidr.toString() + " ";
+                    if (gateway.equals("net_gateway"))
+                        routeExcluded += cidr.toString() + " ";
+                    else
+					    routeopt+=cidr.toString() + " ";
 				} catch (ArrayIndexOutOfBoundsException aioob) {
 					throw new ConfigParseError("Could not parse netmask of route " + netmask);
 				} catch (NumberFormatException ne) {
@@ -338,9 +347,20 @@ public class ConfigParser {
 
 			}
 			np.mCustomRoutes=routeopt;
+            np.mExcludedRoutes=routeExcluded;
 		}
 
-		// Also recognize tls-auth [inline] direction ... 
+        Vector<Vector<String>> routesV6 = getAllOption("route-ipv6", 1, 4);
+        if (routesV6!=null) {
+            String customIPv6Routes = "";
+            for (Vector<String> route:routesV6){
+                customIPv6Routes += route.get(1) + " ";
+            }
+
+            np.mCustomRoutesv6 = customIPv6Routes;
+        }
+
+        // Also recognize tls-auth [inline] direction ...
 		Vector<Vector<String>> tlsauthoptions = getAllOption("tls-auth", 1, 2);
 		if(tlsauthoptions!=null) {
 			for(Vector<String> tlsauth:tlsauthoptions) {

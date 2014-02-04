@@ -24,6 +24,12 @@
             android:dialogMessage="@string/custom_route_message"
             android:key="customRoutes"
             android:title="@string/custom_routes_title" />
+
+        <EditTextPreference
+            android:dependency="useDefaultRoute"
+            android:dialogMessage="@string/custom_route_message_excluded"
+            android:key="excludedRoutes"
+            android:title="@string/custom_routes_title_excluded" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/ipv6" >
         <CheckBoxPreference
@@ -37,6 +43,12 @@
             android:dialogMessage="@string/custom_route_message"
             android:key="customRoutesv6"
             android:title="@string/custom_routes_title" />
+
+        <EditTextPreference
+            android:dependency="useDefaultRoute"
+            android:dialogMessage="@string/custom_route_message_excluded"
+            android:key="excludedRoutesv6"
+            android:title="@string/custom_routes_title_excluded" />
     </PreferenceCategory>
 
 </PreferenceScreen>

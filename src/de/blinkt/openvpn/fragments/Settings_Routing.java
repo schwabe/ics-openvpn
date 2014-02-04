@@ -14,17 +14,22 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 	private CheckBoxPreference mUseDefaultRoutev6;
 	private CheckBoxPreference mRouteNoPull;
     private CheckBoxPreference mLocalVPNAccess;
+    private EditTextPreference mExcludedRoutes;
+    private EditTextPreference mExcludedRoutesv6;
 
-	@Override
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.vpn_routing);
-		mCustomRoutes = (EditTextPreference) findPreference("customRoutes");
+        mCustomRoutes = (EditTextPreference) findPreference("customRoutes");
 		mUseDefaultRoute = (CheckBoxPreference) findPreference("useDefaultRoute");
 		mCustomRoutesv6 = (EditTextPreference) findPreference("customRoutesv6");
 		mUseDefaultRoutev6 = (CheckBoxPreference) findPreference("useDefaultRoutev6");
+        mExcludedRoutes = (EditTextPreference) findPreference("excludedRoutes");
+        mExcludedRoutesv6 = (EditTextPreference) findPreference("excludedRoutesv6");
+
 		mRouteNoPull = (CheckBoxPreference) findPreference("routenopull");
         mLocalVPNAccess = (CheckBoxPreference) findPreference("unblockLocal");
 
@@ -42,6 +47,9 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 
 		mCustomRoutes.setText(mProfile.mCustomRoutes);
 		mCustomRoutesv6.setText(mProfile.mCustomRoutesv6);
+
+        mExcludedRoutes.setText(mProfile.mExcludedRoutes);
+        mExcludedRoutes.setText(mProfile.mExcludedRoutesv6);
 
 		mRouteNoPull.setChecked(mProfile.mRoutenopull);
         mLocalVPNAccess.setChecked(mProfile.mAllowLocalLAN);
@@ -61,12 +69,15 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 		mProfile.mCustomRoutesv6 = mCustomRoutesv6.getText();
 		mProfile.mRoutenopull = mRouteNoPull.isChecked();
         mProfile.mAllowLocalLAN =mLocalVPNAccess.isChecked();
+        mProfile.mExcludedRoutes = mExcludedRoutes.getText();
+        mProfile.mExcludedRoutesv6 = mExcludedRoutesv6.getText();
 	}
 
 	@Override
 	public boolean onPreferenceChange(Preference preference,
 			Object newValue) {
-		if(	 preference == mCustomRoutes || preference == mCustomRoutesv6 )
+		if(	 preference == mCustomRoutes || preference == mCustomRoutesv6
+                || preference == mExcludedRoutes || preference == mExcludedRoutesv6)
 			preference.setSummary((String)newValue);
 
 		saveSettings();

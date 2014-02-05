@@ -24,11 +24,24 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/no_vpn_profiles_defined"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12sp" />
+
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="To use this app you need a VPN provider/VPN gateway supporting OpenVPN. Check out http://community.openvpn.net/ for more information on OpenVPN and how to setup your own OpenVPN server."
+            android:autoLink="web"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="12sp" />
+
 
         <TextView
             android:id="@+id/add_new_vpn_hint"

@@ -70,4 +70,10 @@ proguard-project.txt
 build.xml
 cache.properties
 .gradle
-.idea
+
+# User-specific configurations
+.idea/libraries/
+.idea/tasks.xml
+.idea/.name
+*.iml
+

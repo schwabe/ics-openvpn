@@ -245,8 +245,19 @@ public class ConfigParser {
             "ip-win32",
             "management-hold",
             "management",
+            "management-client",
+            "management-query-remote",
 			"management-query-passwords",
+            "management-query-proxy",
+            "management-external-key",
+            "management-forget-disconnect",
+            "management-signal",
+            "management-log-cache",
+            "management-up-down",
+            "management-client-user",
+            "management-client-group",
 			"pause-exit",
+            "plugin",
             "machine-readable-output",
 			"persist-key",
 			"register-dns",
@@ -263,6 +274,13 @@ public class ConfigParser {
 			"topology",
             "user",
             "win-sys",
+
+    };
+
+    final String[][] ignoreOptionsWithArg =
+    {
+        {"setenv", "IV_GUI_VER"},
+        {"setenv", "IV_OPENVPN_GUI_VERSION"}
     };
 
     final String[] connectionOptions = {
@@ -640,10 +658,14 @@ public class ConfigParser {
 			// removing an item which is not in the map is no error
 			options.remove(option);
 
+
+
+
 		if(options.size()> 0) {
 			np.mCustomConfigOptions += "# These Options were found in the config file do not map to config settings:\n";
 
 			for(Vector<Vector<String>> option:options.values()) {
+
 				np.mCustomConfigOptions += getOptionStrings(option);
 
 			}
@@ -652,18 +674,39 @@ public class ConfigParser {
 		}
 	}
 
-	private String getOptionStrings( Vector<Vector<String>> option) {
-		String custom="";
-		for(Vector<String> optionsline: option) {
-			for (String arg : optionsline)
-				custom+= VpnProfile.openVpnEscape(arg) + " ";
-			custom+="\n";
-		}
-		return custom;
-	}
+
+    boolean ignoreThisOption(Vector<String> option) {
+        for (String[] ignoreOption : ignoreOptionsWithArg) {
+
+            if (option.size() < ignoreOption.length)
+                continue;
+
+            boolean ignore = true;
+            for (int i = 0; i < ignoreOption.length; i++) {
+                if (!ignoreOption[i].equals(option.get(i)))
+                    ignore = false;
+            }
+            if (ignore)
+                return true;
+
+        }
+        return false;
+    }
+
+    private String getOptionStrings(Vector<Vector<String>> option) {
+        String custom = "";
+        for (Vector<String> optionsline : option) {
+            if (!ignoreThisOption(optionsline)) {
+                for (String arg : optionsline)
+                    custom += VpnProfile.openVpnEscape(arg) + " ";
+                custom += "\n";
+            }
+        }
+        return custom;
+    }
 
 
-	private void fixup(VpnProfile np) {
+    private void fixup(VpnProfile np) {
 		if(np.mRemoteCN.equals(np.mServerName)) {
 			np.mRemoteCN="";
 		}

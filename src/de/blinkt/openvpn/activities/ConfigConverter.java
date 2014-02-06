@@ -315,15 +315,20 @@ public class ConfigConverter extends ListActivity implements FileSelectCallback 
                 if (mResult!=null)
                     value = mResult.mPKCS12Filename;
                 break;
+
+            case USERPW_FILE:
+                titleRes = R.string.userpw_file;
+                return;
+
         }
 
         boolean isCert = type == Utils.FileType.CA_CERTIFICATE || type == Utils.FileType.CLIENT_CERTIFICATE;
         FileSelectLayout fl = new FileSelectLayout(this,getString(titleRes), isCert);
-        fl.setData(value,this);
-        fileSelectMap.put(type,fl);
+        fileSelectMap.put(type, fl);
         fl.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         ((LinearLayout) findViewById(R.id.config_convert_root)).addView(fl, 1);
+        fl.setData(value,this);
         int i = getFileLayoutOffset(type);
         fl.setCaller(this, i, type);
 

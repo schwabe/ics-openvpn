@@ -72,8 +72,6 @@ cache.properties
 .gradle
 
 # User-specific configurations
-.idea/libraries/
-.idea/tasks.xml
-.idea/.name
+.idea
 *.iml
 

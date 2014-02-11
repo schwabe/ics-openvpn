@@ -167,7 +167,7 @@ public class Utils {
 
         String prefix = "";
         try {
-            if (cursor.moveToFirst()) {
+            if (cursor!=null && cursor.moveToFirst()) {
                 int cidx = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
                 if (cidx != -1) {
                     String displayName = cursor.getString(cidx);
@@ -177,7 +177,8 @@ public class Utils {
                 }
             }
         } finally {
-            cursor.close();
+            if(cursor!=null)
+                cursor.close();
         }
 
         switch (ft) {

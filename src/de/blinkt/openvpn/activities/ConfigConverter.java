@@ -512,7 +512,7 @@ public class ConfigConverter extends ListActivity implements FileSelectCallback 
                     try {
 
 
-                        if (cursor.moveToFirst()) {
+                        if (cursor!=null && cursor.moveToFirst()) {
                             int cidx = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
 
                             if (cidx != -1) {
@@ -526,7 +526,8 @@ public class ConfigConverter extends ListActivity implements FileSelectCallback 
                             }
                         }
                     } finally {
-                        cursor.close();
+                        if(cursor!=null)
+                            cursor.close();
                     }
                     if (possibleName != null) {
                         possibleName = possibleName.replace(".ovpn", "");

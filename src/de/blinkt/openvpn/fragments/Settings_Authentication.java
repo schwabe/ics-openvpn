@@ -191,7 +191,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 			setTlsAuthSummary(result);
 		}  else if (requestCode == SELECT_TLS_FILE_KITKAT && resultCode == Activity.RESULT_OK) {
             try {
-                mTlsAuthFileData= VpnProfile.INLINE_TAG + Utils.getStringFromFilePickerResult(Utils.FileType.TLS_AUTH_FILE,data,getActivity());
+                mTlsAuthFileData= Utils.getFilePickerResult(Utils.FileType.TLS_AUTH_FILE,data,getActivity());
                 setTlsAuthSummary(mTlsAuthFileData);
             } catch (IOException e) {
                 VpnStatus.logException(e);
@@ -200,9 +200,12 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 	}
 
 	private void setTlsAuthSummary(String result) {
-		if(result==null) result = getString(R.string.no_certificate);
+		if(result==null)
+            result = getString(R.string.no_certificate);
 		if(result.startsWith(VpnProfile.INLINE_TAG))
 			mTLSAuthFile.setSummary(R.string.inline_file_data);
+        else if (result.startsWith(VpnProfile.DISPLAYNAME_TAG))
+            mExpectTLSCert.setSummary(getString(R.string.imported_from_file, VpnProfile.getDisplayName(result)));
 		else
 			mTLSAuthFile.setSummary(result);
 	}

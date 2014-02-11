@@ -185,15 +185,15 @@ public class FileSelect extends Activity {
 	}
 
 	public String getSelectPath() {
-		if(!mData.startsWith(VpnProfile.INLINE_TAG))
+		if(VpnProfile.isEmbedded(mData))
 			return mData;
 		else
 			return Environment.getExternalStorageDirectory().getPath();
 	}
 
 	public CharSequence getInlineData() {
-		if(mData.startsWith(VpnProfile.INLINE_TAG))
-			return mData.substring(VpnProfile.INLINE_TAG.length());
+		if(VpnProfile.isEmbedded(mData))
+			return VpnProfile.getEmbeddedContent(mData);
 		else
 			return "";
 	}

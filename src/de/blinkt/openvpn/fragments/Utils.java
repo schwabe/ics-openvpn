@@ -3,10 +3,14 @@ package de.blinkt.openvpn.fragments;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.OpenableColumns;
 import android.util.Base64;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
+import de.blinkt.openvpn.VpnProfile;
 import junit.framework.Assert;
 
 import java.io.*;
@@ -44,6 +48,21 @@ public class Utils {
                 i.setType("application/x-pem-file");
                 supportedMimeTypes.add("application/x-pem-file");
                 supportedMimeTypes.add("application/pkcs8");
+
+                // Google drive ....
+                supportedMimeTypes.add("application/x-iwork-keynote-sffkey");
+                extensions.add("key");
+                break;
+
+            case TLS_AUTH_FILE:
+                i.setType("text/plain");
+
+                // Backup ....
+                supportedMimeTypes.add("application/pkcs8");
+                // Google Drive is kind of crazy .....
+                supportedMimeTypes.add("application/x-iwork-keynote-sffkey");
+
+                extensions.add("txt");
                 extensions.add("key");
                 break;
 
@@ -52,19 +71,14 @@ public class Utils {
                 supportedMimeTypes.add("application/x-openvpn-profile");
                 supportedMimeTypes.add("application/openvpn-profile");
                 supportedMimeTypes.add("application/ovpn");
+                supportedMimeTypes.add("text/plain");
                 extensions.add("ovpn");
                 extensions.add("conf");
                 break;
-            case TLS_AUTH_FILE:
-                i.setType("text/plain");
 
-                // Backup ....
-                supportedMimeTypes.add("application/pkcs8");
-                extensions.add("txt");
-                extensions.add("key");
-                break;
             case USERPW_FILE:
-                Assert.fail();
+                i.setType("text/plain");
+                supportedMimeTypes.add("text/plain");
                 break;
         }
 
@@ -74,9 +88,10 @@ public class Utils {
             String mimeType = mtm.getMimeTypeFromExtension(ext);
             if (mimeType != null)
                 supportedMimeTypes.add(mimeType);
-            else
-                supportedMimeTypes.add("application/octet-stream");
         }
+
+        // Always add this as fallback
+        supportedMimeTypes.add("application/octet-stream");
 
         i.putExtra(Intent.EXTRA_MIME_TYPES, supportedMimeTypes.toArray(new String[supportedMimeTypes.size()]));
         return i;
@@ -94,12 +109,11 @@ public class Utils {
         private int value;
 
         FileType(int i) {
-            value=i;
+            value = i;
         }
 
-        public static FileType getFileTypeByValue(int value)
-        {
-            switch(value) {
+        public static FileType getFileTypeByValue(int value) {
+            switch (value) {
                 case 0:
                     return PKCS12;
                 case 1:
@@ -140,14 +154,32 @@ public class Utils {
         return buffer.toByteArray();
     }
 
-    public static String getStringFromFilePickerResult(FileType ft, Intent result, Context c) throws IOException {
+    public static String getFilePickerResult(FileType ft, Intent result, Context c) throws IOException {
 
         Uri uri = result.getData();
-        if (uri ==null)
+        if (uri == null)
             return null;
 
         byte[] fileData = readBytesFromStream(c.getContentResolver().openInputStream(uri));
         String newData = null;
+
+        Cursor cursor = c.getContentResolver().query(uri, null, null, null, null);
+
+        String prefix = "";
+        try {
+            if (cursor.moveToFirst()) {
+                int cidx = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                if (cidx != -1) {
+                    String displayName = cursor.getString(cidx);
+
+                    if (!displayName.contains(VpnProfile.INLINE_TAG) && !displayName.contains(VpnProfile.DISPLAYNAME_TAG))
+                        prefix = VpnProfile.DISPLAYNAME_TAG + displayName;
+                }
+            }
+        } finally {
+            cursor.close();
+        }
+
         switch (ft) {
             case PKCS12:
                 newData = Base64.encodeToString(fileData, Base64.DEFAULT);
@@ -156,6 +188,7 @@ public class Utils {
                 newData = new String(fileData, "UTF-8");
                 break;
         }
-        return newData;
+
+        return prefix + VpnProfile.INLINE_TAG + newData;
     }
 }

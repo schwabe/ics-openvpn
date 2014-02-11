@@ -314,4 +314,5 @@
     <string name="blocklocal_summary">Networks directly connected to the local interfaces will not be routed over the VPN. Unchecking this option will redirect all traffic indented for local networks to VPN.</string>
     <string name="blocklocal_title">Bypass VPN for local networks</string>
     <string name="userpw_file">Username/Password file</string>
+    <string name="imported_from_file">[Imported from: %s]</string>
 </resources>

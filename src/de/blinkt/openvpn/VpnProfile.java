@@ -47,6 +47,7 @@ public class VpnProfile implements Serializable {
     // Don't change this, not all parts of the program use this constant
     public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
     public static final String INLINE_TAG = "[[INLINE]]";
+    public static final String DISPLAYNAME_TAG = "[[NAME]]";
     public static final String MINIVPN = "miniopenvpn";
     private static final long serialVersionUID = 7085688938959334563L;
     private static final String OVPNCONFIGFILE = "android.conf";
@@ -462,9 +463,9 @@ public class VpnProfile implements Serializable {
         if (filedata == null) {
             // TODO: generate good error
             return String.format("%s %s\n", cfgentry, "missing");
-        } else if (filedata.startsWith(VpnProfile.INLINE_TAG)) {
-            String datawoheader = filedata.substring(VpnProfile.INLINE_TAG.length());
-            return String.format(Locale.ENGLISH, "<%s>\n%s\n</%s>\n", cfgentry, datawoheader, cfgentry);
+        } else if (isEmbedded(filedata)) {
+            String dataWithOutHeader = getEmbeddedContent(filedata);
+            return String.format(Locale.ENGLISH, "<%s>\n%s\n</%s>\n", cfgentry, dataWithOutHeader, cfgentry);
         } else {
             return String.format(Locale.ENGLISH, "%s %s\n", cfgentry, openVpnEscape(filedata));
         }
@@ -582,6 +583,31 @@ public class VpnProfile implements Serializable {
     String[] getKeyStoreCertificates(Context context) {
         return getKeyStoreCertificates(context, 5);
     }
+
+    public static String getDisplayName(String embeddedFile) {
+        int start = DISPLAYNAME_TAG.length();
+        int end = embeddedFile.indexOf(INLINE_TAG);
+        return embeddedFile.substring(start,end);
+    }
+
+    public static String getEmbeddedContent(String data)
+    {
+        if (!data.contains(INLINE_TAG))
+            return data;
+
+        int start = data.indexOf(INLINE_TAG) + INLINE_TAG.length();
+        return data.substring(start);
+    }
+
+    public static boolean isEmbedded(String data) {
+        if (data==null)
+            return false;
+        if(data.startsWith(INLINE_TAG) || data.startsWith(DISPLAYNAME_TAG))
+            return true;
+        else
+            return false;
+    }
+
 
     class NoCertReturnedException extends Exception {
         public NoCertReturnedException (String msg) {
@@ -760,7 +786,7 @@ public class VpnProfile implements Serializable {
             return false;
 
         String data = "";
-        if (mClientKeyFilename.startsWith(INLINE_TAG))
+        if (isEmbedded(mClientKeyFilename))
             data = mClientKeyFilename;
         else {
             char[] buf = new char[2048];

@@ -398,10 +398,18 @@ public class ConfigParser {
 		if(direction!=null)
 			np.mTLSAuthDirection=direction.get(1);
 
+        Vector<Vector<String>> defgw = getAllOption("redirect-gateway", 0, 5);
+		if(defgw != null)
+        {
+            np.mUseDefaultRoute=true;
+            checkRedirectParameters(np, defgw);
+        }
 
-		if(getAllOption("redirect-gateway", 0, 5) != null)
-			np.mUseDefaultRoute=true;
-
+        Vector<Vector<String>> redirectPrivate = getAllOption("redirect-private",0,5);
+        if (redirectPrivate != null)
+        {
+            checkRedirectParameters(np,redirectPrivate);
+        }
 		Vector<String> dev =getOption("dev",1,1);
 		Vector<String> devtype =getOption("dev-type",1,1);
 
@@ -621,7 +629,17 @@ public class ConfigParser {
 		return np;
 	}
 
-	public void useExtraRemotesAsCustom(boolean b) {
+    private void checkRedirectParameters(VpnProfile np, Vector<Vector<String>> defgw) {
+        for (Vector<String> redirect: defgw)
+            for (int i=1;i<redirect.size();i++){
+                if (defgw.get(i).equals("block-local"))
+                    np.mAllowLocalLAN=false;
+                else if (defgw.get(i).equals("unblock-local"))
+                    np.mAllowLocalLAN=true;
+            }
+    }
+
+    public void useExtraRemotesAsCustom(boolean b) {
 		this.extraRemotesAsCustom = b;
 	}
 
@@ -641,7 +659,7 @@ public class ConfigParser {
 
 	static public void useEmbbedUserAuth(VpnProfile np,String inlinedata)
 	{
-		String data = inlinedata.replace(VpnProfile.INLINE_TAG, "");
+		String data = VpnProfile.getEmbeddedContent(inlinedata);
 		String[] parts = data.split("\n");
 		if(parts.length >= 2) {
 			np.mUsername=parts[0];

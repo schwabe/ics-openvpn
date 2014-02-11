@@ -128,18 +128,18 @@ public class FileSelect extends Activity {
 
 			String data = "";
 			
-			byte[] filedata = readBytesFromFile(ifile) ;
+			byte[] fileData = readBytesFromFile(ifile) ;
 			if(mBase64Encode)
-				data += Base64.encodeToString(filedata, Base64.DEFAULT);
+				data += Base64.encodeToString(fileData, Base64.DEFAULT);
 			else
-				data += new String(filedata);
+				data += new String(fileData);
 			
 			mData =data;
 			
 			/*
 			mInlineFragment.setData(data);
 			getActionBar().selectTab(inlineFileTab); */
-			saveInlineData(data);
+			saveInlineData(ifile.getName(), data);
 		} catch (FileNotFoundException e) {
 			fe = e;
 		} catch (IOException e) {
@@ -206,11 +206,14 @@ public class FileSelect extends Activity {
 		
 	}
 
-	public void saveInlineData(String string) {
+	public void saveInlineData(String fileName, String string) {
 		Intent intent = new Intent();
-		
-		intent.putExtra(RESULT_DATA,VpnProfile.INLINE_TAG + string);
-		setResult(Activity.RESULT_OK,intent);
+
+        if(fileName==null)
+            intent.putExtra(RESULT_DATA, VpnProfile.INLINE_TAG + string);
+        else
+		    intent.putExtra(RESULT_DATA,VpnProfile.DISPLAYNAME_TAG + fileName + VpnProfile.INLINE_TAG + string);
+		setResult(Activity.RESULT_OK, intent);
 		finish();
 		
 	}

@@ -315,4 +315,5 @@
     <string name="blocklocal_title">Bypass VPN for local networks</string>
     <string name="userpw_file">Username/Password file</string>
     <string name="imported_from_file">[Imported from: %s]</string>
+    <string name="files_missing_hint">Some files could not be found. Please select the files to import the profile:</string>
 </resources>

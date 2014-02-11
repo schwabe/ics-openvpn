@@ -57,7 +57,7 @@ public class InlineFileTab extends Fragment
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId()==MENU_SAVE){
-			((FileSelect)getActivity()).saveInlineData(mInlineData.getText().toString());
+			((FileSelect)getActivity()).saveInlineData(null, mInlineData.getText().toString());
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

@@ -2013,6 +2013,9 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
   if (ce->proto == PROTO_TCP_SERVER && (options->connection_list->len > 1))
     msg (M_USAGE, "TCP server mode allows at most one --remote address");
 
+  if (options->routes && ((options->routes->flags & RG_BLOCK_LOCAL) && (options->routes->flags & RG_UNBLOCK_LOCAL)))
+    msg (M_USAGE, "unblock-local and block-local options of redirect-gateway/redirect-private are mutatlly exclusive");
+
 #if P2MP_SERVER
 
   /*
@@ -2076,8 +2079,7 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 #endif
       if (options->routes && (options->routes->flags & RG_ENABLE))
 	msg (M_USAGE, "--redirect-gateway cannot be used with --mode server (however --push \"redirect-gateway\" is fine)");
-      if (options->routes && ((options->routes->flags & RG_BLOCK_LOCAL) && (options->routes->flags & RG_BLOCK_LOCAL)))
-	  msg (M_USAGE, "unblock-local and block-local options of redirect-gateway/redirect-private are mutatlly exclusive");
+
       if (options->route_delay_defined)
 	msg (M_USAGE, "--route-delay cannot be used with --mode server");
       if (options->up_delay)

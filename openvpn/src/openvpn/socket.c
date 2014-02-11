@@ -1835,8 +1835,6 @@ phase2_tcp_client (struct link_socket *sock, struct signal_info *sig_info)
 #endif
     if (proxy_retry)
       {
-	/* TODO (schwabe): This code assumes AF_INET for the proxy socket
-         * when retrying a connection */
 	openvpn_close_socket (sock->sd);
 	sock->sd = create_socket_tcp (sock->info.lsa->current_remote);
       }

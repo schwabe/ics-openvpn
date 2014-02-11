@@ -44,7 +44,9 @@
             android:key="customRoutesv6"
             android:title="@string/custom_routes_title" />
 
+        <!-- disable for now. Not supported by OpenVPN itself -->
         <EditTextPreference
+            android:enabled="false"
             android:dependency="useDefaultRoute"
             android:dialogMessage="@string/custom_route_message_excluded"
             android:key="excludedRoutesv6"

@@ -313,4 +313,5 @@
   <string name="full_licenses">Komplette Lizenzen</string>
   <string name="blocklocal_summary">Netze, die direkt über ein lokales Interfaces erreicht werden können werden nicht über das VPN gerottet. Deaktivieren dieser Option leitet allen Verkehr, der für lokale Netzwerke bestimmt ist, über das VPN.</string>
   <string name="blocklocal_title">VPN für lokale Netzwerke umgehen</string>
+  <string name="userpw_file">Datei mit Benutzername und Passwort</string>
 </resources>

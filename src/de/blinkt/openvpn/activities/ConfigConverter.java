@@ -329,7 +329,8 @@ public class ConfigConverter extends ListActivity implements FileSelectCallback 
         fileSelectMap.put(type, fl);
         fl.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        ((LinearLayout) findViewById(R.id.config_convert_root)).addView(fl, 1);
+        ((LinearLayout) findViewById(R.id.config_convert_root)).addView(fl, 2);
+        findViewById(R.id.files_missing_hint).setVisibility(View.VISIBLE);
         fl.setData(value, this);
         int i = getFileLayoutOffset(type);
         fl.setCaller(this, i, type);

@@ -2,14 +2,14 @@ obj
 bin
 libs
 ^gen$
-build
+build/
 openvpn/.git
 openvpn/autom4te.cache
 openvpn/aclocal.m4
 openvpn/config.log
 openvpn/config.h.in
 openvpn/configure
-
+^.gradle$
 syntax: regexp
 .DS_Store
 ^openvpn/xcopenvpn$
@@ -69,7 +69,6 @@ local.properties
 proguard-project.txt
 build.xml
 cache.properties
-.gradle
 
 # User-specific configurations
 .idea

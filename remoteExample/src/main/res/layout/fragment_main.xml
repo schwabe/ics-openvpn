@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/helloworld"
             android:layout_alignParentTop="true"
-            android:text="No Status yet" />
+            android:text="@string/no_status_yet" />
 
         <Button
             android:id="@+id/startVPN"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/helloworld"
             android:layout_below="@+id/helloworld"
-            android:text="Not now"
+            android:text="@string/no_now"
             android:visibility="visible" />
 
     <TextView
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/helloworld"
             android:layout_alignParentLeft="true"
-            android:text="TextView" />
+            tools:text="TextView" />
 
         <Button
             android:id="@+id/getMyIP"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/startVPN"
-            android:text="Show my IP" />
+            android:text="@string/show_my_ip" />
 
         <Button
             android:id="@+id/disconnect"
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/startVPN"
             android:layout_toRightOf="@+id/startVPN"
-            android:text="Disconnect" />
+            android:text="@string/disconnect" />
 
         <Button
             android:id="@+id/startembedded"
@@ -65,6 +65,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/getMyIP"
-            android:text="Start embedded profile" />
+            android:text="@string/start_embedded" />
 
 </RelativeLayout>

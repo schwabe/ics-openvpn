@@ -9,7 +9,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select the apps that should be allowed to use the VpnService API without user confirmation"/>
+            android:text="@string/select_apps"/>
 
 
     <ListView
@@ -27,7 +27,7 @@
         <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="No Apps using the VPNService API found"
+                android:text="@string/no_apps_found"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 

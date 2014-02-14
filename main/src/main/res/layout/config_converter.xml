@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/config_convert_root"
-    android:orientation="vertical" >
-    <TextView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/files_missing_hint"
-            android:visibility="gone"
-            android:id="@+id/files_missing_hint"
-            tools:visibilty="visible"/>
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/stdpadding"
+            android:orientation="vertical">
 
-    <CheckBox
-        android:id="@+id/importpkcs12"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="@string/importpkcs12fromconfig"
-        android:visibility="gone" />
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:id="@+id/config_convert_root"
+            android:layout_height="wrap_content">
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/files_missing_hint"
+                android:visibility="gone"
+                android:id="@+id/files_missing_hint"
+                tools:visibilty="visible"/>
 
-</LinearLayout>
+        <CheckBox
+                android:id="@+id/importpkcs12"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                tools:visibilty="visible"
+                android:text="@string/importpkcs12fromconfig"
+                android:visibility="gone"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/import_log"
+                android:id="@+id/textView"/>
+
+    </LinearLayout>
+
+
+</ScrollView>

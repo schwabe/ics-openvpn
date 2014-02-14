@@ -39,7 +39,7 @@ import java.util.*;
 
 import static de.blinkt.openvpn.views.FileSelectLayout.FileSelectCallback;
 
-public class ConfigConverter extends ListActivity implements FileSelectCallback {
+public class ConfigConverter extends Activity implements FileSelectCallback {
 
     public static final String IMPORT_PROFILE = "de.blinkt.openvpn.IMPORT_PROFILE";
     private static final int RESULT_INSTALLPKCS12 = 7;
@@ -47,8 +47,7 @@ public class ConfigConverter extends ListActivity implements FileSelectCallback 
     public static final String VPNPROFILE = "vpnProfile";
 
     private VpnProfile mResult;
-    private transient ArrayAdapter<String> mArrayAdapter;
-
+    
     private transient List<String> mPathsegments;
 
     private String mAliasName = null;
@@ -56,6 +55,7 @@ public class ConfigConverter extends ListActivity implements FileSelectCallback 
 
     private Map<Utils.FileType, FileSelectLayout> fileSelectMap = new HashMap<Utils.FileType, FileSelectLayout>();
     private String mEmbeddedPwFile;
+    private Vector<String> mLogEntries = new Vector<String>();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -89,10 +89,10 @@ public class ConfigConverter extends ListActivity implements FileSelectCallback 
             outState.putSerializable(VPNPROFILE, mResult);
         outState.putString("mAliasName", mAliasName);
 
-        String[] logentries = new String[mArrayAdapter.getCount()];
-        for (int i = 0; i < mArrayAdapter.getCount(); i++) {
-            logentries[i] = mArrayAdapter.getItem(i);
-        }
+
+
+        String[] logentries = mLogEntries.toArray(new String[mLogEntries.size()]);
+
         outState.putStringArray("logentries", logentries);
 
         int[] fileselects = new int[fileSelectMap.size()];
@@ -473,18 +473,16 @@ public class ConfigConverter extends ListActivity implements FileSelectCallback 
     protected void onCreate(Bundle savedInstanceState) {
 
         setContentView(R.layout.config_converter);
-
-        mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        getListView().setAdapter(mArrayAdapter);
-
         super.onCreate(savedInstanceState);
-
 
         if (savedInstanceState != null && savedInstanceState.containsKey(VPNPROFILE)) {
             mResult = (VpnProfile) savedInstanceState.getSerializable(VPNPROFILE);
             mAliasName = savedInstanceState.getString("mAliasName");
             mEmbeddedPwFile = savedInstanceState.getString("pwfile");
-            mArrayAdapter.addAll(savedInstanceState.getStringArray("logentries"));
+
+            for(String logItem : savedInstanceState.getStringArray("logentries"))
+                log (logItem);
+
             for (int k : savedInstanceState.getIntArray("fileselects")) {
                 addFileSelectDialog(Utils.FileType.getFileTypeByValue(k));
             }
@@ -563,7 +561,11 @@ public class ConfigConverter extends ListActivity implements FileSelectCallback 
     }
 
     private void log(String logmessage) {
-        mArrayAdapter.add(logmessage);
+        mLogEntries.add(logmessage);
+        TextView tv = new TextView(this);
+        tv.setText(logmessage);
+        LinearLayout logLayout = (LinearLayout) findViewById(R.id.config_convert_root);
+        logLayout.addView(tv);
     }
 
     private void doImport(InputStream is, String newName) {

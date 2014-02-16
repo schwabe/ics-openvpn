@@ -22,10 +22,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Locale;
-import java.util.Vector;
+import java.util.*;
 
 public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
@@ -380,11 +377,19 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		} else if (needed.equals("ROUTE")) {
 			String[] routeparts = extra.split(" ");
 
-            if(routeparts.length>3) {
+            /*
+            buf_printf (&out, "%s %s %s dev %s", network, netmask, gateway, rgi->iface);
+            else
+            buf_printf (&out, "%s %s %s", network, netmask, gateway);
+            */
+
+            if(routeparts.length==5) {
                 assert(routeparts[3].equals("dev"));
                 mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], routeparts[4]);
-            }  else {
+            }  else if (routeparts.length == 3) {
                 mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], null);
+            } else {
+                VpnStatus.logError("Unrecognized ROUTE cmd:" + Arrays.toString(routeparts) + " | " + argument);
             }
 
 		} else if (needed.equals("ROUTE6")) {

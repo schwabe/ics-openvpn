@@ -386,7 +386,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             if(routeparts.length==5) {
                 assert(routeparts[3].equals("dev"));
                 mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], routeparts[4]);
-            }  else if (routeparts.length == 3) {
+            }  else if (routeparts.length >= 3) {
                 mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], null);
             } else {
                 VpnStatus.logError("Unrecognized ROUTE cmd:" + Arrays.toString(routeparts) + " | " + argument);

@@ -632,9 +632,9 @@ public class ConfigParser {
     private void checkRedirectParameters(VpnProfile np, Vector<Vector<String>> defgw) {
         for (Vector<String> redirect: defgw)
             for (int i=1;i<redirect.size();i++){
-                if (defgw.get(i).equals("block-local"))
+                if (redirect.get(i).equals("block-local"))
                     np.mAllowLocalLAN=false;
-                else if (defgw.get(i).equals("unblock-local"))
+                else if (redirect.get(i).equals("unblock-local"))
                     np.mAllowLocalLAN=true;
             }
     }

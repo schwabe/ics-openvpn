@@ -591,25 +591,25 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     public void setLocalIP(String local, String netmask, int mtu, String mode) {
         mLocalIP = new CIDRIP(local, netmask);
         mMtu = mtu;
+        mRemoteGW=null;
+
 
         if (mLocalIP.len == 32 && !netmask.equals("255.255.255.255")) {
             // get the netmask as IP
-            long netint = CIDRIP.getInt(netmask);
-            if (Math.abs(netint - mLocalIP.getInt()) == 1) {
+            long netMaskAsInt = CIDRIP.getInt(netmask);
+
+            // Netmask is Ip address +/-1, assume net30/p2p with small net
+            if (Math.abs(netMaskAsInt - mLocalIP.getInt()) == 1) {
                 if ("net30".equals(mode))
                     mLocalIP.len = 30;
                 else
                     mLocalIP.len = 31;
             } else {
-                VpnStatus.logWarning(R.string.ip_not_cidr, local, netmask, mode);
+                if (!"p2p".equals(mode))
+                    VpnStatus.logWarning(R.string.ip_not_cidr, local, netmask, mode);
+                mRemoteGW=netmask;
             }
         }
-
-        if ("p2p".equals(mode))
-            mRemoteGW=netmask;
-        else
-            mRemoteGW=null;
-
     }
 
     public void setLocalIPv6(String ipv6addr) {

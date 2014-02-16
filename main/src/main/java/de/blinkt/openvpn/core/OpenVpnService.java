@@ -538,6 +538,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
         NetworkSpace.ipAddress gatewayIP = new NetworkSpace.ipAddress(new CIDRIP(gateway, 32),false);
 
+        if (mLocalIP==null) {
+            VpnStatus.logError("Local IP address unset but adding route?! This is broken! Please contact author with log");
+            return;
+        }
         NetworkSpace.ipAddress localNet = new NetworkSpace.ipAddress(mLocalIP,true);
         if (localNet.containsNet(gatewayIP))
             include=true;

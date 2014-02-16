@@ -108,7 +108,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
             boolean screenOffPause = prefs.getBoolean("screenoff", false);
 
             if (screenOffPause) {
-                if (!ProfileManager.getLastConnectedVpn().mPersistTun)
+                if (ProfileManager.getLastConnectedVpn()!=null &&  !ProfileManager.getLastConnectedVpn().mPersistTun)
                     VpnStatus.logError(R.string.screen_nopersistenttun);
 
                 screen = connectState.PENDINGDISCONNECT;

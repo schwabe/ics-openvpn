@@ -15,6 +15,8 @@ public class NetworkSpace {
         public int networkMask;
         private boolean included;
         private boolean isV4;
+        private BigInteger firstaddr;
+        private BigInteger lastaddr;
 
 
         @Override
@@ -55,12 +57,16 @@ public class NetworkSpace {
         }
 
         public BigInteger getLastAddress() {
-            return getMaskedAddress(true);
+            if(lastaddr==null)
+                lastaddr= getMaskedAddress(true);
+            return lastaddr;
         }
 
 
         public BigInteger getFirstAddress() {
-            return getMaskedAddress(false);
+            if (firstaddr==null)
+                firstaddr=getMaskedAddress(false);
+            return firstaddr;
         }
 
 

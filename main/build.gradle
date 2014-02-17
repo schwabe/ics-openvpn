@@ -30,7 +30,7 @@ android {
 
     sourceSets {
         main {
-           assets.srcDirs = ['main/src/assets', 'ovpnlibs/assets'] 
+           assets.srcDirs = ['src/main/assets', 'ovpnlibs/assets'] 
             jniLibs.srcDirs = ['ovpnlibs/jniLibs']
             jni.srcDirs = [] //disable automatic ndk-build
         }

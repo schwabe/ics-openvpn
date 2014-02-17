@@ -322,14 +322,13 @@ public class VpnProfile implements Serializable {
             cfg += "route-nopull\n";
 
         String routes = "";
-        int numroutes = 0;
+
         if (mUseDefaultRoute)
             routes += "route 0.0.0.0 0.0.0.0 vpn_gateway\n";
         else
         {
             for (String route : getCustomRoutes(mCustomRoutes)) {
                 routes += "route " + route + " vpn_gateway\n";
-                numroutes++;
             }
 
             for (String route: getCustomRoutes(mExcludedRoutes)) {
@@ -348,15 +347,8 @@ public class VpnProfile implements Serializable {
         else
             for (String route : getCustomRoutesv6(mCustomRoutesv6)) {
                 routes += "route-ipv6 " + route + "\n";
-                numroutes++;
             }
 
-        // Round number to next 100
-        if (numroutes > 90) {
-            numroutes = ((numroutes / 100) + 1) * 100;
-            cfg += "# A lot of routes are set, increase max-routes\n";
-            cfg += "max-routes " + numroutes + "\n";
-        }
         cfg += routes;
 
         if (mOverrideDNS || !mUsePull) {

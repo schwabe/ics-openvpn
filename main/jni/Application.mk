@@ -7,3 +7,5 @@ APP_STL:=stlport_shared
 #APP_OPTIM := release
 
 #LOCAL_ARM_MODE := arm
+
+#NDK_TOOLCHAIN_VERSION=clang

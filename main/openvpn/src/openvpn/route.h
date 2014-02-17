@@ -33,8 +33,6 @@
 #include "tun.h"
 #include "misc.h"
 
-#define MAX_ROUTES_DEFAULT 100
-
 #ifdef WIN32
 /*
  * Windows route methods
@@ -74,6 +72,7 @@ struct route_special_addr
 };
 
 struct route_option {
+  struct route_option *next;
   const char *network;
   const char *netmask;
   const char *gateway;
@@ -93,12 +92,12 @@ struct route_option {
 
 struct route_option_list {
   unsigned int flags;  /* RG_x flags */
-  int capacity;
-  int n;
-  struct route_option routes[EMPTY_ARRAY_SIZE];
+  struct route_option *routes;
+  struct gc_arena *gc;
 };
 
 struct route_ipv6_option {
+  struct route_ipv6_option *next;
   const char *prefix;		/* e.g. "2001:db8:1::/64" */
   const char *gateway;		/* e.g. "2001:db8:0::2" */
   const char *metric;		/* e.g. "5" */
@@ -106,15 +105,15 @@ struct route_ipv6_option {
 
 struct route_ipv6_option_list {
   unsigned int flags;
-  int capacity;
-  int n;
-  struct route_ipv6_option routes_ipv6[EMPTY_ARRAY_SIZE];
+  struct route_ipv6_option *routes_ipv6;
+  struct gc_arena *gc;
 };
 
 struct route_ipv4 {
 # define RT_DEFINED        (1<<0)
 # define RT_ADDED          (1<<1)
 # define RT_METRIC_DEFINED (1<<2)
+  struct route_ipv4 *next;
   unsigned int flags;
   const struct route_option *option;
   in_addr_t network;
@@ -124,6 +123,7 @@ struct route_ipv4 {
 };
 
 struct route_ipv6 {
+  struct route_ipv6 *next;
   bool defined;
   struct in6_addr network;
   unsigned int netbits;
@@ -141,9 +141,8 @@ struct route_ipv6_list {
   bool remote_endpoint_defined;
   bool did_redirect_default_gateway;			/* TODO (?) */
   bool did_local;					/* TODO (?) */
-  int capacity;
-  int n;
-  struct route_ipv6 routes_ipv6[EMPTY_ARRAY_SIZE];
+  struct route_ipv6 *routes_ipv6;
+  struct gc_arena gc;
 };
 
 
@@ -189,9 +188,8 @@ struct route_list {
   struct route_special_addr spec;
   struct route_gateway_info rgi;
   unsigned int flags;     /* RG_x flags */
-  int capacity;
-  int n;
-  struct route_ipv4 routes[EMPTY_ARRAY_SIZE];
+  struct route_ipv4 *routes;
+  struct gc_arena gc;
 };
 
 #if P2MP
@@ -209,17 +207,15 @@ struct iroute_ipv6 {
 };
 #endif
 
-struct route_option_list *new_route_option_list (const int max_routes, struct gc_arena *a);
-struct route_ipv6_option_list *new_route_ipv6_option_list (const int max_routes, struct gc_arena *a);
+struct route_option_list *new_route_option_list (struct gc_arena *a);
+struct route_ipv6_option_list *new_route_ipv6_option_list (struct gc_arena *a);
 
 struct route_option_list *clone_route_option_list (const struct route_option_list *src, struct gc_arena *a);
 struct route_ipv6_option_list *clone_route_ipv6_option_list (const struct route_ipv6_option_list *src, struct gc_arena *a);
-void copy_route_option_list (struct route_option_list *dest, const struct route_option_list *src);
+void copy_route_option_list (struct route_option_list *dest, const struct route_option_list *src, struct gc_arena *a);
 void copy_route_ipv6_option_list (struct route_ipv6_option_list *dest,
-				  const struct route_ipv6_option_list *src);
-
-struct route_list *new_route_list (const int max_routes, struct gc_arena *a);
-struct route_ipv6_list *new_route_ipv6_list (const int max_routes, struct gc_arena *a);
+                                  const struct route_ipv6_option_list *src,
+                                  struct gc_arena *a);
 
 void add_route_ipv6 (struct route_ipv6 *r, const struct tuntap *tt, unsigned int flags, const struct env_set *es);
 void delete_route_ipv6 (const struct route_ipv6 *r, const struct tuntap *tt, unsigned int flags, const struct env_set *es);

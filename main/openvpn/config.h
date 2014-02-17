@@ -624,6 +624,7 @@
 #define HAVE_TIME_H 1
 #define HAVE_CONFIG_VERSION_H 1
 #define PATH_SEPARATOR_STR "/" 
+#define HAVE_SA_FAMILY_T 1
 
 
 // Workaround for bionc

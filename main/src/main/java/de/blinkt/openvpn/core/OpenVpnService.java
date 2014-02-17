@@ -29,6 +29,7 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
@@ -419,7 +420,13 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     }
 
     public ParcelFileDescriptor openTun() {
+
+        //Debug.startMethodTracing(getExternalFilesDir(null).toString() + "/opentun.trace", 40* 1024 * 1024);
+
         Builder builder = new Builder();
+
+        VpnStatus.logInfo(R.string.last_openvpn_tun_config);
+
 
         if (mLocalIP == null && mLocalIPv6 == null) {
             VpnStatus.logError(getString(R.string.opentun_no_ipaddr));
@@ -458,8 +465,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
         builder.setMtu(mMtu);
 
+        Collection<ipAddress> positiveIPv4Routes = mRoutes.getPositiveIPList();
+        Collection<ipAddress> positiveIPv6Routes = mRoutesv6.getPositiveIPList();
 
-        for (NetworkSpace.ipAddress route : mRoutes.getPositiveIPList()) {
+        for (NetworkSpace.ipAddress route : positiveIPv4Routes) {
             try {
                 builder.addRoute(route.getIPv4Address(), route.networkMask);
             } catch (IllegalArgumentException ia) {
@@ -467,7 +476,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             }
         }
 
-        for (NetworkSpace.ipAddress route6 : mRoutesv6.getPositiveIPList()) {
+        for (NetworkSpace.ipAddress route6 : positiveIPv6Routes) {
             try {
                 builder.addRoute(route6.getIPv6Address(), route6.networkMask);
             } catch (IllegalArgumentException ia) {
@@ -478,12 +487,11 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         if (mDomain != null)
             builder.addSearchDomain(mDomain);
 
-        VpnStatus.logInfo(R.string.last_openvpn_tun_config);
         VpnStatus.logInfo(R.string.local_ip_info, mLocalIP.mIp, mLocalIP.len, mLocalIPv6, mMtu);
         VpnStatus.logInfo(R.string.dns_server_info, TextUtils.join(", ", mDnslist), mDomain);
         VpnStatus.logInfo(R.string.routes_info_incl, TextUtils.join(", ", mRoutes.getNetworks(true)), TextUtils.join(", ", mRoutesv6.getNetworks(true)));
         VpnStatus.logInfo(R.string.routes_info_excl, TextUtils.join(", ", mRoutes.getNetworks(false)),TextUtils.join(", ", mRoutesv6.getNetworks(false)));
-        VpnStatus.logDebug(R.string.routes_debug, TextUtils.join(", ", mRoutes.getPositiveIPList()), TextUtils.join(", ", mRoutesv6.getPositiveIPList()));
+        VpnStatus.logDebug(R.string.routes_debug, TextUtils.join(", ", positiveIPv4Routes), TextUtils.join(", ", positiveIPv6Routes));
 
         String session = mProfile.mName;
         if (mLocalIP != null && mLocalIPv6 != null)
@@ -510,7 +518,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         builder.setConfigureIntent(getLogPendingIntent());
 
         try {
-            return builder.establish();
+            ParcelFileDescriptor tun = builder.establish();
+            //Debug.stopMethodTracing();
+            return tun;
         } catch (Exception e) {
             VpnStatus.logError(R.string.tun_open_error);
             VpnStatus.logError(getString(R.string.error) + e.getLocalizedMessage());

@@ -32,8 +32,6 @@ public class NetworkSpace {
                 return 0;
             else
                 return 1;
-
-
         }
 
         public ipAddress(CIDRIP ip, boolean include) {
@@ -171,70 +169,82 @@ public class NetworkSpace {
     }
 
     TreeSet<ipAddress> generateIPList() {
-        TreeSet<ipAddress> ipsSorted = new TreeSet<ipAddress>(mIpAddresses);
-        Iterator<ipAddress> it = ipsSorted.iterator();
 
-        ipAddress currentNet = null;
-        if (it.hasNext())
-            currentNet = it.next();
-        while (it.hasNext()) {
+        PriorityQueue<ipAddress> networks = new PriorityQueue<ipAddress>(mIpAddresses);
+
+        TreeSet<ipAddress> ipsDone = new TreeSet<ipAddress>();
+
+        ipAddress currentNet =  networks.poll();
+        if (currentNet==null)
+            return ipsDone;
+
+        while (currentNet!=null) {
             // Check if it and the next of it are compatbile
-            ipAddress nextNet = it.next();
+            ipAddress nextNet = networks.poll();
 
             assert currentNet != null;
-            if (currentNet.getLastAddress().compareTo(nextNet.getFirstAddress()) == -1) {
+            if (nextNet== null || currentNet.getLastAddress().compareTo(nextNet.getFirstAddress()) == -1) {
                 // Everything good, no overlapping nothing to do
+                ipsDone.add(currentNet);
+
                 currentNet = nextNet;
             } else {
                 // This network is smaller or equal to the next but has the same base address
                 if (currentNet.getFirstAddress().equals(nextNet.getFirstAddress()) && currentNet.networkMask >= nextNet.networkMask) {
                     if (currentNet.included == nextNet.included) {
-                        ipsSorted.remove(currentNet);
+                        // Included in the next next and same type
+                        // Simply forget our current network
+                        currentNet=nextNet;
                     } else {
-
-                        // our currentnet is included in next and nextnet needs to be split
-                        ipsSorted.remove(nextNet);
+                        // our currentnet is included in next and types differ. Need to split the next network
                         ipAddress[] newNets = nextNet.split();
+
+                        // First add the second half to keep the order in networks
+                        networks.add(newNets[1]);
 
                         if (newNets[0].getLastAddress().equals(currentNet.getLastAddress())) {
                             assert (newNets[0].networkMask == currentNet.networkMask);
                             // Don't add the lower half that would conflict with currentNet
                         } else {
-                            ipsSorted.add(newNets[0]);
+                            networks.add(newNets[0]);
                         }
-
-                        ipsSorted.add(newNets[1]);
+                        // Keep currentNet as is
                     }
                 } else {
                     assert (currentNet.networkMask < nextNet.networkMask);
                     assert (nextNet.getFirstAddress().compareTo(currentNet.getFirstAddress()) == 1);
-                    // This network is bigger than the next and last ip of current >= next
                     assert (currentNet.getLastAddress().compareTo(nextNet.getLastAddress()) != -1);
 
+                    // This network is bigger than the next and last ip of current >= next
+
                     if (currentNet.included == nextNet.included) {
-                        ipsSorted.remove(nextNet);
+                        // Next network is in included in our network with the same type,
+                        // simply ignore the next and move on
                     } else {
-                        ipsSorted.remove(currentNet);
+                        // We need to split our network
                         ipAddress[] newNets = currentNet.split();
 
-                        ipsSorted.add(newNets[0]);
 
                         if (newNets[1].networkMask == nextNet.networkMask) {
                             assert (newNets[1].getFirstAddress().equals(nextNet.getFirstAddress()));
                             assert (newNets[1].getLastAddress().equals(currentNet.getLastAddress()));
+                            // Splitted second equal the next network, do not add it
+
+                            networks.add(nextNet);
                         } else {
-                            ipsSorted.add(newNets[1]);
+                            // Add the smaller network first
+                            networks.add(newNets[1]);
+                            networks.add(nextNet);
                         }
+                        currentNet = newNets[0];
+
                     }
                 }
-                // Reset iterator
-                it = ipsSorted.iterator();
-                currentNet = it.next();
             }
 
         }
 
-        return ipsSorted;
+        return ipsDone;
     }
 
     Collection<ipAddress> getPositiveIPList() {

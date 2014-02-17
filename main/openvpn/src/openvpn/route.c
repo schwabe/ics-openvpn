@@ -526,7 +526,7 @@ add_unblock_local (struct route_list *rl)
       ALLOC_OBJ_GC (r, struct route_ipv4, &rl->gc);
       int i;
 
-      CLEAR(r);
+      CLEAR(*r);
       r->flags = RT_DEFINED;
       r->network = rl->rgi.gateway.addr & rl->rgi.gateway.netmask;
       r->netmask = rl->rgi.gateway.netmask;
@@ -544,7 +544,7 @@ add_unblock_local (struct route_list *rl)
 		 && rl->rgi.gateway.netmask == gwa->netmask))
 	    {
 	      ALLOC_OBJ_GC (r, struct route_ipv4, &rl->gc);
-	      CLEAR(r);
+	      CLEAR(*r);
 	      r->flags = RT_DEFINED;
 	      r->network = gwa->addr & gwa->netmask;
 	      r->netmask = gwa->netmask;

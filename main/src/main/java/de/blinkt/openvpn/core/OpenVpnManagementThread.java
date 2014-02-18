@@ -429,7 +429,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 			return false;
 		}
-		ParcelFileDescriptor pfd = mOpenVPNService.openTun(); 
+		ParcelFileDescriptor pfd = mOpenVPNService.openTun();
 		if(pfd==null)
 			return false;
 

@@ -109,6 +109,13 @@ new_route_ipv6_option_list (struct gc_arena *a)
   return ret;
 }
 
+/*
+ * NOTE: structs are cloned/copied shallow by design.
+ * The routes list from src will stay intact since it is allocated using
+ * the options->gc. The cloned/copied lists will share this common tail
+ * to avoid copying the data around between pulls. Pulled routes use
+ * the c2->gc so they get freed immediately after a reconnect.
+ */
 struct route_option_list *
 clone_route_option_list (const struct route_option_list *src, struct gc_arena *a)
 {

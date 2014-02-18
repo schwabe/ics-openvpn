@@ -225,7 +225,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
 
 
             if (buyBundle.getInt(RESPONSE_CODE) == BILLING_RESPONSE_RESULT_OK) {
-                PendingIntent buyIntent = (PendingIntent) buyBundle.getParcelable(RESPONSE_BUY_INTENT);
+                PendingIntent buyIntent = buyBundle.getParcelable(RESPONSE_BUY_INTENT);
                 getActivity().startIntentSenderForResult(buyIntent.getIntentSender(), DONATION_CODE, new Intent(),
                         0, 0, 0);
             }

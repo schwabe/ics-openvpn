@@ -638,6 +638,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         if (mProcessThread == null && !mNotificationAlwaysVisible)
             return;
 
+        boolean lowpriority = false;
         // Display byte count only after being connected
 
         {
@@ -648,6 +649,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             } else if (level == LEVEL_CONNECTED) {
                 mDisplayBytecount = true;
                 mConnecttime = System.currentTimeMillis();
+                lowpriority = true;
             } else {
                 mDisplayBytecount = false;
             }
@@ -655,8 +657,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             // Other notifications are shown,
             // This also mean we are no longer connected, ignore bytecount messages until next
             // CONNECTED
-            String ticker = getString(resid);
-            showNotification(getString(resid) + " " + logmessage, ticker, false, 0, level);
+            // Does not work :(
+            String msg = getString(resid);
+            String ticker = msg;
+            showNotification(msg + " " + logmessage, ticker, lowpriority , 0, level);
 
         }
     }

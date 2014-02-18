@@ -4,9 +4,7 @@ package de.blinkt.openvpn.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.ListActivity;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -16,12 +14,30 @@ import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
-import android.view.*;
-import android.widget.ArrayAdapter;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import junit.framework.Assert;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -30,12 +46,6 @@ import de.blinkt.openvpn.core.ConfigParser.ConfigParseError;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.fragments.Utils;
 import de.blinkt.openvpn.views.FileSelectLayout;
-import junit.framework.Assert;
-
-import org.jetbrains.annotations.Nullable;
-
-import java.io.*;
-import java.util.*;
 
 import static de.blinkt.openvpn.views.FileSelectLayout.FileSelectCallback;
 
@@ -83,7 +93,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NotNull Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mResult != null)
             outState.putSerializable(VPNPROFILE, mResult);
@@ -366,7 +376,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
             // /document/primary:ovpn/openvpn-imt.conf
 
 
-            if (path.indexOf(':') != -1) {
+            if (path.indexOf(':') != -1 && path.indexOf('/') != -1) {
                 String possibleDir = path.substring(path.indexOf(':') + 1, path.length());
                 possibleDir = possibleDir.substring(0, possibleDir.lastIndexOf('/'));
 
@@ -437,7 +447,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
 
         // Read in the bytes
         int offset = 0;
-        int bytesRead = 0;
+        int bytesRead;
         while (offset < bytes.length
                 && (bytesRead = input.read(bytes, offset, bytes.length - offset)) >= 0) {
             offset += bytesRead;
@@ -480,13 +490,17 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
             mAliasName = savedInstanceState.getString("mAliasName");
             mEmbeddedPwFile = savedInstanceState.getString("pwfile");
 
-            for(String logItem : savedInstanceState.getStringArray("logentries"))
-                log (logItem);
-
-            for (int k : savedInstanceState.getIntArray("fileselects")) {
-                addFileSelectDialog(Utils.FileType.getFileTypeByValue(k));
+            if (savedInstanceState.containsKey("logentries")) {
+                //noinspection ConstantConditions
+                for (String logItem : savedInstanceState.getStringArray("logentries"))
+                    log(logItem);
             }
-
+            if (savedInstanceState.containsKey("fileselects")) {
+                //noinspection ConstantConditions
+                for (int k : savedInstanceState.getIntArray("fileselects")) {
+                    addFileSelectDialog(Utils.FileType.getFileTypeByValue(k));
+                }
+            }
             return;
         }
 
@@ -500,9 +514,11 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
                 log(R.string.importing_config, data.toString());
                 try {
                     String possibleName = null;
-                    if (data.getScheme().equals("file") ||
-                            data.getLastPathSegment().endsWith(".ovpn") ||
-                            data.getLastPathSegment().endsWith(".conf")) {
+                    if ((data.getScheme() != null && data.getScheme().equals("file")) ||
+                            (data.getLastPathSegment() != null &&
+                                    (data.getLastPathSegment().endsWith(".ovpn") ||
+                                            data.getLastPathSegment().endsWith(".conf")))
+                            ) {
                         possibleName = data.getLastPathSegment();
                         if (possibleName.lastIndexOf('/') != -1)
                             possibleName = possibleName.substring(possibleName.lastIndexOf('/') + 1);
@@ -574,8 +590,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
             InputStreamReader isr = new InputStreamReader(is);
 
             cp.parseConfig(isr);
-            VpnProfile vp = cp.convertProfile();
-            mResult = vp;
+            mResult = cp.convertProfile();
             embedFiles();
             displayWarnings();
             mResult.mName = getUniqueProfileName(newName);

@@ -313,7 +313,8 @@ public class ConfigParser {
 
 
     // This method is far too long
-	public VpnProfile convertProfile() throws ConfigParseError{
+	@SuppressWarnings("ConstantConditions")
+    public VpnProfile convertProfile() throws ConfigParseError{
 		boolean noauthtypeset=true;
 		VpnProfile np = new VpnProfile(CONVERTED_PROFILE);
 		// Pull, client, tls-client

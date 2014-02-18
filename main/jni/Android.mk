@@ -2,14 +2,14 @@
 JNI_DIR := $(call my-dir)
 
 #USE_POLAR=1
-USE_BREAKPAD=0
+#USE_BREAKPAD=0
 
 include lzo/Android.mk
 include snappy/Android.mk
 
 include openssl/Android.mk
 
-ifeq ($(USE_BREAKPAD),1)
+ifneq ($(USE_BREAKPAD),0)
 	ifneq ($(TARGET_ARCH),mips)
 	WITH_BREAKPAD=1
 	include google-breakpad/android/google_breakpad/Android.mk

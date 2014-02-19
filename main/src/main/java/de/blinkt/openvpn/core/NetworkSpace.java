@@ -200,13 +200,15 @@ public class NetworkSpace {
                         ipAddress[] newNets = nextNet.split();
 
                         // First add the second half to keep the order in networks
-                        networks.add(newNets[1]);
+                        if (!networks.contains(newNets[1]))
+                            networks.add(newNets[1]);
 
                         if (newNets[0].getLastAddress().equals(currentNet.getLastAddress())) {
                             assert (newNets[0].networkMask == currentNet.networkMask);
                             // Don't add the lower half that would conflict with currentNet
                         } else {
-                            networks.add(newNets[0]);
+                            if (!networks.contains(newNets[0]))
+                                networks.add(newNets[0]);
                         }
                         // Keep currentNet as is
                     }

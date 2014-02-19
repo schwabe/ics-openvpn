@@ -361,6 +361,10 @@ public class ConfigParser {
 				} catch (ArrayIndexOutOfBoundsException aioob) {
 					throw new ConfigParseError("Could not parse netmask of route " + netmask);
 				} catch (NumberFormatException ne) {
+
+
+
+
 					throw new ConfigParseError("Could not parse netmask of route " + netmask);
 				}
 

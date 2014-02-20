@@ -21,7 +21,7 @@ public class Utils {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static Intent getFilePickerIntent(FileType fileType) {
-        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
         TreeSet<String> supportedMimeTypes = new TreeSet<String>();
         Vector<String> extensions = new Vector<String>();

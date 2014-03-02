@@ -22,7 +22,11 @@ if [ -d openvpn/.git ]; then
     cd ..
 fi
 
-ndk-build APP_API=all -j 8
+if [ "x$1" = "x" ]; then
+    ndk-build APP_API=all -j 8
+else
+  ndk-build $@
+fi
 
 if [ $? = 0 ]; then
 	rm -rf ovpnlibs/

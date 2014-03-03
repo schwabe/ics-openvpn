@@ -14,7 +14,7 @@ langtoinclude="ca cs de es et fr id it ja ko no nl pl ro ru sv tr uk"
 
 for lang in $langtoinclude
 do
-    tar xfv ics-openvpn.zip src/main/res/values-$lang/
+    tar -xvf ics-openvpn.zip -C src/main res/values-$lang/
 done
 
 # Chinese language require zh-CN and zh-TW

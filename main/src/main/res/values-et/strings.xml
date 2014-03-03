@@ -83,7 +83,9 @@
   <string name="default_route_summary">Suuna kogu võrguliiklus VPN kaudu</string>
   <string name="use_default_title">Kasuta vaikeruutingut</string>
   <string name="custom_route_message">Sisesta oma personaalsed ruutingud. Sihtkoht peab olema CIDR formaadis. \"10.0.0.0/8 2002::/16\" suunab võrgud 10.0.0.0/8 ja 2002::/16 VPN kaudu.</string>
+  <string name="custom_route_message_excluded">Marsruudid mida EI TOHI suunata üle VPN\'i. Kasuta sama süntaksit kui kaasatud marsruutide jaoks.</string>
   <string name="custom_routes_title">Marsruutide kohandamine</string>
+  <string name="custom_routes_title_excluded">Välistatud võrgud</string>
   <string name="log_verbosity_level">Logimise detailsus</string>
   <string name="float_summary">Suvalise IP autenditud paketid on lubatud</string>
   <string name="float_title">Luba \'ujuv\' server</string>
@@ -309,4 +311,7 @@
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
   <string name="faq_system_dialog_xposed">Kui olete ome Androidiseadme ruutinud, saate paigaldada omal riisikol &lt;a href=\"http://xposed.info/\"&gt;Xposed framework&lt;/a&gt; ja &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN Dialoogi kinnitusmooduli&lt;/a&gt;\"</string>
   <string name="full_licenses">Kõik litsentsid</string>
+  <string name="blocklocal_summary">Kohaliku liidese külge ühendatud võrkude ühendusi ei suunata üle VPN\'i. Selle valiku keelamisel suunatakse ka kohaliku võrgu andmeliiklus VPN\'i.</string>
+  <string name="blocklocal_title">Keela VPN kohalike võrkude jaoks</string>
+  <string name="userpw_file">Kasutajanimede/Paroolide fail</string>
 </resources>

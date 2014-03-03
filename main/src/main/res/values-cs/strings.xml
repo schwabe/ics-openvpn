@@ -83,7 +83,9 @@
   <string name="default_route_summary">Přesměrovat všechen provoz skrz VPN</string>
   <string name="use_default_title">Použít jako výchozí</string>
   <string name="custom_route_message">Zadat vlastní směrování. Zadej cíle v CIDR formátu. \"10.0.0.0/8 2002::/16\" nasměruje sítě 10.0.0.0/8 a 2002::/16 skrz VPN.</string>
+  <string name="custom_route_message_excluded">Trasy, které NEmají být směrovány skrze VPN. Použij stejnou syntaxi jako pro zahrnuté trasy.</string>
   <string name="custom_routes_title">Vlastní směrování</string>
+  <string name="custom_routes_title_excluded">Vyloučené sítě</string>
   <string name="log_verbosity_level">Ukecanost logu</string>
   <string name="float_summary">Povol autentifikované pakety z libovolné IP</string>
   <string name="float_title">Povol plovoucí server</string>
@@ -97,6 +99,9 @@
   <string name="last_openvpn_tun_config">Otevření rozhraní tun:</string>
   <string name="local_ip_info">Místní IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS server: %1$s, Doména: %2$s</string>
+  <string name="routes_info_incl">Trasy: %1$s %2$s</string>
+  <string name="routes_info_excl">Vyloučené trasy: %1$s %2$s</string>
+  <string name="routes_debug">Instalované VPNService trasy: %1$s%2$s</string>
   <string name="ip_not_cidr">Získány informace o rozhraní %1$s a %2$s, předpokládám, že druhá adresa je adresa vzdáleného kolegy. Používám /32 masku pro místní IP adresu. Mód OpenVPN je \"%3$s\".</string>
   <string name="route_not_cidr">%1$s a %2$s jako IP adresy s CIDR maskou nedávají smysl, používám /32 jako masku.</string>
   <string name="route_not_netip">Směrování opraveno z %1$s/%2$s na %3$s/%2$s</string>
@@ -304,5 +309,9 @@
   <string name="logview_options">Zobrazit možnosti</string>
   <string name="unhandled_exception">Neošetřená výjimka: %1$s\n\n%2$s</string>
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
+  <string name="faq_system_dialog_xposed">Pokud máš rootnuté zařízení, můžeš nainstalovat &lt;a href=\"http://xposed.info/\"&gt;Xposed framework&lt;/a&gt; a &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN potvrzovací modul&lt;/a&gt; na vlastní nebezpečí\"</string>
   <string name="full_licenses">Plné licence</string>
+  <string name="blocklocal_summary">Sítě přímo připojené na lokální interface nebudou směrovány skrze VPN. Odškrtnutím této volby bude přesměrován všechen lokální provoz do VPN.</string>
+  <string name="blocklocal_title">Nepoužívat VPN pro lokální sítě</string>
+  <string name="userpw_file">Soubor pro Jméno/Heslo</string>
 </resources>

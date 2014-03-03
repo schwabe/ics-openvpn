@@ -83,7 +83,7 @@
   <string name="default_route_summary">Leitet allen Internet Verkehr über das VPN</string>
   <string name="use_default_title">Benutze Default Route</string>
   <string name="custom_route_message">Benutze eigene Routen. Geben Sie Zielnetzwerk im CIDR Format an. Z.b. \"10.0.0.0/8 2002::/16\" würde die Netzwerke 10.0.0.0/8 und 2002::/16 über das VPN routen.</string>
-  <string name="custom_route_message_excluded">Netze, die nicht über über das VPN weitergeleitet werden sollen. Nutzt die gleiche Syntax wie die eigenen Routen.</string>
+  <string name="custom_route_message_excluded">Netze, die nicht über das VPN weitergeleitet werden sollen. Nutzt die gleiche Syntax wie die eigenen Routen.</string>
   <string name="custom_routes_title">Eigene Routen</string>
   <string name="custom_routes_title_excluded">Ausgenommene Netze</string>
   <string name="log_verbosity_level">Log Detail Level</string>

@@ -14,7 +14,7 @@ langtoinclude="ca cs de es et fr id it ja ko no nl pl ro ru sv tr uk"
 
 for lang in $langtoinclude
 do
-    tar xfv ics-openvpn.zip res/values-$lang/
+    tar xfv ics-openvpn.zip src/main/res/values-$lang/
 done
 
 # Chinese language require zh-CN and zh-TW
@@ -31,7 +31,7 @@ do
 
 	echo "Fetch archive for $lang"
 	fetch http://crowdin.net/download/project/ics-openvpn/$lang.zip
-	tar -xv -C res/values-$rlang/ --strip-components 3 -f $lang.zip
+	tar -xv -C src/main/res/values-$rlang/ --strip-components 3 -f $lang.zip
     rm $lang.zip
 done
 

@@ -332,7 +332,7 @@ public class VpnProfile implements Serializable {
             }
 
             for (String route: getCustomRoutes(mExcludedRoutes)) {
-                routes += "route " + route + " net_gateway";
+                routes += "route " + route + " net_gateway\n";
             }
         }
 

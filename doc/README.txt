@@ -3,7 +3,7 @@ ATTENTION
 Before doing anything please read the first FAQ point in this file, espically if 
 you planing to build commercial software from this client. Also make sure you
 understand the licenses of the code. OpenVPN for Android is GPL licensed. You
-_CANNOT_ build a closed sourced custom UI application whithout acquiring a different 
+_CANNOT_ build a closed sourced custom UI application without acquiring a different
 (paid) license for UI code.
 
 When in doubt mail me about it.

@@ -30,12 +30,12 @@ android {
 
     sourceSets {
         main {
-           assets.srcDirs = ['src/main/assets', 'ovpnlibs/assets'] 
+            assets.srcDirs = ['src/main/assets', 'ovpnlibs/assets']
             jniLibs.srcDirs = ['ovpnlibs/jniLibs']
             jni.srcDirs = [] //disable automatic ndk-build
         }
     }
-    
+
     /*
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -56,6 +56,40 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+
+    productFlavors {
+        x86 {
+            versionCode Integer.parseInt("6" + defaultConfig.versionCode)
+            ndk {
+                abiFilter "x86"
+            }
+        }
+
+        mips {
+            versionCode Integer.parseInt("4" + defaultConfig.versionCode)
+            ndk {
+                abiFilter "mips"
+            }
+        }
+
+        armv7 {
+            versionCode Integer.parseInt("2" + defaultConfig.versionCode)
+            ndk {
+               abiFilter "armeabi-v7a"
+            }
+        }
+
+        arm {
+            versionCode Integer.parseInt("1" + defaultConfig.versionCode)
+            ndk {
+                abiFilter "armeabi"
+            }
+        }
+
+        fat
+    }
+
 }
 
 // ~/.gradle/gradle.properties

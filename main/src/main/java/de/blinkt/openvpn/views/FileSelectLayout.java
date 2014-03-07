@@ -138,7 +138,7 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
     public void onClick(View v) {
         if (v == mSelectButton) {
             if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
-                Intent startFilePicker = Utils.getFilePickerIntent(fileType);
+                Intent startFilePicker = Utils.getFilePickerIntent(getContext(),fileType);
                 mFragment.startActivityForResult(startFilePicker, mTaskId);
             } else {
                 getCertificateFileDialog();

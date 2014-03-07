@@ -165,7 +165,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 
     void startFileDialog() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Intent startFC = Utils.getFilePickerIntent (Utils.FileType.TLS_AUTH_FILE);
+            Intent startFC = Utils.getFilePickerIntent (getActivity(), Utils.FileType.TLS_AUTH_FILE);
             startActivityForResult(startFC, SELECT_TLS_FILE_KITKAT);
         } else {
             Intent startFC = new Intent(getActivity(), FileSelect.class);

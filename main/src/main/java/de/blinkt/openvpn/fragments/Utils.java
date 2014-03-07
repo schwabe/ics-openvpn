@@ -3,6 +3,8 @@ package de.blinkt.openvpn.fragments;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -14,12 +16,13 @@ import de.blinkt.openvpn.VpnProfile;
 import junit.framework.Assert;
 
 import java.io.*;
+import java.util.List;
 import java.util.TreeSet;
 import java.util.Vector;
 
 public class Utils {
 
-    public static Intent getFilePickerIntent(FileType fileType) {
+    public static Intent getFilePickerIntent(Context c, FileType fileType) {
         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
         TreeSet<String> supportedMimeTypes = new TreeSet<String>();
@@ -93,9 +96,28 @@ public class Utils {
         supportedMimeTypes.add("application/octet-stream");
 
         i.putExtra(Intent.EXTRA_MIME_TYPES, supportedMimeTypes.toArray(new String[supportedMimeTypes.size()]));
+
+
+        /* Samsung has decided to do something strange, on stock Android GET_CONTENT opens the document UI */
+        /* fist try with documentsui */
+        i.setPackage("com.android.documentsui");
+
+        if (!isIntentAvailable(c,i)) {
+            i.setAction(Intent.ACTION_OPEN_DOCUMENT);
+            i.setPackage(null);
+        }
+
         return i;
     }
 
+
+    public static boolean isIntentAvailable(Context context, Intent i) {
+        final PackageManager packageManager = context.getPackageManager();
+        List<ResolveInfo> list =
+                packageManager.queryIntentActivities(i,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+        return list.size() > 0;
+    }
     public enum FileType {
         PKCS12(0),
         CLIENT_CERTIFICATE(1),

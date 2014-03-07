@@ -220,7 +220,7 @@ public class VPNProfileList extends ListFragment {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void startFilePicker() {
-       Intent i = Utils.getFilePickerIntent(Utils.FileType.OVPN_CONFIG);
+       Intent i = Utils.getFilePickerIntent(getActivity(), Utils.FileType.OVPN_CONFIG);
        startActivityForResult(i, FILE_PICKER_RESULT);
     }
 

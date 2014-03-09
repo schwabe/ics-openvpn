@@ -22,6 +22,8 @@ import java.util.Vector;
 
 public class Utils {
 
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     public static Intent getFilePickerIntent(Context c, FileType fileType) {
         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
@@ -102,7 +104,8 @@ public class Utils {
         /* fist try with documentsui */
         i.setPackage("com.android.documentsui");
 
-        if (!isIntentAvailable(c,i)) {
+        //noinspection ConstantConditions
+        if (true || !isIntentAvailable(c,i)) {
             i.setAction(Intent.ACTION_OPEN_DOCUMENT);
             i.setPackage(null);
         }
@@ -118,6 +121,8 @@ public class Utils {
                         PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
     }
+
+
     public enum FileType {
         PKCS12(0),
         CLIENT_CERTIFICATE(1),

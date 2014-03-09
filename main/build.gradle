@@ -57,7 +57,7 @@ android {
         }
     }
 
-
+    /*
     productFlavors {
         x86 {
             versionCode Integer.parseInt("6" + defaultConfig.versionCode)
@@ -89,6 +89,7 @@ android {
 
         fat
     }
+    */
 
 }
 

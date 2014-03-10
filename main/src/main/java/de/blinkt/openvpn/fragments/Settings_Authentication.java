@@ -195,6 +195,8 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
                 setTlsAuthSummary(mTlsAuthFileData);
             } catch (IOException e) {
                 VpnStatus.logException(e);
+            } catch (SecurityException se) {
+                VpnStatus.logException(se);
             }
         }
 	}

@@ -3,9 +3,13 @@ package de.blinkt.openvpn.core;
 import android.os.Build;
 import android.text.TextUtils;
 
+import junit.framework.Assert;
+
 import java.math.BigInteger;
 import java.net.Inet6Address;
 import java.util.*;
+
+import de.blinkt.openvpn.BuildConfig;
 
 public class NetworkSpace {
 
@@ -15,8 +19,8 @@ public class NetworkSpace {
         public int networkMask;
         private boolean included;
         private boolean isV4;
-        private BigInteger firstaddr;
-        private BigInteger lastaddr;
+        private BigInteger firstAddress;
+        private BigInteger lastAddress;
 
 
         @Override
@@ -55,16 +59,16 @@ public class NetworkSpace {
         }
 
         public BigInteger getLastAddress() {
-            if(lastaddr==null)
-                lastaddr= getMaskedAddress(true);
-            return lastaddr;
+            if(lastAddress ==null)
+                lastAddress = getMaskedAddress(true);
+            return lastAddress;
         }
 
 
         public BigInteger getFirstAddress() {
-            if (firstaddr==null)
-                firstaddr=getMaskedAddress(false);
-            return firstaddr;
+            if (firstAddress ==null)
+                firstAddress =getMaskedAddress(false);
+            return firstAddress;
         }
 
 
@@ -108,20 +112,22 @@ public class NetworkSpace {
         public ipAddress[] split() {
             ipAddress firsthalf = new ipAddress(getFirstAddress(), networkMask + 1, included, isV4);
             ipAddress secondhalf = new ipAddress(firsthalf.getLastAddress().add(BigInteger.ONE), networkMask + 1, included, isV4);
-            assert secondhalf.getLastAddress().equals(getLastAddress());
+            if (BuildConfig.DEBUG) Assert.assertTrue(secondhalf.getLastAddress().equals(getLastAddress()));
             return new ipAddress[]{firsthalf, secondhalf};
         }
 
         String getIPv4Address() {
-            assert (isV4);
-            assert (netAddress.longValue() <= 0xffffffffl);
-            assert (netAddress.longValue() >= 0);
+            if (BuildConfig.DEBUG) {
+                Assert.assertTrue (isV4);
+                Assert.assertTrue (netAddress.longValue() <= 0xffffffffl);
+                Assert.assertTrue (netAddress.longValue() >= 0);
+            }
             long ip = netAddress.longValue();
             return String.format(Locale.US, "%d.%d.%d.%d", (ip >> 24) % 256, (ip >> 16) % 256, (ip >> 8) % 256, ip % 256);
         }
 
         String getIPv6Address() {
-            assert (!isV4);
+            if (BuildConfig.DEBUG) Assert.assertTrue (!isV4);
             BigInteger r = netAddress;
             if (r.longValue() == 0)
                 return "::";
@@ -182,7 +188,7 @@ public class NetworkSpace {
             // Check if it and the next of it are compatbile
             ipAddress nextNet = networks.poll();
 
-            assert currentNet != null;
+            if (BuildConfig.DEBUG) Assert.assertNotNull(currentNet);
             if (nextNet== null || currentNet.getLastAddress().compareTo(nextNet.getFirstAddress()) == -1) {
                 // Everything good, no overlapping nothing to do
                 ipsDone.add(currentNet);
@@ -204,7 +210,7 @@ public class NetworkSpace {
                             networks.add(newNets[1]);
 
                         if (newNets[0].getLastAddress().equals(currentNet.getLastAddress())) {
-                            assert (newNets[0].networkMask == currentNet.networkMask);
+                            if (BuildConfig.DEBUG) Assert.assertEquals (newNets[0].networkMask, currentNet.networkMask);
                             // Don't add the lower half that would conflict with currentNet
                         } else {
                             if (!networks.contains(newNets[0]))
@@ -213,10 +219,11 @@ public class NetworkSpace {
                         // Keep currentNet as is
                     }
                 } else {
-                    assert (currentNet.networkMask < nextNet.networkMask);
-                    assert (nextNet.getFirstAddress().compareTo(currentNet.getFirstAddress()) == 1);
-                    assert (currentNet.getLastAddress().compareTo(nextNet.getLastAddress()) != -1);
-
+                    if (BuildConfig.DEBUG) {
+                        Assert.assertTrue(currentNet.networkMask < nextNet.networkMask);
+                        Assert.assertTrue (nextNet.getFirstAddress().compareTo(currentNet.getFirstAddress()) == 1);
+                        Assert.assertTrue (currentNet.getLastAddress().compareTo(nextNet.getLastAddress()) != -1);
+                    }
                     // This network is bigger than the next and last ip of current >= next
 
                     if (currentNet.included == nextNet.included) {
@@ -228,10 +235,11 @@ public class NetworkSpace {
 
 
                         if (newNets[1].networkMask == nextNet.networkMask) {
-                            assert (newNets[1].getFirstAddress().equals(nextNet.getFirstAddress()));
-                            assert (newNets[1].getLastAddress().equals(currentNet.getLastAddress()));
-                            // Splitted second equal the next network, do not add it
-
+                            if (BuildConfig.DEBUG) {
+                                Assert.assertTrue (newNets[1].getFirstAddress().equals(nextNet.getFirstAddress()));
+                                Assert.assertTrue (newNets[1].getLastAddress().equals(currentNet.getLastAddress()));
+                                // Splitted second equal the next network, do not add it
+                            }
                             networks.add(nextNet);
                         } else {
                             // Add the smaller network first

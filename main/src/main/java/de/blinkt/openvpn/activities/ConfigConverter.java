@@ -527,22 +527,25 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
                     InputStream is = getContentResolver().openInputStream(data);
                     mPathsegments = data.getPathSegments();
 
+                    Cursor cursor = null;
+                    if (data!=null)
+                         cursor = getContentResolver().query(data, null, null, null, null);
 
-                    Cursor cursor = getContentResolver().query(data, null, null, null, null);
+
                     try {
 
 
                         if (cursor!=null && cursor.moveToFirst()) {
-                            int cidx = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                            int columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
 
-                            if (cidx != -1) {
-                                String displayName = cursor.getString(cidx);
+                            if (columnIndex != -1) {
+                                String displayName = cursor.getString(columnIndex);
                                 if (displayName != null)
                                     possibleName = displayName;
                             }
-                            cidx = cursor.getColumnIndex("mime_type");
-                            if (cidx != -1) {
-                                log("Opening Mime TYPE: " + cursor.getString(cidx));
+                            columnIndex = cursor.getColumnIndex("mime_type");
+                            if (columnIndex != -1) {
+                                log("Opening Mime TYPE: " + cursor.getString(columnIndex));
                             }
                         }
                     } finally {

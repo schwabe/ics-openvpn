@@ -35,6 +35,8 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 
             } catch (IOException e) {
                 VpnStatus.logException(e);
+            } catch (SecurityException e) {
+                VpnStatus.logException(e);
             }
 
 

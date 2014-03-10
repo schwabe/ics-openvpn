@@ -180,7 +180,7 @@ public class Utils {
         return buffer.toByteArray();
     }
 
-    public static String getFilePickerResult(FileType ft, Intent result, Context c) throws IOException {
+    public static String getFilePickerResult(FileType ft, Intent result, Context c) throws IOException, SecurityException {
 
         Uri uri = result.getData();
         if (uri == null)

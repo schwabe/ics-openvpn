@@ -202,7 +202,9 @@ public class VpnProfile implements Serializable {
         //cfg += "management-signal\n";
         cfg += "management-query-passwords\n";
         cfg += "management-hold\n\n";
-        cfg += getVersionEnvString(context);
+
+        if (!configForOvpn3)
+            cfg += String.format("setenv IV_GUI_VER %s \n", openVpnEscape(getVersionEnvString(context)));
 
         cfg += "machine-readable-output\n";
 
@@ -439,7 +441,7 @@ public class VpnProfile implements Serializable {
         return cfg;
     }
 
-    private String getVersionEnvString(Context c) {
+    public String getVersionEnvString(Context c) {
         String version = "unknown";
         try {
             PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
@@ -447,7 +449,7 @@ public class VpnProfile implements Serializable {
         } catch (PackageManager.NameNotFoundException e) {
             VpnStatus.logException(e);
         }
-        return String.format(Locale.US, "setenv IV_GUI_VER \"%s %s\"\n", c.getPackageName(), version);
+        return String.format(Locale.US, "%s %s", c.getPackageName(), version);
 
     }
 
@@ -573,7 +575,7 @@ public class VpnProfile implements Serializable {
         return intent;
     }
 
-    String[] getKeyStoreCertificates(Context context) {
+    public String[] getKeyStoreCertificates(Context context) {
         return getKeyStoreCertificates(context, 5);
     }
 
@@ -761,7 +763,7 @@ public class VpnProfile implements Serializable {
         }
     }
 
-    boolean isUserPWAuth() {
+    public boolean isUserPWAuth() {
         switch (mAuthenticationType) {
             case TYPE_USERPASS:
             case TYPE_USERPASS_CERTIFICATES:

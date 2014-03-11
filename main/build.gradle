@@ -34,6 +34,10 @@ android {
             jniLibs.srcDirs = ['ovpnlibs/jniLibs']
             jni.srcDirs = [] //disable automatic ndk-build
         }
+        
+        ovpn3 {
+         
+        }
     }
 
     /*
@@ -57,9 +61,14 @@ android {
         }
     }
 
-    /*
+
     productFlavors {
-        x86 {
+      ovpn3
+
+      normal
+                        
+      /*                   
+      x86 {
             versionCode Integer.parseInt("6" + defaultConfig.versionCode)
             ndk {
                 abiFilter "x86"
@@ -88,8 +97,9 @@ android {
         }
 
         fat
+        */
     }
-    */
+
 
 }
 

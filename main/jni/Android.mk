@@ -26,7 +26,7 @@ ifeq ($(USE_POLAR),1)
 endif
 
 include openvpn/Android.mk
-
+include ovpn3/Android.mk
 
 LOCAL_PATH := $(JNI_DIR)
 

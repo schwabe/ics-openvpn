@@ -15,6 +15,8 @@ import android.os.*;
 import android.os.Handler.Callback;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+
+import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.activities.LogWindow;
 import de.blinkt.openvpn.R;
@@ -295,7 +297,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             return START_REDELIVER_INTENT;
         }
 
-        assert (intent != null);
+        if (intent == null)
+            return START_NOT_STICKY;
 
         // Extract information from the intent.
         String prefix = getPackageName();
@@ -335,7 +338,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         mOvpn3 = prefs.getBoolean("ovpn3", false);
-        mOvpn3 = false;
+        if (!"ovpn3".equals(BuildConfig.FLAVOR))
+            mOvpn3 = false;
 
 
         // Open the Management Interface
@@ -383,6 +387,22 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     }
 
     private OpenVPNManagement instantiateOpenVPN3Core() {
+        try {
+            Class cl = Class.forName("de.blinkt.openvpn.core.OpenVPNThreadv3");
+            return (OpenVPNManagement) cl.getConstructor(OpenVpnService.class,VpnProfile.class).newInstance(this,mProfile);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -540,6 +560,11 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         if (mDomain == null) {
             mDomain = domain;
         }
+    }
+
+    /** Route that is always included, used by the v3 core */
+    public void addRoute (CIDRIP route) {
+        mRoutes.addIP(route, true);
     }
 
     public void addRoute (String dest, String mask, String gateway, String device) {

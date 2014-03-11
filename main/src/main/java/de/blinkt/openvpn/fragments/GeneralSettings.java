@@ -16,6 +16,8 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+
+import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.api.ExternalAppDatabase;
 
@@ -53,6 +55,12 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 
         if(devHacks.getPreferenceCount()==0)
             getPreferenceScreen().removePreference(devHacks);
+
+        if (!"ovpn3".equals(BuildConfig.FLAVOR)) {
+            PreferenceCategory appBehaviour = (PreferenceCategory) findPreference("app_behaviour");
+            appBehaviour.removePreference(findPreference("ovpn3"));
+        }
+
 
 		setClearApiSummary();
 	}

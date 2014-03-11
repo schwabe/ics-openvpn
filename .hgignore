@@ -74,3 +74,5 @@ cache.properties
 .idea
 *.iml
 
+main/openvpn3
+main/boost_1_55_0

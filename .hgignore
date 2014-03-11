@@ -1,14 +1,15 @@
 obj
 bin
 libs
-gen
+^gen$
+build/
 openvpn/.git
 openvpn/autom4te.cache
 openvpn/aclocal.m4
 openvpn/config.log
 openvpn/config.h.in
 openvpn/configure
-
+^.gradle$
 syntax: regexp
 .DS_Store
 ^openvpn/xcopenvpn$
@@ -51,7 +52,6 @@ assets/minivpn.armeabi-v7a
 assets/minivpn.mips
 assets/minivpn.x86
 openvpn/a.out.dSYM
-openvpn/config-version.h
 openvpn/config.status
 Makefile
 openvpn/libtool
@@ -64,3 +64,15 @@ zh-TW.zip
 google-breakpad/
 id.zip
 ovpn3/boost
+polarssl
+local.properties
+proguard-project.txt
+build.xml
+cache.properties
+
+# User-specific configurations
+.idea
+*.iml
+
+main/openvpn3
+main/boost_1_55_0

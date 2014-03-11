@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<resources>
-   <declare-styleable name="FileSelectLayout">
-      <attr name="title" format="string|reference" />
-<!--     <attr name="taskid" format="integer" /> -->
-   </declare-styleable>
-</resources>

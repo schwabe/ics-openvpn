@@ -1,0 +1,34 @@
+Ideas:
+
+- Do cert+key+ca => p12 inside the app, import directly to keystore
+   
+- general settings dialog
+   - encryption of profiles
+ 
+- Give the notification a nice speed bar
+   
+- The app https://play.google.com/store/apps/details?id=org.proxydroid
+    has a nice feature: auto connect. Run a profile if a specified
+    network is available (a user defined WIFI profile and/or "WIFI/2G/3G" 
+	and/or "WIFI" and/or "2G/3G" - selection of more than one network type 
+	is possible)
+
+-  Copy/Duplicate an existing profile (to create a new one with nearly
+    exact settings)
+
+- implement an encryption for profiles, so no sensitive data has be stored in plain text
+   - encrypt/decrypt with android private storage key (+no user input required)
+
+ - hibernate when screen off and < 50 kB min
+
+
+Missing configuration options:
+
+Tap support:
+- Actually it is possible to emulate tap with tun device, a minimal implementation would have to do:
+   - generate random mac
+   - strip macs header on receive
+   - append mac header on send
+   - implement arp, possible the most difficult task ...
+      - need to chose right mac of receiver
+

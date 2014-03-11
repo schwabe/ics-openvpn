@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!--  Keep the order the same as the TYPE_ constants in VPNProfile -->
+    <string-array name="vpn_types">
+        <item>Certificates</item>
+        <item>PKCS12 File</item>
+        <item>Android Certificate</item>
+        <item>Username/Password</item>
+        <item>Static Keys</item>
+        <item>User/PW + Certificates</item>
+        <item>User/PW + PKCS12 </item>
+        <item>User/PW + Android</item>
+    </string-array>
+    <string-array name="tls_directions_entries">
+        <item>0</item>
+        <item>1</item>
+        <item>Unspecified</item>
+    </string-array>
+    <string-array name="crm_entries">
+        <item>No reconnection retries</item>
+        <item>One reconnection retry</item>
+        <item>Five reconnection retries</item>
+        <item>Fifty reconnection retries</item>
+        <item>Unlimited reconnection retries</item>
+    </string-array>
+</resources>

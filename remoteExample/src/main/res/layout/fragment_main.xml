@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="de.blinkt.openvpn.remote.MainFragment">
+
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/helloworld"
+            android:layout_alignParentTop="true"
+            android:text="@string/no_status_yet" />
+
+        <Button
+            android:id="@+id/startVPN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/helloworld"
+            android:layout_below="@+id/helloworld"
+            android:text="@string/no_now"
+            android:visibility="visible" />
+
+    <TextView
+            android:id="@+id/helloworld"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/hello_world" />
+
+        <TextView
+            android:id="@+id/MyIpText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/helloworld"
+            android:layout_alignParentLeft="true"
+            tools:text="TextView" />
+
+        <Button
+            android:id="@+id/getMyIP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/startVPN"
+            android:text="@string/show_my_ip" />
+
+        <Button
+            android:id="@+id/disconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/startVPN"
+            android:layout_toRightOf="@+id/startVPN"
+            android:text="@string/disconnect" />
+
+        <Button
+            android:id="@+id/startembedded"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/getMyIP"
+            android:text="@string/start_embedded" />
+
+</RelativeLayout>

@@ -1,0 +1,2 @@
+#define CONFIGURE_GIT_REVISION "icsopenvpn_70-078981e61dfdf105"
+#define CONFIGURE_GIT_FLAGS ""

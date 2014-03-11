@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/cancel"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:showAsAction="ifRoom|withText"
+        android:title="@android:string/cancel"
+        android:titleCondensed="@string/cancel"/>
+    
+    <item
+        android:id="@+id/ok"
+        android:icon="@android:drawable/ic_menu_save"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/add_profile"
+        android:titleCondensed="@string/import_vpn"/>
+
+
+</menu>

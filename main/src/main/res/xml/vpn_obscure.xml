@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Obscure Settings" >
+
+
+    <CheckBoxPreference
+        android:key="useRandomHostname"
+        android:persistent="false"
+        android:summary="@string/random_host_summary"
+        android:title="@string/random_host_prefix" />
+    <CheckBoxPreference
+        android:key="useFloat"
+        android:persistent="false"
+        android:summary="@string/float_summary"
+        android:title="@string/float_title" />
+    <CheckBoxPreference
+        android:key="usePersistTun"
+        android:summary="@string/persisttun_summary"
+        android:title="@string/persistent_tun_title" />
+
+    <PreferenceCategory android:title="@string/reconnection_settings" >
+        <ListPreference
+            android:entries="@array/crm_entries"
+            android:entryValues="@array/crm_values"
+            android:key="connectretrymax"
+            android:persistent="false"
+            android:title="@string/connection_retries" />
+
+        <EditTextPreference
+            android:dialogMessage="@string/connectretrymessage"
+            android:key="connectretry"
+            android:persistent="false"
+            android:title="@string/connectretrywait" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/custom_config_title" >
+        <CheckBoxPreference
+            android:key="enableCustomOptions"
+            android:persistent="false"
+            android:summary="@string/custom_config_summary"
+            android:title="@string/custom_config_title" />
+
+        <EditTextPreference
+            android:dependency="enableCustomOptions"
+            android:dialogMessage="@string/custom_option_warning"
+            android:key="customOptions"
+            android:persistent="false"
+            android:title="@string/custom_options_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

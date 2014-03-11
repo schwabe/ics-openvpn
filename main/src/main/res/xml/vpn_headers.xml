@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <header
+        android:id="@+id/basicsettingsid"
+        android:fragment="de.blinkt.openvpn.fragments.Settings_Basic"
+        android:title="@string/basic" />
+    <!-- android:icon="@drawable/ic_settings_applications" -->
+
+    <header
+        android:fragment="de.blinkt.openvpn.fragments.Settings_IP"
+        android:title="@string/ipdns" />
+    <header
+        android:fragment="de.blinkt.openvpn.fragments.Settings_Routing"
+        android:title="@string/routing" />
+    <header
+        android:fragment="de.blinkt.openvpn.fragments.Settings_Authentication"
+        android:title="@string/settings_auth" />
+
+    <!-- android:icon="@drawable/ic_settings_display" -->
+    <header
+        android:fragment="de.blinkt.openvpn.fragments.Settings_Obscure"
+        android:summary="@string/obscure"
+        android:title="@string/advanced" >
+    </header>
+    <header
+        android:fragment="de.blinkt.openvpn.fragments.ShowConfigFragment"
+        android:summary="@string/generated_config_summary"
+        android:title="@string/generated_config" />
+
+</preference-headers>

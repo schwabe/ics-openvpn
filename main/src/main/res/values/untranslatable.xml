@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="copyright_blinktgui" translatable="false">Copyright 2012–2013 Arne Schwabe &lt;arne@rfc2549.org></string>
+    <string name="opevpn_copyright" translatable="false">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net>\n
+
+	  "OpenVPN" is a trademark of OpenVPN Technologies, Inc.\n</string>
+    <string name="defaultserver" translatable="false">openvpn.uni-paderborn.de</string>
+    <string name="defaultport" translatable="false">1194</string>
+    <string name="copyright_file_dialog" translatable="false">File Dialog based on work by Alexander Ponomarev</string>
+    <string name="lzo_copyright" translatable="false">Copyright © 1996 – 2011 Markus Franz Xaver Johannes Oberhumer</string>
+    <string name="copyright_openssl" translatable="false">        This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit\n
+        Copyright © 1998-2008 The OpenSSL Project. All rights reserved.\n\n
+        This product includes cryptographic software written by Eric Young (eay@cryptsoft.com)\n
+        Copyright © 1995-1998 Eric Young (eay@cryptsoft.com) All rights reserved.</string>
+    <string name="openvpn" translatable="false">OpenVPN</string>
+    <string name="file_dialog" translatable="false">File Dialog</string>
+    <string name="lzo" translatable="false">LZO</string>
+    <string name="openssl" translatable="false">OpenSSL</string>
+    <string name="unknown_state" translatable="false">Unknown state</string>
+    <string name="permission_description">Allows another app to control OpenVPN</string>
+    <string name="bouncy_castle" translatable="false">Bouncy Castle Crypto APIs</string>
+    <string name="copyright_bouncycastle" translatable="false">Copyright © 2000–2012 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)</string>
+
+    <string-array name="tls_directions_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item></item>
+    </string-array>
+    <string-array name="crm_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>50</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- These strings should not be visible to the user -->
+    <string name="state_user_vpn_permission" translatable="false">Waiting for user permission to use VPN API</string>
+    <string name="state_user_vpn_password" translatable="false">Waiting for user VPN password</string>
+    <string name="state_user_vpn_password_cancelled" translatable="false">VPN password input dialog cancelled</string>
+    <string name="state_user_vpn_permission_cancelled" translatable="false">VPN API permission dialog cancelled</string>
+    
+</resources>

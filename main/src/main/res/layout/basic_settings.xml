@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:blinkt="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="4dp" >
+
+        <TextView
+            style="@style/item"
+            android:text="@string/profilename"
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            />
+
+        <EditText
+            android:id="@+id/profilename"
+            style="@style/item"
+            android:inputType="text" />
+
+        <TextView
+            style="@style/item"
+            android:text="@string/address"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <EditText
+            android:id="@+id/address"
+            style="@style/item"
+            android:inputType="textUri"
+            android:text="@string/defaultserver" >
+
+            <!-- <requestFocus /> -->
+        </EditText>
+
+        <TextView
+            style="@style/item"
+            android:text="@string/port"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip" >
+
+            <EditText
+                android:id="@+id/port"
+                style="@style/item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:inputType="number"
+                android:text="@string/defaultport" />
+
+            <ToggleButton
+                android:id="@+id/tcpudp"
+                style="@style/accountSetupButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:textOff="TCP"
+                android:textOn="UDP" />
+        </RelativeLayout>
+
+        <CheckBox
+            android:id="@+id/lzo"
+            style="@style/item"
+            android:text="@string/useLZO" />
+
+        <TextView
+            style="@style/item"
+            android:text="@string/vpn_type"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <Spinner
+            android:id="@+id/type"
+            style="@style/item"
+            android:entries="@array/vpn_types"
+            android:prompt="@string/vpn_type" />
+
+        <LinearLayout
+            android:id="@+id/keystore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <include layout="@layout/keystore_selector" />
+
+            <TextView
+                style="@style/item"
+                android:singleLine="false"
+                android:text="@string/extracahint"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cacert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <de.blinkt.openvpn.views.FileSelectLayout
+                android:id="@+id/caselect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                blinkt:title="@string/ca_title" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/certs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <de.blinkt.openvpn.views.FileSelectLayout
+                android:id="@+id/certselect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                blinkt:title="@string/client_certificate_title" />
+
+            <de.blinkt.openvpn.views.FileSelectLayout
+                android:id="@+id/keyselect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                blinkt:certificate="false"
+                blinkt:title="@string/client_key_title" />
+
+            <LinearLayout
+                android:id="@+id/key_password_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    style="@style/item"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
+                    android:text="@string/private_key_password"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <EditText
+                    android:id="@+id/key_password"
+                    style="@style/item"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
+                    android:hint="@string/pw_query_hint"
+                    android:inputType="textPassword" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pkcs12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <de.blinkt.openvpn.views.FileSelectLayout
+                android:id="@+id/pkcs12select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                blinkt:certificate="false"
+                blinkt:title="@string/client_pkcs12_title" />
+
+            <TextView
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:text="@string/pkcs12pwquery"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/pkcs12password"
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:hint="@string/pw_query_hint"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/userpassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:text="@string/auth_username"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/auth_username"
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:inputType="textNoSuggestions" />
+
+            <TextView
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:text="@string/auth_pwquery"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <EditText
+                android:id="@+id/auth_password"
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:hint="@string/pw_query_hint"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/statickeys"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                style="@style/item"
+                android:singleLine="false"
+                android:text="@string/static_keys_info" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="de.blinkt.vpndialogxposed" >
+
+
+    <application
+            android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/app_name"
+            >
+
+        <activity
+                android:name=".AllowedVPNsChooser">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <meta-data
+                android:value="true"
+                android:name="xposedmodule"/>
+        <meta-data
+                android:value="2.0*"
+                android:name="xposedminversion"/>
+        <meta-data
+                android:value="Allows OpenVPN for Android to establish a VPN connection without confirmation dialog"
+                android:name="xposeddescription"/>
+    </application>
+
+</manifest>

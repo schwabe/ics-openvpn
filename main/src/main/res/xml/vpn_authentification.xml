@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <CheckBoxPreference
+        android:key="remoteServerTLS"
+        android:summary="@string/check_remote_tlscert"
+        android:title="@string/check_remote_tlscert_title" />
+    <CheckBoxPreference
+        android:key="checkRemoteCN"
+        android:summary="@string/remote_tlscn_check_summary"
+        android:title="@string/remote_tlscn_check_title" />
+
+    <de.blinkt.openvpn.views.RemoteCNPreference
+        android:dependency="checkRemoteCN"
+        android:key="remotecn"
+        android:title="@string/enter_tlscn_title" />
+
+    <PreferenceCategory android:title="@string/tls_authentication" >
+        <SwitchPreference
+            android:key="useTLSAuth"
+            android:summary="@string/tls_key_auth"
+            android:title="@string/useTLSAuth" />
+
+        <Preference
+            android:dependency="useTLSAuth"
+            android:key="tlsAuthFile"
+            android:title="@string/tls_auth_file" />
+
+        <ListPreference
+            android:dependency="useTLSAuth"
+            android:entries="@array/tls_directions_entries"
+            android:entryValues="@array/tls_directions_values"
+            android:key="tls_direction"
+            android:persistent="false"
+            android:title="@string/tls_direction" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/encryption" >
+        <EditTextPreference
+            android:dialogMessage="@string/chipher_dialog_message"
+            android:dialogTitle="@string/cipher_dialog_title"
+            android:key="cipher"
+            android:persistent="false"
+            android:title="@string/encryption_cipher" />
+        <EditTextPreference
+            android:dialogMessage="@string/auth_dialog_message"
+            android:dialogTitle="@string/auth_dialog_title"
+            android:key="auth"
+            android:persistent="false"
+            android:title="@string/packet_auth" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

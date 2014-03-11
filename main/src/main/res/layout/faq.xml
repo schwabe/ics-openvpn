@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/stdpadding"
+    android:paddingRight="@dimen/stdpadding" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/faq_howto_title" />
+
+        <TextView
+            android:id="@+id/faq_howto"
+            style="@style/faqitem"
+            tools:text="@string/faq_howto"
+            tools:ignore="SelectableText" />
+
+        <TextView
+                style="@style/faqhead"
+                android:text="@string/faq_vpndialog43_title" />
+
+        <TextView
+                tools:text="@string/faq_vpndialog43"
+                android:id="@+id/faq_vpndialog43"
+                style="@style/faqitem" />
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/faq_system_dialogs_title" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/faq_system_dialogs" />
+
+        <TextView
+            style="@style/faqitem"
+            tools:text="@string/faq_system_dialog_xposed"
+            android:id="@+id/faq_system_dialog_xposed"/>
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/faq_duplicate_notification_title" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/faq_duplicate_notification" />
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/battery_consumption_title" />
+
+        <TextView
+            android:id="@+id/baterry_consumption"
+            tools:text="@string/baterry_consumption"
+            style="@style/faqitem"
+            tools:ignore="SelectableText" />
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/tap_mode" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/faq_tap_mode" />
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/vpn_tethering_title" />
+
+        <TextView
+            android:id="@+id/faq_tethering"
+            style="@style/faqitem"
+            tools:text="@string/faq_tethering"
+            tools:ignore="SelectableText" />
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/faq_security_title" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/faq_security" />
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/broken_images" />
+
+        <TextView
+            android:id="@+id/broken_images_faq"
+            style="@style/faqitem"
+            tools:ignore="SelectableText" />
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/faq_shortcut" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/faq_howto_shortcut" />
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/tap_mode" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/tap_faq2" />
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/copying_log_entries" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/faq_copying" />
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/tap_mode" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/tap_faq3" />
+
+        <TextView
+            style="@style/faqhead"
+            android:text="@string/faq_routing_title" />
+
+        <TextView
+            style="@style/faqitem"
+            android:text="@string/faq_routing" >
+        </TextView>
+    </LinearLayout>
+
+</ScrollView>

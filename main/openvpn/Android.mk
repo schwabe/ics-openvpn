@@ -11,7 +11,7 @@ LOCAL_C_INCLUDES := openssl/include lzo/include openssl/crypto openssl openvpn/s
 LOCAL_CFLAGS= -DHAVE_CONFIG_H -DTARGET_ABI=\"${TARGET_ABI}\"
 LOCAL_STATIC_LIBRARIES :=  liblzo-static snappy-static
 
-ifeq ($(USE_POLAR),1)
+ifeq ($(WITH_POLAR),1)
 LOCAL_STATIC_LIBRARIES +=  polarssl-static
 LOCAL_CFLAGS += -DENABLE_CRYPTO_POLARSSL=1
 else

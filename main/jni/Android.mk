@@ -1,8 +1,12 @@
 # Path of the sources
 JNI_DIR := $(call my-dir)
 
-#USE_POLAR=1
-#USE_BREAKPAD=0
+#optional arguments
+#WITH_POLAR=1
+#WITH_OPENVPN3=1
+# Build openvpn with polar (OpenVPN3 core is always build with polar)
+#WITH_BREAKPAD=0
+
 
 include lzo/Android.mk
 include snappy/Android.mk
@@ -20,13 +24,22 @@ else
 WITH_BREAKPAD=0
 endif
 
+ifeq ($(WITH_POLAR),1)
+	USE_POLAR=1
+endif
+ifeq ($(WITH_OPENVPN3),1)
+	USE_POLAR=1
+endif
 
 ifeq ($(USE_POLAR),1)
 	include polarssl/Android.mk
 endif
 
 include openvpn/Android.mk
-include ovpn3/Android.mk
+
+ifeq ($(WITH_OPENVPN3),1)
+	include ovpn3/Android.mk
+endif
 
 LOCAL_PATH := $(JNI_DIR)
 

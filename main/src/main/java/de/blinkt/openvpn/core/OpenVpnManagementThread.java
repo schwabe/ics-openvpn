@@ -158,7 +158,10 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 			// You can even get more evil by parsing toString() and extract the int from that :)
 
-			mOpenVPNService.protect(fdint);
+			boolean result = mOpenVPNService.protect(fdint);
+            if (!result)
+                VpnStatus.logWarning("Could not protect VPN socket");
+
 
 			//ParcelFileDescriptor pfd = ParcelFileDescriptor.fromFd(fdint);
 			//pfd.close();
@@ -232,6 +235,10 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		} else if (command.startsWith("SUCCESS:")) {
 			/* Ignore this kind of message too */
             return;
+        } else if (command.startsWith("PROTECTFD: ")) {
+            FileDescriptor fdtoprotect = mFDList.pollFirst();
+            if (fdtoprotect!=null)
+                protectFileDescriptor(fdtoprotect);
 		} else {
 			Log.i(TAG, "Got unrecognized line from managment" + command);
 			VpnStatus.logWarning("MGMT: Got unrecognized line from management:" + command);
@@ -534,6 +541,12 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 		}
 		return sendCMD;		
 	}
+
+    @Override
+    public void networkChange() {
+        if(!mWaitingForRelease)
+            managmentCommand("network-change\n");
+    }
 
 	public void signalusr1() {
 		mReleaseHold=false;

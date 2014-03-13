@@ -3209,6 +3209,20 @@ management_show_net_callback (void *arg, const int msglevel)
 #endif
 }
 
+#ifdef TARGET_ANDROID
+int
+managmenet_callback_network_change (void *arg)
+{
+  struct context *c = (struct context *) arg;
+  if (!c->c2.link_socket)
+    return -1;
+  if (c->c2.link_socket->sd == SOCKET_UNDEFINED)
+    return -1;
+
+  return c->c2.link_socket->sd;
+}
+#endif
+
 #endif
 
 void
@@ -3224,6 +3238,9 @@ init_management_callback_p2p (struct context *c)
       cb.show_net = management_show_net_callback;
       cb.proxy_cmd = management_callback_proxy_cmd;
       cb.remote_cmd = management_callback_remote_cmd;
+#ifdef TARGET_ANDROID
+      cb.network_change = managmenet_callback_network_change;
+#endif
       management_set_callback (management, &cb);
     }
 #endif

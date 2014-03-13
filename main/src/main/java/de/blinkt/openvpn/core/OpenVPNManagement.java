@@ -17,4 +17,8 @@ public interface OpenVPNManagement {
 
 	boolean stopVPN();
 
+    /*
+     * Rebind the interface
+     */
+    void networkChange();
 }

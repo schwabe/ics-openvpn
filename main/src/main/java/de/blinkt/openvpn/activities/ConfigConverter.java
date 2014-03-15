@@ -376,7 +376,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
             // /document/primary:ovpn/openvpn-imt.conf
 
 
-            if (path.indexOf(':') != -1 && path.indexOf('/') != -1) {
+            if (path.indexOf(':') != -1 && path.indexOf('/') > path.indexOf(':')) {
                 String possibleDir = path.substring(path.indexOf(':') + 1, path.length());
                 possibleDir = possibleDir.substring(0, possibleDir.lastIndexOf('/'));
 

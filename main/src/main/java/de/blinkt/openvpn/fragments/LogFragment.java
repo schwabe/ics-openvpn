@@ -643,16 +643,18 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 
                 @Override
                 public void run() {
-                    String prefix = getString(resId) + ":";
-                    if (status.equals("BYTECOUNT") || status.equals("NOPROCESS"))
-                        prefix = "";
-                    if (resId == R.string.unknown_state)
-                        prefix += status;
-                    if (mSpeedView != null)
-                        mSpeedView.setText(prefix + logMessage);
+                    if (isAdded()) {
+                        String prefix = getString(resId) + ":";
+                        if (status.equals("BYTECOUNT") || status.equals("NOPROCESS"))
+                            prefix = "";
+                        if (resId == R.string.unknown_state)
+                            prefix += status;
+                        if (mSpeedView != null)
+                            mSpeedView.setText(prefix + logMessage);
 
-                    if (mConnectStatus != null)
-                        mConnectStatus.setText(getString(resId));
+                        if (mConnectStatus != null)
+                            mConnectStatus.setText(getString(resId));
+                    }
                 }
             });
         }

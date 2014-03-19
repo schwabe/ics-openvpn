@@ -1994,6 +1994,8 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 #ifdef ENABLE_HTTP_PROXY
   if ((ce->http_proxy_options) && ce->proto != PROTO_TCP_CLIENT)
     msg (M_USAGE, "--http-proxy MUST be used in TCP Client mode (i.e. --proto tcp-client)");
+  if ((ce->http_proxy_options) && !ce->http_proxy_options->server)
+    msg (M_USAGE, "--http-proxy not specified but other http proxy options present");
 #endif
 
 #if defined(ENABLE_HTTP_PROXY) && defined(ENABLE_SOCKS)
@@ -5252,8 +5254,10 @@ add_option (struct options *options,
     }
   else if (streq (p[0], "max-routes"))
     {
-      msg (msglevel, "--max-routes option ignored. The number of routes is unlimited as of version 2.4. "
-           "This option will be removed in a future version, please remove it from your configuration.");
+      msg (M_WARN, "DEPRECATED OPTION: --max-routes option ignored."
+	   "The number of routes is unlimited as of version 2.4. "
+	   "This option will be removed in a future version, "
+	   "please remove it from your configuration.");
     }
   else if (streq (p[0], "route-gateway") && p[1])
     {

@@ -1161,10 +1161,12 @@ man_dispatch_command (struct management *man, struct status_output *so, const ch
       if (man_need (man, p, 1, 0))
 	man_signal (man, p[1]);
     }
+#ifdef TARGET_ANDROID
   else if (streq (p[0], "network-change"))
     {
         man_network_change(man);
     }
+#endif
   else if (streq (p[0], "load-stats"))
     {
       man_load_stats (man);

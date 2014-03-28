@@ -686,7 +686,7 @@ fi
 
 case "${with_mem_check}" in
 	valgrind)
-		AC_CHECK_HEADER(
+		AC_CHECK_HEADERS(
 			[valgrind/memcheck.h],
 			[
 				CFLAGS="${CFLAGS} -g -fno-inline"
@@ -700,7 +700,7 @@ case "${with_mem_check}" in
 		)
 		;;
 	dmalloc)
-		AC_CHECK_HEADER(
+		AC_CHECK_HEADERS(
 			[dmalloc.h],
 			[AC_CHECK_LIB(
 				[dmalloc],
@@ -744,7 +744,7 @@ PKG_CHECK_MODULES(
 
 PKG_CHECK_MODULES(
 	[OPENSSL_CRYPTO],
-	[libcrypto >= 0.9.6],
+	[libcrypto >= 0.9.8],
 	[have_openssl_crypto="yes"],
 	[AC_CHECK_LIB(
 		[crypto],
@@ -758,7 +758,7 @@ PKG_CHECK_MODULES(
 
 PKG_CHECK_MODULES(
 	[OPENSSL_SSL],
-	[libssl >= 0.9.6],
+	[libssl >= 0.9.8],
 	[have_openssl_ssl="yes"],
 	[AC_CHECK_LIB(
 		[ssl],
@@ -791,6 +791,21 @@ if test "${have_openssl_crypto}" = "yes"; then
 
 	CFLAGS="${saved_CFLAGS}"
 	LIBS="${saved_LIBS}"
+fi
+
+if test "${have_openssl_ssl}" = "yes"; then
+    AC_MSG_CHECKING([for SSL_OP_NO_TICKET flag in OpenSSL])
+    AC_EGREP_CPP(have_ssl_op_no_ticket, [
+    #include <openssl/ssl.h>
+    #ifdef SSL_OP_NO_TICKET
+    have_ssl_op_no_ticket
+    #endif
+    ], [
+        AC_MSG_RESULT([yes])
+    ], [
+        AC_MSG_RESULT([no])
+        AC_ERROR([OpenVPN 2.4+ requires SSL_OP_NO_TICKET in OpenSSL])
+    ])
 fi
 
 AC_ARG_VAR([POLARSSL_CFLAGS], [C compiler flags for polarssl])
@@ -929,7 +944,7 @@ if test "$enable_snappy" = "yes" && test "$enable_comp_stub" = "no"; then
 
     saved_CFLAGS="${CFLAGS}"
     CFLAGS="${CFLAGS} ${SNAPPY_CFLAGS}"
-    AC_CHECK_HEADER(snappy-c.h,
+    AC_CHECK_HEADERS(snappy-c.h,
        ,
        [
 	   AC_MSG_RESULT([Snappy headers not found.])
@@ -968,7 +983,7 @@ if test "$enable_lz4" = "yes" && test "$enable_comp_stub" = "no"; then
 
     saved_CFLAGS="${CFLAGS}"
     CFLAGS="${CFLAGS} ${LZ4_CFLAGS}"
-    AC_CHECK_HEADER(lz4.h,
+    AC_CHECK_HEADERS(lz4.h,
        ,
        [
 	   AC_MSG_RESULT([LZ4 headers not found.])

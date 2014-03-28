@@ -129,6 +129,10 @@ streqnull (const char* a, const char* b)
     return streq (a, b);
 }
 
+/*
+  get_cached_dns_entry return 0 on success and -1
+  otherwise. (like getaddrinfo)
+ */
 static int
 get_cached_dns_entry (struct cached_dns_entry* dns_cache,
 		      const char* hostname,
@@ -166,47 +170,46 @@ do_preresolve_host (struct context *c,
 		    const int flags)
 {
   struct addrinfo *ai;
+  int status;
+
   if (get_cached_dns_entry(c->c1.dns_cache,
 			   hostname,
-			     servname,
-			     af,
-			     flags,
-			   &ai))
+			   servname,
+			   af,
+			   flags,
+			   &ai) == 0 )
     {
-      int status;
-      status = openvpn_getaddrinfo (flags, hostname, servname,
-				    c->options.resolve_retry_seconds, NULL,
-				    af, &ai);
-      if (status == 0)
-	{
-	  struct cached_dns_entry *ph;
-
-	  ALLOC_OBJ_CLEAR_GC (ph, struct cached_dns_entry, &c->gc);
-	  ph->ai = ai;
-	  ph->hostname = hostname;
-	  ph->servname = servname;
-	  ph->flags = flags & GETADDR_CACHE_MASK;
-
-	  if (!c->c1.dns_cache)
-	    c->c1.dns_cache = ph;
-	  else
-	    {
-	      struct cached_dns_entry *prev = c->c1.dns_cache;
-	      while (prev->next)
-		prev = prev->next;
-	      prev->next = ph;
-	    }
-
-	  gc_addspecial (ai, &gc_freeaddrinfo_callback, &c->gc);
-
-	}
-      return status;
-    }
-  else
-    {
-      /* already in cached dns list, return success */
+      /* entry already cached, return success */
       return 0;
     }
+
+  status = openvpn_getaddrinfo (flags, hostname, servname,
+				c->options.resolve_retry_seconds, NULL,
+				af, &ai);
+  if (status == 0)
+    {
+      struct cached_dns_entry *ph;
+
+      ALLOC_OBJ_CLEAR_GC (ph, struct cached_dns_entry, &c->gc);
+      ph->ai = ai;
+      ph->hostname = hostname;
+      ph->servname = servname;
+      ph->flags = flags & GETADDR_CACHE_MASK;
+
+      if (!c->c1.dns_cache)
+	c->c1.dns_cache = ph;
+      else
+	{
+	  struct cached_dns_entry *prev = c->c1.dns_cache;
+	  while (prev->next)
+	    prev = prev->next;
+	  prev->next = ph;
+	}
+
+      gc_addspecial (ai, &gc_freeaddrinfo_callback, &c->gc);
+
+    }
+  return status;
 }
 
 void
@@ -869,7 +872,8 @@ create_socket (struct link_socket* sock, struct addrinfo* addr)
 	   * currently resolve two remote addresses is not supported,
 	   * TODO: Rewrite the whole resolve_remote */
 	  struct addrinfo addrinfo_tmp = *addr;
-	  addr->ai_protocol = IPPROTO_TCP;
+	  addrinfo_tmp.ai_socktype = SOCK_STREAM;
+	  addrinfo_tmp.ai_protocol = IPPROTO_TCP;
 	  sock->ctrl_sd = create_socket_tcp (&addrinfo_tmp);
 	}
 #endif
@@ -2925,7 +2929,7 @@ link_socket_read_udp_posix_recvmsg (struct link_socket *sock,
 	}
       else if (cmsg != NULL)
 	{
-	  msg(M_WARN, "CMSG received that cannot be parsed");
+	  msg(M_WARN, "CMSG received that cannot be parsed (cmsg_level=%d, cmsg_type=%d, cmsg=len=%d)", (int)cmsg->cmsg_level, (int)cmsg->cmsg_type, (int)cmsg->cmsg_len );
 	}
     }
 

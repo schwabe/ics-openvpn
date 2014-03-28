@@ -1589,7 +1589,7 @@ man_listen (struct management *man)
 	{
 	  man->connection.sd_top = create_socket_tcp (man->settings.local);
 	  socket_bind (man->connection.sd_top, man->settings.local,
-		       man->settings.local->ai_family, "MANAGEMENT", false);
+                       man->settings.local->ai_family, "MANAGEMENT", false);
 	}
 
       /*
@@ -1887,7 +1887,7 @@ bool management_android_control (struct management *man, const char *command, co
 /*
  * In Android 4.4 it is not possible to open a new tun device and then close the
  * old tun device without breaking the whole VPNService stack until the device
- * is reported. This management method ask the UI what method should be taken to
+ * is rebooted. This management method ask the UI what method should be taken to
  * ensure the optimal solution for the situation
  */
 int managment_android_persisttun_action (struct management *man)
@@ -1904,7 +1904,10 @@ int managment_android_persisttun_action (struct management *man)
   else if (!strcmp ("OPEN_BEFORE_CLOSE", up.password))
     return ANDROID_OPEN_BEFORE_CLOSE;
   else
-    ASSERT (0);
+    msg (M_ERR, "Got unrecognised '%s' from management for PERSIST_TUN_ACTION query", up.password);
+
+  ASSERT(0);
+  return ANDROID_OPEN_AFTER_CLOSE;
 }
 
 

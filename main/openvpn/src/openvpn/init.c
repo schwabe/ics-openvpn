@@ -1,4 +1,4 @@
-    /*
+/*
  *  OpenVPN -- An application to securely tunnel IP networks
  *             over a single TCP/UDP port, with support for SSL/TLS-based
  *             session authentication and key exchange,
@@ -131,7 +131,8 @@ management_callback_proxy_cmd (void *arg, const char **p)
           msg (M_WARN, "HTTP proxy support is not available");
 #else
           struct http_proxy_options *ho;
-         if (ce->proto != PROTO_TCP && ce->proto != PROTO_TCP_CLIENT )            {
+          if (ce->proto != PROTO_TCP && ce->proto != PROTO_TCP_CLIENT )
+            {
               msg (M_WARN, "HTTP proxy support only works for TCP based connections");
               return false;
             }

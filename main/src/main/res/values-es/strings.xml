@@ -84,7 +84,9 @@
   <string name="default_route_summary">Redirige todo el tráfico a través de VPN</string>
   <string name="use_default_title">Usar ruta predeterminada</string>
   <string name="custom_route_message">Introduzca las rutas personalizadas. Sólo introduzca destinos en formato CIDR. \"10.0.0.0/8 2002:: / 16\" dirigiría las redes 10.0.0.0/8 y 2002::/16 sobre la VPN.</string>
+  <string name="custom_route_message_excluded">Rutas que NO deberían ser enrutadas a través de la VPN. Use la misma sintaxis que para las rutas incluidas.</string>
   <string name="custom_routes_title">Rutas personalizadas</string>
+  <string name="custom_routes_title_excluded">Redes Excluidas</string>
   <string name="log_verbosity_level">Nivel de detalle del registro</string>
   <string name="float_summary">Permite paquetes autenticados desde cualquier IP</string>
   <string name="float_title">Permitir servidor flotante</string>
@@ -98,6 +100,9 @@
   <string name="last_openvpn_tun_config">Abriendo interfaz tun:</string>
   <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">Servidor DNS : %1$s, Dominio: %2$s</string>
+  <string name="routes_info_incl">Rutas: %1$s %2$s</string>
+  <string name="routes_info_excl">Rutas excluidas: %1$s %2$s</string>
+  <string name="routes_debug">Rutas instaladas por VpnService: %1$s %2$s</string>
   <string name="ip_not_cidr">Información de la interfaz obtenida %1$s and %2$s, asumiendo que la segunda dirección es una dirección equivalente del remoto. Usando una máscara de red /32 para la IP local. El modo dado por OpenVPN es \"%3$s\".</string>
   <string name="route_not_cidr">No tienen sentido %1$s y %2$s como ruta IP con máscara de red CIDR, usando /32 como máscara de red.</string>
   <string name="route_not_netip">Ruta conectada de %1$s/%2$s a %3$s/%2$s</string>
@@ -305,5 +310,9 @@
   <string name="logview_options">Opciones de visualización</string>
   <string name="unhandled_exception">Excepcion no controlada: %1$s\n\n%2$s</string>
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
+  <string name="faq_system_dialog_xposed">Si ha rooteado su dispositivo Android, puede instalar el &lt;a href=\"http://xposed.info/\"&gt;framework Xposed&lt;/a&gt; y añadir el &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;módulo de confirmación de Diálogo VPN&lt;/a&gt; bajo su propio riesgo\"</string>
   <string name="full_licenses">Licencias completas</string>
+  <string name="blocklocal_summary">Las redes conectadas directamente a los interfaces locales no serán enrutadas a través de la VPN. Al desmarcar esta opción, todo el tráfico previsto para las redes locales será redirigido a la VPN.</string>
+  <string name="blocklocal_title">Evitar la VPN para las redes locales</string>
+  <string name="userpw_file">Archivo de Usuario/Contraseña</string>
 </resources>

@@ -242,9 +242,7 @@ static const char usage_message[] =
   "                  Add 'bypass-dns' flag to similarly bypass tunnel for DNS.\n"
   "--redirect-private [flags]: Like --redirect-gateway, but omit actually changing\n"
   "                  the default gateway.  Useful when pushing private subnets.\n"
-#ifdef ENABLE_CLIENT_NAT
   "--client-nat snat|dnat network netmask alias : on client add 1-to-1 NAT rule.\n"
-#endif
 #ifdef ENABLE_PUSH_PEER_INFO
   "--push-peer-info : (client only) push client info to server.\n"
 #endif
@@ -567,12 +565,7 @@ static const char usage_message[] =
   "                  root certificate.\n"
 #ifndef ENABLE_CRYPTO_POLARSSL
   "--capath dir    : A directory of trusted certificates (CAs"
-#if OPENSSL_VERSION_NUMBER >= 0x00907000L
   " and CRLs).\n"
-#else /* OPENSSL_VERSION_NUMBER >= 0x00907000L */
-  ").\n"
-  "                  WARNING: no support of CRL available with this version.\n"
-#endif /* OPENSSL_VERSION_NUMBER >= 0x00907000L */
 #endif /* ENABLE_CRYPTO_POLARSSL */
   "--dh file       : File containing Diffie Hellman parameters\n"
   "                  in .pem format (for --tls-server only).\n"
@@ -635,7 +628,6 @@ static const char usage_message[] =
   "--x509-track x  : Save peer X509 attribute x in environment for use by\n"
   "                  plugins and management interface.\n"
 #endif
-#if OPENSSL_VERSION_NUMBER >= 0x00907000L || ENABLE_CRYPTO_POLARSSL
   "--remote-cert-ku v ... : Require that the peer certificate was signed with\n"
   "                  explicit key usage, you can specify more than one value.\n"
   "                  value should be given in hex format.\n"
@@ -645,7 +637,6 @@ static const char usage_message[] =
   "--remote-cert-tls t: Require that peer certificate was signed with explicit\n"
   "                  key usage and extended key usage based on RFC3280 TLS rules.\n"
   "                  t = 'client' | 'server'.\n"
-#endif				/* OPENSSL_VERSION_NUMBER || ENABLE_CRYPTO_POLARSSL */
 #endif				/* ENABLE_SSL */
 #ifdef ENABLE_PKCS11
   "\n"
@@ -1327,9 +1318,7 @@ options_detach (struct options *o)
 {
   gc_detach (&o->gc);
   o->routes = NULL;
-#ifdef ENABLE_CLIENT_NAT
   o->client_nat = NULL;
-#endif
 #if P2MP_SERVER
   clone_push_list(o);
 #endif
@@ -1349,14 +1338,12 @@ rol6_check_alloc (struct options *options)
     options->routes_ipv6 = new_route_ipv6_option_list (&options->gc);
 }
 
-#ifdef ENABLE_CLIENT_NAT
 static void
 cnol_check_alloc (struct options *options)
 {
   if (!options->client_nat)
     options->client_nat = new_client_nat_list (&options->gc);
 }
-#endif
 
 #ifndef ENABLE_SMALL
 static void
@@ -1558,11 +1545,9 @@ show_settings (const struct options *o)
   SHOW_BOOL (allow_pull_fqdn);
   if (o->routes)
     print_route_options (o->routes, D_SHOW_PARMS);
-  
-#ifdef ENABLE_CLIENT_NAT
+
   if (o->client_nat)
     print_client_nat_list(o->client_nat, D_SHOW_PARMS);
-#endif
 
 #ifdef ENABLE_MANAGEMENT
   SHOW_STR (management_addr);
@@ -2828,13 +2813,11 @@ pre_pull_save (struct options *o)
 	  o->pre_pull->routes_ipv6 = clone_route_ipv6_option_list(o->routes_ipv6, &o->gc);
 	  o->pre_pull->routes_ipv6_defined = true;
 	}
-#ifdef ENABLE_CLIENT_NAT
       if (o->client_nat)
 	{
 	  o->pre_pull->client_nat = clone_client_nat_option_list(o->client_nat, &o->gc);
 	  o->pre_pull->client_nat_defined = true;
 	}
-#endif
     }
 }
 
@@ -2864,7 +2847,6 @@ pre_pull_restore (struct options *o, struct gc_arena *gc)
       else
 	o->routes_ipv6 = NULL;
 
-#ifdef ENABLE_CLIENT_NAT
       if (pp->client_nat_defined)
 	{
 	  cnol_check_alloc (o);
@@ -2872,7 +2854,6 @@ pre_pull_restore (struct options *o, struct gc_arena *gc)
 	}
       else
 	o->client_nat = NULL;
-#endif
 
       o->foreign_option_index = pp->foreign_option_index;
     }
@@ -5200,14 +5181,12 @@ add_option (struct options *options,
       VERIFY_PERMISSION (OPT_P_PERSIST_IP);
       options->persist_remote_ip = true;
     }
-#ifdef ENABLE_CLIENT_NAT
   else if (streq (p[0], "client-nat") && p[1] && p[2] && p[3] && p[4])
     {
       VERIFY_PERMISSION (OPT_P_ROUTE);
       cnol_check_alloc (options);
       add_client_nat_to_option_list(options->client_nat, p[1], p[2], p[3], p[4], msglevel);
     }
-#endif
   else if (streq (p[0], "route") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_ROUTE);
@@ -5795,10 +5774,8 @@ add_option (struct options *options,
 	  options->push_ifconfig_defined = true;
 	  options->push_ifconfig_local = local;
 	  options->push_ifconfig_remote_netmask = remote_netmask;
-#ifdef ENABLE_CLIENT_NAT
 	  if (p[3])
 	    options->push_ifconfig_local_alias = getaddr (GETADDR_HOST_ORDER|GETADDR_RESOLVE, p[3], 0, NULL, NULL);
-#endif
 	}
       else
 	{
@@ -6786,7 +6763,6 @@ add_option (struct options *options,
 	  goto err;
 	}
     }
-#if OPENSSL_VERSION_NUMBER >= 0x00907000L || ENABLE_CRYPTO_POLARSSL
   else if (streq (p[0], "remote-cert-ku"))
     {
       int j;
@@ -6824,7 +6800,6 @@ add_option (struct options *options,
 	  goto err;
 	}
     }
-#endif	/* OPENSSL_VERSION_NUMBER */
   else if (streq (p[0], "tls-timeout") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_TLS_PARMS);

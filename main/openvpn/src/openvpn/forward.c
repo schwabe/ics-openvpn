@@ -1017,6 +1017,8 @@ process_ip_header (struct context *c, unsigned int flags, struct buffer *buf)
   if (!c->options.passtos)
     flags &= ~PIPV4_PASSTOS;
 #endif
+  if (!c->options.client_nat)
+    flags &= ~PIPV4_CLIENT_NAT;
   if (!c->options.route_gateway_via_dhcp)
     flags &= ~PIPV4_EXTRACT_DHCP_ROUTER;
 
@@ -1026,11 +1028,13 @@ process_ip_header (struct context *c, unsigned int flags, struct buffer *buf)
        * The --passtos and --mssfix options require
        * us to examine the IPv4 header.
        */
+
+      if (flags & (PIP_MSSFIX
 #if PASSTOS_CAPABILITY
-      if (flags & (PIPV4_PASSTOS|PIP_MSSFIX))
-#else
-      if (flags & PIP_MSSFIX)
+	  | PIPV4_PASSTOS
 #endif
+	  | PIPV4_CLIENT_NAT
+	  ))
 	{
 	  struct buffer ipbuf = *buf;
 	  if (is_ipv4 (TUNNEL_TYPE (c->c1.tuntap), &ipbuf))
@@ -1045,14 +1049,12 @@ process_ip_header (struct context *c, unsigned int flags, struct buffer *buf)
 	      if (flags & PIP_MSSFIX)
 		mss_fixup_ipv4 (&ipbuf, MTU_TO_MSS (TUN_MTU_SIZE_DYNAMIC (&c->c2.frame)));
 
-#ifdef ENABLE_CLIENT_NAT
 	      /* possibly do NAT on packet */
 	      if ((flags & PIPV4_CLIENT_NAT) && c->options.client_nat)
 		{
 		  const int direction = (flags & PIPV4_OUTGOING) ? CN_INCOMING : CN_OUTGOING;
 		  client_nat_transform (c->options.client_nat, &ipbuf, direction);
 		}
-#endif
 	      /* possibly extract a DHCP router message */
 	      if (flags & PIPV4_EXTRACT_DHCP_ROUTER)
 		{

@@ -166,6 +166,7 @@ char *string_alloc_debug (const char *str, struct gc_arena *gc, const char *file
 struct buffer string_alloc_buf_debug (const char *str, struct gc_arena *gc, const char *file, int line);
 
 #else
+
 struct buffer alloc_buf (size_t size);
 struct buffer alloc_buf_gc (size_t size, struct gc_arena *gc); /* allocate buffer with garbage collection */
 struct buffer clone_buf (const struct buffer* buf);

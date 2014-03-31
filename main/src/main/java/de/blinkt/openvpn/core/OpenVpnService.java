@@ -11,23 +11,17 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.VpnService;
-import android.os.*;
+import android.os.Binder;
+import android.os.Build;
 import android.os.Handler.Callback;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import de.blinkt.openvpn.BuildConfig;
-import de.blinkt.openvpn.activities.DisconnectVPN;
-import de.blinkt.openvpn.activities.LogWindow;
-import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
-import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
-import de.blinkt.openvpn.core.VpnStatus.StateListener;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -36,8 +30,19 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
 
-import static de.blinkt.openvpn.core.NetworkSpace.*;
-import static de.blinkt.openvpn.core.VpnStatus.ConnectionStatus.*;
+import de.blinkt.openvpn.BuildConfig;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.activities.DisconnectVPN;
+import de.blinkt.openvpn.activities.LogWindow;
+import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
+import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
+import de.blinkt.openvpn.core.VpnStatus.StateListener;
+
+import static de.blinkt.openvpn.core.NetworkSpace.ipAddress;
+import static de.blinkt.openvpn.core.VpnStatus.ConnectionStatus.LEVEL_CONNECTED;
+import static de.blinkt.openvpn.core.VpnStatus.ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET;
+import static de.blinkt.openvpn.core.VpnStatus.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
 
 public class OpenVpnService extends VpnService implements StateListener, Callback, ByteCountListener {
     public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";
@@ -321,6 +326,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
+                //ignore
             }
 
 
@@ -329,6 +335,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
+                //ignore
             }
         }
         // An old running VPN should now be exited
@@ -429,7 +436,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         if (mLocalIP != null)
             cfg += mLocalIP.toString();
         if (mLocalIPv6 != null)
-            cfg += mLocalIPv6.toString();
+            cfg += mLocalIPv6;
 
         cfg += "routes: " + TextUtils.join("|", mRoutes.getNetworks(true)) + TextUtils.join("|", mRoutesv6.getNetworks(true));
         cfg += "excl. routes:" + TextUtils.join("|", mRoutes.getNetworks(false)) + TextUtils.join("|", mRoutesv6.getNetworks(false));
@@ -538,9 +545,8 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         builder.setConfigureIntent(getLogPendingIntent());
 
         try {
-            ParcelFileDescriptor tun = builder.establish();
             //Debug.stopMethodTracing();
-            return tun;
+            return builder.establish();
         } catch (Exception e) {
             VpnStatus.logError(R.string.tun_open_error);
             VpnStatus.logError(getString(R.string.error) + e.getLocalizedMessage());
@@ -637,12 +643,16 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             // get the netmask as IP
             long netMaskAsInt = CIDRIP.getInt(netmask);
 
+            int masklen;
+            if ("net30".equals(mode))
+                masklen = 30;
+            else
+                masklen = 31;
+
+            int mask = ~( 1 << (32 - (mLocalIP.len +1)));
             // Netmask is Ip address +/-1, assume net30/p2p with small net
-            if (Math.abs(netMaskAsInt - mLocalIP.getInt()) == 1) {
-                if ("net30".equals(mode))
-                    mLocalIP.len = 30;
-                else
-                    mLocalIP.len = 31;
+            if ((netMaskAsInt & mask) == (mLocalIP.getInt() & mask )) {
+                mLocalIP.len = masklen;
             } else {
                 if (!"p2p".equals(mode))
                     VpnStatus.logWarning(R.string.ip_not_cidr, local, netmask, mode);

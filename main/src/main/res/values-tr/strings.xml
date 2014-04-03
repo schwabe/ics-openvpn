@@ -211,7 +211,6 @@
   <string name="vpn_import_hint">Kullanım &lt; img src = \"ic_menu_archive\" / &gt; simgesi sdcard (.ovpn veya .conf) bir profili almak için.</string>
   <string name="faq_hint">Ayrıca SSS kontrol etmeyi unutmayın. Hızlı Başlangıç Kılavuzu vardır.</string>
   <string name="faq_routing_title">Yönlendirme/arabirimi yapılandırması</string>
-  <string name="faq_routing">Yönlendirme ve arabirim yapılandırma traditionell ifconfig/rota komutu ile ama VPNService API kullanarak bitmiş değil. Diğer işletim sistemleri üzerinde farklı bir yönlendirme yapılandırmasını sonuçlanır. Yapılandırma yalnızca IP tünel arabirimi ve bu arabirim üzerinden yönlendirileceğini ağlar oluşur. Özellikle hiçbir eş ortak adresi ya da ağ geçidi adresi gereklidir. VPN sunucusunun (yönlendirme ağ geçidi kullanarak, örneğin eklendi) ulaşmak için özel yollar da gerekli değil. Uygulama, sonuç olarak bir yapılandırma alırken bu ayarları yoksayar. App VPNService API\'sı ile sunucuya bağlantı VPN tüneli yönlendirilmez sağlar. Tek belirterek üzerinden yönlendirilecek iletişim beri tünel desteklenir ilave rotalar tünele işaret değil olamaz ya desteklenen. (örneğin rota x.x.x.x y.y.y.y net_gateway). Windows\'ta oturum bağlantı kurma üzerine VPNService geçerli yapılandırmasını gösterir. </string>
   <string name="persisttun_summary">OpenVPN yeniden bağlamadan zaman VPN bağlantısı değil geri dönüş yap</string>
   <string name="persistent_tun_title">Kalıcı tun</string>
   <string name="openvpn_log">OpenVPN kayıtları</string>

@@ -215,7 +215,7 @@
   <string name="vpn_import_hint">Benutzen Sie &lt;img src=\"ic_menu_archive\"/&gt; um ein vorhandenes (.ovpn oder .conf) Profil von Ihrer SD Karte zu importieren</string>
   <string name="faq_hint">Lesen Sie auch die FAQ. Dort befindet sich eine Schnellstart Anleitung</string>
   <string name="faq_routing_title">Routing/Netzwerk Konfiguration</string>
-  <string name="faq_routing">In dieser Anwendung wird die Routing und Netzwerkkonfiguration nicht mit den traditionellen ifconfig/route Kommandos konfiguriert sondern mittels der VPNService API. Diese erwartet eine Tunnel IP Adresse und die Netzwerke, die über den Tunnel geroutet werden sollen. Insbesondere wird keine Gateway oder Peer IP Adresse benötigt. Die Anwendung ignoriert diese daher auch beim Import. Dass die Verbindung zum VPN Server nicht über den Tunnel geroutet wird, wird auch über die VPNService API sichergestellt ohne dass hierfür spezielle Routen nötig sind. Da nur Netzwerke, die über den Tunnel geroutet werden sollen, angeben werden können, ist es nicht möglich andere Routen zu unterstützen (z.B. route x.x.x.x y.y.y.y net_gateway)\"</string>
+  <string name="faq_routing">In dieser Anwendung wird die Routing und Netzwerkkonfiguration nicht mit den traditionellen ifconfig/route Kommandos konfiguriert sondern mittels der VPNService API. Diese erwartet eine Tunnel IP Adresse und die Netzwerke, die über den Tunnel geroutet werden sollen. Insbesondere wird keine Gateway oder Peer IP Adresse benötigt. Die Anwendung ignoriert diese daher auch beim Import. Dass die Verbindung zum VPN Server nicht über den Tunnel geroutet wird, wird auch über die VPNService API sichergestellt ohne dass hierfür spezielle Routen nötig sind. Da nur Netzwerke, die über den Tunnel geroutet werden sollen, angeben werden können, ist es nicht möglich andere Routen zu unterstützen. Die Anwendung versucht daher andere Routen (wie z.B. route x.x.x.x y.y.y.y net_gateway)\" die nicht über den Tunnel geroutet werden sollen zu erkken und eine Menge von Routen zu berechnen die das Verhalten auf anderen Plattformen emulieren. Das Verbindungslog zeigt die genaue Konfiguration und die errechneten Routen beim Verbinden an.</string>
   <string name="persisttun_summary">Verhindere Zurückfallen auf nicht VPN Verbindungen während OpenVPN neu verbindet.</string>
   <string name="persistent_tun_title">Persistentes tun Device</string>
   <string name="openvpn_log">OpenVPN-Log</string>
@@ -315,4 +315,8 @@
   <string name="blocklocal_summary">Netze, die direkt über ein lokales Interfaces erreicht werden können werden nicht über das VPN gerottet. Deaktivieren dieser Option leitet allen Verkehr, der für lokale Netzwerke bestimmt ist, über das VPN.</string>
   <string name="blocklocal_title">VPN für lokale Netzwerke umgehen</string>
   <string name="userpw_file">Datei mit Benutzername und Passwort</string>
+  <string name="imported_from_file">[Importiert aus %s]</string>
+  <string name="files_missing_hint">Einige Dateien konnten nicht gefunden werden. Bitte wählen Sie diese manuell aus:</string>
+  <string name="openvpn_is_no_free_vpn">Um diese Anwendung nutzen zu können brauchen Sie einen OpenVPN fähigen Server. Diese werden häufig von Ihrer Firma oder Universität bereitgestellt. Besuchen Sie http://community.openvpn.net/  um mehr über OpenVPN zu erfahren und wie Sie Ihren eigenen Server aufsetzen können.</string>
+  <string name="import_log">Import-Protokoll:</string>
 </resources>

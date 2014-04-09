@@ -322,4 +322,6 @@ OpenVPNの接続を保証するためには、アプリケーションを高い�
   <string name="full_licenses">フルライセンス</string>
   <string name="blocklocal_summary">ローカルインターフェイスに直接接続されているネットワークはVPNを経由しません。
 このオプションを外すとローカルネットワーク宛のすべての通信をVPNにリダイレクトします。</string>
+  <string name="files_missing_hint">いくつかのファイルが見つかりませんでした。プロファイルをインポートするファイルを選択してください：</string>
+  <string name="import_log">インポートログ：</string>
 </resources>

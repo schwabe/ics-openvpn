@@ -314,4 +314,7 @@
   <string name="blocklocal_summary">Sítě přímo připojené na lokální interface nebudou směrovány skrze VPN. Odškrtnutím této volby bude přesměrován všechen lokální provoz do VPN.</string>
   <string name="blocklocal_title">Nepoužívat VPN pro lokální sítě</string>
   <string name="userpw_file">Soubor pro Jméno/Heslo</string>
+  <string name="imported_from_file">[Importováno z: %s]</string>
+  <string name="files_missing_hint">Některé soubory nemohly být nalezeny. Prosím vyberte profil, který chcete importovat:</string>
+  <string name="import_log">Import logu:</string>
 </resources>

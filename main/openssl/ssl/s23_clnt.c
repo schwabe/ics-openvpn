@@ -283,7 +283,7 @@ int ssl_fill_hello_random(SSL *s, int server, unsigned char *result, int len)
 		send_time = (s->mode & SSL_MODE_SEND_CLIENTHELLO_TIME) != 0;
 	if (send_time)
 		{
-		unsigned long Time = time(NULL);
+		unsigned long Time = (unsigned long)time(NULL);
 		unsigned char *p = result;
 		l2n(Time, p);
 		return RAND_pseudo_bytes(p, len-4);
@@ -487,10 +487,7 @@ static int ssl23_client_hello(SSL *s)
 			{
 			/* create Client Hello in SSL 3.0/TLS 1.0 format */
 
-			/* do the record header (5 bytes) and handshake message
-			 * header (4 bytes) last. Note: the code to add the
-			 * padding extension in t1_lib.c depends on the size of
-			 * this prefix. */
+			/* do the record header (5 bytes) and handshake message header (4 bytes) last */
 			d = p = &(buf[9]);
 			
 			*(p++) = version_major;

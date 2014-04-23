@@ -123,7 +123,7 @@ OPENSSL_wipe_cpu:
 			fmovs	%f1,%f3
 			fmovs	%f0,%f2
 
-	add	%fp,BIAS,%i0	! return pointer to caller´s top of stack
+	add	%fp,BIAS,%i0	! return pointer to callerÂ´s top of stack
 
 	ret
 	restore
@@ -235,10 +235,10 @@ _sparcv9_rdtick:
 .global	_sparcv9_vis1_probe
 .align	8
 _sparcv9_vis1_probe:
-	.word	0x81b00d80	!fxor	%f0,%f0,%f0
 	add	%sp,BIAS+2,%o1
-	retl
 	.word	0xc19a5a40	!ldda	[%o1]ASI_FP16_P,%f0
+	retl
+	.word	0x81b00d80	!fxor	%f0,%f0,%f0
 .type	_sparcv9_vis1_probe,#function
 .size	_sparcv9_vis1_probe,.-_sparcv9_vis1_probe
 

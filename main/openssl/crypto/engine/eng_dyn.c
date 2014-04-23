@@ -408,7 +408,7 @@ static int int_load(dynamic_data_ctx *ctx)
 	int num, loop;
 	/* Unless told not to, try a direct load */
 	if((ctx->dir_load != 2) && (DSO_load(ctx->dynamic_dso,
-				ctx->DYNAMIC_LIBNAME, NULL, 0)) != NULL)
+				ctx->DYNAMIC_LIBNAME, NULL, 0) != NULL))
 		return 1;
 	/* If we're not allowed to use 'dirs' or we have none, fail */
 	if(!ctx->dir_load || (num = sk_OPENSSL_STRING_num(ctx->dirs)) < 1)
@@ -423,6 +423,9 @@ static int int_load(dynamic_data_ctx *ctx)
 			{
 			/* Found what we're looking for */
 			OPENSSL_free(merge);
+			/* Previous failed loop iterations, if any, will have resulted in
+			 * errors. Clear them out before returning success. */
+			ERR_clear_error();
 			return 1;
 			}
 		OPENSSL_free(merge);

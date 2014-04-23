@@ -10,14 +10,6 @@
  	/* Default generate session ID callback. */
  	GEN_SESSION_CB generate_session_id;
  
-@@ -1546,6 +1549,7 @@ const SSL_CIPHER *SSL_get_current_cipher
- int	SSL_CIPHER_get_bits(const SSL_CIPHER *c,int *alg_bits);
- char *	SSL_CIPHER_get_version(const SSL_CIPHER *c);
- const char *	SSL_CIPHER_get_name(const SSL_CIPHER *c);
-+const char *	SSL_CIPHER_authentication_method(const SSL_CIPHER *c);
- 
- int	SSL_get_fd(const SSL *s);
- int	SSL_get_rfd(const SSL *s);
 @@ -1554,6 +1558,7 @@ const char  * SSL_get_cipher_list(const 
  char *	SSL_get_shared_ciphers(const SSL *s, char *buf, int len);
  int	SSL_get_read_ahead(const SSL * s);
@@ -48,9 +40,9 @@
  const unsigned char *SSL_SESSION_get_id(const SSL_SESSION *s,
  					unsigned int *len);
 +const char *	SSL_SESSION_get_version(const SSL_SESSION *s);
+ unsigned int SSL_SESSION_get_compress_id(const SSL_SESSION *s);
  #ifndef OPENSSL_NO_FP_API
  int	SSL_SESSION_print_fp(FILE *fp,const SSL_SESSION *ses);
- #endif
 @@ -1624,6 +1633,7 @@ int	SSL_SESSION_print(BIO *fp,const SSL_
  void	SSL_SESSION_free(SSL_SESSION *ses);
  int	i2d_SSL_SESSION(SSL_SESSION *in,unsigned char **pp);
@@ -296,15 +288,21 @@
  /* works well for SSLv2, not so good for SSLv3 */
  char *SSL_get_shared_ciphers(const SSL *s,char *buf,int len)
  	{
-@@ -2551,18 +2578,45 @@ SSL_METHOD *ssl_bad_method(int ver)
+@@ -2551,22 +2578,45 @@ SSL_METHOD *ssl_bad_method(int ver)
  	return(NULL);
  	}
  
 -const char *SSL_get_version(const SSL *s)
 +static const char *ssl_get_version(int version)
  	{
--	if (s->version == TLS1_VERSION)
-+	if (version == TLS1_VERSION)
+-	if (s->version == TLS1_2_VERSION)
++	if (version == TLS1_2_VERSION)
+ 		return("TLSv1.2");
+-	else if (s->version == TLS1_1_VERSION)
++	else if (version == TLS1_1_VERSION)
+ 		return("TLSv1.1");
+-	else if (s->version == TLS1_VERSION)
++	else if (version == TLS1_VERSION)
  		return("TLSv1");
 -	else if (s->version == SSL3_VERSION)
 +	else if (version == SSL3_VERSION)
@@ -334,12 +332,8 @@
 +		{
 +	case SSL2_VERSION:
 +		return SSL_TXT_RSA;
-+	case SSL3_VERSION:
-+	case TLS1_VERSION:
-+	case DTLS1_VERSION:
-+		return SSL_CIPHER_authentication_method(ssl->s3->tmp.new_cipher);
 +	default:
-+		return "UNKNOWN";
++		return SSL_CIPHER_authentication_method(ssl->s3->tmp.new_cipher);
 +		}
 +	}
 +
@@ -358,7 +352,7 @@
  
 --- openssl-1.0.0b.orig/ssl/ssl_rsa.c	2009-09-12 23:09:26.000000000 +0000
 +++ openssl-1.0.0b/ssl/ssl_rsa.c	2010-11-30 00:03:47.000000000 +0000
-@@ -697,6 +697,42 @@ int SSL_CTX_use_PrivateKey_ASN1(int type
+@@ -697,6 +697,44 @@ int SSL_CTX_use_PrivateKey_ASN1(int type
  	}
  
  
@@ -379,6 +373,8 @@
 +		SSLerr(SSL_F_SSL_USE_CERTIFICATE_CHAIN,SSL_R_NO_CERTIFICATE_ASSIGNED);
 +		return(0);
 +		}
++	if (ssl->cert->key->cert_chain != NULL)
++		sk_X509_pop_free(ssl->cert->key->cert_chain, X509_free);
 +	ssl->cert->key->cert_chain = cert_chain;
 +	return(1);
 +	}

@@ -756,9 +756,7 @@ int ssl3_client_hello(SSL *s)
 		if (ssl_fill_hello_random(s, 0, p, SSL3_RANDOM_SIZE) <= 0)
 			goto err;
 
-		/* Do the message type and length last.
-		 * Note: the code to add the padding extension in t1_lib.c
-		 * depends on the size of this prefix. */
+		/* Do the message type and length last */
 		d=p= &(buf[4]);
 
 		/* version indicates the negotiated version: for example from

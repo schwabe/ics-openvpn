@@ -43,11 +43,6 @@ cbc_record_splitting.patch
 BEAST attack client-side mitigation. Removes 0/n record splitting, adds 1/n-1
 record splitting. Record splitting is disabled by default.
 
-paddingext.patch
-
-ClientHello padding extension which is added, when needed, to work around bugs
-in F5 terminators.
-
 dsa_nonce.patch
 
 Adds an option to mix in hash of message and private key into (EC)DSA nonces to

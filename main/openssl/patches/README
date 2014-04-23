@@ -3,18 +3,6 @@ progs.patch:
 Fixup sources under the apps/ directory that are not built under the android environment.
 
 
-small_records.patch:
-
-Reduce OpenSSL memory consumption.
-SSL records may be as large as 16K, but are typically < 2K.  In
-addition, a historic bug in Windows allowed records to be as large
-32K.  OpenSSL statically allocates read and write buffers (34K and
-18K respectively) used for processing records.
-With this patch, OpenSSL statically allocates 4K + 4K buffers, with
-the option of dynamically growing buffers to 34K + 4K, which is a
-saving of 44K per connection for the typical case.
-
-
 handshake_cutthrough.patch
 
 Enables SSL3+ clients to send application data immediately following the
@@ -26,14 +14,42 @@ jsse.patch
 
 Support for JSSE implementation based on OpenSSL.
 
-npn.patch
+channelid.patch
 
-Transport Layer Security (TLS) Next Protocol Negotiation Extension
+Implements TLS Channel ID support as both a client and a server.
+See http://tools.ietf.org/html/draft-balfanz-tls-channelid-00.
 
-sslv3_uninit_padding.patch
+eng_dyn_dirs.patch
 
-This patch sets the padding for SSLv3 block ciphers to zero.
+Fixes the case of having multiple DIR_ADD commands sent to eng_dyn
 
-sha1_armv4_large.patch
+fix_clang_build.patch
 
-This patch eliminates memory stores to addresses below SP.
+Fixes the Clang based build.
+
+tls12_digests.patch
+
+Fixes a bug with handling TLS 1.2 and digest functions for DSA and ECDSA
+keys.
+
+alpn.patch
+
+This change adds support for ALPN in OpenSSL. ALPN is the IETF
+blessed version of NPN and we'll be supporting both ALPN and NPN for
+some time yet.
+
+cbc_record_splitting.patch
+
+BEAST attack client-side mitigation. Removes 0/n record splitting, adds 1/n-1
+record splitting. Record splitting is disabled by default.
+
+paddingext.patch
+
+ClientHello padding extension which is added, when needed, to work around bugs
+in F5 terminators.
+
+dsa_nonce.patch
+
+Adds an option to mix in hash of message and private key into (EC)DSA nonces to
+make (EC)DSA more resilient to weaknesses in RNGs used for nonces. The feature
+is disabled by default.

@@ -237,11 +237,19 @@ DSO *DSO_load(DSO *dso, const char *filename, DSO_METHOD *meth, int flags)
 	if(ret->meth->dso_load == NULL)
 		{
 		DSOerr(DSO_F_DSO_LOAD,DSO_R_UNSUPPORTED);
+		/* Make sure we unset the filename on failure, because we use
+		 * this to determine when the DSO has been loaded above. */
+		OPENSSL_free(ret->filename);
+		ret->filename = NULL;
 		goto err;
 		}
 	if(!ret->meth->dso_load(ret))
 		{
 		DSOerr(DSO_F_DSO_LOAD,DSO_R_LOAD_FAILED);
+		/* Make sure we unset the filename on failure, because we use
+		 * this to determine when the DSO has been loaded above. */
+		OPENSSL_free(ret->filename);
+		ret->filename = NULL;
 		goto err;
 		}
 	/* Load succeeded */

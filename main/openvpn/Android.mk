@@ -6,7 +6,7 @@ LOCAL_LDLIBS := -lz
 LOCAL_C_INCLUDES := openssl/include lzo/include openssl/crypto openssl openvpn/src/compat openvpn/src/openvpn openvpn/include google-breakpad/src google-breakpad/src/common/android/include polarssl/include snappy
 
 
-#LOCAL_STATIC_LIBRARIES :=  libssl_static libcrypto_static  liblzo-static
+
 
 LOCAL_CFLAGS= -DHAVE_CONFIG_H -DTARGET_ABI=\"${TARGET_ABI}\"
 LOCAL_STATIC_LIBRARIES :=  liblzo-static snappy-static
@@ -15,7 +15,8 @@ ifeq ($(WITH_POLAR),1)
 LOCAL_STATIC_LIBRARIES +=  polarssl-static
 LOCAL_CFLAGS += -DENABLE_CRYPTO_POLARSSL=1
 else
-LOCAL_SHARED_LIBRARIES :=  libssl libcrypto 
+#LOCAL_SHARED_LIBRARIES :=  libssl libcrypto 
+LOCAL_STATIC_LIBRARIES +=  libssl_static libcrypto_static  
 LOCAL_CFLAGS += -DENABLE_CRYPTO_OPENSSL=1
 endif
 

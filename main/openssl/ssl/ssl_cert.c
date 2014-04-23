@@ -174,7 +174,6 @@ CERT *ssl_cert_new(void)
 
 	ret->key= &(ret->pkeys[SSL_PKEY_RSA_ENC]);
 	ret->references=1;
-
 	return(ret);
 	}
 

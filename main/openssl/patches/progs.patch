@@ -20,8 +20,8 @@
 +#if 0 /* ANDROID */
  	{FUNC_TYPE_GENERAL,"ts",ts_main},
 +#endif
- #ifndef OPENSSL_NO_MD2
- 	{FUNC_TYPE_MD,"md2",dgst_main},
+ #ifndef OPENSSL_NO_SRP
+ 	{FUNC_TYPE_GENERAL,"srp",srp_main},
  #endif
 --- openssl-1.0.0.orig/apps/speed.c	2010-03-03 11:56:17.000000000 -0800
 +++ openssl-1.0.0/apps/speed.c	2010-05-18 14:05:57.000000000 -0700

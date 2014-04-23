@@ -23,7 +23,6 @@ The following steps are recommended for porting new OpenSSL versions.
 
 2) Update the variables in openssl.config and openssl.version as appropriate.
    At the very least you will need to update the openssl.version.
-   Similarly update ThirdPartyProject.prop.
 
 3) Run:
 
@@ -54,17 +53,23 @@ The following steps are recommended for porting new OpenSSL versions.
      # Build and sync libcore tests
      (croot && cd libcore && mm -j16 snod && adb remount && adb sync)
      # Run tests from libcore
-     (croot && vogar --classpath out/target/common/obj/JAVA_LIBRARIES/core-tests-support_intermediates/classes.jar --classpath out/target/common/obj/JAVA_LIBRARIES/core-tests_intermediates/classes.jar javax.net.ssl tests.api.javax.net)
+     (croot && vogar --classpath out/target/common/obj/JAVA_LIBRARIES/core-tests_intermediates/classes.jar javax.net.ssl tests.api.javax.net)
      # Run tests from Harmony
-     (croot && vogar --classpath harmony_tests.jar tests.api.java.math.BigIntegerTest org.apache.harmony.tests.java.math)
+     (croot && vogar --classpath out/target/common/obj/JAVA_LIBRARIES/apache-harmony-tests_intermediates/classes.jar tests.api.java.math.BigIntegerTest org.apache.harmony.tests.java.math)
      # try an https website
      adb shell am start https://online.citibank.com # confirm result in browser
 
      The vogar tool can be found externally at http://code.google.com/p/vogar/
-     Within Google it can be run with ~dalvik-prebuild/vogar/bin/vogar
 
-     harmony_tests.jar is built from Subversion http://harmony.apache.org/
-     Within Google it can be found at ~dalvik-prebuild/bin/harmony_tests.jar
+     Quick installation instructions (without rebuilding from source):
+        VOGAR=$HOME/vogar
+        svn co http://vogar.googlecode.com/svn/trunk/ $VOGAR
+        mkdir -p $VOGAR/build/
+        curl -o $VOGAR/build/vogar.jar https://vogar.googlecode.com/files/vogar.jar
+        PATH=$PATH:$VOGAR/bin
+
+     Within Google, you can find it under:
+       /home/dalvik-prebuild/vogar/bin/vogar
 
      # You can also run openssl s_server as a test server on the device:
      adb push ./android.testssl/CAss.cnf /sdcard/CAss.cnf
@@ -76,17 +81,7 @@ The following steps are recommended for porting new OpenSSL versions.
 
      m -j16
 
-Optionally, check whether build flags (located in android-config.mk
-need to be updated.  Doing this step will help ensure that the
-compiled library is appropriately optimized for speed and size.  To
-update build flags:
-
-a) source openssl.config
-b) tar -zxf openssl-*.tar.gz
-c) cd openssl-*/
-d) ./Configure $CONFIGURE_ARGS
-e) examine Makefile and compare with ../android-config.mk
-f) modify ../openssl.config as appropriate and go to step 3) above.
-
-Alternatively, ."/import_openssl.sh import" now prints the
-post-Configure Makefile for review before deleting in on import.
+Optionally, check whether build flags (located in CONFIGURE_ARGS in
+openssl.config, plus some extras in android-config.mk), need to be updated.
+Doing this step will help ensure that the compiled library is appropriately
+optimized for speed and size.

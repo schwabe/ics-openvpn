@@ -82,6 +82,7 @@ SSL3_ENC_METHOD DTLSv1_enc_data={
 	TLS_MD_CLIENT_FINISH_CONST,TLS_MD_CLIENT_FINISH_CONST_SIZE,
 	TLS_MD_SERVER_FINISH_CONST,TLS_MD_SERVER_FINISH_CONST_SIZE,
 	tls1_alert_code,
+	tls1_export_keying_material,
 	};
 
 long dtls1_default_timeout(void)
@@ -195,6 +196,7 @@ void dtls1_free(SSL *s)
 	pqueue_free(s->d1->buffered_app_data.q);
 
 	OPENSSL_free(s->d1);
+	s->d1 = NULL;
 	}
 
 void dtls1_clear(SSL *s)
@@ -204,7 +206,8 @@ void dtls1_clear(SSL *s)
     pqueue buffered_messages;
 	pqueue sent_messages;
 	pqueue buffered_app_data;
-	
+	unsigned int mtu;
+
 	if (s->d1)
 		{
 		unprocessed_rcds = s->d1->unprocessed_rcds.q;
@@ -212,6 +215,7 @@ void dtls1_clear(SSL *s)
 		buffered_messages = s->d1->buffered_messages;
 		sent_messages = s->d1->sent_messages;
 		buffered_app_data = s->d1->buffered_app_data.q;
+		mtu = s->d1->mtu;
 
 		dtls1_clear_queues(s);
 
@@ -220,6 +224,11 @@ void dtls1_clear(SSL *s)
 		if (s->server)
 			{
 			s->d1->cookie_len = sizeof(s->d1->cookie);
+			}
+
+		if (SSL_get_options(s) & SSL_OP_NO_QUERY_MTU)
+			{
+			s->d1->mtu = mtu;
 			}
 
 		s->d1->unprocessed_rcds.q = unprocessed_rcds;
@@ -284,6 +293,15 @@ const SSL_CIPHER *dtls1_get_cipher(unsigned int u)
 
 void dtls1_start_timer(SSL *s)
 	{
+#ifndef OPENSSL_NO_SCTP
+	/* Disable timer for SCTP */
+	if (BIO_dgram_is_sctp(SSL_get_wbio(s)))
+		{
+		memset(&(s->d1->next_timeout), 0, sizeof(struct timeval));
+		return;
+		}
+#endif
+
 	/* If timer is not set, initialize duration with 1 second */
 	if (s->d1->next_timeout.tv_sec == 0 && s->d1->next_timeout.tv_usec == 0)
 		{
@@ -374,6 +392,7 @@ void dtls1_double_timeout(SSL *s)
 void dtls1_stop_timer(SSL *s)
 	{
 	/* Reset everything */
+	memset(&(s->d1->timeout), 0, sizeof(struct dtls1_timeout_st));
 	memset(&(s->d1->next_timeout), 0, sizeof(struct timeval));
 	s->d1->timeout_duration = 1;
 	BIO_ctrl(SSL_get_rbio(s), BIO_CTRL_DGRAM_SET_NEXT_TIMEOUT, 0, &(s->d1->next_timeout));
@@ -381,10 +400,28 @@ void dtls1_stop_timer(SSL *s)
 	dtls1_clear_record_buffer(s);
 	}
 
+int dtls1_check_timeout_num(SSL *s)
+	{
+	s->d1->timeout.num_alerts++;
+
+	/* Reduce MTU after 2 unsuccessful retransmissions */
+	if (s->d1->timeout.num_alerts > 2)
+		{
+		s->d1->mtu = BIO_ctrl(SSL_get_wbio(s), BIO_CTRL_DGRAM_GET_FALLBACK_MTU, 0, NULL);		
+		}
+
+	if (s->d1->timeout.num_alerts > DTLS1_TMO_ALERT_COUNT)
+		{
+		/* fail the connection, enough alerts have been sent */
+		SSLerr(SSL_F_DTLS1_CHECK_TIMEOUT_NUM,SSL_R_READ_TIMEOUT_EXPIRED);
+		return -1;
+		}
+
+	return 0;
+	}
+
 int dtls1_handle_timeout(SSL *s)
 	{
-	DTLS1_STATE *state;
-
 	/* if no timer is expired, don't do anything */
 	if (!dtls1_is_timer_expired(s))
 		{
@@ -392,20 +429,23 @@ int dtls1_handle_timeout(SSL *s)
 		}
 
 	dtls1_double_timeout(s);
-	state = s->d1;
-	state->timeout.num_alerts++;
-	if ( state->timeout.num_alerts > DTLS1_TMO_ALERT_COUNT)
-		{
-		/* fail the connection, enough alerts have been sent */
-		SSLerr(SSL_F_DTLS1_HANDLE_TIMEOUT,SSL_R_READ_TIMEOUT_EXPIRED);
+
+	if (dtls1_check_timeout_num(s) < 0)
 		return -1;
+
+	s->d1->timeout.read_timeouts++;
+	if (s->d1->timeout.read_timeouts > DTLS1_TMO_READ_COUNT)
+		{
+		s->d1->timeout.read_timeouts = 1;
 		}
 
-	state->timeout.read_timeouts++;
-	if ( state->timeout.read_timeouts > DTLS1_TMO_READ_COUNT)
+#ifndef OPENSSL_NO_HEARTBEATS
+	if (s->tlsext_hb_pending)
 		{
-		state->timeout.read_timeouts = 1;
+		s->tlsext_hb_pending = 0;
+		return dtls1_heartbeat(s);
 		}
+#endif
 
 	dtls1_start_timer(s);
 	return dtls1_retransmit_buffered_messages(s);

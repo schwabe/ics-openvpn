@@ -1,2 +1,1 @@
-# also update ThirdPartyProject.prop
-OPENSSL_VERSION=1.0.0e
+OPENSSL_VERSION=1.0.1f

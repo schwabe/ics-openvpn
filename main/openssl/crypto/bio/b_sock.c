@@ -629,7 +629,8 @@ int BIO_get_accept_socket(char *host, int bind_mode)
 		struct sockaddr_in6 sa_in6;
 #endif
 	} server,client;
-	int s=INVALID_SOCKET,cs,addrlen;
+	int s=INVALID_SOCKET,cs;
+	socklen_t addrlen;
 	unsigned char ip[4];
 	unsigned short port;
 	char *str=NULL,*e;
@@ -704,10 +705,10 @@ int BIO_get_accept_socket(char *host, int bind_mode)
 
 	if ((*p_getaddrinfo.f)(h,p,&hint,&res)) break;
 
-	addrlen = res->ai_addrlen<=sizeof(server) ?
+	addrlen = res->ai_addrlen <= (socklen_t)sizeof(server) ?
 			res->ai_addrlen :
-			sizeof(server);
-	memcpy(&server, res->ai_addr, addrlen);
+			(socklen_t)sizeof(server);
+	memcpy(&server, res->ai_addr, (size_t)addrlen);
 
 	(*p_freeaddrinfo.f)(res);
 	goto again;
@@ -719,7 +720,7 @@ int BIO_get_accept_socket(char *host, int bind_mode)
 	memset((char *)&server,0,sizeof(server));
 	server.sa_in.sin_family=AF_INET;
 	server.sa_in.sin_port=htons(port);
-	addrlen = sizeof(server.sa_in);
+	addrlen = (socklen_t)sizeof(server.sa_in);
 
 	if (h == NULL || strcmp(h,"*") == 0)
 		server.sa_in.sin_addr.s_addr=INADDR_ANY;
@@ -960,7 +961,6 @@ int BIO_set_tcp_ndelay(int s, int on)
 #endif
 	return(ret == 0);
 	}
-#endif
 
 int BIO_socket_nbio(int s, int mode)
 	{
@@ -973,3 +973,4 @@ int BIO_socket_nbio(int s, int mode)
 #endif
 	return(ret == 0);
 	}
+#endif

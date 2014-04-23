@@ -67,6 +67,7 @@ receive_auth_failed (struct context *c, const struct buffer *buffer)
 	  ASSERT (0);
 	}
       c->sig->signal_text = "auth-failure";
+#ifdef ENABLE_MANAGEMENT
       if (management)
 	{
 	  const char *reason = NULL;
@@ -75,6 +76,7 @@ receive_auth_failed (struct context *c, const struct buffer *buffer)
 	    reason = BSTR (&buf);
 	  management_auth_failure (management, UP_TYPE_AUTH, reason);
 	} else
+#endif
 	{
 #ifdef ENABLE_CLIENT_CR
 	  struct buffer buf = *buffer;

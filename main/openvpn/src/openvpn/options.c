@@ -139,7 +139,6 @@ static const char usage_message[] =
   "                    between connection retries (default=%d).\n"
   "--connect-timeout n : For --proto tcp-client, connection timeout (in seconds).\n"
   "--connect-retry-max n : Maximum connection attempt retries, default infinite.\n"
-#ifdef ENABLE_HTTP_PROXY
   "--http-proxy s p [up] [auth] : Connect to remote host\n"
   "                  through an HTTP proxy at address s and port p.\n"
   "                  If proxy authentication is required,\n"
@@ -155,15 +154,12 @@ static const char usage_message[] =
   "                                  Repeat to set multiple options.\n"
   "                  VERSION version (default=1.0)\n"
   "                  AGENT user-agent\n"
-#endif
-#ifdef ENABLE_SOCKS
   "--socks-proxy s [p] [up] : Connect to remote host through a Socks5 proxy at\n"
   "                  address s and port p (default port = 1080).\n"
   "                  If proxy authentication is required,\n"
   "                  up is a file containing username/password on 2 lines, or\n"
   "                  'stdin' to prompt for console.\n"
   "--socks-proxy-retry : Retry indefinitely on Socks proxy errors.\n"
-#endif
   "--resolv-retry n: If hostname resolve fails for --remote, retry\n"
   "                  resolve for n seconds before failing (disabled by default).\n"
   "                  Set n=\"infinite\" to retry indefinitely.\n"
@@ -176,12 +172,8 @@ static const char usage_message[] =
   "--rport port    : TCP/UDP port # for remote (default=%s).\n"
   "--bind          : Bind to local address and port. (This is the default unless\n"
   "                  --proto tcp-client"
-#ifdef ENABLE_HTTP_PROXY
                    " or --http-proxy"
-#endif
-#ifdef ENABLE_SOCKS
                    " or --socks-proxy"
-#endif
                    " is used).\n"
   "--nobind        : Do not bind to local address and port.\n"
   "--dev tunX|tapX : tun/tap device (X can be omitted for dynamic device.\n"
@@ -852,6 +844,7 @@ init_options (struct options *o, const bool init_gc)
   o->renegotiate_seconds = 3600;
   o->handshake_window = 60;
   o->transition_window = 3600;
+  o->ecdh_curve = NULL;
 #ifdef ENABLE_X509ALTUSERNAME
   o->x509_username_field = X509_USERNAME_FIELD_DEFAULT;
 #endif
@@ -908,20 +901,16 @@ setenv_connection_entry (struct env_set *es,
   setenv_str_i (es, "remote", e->remote, i);
   setenv_str_i (es, "remote_port", e->remote_port, i);
 
-#ifdef ENABLE_HTTP_PROXY
   if (e->http_proxy_options)
     {
       setenv_str_i (es, "http_proxy_server", e->http_proxy_options->server, i);
       setenv_str_i (es, "http_proxy_port", e->http_proxy_options->port, i);
     }
-#endif
-#ifdef ENABLE_SOCKS
   if (e->socks_proxy_server)
     {
       setenv_str_i (es, "socks_proxy_server", e->socks_proxy_server, i);
       setenv_str_i (es, "socks_proxy_port", e->socks_proxy_port, i);
     }
-#endif
 }
 
 void
@@ -1286,7 +1275,7 @@ option_iroute_ipv6 (struct options *o,
 #endif /* P2MP_SERVER */
 #endif /* P2MP */
 
-#if defined(ENABLE_HTTP_PROXY) && !defined(ENABLE_SMALL)
+#ifndef ENABLE_SMALL
 static void
 show_http_proxy_options (const struct http_proxy_options *o)
 {
@@ -1361,15 +1350,11 @@ show_connection_entry (const struct connection_entry *o)
   SHOW_INT (connect_retry_seconds);
   SHOW_INT (connect_timeout);
 
-#ifdef ENABLE_HTTP_PROXY
   if (o->http_proxy_options)
     show_http_proxy_options (o->http_proxy_options);
-#endif
-#ifdef ENABLE_SOCKS
   SHOW_STR (socks_proxy_server);
   SHOW_STR (socks_proxy_port);
   SHOW_BOOL (socks_proxy_retry);
-#endif
   SHOW_INT (tun_mtu);
   SHOW_BOOL (tun_mtu_defined);
   SHOW_INT (link_mtu);
@@ -1687,7 +1672,7 @@ show_settings (const struct options *o)
 #undef SHOW_INT
 #undef SHOW_BOOL
 
-#if HTTP_PROXY_OVERRIDE
+#ifdef ENABLE_MANAGEMENT
 
 static struct http_proxy_options *
 parse_http_proxy_override (const char *server,
@@ -1976,22 +1961,16 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
   if (!ce->remote && ce->proto == PROTO_TCP_CLIENT)
     msg (M_USAGE, "--remote MUST be used in TCP Client mode");
 
-#ifdef ENABLE_HTTP_PROXY
   if ((ce->http_proxy_options) && ce->proto != PROTO_TCP_CLIENT)
     msg (M_USAGE, "--http-proxy MUST be used in TCP Client mode (i.e. --proto tcp-client)");
   if ((ce->http_proxy_options) && !ce->http_proxy_options->server)
     msg (M_USAGE, "--http-proxy not specified but other http proxy options present");
-#endif
 
-#if defined(ENABLE_HTTP_PROXY) && defined(ENABLE_SOCKS)
   if (ce->http_proxy_options && ce->socks_proxy_server)
     msg (M_USAGE, "--http-proxy can not be used together with --socks-proxy");
-#endif
 
-#ifdef ENABLE_SOCKS
   if (ce->socks_proxy_server && ce->proto == PROTO_TCP_SERVER)
     msg (M_USAGE, "--socks-proxy can not be used in TCP Server mode");
-#endif
 
   if (ce->proto == PROTO_TCP_SERVER && (options->connection_list->len > 1))
     msg (M_USAGE, "TCP server mode allows at most one --remote address");
@@ -2025,14 +2004,10 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 	msg (M_USAGE, "--remote cannot be used with --mode server");
       if (!ce->bind_local)
 	msg (M_USAGE, "--nobind cannot be used with --mode server");
-#ifdef ENABLE_HTTP_PROXY
       if (ce->http_proxy_options)
 	msg (M_USAGE, "--http-proxy cannot be used with --mode server");
-#endif
-#ifdef ENABLE_SOCKS
       if (ce->socks_proxy_server)
 	msg (M_USAGE, "--socks-proxy cannot be used with --mode server");
-#endif
       /* <connection> blocks force to have a remote embedded, so we check for the
        * --remote and bail out if it  is present */
        if (options->connection_list->len >1 ||
@@ -2374,10 +2349,8 @@ options_postprocess_mutate_ce (struct options *o, struct connection_entry *ce)
   if (ce->proto == PROTO_TCP_CLIENT && !ce->local && !ce->local_port_defined && !ce->bind_defined)
     ce->bind_local = false;
 
-#ifdef ENABLE_SOCKS
   if (ce->proto == PROTO_UDP && ce->socks_proxy_server && !ce->local && !ce->local_port_defined && !ce->bind_defined)
     ce->bind_local = false;
-#endif
 
   if (!ce->bind_local)
     ce->local_port = NULL;
@@ -2526,7 +2499,7 @@ options_postprocess_mutate (struct options *o)
   for (i = 0; i < o->connection_list->len; ++i)
 	options_postprocess_mutate_ce (o, o->connection_list->array[i]);
 
-#if HTTP_PROXY_OVERRIDE
+#if ENABLE_MANAGEMENT
   if (o->http_proxy_override)
 	options_postprocess_http_proxy_override(o);
 #endif
@@ -3427,10 +3400,28 @@ usage_small (void)
   openvpn_exit (OPENVPN_EXIT_STATUS_USAGE); /* exit point */
 }
 
+void
+show_library_versions(const unsigned int flags)
+{
+  msg (flags, "library versions: %s%s%s",
+#ifdef ENABLE_SSL
+			get_ssl_library_version(),
+#else
+			"",
+#endif
+#ifdef ENABLE_LZO
+			", LZO ", lzo_version_string()
+#else
+			"", ""
+#endif
+	);
+}
+
 static void
 usage_version (void)
 {
   msg (M_INFO|M_NOPREFIX, "%s", title_string);
+  show_library_versions( M_INFO|M_NOPREFIX );
   msg (M_INFO|M_NOPREFIX, "Originally developed by James Yonan");
   msg (M_INFO|M_NOPREFIX, "Copyright (C) 2002-2010 OpenVPN Technologies, Inc. <sales@openvpn.net>");
 #ifndef ENABLE_SMALL
@@ -4477,7 +4468,7 @@ add_option (struct options *options,
 
       options->ignore_unknown_option[i] = NULL;
     }
-#if HTTP_PROXY_OVERRIDE
+#if ENABLE_MANAGEMENT
   else if (streq (p[0], "http-proxy-override") && p[1] && p[2])
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
@@ -4989,7 +4980,6 @@ add_option (struct options *options,
 	}
       options->proto_force = proto_force;
     }
-#ifdef ENABLE_HTTP_PROXY
   else if (streq (p[0], "http-proxy") && p[1])
     {
       struct http_proxy_options *ho;
@@ -5096,8 +5086,6 @@ add_option (struct options *options,
 	  msg (msglevel, "Bad http-proxy-option or missing parameter: '%s'", p[1]);
 	}
     }
-#endif
-#ifdef ENABLE_SOCKS
   else if (streq (p[0], "socks-proxy") && p[1])
     {
       VERIFY_PERMISSION (OPT_P_GENERAL|OPT_P_CONNECTION);
@@ -5118,7 +5106,6 @@ add_option (struct options *options,
       VERIFY_PERMISSION (OPT_P_GENERAL|OPT_P_CONNECTION);
       options->ce.socks_proxy_retry = true;
     }
-#endif
   else if (streq (p[0], "keepalive") && p[1] && p[2])
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
@@ -6487,6 +6474,16 @@ add_option (struct options *options,
     {
       VERIFY_PERMISSION (OPT_P_GENERAL);
       options->show_tls_ciphers = true;
+    }
+  else if (streq (p[0], "show-curves"))
+    {
+      VERIFY_PERMISSION (OPT_P_GENERAL);
+      options->show_curves = true;
+    }
+  else if (streq (p[0], "ecdh-curve") && p[1])
+    {
+      VERIFY_PERMISSION (OPT_P_CRYPTO);
+      options->ecdh_curve= p[1];
     }
   else if (streq (p[0], "tls-server"))
     {

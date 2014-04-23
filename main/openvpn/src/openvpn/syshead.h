@@ -586,11 +586,6 @@ socket_defined (const socket_descriptor_t sd)
 #endif
 
 /*
- * Compile the struct buffer_list code
- */
-#define ENABLE_BUFFER_LIST
-
-/*
  * Should we include OCC (options consistency check) code?
  */
 #ifndef ENABLE_SMALL
@@ -600,7 +595,7 @@ socket_defined (const socket_descriptor_t sd)
 /*
  * Should we include NTLM proxy functionality
  */
-#if defined(ENABLE_CRYPTO) && defined(ENABLE_HTTP_PROXY)
+#if defined(ENABLE_CRYPTO)
 #define NTLM 1
 #else
 #define NTLM 0
@@ -609,17 +604,10 @@ socket_defined (const socket_descriptor_t sd)
 /*
  * Should we include proxy digest auth functionality
  */
-#if defined(ENABLE_CRYPTO) && defined(ENABLE_HTTP_PROXY)
+#if defined(ENABLE_CRYPTO)
 #define PROXY_DIGEST_AUTH 1
 #else
 #define PROXY_DIGEST_AUTH 0
-#endif
-
-/*
- * Should we include code common to all proxy methods?
- */
-#if defined(ENABLE_HTTP_PROXY) || defined(ENABLE_SOCKS)
-#define GENERAL_PROXY_SUPPORT
 #endif
 
 /*
@@ -658,15 +646,6 @@ socket_defined (const socket_descriptor_t sd)
 #if 0
 #undef EPOLL
 #define EPOLL 0
-#endif
-
-/*
- * Should we include http proxy override functionality
- */
-#if defined(ENABLE_MANAGEMENT) && defined(ENABLE_HTTP_PROXY)
-#define HTTP_PROXY_OVERRIDE 1
-#else
-#define HTTP_PROXY_OVERRIDE 0
 #endif
 
 /*

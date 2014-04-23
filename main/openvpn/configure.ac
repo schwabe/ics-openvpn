@@ -121,20 +121,6 @@ AC_ARG_ENABLE(
 )
 
 AC_ARG_ENABLE(
-	[socks],
-	[AS_HELP_STRING([--disable-socks], [disable Socks support @<:@default=yes@:>@])],
-	,
-	[enable_socks="yes"]
-)
-
-AC_ARG_ENABLE(
-	[http-proxy],
-	[AS_HELP_STRING([--disable-http-proxy], [disable HTTP proxy support @<:@default=yes@:>@])],
-	,
-	[enable_http_proxy="yes"]
-)
-
-AC_ARG_ENABLE(
 	[fragment],
 	[AS_HELP_STRING([--disable-fragment], [disable internal fragmentation support (--fragment) @<:@default=yes@:>@])],
 	,
@@ -794,6 +780,8 @@ if test "${have_openssl_crypto}" = "yes"; then
 fi
 
 if test "${have_openssl_ssl}" = "yes"; then
+    saved_CPPFLAGS="${CPPFLAGS}"
+    CPPFLAGS="${CPPFLAGS} ${OPENSSL_CRYPTO_CFLAGS}"
     AC_MSG_CHECKING([for SSL_OP_NO_TICKET flag in OpenSSL])
     AC_EGREP_CPP(have_ssl_op_no_ticket, [
     #include <openssl/ssl.h>
@@ -806,6 +794,7 @@ if test "${have_openssl_ssl}" = "yes"; then
         AC_MSG_RESULT([no])
         AC_ERROR([OpenVPN 2.4+ requires SSL_OP_NO_TICKET in OpenSSL])
     ])
+    CPPFLAGS="${saved_CPPFLAGS}"
 fi
 
 AC_ARG_VAR([POLARSSL_CFLAGS], [C compiler flags for polarssl])
@@ -841,13 +830,13 @@ if test "${with_crypto_library}" = "polarssl" ; then
 #include <polarssl/version.h>
 			]],
 			[[
-#if POLARSSL_VERSION_NUMBER < 0x01020A00 || POLARSSL_VERSION_NUMBER >= 0x01030000
+#if POLARSSL_VERSION_NUMBER < 0x01030300 || POLARSSL_VERSION_NUMBER >= 0x01040000
 #error invalid version
 #endif
 			]]
 		)],
 		[AC_MSG_RESULT([ok])],
-		[AC_MSG_ERROR([PolarSSL 1.2.x required and must be 1.2.10 or later])]
+		[AC_MSG_ERROR([PolarSSL 1.3.x required and must be 1.3.3 or later])]
 	)
 
 	polarssl_with_pkcs11="no"
@@ -1033,8 +1022,6 @@ test "${ac_cv_header_sys_uio_h}" = "yes" && AC_DEFINE([HAVE_IOVEC], [1], [struct
 test "${enable_multi}" = "yes" && AC_DEFINE([ENABLE_CLIENT_SERVER], [1], [Enable client/server capability])
 test "${enable_server}" = "no" && AC_DEFINE([ENABLE_CLIENT_ONLY], [1], [Enable client capability only])
 test "${enable_management}" = "yes" && AC_DEFINE([ENABLE_MANAGEMENT], [1], [Enable management server capability])
-test "${enable_socks}" = "yes" && AC_DEFINE([ENABLE_SOCKS], [1], [Enable Socks proxy support])
-test "${enable_http_proxy}" = "yes" && AC_DEFINE([ENABLE_HTTP_PROXY], [1], [Enable HTTP proxy support])
 test "${enable_multihome}" = "yes" && AC_DEFINE([ENABLE_MULTIHOME], [1], [Enable multi-homed UDP server capability])
 test "${enable_debug}" = "yes" && AC_DEFINE([ENABLE_DEBUG], [1], [Enable debugging support])
 test "${enable_small}" = "yes" && AC_DEFINE([ENABLE_SMALL], [1], [Enable smaller executable size])

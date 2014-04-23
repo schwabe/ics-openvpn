@@ -775,7 +775,6 @@ create_socket_tcp (struct addrinfo* addrinfo)
 
   ASSERT (addrinfo);
   ASSERT (addrinfo->ai_socktype == SOCK_STREAM);
-  ASSERT (addrinfo->ai_protocol == IPPROTO_TCP);
 
   if ((sd = socket (addrinfo->ai_family, addrinfo->ai_socktype, addrinfo->ai_protocol)) < 0)
     msg (M_ERR, "Cannot create TCP socket");
@@ -800,7 +799,6 @@ create_socket_udp (struct addrinfo* addrinfo, const unsigned int flags)
 
   ASSERT (addrinfo);
   ASSERT (addrinfo->ai_socktype == SOCK_DGRAM);
-  ASSERT (addrinfo->ai_protocol == IPPROTO_UDP);
 
   if ((sd = socket (addrinfo->ai_family, addrinfo->ai_socktype, addrinfo->ai_protocol)) < 0)
     msg (M_ERR, "UDP: Cannot create UDP/UDP6 socket");
@@ -843,12 +841,10 @@ static void bind_local (struct link_socket *sock, const sa_family_t ai_family)
     /* bind to local address/port */
     if (sock->bind_local)
       {
-#ifdef ENABLE_SOCKS
         if (sock->socks_proxy && sock->info.proto == PROTO_UDP)
             socket_bind (sock->ctrl_sd, sock->info.lsa->bind_local,
 			 ai_family, "SOCKS", false);
         else
-#endif
             socket_bind (sock->sd, sock->info.lsa->bind_local,
 			 ai_family,
                          "TCP/UDP", sock->info.bind_ipv6_only);
@@ -858,12 +854,11 @@ static void bind_local (struct link_socket *sock, const sa_family_t ai_family)
 static void
 create_socket (struct link_socket* sock, struct addrinfo* addr)
 {
-  if (addr->ai_protocol == IPPROTO_UDP)
+  if (addr->ai_protocol == IPPROTO_UDP || addr->ai_socktype == SOCK_DGRAM)
     {
       sock->sd = create_socket_udp (addr, sock->sockflags);
       sock->sockflags |= SF_GETADDRINFO_DGRAM;
 
-#ifdef ENABLE_SOCKS
       /* Assume that control socket and data socket to the socks proxy
        * are using the same IP family */
       if (sock->socks_proxy)
@@ -876,9 +871,8 @@ create_socket (struct link_socket* sock, struct addrinfo* addr)
 	  addrinfo_tmp.ai_protocol = IPPROTO_TCP;
 	  sock->ctrl_sd = create_socket_tcp (&addrinfo_tmp);
 	}
-#endif
     }
-  else if (addr->ai_protocol == IPPROTO_TCP)
+  else if (addr->ai_protocol == IPPROTO_TCP || addr->ai_socktype == SOCK_STREAM)
     {
       sock->sd = create_socket_tcp (addr);
     }
@@ -917,15 +911,16 @@ static void protect_fd_nonlocal (int fd, const struct sockaddr* addr)
  */
 static void
 socket_do_listen (socket_descriptor_t sd,
-		  const struct sockaddr *local,
+		  const struct addrinfo *local,
 		  bool do_listen,
 		  bool do_set_nonblock)
 {
   struct gc_arena gc = gc_new ();
   if (do_listen)
     {
+      ASSERT(local);
       msg (M_INFO, "Listening for incoming TCP connection on %s", 
-	   print_sockaddr (local, &gc));
+	   print_sockaddr (local->ai_addr, &gc));
       if (listen (sd, 1))
 	msg (M_ERR, "TCP: listen() failed");
     }
@@ -1018,7 +1013,7 @@ socket_listen_accept (socket_descriptor_t sd,
   int new_sd = SOCKET_UNDEFINED;
 
   CLEAR (*act);
-  socket_do_listen (sd, local->ai_addr, do_listen, true);
+  socket_do_listen (sd, local, do_listen, true);
 
   while (true)
     {
@@ -1053,7 +1048,7 @@ socket_listen_accept (socket_descriptor_t sd,
 
       if (socket_defined (new_sd))
 	{
-          struct addrinfo* ai;
+          struct addrinfo* ai = NULL;
           if(remote_dynamic)
               openvpn_getaddrinfo(0, remote_dynamic, NULL, 1, NULL,
                                     remote_verify.addr.sa.sa_family, &ai);
@@ -1495,9 +1490,7 @@ link_socket_new (void)
 
   ALLOC_OBJ_CLEAR (sock, struct link_socket);
   sock->sd = SOCKET_UNDEFINED;
-#ifdef ENABLE_SOCKS
   sock->ctrl_sd = SOCKET_UNDEFINED;
-#endif
   return sock;
 }
 
@@ -1513,12 +1506,8 @@ link_socket_init_phase1 (struct link_socket *sock,
 			 bool bind_ipv6_only,
 			 int mode,
 			 const struct link_socket *accept_from,
-#ifdef ENABLE_HTTP_PROXY
 			 struct http_proxy_info *http_proxy,
-#endif
-#ifdef ENABLE_SOCKS
 			 struct socks_proxy_info *socks_proxy,
-#endif
 #ifdef ENABLE_DEBUG
 			 int gremlin,
 #endif
@@ -1543,15 +1532,8 @@ link_socket_init_phase1 (struct link_socket *sock,
   sock->remote_host = remote_host;
   sock->remote_port = remote_port;
   sock->dns_cache = dns_cache;
-
-#ifdef ENABLE_HTTP_PROXY
   sock->http_proxy = http_proxy;
-#endif
-
-#ifdef ENABLE_SOCKS
   sock->socks_proxy = socks_proxy;
-#endif
-
   sock->bind_local = bind_local;
   sock->inetd = inetd;
   sock->resolve_retry_seconds = resolve_retry_seconds;
@@ -1587,7 +1569,6 @@ link_socket_init_phase1 (struct link_socket *sock,
 
   if (false)
     ;
-#ifdef ENABLE_HTTP_PROXY
   /* are we running in HTTP proxy mode? */
   else if (sock->http_proxy)
     {
@@ -1602,8 +1583,6 @@ link_socket_init_phase1 (struct link_socket *sock,
       sock->proxy_dest_host = remote_host;
       sock->proxy_dest_port = remote_port;
     }
-#endif
-#ifdef ENABLE_SOCKS
   /* or in Socks proxy mode? */
   else if (sock->socks_proxy)
     {
@@ -1617,7 +1596,6 @@ link_socket_init_phase1 (struct link_socket *sock,
       sock->proxy_dest_host = remote_host;
       sock->proxy_dest_port = remote_port;
     }
-#endif
   else
     {
       sock->remote_host = remote_host;
@@ -1703,10 +1681,8 @@ phase2_set_socket_flags (struct link_socket* sock)
      scripts don't have access to it */
   set_cloexec (sock->sd);
 
-#ifdef ENABLE_SOCKS
   if (socket_defined (sock->ctrl_sd))
     set_cloexec (sock->ctrl_sd);
-#endif
 
   /* set Path MTU discovery options on the socket */
   set_mtu_discover_type (sock->sd, sock->mtu_discover_type);
@@ -1775,7 +1751,7 @@ phase2_tcp_server (struct link_socket *sock, const char *remote_dynamic,
       break;
     case LS_MODE_TCP_LISTEN:
       socket_do_listen (sock->sd,
-			sock->info.lsa->bind_local->ai_addr,
+			sock->info.lsa->bind_local,
 			true,
 			false);
       break;
@@ -1799,13 +1775,8 @@ phase2_tcp_server (struct link_socket *sock, const char *remote_dynamic,
 static void
 phase2_tcp_client (struct link_socket *sock, struct signal_info *sig_info)
 {
-#ifdef GENERAL_PROXY_SUPPORT
   bool proxy_retry = false;
-#else
-  const bool proxy_retry = false;
-#endif
   do {
-    ASSERT (sock->info.lsa->current_remote->ai_protocol == IPPROTO_TCP);
     socket_connect (&sock->sd,
                    sock->info.lsa->current_remote->ai_addr,
                    sock->connect_timeout,
@@ -1816,7 +1787,6 @@ phase2_tcp_client (struct link_socket *sock, struct signal_info *sig_info)
 
     if (false)
       ;
-#ifdef ENABLE_HTTP_PROXY
     else if (sock->http_proxy)
       {
 	proxy_retry = establish_http_proxy_passthru (sock->http_proxy,
@@ -1826,8 +1796,6 @@ phase2_tcp_client (struct link_socket *sock, struct signal_info *sig_info)
 						     &sock->stream_buf.residual,
 						     &sig_info->signal_received);
       }
-#endif
-#ifdef ENABLE_SOCKS
     else if (sock->socks_proxy)
       {
 	establish_socks_proxy_passthru (sock->socks_proxy,
@@ -1836,7 +1804,6 @@ phase2_tcp_client (struct link_socket *sock, struct signal_info *sig_info)
 					sock->proxy_dest_port,
 					&sig_info->signal_received);
       }
-#endif
     if (proxy_retry)
       {
 	openvpn_close_socket (sock->sd);
@@ -1847,7 +1814,6 @@ phase2_tcp_client (struct link_socket *sock, struct signal_info *sig_info)
 
 }
 
-#ifdef ENABLE_SOCKS
 static void
 phase2_socks_client (struct link_socket *sock, struct signal_info *sig_info)
 {
@@ -1881,7 +1847,6 @@ phase2_socks_client (struct link_socket *sock, struct signal_info *sig_info)
 
     resolve_remote (sock, 1, NULL, &sig_info->signal_received);
 }
-#endif
 
 /* finalize socket initialization */
 void
@@ -1967,11 +1932,9 @@ link_socket_init_phase2 (struct link_socket *sock,
 	  phase2_tcp_client (sock, sig_info);
 
 	}
-#ifdef ENABLE_SOCKS
       else if (sock->info.proto == PROTO_UDP && sock->socks_proxy)
 	{
 	  phase2_socks_client (sock, sig_info);
-#endif
 	}
 #ifdef TARGET_ANDROID
       if (sock->sd != -1)
@@ -2024,14 +1987,12 @@ link_socket_close (struct link_socket *sock)
 #endif
 	}
 
-#ifdef ENABLE_SOCKS
       if (socket_defined (sock->ctrl_sd))
 	{
 	  if (openvpn_close_socket (sock->ctrl_sd))
 	    msg (M_WARN | M_ERRNO, "TCP/UDP: Close Socket (ctrl_sd) failed");
 	  sock->ctrl_sd = SOCKET_UNDEFINED;
 	}
-#endif
 
       stream_buf_close (&sock->stream_buf);
       free_buf (&sock->stream_buf_data);

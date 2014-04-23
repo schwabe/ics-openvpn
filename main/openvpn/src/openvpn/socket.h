@@ -172,10 +172,7 @@ struct link_socket
   struct link_socket_info info;
 
   socket_descriptor_t sd;
-
-#ifdef ENABLE_SOCKS
   socket_descriptor_t ctrl_sd;  /* only used for UDP over Socks */
-#endif
 
 #ifdef WIN32
   struct overlapped_io reads;
@@ -228,22 +225,16 @@ struct link_socket
   struct buffer stream_buf_data;
   bool stream_reset;
 
-#ifdef ENABLE_HTTP_PROXY
   /* HTTP proxy */
   struct http_proxy_info *http_proxy;
-#endif
 
-#ifdef ENABLE_SOCKS
   /* Socks proxy */
   struct socks_proxy_info *socks_proxy;
   struct link_socket_actual socks_relay; /* Socks UDP relay address */
-#endif
 
-#if defined(ENABLE_HTTP_PROXY) || defined(ENABLE_SOCKS)
   /* The OpenVPN server we will use the proxy to connect to */
   const char *proxy_dest_host;
   const char *proxy_dest_port;
-#endif
 
 #if PASSTOS_CAPABILITY
   /* used to get/set TOS. */
@@ -321,12 +312,8 @@ link_socket_init_phase1 (struct link_socket *sock,
 			 bool bind_ipv6_only,
 			 int mode,
 			 const struct link_socket *accept_from,
-#ifdef ENABLE_HTTP_PROXY
 			 struct http_proxy_info *http_proxy,
-#endif
-#ifdef ENABLE_SOCKS
 			 struct socks_proxy_info *socks_proxy,
-#endif
 #ifdef ENABLE_DEBUG
 			 int gremlin,
 #endif
@@ -524,7 +511,7 @@ bool unix_socket_get_peer_uid_gid (const socket_descriptor_t sd, int *uid, int *
 #define GETADDR_PASSIVE               (1<<10)
 #define GETADDR_DATAGRAM              (1<<11)
 
-#define GETADDR_CACHE_MASK		GETADDR_DATAGRAM|GETADDR_PASSIVE
+#define GETADDR_CACHE_MASK		(GETADDR_DATAGRAM|GETADDR_PASSIVE)
 
 in_addr_t getaddr (unsigned int flags,
 		   const char *hostname,

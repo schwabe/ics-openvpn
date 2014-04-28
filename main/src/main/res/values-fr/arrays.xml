@@ -16,11 +16,4 @@
     <item>1</item>
     <item>Non spécifié</item>
   </string-array>
-  <string-array name="crm_entries">
-    <item>No reconnection retries</item>
-    <item>One reconnection retry</item>
-    <item>Five reconnection retries</item>
-    <item>Fifty reconnection retries</item>
-    <item>Unlimited reconnection retries</item>
-  </string-array>
 </resources>

@@ -73,18 +73,18 @@ def loadstrres(filename,lang):
 
 def main():
     
-    loadstrres("res/values/strings.xml","default")
+    loadstrres("src/main/res/values/strings.xml","default")
     
-    faqdom = dom.parse("res/layout/faq.xml")
+    faqdom = dom.parse("src/main/res/layout/faq.xml")
     faq= genPage(faqdom,"default")
 
     open(faqpath + "/FAQ.wiki","w").write(faq)
 
-    for directory in os.listdir("res"):
+    for directory in os.listdir("src/main/res"):
         if directory.startswith("values-") and directory.find("-sw")==-1:
             lang = directory.split("-",1)[1]
             print lang
-            loadstrres("res/values-%s/strings.xml" % lang,lang)
+            loadstrres("src/main/res/values-%s/strings.xml" % lang,lang)
 
             langdir= "%s/%s" %(faqpath,lang)
             if lang=="zh-rCN":

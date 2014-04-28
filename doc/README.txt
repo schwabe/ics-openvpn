@@ -6,6 +6,8 @@ understand the licenses of the code. OpenVPN for Android is GPL licensed. You
 _CANNOT_ build a closed sourced custom UI application without acquiring a different
 (paid) license for UI code.
 
+The use of the AIDL API to control OpenVPN for Android is not subject to the license. The remoteExample project is licensed under the Apache 2.0 license.
+
 When in doubt mail me about it.
 
 See  the file todo.txt for ideas/not yet implemented features (and the bug tracker).

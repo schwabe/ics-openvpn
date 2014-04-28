@@ -1,6 +1,8 @@
 License for OpenVPN for Android. Please note that the thirdparty libraries/executables may have other license (OpenVPN, lzo, OpenSSL, Google Breakpad)
 
-Copyright (c) 2012-2013, Arne Schwabe
+The source code needed to control OpenVPN for Android from another app (the remoteExample) is licensed under the Apache v2 license.
+
+Copyright (c) 2012-2014, Arne Schwabe
  All rights reserved.
 
 If you need a non GPLv2 license of the source please contact me.

@@ -340,7 +340,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
         }
 
         boolean isCert = type == Utils.FileType.CA_CERTIFICATE || type == Utils.FileType.CLIENT_CERTIFICATE;
-        FileSelectLayout fl = new FileSelectLayout(this, getString(titleRes), isCert);
+        FileSelectLayout fl = new FileSelectLayout(this, getString(titleRes), isCert, false);
         fileSelectMap.put(type, fl);
         fl.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 

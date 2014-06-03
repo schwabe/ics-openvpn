@@ -107,13 +107,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            tools:visibility="visible"
             android:visibility="gone" >
 
             <de.blinkt.openvpn.views.FileSelectLayout
                 android:id="@+id/caselect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                blinkt:showClear="true"
                 blinkt:title="@string/ca_title" />
+
         </LinearLayout>
 
         <LinearLayout

@@ -56,7 +56,9 @@
 #include <openssl/pkcs12.h>
 #include <openssl/x509.h>
 #include <openssl/crypto.h>
+#ifndef OPENSSL_NO_EC
 #include <openssl/ec.h>
+#endif
 
 /*
  * Allocate space in SSL objects in which to store a struct tls_session
@@ -196,6 +198,9 @@ tls_ctx_set_options (struct tls_root_ctx *ctx, unsigned int ssl_flags)
     SSL_CTX_set_options (ctx->ctx, sslopt);
   }
 
+#ifdef SSL_MODE_RELEASE_BUFFERS
+  SSL_CTX_set_mode (ctx->ctx, SSL_MODE_RELEASE_BUFFERS);
+#endif
   SSL_CTX_set_session_cache_mode (ctx->ctx, SSL_SESS_CACHE_OFF);
   SSL_CTX_set_default_passwd_cb (ctx->ctx, pem_password_callback);
 
@@ -334,6 +339,7 @@ void
 tls_ctx_load_ecdh_params (struct tls_root_ctx *ctx, const char *curve_name
     )
 {
+#ifndef OPENSSL_NO_EC
   int nid = NID_undef;
   EC_KEY *ecdh = NULL;
   const char *sname = NULL;
@@ -395,6 +401,10 @@ tls_ctx_load_ecdh_params (struct tls_root_ctx *ctx, const char *curve_name
   msg (D_TLS_DEBUG_LOW, "ECDH curve %s added", sname);
 
   EC_KEY_free(ecdh);
+#else
+  msg (M_DEBUG, "Your OpenSSL library was built without elliptic curve support."
+		" Skipping ECDH parameter loading.");
+#endif /* OPENSSL_NO_EC */
 }
 
 int
@@ -1374,6 +1384,7 @@ show_available_tls_ciphers (const char *cipher_list)
 void
 show_available_curves()
 {
+#ifndef OPENSSL_NO_EC
   EC_builtin_curve *curves = NULL;
   size_t crv_len = 0;
   size_t n = 0;
@@ -1404,6 +1415,10 @@ show_available_curves()
     }
     OPENSSL_free(curves);
   }
+#else
+  msg (M_WARN, "Your OpenSSL library was built without elliptic curve support. "
+	       "No curves available.");
+#endif
 }
 
 void
@@ -1427,7 +1442,7 @@ get_highest_preference_tls_cipher (char *buf, int size)
   SSL_CTX_free (ctx);
 }
 
-char *
+const char *
 get_ssl_library_version(void)
 {
     return SSLeay_version(SSLEAY_VERSION);

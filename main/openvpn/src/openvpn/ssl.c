@@ -35,7 +35,6 @@
  * Both the TLS session and the data channel are multiplexed
  * over the same TCP/UDP port.
  */
-
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #elif defined(_MSC_VER)
@@ -48,7 +47,6 @@
 
 #include "error.h"
 #include "common.h"
-#include "integer.h"
 #include "socket.h"
 #include "misc.h"
 #include "fdmisc.h"
@@ -57,8 +55,6 @@
 #include "status.h"
 #include "gremlin.h"
 #include "pkcs11.h"
-#include "list.h"
-#include "base64.h"
 #include "route.h"
 
 #include "ssl.h"
@@ -839,6 +835,25 @@ key_state_free (struct key_state *ks, bool clear)
  */
 static inline void tls_session_set_self_referential_pointers (struct tls_session* session) {
   session->tls_auth.packet_id = &session->tls_auth_pid;
+}
+
+/**
+ * Returns whether or not the server should check for username/password
+ *
+ * @param session	The current TLS session
+ *
+ * @return		true if username and password verification is enabled,
+ *			false if not.
+ */
+static inline bool
+tls_session_user_pass_enabled(struct tls_session *session)
+{
+  return (session->opt->auth_user_pass_verify_script
+        || plugin_defined (session->opt->plugins, OPENVPN_PLUGIN_AUTH_USER_PASS_VERIFY)
+#ifdef MANAGEMENT_DEF_AUTH
+        || management_enable_def_auth (management)
+#endif
+        );
 }
 
 
@@ -2073,7 +2088,7 @@ key_method_2_read (struct buffer *buf, struct tls_multi *multi, struct tls_sessi
       output_peer_info_env (session->opt->es, multi->peer_info);
 #endif
 
-  if (verify_user_pass_enabled(session))
+  if (tls_session_user_pass_enabled(session))
     {
       /* Perform username/password authentication */
       if (!username_status || !password_status)

@@ -56,6 +56,7 @@
 #include "helper.h"
 #include "manage.h"
 #include "forward.h"
+#include "ssl_verify.h"
 #include <ctype.h>
 
 #include "memdbg.h"
@@ -3403,18 +3404,21 @@ usage_small (void)
 void
 show_library_versions(const unsigned int flags)
 {
-  msg (flags, "library versions: %s%s%s",
 #ifdef ENABLE_SSL
-			get_ssl_library_version(),
+#define SSL_LIB_VER_STR get_ssl_library_version()
 #else
-			"",
+#define SSL_LIB_VER_STR ""
 #endif
 #ifdef ENABLE_LZO
-			", LZO ", lzo_version_string()
+#define LZO_LIB_VER_STR ", LZO ", lzo_version_string()
 #else
-			"", ""
+#define LZO_LIB_VER_STR "", ""
 #endif
-	);
+
+  msg (flags, "library versions: %s%s%s", SSL_LIB_VER_STR, LZO_LIB_VER_STR);
+
+#undef SSL_LIB_VER_STR
+#undef LZO_LIB_VER_STR
 }
 
 static void
@@ -4108,7 +4112,7 @@ add_option (struct options *options,
 
       read_config_file (options, p[1], level, file, line, msglevel, permission_mask, option_types_found, es);
     }
-#ifdef ENABLE_DEBUG
+#if defined(ENABLE_DEBUG) && !defined(ENABLE_SMALL)
   else if (streq (p[0], "show-gateway"))
     {
       struct route_gateway_info rgi;

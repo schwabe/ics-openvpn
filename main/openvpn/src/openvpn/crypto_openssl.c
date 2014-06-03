@@ -57,32 +57,6 @@
 #warning Some OpenSSL HMAC message digests now support key lengths greater than MAX_HMAC_KEY_LENGTH -- consider increasing MAX_HMAC_KEY_LENGTH
 #endif
 
-static inline int
-EVP_CipherInit_ov (EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type, uint8_t *key, uint8_t *iv, int enc)
-{
-  return EVP_CipherInit (ctx, type, key, iv, enc);
-}
-
-static inline int
-EVP_CipherUpdate_ov (EVP_CIPHER_CTX *ctx, uint8_t *out, int *outl, uint8_t *in, int inl)
-{
-  return EVP_CipherUpdate (ctx, out, outl, in, inl);
-}
-
-static inline bool
-cipher_ok (const char* name)
-{
-  return true;
-}
-
-#ifndef EVP_CIPHER_name
-#define EVP_CIPHER_name(e)		OBJ_nid2sn(EVP_CIPHER_nid(e))
-#endif
-
-#ifndef EVP_MD_name
-#define EVP_MD_name(e)			OBJ_nid2sn(EVP_MD_type(e))
-#endif
-
 #if HAVE_OPENSSL_ENGINE
 #include <openssl/engine.h>
 
@@ -285,7 +259,7 @@ show_available_ciphers ()
   for (nid = 0; nid < 10000; ++nid)	/* is there a better way to get the size of the nid list? */
     {
       const EVP_CIPHER *cipher = EVP_get_cipherbynid (nid);
-      if (cipher && cipher_ok (OBJ_nid2sn (nid)))
+      if (cipher)
 	{
 	  const unsigned int mode = EVP_CIPHER_mode (cipher);
 	  if (mode == EVP_CIPH_CBC_MODE
@@ -464,7 +438,7 @@ cipher_kt_get (const char *ciphername)
 
   cipher = EVP_get_cipherbyname (ciphername);
 
-  if ((NULL == cipher) || !cipher_ok (OBJ_nid2sn (EVP_CIPHER_nid (cipher))))
+  if (NULL == cipher)
     msg (M_SSLERR, "Cipher algorithm '%s' not found", ciphername);
 
   if (EVP_CIPHER_key_length (cipher) > MAX_CIPHER_KEY_LENGTH)
@@ -525,13 +499,13 @@ cipher_ctx_init (EVP_CIPHER_CTX *ctx, uint8_t *key, int key_len,
   CLEAR (*ctx);
 
   EVP_CIPHER_CTX_init (ctx);
-  if (!EVP_CipherInit_ov (ctx, kt, NULL, NULL, enc))
+  if (!EVP_CipherInit (ctx, kt, NULL, NULL, enc))
     msg (M_SSLERR, "EVP cipher init #1");
 #ifdef HAVE_EVP_CIPHER_CTX_SET_KEY_LENGTH
   if (!EVP_CIPHER_CTX_set_key_length (ctx, key_len))
     msg (M_SSLERR, "EVP set key size");
 #endif
-  if (!EVP_CipherInit_ov (ctx, NULL, key, NULL, enc))
+  if (!EVP_CipherInit (ctx, NULL, key, NULL, enc))
     msg (M_SSLERR, "EVP cipher init #2");
 
   /* make sure we used a big enough key */
@@ -565,14 +539,14 @@ cipher_ctx_mode (const EVP_CIPHER_CTX *ctx)
 int
 cipher_ctx_reset (EVP_CIPHER_CTX *ctx, uint8_t *iv_buf)
 {
-  return EVP_CipherInit_ov (ctx, NULL, NULL, iv_buf, -1);
+  return EVP_CipherInit (ctx, NULL, NULL, iv_buf, -1);
 }
 
 int
 cipher_ctx_update (EVP_CIPHER_CTX *ctx, uint8_t *dst, int *dst_len,
     uint8_t *src, int src_len)
 {
-  return EVP_CipherUpdate_ov (ctx, dst, dst_len, src, src_len);
+  return EVP_CipherUpdate (ctx, dst, dst_len, src, src_len);
 }
 
 int

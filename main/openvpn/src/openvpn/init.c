@@ -43,6 +43,7 @@
 #include "lladdr.h"
 #include "ping.h"
 #include "mstats.h"
+#include "ssl_verify.h"
 
 #include "memdbg.h"
 
@@ -1823,13 +1824,7 @@ do_hold (struct context *c)
 static void
 socket_restart_pause (struct context *c)
 {
-  bool proxy = false;
   int sec = 2;
-
-  if (c->options.ce.http_proxy_options)
-    proxy = true;
-  if (c->options.ce.socks_proxy_server)
-    proxy = true;
 
   switch (c->options.ce.proto)
     {

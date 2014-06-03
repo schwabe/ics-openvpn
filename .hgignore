@@ -75,5 +75,6 @@ cache.properties
 *.iml
 
 main/openvpn3
+main/openssl/.git
 main/boost_1_55_0
 

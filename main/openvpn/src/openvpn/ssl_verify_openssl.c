@@ -37,9 +37,13 @@
 
 #if defined(ENABLE_SSL) && defined(ENABLE_CRYPTO_OPENSSL)
 
+#include "ssl_verify_openssl.h"
+
+#include "error.h"
+#include "ssl_openssl.h"
 #include "ssl_verify.h"
 #include "ssl_verify_backend.h"
-#include "ssl_openssl.h"
+
 #include <openssl/x509v3.h>
 #include <openssl/err.h>
 
@@ -238,10 +242,18 @@ backend_x509_get_serial (openvpn_x509_cert_t *cert, struct gc_arena *gc)
   return serial;
 }
 
+char *
+backend_x509_get_serial_hex (openvpn_x509_cert_t *cert, struct gc_arena *gc)
+{
+  const ASN1_INTEGER *asn1_i = X509_get_serialNumber(cert);
+
+  return format_hex_ex(asn1_i->data, asn1_i->length, 0, 1, ":", gc);
+}
+
 unsigned char *
 x509_get_sha1_hash (X509 *cert, struct gc_arena *gc)
 {
-  char *hash = gc_malloc(SHA_DIGEST_LENGTH, false, gc);
+  unsigned char *hash = gc_malloc(SHA_DIGEST_LENGTH, false, gc);
   memcpy(hash, cert->sha1_hash, SHA_DIGEST_LENGTH);
   return hash;
 }

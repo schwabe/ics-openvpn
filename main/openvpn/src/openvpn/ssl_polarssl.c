@@ -232,7 +232,9 @@ void
 tls_ctx_load_ecdh_params (struct tls_root_ctx *ctx, const char *curve_name
     )
 {
-    msg(M_WARN, "Elliptic Curves not yet supported by PolarSSL");
+    if (NULL != curve_name)
+      msg(M_WARN, "WARNING: PolarSSL builds do not support specifying an ECDH "
+                  "curve, using default curves.");
 }
 
 int
@@ -1093,7 +1095,18 @@ show_available_tls_ciphers (const char *cipher_list)
 void
 show_available_curves (void)
 {
-  printf("The PolarSSL build of OpenVPN does not support elliptic curves yet");
+  const ecp_curve_info *pcurve = ecp_curve_list();
+
+  if (NULL == pcurve)
+    msg (M_FATAL, "Cannot retrieve curve list from PolarSSL");
+
+  /* Print curve list */
+  printf ("Available Elliptic curves, listed in order of preference:\n\n");
+  while (POLARSSL_ECP_DP_NONE != pcurve->grp_id)
+    {
+      printf("%s\n", pcurve->name);
+      pcurve++;
+    }
 }
 
 void
@@ -1108,7 +1121,7 @@ get_highest_preference_tls_cipher (char *buf, int size)
   strncpynt (buf, cipher_name, size);
 }
 
-char *
+const char *
 get_ssl_library_version(void)
 {
     static char polar_version[30];

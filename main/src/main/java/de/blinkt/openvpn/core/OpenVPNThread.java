@@ -1,17 +1,27 @@
 package de.blinkt.openvpn.core;
 
 import android.util.Log;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 import de.blinkt.openvpn.core.VpnStatus.LogItem;
-
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class OpenVPNThread implements Runnable {
     private static final String DUMP_PATH_STRING = "Dump path: ";
@@ -164,10 +174,10 @@ public class OpenVPNThread implements Runnable {
 		if(lbpath==null) 
 			lbpath = applibpath;
 		else
-			lbpath = lbpath + ":" + applibpath;
+			lbpath = applibpath + ":" + lbpath;
 		
 		if (!applibpath.equals(mNativeDir)) {
-			lbpath = lbpath + ":" + mNativeDir;
+			lbpath =  mNativeDir + ":" + lbpath;
 		}
 		return lbpath;
 	}

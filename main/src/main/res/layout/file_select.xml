@@ -17,12 +17,13 @@
 
 <!-- A layout to select a certificate, akin to a file selector on web pages. -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dip"
-                android:gravity="center_vertical" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dip"
+    android:gravity="center_vertical">
 
-    <Button
+<Button
             android:id="@+id/file_select_button"
             style="@style/accountSetupButton"
             android:layout_width="wrap_content"
@@ -30,13 +31,23 @@
             android:layout_alignParentRight="true"
             android:text="@string/file_select" />
 
+    <Button
+        android:id="@+id/file_clear_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_toLeftOf="@id/file_select_button"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:text="@string/clear"/>
+
     <TextView
             android:id="@+id/file_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/file_select_button"
+            android:layout_toLeftOf="@+id/file_clear_button"
             android:text="@string/client_certificate_title"
             android:textStyle="bold" />
 
@@ -47,7 +58,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/file_title"
             android:layout_marginLeft="16dip"
-            android:layout_toLeftOf="@+id/file_select_button"
+            android:layout_toLeftOf="@+id/file_clear_button"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="@string/file_nothing_selected" />

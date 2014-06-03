@@ -26,14 +26,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-import de.blinkt.openvpn.views.FileSelectLayout;
-import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.R.id;
-import de.blinkt.openvpn.core.ProfileManager;
-import de.blinkt.openvpn.core.X509Utils;
 
 import java.security.cert.X509Certificate;
+
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.R.id;
+import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.core.ProfileManager;
+import de.blinkt.openvpn.core.X509Utils;
+import de.blinkt.openvpn.views.FileSelectLayout;
 
 public class Settings_Basic extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback, FileSelectLayout.FileSelectCallback {
 	private static final int CHOOSE_FILE_OFFSET = 1000;
@@ -207,7 +208,8 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mView.findViewById(R.id.statickeys).setVisibility(View.GONE);
 		mView.findViewById(R.id.keystore).setVisibility(View.GONE);
 		mView.findViewById(R.id.cacert).setVisibility(View.GONE);
-		mView.findViewById(R.id.userpassword).setVisibility(View.GONE);
+        ((FileSelectLayout) mView.findViewById(R.id.caselect)).setClearable(false);
+        mView.findViewById(R.id.userpassword).setVisibility(View.GONE);
 		mView.findViewById(R.id.key_password_layout).setVisibility(View.GONE);
 
 		// Fall through are by design
@@ -236,7 +238,8 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		case VpnProfile.TYPE_KEYSTORE:
 			mView.findViewById(R.id.keystore).setVisibility(View.VISIBLE);
 			mView.findViewById(R.id.cacert).setVisibility(View.VISIBLE);
-			break;
+            ((FileSelectLayout) mView.findViewById(R.id.caselect)).setClearable(true);
+            break;
 
 		case VpnProfile.TYPE_USERPASS:
 			mView.findViewById(R.id.userpassword).setVisibility(View.VISIBLE);

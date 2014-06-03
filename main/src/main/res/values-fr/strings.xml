@@ -315,4 +315,8 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="blocklocal_summary">Les réseaux directement connectés aux interfaces locales ne seront pas routés via le VPN. Décochez cette option pour rediriger tout le trafic local vers le VPN.</string>
   <string name="blocklocal_title">Ne pas utilisé le VPN pour les réseaux locaux</string>
   <string name="userpw_file">Fichier Nom d\'utilisateur/Mot de passe</string>
+  <string name="imported_from_file">[Importé de : %s]</string>
+  <string name="files_missing_hint">Certains fichiers sont introuvables. Sélectionner les fichiers pour importer le profil :</string>
+  <string name="openvpn_is_no_free_vpn">Pour utiliser cette application, vous avez besoin d\'un fournisseur/passerelle VPN qui soutient OpenVPN (souvent fourni par votre employeur). Vérifier ici http://community.openvpn.net/ pour plus d\'informations sur OpenVPN et comment configurer votre propre serveur OpenVPN.</string>
+  <string name="import_log">Journal d\'importation :</string>
 </resources>

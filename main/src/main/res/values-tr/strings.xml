@@ -13,7 +13,7 @@
   <string name="useLZO">LZO sıkıştırma</string>
   <string name="client_no_certificate">Sertifika yok</string>
   <string name="client_certificate_title">İstemci sertifikası</string>
-  <string name="client_key_title">İstemci sertifika anahtarı</string>
+  <string name="client_key_title">İstemci Sertifika Anahtarı</string>
   <string name="client_pkcs12_title">PCKCS12 Dosyası</string>
   <string name="ca_title">CA Sertifikası</string>
   <string name="no_certificate">Bir sertifika seçmelisiniz</string>
@@ -307,4 +307,6 @@
   <string name="unhandled_exception">Kural dışı durum: %1$s\n\n%2$s</string>
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
   <string name="full_licenses">Lisanslar</string>
+  <string name="blocklocal_title">Yerel ağlar için Bypass VPN</string>
+  <string name="userpw_file">Kullanıcı adı / Şifre dosyası</string>
 </resources>

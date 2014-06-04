@@ -35,7 +35,8 @@ if [ $? = 0 ]; then
 	mkdir -p ../ovpnlibs/assets
 	for i in *
 	do
-		cp -v $i/minivpn ../ovpnlibs/assets/minivpn.$i
+		cp -v $i/nopievpn ../ovpnlibs/assets/nopievpn.$i
+		cp -v $i/pievpn ../ovpnlibs/assets/pievpn.$i
 	done
 	# Removed compiled openssl libs, will use platform so libs 
 	# Reduces size of apk

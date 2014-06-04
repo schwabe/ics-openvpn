@@ -1,19 +1,20 @@
 package de.blinkt.openvpn.core;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 
 public class VPNLaunchHelper {
 	static private boolean writeMiniVPN(Context context) {
-		File mvpnout = new File(context.getCacheDir(),VpnProfile.MINIVPN);
+		File mvpnout = new File(context.getCacheDir(),VpnProfile.getMiniVPNExecutableName());
 		if (mvpnout.exists() && mvpnout.canExecute())
 			return true;
 
@@ -23,12 +24,12 @@ public class VPNLaunchHelper {
 			InputStream mvpn;
 			
 			try {
-				mvpn = context.getAssets().open("minivpn." + Build.CPU_ABI);
+				mvpn = context.getAssets().open(VpnProfile.getMiniVPNExecutableName() + "." + Build.CPU_ABI);
 			}
 			catch (IOException errabi) {
 				VpnStatus.logInfo("Failed getting assets for archicture " + Build.CPU_ABI);
 				e2=errabi;
-				mvpn = context.getAssets().open("minivpn." + Build.CPU_ABI2);
+				mvpn = context.getAssets().open(VpnProfile.getMiniVPNExecutableName() + "." + Build.CPU_ABI2);
 				
 			}
 
@@ -45,7 +46,7 @@ public class VPNLaunchHelper {
 			fout.close();
 
 			if(!mvpnout.setExecutable(true)) {
-				VpnStatus.logError("Failed to set minivpn executable");
+				VpnStatus.logError("Failed to make OpenVPN executable");
 				return false;
 			}
 				

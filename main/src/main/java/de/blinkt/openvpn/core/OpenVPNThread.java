@@ -168,7 +168,7 @@ public class OpenVPNThread implements Runnable {
 
 	private String genLibraryPath(String[] argv, ProcessBuilder pb) {
 		// Hack until I find a good way to get the real library path
-		String applibpath = argv[0].replace("/cache/" + VpnProfile.MINIVPN , "/lib");
+		String applibpath = argv[0].replace("/cache/" + VpnProfile.getMiniVPNExecutableName() , "/lib");
 		
 		String lbpath = pb.environment().get("LD_LIBRARY_PATH");
 		if(lbpath==null) 

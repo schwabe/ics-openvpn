@@ -740,12 +740,17 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
     public String getTunReopenStatus() {
         String currentConfiguration = getTunConfigString();
-        if (currentConfiguration.equals(mLastTunCfg))
+        if (currentConfiguration.equals(mLastTunCfg)) {
             return "NOACTION";
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-            return "OPEN_AFTER_CLOSE";
-        else
-            return "OPEN_BEFORE_CLOSE";
+        } else {
+            String release = Build.VERSION.RELEASE;
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !release.startsWith("4.4.3")
+                    &&  !release.startsWith("4.4.4") &&  !release.startsWith("4.4.5"))
+                // There will be probably no 4.4.4 or 4.4.5 version, so don't waste effort to do parsing here
+                return "OPEN_AFTER_CLOSE";
+            else
+                return "OPEN_BEFORE_CLOSE";
+        }
     }
 
     public class LocalBinder extends Binder {

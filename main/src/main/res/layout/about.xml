@@ -60,10 +60,6 @@
                 tools:ignore="SelectableText"/>
 
 
-        <Space
-                android:layout_width="match_parent"
-                android:layout_height="12sp" />
-
         <TextView
             android:id="@+id/translation"
             android:layout_width="match_parent"

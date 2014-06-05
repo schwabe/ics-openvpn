@@ -69,10 +69,11 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         getActivity().bindService(new
                 Intent("com.android.vending.billing.InAppBillingService.BIND"),
                 mServiceConn, Context.BIND_AUTO_CREATE);
-
+        */
     }
 
     @Override
@@ -266,7 +267,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
         /* recreating view without onCreate/onDestroy cycle */
 
         // Disable GMS for now
-        if (mService!=null && false)
+        if (mService!=null)
             initGooglePlayDonation();
 
         TextView translation = (TextView) v.findViewById(R.id.translation);

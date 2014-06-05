@@ -266,7 +266,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
         /* recreating view without onCreate/onDestroy cycle */
 
         // Disable GMS for now
-        if (mService!=null || false)
+        if (mService!=null && false)
             initGooglePlayDonation();
 
         TextView translation = (TextView) v.findViewById(R.id.translation);

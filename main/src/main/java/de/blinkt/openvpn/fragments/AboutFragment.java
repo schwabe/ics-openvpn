@@ -264,7 +264,9 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
         paypal.setMovementMethod(LinkMovementMethod.getInstance());
         gmsTextView = (TextView) v.findViewById(R.id.donategms);
         /* recreating view without onCreate/onDestroy cycle */
-        if (mService!=null)
+
+        // Disable GMS for now
+        if (mService!=null || false)
             initGooglePlayDonation();
 
         TextView translation = (TextView) v.findViewById(R.id.translation);

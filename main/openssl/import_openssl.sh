@@ -143,7 +143,7 @@ function gen_asm_mips () {
 function gen_asm_x86 () {
   local OUT
   OUT=$(default_asm_file "$@")
-  $PERL_EXE "$1" elf -fPIC > "$OUT"
+  $PERL_EXE "$1" elf -fPIC $(print_values_with_prefix -D $OPENSSL_CRYPTO_DEFINES_x86) > "$OUT"
 }
 
 function gen_asm_x86_64 () {
@@ -186,12 +186,12 @@ function generate_build_config_headers() {
   local configure_args_bits=CONFIGURE_ARGS_$1
   local configure_args_stat=''
   local outname=$1
-  if [ $2 -eq "1" ] ; then
+  if [[ $2 == 1 ]] ; then
       configure_args_stat=CONFIGURE_ARGS_STATIC
       outname="static-$1"
   fi
 
-  if [ $1 == "trusty" ] ; then
+  if [[ $1 == trusty ]] ; then
     PERL=/usr/bin/perl ./Configure $CONFIGURE_ARGS_TRUSTY
   else
     PERL=/usr/bin/perl ./Configure $CONFIGURE_ARGS ${!configure_args_bits} ${!configure_args_stat}
@@ -282,6 +282,17 @@ var_value() {
 # Out: variable value (if space-separated list, sorted with no duplicates)
 var_sorted_value() {
   uniq_sort $(var_value $1)
+}
+
+# Print the values in a list with a prefix
+# $1: prefix to use
+# $2+: values of list
+print_values_with_prefix() {
+  declare -r prefix=$1
+  shift
+  for src; do
+    echo -n " $prefix$src "
+  done
 }
 
 # Print the definition of a given variable in a GNU Make build file.
@@ -393,36 +404,28 @@ LOCAL_CFLAGS_${arch} += \$(${arch}_cflags)"
       done
     else
       echo "
-ifeq (\$(HOST_OS)-\$(HOST_ARCH),linux-x86)
-ifneq (\$(BUILD_HOST_64bit),)
-host_arch := x86_64
-else
-host_arch := x86
-endif
-else
-ifeq (\$(HOST_OS)-\$(HOST_ARCH),linux-x86_64)
-host_arch := x86_64
-else
-\$(warning Unknown host architecture \$(HOST_OS)-\$(HOST_ARCH))
-host_arch := unknown
-endif
-endif
-
-LOCAL_CFLAGS     += \$(common_cflags) \$(\$(host_arch)_cflags)
+LOCAL_CFLAGS += \$(common_cflags)
 LOCAL_C_INCLUDES += \$(common_c_includes) \$(local_c_includes)
-LOCAL_SRC_FILES  += \$(filter-out \$(\$(host_arch)_exclude_files), \$(common_src_files) \$(\$(host_arch)_src_files))"
+
+ifeq (\$(HOST_OS),linux)
+LOCAL_CFLAGS_x86 += \$(x86_cflags)
+LOCAL_SRC_FILES_x86 += \$(filter-out \$(x86_exclude_files), \$(common_src_files) \$(x86_src_files))
+LOCAL_CFLAGS_x86_64 += \$(x86_64_cflags)
+LOCAL_SRC_FILES_x86_64 += \$(filter-out \$(x86_64_exclude_files), \$(common_src_files) \$(x86_64_src_files))
+else
+\$(warning Unknown host OS \$(HOST_OS))
+LOCAL_SRC_FILES += \$(common_src_files)
+endif"
     fi
   ) > "$output"
 }
 
 function import() {
   declare -r OPENSSL_SOURCE=$1
-
   untar $OPENSSL_SOURCE readonly
   applypatches $OPENSSL_DIR
 
   cd $OPENSSL_DIR
-
   generate_build_config_mk
   generate_opensslconf_h
 
@@ -440,6 +443,7 @@ function import() {
 
   # Generate arm asm
   gen_asm_arm crypto/aes/asm/aes-armv4.pl
+  gen_asm_arm crypto/aes/asm/bsaes-armv7.pl
   gen_asm_arm crypto/bn/asm/armv4-gf2m.pl
   gen_asm_arm crypto/bn/asm/armv4-mont.pl
   gen_asm_arm crypto/modes/asm/ghash-armv4.pl

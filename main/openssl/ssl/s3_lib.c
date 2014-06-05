@@ -2826,6 +2826,42 @@ OPENSSL_GLOBAL SSL_CIPHER ssl3_ciphers[]={
 	256,
 	},
 
+#ifndef OPENSSL_NO_PSK
+    /* ECDH PSK ciphersuites from RFC 5489 */
+
+	/* Cipher C037 */
+	{
+	1,
+	TLS1_TXT_ECDHE_PSK_WITH_AES_128_CBC_SHA256,
+	TLS1_CK_ECDHE_PSK_WITH_AES_128_CBC_SHA256,
+	SSL_kEECDH,
+	SSL_aPSK,
+	SSL_AES128,
+	SSL_SHA256,
+	SSL_TLSV1,
+	SSL_NOT_EXP|SSL_HIGH,
+	SSL_HANDSHAKE_MAC_DEFAULT|TLS1_PRF_SHA256,
+	128,
+	128,
+	},
+
+	/* Cipher C038 */
+	{
+	1,
+	TLS1_TXT_ECDHE_PSK_WITH_AES_256_CBC_SHA384,
+	TLS1_CK_ECDHE_PSK_WITH_AES_256_CBC_SHA384,
+	SSL_kEECDH,
+	SSL_aPSK,
+	SSL_AES256,
+	SSL_SHA384,
+	SSL_TLSV1,
+	SSL_NOT_EXP|SSL_HIGH,
+	SSL_HANDSHAKE_MAC_DEFAULT|TLS1_PRF_SHA384,
+	256,
+	256,
+	},
+#endif /* OPENSSL_NO_PSK */
+
 #endif /* OPENSSL_NO_ECDH */
 
 
@@ -3911,7 +3947,7 @@ SSL_CIPHER *ssl3_choose_cipher(SSL *s, STACK_OF(SSL_CIPHER) *clnt,
 #endif /* OPENSSL_NO_KRB5 */
 #ifndef OPENSSL_NO_PSK
 		/* with PSK there must be server callback set */
-		if ((alg_k & SSL_kPSK) && s->psk_server_callback == NULL)
+		if ((alg_a & SSL_aPSK) && s->psk_server_callback == NULL)
 			continue;
 #endif /* OPENSSL_NO_PSK */
 

@@ -388,6 +388,13 @@ SSL *SSL_new(SSL_CTX *ctx)
 	CRYPTO_new_ex_data(CRYPTO_EX_INDEX_SSL, s, &s->ex_data);
 
 #ifndef OPENSSL_NO_PSK
+	s->psk_identity_hint = NULL;
+	if (ctx->psk_identity_hint)
+		{
+		s->psk_identity_hint = BUF_strdup(ctx->psk_identity_hint);
+		if (s->psk_identity_hint == NULL)
+			goto err;
+		}
 	s->psk_client_callback=ctx->psk_client_callback;
 	s->psk_server_callback=ctx->psk_server_callback;
 #endif
@@ -594,6 +601,11 @@ void SSL_free(SSL *s)
 		EVP_PKEY_free(s->tlsext_channel_id_private);
 	if (s->alpn_client_proto_list)
 		OPENSSL_free(s->alpn_client_proto_list);
+#endif
+
+#ifndef OPENSSL_NO_PSK
+	if (s->psk_identity_hint)
+		OPENSSL_free(s->psk_identity_hint);
 #endif
 
 	if (s->client_CA != NULL)
@@ -1440,7 +1452,7 @@ int ssl_cipher_list_to_bytes(SSL *s,STACK_OF(SSL_CIPHER) *sk,unsigned char *p,
 #endif /* OPENSSL_NO_KRB5 */
 #ifndef OPENSSL_NO_PSK
 		/* with PSK there must be client callback set */
-		if (((c->algorithm_mkey & SSL_kPSK) || (c->algorithm_auth & SSL_aPSK)) &&
+		if ((c->algorithm_auth & SSL_aPSK) &&
 		    s->psk_client_callback == NULL)
 			continue;
 #endif /* OPENSSL_NO_PSK */
@@ -3303,32 +3315,54 @@ int SSL_use_psk_identity_hint(SSL *s, const char *identity_hint)
 	if (s == NULL)
 		return 0;
 
-	if (s->session == NULL)
-		return 1; /* session not created yet, ignored */
-
 	if (identity_hint != NULL && strlen(identity_hint) > PSK_MAX_IDENTITY_LEN)
 		{
 		SSLerr(SSL_F_SSL_USE_PSK_IDENTITY_HINT, SSL_R_DATA_LENGTH_TOO_LONG);
 		return 0;
 		}
-	if (s->session->psk_identity_hint != NULL)
+
+	/* Clear hint in SSL and associated SSL_SESSION (if any). */
+	if (s->psk_identity_hint != NULL)
+		{
+		OPENSSL_free(s->psk_identity_hint);
+		s->psk_identity_hint = NULL;
+		}
+	if (s->session != NULL && s->session->psk_identity_hint != NULL)
+		{
 		OPENSSL_free(s->session->psk_identity_hint);
+		s->session->psk_identity_hint = NULL;
+		}
+
 	if (identity_hint != NULL)
 		{
-		s->session->psk_identity_hint = BUF_strdup(identity_hint);
-		if (s->session->psk_identity_hint == NULL)
-			return 0;
+		/* The hint is stored in SSL and SSL_SESSION with the one in
+		 * SSL_SESSION taking precedence. Thus, if SSL_SESSION is avaiable,
+		 * we store the hint there, otherwise we store it in SSL. */
+		if (s->session != NULL)
+			{
+			s->session->psk_identity_hint = BUF_strdup(identity_hint);
+			if (s->session->psk_identity_hint == NULL)
+				return 0;
+			}
+		else
+			{
+			s->psk_identity_hint = BUF_strdup(identity_hint);
+			if (s->psk_identity_hint == NULL)
+				return 0;
+			}
 		}
-	else
-		s->session->psk_identity_hint = NULL;
 	return 1;
 	}
 
 const char *SSL_get_psk_identity_hint(const SSL *s)
 	{
-	if (s == NULL || s->session == NULL)
+	if (s == NULL)
 		return NULL;
-	return(s->session->psk_identity_hint);
+	/* The hint is stored in SSL and SSL_SESSION with the one in SSL_SESSION
+	 * taking precedence. */
+	if (s->session != NULL)
+		return(s->session->psk_identity_hint);
+	return(s->psk_identity_hint);
 	}
 
 const char *SSL_get_psk_identity(const SSL *s)

@@ -25,6 +25,278 @@ sha512_block_data_order:
 	movl	%edi,4(%esp)
 	movl	%eax,8(%esp)
 	movl	%ebx,12(%esp)
+	leal	_GLOBAL_OFFSET_TABLE_+[.-.L001K512](%ebp),%edx
+	movl	OPENSSL_ia32cap_P@GOT(%edx),%edx
+	btl	$26,(%edx)
+	jnc	.L002loop_x86
+	movq	(%esi),%mm0
+	movq	8(%esi),%mm1
+	movq	16(%esi),%mm2
+	movq	24(%esi),%mm3
+	movq	32(%esi),%mm4
+	movq	40(%esi),%mm5
+	movq	48(%esi),%mm6
+	movq	56(%esi),%mm7
+	subl	$80,%esp
+.align	16
+.L003loop_sse2:
+	movq	%mm1,8(%esp)
+	movq	%mm2,16(%esp)
+	movq	%mm3,24(%esp)
+	movq	%mm5,40(%esp)
+	movq	%mm6,48(%esp)
+	movq	%mm7,56(%esp)
+	movl	(%edi),%ecx
+	movl	4(%edi),%edx
+	addl	$8,%edi
+	bswap	%ecx
+	bswap	%edx
+	movl	%ecx,76(%esp)
+	movl	%edx,72(%esp)
+.align	16
+.L00400_14_sse2:
+	movl	(%edi),%eax
+	movl	4(%edi),%ebx
+	addl	$8,%edi
+	bswap	%eax
+	bswap	%ebx
+	movl	%eax,68(%esp)
+	movl	%ebx,64(%esp)
+	movq	40(%esp),%mm5
+	movq	48(%esp),%mm6
+	movq	56(%esp),%mm7
+	movq	%mm4,%mm1
+	movq	%mm4,%mm2
+	psrlq	$14,%mm1
+	movq	%mm4,32(%esp)
+	psllq	$23,%mm2
+	movq	%mm1,%mm3
+	psrlq	$4,%mm1
+	pxor	%mm2,%mm3
+	psllq	$23,%mm2
+	pxor	%mm1,%mm3
+	psrlq	$23,%mm1
+	pxor	%mm2,%mm3
+	psllq	$4,%mm2
+	pxor	%mm1,%mm3
+	paddq	(%ebp),%mm7
+	pxor	%mm2,%mm3
+	pxor	%mm6,%mm5
+	movq	8(%esp),%mm1
+	pand	%mm4,%mm5
+	movq	16(%esp),%mm2
+	pxor	%mm6,%mm5
+	movq	24(%esp),%mm4
+	paddq	%mm5,%mm3
+	movq	%mm0,(%esp)
+	paddq	%mm7,%mm3
+	movq	%mm0,%mm5
+	movq	%mm0,%mm6
+	paddq	72(%esp),%mm3
+	psrlq	$28,%mm5
+	paddq	%mm3,%mm4
+	psllq	$25,%mm6
+	movq	%mm5,%mm7
+	psrlq	$6,%mm5
+	pxor	%mm6,%mm7
+	psllq	$5,%mm6
+	pxor	%mm5,%mm7
+	psrlq	$5,%mm5
+	pxor	%mm6,%mm7
+	psllq	$6,%mm6
+	pxor	%mm5,%mm7
+	subl	$8,%esp
+	pxor	%mm6,%mm7
+	movq	%mm0,%mm5
+	por	%mm2,%mm0
+	pand	%mm2,%mm5
+	pand	%mm1,%mm0
+	por	%mm0,%mm5
+	paddq	%mm5,%mm7
+	movq	%mm3,%mm0
+	movb	(%ebp),%dl
+	paddq	%mm7,%mm0
+	addl	$8,%ebp
+	cmpb	$53,%dl
+	jne	.L00400_14_sse2
+	movq	40(%esp),%mm5
+	movq	48(%esp),%mm6
+	movq	56(%esp),%mm7
+	movq	%mm4,%mm1
+	movq	%mm4,%mm2
+	psrlq	$14,%mm1
+	movq	%mm4,32(%esp)
+	psllq	$23,%mm2
+	movq	%mm1,%mm3
+	psrlq	$4,%mm1
+	pxor	%mm2,%mm3
+	psllq	$23,%mm2
+	pxor	%mm1,%mm3
+	psrlq	$23,%mm1
+	pxor	%mm2,%mm3
+	psllq	$4,%mm2
+	pxor	%mm1,%mm3
+	paddq	(%ebp),%mm7
+	pxor	%mm2,%mm3
+	pxor	%mm6,%mm5
+	movq	8(%esp),%mm1
+	pand	%mm4,%mm5
+	movq	16(%esp),%mm2
+	pxor	%mm6,%mm5
+	movq	24(%esp),%mm4
+	paddq	%mm5,%mm3
+	movq	%mm0,(%esp)
+	paddq	%mm7,%mm3
+	movq	%mm0,%mm5
+	movq	%mm0,%mm6
+	paddq	72(%esp),%mm3
+	psrlq	$28,%mm5
+	paddq	%mm3,%mm4
+	psllq	$25,%mm6
+	movq	%mm5,%mm7
+	psrlq	$6,%mm5
+	pxor	%mm6,%mm7
+	psllq	$5,%mm6
+	pxor	%mm5,%mm7
+	psrlq	$5,%mm5
+	pxor	%mm6,%mm7
+	psllq	$6,%mm6
+	pxor	%mm5,%mm7
+	subl	$8,%esp
+	pxor	%mm6,%mm7
+	movq	%mm0,%mm5
+	por	%mm2,%mm0
+	movq	88(%esp),%mm6
+	pand	%mm2,%mm5
+	pand	%mm1,%mm0
+	movq	192(%esp),%mm2
+	por	%mm0,%mm5
+	paddq	%mm5,%mm7
+	movq	%mm3,%mm0
+	movb	(%ebp),%dl
+	paddq	%mm7,%mm0
+	addl	$8,%ebp
+.align	16
+.L00516_79_sse2:
+	movq	%mm2,%mm1
+	psrlq	$1,%mm2
+	movq	%mm6,%mm7
+	psrlq	$6,%mm6
+	movq	%mm2,%mm3
+	psrlq	$6,%mm2
+	movq	%mm6,%mm5
+	psrlq	$13,%mm6
+	pxor	%mm2,%mm3
+	psrlq	$1,%mm2
+	pxor	%mm6,%mm5
+	psrlq	$42,%mm6
+	pxor	%mm2,%mm3
+	movq	200(%esp),%mm2
+	psllq	$56,%mm1
+	pxor	%mm6,%mm5
+	psllq	$3,%mm7
+	pxor	%mm1,%mm3
+	paddq	128(%esp),%mm2
+	psllq	$7,%mm1
+	pxor	%mm7,%mm5
+	psllq	$42,%mm7
+	pxor	%mm1,%mm3
+	pxor	%mm7,%mm5
+	paddq	%mm5,%mm3
+	paddq	%mm2,%mm3
+	movq	%mm3,72(%esp)
+	movq	40(%esp),%mm5
+	movq	48(%esp),%mm6
+	movq	56(%esp),%mm7
+	movq	%mm4,%mm1
+	movq	%mm4,%mm2
+	psrlq	$14,%mm1
+	movq	%mm4,32(%esp)
+	psllq	$23,%mm2
+	movq	%mm1,%mm3
+	psrlq	$4,%mm1
+	pxor	%mm2,%mm3
+	psllq	$23,%mm2
+	pxor	%mm1,%mm3
+	psrlq	$23,%mm1
+	pxor	%mm2,%mm3
+	psllq	$4,%mm2
+	pxor	%mm1,%mm3
+	paddq	(%ebp),%mm7
+	pxor	%mm2,%mm3
+	pxor	%mm6,%mm5
+	movq	8(%esp),%mm1
+	pand	%mm4,%mm5
+	movq	16(%esp),%mm2
+	pxor	%mm6,%mm5
+	movq	24(%esp),%mm4
+	paddq	%mm5,%mm3
+	movq	%mm0,(%esp)
+	paddq	%mm7,%mm3
+	movq	%mm0,%mm5
+	movq	%mm0,%mm6
+	paddq	72(%esp),%mm3
+	psrlq	$28,%mm5
+	paddq	%mm3,%mm4
+	psllq	$25,%mm6
+	movq	%mm5,%mm7
+	psrlq	$6,%mm5
+	pxor	%mm6,%mm7
+	psllq	$5,%mm6
+	pxor	%mm5,%mm7
+	psrlq	$5,%mm5
+	pxor	%mm6,%mm7
+	psllq	$6,%mm6
+	pxor	%mm5,%mm7
+	subl	$8,%esp
+	pxor	%mm6,%mm7
+	movq	%mm0,%mm5
+	por	%mm2,%mm0
+	movq	88(%esp),%mm6
+	pand	%mm2,%mm5
+	pand	%mm1,%mm0
+	movq	192(%esp),%mm2
+	por	%mm0,%mm5
+	paddq	%mm5,%mm7
+	movq	%mm3,%mm0
+	movb	(%ebp),%dl
+	paddq	%mm7,%mm0
+	addl	$8,%ebp
+	cmpb	$23,%dl
+	jne	.L00516_79_sse2
+	movq	8(%esp),%mm1
+	movq	16(%esp),%mm2
+	movq	24(%esp),%mm3
+	movq	40(%esp),%mm5
+	movq	48(%esp),%mm6
+	movq	56(%esp),%mm7
+	paddq	(%esi),%mm0
+	paddq	8(%esi),%mm1
+	paddq	16(%esi),%mm2
+	paddq	24(%esi),%mm3
+	paddq	32(%esi),%mm4
+	paddq	40(%esi),%mm5
+	paddq	48(%esi),%mm6
+	paddq	56(%esi),%mm7
+	movq	%mm0,(%esi)
+	movq	%mm1,8(%esi)
+	movq	%mm2,16(%esi)
+	movq	%mm3,24(%esi)
+	movq	%mm4,32(%esi)
+	movq	%mm5,40(%esi)
+	movq	%mm6,48(%esi)
+	movq	%mm7,56(%esi)
+	addl	$640,%esp
+	subl	$640,%ebp
+	cmpl	88(%esp),%edi
+	jb	.L003loop_sse2
+	emms
+	movl	92(%esp),%esp
+	popl	%edi
+	popl	%esi
+	popl	%ebx
+	popl	%ebp
+	ret
 .align	16
 .L002loop_x86:
 	movl	(%edi),%eax
@@ -130,7 +402,7 @@ sha512_block_data_order:
 	movl	$16,%ecx
 .long	2784229001
 .align	16
-.L00300_15_x86:
+.L00600_15_x86:
 	movl	40(%esp),%ecx
 	movl	44(%esp),%edx
 	movl	%ecx,%esi
@@ -237,9 +509,9 @@ sha512_block_data_order:
 	subl	$8,%esp
 	leal	8(%ebp),%ebp
 	cmpb	$148,%dl
-	jne	.L00300_15_x86
+	jne	.L00600_15_x86
 .align	16
-.L00416_79_x86:
+.L00716_79_x86:
 	movl	312(%esp),%ecx
 	movl	316(%esp),%edx
 	movl	%ecx,%esi
@@ -412,7 +684,7 @@ sha512_block_data_order:
 	subl	$8,%esp
 	leal	8(%ebp),%ebp
 	cmpb	$23,%dl
-	jne	.L00416_79_x86
+	jne	.L00716_79_x86
 	movl	840(%esp),%esi
 	movl	844(%esp),%edi
 	movl	(%esi),%eax
@@ -561,3 +833,4 @@ sha512_block_data_order:
 .byte	67,82,89,80,84,79,71,65,77,83,32,98,121,32,60,97
 .byte	112,112,114,111,64,111,112,101,110,115,115,108,46,111,114,103
 .byte	62,0
+.comm	OPENSSL_ia32cap_P,8,4

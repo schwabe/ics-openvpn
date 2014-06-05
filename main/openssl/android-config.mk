@@ -7,6 +7,20 @@
 # This script performs minor but required patching for the Android build.
 #
 
+# Directories for ENGINE shared libraries
+openssl_cflags_32 += \
+  -DOPENSSLDIR="\"/system/lib/ssl\"" \
+  -DENGINESDIR="\"/system/lib/ssl/engines\""
+openssl_cflags_static_32 += \
+  -DOPENSSLDIR="\"/system/lib/ssl\"" \
+  -DENGINESDIR="\"/system/lib/ssl/engines\""
+openssl_cflags_64 += \
+  -DOPENSSLDIR="\"/system/lib64/ssl\"" \
+  -DENGINESDIR="\"/system/lib64/ssl/engines\""
+openssl_cflags_static_64 += \
+  -DOPENSSLDIR="\"/system/lib64/ssl\"" \
+  -DENGINESDIR="\"/system/lib64/ssl/engines\""
+
 # Intentionally excluded http://b/7079965
 ifneq (,$(filter -DZLIB, $(openssl_cflags_32) $(openssl_cflags_64) \
     $(openssl_cflags_static_32) $(openssl_cflags_static_64)))
@@ -26,11 +40,6 @@ ifeq ($(HOST_OS),windows)
 LOCAL_CFLAGS_32 := $(filter-out -DDSO_DLFCN -DHAVE_DLFCN_H,$(LOCAL_CFLAGS_32))
 LOCAL_CFLAGS_64 := $(filter-out -DDSO_DLFCN -DHAVE_DLFCN_H,$(LOCAL_CFLAGS_64))
 endif
-
-# Directories
-LOCAL_CFLAGS += \
-  -DOPENSSLDIR="\"/system/lib/ssl\"" \
-  -DENGINESDIR="\"/system/lib/ssl/engines\""
 
 # Debug
 # LOCAL_CFLAGS += -DCIPHER_DEBUG

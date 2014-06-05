@@ -1440,7 +1440,7 @@ int dtls1_send_client_key_exchange(SSL *s)
 				goto err;
 				}
 
-			psk_len = s->psk_client_callback(s, s->ctx->psk_identity_hint,
+			psk_len = s->psk_client_callback(s, s->session->psk_identity_hint,
 				identity, PSK_MAX_IDENTITY_LEN,
 				psk_or_pre_ms, sizeof(psk_or_pre_ms));
 			if (psk_len > PSK_MAX_PSK_LEN)
@@ -1464,17 +1464,6 @@ int dtls1_send_client_key_exchange(SSL *s)
 			memset(t, 0, psk_len);
 			t+=psk_len;
 			s2n(psk_len, t);
-
-			if (s->session->psk_identity_hint != NULL)
-				OPENSSL_free(s->session->psk_identity_hint);
-			s->session->psk_identity_hint = BUF_strdup(s->ctx->psk_identity_hint);
-			if (s->ctx->psk_identity_hint != NULL &&
-				s->session->psk_identity_hint == NULL)
-				{
-				SSLerr(SSL_F_DTLS1_SEND_CLIENT_KEY_EXCHANGE,
-					ERR_R_MALLOC_FAILURE);
-				goto psk_err;
-				}
 
 			if (s->session->psk_identity != NULL)
 				OPENSSL_free(s->session->psk_identity);

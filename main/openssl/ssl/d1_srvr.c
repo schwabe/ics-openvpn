@@ -471,7 +471,7 @@ int dtls1_accept(SSL *s)
 			/* PSK: send ServerKeyExchange if PSK identity
 			 * hint if provided */
 #ifndef OPENSSL_NO_PSK
-			    || ((alg_k & SSL_kPSK) && s->ctx->psk_identity_hint)
+			    || ((alg_k & SSL_kPSK) && s->session->psk_identity_hint)
 #endif
 			    || (alg_k & (SSL_kEDH|SSL_kDHr|SSL_kDHd))
 			    || (alg_k & SSL_kEECDH)
@@ -1288,7 +1288,7 @@ int dtls1_send_server_key_exchange(SSL *s)
 			if (type & SSL_kPSK)
 				{
 				/* reserve size for record length and PSK identity hint*/
-				n+=2+strlen(s->ctx->psk_identity_hint);
+				n+=2+strlen(s->session->psk_identity_hint);
 				}
 			else
 #endif /* !OPENSSL_NO_PSK */
@@ -1364,9 +1364,9 @@ int dtls1_send_server_key_exchange(SSL *s)
 		if (type & SSL_kPSK)
 			{
 			/* copy PSK identity hint */
-			s2n(strlen(s->ctx->psk_identity_hint), p); 
-			strncpy((char *)p, s->ctx->psk_identity_hint, strlen(s->ctx->psk_identity_hint));
-			p+=strlen(s->ctx->psk_identity_hint);
+			s2n(strlen(s->session->psk_identity_hint), p);
+			strncpy((char *)p, s->session->psk_identity_hint, strlen(s->session->psk_identity_hint));
+			p+=strlen(s->session->psk_identity_hint);
 			}
 #endif
 

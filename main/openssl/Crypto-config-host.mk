@@ -545,15 +545,20 @@ common_c_includes := \
 
 arm_cflags := \
   -DAES_ASM \
+  -DBSAES_ASM \
   -DGHASH_ASM \
   -DOPENSSL_BN_ASM_GF2m \
   -DOPENSSL_BN_ASM_MONT \
+  -DOPENSSL_CPUID_OBJ \
   -DSHA1_ASM \
   -DSHA256_ASM \
   -DSHA512_ASM \
 
 arm_src_files := \
   crypto/aes/asm/aes-armv4.S \
+  crypto/aes/asm/bsaes-armv7.S \
+  crypto/armcap.c \
+  crypto/armv4cpuid.S \
   crypto/bn/asm/armv4-gf2m.S \
   crypto/bn/asm/armv4-mont.S \
   crypto/modes/asm/ghash-armv4.S \
@@ -563,6 +568,7 @@ arm_src_files := \
 
 arm_exclude_files := \
   crypto/aes/aes_core.c \
+  crypto/mem_clr.c \
 
 arm64_cflags := \
   -DOPENSSL_NO_ASM \
@@ -582,9 +588,11 @@ x86_cflags := \
   -DOPENSSL_BN_ASM_MONT \
   -DOPENSSL_BN_ASM_PART_WORDS \
   -DOPENSSL_CPUID_OBJ \
+  -DOPENSSL_IA32_SSE2 \
   -DSHA1_ASM \
   -DSHA256_ASM \
   -DSHA512_ASM \
+  -DVPAES_ASM \
 
 x86_src_files := \
   crypto/aes/asm/aes-586.S \
@@ -615,6 +623,7 @@ x86_exclude_files := \
 
 x86_64_cflags := \
   -DAES_ASM \
+  -DBSAES_ASM \
   -DDES_PTR \
   -DDES_RISC1 \
   -DDES_UNROLL \
@@ -622,10 +631,12 @@ x86_64_cflags := \
   -DMD5_ASM \
   -DOPENSSL_BN_ASM_GF2m \
   -DOPENSSL_BN_ASM_MONT \
+  -DOPENSSL_BN_ASM_MONT5 \
   -DOPENSSL_CPUID_OBJ \
   -DSHA1_ASM \
   -DSHA256_ASM \
   -DSHA512_ASM \
+  -DVPAES_ASM \
 
 x86_64_src_files := \
   crypto/aes/asm/aes-x86_64.S \
@@ -673,21 +684,15 @@ mips_exclude_files := \
   crypto/bn/bn_asm.c \
 
 
-ifeq ($(HOST_OS)-$(HOST_ARCH),linux-x86)
-ifneq ($(BUILD_HOST_64bit),)
-host_arch := x86_64
-else
-host_arch := x86
-endif
-else
-ifeq ($(HOST_OS)-$(HOST_ARCH),linux-x86_64)
-host_arch := x86_64
-else
-$(warning Unknown host architecture $(HOST_OS)-$(HOST_ARCH))
-host_arch := unknown
-endif
-endif
-
-LOCAL_CFLAGS     += $(common_cflags) $($(host_arch)_cflags)
+LOCAL_CFLAGS += $(common_cflags)
 LOCAL_C_INCLUDES += $(common_c_includes) $(local_c_includes)
-LOCAL_SRC_FILES  += $(filter-out $($(host_arch)_exclude_files), $(common_src_files) $($(host_arch)_src_files))
+
+ifeq ($(HOST_OS),linux)
+LOCAL_CFLAGS_x86 += $(x86_cflags)
+LOCAL_SRC_FILES_x86 += $(filter-out $(x86_exclude_files), $(common_src_files) $(x86_src_files))
+LOCAL_CFLAGS_x86_64 += $(x86_64_cflags)
+LOCAL_SRC_FILES_x86_64 += $(filter-out $(x86_64_exclude_files), $(common_src_files) $(x86_64_src_files))
+else
+$(warning Unknown host OS $(HOST_OS))
+LOCAL_SRC_FILES += $(common_src_files)
+endif

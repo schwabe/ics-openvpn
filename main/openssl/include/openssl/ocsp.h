@@ -90,6 +90,13 @@ extern "C" {
 #define OCSP_RESPID_KEY			0x400
 #define OCSP_NOTIME			0x800
 
+#ifdef OPENSSL_SYS_WIN32
+  /* Under Win32 these are defined in wincrypt.h */
+#undef OCSP_REQUEST
+#undef X509_NAME
+#undef OCSP_RESPONSE
+#endif
+
 /*   CertID ::= SEQUENCE {
  *       hashAlgorithm            AlgorithmIdentifier,
  *       issuerNameHash     OCTET STRING, -- Hash of Issuer's DN

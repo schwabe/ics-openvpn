@@ -2707,6 +2707,7 @@ void ERR_load_SSL_strings(void);
 #define SSL_R_WRONG_VERSION_NUMBER			 267
 #define SSL_R_X509_LIB					 268
 #define SSL_R_X509_VERIFICATION_SETUP_PROBLEMS		 269
+#define SSL_R_UNEXPECTED_CCS				 388
 
 #ifdef  __cplusplus
 }

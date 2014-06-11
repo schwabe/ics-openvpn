@@ -84,6 +84,7 @@
   <string name="default_route_summary">Reindirizza tutto il traffico sulla VPN</string>
   <string name="use_default_title">Utilizza il Routing di default</string>
   <string name="custom_route_message">Inserisci instradamenti personalizzati. Usare il formato CIDR. \"10.0.0.0/8 2002::/16\" reindirizza le reti 10.0.0.0/8 e 2002::/16 sulla VPN.</string>
+  <string name="custom_route_message_excluded">Itinerari che dovrebbero non essere instradati su VPN. Utilizzare la stessa sintassi per quanto riguarda le rotte incluse.</string>
   <string name="custom_routes_title">Routing personalizzati</string>
   <string name="log_verbosity_level">Livello di dettaglio del registro</string>
   <string name="float_summary">Permette pacchetti autenticati da qualsiasi IP (consente che l\'IP del server possa cambiare)</string>

@@ -85,6 +85,7 @@
   <string name="use_default_title">Використовувати типовий маршрут</string>
   <string name="custom_route_message"> Введіть користувацькі маршрути. Тільки введіть адресу призначення в форматі CIDR. \"10.0.0.0/8 2002::/16\" буде використано для 10.0.0.0/8 і 2002::/16 мереж через VPN.</string>
   <string name="custom_routes_title">Власні маршрути</string>
+  <string name="custom_routes_title_excluded">Виключені Мережі</string>
   <string name="log_verbosity_level">Рівень деталізації журналу</string>
   <string name="float_summary">Дозволити пакети аутентифікації з будь-якої IP-адреси</string>
   <string name="float_title">Дозволити \"плаваючий\" сервер</string>
@@ -98,6 +99,9 @@
   <string name="last_openvpn_tun_config">Відкриття tun інтерфейсу:</string>
   <string name="local_ip_info">Адреса IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS-сервер: %1$s, Домен: %2$s</string>
+  <string name="routes_info_incl">Маршрути: %1$s %2$s</string>
+  <string name="routes_info_excl">Виключені маршрути : %1$s %2$s</string>
+  <string name="routes_debug">Встановлені маршрути VpnService: %1$s %2$s</string>
   <string name="ip_not_cidr">Отримано інформацію інтерфейсу %1$s і %2$s, друга адреса є віддаленою адресою каналу. Використовується мережева маска /32 для локальної IP-адреси. Режим, встановлений OpenVPN: \"%3$s\".</string>
   <string name="route_not_cidr">Неможливо використовувати вирази %1$s і %2$s як маршрут за стандартом CIDR. використовується /32 як маска підмережі.</string>
   <string name="route_not_netip">Виправлено маршрут з %1$s/%2$s на %3$s/%2$s</string>
@@ -273,4 +277,18 @@
   <string name="screenoff_pause">Призупинення зв\'язку в екрані вимкненого стану: менше %1$s у %2$sс.</string>
   <string name="screen_nopersistenttun">Попередження: Постійний тут не увімкнений для цього VPN. Трафік буде використовувати звичайне інтернет-з\'єднання, коли екран вимкнений.</string>
   <string name="save_password">Зберегти пароль</string>
+  <string name="pauseVPN">Призупинити VPN</string>
+  <string name="resumevpn">Відновити VPN</string>
+  <string name="cannotparsecert">Неможливо відобразити інформацію про сертифікат</string>
+  <string name="vpnbehaviour">Поведінка VPN</string>
+  <string name="allow_vpn_changes">Дозволити зміни в профілі VPN</string>
+  <string name="permission_icon_app">Іконка додатка намагається використовувати OpenVPN для Android</string>
+  <string name="thanks_for_donation">Дякуємо за пожертвування %s!</string>
+  <string name="logCleared">Журнал очищено.</string>
+  <string name="show_password">Показати пароль</string>
+  <string name="timestamp_iso">ISO</string>
+  <string name="timestamps">Часові позначки</string>
+  <string name="full_licenses">Повні ліцензії</string>
+  <string name="imported_from_file">[Імпортовано з: %s]</string>
+  <string name="import_log">Журнал імпорту :</string>
 </resources>

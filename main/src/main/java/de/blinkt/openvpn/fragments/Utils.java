@@ -10,15 +10,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.OpenableColumns;
 import android.util.Base64;
-import android.util.Log;
 import android.webkit.MimeTypeMap;
-import de.blinkt.openvpn.VpnProfile;
-import junit.framework.Assert;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.Vector;
+
+import de.blinkt.openvpn.VpnProfile;
 
 public class Utils {
 
@@ -99,17 +100,30 @@ public class Utils {
 
         i.putExtra(Intent.EXTRA_MIME_TYPES, supportedMimeTypes.toArray(new String[supportedMimeTypes.size()]));
 
+        // People don't know that this is actually a system setting. Override it ...
+        // DocumentsContract.EXTRA_SHOW_ADVANCED is hidden
+        i.putExtra("android.content.extra.SHOW_ADVANCED", true);
+
 
         /* Samsung has decided to do something strange, on stock Android GET_CONTENT opens the document UI */
         /* fist try with documentsui */
         i.setPackage("com.android.documentsui");
 
+
+
         //noinspection ConstantConditions
-        if (true || !isIntentAvailable(c,i)) {
+        if (!isIntentAvailable(c,i)) {
             i.setAction(Intent.ACTION_OPEN_DOCUMENT);
             i.setPackage(null);
         }
+        /*
+        final PackageManager packageManager = c.getPackageManager();
+        ResolveInfo list = packageManager.resolveActivity(i, 0);
 
+        Toast.makeText(c, "Starting package: "+ list.activityInfo.packageName
+                + "with ACTION " + i.getAction(), Toast.LENGTH_LONG).show();
+
+        */
         return i;
     }
 

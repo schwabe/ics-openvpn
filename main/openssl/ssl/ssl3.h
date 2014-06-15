@@ -388,9 +388,6 @@ typedef struct ssl3_buffer_st
 #define TLS1_FLAGS_TLS_PADDING_BUG		0x0008
 #define TLS1_FLAGS_SKIP_CERT_VERIFY		0x0010
 #define TLS1_FLAGS_KEEP_HANDSHAKE		0x0020
-/* SSL3_FLAGS_CCS_OK indicates that a ChangeCipherSpec record is acceptable at
- * this point in the handshake. If this flag is not set then received CCS
- * records will cause a fatal error for the connection. */
 #define SSL3_FLAGS_CCS_OK			0x0080
  
 /* SSL3_FLAGS_SGC_RESTART_DONE is set when we
@@ -558,6 +555,11 @@ typedef struct ssl3_state_st
 	 * for Channel IDs and that tlsext_channel_id will be valid after the
 	 * handshake. */
 	char tlsext_channel_id_valid;
+	/* tlsext_channel_id_new means that the updated Channel ID extension
+	 * was negotiated. This is a temporary hack in the code to support both
+	 * forms of Channel ID extension while we transition to the new format,
+	 * which fixed a security issue. */
+	char tlsext_channel_id_new;
 	/* For a server:
 	 *     If |tlsext_channel_id_valid| is true, then this contains the
 	 *     verified Channel ID from the client: a P256 point, (x,y), where
@@ -678,11 +680,11 @@ typedef struct ssl3_state_st
 #define SSL3_ST_SR_CERT_VRFY_B		(0x1A1|SSL_ST_ACCEPT)
 #define SSL3_ST_SR_CHANGE_A		(0x1B0|SSL_ST_ACCEPT)
 #define SSL3_ST_SR_CHANGE_B		(0x1B1|SSL_ST_ACCEPT)
-#define SSL3_ST_SR_POST_CLIENT_CERT	(0x1BF|SSL_ST_ACCEPT)
 #ifndef OPENSSL_NO_NEXTPROTONEG
 #define SSL3_ST_SR_NEXT_PROTO_A		(0x210|SSL_ST_ACCEPT)
 #define SSL3_ST_SR_NEXT_PROTO_B		(0x211|SSL_ST_ACCEPT)
 #endif
+#define SSL3_ST_SR_POST_CLIENT_CERT	(0x1BF|SSL_ST_ACCEPT)
 #define SSL3_ST_SR_CHANNEL_ID_A		(0x220|SSL_ST_ACCEPT)
 #define SSL3_ST_SR_CHANNEL_ID_B		(0x221|SSL_ST_ACCEPT)
 #define SSL3_ST_SR_FINISHED_A		(0x1C0|SSL_ST_ACCEPT)

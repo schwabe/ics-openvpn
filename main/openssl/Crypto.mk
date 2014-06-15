@@ -31,7 +31,7 @@ LOCAL_SHARED_LIBRARIES := $(log_shared_libraries)
 # in the NDK.
 ifeq (,$(TARGET_BUILD_APPS))
 LOCAL_CLANG := true
-ifeq ($(HOST_OS), darwin_XXX)
+ifeq ($(HOST_OS), darwin)
 LOCAL_ASFLAGS += -no-integrated-as
 LOCAL_CFLAGS += -no-integrated-as
 endif

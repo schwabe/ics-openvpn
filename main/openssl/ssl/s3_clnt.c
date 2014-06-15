@@ -215,24 +215,12 @@ int ssl3_connect(SSL *s)
 		}
 #endif
 
-// BEGIN android-added
-#if 0
-/* Send app data in separate packet, otherwise, some particular site
- * (only one site so far) closes the socket. http://b/2511073
- * Note: there is a very small chance that two TCP packets
- * could be arriving at server combined into a single TCP packet,
- * then trigger that site to break. We haven't encounter that though.
- */
-// END android-added
 	if (SSL_get_mode(s) & SSL_MODE_HANDSHAKE_CUTTHROUGH)
 		{
 		/* Send app data along with CCS/Finished */
 		s->s3->flags |= SSL3_FLAGS_DELAY_CLIENT_FINISHED;
 		}
 
-// BEGIN android-added
-#endif
-// END android-added
 	for (;;)
 		{
 		state=s->state;
@@ -558,7 +546,20 @@ int ssl3_connect(SSL *s)
 				}
 			else
 				{
-				if ((SSL_get_mode(s) & SSL_MODE_HANDSHAKE_CUTTHROUGH) && SSL_get_cipher_bits(s, NULL) >= 128
+				/* This is a non-resumption handshake. If it
+				 * involves ChannelID, then record the
+				 * handshake hashes at this point in the
+				 * session so that any resumption of this
+				 * session with ChannelID can sign those
+				 * hashes. */
+				if (s->s3->tlsext_channel_id_new)
+					{
+					ret = tls1_record_handshake_hashes_for_channel_id(s);
+					if (ret <= 0)
+						goto end;
+					}
+				if ((SSL_get_mode(s) & SSL_MODE_HANDSHAKE_CUTTHROUGH)
+				    && ssl3_can_cutthrough(s)
 				    && s->s3->previous_server_finished_len == 0 /* no cutthrough on renegotiation (would complicate the state machine) */
 				   )
 					{
@@ -607,6 +608,7 @@ int ssl3_connect(SSL *s)
 
 		case SSL3_ST_CR_FINISHED_A:
 		case SSL3_ST_CR_FINISHED_B:
+
 			s->s3->flags |= SSL3_FLAGS_CCS_OK;
 			ret=ssl3_get_finished(s,SSL3_ST_CR_FINISHED_A,
 				SSL3_ST_CR_FINISHED_B);
@@ -2302,7 +2304,7 @@ int ssl3_get_server_done(SSL *s)
 int ssl3_send_client_key_exchange(SSL *s)
 	{
 	unsigned char *p,*d;
-	int n;
+	int n = 0;
 	unsigned long alg_k;
 	unsigned long alg_a;
 #ifndef OPENSSL_NO_RSA
@@ -2688,6 +2690,13 @@ int ssl3_send_client_key_exchange(SSL *s)
 			unsigned int i;
 #endif
 
+			if (s->session->sess_cert == NULL) 
+				{
+				ssl3_send_alert(s,SSL3_AL_FATAL,SSL_AD_UNEXPECTED_MESSAGE);
+				SSLerr(SSL_F_SSL3_SEND_CLIENT_KEY_EXCHANGE,SSL_R_UNEXPECTED_MESSAGE);
+				goto err;
+				}
+
 			/* Did we send out the client's
 			 * ECDH share for use in premaster
 			 * computation as part of client certificate?
@@ -3027,7 +3036,7 @@ int ssl3_send_client_key_exchange(SSL *s)
 				}
 			}
 #endif
-		else if (!(alg_k & SSL_kPSK))
+		else if (!(alg_k & SSL_kPSK) || ((alg_k & SSL_kPSK) && !(alg_a & SSL_aPSK)))
 			{
 			ssl3_send_alert(s, SSL3_AL_FATAL,
 			    SSL_AD_HANDSHAKE_FAILURE);
@@ -3491,10 +3500,29 @@ int ssl3_send_channel_id(SSL *s)
 	if (s->state != SSL3_ST_CW_CHANNEL_ID_A)
 		return ssl3_do_write(s, SSL3_RT_HANDSHAKE);
 
+	if (!s->tlsext_channel_id_private && s->ctx->channel_id_cb)
+		{
+		EVP_PKEY *key = NULL;
+		s->ctx->channel_id_cb(s, &key);
+		if (key != NULL)
+			{
+			s->tlsext_channel_id_private = key;
+			}
+		}
+	if (!s->tlsext_channel_id_private)
+		{
+		s->rwstate=SSL_CHANNEL_ID_LOOKUP;
+		return (-1);
+		}
+	s->rwstate=SSL_NOTHING;
+
 	d = (unsigned char *)s->init_buf->data;
 	*(d++)=SSL3_MT_ENCRYPTED_EXTENSIONS;
 	l2n3(2 + 2 + TLSEXT_CHANNEL_ID_SIZE, d);
-	s2n(TLSEXT_TYPE_channel_id, d);
+	if (s->s3->tlsext_channel_id_new)
+		s2n(TLSEXT_TYPE_channel_id_new, d);
+	else
+		s2n(TLSEXT_TYPE_channel_id, d);
 	s2n(TLSEXT_CHANNEL_ID_SIZE, d);
 
 	EVP_MD_CTX_init(&md_ctx);
@@ -3505,9 +3533,9 @@ int ssl3_send_channel_id(SSL *s)
 		SSLerr(SSL_F_SSL3_SEND_CHANNEL_ID,SSL_R_CANNOT_SERIALIZE_PUBLIC_KEY);
 		goto err;
 		}
-	// i2d_PublicKey will produce an ANSI X9.62 public key which, for a
-	// P-256 key, is 0x04 (meaning uncompressed) followed by the x and y
-	// field elements as 32-byte, big-endian numbers.
+	/* i2d_PublicKey will produce an ANSI X9.62 public key which, for a
+	 * P-256 key, is 0x04 (meaning uncompressed) followed by the x and y
+	 * field elements as 32-byte, big-endian numbers. */
 	if (public_key_len != 65)
 		{
 		SSLerr(SSL_F_SSL3_SEND_CHANNEL_ID,SSL_R_CHANNEL_ID_NOT_P256);
@@ -3553,14 +3581,14 @@ int ssl3_send_channel_id(SSL *s)
 		}
 
 	derp = der_sig;
-	sig = d2i_ECDSA_SIG(NULL, (const unsigned char**)&derp, sig_len);
+	sig = d2i_ECDSA_SIG(NULL, (const unsigned char**) &derp, sig_len);
 	if (sig == NULL)
 		{
 		SSLerr(SSL_F_SSL3_SEND_CHANNEL_ID,SSL_R_D2I_ECDSA_SIG);
 		goto err;
 		}
 
-	// The first byte of public_key will be 0x4, denoting an uncompressed key.
+	/* The first byte of public_key will be 0x4, denoting an uncompressed key. */
 	memcpy(d, public_key + 1, 64);
 	d += 64;
 	memset(d, 0, 2 * 32);

@@ -675,8 +675,8 @@ int ssl3_accept(SSL *s)
 		case SSL3_ST_SR_CERT_VRFY_A:
 		case SSL3_ST_SR_CERT_VRFY_B:
 
-			/* we should decide if we expected this one */
 			s->s3->flags |= SSL3_FLAGS_CCS_OK;
+			/* we should decide if we expected this one */
 			ret=ssl3_get_cert_verify(s);
 			if (ret <= 0) goto end;
 
@@ -694,7 +694,6 @@ int ssl3_accept(SSL *s)
 			channel_id = s->s3->tlsext_channel_id_valid;
 #endif
 
-			s->s3->flags |= SSL3_FLAGS_CCS_OK;
 			if (next_proto_neg)
 				s->state=SSL3_ST_SR_NEXT_PROTO_A;
 			else if (channel_id)
@@ -729,6 +728,7 @@ int ssl3_accept(SSL *s)
 
 		case SSL3_ST_SR_FINISHED_A:
 		case SSL3_ST_SR_FINISHED_B:
+			s->s3->flags |= SSL3_FLAGS_CCS_OK;
 			ret=ssl3_get_finished(s,SSL3_ST_SR_FINISHED_A,
 				SSL3_ST_SR_FINISHED_B);
 			if (ret <= 0) goto end;
@@ -740,6 +740,15 @@ int ssl3_accept(SSL *s)
 #endif
 			else
 				s->state=SSL3_ST_SW_CHANGE_A;
+			/* If this is a full handshake with ChannelID then
+			 * record the hashshake hashes in |s->session| in case
+			 * we need them to verify a ChannelID signature on a
+			 * resumption of this session in the future. */
+			if (!s->hit && s->s3->tlsext_channel_id_new)
+				{
+				ret = tls1_record_handshake_hashes_for_channel_id(s);
+				if (ret <= 0) goto end;
+				}
 			s->init_num=0;
 			break;
 
@@ -1468,6 +1477,22 @@ int ssl3_send_server_hello(SSL *s)
 
 	if (s->state == SSL3_ST_SW_SRVR_HELLO_A)
 		{
+		/* We only accept ChannelIDs on connections with ECDHE in order
+		 * to avoid a known attack while we fix ChannelID itself. */
+		if (s->s3 &&
+		    s->s3->tlsext_channel_id_valid &&
+		    (s->s3->tmp.new_cipher->algorithm_mkey & SSL_kEECDH) == 0)
+			s->s3->tlsext_channel_id_valid = 0;
+
+		/* If this is a resumption and the original handshake didn't
+		 * support ChannelID then we didn't record the original
+		 * handshake hashes in the session and so cannot resume with
+		 * ChannelIDs. */
+		if (s->hit &&
+		    s->s3->tlsext_channel_id_new &&
+		    s->session->original_handshake_hash_len == 0)
+			s->s3->tlsext_channel_id_valid = 0;
+
 		buf=(unsigned char *)s->init_buf->data;
 #ifdef OPENSSL_NO_TLSEXT
 		p=s->s3->server_random;
@@ -2143,6 +2168,11 @@ int ssl3_send_certificate_request(SSL *s)
 		s->init_num=n+4;
 		s->init_off=0;
 #ifdef NETSCAPE_HANG_BUG
+		if (!BUF_MEM_grow_clean(buf, s->init_num + 4))
+			{
+			SSLerr(SSL_F_SSL3_SEND_CERTIFICATE_REQUEST,ERR_R_BUF_LIB);
+			goto err;
+			}
 		p=(unsigned char *)s->init_buf->data + s->init_num;
 
 		/* do the header */
@@ -2885,6 +2915,8 @@ int ssl3_get_client_key_exchange(SSL *s)
 		unsigned char premaster_secret[32], *start;
 		size_t outlen=32, inlen;
 		unsigned long alg_a;
+		int Ttag, Tclass;
+		long Tlen;
 
 		/* Get our certificate private key*/
 		alg_a = s->s3->tmp.new_cipher->algorithm_auth;
@@ -2906,28 +2938,16 @@ int ssl3_get_client_key_exchange(SSL *s)
 				ERR_clear_error();
 			}
 		/* Decrypt session key */
-		if ((*p!=( V_ASN1_SEQUENCE| V_ASN1_CONSTRUCTED))) 
+		if (ASN1_get_object((const unsigned char **)&p, &Tlen, &Ttag, &Tclass, n) != V_ASN1_CONSTRUCTED ||
+			Ttag != V_ASN1_SEQUENCE ||
+			Tclass != V_ASN1_UNIVERSAL)
 			{
 			SSLerr(SSL_F_SSL3_GET_CLIENT_KEY_EXCHANGE,SSL_R_DECRYPTION_FAILED);
 			goto gerr;
 			}
-		if (p[1] == 0x81)
-			{
-			start = p+3;
-			inlen = p[2];
-			}
-		else if (p[1] < 0x80)
-			{
-			start = p+2;
-			inlen = p[1];
-			}
-		else
-			{
-			SSLerr(SSL_F_SSL3_GET_CLIENT_KEY_EXCHANGE,SSL_R_DECRYPTION_FAILED);
-			goto gerr;
-			}
+		start = p;
+		inlen = Tlen;
 		if (EVP_PKEY_decrypt(pkey_ctx,premaster_secret,&outlen,start,inlen) <=0) 
-
 			{
 			SSLerr(SSL_F_SSL3_GET_CLIENT_KEY_EXCHANGE,SSL_R_DECRYPTION_FAILED);
 			goto gerr;
@@ -3675,6 +3695,7 @@ int ssl3_get_channel_id(SSL *s)
 	EC_POINT* point = NULL;
 	ECDSA_SIG sig;
 	BIGNUM x, y;
+	unsigned short expected_extension_type;
 
 	if (s->state == SSL3_ST_SR_CHANNEL_ID_A && s->init_num == 0)
 		{
@@ -3732,7 +3753,11 @@ int ssl3_get_channel_id(SSL *s)
 	n2s(p, extension_type);
 	n2s(p, extension_len);
 
-	if (extension_type != TLSEXT_TYPE_channel_id ||
+	expected_extension_type = TLSEXT_TYPE_channel_id;
+	if (s->s3->tlsext_channel_id_new)
+		expected_extension_type = TLSEXT_TYPE_channel_id_new;
+
+	if (extension_type != expected_extension_type ||
 	    extension_len != TLSEXT_CHANNEL_ID_SIZE)
 		{
 		SSLerr(SSL_F_SSL3_GET_CHANNEL_ID,SSL_R_INVALID_MESSAGE);

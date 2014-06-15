@@ -617,6 +617,8 @@ unsigned char *ssl_add_clienthello_tlsext(SSL *s, unsigned char *p, unsigned cha
 
 #ifndef OPENSSL_NO_HEARTBEATS
 	/* Add Heartbeat extension */
+	if ((limit - ret - 4 - 1) < 0)
+		return NULL;
 	s2n(TLSEXT_TYPE_heartbeat,ret);
 	s2n(1,ret);
 	/* Set mode:
@@ -647,7 +649,10 @@ unsigned char *ssl_add_clienthello_tlsext(SSL *s, unsigned char *p, unsigned cha
 		 * support for Channel ID. */
 		if (limit - ret - 4 < 0)
 			return NULL;
-		s2n(TLSEXT_TYPE_channel_id,ret);
+		if (s->ctx->tlsext_channel_id_enabled_new)
+			s2n(TLSEXT_TYPE_channel_id_new,ret);
+		else
+			s2n(TLSEXT_TYPE_channel_id,ret);
 		s2n(0,ret);
 		}
 
@@ -683,36 +688,35 @@ unsigned char *ssl_add_clienthello_tlsext(SSL *s, unsigned char *p, unsigned cha
                 ret += el;
                 }
 #endif
-
-#ifdef TLSEXT_TYPE_padding
 	/* Add padding to workaround bugs in F5 terminators.
 	 * See https://tools.ietf.org/html/draft-agl-tls-padding-03
 	 *
 	 * NB: because this code works out the length of all existing
 	 * extensions it MUST always appear last.
 	 */
-	{
-	int hlen = ret - (unsigned char *)s->init_buf->data;
-	/* The code in s23_clnt.c to build ClientHello messages includes the
-	 * 5-byte record header in the buffer, while the code in s3_clnt.c does
-	 * not. */
-	if (s->state == SSL23_ST_CW_CLNT_HELLO_A)
-		hlen -= 5;
-	if (hlen > 0xff && hlen < 0x200)
+	if (s->options & SSL_OP_TLSEXT_PADDING)
 		{
-		hlen = 0x200 - hlen;
-		if (hlen >= 4)
-			hlen -= 4;
-		else
-			hlen = 0;
+		int hlen = ret - (unsigned char *)s->init_buf->data;
+		/* The code in s23_clnt.c to build ClientHello messages
+		 * includes the 5-byte record header in the buffer, while
+		 * the code in s3_clnt.c does not.
+		 */
+		if (s->state == SSL23_ST_CW_CLNT_HELLO_A)
+			hlen -= 5;
+		if (hlen > 0xff && hlen < 0x200)
+			{
+			hlen = 0x200 - hlen;
+			if (hlen >= 4)
+				hlen -= 4;
+			else
+				hlen = 0;
 
-		s2n(TLSEXT_TYPE_padding, ret);
-		s2n(hlen, ret);
-		memset(ret, 0, hlen);
-		ret += hlen;
+			s2n(TLSEXT_TYPE_padding, ret);
+			s2n(hlen, ret);
+			memset(ret, 0, hlen);
+			ret += hlen;
+			}
 		}
-	}
-#endif
 
 	if ((extdatalen = ret-p-2)== 0) 
 		return p;
@@ -867,6 +871,8 @@ unsigned char *ssl_add_serverhello_tlsext(SSL *s, unsigned char *p, unsigned cha
 	/* Add Heartbeat extension if we've received one */
 	if (s->tlsext_heartbeat & SSL_TLSEXT_HB_ENABLED)
 		{
+		if ((limit - ret - 4 - 1) < 0)
+			return NULL;
 		s2n(TLSEXT_TYPE_heartbeat,ret);
 		s2n(1,ret);
 		/* Set mode:
@@ -909,7 +915,10 @@ unsigned char *ssl_add_serverhello_tlsext(SSL *s, unsigned char *p, unsigned cha
 		{
 		if (limit - ret - 4 < 0)
 			return NULL;
-		s2n(TLSEXT_TYPE_channel_id,ret);
+		if (s->s3->tlsext_channel_id_new)
+			s2n(TLSEXT_TYPE_channel_id_new,ret);
+		else
+			s2n(TLSEXT_TYPE_channel_id,ret);
 		s2n(0,ret);
 		}
 
@@ -1572,6 +1581,13 @@ int ssl_parse_clienthello_tlsext(SSL *s, unsigned char **p, unsigned char *d, in
 		else if (type == TLSEXT_TYPE_channel_id && s->tlsext_channel_id_enabled)
 			s->s3->tlsext_channel_id_valid = 1;
 
+		else if (type == TLSEXT_TYPE_channel_id_new &&
+			 s->tlsext_channel_id_enabled)
+			{
+			s->s3->tlsext_channel_id_valid = 1;
+			s->s3->tlsext_channel_id_new = 1;
+			}
+
 		else if (type == TLSEXT_TYPE_application_layer_protocol_negotiation &&
 			 s->ctx->alpn_select_cb &&
 			 s->s3->tmp.finish_md_len == 0)
@@ -1820,6 +1836,12 @@ int ssl_parse_serverhello_tlsext(SSL *s, unsigned char **p, unsigned char *d, in
 #endif
 		else if (type == TLSEXT_TYPE_channel_id)
 			s->s3->tlsext_channel_id_valid = 1;
+
+		else if (type == TLSEXT_TYPE_channel_id_new)
+			{
+			s->s3->tlsext_channel_id_valid = 1;
+			s->s3->tlsext_channel_id_new = 1;
+			}
 
 		else if (type == TLSEXT_TYPE_application_layer_protocol_negotiation)
 			{
@@ -2908,6 +2930,17 @@ tls1_channel_id_hash(EVP_MD_CTX *md, SSL *s)
 
 	EVP_DigestUpdate(md, kClientIDMagic, sizeof(kClientIDMagic));
 
+	if (s->hit && s->s3->tlsext_channel_id_new)
+		{
+		static const char kResumptionMagic[] = "Resumption";
+		EVP_DigestUpdate(md, kResumptionMagic,
+				 sizeof(kResumptionMagic));
+		if (s->session->original_handshake_hash_len == 0)
+			return 0;
+		EVP_DigestUpdate(md, s->session->original_handshake_hash,
+				 s->session->original_handshake_hash_len);
+		}
+
 	EVP_MD_CTX_init(&ctx);
 	for (i = 0; i < SSL_MAX_DIGEST; i++)
 		{
@@ -2922,3 +2955,29 @@ tls1_channel_id_hash(EVP_MD_CTX *md, SSL *s)
 	return 1;
 	}
 #endif
+
+/* tls1_record_handshake_hashes_for_channel_id records the current handshake
+ * hashes in |s->session| so that Channel ID resumptions can sign that data. */
+int tls1_record_handshake_hashes_for_channel_id(SSL *s)
+	{
+	int digest_len;
+	/* This function should never be called for a resumed session because
+	 * the handshake hashes that we wish to record are for the original,
+	 * full handshake. */
+	if (s->hit)
+		return -1;
+	/* It only makes sense to call this function if Channel IDs have been
+	 * negotiated. */
+	if (!s->s3->tlsext_channel_id_new)
+		return -1;
+
+	digest_len = tls1_handshake_digest(
+		s, s->session->original_handshake_hash,
+		sizeof(s->session->original_handshake_hash));
+	if (digest_len < 0)
+		return -1;
+
+	s->session->original_handshake_hash_len = digest_len;
+
+	return 1;
+	}

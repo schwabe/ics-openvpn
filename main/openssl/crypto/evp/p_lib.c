@@ -202,7 +202,7 @@ EVP_PKEY *EVP_PKEY_new(void)
 
 EVP_PKEY *EVP_PKEY_dup(EVP_PKEY *pkey)
 	{
-	CRYPTO_add(&pkey->references, 1, CRYPTO_LOCK_EVP_PKEY);
+	CRYPTO_add(&pkey->references,1,CRYPTO_LOCK_EVP_PKEY);
 	return pkey;
 	}
 

@@ -544,6 +544,13 @@ struct ssl_session_st
 #ifndef OPENSSL_NO_SRP
 	char *srp_username;
 #endif
+
+	/* original_handshake_hash contains the handshake hash (either
+	 * SHA-1+MD5 or SHA-2, depending on TLS version) for the original, full
+	 * handshake that created a session. This is used by Channel IDs during
+	 * resumption. */
+	unsigned char original_handshake_hash[EVP_MAX_MD_SIZE];
+	unsigned int original_handshake_hash_len;
 	};
 
 #endif
@@ -553,7 +560,7 @@ struct ssl_session_st
 /* Allow initial connection to servers that don't support RI */
 #define SSL_OP_LEGACY_SERVER_CONNECT			0x00000004L
 #define SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG		0x00000008L
-#define SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG		0x00000010L
+#define SSL_OP_TLSEXT_PADDING				0x00000010L
 #define SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER		0x00000020L
 #define SSL_OP_SAFARI_ECDHE_ECDSA_BUG			0x00000040L
 #define SSL_OP_SSLEAY_080_CLIENT_DH_BUG			0x00000080L
@@ -562,6 +569,8 @@ struct ssl_session_st
 
 /* Hasn't done anything since OpenSSL 0.9.7h, retained for compatibility */
 #define SSL_OP_MSIE_SSLV2_RSA_PADDING			0x0
+/* Refers to ancient SSLREF and SSLv2, retained for compatibility */
+#define SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG		0x0
 
 /* SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS is vestigial. Previously it disabled the
  * insertion of empty records in CBC mode, but the empty records were commonly
@@ -648,12 +657,14 @@ struct ssl_session_st
  * TLS only.)  "Released" buffers are put onto a free-list in the context
  * or just freed (depending on the context's setting for freelist_max_len). */
 #define SSL_MODE_RELEASE_BUFFERS 0x00000010L
+
 /* Send the current time in the Random fields of the ClientHello and
  * ServerHello records for compatibility with hypothetical implementations
  * that require it.
  */
 #define SSL_MODE_SEND_CLIENTHELLO_TIME 0x00000020L
 #define SSL_MODE_SEND_SERVERHELLO_TIME 0x00000040L
+
 /* When set, clients may send application data before receipt of CCS
  * and Finished.  This mode enables full-handshakes to 'complete' in
  * one RTT. */
@@ -866,6 +877,9 @@ struct ssl_ctx_st
 	/* get client cert callback */
 	int (*client_cert_cb)(SSL *ssl, X509 **x509, EVP_PKEY **pkey);
 
+	/* get channel id callback */
+	void (*channel_id_cb)(SSL *ssl, EVP_PKEY **pkey);
+
     /* cookie generate callback */
     int (*app_gen_cookie_cb)(SSL *ssl, unsigned char *cookie, 
         unsigned int *cookie_len);
@@ -1028,6 +1042,10 @@ struct ssl_ctx_st
 	/* If true, a client will advertise the Channel ID extension and a
 	 * server will echo it. */
 	char tlsext_channel_id_enabled;
+	/* tlsext_channel_id_enabled_new is a hack to support both old and new
+	 * ChannelID signatures. It indicates that a client should advertise the
+	 * new ChannelID extension number. */
+	char tlsext_channel_id_enabled_new;
 	/* The client's Channel ID private key. */
 	EVP_PKEY *tlsext_channel_id_private;
 #endif
@@ -1086,6 +1104,8 @@ void SSL_CTX_set_info_callback(SSL_CTX *ctx, void (*cb)(const SSL *ssl,int type,
 void (*SSL_CTX_get_info_callback(SSL_CTX *ctx))(const SSL *ssl,int type,int val);
 void SSL_CTX_set_client_cert_cb(SSL_CTX *ctx, int (*client_cert_cb)(SSL *ssl, X509 **x509, EVP_PKEY **pkey));
 int (*SSL_CTX_get_client_cert_cb(SSL_CTX *ctx))(SSL *ssl, X509 **x509, EVP_PKEY **pkey);
+void SSL_CTX_set_channel_id_cb(SSL_CTX *ctx, void (*channel_id_cb)(SSL *ssl, EVP_PKEY **pkey));
+void (*SSL_CTX_get_channel_id_cb(SSL_CTX *ctx))(SSL *ssl, EVP_PKEY **pkey);
 #ifndef OPENSSL_NO_ENGINE
 int SSL_CTX_set_client_cert_engine(SSL_CTX *ctx, ENGINE *e);
 #endif
@@ -1162,12 +1182,14 @@ const char *SSL_get_psk_identity(const SSL *s);
 #define SSL_WRITING	2
 #define SSL_READING	3
 #define SSL_X509_LOOKUP	4
+#define SSL_CHANNEL_ID_LOOKUP	5
 
 /* These will only be used when doing non-blocking IO */
 #define SSL_want_nothing(s)	(SSL_want(s) == SSL_NOTHING)
 #define SSL_want_read(s)	(SSL_want(s) == SSL_READING)
 #define SSL_want_write(s)	(SSL_want(s) == SSL_WRITING)
 #define SSL_want_x509_lookup(s)	(SSL_want(s) == SSL_X509_LOOKUP)
+#define SSL_want_channel_id_lookup(s)	(SSL_want(s) == SSL_CHANNEL_ID_LOOKUP)
 
 #define SSL_MAC_FLAG_READ_MAC_STREAM 1
 #define SSL_MAC_FLAG_WRITE_MAC_STREAM 2
@@ -1602,6 +1624,7 @@ DECLARE_PEM_rw(SSL_SESSION, SSL_SESSION)
 #define SSL_ERROR_ZERO_RETURN		6
 #define SSL_ERROR_WANT_CONNECT		7
 #define SSL_ERROR_WANT_ACCEPT		8
+#define SSL_ERROR_WANT_CHANNEL_ID_LOOKUP	9
 
 #define SSL_CTRL_NEED_TMP_RSA			1
 #define SSL_CTRL_SET_TMP_RSA			2
@@ -1739,10 +1762,11 @@ DECLARE_PEM_rw(SSL_SESSION, SSL_SESSION)
 #define SSL_set_tmp_ecdh(ssl,ecdh) \
 	SSL_ctrl(ssl,SSL_CTRL_SET_TMP_ECDH,0,(char *)ecdh)
 
-/* SSL_enable_tls_channel_id configures a TLS server to accept TLS client
- * IDs from clients. Returns 1 on success. */
-#define SSL_enable_tls_channel_id(ctx) \
-	SSL_ctrl(ctx,SSL_CTRL_CHANNEL_ID,0,NULL)
+/* SSL_enable_tls_channel_id either configures a TLS server to accept TLS client
+ * IDs from clients, or configure a client to send TLS client IDs to server.
+ * Returns 1 on success. */
+#define SSL_enable_tls_channel_id(s) \
+	SSL_ctrl(s,SSL_CTRL_CHANNEL_ID,0,NULL)
 /* SSL_set1_tls_channel_id configures a TLS client to send a TLS Channel ID to
  * compatible servers. private_key must be a P-256 EVP_PKEY*. Returns 1 on
  * success. */
@@ -1792,7 +1816,6 @@ int	SSL_CIPHER_get_bits(const SSL_CIPHER *c,int *alg_bits);
 char *	SSL_CIPHER_get_version(const SSL_CIPHER *c);
 const char *	SSL_CIPHER_get_name(const SSL_CIPHER *c);
 unsigned long 	SSL_CIPHER_get_id(const SSL_CIPHER *c);
-const char* SSL_CIPHER_authentication_method(const SSL_CIPHER* cipher);
 
 int	SSL_get_fd(const SSL *s);
 int	SSL_get_rfd(const SSL *s);
@@ -2707,7 +2730,6 @@ void ERR_load_SSL_strings(void);
 #define SSL_R_WRONG_VERSION_NUMBER			 267
 #define SSL_R_X509_LIB					 268
 #define SSL_R_X509_VERIFICATION_SETUP_PROBLEMS		 269
-#define SSL_R_UNEXPECTED_CCS				 388
 
 #ifdef  __cplusplus
 }

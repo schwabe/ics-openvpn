@@ -241,14 +241,6 @@ dtls1_buffer_record(SSL *s, record_pqueue *queue, unsigned char *priority)
 	}
 #endif
 
-	/* insert should not fail, since duplicates are dropped */
-	if (pqueue_insert(queue->q, item) == NULL)
-		{
-		OPENSSL_free(rdata);
-		pitem_free(item);
-		return(0);
-		}
-
 	s->packet = NULL;
 	s->packet_length = 0;
 	memset(&(s->s3->rbuf), 0, sizeof(SSL3_BUFFER));
@@ -261,7 +253,16 @@ dtls1_buffer_record(SSL *s, record_pqueue *queue, unsigned char *priority)
 		pitem_free(item);
 		return(0);
 		}
-	
+
+	/* insert should not fail, since duplicates are dropped */
+	if (pqueue_insert(queue->q, item) == NULL)
+		{
+		SSLerr(SSL_F_DTLS1_BUFFER_RECORD, ERR_R_INTERNAL_ERROR);
+		OPENSSL_free(rdata);
+		pitem_free(item);
+		return(0);
+		}
+
 	return(1);
 	}
 

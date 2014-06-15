@@ -1144,6 +1144,17 @@ int (*SSL_CTX_get_client_cert_cb(SSL_CTX *ctx))(SSL * ssl, X509 ** x509 , EVP_PK
 	return ctx->client_cert_cb;
 	}
 
+void SSL_CTX_set_channel_id_cb(SSL_CTX *ctx,
+	void (*cb)(SSL *ssl, EVP_PKEY **pkey))
+	{
+	ctx->channel_id_cb=cb;
+	}
+
+void (*SSL_CTX_get_channel_id_cb(SSL_CTX *ctx))(SSL * ssl, EVP_PKEY **pkey)
+	{
+	return ctx->channel_id_cb;
+	}
+
 #ifndef OPENSSL_NO_ENGINE
 int SSL_CTX_set_client_cert_engine(SSL_CTX *ctx, ENGINE *e)
 	{

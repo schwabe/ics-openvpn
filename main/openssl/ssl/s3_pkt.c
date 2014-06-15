@@ -110,6 +110,7 @@
  */
 
 #include <stdio.h>
+#include <limits.h>
 #include <errno.h>
 #define USE_SOCKETS
 #include "ssl_locl.h"
@@ -580,10 +581,11 @@ int ssl3_do_compress(SSL *ssl)
 int ssl3_write_bytes(SSL *s, int type, const void *buf_, int len)
 	{
 	const unsigned char *buf=buf_;
-	unsigned int tot,n,nw;
-	int i;
+	unsigned int n,nw;
+	int i,tot;
 
 	s->rwstate=SSL_NOTHING;
+	OPENSSL_assert(s->s3->wnum <= INT_MAX);
 	tot=s->s3->wnum;
 	s->s3->wnum=0;
 
@@ -597,6 +599,22 @@ int ssl3_write_bytes(SSL *s, int type, const void *buf_, int len)
 			return -1;
 			}
 		}
+
+	/* ensure that if we end up with a smaller value of data to write 
+	 * out than the the original len from a write which didn't complete 
+	 * for non-blocking I/O and also somehow ended up avoiding 
+	 * the check for this in ssl3_write_pending/SSL_R_BAD_WRITE_RETRY as
+	 * it must never be possible to end up with (len-tot) as a large
+	 * number that will then promptly send beyond the end of the users
+	 * buffer ... so we trap and report the error in a way the user
+	 * will notice
+	 */
+	if (len < tot)
+		{
+		SSLerr(SSL_F_SSL3_WRITE_BYTES,SSL_R_BAD_LENGTH);
+		return(-1);
+		}
+
 
 	n=(len-tot);
 	for (;;)
@@ -668,9 +686,6 @@ static int do_ssl3_write(SSL *s, int type, const unsigned char *buf,
 	SSL3_BUFFER *wb=&(s->s3->wbuf);
 	SSL_SESSION *sess;
 
- 	if (wb->buf == NULL)
-		if (!ssl3_setup_write_buffer(s))
-			return -1;
 
 	/* first check if there is a SSL3_BUFFER still being written
 	 * out.  This will happen with non blocking IO */
@@ -685,6 +700,10 @@ static int do_ssl3_write(SSL *s, int type, const unsigned char *buf,
 			return(i);
 		/* if it went, fall through and send more stuff */
 		}
+
+ 	if (wb->buf == NULL)
+		if (!ssl3_setup_write_buffer(s))
+			return -1;
 
 	if (len == 0)
 		return 0;
@@ -1067,7 +1086,7 @@ start:
 				{
 				s->rstate=SSL_ST_READ_HEADER;
 				rr->off=0;
-				if (s->mode & SSL_MODE_RELEASE_BUFFERS)
+				if (s->mode & SSL_MODE_RELEASE_BUFFERS && s->s3->rbuf.left == 0)
 					ssl3_release_read_buffer(s);
 				}
 			}
@@ -1312,9 +1331,11 @@ start:
 		if (!(s->s3->flags & SSL3_FLAGS_CCS_OK))
 			{
 			al=SSL_AD_UNEXPECTED_MESSAGE;
-			SSLerr(SSL_F_SSL3_READ_BYTES,SSL_R_UNEXPECTED_CCS);
+			SSLerr(SSL_F_SSL3_READ_BYTES,SSL_R_CCS_RECEIVED_EARLY);
 			goto f_err;
 			}
+
+		s->s3->flags &= ~SSL3_FLAGS_CCS_OK;
 
 		rr->length=0;
 
@@ -1450,12 +1471,7 @@ int ssl3_do_change_cipher_spec(SSL *s)
 
 	if (s->s3->tmp.key_block == NULL)
 		{
-		if (s->session->master_key_length == 0)
-			{
-			SSLerr(SSL_F_SSL3_DO_CHANGE_CIPHER_SPEC,SSL_R_UNEXPECTED_CCS);
-			return (0);
-			}
-		if (s->session == NULL)
+		if (s->session == NULL || s->session->master_key_length == 0)
 			{
 			/* might happen if dtls1_read_bytes() calls this */
 			SSLerr(SSL_F_SSL3_DO_CHANGE_CIPHER_SPEC,SSL_R_CCS_RECEIVED_EARLY);

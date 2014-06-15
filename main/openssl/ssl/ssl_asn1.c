@@ -117,12 +117,13 @@ typedef struct ssl_session_asn1_st
 #ifndef OPENSSL_NO_SRP
 	ASN1_OCTET_STRING srp_username;
 #endif /* OPENSSL_NO_SRP */
+	ASN1_OCTET_STRING original_handshake_hash;
 	} SSL_SESSION_ASN1;
 
 int i2d_SSL_SESSION(SSL_SESSION *in, unsigned char **pp)
 	{
 #define LSIZE2 (sizeof(long)*2)
-	int v1=0,v2=0,v3=0,v4=0,v5=0,v7=0,v8=0;
+	int v1=0,v2=0,v3=0,v4=0,v5=0,v7=0,v8=0,v14=0;
 	unsigned char buf[4],ibuf1[LSIZE2],ibuf2[LSIZE2];
 	unsigned char ibuf3[LSIZE2],ibuf4[LSIZE2],ibuf5[LSIZE2];
 #ifndef OPENSSL_NO_TLSEXT
@@ -272,6 +273,13 @@ int i2d_SSL_SESSION(SSL_SESSION *in, unsigned char **pp)
 		a.psk_identity.type=V_ASN1_OCTET_STRING;
 		a.psk_identity.data=(unsigned char *)(in->psk_identity);
 		}
+
+	if (in->original_handshake_hash_len > 0)
+		{
+		a.original_handshake_hash.length = in->original_handshake_hash_len;
+		a.original_handshake_hash.type = V_ASN1_OCTET_STRING;
+		a.original_handshake_hash.data = in->original_handshake_hash;
+		}
 #endif /* OPENSSL_NO_PSK */
 #ifndef OPENSSL_NO_SRP
 	if (in->srp_username)
@@ -325,6 +333,8 @@ int i2d_SSL_SESSION(SSL_SESSION *in, unsigned char **pp)
 	if (in->srp_username)
         	M_ASN1_I2D_len_EXP_opt(&(a.srp_username), i2d_ASN1_OCTET_STRING,12,v12);
 #endif /* OPENSSL_NO_SRP */
+	if (in->original_handshake_hash_len > 0)
+		M_ASN1_I2D_len_EXP_opt(&(a.original_handshake_hash),i2d_ASN1_OCTET_STRING,14,v14);
 
 	M_ASN1_I2D_seq_total();
 
@@ -373,6 +383,8 @@ int i2d_SSL_SESSION(SSL_SESSION *in, unsigned char **pp)
 	if (in->srp_username)
 		M_ASN1_I2D_put_EXP_opt(&(a.srp_username), i2d_ASN1_OCTET_STRING,12,v12);
 #endif /* OPENSSL_NO_SRP */
+	if (in->original_handshake_hash_len > 0)
+		M_ASN1_I2D_put_EXP_opt(&(a.original_handshake_hash),i2d_ASN1_OCTET_STRING,14,v14);
 	M_ASN1_I2D_finish();
 	}
 
@@ -408,6 +420,7 @@ SSL_SESSION *d2i_SSL_SESSION(SSL_SESSION **a, const unsigned char **pp,
 		if (os.length != 3)
 			{
 			c.error=SSL_R_CIPHER_CODE_WRONG_LENGTH;
+			c.line=__LINE__;
 			goto err;
 			}
 		id=0x02000000L|
@@ -420,6 +433,7 @@ SSL_SESSION *d2i_SSL_SESSION(SSL_SESSION **a, const unsigned char **pp,
 		if (os.length != 2)
 			{
 			c.error=SSL_R_CIPHER_CODE_WRONG_LENGTH;
+			c.line=__LINE__;
 			goto err;
 			}
 		id=0x03000000L|
@@ -429,6 +443,7 @@ SSL_SESSION *d2i_SSL_SESSION(SSL_SESSION **a, const unsigned char **pp,
 	else
 		{
 		c.error=SSL_R_UNKNOWN_SSL_VERSION;
+		c.line=__LINE__;
 		goto err;
 		}
 	
@@ -521,6 +536,7 @@ SSL_SESSION *d2i_SSL_SESSION(SSL_SESSION **a, const unsigned char **pp,
 	    if (os.length > SSL_MAX_SID_CTX_LENGTH)
 		{
 		c.error=SSL_R_BAD_LENGTH;
+		c.line=__LINE__;
 		goto err;
 		}
 	    else
@@ -637,6 +653,17 @@ SSL_SESSION *d2i_SSL_SESSION(SSL_SESSION **a, const unsigned char **pp,
 	else
 		ret->srp_username=NULL;
 #endif /* OPENSSL_NO_SRP */
+
+	os.length=0;
+	os.data=NULL;
+	M_ASN1_D2I_get_EXP_opt(osp,d2i_ASN1_OCTET_STRING,14);
+	if (os.data && os.length < (int)sizeof(ret->original_handshake_hash))
+		{
+		memcpy(ret->original_handshake_hash, os.data, os.length);
+		ret->original_handshake_hash_len = os.length;
+		OPENSSL_free(os.data);
+		os.data = NULL;
+		}
 
 	M_ASN1_D2I_Finish(a,SSL_SESSION_free,SSL_F_D2I_SSL_SESSION);
 	}

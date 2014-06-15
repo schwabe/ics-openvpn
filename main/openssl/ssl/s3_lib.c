@@ -3412,8 +3412,6 @@ long ssl3_ctrl(SSL *s, int cmd, long larg, void *parg)
 		break;
 #endif
 	case SSL_CTRL_CHANNEL_ID:
-		if (!s->server)
-			break;
 		s->tlsext_channel_id_enabled = 1;
 		ret = 1;
 		break;
@@ -3429,7 +3427,7 @@ long ssl3_ctrl(SSL *s, int cmd, long larg, void *parg)
 			}
 		if (s->tlsext_channel_id_private)
 			EVP_PKEY_free(s->tlsext_channel_id_private);
-		s->tlsext_channel_id_private = (EVP_PKEY*) parg;
+		s->tlsext_channel_id_private = EVP_PKEY_dup((EVP_PKEY*) parg);
 		ret = 1;
 		break;
 
@@ -3744,7 +3742,7 @@ long ssl3_ctx_ctrl(SSL_CTX *ctx, int cmd, long larg, void *parg)
 			}
 		if (ctx->tlsext_channel_id_private)
 			EVP_PKEY_free(ctx->tlsext_channel_id_private);
-		ctx->tlsext_channel_id_private = (EVP_PKEY*) parg;
+		ctx->tlsext_channel_id_private = EVP_PKEY_dup((EVP_PKEY*) parg);
 		break;
 
 	default:

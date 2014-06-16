@@ -62,7 +62,7 @@
   <string name="remove_vpn">VPN löschen</string>
   <string name="check_remote_tlscert">Überprüfe, ob der Server ein Zertifikat mit TLS-Servererweiterungen verwendet (--remote-cert-tls server)</string>
   <string name="check_remote_tlscert_title">TLS-Serverzertifikat erwarten</string>
-  <string name="remote_tlscn_check_summary">Server Zertifikatssubjekt überprüfen</string>
+  <string name="remote_tlscn_check_summary">Server Zertifikatssubjekt DN überprüfen</string>
   <string name="remote_tlscn_check_title">Zertifikat Namen überprüfen</string>
   <string name="enter_tlscn_dialog">Spezifizieren Sie die Methode mit welcher der DN des Serverzertifikates (z. B. C=DE, L=Paderborn, OU=Avian IP-Carrier, CN=openvpn.blinkt.de) überprüft wird.\n\nSie können den vollständigen DN oder den RDN (openvpn.blinkt.de im Beispiel) oder ein RDN-Präfix angeben.\n\nDer RDN Präfix \"Server\" erlaubt z.B. \"Server-1\" und \"Server-2\" \n\nWenn Sie das Eingabefeld leer lassen, wird der RDN gegen den Servernamen geprüft.\n\n Für weitere Details sehen Sie die Manpage von OpenVPN 2.3.1+  unter  —verify-x509-name</string>
   <string name="enter_tlscn_title">Serverzertifikat Subject</string>
@@ -84,7 +84,7 @@
   <string name="default_route_summary">Leitet allen Internet Verkehr über das VPN</string>
   <string name="use_default_title">Benutze Default Route</string>
   <string name="custom_route_message">Benutze eigene Routen. Geben Sie Zielnetzwerk im CIDR Format an. Z.b. \"10.0.0.0/8 2002::/16\" würde die Netzwerke 10.0.0.0/8 und 2002::/16 über das VPN routen.</string>
-  <string name="custom_route_message_excluded">Netze, die nicht über das VPN weitergeleitet werden sollen. Nutzt die gleiche Syntax wie die eigenen Routen.</string>
+  <string name="custom_route_message_excluded">Netze, die nicht über das VPN geleitet werden sollen. Nutzt die gleiche Syntax wie die eigenen Routen.</string>
   <string name="custom_routes_title">Eigene Routen</string>
   <string name="custom_routes_title_excluded">Ausgeschlossene Netze</string>
   <string name="log_verbosity_level">Log Detail Level</string>
@@ -312,7 +312,7 @@
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
   <string name="faq_system_dialog_xposed">Wenn Sie ihr Gerät gerootet haben können Sie das &lt;a href=\"http://xposed.info/\"&gt;Xposed Framework&lt;/a&gt; und das &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN Dialog confirm Modul&lt;/a&gt; auf eigene Gefahr installieren.</string>
   <string name="full_licenses">Komplette Lizenzen</string>
-  <string name="blocklocal_summary">Netze, die direkt über ein lokales Interfaces erreicht werden können werden nicht über das VPN gerottet. Deaktivieren dieser Option leitet allen Verkehr, der für lokale Netzwerke bestimmt ist, über das VPN.</string>
+  <string name="blocklocal_summary">Netze, die direkt über ein lokales Interfaces erreicht werden können werden nicht über das VPN geroutet. Deaktivieren dieser Option leitet allen Verkehr, der für lokale Netzwerke bestimmt ist, über das VPN.</string>
   <string name="blocklocal_title">VPN für lokale Netzwerke umgehen</string>
   <string name="userpw_file">Datei mit Benutzername und Passwort</string>
   <string name="imported_from_file">[Importiert aus %s]</string>

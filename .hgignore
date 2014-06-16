@@ -15,6 +15,7 @@ syntax: regexp
 ^openvpn/xcopenvpn$
 
 syntax: glob
+.navigation
 openvpn/src/openvpnserv/.deps
 openvpn/Makefile
 openvpn/Makefile.in

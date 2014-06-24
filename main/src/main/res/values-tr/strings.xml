@@ -309,4 +309,5 @@
   <string name="full_licenses">Lisanslar</string>
   <string name="blocklocal_title">Yerel ağlar için Bypass VPN</string>
   <string name="userpw_file">Kullanıcı adı / Şifre dosyası</string>
+  <string name="imported_from_file">[Buradan içeri aktar: %s]</string>
 </resources>

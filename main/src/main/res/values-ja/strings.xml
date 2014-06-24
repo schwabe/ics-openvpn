@@ -286,6 +286,7 @@ OpenVPNの接続を保証するためには、アプリケーションを高い�
   <string name="tls_remote_deprecated"> tls-remote (非推奨)</string>
   <string name="help_translate">翻訳作業を手伝っていただける方は次のURLへ http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s は %2$s を制御しようとしています。</string>
+  <string name="remote_warning">このまま進むと、あなたはOpenVPN for Androidの完全な制御とすべての通信を傍受する権限をアプリケーションに対し与えることになります。<b>アプリケーションが信頼できない限り、承諾しないでください。</b>さもないと、あなたのデータがマルウェアにより漏洩させられる危険があります。</string>
   <string name="remote_trust">私はこのアプリケーションを信頼します</string>
   <string name="no_external_app_allowed">外部APIの使用を許可されたアプリはありません</string>
   <string name="allowed_apps">許可アプリ: %s</string>
@@ -307,6 +308,7 @@ OpenVPNの接続を保証するためには、アプリケーションを高い�
   <string name="permission_icon_app">OpenVPN for Androidを使用しようと試みるアプリのアイコン</string>
   <string name="faq_vpndialog43_title">Android 4.3以降用VPN確認ダイアログ</string>
   <string name="donatePlayStore">ほかの手段として、Play Storeで私に寄付できます。</string>
+  <string name="thanks_for_donation">%s の寄付をお寄せいただきありがとうございます！</string>
   <string name="logCleared">ログがクリアされました。</string>
   <string name="show_password">パスワードを表示する</string>
   <string name="keyChainAccessError">キーチェーン アクセス エラー: %s</string>
@@ -316,12 +318,17 @@ OpenVPNの接続を保証するためには、アプリケーションを高い�
   <string name="uploaded_data">アップロード</string>
   <string name="downloaded_data">ダウンロード</string>
   <string name="vpn_status">VPNの状態</string>
+  <string name="logview_options">オプションを表示</string>
   <string name="unhandled_exception">未処理の例外: %1$s\n\n%2$s</string>
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
   <string name="faq_system_dialog_xposed">もしあなたがデバイスをroot化しているのであれば、 &lt;a href=\"http://xposed.info/\"&gt;Xposed framework&lt;/a&gt;と&lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN Dialog confirm module&lt;/a&gt; を自己責任においてインストールできます</string>
   <string name="full_licenses">フルライセンス</string>
   <string name="blocklocal_summary">ローカルインターフェイスに直接接続されているネットワークはVPNを経由しません。
 このオプションを外すとローカルネットワーク宛のすべての通信をVPNにリダイレクトします。</string>
+  <string name="blocklocal_title">ローカルネットワークはVPNを経由しない</string>
+  <string name="userpw_file">ユーザー名/パスワードファイル</string>
+  <string name="imported_from_file">[インポート元: %s]</string>
   <string name="files_missing_hint">いくつかのファイルが見つかりませんでした。プロファイルをインポートするファイルを選択してください：</string>
+  <string name="openvpn_is_no_free_vpn">このアプリを使用するには、（多くの場合、あなたの雇用者によって提供される）OpenVPNをサポートするVPNプロバイダ/ VPNゲートウェイが必要です。あなた独自のOpenVPNサーバーをセットアップするためにはhttp://community.openvpn.net/ をチェックしてください。</string>
   <string name="import_log">インポートログ：</string>
 </resources>

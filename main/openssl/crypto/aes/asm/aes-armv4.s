@@ -1,6 +1,53 @@
-#include "arm_arch.h"
+
+@ ====================================================================
+@ Written by Andy Polyakov <appro@openssl.org> for the OpenSSL
+@ project. The module is, however, dual licensed under OpenSSL and
+@ CRYPTOGAMS licenses depending on where you obtain it. For further
+@ details see http://www.openssl.org/~appro/cryptogams/.
+@ ====================================================================
+
+@ AES for ARMv4
+
+@ January 2007.
+@
+@ Code uses single 1K S-box and is >2 times faster than code generated
+@ by gcc-3.4.1. This is thanks to unique feature of ARMv4 ISA, which
+@ allows to merge logical or arithmetic operation with shift or rotate
+@ in one instruction and emit combined result every cycle. The module
+@ is endian-neutral. The performance is ~42 cycles/byte for 128-bit
+@ key [on single-issue Xscale PXA250 core].
+
+@ May 2007.
+@
+@ AES_set_[en|de]crypt_key is added.
+
+@ July 2010.
+@
+@ Rescheduling for dual-issue pipeline resulted in 12% improvement on
+@ Cortex A8 core and ~25 cycles per byte processed with 128-bit key.
+
+@ February 2011.
+@
+@ Profiler-assisted and platform-specific optimization resulted in 16%
+@ improvement on Cortex A8 core and ~21.5 cycles per byte.
+
+#ifndef __KERNEL__
+# include "arm_arch.h"
+#else
+# define __ARM_ARCH__ __LINUX_ARM_ARCH__
+#endif
+
 .text
+#if __ARM_ARCH__<7
 .code	32
+#else
+.syntax	unified
+# ifdef __thumb2__
+.thumb
+# else
+.code	32
+# endif
+#endif
 
 .type	AES_Te,%object
 .align	5
@@ -114,7 +161,11 @@ AES_Te:
 .type   AES_encrypt,%function
 .align	5
 AES_encrypt:
+#if __ARM_ARCH__<7
 	sub	r3,pc,#8		@ AES_encrypt
+#else
+	adr	r3,AES_encrypt
+#endif
 	stmdb   sp!,{r1,r4-r12,lr}
 	mov	r12,r0		@ inp
 	mov	r11,r2
@@ -356,11 +407,21 @@ _armv4_AES_encrypt:
 .align	5
 private_AES_set_encrypt_key:
 _armv4_AES_set_encrypt_key:
+#if __ARM_ARCH__<7
 	sub	r3,pc,#8		@ AES_set_encrypt_key
+#else
+	adr	r3,private_AES_set_encrypt_key
+#endif
 	teq	r0,#0
+#if __ARM_ARCH__>=7
+	itt	eq			@ Thumb2 thing, sanity check in ARM
+#endif
 	moveq	r0,#-1
 	beq	.Labrt
 	teq	r2,#0
+#if __ARM_ARCH__>=7
+	itt	eq			@ Thumb2 thing, sanity check in ARM
+#endif
 	moveq	r0,#-1
 	beq	.Labrt
 
@@ -369,6 +430,9 @@ _armv4_AES_set_encrypt_key:
 	teq	r1,#192
 	beq	.Lok
 	teq	r1,#256
+#if __ARM_ARCH__>=7
+	itt	ne			@ Thumb2 thing, sanity check in ARM
+#endif
 	movne	r0,#-1
 	bne	.Labrt
 
@@ -523,6 +587,9 @@ _armv4_AES_set_encrypt_key:
 	str	r2,[r11,#-16]
 	subs	r12,r12,#1
 	str	r3,[r11,#-12]
+#if __ARM_ARCH__>=7
+	itt	eq				@ Thumb2 thing, sanity check in ARM
+#endif
 	subeq	r2,r11,#216
 	beq	.Ldone
 
@@ -592,6 +659,9 @@ _armv4_AES_set_encrypt_key:
 	str	r2,[r11,#-24]
 	subs	r12,r12,#1
 	str	r3,[r11,#-20]
+#if __ARM_ARCH__>=7
+	itt	eq				@ Thumb2 thing, sanity check in ARM
+#endif
 	subeq	r2,r11,#256
 	beq	.Ldone
 
@@ -621,11 +691,17 @@ _armv4_AES_set_encrypt_key:
 	str	r9,[r11,#-4]
 	b	.L256_loop
 
+.align	2
 .Ldone:	mov	r0,#0
 	ldmia   sp!,{r4-r12,lr}
-.Labrt:	tst	lr,#1
+.Labrt:
+#if __ARM_ARCH__>=5
+	bx	lr				@ .word	0xe12fff1e
+#else
+	tst	lr,#1
 	moveq	pc,lr			@ be binary compatible with V4, yet
 	.word	0xe12fff1e			@ interoperable with Thumb ISA:-)
+#endif
 .size	private_AES_set_encrypt_key,.-private_AES_set_encrypt_key
 
 .global private_AES_set_decrypt_key
@@ -635,34 +711,57 @@ private_AES_set_decrypt_key:
 	str	lr,[sp,#-4]!            @ push lr
 	bl	_armv4_AES_set_encrypt_key
 	teq	r0,#0
-	ldrne	lr,[sp],#4              @ pop lr
+	ldr	lr,[sp],#4              @ pop lr
 	bne	.Labrt
 
-	stmdb   sp!,{r4-r12}
+	mov	r0,r2			@ AES_set_encrypt_key preserves r2,
+	mov	r1,r2			@ which is AES_KEY *key
+	b	_armv4_AES_set_enc2dec_key
+.size	private_AES_set_decrypt_key,.-private_AES_set_decrypt_key
 
-	ldr	r12,[r2,#240]	@ AES_set_encrypt_key preserves r2,
-	mov	r11,r2			@ which is AES_KEY *key
-	mov	r7,r2
-	add	r8,r2,r12,lsl#4
+@ void AES_set_enc2dec_key(const AES_KEY *inp,AES_KEY *out)
+.global	AES_set_enc2dec_key
+.type	AES_set_enc2dec_key,%function
+.align	5
+AES_set_enc2dec_key:
+_armv4_AES_set_enc2dec_key:
+	stmdb   sp!,{r4-r12,lr}
 
-.Linv:	ldr	r0,[r7]
+	ldr	r12,[r0,#240]
+	mov	r7,r0			@ input
+	add	r8,r0,r12,lsl#4
+	mov	r11,r1			@ ouput
+	add	r10,r1,r12,lsl#4
+	str	r12,[r1,#240]
+
+.Linv:	ldr	r0,[r7],#16
+	ldr	r1,[r7,#-12]
+	ldr	r2,[r7,#-8]
+	ldr	r3,[r7,#-4]
+	ldr	r4,[r8],#-16
+	ldr	r5,[r8,#16+4]
+	ldr	r6,[r8,#16+8]
+	ldr	r9,[r8,#16+12]
+	str	r0,[r10],#-16
+	str	r1,[r10,#16+4]
+	str	r2,[r10,#16+8]
+	str	r3,[r10,#16+12]
+	str	r4,[r11],#16
+	str	r5,[r11,#-12]
+	str	r6,[r11,#-8]
+	str	r9,[r11,#-4]
+	teq	r7,r8
+	bne	.Linv
+
+	ldr	r0,[r7]
 	ldr	r1,[r7,#4]
 	ldr	r2,[r7,#8]
 	ldr	r3,[r7,#12]
-	ldr	r4,[r8]
-	ldr	r5,[r8,#4]
-	ldr	r6,[r8,#8]
-	ldr	r9,[r8,#12]
-	str	r0,[r8],#-16
-	str	r1,[r8,#16+4]
-	str	r2,[r8,#16+8]
-	str	r3,[r8,#16+12]
-	str	r4,[r7],#16
-	str	r5,[r7,#-12]
-	str	r6,[r7,#-8]
-	str	r9,[r7,#-4]
-	teq	r7,r8
-	bne	.Linv
+	str	r0,[r11]
+	str	r1,[r11,#4]
+	str	r2,[r11,#8]
+	str	r3,[r11,#12]
+	sub	r11,r11,r12,lsl#3
 	ldr	r0,[r11,#16]!		@ prefetch tp1
 	mov	r7,#0x80
 	mov	r8,#0x1b
@@ -715,7 +814,7 @@ private_AES_set_decrypt_key:
 	moveq	pc,lr			@ be binary compatible with V4, yet
 	.word	0xe12fff1e			@ interoperable with Thumb ISA:-)
 #endif
-.size	private_AES_set_decrypt_key,.-private_AES_set_decrypt_key
+.size	AES_set_enc2dec_key,.-AES_set_enc2dec_key
 
 .type	AES_Td,%object
 .align	5
@@ -825,7 +924,11 @@ AES_Td:
 .type   AES_decrypt,%function
 .align	5
 AES_decrypt:
+#if __ARM_ARCH__<7
 	sub	r3,pc,#8		@ AES_decrypt
+#else
+	adr	r3,AES_decrypt
+#endif
 	stmdb   sp!,{r1,r4-r12,lr}
 	mov	r12,r0		@ inp
 	mov	r11,r2
@@ -1022,8 +1125,9 @@ _armv4_AES_decrypt:
 	ldrb	r6,[r10,r9]		@ Td4[s0>>0]
 	and	r9,lr,r1,lsr#8
 
+	add	r1,r10,r1,lsr#24
 	ldrb	r7,[r10,r7]		@ Td4[s1>>0]
-	ldrb	r1,[r10,r1,lsr#24]	@ Td4[s1>>24]
+	ldrb	r1,[r1]		@ Td4[s1>>24]
 	ldrb	r8,[r10,r8]		@ Td4[s1>>16]
 	eor	r0,r7,r0,lsl#24
 	ldrb	r9,[r10,r9]		@ Td4[s1>>8]
@@ -1036,7 +1140,8 @@ _armv4_AES_decrypt:
 	ldrb	r8,[r10,r8]		@ Td4[s2>>0]
 	and	r9,lr,r2,lsr#16
 
-	ldrb	r2,[r10,r2,lsr#24]	@ Td4[s2>>24]
+	add	r2,r10,r2,lsr#24
+	ldrb	r2,[r2]		@ Td4[s2>>24]
 	eor	r0,r0,r7,lsl#8
 	ldrb	r9,[r10,r9]		@ Td4[s2>>16]
 	eor	r1,r8,r1,lsl#16
@@ -1048,8 +1153,9 @@ _armv4_AES_decrypt:
 	ldrb	r8,[r10,r8]		@ Td4[s3>>8]
 	and	r9,lr,r3		@ i2
 
+	add	r3,r10,r3,lsr#24
 	ldrb	r9,[r10,r9]		@ Td4[s3>>0]
-	ldrb	r3,[r10,r3,lsr#24]	@ Td4[s3>>24]
+	ldrb	r3,[r3]		@ Td4[s3>>24]
 	eor	r0,r0,r7,lsl#16
 	ldr	r7,[r11,#0]
 	eor	r1,r1,r8,lsl#8

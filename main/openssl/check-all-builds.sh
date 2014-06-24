@@ -143,7 +143,7 @@ esac
 # NOTE: x86_64 is not ready yet, while the toolchain is in
 # prebuilts/ it doesn't have a sysroot which means it requires
 # a platform build to get Bionic and stuff.
-ANDROID_ARCHS="arm x86 mips"
+ANDROID_ARCHS="arm arm64 x86 x86_64 mips"
 
 BUILD_TYPES=
 for ARCH in $ANDROID_ARCHS; do
@@ -311,11 +311,14 @@ get_build_arch () {
 # Out: GNU configuration target (e.g. arm-linux-androideabi)
 get_build_arch_target () {
   case $1 in
+    arm64)
+      echo "aarch64-linux-android"
+      ;;
     arm)
       echo "arm-linux-androideabi"
       ;;
     x86)
-      echo "i686-linux-android"
+      echo "x86_64-linux-android"
       ;;
     x86_64)
       echo "x86_64-linux-android"
@@ -329,8 +332,8 @@ get_build_arch_target () {
   esac
 }
 
-GCC_VERSION=4.7
-CLANG_VERSION=3.1
+GCC_VERSION=4.8
+CLANG_VERSION=3.2
 
 get_prebuilt_gcc_dir_for_arch () {
   local arch=$1
@@ -340,6 +343,9 @@ get_prebuilt_gcc_dir_for_arch () {
   case $arch in
     x86_64)
         arch=x86
+        ;;
+    arm64)
+        arch=aarch64
         ;;
   esac
   echo "$ANDROID_BUILD_TOP/prebuilts/gcc/$ANDROID_HOST_TAG/$arch/$target-$GCC_VERSION"
@@ -397,7 +403,7 @@ get_build_compiler () {
 
   # Force -m32 flag when needed for 32-bit builds.
   case $1 in
-    *-linux-x86|*-darwin-x86|*-generic32)
+    *-x86|*-generic32)
       result="$result -m32"
       ;;
   esac

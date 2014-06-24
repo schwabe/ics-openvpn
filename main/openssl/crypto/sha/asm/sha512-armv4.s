@@ -1775,7 +1775,7 @@ sha512_block_data_order:
 	bne		.Loop_neon
 
 	vldmia	sp!,{d8-d15}		@ epilogue
-	.word	0xe12fff1e
+	bx	lr				@ .word	0xe12fff1e
 #endif
 .size	sha512_block_data_order,.-sha512_block_data_order
 .asciz	"SHA512 block transform for ARMv4/NEON, CRYPTOGAMS by <appro@openssl.org>"

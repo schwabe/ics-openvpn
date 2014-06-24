@@ -9,7 +9,7 @@ LOCAL_SHARED_LIBRARIES := $(log_shared_libraries)
 LOCAL_SDK_VERSION := 9
 
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE:= libcrypto_static
+LOCAL_MODULE := libcrypto_static
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/android-config.mk $(LOCAL_PATH)/Crypto.mk
 include $(LOCAL_PATH)/Crypto-config-target.mk
 include $(LOCAL_PATH)/android-config.mk
@@ -31,7 +31,7 @@ LOCAL_SHARED_LIBRARIES := $(log_shared_libraries)
 # in the NDK.
 ifeq (,$(TARGET_BUILD_APPS))
 LOCAL_CLANG := true
-ifeq ($(HOST_OS), darwinXXX)
+ifeq ($(HOST_OS), darwin_does_not_wrok)
 LOCAL_ASFLAGS += -no-integrated-as
 LOCAL_CFLAGS += -no-integrated-as
 endif
@@ -41,7 +41,7 @@ endif
 LOCAL_LDFLAGS += -ldl
 
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE:= libcrypto
+LOCAL_MODULE := libcrypto
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/android-config.mk $(LOCAL_PATH)/Crypto.mk
 include $(LOCAL_PATH)/Crypto-config-target.mk
 include $(LOCAL_PATH)/android-config.mk
@@ -50,16 +50,16 @@ include $(BUILD_SHARED_LIBRARY)
 
 #######################################
 # host shared library
-# include $(CLEAR_VARS)
-# LOCAL_SHARED_LIBRARIES := $(log_shared_libraries)
-# LOCAL_CFLAGS += -DPURIFY
-# LOCAL_LDLIBS += -ldl
-# LOCAL_MODULE_TAGS := optional
-# LOCAL_MODULE:= libcrypto-host
-# LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/android-config.mk $(LOCAL_PATH)/Crypto.mk
-# include $(LOCAL_PATH)/Crypto-config-host.mk
-# include $(LOCAL_PATH)/android-config.mk
-# include $(BUILD_HOST_SHARED_LIBRARY)
+#include $(CLEAR_VARS)
+#LOCAL_SHARED_LIBRARIES := $(log_shared_libraries)
+#LOCAL_CFLAGS += -DPURIFY
+#LOCAL_LDLIBS += -ldl
+#LOCAL_MODULE_TAGS := optional
+#LOCAL_MODULE := libcrypto-host
+#LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/android-config.mk $(LOCAL_PATH)/Crypto.mk
+#include $(LOCAL_PATH)/Crypto-config-host.mk
+#include $(LOCAL_PATH)/android-config.mk
+#include $(BUILD_HOST_SHARED_LIBRARY)
 
 ########################################
 # host static library, which is used by some SDK tools.
@@ -69,8 +69,9 @@ include $(BUILD_SHARED_LIBRARY)
 # LOCAL_CFLAGS += -DPURIFY
 # LOCAL_LDLIBS += -ldl
 # LOCAL_MODULE_TAGS := optional
-# LOCAL_MODULE:= libcrypto_static
+# LOCAL_MODULE := libcrypto_static
 # LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/android-config.mk $(LOCAL_PATH)/Crypto.mk
 # include $(LOCAL_PATH)/Crypto-config-host.mk
 # include $(LOCAL_PATH)/android-config.mk
 # include $(BUILD_HOST_STATIC_LIBRARY)
+

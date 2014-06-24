@@ -5,31 +5,6 @@
 
 #if __ARM_ARCH__>=7
 .fpu	neon
-
-.type	mul_1x1_neon,%function
-.align	5
-mul_1x1_neon:
-	vshl.u64	d2,d16,#8	@ q1-q3 are slided 
-	vmull.p8	q0,d16,d17	@ a·bb
-	vshl.u64	d4,d16,#16
-	vmull.p8	q1,d2,d17	@ a<<8·bb
-	vshl.u64	d6,d16,#24
-	vmull.p8	q2,d4,d17	@ a<<16·bb
-	vshr.u64	d2,#8
-	vmull.p8	q3,d6,d17	@ a<<24·bb
-	vshl.u64	d3,#24
-	veor		d0,d2
-	vshr.u64	d4,#16
-	veor		d0,d3
-	vshl.u64	d5,#16
-	veor		d0,d4
-	vshr.u64	d6,#24
-	veor		d0,d5
-	vshl.u64	d7,#8
-	veor		d0,d6
-	veor		d0,d7
-	.word	0xe12fff1e
-.size	mul_1x1_neon,.-mul_1x1_neon
 #endif
 .type	mul_1x1_ialu,%function
 .align	5
@@ -120,40 +95,53 @@ bn_GF2m_mul_2x2:
 	tst	r12,#1
 	beq	.Lialu
 
-	veor	d18,d18
-	vmov.32	d19,r3,r3		@ two copies of b1
-	vmov.32	d18[0],r1		@ a1
+	ldr		r12, [sp]		@ 5th argument
+	vmov.32		d26, r2, r1
+	vmov.32		d27, r12, r3
+	vmov.i64	d28, #0x0000ffffffffffff
+	vmov.i64	d29, #0x00000000ffffffff
+	vmov.i64	d30, #0x000000000000ffff
 
-	veor	d20,d20
-	vld1.32	d21[],[sp,:32]	@ two copies of b0
-	vmov.32	d20[0],r2		@ a0
-	mov	r12,lr
+	vext.8		d2, d26, d26, #1	@ A1
+	vmull.p8	q1, d2, d27		@ F = A1*B
+	vext.8		d0, d27, d27, #1	@ B1
+	vmull.p8	q0, d26, d0		@ E = A*B1
+	vext.8		d4, d26, d26, #2	@ A2
+	vmull.p8	q2, d4, d27		@ H = A2*B
+	vext.8		d16, d27, d27, #2	@ B2
+	vmull.p8	q8, d26, d16		@ G = A*B2
+	vext.8		d6, d26, d26, #3	@ A3
+	veor		q1, q1, q0		@ L = E + F
+	vmull.p8	q3, d6, d27		@ J = A3*B
+	vext.8		d0, d27, d27, #3	@ B3
+	veor		q2, q2, q8		@ M = G + H
+	vmull.p8	q0, d26, d0		@ I = A*B3
+	veor		d2, d2, d3	@ t0 = (L) (P0 + P1) << 8
+	vand		d3, d3, d28
+	vext.8		d16, d27, d27, #4	@ B4
+	veor		d4, d4, d5	@ t1 = (M) (P2 + P3) << 16
+	vand		d5, d5, d29
+	vmull.p8	q8, d26, d16		@ K = A*B4
+	veor		q3, q3, q0		@ N = I + J
+	veor		d2, d2, d3
+	veor		d4, d4, d5
+	veor		d6, d6, d7	@ t2 = (N) (P4 + P5) << 24
+	vand		d7, d7, d30
+	vext.8		q1, q1, q1, #15
+	veor		d16, d16, d17	@ t3 = (K) (P6 + P7) << 32
+	vmov.i64	d17, #0
+	vext.8		q2, q2, q2, #14
+	veor		d6, d6, d7
+	vmull.p8	q0, d26, d27		@ D = A*B
+	vext.8		q8, q8, q8, #12
+	vext.8		q3, q3, q3, #13
+	veor		q1, q1, q2
+	veor		q3, q3, q8
+	veor		q0, q0, q1
+	veor		q0, q0, q3
 
-	vmov	d16,d18
-	vmov	d17,d19
-	bl	mul_1x1_neon		@ a1·b1
-	vmov	d22,d0
-
-	vmov	d16,d20
-	vmov	d17,d21
-	bl	mul_1x1_neon		@ a0·b0
-	vmov	d23,d0
-
-	veor	d16,d20,d18
-	veor	d17,d21,d19
-	veor	d20,d23,d22
-	bl	mul_1x1_neon		@ (a0+a1)·(b0+b1)
-
-	veor	d0,d20			@ (a0+a1)·(b0+b1)-a0·b0-a1·b1
-	vshl.u64 d1,d0,#32
-	vshr.u64 d0,d0,#32
-	veor	d23,d1
-	veor	d22,d0
-	vst1.32	{d23[0]},[r0,:32]!
-	vst1.32	{d23[1]},[r0,:32]!
-	vst1.32	{d22[0]},[r0,:32]!
-	vst1.32	{d22[1]},[r0,:32]
-	bx	r12
+	vst1.32		{q0}, [r0]
+	bx	lr		@ bx lr
 .align	4
 .Lialu:
 #endif

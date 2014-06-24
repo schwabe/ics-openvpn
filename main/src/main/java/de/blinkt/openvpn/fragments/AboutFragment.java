@@ -2,7 +2,10 @@ package de.blinkt.openvpn.fragments;
 
 import android.app.Fragment;
 import android.app.PendingIntent;
-import android.content.*;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.IntentSender;
+import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
@@ -11,7 +14,6 @@ import android.os.RemoteException;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
@@ -21,13 +23,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
+
 import com.android.vending.billing.IInAppBillingService;
-import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.core.VpnStatus;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Locale;
+import java.util.Vector;
+
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.core.VpnStatus;
 
 public class AboutFragment extends Fragment implements View.OnClickListener {
 
@@ -79,7 +89,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mServiceConn != null) {
+        if (mService != null) {
             getActivity().unbindService(mServiceConn);
         }
 

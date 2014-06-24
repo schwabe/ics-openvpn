@@ -9,11 +9,9 @@ import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import org.jetbrains.annotations.NotNull;
+import junit.framework.Assert;
 
-import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -22,7 +20,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Locale;
+import java.util.Vector;
+
+import de.blinkt.openvpn.BuildConfig;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 
 public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
@@ -391,7 +398,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             */
 
             if(routeparts.length==5) {
-                assert(routeparts[3].equals("dev"));
+                if (BuildConfig.DEBUG) Assert.assertEquals("dev", routeparts[3]);
                 mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], routeparts[4]);
             }  else if (routeparts.length >= 3) {
                 mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], null);

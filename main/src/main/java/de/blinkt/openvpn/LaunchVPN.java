@@ -1,7 +1,5 @@
 package de.blinkt.openvpn;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -16,13 +14,17 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.widget.*;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+
+import java.io.IOException;
 
 import de.blinkt.openvpn.activities.LogWindow;
-import de.blinkt.openvpn.core.VpnStatus;
-import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
+import de.blinkt.openvpn.core.VpnStatus;
+import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 
 /**
  * This Activity actually handles two stages of a launcher shortcut's life cycle.
@@ -110,7 +112,7 @@ public class LaunchVPN extends Activity {
 	private void askForPW(final int type) {
 
 		final EditText entry = new EditText(this);
-        final View userpwlayout = getLayoutInflater().inflate(R.layout.userpass, null);
+        final View userpwlayout = getLayoutInflater().inflate(R.layout.userpass, null, false);
 
 		entry.setSingleLine();
 		entry.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);

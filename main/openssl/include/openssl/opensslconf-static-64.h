@@ -53,6 +53,9 @@
 #ifndef OPENSSL_NO_RFC3779
 # define OPENSSL_NO_RFC3779
 #endif
+#ifndef OPENSSL_NO_RIPEMD
+# define OPENSSL_NO_RIPEMD
+#endif
 #ifndef OPENSSL_NO_RSAX
 # define OPENSSL_NO_RSAX
 #endif
@@ -136,6 +139,9 @@
 # endif
 # if defined(OPENSSL_NO_RFC3779) && !defined(NO_RFC3779)
 #  define NO_RFC3779
+# endif
+# if defined(OPENSSL_NO_RIPEMD) && !defined(NO_RIPEMD)
+#  define NO_RIPEMD
 # endif
 # if defined(OPENSSL_NO_RSAX) && !defined(NO_RSAX)
 #  define NO_RSAX

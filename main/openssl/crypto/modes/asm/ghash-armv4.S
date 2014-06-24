@@ -309,99 +309,213 @@ gcm_gmult_4bit:
 #if __ARM_ARCH__>=7
 .fpu	neon
 
+.global	gcm_init_neon
+.type	gcm_init_neon,%function
+.align	4
+gcm_init_neon:
+	vld1.64		d7,[r1,:64]!	@ load H
+	vmov.i8		q8,#0xe1
+	vld1.64		d6,[r1,:64]
+	vshl.i64	d17,#57
+	vshr.u64	d16,#63		@ t0=0xc2....01
+	vdup.8		q9,d7[7]
+	vshr.u64	d26,d6,#63
+	vshr.s8		q9,#7			@ broadcast carry bit
+	vshl.i64	q3,q3,#1
+	vand		q8,q8,q9
+	vorr		d7,d26		@ H<<<=1
+	veor		q3,q3,q8		@ twisted H
+	vstmia		r0,{q3}
+
+	bx	lr					@ bx lr
+.size	gcm_init_neon,.-gcm_init_neon
+
 .global	gcm_gmult_neon
 .type	gcm_gmult_neon,%function
 .align	4
 gcm_gmult_neon:
-	sub		r1,#16		@ point at H in GCM128_CTX
-	vld1.64		d29,[r0,:64]!@ load Xi
-	vmov.i32	d5,#0xe1		@ our irreducible polynomial
-	vld1.64		d28,[r0,:64]!
-	vshr.u64	d5,#32
-	vldmia		r1,{d0-d1}	@ load H
-	veor		q12,q12
+	vld1.64		d7,[r0,:64]!	@ load Xi
+	vld1.64		d6,[r0,:64]!
+	vmov.i64	d29,#0x0000ffffffffffff
+	vldmia		r1,{d26-d27}	@ load twisted H
+	vmov.i64	d30,#0x00000000ffffffff
 #ifdef __ARMEL__
-	vrev64.8	q14,q14
+	vrev64.8	q3,q3
 #endif
-	veor		q13,q13
-	veor		q11,q11
-	mov		r1,#16
-	veor		q10,q10
+	vmov.i64	d31,#0x000000000000ffff
+	veor		d28,d26,d27		@ Karatsuba pre-processing
 	mov		r3,#16
-	veor		d2,d2
-	vdup.8		d4,d28[0]	@ broadcast lowest byte
-	b		.Linner_neon
+	b		.Lgmult_neon
 .size	gcm_gmult_neon,.-gcm_gmult_neon
 
 .global	gcm_ghash_neon
 .type	gcm_ghash_neon,%function
 .align	4
 gcm_ghash_neon:
-	vld1.64		d21,[r0,:64]!	@ load Xi
-	vmov.i32	d5,#0xe1		@ our irreducible polynomial
-	vld1.64		d20,[r0,:64]!
-	vshr.u64	d5,#32
-	vldmia		r0,{d0-d1}		@ load H
-	veor		q12,q12
-	nop
+	vld1.64		d1,[r0,:64]!	@ load Xi
+	vld1.64		d0,[r0,:64]!
+	vmov.i64	d29,#0x0000ffffffffffff
+	vldmia		r1,{d26-d27}	@ load twisted H
+	vmov.i64	d30,#0x00000000ffffffff
 #ifdef __ARMEL__
-	vrev64.8	q10,q10
+	vrev64.8	q0,q0
 #endif
-.Louter_neon:
-	vld1.64		d29,[r2]!	@ load inp
-	veor		q13,q13
-	vld1.64		d28,[r2]!
-	veor		q11,q11
-	mov		r1,#16
+	vmov.i64	d31,#0x000000000000ffff
+	veor		d28,d26,d27		@ Karatsuba pre-processing
+
+.Loop_neon:
+	vld1.64		d7,[r2]!		@ load inp
+	vld1.64		d6,[r2]!
 #ifdef __ARMEL__
-	vrev64.8	q14,q14
+	vrev64.8	q3,q3
 #endif
-	veor		d2,d2
-	veor		q14,q10			@ inp^=Xi
-	veor		q10,q10
-	vdup.8		d4,d28[0]	@ broadcast lowest byte
-.Linner_neon:
-	subs		r1,r1,#1
-	vmull.p8	q9,d1,d4		@ H.lo·Xi[i]
-	vmull.p8	q8,d0,d4		@ H.hi·Xi[i]
-	vext.8		q14,q12,#1		@ IN>>=8
+	veor		q3,q0			@ inp^=Xi
+.Lgmult_neon:
+	vext.8		d16, d26, d26, #1	@ A1
+	vmull.p8	q8, d16, d6		@ F = A1*B
+	vext.8		d0, d6, d6, #1	@ B1
+	vmull.p8	q0, d26, d0		@ E = A*B1
+	vext.8		d18, d26, d26, #2	@ A2
+	vmull.p8	q9, d18, d6		@ H = A2*B
+	vext.8		d22, d6, d6, #2	@ B2
+	vmull.p8	q11, d26, d22		@ G = A*B2
+	vext.8		d20, d26, d26, #3	@ A3
+	veor		q8, q8, q0		@ L = E + F
+	vmull.p8	q10, d20, d6		@ J = A3*B
+	vext.8		d0, d6, d6, #3	@ B3
+	veor		q9, q9, q11		@ M = G + H
+	vmull.p8	q0, d26, d0		@ I = A*B3
+	veor		d16, d16, d17	@ t0 = (L) (P0 + P1) << 8
+	vand		d17, d17, d29
+	vext.8		d22, d6, d6, #4	@ B4
+	veor		d18, d18, d19	@ t1 = (M) (P2 + P3) << 16
+	vand		d19, d19, d30
+	vmull.p8	q11, d26, d22		@ K = A*B4
+	veor		q10, q10, q0		@ N = I + J
+	veor		d16, d16, d17
+	veor		d18, d18, d19
+	veor		d20, d20, d21	@ t2 = (N) (P4 + P5) << 24
+	vand		d21, d21, d31
+	vext.8		q8, q8, q8, #15
+	veor		d22, d22, d23	@ t3 = (K) (P6 + P7) << 32
+	vmov.i64	d23, #0
+	vext.8		q9, q9, q9, #14
+	veor		d20, d20, d21
+	vmull.p8	q0, d26, d6		@ D = A*B
+	vext.8		q11, q11, q11, #12
+	vext.8		q10, q10, q10, #13
+	veor		q8, q8, q9
+	veor		q10, q10, q11
+	veor		q0, q0, q8
+	veor		q0, q0, q10
+	veor		d6,d6,d7	@ Karatsuba pre-processing
+	vext.8		d16, d28, d28, #1	@ A1
+	vmull.p8	q8, d16, d6		@ F = A1*B
+	vext.8		d2, d6, d6, #1	@ B1
+	vmull.p8	q1, d28, d2		@ E = A*B1
+	vext.8		d18, d28, d28, #2	@ A2
+	vmull.p8	q9, d18, d6		@ H = A2*B
+	vext.8		d22, d6, d6, #2	@ B2
+	vmull.p8	q11, d28, d22		@ G = A*B2
+	vext.8		d20, d28, d28, #3	@ A3
+	veor		q8, q8, q1		@ L = E + F
+	vmull.p8	q10, d20, d6		@ J = A3*B
+	vext.8		d2, d6, d6, #3	@ B3
+	veor		q9, q9, q11		@ M = G + H
+	vmull.p8	q1, d28, d2		@ I = A*B3
+	veor		d16, d16, d17	@ t0 = (L) (P0 + P1) << 8
+	vand		d17, d17, d29
+	vext.8		d22, d6, d6, #4	@ B4
+	veor		d18, d18, d19	@ t1 = (M) (P2 + P3) << 16
+	vand		d19, d19, d30
+	vmull.p8	q11, d28, d22		@ K = A*B4
+	veor		q10, q10, q1		@ N = I + J
+	veor		d16, d16, d17
+	veor		d18, d18, d19
+	veor		d20, d20, d21	@ t2 = (N) (P4 + P5) << 24
+	vand		d21, d21, d31
+	vext.8		q8, q8, q8, #15
+	veor		d22, d22, d23	@ t3 = (K) (P6 + P7) << 32
+	vmov.i64	d23, #0
+	vext.8		q9, q9, q9, #14
+	veor		d20, d20, d21
+	vmull.p8	q1, d28, d6		@ D = A*B
+	vext.8		q11, q11, q11, #12
+	vext.8		q10, q10, q10, #13
+	veor		q8, q8, q9
+	veor		q10, q10, q11
+	veor		q1, q1, q8
+	veor		q1, q1, q10
+	vext.8		d16, d27, d27, #1	@ A1
+	vmull.p8	q8, d16, d7		@ F = A1*B
+	vext.8		d4, d7, d7, #1	@ B1
+	vmull.p8	q2, d27, d4		@ E = A*B1
+	vext.8		d18, d27, d27, #2	@ A2
+	vmull.p8	q9, d18, d7		@ H = A2*B
+	vext.8		d22, d7, d7, #2	@ B2
+	vmull.p8	q11, d27, d22		@ G = A*B2
+	vext.8		d20, d27, d27, #3	@ A3
+	veor		q8, q8, q2		@ L = E + F
+	vmull.p8	q10, d20, d7		@ J = A3*B
+	vext.8		d4, d7, d7, #3	@ B3
+	veor		q9, q9, q11		@ M = G + H
+	vmull.p8	q2, d27, d4		@ I = A*B3
+	veor		d16, d16, d17	@ t0 = (L) (P0 + P1) << 8
+	vand		d17, d17, d29
+	vext.8		d22, d7, d7, #4	@ B4
+	veor		d18, d18, d19	@ t1 = (M) (P2 + P3) << 16
+	vand		d19, d19, d30
+	vmull.p8	q11, d27, d22		@ K = A*B4
+	veor		q10, q10, q2		@ N = I + J
+	veor		d16, d16, d17
+	veor		d18, d18, d19
+	veor		d20, d20, d21	@ t2 = (N) (P4 + P5) << 24
+	vand		d21, d21, d31
+	vext.8		q8, q8, q8, #15
+	veor		d22, d22, d23	@ t3 = (K) (P6 + P7) << 32
+	vmov.i64	d23, #0
+	vext.8		q9, q9, q9, #14
+	veor		d20, d20, d21
+	vmull.p8	q2, d27, d7		@ D = A*B
+	vext.8		q11, q11, q11, #12
+	vext.8		q10, q10, q10, #13
+	veor		q8, q8, q9
+	veor		q10, q10, q11
+	veor		q2, q2, q8
+	veor		q2, q2, q10
+	veor		q1,q1,q0		@ Karatsuba post-processing
+	veor		q1,q1,q2
+	veor		d1,d1,d2
+	veor		d4,d4,d3	@ Xh|Xl - 256-bit result
 
-	veor		q10,q13		@ modulo-scheduled part
-	vshl.i64	d22,#48
-	vdup.8		d4,d28[0]	@ broadcast lowest byte
-	veor		d3,d18,d20
+	@ equivalent of reduction_avx from ghash-x86_64.pl
+	vshl.i64	q9,q0,#57		@ 1st phase
+	vshl.i64	q10,q0,#62
+	veor		q10,q10,q9		@
+	vshl.i64	q9,q0,#63
+	veor		q10, q10, q9		@
+ 	veor		d1,d1,d20	@
+	veor		d4,d4,d21
 
-	veor		d21,d22
-	vuzp.8		q9,q8
-	vsli.8		d2,d3,#1		@ compose the "carry" byte
-	vext.8		q10,q12,#1		@ Z>>=8
+	vshr.u64	q10,q0,#1		@ 2nd phase
+	veor		q2,q2,q0
+	veor		q0,q0,q10		@
+	vshr.u64	q10,q10,#6
+	vshr.u64	q0,q0,#1		@
+	veor		q0,q0,q2		@
+	veor		q0,q0,q10		@
 
-	vmull.p8	q11,d2,d5		@ "carry"·0xe1
-	vshr.u8		d2,d3,#7		@ save Z's bottom bit
-	vext.8		q13,q9,q12,#1	@ Qlo>>=8
-	veor		q10,q8
-	bne		.Linner_neon
-
-	veor		q10,q13		@ modulo-scheduled artefact
-	vshl.i64	d22,#48
-	veor		d21,d22
-
-	@ finalization, normalize Z:Zo
-	vand		d2,d5		@ suffices to mask the bit
-	vshr.u64	d3,d20,#63
-	vshl.i64	q10,#1
 	subs		r3,#16
-	vorr		q10,q1		@ Z=Z:Zo<<1
-	bne		.Louter_neon
+	bne		.Loop_neon
 
 #ifdef __ARMEL__
-	vrev64.8	q10,q10
+	vrev64.8	q0,q0
 #endif
 	sub		r0,#16	
-	vst1.64		d21,[r0,:64]!	@ write out Xi
-	vst1.64		d20,[r0,:64]
+	vst1.64		d1,[r0,:64]!	@ write out Xi
+	vst1.64		d0,[r0,:64]
 
-	.word	0xe12fff1e
+	bx	lr					@ bx lr
 .size	gcm_ghash_neon,.-gcm_ghash_neon
 #endif
 .asciz  "GHASH for ARMv4/NEON, CRYPTOGAMS by <appro@openssl.org>"

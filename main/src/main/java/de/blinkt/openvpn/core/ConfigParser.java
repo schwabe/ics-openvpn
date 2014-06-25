@@ -1,7 +1,5 @@
 package de.blinkt.openvpn.core;
 
-import de.blinkt.openvpn.VpnProfile;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -9,6 +7,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
+
+import de.blinkt.openvpn.VpnProfile;
 
 //! Openvpn Config FIle Parser, probably not 100% accurate but close enough
 
@@ -31,10 +31,16 @@ public class ConfigParser {
 
 		BufferedReader br =new BufferedReader(reader);
 
+        int lineno=0;
 		while (true){
 			String line = br.readLine();
+            lineno++;
 			if(line==null)
 				break;
+
+            if (lineno==1 && (line.startsWith("PK\003\004")
+                        ||   (line.startsWith("PK\007\008"))))
+                    throw new ConfigParseError("Input looks like a ZIP Archive. Import is only possible for OpenVPN config files (.ovpn/.conf)");
 
 			// Check for OpenVPN Access Server Meta information
 			if (line.startsWith("# OVPN_ACCESS_SERVER_")) {
@@ -440,8 +446,8 @@ public class ConfigParser {
 		}
 
         Vector<String> rport = getOption("rport", 1,1);
-        if(port!=null){
-            np.mServerPort = port.get(1);
+        if(rport!=null){
+            np.mServerPort = rport.get(1);
         }
 
         Vector<String> proto = getOption("proto", 1,1);

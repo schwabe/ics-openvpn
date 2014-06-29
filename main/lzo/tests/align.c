@@ -2,22 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 2011 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2010 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2009 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2008 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2007 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2006 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2005 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2004 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2003 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2002 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2001 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 2000 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 1999 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 1998 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 1997 Markus Franz Xaver Johannes Oberhumer
-   Copyright (C) 1996 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -52,14 +37,14 @@
 #include "examples/portab.h"
 
 
-int opt_verbose = 0;
+static int opt_verbose = 0;
 
 
 /*************************************************************************
 //
 **************************************************************************/
 
-unsigned long align_test(lzo_bytep block, lzo_uint len, lzo_uint step)
+static unsigned long align_test(lzo_bytep block, lzo_uint len, lzo_uint step)
 {
     lzo_bytep b1 = block;
     lzo_bytep b2 = block;
@@ -208,7 +193,4 @@ int main(int argc, char *argv[])
 }
 
 
-/*
-vi:ts=4:et
-*/
-
+/* vim:set ts=4 sw=4 et: */

@@ -26,7 +26,7 @@ do
     elif [ $lang = "zh-TW" ] ; then
         rlang="zh-rTW"
     elif [ $lang = "id" ] ; then
-        rlang="id"
+        rlang="in"
 	fi
 
 	echo "Fetch archive for $lang"

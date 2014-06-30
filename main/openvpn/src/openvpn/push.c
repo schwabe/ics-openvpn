@@ -303,6 +303,11 @@ send_push_reply (struct context *c)
   if (multi_push)
     buf_printf (&buf, ",push-continuation 1");
 
+  /* Send session_id if client supports it */
+  if (c->c2.tls_multi->peer_info && strstr(c->c2.tls_multi->peer_info, "IV_PROTO=2")) {
+      buf_printf(&buf, ",session_id %d", c->c2.tls_multi->vpn_session_id);
+  }
+
   if (BLEN (&buf) > sizeof(cmd)-1)
     {
       const bool status = send_control_channel_string (c, BSTR (&buf), D_PUSH);
@@ -462,7 +467,8 @@ process_incoming_push_msg (struct context *c,
 				  &buf,
 				  permission_mask,
 				  option_types_found,
-				  c->c2.es))
+				  c->c2.es,
+				  c->c2.tls_multi))
 	    switch (c->options.push_continuation)
 	      {
 	      case 0:

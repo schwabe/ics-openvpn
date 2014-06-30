@@ -125,6 +125,8 @@ struct multi_context {
 # define MC_WORK_THREAD                (MC_MULTI_THREADED_WORKER|MC_MULTI_THREADED_SCHEDULER)
   int thread_mode;
 
+  struct multi_instance** instances;
+
   struct hash *hash;            /**< VPN tunnel instances indexed by real
                                  *   address of the remote peer. */
   struct hash *vhash;           /**< VPN tunnel instances indexed by

@@ -624,6 +624,8 @@ packet_opcode_name (int op)
       return "P_ACK_V1";
     case P_DATA_V1:
       return "P_DATA_V1";
+    case P_DATA_V2:
+      return "P_DATA_V2";
     default:
       return "P_???";
     }
@@ -1068,6 +1070,9 @@ tls_multi_init (struct tls_options *tls_options)
   ret->key_scan[0] = &ret->session[TM_ACTIVE].key[KS_PRIMARY];
   ret->key_scan[1] = &ret->session[TM_ACTIVE].key[KS_LAME_DUCK];
   ret->key_scan[2] = &ret->session[TM_LAME_DUCK].key[KS_LAME_DUCK];
+
+  /* By default not use P_DATA_V2 */
+  ret->use_session_id = false;
 
   return ret;
 }
@@ -1841,6 +1846,9 @@ push_peer_info(struct buffer *buf, struct tls_session *session)
 #elif defined(WIN32)
       buf_printf (&out, "IV_PLAT=win\n");
 #endif
+
+      /* support for P_DATA_V2 */
+      buf_printf(&out, "IV_PROTO=2\n");
 
       /* push compression status */
 #ifdef USE_COMP
@@ -2799,8 +2807,9 @@ tls_pre_decrypt (struct tls_multi *multi,
 	key_id = c & P_KEY_ID_MASK;
       }
 
-      if (op == P_DATA_V1)
-	{			/* data channel packet */
+      if ((op == P_DATA_V1) || (op == P_DATA_V2))
+	{
+	  /* data channel packet */
 	  for (i = 0; i < KEY_SCAN_SIZE; ++i)
 	    {
 	      struct key_state *ks = multi->key_scan[i];
@@ -2832,7 +2841,9 @@ tls_pre_decrypt (struct tls_multi *multi,
 		  opt->pid_persist = NULL;
 		  opt->flags &= multi->opt.crypto_flags_and;
 		  opt->flags |= multi->opt.crypto_flags_or;
-		  ASSERT (buf_advance (buf, 1));
+
+		  ASSERT (buf_advance (buf, op == P_DATA_V1 ? 1 : 4));
+
 		  ++ks->n_packets;
 		  ks->n_bytes += buf->len;
 		  dmsg (D_TLS_KEYSELECT,
@@ -3329,6 +3340,7 @@ tls_pre_decrypt_lite (const struct tls_auth_standalone *tas,
   return ret;
 
  error:
+
   tls_clear_error();
   gc_free (&gc);
   return ret;
@@ -3397,14 +3409,24 @@ tls_post_encrypt (struct tls_multi *multi, struct buffer *buf)
 {
   struct key_state *ks;
   uint8_t *op;
+  uint32_t sess;
 
   ks = multi->save_ks;
   multi->save_ks = NULL;
   if (buf->len > 0)
     {
       ASSERT (ks);
-      ASSERT (op = buf_prepend (buf, 1));
-      *op = (P_DATA_V1 << P_OPCODE_SHIFT) | ks->key_id;
+
+      if (!multi->opt.server && multi->use_session_id)
+	{
+	  sess = ((P_DATA_V2 << P_OPCODE_SHIFT) | ks->key_id) | (multi->vpn_session_id << 8);
+	  ASSERT (buf_write_prepend (buf, &sess, 4));
+	}
+      else
+	{
+	  ASSERT (op = buf_prepend (buf, 1));
+	  *op = (P_DATA_V1 << P_OPCODE_SHIFT) | ks->key_id;
+	}
       ++ks->n_packets;
       ks->n_bytes += buf->len;
     }
@@ -3477,6 +3499,31 @@ tls_rec_payload (struct tls_multi *multi,
   return ret;
 }
 
+/* Update the remote_addr, needed if a client floats. */
+void
+tls_update_remote_addr (struct tls_multi *multi,
+const struct link_socket_actual *from)
+{
+  struct gc_arena gc = gc_new ();
+  int i;
+
+  for (i = 0; i < KEY_SCAN_SIZE; ++i)
+    {
+      struct key_state *ks = multi->key_scan[i];
+      if (DECRYPT_KEY_ENABLED (multi, ks) && ks->authenticated && link_socket_actual_defined(&ks->remote_addr))
+       {
+	 if (link_socket_actual_match (from, &ks->remote_addr))
+	   continue;
+	 dmsg (D_TLS_KEYSELECT,
+		"TLS: tls_update_remote_addr from IP=%s to IP=%s",
+	       print_link_socket_actual (&ks->remote_addr, &gc),
+	       print_link_socket_actual (from, &gc));
+	 memcpy(&ks->remote_addr, from, sizeof(*from));
+       }
+    }
+  gc_free (&gc);
+}
+
 /*
  * Dump a human-readable rendition of an openvpn packet
  * into a garbage collectable string which is returned.
@@ -3511,7 +3558,7 @@ protocol_dump (struct buffer *buffer, unsigned int flags, struct gc_arena *gc)
   key_id = c & P_KEY_ID_MASK;
   buf_printf (&out, "%s kid=%d", packet_opcode_name (op), key_id);
 
-  if (op == P_DATA_V1)
+  if ((op == P_DATA_V1) || (op == P_DATA_V2))
     goto print_data;
 
   /*

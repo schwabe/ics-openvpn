@@ -495,6 +495,10 @@ struct tls_multi
   char *peer_info;
 #endif
 
+  /* For P_DATA_V2 */
+  uint32_t vpn_session_id;
+  int use_session_id;
+
   /*
    * Our session objects.
    */

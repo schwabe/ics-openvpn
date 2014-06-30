@@ -111,11 +111,9 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         public void startProfile(String profileUUID) throws RemoteException {
             checkOpenVPNPermission();
 
-            Intent shortVPNIntent = new Intent(Intent.ACTION_MAIN);
-            shortVPNIntent.setClass(getBaseContext(), de.blinkt.openvpn.LaunchVPN.class);
-            shortVPNIntent.putExtra(de.blinkt.openvpn.LaunchVPN.EXTRA_KEY, profileUUID);
-            shortVPNIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(shortVPNIntent);
+
+            VpnProfile vp = ProfileManager.get(getBaseContext(), profileUUID);
+            VPNLaunchHelper.startOpenVpn(vp, getBaseContext());
         }
 
         public void startVPN(String inlineconfig) throws RemoteException {

@@ -43,8 +43,8 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         unbindService(mConnection);
     }
 

@@ -71,6 +71,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     private OpenVPNManagement mManagement;
     private String mLastTunCfg;
     private String mRemoteGW;
+    private Object mProcessLock = new Object();
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean mbit) {
@@ -109,7 +110,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     }
 
     private void endVpnService() {
-        mProcessThread = null;
+        synchronized (mProcessLock) {
+            mProcessThread = null;
+        }
         VpnStatus.removeByteCountListener(this);
         unregisterDeviceStateReceiver();
         ProfileManager.setConntectedVpnProfileDisconnected(this);
@@ -329,13 +332,14 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
                 //ignore
             }
 
-
-        if (mProcessThread != null) {
-            mProcessThread.interrupt();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                //ignore
+        synchronized (mProcessLock) {
+            if (mProcessThread != null) {
+                mProcessThread.interrupt();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    //ignore
+                }
             }
         }
         // An old running VPN should now be exited
@@ -379,9 +383,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             processThread = new OpenVPNThread(this, argv, env, nativelibdir);
         }
 
-        mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
-        mProcessThread.start();
-
+        synchronized (mProcessLock) {
+            mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
+            mProcessThread.start();
+        }
         if (mDeviceStateReceiver != null)
             unregisterDeviceStateReceiver();
 
@@ -415,11 +420,12 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
 
     @Override
     public void onDestroy() {
-        if (mProcessThread != null) {
-            mManagement.stopVPN();
-
-            mProcessThread.interrupt();
+        synchronized (mProcessLock) {
+            if (mProcessThread != null) {
+                mManagement.stopVPN();
+            }
         }
+
         if (mDeviceStateReceiver != null) {
             this.unregisterReceiver(mDeviceStateReceiver);
         }

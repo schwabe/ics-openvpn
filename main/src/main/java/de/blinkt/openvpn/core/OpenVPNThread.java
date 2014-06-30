@@ -48,8 +48,6 @@ public class OpenVPNThread implements Runnable {
 	public void stopProcess() {
 		mProcess.destroy();
 	}
-
-	
 	
 	@Override
 	public void run() {

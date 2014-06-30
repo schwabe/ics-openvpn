@@ -56,8 +56,10 @@ public class AllowedVPNsChooser extends ListActivity {
     private void saveAllowedApps(Set<String> allowedApps)
     {
         SharedPreferences prefs = getPreferences(MODE_WORLD_READABLE);
-        prefs.edit().putStringSet(ALLOWED_APPS,allowedApps)
-                .putInt("random",new Random().nextInt()).apply();
+        SharedPreferences.Editor prefeditor = prefs.edit();
+        prefeditor.putStringSet(ALLOWED_APPS,allowedApps);
+        prefeditor.putInt("random",new Random().nextInt());
+        prefeditor.apply();
     }
 
 

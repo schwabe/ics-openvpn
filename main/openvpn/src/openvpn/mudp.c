@@ -38,6 +38,55 @@
 #include "memdbg.h"
 
 /*
+ * Update instance with new peer address
+ */
+void
+update_floated(struct multi_context *m, struct multi_instance *mi,
+	       struct mroute_addr real, uint32_t hv)
+{
+  struct mroute_addr real_old;
+
+  real_old = mi->real;
+  generate_prefix (mi);
+
+  /* remove before modifying mi->real, since it also modifies key in hash */
+  hash_remove(m->hash, &real_old);
+  hash_remove(m->iter, &real_old);
+
+  /* update address */
+  memcpy(&mi->real, &real, sizeof(real));
+
+  mi->context.c2.from = m->top.c2.from;
+  mi->context.c2.to_link_addr = &mi->context.c2.from;
+
+  /* switch to new log prefix */
+  generate_prefix (mi);
+  /* inherit buffers */
+  mi->context.c2.buffers = m->top.c2.buffers;
+
+  /* inherit parent link_socket and link_socket_info */
+  mi->context.c2.link_socket = m->top.c2.link_socket;
+  mi->context.c2.link_socket_info->lsa->actual = m->top.c2.from;
+
+  /* fix remote_addr in tls structure */
+  tls_update_remote_addr (mi->context.c2.tls_multi, &mi->context.c2.from);
+  mi->did_open_context = true;
+
+  hash_add(m->hash, &mi->real, mi, false);
+  hash_add(m->iter, &mi->real, mi, false);
+
+  mi->did_real_hash = true;
+#ifdef MANAGEMENT_DEF_AUTH
+  hash_remove (m->cid_hash, &mi->context.c2.mda_context.cid);
+  hash_add (m->cid_hash, &mi->context.c2.mda_context.cid, mi, false);
+#endif
+
+#ifdef MANAGEMENT_DEF_AUTH
+  mi->did_cid_hash = true;
+#endif
+}
+
+/*
  * Get a client instance based on real address.  If
  * the instance doesn't exist, create it while
  * maintaining real address hash table atomicity.
@@ -56,14 +105,46 @@ multi_get_create_instance_udp (struct multi_context *m)
       struct hash_element *he;
       const uint32_t hv = hash_value (hash, &real);
       struct hash_bucket *bucket = hash_bucket (hash, hv);
-  
-      he = hash_lookup_fast (hash, bucket, &real, hv);
+      uint8_t* ptr  = BPTR(&m->top.c2.buf);
+      uint8_t op = ptr[0] >> P_OPCODE_SHIFT;
+      uint32_t sess_id;
+      bool session_forged = false;
 
-      if (he)
+      if (op == P_DATA_V2)
 	{
-	  mi = (struct multi_instance *) he->value;
+	  sess_id = (*(uint32_t*)ptr) >> 8;
+	  if ((sess_id < m->max_clients) && (m->instances[sess_id]))
+	    {
+	      mi = m->instances[sess_id];
+
+	      if (!link_socket_actual_match(&mi->context.c2.from, &m->top.c2.from))
+		{
+		  msg(D_MULTI_MEDIUM, "floating detected from %s to %s",
+		      print_link_socket_actual (&mi->context.c2.from, &gc), print_link_socket_actual (&m->top.c2.from, &gc));
+
+		  /* session-id is not trusted, so check hmac */
+		  session_forged = !(crypto_test_hmac(&m->top.c2.buf, &mi->context.c2.crypto_options));
+		  if (session_forged)
+		    {
+		      mi = NULL;
+		      msg (D_MULTI_MEDIUM, "hmac verification failed, session forge detected!");
+		    }
+		  else
+		    {
+		      update_floated(m, mi, real, hv);
+		    }
+		}
+	    }
 	}
       else
+	{
+	  he = hash_lookup_fast (hash, bucket, &real, hv);
+	  if (he)
+	    {
+	      mi = (struct multi_instance *) he->value;
+	    }
+	}
+      if (!mi && !session_forged)
 	{
 	  if (!m->top.c2.tls_auth_standalone
 	      || tls_pre_decrypt_lite (m->top.c2.tls_auth_standalone, &m->top.c2.from, &m->top.c2.buf))
@@ -75,6 +156,17 @@ multi_get_create_instance_udp (struct multi_context *m)
 		    {
 		      hash_add_fast (hash, bucket, &mi->real, hv, mi);
 		      mi->did_real_hash = true;
+
+		      int i;
+		      for (i = 0; i < m->max_clients; ++ i)
+			{
+			  if (!m->instances[i])
+			    {
+			      mi->context.c2.tls_multi->vpn_session_id = i;
+			      m->instances[i] = mi;
+			      break;
+			    }
+			}
 		    }
 		}
 	      else
@@ -89,15 +181,17 @@ multi_get_create_instance_udp (struct multi_context *m)
 #ifdef ENABLE_DEBUG
       if (check_debug_level (D_MULTI_DEBUG))
 	{
-	  const char *status;
+	  const char *status = mi ? "[ok]" : "[failed]";
 
+	  /*
 	  if (he && mi)
 	    status = "[succeeded]";
 	  else if (!he && mi)
 	    status = "[created]";
 	  else
 	    status = "[failed]";
-	
+	  */
+
 	  dmsg (D_MULTI_DEBUG, "GET INST BY REAL: %s %s",
 	       mroute_addr_print (&real, &gc),
 	       status);

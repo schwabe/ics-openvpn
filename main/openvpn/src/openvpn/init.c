@@ -3165,13 +3165,24 @@ management_show_net_callback (void *arg, const int msglevel)
 int
 managmenet_callback_network_change (void *arg)
 {
+  int socketfd=-1;
   struct context *c = (struct context *) arg;
   if (!c->c2.link_socket)
     return -1;
   if (c->c2.link_socket->sd == SOCKET_UNDEFINED)
     return -1;
 
-  return c->c2.link_socket->sd;
+  /* Check if the client should translate the network change to a SIGUSR1 to 
+     reestablish the connection or just reprotect the socket */
+
+  /* At the moment just assume that, for all settings that use pull 
+     reestablishing the connection is required */
+
+  socketfd = c->c2.link_socket->sd;
+  if (!c->options.pull || c->c2.tls_multi->use_session_id)
+    return socketfd;
+  else
+    return -2;
 }
 #endif
 

@@ -712,11 +712,13 @@ void options_postprocess (struct options *options);
 void pre_pull_save (struct options *o);
 void pre_pull_restore (struct options *o, struct gc_arena *gc);
 
+struct tls_multi;
 bool apply_push_options (struct options *options,
 			 struct buffer *buf,
 			 unsigned int permission_mask,
 			 unsigned int *option_types_found,
-			 struct env_set *es);
+			 struct env_set *es,
+			 struct tls_multi* tls_multi);
 
 void options_detach (struct options *o);
 

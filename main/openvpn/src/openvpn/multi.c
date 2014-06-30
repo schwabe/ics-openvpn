@@ -303,6 +303,7 @@ multi_init (struct multi_context *m, struct context *t, bool tcp_mode, int threa
 			   cid_compare_function);
 #endif
 
+
   /*
    * This is our scheduler, for time-based wakeup
    * events.
@@ -372,6 +373,13 @@ multi_init (struct multi_context *m, struct context *t, bool tcp_mode, int threa
    * Per-client limits
    */
   m->max_clients = t->options.max_clients;
+
+  int i;
+  m->instances = malloc(sizeof(struct multi_instance*) * m->max_clients);
+  for (i = 0; i < m->max_clients; ++ i)
+    {
+      m->instances[i] = NULL;
+    }
 
   /*
    * Initialize multi-socket TCP I/O wait object
@@ -553,6 +561,8 @@ multi_close_instance (struct multi_context *m,
 	}
 #endif
 
+      m->instances[mi->context.c2.tls_multi->vpn_session_id] = NULL;
+
       schedule_remove_entry (m->schedule, (struct schedule_entry *) mi);
 
       ifconfig_pool_release (m->ifconfig_pool, mi->vaddr_handle, false);
@@ -629,6 +639,8 @@ multi_uninit (struct multi_context *m)
 #endif
 	  m->hash = NULL;
 
+	  free(m->instances);
+
 	  schedule_free (m->schedule);
 	  mbuf_free (m->mbuf);
 	  ifconfig_pool_free (m->ifconfig_pool);
@@ -651,8 +663,6 @@ multi_create_instance (struct multi_context *m, const struct mroute_addr *real)
   struct multi_instance *mi;
 
   perf_push (PERF_MULTI_CREATE_INSTANCE);
-
-  msg (D_MULTI_MEDIUM, "MULTI: multi_create_instance called");
 
   ALLOC_OBJ_CLEAR (mi, struct multi_instance);
 

@@ -2,23 +2,23 @@ package de.blinkt.vpndialogxposed;
 
 import android.Manifest;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.*;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.os.Bundle;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+import java.util.Vector;
 
 
-/**
- * Created by arne on 06.10.13.
- */
 public class AllowedVPNsChooser extends ListActivity {
 
     public static final String ALLOWED_APPS = "allowedApps";
@@ -47,7 +47,7 @@ public class AllowedVPNsChooser extends ListActivity {
 
 
     private Collection<String> getAllowedApps(){
-        SharedPreferences prefs = getPreferences(MODE_WORLD_READABLE);
+        @SuppressWarnings("deprecation")  SharedPreferences prefs = getPreferences(MODE_WORLD_READABLE);
         HashSet<String> defaultapps = new HashSet<String>();
         defaultapps.add("de.blinkt.openvpn");
         return prefs.getStringSet(ALLOWED_APPS,defaultapps );
@@ -55,7 +55,7 @@ public class AllowedVPNsChooser extends ListActivity {
 
     private void saveAllowedApps(Set<String> allowedApps)
     {
-        SharedPreferences prefs = getPreferences(MODE_WORLD_READABLE);
+        @SuppressWarnings("deprecation") SharedPreferences prefs = getPreferences(MODE_WORLD_READABLE);
         SharedPreferences.Editor prefeditor = prefs.edit();
         prefeditor.putStringSet(ALLOWED_APPS,allowedApps);
         prefeditor.putInt("random",new Random().nextInt());

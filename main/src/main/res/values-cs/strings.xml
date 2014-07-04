@@ -215,6 +215,7 @@
   <string name="vpn_import_hint">Použij ikonu &lt;img src=\"ic_menu_archive\"/&gt; k imporu existujícího (.ovpn nebo .conf) profilu z SD karty.</string>
   <string name="faq_hint">Ujisti se, že jsi si pročetl FAQ. Je zde nápověda pro rychlý start.</string>
   <string name="faq_routing_title">Nastavení směrování/rozhraní</string>
+  <string name="faq_routing">Směrování a konfigurace rozhraní není provedena pomocí tradičních příkazů ifconfig/route, ale pomocí VPNService API. To má za následek odlišnou konfiguraci směrování, než na jiných operačních systémech. Konfigurace VPN tunelu se skládá z IP adresy a sítě, která má být směrována skrze toto rozhraní. Zejména není potřeba adresa protistrany nebo brány. Speciální směrování pro dosažení VPN serveru (například v případě použití redirect-gataway direktivy) také není potřeba. Aplikace bude toto nastavení při importu konfigurace ignorovat. Aplikace pomocí VPNService API zajišťuje, že spojení k VPN serveru není směrováno skrze tunel. Povoleno je pouze specifikování sítí, které se mají směrovat skrze tunel. Aplikace se snaží detekovat sítě, které by neměli procházet tunelem (např. route x.x.x.x y.y.y.y net_gateway) a vypočítává nastavení směrování tak, aby emulovalo správné chováni jako na ostatních platformách. Logovací okno ukazuje konfiguraci VPNService při navázání spojení.</string>
   <string name="persisttun_summary">Nevracej se ke spojení mimo VPN, zatímco se OpenVPN připojuje.</string>
   <string name="persistent_tun_title">Trvalý tun</string>
   <string name="openvpn_log">OpenVPN Log</string>
@@ -311,10 +312,11 @@
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
   <string name="faq_system_dialog_xposed">Pokud máš rootnuté zařízení, můžeš nainstalovat &lt;a href=\"http://xposed.info/\"&gt;Xposed framework&lt;/a&gt; a &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN potvrzovací modul&lt;/a&gt; na vlastní nebezpečí\"</string>
   <string name="full_licenses">Plné licence</string>
-  <string name="blocklocal_summary">Sítě přímo připojené na lokální interface nebudou směrovány skrze VPN. Odškrtnutím této volby bude přesměrován všechen lokální provoz do VPN.</string>
+  <string name="blocklocal_summary">Sítě přímo připojené na lokální rozhraní nebudou směrovány skrze VPN. Odškrtnutím této volby bude přesměrován všechen lokální provoz do VPN.</string>
   <string name="blocklocal_title">Nepoužívat VPN pro lokální sítě</string>
   <string name="userpw_file">Soubor pro Jméno/Heslo</string>
   <string name="imported_from_file">[Importováno z: %s]</string>
-  <string name="files_missing_hint">Některé soubory nemohly být nalezeny. Prosím vyberte profil, který chcete importovat:</string>
+  <string name="files_missing_hint">Některé soubory nemohly být nalezeny. Prosím vyber profil, který chceš importovat:</string>
+  <string name="openvpn_is_no_free_vpn">Pro používání této aplikace je potřeba VPN poskytovatel/brána, která podporuje OpenVPN (často je to zaměstnavatel). Pro více informací a návod na nastavení OpenVPN serveru navštiv http://community.openvpn.net/</string>
   <string name="import_log">Import logu:</string>
 </resources>

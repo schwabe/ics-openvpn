@@ -5,6 +5,8 @@ import android.text.TextUtils;
 
 import junit.framework.Assert;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.math.BigInteger;
 import java.net.Inet6Address;
 import java.util.*;
@@ -23,19 +25,40 @@ public class NetworkSpace {
         private BigInteger lastAddress;
 
 
+        /**
+         * sorts the networks with following criteria:
+         *    1. compares first 1 of the network
+         *    2. smaller networks are returned as smaller
+         */
         @Override
-        public int compareTo(ipAddress another) {
+        public int compareTo(@NotNull ipAddress another) {
             int comp = getFirstAddress().compareTo(another.getFirstAddress());
             if (comp != 0)
                 return comp;
 
-            // bigger mask means smaller address block
+
             if (networkMask > another.networkMask)
                 return -1;
             else if (another.networkMask == networkMask)
                 return 0;
             else
                 return 1;
+        }
+
+        /**
+         * Warning ignores the included integer
+         *
+         * @param o
+         *            the object to compare this instance with.
+         */
+        @Override
+        public boolean equals(Object o) {
+            if (!(o instanceof ipAddress))
+                return super.equals(o);
+
+
+            ipAddress on = (ipAddress) o;
+            return (networkMask == on.networkMask) && on.getFirstAddress().equals(getFirstAddress());
         }
 
         public ipAddress(CIDRIP ip, boolean include) {
@@ -110,10 +133,10 @@ public class NetworkSpace {
 
 
         public ipAddress[] split() {
-            ipAddress firsthalf = new ipAddress(getFirstAddress(), networkMask + 1, included, isV4);
-            ipAddress secondhalf = new ipAddress(firsthalf.getLastAddress().add(BigInteger.ONE), networkMask + 1, included, isV4);
-            if (BuildConfig.DEBUG) Assert.assertTrue(secondhalf.getLastAddress().equals(getLastAddress()));
-            return new ipAddress[]{firsthalf, secondhalf};
+            ipAddress firstHalf = new ipAddress(getFirstAddress(), networkMask + 1, included, isV4);
+            ipAddress secondHalf = new ipAddress(firstHalf.getLastAddress().add(BigInteger.ONE), networkMask + 1, included, isV4);
+            if (BuildConfig.DEBUG) Assert.assertTrue(secondHalf.getLastAddress().equals(getLastAddress()));
+            return new ipAddress[]{firstHalf, secondHalf};
         }
 
         String getIPv4Address() {
@@ -185,7 +208,7 @@ public class NetworkSpace {
             return ipsDone;
 
         while (currentNet!=null) {
-            // Check if it and the next of it are compatbile
+            // Check if it and the next of it are compatible
             ipAddress nextNet = networks.poll();
 
             if (BuildConfig.DEBUG) Assert.assertNotNull(currentNet);
@@ -202,8 +225,11 @@ public class NetworkSpace {
                         // Simply forget our current network
                         currentNet=nextNet;
                     } else {
-                        // our currentnet is included in next and types differ. Need to split the next network
+                        // our currentNet is included in next and types differ. Need to split the next network
                         ipAddress[] newNets = nextNet.split();
+
+
+                        // TODO: The contains method of the Priority is stupid linear search
 
                         // First add the second half to keep the order in networks
                         if (!networks.contains(newNets[1]))
@@ -226,6 +252,7 @@ public class NetworkSpace {
                     }
                     // This network is bigger than the next and last ip of current >= next
 
+                    //noinspection StatementWithEmptyBody
                     if (currentNet.included == nextNet.included) {
                         // Next network is in included in our network with the same type,
                         // simply ignore the next and move on
@@ -238,7 +265,7 @@ public class NetworkSpace {
                             if (BuildConfig.DEBUG) {
                                 Assert.assertTrue (newNets[1].getFirstAddress().equals(nextNet.getFirstAddress()));
                                 Assert.assertTrue (newNets[1].getLastAddress().equals(currentNet.getLastAddress()));
-                                // Splitted second equal the next network, do not add it
+                                // split second equal the next network, do not add it
                             }
                             networks.add(nextNet);
                         } else {

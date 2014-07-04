@@ -751,7 +751,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         } else {
             String release = Build.VERSION.RELEASE;
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !release.startsWith("4.4.3")
-                    &&  !release.startsWith("4.4.4") &&  !release.startsWith("4.4.5"))
+                    &&  !release.startsWith("4.4.4") &&  !release.startsWith("4.4.5") && !release.startsWith("4.4.6"))
                 // There will be probably no 4.4.4 or 4.4.5 version, so don't waste effort to do parsing here
                 return "OPEN_AFTER_CLOSE";
             else

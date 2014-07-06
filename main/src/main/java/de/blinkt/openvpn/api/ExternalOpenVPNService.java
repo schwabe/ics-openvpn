@@ -111,7 +111,6 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         public void startProfile(String profileUUID) throws RemoteException {
             checkOpenVPNPermission();
 
-
             VpnProfile vp = ProfileManager.get(getBaseContext(), profileUUID);
             VPNLaunchHelper.startOpenVpn(vp, getBaseContext());
         }

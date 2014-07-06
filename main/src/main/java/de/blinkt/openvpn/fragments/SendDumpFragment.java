@@ -53,7 +53,7 @@ public class SendDumpFragment extends Fragment  {
 		}
 
 
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, String.format("%s %s Minidump",name,version));
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, String.format("%s(%s) %s Minidump",name, getActivity().getPackageName(), version));
 
 		emailIntent.putExtra(Intent.EXTRA_TEXT, "Please describe the issue you have experienced");
 

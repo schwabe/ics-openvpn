@@ -111,8 +111,8 @@ public class VpnProfile implements Serializable {
     public boolean mUseDefaultRoute = true;
     public boolean mUsePull = true;
     public String mCustomRoutes;
-    public boolean mCheckRemoteCN = false;
-    public boolean mExpectTLSCert = true;
+    public boolean mCheckRemoteCN = true;
+    public boolean mExpectTLSCert = false;
     public String mRemoteCN = "";
     public String mPassword = "";
     public String mUsername = "";
@@ -177,6 +177,7 @@ public class VpnProfile implements Serializable {
         mUseDefaultRoute = false;
         mUseDefaultRoutev6 = false;
         mExpectTLSCert = false;
+        mCheckRemoteCN = false;
         mPersistTun = false;
         mAllowLocalLAN = true;
     }

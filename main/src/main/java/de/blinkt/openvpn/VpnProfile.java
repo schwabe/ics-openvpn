@@ -1,5 +1,6 @@
 package de.blinkt.openvpn;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -890,12 +891,15 @@ public class VpnProfile implements Serializable {
 
         try {
 
+            /* ECB is perfectly fine in this special case, since we are using it for
+               the public/private part in the TLS exchange
+             */
+            @SuppressLint(GetInstance)
+            Cipher rsaSigner = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
 
-            Cipher rsasinger = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+            rsaSigner.init(Cipher.ENCRYPT_MODE, privkey);
 
-            rsasinger.init(Cipher.ENCRYPT_MODE, privkey);
-
-            byte[] signed_bytes = rsasinger.doFinal(data);
+            byte[] signed_bytes = rsaSigner.doFinal(data);
             return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
 
         } catch (NoSuchAlgorithmException e) {

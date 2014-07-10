@@ -14,7 +14,7 @@ See  the file todo.txt for ideas/not yet implemented features (and the bug track
 
 Build instraction:
 
-Disable Google breakcode (WITH_BREAKPAD=0 in jni/Android.mk) or checkout google breakcode
+Disable Google breakcode (call build-native.sh with USE_BREAKPAD=0) or checkout google breakcode
 
 svn co http://google-breakpad.googlecode.com/svn/trunk/ google-breakpad
 

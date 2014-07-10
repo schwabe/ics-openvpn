@@ -228,6 +228,9 @@ public class VpnProfile implements Serializable {
 
         cfg += "machine-readable-output\n";
 
+        // Users are confused by warnings that are misleading...
+        cfg += "ifconfig-nowarn\n";
+
 
         boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
 

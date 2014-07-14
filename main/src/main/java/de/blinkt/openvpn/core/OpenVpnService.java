@@ -644,10 +644,10 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
         mMtu = mtu;
         mRemoteGW=null;
 
+        long netMaskAsInt = CIDRIP.getInt(netmask);
 
         if (mLocalIP.len == 32 && !netmask.equals("255.255.255.255")) {
             // get the netmask as IP
-            long netMaskAsInt = CIDRIP.getInt(netmask);
 
             int masklen;
             if ("net30".equals(mode))
@@ -660,11 +660,18 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             if ((netMaskAsInt & mask) == (mLocalIP.getInt() & mask )) {
                 mLocalIP.len = masklen;
             } else {
+                mLocalIP.len = 32;
                 if (!"p2p".equals(mode))
                     VpnStatus.logWarning(R.string.ip_not_cidr, local, netmask, mode);
-                mRemoteGW=netmask;
             }
         }
+        if (("p2p".equals(mode))  && mLocalIP.len < 32 || "net30".equals("net30") && mLocalIP.len < 30) {
+            VpnStatus.logWarning(R.string.ip_looks_like_subnet, local, netmask, mode);
+        }
+
+
+        // Configurations are sometimes really broken...
+        mRemoteGW=netmask;
     }
 
     public void setLocalIPv6(String ipv6addr) {

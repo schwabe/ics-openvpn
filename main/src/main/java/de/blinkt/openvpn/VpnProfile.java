@@ -11,6 +11,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.security.KeyChain;
 import android.security.KeyChainException;
+import android.text.TextUtils;
 import android.util.Base64;
 
 import org.spongycastle.util.io.pem.PemObject;
@@ -197,10 +198,7 @@ public class VpnProfile implements Serializable {
     public void upgradeProfile(){
         if(mProfileVersion< 2) {
             /* default to the behaviour the OS used */
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
-                mAllowLocalLAN = true;
-            else
-                mAllowLocalLAN = false;
+            mAllowLocalLAN = Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT;
         }
 
         mProfileVersion= CURRENT_PROFILE_VERSION;
@@ -211,7 +209,7 @@ public class VpnProfile implements Serializable {
         File cacheDir = context.getCacheDir();
         String cfg = "";
 
-        // Enable managment interface
+        // Enable management interface
         cfg += "# Enables connection to GUI\n";
         cfg += "management ";
 
@@ -328,7 +326,7 @@ public class VpnProfile implements Serializable {
             else
                 cfg += insertFileData("tls-auth", mTLSAuthFilename);
 
-            if (nonNull(mTLSAuthDirection)) {
+            if (!TextUtils.isEmpty(mTLSAuthDirection)) {
                 cfg += "key-direction ";
                 cfg += mTLSAuthDirection;
                 cfg += "\n";
@@ -337,10 +335,10 @@ public class VpnProfile implements Serializable {
         }
 
         if (!mUsePull) {
-            if (nonNull(mIPv4Address))
+            if (!TextUtils.isEmpty(mIPv4Address))
                 cfg += "ifconfig " + cidrToIPAndNetmask(mIPv4Address) + "\n";
 
-            if (nonNull(mIPv6Address))
+            if (!TextUtils.isEmpty(mIPv6Address))
                 cfg += "ifconfig-ipv6 " + mIPv6Address + "\n";
         }
 
@@ -378,11 +376,11 @@ public class VpnProfile implements Serializable {
         cfg += routes;
 
         if (mOverrideDNS || !mUsePull) {
-            if (nonNull(mDNS1))
+            if (!TextUtils.isEmpty(mDNS1))
                 cfg += "dhcp-option DNS " + mDNS1 + "\n";
-            if (nonNull(mDNS2))
+            if (!TextUtils.isEmpty(mDNS2))
                 cfg += "dhcp-option DNS " + mDNS2 + "\n";
-            if (nonNull(mSearchDomain))
+            if (!TextUtils.isEmpty(mSearchDomain))
                 cfg += "dhcp-option DOMAIN " + mSearchDomain + "\n";
 
         }
@@ -423,11 +421,11 @@ public class VpnProfile implements Serializable {
                 cfg += "remote-cert-tls server\n";
         }
 
-        if (nonNull(mCipher)) {
+        if (!TextUtils.isEmpty(mCipher)) {
             cfg += "cipher " + mCipher + "\n";
         }
 
-        if (nonNull(mAuth)) {
+        if (!TextUtils.isEmpty(mAuth)) {
             cfg += "auth " + mAuth + "\n";
         }
 
@@ -487,13 +485,6 @@ public class VpnProfile implements Serializable {
         } else {
             return String.format(Locale.ENGLISH, "%s %s\n", cfgentry, openVpnEscape(filedata));
         }
-    }
-
-    private boolean nonNull(String val) {
-        if (val == null || val.equals(""))
-            return false;
-        else
-            return true;
     }
 
     private Collection<String> getCustomRoutes(String routes) {
@@ -637,8 +628,8 @@ public class VpnProfile implements Serializable {
 
     synchronized String[] getKeyStoreCertificates(Context context,int tries) {
         PrivateKey privateKey = null;
-        X509Certificate[] cachain;
-        Exception exp=null;
+        X509Certificate[] caChain;
+        Exception exp;
         try {
             privateKey = KeyChain.getPrivateKey(context, mAlias);
             mPrivateKey = privateKey;
@@ -646,18 +637,18 @@ public class VpnProfile implements Serializable {
             String keystoreChain = null;
 
 
-            cachain = KeyChain.getCertificateChain(context, mAlias);
-            if(cachain == null)
+            caChain = KeyChain.getCertificateChain(context, mAlias);
+            if(caChain == null)
                 throw new NoCertReturnedException("No certificate returned from Keystore");
 
-            if (cachain.length <= 1 && !nonNull(mCaFilename)) {
+            if (caChain.length <= 1 && TextUtils.isEmpty(mCaFilename)) {
                 VpnStatus.logMessage(VpnStatus.LogLevel.ERROR, "", context.getString(R.string.keychain_nocacert));
             } else {
                 StringWriter ksStringWriter = new StringWriter();
 
                 PemWriter pw = new PemWriter(ksStringWriter);
-                for (int i = 1; i < cachain.length; i++) {
-                    X509Certificate cert = cachain[i];
+                for (int i = 1; i < caChain.length; i++) {
+                    X509Certificate cert = caChain[i];
                     pw.writeObject(new PemObject("CERTIFICATE", cert.getEncoded()));
                 }
                 pw.close();
@@ -666,7 +657,7 @@ public class VpnProfile implements Serializable {
 
 
             String caout = null;
-            if (nonNull(mCaFilename)) {
+            if (!TextUtils.isEmpty(mCaFilename)) {
                 try {
                     Certificate cacert = X509Utils.getCertificateFromFile(mCaFilename);
                     StringWriter caoutWriter = new StringWriter();
@@ -685,8 +676,8 @@ public class VpnProfile implements Serializable {
             StringWriter certout = new StringWriter();
 
 
-            if (cachain.length >= 1) {
-                X509Certificate usercert = cachain[0];
+            if (caChain.length >= 1) {
+                X509Certificate usercert = caChain[0];
 
                 PemWriter upw = new PemWriter(certout);
                 upw.writeObject(new PemObject("CERTIFICATE", usercert.getEncoded()));
@@ -731,15 +722,14 @@ public class VpnProfile implements Serializable {
             }
             return getKeyStoreCertificates(context, tries-1);
         }
-        if (exp != null) {
-            exp.printStackTrace();
-            VpnStatus.logError(R.string.keyChainAccessError, exp.getLocalizedMessage());
 
-            VpnStatus.logError(R.string.keychain_access);
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
-                if (!mAlias.matches("^[a-zA-Z0-9]$")) {
-                    VpnStatus.logError(R.string.jelly_keystore_alphanumeric_bug);
-                }
+        exp.printStackTrace();
+        VpnStatus.logError(R.string.keyChainAccessError, exp.getLocalizedMessage());
+
+        VpnStatus.logError(R.string.keychain_access);
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
+            if (!mAlias.matches("^[a-zA-Z0-9]$")) {
+                VpnStatus.logError(R.string.jelly_keystore_alphanumeric_bug);
             }
         }
         return null;
@@ -802,7 +792,7 @@ public class VpnProfile implements Serializable {
     }
 
     public boolean requireTLSKeyPassword() {
-        if (!nonNull(mClientKeyFilename))
+        if (TextUtils.isEmpty(mClientKeyFilename))
             return false;
 
         String data = "";
@@ -843,13 +833,13 @@ public class VpnProfile implements Serializable {
         }
 
         if (mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) {
-            if (requireTLSKeyPassword() && !nonNull(mKeyPassword))
+            if (requireTLSKeyPassword() && TextUtils.isEmpty(mKeyPassword))
                 if (mTransientPCKS12PW == null) {
                     return R.string.private_key_password;
                 }
         }
 
-        if (isUserPWAuth() && !(nonNull(mUsername) && (nonNull(mPassword) || mTransientPW != null))) {
+        if (isUserPWAuth() && !(!TextUtils.isEmpty(mUsername) && (!TextUtils.isEmpty(mPassword) || mTransientPW != null))) {
             return R.string.password;
         }
         return 0;
@@ -897,7 +887,7 @@ public class VpnProfile implements Serializable {
             /* ECB is perfectly fine in this special case, since we are using it for
                the public/private part in the TLS exchange
              */
-            @SuppressLint(GetInstance)
+            @SuppressLint("GetInstance")
             Cipher rsaSigner = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
 
             rsaSigner.init(Cipher.ENCRYPT_MODE, privkey);

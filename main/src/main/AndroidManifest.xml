@@ -27,7 +27,8 @@
         android:icon="@drawable/icon"
         android:label="@string/app"
         android:name=".core.ICSOpenVPNApplication"
-        android:supportsRtl="true" >
+        android:supportsRtl="true"
+        tools:ignore="UnusedAttribute">
         <activity
             android:name=".activities.VPNPreferences"
             android:windowSoftInputMode="stateHidden"

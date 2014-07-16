@@ -549,8 +549,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                     // Ignore close error on already closed socket
                 }
             }
+            return sendCMD;
         }
-        return sendCMD;
     }
 
     @Override

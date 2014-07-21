@@ -55,7 +55,7 @@ A: minivpn is only a executable thats links against libopenvpn which is the norm
    keeping minivpn up to date because it contains no code. For almost all intents and purposes
    minivpn + libopenvpn.so is the same as the normal openvpn binary
 
-Q: How to a VPN by name from an external app
+Q: How do I start a VPN by name from an external app?
 
 A: public class StartOpenVPNActivity extends Activity {
     @Override
@@ -78,4 +78,6 @@ am start -a android.intent.action.MAIN -n de.blinkt.openvpn/.LaunchVPN -e de.bli
 
 Q: How to control the app from an external app?
 
-A: There is an AIDL interface. See src/de/blinkt/openvpn/api/IOpenVPNAPIService.aidl. See the normal Android documentation how to use AIDL.
+A: There is an AIDL interface. See src/de/blinkt/openvpn/api/IOpenVPNAPIService.aidl. See the normal Android documentation how to use AIDL. 
+   See also the example project under remoteExample.
+   

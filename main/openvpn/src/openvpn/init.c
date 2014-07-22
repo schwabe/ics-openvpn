@@ -2150,7 +2150,7 @@ do_init_crypto_tls (struct context *c, const unsigned int flags)
 			       options->use_iv);
 
   /* In short form, unique datagram identifier is 32 bits, in long form 64 bits */
-  packet_id_long_form = cfb_ofb_mode (&c->c1.ks.key_type);
+  packet_id_long_form = cipher_kt_mode_ofb_cfb (c->c1.ks.key_type.cipher);
 
   /* Compute MTU parameters */
   crypto_adjust_frame_parameters (&c->c2.frame,
@@ -3172,10 +3172,10 @@ managmenet_callback_network_change (void *arg)
   if (c->c2.link_socket->sd == SOCKET_UNDEFINED)
     return -1;
 
-  /* Check if the client should translate the network change to a SIGUSR1 to 
+  /* Check if the client should translate the network change to a SIGUSR1 to
      reestablish the connection or just reprotect the socket */
 
-  /* At the moment just assume that, for all settings that use pull 
+  /* At the moment just assume that, for all settings that use pull
      reestablishing the connection is required */
 
   socketfd = c->c2.link_socket->sd;

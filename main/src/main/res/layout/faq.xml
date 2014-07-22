@@ -89,6 +89,7 @@
 
         <TextView
             style="@style/faqhead"
+            android:id="@+id/broken_images_faq_title"
             android:text="@string/broken_images" />
 
         <TextView

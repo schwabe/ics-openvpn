@@ -40,6 +40,7 @@
 #include "basic.h"
 #include "buffer.h"
 #include "integer.h"
+#include "crypto.h"
 #include "crypto_backend.h"
 #include <openssl/objects.h>
 #include <openssl/evp.h>
@@ -253,7 +254,7 @@ show_available_ciphers ()
 	  "used as a parameter to the --cipher option.  The default\n"
 	  "key size is shown as well as whether or not it can be\n"
           "changed with the --keysize directive.  Using a CBC mode\n"
-	  "is recommended.\n\n");
+	  "is recommended. In static key mode only CBC mode is allowed.\n\n");
 #endif
 
   for (nid = 0; nid < 10000; ++nid)	/* is there a better way to get the size of the nid list? */
@@ -261,17 +262,22 @@ show_available_ciphers ()
       const EVP_CIPHER *cipher = EVP_get_cipherbynid (nid);
       if (cipher)
 	{
-	  const unsigned int mode = EVP_CIPHER_mode (cipher);
-	  if (mode == EVP_CIPH_CBC_MODE
-#ifdef ALLOW_NON_CBC_CIPHERS
-	      || mode == EVP_CIPH_CFB_MODE || mode == EVP_CIPH_OFB_MODE
+	  if (cipher_kt_mode_cbc(cipher)
+#ifdef ENABLE_OFB_CFB_MODE
+	      || cipher_kt_mode_ofb_cfb(cipher)
 #endif
 	      )
-	    printf ("%s %d bit default key (%s)\n",
-		    OBJ_nid2sn (nid),
-		    EVP_CIPHER_key_length (cipher) * 8,
-		    ((EVP_CIPHER_flags (cipher) & EVP_CIPH_VARIABLE_LENGTH) ?
-		     "variable" : "fixed"));
+	    {
+	      const char *var_key_size =
+		  (EVP_CIPHER_flags (cipher) & EVP_CIPH_VARIABLE_LENGTH) ?
+		       "variable" : "fixed";
+	      const char *ssl_only = cipher_kt_mode_ofb_cfb(cipher) ?
+		  " (TLS client/server mode)" : "";
+
+	      printf ("%s %d bit default key (%s)%s\n", OBJ_nid2sn (nid),
+		      EVP_CIPHER_key_length (cipher) * 8, var_key_size,
+		      ssl_only);
+	    }
 	}
     }
   printf ("\n");
@@ -483,6 +489,29 @@ cipher_kt_mode (const EVP_CIPHER *cipher_kt)
   return EVP_CIPHER_mode (cipher_kt);
 }
 
+bool
+cipher_kt_mode_cbc(const cipher_kt_t *cipher)
+{
+  return cipher_kt_mode(cipher) == OPENVPN_MODE_CBC
+#ifdef EVP_CIPH_FLAG_AEAD_CIPHER
+      /* Exclude AEAD cipher modes, they require a different API */
+      && !(EVP_CIPHER_flags(cipher) & EVP_CIPH_FLAG_AEAD_CIPHER)
+#endif
+    ;
+}
+
+bool
+cipher_kt_mode_ofb_cfb(const cipher_kt_t *cipher)
+{
+  return (cipher_kt_mode(cipher) == OPENVPN_MODE_OFB ||
+	  cipher_kt_mode(cipher) == OPENVPN_MODE_CFB)
+#ifdef EVP_CIPH_FLAG_AEAD_CIPHER
+      /* Exclude AEAD cipher modes, they require a different API */
+      && !(EVP_CIPHER_flags(cipher) & EVP_CIPH_FLAG_AEAD_CIPHER)
+#endif
+    ;
+}
+
 /*
  *
  * Generic cipher context functions
@@ -535,6 +564,13 @@ cipher_ctx_mode (const EVP_CIPHER_CTX *ctx)
 {
   return EVP_CIPHER_CTX_mode (ctx);
 }
+
+const cipher_kt_t *
+cipher_ctx_get_cipher_kt (const cipher_ctx_t *ctx)
+{
+  return EVP_CIPHER_CTX_cipher(ctx);
+}
+
 
 int
 cipher_ctx_reset (EVP_CIPHER_CTX *ctx, uint8_t *iv_buf)

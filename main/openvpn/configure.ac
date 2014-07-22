@@ -72,6 +72,13 @@ AC_ARG_ENABLE(
 )
 
 AC_ARG_ENABLE(
+	[ofb-cfb],
+	[AS_HELP_STRING([--enable-ofb-cfb], [enable support for OFB and CFB cipher modes @<:@default=yes@:>@])],
+	,
+	[enable_crypto_ofb_cfb="yes"]
+)
+
+AC_ARG_ENABLE(
 	[ssl],
 	[AS_HELP_STRING([--disable-ssl], [disable SSL support for TLS-based key exchange @<:@default=yes@:>@])],
 	,
@@ -334,6 +341,13 @@ case "$host" in
 	*-*-dragonfly*)
 		AC_DEFINE([TARGET_DRAGONFLY], [1], [Are we running on DragonFlyBSD?])
 		AC_DEFINE_UNQUOTED([TARGET_PREFIX], ["D"], [Target prefix])
+		;;
+	*-aix*)
+		AC_DEFINE([TARGET_AIX], [1], [Are we running AIX?])
+		AC_DEFINE_UNQUOTED([TARGET_PREFIX], ["A"], [Target prefix])
+		ROUTE="/usr/sbin/route"
+		have_tap_header="yes"
+		ac_cv_header_net_if_h="no"	# exists, but breaks things
 		;;
 	*)
 		AC_DEFINE_UNQUOTED([TARGET_PREFIX], ["X"], [Target prefix])
@@ -786,25 +800,6 @@ if test "${have_openssl_crypto}" = "yes"; then
 	LIBS="${saved_LIBS}"
 fi
 
-if test "${enable_ssl}" = "yes" && test "${with_crypto_library}" = "openssl";
-then
-    saved_CPPFLAGS="${CPPFLAGS}"
-    CPPFLAGS="${CPPFLAGS} ${OPENSSL_CRYPTO_CFLAGS}"
-    AC_MSG_CHECKING([for SSL_OP_NO_TICKET flag in OpenSSL])
-    AC_EGREP_CPP(have_ssl_op_no_ticket, [
-    #include <openssl/ssl.h>
-    #ifdef SSL_OP_NO_TICKET
-    have_ssl_op_no_ticket
-    #endif
-    ], [
-        AC_MSG_RESULT([yes])
-    ], [
-        AC_MSG_RESULT([no])
-        AC_ERROR([OpenVPN 2.4+ requires SSL_OP_NO_TICKET in OpenSSL])
-    ])
-    CPPFLAGS="${saved_CPPFLAGS}"
-fi
-
 AC_ARG_VAR([POLARSSL_CFLAGS], [C compiler flags for polarssl])
 AC_ARG_VAR([POLARSSL_LIBS], [linker flags for polarssl])
 have_polarssl_ssl="yes"
@@ -1071,6 +1066,7 @@ fi
 
 if test "${enable_crypto}" = "yes"; then
 	test "${have_crypto_crypto}" != "yes" && AC_MSG_ERROR([${with_crypto_library} crypto is required but missing])
+	test "${enable_crypto_ofb_cfb}" = "yes" && AC_DEFINE([ENABLE_OFB_CFB_MODE], [1], [Enable OFB and CFB cipher modes])
 	OPTIONAL_CRYPTO_CFLAGS="${OPTIONAL_CRYPTO_CFLAGS} ${CRYPTO_CRYPTO_CFLAGS}"
 	OPTIONAL_CRYPTO_LIBS="${OPTIONAL_CRYPTO_LIBS} ${CRYPTO_CRYPTO_LIBS}"
 	AC_DEFINE([ENABLE_CRYPTO], [1], [Enable crypto library])

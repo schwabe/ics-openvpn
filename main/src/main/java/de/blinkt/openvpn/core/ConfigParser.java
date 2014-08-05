@@ -432,6 +432,19 @@ public class ConfigParser {
             throw new ConfigParseError("Sorry. Only tun mode is supported. See the FAQ for more detail");
 		}
 
+        Vector<String> mssfix = getOption("mssfix",0,1);
+
+        if (mssfix!=null) {
+            if (mssfix.size()>=2) {
+                try {
+                    np.mMssFix=Integer.parseInt(mssfix.get(1));
+                } catch(NumberFormatException e) {
+                    throw new ConfigParseError("Argument to --mssfix has to be an integer");
+                }
+            } else {
+                np.mMssFix = VpnProfile.DEFAULT_MSSFIX_SIZE;
+            }
+        }
 
 
 		Vector<String> mode =getOption("mode",1,1);

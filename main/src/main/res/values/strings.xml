@@ -254,7 +254,7 @@
     <string name="start_vpn_ticker">Connecting to VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Some versions of Android 4.1 have problems if the name of the keystore certificate contains non alphanumeric characters (like spaces, underscores or dashes). Try to reimport the certificate without special characters</string>
     <string name="encryption_cipher">Encryption cipher</string>
-    <string name="packet_auth">Packets authentication</string>
+    <string name="packet_auth">Packet authentication</string>
     <string name="auth_dialog_title">Enter packet authentication method</string>
     <string name="mobile_info_extended">Running on %1$s (%2$s) %3$s, Android API %4$d, version %5$s, %6$s</string>
     <string name="built_by">built by %s</string>
@@ -319,4 +319,8 @@
     <string name="openvpn_is_no_free_vpn">To use this app you need a VPN provider/VPN gateway supporting OpenVPN (often provided by your employer). Check out http://community.openvpn.net/ for more information on OpenVPN and how to setup your own OpenVPN server.</string>
     <string name="import_log">Import log:</string>
     <string name="ip_looks_like_subnet">Vpn topology \"%3$s\" specified but ifconfig %1$s %2$s looks more like an IP address with a network mask. Assuming \"subnet\" topology.</string>
+    <string name="mssfix_invalid_value">mssfix value has to be a integer between 0 and 9000</string>
+    <string name="mssfix_value_dialog">Announce to TCP sessions running over the tunnel that they should limit their send packet sizes such that after OpenVPN has encapsulated them, the resulting UDP packet size that OpenVPN sends to its peer will not exceed this number of bytes. (default is 1450)</string>
+    <string name="mssfix_checkbox">Override MSS value of TCP payload</string>
+    <string name="mssfix_dialogtitle">Set MSS of TCP payload</string>
 </resources>

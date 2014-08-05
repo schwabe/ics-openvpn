@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="Obscure Settings" >
+    android:title="Obscure Settings">
 
 
     <CheckBoxPreference
@@ -13,26 +13,20 @@
         android:persistent="false"
         android:summary="@string/float_summary"
         android:title="@string/float_title" />
-    <CheckBoxPreference
-        android:key="usePersistTun"
-        android:summary="@string/persisttun_summary"
-        android:title="@string/persistent_tun_title" />
 
-    <PreferenceCategory android:title="@string/reconnection_settings" >
-        <ListPreference
-            android:entries="@array/crm_entries"
-            android:entryValues="@array/crm_values"
-            android:key="connectretrymax"
+    <PreferenceCategory android:title="Payload options">
+        <CheckBoxPreference
+            android:key="mssFix"
             android:persistent="false"
-            android:title="@string/connection_retries" />
-
+            android:title="@string/mssfix_checkbox" />
         <EditTextPreference
-            android:dialogMessage="@string/connectretrymessage"
-            android:key="connectretry"
+            android:dependency="mssFix"
+            android:dialogMessage="@string/mssfix_value_dialog"
+            android:key="mssFixValue"
             android:persistent="false"
-            android:title="@string/connectretrywait" />
+            android:title="@string/mssfix_dialogtitle" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/custom_config_title" >
+    <PreferenceCategory android:title="@string/custom_config_title">
         <CheckBoxPreference
             android:key="enableCustomOptions"
             android:persistent="false"

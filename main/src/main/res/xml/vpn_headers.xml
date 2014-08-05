@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
 
+
+    <header
+        android:fragment="de.blinkt.openvpn.fragments.Settings_Behaviour"
+        android:title="Client Behaviour"
+        />
     <header
         android:id="@+id/basicsettingsid"
         android:fragment="de.blinkt.openvpn.fragments.Settings_Basic"

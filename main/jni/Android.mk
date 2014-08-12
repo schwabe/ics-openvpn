@@ -13,15 +13,18 @@ include snappy/Android.mk
 
 include openssl/Android.mk
 
+ifeq ($(TARGET_ARCH),mips)
+	USE_BREAKPAD=0
+endif
+ifeq ($(TARGET_ARCH),mips64)
+	USE_BREAKPAD=0
+endif
+
 ifneq ($(USE_BREAKPAD),0)
-	ifneq ($(TARGET_ARCH),mips)
 	WITH_BREAKPAD=1
 	include google-breakpad/android/google_breakpad/Android.mk
-	else
-	WITH_BREAKPAD=0
-	endif
 else
-WITH_BREAKPAD=0
+	WITH_BREAKPAD=0
 endif
 
 ifeq ($(WITH_POLAR),1)

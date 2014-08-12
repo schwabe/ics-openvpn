@@ -34,10 +34,10 @@ Q: Why are you not answering my questions about modifying ics-openvpn/why do not
 
 A: There are many people building/wanting to build commercial VPN clients on top of my of my client. These
    client often do not even honour the license my app or the license of OpenVPN. Even if these modified
-   software does honour the license I don't like doing upaid work/giving advise for free to commerical
+   software does honour the license I don't like doing unpaid work/giving advise for free to commerical
    software developers. 
    
-   If you have a legitimate non commerical open source project I will gladly help you but please understand
+   If you have a legitimate non commercial open source project I will gladly help you but please understand
    my initial reservations.
    
 

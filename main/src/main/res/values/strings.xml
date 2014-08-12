@@ -323,4 +323,5 @@
     <string name="mssfix_value_dialog">Announce to TCP sessions running over the tunnel that they should limit their send packet sizes such that after OpenVPN has encapsulated them, the resulting UDP packet size that OpenVPN sends to its peer will not exceed this number of bytes. (default is 1450)</string>
     <string name="mssfix_checkbox">Override MSS value of TCP payload</string>
     <string name="mssfix_dialogtitle">Set MSS of TCP payload</string>
+
 </resources>

@@ -57,7 +57,7 @@
         </activity>
 
         <service
-            android:name="de.blinkt.openvpn.core.OpenVpnService"
+            android:name=".core.OpenVPNService"
             android:permission="android.permission.BIND_VPN_SERVICE" >
             <intent-filter>
                 <action android:name="android.net.VpnService" />

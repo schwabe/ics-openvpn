@@ -44,7 +44,7 @@ import static de.blinkt.openvpn.core.VpnStatus.ConnectionStatus.LEVEL_CONNECTED;
 import static de.blinkt.openvpn.core.VpnStatus.ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET;
 import static de.blinkt.openvpn.core.VpnStatus.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
 
-public class OpenVpnService extends VpnService implements StateListener, Callback, ByteCountListener {
+public class OpenVPNService extends VpnService implements StateListener, Callback, ByteCountListener {
     public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";
     public static final String START_SERVICE_STICKY = "de.blinkt.openvpn.START_SERVICE_STICKY";
     public static final String ALWAYS_SHOW_NOTIFICATION = "de.blinkt.openvpn.NOTIFICATION_ALWAYS_VISIBLE";
@@ -209,7 +209,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
             nbuilder.addAction(android.R.drawable.ic_menu_close_clear_cancel,
                     getString(R.string.cancel_connection), disconnectPendingIntent);
 
-            Intent pauseVPN = new Intent(this, OpenVpnService.class);
+            Intent pauseVPN = new Intent(this, OpenVPNService.class);
             if (mDeviceStateReceiver == null || !mDeviceStateReceiver.isUserPaused()) {
                 pauseVPN.setAction(PAUSE_VPN);
                 PendingIntent pauseVPNPending = PendingIntent.getService(this, 0, pauseVPN, 0);
@@ -401,7 +401,7 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     private OpenVPNManagement instantiateOpenVPN3Core() {
         try {
             Class cl = Class.forName("de.blinkt.openvpn.core.OpenVPNThreadv3");
-            return (OpenVPNManagement) cl.getConstructor(OpenVpnService.class,VpnProfile.class).newInstance(this,mProfile);
+            return (OpenVPNManagement) cl.getConstructor(OpenVPNService.class,VpnProfile.class).newInstance(this,mProfile);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
@@ -767,9 +767,9 @@ public class OpenVpnService extends VpnService implements StateListener, Callbac
     }
 
     public class LocalBinder extends Binder {
-        public OpenVpnService getService() {
+        public OpenVPNService getService() {
             // Return this instance of LocalService so clients can call public methods
-            return OpenVpnService.this;
+            return OpenVPNService.this;
         }
     }
 }

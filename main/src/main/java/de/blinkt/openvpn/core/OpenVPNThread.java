@@ -33,11 +33,11 @@ public class OpenVPNThread implements Runnable {
     private String[] mArgv;
 	private Process mProcess;
 	private String mNativeDir;
-	private OpenVpnService mService;
+	private OpenVPNService mService;
 	private String mDumpPath;
 	private Map<String, String> mProcessEnv;
 
-	public OpenVPNThread(OpenVpnService service,String[] argv, Map<String,String> processEnv, String nativelibdir)
+	public OpenVPNThread(OpenVPNService service,String[] argv, Map<String,String> processEnv, String nativelibdir)
 	{
 		mArgv = argv;
 		mNativeDir = nativelibdir;

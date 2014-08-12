@@ -51,7 +51,7 @@ import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.activities.MainActivity;
 import de.blinkt.openvpn.activities.VPNPreferences;
 import de.blinkt.openvpn.core.OpenVPNManagement;
-import de.blinkt.openvpn.core.OpenVpnService;
+import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
@@ -59,7 +59,7 @@ import de.blinkt.openvpn.core.VpnStatus.LogItem;
 import de.blinkt.openvpn.core.VpnStatus.LogListener;
 import de.blinkt.openvpn.core.VpnStatus.StateListener;
 
-import static de.blinkt.openvpn.core.OpenVpnService.humanReadableByteCount;
+import static de.blinkt.openvpn.core.OpenVPNService.humanReadableByteCount;
 
 public class LogFragment extends ListFragment implements StateListener, SeekBar.OnSeekBarChangeListener, RadioGroup.OnCheckedChangeListener, VpnStatus.ByteCountListener {
 	private static final String LOGTIMEFORMAT = "logtimeformat";
@@ -499,8 +499,8 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 		super.onResume();
 		VpnStatus.addStateListener(this);
         VpnStatus.addByteCountListener(this);
-        Intent intent = new Intent(getActivity(), OpenVpnService.class);
-        intent.setAction(OpenVpnService.START_SERVICE);
+        Intent intent = new Intent(getActivity(), OpenVPNService.class);
+        intent.setAction(OpenVPNService.START_SERVICE);
 
     }
 

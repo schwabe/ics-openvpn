@@ -6,14 +6,14 @@ import android.content.*;
 import android.os.IBinder;
 
 import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.core.OpenVpnService;
+import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.ProfileManager;
 
 /**
  * Created by arne on 13.10.13.
  */
 public class DisconnectVPN extends Activity implements DialogInterface.OnClickListener{
-    protected OpenVpnService mService;
+    protected OpenVPNService mService;
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -22,7 +22,7 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
-            OpenVpnService.LocalBinder binder = (OpenVpnService.LocalBinder) service;
+            OpenVPNService.LocalBinder binder = (OpenVPNService.LocalBinder) service;
             mService = binder.getService();
         }
 
@@ -36,8 +36,8 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
-        Intent intent = new Intent(this, OpenVpnService.class);
-        intent.setAction(OpenVpnService.START_SERVICE);
+        Intent intent = new Intent(this, OpenVPNService.class);
+        intent.setAction(OpenVPNService.START_SERVICE);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         showDisconnectDialog();
     }

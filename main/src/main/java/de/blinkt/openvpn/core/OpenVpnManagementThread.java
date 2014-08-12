@@ -36,7 +36,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     private static final String TAG = "openvpn";
     private LocalSocket mSocket;
     private VpnProfile mProfile;
-    private OpenVpnService mOpenVPNService;
+    private OpenVPNService mOpenVPNService;
     private LinkedList<FileDescriptor> mFDList = new LinkedList<FileDescriptor>();
     private LocalServerSocket mServerSocket;
     private boolean mReleaseHold = true;
@@ -48,7 +48,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     private pauseReason lastPauseReason = pauseReason.noNetwork;
 
-    public OpenVpnManagementThread(VpnProfile profile, OpenVpnService openVpnService) {
+    public OpenVpnManagementThread(VpnProfile profile, OpenVPNService openVpnService) {
         mProfile = profile;
         mOpenVPNService = openVpnService;
 

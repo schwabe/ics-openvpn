@@ -43,7 +43,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 import de.blinkt.openvpn.core.NativeUtils;
-import de.blinkt.openvpn.core.OpenVpnService;
+import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.X509Utils;
 
@@ -578,7 +578,7 @@ public class VpnProfile implements Serializable {
     public Intent prepareIntent(Context context) {
         String prefix = context.getPackageName();
 
-        Intent intent = new Intent(context, OpenVpnService.class);
+        Intent intent = new Intent(context, OpenVPNService.class);
 
         if (mAuthenticationType == VpnProfile.TYPE_KEYSTORE || mAuthenticationType == VpnProfile.TYPE_USERPASS_KEYSTORE) {
             if (getKeyStoreCertificates(context) == null)

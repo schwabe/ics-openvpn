@@ -14,9 +14,7 @@ import net.openvpn.ovpn3.ClientAPI_TransportStats;
 import java.lang.Override;
 
 import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.core.OpenVPNManagement;
-import de.blinkt.openvpn.core.OpenVpnService;
-import de.blinkt.openvpn.core.VpnStatus;
+
 import android.content.Context;
 
 public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable, OpenVPNManagement {
@@ -29,7 +27,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	}
 
 	private VpnProfile mVp;
-	private OpenVpnService mService;
+	private OpenVPNService mService;
 
 	class StatusPoller implements  Runnable 
 	{
@@ -224,7 +222,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	}
 
-	public OpenVPNThreadv3(OpenVpnService openVpnService, VpnProfile vp) {
+	public OpenVPNThreadv3(OpenVPNService openVpnService, VpnProfile vp) {
 		init_process();
 		mVp =vp;
 		mService =openVpnService;

@@ -21,11 +21,11 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
 import de.blinkt.openvpn.core.ConfigParser.ConfigParseError;
+import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 import de.blinkt.openvpn.core.VpnStatus.StateListener;
-import de.blinkt.openvpn.core.OpenVpnService;
-import de.blinkt.openvpn.core.OpenVpnService.LocalBinder;
+import de.blinkt.openvpn.core.OpenVPNService.LocalBinder;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 
@@ -37,7 +37,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
     final RemoteCallbackList<IOpenVPNStatusCallback> mCallbacks =
             new RemoteCallbackList<IOpenVPNStatusCallback>();
 
-    private OpenVpnService mService;
+    private OpenVPNService mService;
     private ExternalAppDatabase mExtAppDb;
 
 
@@ -65,8 +65,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         VpnStatus.addStateListener(this);
         mExtAppDb = new ExternalAppDatabase(this);
 
-        Intent intent = new Intent(getBaseContext(), OpenVpnService.class);
-        intent.setAction(OpenVpnService.START_SERVICE);
+        Intent intent = new Intent(getBaseContext(), OpenVPNService.class);
+        intent.setAction(OpenVPNService.START_SERVICE);
 
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         mHandler.setService(this);

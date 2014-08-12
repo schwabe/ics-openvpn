@@ -43,7 +43,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     private boolean mWaitingForRelease = false;
     private long mLastHoldRelease = 0;
 
-    private static Vector<OpenVpnManagementThread> active = new Vector<OpenVpnManagementThread>();
+    private static final Vector<OpenVpnManagementThread> active = new Vector<OpenVpnManagementThread>();
     private LocalSocket mServerSocketLocal;
 
     private pauseReason lastPauseReason = pauseReason.noNetwork;
@@ -310,7 +310,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         if ((System.currentTimeMillis() - mLastHoldRelease) < 5000) {
             try {
                 Thread.sleep(3000);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
             }
 
         }

@@ -34,11 +34,12 @@
         <item>50</item>
         <item>-1</item>
     </string-array>
-
+    <string name="crash_toast_text">OpenVPN for Android crashed, crash reported</string>
+    
     <!-- These strings should not be visible to the user -->
     <string name="state_user_vpn_permission" translatable="false">Waiting for user permission to use VPN API</string>
     <string name="state_user_vpn_password" translatable="false">Waiting for user VPN password</string>
     <string name="state_user_vpn_password_cancelled" translatable="false">VPN password input dialog cancelled</string>
     <string name="state_user_vpn_permission_cancelled" translatable="false">VPN API permission dialog cancelled</string>
-    
+
 </resources>

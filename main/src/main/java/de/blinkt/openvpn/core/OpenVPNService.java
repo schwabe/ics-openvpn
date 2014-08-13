@@ -71,7 +71,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private OpenVPNManagement mManagement;
     private String mLastTunCfg;
     private String mRemoteGW;
-    private Object mProcessLock = new Object();
+    private final Object mProcessLock = new Object();
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean mbit) {

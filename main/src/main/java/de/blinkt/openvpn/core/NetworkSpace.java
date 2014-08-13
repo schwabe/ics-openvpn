@@ -76,8 +76,8 @@ public class NetworkSpace {
 
             netAddress = BigInteger.ZERO;
             for (byte b : address.getAddress()) {
-                s -= 16;
-                netAddress = netAddress.add(BigInteger.valueOf(b).shiftLeft(s));
+                s -= 8;
+                netAddress = netAddress.add(BigInteger.valueOf((b & 0xFF)).shiftLeft(s));
             }
         }
 
@@ -152,12 +152,12 @@ public class NetworkSpace {
         String getIPv6Address() {
             if (BuildConfig.DEBUG) Assert.assertTrue (!isV4);
             BigInteger r = netAddress;
-            if (r.longValue() == 0)
+            if (r.compareTo(BigInteger.ZERO)==0 && networkMask==0)
                 return "::";
 
             Vector<String> parts = new Vector<String>();
             while (r.compareTo(BigInteger.ZERO) == 1) {
-                parts.add(0, String.format(Locale.US, "%x", r.mod(BigInteger.valueOf(256)).longValue()));
+                parts.add(0, String.format(Locale.US, "%x", r.mod(BigInteger.valueOf(0x10000)).longValue()));
                 r = r.shiftRight(16);
             }
 

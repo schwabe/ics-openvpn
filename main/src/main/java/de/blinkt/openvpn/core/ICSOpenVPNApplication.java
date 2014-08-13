@@ -1,9 +1,11 @@
 package de.blinkt.openvpn.core;
 import android.app.Application;
 
+/*
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
+*/
 
 import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;

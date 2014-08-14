@@ -495,8 +495,15 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
-
-        builder.setMtu(mMtu);
+        String release = Build.VERSION.RELEASE;
+        if ((Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !release.startsWith("4.4.3")
+                &&  !release.startsWith("4.4.4") &&  !release.startsWith("4.4.5") && !release.startsWith("4.4.6"))
+                && mMtu < 1280) {
+            VpnStatus.logInfo(String.format("Forcing MTU to 1280 instead of %d to workaround Android Bug #70916", mMtu));
+            builder.setMtu(1280);
+        } else {
+            builder.setMtu(mMtu);
+        }
 
         Collection<ipAddress> positiveIPv4Routes = mRoutes.getPositiveIPList();
         Collection<ipAddress> positiveIPv6Routes = mRoutesv6.getPositiveIPList();

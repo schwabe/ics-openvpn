@@ -2,7 +2,7 @@ This file documents the support in OpenVPN for Android 4.0 and up.
 
 This support is primarily used in the "OpenVPN for Android" app
 (http://code.google.com/p/ics-openvpn/). For building see the developer
-README: http://code.google.com/p/ics-openvpn/source/browse/README.txt.
+README: http://code.google.com/p/ics-openvpn/source/browse/doc/README.txt.
 
 Android provides the VPNService API
 (http://developer.android.com/reference/android/net/VpnService.html)
@@ -74,3 +74,12 @@ are not specific to Android but are rarely used on other platform.
 For example using SIGUSR1 and management-hold to restart, pause,
 continue the VPN on network changes or the external key management
 --management-external-key option and inline files.
+
+Due to a bug in Android 4.4-4.4.2 there the Android Control will also
+query what action the daemon should take when opening the fd. The GUI
+should compare the last configuration of the tun device with the current
+tun configuration and reply with either
+
+- NOACTION: Keep using the old fd
+- OPEN_AFTER_CLOSE: First close the old fd and then open a new to workaround the bug
+- OPEN_BEFORE_CLOSE: the normal behaviour when the VPN configuration changed

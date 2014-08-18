@@ -1,16 +1,16 @@
-#! /bin/sh
-
+#! /bin/zsh
+set -o shwordsplit
 
 if [ "$ICSCROWDAPIKEY" != "" ]
 then
 	echo "Generating new translation archives"
-	fetch -q -1 -o - http://api.crowdin.net/api/project/ics-openvpn/export?key=$ICSCROWDAPIKEY
+	fetch -q -1 -o - "http://api.crowdin.net/api/project/ics-openvpn/export?key=$ICSCROWDAPIKEY"
 fi
 
 echo "Fetch translation archive"
 fetch -q http://crowdin.net/download/project/ics-openvpn.zip
 
-langtoinclude="ca cs de es et fr hu it ja ko no nl pl ro ru sv tr uk"
+
 
 for lang in $langtoinclude
 do
@@ -19,20 +19,21 @@ done
 
 # Chinese language require zh-CN and zh-TW
 
-for lang in zh-CN zh-TW id
+typeset -A langhash
+langhash=(zh-CN zh-rCN zh-TW zh-rTW id-ID in ca-ES ca cs-CZ cs et-EE et ja-JP ja ko-KR ko sv-SE sv uk-UA uk)
+
+langtoinclude="de es fr hu it no nl pl pt ro ru tr"
+for lang in $langtoinclude ${(k)langhash}
 do
-	if [ $lang = "zh-CN" ] ; then
-		rlang="zh-rCN"
-    elif [ $lang = "zh-TW" ] ; then
-        rlang="zh-rTW"
-    elif [ $lang = "id" ] ; then
-        rlang="in"
+    if (( ${+langhash[$lang]} )); then
+        alang=$lang
+        rlang=${langhash[$lang]}
+    else
+        alang=$lang-${lang:u}
+        rlang=$lang
 	fi
 
-	echo "Fetch archive for $lang"
-	fetch http://crowdin.net/download/project/ics-openvpn/$lang.zip
-	tar -xv -C src/main/res/values-$rlang/ --strip-components 3 -f $lang.zip
-    rm $lang.zip
+	tar -xv -C src/main/res/values-$rlang/ --strip-components 3 -f ics-openvpn.zip res/values-$alang/
 done
 
 rm -v ics-openvpn.zip

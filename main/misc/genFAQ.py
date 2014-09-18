@@ -112,7 +112,7 @@ def checkFormatString(lang):
             int = tstr.find(f)==-1
 
             if ino != int:
-                print "Mismatch",strid,f,ostr,tstr
+                print "Mismatch StringID(%s): " % lang,strid,"Original String:",ostr,"Translated String:",tstr
                 
 if __name__=="__main__":
     main()

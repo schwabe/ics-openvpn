@@ -120,7 +120,14 @@ public class Utils {
         if (!isIntentAvailable(c,i)) {
             i.setAction(Intent.ACTION_OPEN_DOCUMENT);
             i.setPackage(null);
+
+            // Check for really broken devices ... :(
+            if (!isIntentAvailable(c,i)) {
+                return null;
+            }
         }
+
+
         /*
         final PackageManager packageManager = c.getPackageManager();
         ResolveInfo list = packageManager.resolveActivity(i, 0);

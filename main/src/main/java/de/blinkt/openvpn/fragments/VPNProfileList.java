@@ -20,7 +20,6 @@ import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.view.*;
 import android.view.View.OnClickListener;
-import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -44,7 +43,7 @@ public class VPNProfileList extends ListFragment {
 	private static final int START_VPN_CONFIG = 92;
 	private static final int SELECT_PROFILE = 43;
 	private static final int IMPORT_PROFILE = 231;
-    private static final int FILE_PICKER_RESULT = 392;
+    private static final int FILE_PICKER_RESULT_KITKAT = 392;
 
 	private static final int MENU_IMPORT_PROFILE = Menu.FIRST +1;
 
@@ -212,9 +211,11 @@ public class VPNProfileList extends ListFragment {
 			onAddProfileClicked();
 			return true;
 		} else if (itemId == MENU_IMPORT_PROFILE) {
+            boolean startOldFileDialog=true;
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-                startFilePicker();
-            else
+                    startOldFileDialog = ! startFilePicker();
+
+            if (startOldFileDialog)
 			    startImportConfig();
 
 			return true;
@@ -224,9 +225,14 @@ public class VPNProfileList extends ListFragment {
 	}
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void startFilePicker() {
+    private boolean startFilePicker() {
+
        Intent i = Utils.getFilePickerIntent(getActivity(), Utils.FileType.OVPN_CONFIG);
-       startActivityForResult(i, FILE_PICKER_RESULT);
+        if (i!=null) {
+            startActivityForResult(i, FILE_PICKER_RESULT_KITKAT);
+            return true;
+        } else
+            return false;
     }
 
     private void startImportConfig() {
@@ -314,7 +320,7 @@ public class VPNProfileList extends ListFragment {
 		} else if(requestCode == IMPORT_PROFILE) {
 			String profileUUID = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
 			mArrayadapter.add(ProfileManager.get(getActivity(), profileUUID));
-		} else if(requestCode == FILE_PICKER_RESULT) {
+		} else if(requestCode == FILE_PICKER_RESULT_KITKAT) {
             if (data != null) {
                 Uri uri = data.getData();
                 startConfigImport(uri);

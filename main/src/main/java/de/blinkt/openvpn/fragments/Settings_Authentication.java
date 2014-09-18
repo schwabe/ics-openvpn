@@ -27,8 +27,8 @@ import java.io.IOException;
 
 
 public class Settings_Authentication extends OpenVpnPreferencesFragment implements OnPreferenceChangeListener, OnPreferenceClickListener {
-	private static final int SELECT_TLS_FILE = 23223232;
-    private static final int SELECT_TLS_FILE_KITKAT = SELECT_TLS_FILE +1;
+	private static final int SELECT_TLS_FILE_LEGACY_DIALOG = 23223232;
+    private static final int SELECT_TLS_FILE_KITKAT = SELECT_TLS_FILE_LEGACY_DIALOG +1;
     private CheckBoxPreference mExpectTLSCert;
 	private CheckBoxPreference mCheckRemoteCN;
 	private RemoteCNPreference mRemoteCN;
@@ -169,14 +169,17 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 	}
 
     void startFileDialog() {
+        Intent startFC = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Intent startFC = Utils.getFilePickerIntent (getActivity(), Utils.FileType.TLS_AUTH_FILE);
+            startFC = Utils.getFilePickerIntent(getActivity(), Utils.FileType.TLS_AUTH_FILE);
             startActivityForResult(startFC, SELECT_TLS_FILE_KITKAT);
-        } else {
-            Intent startFC = new Intent(getActivity(), FileSelect.class);
+        }
+
+        if (startFC == null) {
+            startFC = new Intent(getActivity(), FileSelect.class);
             startFC.putExtra(FileSelect.START_DATA, mTlsAuthFileData);
             startFC.putExtra(FileSelect.WINDOW_TITLE, R.string.tls_auth_file);
-            startActivityForResult(startFC, SELECT_TLS_FILE);
+            startActivityForResult(startFC, SELECT_TLS_FILE_LEGACY_DIALOG);
         }
     }
 
@@ -190,7 +193,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode==SELECT_TLS_FILE && resultCode == Activity.RESULT_OK){
+		if(requestCode== SELECT_TLS_FILE_LEGACY_DIALOG && resultCode == Activity.RESULT_OK){
 			String result = data.getStringExtra(FileSelect.RESULT_DATA);
 			mTlsAuthFileData=result;
 			setTlsAuthSummary(result);

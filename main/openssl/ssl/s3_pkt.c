@@ -632,9 +632,6 @@ int ssl3_write_bytes(SSL *s, int type, const void *buf_, int len)
 		    !s->s3->record_split_done)
 			{
 			fragment = 1;
-			/* The first byte will be in its own record, so we
-			 * can write an extra byte. */
-			max++;
 			/* record_split_done records that the splitting has
 			 * been done in case we hit an SSL_WANT_WRITE condition.
 			 * In that case, we don't need to do the split again. */
@@ -650,6 +647,8 @@ int ssl3_write_bytes(SSL *s, int type, const void *buf_, int len)
 		if (i <= 0)
 			{
 			s->s3->wnum=tot;
+			/* Try to write the fragment next time. */
+			s->s3->record_split_done = 0;
 			return i;
 			}
 
@@ -701,7 +700,7 @@ static int do_ssl3_write(SSL *s, int type, const unsigned char *buf,
 		/* if it went, fall through and send more stuff */
 		}
 
- 	if (wb->buf == NULL)
+	if (wb->buf == NULL)
 		if (!ssl3_setup_write_buffer(s))
 			return -1;
 

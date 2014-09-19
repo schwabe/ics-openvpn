@@ -669,6 +669,7 @@ struct ssl_session_st
  * and Finished.  This mode enables full-handshakes to 'complete' in
  * one RTT. */
 #define SSL_MODE_HANDSHAKE_CUTTHROUGH 0x00000080L
+
 /* When set, TLS 1.0 and SSLv3, multi-byte, CBC records will be split in two:
  * the first record will contain a single byte and the second will contain the
  * rest of the bytes. This effectively randomises the IV and prevents BEAST

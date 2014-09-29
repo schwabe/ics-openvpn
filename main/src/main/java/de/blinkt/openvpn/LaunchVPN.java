@@ -188,7 +188,7 @@ public class LaunchVPN extends Activity {
 
 		if(requestCode==START_VPN_PROFILE) {
 			if(resultCode == Activity.RESULT_OK) {
-				int needpw = mSelectedProfile.needUserPWInput();
+				int needpw = mSelectedProfile.needUserPWInput(false);
 				if(needpw !=0) {
 					VpnStatus.updateStateString("USER_VPN_PASSWORD", "", R.string.state_user_vpn_password,
                             ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);

@@ -41,6 +41,7 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.Vector;
+import java.util.concurrent.Future;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -175,7 +176,8 @@ public class VpnProfile implements Serializable {
         escapedString = escapedString.replace("\n", "\\n");
 
         if (escapedString.equals(unescaped) && !escapedString.contains(" ") &&
-                !escapedString.contains("#") && !escapedString.contains(";"))
+                !escapedString.contains("#") && !escapedString.contains(";")
+                && !escapedString.equals(""))
             return unescaped;
         else
             return '"' + escapedString + '"';
@@ -636,6 +638,21 @@ public class VpnProfile implements Serializable {
             return false;
     }
 
+    public void checkForRestart(final Context context) {
+        /* This method is called when OpenVPNService is restarted */
+
+        if ((mAuthenticationType == VpnProfile.TYPE_KEYSTORE || mAuthenticationType == VpnProfile.TYPE_USERPASS_KEYSTORE)
+                && mPrivateKey==null) {
+            new Thread( new Runnable() {
+                @Override
+                public void run() {
+                    getKeyStoreCertificates(context);
+
+                }
+            }).start();
+        }
+    }
+
 
     class NoCertReturnedException extends Exception {
         public NoCertReturnedException (String msg) {
@@ -842,21 +859,23 @@ public class VpnProfile implements Serializable {
             return false;
     }
 
-    public int needUserPWInput() {
+    public int needUserPWInput(boolean ignoreTransient) {
         if ((mAuthenticationType == TYPE_PKCS12 || mAuthenticationType == TYPE_USERPASS_PKCS12) &&
                 (mPKCS12Password == null || mPKCS12Password.equals(""))) {
-            if (mTransientPCKS12PW == null)
+            if (ignoreTransient || mTransientPCKS12PW == null)
                 return R.string.pkcs12_file_encryption_key;
         }
 
         if (mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) {
             if (requireTLSKeyPassword() && TextUtils.isEmpty(mKeyPassword))
-                if (mTransientPCKS12PW == null) {
+                if (ignoreTransient || mTransientPCKS12PW == null) {
                     return R.string.private_key_password;
                 }
         }
 
-        if (isUserPWAuth() && !(!TextUtils.isEmpty(mUsername) && (!TextUtils.isEmpty(mPassword) || mTransientPW != null))) {
+        if (isUserPWAuth() &&
+                (TextUtils.isEmpty(mUsername) ||
+                (TextUtils.isEmpty(mPassword) && (mTransientPW == null  || ignoreTransient)))) {
             return R.string.password;
         }
         return 0;

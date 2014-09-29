@@ -4,7 +4,7 @@
   -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="Client behaviour">
+    android:title="@string/client_behaviour">
 
     <CheckBoxPreference
         android:key="usePersistTun"

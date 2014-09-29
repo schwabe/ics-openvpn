@@ -29,7 +29,7 @@
         <Preference
                 android:key="clearapi"
                 android:persistent="false"
-                android:title="Clear allowed external apps"/>
+                android:title="@string/clear_external_apps"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/vpnbehaviour">

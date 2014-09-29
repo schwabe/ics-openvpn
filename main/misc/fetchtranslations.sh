@@ -11,18 +11,13 @@ echo "Fetch translation archive"
 fetch -q http://crowdin.net/download/project/ics-openvpn.zip
 
 
-
-for lang in $langtoinclude
-do
-    tar -xvf ics-openvpn.zip -C src/main res/values-$lang/
-done
-
 # Chinese language require zh-CN and zh-TW
 
 typeset -A langhash
 langhash=(zh-CN zh-rCN zh-TW zh-rTW id-ID in ca-ES ca cs-CZ cs et-EE et ja-JP ja ko-KR ko sv-SE sv uk-UA uk)
 
 langtoinclude="de es fr hu it no nl pl pt ro ru tr"
+
 for lang in $langtoinclude ${(k)langhash}
 do
     if (( ${+langhash[$lang]} )); then
@@ -31,9 +26,9 @@ do
     else
         alang=$lang-${lang:u}
         rlang=$lang
-	fi
+    fi
 
-	tar -xv -C src/main/res/values-$rlang/ --strip-components 3 -f ics-openvpn.zip res/values-$alang/
+    tar -xv -C src/main/res/values-$rlang/ --strip-components 3 -f ics-openvpn.zip res/values-$alang/
 done
 
-rm -v ics-openvpn.zip
+rm ics-openvpn.zip

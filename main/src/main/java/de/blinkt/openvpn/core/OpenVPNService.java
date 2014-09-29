@@ -24,6 +24,7 @@ import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -310,18 +311,32 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             return START_REDELIVER_INTENT;
         }
 
-        if (intent == null)
-            return START_NOT_STICKY;
+        /* The intent is null when the service has been restarted */
+        if (intent == null) {
+            mProfile = ProfileManager.getLastConnectedProfile(this, false);
+
+            /* Got no profile, just stop */
+            if (mProfile==null) {
+                Log.d("OpenVPN", "Got no last connected profile on null intent. Stopping");
+                stopSelf(startId);
+                return START_NOT_STICKY;
+            }
+            /* Do the asynchronous keychain certificate stuff */
+            mProfile.checkForRestart(this);
+
+            /* Recreate the intent */
+            intent = mProfile.getStartServiceIntent(this);
+
+        } else {
+            String profileUUID = intent.getStringExtra(getPackageName() + ".profileUUID");
+            mProfile = ProfileManager.get(this, profileUUID);
+        }
+
 
         // Extract information from the intent.
         String prefix = getPackageName();
         String[] argv = intent.getStringArrayExtra(prefix + ".ARGV");
-        String nativelibdir = intent.getStringExtra(prefix + ".nativelib");
-        String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
-
-        mProfile = ProfileManager.get(this, profileUUID);
-        // Will refetch the private key of the store on restart
-        mProfile.checkForRestart(this);
+        String nativeLibraryDirectory = intent.getStringExtra(prefix + ".nativelib");
 
         String startTitle = getString(R.string.start_vpn_title, mProfile.mName);
         String startTicker = getString(R.string.start_vpn_ticker, mProfile.mName);
@@ -387,7 +402,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         } else {
             HashMap<String, String> env = new HashMap<String, String>();
-            processThread = new OpenVPNThread(this, argv, env, nativelibdir);
+            processThread = new OpenVPNThread(this, argv, env, nativeLibraryDirectory);
         }
 
         synchronized (mProcessLock) {
@@ -402,11 +417,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         ProfileManager.setConnectedVpnProfile(this, mProfile);
         /* TODO: At the moment we have no way to handle asynchronous PW input
-         * Fixing will also allow to handle challenge/responsee authentication /*
+         * Fixing will also allow to handle challenge/responsee authentication */
         if (mProfile.needUserPWInput(true) != 0)
             return START_NOT_STICKY;
 
-        return START_REDELIVER_INTENT;
+        return START_STICKY;
     }
 
     private OpenVPNManagement instantiateOpenVPN3Core() {

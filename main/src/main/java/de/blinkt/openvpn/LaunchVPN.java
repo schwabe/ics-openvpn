@@ -195,9 +195,9 @@ public class LaunchVPN extends Activity {
 					askForPW(needpw);
 				} else {
 					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);        
-					boolean showlogwindow = prefs.getBoolean("showlogwindow", true);
+					boolean showLogWindow = prefs.getBoolean("showlogwindow", true);
 
-					if(!mhideLog && showlogwindow)
+					if(!mhideLog && showLogWindow)
 						showLogWindow();
 					new startOpenVpnThread().start();
 				}

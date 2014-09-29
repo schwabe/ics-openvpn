@@ -582,21 +582,15 @@ public class VpnProfile implements Serializable {
 
 
 
-    public Intent prepareIntent(Context context) {
-        String prefix = context.getPackageName();
+    public Intent prepareStartService(Context context) {
+        Intent intent = getStartServiceIntent(context);
 
-        Intent intent = new Intent(context, OpenVPNService.class);
 
         if (mAuthenticationType == VpnProfile.TYPE_KEYSTORE || mAuthenticationType == VpnProfile.TYPE_USERPASS_KEYSTORE) {
             if (getKeyStoreCertificates(context) == null)
                 return null;
         }
 
-        intent.putExtra(prefix + ".ARGV", buildOpenvpnArgv(context.getCacheDir()));
-        intent.putExtra(prefix + ".profileUUID", mUuid.toString());
-
-        ApplicationInfo info = context.getApplicationInfo();
-        intent.putExtra(prefix + ".nativelib", info.nativeLibraryDir);
 
         try {
             FileWriter cfg = new FileWriter(context.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE);
@@ -607,6 +601,18 @@ public class VpnProfile implements Serializable {
             VpnStatus.logException(e);
         }
 
+        return intent;
+    }
+
+    public Intent getStartServiceIntent(Context context) {
+        String prefix = context.getPackageName();
+
+        Intent intent = new Intent(context, OpenVPNService.class);
+        intent.putExtra(prefix + ".ARGV", buildOpenvpnArgv(context.getCacheDir()));
+        intent.putExtra(prefix + ".profileUUID", mUuid.toString());
+
+        ApplicationInfo info = context.getApplicationInfo();
+        intent.putExtra(prefix + ".nativelib", info.nativeLibraryDir);
         return intent;
     }
 

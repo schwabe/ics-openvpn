@@ -75,7 +75,7 @@ public class VPNLaunchHelper {
 
 		VpnStatus.logInfo(R.string.building_configration);
 
-		Intent startVPN = startprofile.prepareIntent(context);
+		Intent startVPN = startprofile.prepareStartService(context);
 		if(startVPN!=null)
 			context.startService(startVPN);
 

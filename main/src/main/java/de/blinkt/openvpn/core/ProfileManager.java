@@ -28,7 +28,7 @@ public class ProfileManager {
 
 
 
-	private static final String ONBOOTPROFILE = "onBootProfile";
+	private static final String LAST_CONNECTED_PROFILE = "lastConnectedProfile";
 
 
 
@@ -70,7 +70,7 @@ public class ProfileManager {
 	public static void setConntectedVpnProfileDisconnected(Context c) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 		Editor prefsedit = prefs.edit();
-		prefsedit.putString(ONBOOTPROFILE, null);
+		prefsedit.putString(LAST_CONNECTED_PROFILE, null);
 		prefsedit.apply();
 		
 	}
@@ -79,21 +79,23 @@ public class ProfileManager {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 		Editor prefsedit = prefs.edit();
 		
-		prefsedit.putString(ONBOOTPROFILE, connectedrofile.getUUIDString());
+		prefsedit.putString(LAST_CONNECTED_PROFILE, connectedrofile.getUUIDString());
 		prefsedit.apply();
 		mLastConnectedVpn=connectedrofile;
 		
 	}
 	
-	public static VpnProfile getOnBootProfile(Context c) {
+	public static VpnProfile getLastConnectedProfile(Context c, boolean onBoot) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 
 		boolean useStartOnBoot = prefs.getBoolean("restartvpnonboot", false);
 
+        if (onBoot && !useStartOnBoot)
+            return null;
 		
-		String mBootProfileUUID = prefs.getString(ONBOOTPROFILE,null);
-		if(useStartOnBoot && mBootProfileUUID!=null)
-			return get(c, mBootProfileUUID);
+		String lastConnectedProfile = prefs.getString(LAST_CONNECTED_PROFILE, null);
+		if(lastConnectedProfile!=null)
+			return get(c, lastConnectedProfile);
 		else 
 			return null;
 	}

@@ -30,6 +30,7 @@ import de.blinkt.openvpn.core.VpnStatus.LogItem;
 
 public class OpenVPNThread implements Runnable {
     private static final String DUMP_PATH_STRING = "Dump path: ";
+    private static final String BROKEN_PIE_SUPPORT = "/data/data/de.blinkt.openvpn/cache/pievpn[1]: syntax error:";
 	private static final String TAG = "OpenVPN";
     public static final int M_FATAL = (1 << 4);
     public static final int M_NONFATAL = (1 << 5);
@@ -41,8 +42,9 @@ public class OpenVPNThread implements Runnable {
 	private OpenVPNService mService;
 	private String mDumpPath;
 	private Map<String, String> mProcessEnv;
+    private boolean mBrokenPie=false;
 
-	public OpenVPNThread(OpenVPNService service,String[] argv, Map<String,String> processEnv, String nativelibdir)
+    public OpenVPNThread(OpenVPNService service,String[] argv, Map<String,String> processEnv, String nativelibdir)
 	{
 		mArgv = argv;
 		mNativeDir = nativelibdir;
@@ -73,8 +75,22 @@ public class OpenVPNThread implements Runnable {
 			} catch (InterruptedException ie) {
 				VpnStatus.logError("InterruptedException: " + ie.getLocalizedMessage());
 			}
-			if( exitvalue != 0)
-				VpnStatus.logError("Process exited with exit value " + exitvalue);
+			if( exitvalue != 0) {
+                VpnStatus.logError("Process exited with exit value " + exitvalue);
+                if (mBrokenPie) {
+                    String[] noPieArgv = VpnProfile.replacePieWithNoPie(mArgv);
+
+                    // We are already noPIE, nothing to gain
+                    if (!noPieArgv.equals(mArgv)) {
+                        mArgv = noPieArgv;
+                        VpnStatus.logInfo("PIE Version could not be executed. Trying no PIE version");
+                        run();
+                        return;
+                    }
+
+                }
+
+            }
 			
 			VpnStatus.updateStateString("NOPROCESS", "No process running.", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
 			if(mDumpPath!=null) {
@@ -128,6 +144,9 @@ public class OpenVPNThread implements Runnable {
 
 				if (logline.startsWith(DUMP_PATH_STRING))
 					mDumpPath = logline.substring(DUMP_PATH_STRING.length());
+
+                if (logline.startsWith(BROKEN_PIE_SUPPORT))
+                    mBrokenPie = true;
 					
 
                 // 1380308330.240114 18000002 Send to HTTP proxy: 'X-Online-Host: bla.blabla.com'

@@ -320,6 +320,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         String profileUUID = intent.getStringExtra(prefix + ".profileUUID");
 
         mProfile = ProfileManager.get(this, profileUUID);
+        // Will refetch the private key of the store on restart
+        mProfile.checkForRestart(this);
 
         String startTitle = getString(R.string.start_vpn_title, mProfile.mName);
         String startTicker = getString(R.string.start_vpn_ticker, mProfile.mName);
@@ -399,8 +401,12 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
 
         ProfileManager.setConnectedVpnProfile(this, mProfile);
+        /* TODO: At the moment we have no way to handle asynchronous PW input
+         * Fixing will also allow to handle challenge/responsee authentication /*
+        if (mProfile.needUserPWInput(true) != 0)
+            return START_NOT_STICKY;
 
-        return START_NOT_STICKY;
+        return START_REDELIVER_INTENT;
     }
 
     private OpenVPNManagement instantiateOpenVPN3Core() {
@@ -504,7 +510,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if ((Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !release.startsWith("4.4.3")
                 &&  !release.startsWith("4.4.4") &&  !release.startsWith("4.4.5") && !release.startsWith("4.4.6"))
                 && mMtu < 1280) {
-            VpnStatus.logInfo(String.format("Forcing MTU to 1280 instead of %d to workaround Android Bug #70916", mMtu));
+            VpnStatus.logInfo(String.format(Locale.US, "Forcing MTU to 1280 instead of %d to workaround Android Bug #70916", mMtu));
             builder.setMtu(1280);
         } else {
             builder.setMtu(mMtu);

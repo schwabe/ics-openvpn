@@ -9,7 +9,7 @@
 
     <header
         android:fragment="de.blinkt.openvpn.fragments.Settings_Behaviour"
-        android:title="Client Behaviour"
+        android:title="@string/client_behaviour"
         />
     <header
         android:id="@+id/basicsettingsid"

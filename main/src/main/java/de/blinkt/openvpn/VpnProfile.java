@@ -168,6 +168,12 @@ public class VpnProfile implements Serializable {
             return VpnProfile.MININONPIEVPN;
     }
 
+    public static String[] replacePieWithNoPie(String[] mArgv)
+    {
+        mArgv[0] = mArgv[0].replace(MINIPIEVPN, MININONPIEVPN);
+        return mArgv;
+    }
+
     public static String openVpnEscape(String unescaped) {
         if (unescaped == null)
             return null;

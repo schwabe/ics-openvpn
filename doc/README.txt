@@ -20,7 +20,7 @@ svn co http://google-breakpad.googlecode.com/svn/trunk/ google-breakpad
 
 
 - Install sdk
-- Install ndk (Version r9 is tested and used by me)
+- Install ndk (Version r10b is tested and used by me)
 - Make sure that ndk-build is in your build path.
 
 Do cd main;./misc/build-native.(sh|bat) in the main directory of the project.

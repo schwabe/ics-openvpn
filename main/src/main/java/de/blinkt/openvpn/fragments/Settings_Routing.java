@@ -54,7 +54,7 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 		mCustomRoutesv6.setText(mProfile.mCustomRoutesv6);
 
         mExcludedRoutes.setText(mProfile.mExcludedRoutes);
-        mExcludedRoutes.setText(mProfile.mExcludedRoutesv6);
+        mExcludedRoutesv6.setText(mProfile.mExcludedRoutesv6);
 
 		mRouteNoPull.setChecked(mProfile.mRoutenopull);
         mLocalVPNAccess.setChecked(mProfile.mAllowLocalLAN);

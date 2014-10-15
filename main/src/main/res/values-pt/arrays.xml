@@ -3,17 +3,17 @@
 <resources>
   <string-array name="vpn_types">
     <item>Certificados</item>
-    <item>Arquivo PKCS12</item>
+    <item>Ficheiro PKCS12</item>
     <item>Certificado Android</item>
-    <item>Usuário/Senha</item>
+    <item>Utilizador/Password</item>
     <item>Chaves Estáticas</item>
-    <item>Usuário/Senha + Certificados</item>
-    <item>Usuário/Senha + PKCS12</item>
-    <item>Usuário/Senha + Android</item>
+    <item>Utilizador/PW + Certificados</item>
+    <item>Utilizador/PW + PKCS12</item>
+    <item>Utilizador/PW + Android</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item>0</item>
     <item>1</item>
-    <item>Não Especificado</item>
+    <item>Não especificado</item>
   </string-array>
 </resources>

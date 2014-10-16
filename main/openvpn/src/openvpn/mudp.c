@@ -112,7 +112,7 @@ multi_get_create_instance_udp (struct multi_context *m)
 
       if (op == P_DATA_V2)
 	{
-	  sess_id = (*(uint32_t*)ptr) >> 8;
+	  sess_id = ntohl((*(uint32_t*)ptr)) & 0xFFFFFF;
 	  if ((sess_id < m->max_clients) && (m->instances[sess_id]))
 	    {
 	      mi = m->instances[sess_id];

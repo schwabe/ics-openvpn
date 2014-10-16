@@ -303,9 +303,17 @@ send_push_reply (struct context *c)
   if (multi_push)
     buf_printf (&buf, ",push-continuation 1");
 
-  /* Send session_id if client supports it */
-  if (c->c2.tls_multi->peer_info && strstr(c->c2.tls_multi->peer_info, "IV_PROTO=2")) {
-      buf_printf(&buf, ",session_id %d", c->c2.tls_multi->vpn_session_id);
+  /* Send session-id if client supports it */
+  if (c->c2.tls_multi->peer_info)
+    {
+      const char* proto_str = strstr(c->c2.tls_multi->peer_info, "IV_PROTO=");
+      if (proto_str)
+	{
+	  int proto = 0;
+	  int r = sscanf(proto_str, "IV_PROTO=%d", &proto);
+	  if ((r == 1) && (proto >= 2))
+	    buf_printf(&buf, ",session-id %d", c->c2.tls_multi->vpn_session_id);
+	}
   }
 
   if (BLEN (&buf) > sizeof(cmd)-1)

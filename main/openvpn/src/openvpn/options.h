@@ -591,6 +591,9 @@ struct options
   bool show_net_up;
   int route_method;
 #endif
+
+  bool use_session_id;
+  uint32_t vpn_session_id;
 };
 
 #define streq(x, y) (!strcmp((x), (y)))
@@ -626,6 +629,7 @@ struct options
 #define OPT_P_SOCKBUF         (1<<25)
 #define OPT_P_SOCKFLAGS       (1<<26)
 #define OPT_P_CONNECTION      (1<<27)
+#define OPT_P_SESSION_ID      (1<<28)
 
 #define OPT_P_DEFAULT   (~(OPT_P_INSTANCE|OPT_P_PULL_MODE))
 

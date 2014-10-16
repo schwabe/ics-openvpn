@@ -2826,7 +2826,10 @@ tls_pre_decrypt (struct tls_multi *multi,
 		  opt->flags &= multi->opt.crypto_flags_and;
 		  opt->flags |= multi->opt.crypto_flags_or;
 
-		  ASSERT (buf_advance (buf, op == P_DATA_V1 ? 1 : 4));
+		  ASSERT (buf_advance (buf, 1));
+		  if (op == P_DATA_V2) {
+		    buf_advance (buf, 3);
+		  }
 
 		  ++ks->n_packets;
 		  ks->n_bytes += buf->len;
@@ -3403,7 +3406,7 @@ tls_post_encrypt (struct tls_multi *multi, struct buffer *buf)
 
       if (!multi->opt.server && multi->use_session_id)
 	{
-	  sess = ((P_DATA_V2 << P_OPCODE_SHIFT) | ks->key_id) | (multi->vpn_session_id << 8);
+	  sess = htonl(((P_DATA_V2 << P_OPCODE_SHIFT) | ks->key_id) << 24 | (multi->vpn_session_id & 0xFFFFFF));
 	  ASSERT (buf_write_prepend (buf, &sess, 4));
 	}
       else

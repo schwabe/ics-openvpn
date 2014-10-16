@@ -1718,7 +1718,8 @@ pull_permission_mask (const struct context *c)
     | OPT_P_MESSAGES
     | OPT_P_EXPLICIT_NOTIFY
     | OPT_P_ECHO
-    | OPT_P_PULL_MODE;
+    | OPT_P_PULL_MODE
+    | OPT_P_SESSION_ID;
 
   if (!c->options.route_nopull)
     flags |= (OPT_P_ROUTE | OPT_P_IPWIN32);
@@ -1795,6 +1796,13 @@ do_deferred_options (struct context *c, const unsigned int found)
     msg (D_PUSH, "OPTIONS IMPORT: --ip-win32 and/or --dhcp-option options modified");
   if (found & OPT_P_SETENV)
     msg (D_PUSH, "OPTIONS IMPORT: environment modified");
+
+  if (found & OPT_P_SESSION_ID)
+    {
+      msg (D_PUSH, "OPTIONS IMPORT: session-id set");
+      c->c2.tls_multi->use_session_id = true;
+      c->c2.tls_multi->vpn_session_id = c->options.vpn_session_id;
+    }
 }
 
 /*

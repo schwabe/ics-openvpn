@@ -3913,19 +3913,9 @@ apply_push_options (struct options *options,
       ++line_num;
       if (parse_line (line, p, SIZE (p), file, line_num, msglevel, &options->gc))
 	{
-	  if (streq(p[0], "session_id"))
-	    {
-	      /* Server supports P_DATA_V2 */
-	      tls_multi->vpn_session_id = atoi(p[1]);
-	      tls_multi->use_session_id = true;
-	      msg(D_PUSH, "session id: %d", tls_multi->vpn_session_id);
-	    }
-	  else
-	    {
 	      add_option (options, p, file, line_num, 0, msglevel, permission_mask, option_types_found, es);
 	    }
 	}
-    }
   return true;
 }
 
@@ -6986,6 +6976,12 @@ add_option (struct options *options,
       options->persist_mode = 1;
     }
 #endif
+  else if (streq (p[0], "session-id"))
+    {
+      VERIFY_PERMISSION (OPT_P_SESSION_ID);
+      options->use_session_id = true;
+      options->vpn_session_id = atoi(p[1]);
+    }
   else
     {
       int i;

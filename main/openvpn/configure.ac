@@ -368,15 +368,18 @@ AC_ARG_VAR([IPROUTE], [full path to ip utility])
 AC_ARG_VAR([NETSTAT], [path to netstat utility]) # tests
 AC_ARG_VAR([MAN2HTML], [path to man2html utility])
 AC_ARG_VAR([GIT], [path to git utility])
+AC_ARG_VAR([SYSTEMD_ASK_PASSWORD], [path to systemd-ask-password utility])
 AC_PATH_PROGS([IFCONFIG], [ifconfig],, [$PATH:/usr/local/sbin:/usr/sbin:/sbin])
 AC_PATH_PROGS([ROUTE], [route],, [$PATH:/usr/local/sbin:/usr/sbin:/sbin])
 AC_PATH_PROGS([IPROUTE], [ip],, [$PATH:/usr/local/sbin:/usr/sbin:/sbin])
+AC_PATH_PROGS([SYSTEMD_ASK_PASSWORD], [systemd-ask-password],, [$PATH:/usr/local/bin:/usr/bin:/bin])
 AC_CHECK_PROGS([NETSTAT], [netstat], [netstat], [$PATH:/usr/local/sbin:/usr/sbin:/sbin:/etc]) # tests
 AC_CHECK_PROGS([MAN2HTML], [man2html])
 AC_CHECK_PROGS([GIT], [git]) # optional
 AC_DEFINE_UNQUOTED([IFCONFIG_PATH], ["$IFCONFIG"], [Path to ifconfig tool])
 AC_DEFINE_UNQUOTED([IPROUTE_PATH], ["$IPROUTE"], [Path to iproute tool])
 AC_DEFINE_UNQUOTED([ROUTE_PATH], ["$ROUTE"], [Path to route tool])
+AC_DEFINE_UNQUOTED([SYSTEMD_ASK_PASSWORD_PATH], ["$SYSTEMD_ASK_PASSWORD"], [Path to systemd-ask-password tool])
 
 #
 # Libtool
@@ -994,6 +997,28 @@ if test "$enable_lz4" = "yes" && test "$enable_comp_stub" = "no"; then
 fi
 
 
+dnl
+dnl Check for systemd
+dnl
+
+if test "$enable_systemd" = "yes" ; then
+    PKG_CHECK_MODULES([libsystemd], [systemd libsystemd],
+                      [],
+                      [PKG_CHECK_MODULES([libsystemd], [libsystemd-daemon])]
+                      )
+    AC_CHECK_HEADERS(systemd/sd-daemon.h,
+       ,
+       [
+	   AC_MSG_ERROR([systemd development headers not found.])
+       ])
+
+    saved_LIBS="${LIBS}"
+    LIBS="${LIBS} ${libsystemd_LIBS}"
+    AC_CHECK_FUNCS([sd_booted], [], [AC_MSG_ERROR([systemd library is missing sd_booted()])])
+    OPTIONAL_SYSTEMD_LIBS="${libsystemd_LIBS}"
+    AC_DEFINE(ENABLE_SYSTEMD, 1, [Enable systemd integration])
+    LIBS="${saved_LIBS}"
+fi
 
 
 AC_MSG_CHECKING([git checkout])
@@ -1034,7 +1059,6 @@ test "${enable_def_auth}" = "yes" && AC_DEFINE([ENABLE_DEF_AUTH], [1], [Enable d
 test "${enable_pf}" = "yes" && AC_DEFINE([ENABLE_PF], [1], [Enable internal packet filter])
 test "${enable_strict_options}" = "yes" && AC_DEFINE([ENABLE_STRICT_OPTIONS_CHECK], [1], [Enable strict options check between peers])
 test "${enable_password_save}" = "yes" && AC_DEFINE([ENABLE_PASSWORD_SAVE], [1], [Allow --askpass and --auth-user-pass passwords to be read from a file])
-test "${enable_systemd}" = "yes" && AC_DEFINE([ENABLE_SYSTEMD], [1], [Enable systemd support])
 
 case "${with_crypto_library}" in
 	openssl)
@@ -1167,6 +1191,7 @@ AC_SUBST([OPTIONAL_SNAPPY_CFLAGS])
 AC_SUBST([OPTIONAL_SNAPPY_LIBS])
 AC_SUBST([OPTIONAL_LZ4_CFLAGS])
 AC_SUBST([OPTIONAL_LZ4_LIBS])
+AC_SUBST([OPTIONAL_SYSTEMD_LIBS])
 AC_SUBST([OPTIONAL_PKCS11_HELPER_CFLAGS])
 AC_SUBST([OPTIONAL_PKCS11_HELPER_LIBS])
 

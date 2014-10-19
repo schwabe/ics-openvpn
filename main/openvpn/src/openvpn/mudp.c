@@ -119,8 +119,10 @@ multi_get_create_instance_udp (struct multi_context *m)
 
 	      if (!link_socket_actual_match(&mi->context.c2.from, &m->top.c2.from))
 		{
-		  msg(D_MULTI_MEDIUM, "floating detected from %s to %s",
-		      print_link_socket_actual (&mi->context.c2.from, &gc), print_link_socket_actual (&m->top.c2.from, &gc));
+		  msg(D_MULTI_MEDIUM, "floating detected from %s to %s (session id: %d)",
+		      print_link_socket_actual (&mi->context.c2.from, &gc),
+              print_link_socket_actual (&m->top.c2.from, &gc),
+              sess_id);
 
 		  /* session-id is not trusted, so check hmac */
 		  session_forged = !(crypto_test_hmac(&m->top.c2.buf, &mi->context.c2.crypto_options));

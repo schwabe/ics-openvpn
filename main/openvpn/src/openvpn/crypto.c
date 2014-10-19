@@ -430,7 +430,7 @@ crypto_test_hmac (struct buffer *buf, const struct crypto_options *opt)
 	  hmac_ctx_final (ctx->hmac, local_hmac);
 
 	  /* Compare locally computed HMAC with packet HMAC */
-	  if (memcmp (local_hmac, BPTR (buf) + offset, hmac_len))
+	  if (memcmp_constant_time (local_hmac, BPTR (buf) + offset, hmac_len))
 	    {
 	      gc_free (&gc);
 	      return false;

@@ -863,10 +863,12 @@ redirect_default_route_to_vpn (struct route_list *rl, const struct tuntap *tt, u
 	{
 	  msg (M_WARN, "%s VPN gateway parameter (--route-gateway or --ifconfig) is missing", err);
 	}
+#ifndef TARGET_ANDROID
       else if (!(rl->rgi.flags & RGI_ADDR_DEFINED))
 	{
 	  msg (M_WARN, "%s Cannot read current default gateway from system", err);
 	}
+#endif
       else if (!(rl->spec.flags & RTSA_REMOTE_HOST))
 	{
 	  msg (M_WARN, "%s Cannot obtain current remote host address", err);
@@ -913,6 +915,16 @@ redirect_default_route_to_vpn (struct route_list *rl, const struct tuntap *tt, u
 
 	  if (rl->flags & RG_REROUTE_GW)
 	    {
+#ifdef TARGET_ANDROID
+	      add_route3 (0,
+			  0,
+			  rl->spec.remote_endpoint,
+			  tt,
+			  flags,
+			  &rl->rgi,
+			  es);
+
+#else
 	      if (rl->flags & RG_DEF1)
 		{
 		  /* add new default route (1st component) */
@@ -953,6 +965,7 @@ redirect_default_route_to_vpn (struct route_list *rl, const struct tuntap *tt, u
 			      &rl->rgi,
 			      es);
 		}
+#endif
 	    }
 
 	  /* set a flag so we can undo later */

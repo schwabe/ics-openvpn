@@ -23,7 +23,7 @@ if [ -d openvpn/.git ]; then
 fi
 
 if [ "x$1" = "x" ]; then
-    ndk-build APP_API=all -j 8
+    ndk-build  -j 8 USE_BREAKPAD=0
 else
   ndk-build $@
 fi

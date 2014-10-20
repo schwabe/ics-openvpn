@@ -698,7 +698,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     VpnStatus.logWarning(R.string.ip_not_cidr, local, netmask, mode);
             }
         }
-        if (("p2p".equals(mode))  && mLocalIP.len < 32 || "net30".equals("net30") && mLocalIP.len < 30) {
+        if (("p2p".equals(mode)  && mLocalIP.len < 32) || ("net30".equals(mode) && mLocalIP.len < 30)) {
             VpnStatus.logWarning(R.string.ip_looks_like_subnet, local, netmask, mode);
         }
 

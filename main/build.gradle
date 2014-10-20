@@ -13,11 +13,11 @@ dependencies {
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21"
+    buildToolsVersion "21.0.1"
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode = 99
+        versionCode = 100
         versionName = "0.6.19"
     }
 

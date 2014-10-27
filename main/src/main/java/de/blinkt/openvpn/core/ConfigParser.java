@@ -558,8 +558,13 @@ public class ConfigParser {
 			noauthtypeset=false;
 		}
 
+        Vector<String> cryptoapicert = getOption("cryptoapicert",1,1);
+        if(cryptoapicert!=null) {
+            np.mAuthenticationType = VpnProfile.TYPE_KEYSTORE;
+            noauthtypeset=false;
+        }
 
-		Vector<String> compatnames = getOption("compat-names",1,2);
+        Vector<String> compatnames = getOption("compat-names",1,2);
 		Vector<String> nonameremapping = getOption("no-name-remapping",1,1);
 		Vector<String> tlsremote = getOption("tls-remote",1,1);
 		if(tlsremote!=null){

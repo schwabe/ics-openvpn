@@ -75,3 +75,8 @@ psk_client_callback_128_byte_id_bug.patch
 
 Fixes the issue where it was impossible to return a 128 byte long PSK identity
 (the maximum supported length) from psk_client_callback.
+
+tls_fallback_scsv.patch
+
+Adds the signalling cipher suite value (SCSV) from
+https://tools.ietf.org/html/draft-ietf-tls-downgrade-scsv-00

@@ -695,6 +695,10 @@ mips_exclude_files := \
   crypto/aes/aes_core.c \
   crypto/bn/bn_asm.c \
 
+# At least crypto/aes/asm/bsaes-armv7.S does not compile with Clang
+LOCAL_CLANG_ASFLAGS_arm += -no-integrated-as
+# crypto/aes/asm/aesv8-armx-64.S failed to compile.
+LOCAL_CLANG_ASFLAGS_arm64 += -no-integrated-as
 
 LOCAL_CFLAGS += $(common_cflags)
 LOCAL_C_INCLUDES += $(common_c_includes)

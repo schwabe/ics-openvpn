@@ -25,7 +25,7 @@
 #if PROXY_DIGEST_AUTH
 
 #define HASHLEN 16
-typedef unsigned char HASH[HASHLEN];
+typedef uint8_t HASH[HASHLEN];
 #define HASHHEXLEN 32
 typedef unsigned char HASHHEX[HASHHEXLEN+1];
 #undef IN

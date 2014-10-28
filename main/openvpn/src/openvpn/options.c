@@ -570,6 +570,7 @@ static const char usage_message[] =
   "--tls-version-min <version> ['or-highest'] : sets the minimum TLS version we\n"
   "    will accept from the peer.  If version is unrecognized and 'or-highest'\n"
   "    is specified, require max TLS version supported by SSL implementation.\n"
+  "--tls-version-max <version> : sets the maximum TLS version we will use.\n"
 #ifndef ENABLE_CRYPTO_POLARSSL
   "--pkcs12 file   : PKCS#12 file containing local private key, local certificate\n"
   "                  and optionally the root CA certificate.\n"
@@ -2145,10 +2146,6 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
       (options->shared_secret_file != NULL) > 1)
     msg (M_USAGE, "specify only one of --tls-server, --tls-client, or --secret");
 
-  if (options->tls_server)
-    {
-      notnull (options->dh_file, "DH file (--dh)");
-    }
   if (options->tls_server || options->tls_client)
     {
 #ifdef ENABLE_PKCS11
@@ -2499,6 +2496,16 @@ options_postprocess_mutate (struct options *o)
   ASSERT (o->connection_list);
   for (i = 0; i < o->connection_list->len; ++i)
 	options_postprocess_mutate_ce (o, o->connection_list->array[i]);
+
+#ifdef ENABLE_SSL
+  if (o->tls_server)
+    {
+      /* Check that DH file is specified, or explicitly disabled */
+      notnull (o->dh_file, "DH file (--dh)");
+      if (streq (o->dh_file, "none"))
+	o->dh_file = NULL;
+    }
+#endif
 
 #if ENABLE_MANAGEMENT
   if (o->http_proxy_override)
@@ -2991,7 +2998,8 @@ options_string (const struct options *o,
 		       o->authname, o->authname_defined,
 		       o->keysize, true, false);
 
-	buf_printf (&out, ",cipher %s", cipher_kt_name (kt.cipher));
+	buf_printf (&out, ",cipher %s",
+	    translate_cipher_name_to_openvpn(cipher_kt_name (kt.cipher)));
 	buf_printf (&out, ",auth %s", md_kt_name (kt.digest));
 	buf_printf (&out, ",keysize %d", kt.cipher_length * 8);
 	if (o->shared_secret_file)
@@ -6568,14 +6576,29 @@ add_option (struct options *options,
     {
       int ver;
       VERIFY_PERMISSION (OPT_P_GENERAL);
-      ver = tls_version_min_parse(p[1], p[2]);
+      ver = tls_version_parse(p[1], p[2]);
       if (ver == TLS_VER_BAD)
 	{
 	  msg (msglevel, "unknown tls-version-min parameter: %s", p[1]);
           goto err;
 	}
-      options->ssl_flags &= ~(SSLF_TLS_VERSION_MASK << SSLF_TLS_VERSION_SHIFT);
-      options->ssl_flags |= (ver << SSLF_TLS_VERSION_SHIFT);
+      options->ssl_flags &=
+	  ~(SSLF_TLS_VERSION_MIN_MASK << SSLF_TLS_VERSION_MIN_SHIFT);
+      options->ssl_flags |= (ver << SSLF_TLS_VERSION_MIN_SHIFT);
+    }
+  else if (streq (p[0], "tls-version-max") && p[1])
+    {
+      int ver;
+      VERIFY_PERMISSION (OPT_P_GENERAL);
+      ver = tls_version_parse(p[1], NULL);
+      if (ver == TLS_VER_BAD)
+	{
+	  msg (msglevel, "unknown tls-version-max parameter: %s", p[1]);
+          goto err;
+	}
+      options->ssl_flags &=
+	  ~(SSLF_TLS_VERSION_MAX_MASK << SSLF_TLS_VERSION_MAX_SHIFT);
+      options->ssl_flags |= (ver << SSLF_TLS_VERSION_MAX_SHIFT);
     }
 #ifndef ENABLE_CRYPTO_POLARSSL
   else if (streq (p[0], "pkcs12") && p[1])
@@ -6976,11 +6999,11 @@ add_option (struct options *options,
       options->persist_mode = 1;
     }
 #endif
-  else if (streq (p[0], "session-id"))
+  else if (streq (p[0], "peer-id"))
     {
-      VERIFY_PERMISSION (OPT_P_SESSION_ID);
-      options->use_session_id = true;
-      options->vpn_session_id = atoi(p[1]);
+      VERIFY_PERMISSION (OPT_P_PEER_ID);
+      options->use_peer_id = true;
+      options->peer_id = atoi(p[1]);
     }
   else
     {

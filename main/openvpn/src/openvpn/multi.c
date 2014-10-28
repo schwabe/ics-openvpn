@@ -561,7 +561,7 @@ multi_close_instance (struct multi_context *m,
 	}
 #endif
 
-      m->instances[mi->context.c2.tls_multi->vpn_session_id] = NULL;
+      m->instances[mi->context.c2.tls_multi->peer_id] = NULL;
 
       schedule_remove_entry (m->schedule, (struct schedule_entry *) mi);
 

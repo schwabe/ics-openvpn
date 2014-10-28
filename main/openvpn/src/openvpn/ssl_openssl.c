@@ -104,7 +104,7 @@ tls_ctx_server_new(struct tls_root_ctx *ctx)
   ctx->ctx = SSL_CTX_new (SSLv23_server_method ());
 
   if (ctx->ctx == NULL)
-    msg (M_SSLERR, "SSL_CTX_new SSLv23_server_method");
+    crypto_msg (M_FATAL, "SSL_CTX_new SSLv23_server_method");
 }
 
 void
@@ -115,7 +115,7 @@ tls_ctx_client_new(struct tls_root_ctx *ctx)
   ctx->ctx = SSL_CTX_new (SSLv23_client_method ());
 
   if (ctx->ctx == NULL)
-    msg (M_SSLERR, "SSL_CTX_new SSLv23_client_method");
+    crypto_msg (M_FATAL, "SSL_CTX_new SSLv23_client_method");
 }
 
 void
@@ -152,7 +152,7 @@ info_callback (INFO_CALLBACK_SSL_CONST SSL * s, int where, int ret)
     }
   else if (where & SSL_CB_ALERT)
     {
-      dmsg (D_HANDSHAKE_VERBOSE, "SSL alert (%s): %s: %s",
+      dmsg(D_HANDSHAKE_VERBOSE, "SSL alert (%s): %s: %s",
 	   where & SSL_CB_READ ? "read" : "write",
 	   SSL_alert_type_string_long (ret),
 	   SSL_alert_desc_string_long (ret));
@@ -184,15 +184,23 @@ tls_ctx_set_options (struct tls_root_ctx *ctx, unsigned int ssl_flags)
   /* process SSL options including minimum TLS version we will accept from peer */
   {
     long sslopt = SSL_OP_SINGLE_DH_USE | SSL_OP_NO_TICKET | SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3;
-    const int tls_version_min = (ssl_flags >> SSLF_TLS_VERSION_SHIFT) & SSLF_TLS_VERSION_MASK;
-    if (tls_version_min > TLS_VER_1_0)
+    int tls_ver_max = TLS_VER_UNSPEC;
+    const int tls_ver_min =
+	(ssl_flags >> SSLF_TLS_VERSION_MIN_SHIFT) & SSLF_TLS_VERSION_MIN_MASK;
+
+    tls_ver_max =
+	(ssl_flags >> SSLF_TLS_VERSION_MAX_SHIFT) & SSLF_TLS_VERSION_MAX_MASK;
+    if (tls_ver_max <= TLS_VER_UNSPEC)
+	tls_ver_max = tls_version_max();
+
+    if (tls_ver_min > TLS_VER_1_0 || tls_ver_max < TLS_VER_1_0)
       sslopt |= SSL_OP_NO_TLSv1;
 #ifdef SSL_OP_NO_TLSv1_1
-    if (tls_version_min > TLS_VER_1_1)
+    if (tls_ver_min > TLS_VER_1_1 || tls_ver_max < TLS_VER_1_1)
       sslopt |= SSL_OP_NO_TLSv1_1;
 #endif
 #ifdef SSL_OP_NO_TLSv1_2
-    if (tls_version_min > TLS_VER_1_2)
+    if (tls_ver_min > TLS_VER_1_2 || tls_ver_max < TLS_VER_1_2)
       sslopt |= SSL_OP_NO_TLSv1_2;
 #endif
     SSL_CTX_set_options (ctx->ctx, sslopt);
@@ -227,7 +235,7 @@ tls_ctx_restrict_ciphers(struct tls_root_ctx *ctx, const char *ciphers)
     {
       /* Use sane default (disable export, and unsupported cipher modes) */
       if(!SSL_CTX_set_cipher_list(ctx->ctx, "DEFAULT:!EXP:!PSK:!SRP"))
-        msg(M_SSLERR, "Failed to set default TLS cipher list.");
+	crypto_msg (M_FATAL, "Failed to set default TLS cipher list.");
       return;
     }
 
@@ -280,7 +288,8 @@ tls_ctx_restrict_ciphers(struct tls_root_ctx *ctx, const char *ciphers)
 
       // Make sure new cipher name fits in cipher string
       if (((sizeof(openssl_ciphers)-1) - openssl_ciphers_len) < current_cipher_len) {
-	msg(M_SSLERR, "Failed to set restricted TLS cipher list, too long (>%d).", (int)sizeof(openssl_ciphers)-1);
+	  crypto_msg (M_FATAL, "Failed to set restricted TLS cipher list, too "
+	      "long (>%d).", (int)sizeof(openssl_ciphers)-1);
       }
 
       // Concatenate cipher name to OpenSSL cipher string
@@ -297,7 +306,8 @@ tls_ctx_restrict_ciphers(struct tls_root_ctx *ctx, const char *ciphers)
 
   // Set OpenSSL cipher list
   if(!SSL_CTX_set_cipher_list(ctx->ctx, openssl_ciphers))
-    msg(M_SSLERR, "Failed to set restricted TLS cipher list: %s", openssl_ciphers);
+    crypto_msg (M_FATAL, "Failed to set restricted TLS cipher list: %s",
+	openssl_ciphers);
 }
 
 void
@@ -313,22 +323,22 @@ tls_ctx_load_dh_params (struct tls_root_ctx *ctx, const char *dh_file,
   if (!strcmp (dh_file, INLINE_FILE_TAG) && dh_file_inline)
     {
       if (!(bio = BIO_new_mem_buf ((char *)dh_file_inline, -1)))
-	msg (M_SSLERR, "Cannot open memory BIO for inline DH parameters");
+	crypto_msg (M_FATAL, "Cannot open memory BIO for inline DH parameters");
     }
   else
     {
       /* Get Diffie Hellman Parameters */
       if (!(bio = BIO_new_file (dh_file, "r")))
-	msg (M_SSLERR, "Cannot open %s for DH parameters", dh_file);
+	crypto_msg (M_FATAL, "Cannot open %s for DH parameters", dh_file);
     }
 
   dh = PEM_read_bio_DHparams (bio, NULL, NULL, NULL);
   BIO_free (bio);
 
   if (!dh)
-    msg (M_SSLERR, "Cannot load DH parameters from %s", dh_file);
+    crypto_msg (M_FATAL, "Cannot load DH parameters from %s", dh_file);
   if (!SSL_CTX_set_tmp_dh (ctx->ctx, dh))
-    msg (M_SSLERR, "SSL_CTX_set_tmp_dh");
+    crypto_msg (M_FATAL, "SSL_CTX_set_tmp_dh");
 
   msg (D_TLS_DEBUG_LOW, "Diffie-Hellman initialized with %d bit key",
        8 * DH_size (dh));
@@ -397,7 +407,7 @@ tls_ctx_load_ecdh_params (struct tls_root_ctx *ctx, const char *curve_name
     }
 
   if (!SSL_CTX_set_tmp_ecdh(ctx->ctx, ecdh))
-    msg (M_SSLERR, "SSL_CTX_set_tmp_ecdh: cannot add curve");
+    crypto_msg (M_FATAL, "SSL_CTX_set_tmp_ecdh: cannot add curve");
 
   msg (D_TLS_DEBUG_LOW, "ECDH curve %s added", sname);
 
@@ -433,7 +443,7 @@ tls_ctx_load_pkcs12(struct tls_root_ctx *ctx, const char *pkcs12_file,
       BIO_push(b64, bio);
       p12 = d2i_PKCS12_bio(b64, NULL);
       if (!p12)
-	msg(M_SSLERR, "Error reading inline PKCS#12 file");
+	crypto_msg (M_FATAL, "Error reading inline PKCS#12 file");
       BIO_free(b64);
       BIO_free(bio);
     }
@@ -441,11 +451,11 @@ tls_ctx_load_pkcs12(struct tls_root_ctx *ctx, const char *pkcs12_file,
     {
       /* Load the PKCS #12 file */
       if (!(fp = platform_fopen(pkcs12_file, "rb")))
-	msg(M_SSLERR, "Error opening file %s", pkcs12_file);
+	crypto_msg (M_FATAL, "Error opening file %s", pkcs12_file);
       p12 = d2i_PKCS12_fp(fp, NULL);
       fclose(fp);
       if (!p12)
-	msg(M_SSLERR, "Error reading PKCS#12 file %s", pkcs12_file);
+	crypto_msg (M_FATAL, "Error reading PKCS#12 file %s", pkcs12_file);
     }
 
   /* Parse the PKCS #12 file */
@@ -468,16 +478,16 @@ tls_ctx_load_pkcs12(struct tls_root_ctx *ctx, const char *pkcs12_file,
 
   /* Load Certificate */
   if (!SSL_CTX_use_certificate (ctx->ctx, cert))
-   msg (M_SSLERR, "Cannot use certificate");
+    crypto_msg (M_FATAL, "Cannot use certificate");
 
   /* Load Private Key */
   if (!SSL_CTX_use_PrivateKey (ctx->ctx, pkey))
-   msg (M_SSLERR, "Cannot use private key");
+    crypto_msg (M_FATAL, "Cannot use private key");
   warn_if_group_others_accessible (pkcs12_file);
 
   /* Check Private Key */
   if (!SSL_CTX_check_private_key (ctx->ctx))
-   msg (M_SSLERR, "Private key does not match the certificate");
+    crypto_msg (M_FATAL, "Private key does not match the certificate");
 
   /* Set Certificate Verification chain */
   if (load_ca_file)
@@ -491,9 +501,11 @@ tls_ctx_load_pkcs12(struct tls_root_ctx *ctx, const char *pkcs12_file,
 	for (i = 0; i < sk_X509_num(ca); i++)
 	  {
 	    if (!X509_STORE_add_cert(ctx->ctx->cert_store,sk_X509_value(ca, i)))
-	      msg (M_SSLERR, "Cannot add certificate to certificate chain (X509_STORE_add_cert)");
+	      crypto_msg (M_FATAL, "Cannot add certificate to certificate chain"
+		  " (X509_STORE_add_cert)");
 	    if (!SSL_CTX_add_client_CA(ctx->ctx, sk_X509_value(ca, i)))
-	      msg (M_SSLERR, "Cannot add certificate to client CA list (SSL_CTX_add_client_CA)");
+	      crypto_msg (M_FATAL, "Cannot add certificate to client CA list "
+		  "(SSL_CTX_add_client_CA)");
 	  }
       }
    } else {
@@ -507,7 +519,8 @@ tls_ctx_load_pkcs12(struct tls_root_ctx *ctx, const char *pkcs12_file,
 	for (i = 0; i < sk_X509_num(ca); i++)
 	  {
 	    if (!SSL_CTX_add_extra_chain_cert(ctx->ctx,sk_X509_value(ca, i)))
-	      msg (M_SSLERR, "Cannot add extra certificate to chain (SSL_CTX_add_extra_chain_cert)");
+	      crypto_msg (M_FATAL, "Cannot add extra certificate to chain "
+		  "(SSL_CTX_add_extra_chain_cert)");
 	  }
       }
    }
@@ -522,8 +535,8 @@ tls_ctx_load_cryptoapi(struct tls_root_ctx *ctx, const char *cryptoapi_cert)
 
   /* Load Certificate and Private Key */
   if (!SSL_CTX_use_CryptoAPI_certificate (ctx->ctx, cryptoapi_cert))
-    msg (M_SSLERR, "Cannot load certificate \"%s\" from Microsoft Certificate Store",
-	   cryptoapi_cert);
+    crypto_msg (M_SSLERR, "Cannot load certificate \"%s\" from Microsoft "
+	"Certificate Store", cryptoapi_cert);
 }
 #endif /* WIN32 */
 
@@ -537,9 +550,9 @@ tls_ctx_add_extra_certs (struct tls_root_ctx *ctx, BIO *bio)
       if (!PEM_read_bio_X509 (bio, &cert, 0, NULL)) /* takes ownership of cert */
         break;
       if (!cert)
-        msg (M_SSLERR, "Error reading extra certificate");
+	crypto_msg (M_FATAL, "Error reading extra certificate");
       if (SSL_CTX_add_extra_chain_cert(ctx->ctx, cert) != 1)
-        msg (M_SSLERR, "Error adding extra certificate");
+	crypto_msg (M_FATAL, "Error adding extra certificate");
     }
 }
 
@@ -587,9 +600,9 @@ end:
   if (!ret)
     {
       if (inline_file)
-        msg (M_SSLERR, "Cannot load inline certificate file");
+	crypto_msg (M_FATAL, "Cannot load inline certificate file");
       else
-        msg (M_SSLERR, "Cannot load certificate file %s", cert_file);
+	crypto_msg (M_FATAL, "Cannot load certificate file %s", cert_file);
     }
 
   if (in != NULL)
@@ -647,14 +660,14 @@ tls_ctx_load_priv_file (struct tls_root_ctx *ctx, const char *priv_key_file,
       if (management && (ERR_GET_REASON (ERR_peek_error()) == EVP_R_BAD_DECRYPT))
           management_auth_failure (management, UP_TYPE_PRIVATE_KEY, NULL);
 #endif
-      msg (M_WARN|M_SSL, "Cannot load private key file %s", priv_key_file);
+      crypto_msg (M_WARN, "Cannot load private key file %s", priv_key_file);
       goto end;
     }
   warn_if_group_others_accessible (priv_key_file);
 
   /* Check Private Key */
   if (!SSL_CTX_check_private_key (ssl_ctx))
-    msg (M_SSLERR, "Private key does not match the certificate");
+    crypto_msg (M_FATAL, "Private key does not match the certificate");
   ret = 0;
 
 end:
@@ -805,7 +818,7 @@ tls_ctx_use_external_private_key (struct tls_root_ctx *ctx,
       if (rsa_meth)
 	free(rsa_meth);
     }
-  msg (M_SSLERR, "Cannot enable SSL external private key capability");
+  crypto_msg (M_FATAL, "Cannot enable SSL external private key capability");
   return 0;
 }
 
@@ -835,7 +848,8 @@ tls_ctx_load_ca (struct tls_root_ctx *ctx, const char *ca_file,
 
   store = SSL_CTX_get_cert_store(ctx->ctx);
   if (!store)
-    msg(M_SSLERR, "Cannot get certificate store (SSL_CTX_get_cert_store)");
+    crypto_msg (M_FATAL, "Cannot get certificate store "
+	"(SSL_CTX_get_cert_store)");
 
   /* Try to add certificates and CRLs from ca_file */
   if (ca_file)
@@ -858,7 +872,7 @@ tls_ctx_load_ca (struct tls_root_ctx *ctx, const char *ca_file,
 
               if (tls_server && !info->x509)
                 {
-                  msg (M_SSLERR, "X509 name was missing in TLS mode");
+                  crypto_msg (M_FATAL, "X509 name was missing in TLS mode");
                 }
 
               if (info->x509)
@@ -894,7 +908,8 @@ tls_ctx_load_ca (struct tls_root_ctx *ctx, const char *ca_file,
               if (tls_server) {
                 int cnum = sk_X509_NAME_num (cert_names);
                 if (cnum != (prev + 1)) {
-                  msg (M_WARN, "Cannot load CA certificate file %s (entry %d did not validate)", np(ca_file), added);
+                  crypto_msg (M_WARN, "Cannot load CA certificate file %s "
+                      "(entry %d did not validate)", np(ca_file), added);
                 }
                 prev = cnum;
               }
@@ -907,12 +922,14 @@ tls_ctx_load_ca (struct tls_root_ctx *ctx, const char *ca_file,
         SSL_CTX_set_client_CA_list (ctx->ctx, cert_names);
 
       if (!added)
-        msg (M_SSLERR, "Cannot load CA certificate file %s (no entries were read)", np(ca_file));
+	crypto_msg (M_FATAL, "Cannot load CA certificate file %s "
+	    "(no entries were read)", np(ca_file));
 
       if (tls_server) {
         int cnum = sk_X509_NAME_num (cert_names);
         if (cnum != added)
-          msg (M_SSLERR, "Cannot load CA certificate file %s (only %d of %d entries were valid X509 names)", np(ca_file), cnum, added);
+          crypto_msg (M_FATAL, "Cannot load CA certificate file %s (only %d of "
+              "%d entries were valid X509 names)", np(ca_file), cnum, added);
       }
 
       if (in)
@@ -926,7 +943,7 @@ tls_ctx_load_ca (struct tls_root_ctx *ctx, const char *ca_file,
       if (lookup && X509_LOOKUP_add_dir (lookup, ca_path, X509_FILETYPE_PEM))
         msg(M_WARN, "WARNING: experimental option --capath %s", ca_path);
       else
-        msg(M_SSLERR, "Cannot add lookup at --capath %s", ca_path);
+	crypto_msg (M_FATAL, "Cannot add lookup at --capath %s", ca_path);
       X509_STORE_set_flags (store, X509_V_FLAG_CRL_CHECK | X509_V_FLAG_CRL_CHECK_ALL);
     }
 }
@@ -943,7 +960,7 @@ tls_ctx_load_extra_certs (struct tls_root_ctx *ctx, const char *extra_certs_file
     in = BIO_new_file (extra_certs_file, "r");
 
   if (in == NULL)
-    msg (M_SSLERR, "Cannot load extra-certs file: %s", extra_certs_file);
+    crypto_msg (M_FATAL, "Cannot load extra-certs file: %s", extra_certs_file);
   else
     tls_ctx_add_extra_certs (ctx, in);
 
@@ -1035,7 +1052,7 @@ getbio (BIO_METHOD * type, const char *desc)
   BIO *ret;
   ret = BIO_new (type);
   if (!ret)
-    msg (M_SSLERR, "Error creating %s BIO", desc);
+    crypto_msg (M_FATAL, "Error creating %s BIO", desc);
   return ret;
 }
 
@@ -1069,16 +1086,15 @@ bio_write (BIO *bio, const uint8_t *data, int size, const char *desc)
 	    }
 	  else
 	    {
-	      msg (D_TLS_ERRORS | M_SSL, "TLS ERROR: BIO write %s error",
-		   desc);
+	      crypto_msg (D_TLS_ERRORS, "TLS ERROR: BIO write %s error", desc);
 	      ret = -1;
 	      ERR_clear_error ();
 	    }
 	}
       else if (i != size)
 	{
-	  msg (D_TLS_ERRORS | M_SSL,
-	       "TLS ERROR: BIO write %s incomplete %d/%d", desc, i, size);
+	  crypto_msg (D_TLS_ERRORS, "TLS ERROR: BIO write %s incomplete %d/%d",
+	      desc, i, size);
 	  ret = -1;
 	  ERR_clear_error ();
 	}
@@ -1144,8 +1160,7 @@ bio_read (BIO *bio, struct buffer *buf, int maxlen, const char *desc)
 	    }
 	  else
 	    {
-	      msg (D_TLS_ERRORS | M_SSL, "TLS_ERROR: BIO read %s error",
-		   desc);
+	      crypto_msg (D_TLS_ERRORS, "TLS_ERROR: BIO read %s error", desc);
 	      buf->len = 0;
 	      ret = -1;
 	      ERR_clear_error ();
@@ -1175,7 +1190,7 @@ key_state_ssl_init(struct key_state_ssl *ks_ssl, const struct tls_root_ctx *ssl_
 
   ks_ssl->ssl = SSL_new (ssl_ctx->ctx);
   if (!ks_ssl->ssl)
-    msg (M_SSLERR, "SSL_new failed");
+    crypto_msg (M_FATAL, "SSL_new failed");
 
   /* put session * in ssl object so we can access it
      from verify callback*/
@@ -1350,11 +1365,11 @@ show_available_tls_ciphers (const char *cipher_list)
 
   tls_ctx.ctx = SSL_CTX_new (SSLv23_method ());
   if (!tls_ctx.ctx)
-    msg (M_SSLERR, "Cannot create SSL_CTX object");
+    crypto_msg (M_FATAL, "Cannot create SSL_CTX object");
 
   ssl = SSL_new (tls_ctx.ctx);
   if (!ssl)
-    msg (M_SSLERR, "Cannot create SSL object");
+    crypto_msg (M_FATAL, "Cannot create SSL object");
 
   tls_ctx_restrict_ciphers(&tls_ctx, cipher_list);
 
@@ -1395,7 +1410,7 @@ show_available_curves()
   curves = OPENSSL_malloc((int)(sizeof(EC_builtin_curve) * crv_len));
 
   if (curves == NULL)
-    msg (M_SSLERR, "Cannot create EC_builtin_curve object");
+    crypto_msg (M_FATAL, "Cannot create EC_builtin_curve object");
   else
   {
     if (EC_get_builtin_curves(curves, crv_len))
@@ -1412,7 +1427,7 @@ show_available_curves()
     }
     else
     {
-      msg (M_SSLERR, "Cannot get list of builtin curves");
+      crypto_msg (M_FATAL, "Cannot get list of builtin curves");
     }
     OPENSSL_free(curves);
   }
@@ -1431,10 +1446,10 @@ get_highest_preference_tls_cipher (char *buf, int size)
 
   ctx = SSL_CTX_new (SSLv23_method ());
   if (!ctx)
-    msg (M_SSLERR, "Cannot create SSL_CTX object");
+    crypto_msg (M_FATAL, "Cannot create SSL_CTX object");
   ssl = SSL_new (ctx);
   if (!ssl)
-    msg (M_SSLERR, "Cannot create SSL object");
+    crypto_msg (M_FATAL, "Cannot create SSL object");
 
   cipher_name = SSL_get_cipher_list (ssl, 0);
   strncpynt (buf, cipher_name, size);

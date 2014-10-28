@@ -213,6 +213,9 @@ struct packet_id
 void packet_id_init (struct packet_id *p, bool tcp_mode, int seq_backtrack, int time_backtrack, const char *name, int unit);
 void packet_id_free (struct packet_id *p);
 
+/** Is this struct packet_id initialized? */
+bool packet_id_initialized (const struct packet_id *pid);
+
 /* should we accept an incoming packet id ? */
 bool packet_id_test (struct packet_id_rec *p,
 		     const struct packet_id_net *pin);

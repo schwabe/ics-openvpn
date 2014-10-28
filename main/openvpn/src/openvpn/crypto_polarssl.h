@@ -61,6 +61,9 @@ typedef md_context_t hmac_ctx_t;
 /** Cipher is in CFB mode */
 #define OPENVPN_MODE_CFB 	POLARSSL_MODE_CFB
 
+/** Cipher is in GCM mode */
+#define OPENVPN_MODE_GCM	POLARSSL_MODE_GCM
+
 /** Cipher should encrypt */
 #define OPENVPN_OP_ENCRYPT 	POLARSSL_ENCRYPT
 
@@ -90,5 +93,45 @@ ctr_drbg_context * rand_ctx_get();
  */
 void rand_ctx_enable_prediction_resistance();
 #endif
+
+/**
+ * Log the supplied PolarSSL error, then print the supplied error message.
+ *
+ * @param flags		Flags to indicate error type and priority.
+ * @param errval	PolarSSL error code to convert to error message.
+ * @param prefix	Prefix to PolarSSL error message.
+ *
+ * @returns true if no errors are detected, false otherwise.
+ */
+bool polar_log_err(unsigned int flags, int errval, const char *prefix);
+
+/**
+ * Log the supplied PolarSSL error, then print the supplied error message.
+ *
+ * @param flags		Flags to indicate error type and priority.
+ * @param errval	PolarSSL error code to convert to error message.
+ * @param func		Function name where error was reported.
+ * @param line		Line number where error was reported.
+ *
+ * @returns true if no errors are detected, false otherwise.
+ */
+bool polar_log_func_line(unsigned int flags, int errval, const char *func,
+    int line);
+
+/**
+ * Check errval and log on error.
+ *
+ * Convenience wrapper to put around polarssl library calls, e.g.
+ *   if (!polar_ok(polarssl_func())) return 0;
+ * or
+ *   ASSERT (polar_ok(polarssl_func()));
+ *
+ * @param errval	PolarSSL error code to convert to error message.
+ *
+ * @returns true if no errors are detected, false otherwise.
+ */
+#define polar_ok(errval) \
+  polar_log_func_line(D_CRYPT_ERRORS, errval, __func__, __LINE__)
+
 
 #endif /* CRYPTO_POLARSSL_H_ */

@@ -63,13 +63,15 @@ struct key
 
 
 /**
- * Container for one set of OpenSSL cipher and/or HMAC contexts.
+ * Container for one set of cipher and/or HMAC contexts.
  * @ingroup control_processor
  */
 struct key_ctx
 {
   cipher_ctx_t *cipher;      	/**< Generic cipher %context. */
-  hmac_ctx_t *hmac;               /**< Generic HMAC %context. */
+  hmac_ctx_t *hmac;             /**< Generic HMAC %context. */
+  uint8_t *implicit_iv;		/**< The implicit part of the IV */
+  size_t implicit_iv_len;       /**< The length of implicit_iv */
 };
 
 #define KEY_DIRECTION_BIDIRECTIONAL 0 /* same keys for both directions */
@@ -120,10 +122,10 @@ struct key_direction_state
  */
 struct key_ctx_bi
 {
-  struct key_ctx encrypt;       /**< OpenSSL cipher and/or HMAC contexts
-                                 *   for sending direction. */
-  struct key_ctx decrypt;       /**< OpenSSL cipher and/or HMAC contexts
-                                 *   for receiving direction. */
+  struct key_ctx encrypt;       /**< Cipher and/or HMAC contexts for sending
+				 *   direction. */
+  struct key_ctx decrypt;       /**< cipher and/or HMAC contexts for
+                                 *   receiving direction. */
 };
 
 /**
@@ -132,11 +134,11 @@ struct key_ctx_bi
  */
 struct crypto_options
 {
-  struct key_ctx_bi *key_ctx_bi;
+  struct key_ctx_bi key_ctx_bi;
                                 /**< OpenSSL cipher and HMAC contexts for
                                  *   both sending and receiving
                                  *   directions. */
-  struct packet_id *packet_id;  /**< Current packet ID state for both
+  struct packet_id packet_id;   /**< Current packet ID state for both
                                  *   sending and receiving directions. */
   struct packet_id_persist *pid_persist;
                                 /**< Persistent packet ID state for
@@ -203,6 +205,17 @@ void free_key_ctx (struct key_ctx *ctx);
 
 void free_key_ctx_bi (struct key_ctx_bi *ctx);
 
+/**
+ * Set an implicit IV for a key context.
+ *
+ * @param ctx	The key context to update
+ * @param iv	The implicit IV to load into ctx
+ * @param len	The length (in bytes) of iv
+ */
+bool key_ctx_set_implicit_iv (struct key_ctx *ctx, const uint8_t *iv,
+    size_t len);
+
+
 
 /**************************************************************************/
 /** @name Functions for performing security operations on data channel packets
@@ -236,8 +249,7 @@ void free_key_ctx_bi (struct key_ctx_bi *ctx);
  *     error occurred.
  */
 void openvpn_encrypt (struct buffer *buf, struct buffer work,
-		      const struct crypto_options *opt,
-		      const struct frame* frame);
+		      struct crypto_options *opt, const struct frame* frame);
 
 
 /**
@@ -272,8 +284,7 @@ void openvpn_encrypt (struct buffer *buf, struct buffer work,
  *     an error occurred.
  */
 bool openvpn_decrypt (struct buffer *buf, struct buffer work,
-		      const struct crypto_options *opt,
-		      const struct frame* frame);
+		      struct crypto_options *opt, const struct frame* frame);
 
 
 bool crypto_test_hmac (struct buffer *buf, const struct crypto_options *opt);
@@ -325,7 +336,7 @@ void prng_bytes (uint8_t *output, int len);
 
 void prng_uninit ();
 
-void test_crypto (const struct crypto_options *co, struct frame* f);
+void test_crypto (struct crypto_options *co, struct frame* f);
 
 
 /* key direction functions */

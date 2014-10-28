@@ -1,5 +1,6 @@
 #######################################
 # target static library
+
 include $(CLEAR_VARS)
 include $(LOCAL_PATH)/ndk-build-clear.mk
 
@@ -25,6 +26,7 @@ include $(BUILD_STATIC_LIBRARY)
 # target shared library
 include $(CLEAR_VARS)
 include $(LOCAL_PATH)/ndk-build-clear.mk
+
 LOCAL_SHARED_LIBRARIES := $(log_shared_libraries)
 LOCAL_C_INCLUDES := $(log_c_includes)
 

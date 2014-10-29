@@ -160,8 +160,9 @@ struct key_state
   int initial_opcode;		/* our initial P_ opcode */
   struct session_id session_id_remote;   /* peer's random session ID */
   struct link_socket_actual remote_addr; /* peer's IP addr */
+  struct packet_id packet_id;	       /* for data channel, to prevent replay attacks */
 
-  struct crypto_options crypto_options;/* data channel crypto options */
+  struct key_ctx_bi key;	       /* data channel keys for encrypt/decrypt/hmac */
 
   struct key_source2 *key_src;         /* source entropy for key expansion */
 
@@ -258,7 +259,6 @@ struct tls_options
   bool pass_config_info;
 
   /* struct crypto_option flags */
-  unsigned int crypto_flags;
   unsigned int crypto_flags_and;
   unsigned int crypto_flags_or;
 
@@ -268,6 +268,7 @@ struct tls_options
 
   /* packet authentication for TLS handshake */
   struct crypto_options tls_auth;
+  struct key_ctx_bi tls_auth_key;
 
   /* frame parameters for TLS control channel */
   struct frame frame;
@@ -295,10 +296,8 @@ struct tls_options
 # define SSLF_AUTH_USER_PASS_OPTIONAL  (1<<2)
 # define SSLF_OPT_VERIFY               (1<<4)
 # define SSLF_CRL_VERIFY_DIR           (1<<5)
-# define SSLF_TLS_VERSION_MIN_SHIFT    6
-# define SSLF_TLS_VERSION_MIN_MASK     0xF /* (uses bit positions 6 to 9) */
-# define SSLF_TLS_VERSION_MAX_SHIFT    10
-# define SSLF_TLS_VERSION_MAX_MASK     0xF /* (uses bit positions 10 to 13) */
+# define SSLF_TLS_VERSION_SHIFT        6
+# define SSLF_TLS_VERSION_MASK         0xF /* (uses bit positions 6 to 9) */
   unsigned int ssl_flags;
 
 #ifdef MANAGEMENT_DEF_AUTH
@@ -358,6 +357,7 @@ struct tls_session
 
   /* authenticate control packets */
   struct crypto_options tls_auth;
+  struct packet_id tls_auth_pid;
 
   int initial_opcode;		/* our initial P_ opcode */
   struct session_id session_id;	/* our random session ID */

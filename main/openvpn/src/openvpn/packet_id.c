@@ -99,12 +99,6 @@ packet_id_init (struct packet_id *p, bool tcp_mode, int seq_backtrack, int time_
   p->rec.initialized = true;
 }
 
-bool
-packet_id_initialized (const struct packet_id *pid)
-{
-  return pid->rec.initialized;
-}
-
 void
 packet_id_free (struct packet_id *p)
 {

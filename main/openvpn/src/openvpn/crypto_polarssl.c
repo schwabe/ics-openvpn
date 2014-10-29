@@ -46,7 +46,6 @@
 #include "misc.h"
 
 #include <polarssl/des.h>
-#include <polarssl/error.h>
 #include <polarssl/md5.h>
 #include <polarssl/cipher.h>
 #include <polarssl/havege.h>
@@ -87,32 +86,6 @@ crypto_clear_error (void)
 {
 }
 
-bool polar_log_err(unsigned int flags, int errval, const char *prefix)
-{
-  if (0 != errval)
-    {
-      char errstr[256];
-      polarssl_strerror(errval, errstr, sizeof(errstr));
-
-      if (NULL == prefix) prefix = "PolarSSL error";
-      msg (flags, "%s: %s", prefix, errstr);
-    }
-
-  return 0 == errval;
-}
-
-bool polar_log_func_line(unsigned int flags, int errval, const char *func,
-    int line)
-{
-  char prefix[256];
-
-  if (!openvpn_snprintf(prefix, sizeof(prefix), "%s:%d", func, line))
-    return polar_log_err(flags, errval, func);
-
-  return polar_log_err(flags, errval, prefix);
-}
-
-
 #ifdef DMALLOC
 void
 crypto_init_dmalloc (void)
@@ -121,15 +94,52 @@ crypto_init_dmalloc (void)
 }
 #endif /* DMALLOC */
 
-const cipher_name_pair cipher_name_translation_table[] = {
+typedef struct { const char * openvpn_name; const char * polarssl_name; } cipher_name_pair;
+cipher_name_pair cipher_name_translation_table[] = {
     { "BF-CBC", "BLOWFISH-CBC" },
     { "BF-CFB", "BLOWFISH-CFB64" },
     { "CAMELLIA-128-CFB", "CAMELLIA-128-CFB128" },
     { "CAMELLIA-192-CFB", "CAMELLIA-192-CFB128" },
     { "CAMELLIA-256-CFB", "CAMELLIA-256-CFB128" }
 };
-const size_t cipher_name_translation_table_count =
-    sizeof (cipher_name_translation_table) / sizeof (*cipher_name_translation_table);
+
+const cipher_name_pair *
+get_cipher_name_pair(const char *cipher_name) {
+  cipher_name_pair *pair;
+  size_t i = 0;
+
+  /* Search for a cipher name translation */
+  for (; i < sizeof (cipher_name_translation_table) / sizeof (*cipher_name_translation_table); i++)
+    {
+      pair = &cipher_name_translation_table[i];
+      if (0 == strcmp (cipher_name, pair->openvpn_name) ||
+	  0 == strcmp (cipher_name, pair->polarssl_name))
+	  return pair;
+    }
+
+  /* Nothing found, return null */
+  return NULL;
+}
+
+const char *
+translate_cipher_name_from_openvpn (const char *cipher_name) {
+  const cipher_name_pair *pair = get_cipher_name_pair(cipher_name);
+
+  if (NULL == pair)
+    return cipher_name;
+
+  return pair->polarssl_name;
+}
+
+const char *
+translate_cipher_name_to_openvpn (const char *cipher_name) {
+  const cipher_name_pair *pair = get_cipher_name_pair(cipher_name);
+
+  if (NULL == pair)
+    return cipher_name;
+
+  return pair->openvpn_name;
+}
 
 void
 show_available_ciphers ()
@@ -137,28 +147,21 @@ show_available_ciphers ()
   const int *ciphers = cipher_list();
 
 #ifndef ENABLE_SMALL
-  printf ("The following ciphers and cipher modes are available for use\n"
-	  "with " PACKAGE_NAME ".  Each cipher shown below may be used as a\n"
-	  "parameter to the --cipher option.  Using a CBC or GCM mode is\n"
-	  "recommended.  In static key mode only CBC mode is allowed.\n\n");
+  printf ("The following ciphers and cipher modes are available\n"
+	  "for use with " PACKAGE_NAME ".  Each cipher shown below may be\n"
+	  "used as a parameter to the --cipher option.  The default\n"
+	  "key size is shown as well as whether or not it can be\n"
+          "changed with the --keysize directive.  Using a CBC mode\n"
+	  "is recommended.\n\n");
 #endif
 
   while (*ciphers != 0)
     {
-      const cipher_kt_t *info = cipher_info_from_type(*ciphers);
+      const cipher_info_t *info = cipher_info_from_type(*ciphers);
 
-      if (info && (cipher_kt_mode_cbc(info)
-#ifdef HAVE_AEAD_CIPHER_MODES
-          || cipher_kt_mode_aead(info)
-#endif
-          ))
-	{
-	  const char *ssl_only = cipher_kt_mode_cbc(info) ?
-	      "" : " (TLS client/server mode)";
-
-	  printf ("%s %d bit default key%s\n",
-	      cipher_kt_name(info), cipher_kt_key_size(info) * 8, ssl_only);
-	}
+      if (info && info->mode == POLARSSL_MODE_CBC)
+	printf ("%s %d bit default key\n",
+		cipher_kt_name(info), cipher_kt_key_size(info) * 8);
 
       ciphers++;
     }
@@ -231,8 +234,7 @@ ctr_drbg_context * rand_ctx_get()
       /* Initialise PolarSSL RNG, and built-in entropy sources */
       entropy_init(&ec);
 
-      if (!polar_ok(ctr_drbg_init(&cd_ctx, entropy_func, &ec,
-		    BPTR(&pers_string), BLEN(&pers_string))))
+      if (0 != ctr_drbg_init(&cd_ctx, entropy_func, &ec, BPTR(&pers_string), BLEN(&pers_string)))
         msg (M_FATAL, "Failed to initialize random generator");
 
       gc_free(&gc);
@@ -408,16 +410,6 @@ cipher_kt_block_size (const cipher_info_t *cipher_kt)
 }
 
 int
-cipher_kt_tag_size (const cipher_info_t *cipher_kt)
-{
-#ifdef HAVE_AEAD_CIPHER_MODES
-  if (cipher_kt && cipher_kt_mode_aead(cipher_kt))
-    return OPENVPN_AEAD_TAG_LENGTH;
-#endif
-  return 0;
-}
-
-int
 cipher_kt_mode (const cipher_info_t *cipher_kt)
 {
   ASSERT(NULL != cipher_kt);
@@ -437,12 +429,6 @@ cipher_kt_mode_ofb_cfb(const cipher_kt_t *cipher)
 	  cipher_kt_mode(cipher) == OPENVPN_MODE_CFB);
 }
 
-bool
-cipher_kt_mode_aead(const cipher_kt_t *cipher)
-{
-  return cipher_kt_mode(cipher) == OPENVPN_MODE_GCM;
-}
-
 
 /*
  *
@@ -459,10 +445,10 @@ cipher_ctx_init (cipher_context_t *ctx, uint8_t *key, int key_len,
 
   CLEAR (*ctx);
 
-  if (!polar_ok(cipher_init_ctx(ctx, kt)))
+  if (0 != cipher_init_ctx(ctx, kt))
     msg (M_FATAL, "PolarSSL cipher context init #1");
 
-  if (!polar_ok(cipher_setkey(ctx, key, key_len*8, enc)))
+  if (0 != cipher_setkey(ctx, key, key_len*8, enc))
     msg (M_FATAL, "PolarSSL cipher set key");
 
   /* make sure we used a big enough key */
@@ -471,27 +457,12 @@ cipher_ctx_init (cipher_context_t *ctx, uint8_t *key, int key_len,
 
 void cipher_ctx_cleanup (cipher_context_t *ctx)
 {
-  ASSERT (polar_ok(cipher_free_ctx(ctx)));
+  cipher_free_ctx(ctx);
 }
 
 int cipher_ctx_iv_length (const cipher_context_t *ctx)
 {
   return cipher_get_iv_size(ctx);
-}
-
-int cipher_ctx_get_tag (cipher_ctx_t *ctx, uint8_t* tag, int tag_len)
-{
-#ifdef HAVE_AEAD_CIPHER_MODES
-  if (tag_len > SIZE_MAX)
-    return 0;
-
-  if (!polar_ok(cipher_write_tag(ctx, (unsigned char *) tag, tag_len)))
-    return 0;
-
-  return 1;
-#else
-  ASSERT(0);
-#endif /* HAVE_AEAD_CIPHER_MODES */
 }
 
 int cipher_ctx_block_size(const cipher_context_t *ctx)
@@ -516,74 +487,36 @@ cipher_ctx_get_cipher_kt (const cipher_ctx_t *ctx)
 
 int cipher_ctx_reset (cipher_context_t *ctx, uint8_t *iv_buf)
 {
-  if (!polar_ok(cipher_reset(ctx)))
-    return 0;
+  int retval = cipher_reset(ctx);
 
-  if (!polar_ok(cipher_set_iv(ctx, iv_buf, ctx->cipher_info->iv_size)))
-    return 0;
+  if (0 == retval)
+    retval = cipher_set_iv(ctx, iv_buf, ctx->cipher_info->iv_size);
 
-  return 1;
-}
-
-int cipher_ctx_update_ad (cipher_ctx_t *ctx, uint8_t *src, int src_len)
-{
-  if (src_len > SIZE_MAX)
-    return 0;
-
-  if (!polar_ok(cipher_update_ad(ctx, src, src_len)))
-    return 0;
-
-  return 1;
+  return 0 == retval;
 }
 
 int cipher_ctx_update (cipher_context_t *ctx, uint8_t *dst, int *dst_len,
     uint8_t *src, int src_len)
 {
+  int retval = 0;
   size_t s_dst_len = *dst_len;
 
-  if (!polar_ok(cipher_update(ctx, src, (size_t)src_len, dst, &s_dst_len)))
-    return 0;
+  retval = cipher_update(ctx, src, (size_t)src_len, dst, &s_dst_len);
 
   *dst_len = s_dst_len;
 
-  return 1;
+  return 0 == retval;
 }
 
 int cipher_ctx_final (cipher_context_t *ctx, uint8_t *dst, int *dst_len)
 {
+  int retval = 0;
   size_t s_dst_len = *dst_len;
 
-  if (!polar_ok(cipher_finish(ctx, dst, &s_dst_len)))
-    return 0;
-
+  retval = cipher_finish(ctx, dst, &s_dst_len);
   *dst_len = s_dst_len;
 
-  return 1;
-}
-
-int cipher_ctx_final_check_tag (cipher_context_t *ctx, uint8_t *dst, int *dst_len,
-    const uint8_t *tag, size_t tag_len)
-{
-#ifdef HAVE_AEAD_CIPHER_MODES
-  if (POLARSSL_DECRYPT != ctx->operation)
-    return 0;
-
-  if (tag_len > SIZE_MAX)
-    return 0;
-
-  if (!cipher_ctx_final(ctx, dst, dst_len))
-    {
-      msg(D_CRYPT_ERRORS, "%s: cipher_ctx_final() failed", __func__);
-      return 0;
-    }
-
-  if (!polar_ok(cipher_check_tag(ctx, (const unsigned char *) tag, tag_len)))
-    return 0;
-
-  return 1;
-#else
-  ASSERT(0);
-#endif /* HAVE_AEAD_CIPHER_MODES */
+  return 0 == retval;
 }
 
 void
@@ -593,8 +526,8 @@ cipher_des_encrypt_ecb (const unsigned char key[DES_KEY_LENGTH],
 {
     des_context ctx;
 
-    ASSERT (polar_ok(des_setkey_enc(&ctx, key)));
-    ASSERT (polar_ok(des_crypt_ecb(&ctx, src, dst)));
+    des_setkey_enc(&ctx, key);
+    des_crypt_ecb(&ctx, src, dst);
 }
 
 

@@ -79,13 +79,6 @@ AC_ARG_ENABLE(
 )
 
 AC_ARG_ENABLE(
-	[aead-modes],
-	[AS_HELP_STRING([--disable-aead-modes], [disable AEAD crypto modes @<:@default=yes@:>@])],
-	,
-	[enable_aead_modes="yes"]
-)
-
-AC_ARG_ENABLE(
 	[ssl],
 	[AS_HELP_STRING([--disable-ssl], [disable SSL support for TLS-based key exchange @<:@default=yes@:>@])],
 	,
@@ -806,16 +799,6 @@ if test "${have_openssl_crypto}" = "yes"; then
 		[have_openssl_engine="no"; break]
 	)
 
-	have_crypto_aead_modes="yes"
-	AC_CHECK_FUNCS(
-		[ \
-			EVP_aes_256_ccm \
-			EVP_aes_256_gcm \
-		],
-		,
-		[have_crypto_aead_modes="no"; break]
-	)
-
 	CFLAGS="${saved_CFLAGS}"
 	LIBS="${saved_LIBS}"
 fi
@@ -845,10 +828,8 @@ fi
 
 if test "${with_crypto_library}" = "polarssl" ; then
 	AC_MSG_CHECKING([polarssl version])
-	saved_CFLAGS="${CFLAGS}"
-	saved_LIBS="${LIBS}"
-	CFLAGS="${POLARSSL_CFLAGS} ${PKCS11_HELPER_CFLAGS} ${CFLAGS}"
-	LIBS="${POLARSSL_LIBS} ${PKCS11_HELPER_LIBS} ${LIBS}"
+	old_CFLAGS="${CFLAGS}"
+	CFLAGS="${POLARSSL_CFLAGS} ${CFLAGS}"
 	AC_COMPILE_IFELSE(
 		[AC_LANG_PROGRAM(
 			[[
@@ -877,6 +858,7 @@ if test "${with_crypto_library}" = "polarssl" ; then
 			]]
 		)],
 		polarssl_with_pkcs11="yes")
+	CFLAGS="${old_CFLAGS}"
 
 	AC_MSG_CHECKING([polarssl pkcs11 support])
 	if test "${enable_pkcs11}" = "yes"; then
@@ -893,17 +875,6 @@ if test "${with_crypto_library}" = "polarssl" ; then
 		fi
 	fi
 
-	have_crypto_aead_modes="yes"
-	AC_CHECK_FUNCS(
-		[ \
-			cipher_write_tag \
-			cipher_check_tag \
-		],
-		,
-		[have_crypto_aead_modes="no"; break]
-	)
-	CFLAGS="${saved_CFLAGS}"
-	LIBS="${saved_LIBS}"
 fi
 
 AC_ARG_VAR([LZO_CFLAGS], [C compiler flags for lzo])
@@ -1120,10 +1091,6 @@ fi
 if test "${enable_crypto}" = "yes"; then
 	test "${have_crypto_crypto}" != "yes" && AC_MSG_ERROR([${with_crypto_library} crypto is required but missing])
 	test "${enable_crypto_ofb_cfb}" = "yes" && AC_DEFINE([ENABLE_OFB_CFB_MODE], [1], [Enable OFB and CFB cipher modes])
-	if test "${enable_aead_modes}" = "yes"; then
-		test "${have_crypto_aead_modes}" = "yes" && AC_DEFINE([HAVE_AEAD_CIPHER_MODES], [1], [Use crypto library])
-		test "${have_crypto_aead_modes}" != "yes" && AC_MSG_ERROR([AEAD modes required but missing])
-	fi
 	OPTIONAL_CRYPTO_CFLAGS="${OPTIONAL_CRYPTO_CFLAGS} ${CRYPTO_CRYPTO_CFLAGS}"
 	OPTIONAL_CRYPTO_LIBS="${OPTIONAL_CRYPTO_LIBS} ${CRYPTO_CRYPTO_LIBS}"
 	AC_DEFINE([ENABLE_CRYPTO], [1], [Enable crypto library])

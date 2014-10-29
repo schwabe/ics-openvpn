@@ -105,10 +105,10 @@ multi_get_create_instance_udp (struct multi_context *m)
       struct hash_element *he;
       const uint32_t hv = hash_value (hash, &real);
       struct hash_bucket *bucket = hash_bucket (hash, hv);
-      uint8_t* ptr  = BPTR(&m->top.c2.buf);
+      uint8_t* ptr = BPTR(&m->top.c2.buf);
       uint8_t op = ptr[0] >> P_OPCODE_SHIFT;
       uint32_t peer_id;
-      bool session_forged = false;
+      bool hmac_mismatch = false;
 
       if (op == P_DATA_V2)
 	{
@@ -119,15 +119,15 @@ multi_get_create_instance_udp (struct multi_context *m)
 
 	      if (!link_socket_actual_match(&mi->context.c2.from, &m->top.c2.from))
 		{
-		  msg(D_MULTI_MEDIUM, "floating detected from %s to %s",
-		      print_link_socket_actual (&mi->context.c2.from, &gc), print_link_socket_actual (&m->top.c2.from, &gc));
+		  msg(D_MULTI_MEDIUM, "float from %s to %s",
+			print_link_socket_actual (&mi->context.c2.from, &gc), print_link_socket_actual (&m->top.c2.from, &gc));
 
 		  /* peer-id is not trusted, so check hmac */
-		  session_forged = !(crypto_test_hmac(&m->top.c2.buf, &mi->context.c2.crypto_options));
-		  if (session_forged)
+		  hmac_mismatch = !(crypto_test_hmac(&m->top.c2.buf, &mi->context.c2.crypto_options));
+		  if (hmac_mismatch)
 		    {
 		      mi = NULL;
-		      msg (D_MULTI_MEDIUM, "hmac verification failed, session forge detected!");
+		      msg (D_MULTI_MEDIUM, "HMAC mismatch for peer-id %d", peer_id);
 		    }
 		  else
 		    {
@@ -144,7 +144,7 @@ multi_get_create_instance_udp (struct multi_context *m)
 	      mi = (struct multi_instance *) he->value;
 	    }
 	}
-      if (!mi && !session_forged)
+      if (!mi && !hmac_mismatch)
 	{
 	  if (!m->top.c2.tls_auth_standalone
 	      || tls_pre_decrypt_lite (m->top.c2.tls_auth_standalone, &m->top.c2.from, &m->top.c2.buf))

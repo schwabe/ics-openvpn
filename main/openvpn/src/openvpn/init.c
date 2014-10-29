@@ -1893,38 +1893,39 @@ do_startup_pause (struct context *c)
  * Finalize MTU parameters based on command line or config file options.
  */
 static void
-frame_finalize_options (struct frame *frame, const struct options *o,
-    bool cipher_enabled)
+frame_finalize_options (struct context *c, const struct options *o)
 {
-  ASSERT(o);
+  if (!o)
+    o = &c->options;
 
   /*
    * Set adjustment factor for buffer alignment when no
    * cipher is used.
    */
-  if (!cipher_enabled)
+  if (!CIPHER_ENABLED (c))
     {
-      frame_align_to_extra_frame (frame);
-      frame_or_align_flags (frame,
+      frame_align_to_extra_frame (&c->c2.frame);
+      frame_or_align_flags (&c->c2.frame,
 			    FRAME_HEADROOM_MARKER_FRAGMENT
 			    |FRAME_HEADROOM_MARKER_READ_LINK
 			    |FRAME_HEADROOM_MARKER_READ_STREAM);
     }
   
-  frame_finalize (frame,
+  frame_finalize (&c->c2.frame,
 		  o->ce.link_mtu_defined,
 		  o->ce.link_mtu,
 		  o->ce.tun_mtu_defined,
 		  o->ce.tun_mtu);
 }
 
-#ifdef ENABLE_CRYPTO
 /*
  * Free a key schedule, including OpenSSL components.
  */
 static void
 key_schedule_free (struct key_schedule *ks, bool free_ssl_ctx)
 {
+#ifdef ENABLE_CRYPTO
+  free_key_ctx_bi (&ks->static_key);
 #ifdef ENABLE_SSL
   if (tls_ctx_initialised(&ks->ssl_ctx) && free_ssl_ctx)
     {
@@ -1932,8 +1933,11 @@ key_schedule_free (struct key_schedule *ks, bool free_ssl_ctx)
       free_key_ctx_bi (&ks->tls_auth_key);
     }
 #endif /* ENABLE_SSL */
+#endif /* ENABLE_CRYPTO */
   CLEAR (*ks);
 }
+
+#ifdef ENABLE_CRYPTO
 
 static void
 init_crypto_pre (struct context *c, const unsigned int flags)
@@ -1947,6 +1951,14 @@ init_crypto_pre (struct context *c, const unsigned int flags)
       if (c->options.packet_id_file)
 	packet_id_persist_load (&c->c1.pid_persist, c->options.packet_id_file);
     }
+
+  /* Initialize crypto options */
+
+  if (c->options.use_iv)
+    c->c2.crypto_options.flags |= CO_USE_IV;
+
+  if (c->options.mute_replay_warnings)
+    c->c2.crypto_options.flags |= CO_MUTE_REPLAY_WARNINGS;
 
 #ifdef ENABLE_PREDICTION_RESISTANCE
   if (c->options.use_prediction_resistance)
@@ -1966,28 +1978,22 @@ do_init_crypto_static (struct context *c, const unsigned int flags)
 
   init_crypto_pre (c, flags);
 
-  /* Initialize flags */
-  if (c->options.use_iv)
-    c->c2.crypto_options.flags |= CO_USE_IV;
-
-  if (c->options.mute_replay_warnings)
-    c->c2.crypto_options.flags |= CO_MUTE_REPLAY_WARNINGS;
-
   /* Initialize packet ID tracking */
   if (options->replay)
     {
-      packet_id_init (&c->c2.crypto_options.packet_id,
+      packet_id_init (&c->c2.packet_id,
 		      link_socket_proto_connection_oriented (options->ce.proto),
 		      options->replay_window,
 		      options->replay_time,
 		      "STATIC", 0);
+      c->c2.crypto_options.packet_id = &c->c2.packet_id;
       c->c2.crypto_options.pid_persist = &c->c1.pid_persist;
       c->c2.crypto_options.flags |= CO_PACKET_ID_LONG_FORM;
       packet_id_persist_load_obj (&c->c1.pid_persist,
-				  &c->c2.crypto_options.packet_id);
+				  c->c2.crypto_options.packet_id);
     }
 
-  if (!key_ctx_bi_defined (&c->c2.crypto_options.key_ctx_bi))
+  if (!key_ctx_bi_defined (&c->c1.ks.static_key))
     {
       struct key2 key2;
       struct key_direction_state kds;
@@ -2019,12 +2025,10 @@ do_init_crypto_static (struct context *c, const unsigned int flags)
       key_direction_state_init (&kds, options->key_direction);
       must_have_n_keys (options->shared_secret_file, "secret", &key2,
 			kds.need_keys);
-      init_key_ctx (&c->c2.crypto_options.key_ctx_bi.encrypt,
-		    &key2.keys[kds.out_key], &c->c1.ks.key_type,
-		    OPENVPN_OP_ENCRYPT, "Static Encrypt");
-      init_key_ctx (&c->c2.crypto_options.key_ctx_bi.decrypt,
-		    &key2.keys[kds.in_key], &c->c1.ks.key_type,
-		    OPENVPN_OP_DECRYPT, "Static Decrypt");
+      init_key_ctx (&c->c1.ks.static_key.encrypt, &key2.keys[kds.out_key],
+		    &c->c1.ks.key_type, OPENVPN_OP_ENCRYPT, "Static Encrypt");
+      init_key_ctx (&c->c1.ks.static_key.decrypt, &key2.keys[kds.in_key],
+		    &c->c1.ks.key_type, OPENVPN_OP_DECRYPT, "Static Decrypt");
 
       /* Erase the temporary copy of key */
       CLEAR (key2);
@@ -2033,6 +2037,9 @@ do_init_crypto_static (struct context *c, const unsigned int flags)
     {
       msg (M_INFO, "Re-using pre-shared static key");
     }
+
+  /* Get key schedule */
+  c->c2.crypto_options.key_ctx_bi = &c->c1.ks.static_key;
 
   /* Compute MTU parameters */
   crypto_adjust_frame_parameters (&c->c2.frame,
@@ -2105,22 +2112,11 @@ do_init_crypto_tls_c1 (struct context *c)
 	      flags |= GHK_INLINE;
 	      file = options->tls_auth_file_inline;
 	    }
-
-	  /* Initialize key_type for tls-auth with auth only */
-	  CLEAR (c->c1.ks.tls_auth_key_type);
-	  if (options->authname && options->authname_defined)
-	    {
-	      c->c1.ks.tls_auth_key_type.digest = md_kt_get (options->authname);
-	      c->c1.ks.tls_auth_key_type.hmac_length =
-		  md_kt_size (c->c1.ks.tls_auth_key_type.digest);
-	    }
-	  else
-	    {
-	      msg (M_FATAL, "ERROR: tls-auth specified, but no valid auth");
-	    }
-
-	  get_tls_handshake_key (&c->c1.ks.tls_auth_key_type,
-	      &c->c1.ks.tls_auth_key, file, options->key_direction, flags);
+	  get_tls_handshake_key (&c->c1.ks.key_type,
+				 &c->c1.ks.tls_auth_key,
+				 file,
+				 options->key_direction,
+				 flags);
 	}
 
 #if 0 /* was: #if ENABLE_INLINE_FILES --  Note that enabling this code will break restarts */
@@ -2174,12 +2170,6 @@ do_init_crypto_tls (struct context *c, const unsigned int flags)
 
   /* Set all command-line TLS-related options */
   CLEAR (to);
-
-  if (options->use_iv)
-    to.crypto_flags |= CO_USE_IV;
-
-  if (options->mute_replay_warnings)
-    to.crypto_flags |= CO_MUTE_REPLAY_WARNINGS;
 
   to.crypto_flags_and = ~(CO_PACKET_ID_LONG_FORM);
   if (packet_id_long_form)
@@ -2270,11 +2260,11 @@ do_init_crypto_tls (struct context *c, const unsigned int flags)
   /* TLS handshake authentication (--tls-auth) */
   if (options->tls_auth_file)
     {
-      to.tls_auth.key_ctx_bi = c->c1.ks.tls_auth_key;
+      to.tls_auth_key = c->c1.ks.tls_auth_key;
       to.tls_auth.pid_persist = &c->c1.pid_persist;
       to.tls_auth.flags |= CO_PACKET_ID_LONG_FORM;
       crypto_adjust_frame_parameters (&to.frame,
-				      &c->c1.ks.tls_auth_key_type,
+				      &c->c1.ks.key_type,
 				      false, false, true, true);
     }
 
@@ -2417,7 +2407,7 @@ do_init_frame (struct context *c)
    * Fill in the blanks in the frame parameters structure,
    * make sure values are rational, etc.
    */
-  frame_finalize_options (&c->c2.frame, &c->options, CIPHER_ENABLED (c));
+  frame_finalize_options (c, NULL);
 
 #ifdef USE_COMP
   /*
@@ -2853,13 +2843,8 @@ do_close_tls (struct context *c)
 static void
 do_close_free_key_schedule (struct context *c, bool free_ssl_ctx)
 {
-#ifdef ENABLE_CRYPTO
   if (!(c->sig->signal_received == SIGUSR1 && c->options.persist_key))
-    {
-      key_schedule_free (&c->c1.ks, free_ssl_ctx);
-      free_key_ctx_bi (&c->c2.crypto_options.key_ctx_bi);
-    }
-#endif /* ENABLE_CRYPTO */
+    key_schedule_free (&c->c1.ks, free_ssl_ctx);
 }
 
 /*
@@ -2908,7 +2893,7 @@ static void
 do_close_packet_id (struct context *c)
 {
 #ifdef ENABLE_CRYPTO
-  packet_id_free (&c->c2.crypto_options.packet_id);
+  packet_id_free (&c->c2.packet_id);
   packet_id_persist_save (&c->c1.pid_persist);
   if (!(c->sig->signal_received == SIGUSR1))
     packet_id_persist_close (&c->c1.pid_persist);
@@ -3795,6 +3780,7 @@ close_context (struct context *c, int sig, unsigned int flags)
 }
 
 #ifdef ENABLE_CRYPTO
+
 /*
  * Do a loopback test
  * on the crypto subsystem.
@@ -3811,21 +3797,23 @@ test_crypto_thread (void *arg)
   next_connection_entry(c);
   do_init_crypto_static (c, 0);
 
-  frame_finalize_options (&c->c2.frame, options, CIPHER_ENABLED (c));
+  frame_finalize_options (c, options);
 
   test_crypto (&c->c2.crypto_options, &c->c2.frame);
 
   key_schedule_free (&c->c1.ks, true);
-  free_key_ctx_bi (&c->c2.crypto_options.key_ctx_bi);
-  packet_id_free (&c->c2.crypto_options.packet_id);
+  packet_id_free (&c->c2.packet_id);
 
   context_gc_free (c);
   return NULL;
 }
 
+#endif
+
 bool
 do_test_crypto (const struct options *o)
 {
+#ifdef ENABLE_CRYPTO
   if (o->test_crypto)
     {
       struct context c;
@@ -3840,12 +3828,6 @@ do_test_crypto (const struct options *o)
       test_crypto_thread ((void *) &c);
       return true;
     }
+#endif
   return false;
 }
-#else
-bool
-do_test_crypto (const struct options *o)
-{
-  return false;
-}
-#endif /* ENABLE_CRYPTO */

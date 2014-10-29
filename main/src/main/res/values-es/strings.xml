@@ -323,4 +323,8 @@
   <string name="files_missing_hint">Algunos archivos no se pudo encontrar. Por favor, seleccione los archivos que desea importar el perfil:</string>
   <string name="openvpn_is_no_free_vpn">Para utilizar esta aplicación usted necesita un proveedor de servicio VPN /  es un apoyo OpenVPN (a menudo proporcionados por su empleador). Echa un vistazo a http://community.openvpn.net/ para más información sobre OpenVPN y cómo configurar su propio servidor OpenVPN.</string>
   <string name="import_log">Importar registros:</string>
+  <string name="ip_looks_like_subnet">Topología de VPN \"%3$s\" especificado pero ifconfig %1$s %2$s se parece más a una dirección IP con una máscara de red. Asumiendo una topología de \"subred\".</string>
+  <string name="mssfix_invalid_value">El valor de mssfix debe ser un número entero entre 0 y 9000</string>
+  <string name="mssfix_checkbox">Reemplazar el valor MSS de la carga TCP</string>
+  <string name="mssfix_dialogtitle">Establecer MSS de la carga TCP</string>
 </resources>

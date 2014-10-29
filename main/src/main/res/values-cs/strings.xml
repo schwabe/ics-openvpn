@@ -323,4 +323,9 @@
   <string name="files_missing_hint">Některé soubory nemohly být nalezeny. Prosím vyber profil, který chceš importovat:</string>
   <string name="openvpn_is_no_free_vpn">Pro používání této aplikace je potřeba VPN poskytovatel/brána, která podporuje OpenVPN (často je to zaměstnavatel). Pro více informací a návod na nastavení OpenVPN serveru navštiv http://community.openvpn.net/</string>
   <string name="import_log">Import logu:</string>
+  <string name="ip_looks_like_subnet">Vpn topologie \"%3$s\" soecifikována, ale ifconfig %1$s %2$s vypadá spíše jako IP adresa se síťovou maskou. Předpokládám \"podsíťovou\" topologii.</string>
+  <string name="mssfix_invalid_value">mssfix hodnota musí být celé číslo mezi 0 a 9000</string>
+  <string name="mssfix_value_dialog">Oznámit TCP sezením běžícím skrze tunel, že mají limitovat velikost odesílaných paketů tak, aby poté, co je OpenVPN zabalí, byla výsledná velikost UDP paketu, které OpenVPN posílá menší než tento počet bytů. (výchozí je 1450)</string>
+  <string name="mssfix_checkbox">Přepsat hodnotu MSS pro TCP obsah</string>
+  <string name="mssfix_dialogtitle">Nastavit MSS pro TCP obsah</string>
 </resources>

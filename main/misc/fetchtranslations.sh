@@ -8,7 +8,7 @@ then
 fi
 
 echo "Fetch translation archive"
-#fetch -q http://crowdin.net/download/project/ics-openvpn.zip
+fetch -q http://crowdin.net/download/project/ics-openvpn.zip
 
 
 # Chinese language require zh-CN and zh-TW
@@ -29,7 +29,8 @@ do
     fi
 
     mkdir -p src/main/res/values-$rlang/
+    echo "$alang -> $rlang"
     tar -xv -C src/main/res/values-$rlang/ --strip-components 2 -f ics-openvpn.zip res/values-$alang/
 done
 
-#rm ics-openvpn.zip
+rm ics-openvpn.zip

@@ -59,12 +59,14 @@ struct key_schedule
   /* which cipher, HMAC digest, and key sizes are we using? */
   struct key_type key_type;
 
+  /* pre-shared static key, read from a file */
+  struct key_ctx_bi static_key;
+
 #ifdef ENABLE_SSL
   /* our global SSL context */
   struct tls_root_ctx ssl_ctx;
 
   /* optional authentication HMAC key for TLS control channel */
-  struct key_type tls_auth_key_type;
   struct key_ctx_bi tls_auth_key;
 
 #endif				/* ENABLE_SSL */
@@ -364,6 +366,7 @@ struct context_2
                                  *   process data channel packet. */
 
   /* used to keep track of data channel packet sequence numbers */
+  struct packet_id packet_id;
   struct event_timeout packet_id_persist_interval;
 
 #endif /* ENABLE_CRYPTO */

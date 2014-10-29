@@ -303,7 +303,6 @@ multi_init (struct multi_context *m, struct context *t, bool tcp_mode, int threa
 			   cid_compare_function);
 #endif
 
-
   /*
    * This is our scheduler, for time-based wakeup
    * events.
@@ -374,12 +373,7 @@ multi_init (struct multi_context *m, struct context *t, bool tcp_mode, int threa
    */
   m->max_clients = t->options.max_clients;
 
-  int i;
-  m->instances = malloc(sizeof(struct multi_instance*) * m->max_clients);
-  for (i = 0; i < m->max_clients; ++ i)
-    {
-      m->instances[i] = NULL;
-    }
+  m->instances = calloc(m->max_clients, sizeof(struct multi_instance*));
 
   /*
    * Initialize multi-socket TCP I/O wait object
@@ -663,6 +657,8 @@ multi_create_instance (struct multi_context *m, const struct mroute_addr *real)
   struct multi_instance *mi;
 
   perf_push (PERF_MULTI_CREATE_INSTANCE);
+
+  msg (D_MULTI_MEDIUM, "MULTI: multi_create_instance called");
 
   ALLOC_OBJ_CLEAR (mi, struct multi_instance);
 

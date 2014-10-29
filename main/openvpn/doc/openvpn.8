@@ -4238,18 +4238,13 @@ Not available with PolarSSL.
 File containing Diffie Hellman parameters
 in .pem format (required for
 .B \-\-tls-server
-only).
+only). Use
 
-Set
-.B file=none
-to disable Diffie Hellman key exchange (and use ECDH only). Note that this
-requires peers to be using an SSL library that supports ECDH TLS cipher suites
-(e.g. OpenSSL 1.0.1+, or PolarSSL 1.3+).
+.B openssl dhparam -out dh1024.pem 1024
 
-Use
-.B openssl dhparam -out dh2048.pem 2048
-to generate 2048-bit DH parameters. Diffie Hellman parameters may be considered
-public.
+to generate your own, or use the existing dh1024.pem file
+included with the OpenVPN distribution.  Diffie Hellman parameters
+may be considered public.
 .\"*********************************************************
 .TP
 .B \-\-ecdh-curve name
@@ -4333,11 +4328,6 @@ Examples for version
 include "1.0", "1.1", or "1.2".  If 'or-highest' is specified
 and version is not recognized, we will only accept the highest TLS
 version supported by the local SSL implementation.
-.\"*********************************************************
-.TP
-.B \-\-tls-version-max version
-Set the maximum TLS version we will use (default is the highest version
-supported).  Examples for version include "1.0", "1.1", or "1.2".
 .\"*********************************************************
 .TP
 .B \-\-pkcs12 file

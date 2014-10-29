@@ -433,7 +433,6 @@ encrypt_sign (struct context *c, bool comp_frag)
 {
   struct context_buffers *b = c->c2.buffers;
   const uint8_t *orig_buf = c->c2.buf.data;
-  struct crypto_options *co = NULL;
 
 #if P2MP_SERVER
   /*
@@ -465,19 +464,15 @@ encrypt_sign (struct context *c, bool comp_frag)
    */
   if (c->c2.tls_multi)
     {
-      tls_pre_encrypt (c->c2.tls_multi, &c->c2.buf, &co);
+      tls_pre_encrypt (c->c2.tls_multi, &c->c2.buf, &c->c2.crypto_options);
     }
-  else
 #endif
-    {
-      co = &c->c2.crypto_options;
-    }
 
   /*
    * Encrypt the packet and write an optional
    * HMAC signature.
    */
-  openvpn_encrypt (&c->c2.buf, b->encrypt_buf, co, &c->c2.frame);
+  openvpn_encrypt (&c->c2.buf, b->encrypt_buf, &c->c2.crypto_options, &c->c2.frame);
 #endif
   /*
    * Get the address we will be sending the packet to.
@@ -793,7 +788,6 @@ process_incoming_link (struct context *c)
    */
   if (c->c2.buf.len > 0)
     {
-      struct crypto_options *co = NULL;
       if (!link_socket_verify_incoming_addr (&c->c2.buf, lsi, &c->c2.from))
 	link_socket_bad_incoming_addr (&c->c2.buf, lsi, &c->c2.from);
 
@@ -811,7 +805,7 @@ process_incoming_link (struct context *c)
 	   * will load crypto_options with the correct encryption key
 	   * and return false.
 	   */
-	  if (tls_pre_decrypt (c->c2.tls_multi, &c->c2.from, &c->c2.buf, &co))
+	  if (tls_pre_decrypt (c->c2.tls_multi, &c->c2.from, &c->c2.buf, &c->c2.crypto_options))
 	    {
 	      interval_action (&c->c2.tmp_int);
 
@@ -819,10 +813,6 @@ process_incoming_link (struct context *c)
 	      if (c->options.ping_rec_timeout)
 		event_timeout_reset (&c->c2.ping_rec_interval);
 	    }
-	}
-      else
-	{
-	  co = &c->c2.crypto_options;
 	}
 #if P2MP_SERVER
       /*
@@ -832,12 +822,10 @@ process_incoming_link (struct context *c)
       if (c->c2.context_auth != CAS_SUCCEEDED)
 	c->c2.buf.len = 0;
 #endif
-#else
-      co = &c->c2.crypto_options;
 #endif /* ENABLE_SSL */
 
       /* authenticate and decrypt the incoming packet */
-      decrypt_status = openvpn_decrypt (&c->c2.buf, c->c2.buffers->decrypt_buf, co, &c->c2.frame);
+      decrypt_status = openvpn_decrypt (&c->c2.buf, c->c2.buffers->decrypt_buf, &c->c2.crypto_options, &c->c2.frame);
 
       if (!decrypt_status && link_socket_connection_oriented (c->c2.link_socket))
 	{

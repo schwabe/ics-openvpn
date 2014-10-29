@@ -73,26 +73,26 @@ create_des_keys(const unsigned char *hash, unsigned char *key)
 }
 
 static void
-gen_md4_hash (const uint8_t* data, int data_len, uint8_t *result)
+gen_md4_hash (const char* data, int data_len, char *result)
 {
   /* result is 16 byte md4 hash */
   const md_kt_t *md4_kt = md_kt_get("MD4");
-  uint8_t md[MD4_DIGEST_LENGTH];
+  char md[MD4_DIGEST_LENGTH];
 
   md_full(md4_kt, data, data_len, md);
   memcpy (result, md, MD4_DIGEST_LENGTH);
 }
 
 static void
-gen_hmac_md5 (const uint8_t *data, int data_len, const uint8_t *key, int key_len, uint8_t *result)
+gen_hmac_md5 (const char* data, int data_len, const char* key, int key_len,char *result)
 {
 	const md_kt_t *md5_kt = md_kt_get("MD5");
 	hmac_ctx_t hmac_ctx;
 	CLEAR(hmac_ctx);
 
 	hmac_ctx_init(&hmac_ctx, key, key_len, md5_kt);
-	hmac_ctx_update(&hmac_ctx, data, data_len);
-	hmac_ctx_final(&hmac_ctx, result);
+	hmac_ctx_update(&hmac_ctx, (const unsigned char *)data, data_len);
+	hmac_ctx_final(&hmac_ctx, (unsigned char *)result);
 	hmac_ctx_cleanup(&hmac_ctx);
 }
 
@@ -140,7 +140,7 @@ unsigned char *my_strupr(unsigned char *str)
 }
 
 static int
-unicodize (uint8_t *dst, const char *src)
+unicodize (char *dst, const char *src)
 {
   /* not really unicode... */
   int i = 0;
@@ -192,20 +192,20 @@ ntlm_phase_3 (const struct http_proxy_info *p, const char *phase_2, struct gc_ar
 	 *
 	 */
 	
-  uint8_t pwbuf[sizeof (p->up.password) * 2]; /* for unicode password */
+  char pwbuf[sizeof (p->up.password) * 2]; /* for unicode password */
   char buf2[128]; /* decoded reply from proxy */
   unsigned char phase3[464];
 
-  uint8_t md4_hash[MD4_DIGEST_LENGTH+5];
-  unsigned char challenge[8], ntlm_response[24];
+  char md4_hash[MD4_DIGEST_LENGTH+5];
+  char challenge[8], ntlm_response[24];
   int i, ret_val;
 
-	uint8_t ntlmv2_response[144];
-	uint8_t userdomain_u[256]; /* for uppercase unicode username and domain */
+	char ntlmv2_response[144];
+	char userdomain_u[256]; /* for uppercase unicode username and domain */
 	char userdomain[128];   /* the same as previous but ascii */
-	uint8_t ntlmv2_hash[MD5_DIGEST_LENGTH];
-	uint8_t ntlmv2_hmacmd5[16];
-	uint8_t *ntlmv2_blob = ntlmv2_response + 16; /* inside ntlmv2_response, length: 128 */
+	char ntlmv2_hash[MD5_DIGEST_LENGTH];
+	char ntlmv2_hmacmd5[16];
+	char *ntlmv2_blob = ntlmv2_response + 16; /* inside ntlmv2_response, length: 128 */
 	int ntlmv2_blob_size=0;
 	int phase3_bufpos = 0x40; /* offset to next security buffer data to be added */
 	size_t len;

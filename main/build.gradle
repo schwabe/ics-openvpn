@@ -8,6 +8,9 @@ repositories {
 
 dependencies {
     compile 'com.intellij:annotations:12.0'
+    compile 'com.android.support:cardview-v7:21.0.+'
+    compile 'com.android.support:recyclerview-v7:21.0.+'
+
 //    compile 'ch.acra:acra:4.5.0'
 }
 

@@ -168,9 +168,12 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
         try {
             List<APIVpnProfile> list = mService.getProfiles();
             String all="List:";
-            for(APIVpnProfile vp:list) {
+            for(APIVpnProfile vp:list.subList(0, Math.min(5, list.size()))) {
                 all = all + vp.mName + ":" + vp.mUUID + "\n";
             }
+
+            if (list.size() > 5)
+                all +="\n And some profiles....";
 
             if(list.size()> 0) {
                 Button b= mStartVpn;

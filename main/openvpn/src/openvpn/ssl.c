@@ -2826,7 +2826,17 @@ tls_pre_decrypt (struct tls_multi *multi,
 		  opt->flags &= multi->opt.crypto_flags_and;
 		  opt->flags |= multi->opt.crypto_flags_or;
 
-		  ASSERT (buf_advance (buf, (op == P_DATA_V2) ? 4 : 1));
+		  ASSERT (buf_advance (buf, 1));
+		  if (op == P_DATA_V2)
+		    {
+		      if (buf->len < 4)
+			{
+			  msg (D_TLS_ERRORS, "Protocol error: received P_DATA_V2 from %s but length is < 4",
+				print_link_socket_actual (from, &gc));
+			  goto error;
+			}
+		      ASSERT (buf_advance (buf, 3));
+		    }
 
 		  ++ks->n_packets;
 		  ks->n_bytes += buf->len;

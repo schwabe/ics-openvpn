@@ -22,6 +22,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.VpnService;
 import android.os.*;
+
+import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
@@ -112,12 +114,30 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             return profiles;
         }
 
+
+        private void startProfile(VpnProfile vp)
+        {
+            Intent vpnPermissionIntent = VpnService.prepare(ExternalOpenVPNService.this);
+            /* Check if we need to show the confirmation dialog */
+            if(vpnPermissionIntent != null){
+                Intent shortVPNIntent = new Intent(Intent.ACTION_MAIN);
+                shortVPNIntent.setClass(getBaseContext(), de.blinkt.openvpn.LaunchVPN.class);
+                shortVPNIntent.putExtra(de.blinkt.openvpn.LaunchVPN.EXTRA_KEY, vp.getUUIDString());
+                shortVPNIntent.putExtra(de.blinkt.openvpn.LaunchVPN.EXTRA_HIDELOG, true);
+                shortVPNIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(shortVPNIntent);
+            } else {
+                VPNLaunchHelper.startOpenVpn(vp, getBaseContext());
+            }
+
+        }
+
         @Override
         public void startProfile(String profileUUID) throws RemoteException {
             checkOpenVPNPermission();
 
             VpnProfile vp = ProfileManager.get(getBaseContext(), profileUUID);
-            VPNLaunchHelper.startOpenVpn(vp, getBaseContext());
+            startProfile(vp);
         }
 
         public void startVPN(String inlineconfig) throws RemoteException {
@@ -132,8 +152,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
 
                 ProfileManager.setTemporaryProfile(vp);
-                VPNLaunchHelper.startOpenVpn(vp, getBaseContext());
-
+                startProfile(vp);
 
             } catch (IOException e) {
                 throw new RemoteException(e.getMessage());

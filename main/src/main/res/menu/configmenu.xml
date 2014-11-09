@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/sendConfig"
-        android:icon="@android:drawable/ic_menu_share"
+        android:icon="@drawable/ic_menu_share"
         android:showAsAction="ifRoom|withText"
         android:title="@string/send_config"
         android:titleCondensed="@string/send"/>

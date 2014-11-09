@@ -8,7 +8,7 @@
     <item
         android:id="@+id/remove_vpn"
         android:alphabeticShortcut="d"
-        android:icon="@android:drawable/ic_menu_delete"
+        android:icon="@drawable/ic_menu_delete"
         android:showAsAction="withText|ifRoom"
         android:title="@string/remove_vpn"/>
     

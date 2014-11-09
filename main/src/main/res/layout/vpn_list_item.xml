@@ -68,7 +68,7 @@
         android:contentDescription="@string/configure_the_vpn"
         android:paddingLeft="15dip"
         android:paddingRight="?android:attr/scrollbarSize"
-        android:src="@drawable/ic_sysbar_quicksettings"
+        android:src="@drawable/vpn_item_edit"
         android:focusable="true"/>
 
 </LinearLayout>

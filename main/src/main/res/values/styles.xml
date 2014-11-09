@@ -5,6 +5,10 @@
   -->
 
 <resources>
+    <style name="appstyle" parent="android:Theme.DeviceDefault.Light">
+
+    </style>
+
 
     <style name="item">
         <item name="android:layout_width">match_parent</item>

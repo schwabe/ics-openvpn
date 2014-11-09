@@ -5,12 +5,6 @@
 
 package de.blinkt.openvpn.api;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.lang.ref.WeakReference;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.annotation.TargetApi;
 import android.app.Service;
 import android.content.ComponentName;
@@ -21,20 +15,31 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.VpnService;
-import android.os.*;
+import android.os.Binder;
+import android.os.Build;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.RemoteCallbackList;
+import android.os.RemoteException;
 
-import de.blinkt.openvpn.LaunchVPN;
+import java.io.IOException;
+import java.io.StringReader;
+import java.lang.ref.WeakReference;
+import java.util.LinkedList;
+import java.util.List;
+
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
 import de.blinkt.openvpn.core.ConfigParser.ConfigParseError;
 import de.blinkt.openvpn.core.OpenVPNService;
-import de.blinkt.openvpn.core.VpnStatus;
-import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
-import de.blinkt.openvpn.core.VpnStatus.StateListener;
 import de.blinkt.openvpn.core.OpenVPNService.LocalBinder;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
+import de.blinkt.openvpn.core.VpnStatus;
+import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
+import de.blinkt.openvpn.core.VpnStatus.StateListener;
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
 public class ExternalOpenVPNService extends Service implements StateListener {
@@ -161,6 +166,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             }
         }
 
+
+
         @Override
         public boolean addVPNProfile(String name, String config) throws RemoteException {
             checkOpenVPNPermission();
@@ -181,6 +188,14 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             }
 
             return true;
+        }
+
+        @Override
+        public void removeProfile(String profileUUID) throws RemoteException {
+            checkOpenVPNPermission();
+            ProfileManager pm = ProfileManager.getInstance(getBaseContext());
+            VpnProfile vp = ProfileManager.get(getBaseContext(), profileUUID);
+            pm.removeProfile(ExternalOpenVPNService.this, vp);
         }
 
 

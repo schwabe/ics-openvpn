@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2012-2014 Arne Schwabe
+  ~ Distributed under the GNU GPL v2. For full terms see the file doc/LICENSE.txt
+  -->
+
+<resources>
+    <drawable name="ic_menu_close_clear_cancel">@drawable/ic_close_white_48dp</drawable>
+    <drawable name="ic_menu_share">@drawable/ic_share_white_48dp </drawable>
+    <drawable name="ic_menu_save">@drawable/ic_check_white_48dp</drawable>
+    <drawable name="ic_menu_view">@drawable/ic_filter_list_white_48dp</drawable>
+    <drawable name="ic_menu_delete">@drawable/ic_delete_white_48dp</drawable>
+    <drawable name="ic_menu_edit">@drawable/ic_edit_white_48dp</drawable>
+    <drawable name="ic_menu_import">@drawable/ic_archive_white_48dp</drawable>
+    <drawable name="vpn_item_edit">@drawable/ic_edit_white_48dp</drawable>
+    <drawable name="ic_menu_add">@drawable/ic_add_circle_outline_white_48dp</drawable>
+</resources>

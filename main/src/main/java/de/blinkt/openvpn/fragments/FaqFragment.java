@@ -47,7 +47,7 @@ private static int[] faqitems[] =
         columns = Math.max(1, columns);
 
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.gridview);
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.faq_recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView

@@ -78,7 +78,8 @@ public class OpenVPNThread implements Runnable {
 			if( exitvalue != 0) {
                 VpnStatus.logError("Process exited with exit value " + exitvalue);
                 if (mBrokenPie) {
-                    String[] noPieArgv = VpnProfile.replacePieWithNoPie(mArgv);
+                    /* This will probably fail since the NoPIE binary is probably not written */
+                    String[] noPieArgv = VPNLaunchHelper.replacePieWithNoPie(mArgv);
 
                     // We are already noPIE, nothing to gain
                     if (!noPieArgv.equals(mArgv)) {
@@ -190,7 +191,7 @@ public class OpenVPNThread implements Runnable {
 
 	private String genLibraryPath(String[] argv, ProcessBuilder pb) {
 		// Hack until I find a good way to get the real library path
-		String applibpath = argv[0].replace("/cache/" + VpnProfile.getMiniVPNExecutableName() , "/lib");
+		String applibpath = argv[0].replaceFirst("/cache/.*$"  , "/lib");
 		
 		String lbpath = pb.environment().get("LD_LIBRARY_PATH");
 		if(lbpath==null) 

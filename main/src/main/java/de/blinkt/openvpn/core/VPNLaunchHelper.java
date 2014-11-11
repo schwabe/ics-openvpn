@@ -7,68 +7,114 @@ package de.blinkt.openvpn.core;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.os.Build;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Vector;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 
 public class VPNLaunchHelper {
-	static private boolean writeMiniVPN(Context context) {
-		File mvpnout = new File(context.getCacheDir(),VpnProfile.getMiniVPNExecutableName());
-		if (mvpnout.exists() && mvpnout.canExecute())
-			return true;
-
-		IOException e2 = null;
-
-		try {
-			InputStream mvpn;
-			
-			try {
-				mvpn = context.getAssets().open(VpnProfile.getMiniVPNExecutableName() + "." + Build.CPU_ABI);
-			}
-			catch (IOException errabi) {
-				VpnStatus.logInfo("Failed getting assets for archicture " + Build.CPU_ABI);
-				e2=errabi;
-				mvpn = context.getAssets().open(VpnProfile.getMiniVPNExecutableName() + "." + Build.CPU_ABI2);
-				
-			}
+    private static final String MININONPIEVPN = "nopievpn";
+    private static final String MINIPIEVPN = "pievpn";
+    private static final String OVPNCONFIGFILE = "android.conf";
 
 
-			FileOutputStream fout = new FileOutputStream(mvpnout);
 
-			byte buf[]= new byte[4096];
+    static private String writeMiniVPN(Context context) {
+        String[] abis;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            abis =Build.SUPPORTED_ABIS;
+        else
+            abis = new String[]{Build.CPU_ABI, Build.CPU_ABI2};
 
-			int lenread = mvpn.read(buf);
-			while(lenread> 0) {
-				fout.write(buf, 0, lenread);
-				lenread = mvpn.read(buf);
-			}
-			fout.close();
+        for (String abi: abis) {
 
-			if(!mvpnout.setExecutable(true)) {
-				VpnStatus.logError("Failed to make OpenVPN executable");
-				return false;
-			}
-				
-			
-			return true;
-		} catch (IOException e) {
-			if(e2!=null)
-				VpnStatus.logException(e2);
-			VpnStatus.logException(e);
+            File mvpnout = new File(context.getCacheDir(), getMiniVPNExecutableName() + "." + abi);
+            if ((mvpnout.exists() && mvpnout.canExecute()) || writeMiniVPNBinary(context, abi, mvpnout)) {
+                return mvpnout.getPath();
+            }
+        }
 
-			return false;
-		}
+        return null;
 	}
+
+    private static String getMiniVPNExecutableName()
+    {
+        if (Build.VERSION.SDK_INT  >= Build.VERSION_CODES.JELLY_BEAN)
+            return MINIPIEVPN;
+        else
+            return MININONPIEVPN;
+    }
+
+
+    public static String[] replacePieWithNoPie(String[] mArgv)
+    {
+        mArgv[0] = mArgv[0].replace(MINIPIEVPN, MININONPIEVPN);
+        return mArgv;
+    }
+
+
+    public static String[] buildOpenvpnArgv(Context c) {
+        Vector<String> args = new Vector<String>();
+
+        // Add fixed paramenters
+        //args.add("/data/data/de.blinkt.openvpn/lib/openvpn");
+        args.add(writeMiniVPN(c));
+
+        args.add("--config");
+        args.add(c.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE);
+
+
+        return args.toArray(new String[args.size()]);
+    }
+
+    private static boolean writeMiniVPNBinary(Context context, String abi, File mvpnout) {
+        try {
+            InputStream mvpn;
+
+            try {
+                mvpn = context.getAssets().open(getMiniVPNExecutableName() + "." + abi);
+            }
+            catch (IOException errabi) {
+                VpnStatus.logInfo("Failed getting assets for archicture " + abi);
+                return false;
+            }
+
+
+            FileOutputStream fout = new FileOutputStream(mvpnout);
+
+            byte buf[]= new byte[4096];
+
+            int lenread = mvpn.read(buf);
+            while(lenread> 0) {
+                fout.write(buf, 0, lenread);
+                lenread = mvpn.read(buf);
+            }
+            fout.close();
+
+            if(!mvpnout.setExecutable(true)) {
+                VpnStatus.logError("Failed to make OpenVPN executable");
+                return false;
+            }
+
+
+            return true;
+        } catch (IOException e) {
+            VpnStatus.logException(e);
+            return false;
+        }
+
+    }
 	
 
 	public static void startOpenVpn(VpnProfile startprofile, Context context) {
-		if(!writeMiniVPN(context)) {
+		if(writeMiniVPN(context)==null) {
 			VpnStatus.logError("Error writing minivpn binary");
 			return;
 		}
@@ -80,4 +126,9 @@ public class VPNLaunchHelper {
 			context.startService(startVPN);
 
 	}
+
+    public static String getConfigFilePath(Context context) {
+        return context.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE;
+    }
+
 }

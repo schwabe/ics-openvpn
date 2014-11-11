@@ -41,7 +41,6 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.Vector;
-import java.util.concurrent.Future;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -50,6 +49,7 @@ import javax.crypto.NoSuchPaddingException;
 
 import de.blinkt.openvpn.core.NativeUtils;
 import de.blinkt.openvpn.core.OpenVPNService;
+import de.blinkt.openvpn.core.VPNLaunchHelper;
 import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.X509Utils;
 
@@ -64,11 +64,8 @@ public class VpnProfile implements Serializable {
     public static final String EXTRA_PROFILEUUID = "de.blinkt.openvpn.profileUUID";
     public static final String INLINE_TAG = "[[INLINE]]";
     public static final String DISPLAYNAME_TAG = "[[NAME]]";
-    private static final String MININONPIEVPN = "nopievpn";
-    private static final String MINIPIEVPN = "pievpn";
 
     private static final long serialVersionUID = 7085688938959334563L;
-    private static final String OVPNCONFIGFILE = "android.conf";
     public static final int MAXLOGLEVEL = 4;
     public static final int CURRENT_PROFILE_VERSION = 2;
     public static final int DEFAULT_MSSFIX_SIZE = 1450;
@@ -158,20 +155,6 @@ public class VpnProfile implements Serializable {
         mUuid = UUID.randomUUID();
         mName = name;
         mProfileVersion = CURRENT_PROFILE_VERSION;
-    }
-
-    public static String getMiniVPNExecutableName()
-    {
-        if (Build.VERSION.SDK_INT  >= Build.VERSION_CODES.JELLY_BEAN)
-            return VpnProfile.MINIPIEVPN;
-        else
-            return VpnProfile.MININONPIEVPN;
-    }
-
-    public static String[] replacePieWithNoPie(String[] mArgv)
-    {
-        mArgv[0] = mArgv[0].replace(MINIPIEVPN, MININONPIEVPN);
-        return mArgv;
     }
 
     public static String openVpnEscape(String unescaped) {
@@ -572,19 +555,6 @@ public class VpnProfile implements Serializable {
         return parts[0] + "  " + netmask;
     }
 
-    private String[] buildOpenvpnArgv(File cacheDir) {
-        Vector<String> args = new Vector<String>();
-
-        // Add fixed paramenters
-        //args.add("/data/data/de.blinkt.openvpn/lib/openvpn");
-        args.add(cacheDir.getAbsolutePath() + "/" + getMiniVPNExecutableName());
-
-        args.add("--config");
-        args.add(cacheDir.getAbsolutePath() + "/" + OVPNCONFIGFILE);
-
-
-        return args.toArray(new String[args.size()]);
-    }
 
 
 
@@ -599,7 +569,7 @@ public class VpnProfile implements Serializable {
 
 
         try {
-            FileWriter cfg = new FileWriter(context.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE);
+            FileWriter cfg = new FileWriter(VPNLaunchHelper.getConfigFilePath(context));
             cfg.write(getConfigFile(context, false));
             cfg.flush();
             cfg.close();
@@ -614,7 +584,7 @@ public class VpnProfile implements Serializable {
         String prefix = context.getPackageName();
 
         Intent intent = new Intent(context, OpenVPNService.class);
-        intent.putExtra(prefix + ".ARGV", buildOpenvpnArgv(context.getCacheDir()));
+        intent.putExtra(prefix + ".ARGV", VPNLaunchHelper.buildOpenvpnArgv(context));
         intent.putExtra(prefix + ".profileUUID", mUuid.toString());
 
         ApplicationInfo info = context.getApplicationInfo();

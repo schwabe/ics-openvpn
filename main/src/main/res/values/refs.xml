@@ -14,4 +14,5 @@
     <drawable name="ic_menu_import">@drawable/ic_menu_archive</drawable>
     <drawable name="vpn_item_edit">@drawable/vpn_item_settings </drawable>
     <drawable name="ic_menu_add">@android:drawable/ic_menu_add</drawable>
+    <drawable name="ic_dialog_alert">@android:drawable/ic_dialog_alert</drawable>
 </resources>

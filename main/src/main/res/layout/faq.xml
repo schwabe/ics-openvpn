@@ -5,7 +5,7 @@
   -->
 
 <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/gridview"
+    android:id="@+id/faq_recycler_view"
     android:paddingLeft="@dimen/stdpadding"
     android:paddingRight="@dimen/stdpadding"
     android:layout_width="match_parent"

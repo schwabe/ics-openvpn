@@ -17,7 +17,7 @@ import de.blinkt.openvpn.core.ProfileManager;
 /**
  * Created by arne on 13.10.13.
  */
-public class DisconnectVPN extends Activity implements DialogInterface.OnClickListener{
+public class DisconnectVPN extends Activity implements DialogInterface.OnClickListener, DialogInterface.OnCancelListener {
     protected OpenVPNService mService;
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -71,6 +71,7 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
         builder.setMessage(R.string.cancel_connection_query);
         builder.setNegativeButton(android.R.string.no, this);
         builder.setPositiveButton(android.R.string.yes,this);
+        builder.setOnCancelListener(this);
 
         builder.show();
     }
@@ -82,6 +83,11 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
             if (mService != null && mService.getManagement() != null)
                 mService.getManagement().stopVPN();
         }
+        finish();
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
         finish();
     }
 }

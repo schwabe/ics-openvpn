@@ -5,6 +5,7 @@
 
 package de.blinkt.openvpn.core;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -29,7 +30,7 @@ public class VPNLaunchHelper {
     static private String writeMiniVPN(Context context) {
         String[] abis;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            abis =Build.SUPPORTED_ABIS;
+            abis = getSupportedAbisLollipop();
         else
             abis = new String[]{Build.CPU_ABI, Build.CPU_ABI2};
 
@@ -43,6 +44,11 @@ public class VPNLaunchHelper {
 
         return null;
 	}
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static String[] getSupportedAbisLollipop() {
+        return Build.SUPPORTED_ABIS;
+    }
 
     private static String getMiniVPNExecutableName()
     {

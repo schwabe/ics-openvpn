@@ -715,6 +715,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     public void updateState(String state, String logmessage, int resid, ConnectionStatus level) {
         // If the process is not running, ignore any state,
         // Notification should be invisible in this state
+
         doSendBroadcast(state, level);
         if (mProcessThread == null && !mNotificationAlwaysVisible)
             return;

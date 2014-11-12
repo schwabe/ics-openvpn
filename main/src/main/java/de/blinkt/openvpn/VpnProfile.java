@@ -614,7 +614,7 @@ public class VpnProfile implements Serializable {
     public static boolean isEmbedded(String data) {
         if (data==null)
             return false;
-        if(data.startsWith(INLINE_TAG) || data.startsWith(DISPLAYNAME_TAG))
+        if (data.startsWith(INLINE_TAG) || data.startsWith(DISPLAYNAME_TAG))
             return true;
         else
             return false;

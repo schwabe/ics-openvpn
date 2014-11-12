@@ -111,9 +111,9 @@ public class VPNProfileList extends ListFragment {
 		public Drawable getDrawable(String source) {
 			Drawable d=null;
 			if ("ic_menu_add".equals(source))
-				d = getActivity().getResources().getDrawable(android.R.drawable.ic_menu_add);
+				d = getActivity().getResources().getDrawable(R.drawable.ic_menu_add_grey);
 			else if("ic_menu_archive".equals(source))
-				d = getActivity().getResources().getDrawable(R.drawable.ic_menu_archive);
+				d = getActivity().getResources().getDrawable(R.drawable.ic_menu_import_grey);
 			
 			
 			
@@ -191,13 +191,13 @@ public class VPNProfileList extends ListFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		menu.add(0, MENU_ADD_PROFILE, 0 , R.string.menu_add_profile)
-		.setIcon(android.R.drawable.ic_menu_add)
+		.setIcon(R.drawable.ic_menu_add)
 		.setAlphabeticShortcut('a')
 		.setTitleCondensed(getActivity().getString(R.string.add))
 		.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS |  MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
 		menu.add(0, MENU_IMPORT_PROFILE, 0,  R.string.menu_import)
-		.setIcon(R.drawable.ic_menu_archive)
+		.setIcon(R.drawable.ic_menu_import)
 		.setAlphabeticShortcut('i')
 		.setTitleCondensed(getActivity().getString(R.string.menu_import_short))
 		.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT );

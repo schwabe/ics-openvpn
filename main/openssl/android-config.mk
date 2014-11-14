@@ -41,6 +41,8 @@ LOCAL_CFLAGS_32 := $(filter-out -DDSO_DLFCN -DHAVE_DLFCN_H,$(LOCAL_CFLAGS_32))
 LOCAL_CFLAGS_64 := $(filter-out -DDSO_DLFCN -DHAVE_DLFCN_H,$(LOCAL_CFLAGS_64))
 endif
 
+LOCAL_CFLAGS += -Wno-missing-field-initializers -Wno-unused-parameter
+
 # Debug
 # LOCAL_CFLAGS += -DCIPHER_DEBUG
 

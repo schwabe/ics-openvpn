@@ -1462,6 +1462,11 @@ int ssl_cipher_list_to_bytes(SSL *s,STACK_OF(SSL_CIPHER) *sk,unsigned char *p,
 		    s->psk_client_callback == NULL)
 			continue;
 #endif /* OPENSSL_NO_PSK */
+#ifndef OPENSSL_NO_SRP
+		if (((c->algorithm_mkey & SSL_kSRP) || (c->algorithm_auth & SSL_aSRP)) &&
+		    !(s->srp_ctx.srp_Mask & SSL_kSRP))
+		    continue;
+#endif /* OPENSSL_NO_SRP */
 		j = put_cb(c,p);
 		p+=j;
 		}
@@ -1492,6 +1497,7 @@ int ssl_cipher_list_to_bytes(SSL *s,STACK_OF(SSL_CIPHER) *sk,unsigned char *p,
 			p+=j;
 			}
  		}
+
 	return(p-q);
 	}
 
@@ -1542,7 +1548,7 @@ STACK_OF(SSL_CIPHER) *ssl_bytes_to_cipher_list(SSL *s,unsigned char *p,int num,
 			}
 
 		/* Check for TLS_FALLBACK_SCSV */
-		if (s->s3 && (n != 3 || !p[0]) &&
+		if ((n != 3 || !p[0]) &&
 			(p[n-2] == ((SSL3_CK_FALLBACK_SCSV >> 8) & 0xff)) &&
 			(p[n-1] == (SSL3_CK_FALLBACK_SCSV & 0xff)))
 			{
@@ -1551,7 +1557,8 @@ STACK_OF(SSL_CIPHER) *ssl_bytes_to_cipher_list(SSL *s,unsigned char *p,int num,
 			if (!SSL_ctrl(s, SSL_CTRL_CHECK_PROTO_VERSION, 0, NULL))
 				{
 				SSLerr(SSL_F_SSL_BYTES_TO_CIPHER_LIST,SSL_R_INAPPROPRIATE_FALLBACK);
-				ssl3_send_alert(s,SSL3_AL_FATAL,SSL_AD_INAPPROPRIATE_FALLBACK);
+				if (s->s3)
+					ssl3_send_alert(s,SSL3_AL_FATAL,SSL_AD_INAPPROPRIATE_FALLBACK);
 				goto err;
 				}
 			continue;

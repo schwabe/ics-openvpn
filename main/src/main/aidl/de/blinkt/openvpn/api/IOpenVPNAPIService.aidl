@@ -14,9 +14,6 @@ interface IOpenVPNAPIService {
 	
 	/** Use a profile with all certificates etc. embedded */
 	boolean addVPNProfile (String name, String config);
-
-	/** Remove a profile by UUID */
-	void removeProfile (String profileUUID);
 	
 	/** start a profile using an config */
 	void startVPN (String inlineconfig);
@@ -49,5 +46,8 @@ interface IOpenVPNAPIService {
      * Remove a previously registered callback interface.
      */
     void unregisterStatusCallback(IOpenVPNStatusCallback cb);
+
+	/** Remove a profile by UUID */
+	void removeProfile (String profileUUID);
 		
 }

@@ -1,6 +1,6 @@
 # Auto-generated - DO NOT EDIT!
 # To regenerate, edit openssl.config, then run:
-#     ./import_openssl.sh import /path/to/openssl-1.0.1h.tar.gz
+#     ./import_openssl.sh import /path/to/openssl-1.0.1j.tar.gz
 #
 openssl_cflags_64 := \
   -DOPENSSL_THREADS \
@@ -31,6 +31,7 @@ openssl_cflags_64 := \
   -DOPENSSL_NO_SHA0 \
   -DOPENSSL_NO_STATIC_ENGINE \
   -DOPENSSL_NO_STORE \
+  -DOPENSSL_NO_UNIT_TEST \
   -DOPENSSL_NO_WHIRLPOOL \
 
 openssl_cflags_static_64 := \
@@ -60,5 +61,6 @@ openssl_cflags_static_64 := \
   -DOPENSSL_NO_SHA0 \
   -DOPENSSL_NO_STATIC_ENGINE \
   -DOPENSSL_NO_STORE \
+  -DOPENSSL_NO_UNIT_TEST \
   -DOPENSSL_NO_WHIRLPOOL \
 

@@ -9,7 +9,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="30dp"
+    android:layout_margin="@dimen/stdpadding"
     >
     <!-- A CardView that contains a TextView -->
     <android.support.v7.widget.CardView
@@ -188,8 +188,14 @@
                 android:layout_alignRight="@+id/portnumber"
                 android:layout_alignEnd="@+id/portnumber" />
 
-
         </RelativeLayout>
+
     </android.support.v7.widget.CardView>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:layout_gravity="right|top" />
 
 </FrameLayout>

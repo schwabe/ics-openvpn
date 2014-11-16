@@ -35,17 +35,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <GridView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/connection_recycler_view"
         android:layout_below="@id/remote_random"
-        android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="290dp"
-        android:gravity="center"
-        android:horizontalSpacing="0dp"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp" />
+        android:verticalSpacing="@dimen/stdpadding"
+        android:horizontalSpacing="@dimen/stdpadding"
+        />
 
     <include layout="@layout/connection_fab" />
 

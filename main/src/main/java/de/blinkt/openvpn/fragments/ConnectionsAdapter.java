@@ -6,6 +6,7 @@
 package de.blinkt.openvpn.fragments;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import de.blinkt.openvpn.core.Connection;
 /**
  * Created by arne on 30.10.14.
  */
-public class ConnectionsAdapter extends BaseAdapter {
+public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.ConnectionsHolder>  {
     private final Context mContext;
     private final VpnProfile mProfile;
     private final Settings_Connections mConnectionFragment;
@@ -42,44 +43,46 @@ public class ConnectionsAdapter extends BaseAdapter {
         mConnectionFragment = connections_fragments;
     }
 
-    @Override
-    public int getCount() {
-        return mConnections.length;
-    }
+    public static class ConnectionsHolder extends RecyclerView.ViewHolder {
+        private final EditText mServerNameView;
+        private final TextView mServerPortNumber;
+        private final EditText mPortNumberView;
+        private final Switch mRemoteSwitch;
+        private final RadioGroup mProtoGroup;
+        private final EditText mCustomOptionText;
+        private final CheckBox mCustomOptionCB;
+        private final View mCustomOptionsLayout;
 
-    @Override
-    public Object getItem(int position) {
-        return position;
-    }
+        public ConnectionsHolder(View card) {
+            super(card);
+            mServerPortNumber = ((TextView)card.findViewById(R.id.portnumber));
+            mServerNameView = (EditText) card.findViewById(R.id.servername);
+            mPortNumberView = (EditText) card.findViewById(R.id.portnumber);
+            mRemoteSwitch = (Switch) card.findViewById (R.id.remoteSwitch);
+            mCustomOptionCB = (CheckBox) card.findViewById(R.id.use_customoptions);
+            mCustomOptionText = (EditText) card.findViewById(R.id.customoptions);
+            mProtoGroup = (RadioGroup) card.findViewById(R.id.udptcpradiogroup);
+            mCustomOptionsLayout = card.findViewById(R.id.custom_options_layout);
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    // create a new ImageView for each item referenced by the Adapter
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View card;
-        if (convertView==null) {
-            LayoutInflater li = LayoutInflater.from(mContext);
-            card = li.inflate(R.layout.server_card, parent, false);
-        } else {
-            card = convertView;
         }
-        final Connection connection = mConnections[position];
-        ((TextView)card.findViewById(R.id.portnumber)).
-                setText(connection.mServerPort);
+    }
 
-        EditText serverNameView = (EditText) card.findViewById(R.id.servername);
-        EditText portNumberView = (EditText) card.findViewById(R.id.portnumber);
+    @Override
+    public ConnectionsAdapter.ConnectionsHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        LayoutInflater li = LayoutInflater.from(mContext);
+        View card = li.inflate(R.layout.server_card, viewGroup, false);
 
-        serverNameView.setText(connection.mServerName);
-        portNumberView.setText(connection.mServerPort);
+        return new ConnectionsHolder(card);
+    }
 
-        Switch remoteSwitch = (Switch) card.findViewById (R.id.remoteSwitch);
-        remoteSwitch.setChecked(connection.mEnabled);
-        remoteSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    @Override
+    public void onBindViewHolder(final ConnectionsAdapter.ConnectionsHolder cH, final int i) {
+        final Connection connection = mConnections[i];
+        cH.mPortNumberView.setText(connection.mServerPort);
+        cH.mServerNameView.setText(connection.mServerName);
+        cH.mPortNumberView.setText(connection.mServerPort);
+        cH.mRemoteSwitch.setChecked(connection.mEnabled);
+        cH.mRemoteSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 connection.mEnabled = isChecked;
@@ -88,7 +91,32 @@ public class ConnectionsAdapter extends BaseAdapter {
         });
 
 
-        serverNameView.addTextChangedListener(new TextWatcher() {
+        cH.mProtoGroup.check(connection.mUseUdp ? R.id.udp_proto : R.id.tcp_proto);
+        cH.mProtoGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.udp_proto)
+                    connection.mUseUdp=true;
+                else if (checkedId == R.id.tcp_proto)
+                    connection.mUseUdp=false;
+            }
+        });
+
+        cH.mCustomOptionsLayout.setVisibility(connection.mUseCustomConfig ? View.VISIBLE : View.GONE);
+        cH.mCustomOptionText.setText(connection.mCustomConfiguration);
+
+        cH.mCustomOptionCB.setChecked(connection.mUseCustomConfig);
+        cH.mCustomOptionCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                connection.mUseCustomConfig = isChecked;
+                cH.mCustomOptionsLayout.setVisibility(connection.mUseCustomConfig ? View.VISIBLE : View.GONE);
+                notifyItemChanged(i);
+            }
+        });
+
+        cH.mServerNameView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -105,7 +133,7 @@ public class ConnectionsAdapter extends BaseAdapter {
             }
         });
 
-        portNumberView.addTextChangedListener(new TextWatcher() {
+        cH.mPortNumberView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -122,39 +150,17 @@ public class ConnectionsAdapter extends BaseAdapter {
             }
         });
 
-        CheckBox customOptionCB = (CheckBox) card.findViewById(R.id.use_customoptions);
-        final EditText editText = (EditText) card.findViewById(R.id.customoptions);
-        RadioGroup protoGroup = (RadioGroup) card.findViewById(R.id.udptcpradiogroup);
-        protoGroup.check(connection.mUseUdp ? R.id.udp_proto : R.id.tcp_proto);
-        protoGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.udp_proto)
-                    connection.mUseUdp=true;
-                else if (checkedId == R.id.tcp_proto)
-                    connection.mUseUdp=false;
-            }
-        });
 
-        final View customOptionsLayout = card.findViewById(R.id.custom_options_layout);
 
-        customOptionsLayout.setVisibility(connection.mUseCustomConfig ? View.VISIBLE : View.GONE);
-        editText.setText(connection.mCustomConfiguration);
-
-        customOptionCB.setChecked(connection.mUseCustomConfig);
-        customOptionCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                connection.mUseCustomConfig = isChecked;
-                customOptionsLayout.setVisibility(connection.mUseCustomConfig ? View.VISIBLE : View.GONE);
-            }
-        });
-        displayWarningifNoneEnabled();
-        return card;
     }
 
-    private void displayWarningifNoneEnabled() {
+    @Override
+    public int getItemCount() {
+        return mConnections.length;
+    }
+
+    private void displayWarningifNoneEnabled()
+     {
         int showWarning = View.VISIBLE;
         for(Connection conn:mConnections) {
             if(conn.mEnabled)
@@ -166,8 +172,8 @@ public class ConnectionsAdapter extends BaseAdapter {
     public void addRemote() {
         mConnections = Arrays.copyOf(mConnections, mConnections.length+1);
         mConnections[mConnections.length-1] = new Connection();
+        notifyItemInserted(mConnections.length-1);
 
-        notifyDataSetInvalidated();
     }
 
     public void saveProfile() {

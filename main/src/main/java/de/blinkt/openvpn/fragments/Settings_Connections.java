@@ -9,6 +9,9 @@ import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +36,7 @@ public class Settings_Connections extends Fragment implements View.OnClickListen
     private ConnectionsAdapter mConnectionsAdapter;
     private TextView mWarning;
     private CheckBox mUseRandomRemote;
+    private RecyclerView mRecyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,16 +60,18 @@ public class Settings_Connections extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.connections, container, false);
 
-        GridView gridview = (GridView) v.findViewById(R.id.gridview);
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
-            }
-        });
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.connection_recycler_view);
+
+        int dpwidth = (int) (container.getWidth()/getResources().getDisplayMetrics().density);
+        int columns = dpwidth/290;
+        columns = Math.max(1, columns);
 
         mConnectionsAdapter = new ConnectionsAdapter(getActivity(), this, mProfile);
-        gridview.setAdapter(mConnectionsAdapter);
+
+        //mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(columns, StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        mRecyclerView.setAdapter(mConnectionsAdapter);
 
         ImageButton fab_button = (ImageButton) v.findViewById(R.id.add_new_remote);
         if(fab_button!=null)

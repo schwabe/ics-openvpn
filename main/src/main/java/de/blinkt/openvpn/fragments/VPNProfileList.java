@@ -135,12 +135,8 @@ public class VPNProfileList extends ListFragment {
 		TextView newvpntext = (TextView) v.findViewById(R.id.add_new_vpn_hint);
 		TextView importvpntext = (TextView) v.findViewById(R.id.import_vpn_hint);
 		
-		
-		
 		newvpntext.setText(Html.fromHtml(getString(R.string.add_new_vpn_hint),new MiniImageGetter(),null));
 		importvpntext.setText(Html.fromHtml(getString(R.string.vpn_import_hint),new MiniImageGetter(),null));
-		
-        
 
 		return v;
 

@@ -1,0 +1,172 @@
+<!--
+  ~ Copyright (c) 2012-2014 Arne Schwabe
+  ~ Distributed under the GNU GPL v2. For full terms see the file doc/LICENSE.txt
+  -->
+
+<RelativeLayout
+    android:padding="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <TextView
+        style="@style/item"
+        android:id="@+id/port_label"
+        android:text="@string/port"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+    <TextView
+        style="@style/item"
+        android:text="@string/address"
+        android:id="@+id/server_label"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+    <EditText
+        android:id="@+id/portnumber"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/port_label"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:text="1194" />
+
+
+    <EditText
+        android:id="@+id/servername"
+        android:singleLine="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:inputType="textUri"
+        android:layout_below="@id/server_label"
+        android:layout_toLeftOf="@id/portnumber"
+        android:layout_toStartOf="@id/portnumber"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:text="openvpn.blinkt.de" />
+
+    <TextView
+        android:paddingTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/servername"
+        android:id="@+id/protocol"
+        android:text="Protocol" />
+
+    <RadioGroup
+        android:id="@+id/udptcpradiogroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/protocol"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp">
+
+        <RadioButton
+            android:id="@+id/udp_proto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UDP" />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/tcp_proto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TCP" />
+    </RadioGroup>
+
+<!--    <TextView
+        android:paddingTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/udptcpradiogroup"
+        android:id="@+id/proxytext"
+        android:text="Proxy" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/proxygroup"
+        android:paddingLeft="20dp"
+        android:layout_below="@id/proxytext">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="None" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HTTP" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Socks" />
+    </RadioGroup> -->
+
+
+    <CheckBox
+        android:paddingTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/udptcpradiogroup"
+        android:id="@+id/use_customoptions"
+        android:text="Custom Options" />
+
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:layout_below="@id/use_customoptions"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/warnung_custom"
+            android:text="Specify custom connection specific options. Use with care"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:inputType="textMultiLine"
+            android:id="@+id/customoptions"
+            android:lines="5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enable"
+        android:id="@+id/remoteSwitch"
+        android:layout_gravity="right|bottom"
+        android:layout_below="@+id/portnumber"
+        android:layout_alignRight="@+id/portnumber"
+        android:layout_alignEnd="@+id/portnumber" />
+
+
+</RelativeLayout>

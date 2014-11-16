@@ -47,6 +47,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import de.blinkt.openvpn.core.Connection;
 import de.blinkt.openvpn.core.NativeUtils;
 import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
@@ -67,7 +68,7 @@ public class VpnProfile implements Serializable {
 
     private static final long serialVersionUID = 7085688938959334563L;
     public static final int MAXLOGLEVEL = 4;
-    public static final int CURRENT_PROFILE_VERSION = 2;
+    public static final int CURRENT_PROFILE_VERSION = 4;
     public static final int DEFAULT_MSSFIX_SIZE = 1450;
     public static String DEFAULT_DNS1 = "8.8.8.8";
     public static String DEFAULT_DNS2 = "8.8.4.4";
@@ -102,12 +103,10 @@ public class VpnProfile implements Serializable {
     public String mClientKeyFilename;
     public String mCaFilename;
     public boolean mUseLzo = true;
-    public String mServerPort = "1194";
-    public boolean mUseUdp = true;
     public String mPKCS12Filename;
     public String mPKCS12Password;
     public boolean mUseTLSAuth = false;
-    public String mServerName = "openvpn.blinkt.de";
+
     public String mDNS1 = DEFAULT_DNS1;
     public String mDNS2 = DEFAULT_DNS2;
     public String mIPv4Address;
@@ -148,6 +147,13 @@ public class VpnProfile implements Serializable {
     public String mExcludedRoutes;
     public String mExcludedRoutesv6;
     public int mMssFix =0; // -1 is default,
+    public Connection[] mConnections;
+    public boolean mRemoteRandom=false;
+
+    /* Options no long used in new profiles */
+    public String mServerName = "openvpn.blinkt.de";
+    public String mServerPort = "1194";
+    public boolean mUseUdp = true;
 
 
 
@@ -202,7 +208,25 @@ public class VpnProfile implements Serializable {
             mAllowLocalLAN = Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT;
         }
 
+
+        if (mProfileVersion < 4)
+            moveOptionsToConnection();
+
         mProfileVersion= CURRENT_PROFILE_VERSION;
+
+    }
+
+    private void moveOptionsToConnection() {
+        mConnections = new Connection[1];
+        Connection conn = new Connection();
+
+        conn.mServerName = mServerName;
+        conn.mServerPort = mServerPort;
+        conn.mUseUdp = mUseUdp;
+        conn.mCustomConfiguration = "";
+
+        mConnections[0] = conn;
+
     }
 
     public String getConfigFile(Context context, boolean configForOvpn3) {
@@ -263,15 +287,19 @@ public class VpnProfile implements Serializable {
         // We cannot use anything else than tun
         cfg += "dev tun\n";
 
-        // Server Address
-        cfg += "remote ";
-        cfg += mServerName;
-        cfg += " ";
-        cfg += mServerPort;
-        if (mUseUdp)
-            cfg += " udp\n";
-        else
-            cfg += " tcp-client\n";
+        if (mConnections.length==1) {
+            cfg += mConnections[0].getConnectionBlock();
+        } else {
+            if (mRemoteRandom)
+                cfg+="remote-random\n";
+            for (Connection conn : mConnections) {
+                if (conn.mEnabled) {
+                    cfg += "<connection>\n";
+                    cfg += conn.getConnectionBlock();
+                    cfg += "</connection>\n";
+                }
+            }
+        }
 
 
         switch (mAuthenticationType) {

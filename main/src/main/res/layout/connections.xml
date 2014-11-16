@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2012-2014 Arne Schwabe
+  ~ Distributed under the GNU GPL v2. For full terms see the file doc/LICENSE.txt
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+
+
+    <TextView
+        android:id="@+id/noserver_active_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/white_rect"
+        android:drawableLeft="@drawable/ic_dialog_alert"
+        android:drawablePadding="10dp"
+        android:elevation="10dp"
+        android:gravity="center_vertical"
+        android:padding="@dimen/stdpadding"
+        android:text="You need to enable at least one server."
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+    <CheckBox
+        android:text="Use connection entries in random order on connect"
+        android:id="@+id/remote_random"
+        android:layout_below="@id/noserver_active_warning"
+        android:padding="@dimen/stdpadding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <GridView
+        android:layout_below="@id/remote_random"
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="290dp"
+        android:gravity="center"
+        android:horizontalSpacing="0dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp" />
+
+    <include layout="@layout/connection_fab" />
+
+</RelativeLayout>

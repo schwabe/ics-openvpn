@@ -27,52 +27,7 @@
             style="@style/item"
             android:inputType="text" />
 
-        <TextView
-            style="@style/item"
-            android:text="@string/address"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <EditText
-            android:id="@+id/address"
-            style="@style/item"
-            android:inputType="textUri"
-            android:text="@string/defaultserver" >
-
-            <!-- <requestFocus /> -->
-        </EditText>
-
-        <TextView
-            style="@style/item"
-            android:text="@string/port"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dip"
-            android:layout_marginRight="8dip" >
-
-            <EditText
-                android:id="@+id/port"
-                style="@style/item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:inputType="number"
-                android:text="@string/defaultport" />
-
-            <ToggleButton
-                android:id="@+id/tcpudp"
-                style="@style/accountSetupButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:textOff="TCP"
-                android:textOn="UDP" />
-        </RelativeLayout>
 
         <CheckBox
             android:id="@+id/lzo"

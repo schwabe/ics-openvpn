@@ -30,7 +30,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import java.security.cert.X509Certificate;
 
@@ -45,15 +44,12 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	private static final int CHOOSE_FILE_OFFSET = 1000;
 	private static final int UPDATE_ALIAS = 20;
 
-	private TextView mServerAddress;
-	private TextView mServerPort;
 	private FileSelectLayout mClientCert;
 	private FileSelectLayout mCaCert;
 	private FileSelectLayout mClientKey;
 	private TextView mAliasName;
     private TextView mAliasCertificate;
 	private CheckBox mUseLzo;
-	private ToggleButton mTcpUdp;
 	private Spinner mType;
 	private FileSelectLayout mpkcs12;
 	private TextView mPKCS12Password;
@@ -129,14 +125,11 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mView = inflater.inflate(R.layout.basic_settings,container,false);
 
 		mProfileName = (EditText) mView.findViewById(R.id.profilename);
-		mServerAddress = (TextView) mView.findViewById(R.id.address);
-		mServerPort = (TextView) mView.findViewById(R.id.port);
 		mClientCert = (FileSelectLayout) mView.findViewById(R.id.certselect);
 		mClientKey = (FileSelectLayout) mView.findViewById(R.id.keyselect);
 		mCaCert = (FileSelectLayout) mView.findViewById(R.id.caselect);
 		mpkcs12 = (FileSelectLayout) mView.findViewById(R.id.pkcs12select);
 		mUseLzo = (CheckBox) mView.findViewById(R.id.lzo);
-		mTcpUdp = (ToggleButton) mView.findViewById(id.tcpudp);
 		mType = (Spinner) mView.findViewById(R.id.type);
 		mPKCS12Password = (TextView) mView.findViewById(R.id.pkcs12password);
 		mAliasName = (TextView) mView.findViewById(R.id.aliasname);
@@ -262,9 +255,6 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mCaCert.setData(mProfile.mCaFilename, getActivity());
 
 		mUseLzo.setChecked(mProfile.mUseLzo);
-		mServerPort.setText(mProfile.mServerPort);
-		mServerAddress.setText(mProfile.mServerName);
-		mTcpUdp.setChecked(mProfile.mUseUdp);
 		mType.setSelection(mProfile.mAuthenticationType);
 		mpkcs12.setData(mProfile.mPKCS12Filename, getActivity());
 		mPKCS12Password.setText(mProfile.mPKCS12Password);
@@ -284,10 +274,6 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 		mProfile.mClientKeyFilename = mClientKey.getData();
 
 		mProfile.mUseLzo = mUseLzo.isChecked();
-		mProfile.mServerPort =mServerPort.getText().toString();
-		mProfile.mServerName = mServerAddress.getText().toString();
-		mProfile.mUseUdp = mTcpUdp.isChecked();
-
 		mProfile.mAuthenticationType = mType.getSelectedItemPosition();
 		mProfile.mPKCS12Filename = mpkcs12.getData();
 		mProfile.mPKCS12Password = mPKCS12Password.getText().toString();

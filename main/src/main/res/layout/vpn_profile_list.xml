@@ -1,71 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2012-2014 Arne Schwabe
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/stdpadding"
-    android:paddingRight="@dimen/stdpadding" >
-
-    <ListView
-        android:descendantFocusability="afterDescendants"
-        android:id="@android:id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@android:id/empty"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/stdpadding"
+        android:paddingRight="@dimen/stdpadding">
 
-        <TextView
+        <ListView
+            android:id="@android:id/list"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/no_vpn_profiles_defined"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_height="fill_parent"
+            android:descendantFocusability="afterDescendants" />
 
-        <Space
+        <LinearLayout
+            android:id="@android:id/empty"
             android:layout_width="match_parent"
-            android:layout_height="12sp" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_vpn_profiles_defined"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12sp" />
 
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/openvpn_is_no_free_vpn"
-            android:autoLink="web" />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="12sp" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:text="@string/openvpn_is_no_free_vpn" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12sp" />
 
 
-        <TextView
-            android:id="@+id/add_new_vpn_hint"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="SelectableText" />
+            <TextView
+                android:id="@+id/add_new_vpn_hint"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="SelectableText" />
 
-        <TextView
-            android:id="@+id/import_vpn_hint"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="SelectableText" />
+            <TextView
+                android:id="@+id/import_vpn_hint"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="SelectableText" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="12sp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12sp" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/faq_hint" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/faq_hint" />
+        </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
+<!--    <ImageButton
+        android:id="@+id/add_button"
+        android:layout_width="@dimen/round_button_diameter"
+        android:layout_height="@dimen/round_button_diameter"
+        android:layout_gravity="end|bottom"
+        android:tint="@android:color/white"
+        android:background="@drawable/oval_ripple"
+        android:elevation="@dimen/elevation_low"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/add_button_margin"
+        android:layout_marginEnd="@dimen/add_button_margin"
+        android:src="@drawable/ic_archive_grey600_24dp" /> -->
+</FrameLayout>

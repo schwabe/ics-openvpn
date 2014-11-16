@@ -109,7 +109,6 @@ public class Utils {
         // DocumentsContract.EXTRA_SHOW_ADVANCED is hidden
         i.putExtra("android.content.extra.SHOW_ADVANCED", true);
 
-
         /* Samsung has decided to do something strange, on stock Android GET_CONTENT opens the document UI */
         /* fist try with documentsui */
         i.setPackage("com.android.documentsui");

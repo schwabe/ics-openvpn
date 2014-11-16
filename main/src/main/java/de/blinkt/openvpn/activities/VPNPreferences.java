@@ -25,6 +25,7 @@ import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.fragments.Settings_Authentication;
 import de.blinkt.openvpn.fragments.Settings_Basic;
 import de.blinkt.openvpn.fragments.Settings_Behaviour;
+import de.blinkt.openvpn.fragments.Settings_Connections;
 import de.blinkt.openvpn.fragments.Settings_IP;
 import de.blinkt.openvpn.fragments.Settings_Obscure;
 import de.blinkt.openvpn.fragments.Settings_Routing;
@@ -37,7 +38,7 @@ public class VPNPreferences extends PreferenceActivity {
     static final Class validFragments[] = new Class[] {
         Settings_Authentication.class, Settings_Basic.class, Settings_IP.class,
             Settings_Obscure.class, Settings_Routing.class, ShowConfigFragment.class,
-            Settings_Behaviour.class
+            Settings_Behaviour.class, Settings_Connections.class
     };
 
     private String mProfileUUID;

@@ -159,7 +159,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         return mConnections.length;
     }
 
-    private void displayWarningifNoneEnabled()
+    public void displayWarningifNoneEnabled()
      {
         int showWarning = View.VISIBLE;
         for(Connection conn:mConnections) {

@@ -27,10 +27,6 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
-
-
-
-
     <ListView
             android:id="@android:id/list"
             android:transcriptMode="normal"

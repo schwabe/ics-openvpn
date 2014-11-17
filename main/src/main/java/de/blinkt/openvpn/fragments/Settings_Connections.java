@@ -70,8 +70,11 @@ public class Settings_Connections extends Fragment implements View.OnClickListen
         mConnectionsAdapter = new ConnectionsAdapter(getActivity(), this, mProfile);
 
         //mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(columns, StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         mRecyclerView.setAdapter(mConnectionsAdapter);
+
+        mConnectionsAdapter.displayWarningifNoneEnabled();
 
         ImageButton fab_button = (ImageButton) v.findViewById(R.id.add_new_remote);
         if(fab_button!=null)

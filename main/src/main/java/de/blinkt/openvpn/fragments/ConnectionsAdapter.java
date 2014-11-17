@@ -184,7 +184,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             mConnections2[i-1]=mConnections[i];
         }
         mConnections = mConnections2;
-        displayWarningifNoneEnabled();
+
     }
 
     @Override

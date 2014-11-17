@@ -802,6 +802,14 @@ public class VpnProfile implements Serializable {
         if (!mUseDefaultRoute && (getCustomRoutes(mCustomRoutes) == null || getCustomRoutes(mExcludedRoutes) ==null))
             return R.string.custom_route_format_error;
 
+        boolean noRemoteEnabled = true;
+        for (Connection c : mConnections)
+            if (c.mEnabled)
+                noRemoteEnabled = false;
+
+        if(noRemoteEnabled)
+            return R.string.remote_no_server_selected;
+
         // Everything okay
         return R.string.no_error_found;
 

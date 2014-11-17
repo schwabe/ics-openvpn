@@ -4,31 +4,39 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/rot"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <RadioGroup
-        android:id="@+id/allowed_vpn_radiogroup"
+    <Button
+        android:background="@color/primary"
         android:layout_width="match_parent"
-        android:elevation="2dp"
-        android:background="@drawable/white_rect"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" />
 
-        <RadioButton
-            android:layout_margin="@dimen/stdpadding"
-            android:id="@+id/radio_vpn_disallow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/vpn_disallow_radio" />
-
-        <RadioButton
-            android:layout_margin="@dimen/stdpadding"
-            android:id="@+id/radio_vpn_allow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/vpn_allow_radio" />
-    </RadioGroup>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/actionBarSize"
+        android:background="@color/switchbar"
+        android:paddingStart="@dimen/switchbar_pad"
+        android:paddingEnd="@dimen/switchbar_pad"
+        tools:ignore="NewApi">
+        <TextView
+            android:id="@+id/default_allow_text"
+            style="@android:style/TextAppearance.Medium.Inverse"
+            tools:text="@string/vpn_disallow_radio"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content" />
+        <Switch
+            android:id="@+id/default_allow"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </RelativeLayout>
 
     <ListView
         android:id="@android:id/list"

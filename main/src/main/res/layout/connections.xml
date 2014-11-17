@@ -14,7 +14,7 @@
 
 
     <CheckBox
-        android:text="Use connection entries in random order on connect"
+        android:text="@string/remote_random"
         android:id="@+id/remote_random"
         android:padding="@dimen/stdpadding"
         android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
         android:elevation="2dp"
         android:gravity="center_vertical"
         android:padding="@dimen/stdpadding"
-        android:text="You need to enable at least one server."
+        android:text="@string/remote_no_server_selected"
         android:visibility="visible"
         tools:visibility="visible" />
 

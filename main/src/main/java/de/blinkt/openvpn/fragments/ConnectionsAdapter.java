@@ -5,17 +5,20 @@
 
 package de.blinkt.openvpn.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -52,6 +55,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         private final EditText mCustomOptionText;
         private final CheckBox mCustomOptionCB;
         private final View mCustomOptionsLayout;
+        private final ImageButton mDeleteButton;
 
         public ConnectionsHolder(View card) {
             super(card);
@@ -63,6 +67,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             mCustomOptionText = (EditText) card.findViewById(R.id.customoptions);
             mProtoGroup = (RadioGroup) card.findViewById(R.id.udptcpradiogroup);
             mCustomOptionsLayout = card.findViewById(R.id.custom_options_layout);
+            mDeleteButton = (ImageButton) card.findViewById(R.id.remove_connection);
 
         }
     }
@@ -116,6 +121,25 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             }
         });
 
+        cH.mDeleteButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder ab = new AlertDialog.Builder(mContext);
+                        ab.setTitle(R.string.query_delete_remote);
+                        ab.setPositiveButton(R.string.keep, null);
+                        ab.setNegativeButton(R.string.delete, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                removeRemote(i);
+                                notifyItemRemoved(i);
+                            }
+                        });
+                        ab.create().show();
+                    }
+                }
+        );
+
         cH.mServerNameView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -154,6 +178,15 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
 
     }
 
+    private void removeRemote(int idx) {
+        Connection[] mConnections2 = Arrays.copyOf(mConnections, mConnections.length-1);
+        for (int i=idx+1;i<mConnections.length;i++){
+            mConnections2[i-1]=mConnections[i];
+        }
+        mConnections = mConnections2;
+        displayWarningifNoneEnabled();
+    }
+
     @Override
     public int getItemCount() {
         return mConnections.length;
@@ -173,7 +206,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         mConnections = Arrays.copyOf(mConnections, mConnections.length+1);
         mConnections[mConnections.length-1] = new Connection();
         notifyItemInserted(mConnections.length-1);
-
+        displayWarningifNoneEnabled();
     }
 
     public void saveProfile() {

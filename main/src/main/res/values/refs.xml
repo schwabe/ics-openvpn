@@ -17,5 +17,6 @@
     <drawable name="ic_dialog_alert">@android:drawable/ic_dialog_alert</drawable>
     <drawable name="ic_menu_add_grey">@android:drawable/ic_menu_add</drawable>
     <drawable name="ic_menu_import_grey">@drawable/ic_menu_archive</drawable>
+    <drawable name="ic_menu_delete_grey">@android:drawable/ic_menu_delete</drawable>
 
 </resources>

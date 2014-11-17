@@ -336,5 +336,8 @@
     <string name="app_no_longer_exists">Package %s is no longer installed, removing it from app allow/disallow list</string>
     <string name="vpn_disallow_radio">VPN is used for all apps but exclude selected</string>
     <string name="vpn_allow_radio">VPN is used for only for selected apps</string>
+    <string name="query_delete_remote">Remove remote server entry?</string>
+    <string name="keep">Keep</string>
+    <string name="delete">Delete</string>
 
 </resources>

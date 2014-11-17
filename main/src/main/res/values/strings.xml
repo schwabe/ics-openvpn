@@ -329,8 +329,6 @@
     <string name="client_behaviour">Client behaviour</string>
     <string name="clear_external_apps">Clear allowed external apps</string>
     <string name="loading">Loading…</string>
-    <string name="vpn_allow_mode_is_allow">Allow only these applications to use the VPN. Other apps will use the normal connection.</string>
-    <string name="vpn_allow_mode_is_disallow">Do not allow these applications to use the VPN. Other apps will use the VPN connection.</string>
     <string name="allowed_vpn_apps_info">Allowed VPN apps: %1$s</string>
     <string name="disallowed_vpn_apps_info">Disallowed VPN apps: %1$s</string>
     <string name="app_no_longer_exists">Package %s is no longer installed, removing it from app allow/disallow list</string>
@@ -339,5 +337,8 @@
     <string name="query_delete_remote">Remove remote server entry?</string>
     <string name="keep">Keep</string>
     <string name="delete">Delete</string>
+    <string name="add_remote">Add new remote</string>
+    <string name="remote_random">Use connection entries in random order on connect</string>
+    <string name="remote_no_server_selected">You need to define and enable at least one remote server.</string>
 
 </resources>

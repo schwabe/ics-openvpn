@@ -7,7 +7,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:icon="@drawable/ic_menu_add"
-        android:title="Add new remote"
+        android:title="@string/add_remote"
         android:id="@+id/add_new_remote"
         android:titleCondensed="@string/add"
         android:showAsAction="ifRoom|withText"

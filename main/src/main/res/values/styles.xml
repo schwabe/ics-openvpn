@@ -6,9 +6,14 @@
 
 <resources>
     <style name="appstyle" parent="android:Theme.DeviceDefault.Light">
-
+        <item name="android:preferenceStyle">@style/BlinktPreferencePanel</item>
     </style>
 
+
+    <!-- No margins or background by default. Not different for x-large screens -->
+    <style name="BlinktPreferencePanel">
+        <item name="android:background">@color/gelb</item>
+    </style>
 
     <style name="item">
         <item name="android:layout_width">match_parent</item>

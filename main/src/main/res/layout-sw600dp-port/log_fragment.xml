@@ -12,6 +12,8 @@
               tools:context=".LogWindow">
 
     <LinearLayout
+        android:background="@drawable/white_rect"
+        android:elevation="1dp"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
@@ -33,10 +35,6 @@
                 android:layout_weight="1"/>
     </LinearLayout>
 
-    <Space
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:minHeight="5dp"/>
 
     <ListView
             android:id="@android:id/list"

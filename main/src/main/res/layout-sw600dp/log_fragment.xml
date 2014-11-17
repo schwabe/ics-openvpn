@@ -14,6 +14,8 @@
 
 
     <LinearLayout
+        android:background="@drawable/white_rect"
+        android:elevation="1dp"
             android:minWidth="300dp"
             android:orientation="vertical"
             android:layout_width="wrap_content"
@@ -23,11 +25,6 @@
 
         <include layout="@layout/vpnstatus"/>
     </LinearLayout>
-
-    <Space
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:minWidth="5dp"/>
 
     <ListView
             android:id="@android:id/list"

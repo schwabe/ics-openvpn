@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.VpnService;
 import android.os.Binder;
@@ -558,6 +559,29 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         VpnStatus.logInfo(R.string.routes_info_incl, TextUtils.join(", ", mRoutes.getNetworks(true)), TextUtils.join(", ", mRoutesv6.getNetworks(true)));
         VpnStatus.logInfo(R.string.routes_info_excl, TextUtils.join(", ", mRoutes.getNetworks(false)),TextUtils.join(", ", mRoutesv6.getNetworks(false)));
         VpnStatus.logDebug(R.string.routes_debug, TextUtils.join(", ", positiveIPv4Routes), TextUtils.join(", ", positiveIPv6Routes));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            for (String pkg : mProfile.mAllowedAppsVpn) {
+                try {
+                    if (mProfile.mAllowedAppsVpnAreDisallowed) {
+                        builder.addDisallowedApplication(pkg);
+                    } else {
+                        builder.addAllowedApplication(pkg);
+                     }
+                } catch (PackageManager.NameNotFoundException e) {
+                    mProfile.mAllowedAppsVpn.remove(pkg);
+                    VpnStatus.logInfo(R.string.app_no_longer_exists, pkg);
+                }
+            }
+
+            if (mProfile.mAllowedAppsVpnAreDisallowed) {
+                VpnStatus.logDebug(R.string.disallowed_vpn_apps_info, TextUtils.join(", ", mProfile.mAllowedAppsVpn));
+            } else {
+                VpnStatus.logDebug(R.string.allowed_vpn_apps_info, TextUtils.join(", ", mProfile.mAllowedAppsVpn));
+            }
+
+        }
+
 
         String session = mProfile.mName;
         if (mLocalIP != null && mLocalIPv6 != null)

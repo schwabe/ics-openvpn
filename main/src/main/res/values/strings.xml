@@ -328,5 +328,13 @@
     <string name="mssfix_dialogtitle">Set MSS of TCP payload</string>
     <string name="client_behaviour">Client behaviour</string>
     <string name="clear_external_apps">Clear allowed external apps</string>
+    <string name="loading">Loading…</string>
+    <string name="vpn_allow_mode_is_allow">Allow only these applications to use the VPN. Other apps will use the normal connection.</string>
+    <string name="vpn_allow_mode_is_disallow">Do not allow these applications to use the VPN. Other apps will use the VPN connection.</string>
+    <string name="allowed_vpn_apps_info">Allowed VPN apps: %1$s</string>
+    <string name="disallowed_vpn_apps_info">Disallowed VPN apps: %1$s</string>
+    <string name="app_no_longer_exists">Package %s is no longer installed, removing it from app allow/disallow list</string>
+    <string name="vpn_disallow_radio">VPN is used for all apps but exclude selected</string>
+    <string name="vpn_allow_radio">VPN is used for only for selected apps</string>
 
 </resources>

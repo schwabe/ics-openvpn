@@ -28,6 +28,11 @@
         android:fragment="de.blinkt.openvpn.fragments.Settings_Authentication"
         android:title="@string/settings_auth" />
 
+    <header
+        android:fragment="de.blinkt.openvpn.fragments.Settings_Allowed_Apps"
+        android:title="Allowed Apps on VPN"
+        android:id="@+id/allowed_apps_header"
+        />
     <!-- android:icon="@drawable/ic_settings_display" -->
     <header
         android:fragment="de.blinkt.openvpn.fragments.Settings_Obscure"

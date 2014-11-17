@@ -60,7 +60,7 @@ public class Settings_Connections extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.connections, container, false);
 
-
+        mWarning = (TextView) v.findViewById(R.id.noserver_active_warning);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.connection_recycler_view);
 
         int dpwidth = (int) (container.getWidth()/getResources().getDisplayMetrics().density);
@@ -74,7 +74,6 @@ public class Settings_Connections extends Fragment implements View.OnClickListen
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         mRecyclerView.setAdapter(mConnectionsAdapter);
 
-        mConnectionsAdapter.displayWarningifNoneEnabled();
 
         ImageButton fab_button = (ImageButton) v.findViewById(R.id.add_new_remote);
         if(fab_button!=null)
@@ -83,7 +82,9 @@ public class Settings_Connections extends Fragment implements View.OnClickListen
         mUseRandomRemote = (CheckBox) v.findViewById(R.id.remote_random);
         mUseRandomRemote.setChecked(mProfile.mRemoteRandom);
 
-        mWarning = (TextView) v.findViewById(R.id.noserver_active_warning);
+
+        mConnectionsAdapter.displayWarningifNoneEnabled();
+
         return v;
     }
 

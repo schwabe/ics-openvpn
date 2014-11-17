@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
+import de.blinkt.openvpn.fragments.Settings_Allowed_Apps;
 import de.blinkt.openvpn.fragments.Settings_Authentication;
 import de.blinkt.openvpn.fragments.Settings_Basic;
 import de.blinkt.openvpn.fragments.Settings_Behaviour;
@@ -38,7 +39,7 @@ public class VPNPreferences extends PreferenceActivity {
     static final Class validFragments[] = new Class[] {
         Settings_Authentication.class, Settings_Basic.class, Settings_IP.class,
             Settings_Obscure.class, Settings_Routing.class, ShowConfigFragment.class,
-            Settings_Behaviour.class, Settings_Connections.class
+            Settings_Behaviour.class, Settings_Connections.class, Settings_Allowed_Apps.class
     };
 
     private String mProfileUUID;
@@ -117,12 +118,17 @@ public class VPNPreferences extends PreferenceActivity {
 
 	@Override
 	public void onBuildHeaders(List<Header> target) {
-		loadHeadersFromResource(R.xml.vpn_headers, target); 
-		for (Header header : target) {
+		loadHeadersFromResource(R.xml.vpn_headers, target);
+        Header headerToRemove=null;
+        for (Header header : target) {
 			if(header.fragmentArguments==null)
 				header.fragmentArguments = new Bundle();
 			header.fragmentArguments.putString(getPackageName() + ".profileUUID",mProfileUUID);
+            if (header.id == R.id.allowed_apps_header && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+                headerToRemove = header;
 		}
+        if (headerToRemove != null)
+            target.remove(headerToRemove);
 	}
 
 	@Override

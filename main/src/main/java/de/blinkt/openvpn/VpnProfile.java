@@ -38,6 +38,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.Vector;
@@ -68,7 +69,7 @@ public class VpnProfile implements Serializable {
 
     private static final long serialVersionUID = 7085688938959334563L;
     public static final int MAXLOGLEVEL = 4;
-    public static final int CURRENT_PROFILE_VERSION = 4;
+    public static final int CURRENT_PROFILE_VERSION = 5;
     public static final int DEFAULT_MSSFIX_SIZE = 1450;
     public static String DEFAULT_DNS1 = "8.8.8.8";
     public static String DEFAULT_DNS2 = "8.8.4.4";
@@ -147,8 +148,11 @@ public class VpnProfile implements Serializable {
     public String mExcludedRoutes;
     public String mExcludedRoutesv6;
     public int mMssFix =0; // -1 is default,
-    public Connection[] mConnections;
+    public Connection[] mConnections = new Connection[0];
     public boolean mRemoteRandom=false;
+    public HashSet<String> mAllowedAppsVpn = new HashSet<String>();
+    public boolean mAllowedAppsVpnAreDisallowed = true;
+
 
     /* Options no long used in new profiles */
     public String mServerName = "openvpn.blinkt.de";
@@ -208,9 +212,14 @@ public class VpnProfile implements Serializable {
             mAllowLocalLAN = Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT;
         }
 
-
-        if (mProfileVersion < 4)
+        if (mProfileVersion < 4) {
             moveOptionsToConnection();
+            mAllowedAppsVpnAreDisallowed=true;
+        }
+        if (mAllowedAppsVpn==null)
+            mAllowedAppsVpn = new HashSet<String>();
+        if (mConnections ==null)
+            mConnections = new Connection[0];
 
         mProfileVersion= CURRENT_PROFILE_VERSION;
 

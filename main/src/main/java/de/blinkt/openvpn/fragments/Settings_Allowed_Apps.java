@@ -43,8 +43,8 @@ public class Settings_Allowed_Apps extends Fragment {
         public View rootView;
         public TextView appName;
         public ImageView appIcon;
-        public TextView appSize;
-        public TextView disabled;
+        //public TextView appSize;
+        //public TextView disabled;
         public CheckBox checkBox;
 
         static public AppViewHolder createOrRecycle(LayoutInflater inflater, View convertView) {
@@ -57,8 +57,8 @@ public class Settings_Allowed_Apps extends Fragment {
                 holder.rootView = convertView;
                 holder.appName = (TextView) convertView.findViewById(R.id.app_name);
                 holder.appIcon = (ImageView) convertView.findViewById(R.id.app_icon);
-                holder.appSize = (TextView) convertView.findViewById(R.id.app_size);
-                holder.disabled = (TextView) convertView.findViewById(R.id.app_disabled);
+                //holder.appSize = (TextView) convertView.findViewById(R.id.app_size);
+                //holder.disabled = (TextView) convertView.findViewById(R.id.app_disabled);
                 holder.checkBox = (CheckBox) convertView.findViewById(R.id.app_selected);
                 convertView.setTag(holder);
                 return holder;

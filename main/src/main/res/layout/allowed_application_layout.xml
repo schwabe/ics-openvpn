@@ -13,16 +13,17 @@
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     android:paddingTop="8dip"
     android:paddingBottom="8dip"
-    android:columnCount="4">
+    android:columnCount="4"
+    tools:ignore="RtlCompat">
 
     <ImageView
         android:id="@+id/app_icon"
         android:layout_width="@android:dimen/app_icon_size"
         android:layout_height="@android:dimen/app_icon_size"
-        android:layout_rowSpan="2"
+        android:layout_rowSpan="1"
         android:layout_marginEnd="8dip"
         android:scaleType="centerInside"
-        tools:drawable="@drawable/icon"
+        tools:background="@drawable/icon"
         android:contentDescription="@null" />
 
     <TextView
@@ -30,7 +31,8 @@
         android:id="@+id/app_name"
         android:layout_width="0dip"
         android:layout_columnSpan="2"
-        android:layout_gravity="fill_horizontal"
+        android:layout_rowSpan="1"
+        android:layout_gravity="fill_horizontal|center_vertical"
         android:layout_marginTop="2dip"
         android:singleLine="true"
         android:ellipsize="marquee"
@@ -40,20 +42,20 @@
     <CheckBox android:id="@+id/app_selected"
         android:layout_marginStart="8dip"
         android:layout_gravity="center_vertical"
-        android:layout_rowSpan="2"
+        android:layout_rowSpan="1"
         android:visibility="visible" />
 
-    <TextView
+<!--    <TextView
         android:id="@+id/app_size"
         android:layout_width="0dip"
         android:layout_gravity="fill_horizontal|top"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textAlignment="viewStart" />
+        android:textAlignment="viewStart" /> -->
 
-    <TextView
+    <!-- <TextView
         android:id="@+id/app_disabled"
         android:layout_marginStart="8dip"
         android:layout_gravity="top"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall" /> -->
 
 </GridLayout>

@@ -5,23 +5,27 @@
 
 package de.blinkt.openvpn.activities;
 
-import java.util.List;
-
 import android.annotation.TargetApi;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
+import android.support.v4n.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
+import de.blinkt.openvpn.fragments.AboutFragment;
+import de.blinkt.openvpn.fragments.FaqFragment;
+import de.blinkt.openvpn.fragments.GeneralSettings;
+import de.blinkt.openvpn.fragments.LogFragment;
+import de.blinkt.openvpn.fragments.SendDumpFragment;
 import de.blinkt.openvpn.fragments.Settings_Allowed_Apps;
 import de.blinkt.openvpn.fragments.Settings_Authentication;
 import de.blinkt.openvpn.fragments.Settings_Basic;
@@ -32,9 +36,11 @@ import de.blinkt.openvpn.fragments.Settings_Obscure;
 import de.blinkt.openvpn.fragments.Settings_Routing;
 import de.blinkt.openvpn.fragments.ShowConfigFragment;
 import de.blinkt.openvpn.fragments.VPNProfileList;
+import de.blinkt.openvpn.views.ScreenSlidePagerAdapter;
+import de.blinkt.openvpn.views.TabBarView;
 
 
-public class VPNPreferences extends PreferenceActivity {
+public class VPNPreferences extends Activity {
 
     static final Class validFragments[] = new Class[] {
         Settings_Authentication.class, Settings_Basic.class, Settings_IP.class,
@@ -44,14 +50,15 @@ public class VPNPreferences extends PreferenceActivity {
 
     private String mProfileUUID;
 	private VpnProfile mProfile;
+    private ViewPager mPager;
+    private ScreenSlidePagerAdapter mPagerAdapter;
 
-	public VPNPreferences() {
+    public VPNPreferences() {
 		super();
 	}
 
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    @Override
     protected boolean isValidFragment(String fragmentName) {
         for (Class c: validFragments)
             if (c.getName().equals(fragmentName))
@@ -74,22 +81,7 @@ public class VPNPreferences extends PreferenceActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Intent intent = getIntent();
-		
-
-		if(intent!=null) {
-			String profileUUID = intent.getStringExtra(getPackageName() + ".profileUUID");
-			if(profileUUID==null) {
-				Bundle initialArguments = getIntent().getBundleExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS);
-				profileUUID =  initialArguments.getString(getPackageName() + ".profileUUID");
-			}
-			if(profileUUID!=null){
-
-				mProfileUUID = profileUUID;
-				mProfile = ProfileManager.get(this,mProfileUUID);
-
-			}
-		}
+        getProfile();
 		// When a profile is deleted from a category fragment in hadset mod we need to finish
 		// this activity as well when returning
 		if (mProfile==null || mProfile.profileDleted) {
@@ -98,7 +90,25 @@ public class VPNPreferences extends PreferenceActivity {
 		}
 	}
 
-	@Override
+    private void getProfile() {
+        Intent intent = getIntent();
+
+        if(intent!=null) {
+            String profileUUID = intent.getStringExtra(getPackageName() + ".profileUUID");
+            if(profileUUID==null) {
+                Bundle initialArguments = getIntent().getBundleExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS);
+                profileUUID =  initialArguments.getString(getPackageName() + ".profileUUID");
+            }
+            if(profileUUID!=null){
+
+                mProfileUUID = profileUUID;
+                mProfile = ProfileManager.get(this, mProfileUUID);
+
+            }
+        }
+    }
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		mProfileUUID = getIntent().getStringExtra(getPackageName() + ".profileUUID");
 		if(savedInstanceState!=null){
@@ -113,10 +123,50 @@ public class VPNPreferences extends PreferenceActivity {
 		}
 		super.onCreate(savedInstanceState);
 
+
+        setContentView(R.layout.main_activity);
+
+        /* Toolbar and slider should have the same elevation */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            disableToolbarElevation();
+        }
+
+        // Instantiate a ViewPager and a PagerAdapter.
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager(), this);
+
+
+        Bundle fragmentArguments = new Bundle();
+        fragmentArguments.putString(getPackageName() + ".profileUUID",mProfileUUID);
+        mPagerAdapter.setFragmentArgs(fragmentArguments);
+
+        mPagerAdapter.addTab(R.string.client_behaviour, Settings_Behaviour.class);
+
+        mPagerAdapter.addTab(R.string.server_list, Settings_Connections.class);
+
+        mPagerAdapter.addTab(R.string.basic, Settings_Basic.class);
+        mPagerAdapter.addTab(R.string.ipdns, Settings_IP.class);
+        mPagerAdapter.addTab(R.string.routing, Settings_Routing.class);
+        mPagerAdapter.addTab(R.string.settings_auth, Settings_Authentication.class);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            mPagerAdapter.addTab(R.string.vpn_allowed_apps, Settings_Allowed_Apps.class);
+
+        mPagerAdapter.addTab(R.string.advanced, Settings_Obscure.class);
+        mPagerAdapter.addTab(R.string.generated_config, ShowConfigFragment.class);
+
+
+
+
+        mPager.setAdapter(mPagerAdapter);
+
+        TabBarView tabs = (TabBarView) findViewById(R.id.sliding_tabs);
+        tabs.setViewPager(mPager);
+
 	}
 
 
-
+/*
 	@Override
 	public void onBuildHeaders(List<Header> target) {
 		loadHeadersFromResource(R.xml.vpn_headers, target);
@@ -130,7 +180,7 @@ public class VPNPreferences extends PreferenceActivity {
 		}
         if (headerToRemove != null)
             target.remove(headerToRemove);
-	}
+	}*/
 
 	@Override
 	public void onBackPressed() {
@@ -176,5 +226,12 @@ public class VPNPreferences extends PreferenceActivity {
 		finish();
 		
 	}
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void disableToolbarElevation() {
+        ActionBar toolbar = getActionBar();
+        toolbar.setElevation(0);
+    }
+
 }
 

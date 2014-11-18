@@ -7,6 +7,7 @@ package de.blinkt.openvpn.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -30,6 +32,16 @@ public class ShowConfigFragment extends Fragment {
 		final TextView cv = (TextView) v.findViewById(R.id.configview);
 		
 		int check=vp.checkProfile(getActivity());
+
+        ImageButton fabButton = (ImageButton) v.findViewById(R.id.share_config);
+        if (fabButton!=null)
+            fabButton.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    shareConfig();
+                }
+            });
+
 		if(check!=R.string.no_error_found) {
 			cv.setText(check);
 			configtext = getString(check);
@@ -70,7 +82,8 @@ public class ShowConfigFragment extends Fragment {
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.configmenu, menu);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+		    inflater.inflate(R.menu.configmenu, menu);
 	}
 	
 	private void shareConfig() {

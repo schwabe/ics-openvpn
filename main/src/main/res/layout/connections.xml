@@ -14,6 +14,7 @@
 
 
     <CheckBox
+        android:layout_margin="@dimen/vpn_setting_padding"
         android:text="@string/remote_random"
         android:id="@+id/remote_random"
         android:padding="@dimen/stdpadding"
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content" />
 
     <android.support.v7.widget.RecyclerView
+        android:layout_margin="@dimen/vpn_setting_padding"
         android:id="@+id/connection_recycler_view"
         android:layout_below="@id/remote_random"
         android:layout_width="match_parent"

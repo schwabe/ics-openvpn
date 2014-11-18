@@ -19,5 +19,5 @@
             android:layout_height="wrap_content" />
     </ScrollView>
 
-    <include layout="@layout/config_fab" />
+    <include layout="@layout/share_fab" />
 </RelativeLayout>

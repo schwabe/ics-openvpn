@@ -5,12 +5,13 @@
   -->
 
 <resources>
+    <style name="blinkt.baseTheme" parent="android:Theme.Material.Light.DarkActionBar" />
+
 
     <!-- http://www.google.de/design/spec/style/color.html#color-color-palette -->
-    <style name="appstyle" parent="android:Theme.Material.Light.DarkActionBar">
+    <style name="blinkt" parent="blinkt.common">
         <item name="android:colorPrimary">@color/primary</item>
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <item name="android:colorAccent">@color/accent</item>
-        <item name="android:preferenceStyle">@style/BlinktPreferencePanel</item>
     </style>
 </resources>

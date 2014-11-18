@@ -5,10 +5,15 @@
   -->
 
 <resources>
-    <style name="appstyle" parent="android:Theme.DeviceDefault.Light">
+    <style name="blinkt.baseTheme" parent="android:Theme.DeviceDefault.Light" />
+    <style name="blinkt.common" parent="blinkt.baseTheme" >
+        <!-- Shared between Holo and Material -->
         <item name="android:preferenceStyle">@style/BlinktPreferencePanel</item>
+
     </style>
 
+    <style name="blinkt" parent="blinkt.common">
+    </style>
 
     <!-- No margins or background by default. Not different for x-large screens -->
     <style name="BlinktPreferencePanel">

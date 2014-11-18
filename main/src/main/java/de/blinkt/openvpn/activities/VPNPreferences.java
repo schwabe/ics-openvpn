@@ -112,6 +112,7 @@ public class VPNPreferences extends PreferenceActivity {
 			setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
 		}
 		super.onCreate(savedInstanceState);
+
 	}
 
 

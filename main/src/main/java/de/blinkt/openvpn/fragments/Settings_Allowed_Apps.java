@@ -5,6 +5,7 @@
 
 package de.blinkt.openvpn.fragments;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -24,7 +25,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -81,10 +84,20 @@ public class Settings_Allowed_Apps extends Fragment {
         PackageAdapter(Context c, VpnProfile vp) {
             mPm = c.getPackageManager();
             mProfile = vp;
-            mPackages = mPm.getInstalledApplications(PackageManager.GET_META_DATA);
+            List<ApplicationInfo> installedPackages = mPm.getInstalledApplications(PackageManager.GET_META_DATA);
             mInflater = LayoutInflater.from(c);
 
-            Collections.sort(mPackages, new ApplicationInfo.DisplayNameComparator(mPm));
+            // Remove apps not using Internet
+
+            Vector<ApplicationInfo> apps= new Vector<ApplicationInfo>();
+            for (ApplicationInfo app:installedPackages) {
+                if (mPm.checkPermission(Manifest.permission.INTERNET, app.packageName) == PackageManager.PERMISSION_GRANTED)
+                    apps.add(app);
+            }
+
+
+            Collections.sort(apps, new ApplicationInfo.DisplayNameComparator(mPm));
+            mPackages=apps;
 
         }
         @Override

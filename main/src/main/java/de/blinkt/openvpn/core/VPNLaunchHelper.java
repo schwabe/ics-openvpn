@@ -76,7 +76,6 @@ public class VPNLaunchHelper {
         args.add("--config");
         args.add(c.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE);
 
-
         return args.toArray(new String[args.size()]);
     }
 

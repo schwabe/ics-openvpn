@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -166,6 +167,12 @@ public class Settings_Allowed_Apps extends Fragment {
         mListView = (ListView) v.findViewById(android.R.id.list);
 
         mListView.setAdapter(new PackageAdapter(getActivity(), mProfile));
+
+        v.setPadding(0,0,0,0);
+
+        /* 'orrible 'ack */
+
+
 
         return v;
     }

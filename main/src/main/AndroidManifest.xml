@@ -28,7 +28,7 @@
 
     <application
         android:allowBackup="true"
-        android:theme="@style/appstyle"
+        android:theme="@style/blinkt"
         android:icon="@drawable/icon"
         android:label="@string/app"
         android:name=".core.ICSOpenVPNApplication"

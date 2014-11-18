@@ -14,4 +14,7 @@
     <color name="gelb">#ffff00</color>
     <color name="rot">#ff0000</color>
 
+
+    <color name="background_tab_pressed">#1AFFFFFF</color>
+
 </resources>

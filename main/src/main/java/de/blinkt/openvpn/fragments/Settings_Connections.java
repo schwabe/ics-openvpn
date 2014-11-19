@@ -20,8 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +37,7 @@ public class Settings_Connections extends Fragment implements View.OnClickListen
     private VpnProfile mProfile;
     private ConnectionsAdapter mConnectionsAdapter;
     private TextView mWarning;
-    private CheckBox mUseRandomRemote;
+    private Checkable mUseRandomRemote;
     private RecyclerView mRecyclerView;
 
     @Override
@@ -79,7 +81,7 @@ public class Settings_Connections extends Fragment implements View.OnClickListen
         if(fab_button!=null)
                 fab_button.setOnClickListener(this);
 
-        mUseRandomRemote = (CheckBox) v.findViewById(R.id.remote_random);
+        mUseRandomRemote = (Checkable) v.findViewById(R.id.remote_random);
         mUseRandomRemote.setChecked(mProfile.mRemoteRandom);
 
 

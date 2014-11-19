@@ -7,28 +7,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    tools:ignore="RtlCompat"
     android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?android:attr/actionBarSize"
-        android:background="@color/switchbar"
+        android:background="@drawable/bg_switchbar"
         android:paddingStart="@dimen/switchbar_pad"
+        android:elevation="1dp"
         android:paddingEnd="@dimen/switchbar_pad"
         tools:ignore="NewApi">
-        <TextView
-            android:id="@+id/default_allow_text"
-            style="@android:style/TextAppearance.Medium.Inverse"
-            tools:text="@string/vpn_disallow_radio"
-            android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_height="wrap_content" />
+
         <Switch
             android:id="@+id/default_allow"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             />
+        <TextView
+            android:id="@+id/default_allow_text"
+            style="@android:style/TextAppearance.Medium.Inverse"
+            tools:text="@string/vpn_disallow_radio"
+            android:layout_toStartOf="@id/default_allow"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_height="wrap_content" />
         </RelativeLayout>
 

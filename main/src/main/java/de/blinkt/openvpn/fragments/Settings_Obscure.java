@@ -8,6 +8,7 @@ package de.blinkt.openvpn.fragments;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.widget.Toast;
@@ -23,6 +24,66 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
     private EditTextPreference mMssFixValue;
     private CheckBoxPreference mMssFixCheckBox;
 
+    private CheckBoxPreference mPersistent;
+    private ListPreference mConnectRetrymax;
+    private EditTextPreference mConnectRetry;
+
+    public void onCreateBehaviour(Bundle savedInstanceState) {
+
+        mPersistent = (CheckBoxPreference) findPreference("usePersistTun");
+        mConnectRetrymax = (ListPreference) findPreference("connectretrymax");
+        mConnectRetry = (EditTextPreference) findPreference("connectretry");
+
+        mConnectRetrymax.setOnPreferenceChangeListener(this);
+        mConnectRetrymax.setSummary("%s");
+
+        mConnectRetry.setOnPreferenceChangeListener(this);
+
+
+
+    }
+
+    protected void loadSettingsBehaviour() {
+        mPersistent.setChecked(mProfile.mPersistTun);
+
+        mConnectRetrymax.setValue(mProfile.mConnectRetryMax);
+        onPreferenceChange(mConnectRetrymax, mProfile.mConnectRetryMax);
+
+        mConnectRetry.setText(mProfile.mConnectRetry);
+        onPreferenceChange(mConnectRetry, mProfile.mConnectRetry);
+    }
+
+
+    protected void saveSettingsBehaviour() {
+        mProfile.mConnectRetryMax = mConnectRetrymax.getValue();
+        mProfile.mPersistTun = mPersistent.isChecked();
+        mProfile.mConnectRetry = mConnectRetry.getText();
+    }
+
+
+    public boolean onPreferenceChangeBehaviour(Preference preference, Object newValue) {
+        if (preference == mConnectRetrymax) {
+            if(newValue==null) {
+                newValue="5";
+            }
+            mConnectRetrymax.setDefaultValue(newValue);
+
+            for(int i=0;i< mConnectRetrymax.getEntryValues().length;i++){
+                if(mConnectRetrymax.getEntryValues().equals(newValue))
+                    mConnectRetrymax.setSummary(mConnectRetrymax.getEntries()[i]);
+            }
+
+        } else if (preference == mConnectRetry) {
+            if(newValue==null || newValue=="")
+                newValue="5";
+            mConnectRetry.setSummary(String.format("%s s", newValue));
+        }
+
+        return true;
+    }
+
+
+
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,7 +97,7 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
         mMssFixCheckBox = (CheckBoxPreference) findPreference("mssFix");
         mMssFixValue = (EditTextPreference) findPreference("mssFixValue");
         mMssFixValue.setOnPreferenceChangeListener(this);
-		
+        onCreateBehaviour(savedInstanceState);
 		loadSettings();
 
 	}
@@ -56,6 +117,7 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
             mMssFixCheckBox.setChecked(true);
             setMssSummary(mProfile.mMssFix);
         }
+        loadSettingsBehaviour();
 
     }
 
@@ -73,6 +135,7 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
         else
             mProfile.mMssFix=0;
 
+        saveSettingsBehaviour();
 	}
 
 	
@@ -89,7 +152,8 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
                 Toast.makeText(getActivity(), R.string.mssfix_invalid_value, Toast.LENGTH_LONG).show();
                 return false;
             }
-        return true;
+        return onPreferenceChangeBehaviour(preference, newValue);
+
 	}
 
 }

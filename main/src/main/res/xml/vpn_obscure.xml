@@ -1,12 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2012-2014 Arne Schwabe
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="Obscure Settings">
+    android:title="@string/advanced_settings">
+    <PreferenceCategory android:title="@string/client_behaviour">
 
+        <CheckBoxPreference
+            android:key="usePersistTun"
+            android:summary="@string/persisttun_summary"
+            android:title="@string/persistent_tun_title" />
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/reconnection_settings">
+        <ListPreference
+            android:entries="@array/crm_entries"
+            android:entryValues="@array/crm_values"
+            android:key="connectretrymax"
+            android:persistent="false"
+            android:title="@string/connection_retries" />
+
+        <EditTextPreference
+            android:dialogMessage="@string/connectretrymessage"
+            android:key="connectretry"
+            android:persistent="false"
+            android:title="@string/connectretrywait" />
+    </PreferenceCategory>
 
     <CheckBoxPreference
         android:key="useRandomHostname"
@@ -19,7 +39,7 @@
         android:summary="@string/float_summary"
         android:title="@string/float_title" />
 
-    <PreferenceCategory android:title="Payload options">
+    <PreferenceCategory android:title="@string/payload_options">
         <CheckBoxPreference
             android:key="mssFix"
             android:persistent="false"

@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 blinkt:showClear="true"
-                blinkt:title="@string/ca_title" />
+                blinkt:fileTitle="@string/ca_title" />
 
         </LinearLayout>
 
@@ -91,14 +91,14 @@
                 android:id="@+id/certselect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                blinkt:title="@string/client_certificate_title" />
+                blinkt:fileTitle="@string/client_certificate_title" />
 
             <de.blinkt.openvpn.views.FileSelectLayout
                 android:id="@+id/keyselect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 blinkt:certificate="false"
-                blinkt:title="@string/client_key_title" />
+                blinkt:fileTitle="@string/client_key_title" />
 
             <LinearLayout
                 android:id="@+id/key_password_layout"
@@ -136,7 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 blinkt:certificate="false"
-                blinkt:title="@string/client_pkcs12_title" />
+                blinkt:fileTitle="@string/client_pkcs12_title" />
 
             <TextView
                 style="@style/item"

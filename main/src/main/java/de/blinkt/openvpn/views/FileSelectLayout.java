@@ -76,7 +76,7 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 
         TypedArray ta = context.obtainStyledAttributes(attrset, R.styleable.FileSelectLayout);
 
-        setupViews(ta.getString(R.styleable.FileSelectLayout_title), ta.getBoolean(R.styleable.FileSelectLayout_certificate, true),
+        setupViews(ta.getString(R.styleable.FileSelectLayout_fileTitle), ta.getBoolean(R.styleable.FileSelectLayout_certificate, true),
                     ta.getBoolean(R.styleable.FileSelectLayout_showClear,false));
 
         ta.recycle();

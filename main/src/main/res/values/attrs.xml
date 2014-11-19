@@ -6,12 +6,12 @@
   -->
 
 <resources>
-    <declare-styleable name="FileSelectLayout">
-        <attr name="title" format="string|reference" />
-        <attr name="certificate" format="boolean" />
-        <!--     <attr name="taskid" format="integer" /> -->
-        <attr name="showClear" format="boolean" />
-    </declare-styleable>
+     <declare-styleable name="FileSelectLayout">
+       <attr name="fileTitle" format="string|reference" />
+      <attr name="certificate" format="boolean" />
+<!--     <attr name="taskid" format="integer" /> -->
+       <attr name="showClear" format="boolean" />
+   </declare-styleable>
 
     <declare-styleable name="PagerSlidingTabStrip">
         <attr name="pstsIndicatorColor" format="color" />
@@ -40,5 +40,4 @@
         <attr name="pstsTextAlpha" format="float" />
         <attr name="pstsTextSelectedAlpha" format="float" />
     </declare-styleable>
-
 </resources>

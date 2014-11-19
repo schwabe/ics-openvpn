@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
             mPagerAdapter.addTab(R.string.crashdump, SendDumpFragment.class);
         }
 
-        mPagerAdapter.addTab(R.string.openvpn_log, LogFragment.class);
+        //mPagerAdapter.addTab(R.string.openvpn_log, LogFragment.class);
 
         mPagerAdapter.addTab(R.string.about, AboutFragment.class);
         mPager.setAdapter(mPagerAdapter);

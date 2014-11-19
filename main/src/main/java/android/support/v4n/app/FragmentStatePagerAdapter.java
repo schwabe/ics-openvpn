@@ -18,9 +18,11 @@ package android.support.v4n.app;
 
 import java.util.ArrayList;
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4n.view.PagerAdapter;
@@ -88,6 +90,7 @@ public abstract class FragmentStatePagerAdapter extends PagerAdapter {
     public void startUpdate(ViewGroup container) {
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         // If we already have this item instantiated, there is nothing
@@ -142,6 +145,7 @@ public abstract class FragmentStatePagerAdapter extends PagerAdapter {
         mCurTransaction.remove(fragment);
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
         Fragment fragment = (Fragment)object;

@@ -560,26 +560,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         VpnStatus.logInfo(R.string.routes_info_excl, TextUtils.join(", ", mRoutes.getNetworks(false)),TextUtils.join(", ", mRoutesv6.getNetworks(false)));
         VpnStatus.logDebug(R.string.routes_debug, TextUtils.join(", ", positiveIPv4Routes), TextUtils.join(", ", positiveIPv6Routes));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            for (String pkg : mProfile.mAllowedAppsVpn) {
-                try {
-                    if (mProfile.mAllowedAppsVpnAreDisallowed) {
-                        builder.addDisallowedApplication(pkg);
-                    } else {
-                        builder.addAllowedApplication(pkg);
-                     }
-                } catch (PackageManager.NameNotFoundException e) {
-                    mProfile.mAllowedAppsVpn.remove(pkg);
-                    VpnStatus.logInfo(R.string.app_no_longer_exists, pkg);
-                }
-            }
-
-            if (mProfile.mAllowedAppsVpnAreDisallowed) {
-                VpnStatus.logDebug(R.string.disallowed_vpn_apps_info, TextUtils.join(", ", mProfile.mAllowedAppsVpn));
-            } else {
-                VpnStatus.logDebug(R.string.allowed_vpn_apps_info, TextUtils.join(", ", mProfile.mAllowedAppsVpn));
-            }
-
+            setAllowedVpnPackages(builder);
         }
 
 
@@ -619,6 +600,28 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             return null;
         }
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setAllowedVpnPackages(Builder builder) {
+        for (String pkg : mProfile.mAllowedAppsVpn) {
+            try {
+                if (mProfile.mAllowedAppsVpnAreDisallowed) {
+                    builder.addDisallowedApplication(pkg);
+                } else {
+                    builder.addAllowedApplication(pkg);
+                 }
+            } catch (PackageManager.NameNotFoundException e) {
+                mProfile.mAllowedAppsVpn.remove(pkg);
+                VpnStatus.logInfo(R.string.app_no_longer_exists, pkg);
+            }
+        }
+
+        if (mProfile.mAllowedAppsVpnAreDisallowed) {
+            VpnStatus.logDebug(R.string.disallowed_vpn_apps_info, TextUtils.join(", ", mProfile.mAllowedAppsVpn));
+        } else {
+            VpnStatus.logDebug(R.string.allowed_vpn_apps_info, TextUtils.join(", ", mProfile.mAllowedAppsVpn));
+        }
     }
 
     public void addDNS(String dns) {

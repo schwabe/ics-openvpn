@@ -4,7 +4,9 @@
   -->
 
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="?android:colorControlHighlight">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:color="?android:colorControlHighlight"
+    tools:ignore="NewApi">
     <item>
         <shape android:shape="oval">
             <solid android:color="?android:colorAccent" />

@@ -184,7 +184,6 @@ common_src_files := \
   crypto/conf/conf_mall.c \
   crypto/conf/conf_mod.c \
   crypto/conf/conf_sap.c \
-  crypto/constant_time_locl.h \
   crypto/cpt_err.c \
   crypto/cryptlib.c \
   crypto/cversion.c \

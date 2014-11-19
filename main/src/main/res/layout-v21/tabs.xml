@@ -10,6 +10,6 @@
         android:layout_height="?android:attr/actionBarSize"
         android:background="@drawable/bg_tabs"
         blinkt:pstsIndicatorColor="@color/accent"
-        blinkt:pstsIndicatorHeight="6dp"
-        android:elevation="4dp" />
+        blinkt:pstsIndicatorHeight="3dp"
+        android:elevation="8dp" />
 </merge>

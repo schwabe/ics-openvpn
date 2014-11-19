@@ -21,15 +21,9 @@ import android.view.MenuItem;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
-import de.blinkt.openvpn.fragments.AboutFragment;
-import de.blinkt.openvpn.fragments.FaqFragment;
-import de.blinkt.openvpn.fragments.GeneralSettings;
-import de.blinkt.openvpn.fragments.LogFragment;
-import de.blinkt.openvpn.fragments.SendDumpFragment;
 import de.blinkt.openvpn.fragments.Settings_Allowed_Apps;
 import de.blinkt.openvpn.fragments.Settings_Authentication;
 import de.blinkt.openvpn.fragments.Settings_Basic;
-import de.blinkt.openvpn.fragments.Settings_Behaviour;
 import de.blinkt.openvpn.fragments.Settings_Connections;
 import de.blinkt.openvpn.fragments.Settings_IP;
 import de.blinkt.openvpn.fragments.Settings_Obscure;
@@ -45,7 +39,7 @@ public class VPNPreferences extends Activity {
     static final Class validFragments[] = new Class[] {
         Settings_Authentication.class, Settings_Basic.class, Settings_IP.class,
             Settings_Obscure.class, Settings_Routing.class, ShowConfigFragment.class,
-            Settings_Behaviour.class, Settings_Connections.class, Settings_Allowed_Apps.class
+            Settings_Connections.class, Settings_Allowed_Apps.class
     };
 
     private String mProfileUUID;
@@ -140,19 +134,16 @@ public class VPNPreferences extends Activity {
         fragmentArguments.putString(getPackageName() + ".profileUUID",mProfileUUID);
         mPagerAdapter.setFragmentArgs(fragmentArguments);
 
-        mPagerAdapter.addTab(R.string.client_behaviour, Settings_Behaviour.class);
-
-        mPagerAdapter.addTab(R.string.server_list, Settings_Connections.class);
-
         mPagerAdapter.addTab(R.string.basic, Settings_Basic.class);
+        mPagerAdapter.addTab(R.string.server_list, Settings_Connections.class);
         mPagerAdapter.addTab(R.string.ipdns, Settings_IP.class);
         mPagerAdapter.addTab(R.string.routing, Settings_Routing.class);
         mPagerAdapter.addTab(R.string.settings_auth, Settings_Authentication.class);
 
+        mPagerAdapter.addTab(R.string.advanced, Settings_Obscure.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             mPagerAdapter.addTab(R.string.vpn_allowed_apps, Settings_Allowed_Apps.class);
 
-        mPagerAdapter.addTab(R.string.advanced, Settings_Obscure.class);
         mPagerAdapter.addTab(R.string.generated_config, ShowConfigFragment.class);
 
 

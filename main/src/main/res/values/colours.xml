@@ -10,9 +10,10 @@
     <color name="primary">#3F51B5</color>      <!--500-->
     <color name="primary_dark">#303F9F</color> <!--700-->
     <color name="accent">#FFA726</color>       <!-- Orange 400 -->
-    <color name="switchbar">#5C6BC0</color>    <!-- 400-->
     <color name="gelb">#ffff00</color>
     <color name="rot">#ff0000</color>
+
+    <color name="switchbar">@android:color/darker_gray</color>
 
 
     <color name="background_tab_pressed">#1AFFFFFF</color>

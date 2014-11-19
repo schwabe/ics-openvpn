@@ -342,5 +342,8 @@
     <string name="remote_no_server_selected">You need to define and enable at least one remote server.</string>
     <string name="server_list">Server List</string>
     <string name="vpn_allowed_apps">Allowed Apps</string>
+    <string name="advanced_settings">Advanced Settings</string>
+    <string name="payload_options">Payload options</string>
+    <string name="tls_settings">TLS Settings</string>
 
 </resources>

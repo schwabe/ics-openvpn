@@ -329,4 +329,23 @@
   <string name="mssfix_value_dialog">Ändere TCP-Verbindungen, die über den Tunnel laufen, so dass die resultierende UDP-Paketgröße nach der Enkapsulierung durch OpenVPN auf diesen Wert beschränkt bleibt. (Standardwert ist 1450)</string>
   <string name="mssfix_checkbox">Überschreiben des MSS-Wert von TCP-Nutzlast</string>
   <string name="mssfix_dialogtitle">Setze MSS von TCP-Nutzlast</string>
+  <string name="client_behaviour">Client-Verhalten</string>
+  <string name="clear_external_apps">Widerrufe Berechtigungen OpenVPN zu steuern</string>
+  <string name="loading">Wird geladen&#8230;</string>
+  <string name="allowed_vpn_apps_info">Apps erlaubt für das VPN: %1$s</string>
+  <string name="disallowed_vpn_apps_info">Apps, die nicht das VPN nutzen: %1$s</string>
+  <string name="app_no_longer_exists">Anwendung mit Paketnamen \'%s\' ist nicht mehr installiert, wird von der Liste der erlaubten/nicht erlaubten VPN Anwendungen gelöscht.</string>
+  <string name="vpn_disallow_radio">VPN für alle Anwendung außer den ausgenommen verwendet</string>
+  <string name="vpn_allow_radio">VPN wird nur für die ausgewählten Anwendungen verwendet</string>
+  <string name="query_delete_remote">Servereintrag entfernen?</string>
+  <string name="keep">Behalten</string>
+  <string name="delete">Entfernen</string>
+  <string name="add_remote">Neuen Server hinzufügen</string>
+  <string name="remote_random">Beim Verbinden Servereinträge in zufälliger Reihenfolge verwenden</string>
+  <string name="remote_no_server_selected">Sie müssen mindestens einen Server definieren und aktivieren.</string>
+  <string name="server_list">Serverliste</string>
+  <string name="vpn_allowed_apps">Erlaubte Anwendungen</string>
+  <string name="advanced_settings">Erweiterte Einstellungen</string>
+  <string name="payload_options">Nutzlast-Optionen</string>
+  <string name="tls_settings">TLS-Einstellungen</string>
 </resources>

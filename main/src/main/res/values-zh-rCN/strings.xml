@@ -89,6 +89,7 @@
   <string name="default_route_summary">重定向所有流量到VPN</string>
   <string name="use_default_title">使用默认路由</string>
   <string name="custom_route_message">输入自定义路由。输入 CIDR 格式地址。</string>
+  <string name="custom_route_message_excluded">路线不应该被路由通过VPN。使用相同的语法包括路线。</string>
   <string name="custom_routes_title">自定义路由</string>
   <string name="log_verbosity_level">日志详细级别</string>
   <string name="float_summary">允许来自任何 IP 的认证数据包</string>
@@ -218,6 +219,7 @@
   <string name="vpn_import_hint">使用 &lt;img src=\"ic_menu_archive\"/&gt; 图标导入存储卡中已有的配置文件(.ovpn 或 .conf)。</string>
   <string name="faq_hint">请确保阅读常见问题解答。这是一个快速向导。</string>
   <string name="faq_routing_title">路由/接口配置</string>
+  <string name="faq_routing">的路由和接口配置不通过传统的ifconfig /路由的命令而将用VPNService API来完成。这导致了比在其它操作系统不同的路由配置。 \ n此VPN隧道的配置包括IP地址，并应被指定到该接口的网络。特别是，没有同行伙伴地址或网关地址是必要的或需要。特殊的路由到达VPN服务器不需要任何（例如，当使用重定向网关添加）。导入配置时，应用程序会因此忽略这些设置。该应用程序可确保与连接到服务器没有通过VPN隧道路由的VPNService API。\ n此VPNService API不允许指定的网络，不应该通过VPN路由。作为一种变通方法的应用程序会检测网络，不应该被路由到隧道（如路由XXXX YYYY net_gateway），并计算一组路由排除这种路线效仿其他平台的行为。日志窗口显示VPNService的在建立连接的配置\ nBehind的场景：安卓4.4+确实使用策略路由。使用route / ifconfig命令不会显示已安装的路径。而使用IP规则，iptables的-t轧-L</string>
   <string name="persisttun_summary">当 OpenVPN 重连时，也一直使用 VPN 连接。</string>
   <string name="persistent_tun_title">保持 tun 通道</string>
   <string name="openvpn_log">OpenVPN 日志</string>

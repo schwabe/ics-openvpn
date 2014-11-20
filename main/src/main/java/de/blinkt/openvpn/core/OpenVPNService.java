@@ -476,6 +476,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         cfg += "dns: " + TextUtils.join("|", mDnslist);
         cfg += "domain: " + mDomain;
         cfg += "mtu: " + mMtu;
+        cfg += "disallowed: " + mProfile.mAllowedAppsVpnAreDisallowed + "|".join(mProfile.mAllowedAppsVpn);
         return cfg;
     }
 

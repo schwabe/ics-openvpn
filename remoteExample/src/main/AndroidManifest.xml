@@ -2,15 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.blinkt.openvpn.remote" >
 
-    <permission
-        android:name="de.blinkt.openvpn.REMOTE_API"
-        android:description="@string/permission_description"
-        android:label="Control OpenVPN"
-        android:permissionGroup="android.permission-group.NETWORK"
-        android:protectionLevel="dangerous" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="de.blinkt.openvpn.REMOTE_API" />
 
     <application
         android:allowBackup="true"

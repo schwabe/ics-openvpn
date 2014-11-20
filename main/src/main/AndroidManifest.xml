@@ -17,15 +17,6 @@
 
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
-    <!-- Copy the <permission> block to your app when using the REMOTE API. Otherwise OpenVPN for
-        Android needs to be installed first -->
-    <permission
-        android:name="de.blinkt.openvpn.REMOTE_API"
-        android:description="@string/permission_description"
-        android:label="Control OpenVPN"
-        android:permissionGroup="android.permission-group.NETWORK"
-        android:protectionLevel="dangerous" />
-
     <application
         android:allowBackup="true"
         android:theme="@style/blinkt"
@@ -69,22 +60,19 @@
             </intent-filter>
         </service>
         <service
-            android:name=".api.ExternalOpenVPNService"
-            android:permission="de.blinkt.openvpn.REMOTE_API" >
+            android:name=".api.ExternalOpenVPNService">
             <intent-filter>
                 <action android:name="de.blinkt.openvpn.api.IOpenVPNAPIService" />
             </intent-filter>
         </service>
 
         <activity
-            android:permission="de.blinkt.openvpn.REMOTE_API"
             android:name=".api.GrantPermissionsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:permission="de.blinkt.openvpn.REMOTE_API"
             android:name=".api.ConfirmDialog" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

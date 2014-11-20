@@ -46,5 +46,8 @@ interface IOpenVPNAPIService {
      * Remove a previously registered callback interface.
      */
     void unregisterStatusCallback(IOpenVPNStatusCallback cb);
+
+	/** Remove a profile by UUID */
+	void removeProfile (String profileUUID);
 		
 }

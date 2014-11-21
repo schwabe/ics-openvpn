@@ -536,9 +536,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
                     if (data!=null)
                          cursor = getContentResolver().query(data, null, null, null, null);
 
-
                     try {
-
 
                         if (cursor!=null && cursor.moveToFirst()) {
                             int columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);

@@ -159,8 +159,11 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
     private String mStartUUID=null;
 
     private void bindService() {
-        getActivity().bindService(new Intent(IOpenVPNAPIService.class.getName()),
-                mConnection, Context.BIND_AUTO_CREATE);
+
+        Intent icsopenvpnService = new Intent(IOpenVPNAPIService.class.getName());
+        icsopenvpnService.setPackage("de.blinkt.openvpn");
+
+        getActivity().bindService(icsopenvpnService, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     protected void listVPNs() {

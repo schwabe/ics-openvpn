@@ -566,6 +566,8 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
 
                 } catch (FileNotFoundException e) {
                     log(R.string.import_content_resolve_error);
+                } catch (SecurityException se) {
+                    log(R.string.import_content_resolve_error + ":" + se.getLocalizedMessage())
                 }
             }
 

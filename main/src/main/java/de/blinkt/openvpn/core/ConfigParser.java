@@ -10,8 +10,6 @@ import android.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Collections;
@@ -37,42 +35,46 @@ public class ConfigParser {
 	public void parseConfig(Reader reader) throws IOException, ConfigParseError {
 
 
-		BufferedReader br =new BufferedReader(reader);
+        BufferedReader br = new BufferedReader(reader);
 
-        int lineno=0;
-		while (true){
-			String line = br.readLine();
-            lineno++;
-			if(line==null)
-				break;
+        int lineno = 0;
+        try {
+            while (true) {
+                String line = br.readLine();
+                lineno++;
+                if (line == null)
+                    break;
 
-            if (lineno==1 && (line.startsWith("PK\003\004")
-                        ||   (line.startsWith("PK\007\008"))))
+                if (lineno == 1 && (line.startsWith("PK\003\004")
+                        || (line.startsWith("PK\007\008"))))
                     throw new ConfigParseError("Input looks like a ZIP Archive. Import is only possible for OpenVPN config files (.ovpn/.conf)");
 
-			// Check for OpenVPN Access Server Meta information
-			if (line.startsWith("# OVPN_ACCESS_SERVER_")) {
-				Vector<String> metaarg = parsemeta(line);
-				meta.put(metaarg.get(0),metaarg);
-				continue;
-			}
-			Vector<String> args = parseline(line);
+                // Check for OpenVPN Access Server Meta information
+                if (line.startsWith("# OVPN_ACCESS_SERVER_")) {
+                    Vector<String> metaarg = parsemeta(line);
+                    meta.put(metaarg.get(0), metaarg);
+                    continue;
+                }
+                Vector<String> args = parseline(line);
 
-			if(args.size() ==0)
-				continue;
+                if (args.size() == 0)
+                    continue;
 
 
-			if(args.get(0).startsWith("--"))
-				args.set(0, args.get(0).substring(2));
+                if (args.get(0).startsWith("--"))
+                    args.set(0, args.get(0).substring(2));
 
-			checkinlinefile(args,br);
+                checkinlinefile(args, br);
 
-			String optionname = args.get(0);
-			if(!options.containsKey(optionname)) {
-				options.put(optionname, new Vector<Vector<String>>());
-			}
-			options.get(optionname).add(args);
-		}
+                String optionname = args.get(0);
+                if (!options.containsKey(optionname)) {
+                    options.put(optionname, new Vector<Vector<String>>());
+                }
+                options.get(optionname).add(args);
+            }
+        } catch (java.lang.OutOfMemoryError memoryError) {
+            throw new ConfigParseError("File too large to parse: " + memoryError.getLocalizedMessage());
+        }
 	}
 
 	private Vector<String> parsemeta(String line) {

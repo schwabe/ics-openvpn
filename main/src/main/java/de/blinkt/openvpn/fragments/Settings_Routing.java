@@ -40,6 +40,8 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 
 		mCustomRoutes.setOnPreferenceChangeListener(this);
 		mCustomRoutesv6.setOnPreferenceChangeListener(this);
+        mExcludedRoutes.setOnPreferenceChangeListener(this);
+        mExcludedRoutesv6.setOnPreferenceChangeListener(this);
 
 		loadSettings();
 	}
@@ -62,7 +64,10 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 		// Sets Summary
 		onPreferenceChange(mCustomRoutes, mCustomRoutes.getText());
 		onPreferenceChange(mCustomRoutesv6, mCustomRoutesv6.getText());
-		mRouteNoPull.setEnabled(mProfile.mUsePull);
+        onPreferenceChange(mExcludedRoutes, mExcludedRoutes.getText());
+        onPreferenceChange(mExcludedRoutesv6, mExcludedRoutesv6.getText());
+
+        mRouteNoPull.setEnabled(mProfile.mUsePull);
 	}
 
 

@@ -729,7 +729,7 @@ static inline void
 socket_set_mark (int sd, int mark)
 {
 #if defined(TARGET_LINUX) && HAVE_DECL_SO_MARK
-  if (mark && setsockopt (sd, SOL_SOCKET, SO_MARK, &mark, sizeof (mark)) != 0)
+  if (mark && setsockopt (sd, SOL_SOCKET, SO_MARK, (void *) &mark, sizeof (mark)) != 0)
     msg (M_WARN, "NOTE: setsockopt SO_MARK=%d failed", mark);
 #endif
 }
@@ -1081,6 +1081,14 @@ socket_listen_accept (socket_descriptor_t sd,
   return new_sd;
 }
 
+/* older mingw versions and WinXP do not have this define,
+ * but Vista and up support the functionality - just define it here
+ */
+#ifdef WIN32
+# ifndef IPV6_V6ONLY
+#  define IPV6_V6ONLY 27
+# endif
+#endif
 void
 socket_bind (socket_descriptor_t sd,
              struct addrinfo *local,
@@ -1117,7 +1125,7 @@ socket_bind (socket_descriptor_t sd,
       int v6only = ipv6only ? 1: 0;	/* setsockopt must have an "int" */
 
       msg (M_INFO, "setsockopt(IPV6_V6ONLY=%d)", v6only);
-      if (setsockopt(sd, IPPROTO_IPV6, IPV6_V6ONLY, &v6only, sizeof(v6only)))
+      if (setsockopt (sd, IPPROTO_IPV6, IPV6_V6ONLY, (void *) &v6only, sizeof(v6only)))
 	{
 	  msg (M_NONFATAL|M_ERRNO, "Setting IPV6_V6ONLY=%d failed", v6only);
 	}
@@ -1211,7 +1219,7 @@ openvpn_connect (socket_descriptor_t sd,
 	}
     }
 #else
-  status = connect (sd, &remote->addr.sa, af_addr_size(remote->addr.sa.sa_family));
+  status = connect (sd, remote, af_addr_size(remote->sa_family));
   if (status)
     status = openvpn_errno ();
 #endif
@@ -2658,7 +2666,7 @@ proto_is_tcp(int proto)
 {
   if (proto < 0 || proto >= PROTO_N)
     ASSERT(0);
-  return proto == PROTO_TCP_CLIENT || proto == PROTO_TCP_SERVER || proto == PROTO_TCP_CLIENT;
+  return proto == PROTO_TCP_CLIENT || proto == PROTO_TCP_SERVER;
 }
 
 int
@@ -2916,6 +2924,7 @@ link_socket_read_udp_posix (struct link_socket *sock,
 #endif
     buf->len = recvfrom (sock->sd, BPTR (buf), maxsize, 0,
 			 &from->dest.addr.sa, &fromlen);
+  /* FIXME: won't do anything when sock->info.af == AF_UNSPEC */
   if (buf->len >= 0 && expectedlen && fromlen != expectedlen)
     bad_address_length (fromlen, expectedlen);
   return buf->len;
@@ -3060,10 +3069,7 @@ socket_recv_queue (struct link_socket *sock, int maxsize)
       if (proto_is_udp(sock->info.proto))
 	{
 	  sock->reads.addr_defined = true;
-	  if (sock->info.af == AF_INET)
-	    sock->reads.addrlen = sizeof (sock->reads.addr);
-	  else
-	    sock->reads.addrlen = sizeof (sock->reads.addr6);
+	  sock->reads.addrlen = sizeof (sock->reads.addr6);
 	  status = WSARecvFrom(
 			       sock->sd,
 			       wsabuf,
@@ -3095,9 +3101,10 @@ socket_recv_queue (struct link_socket *sock, int maxsize)
 
       if (!status) /* operation completed immediately? */
 	{
-	  int addrlen = af_addr_size(sock->info.lsa->local.addr.sa.sa_family);
-	  if (sock->reads.addr_defined && sock->reads.addrlen != addrlen)
-	    bad_address_length (sock->reads.addrlen, addrlen);
+	  /* FIXME: won't do anything when sock->info.af == AF_UNSPEC */
+	  int af_len = af_addr_size (sock->info.af);
+	  if (sock->reads.addr_defined && af_len && sock->reads.addrlen != af_len)
+	    bad_address_length (sock->reads.addrlen, af_len);
 	  sock->reads.iostate = IOSTATE_IMMEDIATE_RETURN;
 
 	  /* since we got an immediate return, we must signal the event object ourselves */
@@ -3159,7 +3166,7 @@ socket_send_queue (struct link_socket *sock, struct buffer *buf, const struct li
 	{
 	  /* set destination address for UDP writes */
 	  sock->writes.addr_defined = true;
-	  if (sock->info.af == AF_INET6)
+	  if (to->dest.addr.sa.sa_family == AF_INET6)
 	    {
 	      sock->writes.addr6 = to->dest.addr.in6;
 	      sock->writes.addrlen = sizeof (sock->writes.addr6);

@@ -182,17 +182,13 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
                     screen = connectState.DISCONNECTED;
 
                 if (shouldBeConnected()) {
-                    if (sendusr1) {
-                        if (lastNetwork == -1) {
-                            mManagement.resume();
-                        } else {
-                            mManagement.reconnect();
-                        }
+                    if (lastNetwork == -1) {
+                        mManagement.resume();
                     } else {
                         mManagement.networkChange();
+
                     }
                 }
-
 
                 lastNetwork = newnet;
             }

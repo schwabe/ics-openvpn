@@ -135,10 +135,15 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 			@SuppressWarnings("unchecked")
 			String dn = ((Pair<Integer, String>) newValue).second;
 
-			if ("".equals(dn))
-				preference.setSummary(getX509String(VpnProfile.X509_VERIFY_TLSREMOTE_RDN, mProfile.mServerName));
-			else
-				preference.setSummary(getX509String(authtype,dn));
+			if ("".equals(dn)) {
+                if (mProfile.mConnections.length > 0) {
+                    preference.setSummary(getX509String(VpnProfile.X509_VERIFY_TLSREMOTE_RDN, mProfile.mConnections[0].mServerName));
+                } else {
+                    preference.setSummary(R.string.no_remote_defined);
+                }
+            } else {
+                preference.setSummary(getX509String(authtype, dn));
+            }
 
 		} else if (preference == mCipher || preference == mAuth) {
 			preference.setSummary((CharSequence) newValue);

@@ -2599,6 +2599,7 @@ get_default_gateway (struct route_gateway_info *rgi)
   /* Android, set some pseudo GW, addr is in host byte order */
   rgi->gateway.addr = 127 << 24 | 'd' << 16 | 'g' << 8 | 'w';
   rgi->flags |= RGI_ADDR_DEFINED;
+  best_name = "android-default";
 #endif
 
   /* scan adapter list */

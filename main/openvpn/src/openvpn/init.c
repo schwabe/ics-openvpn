@@ -1797,12 +1797,14 @@ do_deferred_options (struct context *c, const unsigned int found)
   if (found & OPT_P_SETENV)
     msg (D_PUSH, "OPTIONS IMPORT: environment modified");
 
+#ifdef ENABLE_SSL
   if (found & OPT_P_PEER_ID)
     {
       msg (D_PUSH, "OPTIONS IMPORT: peer-id set");
       c->c2.tls_multi->use_peer_id = true;
       c->c2.tls_multi->peer_id = c->options.peer_id;
     }
+#endif
 }
 
 /*

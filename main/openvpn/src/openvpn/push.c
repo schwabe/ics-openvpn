@@ -475,8 +475,7 @@ process_incoming_push_msg (struct context *c,
 				  &buf,
 				  permission_mask,
 				  option_types_found,
-				  c->c2.es,
-				  c->c2.tls_multi))
+				  c->c2.es))
 	    switch (c->options.push_continuation)
 	      {
 	      case 0:

@@ -1977,9 +1977,6 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
   if (ce->proto == PROTO_TCP_SERVER && (options->connection_list->len > 1))
     msg (M_USAGE, "TCP server mode allows at most one --remote address");
 
-  if (options->routes && ((options->routes->flags & RG_BLOCK_LOCAL) && (options->routes->flags & RG_UNBLOCK_LOCAL)))
-    msg (M_USAGE, "unblock-local and block-local options of redirect-gateway/redirect-private are mutatlly exclusive");
-
 #if P2MP_SERVER
 
   /*
@@ -2039,7 +2036,6 @@ options_postprocess_verify_ce (const struct options *options, const struct conne
 #endif
       if (options->routes && (options->routes->flags & RG_ENABLE))
 	msg (M_USAGE, "--redirect-gateway cannot be used with --mode server (however --push \"redirect-gateway\" is fine)");
-
       if (options->route_delay_defined)
 	msg (M_USAGE, "--route-delay cannot be used with --mode server");
       if (options->up_delay)
@@ -3899,8 +3895,7 @@ apply_push_options (struct options *options,
 		    struct buffer *buf,
 		    unsigned int permission_mask,
 		    unsigned int *option_types_found,
-		    struct env_set *es,
-		    struct tls_multi *tls_multi)
+		    struct env_set *es)
 {
   char line[OPTION_PARM_SIZE];
   int line_num = 0;
@@ -5326,8 +5321,6 @@ add_option (struct options *options,
 	    options->routes->flags |= RG_BYPASS_DNS;
 	  else if (streq (p[j], "block-local"))
 	    options->routes->flags |= RG_BLOCK_LOCAL;
-	  else if (streq (p[j], "unblock-local"))
-	    options->routes->flags |= RG_UNBLOCK_LOCAL;
 	  else
 	    {
 	      msg (msglevel, "unknown --%s flag: %s", p[0], p[j]);

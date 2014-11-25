@@ -88,7 +88,6 @@ struct route_option {
 #define RG_REROUTE_GW     (1<<5)
 #define RG_AUTO_LOCAL     (1<<6)
 #define RG_BLOCK_LOCAL    (1<<7)
-#define RG_UNBLOCK_LOCAL    (1<<8)
 
 struct route_option_list {
   unsigned int flags;  /* RG_x flags */

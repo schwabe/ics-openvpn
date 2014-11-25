@@ -2773,7 +2773,8 @@ bool
 tls_pre_decrypt (struct tls_multi *multi,
 		 const struct link_socket_actual *from,
 		 struct buffer *buf,
-		 struct crypto_options *opt)
+		 struct crypto_options *opt,
+		 bool floated)
 {
   struct gc_arena gc = gc_new ();
   bool ret = false;
@@ -2817,7 +2818,7 @@ tls_pre_decrypt (struct tls_multi *multi,
 #ifdef ENABLE_DEF_AUTH
 		  && !ks->auth_deferred
 #endif
-		  && link_socket_actual_match (from, &ks->remote_addr))
+		  && (floated || link_socket_actual_match (from, &ks->remote_addr)))
 		{
 		  /* return appropriate data channel decrypt key in opt */
 		  opt->key_ctx_bi = &ks->key;
@@ -3492,27 +3493,30 @@ tls_rec_payload (struct tls_multi *multi,
   return ret;
 }
 
-/* Update the remote_addr, needed if a client floats. */
 void
-tls_update_remote_addr (struct tls_multi *multi,
-const struct link_socket_actual *from)
+tls_update_remote_addr (struct tls_multi *multi, const struct link_socket_actual *addr)
 {
   struct gc_arena gc = gc_new ();
-  int i;
+  int i, j;
 
-  for (i = 0; i < KEY_SCAN_SIZE; ++i)
+  for (i = 0; i < TM_SIZE; ++i)
     {
-      struct key_state *ks = multi->key_scan[i];
-      if (DECRYPT_KEY_ENABLED (multi, ks) && ks->authenticated && link_socket_actual_defined(&ks->remote_addr))
-       {
-	 if (link_socket_actual_match (from, &ks->remote_addr))
-	   continue;
-	 dmsg (D_TLS_KEYSELECT,
-		"TLS: tls_update_remote_addr from IP=%s to IP=%s",
+      struct tls_session *session = &multi->session[i];
+
+      for (j = 0; j < KS_SIZE; ++j)
+	{
+	  struct key_state *ks = &session->key[j];
+
+	  if (!link_socket_actual_defined(&ks->remote_addr) ||
+		link_socket_actual_match (addr, &ks->remote_addr))
+	    continue;
+
+	  dmsg (D_TLS_KEYSELECT, "TLS: tls_update_remote_addr from IP=%s to IP=%s",
 	       print_link_socket_actual (&ks->remote_addr, &gc),
-	       print_link_socket_actual (from, &gc));
-	 memcpy(&ks->remote_addr, from, sizeof(*from));
-       }
+	       print_link_socket_actual (addr, &gc));
+
+	  ks->remote_addr = *addr;
+	}
     }
   gc_free (&gc);
 }

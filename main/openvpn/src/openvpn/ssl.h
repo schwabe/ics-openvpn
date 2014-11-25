@@ -306,7 +306,8 @@ int tls_multi_process (struct tls_multi *multi,
 bool tls_pre_decrypt (struct tls_multi *multi,
 		      const struct link_socket_actual *from,
 		      struct buffer *buf,
-		      struct crypto_options *opt);
+		      struct crypto_options *opt,
+		      bool floated);
 
 
 /**************************************************************************/
@@ -431,11 +432,14 @@ bool tls_send_payload (struct tls_multi *multi,
 bool tls_rec_payload (struct tls_multi *multi,
 		      struct buffer *buf);
 
-/*
- * Update remote address of a tls_multi structure
+/**
+ * Updates remote address in TLS sessions.
+ *
+ * @param multi - Tunnel to update
+ * @param addr - new address
  */
 void tls_update_remote_addr (struct tls_multi *multi,
-			     const struct link_socket_actual *from);
+			     const struct link_socket_actual *addr);
 
 #ifdef MANAGEMENT_DEF_AUTH
 static inline char *

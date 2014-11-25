@@ -223,30 +223,6 @@ err:
   return;
 }
 
-int verify_hmac(struct buffer *buf, struct key_ctx *ctx, int offset)
-{
-  uint8_t local_hmac[MAX_HMAC_KEY_LENGTH]; /* HMAC of ciphertext computed locally */
-  int hmac_len = 0;
-
-  hmac_ctx_reset(ctx->hmac);
-  /* Assume the length of the input HMAC */
-  hmac_len = hmac_ctx_size (ctx->hmac);
-
-  /* Authentication fails if insufficient data in packet for HMAC */
-  if (buf->len - offset < hmac_len)
-    return 0;
-
-  hmac_ctx_update (ctx->hmac, BPTR (buf) + hmac_len + offset,
-	BLEN (buf) - hmac_len - offset);
-  hmac_ctx_final (ctx->hmac, local_hmac);
-
-  /* Compare locally computed HMAC with packet HMAC */
-  if (memcmp_constant_time (local_hmac, BPTR (buf) + offset, hmac_len) == 0)
-    return hmac_len;
-
-  return 0;
-}
-
 /*
  * If (opt->flags & CO_USE_IV) is not NULL, we will read an IV from the packet.
  *
@@ -273,9 +249,25 @@ openvpn_decrypt (struct buffer *buf, struct buffer work,
       /* Verify the HMAC */
       if (ctx->hmac)
 	{
-	  int hmac_len = verify_hmac(buf, ctx, 0);
-	  if (hmac_len == 0)
+	  int hmac_len;
+	  uint8_t local_hmac[MAX_HMAC_KEY_LENGTH]; /* HMAC of ciphertext computed locally */
+
+	  hmac_ctx_reset(ctx->hmac);
+
+	  /* Assume the length of the input HMAC */
+	  hmac_len = hmac_ctx_size (ctx->hmac);
+
+	  /* Authentication fails if insufficient data in packet for HMAC */
+	  if (buf->len < hmac_len)
+	    CRYPT_ERROR ("missing authentication info");
+
+	  hmac_ctx_update (ctx->hmac, BPTR (buf) + hmac_len, BLEN (buf) - hmac_len);
+	  hmac_ctx_final (ctx->hmac, local_hmac);
+
+	  /* Compare locally computed HMAC with packet HMAC */
+	  if (memcmp_constant_time (local_hmac, BPTR (buf), hmac_len))
 	    CRYPT_ERROR ("packet HMAC authentication failed");
+
 	  ASSERT (buf_advance (buf, hmac_len));
 	}
 
@@ -396,28 +388,6 @@ openvpn_decrypt (struct buffer *buf, struct buffer work,
   crypto_clear_error();
   buf->len = 0;
   gc_free (&gc);
-  return false;
-}
-
-/*
- * This verifies if a packet and its HMAC fit to a crypto context.
- *
- * On success true is returned.
- */
-bool
-crypto_test_hmac (struct buffer *buf, const struct crypto_options *opt)
-{
-  if (buf->len > 0 && opt->key_ctx_bi)
-    {
-      struct key_ctx *ctx = &opt->key_ctx_bi->decrypt;
-
-      /* Verify the HMAC */
-      if (ctx->hmac)
-	{
-	  /* sizeof(uint32_t) comes from peer_id (3 bytes) and opcode (1 byte) */
-	  return verify_hmac(buf, ctx, sizeof(uint32_t)) != 0;
-	}
-    }
   return false;
 }
 

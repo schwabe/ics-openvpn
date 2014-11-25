@@ -1,7 +1,8 @@
 #include <jni.h>
 #include <android/log.h>
 #include <stdlib.h>
-#include <setjmp.h>
+#include <unistd.h>
+
 
 #include "jniglue.h"
 

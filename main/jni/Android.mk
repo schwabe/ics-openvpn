@@ -49,8 +49,9 @@ LOCAL_PATH := $(JNI_DIR)
 # The only real JNI library
 include $(CLEAR_VARS)
 LOCAL_LDLIBS := -llog  -lz
+LOCAL_CFLAGS = --std=c99
 LOCAL_C_INCLUDES := openssl/include openssl/crypto openssl 
-LOCAL_SRC_FILES:= jniglue.c jbcrypto.cpp
+LOCAL_SRC_FILES:= jniglue.c jbcrypto.cpp scan_ifs.c
 LOCAL_MODULE = opvpnutil
 LOCAL_SHARED_LIBRARIES :=  libcrypto
 include $(BUILD_SHARED_LIBRARY)

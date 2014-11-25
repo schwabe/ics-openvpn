@@ -438,7 +438,7 @@ public class VpnProfile implements Serializable {
         if (mAuthenticationType != TYPE_STATICKEYS) {
             if (mCheckRemoteCN) {
                 if (mRemoteCN == null || mRemoteCN.equals(""))
-                    cfg += "verify-x509-name " + mServerName + " name\n";
+                    cfg += "verify-x509-name " + mConnections[0].mServerName + " name\n";
                 else
                     switch (mX509AuthType) {
 

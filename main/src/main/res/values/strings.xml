@@ -345,5 +345,6 @@
     <string name="advanced_settings">Advanced Settings</string>
     <string name="payload_options">Payload options</string>
     <string name="tls_settings">TLS Settings</string>
+    <string name="no_remote_defined">No remote defined</string>
 
 </resources>

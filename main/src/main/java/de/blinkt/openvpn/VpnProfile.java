@@ -398,11 +398,6 @@ public class VpnProfile implements Serializable {
             }
         }
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT && !mAllowLocalLAN)
-            cfg+="redirect-private block-local\n";
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mAllowLocalLAN)
-            cfg+="redirect-private unblock-local\n";
-
 
         if (mUseDefaultRoutev6)
             cfg += "route-ipv6 ::/0\n";

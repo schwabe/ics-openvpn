@@ -471,6 +471,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (mLocalIPv6 != null)
             cfg += mLocalIPv6;
 
+
+
         cfg += "routes: " + TextUtils.join("|", mRoutes.getNetworks(true)) + TextUtils.join("|", mRoutesv6.getNetworks(true));
         cfg += "excl. routes:" + TextUtils.join("|", mRoutes.getNetworks(false)) + TextUtils.join("|", mRoutesv6.getNetworks(false));
         cfg += "dns: " + TextUtils.join("|", mDnslist);
@@ -487,6 +489,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         VpnStatus.logInfo(R.string.last_openvpn_tun_config);
 
+        addLocalNetworksToRoutes();
 
         if (mLocalIP == null && mLocalIPv6 == null) {
             VpnStatus.logError(getString(R.string.opentun_no_ipaddr));
@@ -601,6 +604,31 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
     }
+
+    private void addLocalNetworksToRoutes() {
+        // Add local network interfaces
+        String[] localRoutes = NativeUtils.getIfconfig();
+
+            // The format of mLocalRoutes is kind of broken because I don't really like JNI
+            for (int i=0; i < localRoutes.length; i+=3){
+                String intf = localRoutes[i];
+                String ipAddr = localRoutes[i+1];
+                String netMask = localRoutes[i+2];
+
+                if (intf == null || intf.equals("lo") ||
+                        intf.startsWith("tun") || intf.startsWith("rmnet"))
+                    continue;
+
+                if (ipAddr.equals(mLocalIP.mIp))
+                    continue;
+
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT && !mProfile.mAllowLocalLAN) {
+                    mRoutes.addIP(new CIDRIP(ipAddr,netMask), true);
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mProfile.mAllowLocalLAN)
+                    mRoutes.addIP(new CIDRIP(ipAddr,netMask), false);
+            }
+    }
+
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setAllowedVpnPackages(Builder builder) {

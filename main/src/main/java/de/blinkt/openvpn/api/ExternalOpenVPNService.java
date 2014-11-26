@@ -123,8 +123,12 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         private void startProfile(VpnProfile vp)
         {
             Intent vpnPermissionIntent = VpnService.prepare(ExternalOpenVPNService.this);
-            /* Check if we need to show the confirmation dialog */
-            if(vpnPermissionIntent != null){
+            /* Check if we need to show the confirmation dialog,
+             * Check if we need to ask for username/password */
+
+            int needpw = vp.needUserPWInput(false);
+
+            if(vpnPermissionIntent != null || needpw != 0){
                 Intent shortVPNIntent = new Intent(Intent.ACTION_MAIN);
                 shortVPNIntent.setClass(getBaseContext(), de.blinkt.openvpn.LaunchVPN.class);
                 shortVPNIntent.putExtra(de.blinkt.openvpn.LaunchVPN.EXTRA_KEY, vp.getUUIDString());
@@ -142,6 +146,9 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             checkOpenVPNPermission();
 
             VpnProfile vp = ProfileManager.get(getBaseContext(), profileUUID);
+            if (vp.checkProfile(getApplicationContext()) != R.string.no_error_found)
+                throw new RemoteException(getString(vp.checkProfile(getApplicationContext())));
+
             startProfile(vp);
         }
 
@@ -155,6 +162,10 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                 if (vp.checkProfile(getApplicationContext()) != R.string.no_error_found)
                     throw new RemoteException(getString(vp.checkProfile(getApplicationContext())));
 
+                /*int needpw = vp.needUserPWInput(false);
+                if(needpw !=0)
+                    throw new RemoteException("The inline file would require user input: " + getString(needpw));
+                    */
 
                 ProfileManager.setTemporaryProfile(vp);
                 startProfile(vp);

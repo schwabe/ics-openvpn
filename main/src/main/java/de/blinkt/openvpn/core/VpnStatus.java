@@ -480,7 +480,11 @@ public class VpnStatus {
 		newLogItem(new LogItem(LogLevel.INFO, message));
 	}
 
-	public static void logInfo(int resourceId, Object... args) {
+    public static void logDebug(String message) {
+        newLogItem(new LogItem(LogLevel.DEBUG, message));
+    }
+
+    public static void logInfo(int resourceId, Object... args) {
 		newLogItem(new LogItem(LogLevel.INFO, resourceId, args));
 	}
 

@@ -16,6 +16,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.net.VpnService;
 import android.os.Binder;
 import android.os.Build;
@@ -79,6 +81,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private String mLastTunCfg;
     private String mRemoteGW;
     private final Object mProcessLock = new Object();
+    private LollipopDeviceStateListener mLollipopDeviceStateListener;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean mbit) {
@@ -263,6 +266,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         mDeviceStateReceiver = new DeviceStateReceiver(magnagement);
         registerReceiver(mDeviceStateReceiver, filter);
         VpnStatus.addByteCountListener(mDeviceStateReceiver);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            addLollipopCMListener();
     }
 
     synchronized void unregisterDeviceStateReceiver() {
@@ -277,6 +283,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 iae.printStackTrace();
             }
         mDeviceStateReceiver = null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            removeLollipopCMListener();
+
     }
 
     public void userPause(boolean shouldBePaused) {
@@ -603,6 +613,26 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             return null;
         }
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    void removeLollipopCMListener()
+    {
+        ConnectivityManager cm = (ConnectivityManager) getBaseContext().getSystemService(CONNECTIVITY_SERVICE);
+        cm.unregisterNetworkCallback(mLollipopDeviceStateListener);
+        mLollipopDeviceStateListener = null;
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    void addLollipopCMListener()
+    {
+        ConnectivityManager cm = (ConnectivityManager) getBaseContext().getSystemService(CONNECTIVITY_SERVICE);
+        NetworkRequest.Builder nrb = new NetworkRequest.Builder();
+        nrb.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN);
+
+        mLollipopDeviceStateListener =  new LollipopDeviceStateListener();
+        cm.requestNetwork(nrb.build(), mLollipopDeviceStateListener);
+        cm.registerNetworkCallback(nrb.build(), mLollipopDeviceStateListener);
     }
 
     private void addLocalNetworksToRoutes() {

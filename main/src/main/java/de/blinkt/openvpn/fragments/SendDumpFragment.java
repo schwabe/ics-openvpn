@@ -81,6 +81,9 @@ public class SendDumpFragment extends Fragment  {
 		long newestDumpTime=0;
 		File newestDumpFile=null;
 
+        if (c.getCacheDir() ==null)
+            return null;
+
 		for(File f:c.getCacheDir().listFiles()) {
 			if(!f.getName().endsWith(".dmp"))
 				continue;
@@ -91,8 +94,8 @@ public class SendDumpFragment extends Fragment  {
 			}
 		}
 		// Ignore old dumps
-		//if(System.currentTimeMillis() - 48 * 60 * 1000 > newestDumpTime )
-		//return null;
+		if(System.currentTimeMillis() - 48 * 60 * 1000 > newestDumpTime )
+		    return null;
 
 		return newestDumpFile;
 	}

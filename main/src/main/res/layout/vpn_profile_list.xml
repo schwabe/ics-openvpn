@@ -74,16 +74,6 @@
 
     </LinearLayout>
 
-<!--    <ImageButton
-        android:id="@+id/add_button"
-        android:layout_width="@dimen/round_button_diameter"
-        android:layout_height="@dimen/round_button_diameter"
-        android:layout_gravity="end|bottom"
-        android:tint="@android:color/white"
-        android:background="@drawable/oval_ripple"
-        android:elevation="@dimen/elevation_low"
-        android:visibility="gone"
-        android:layout_marginBottom="@dimen/add_button_margin"
-        android:layout_marginEnd="@dimen/add_button_margin"
-        android:src="@drawable/ic_archive_grey600_24dp" /> -->
+    <include layout="@layout/profile_list_fabs" />
+
 </FrameLayout>

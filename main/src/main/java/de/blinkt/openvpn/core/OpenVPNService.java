@@ -628,10 +628,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     {
         ConnectivityManager cm = (ConnectivityManager) getBaseContext().getSystemService(CONNECTIVITY_SERVICE);
         NetworkRequest.Builder nrb = new NetworkRequest.Builder();
-        nrb.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN);
 
         mLollipopDeviceStateListener =  new LollipopDeviceStateListener();
-        cm.requestNetwork(nrb.build(), mLollipopDeviceStateListener);
         cm.registerNetworkCallback(nrb.build(), mLollipopDeviceStateListener);
     }
 

@@ -604,10 +604,9 @@ public class ConfigParser {
 				np.mAuthenticationType=VpnProfile.TYPE_USERPASS_KEYSTORE;
 			}
 			if(authuser.size()>1) {
-				// Set option value to password get to get cance to embed later.
+				// Set option value to password get to embed later.
 				np.mUsername=null;
-				np.mPassword=authuser.get(1);
-				useEmbbedUserAuth(np,authuser.get(1));
+				useEmbbedUserAuth(np, authuser.get(1));
 			}
 		}
 
@@ -776,7 +775,7 @@ public class ConfigParser {
 		return isudp;
 	}
 
-	static public void useEmbbedUserAuth(VpnProfile np,String inlinedata)
+	static public void useEmbbedUserAuth(VpnProfile np, String inlinedata)
 	{
 		String data = VpnProfile.getEmbeddedContent(inlinedata);
 		String[] parts = data.split("\n");

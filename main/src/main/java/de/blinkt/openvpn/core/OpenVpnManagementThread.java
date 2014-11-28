@@ -157,7 +157,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
             }
         } catch (IOException e) {
-            if (!e.getMessage().equals("socket closed"))
+            if (!e.getMessage().equals("socket closed") || !e.getMessage().equals("Connection reset by peer"))
                 VpnStatus.logException(e);
         }
         synchronized (active) {

@@ -20,9 +20,11 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.ParcelFileDescriptor;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.StringReader;
 import java.lang.ref.WeakReference;
@@ -207,6 +209,18 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             ProfileManager pm = ProfileManager.getInstance(getBaseContext());
             VpnProfile vp = ProfileManager.get(getBaseContext(), profileUUID);
             pm.removeProfile(ExternalOpenVPNService.this, vp);
+        }
+
+        @Override
+        public boolean protectSocket(ParcelFileDescriptor pfd) throws RemoteException {
+            checkOpenVPNPermission();
+            try {
+                boolean success= mService.protect(pfd.getFd());
+                pfd.close();
+                return success;
+            } catch (IOException e) {
+                throw new RemoteException(e.getMessage());
+            }
         }
 
 

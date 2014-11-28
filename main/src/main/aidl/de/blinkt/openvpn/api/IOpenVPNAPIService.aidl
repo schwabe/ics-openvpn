@@ -49,5 +49,11 @@ interface IOpenVPNAPIService {
 
 	/** Remove a profile by UUID */
 	void removeProfile (String profileUUID);
+
+	/** Request a socket to be protected as a VPN socket would be. Useful for creating
+	  * a helper socket for an app controlling OpenVPN
+	  * Before calling this function you should make sure OpenVPN for Android may actually
+	  * this function by checking if prepareVPNService returns null; */
+	boolean protectSocket(in ParcelFileDescriptor fd);
 		
 }

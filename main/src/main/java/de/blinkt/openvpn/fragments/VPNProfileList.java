@@ -37,6 +37,7 @@ import java.util.TreeSet;
 public class VPNProfileList extends ListFragment {
 
 	public final static int RESULT_VPN_DELETED = Activity.RESULT_FIRST_USER;
+    public final static int RESULT_VPN_DUPLICATE = Activity.RESULT_FIRST_USER +1 ;
 
 	private static final int MENU_ADD_PROFILE = Menu.FIRST;
 
@@ -204,7 +205,7 @@ public class VPNProfileList extends ListFragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		final int itemId = item.getItemId();
 		if (itemId == MENU_ADD_PROFILE) {
-			onAddProfileClicked();
+			onAddOrDuplicateProfile(null);
 			return true;
 		} else if (itemId == MENU_IMPORT_PROFILE) {
             boolean startOldFileDialog=true;
@@ -242,15 +243,19 @@ public class VPNProfileList extends ListFragment {
 
 
 
-	private void onAddProfileClicked() {
+	private void onAddOrDuplicateProfile(final VpnProfile mCopyProfile) {
 		Context context = getActivity();
 		if (context != null) {
 			final EditText entry = new EditText(context);
 			entry.setSingleLine();
 
 			AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-			dialog.setTitle(R.string.menu_add_profile);
-			dialog.setMessage(R.string.add_profile_name_prompt);
+            if (mCopyProfile == null)
+			    dialog.setTitle(R.string.menu_add_profile);
+            else
+                dialog.setTitle(context.getString(R.string.duplicate_profile_title, mCopyProfile.mName));
+
+            dialog.setMessage(R.string.add_profile_name_prompt);
 			dialog.setView(entry);
 
 
@@ -260,7 +265,12 @@ public class VPNProfileList extends ListFragment {
 				public void onClick(DialogInterface dialog, int which) {
 					String name = entry.getText().toString();
 					if (getPM().getProfileByName(name)==null) {
-						VpnProfile profile = new VpnProfile(name);
+                        VpnProfile profile;
+                        if (mCopyProfile!=null)
+                            profile= mCopyProfile.copy(name);
+                        else
+						    profile = new VpnProfile(name);
+
 						addProfile(profile);
 						editVPN(profile);
 					} else {
@@ -295,10 +305,17 @@ public class VPNProfileList extends ListFragment {
 		if(resultCode == RESULT_VPN_DELETED){
 			if(mArrayadapter != null && mEditProfile !=null)
 				mArrayadapter.remove(mEditProfile);
-		}
+		} else if (resultCode == RESULT_VPN_DUPLICATE && data != null) {
+            String profileUUID = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
+            VpnProfile profile = ProfileManager.get(getActivity(), profileUUID);
+            if (profile != null)
+                onAddOrDuplicateProfile(profile);
+        }
 
-		if(resultCode != Activity.RESULT_OK)
+
+        if(resultCode != Activity.RESULT_OK)
 			return;
+
 
 		if (requestCode == START_VPN_CONFIG) {
 			String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);

@@ -9,6 +9,7 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -17,6 +18,8 @@ import android.preference.PreferenceActivity;
 import android.support.v4n.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -181,10 +184,18 @@ public class VPNPreferences extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if(item.getItemId() == R.id.remove_vpn)
+		if (item.getItemId() == R.id.remove_vpn)
 			askProfileRemoval();
-		return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.duplicate_vpn) {
+            Intent data = new Intent();
+            data.putExtra(VpnProfile.EXTRA_PROFILEUUID, mProfileUUID);
+            setResult(VPNProfileList.RESULT_VPN_DUPLICATE, data);
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

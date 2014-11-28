@@ -346,5 +346,7 @@
     <string name="payload_options">Payload options</string>
     <string name="tls_settings">TLS Settings</string>
     <string name="no_remote_defined">No remote defined</string>
+    <string name="duplicate_vpn">Duplicate VPN profile</string>
+    <string name="duplicate_profile_title">Duplicating profile: %s</string>
 
 </resources>

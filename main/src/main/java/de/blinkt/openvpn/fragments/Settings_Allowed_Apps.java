@@ -15,9 +15,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -25,7 +24,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -36,10 +34,17 @@ import de.blinkt.openvpn.core.ProfileManager;
 /**
  * Created by arne on 16.11.14.
  */
-public class Settings_Allowed_Apps extends Fragment {
+public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnItemClickListener {
     private ListView mListView;
     private VpnProfile mProfile;
     private TextView mDefaultAllowTextView;
+    private PackageAdapter mListAdapter;
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        AppViewHolder avh = (AppViewHolder) view.getTag();
+        avh.checkBox.toggle();
+    }
 
     static class AppViewHolder {
         public ApplicationInfo mInfo;
@@ -48,7 +53,7 @@ public class Settings_Allowed_Apps extends Fragment {
         public ImageView appIcon;
         //public TextView appSize;
         //public TextView disabled;
-        public CheckBox checkBox;
+        public CompoundButton checkBox;
 
         static public AppViewHolder createOrRecycle(LayoutInflater inflater, View convertView) {
             if (convertView == null) {
@@ -62,7 +67,7 @@ public class Settings_Allowed_Apps extends Fragment {
                 holder.appIcon = (ImageView) convertView.findViewById(R.id.app_icon);
                 //holder.appSize = (TextView) convertView.findViewById(R.id.app_size);
                 //holder.disabled = (TextView) convertView.findViewById(R.id.app_disabled);
-                holder.checkBox = (CheckBox) convertView.findViewById(R.id.app_selected);
+                holder.checkBox = (CompoundButton) convertView.findViewById(R.id.app_selected);
                 convertView.setTag(holder);
                 return holder;
             } else {
@@ -164,27 +169,26 @@ public class Settings_Allowed_Apps extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.allowed_vpn_apps, container, false);
 
+        mDefaultAllowTextView = (TextView) v.findViewById(R.id.default_allow_text);
+
         Switch vpnOnDefaultSwitch = (Switch) v.findViewById(R.id.default_allow);
-        vpnOnDefaultSwitch.setChecked(mProfile.mAllowedAppsVpnAreDisallowed);
 
         vpnOnDefaultSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 changeDisallowText(isChecked);
+                mProfile.mAllowedAppsVpnAreDisallowed=isChecked;
             }
         });
-        mDefaultAllowTextView = (TextView) v.findViewById(R.id.default_allow_text);
 
-        changeDisallowText(mProfile.mAllowedAppsVpnAreDisallowed);
+        vpnOnDefaultSwitch.setChecked(mProfile.mAllowedAppsVpnAreDisallowed);
 
         mListView = (ListView) v.findViewById(android.R.id.list);
 
-        mListView.setAdapter(new PackageAdapter(getActivity(), mProfile));
-
-        v.setPadding(0,0,0,0);
-
-        /* 'orrible 'ack */
-
+        mListAdapter = new PackageAdapter(getActivity(), mProfile);
+        mListView.setAdapter(mListAdapter);
+        mListView.setOnItemClickListener(this);
 
 
         return v;

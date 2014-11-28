@@ -55,7 +55,7 @@ import de.blinkt.openvpn.core.VPNLaunchHelper;
 import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.X509Utils;
 
-public class VpnProfile implements Serializable {
+public class VpnProfile implements Serializable, Cloneable {
     // Note that this class cannot be moved to core where it belongs since
     // the profile loading depends on it being here
     // The Serializable documentation mentions that class name change are possible
@@ -664,6 +664,27 @@ public class VpnProfile implements Serializable {
 
                 }
             }).start();
+        }
+    }
+
+    @Override
+    protected VpnProfile clone() throws CloneNotSupportedException {
+        VpnProfile copy = (VpnProfile) super.clone();
+        copy.mUuid = UUID.randomUUID();
+        copy.mConnections = mConnections.clone();
+        copy.mAllowedAppsVpn = (HashSet<String>) mAllowedAppsVpn.clone();
+        return copy;
+    }
+
+    public VpnProfile copy(String name) {
+        try {
+            VpnProfile copy = (VpnProfile) clone();
+            copy.mName = name;
+            return copy;
+
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

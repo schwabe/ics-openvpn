@@ -11,5 +11,12 @@
         android:icon="@drawable/ic_menu_delete"
         android:showAsAction="withText|ifRoom"
         android:title="@string/remove_vpn"/>
-    
+
+    <item
+        android:id="@+id/duplicate_vpn"
+        android:alphabeticShortcut="c"
+        android:icon="@drawable/ic_menu_copy"
+        android:showAsAction="withText|ifRoom"
+        android:title="Duplicate VPN" />
+
 </menu>

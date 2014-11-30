@@ -80,11 +80,10 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
     }
 
 
-    static class PackageAdapter extends BaseAdapter {
+    class PackageAdapter extends BaseAdapter {
         private final List<ApplicationInfo> mPackages;
         private final LayoutInflater mInflater;
         private final PackageManager mPm;
-        private final VpnProfile mProfile;
 
         PackageAdapter(Context c, VpnProfile vp) {
             mPm = c.getPackageManager();
@@ -94,11 +93,28 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
 
             // Remove apps not using Internet
 
+            int androidSystemUid=0;
+            ApplicationInfo system = null;
             Vector<ApplicationInfo> apps= new Vector<ApplicationInfo>();
-            for (ApplicationInfo app:installedPackages) {
-                if (mPm.checkPermission(Manifest.permission.INTERNET, app.packageName) == PackageManager.PERMISSION_GRANTED)
-                    apps.add(app);
+
+            try {
+                system = mPm.getApplicationInfo("android", PackageManager.GET_META_DATA);
+                androidSystemUid = system.uid;
+                apps.add(system);
+            } catch (PackageManager.NameNotFoundException e) {
             }
+
+
+            for (ApplicationInfo app:installedPackages) {
+
+                if (mPm.checkPermission(Manifest.permission.INTERNET, app.packageName) == PackageManager.PERMISSION_GRANTED &&
+                        app.uid != androidSystemUid) {
+
+                    apps.add(app);
+                }
+            }
+
+
 
 
             Collections.sort(apps, new ApplicationInfo.DisplayNameComparator(mPm));

@@ -267,8 +267,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         registerReceiver(mDeviceStateReceiver, filter);
         VpnStatus.addByteCountListener(mDeviceStateReceiver);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            addLollipopCMListener();
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            addLollipopCMListener(); */
     }
 
     synchronized void unregisterDeviceStateReceiver() {
@@ -284,8 +284,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         mDeviceStateReceiver = null;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            removeLollipopCMListener();
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            removeLollipopCMListener();*/
 
     }
 

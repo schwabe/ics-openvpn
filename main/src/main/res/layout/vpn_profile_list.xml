@@ -74,6 +74,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/profile_list_fabs" />
+    <!-- <include layout="@layout/profile_list_fabs" /> -->
 
 </FrameLayout>

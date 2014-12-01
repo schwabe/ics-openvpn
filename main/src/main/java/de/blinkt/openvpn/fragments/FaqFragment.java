@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +43,13 @@ private static int[] faqitems[] =
     		Bundle savedInstanceState) {
     	View v= inflater.inflate(R.layout.faq, container, false);
 
-        int dpwidth = (int) (container.getWidth()/getResources().getDisplayMetrics().density);
-        int columns = dpwidth/400;
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int dpWidth = (int) (displaymetrics.widthPixels /getResources().getDisplayMetrics().density);
+
+        //better way but does not work on 5.0
+        //int dpWidth = (int) (container.getWidth()/getResources().getDisplayMetrics().density);
+        int columns = dpWidth/360;
         columns = Math.max(1, columns);
 
 

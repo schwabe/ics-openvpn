@@ -165,6 +165,9 @@ public class VpnProfile implements Serializable, Cloneable {
         mUuid = UUID.randomUUID();
         mName = name;
         mProfileVersion = CURRENT_PROFILE_VERSION;
+
+        mConnections = new Connection[1];
+        mConnections[0]  = new Connection();
     }
 
     public static String openVpnEscape(String unescaped) {

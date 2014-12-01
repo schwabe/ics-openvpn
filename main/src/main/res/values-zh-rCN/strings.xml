@@ -91,6 +91,7 @@
   <string name="custom_route_message">输入自定义路由。输入 CIDR 格式地址。</string>
   <string name="custom_route_message_excluded">路线不应该被路由通过VPN。使用相同的语法包括路线。</string>
   <string name="custom_routes_title">自定义路由</string>
+  <string name="custom_routes_title_excluded">排查网络</string>
   <string name="log_verbosity_level">日志详细级别</string>
   <string name="float_summary">允许来自任何 IP 的认证数据包</string>
   <string name="float_title">允许浮服务器</string>
@@ -104,7 +105,9 @@
   <string name="last_openvpn_tun_config">正在打开 tun 设备：</string>
   <string name="local_ip_info">本地 IPv4： %1$s/%2$d IPv6： %3$s MTU： %4$d</string>
   <string name="dns_server_info">DNS 服务器: %1$s, 域名: %2$s</string>
+  <string name="routes_info_incl">路线: %1$s %2$s</string>
   <string name="routes_info_excl">排除的路由： %1$s %2$s</string>
+  <string name="routes_debug">VpnService安装路线 : %1$s %2$s</string>
   <string name="ip_not_cidr">已获得接口信息 %1$s 以及 %2$s，将第二个地址作为远程地址。使用 /32 作为本地掩码。OpenVPN 给出的模式是 \"%3$s\"。</string>
   <string name="route_not_cidr">无法将 %1$s 和 %2$s 作为 CIDR 形式的路由，将使用 /32 的子网掩码。</string>
   <string name="route_not_netip">纠正路由 %1$s/%2$s 为 %3$s/%2$s</string>

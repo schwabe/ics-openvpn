@@ -12,7 +12,7 @@
   <string name="port">Sunucu Portu:</string>
   <string name="location">Konum</string>
   <string name="cant_read_folder">Dizin Okunamıyor</string>
-  <string name="select">Seçin</string>
+  <string name="select">Seç</string>
   <string name="cancel">İptal</string>
   <string name="no_data">Veri Yok</string>
   <string name="useLZO">LZO sıkıştırma</string>
@@ -317,4 +317,20 @@
   <string name="userpw_file">Kullanıcı adı / Şifre dosyası</string>
   <string name="imported_from_file">[Buradan içeri aktar: %s]</string>
   <string name="import_log">Kaydı içe aktar:</string>
+  <string name="client_behaviour">İstemci davranışı</string>
+  <string name="loading">Yükleniyor&#8230;</string>
+  <string name="allowed_vpn_apps_info">Izin verilen VPN uygulamaları: %1$s</string>
+  <string name="disallowed_vpn_apps_info">İzin verilmeyen VPN uygulamaları: %1$s</string>
+  <string name="app_no_longer_exists">%s adlı paket artık yüklü değil, izin listesinden çıkarılıyor</string>
+  <string name="vpn_disallow_radio">Seçilen uygulamar dışındaki tüm uygulamalar için VPN kullanılır</string>
+  <string name="vpn_allow_radio">Sadece seçilen uygulamar için VPN kullanılır</string>
+  <string name="query_delete_remote">Uzak sunucu girişi kaldırılsın mı?</string>
+  <string name="keep">Sakla</string>
+  <string name="delete">Sil</string>
+  <string name="add_remote">Yenı uzak sunucu ekle</string>
+  <string name="remote_no_server_selected">En az bir uzak sunucu tanımlamalı ve etkinleştirmelisiniz.</string>
+  <string name="server_list">Sunucu Listesi</string>
+  <string name="vpn_allowed_apps">İzin verilen uygulamalar</string>
+  <string name="advanced_settings">Gelişmiş Ayarlar</string>
+  <string name="tls_settings">TLS Ayarları</string>
 </resources>

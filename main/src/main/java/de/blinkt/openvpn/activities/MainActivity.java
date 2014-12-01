@@ -8,17 +8,16 @@ package de.blinkt.openvpn.activities;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.StringRes;
 import android.support.v4n.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.fragments.AboutFragment;
 import de.blinkt.openvpn.fragments.FaqFragment;
 import de.blinkt.openvpn.fragments.GeneralSettings;
-import de.blinkt.openvpn.fragments.LogFragment;
 import de.blinkt.openvpn.fragments.SendDumpFragment;
 import de.blinkt.openvpn.fragments.VPNProfileList;
 import de.blinkt.openvpn.views.ScreenSlidePagerAdapter;
@@ -73,6 +72,21 @@ public class MainActivity extends Activity {
         toolbar.setElevation(0);
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==R.id.show_log){
+            Intent showLog = new Intent(this, LogWindow.class);
+            startActivity(showLog);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

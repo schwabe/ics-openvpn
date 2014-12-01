@@ -42,7 +42,6 @@
         <activity android:name=".activities.FileSelect" />
         <activity
             android:name=".activities.MainActivity"
-            android:uiOptions="splitActionBarWhenNarrow"
             tools:ignore="ExportedActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

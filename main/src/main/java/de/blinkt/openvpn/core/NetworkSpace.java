@@ -21,6 +21,8 @@ import de.blinkt.openvpn.BuildConfig;
 public class NetworkSpace {
 
 
+
+
     static class ipAddress implements Comparable<ipAddress> {
         private BigInteger netAddress;
         public int networkMask;
@@ -196,6 +198,13 @@ public class NetworkSpace {
     void addIP(CIDRIP cidrIp, boolean include) {
 
         mIpAddresses.add(new ipAddress(cidrIp, include));
+    }
+
+    public void addIPSplit(CIDRIP cidrIp, boolean include) {
+        ipAddress newIP = new ipAddress(cidrIp, include);
+        ipAddress[] splitIps = newIP.split();
+        for (ipAddress split: splitIps)
+            mIpAddresses.add(split);
     }
 
     void addIPv6(Inet6Address address, int mask, boolean included) {

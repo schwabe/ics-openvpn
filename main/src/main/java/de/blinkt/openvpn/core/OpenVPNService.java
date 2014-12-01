@@ -16,7 +16,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.VpnService;
 import android.os.Binder;
@@ -651,7 +650,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     continue;
 
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT && !mProfile.mAllowLocalLAN) {
-                    mRoutes.addIP(new CIDRIP(ipAddr,netMask), true);
+                    mRoutes.addIPSplit(new CIDRIP(ipAddr,netMask), true);
+
                 } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mProfile.mAllowLocalLAN)
                     mRoutes.addIP(new CIDRIP(ipAddr,netMask), false);
             }

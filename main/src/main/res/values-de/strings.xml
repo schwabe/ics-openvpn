@@ -348,4 +348,7 @@
   <string name="advanced_settings">Erweiterte Einstellungen</string>
   <string name="payload_options">Nutzlast-Optionen</string>
   <string name="tls_settings">TLS-Einstellungen</string>
+  <string name="no_remote_defined">Keine Server definiert</string>
+  <string name="duplicate_vpn">VPN Profil duplizieren</string>
+  <string name="duplicate_profile_title">VPN Profil duplizieren: %s</string>
 </resources>

@@ -329,4 +329,23 @@
   <string name="mssfix_value_dialog">Oznámit TCP sezením běžícím skrze tunel, že mají limitovat velikost odesílaných paketů tak, aby poté, co je OpenVPN zabalí, byla výsledná velikost UDP paketu, které OpenVPN posílá menší než tento počet bytů. (výchozí je 1450)</string>
   <string name="mssfix_checkbox">Přepsat hodnotu MSS pro TCP obsah</string>
   <string name="mssfix_dialogtitle">Nastavit MSS pro TCP obsah</string>
+  <string name="client_behaviour">Chování klienta</string>
+  <string name="clear_external_apps">Zrušit povolené externí aplikace</string>
+  <string name="loading">Načítání&#8230;</string>
+  <string name="allowed_vpn_apps_info">Povolené VPN aplikace: %1$s</string>
+  <string name="disallowed_vpn_apps_info">Zakázané VPN aplikace: %1$s</string>
+  <string name="app_no_longer_exists">Balíček %s již není nainstalován, odstraňuji ho ze seznamu povolených/zakázaných aplikací</string>
+  <string name="vpn_disallow_radio">VPN je používaná pro všechny aplikace, kromě</string>
+  <string name="vpn_allow_radio">VPN je používaná je pro vybrané aplikace</string>
+  <string name="query_delete_remote">Odstranit položku vzdáleného serveru?</string>
+  <string name="keep">Zachovat</string>
+  <string name="delete">Smazat</string>
+  <string name="add_remote">Přidat nové vzdálené místo</string>
+  <string name="remote_random">Použít položky k připojení v náhodném pořadí</string>
+  <string name="remote_no_server_selected">Je potřeba definovat a povolit alespoň jeden vzdálený server.</string>
+  <string name="server_list">Seznam serverů</string>
+  <string name="vpn_allowed_apps">Povolené aplikace</string>
+  <string name="advanced_settings">Pokročilé nastavení</string>
+  <string name="payload_options">Možnosti dat</string>
+  <string name="tls_settings">Nastevení TLS</string>
 </resources>

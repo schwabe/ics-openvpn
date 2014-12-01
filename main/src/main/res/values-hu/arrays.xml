@@ -8,7 +8,7 @@
 <resources>
   <string-array name="vpn_types">
     <item>Tanúsítványok</item>
-    <item>PKCS12 fájl</item>
+    <item>PKCS12 fáj</item>
     <item>Android tanúsítvány</item>
     <item>Felhasználónév/Jelszó</item>
     <item>Statikus Kulcsok</item>

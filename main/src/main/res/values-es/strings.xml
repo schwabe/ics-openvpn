@@ -328,4 +328,23 @@
   <string name="mssfix_invalid_value">El valor de mssfix debe ser un número entero entre 0 y 9000</string>
   <string name="mssfix_checkbox">Reemplazar el valor MSS de la carga TCP</string>
   <string name="mssfix_dialogtitle">Establecer MSS de la carga TCP</string>
+  <string name="client_behaviour">Comportamiento del cliente</string>
+  <string name="clear_external_apps">Borrar aplicaciones externas permitidas</string>
+  <string name="loading">Cargando&#8230;</string>
+  <string name="allowed_vpn_apps_info">Aplicaciones VPN permitidas: %1$s</string>
+  <string name="disallowed_vpn_apps_info">Aplicaciones VPN no permitidas: %1$s</string>
+  <string name="app_no_longer_exists">El paquete %s ya no está instalado, sacándolo de la lista de apps permitidas/no permitidas</string>
+  <string name="vpn_disallow_radio">La VPN es usada por todas las aplicaciones, excepto por las seleccionadas</string>
+  <string name="vpn_allow_radio">La VPN es utilizada únicamente por las aplicaciones seleccionadas</string>
+  <string name="query_delete_remote">¿Eliminar entrada del servidor remoto?</string>
+  <string name="keep">Mantener</string>
+  <string name="delete">Eliminar</string>
+  <string name="add_remote">Añadir nuevo acceso remoto</string>
+  <string name="remote_random">Utiliza las entradas de conexión en orden aleatorio en la conexión</string>
+  <string name="remote_no_server_selected">Es necesario definir y habilitar al menos un servidor remoto.</string>
+  <string name="server_list">Lista de servidores</string>
+  <string name="vpn_allowed_apps">Aplicaciones permitidas</string>
+  <string name="advanced_settings">Opciones Avanzadas</string>
+  <string name="payload_options">Opciones de carga útil</string>
+  <string name="tls_settings">Configuración TLS</string>
 </resources>

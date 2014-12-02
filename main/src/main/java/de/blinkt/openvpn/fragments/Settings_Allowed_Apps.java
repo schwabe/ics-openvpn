@@ -12,6 +12,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ import de.blinkt.openvpn.core.ProfileManager;
 /**
  * Created by arne on 16.11.14.
  */
-public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnItemClickListener {
+public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnItemClickListener, CompoundButton.OnCheckedChangeListener {
     private ListView mListView;
     private VpnProfile mProfile;
     private TextView mDefaultAllowTextView;
@@ -69,12 +70,27 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
                 //holder.disabled = (TextView) convertView.findViewById(R.id.app_disabled);
                 holder.checkBox = (CompoundButton) convertView.findViewById(R.id.app_selected);
                 convertView.setTag(holder);
+
+
                 return holder;
             } else {
                 // Get the ViewHolder back to get fast access to the TextView
                 // and the ImageView.
-                return (AppViewHolder)convertView.getTag();
+                return (AppViewHolder) convertView.getTag();
             }
+        }
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        String packageName = (String) buttonView.getTag();
+        if (isChecked) {
+            Log.d("openvpn", "adding to allowed apps" + packageName);
+            mProfile.mAllowedAppsVpn.add(packageName);
+        } else {
+            Log.d("openvpn", "removing from allowed apps" + packageName);
+            mProfile.mAllowedAppsVpn.remove(packageName);
         }
 
     }
@@ -93,9 +109,9 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
 
             // Remove apps not using Internet
 
-            int androidSystemUid=0;
+            int androidSystemUid = 0;
             ApplicationInfo system = null;
-            Vector<ApplicationInfo> apps= new Vector<ApplicationInfo>();
+            Vector<ApplicationInfo> apps = new Vector<ApplicationInfo>();
 
             try {
                 system = mPm.getApplicationInfo("android", PackageManager.GET_META_DATA);
@@ -105,7 +121,7 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
             }
 
 
-            for (ApplicationInfo app:installedPackages) {
+            for (ApplicationInfo app : installedPackages) {
 
                 if (mPm.checkPermission(Manifest.permission.INTERNET, app.packageName) == PackageManager.PERMISSION_GRANTED &&
                         app.uid != androidSystemUid) {
@@ -114,13 +130,10 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
                 }
             }
 
-
-
-
             Collections.sort(apps, new ApplicationInfo.DisplayNameComparator(mPm));
-            mPackages=apps;
-
+            mPackages = apps;
         }
+
         @Override
         public int getCount() {
             return mPackages.size();
@@ -144,24 +157,17 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
             final ApplicationInfo mInfo = mPackages.get(position);
 
 
-            CharSequence appName =  mInfo.loadLabel(mPm);
+            CharSequence appName = mInfo.loadLabel(mPm);
 
             if (TextUtils.isEmpty(appName))
                 appName = mInfo.packageName;
             viewHolder.appName.setText(appName);
             viewHolder.appIcon.setImageDrawable(mInfo.loadIcon(mPm));
+            viewHolder.checkBox.setTag(mInfo.packageName);
+            viewHolder.checkBox.setOnCheckedChangeListener(Settings_Allowed_Apps.this);
 
 
             viewHolder.checkBox.setChecked(mProfile.mAllowedAppsVpn.contains(mInfo.packageName));
-            viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked)
-                        mProfile.mAllowedAppsVpn.remove(mInfo.packageName);
-                    else
-                        mProfile.mAllowedAppsVpn.add(mInfo.packageName);
-                }
-            });
             return viewHolder.rootView;
         }
     }
@@ -176,7 +182,7 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
 
         String profileUuid = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-        mProfile= ProfileManager.get(getActivity(), profileUuid);
+        mProfile = ProfileManager.get(getActivity(), profileUuid);
         getActivity().setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
 
     }
@@ -194,7 +200,7 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 changeDisallowText(isChecked);
-                mProfile.mAllowedAppsVpnAreDisallowed=isChecked;
+                mProfile.mAllowedAppsVpnAreDisallowed = isChecked;
             }
         });
 
@@ -211,7 +217,7 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
     }
 
     private void changeDisallowText(boolean selectedAreDisallowed) {
-        if(selectedAreDisallowed)
+        if (selectedAreDisallowed)
             mDefaultAllowTextView.setText(R.string.vpn_disallow_radio);
         else
             mDefaultAllowTextView.setText(R.string.vpn_allow_radio);

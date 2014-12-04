@@ -175,6 +175,7 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
     @Override
     public void onResume() {
         super.onResume();
+        changeDisallowText(mProfile.mAllowedAppsVpnAreDisallowed);
     }
 
     @Override

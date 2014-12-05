@@ -4,7 +4,9 @@
   ~ Distributed under the GNU GPL v2. For full terms see the file doc/LICENSE.txt
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="InconsistentLayout">
 
     <ImageButton
         android:id="@+id/add_button"
@@ -16,9 +18,11 @@
         android:elevation="@dimen/elevation_low"
         android:layout_marginBottom="@dimen/add_button_margin_topfab"
         android:layout_marginEnd="@dimen/add_button_margin"
-        android:src="@drawable/ic_archive_grey600_24dp" />
+        android:src="@drawable/ic_archive_grey600_24dp"
+        android:contentDescription="@string/import_config" />
 
     <ImageButton
+        android:contentDescription="@string/add_profile"
         android:id="@+id/import_button"
         android:layout_width="@dimen/round_button_diameter"
         android:layout_height="@dimen/round_button_diameter"

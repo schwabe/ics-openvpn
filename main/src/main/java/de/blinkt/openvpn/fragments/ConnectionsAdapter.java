@@ -14,14 +14,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import java.util.Arrays;
 
@@ -48,7 +46,6 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
 
     public static class ConnectionsHolder extends RecyclerView.ViewHolder {
         private final EditText mServerNameView;
-        private final TextView mServerPortNumber;
         private final EditText mPortNumberView;
         private final Switch mRemoteSwitch;
         private final RadioGroup mProtoGroup;
@@ -59,7 +56,6 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
 
         public ConnectionsHolder(View card) {
             super(card);
-            mServerPortNumber = ((TextView)card.findViewById(R.id.portnumber));
             mServerNameView = (EditText) card.findViewById(R.id.servername);
             mPortNumberView = (EditText) card.findViewById(R.id.portnumber);
             mRemoteSwitch = (Switch) card.findViewById (R.id.remoteSwitch);

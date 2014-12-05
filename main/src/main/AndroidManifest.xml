@@ -59,6 +59,7 @@
             </intent-filter>
         </service>
         <service
+            tools:ignore="ExportedService"
             android:name=".api.ExternalOpenVPNService">
             <intent-filter>
                 <action android:name="de.blinkt.openvpn.api.IOpenVPNAPIService" />
@@ -82,6 +83,8 @@
             <intent-filter
                 android:priority="999">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+
             </intent-filter>
         </receiver>
 
@@ -108,7 +111,7 @@
             </intent-filter>
             <intent-filter android:label="@string/import_config" >
 
-                <!-- http://stackoverflow.com/questions/7030832/associating-certain-file-extension-to-my-android-application/7102838#7102838 -->
+                <!-- http://stackoverflow.com/questions/7f030832/associating-certain-file-extension-to-my-android-application/7102838#7102838 -->
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />

@@ -17,6 +17,4 @@
     <dimen name="round_button_diameter">56dp</dimen>
     <dimen name="switchbar_pad">16dp</dimen>
     <dimen name="vpn_setting_padding">16dp</dimen>
-    <integer name="num_columns">1</integer>
-
 </resources>

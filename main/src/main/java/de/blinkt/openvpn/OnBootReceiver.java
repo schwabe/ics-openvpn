@@ -19,7 +19,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 
 		final String action = intent.getAction();
 
-		if(Intent.ACTION_BOOT_COMPLETED.equals(action)) {
+		if(Intent.ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {
 			VpnProfile bootProfile = ProfileManager.getLastConnectedProfile(context, true);
 			if(bootProfile != null) {
 				launchVPN(bootProfile, context);

@@ -654,6 +654,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     intf.startsWith("tun") || intf.startsWith("rmnet"))
                 continue;
 
+            if (ipAddr==null || netMask == null) {
+                VpnStatus.logError("Local routes are broken?! (Report to author) " + TextUtils.join("|", localRoutes));
+                continue;
+            }
+            
             if (ipAddr.equals(mLocalIP.mIp))
                 continue;
 

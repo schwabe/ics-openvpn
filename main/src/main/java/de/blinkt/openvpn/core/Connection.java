@@ -44,4 +44,8 @@ public class Connection implements Serializable, Cloneable {
     public Connection clone() throws CloneNotSupportedException {
         return (Connection) super.clone();
     }
+
+    public boolean isOnlyRemote() {
+        return TextUtils.isEmpty(mCustomConfiguration) || !mUseCustomConfig;
+    }
 }

@@ -299,16 +299,24 @@ public class VpnProfile implements Serializable, Cloneable {
         // We cannot use anything else than tun
         cfg += "dev tun\n";
 
+
+        boolean canUsePlainRemotes = true;
+
         if (mConnections.length==1) {
             cfg += mConnections[0].getConnectionBlock();
         } else {
+            for (Connection conn : mConnections) {
+                canUsePlainRemotes = canUsePlainRemotes && conn.isOnlyRemote();
+            }
+
             if (mRemoteRandom)
                 cfg+="remote-random\n";
-            for (Connection conn : mConnections) {
-                if (conn.mEnabled) {
-                    cfg += "<connection>\n";
-                    cfg += conn.getConnectionBlock();
-                    cfg += "</connection>\n";
+
+            if (canUsePlainRemotes) {
+                for (Connection conn : mConnections) {
+                    if (conn.mEnabled) {
+                        cfg += conn.getConnectionBlock();
+                    }
                 }
             }
         }
@@ -500,6 +508,19 @@ public class VpnProfile implements Serializable, Cloneable {
             cfg += "\n";
 
         }
+
+        if (!canUsePlainRemotes) {
+            cfg += "# Connection Options are at the end to allow global options (and global custom options) to influence connection blocks\n"
+            for (Connection conn : mConnections) {
+                if (conn.mEnabled) {
+                    cfg += "<connection>\n";
+                    cfg += conn.getConnectionBlock();
+                    cfg += "</connection>\n";
+                }
+            }
+        }
+
+
 
 
         return cfg;

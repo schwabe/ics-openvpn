@@ -24,14 +24,13 @@ import de.blinkt.openvpn.core.ProfileManager;
 
 public class ShowConfigFragment extends Fragment {
 	private String configtext;
-	public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
+    private TextView mConfigView;
+
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		String profileUUID = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		final VpnProfile vp = ProfileManager.get(getActivity(),profileUUID);
 		View v=inflater.inflate(R.layout.viewconfig, container,false);
-		final TextView cv = (TextView) v.findViewById(R.id.configview);
+		mConfigView = (TextView) v.findViewById(R.id.configview);
 		
-		int check=vp.checkProfile(getActivity());
 
         ImageButton fabButton = (ImageButton) v.findViewById(R.id.share_config);
         if (fabButton!=null)
@@ -42,16 +41,7 @@ public class ShowConfigFragment extends Fragment {
                 }
             });
 
-		if(check!=R.string.no_error_found) {
-			cv.setText(check);
-			configtext = getString(check);
-		}
-		else {
-			// Run in own Thread since Keystore does not like to be queried from the main thread
 
-			cv.setText("Generating config...");
-			startGenConfig(vp, cv);
-		}
 		return v;
 	}
 
@@ -104,4 +94,24 @@ public class ShowConfigFragment extends Fragment {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        String profileUUID = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
+        final VpnProfile vp = ProfileManager.get(getActivity(),profileUUID);
+        int check=vp.checkProfile(getActivity());
+
+        if(check!=R.string.no_error_found) {
+            mConfigView.setText(check);
+            configtext = getString(check);
+        }
+        else {
+            // Run in own Thread since Keystore does not like to be queried from the main thread
+
+            mConfigView.setText("Generating config...");
+            startGenConfig(vp, mConfigView);
+        }
+    }
 }

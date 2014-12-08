@@ -510,7 +510,7 @@ public class VpnProfile implements Serializable, Cloneable {
         }
 
         if (!canUsePlainRemotes) {
-            cfg += "# Connection Options are at the end to allow global options (and global custom options) to influence connection blocks\n"
+            cfg += "# Connection Options are at the end to allow global options (and global custom options) to influence connection blocks\n";
             for (Connection conn : mConnections) {
                 if (conn.mEnabled) {
                     cfg += "<connection>\n";

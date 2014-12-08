@@ -10,6 +10,6 @@
         android:title="@string/add_remote"
         android:id="@+id/add_new_remote"
         android:titleCondensed="@string/add"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="withText|always"
     />
 </menu>

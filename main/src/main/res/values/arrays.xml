@@ -17,8 +17,8 @@
         <item>User/PW + Android</item>
     </string-array>
     <string-array name="tls_directions_entries">
-        <item>0</item>
-        <item>1</item>
+        <item translatable="false">0</item>
+        <item translatable="false">1</item>
         <item>Unspecified</item>
     </string-array>
     <string-array name="crm_entries">

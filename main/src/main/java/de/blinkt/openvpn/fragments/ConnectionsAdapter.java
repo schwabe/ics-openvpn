@@ -76,6 +76,18 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         return new ConnectionsHolder(card);
     }
 
+    static abstract class OnTextChangedWatcher implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+    }
+
     @Override
     public void onBindViewHolder(final ConnectionsAdapter.ConnectionsHolder cH, final int i) {
         final Connection connection = mConnections[i];
@@ -136,41 +148,27 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
                 }
         );
 
-        cH.mServerNameView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
+        cH.mServerNameView.addTextChangedListener(new OnTextChangedWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 connection.mServerName = s.toString();
             }
+
         });
 
-        cH.mPortNumberView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
+        cH.mPortNumberView.addTextChangedListener(new OnTextChangedWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 connection.mServerPort = s.toString();
             }
         });
 
-
+        cH.mCustomOptionText.addTextChangedListener(new OnTextChangedWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                connection.mCustomConfiguration = s.toString();
+            }
+        });
 
     }
 

@@ -4,6 +4,7 @@
 import codecs
 import xml.dom.minidom as dom
 import os.path
+import re
 
 faqpath = "/Users/arne/oss/ics-openvpn.wiki"
 
@@ -29,7 +30,20 @@ def getString(strid,lang):
     ostr = ostr.replace("\\n","<p>")
     return ostr
 
-def genPage(faqdom,lang):
+def genPage(javafile, lang):
+    #{R.string.faq_howto_title, R.string.faq_howto},
+    out =""
+    out+= header
+    for l in javafile:
+        m = re.search("\{.*R.string.([a-z_]+),.*R.string.([a-z_]+)\}", l)
+        if m:
+            (title, body) = m.groups()
+            
+            out +=  "== %s ==\n" % getString(title,lang)
+            out += "%s\n" % getString(body,lang)
+    return out
+            
+def genPageXML(faqdom,lang):
     out =""
     
     #out+="#summary %s\n" % getString("faq_summary",lang)
@@ -75,13 +89,14 @@ def main():
     
     loadstrres("src/main/res/values/strings.xml","default")
     
-    faqdom = dom.parse("src/main/res/layout/faq.xml")
+    #faqdom = dom.parse("src/main/res/layout/faq.xml")
+    faqdom = open("src/main/java/de/blinkt/openvpn/fragments/FaqFragment.java").readlines()
     faq= genPage(faqdom,"default")
 
     open(faqpath + "/FAQ.wiki","w").write(faq)
 
     for directory in os.listdir("src/main/res"):
-        if directory.startswith("values-") and directory.find("-sw")==-1:
+        if directory.startswith("values-") and directory.find("-sw")==-1 and not directory.startswith("values-v"):
             lang = directory.split("-",1)[1]
             print lang
             loadstrres("src/main/res/values-%s/strings.xml" % lang,lang)

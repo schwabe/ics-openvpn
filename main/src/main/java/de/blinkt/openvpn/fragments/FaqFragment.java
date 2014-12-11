@@ -24,6 +24,7 @@ private static int[] faqitems[] =
                 {R.string.faq_vpndialog43_title, R.string.faq_vpndialog43},
                 {R.string.faq_system_dialogs_title, R.string.faq_system_dialogs},
                 {R.string.faq_duplicate_notification_title, R.string.faq_duplicate_notification},
+                {R.string.faq_androids_clients_title, R.string.faq_android_clients},
                 {R.string.battery_consumption_title, R.string.baterry_consumption},
                 {R.string.tap_mode, R.string.faq_tap_mode},
                 {R.string.vpn_tethering_title, R.string.faq_tethering},
@@ -35,6 +36,7 @@ private static int[] faqitems[] =
                 {R.string.tap_mode, R.string.tap_faq3},
                 {R.string.faq_routing_title, R.string.faq_routing}
         };
+
     private RecyclerView mRecyclerView;
 
 

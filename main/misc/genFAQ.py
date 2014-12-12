@@ -41,6 +41,8 @@ def genPage(javafile, lang):
             
             out +=  "== %s ==\n" % getString(title,lang)
             out += "%s\n" % getString(body,lang)
+            if body == "faq_system_dialogs_title":
+                out += "%s\n" % getString("faq_system_dialog_xposed",lang)
     return out
             
 def genPageXML(faqdom,lang):

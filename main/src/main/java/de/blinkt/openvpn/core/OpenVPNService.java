@@ -25,6 +25,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
+import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -326,7 +327,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             mProfile = ProfileManager.getLastConnectedProfile(this, false);
 
             /* Got no profile, just stop */
-            if (mProfile==null) {
+            if (mProfile == null) {
                 Log.d("OpenVPN", "Got no last connected profile on null intent. Stopping");
                 stopSelf(startId);
                 return START_NOT_STICKY;
@@ -437,7 +438,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private OpenVPNManagement instantiateOpenVPN3Core() {
         try {
             Class cl = Class.forName("de.blinkt.openvpn.core.OpenVPNThreadv3");
-            return (OpenVPNManagement) cl.getConstructor(OpenVPNService.class,VpnProfile.class).newInstance(this,mProfile);
+            return (OpenVPNManagement) cl.getConstructor(OpenVPNService.class, VpnProfile.class).newInstance(this, mProfile);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
@@ -481,7 +482,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             cfg += mLocalIPv6;
 
 
-
         cfg += "routes: " + TextUtils.join("|", mRoutes.getNetworks(true)) + TextUtils.join("|", mRoutesv6.getNetworks(true));
         cfg += "excl. routes:" + TextUtils.join("|", mRoutes.getNetworks(false)) + TextUtils.join("|", mRoutesv6.getNetworks(false));
         cfg += "dns: " + TextUtils.join("|", mDnslist);
@@ -499,6 +499,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         VpnStatus.logInfo(R.string.last_openvpn_tun_config);
 
         addLocalNetworksToRoutes();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mProfile.mAllowLocalLAN)
+        {
+            allowAllAFFamilies(builder);
+        }
 
         if (mLocalIP == null && mLocalIPv6 == null) {
             VpnStatus.logError(getString(R.string.opentun_no_ipaddr));
@@ -536,7 +540,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         String release = Build.VERSION.RELEASE;
         if ((Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !release.startsWith("4.4.3")
-                &&  !release.startsWith("4.4.4") &&  !release.startsWith("4.4.5") && !release.startsWith("4.4.6"))
+                && !release.startsWith("4.4.4") && !release.startsWith("4.4.5") && !release.startsWith("4.4.6"))
                 && mMtu < 1280) {
             VpnStatus.logInfo(String.format(Locale.US, "Forcing MTU to 1280 instead of %d to workaround Android Bug #70916", mMtu));
             builder.setMtu(1280);
@@ -569,7 +573,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         VpnStatus.logInfo(R.string.local_ip_info, mLocalIP.mIp, mLocalIP.len, mLocalIPv6, mMtu);
         VpnStatus.logInfo(R.string.dns_server_info, TextUtils.join(", ", mDnslist), mDomain);
         VpnStatus.logInfo(R.string.routes_info_incl, TextUtils.join(", ", mRoutes.getNetworks(true)), TextUtils.join(", ", mRoutesv6.getNetworks(true)));
-        VpnStatus.logInfo(R.string.routes_info_excl, TextUtils.join(", ", mRoutes.getNetworks(false)),TextUtils.join(", ", mRoutesv6.getNetworks(false)));
+        VpnStatus.logInfo(R.string.routes_info_excl, TextUtils.join(", ", mRoutes.getNetworks(false)), TextUtils.join(", ", mRoutesv6.getNetworks(false)));
         VpnStatus.logDebug(R.string.routes_debug, TextUtils.join(", ", positiveIPv4Routes), TextUtils.join(", ", positiveIPv6Routes));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setAllowedVpnPackages(builder);
@@ -615,20 +619,24 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    void removeLollipopCMListener()
-    {
+    private void allowAllAFFamilies(Builder builder) {
+        builder.allowFamily(OsConstants.AF_INET);
+        builder.allowFamily(OsConstants.AF_INET6);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    void removeLollipopCMListener() {
         ConnectivityManager cm = (ConnectivityManager) getBaseContext().getSystemService(CONNECTIVITY_SERVICE);
         cm.unregisterNetworkCallback(mLollipopDeviceStateListener);
         mLollipopDeviceStateListener = null;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    void addLollipopCMListener()
-    {
+    void addLollipopCMListener() {
         ConnectivityManager cm = (ConnectivityManager) getBaseContext().getSystemService(CONNECTIVITY_SERVICE);
         NetworkRequest.Builder nrb = new NetworkRequest.Builder();
 
-        mLollipopDeviceStateListener =  new LollipopDeviceStateListener();
+        mLollipopDeviceStateListener = new LollipopDeviceStateListener();
         cm.registerNetworkCallback(nrb.build(), mLollipopDeviceStateListener);
     }
 
@@ -636,25 +644,25 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         // Add local network interfaces
         String[] localRoutes = NativeUtils.getIfconfig();
 
-            // The format of mLocalRoutes is kind of broken because I don't really like JNI
-            for (int i=0; i < localRoutes.length; i+=3){
-                String intf = localRoutes[i];
-                String ipAddr = localRoutes[i+1];
-                String netMask = localRoutes[i+2];
+        // The format of mLocalRoutes is kind of broken because I don't really like JNI
+        for (int i = 0; i < localRoutes.length; i += 3) {
+            String intf = localRoutes[i];
+            String ipAddr = localRoutes[i + 1];
+            String netMask = localRoutes[i + 2];
 
-                if (intf == null || intf.equals("lo") ||
-                        intf.startsWith("tun") || intf.startsWith("rmnet"))
-                    continue;
+            if (intf == null || intf.equals("lo") ||
+                    intf.startsWith("tun") || intf.startsWith("rmnet"))
+                continue;
 
-                if (ipAddr.equals(mLocalIP.mIp))
-                    continue;
+            if (ipAddr.equals(mLocalIP.mIp))
+                continue;
 
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT && !mProfile.mAllowLocalLAN) {
-                    mRoutes.addIPSplit(new CIDRIP(ipAddr,netMask), true);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT && !mProfile.mAllowLocalLAN) {
+                mRoutes.addIPSplit(new CIDRIP(ipAddr, netMask), true);
 
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mProfile.mAllowLocalLAN)
-                    mRoutes.addIP(new CIDRIP(ipAddr,netMask), false);
-            }
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mProfile.mAllowLocalLAN)
+                mRoutes.addIP(new CIDRIP(ipAddr, netMask), false);
+        }
     }
 
 
@@ -666,7 +674,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     builder.addDisallowedApplication(pkg);
                 } else {
                     builder.addAllowedApplication(pkg);
-                 }
+                }
             } catch (PackageManager.NameNotFoundException e) {
                 mProfile.mAllowedAppsVpn.remove(pkg);
                 VpnStatus.logInfo(R.string.app_no_longer_exists, pkg);
@@ -690,28 +698,30 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
     }
 
-    /** Route that is always included, used by the v3 core */
-    public void addRoute (CIDRIP route) {
+    /**
+     * Route that is always included, used by the v3 core
+     */
+    public void addRoute(CIDRIP route) {
         mRoutes.addIP(route, true);
     }
 
-    public void addRoute (String dest, String mask, String gateway, String device) {
+    public void addRoute(String dest, String mask, String gateway, String device) {
         CIDRIP route = new CIDRIP(dest, mask);
         boolean include = isAndroidTunDevice(device);
 
-        NetworkSpace.ipAddress gatewayIP = new NetworkSpace.ipAddress(new CIDRIP(gateway, 32),false);
+        NetworkSpace.ipAddress gatewayIP = new NetworkSpace.ipAddress(new CIDRIP(gateway, 32), false);
 
-        if (mLocalIP==null) {
+        if (mLocalIP == null) {
             VpnStatus.logError("Local IP address unset but adding route?! This is broken! Please contact author with log");
             return;
         }
-        NetworkSpace.ipAddress localNet = new NetworkSpace.ipAddress(mLocalIP,true);
+        NetworkSpace.ipAddress localNet = new NetworkSpace.ipAddress(mLocalIP, true);
         if (localNet.containsNet(gatewayIP))
-            include=true;
+            include = true;
 
-        if (gateway!= null &&
+        if (gateway != null &&
                 (gateway.equals("255.255.255.255") || gateway.equals(mRemoteGW)))
-            include=true;
+            include = true;
 
 
         if (route.len == 32 && !mask.equals("255.255.255.255")) {
@@ -743,7 +753,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     private boolean isAndroidTunDevice(String device) {
-        return device!=null &&
+        return device != null &&
                 (device.startsWith("tun") || "(null)".equals(device) || "vpnservice-tun".equals(device));
     }
 
@@ -758,7 +768,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     public void setLocalIP(String local, String netmask, int mtu, String mode) {
         mLocalIP = new CIDRIP(local, netmask);
         mMtu = mtu;
-        mRemoteGW=null;
+        mRemoteGW = null;
 
         long netMaskAsInt = CIDRIP.getInt(netmask);
 
@@ -771,9 +781,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             else
                 masklen = 31;
 
-            int mask = ~( 1 << (32 - (mLocalIP.len +1)));
+            int mask = ~(1 << (32 - (mLocalIP.len + 1)));
             // Netmask is Ip address +/-1, assume net30/p2p with small net
-            if ((netMaskAsInt & mask) == (mLocalIP.getInt() & mask )) {
+            if ((netMaskAsInt & mask) == (mLocalIP.getInt() & mask)) {
                 mLocalIP.len = masklen;
             } else {
                 mLocalIP.len = 32;
@@ -781,13 +791,18 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     VpnStatus.logWarning(R.string.ip_not_cidr, local, netmask, mode);
             }
         }
-        if (("p2p".equals(mode)  && mLocalIP.len < 32) || ("net30".equals(mode) && mLocalIP.len < 30)) {
+        if (("p2p".equals(mode) && mLocalIP.len < 32) || ("net30".equals(mode) && mLocalIP.len < 30)) {
             VpnStatus.logWarning(R.string.ip_looks_like_subnet, local, netmask, mode);
         }
 
 
+        /* Workaround for Lollipop, it  does not route traffic to the VPNs own network mask */
+        if (netMaskAsInt < 31 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            addRoute(mLocalIP);
+
+
         // Configurations are sometimes really broken...
-        mRemoteGW=netmask;
+        mRemoteGW = netmask;
     }
 
     public void setLocalIPv6(String ipv6addr) {
@@ -825,7 +840,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             // Does not work :(
             String msg = getString(resid);
             String ticker = msg;
-            showNotification(msg + " " + logmessage, ticker, lowpriority , 0, level);
+            showNotification(msg + " " + logmessage, ticker, lowpriority, 0, level);
 
         }
     }
@@ -875,7 +890,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         } else {
             String release = Build.VERSION.RELEASE;
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !release.startsWith("4.4.3")
-                    &&  !release.startsWith("4.4.4") &&  !release.startsWith("4.4.5") && !release.startsWith("4.4.6"))
+                    && !release.startsWith("4.4.4") && !release.startsWith("4.4.5") && !release.startsWith("4.4.6"))
                 // There will be probably no 4.4.4 or 4.4.5 version, so don't waste effort to do parsing here
                 return "OPEN_AFTER_CLOSE";
             else

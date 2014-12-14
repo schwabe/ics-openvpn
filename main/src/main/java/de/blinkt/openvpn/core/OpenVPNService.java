@@ -498,7 +498,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         VpnStatus.logInfo(R.string.last_openvpn_tun_config);
 
-        addLocalNetworksToRoutes();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mProfile.mAllowLocalLAN)
         {
             allowAllAFFamilies(builder);
@@ -510,6 +509,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         if (mLocalIP != null) {
+            addLocalNetworksToRoutes();
             try {
                 builder.addAddress(mLocalIP.mIp, mLocalIP.len);
             } catch (IllegalArgumentException iae) {
@@ -641,6 +641,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     private void addLocalNetworksToRoutes() {
+
         // Add local network interfaces
         String[] localRoutes = NativeUtils.getIfconfig();
 
@@ -781,12 +782,15 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             // get the netmask as IP
 
             int masklen;
-            if ("net30".equals(mode))
+            long mask;
+            if ("net30".equals(mode)) {
                 masklen = 30;
-            else
+                mask = 0xfffffffc;
+            } else {
                 masklen = 31;
+                mask = 0xfffffffe;
+            }
 
-            int mask = ~(1 << (32 - (mLocalIP.len + 1)));
             // Netmask is Ip address +/-1, assume net30/p2p with small net
             if ((netMaskAsInt & mask) == (mLocalIP.getInt() & mask)) {
                 mLocalIP.len = masklen;
@@ -802,7 +806,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
 
         /* Workaround for Lollipop, it  does not route traffic to the VPNs own network mask */
-        if (netMaskAsInt < 31 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        if (mLocalIP.len <= 31 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             addRoute(mLocalIP);
 
 

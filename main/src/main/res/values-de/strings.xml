@@ -335,8 +335,8 @@
   <string name="allowed_vpn_apps_info">Apps erlaubt für das VPN: %1$s</string>
   <string name="disallowed_vpn_apps_info">Apps, die nicht das VPN nutzen: %1$s</string>
   <string name="app_no_longer_exists">Anwendung mit Paketnamen \'%s\' ist nicht mehr installiert, wird von der Liste der erlaubten/nicht erlaubten VPN Anwendungen gelöscht.</string>
-  <string name="vpn_disallow_radio">VPN für alle Anwendung außer den ausgenommen verwendet</string>
-  <string name="vpn_allow_radio">VPN wird nur für die ausgewählten Anwendungen verwendet</string>
+  <string name="vpn_disallow_radio">VPN für alle Anwendung ausgenommen den ausgewählten</string>
+  <string name="vpn_allow_radio">VPN nur für die ausgewählten Anwendungen</string>
   <string name="query_delete_remote">Servereintrag entfernen?</string>
   <string name="keep">Behalten</string>
   <string name="delete">Entfernen</string>

@@ -329,4 +329,26 @@
   <string name="mssfix_value_dialog">Informeeri tunneldatud TCP sessioone et nad piiraksid saadetavate pakettide suuruse nii, et peale OpenVPN kapseldatud paketi partnerile saatmist ei oleks saadud UDP pakett suurem kui ette antud baitide arv. (vaikeväärtus on 1450)</string>
   <string name="mssfix_checkbox">Ignoreeri TCP lasti MSS väärtust</string>
   <string name="mssfix_dialogtitle">Sea TCP lasti MSS väärtus</string>
+  <string name="client_behaviour">Kliendi toimimine</string>
+  <string name="clear_external_apps">Nulli lubatud välised programmid</string>
+  <string name="loading">Laadimine&#8230;</string>
+  <string name="allowed_vpn_apps_info">Lubatud VPN programmid: %1$s</string>
+  <string name="disallowed_vpn_apps_info">Keelatud VPN programmid: %1$s</string>
+  <string name="app_no_longer_exists">Programm %s on seadmest eemaldatud, see kustutatakse ka lubatud/keelatud programmide nimistust</string>
+  <string name="vpn_disallow_radio">VPN on kõigi, välja arvatud märgitud, programmide puhul kasutuses</string>
+  <string name="vpn_allow_radio">VPN on kasutuses ainult märgitud programmide puhul</string>
+  <string name="query_delete_remote">Kas eemaldada kaugserveri kirje?</string>
+  <string name="keep">Säilita</string>
+  <string name="delete">Eemalda</string>
+  <string name="add_remote">Uue kaugserveri lisamine</string>
+  <string name="remote_random">Ühendumisel kasuta ühenduskirjeid juhuslikus järjekorras</string>
+  <string name="remote_no_server_selected">Peate määrama vähemalt ühe kaugserveri.</string>
+  <string name="server_list">Serverite Nimistu</string>
+  <string name="vpn_allowed_apps">Lubatud Programmid</string>
+  <string name="advanced_settings">Täpsemad seaded</string>
+  <string name="payload_options">Nimikoormuse valikud</string>
+  <string name="tls_settings">TLS Seaded</string>
+  <string name="no_remote_defined">Kaugserverid määramata</string>
+  <string name="duplicate_vpn">Dubleeritud VPN profiil</string>
+  <string name="duplicate_profile_title">Duplitseeritakse profiili: %s</string>
 </resources>

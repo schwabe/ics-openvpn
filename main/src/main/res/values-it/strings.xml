@@ -326,4 +326,16 @@ Effettuata la lettura del file di configurazione</string>
   <string name="files_missing_hint">Alcuni file non possono essere trovati. Si prega di selezionare i file da importare nel profilo:</string>
   <string name="openvpn_is_no_free_vpn">Per utilizzare questa applicazione è necessario un provider VPN/gateway VPN che supportino OpenVPN (spesso forniti dal datore di lavoro). Vai a http://community.openvpn.net/ per ulteriori informazioni su OpenVPN e come configurare il proprio server OpenVPN.</string>
   <string name="import_log">Registro importazione:</string>
+  <string name="mssfix_checkbox">Sovrascrivi il valore del MSS nel payload TCP</string>
+  <string name="mssfix_dialogtitle">Setta il valore del MSS nel payload TCP</string>
+  <string name="client_behaviour">Comportamento Client</string>
+  <string name="loading">Caricando&#8230;</string>
+  <string name="keep">Mantieni</string>
+  <string name="delete">Elimina</string>
+  <string name="server_list">Lista Server</string>
+  <string name="advanced_settings">Impostazioni Avanzate</string>
+  <string name="payload_options">Opzioni Payload</string>
+  <string name="tls_settings">Impostazioni TLS</string>
+  <string name="duplicate_vpn">Profilo VPN duplicato</string>
+  <string name="duplicate_profile_title">Duplicazione del profilo: %s</string>
 </resources>

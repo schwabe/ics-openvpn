@@ -9,7 +9,7 @@
   <string-array name="vpn_types">
     <item>Certificaten</item>
     <item>PKCS12 Bestand</item>
-    <item>Android Certificaat</item>
+    <item>Certifikata Android</item>
     <item>Gebruikersnaam/Wachtwoord</item>
     <item>Statische Sleutels</item>
     <item>Gebruiker/WW + Certificaten</item>

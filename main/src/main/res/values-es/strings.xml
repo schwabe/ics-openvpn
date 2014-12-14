@@ -148,7 +148,7 @@
   <string name="import_warning_custom_options">Su configuración tiene algunas opciones de configuración que no están establecidas en la interfaz de usuario . Estas opciones fueron agregadas como opciones de configuración personalizadas. A continuación se muestra la configuración personalizada:</string>
   <string name="import_done">Se termino de leer el archivo de configuración.</string>
   <string name="nobind_summary">No enlazar con el puerto y la dirección local</string>
-  <string name="no_bind">Ningún enlace local</string>
+  <string name="no_bind">No enlazar localmente</string>
   <string name="import_configuration_file">Importar archivo de configuracion</string>
   <string name="faq_security_title">Consideraciones de seguridad</string>
   <string name="faq_security">"Como OpenVPN es sensible a la seguridad, son razonables algunas notas acerca de seguridad. Todos los datos en la tarjeta SD son inherentemente inseguros. Cualquier aplicación puede leerla (por ejemplo, esta aplicación no requiere ningún permiso especial sobre la tarjeta SD). Los datos de esta aplicación sólo pueden ser leidos por la misma aplicación. Al utilizar la opción importar para el certificado de la CA/certificado/llave, en la ventana de diálogo para selección de archivos, los datos se almacenan en el perfil de la VPN. Los perfiles de VPN sólo son accesibles por esta aplicación. (No olvide después borrar las copias de la tarjeta SD). Aunque sólo sea accesible por esta aplicación, los datos aún están sin encriptar. Al acceder el dispositivo portátil como root u otro medio, es posible recuperar estos datos. Las contraseñas guardadas son almacenadas también en texto plano. Para archivos pkcs12 es muy recomendable que los importe al repositorio de llaves de Android."</string>
@@ -174,7 +174,8 @@
   <string name="generated_config_summary">Muestra el archivo de configuración OpenVPN generado</string>
   <string name="edit_profile_title">Editando \"%s\"</string>
   <string name="building_configration">Construyendo configuracion&#8230;</string>
-  <string name="netchange_summary">Turning this option on will force a reconnect if the network state is changed (e.g. WiFi to/from mobile)</string>
+  <string name="netchange_summary">Activando esta opción forzara una reconexión si el estado de la red es cambiado (Ej. De/hacia WIFi
+hacia/de Móvil)</string>
   <string name="netchange">Reconectar en cambio de red</string>
   <string name="netstatus">Estado de la red: %s</string>
   <string name="extracahint">El certificado de la CA usualmente es recuperado del almacén de claves de Android. Especifique un certificado diferente si obtiene errores de verificación de certificado.</string>
@@ -186,7 +187,7 @@
   <string name="error_rsa_sign">Error al firmar con la llave del almacén de llaves de Android %1$s: %2$s</string>
   <string name="faq_system_dialogs">El aviso de conectividad VPN que esta aplicación puede interceptar todo el trafico esta impuesta por el sistema para evitar abusos de la API VPNService.\nLa notificación de conectividad (El símbolo de llave) también esta impuesta por el sistema Android para notificar una conexión VPN en curso. En algunas imágenes, esta notificación también emite un sonido.\nAndroid ha introducido estos diálogos de sistema para su seguridad e se ha asegurado que no pueden ser evitados. (En algunas imágenes, esto incluye la notificación sonora)</string>
   <string name="faq_system_dialogs_title">Advertencia de conexión y sonido de notificación</string>
-  <string name="translationby">Traducción al español por José Luis Bandala Perez&lt;luis.449bp@gmail.com&gt;</string>
+  <string name="translationby">Traducción al español por José Luis Bandala Pérez&lt;luis.449bp@gmail.com&gt;</string>
   <string name="ipdns">IP y DNS</string>
   <string name="basic">Básico</string>
   <string name="routing">Enrutamiento</string>
@@ -275,7 +276,7 @@
   <string name="rdn">RDN (nombre comun)</string>
   <string name="rdn_prefix">Prefijo RDN</string>
   <string name="tls_remote_deprecated">tls-remote (OBSOLETO)</string>
-  <string name="help_translate">Tu puedes ayudar traduciendo visitando http://crowdin.net/project/ics-openvpn/invite</string>
+  <string name="help_translate">Tu puedes ayudar a traducir visitando http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s intentos de controlar %2$s</string>
   <string name="remote_warning">Al proceder, le estás proporcionando permiso a la aplicación para controlar completamente OpenVPN for Android e interceptar todo el tráfico de la red.<b>NO aceptar a menos que confíes en la aplicación.</b> De otro modo, corres el riesgo de que tus datos se vean comprometidos por software malicioso.\"</string>
   <string name="remote_trust">Confío en esta aplicación.</string>
@@ -318,7 +319,7 @@
   <string name="faq_system_dialog_xposed">Si ha rooteado su dispositivo Android, puede instalar el &lt;a href=\"http://xposed.info/\"&gt;framework Xposed&lt;/a&gt; y añadir el &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;módulo de confirmación de Diálogo VPN&lt;/a&gt; bajo su propio riesgo\"</string>
   <string name="full_licenses">Licencias completas</string>
   <string name="blocklocal_summary">Las redes conectadas directamente a los interfaces locales no serán enrutadas a través de la VPN. Al desmarcar esta opción, todo el tráfico previsto para las redes locales será redirigido a la VPN.</string>
-  <string name="blocklocal_title">Evitar la VPN para las redes locales</string>
+  <string name="blocklocal_title">Saltarse la VPN en redes locales</string>
   <string name="userpw_file">Archivo de Usuario/Contraseña</string>
   <string name="imported_from_file">[Importado de:%s]</string>
   <string name="files_missing_hint">Algunos archivos no se pudo encontrar. Por favor, seleccione los archivos que desea importar el perfil:</string>
@@ -326,6 +327,7 @@
   <string name="import_log">Importar registros:</string>
   <string name="ip_looks_like_subnet">Topología de VPN \"%3$s\" especificado pero ifconfig %1$s %2$s se parece más a una dirección IP con una máscara de red. Asumiendo una topología de \"subred\".</string>
   <string name="mssfix_invalid_value">El valor de mssfix debe ser un número entero entre 0 y 9000</string>
+  <string name="mssfix_value_dialog">Anunciar a las sesiones TCP ejecutandose sobre el túnel que deben limitar su tamaño de paquetes enviados de tal manera que después de que OpenVPN los hay encapsulado, el tamaño del paquete UDP resultante enviado a su par no exceda este numero de bytes. (Por defecto es 1450)</string>
   <string name="mssfix_checkbox">Reemplazar el valor MSS de la carga TCP</string>
   <string name="mssfix_dialogtitle">Establecer MSS de la carga TCP</string>
   <string name="client_behaviour">Comportamiento del cliente</string>
@@ -347,4 +349,7 @@
   <string name="advanced_settings">Opciones Avanzadas</string>
   <string name="payload_options">Opciones de carga útil</string>
   <string name="tls_settings">Configuración TLS</string>
+  <string name="no_remote_defined">Servidor remoto no definido</string>
+  <string name="duplicate_vpn">Duplicar perfil VPN</string>
+  <string name="duplicate_profile_title">Duplicando Perfil: %s</string>
 </resources>

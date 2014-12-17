@@ -5,7 +5,30 @@ The source code needed to control OpenVPN for Android from another app (the remo
 Copyright (c) 2012-2014, Arne Schwabe
  All rights reserved.
 
+
+The name ics-openvpn and OpenVPN for Android refer to the same program.
+OpenVPN for Android is distributed under the GPL license version 2 (see Below)
+with the following clarification/additional terms of what constitues "deriviate work":
+
+Using/including any part of ics-openvpn, especially using/including any part of the
+de.blinkt.openvpn class hierarchy, creates derivative work of ics-openvpn.
+The normal definitions of derivative additionally apply.
+
 If you need a non GPLv2 license of the source please contact me.
+
+Special exception for linking ics-openvpn with OpenSSL:
+
+In addition, as a special exception, Arne Schwabe gives
+permission to link the code of this program with the OpenSSL
+library (or with modified versions of OpenSSL that use the same
+license as OpenSSL), and distribute linked combinations including
+the two.  You must obey the GNU General Public License in all
+respects for all of the code used other than OpenSSL.  If you modify
+this file, you may extend this exception to your version of the
+file, but you are not obligated to do so.  If you do not wish to
+do so, delete this exception statement from your version
+
+
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

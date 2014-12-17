@@ -5,9 +5,5 @@
   -->
 
 <resources>
-    <!-- Indigo -->
-    <!-- OpenVPN colours #203155, #C66D0D -->
-    <color name="primary">#3F51B5</color>
-    <color name="primary_dark">#303F9F</color>
-    <color name="accent">#FFA726</color>
+    <color name="switchbar">#5C6BC0</color>    <!-- 400-->
 </resources>

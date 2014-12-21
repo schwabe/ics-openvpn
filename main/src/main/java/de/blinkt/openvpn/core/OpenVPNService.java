@@ -806,8 +806,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
 
         /* Workaround for Lollipop, it  does not route traffic to the VPNs own network mask */
-        if (mLocalIP.len <= 31 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            addRoute(mLocalIP);
+        if (mLocalIP.len <= 31 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CIDRIP interfaceRoute = new CIDRIP(mLocalIP.mIp, mLocalIP.len);
+            interfaceRoute.normalise();
+            addRoute(interfaceRoute);
+        }
 
 
         // Configurations are sometimes really broken...

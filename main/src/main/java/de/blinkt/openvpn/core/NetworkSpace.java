@@ -172,8 +172,9 @@ public class NetworkSpace {
         }
 
         public boolean containsNet(ipAddress network) {
-            return getFirstAddress().compareTo(network.getFirstAddress()) != 1 &&
-                    getLastAddress().compareTo(network.getLastAddress()) != -1;
+            // this.first >= net.first &&  this.last <= net.last
+            return getFirstAddress().compareTo(network.getFirstAddress()) != -1 &&
+                    getLastAddress().compareTo(network.getLastAddress()) != 1;
         }
     }
 

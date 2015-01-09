@@ -551,9 +551,15 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         Collection<ipAddress> positiveIPv4Routes = mRoutes.getPositiveIPList();
         Collection<ipAddress> positiveIPv6Routes = mRoutesv6.getPositiveIPList();
 
+        ipAddress multicastRange = new ipAddress(new CIDRIP("224.0.0.0", 3), true);
+
         for (NetworkSpace.ipAddress route : positiveIPv4Routes) {
             try {
-                builder.addRoute(route.getIPv4Address(), route.networkMask);
+
+                if (multicastRange.containsNet(route))
+                    VpnStatus.logDebug(R.string.ignore_multicast_route, route.toString());
+                else
+                    builder.addRoute(route.getIPv4Address(), route.networkMask);
             } catch (IllegalArgumentException ia) {
                 VpnStatus.logError(getString(R.string.route_rejected) + route + " " + ia.getLocalizedMessage());
             }

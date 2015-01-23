@@ -14,7 +14,9 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 
 void android_openvpn_log(int level,const char* prefix,const char* prefix_sep,const char* m1)
 {
+#ifndef NDEBUG
     __android_log_print(ANDROID_LOG_DEBUG,"openvpn","%s%s%s",prefix,prefix_sep,m1);
+#endif
 }
 
 void Java_de_blinkt_openvpn_core_NativeUtils_jniclose(JNIEnv *env,jclass jo, jint fd) {

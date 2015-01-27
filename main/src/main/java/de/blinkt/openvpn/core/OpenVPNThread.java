@@ -32,7 +32,7 @@ import de.blinkt.openvpn.core.VpnStatus.LogItem;
 public class OpenVPNThread implements Runnable {
     private static final String DUMP_PATH_STRING = "Dump path: ";
     @SuppressLint("SdCardPath")
-    private static final String BROKEN_PIE_SUPPORT = "/data/data/de.blinkt.openvpn/cache/pievpn"
+    private static final String BROKEN_PIE_SUPPORT = "/data/data/de.blinkt.openvpn/cache/pievpn";
     private final static String BROKEN_PIE_SUPPORT2 = "syntax error";
 	private static final String TAG = "OpenVPN";
     public static final int M_FATAL = (1 << 4);

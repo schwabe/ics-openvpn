@@ -45,7 +45,7 @@ Q: How is the OpenVPN version different from normal OpenVPN
 
 A: OpenVPN for Android uses a OpenVPN 2.4 master branch + dual stack client patches. 
    A git repository of the OpenVPN source code and changes is under: 
-   https://github.com/schwabe/openvpn/tree/ds10
+   https://github.com/schwabe/openvpn/
 
 Q: what is minivpn?
 

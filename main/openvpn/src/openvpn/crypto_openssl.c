@@ -42,9 +42,12 @@
 #include "integer.h"
 #include "crypto.h"
 #include "crypto_backend.h"
-#include <openssl/objects.h>
-#include <openssl/evp.h>
+
 #include <openssl/des.h>
+#include <openssl/err.h>
+#include <openssl/evp.h>
+#include <openssl/objects.h>
+#include <openssl/ssl.h>
 
 /*
  * Check for key size creepage.
@@ -100,13 +103,15 @@ setup_engine (const char *engine)
       if ((e = ENGINE_by_id (engine)) == NULL
 	 && (e = try_load_engine (engine)) == NULL)
 	{
-	  msg (M_FATAL, "OpenSSL error: cannot load engine '%s'", engine);
+	  crypto_msg (M_FATAL, "OpenSSL error: cannot load engine '%s'",
+	      engine);
 	}
 
       if (!ENGINE_set_default (e, ENGINE_METHOD_ALL))
 	{
-	  msg (M_FATAL, "OpenSSL error: ENGINE_set_default failed on engine '%s'",
-	       engine);
+	  crypto_msg (M_FATAL,
+	      "OpenSSL error: ENGINE_set_default failed on engine '%s'",
+	      engine);
 	}
 
       msg (M_INFO, "Initializing OpenSSL support for engine '%s'",
@@ -142,14 +147,6 @@ crypto_init_lib_engine (const char *engine_name)
 void
 crypto_init_lib (void)
 {
-#ifndef ENABLE_SSL
-  /* If SSL is enabled init is taken care of in ssl_openssl.c */
-#ifndef ENABLE_SMALL
-  ERR_load_crypto_strings ();
-#endif
-  OpenSSL_add_all_algorithms ();
-#endif
-
   /*
    * If you build the OpenSSL library and OpenVPN with
    * CRYPTO_MDEBUG, you will get a listing of OpenSSL
@@ -164,14 +161,6 @@ crypto_init_lib (void)
 void
 crypto_uninit_lib (void)
 {
-#ifndef ENABLE_SSL
-  /* If SSL is enabled cleanup is taken care of in ssl_openssl.c */
-  EVP_cleanup ();
-#ifndef ENABLE_SMALL
-  ERR_free_strings ();
-#endif
-#endif
-
 #ifdef CRYPTO_MDEBUG
   FILE* fp = fopen ("sdlog", "w");
   ASSERT (fp);
@@ -194,6 +183,26 @@ crypto_clear_error (void)
 {
   ERR_clear_error ();
 }
+
+void
+crypto_print_openssl_errors(const unsigned int flags) {
+  size_t err = 0;
+
+  while ((err = ERR_get_error ()))
+    {
+      /* Be more clear about frequently occurring "no shared cipher" error */
+      if (err == ERR_PACK(ERR_LIB_SSL,SSL_F_SSL3_GET_CLIENT_HELLO,
+	  SSL_R_NO_SHARED_CIPHER))
+	{
+	  msg (D_CRYPT_ERRORS, "TLS error: The server has no TLS ciphersuites "
+	      "in common with the client. Your --tls-cipher setting might be "
+	      "too restrictive.");
+	}
+
+      msg (flags, "OpenSSL: %s", ERR_error_string (err, NULL));
+    }
+}
+
 
 /*
  *
@@ -386,17 +395,20 @@ key_des_check (uint8_t *key, int key_len, int ndc)
       DES_cblock *dc = (DES_cblock*) buf_read_alloc (&b, sizeof (DES_cblock));
       if (!dc)
 	{
-	  msg (D_CRYPT_ERRORS, "CRYPTO INFO: check_key_DES: insufficient key material");
+	  crypto_msg (D_CRYPT_ERRORS,
+	      "CRYPTO INFO: check_key_DES: insufficient key material");
 	  goto err;
 	}
       if (DES_is_weak_key(dc))
 	{
-	  msg (D_CRYPT_ERRORS, "CRYPTO INFO: check_key_DES: weak key detected");
+	  crypto_msg (D_CRYPT_ERRORS,
+	      "CRYPTO INFO: check_key_DES: weak key detected");
 	  goto err;
 	}
       if (!DES_check_key_parity (dc))
 	{
-	  msg (D_CRYPT_ERRORS, "CRYPTO INFO: check_key_DES: bad parity detected");
+	  crypto_msg (D_CRYPT_ERRORS,
+	      "CRYPTO INFO: check_key_DES: bad parity detected");
 	  goto err;
 	}
     }
@@ -445,7 +457,7 @@ cipher_kt_get (const char *ciphername)
   cipher = EVP_get_cipherbyname (ciphername);
 
   if (NULL == cipher)
-    msg (M_SSLERR, "Cipher algorithm '%s' not found", ciphername);
+    crypto_msg (M_FATAL, "Cipher algorithm '%s' not found", ciphername);
 
   if (EVP_CIPHER_key_length (cipher) > MAX_CIPHER_KEY_LENGTH)
     msg (M_FATAL, "Cipher algorithm '%s' uses a default key size (%d bytes) which is larger than " PACKAGE_NAME "'s current maximum key size (%d bytes)",
@@ -529,13 +541,13 @@ cipher_ctx_init (EVP_CIPHER_CTX *ctx, uint8_t *key, int key_len,
 
   EVP_CIPHER_CTX_init (ctx);
   if (!EVP_CipherInit (ctx, kt, NULL, NULL, enc))
-    msg (M_SSLERR, "EVP cipher init #1");
+    crypto_msg (M_FATAL, "EVP cipher init #1");
 #ifdef HAVE_EVP_CIPHER_CTX_SET_KEY_LENGTH
   if (!EVP_CIPHER_CTX_set_key_length (ctx, key_len))
-    msg (M_SSLERR, "EVP set key size");
+    crypto_msg (M_FATAL, "EVP set key size");
 #endif
   if (!EVP_CipherInit (ctx, NULL, key, NULL, enc))
-    msg (M_SSLERR, "EVP cipher init #2");
+    crypto_msg (M_FATAL, "EVP cipher init #2");
 
   /* make sure we used a big enough key */
   ASSERT (EVP_CIPHER_CTX_key_length (ctx) <= key_len);
@@ -582,7 +594,9 @@ int
 cipher_ctx_update (EVP_CIPHER_CTX *ctx, uint8_t *dst, int *dst_len,
     uint8_t *src, int src_len)
 {
-  return EVP_CipherUpdate (ctx, dst, dst_len, src, src_len);
+  if (!EVP_CipherUpdate (ctx, dst, dst_len, src, src_len))
+    crypto_msg(M_FATAL, "%s: EVP_CipherUpdate() failed", __func__);
+  return 1;
 }
 
 int
@@ -617,12 +631,14 @@ md_kt_get (const char *digest)
   ASSERT (digest);
   md = EVP_get_digestbyname (digest);
   if (!md)
-    msg (M_SSLERR, "Message hash algorithm '%s' not found", digest);
+    crypto_msg (M_FATAL, "Message hash algorithm '%s' not found", digest);
   if (EVP_MD_size (md) > MAX_HMAC_KEY_LENGTH)
-    msg (M_FATAL, "Message hash algorithm '%s' uses a default hash size (%d bytes) which is larger than " PACKAGE_NAME "'s current maximum hash size (%d bytes)",
-	 digest,
-	 EVP_MD_size (md),
-	 MAX_HMAC_KEY_LENGTH);
+    {
+      crypto_msg (M_FATAL, "Message hash algorithm '%s' uses a default hash "
+	  "size (%d bytes) which is larger than " PACKAGE_NAME "'s current "
+	  "maximum hash size (%d bytes)",
+	  digest, EVP_MD_size (md), MAX_HMAC_KEY_LENGTH);
+    }
   return md;
 }
 

@@ -35,7 +35,7 @@
 
 #include "syshead.h"
 
-#if defined(ENABLE_CRYPTO) && defined(ENABLE_SSL)
+#ifdef ENABLE_CRYPTO
 
 #include "misc.h"
 #include "manage.h"
@@ -238,7 +238,7 @@ cert_hash_free (struct cert_hash_set *chs)
     }
 }
 
-static bool
+bool
 cert_hash_compare (const struct cert_hash_set *chs1, const struct cert_hash_set *chs2)
 {
   if (chs1 && chs2)
@@ -1268,4 +1268,4 @@ verify_final_auth_checks(struct tls_multi *multi, struct tls_session *session)
       gc_free (&gc);
     }
 }
-#endif /* defined(ENABLE_CRYPTO) && defined(ENABLE_SSL) */
+#endif /* ENABLE_CRYPTO */

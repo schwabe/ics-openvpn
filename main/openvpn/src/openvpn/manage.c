@@ -701,7 +701,7 @@ man_query_need_str (struct management *man, const char *type, const char *action
 static void
 man_forget_passwords (struct management *man)
 {
-#if defined(ENABLE_CRYPTO) && defined(ENABLE_SSL)
+#ifdef ENABLE_CRYPTO
   ssl_purge_auth (false);
   msg (M_CLIENT, "SUCCESS: Passwords were forgotten");
 #endif
@@ -1115,7 +1115,7 @@ man_network_change (struct management *man)
       man->connection.fdtosend = fd;
       msg (M_CLIENT, "PROTECTFD: fd '%d' sent to be protected", fd);
       if (fd == -2)
-	man_signal (man, "USR1");
+	man_signal (man, "SIGUSR1");
     }
 }
 #endif
@@ -1716,7 +1716,7 @@ man_reset_client_socket (struct management *man, const bool exiting)
     }
   if (!exiting)
     {
-#if defined(ENABLE_CRYPTO) && defined(ENABLE_SSL)
+#ifdef ENABLE_CRYPTO
       if (man->settings.flags & MF_FORGET_DISCONNECT)
 	ssl_purge_auth (false);
 #endif

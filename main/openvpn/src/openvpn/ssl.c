@@ -43,7 +43,7 @@
 
 #include "syshead.h"
 
-#if defined(ENABLE_CRYPTO) && defined(ENABLE_SSL)
+#if defined(ENABLE_CRYPTO)
 
 #include "error.h"
 #include "common.h"
@@ -242,6 +242,7 @@ static const tls_cipher_name_pair tls_cipher_name_translation_table[] = {
     {"EDH", "EDH"},
     {"EXP", "EXP"},
     {"RSA", "RSA"},
+    {"kRSA", "kRSA"},
     {"SRP", "SRP"},
 #endif
     {NULL, NULL}
@@ -263,16 +264,14 @@ tls_get_cipher_name_pair (const char * cipher_name, size_t len) {
   return NULL;
 }
 
-/*
- * Max number of bytes we will add
- * for data structures common to both
- * data and control channel packets.
- * (opcode only). 
+/**
+ * Max number of bytes we will add for data structures common to both data and
+ * control channel packets (1 byte opcode + 3 bytes peer-id).
  */
 void
 tls_adjust_frame_parameters(struct frame *frame)
 {
-  frame_add_to_extra_frame (frame, 1); /* space for opcode */
+  frame_add_to_extra_frame (frame, 1 + 3); /* space for opcode + peer-id */
 }
 
 /*
@@ -483,7 +482,10 @@ init_ssl (const struct options *options, struct tls_root_ctx *new_ctx)
   if (options->tls_server)
     {
       tls_ctx_server_new(new_ctx);
-      tls_ctx_load_dh_params(new_ctx, options->dh_file, options->dh_file_inline);
+
+      if (options->dh_file)
+	tls_ctx_load_dh_params(new_ctx, options->dh_file,
+			       options->dh_file_inline);
     }
   else				/* if client */
     {
@@ -3625,4 +3627,4 @@ done:
 
 #else
 static void dummy(void) {}
-#endif /* ENABLE_CRYPTO && ENABLE_SSL*/
+#endif /* ENABLE_CRYPTO */

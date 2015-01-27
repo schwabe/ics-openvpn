@@ -30,7 +30,7 @@
 #ifndef SSL_VERIFY_H_
 #define SSL_VERIFY_H_
 
-#if defined(ENABLE_CRYPTO) && defined(ENABLE_SSL)
+#ifdef ENABLE_CRYPTO
 
 #include "syshead.h"
 #include "misc.h"
@@ -137,6 +137,14 @@ const char *tls_common_name (const struct tls_multi* multi, const bool null);
  */
 const char *tls_username (const struct tls_multi *multi, const bool null);
 
+/**
+ * Compares certificates hashes, returns true if hashes are equal.
+ *
+ * @param chs1 cert 1 hash set
+ * @param chs2 cert 2 hash set
+ */
+bool cert_hash_compare (const struct cert_hash_set *chs1, const struct cert_hash_set *chs2);
+
 #ifdef ENABLE_PF
 
 /**
@@ -236,6 +244,6 @@ tls_client_reason (struct tls_multi *multi)
 #endif
 }
 
-#endif /* defined(ENABLE_CRYPTO) && defined(ENABLE_SSL) */
+#endif /* ENABLE_CRYPTO */
 
 #endif /* SSL_VERIFY_H_ */

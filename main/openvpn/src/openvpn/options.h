@@ -193,10 +193,8 @@ struct options
   bool show_ciphers;
   bool show_digests;
   bool show_engines;
-#ifdef ENABLE_SSL
   bool show_tls_ciphers;
   bool show_curves;
-#endif
   bool genkey;
 #endif
 
@@ -493,7 +491,6 @@ struct options
   bool use_prediction_resistance;
 #endif
 
-#ifdef ENABLE_SSL
   /* TLS (control channel) parms */
   bool tls_server;
   bool tls_client;
@@ -575,7 +572,6 @@ struct options
 
   bool tls_exit;
 
-#endif /* ENABLE_SSL */
 #endif /* ENABLE_CRYPTO */
 
 #ifdef ENABLE_X509_TRACK

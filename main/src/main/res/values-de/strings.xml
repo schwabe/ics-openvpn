@@ -351,4 +351,6 @@
   <string name="no_remote_defined">Keine Server definiert</string>
   <string name="duplicate_vpn">VPN Profil duplizieren</string>
   <string name="duplicate_profile_title">VPN Profil duplizieren: %s</string>
+    <string name="version_upto">bis einschließlich %s</string>
+
 </resources>

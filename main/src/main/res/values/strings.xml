@@ -295,7 +295,7 @@
     <string name="hwkeychain">Hardware Keystore:</string>
     <string name="permission_icon_app">Icon of app trying to use OpenVPN for Android</string>
     <string name="faq_vpndialog43">"Starting with Android 4.3 the VPN confirmation is guarded against \"overlaying apps\". This results in the dialog not reacting to touch input. If you have an app that uses overlays it may cause this behaviour. If you find an offending app contact the author of the app. This problem affect all VPN applications on Android 4.3 and later. See also &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\">Issue 185&lt;a> for additional details"</string>
-    <string name="faq_vpndialog43_title">Vpn Confirm Dialog on Android 4.3 and later</string>
+    <string name="faq_vpndialog43_title">Vpn Confirmation Dialog</string>
     <string name="donatePlayStore">Alternatively you can send me a donation with the Play Store:</string>
     <string name="thanks_for_donation">Thanks for donating %s!</string>
     <string name="logCleared">Log cleared.</string>
@@ -351,5 +351,19 @@
     <string name="faq_android_clients">Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.&lt;p&gt;The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.&lt;p&gt;OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. &lt;p&gt;OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and moree targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies &lt;p&gt; OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+</string>
     <string name="faq_androids_clients_title">Differences between the OpenVPN Android clients</string>
     <string name="ignore_multicast_route">Ignoring multicast route: %s</string>
+    <string name="ab_only_cidr">Android supports only CIDR routes to the VPN. Since non-CIDR routes are almost never used, OpenVPN for Android will use a /32 for routes that are not CIDR and issue a warning.</string>
+    <string name="ab_tethering_44">Tethering works while the VPN is active. The tethered connection will NOT use the VPN.</string>
+    <string name="ab_kitkat_mss">Early KitKat version set the wrong MSS value on TCP connections (#61948). OpenVPN for will automatically enable mssfix option to workaround this bug.</string>
+    <string name="ab_proxy">Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.<p>When a VPN sets a DNS server Android will not a proxy. There is no API to set a proxy for a VPN connection.</p></string>
+    <string name="ab_lollipop_reinstall">VPN apps may stop working when uninstalled and reinstalled again. For details see #80074</string>
+    <string name="ab_not_route_to_vpn">The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask</string>
+    <string name="ab_persist_tun">Opening a tun device while another tun device is active, which is used for persist-tun support, crashes the VPNServices on the device. A reboot is required to make VPN work again. OpenVPN for Android tries to avoid reopening the tun device and if really needed first closes the current TUN before opening the new TUN device to avoid to crash. This may lead to a short window where packets are sent over the non-VPN connection.</string>
+    <string name="ab_secondary_users">VPN does not work at all for secondary users.</string>
+    <string name="ab_kitkat_reconnect">"Multiple users report that the mobile connection/mobile data connection is frequently dropped while using the VPN app. The behaviour seems to affect only some mobile provider/device combination and so far no cause/workaround for the bug could be identified. "</string>
+    <string name="ab_vpn_reachability_44">Only destination can be reached over the VPN that are reachable without VPN. IPv6 VPNs does not work at all.</string>
+    <string name="ab_only_cidr_title">Non CIDR Routes</string>
+    <string name="ab_proxy_title">Proxy behaviour for VPNs</string>
+    <string name="ab_lollipop_reinstall_title">Reinstalling VPN apps</string>
+    <string name="version_upto">%s and earlier</string>
 
 </resources>

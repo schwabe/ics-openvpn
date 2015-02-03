@@ -19,24 +19,47 @@ import android.widget.TextView;
 
 import de.blinkt.openvpn.R;
 
-import static android.support.v7.widget.RecyclerView.ViewHolder;
-
 public class FaqViewAdapter extends RecyclerView.Adapter<FaqViewAdapter.FaqViewHolder> {
-    private final int[][] mFaqItems;
+    private final FaqFragment.FAQEntry[] mFaqItems;
     private final Spanned[] mHtmlEntries;
+    private final Spanned[] mHtmlEntriesTitle;
 
-    public FaqViewAdapter(Context context, int[][] faqItems) {
+
+    public FaqViewAdapter(Context context, FaqFragment.FAQEntry[] faqItems) {
         mFaqItems = faqItems;
 
         mHtmlEntries = new Spanned[faqItems.length];
+        mHtmlEntriesTitle = new Spanned[faqItems.length];
+
         for (int i =0; i < faqItems.length; i++) {
-            mHtmlEntries[i] = Html.fromHtml(context.getString(faqItems[i][1]));
+            String versionText = mFaqItems[i].getVersionsString(context);
+            String title;
+            String textColor="";
+
+            if (mFaqItems[i].title==-1)
+                title ="";
+            else
+                title = context.getString(faqItems[i].title);
+
+
+            if (!mFaqItems[i].runningVersion())
+                textColor= "<font color=\"gray\">";
+
+            if (versionText != null) {
+
+                mHtmlEntriesTitle[i] = (Spanned) TextUtils.concat(Html.fromHtml(textColor + title),
+                        Html.fromHtml( textColor + "<br><small>" + versionText + "</small>"));
+            } else {
+                mHtmlEntriesTitle[i] = Html.fromHtml(title);
+            }
+
+            mHtmlEntries[i] = Html.fromHtml(textColor + context.getString(faqItems[i].description));
 
             // Add hack R.string.faq_system_dialogs_title -> R.string.faq_system_dialog_xposed
-            if (faqItems[i][0] == R.string.faq_system_dialogs_title)
+            if (faqItems[i].title == R.string.faq_system_dialogs_title)
             {
-                Spanned xposedtext = Html.fromHtml(context.getString(R.string.faq_system_dialog_xposed));
-                mHtmlEntries[i] = (Spanned) TextUtils.concat(mHtmlEntries[i], xposedtext);
+                Spanned xPosedtext = Html.fromHtml(textColor + context.getString(R.string.faq_system_dialog_xposed));
+                mHtmlEntries[i] = (Spanned) TextUtils.concat(mHtmlEntries[i], xPosedtext);
             }
 
         }
@@ -68,13 +91,17 @@ public class FaqViewAdapter extends RecyclerView.Adapter<FaqViewAdapter.FaqViewH
 
     @Override
     public void onBindViewHolder(FaqViewHolder faqViewHolder, int i) {
-        faqViewHolder.mHead.setText(mFaqItems[i][0]);
+
+        faqViewHolder.mHead.setText(mHtmlEntriesTitle[i]);
         faqViewHolder.mBody.setText(mHtmlEntries[i]);
+
+
     }
 
     @Override
     public int getItemCount() {
         return mFaqItems.length;
     }
+
 
 }

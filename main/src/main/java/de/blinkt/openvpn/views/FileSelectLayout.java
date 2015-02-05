@@ -32,23 +32,22 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 
 
     public void parseResponse(Intent data, Context c) {
-        if (VERSION.SDK_INT < VERSION_CODES.KITKAT) {
-            String fileData = data.getStringExtra(FileSelect.RESULT_DATA);
-            setData(fileData, c);
-        } else if (data != null) {
+
             try {
                 String newData = Utils.getFilePickerResult(fileType, data, c);
                 if (newData!=null)
                     setData(newData, c);
+
+                if (newData == null) {
+                    String fileData = data.getStringExtra(FileSelect.RESULT_DATA);
+                    setData(fileData, c);
+                }
 
             } catch (IOException e) {
                 VpnStatus.logException(e);
             } catch (SecurityException e) {
                 VpnStatus.logException(e);
             }
-
-
-        }
     }
 
     public interface FileSelectCallback {
@@ -166,8 +165,12 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == mSelectButton) {
+            Intent startFilePicker=null;
             if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
-                Intent startFilePicker = Utils.getFilePickerIntent(getContext(),fileType);
+                startFilePicker = Utils.getFilePickerIntent(getContext(), fileType);
+            }
+
+            if (startFilePicker != null) {
                 mFragment.startActivityForResult(startFilePicker, mTaskId);
             } else {
                 getCertificateFileDialog();

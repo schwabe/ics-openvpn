@@ -256,8 +256,10 @@ public class VPNProfileList extends ListFragment {
 			AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             if (mCopyProfile == null)
 			    dialog.setTitle(R.string.menu_add_profile);
-            else
+            else {
                 dialog.setTitle(context.getString(R.string.duplicate_profile_title, mCopyProfile.mName));
+                entry.setText(getString(R.string.copy_of_profile, mCopyProfile.mName));
+            }
 
             dialog.setMessage(R.string.add_profile_name_prompt);
 			dialog.setView(entry);

@@ -365,5 +365,6 @@
     <string name="ab_proxy_title">Proxy behaviour for VPNs</string>
     <string name="ab_lollipop_reinstall_title">Reinstalling VPN apps</string>
     <string name="version_upto">%s and earlier</string>
+    <string name="copy_of_profile">Copy of %s</string>
 
 </resources>

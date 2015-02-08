@@ -695,7 +695,11 @@ public class VpnProfile implements Serializable, Cloneable {
     protected VpnProfile clone() throws CloneNotSupportedException {
         VpnProfile copy = (VpnProfile) super.clone();
         copy.mUuid = UUID.randomUUID();
-        copy.mConnections = mConnections.clone();
+        copy.mConnections = new Connection[mConnections.length];
+        int i=0;
+        for (Connection conn: mConnections) {
+            copy.mConnections[i++]=conn.clone();
+        }
         copy.mAllowedAppsVpn = (HashSet<String>) mAllowedAppsVpn.clone();
         return copy;
     }

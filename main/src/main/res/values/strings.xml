@@ -357,7 +357,7 @@
     <string name="ab_proxy">Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.<p>When a VPN sets a DNS server Android will not a proxy. There is no API to set a proxy for a VPN connection.</p></string>
     <string name="ab_lollipop_reinstall">VPN apps may stop working when uninstalled and reinstalled again. For details see #80074</string>
     <string name="ab_not_route_to_vpn">The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask</string>
-    <string name="ab_persist_tun">Opening a tun device while another tun device is active, which is used for persist-tun support, crashes the VPNServices on the device. A reboot is required to make VPN work again. OpenVPN for Android tries to avoid reopening the tun device and if really needed first closes the current TUN before opening the new TUN device to avoid to crash. This may lead to a short window where packets are sent over the non-VPN connection.</string>
+    <string name="ab_persist_tun">Opening a tun device while another tun device is active, which is used for persist-tun support, crashes the VPNServices on the device. A reboot is required to make VPN work again. OpenVPN for Android tries to avoid reopening the tun device and if really needed first closes the current TUN before opening the new TUN device to avoid to crash. This may lead to a short window where packets are sent over the non-VPN connection. Even with this workaround the VPNServices sometimes crashes and requires a reboot of the device.</string>
     <string name="ab_secondary_users">VPN does not work at all for secondary users.</string>
     <string name="ab_kitkat_reconnect">"Multiple users report that the mobile connection/mobile data connection is frequently dropped while using the VPN app. The behaviour seems to affect only some mobile provider/device combination and so far no cause/workaround for the bug could be identified. "</string>
     <string name="ab_vpn_reachability_44">Only destination can be reached over the VPN that are reachable without VPN. IPv6 VPNs does not work at all.</string>
@@ -366,5 +366,8 @@
     <string name="ab_lollipop_reinstall_title">Reinstalling VPN apps</string>
     <string name="version_upto">%s and earlier</string>
     <string name="copy_of_profile">Copy of %s</string>
+    <string name="ab_not_route_to_vpn_title">Route to the configured IP address</string>
+    <string name="ab_kitkat_mss_title">Wrong MSS value for VPN connection</string>
+    <string name="ab_secondary_users_title">Secondary tablet users</string>
 
 </resources>

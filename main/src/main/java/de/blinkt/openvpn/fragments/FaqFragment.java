@@ -24,7 +24,7 @@ public class FaqFragment extends Fragment {
     static class FAQEntry {
 
         public FAQEntry(int startVersion, int endVersion, int description) {
-            this (startVersion, endVersion, -1, description);
+            this(startVersion, endVersion, -1, description);
         }
 
         public FAQEntry(int startVersion, int endVersion, int title, int description) {
@@ -52,7 +52,7 @@ public class FaqFragment extends Fragment {
                         !release.startsWith("4.4.3") && !release.startsWith("4.4.3")
                         && !release.startsWith("4.4.4") && !release.startsWith("4.4.5") && !release.startsWith("4.4.6");
 
-                boolean isAtLeast443 = isAtLeast442 &&   !release.startsWith("4.4.2");
+                boolean isAtLeast443 = isAtLeast442 && !release.startsWith("4.4.2");
                 if (endVersion == -441 && !isAtLeast442)
                     return true;
 
@@ -72,37 +72,37 @@ public class FaqFragment extends Fragment {
                     return c.getString(R.string.version_upto, getAndroidVersionString(c, endVersion));
             }
 
-            if (endVersion==-1)
+            if (endVersion == -1)
                 return getAndroidVersionString(c, startVersion) + " and later";
 
 
             String startver = getAndroidVersionString(c, startVersion);
 
             if (endVersion == startVersion)
-                    return startver;
+                return startver;
 
             return String.format("%s - %s", startver, getAndroidVersionString(c, endVersion));
         }
 
 
-     private String getAndroidVersionString(Context c, int versionCode) {
-        switch (versionCode) {
-            case Build.VERSION_CODES.ICE_CREAM_SANDWICH:
-                return "4.0 (Ice Cream Sandwich)";
-            case -441:
-                return "4.4.1 (KitKat)";
-            case -442:
-                return "4.4.2 (KitKat)";
-            case Build.VERSION_CODES.JELLY_BEAN_MR2:
-                return "4.3 (Jelly Bean MR2)";
-            case Build.VERSION_CODES.KITKAT:
-                return "4.4 (KitKat)";
-            case Build.VERSION_CODES.LOLLIPOP:
-                return "5.0 (Lollipop)";
-            default:
-                return "API " + versionCode;
+        private String getAndroidVersionString(Context c, int versionCode) {
+            switch (versionCode) {
+                case Build.VERSION_CODES.ICE_CREAM_SANDWICH:
+                    return "4.0 (Ice Cream Sandwich)";
+                case -441:
+                    return "4.4.1 (KitKat)";
+                case -442:
+                    return "4.4.2 (KitKat)";
+                case Build.VERSION_CODES.JELLY_BEAN_MR2:
+                    return "4.3 (Jelly Bean MR2)";
+                case Build.VERSION_CODES.KITKAT:
+                    return "4.4 (KitKat)";
+                case Build.VERSION_CODES.LOLLIPOP:
+                    return "5.0 (Lollipop)";
+                default:
+                    return "API " + versionCode;
+            }
         }
-    }
 
 
     }
@@ -125,10 +125,10 @@ public class FaqFragment extends Fragment {
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.battery_consumption_title, R.string.baterry_consumption),
 
 
-            new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, Build.VERSION_CODES.KITKAT , R.string.faq_system_dialogs_title, R.string.faq_system_dialogs),
+            new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, Build.VERSION_CODES.KITKAT, R.string.faq_system_dialogs_title, R.string.faq_system_dialogs),
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.tap_mode, R.string.faq_tap_mode),
 
-            new FAQEntry(Build.VERSION_CODES.JELLY_BEAN_MR2, Build.VERSION_CODES.JELLY_BEAN_MR2, R.string.ab_secondary_users),
+            new FAQEntry(Build.VERSION_CODES.JELLY_BEAN_MR2, Build.VERSION_CODES.JELLY_BEAN_MR2, R.string.ab_secondary_users_title, R.string.ab_secondary_users),
             new FAQEntry(Build.VERSION_CODES.JELLY_BEAN_MR2, -1, R.string.faq_vpndialog43_title, R.string.faq_vpndialog43),
 
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.faq_security_title, R.string.faq_security),
@@ -137,10 +137,10 @@ public class FaqFragment extends Fragment {
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.tap_mode, R.string.tap_faq2),
 
             new FAQEntry(Build.VERSION_CODES.KITKAT, -1, R.string.vpn_tethering_title, R.string.ab_tethering_44),
-            new FAQEntry(Build.VERSION_CODES.KITKAT, -441, R.string.ab_kitkat_mss),
+            new FAQEntry(Build.VERSION_CODES.KITKAT, -441, R.string.ab_kitkat_mss_title, R.string.ab_kitkat_mss),
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.copying_log_entries, R.string.faq_copying),
 
-            new FAQEntry(Build.VERSION_CODES.KITKAT, -442,  R.string.ab_persist_tun),
+            new FAQEntry(Build.VERSION_CODES.KITKAT, -442, R.string.ab_persist_tun),
             new FAQEntry(Build.VERSION_CODES.KITKAT, -1, R.string.faq_routing_title, R.string.faq_routing),
             new FAQEntry(Build.VERSION_CODES.KITKAT, Build.VERSION_CODES.KITKAT, R.string.ab_kitkat_reconnect),
             new FAQEntry(Build.VERSION_CODES.KITKAT, Build.VERSION_CODES.KITKAT, R.string.ab_vpn_reachability_44),
@@ -149,12 +149,10 @@ public class FaqFragment extends Fragment {
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.ab_only_cidr_title, R.string.ab_only_cidr),
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.ab_proxy_title, R.string.ab_proxy),
 
-            new FAQEntry(Build.VERSION_CODES.LOLLIPOP, -1, R.string.ab_not_route_to_vpn),
+            new FAQEntry(Build.VERSION_CODES.LOLLIPOP, -1, R.string.ab_not_route_to_vpn_title, R.string.ab_not_route_to_vpn),
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.tap_mode, R.string.tap_faq3),
 
     };
-
-
 
 
     private RecyclerView mRecyclerView;
@@ -192,13 +190,11 @@ public class FaqFragment extends Fragment {
     private FAQEntry[] getFAQEntries() {
         Vector<FAQEntry> faqItems = new Vector<>();
 
-        for (FAQEntry fe : faqitemsVersionSpecific)
-        {
+        for (FAQEntry fe : faqitemsVersionSpecific) {
             if (fe.runningVersion())
                 faqItems.add(fe);
         }
-        for (FAQEntry fe : faqitemsVersionSpecific)
-        {
+        for (FAQEntry fe : faqitemsVersionSpecific) {
             if (!fe.runningVersion())
                 faqItems.add(fe);
         }

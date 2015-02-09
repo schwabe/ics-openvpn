@@ -264,14 +264,16 @@ tls_get_cipher_name_pair (const char * cipher_name, size_t len) {
   return NULL;
 }
 
-/**
- * Max number of bytes we will add for data structures common to both data and
- * control channel packets (1 byte opcode + 3 bytes peer-id).
+/*
+ * Max number of bytes we will add
+ * for data structures common to both
+ * data and control channel packets.
+ * (opcode only).
  */
 void
 tls_adjust_frame_parameters(struct frame *frame)
 {
-  frame_add_to_extra_frame (frame, 1 + 3); /* space for opcode + peer-id */
+  frame_add_to_extra_frame (frame, 1); /* space for opcode */
 }
 
 /*
@@ -518,10 +520,18 @@ init_ssl (const struct options *options, struct tls_root_ctx *new_ctx)
     }
 #endif
 #ifdef MANAGMENT_EXTERNAL_KEY
-  else if ((options->management_flags & MF_EXTERNAL_KEY) && options->cert_file)
+  else if ((options->management_flags & MF_EXTERNAL_KEY) &&
+           (options->cert_file || options->management_flags & MF_EXTERNAL_CERT))
     {
-      tls_ctx_use_external_private_key(new_ctx, options->cert_file,
-	  options->cert_file_inline);
+      if (options->cert_file) {
+        tls_ctx_use_external_private_key(new_ctx, options->cert_file,
+          options->cert_file_inline);
+      } else {
+        char *external_certificate = management_query_cert(management);
+        tls_ctx_use_external_private_key(new_ctx, INLINE_FILE_TAG,
+            external_certificate);
+        free(external_certificate);
+      }
     }
 #endif
   else

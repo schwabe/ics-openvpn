@@ -19,7 +19,6 @@ Debug
 Win32-Output
 .deps
 .libs
-Makefile
 Makefile.in
 aclocal.m4
 autodefs.h

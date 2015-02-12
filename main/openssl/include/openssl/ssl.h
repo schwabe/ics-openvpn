@@ -607,9 +607,8 @@ struct ssl_session_st
 #define SSL_OP_SINGLE_ECDH_USE				0x00080000L
 /* If set, always create a new key when using tmp_dh parameters */
 #define SSL_OP_SINGLE_DH_USE				0x00100000L
-/* Set to always use the tmp_rsa key when doing RSA operations,
- * even when this violates protocol specs */
-#define SSL_OP_EPHEMERAL_RSA				0x00200000L
+/* Does nothing: retained for compatibiity */
+#define SSL_OP_EPHEMERAL_RSA				0x0
 /* Set on servers to choose the cipher according to the server's
  * preferences */
 #define SSL_OP_CIPHER_SERVER_PREFERENCE			0x00400000L
@@ -666,8 +665,13 @@ struct ssl_session_st
 #define SSL_MODE_SEND_CLIENTHELLO_TIME 0x00000020L
 #define SSL_MODE_SEND_SERVERHELLO_TIME 0x00000040L
 /* Send TLS_FALLBACK_SCSV in the ClientHello.
- * To be set by applications that reconnect with a downgraded protocol
- * version; see draft-ietf-tls-downgrade-scsv-00 for details. */
+ * To be set only by applications that reconnect with a downgraded protocol
+ * version; see draft-ietf-tls-downgrade-scsv-00 for details.
+ *
+ * DO NOT ENABLE THIS if your application attempts a normal handshake.
+ * Only use this in explicit fallback retries, following the guidance
+ * in draft-ietf-tls-downgrade-scsv-00.
+ */
 #define SSL_MODE_SEND_FALLBACK_SCSV 0x00000080L
 
 /* When set, clients may send application data before receipt of CCS
@@ -711,6 +715,10 @@ struct ssl_session_st
         SSL_ctrl((ssl),SSL_CTRL_MODE,0,NULL)
 #define SSL_set_mtu(ssl, mtu) \
         SSL_ctrl((ssl),SSL_CTRL_SET_MTU,(mtu),NULL)
+#define DTLS_set_link_mtu(ssl, mtu) \
+        SSL_ctrl((ssl),DTLS_CTRL_SET_LINK_MTU,(mtu),NULL)
+#define DTLS_get_link_min_mtu(ssl) \
+        SSL_ctrl((ssl),DTLS_CTRL_GET_LINK_MIN_MTU,0,NULL)
 
 #define SSL_get_secure_renegotiation_support(ssl) \
 	SSL_ctrl((ssl), SSL_CTRL_GET_RI_SUPPORT, 0, NULL)
@@ -1736,6 +1744,8 @@ DECLARE_PEM_rw(SSL_SESSION, SSL_SESSION)
 #define SSL_CTRL_CLEAR_EXTRA_CHAIN_CERTS	83
 
 #define SSL_CTRL_CHECK_PROTO_VERSION		119
+#define DTLS_CTRL_SET_LINK_MTU			120
+#define DTLS_CTRL_GET_LINK_MIN_MTU		121
 
 #define DTLSv1_get_timeout(ssl, arg) \
 	SSL_ctrl(ssl,DTLS_CTRL_GET_TIMEOUT,0, (void *)arg)
@@ -2014,13 +2024,15 @@ const SSL_METHOD *SSLv2_server_method(void);	/* SSLv2 */
 const SSL_METHOD *SSLv2_client_method(void);	/* SSLv2 */
 #endif
 
+#ifndef OPENSSL_NO_SSL3_METHOD
 const SSL_METHOD *SSLv3_method(void);		/* SSLv3 */
 const SSL_METHOD *SSLv3_server_method(void);	/* SSLv3 */
 const SSL_METHOD *SSLv3_client_method(void);	/* SSLv3 */
+#endif
 
-const SSL_METHOD *SSLv23_method(void);	/* SSLv3 but can rollback to v2 */
-const SSL_METHOD *SSLv23_server_method(void);	/* SSLv3 but can rollback to v2 */
-const SSL_METHOD *SSLv23_client_method(void);	/* SSLv3 but can rollback to v2 */
+const SSL_METHOD *SSLv23_method(void);	/* Negotiate highest available SSL/TLS version */
+const SSL_METHOD *SSLv23_server_method(void);	/* Negotiate highest available SSL/TLS version */
+const SSL_METHOD *SSLv23_client_method(void);	/* Negotiate highest available SSL/TLS version */
 
 const SSL_METHOD *TLSv1_method(void);		/* TLSv1.0 */
 const SSL_METHOD *TLSv1_server_method(void);	/* TLSv1.0 */
@@ -2592,7 +2604,7 @@ void ERR_load_SSL_strings(void);
 #define SSL_R_NO_COMPRESSION_SPECIFIED			 187
 #define SSL_R_NO_GOST_CERTIFICATE_SENT_BY_PEER		 330
 #define SSL_R_NO_METHOD_SPECIFIED			 188
-#define SSL_R_NO_P256_SUPPORT				 373
+#define SSL_R_NO_P256_SUPPORT				 380
 #define SSL_R_NO_PRIVATEKEY				 189
 #define SSL_R_NO_PRIVATE_KEY_ASSIGNED			 190
 #define SSL_R_NO_PROTOCOLS_AVAILABLE			 191

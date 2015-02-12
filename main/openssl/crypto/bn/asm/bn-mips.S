@@ -1549,21 +1549,20 @@ bn_sqr_comba8:
 	sltu	$1,$3,$24
 	addu	$7,$25,$1
 	sw	$3,4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$3,$25,$0
-	sll	$25,1
-	multu	$13,$13		# mul_add_c(a[1],b[1],c3,c1,c2);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$7,$24
 	sltu	$1,$7,$24
-	addu	$25,$1
+	 multu	$13,$13			# forward multiplication
+	addu	$7,$24
+	addu	$1,$25
+	sltu	$24,$7,$24
+	addu	$2,$1
+	addu	$25,$24
+	sltu	$3,$2,$1
 	addu	$2,$25
-	sltu	$1,$2,$25
-	addu	$3,$1
+	sltu	$25,$2,$25
+	addu	$3,$25
 	mflo	$24
 	mfhi	$25
 	addu	$7,$24
@@ -1574,67 +1573,65 @@ bn_sqr_comba8:
 	sltu	$1,$2,$25
 	addu	$3,$1
 	sw	$7,2*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$7,$25,$0
-	sll	$25,1
-	multu	$13,$14		# mul_add_c2(a[1],b[2],c1,c2,c3);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$2,$24
 	sltu	$1,$2,$24
-	addu	$25,$1
+	 multu	$13,$14			# forward multiplication
+	addu	$2,$24
+	addu	$1,$25
+	sltu	$24,$2,$24
+	addu	$3,$1
+	addu	$25,$24
+	sltu	$7,$3,$1
 	addu	$3,$25
-	sltu	$1,$3,$25
-	addu	$7,$1
+	sltu	$25,$3,$25
+	addu	$7,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$7,$1
-	 multu	$8,$12		# mul_add_c2(a[4],b[0],c2,c3,c1);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$2,$24
 	sltu	$1,$2,$24
-	addu	$25,$1
+	 multu	$8,$12			# forward multiplication
+	addu	$2,$24
+	addu	$1,$25
+	sltu	$24,$2,$24
+	addu	$3,$1
+	addu	$25,$24
+	sltu	$1,$3,$1
 	addu	$3,$25
-	sltu	$1,$3,$25
 	addu	$7,$1
+	sltu	$25,$3,$25
+	addu	$7,$25
 	sw	$2,3*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$2,$25,$0
-	sll	$25,1
-	multu	$15,$13		# mul_add_c2(a[3],b[1],c2,c3,c1);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$3,$24
 	sltu	$1,$3,$24
-	addu	$25,$1
+	 multu	$15,$13			# forward multiplication
+	addu	$3,$24
+	addu	$1,$25
+	sltu	$24,$3,$24
+	addu	$7,$1
+	addu	$25,$24
+	sltu	$2,$7,$1
 	addu	$7,$25
-	sltu	$1,$7,$25
-	addu	$2,$1
+	sltu	$25,$7,$25
+	addu	$2,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$2,$1
-	multu	$14,$14		# mul_add_c(a[2],b[2],c2,c3,c1);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$3,$24
 	sltu	$1,$3,$24
-	addu	$25,$1
+	 multu	$14,$14			# forward multiplication
+	addu	$3,$24
+	addu	$1,$25
+	sltu	$24,$3,$24
+	addu	$7,$1
+	addu	$25,$24
+	sltu	$1,$7,$1
 	addu	$7,$25
-	sltu	$1,$7,$25
 	addu	$2,$1
+	sltu	$25,$7,$25
+	addu	$2,$25
 	mflo	$24
 	mfhi	$25
 	addu	$3,$24
@@ -1645,97 +1642,95 @@ bn_sqr_comba8:
 	sltu	$1,$7,$25
 	addu	$2,$1
 	sw	$3,4*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$3,$25,$0
-	sll	$25,1
-	multu	$13,$8		# mul_add_c2(a[1],b[4],c3,c1,c2);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$7,$24
 	sltu	$1,$7,$24
-	addu	$25,$1
+	 multu	$13,$8			# forward multiplication
+	addu	$7,$24
+	addu	$1,$25
+	sltu	$24,$7,$24
+	addu	$2,$1
+	addu	$25,$24
+	sltu	$3,$2,$1
 	addu	$2,$25
-	sltu	$1,$2,$25
-	addu	$3,$1
+	sltu	$25,$2,$25
+	addu	$3,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$3,$1
-	multu	$14,$15		# mul_add_c2(a[2],b[3],c3,c1,c2);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$7,$24
 	sltu	$1,$7,$24
-	addu	$25,$1
+	 multu	$14,$15			# forward multiplication
+	addu	$7,$24
+	addu	$1,$25
+	sltu	$24,$7,$24
+	addu	$2,$1
+	addu	$25,$24
+	sltu	$1,$2,$1
 	addu	$2,$25
-	sltu	$1,$2,$25
 	addu	$3,$1
+	sltu	$25,$2,$25
+	addu	$3,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	 multu	$10,$12		# mul_add_c2(a[6],b[0],c1,c2,c3);
-	addu	$3,$1
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$7,$24
 	sltu	$1,$7,$24
-	addu	$25,$1
+	 multu	$10,$12			# forward multiplication
+	addu	$7,$24
+	addu	$1,$25
+	sltu	$24,$7,$24
+	addu	$2,$1
+	addu	$25,$24
+	sltu	$1,$2,$1
 	addu	$2,$25
-	sltu	$1,$2,$25
 	addu	$3,$1
+	sltu	$25,$2,$25
+	addu	$3,$25
 	sw	$7,5*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$7,$25,$0
-	sll	$25,1
-	multu	$9,$13		# mul_add_c2(a[5],b[1],c1,c2,c3);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$2,$24
 	sltu	$1,$2,$24
-	addu	$25,$1
+	 multu	$9,$13			# forward multiplication
+	addu	$2,$24
+	addu	$1,$25
+	sltu	$24,$2,$24
+	addu	$3,$1
+	addu	$25,$24
+	sltu	$7,$3,$1
 	addu	$3,$25
-	sltu	$1,$3,$25
-	addu	$7,$1
+	sltu	$25,$3,$25
+	addu	$7,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$7,$1
-	multu	$8,$14		# mul_add_c2(a[4],b[2],c1,c2,c3);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$2,$24
 	sltu	$1,$2,$24
-	addu	$25,$1
+	 multu	$8,$14			# forward multiplication
+	addu	$2,$24
+	addu	$1,$25
+	sltu	$24,$2,$24
+	addu	$3,$1
+	addu	$25,$24
+	sltu	$1,$3,$1
 	addu	$3,$25
-	sltu	$1,$3,$25
 	addu	$7,$1
+	sltu	$25,$3,$25
+	addu	$7,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$7,$1
-	multu	$15,$15		# mul_add_c(a[3],b[3],c1,c2,c3);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$2,$24
 	sltu	$1,$2,$24
-	addu	$25,$1
+	 multu	$15,$15			# forward multiplication
+	addu	$2,$24
+	addu	$1,$25
+	sltu	$24,$2,$24
+	addu	$3,$1
+	addu	$25,$24
+	sltu	$1,$3,$1
 	addu	$3,$25
-	sltu	$1,$3,$25
 	addu	$7,$1
+	sltu	$25,$3,$25
+	addu	$7,$25
 	mflo	$24
 	mfhi	$25
 	addu	$2,$24
@@ -1746,112 +1741,110 @@ bn_sqr_comba8:
 	sltu	$1,$3,$25
 	addu	$7,$1
 	sw	$2,6*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$2,$25,$0
-	sll	$25,1
-	multu	$13,$10		# mul_add_c2(a[1],b[6],c2,c3,c1);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$3,$24
 	sltu	$1,$3,$24
-	addu	$25,$1
+	 multu	$13,$10			# forward multiplication
+	addu	$3,$24
+	addu	$1,$25
+	sltu	$24,$3,$24
+	addu	$7,$1
+	addu	$25,$24
+	sltu	$2,$7,$1
 	addu	$7,$25
-	sltu	$1,$7,$25
-	addu	$2,$1
+	sltu	$25,$7,$25
+	addu	$2,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$2,$1
-	multu	$14,$9		# mul_add_c2(a[2],b[5],c2,c3,c1);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$3,$24
 	sltu	$1,$3,$24
-	addu	$25,$1
+	 multu	$14,$9			# forward multiplication
+	addu	$3,$24
+	addu	$1,$25
+	sltu	$24,$3,$24
+	addu	$7,$1
+	addu	$25,$24
+	sltu	$1,$7,$1
 	addu	$7,$25
-	sltu	$1,$7,$25
 	addu	$2,$1
+	sltu	$25,$7,$25
+	addu	$2,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$2,$1
-	multu	$15,$8		# mul_add_c2(a[3],b[4],c2,c3,c1);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$3,$24
 	sltu	$1,$3,$24
-	addu	$25,$1
+	 multu	$15,$8			# forward multiplication
+	addu	$3,$24
+	addu	$1,$25
+	sltu	$24,$3,$24
+	addu	$7,$1
+	addu	$25,$24
+	sltu	$1,$7,$1
 	addu	$7,$25
-	sltu	$1,$7,$25
 	addu	$2,$1
+	sltu	$25,$7,$25
+	addu	$2,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$2,$1
-	 multu	$11,$13		# mul_add_c2(a[7],b[1],c3,c1,c2);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$3,$24
 	sltu	$1,$3,$24
-	addu	$25,$1
+	 multu	$11,$13			# forward multiplication
+	addu	$3,$24
+	addu	$1,$25
+	sltu	$24,$3,$24
+	addu	$7,$1
+	addu	$25,$24
+	sltu	$1,$7,$1
 	addu	$7,$25
-	sltu	$1,$7,$25
 	addu	$2,$1
+	sltu	$25,$7,$25
+	addu	$2,$25
 	sw	$3,7*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$3,$25,$0
-	sll	$25,1
-	multu	$10,$14		# mul_add_c2(a[6],b[2],c3,c1,c2);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$7,$24
 	sltu	$1,$7,$24
-	addu	$25,$1
+	 multu	$10,$14			# forward multiplication
+	addu	$7,$24
+	addu	$1,$25
+	sltu	$24,$7,$24
+	addu	$2,$1
+	addu	$25,$24
+	sltu	$3,$2,$1
 	addu	$2,$25
-	sltu	$1,$2,$25
-	addu	$3,$1
+	sltu	$25,$2,$25
+	addu	$3,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$3,$1
-	multu	$9,$15		# mul_add_c2(a[5],b[3],c3,c1,c2);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$7,$24
 	sltu	$1,$7,$24
-	addu	$25,$1
+	 multu	$9,$15			# forward multiplication
+	addu	$7,$24
+	addu	$1,$25
+	sltu	$24,$7,$24
+	addu	$2,$1
+	addu	$25,$24
+	sltu	$1,$2,$1
 	addu	$2,$25
-	sltu	$1,$2,$25
 	addu	$3,$1
+	sltu	$25,$2,$25
+	addu	$3,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$3,$1
-	multu	$8,$8		# mul_add_c(a[4],b[4],c3,c1,c2);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$7,$24
 	sltu	$1,$7,$24
-	addu	$25,$1
+	 multu	$8,$8			# forward multiplication
+	addu	$7,$24
+	addu	$1,$25
+	sltu	$24,$7,$24
+	addu	$2,$1
+	addu	$25,$24
+	sltu	$1,$2,$1
 	addu	$2,$25
-	sltu	$1,$2,$25
 	addu	$3,$1
+	sltu	$25,$2,$25
+	addu	$3,$25
 	mflo	$24
 	mfhi	$25
 	addu	$7,$24
@@ -1862,82 +1855,80 @@ bn_sqr_comba8:
 	sltu	$1,$2,$25
 	addu	$3,$1
 	sw	$7,8*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$7,$25,$0
-	sll	$25,1
-	multu	$15,$10		# mul_add_c2(a[3],b[6],c1,c2,c3);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$2,$24
 	sltu	$1,$2,$24
-	addu	$25,$1
+	 multu	$15,$10			# forward multiplication
+	addu	$2,$24
+	addu	$1,$25
+	sltu	$24,$2,$24
+	addu	$3,$1
+	addu	$25,$24
+	sltu	$7,$3,$1
 	addu	$3,$25
-	sltu	$1,$3,$25
-	addu	$7,$1
+	sltu	$25,$3,$25
+	addu	$7,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$7,$1
-	multu	$8,$9		# mul_add_c2(a[4],b[5],c1,c2,c3);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$2,$24
 	sltu	$1,$2,$24
-	addu	$25,$1
+	 multu	$8,$9			# forward multiplication
+	addu	$2,$24
+	addu	$1,$25
+	sltu	$24,$2,$24
+	addu	$3,$1
+	addu	$25,$24
+	sltu	$1,$3,$1
 	addu	$3,$25
-	sltu	$1,$3,$25
 	addu	$7,$1
+	sltu	$25,$3,$25
+	addu	$7,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$7,$1
-	 multu	$11,$15		# mul_add_c2(a[7],b[3],c2,c3,c1);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$2,$24
 	sltu	$1,$2,$24
-	addu	$25,$1
+	 multu	$11,$15			# forward multiplication
+	addu	$2,$24
+	addu	$1,$25
+	sltu	$24,$2,$24
+	addu	$3,$1
+	addu	$25,$24
+	sltu	$1,$3,$1
 	addu	$3,$25
-	sltu	$1,$3,$25
 	addu	$7,$1
+	sltu	$25,$3,$25
+	addu	$7,$25
 	sw	$2,9*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$2,$25,$0
-	sll	$25,1
-	multu	$10,$8		# mul_add_c2(a[6],b[4],c2,c3,c1);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$3,$24
 	sltu	$1,$3,$24
-	addu	$25,$1
+	 multu	$10,$8			# forward multiplication
+	addu	$3,$24
+	addu	$1,$25
+	sltu	$24,$3,$24
+	addu	$7,$1
+	addu	$25,$24
+	sltu	$2,$7,$1
 	addu	$7,$25
-	sltu	$1,$7,$25
-	addu	$2,$1
+	sltu	$25,$7,$25
+	addu	$2,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$2,$1
-	multu	$9,$9		# mul_add_c(a[5],b[5],c2,c3,c1);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$3,$24
 	sltu	$1,$3,$24
-	addu	$25,$1
+	 multu	$9,$9			# forward multiplication
+	addu	$3,$24
+	addu	$1,$25
+	sltu	$24,$3,$24
+	addu	$7,$1
+	addu	$25,$24
+	sltu	$1,$7,$1
 	addu	$7,$25
-	sltu	$1,$7,$25
 	addu	$2,$1
+	sltu	$25,$7,$25
+	addu	$2,$25
 	mflo	$24
 	mfhi	$25
 	addu	$3,$24
@@ -1948,52 +1939,50 @@ bn_sqr_comba8:
 	sltu	$1,$7,$25
 	addu	$2,$1
 	sw	$3,10*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$3,$25,$0
-	sll	$25,1
-	multu	$9,$10		# mul_add_c2(a[5],b[6],c3,c1,c2);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$7,$24
 	sltu	$1,$7,$24
-	addu	$25,$1
+	 multu	$9,$10			# forward multiplication
+	addu	$7,$24
+	addu	$1,$25
+	sltu	$24,$7,$24
+	addu	$2,$1
+	addu	$25,$24
+	sltu	$3,$2,$1
 	addu	$2,$25
-	sltu	$1,$2,$25
-	addu	$3,$1
+	sltu	$25,$2,$25
+	addu	$3,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$3,$1
-	 multu	$11,$9		# mul_add_c2(a[7],b[5],c1,c2,c3);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$7,$24
 	sltu	$1,$7,$24
-	addu	$25,$1
+	 multu	$11,$9			# forward multiplication
+	addu	$7,$24
+	addu	$1,$25
+	sltu	$24,$7,$24
+	addu	$2,$1
+	addu	$25,$24
+	sltu	$1,$2,$1
 	addu	$2,$25
-	sltu	$1,$2,$25
 	addu	$3,$1
+	sltu	$25,$2,$25
+	addu	$3,$25
 	sw	$7,11*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$7,$25,$0
-	sll	$25,1
-	multu	$10,$10		# mul_add_c(a[6],b[6],c1,c2,c3);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$2,$24
 	sltu	$1,$2,$24
-	addu	$25,$1
+	 multu	$10,$10			# forward multiplication
+	addu	$2,$24
+	addu	$1,$25
+	sltu	$24,$2,$24
+	addu	$3,$1
+	addu	$25,$24
+	sltu	$7,$3,$1
 	addu	$3,$25
-	sltu	$1,$3,$25
-	addu	$7,$1
+	sltu	$25,$3,$25
+	addu	$7,$25
 	mflo	$24
 	mfhi	$25
 	addu	$2,$24
@@ -2004,21 +1993,20 @@ bn_sqr_comba8:
 	sltu	$1,$3,$25
 	addu	$7,$1
 	sw	$2,12*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$2,$25,$0
-	sll	$25,1
-	 multu	$11,$11		# mul_add_c(a[7],b[7],c3,c1,c2);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$3,$24
 	sltu	$1,$3,$24
-	addu	$25,$1
+	 multu	$11,$11			# forward multiplication
+	addu	$3,$24
+	addu	$1,$25
+	sltu	$24,$3,$24
+	addu	$7,$1
+	addu	$25,$24
+	sltu	$2,$7,$1
 	addu	$7,$25
-	sltu	$1,$7,$25
-	addu	$2,$1
+	sltu	$25,$7,$25
+	addu	$2,$25
 	sw	$3,13*4($4)
 
 	mflo	$24
@@ -2062,21 +2050,20 @@ bn_sqr_comba4:
 	sltu	$1,$3,$24
 	addu	$7,$25,$1
 	sw	$3,4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$3,$25,$0
-	sll	$25,1
-	multu	$13,$13		# mul_add_c(a[1],b[1],c3,c1,c2);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$7,$24
 	sltu	$1,$7,$24
-	addu	$25,$1
+	 multu	$13,$13			# forward multiplication
+	addu	$7,$24
+	addu	$1,$25
+	sltu	$24,$7,$24
+	addu	$2,$1
+	addu	$25,$24
+	sltu	$3,$2,$1
 	addu	$2,$25
-	sltu	$1,$2,$25
-	addu	$3,$1
+	sltu	$25,$2,$25
+	addu	$3,$25
 	mflo	$24
 	mfhi	$25
 	addu	$7,$24
@@ -2087,52 +2074,50 @@ bn_sqr_comba4:
 	sltu	$1,$2,$25
 	addu	$3,$1
 	sw	$7,2*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$7,$25,$0
-	sll	$25,1
-	multu	$13,$14		# mul_add_c(a2[1],b[2],c1,c2,c3);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$2,$24
 	sltu	$1,$2,$24
-	addu	$25,$1
+	 multu	$13,$14			# forward multiplication
+	addu	$2,$24
+	addu	$1,$25
+	sltu	$24,$2,$24
+	addu	$3,$1
+	addu	$25,$24
+	sltu	$7,$3,$1
 	addu	$3,$25
-	sltu	$1,$3,$25
-	addu	$7,$1
+	sltu	$25,$3,$25
+	addu	$7,$25
 	mflo	$24
 	mfhi	$25
-	slt	$1,$25,$0
-	addu	$7,$1
-	 multu	$15,$13		# mul_add_c2(a[3],b[1],c2,c3,c1);
-	sll	$25,1
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$2,$24
 	sltu	$1,$2,$24
-	addu	$25,$1
+	 multu	$15,$13			# forward multiplication
+	addu	$2,$24
+	addu	$1,$25
+	sltu	$24,$2,$24
+	addu	$3,$1
+	addu	$25,$24
+	sltu	$1,$3,$1
 	addu	$3,$25
-	sltu	$1,$3,$25
 	addu	$7,$1
+	sltu	$25,$3,$25
+	addu	$7,$25
 	sw	$2,3*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$2,$25,$0
-	sll	$25,1
-	multu	$14,$14		# mul_add_c(a[2],b[2],c2,c3,c1);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$3,$24
 	sltu	$1,$3,$24
-	addu	$25,$1
+	 multu	$14,$14			# forward multiplication
+	addu	$3,$24
+	addu	$1,$25
+	sltu	$24,$3,$24
+	addu	$7,$1
+	addu	$25,$24
+	sltu	$2,$7,$1
 	addu	$7,$25
-	sltu	$1,$7,$25
-	addu	$2,$1
+	sltu	$25,$7,$25
+	addu	$2,$25
 	mflo	$24
 	mfhi	$25
 	addu	$3,$24
@@ -2143,21 +2128,20 @@ bn_sqr_comba4:
 	sltu	$1,$7,$25
 	addu	$2,$1
 	sw	$3,4*4($4)
-
 	mflo	$24
 	mfhi	$25
-	slt	$3,$25,$0
-	sll	$25,1
-	 multu	$15,$15		# mul_add_c(a[3],b[3],c1,c2,c3);
-	slt	$6,$24,$0
-	addu	$25,$6
-	sll	$24,1
 	addu	$7,$24
 	sltu	$1,$7,$24
-	addu	$25,$1
+	 multu	$15,$15			# forward multiplication
+	addu	$7,$24
+	addu	$1,$25
+	sltu	$24,$7,$24
+	addu	$2,$1
+	addu	$25,$24
+	sltu	$3,$2,$1
 	addu	$2,$25
-	sltu	$1,$2,$25
-	addu	$3,$1
+	sltu	$25,$2,$25
+	addu	$3,$25
 	sw	$7,5*4($4)
 
 	mflo	$24

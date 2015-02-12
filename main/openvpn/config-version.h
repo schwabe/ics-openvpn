@@ -1,2 +1,2 @@
-#define CONFIGURE_GIT_REVISION "icsopenvpn_627-cff5e3e9c3ac08df"
+#define CONFIGURE_GIT_REVISION "icsopenvpn_629-3976c7f5f4d39f06"
 #define CONFIGURE_GIT_FLAGS ""

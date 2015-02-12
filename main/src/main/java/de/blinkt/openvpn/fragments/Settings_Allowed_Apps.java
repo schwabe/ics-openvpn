@@ -56,9 +56,9 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
         //public TextView disabled;
         public CompoundButton checkBox;
 
-        static public AppViewHolder createOrRecycle(LayoutInflater inflater, View convertView) {
+        static public AppViewHolder createOrRecycle(LayoutInflater inflater, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.allowed_application_layout, null);
+                convertView = inflater.inflate(R.layout.allowed_application_layout, parent, false);
 
                 // Creates a ViewHolder and store references to the two children views
                 // we want to bind data to.
@@ -151,7 +151,7 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            AppViewHolder viewHolder = AppViewHolder.createOrRecycle(mInflater, convertView);
+            AppViewHolder viewHolder = AppViewHolder.createOrRecycle(mInflater, convertView ,parent);
             convertView = viewHolder.rootView;
             viewHolder.mInfo = mPackages.get(position);
             final ApplicationInfo mInfo = mPackages.get(position);

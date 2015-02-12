@@ -4,15 +4,17 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/fdrowimage"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_alignParentLeft="true"
+        tools:background="@drawable/ic_root_folder_am"
         android:paddingLeft="3dp"
         android:paddingRight="5dp" android:contentDescription="@string/file_icon"/>
 
@@ -20,12 +22,10 @@
         android:id="@+id/fdrowtext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/fdrowimage"
-        android:layout_alignTop="@+id/fdrowimage"
-        android:layout_toRightOf="@+id/fdrowimage"
         android:gravity="center_vertical"
-        android:text="@+id/fdrowtext"
+        android:layout_gravity="center_vertical"
+        tools:text="foo, die datei,"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
-</RelativeLayout>
+</LinearLayout>

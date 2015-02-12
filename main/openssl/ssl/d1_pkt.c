@@ -214,7 +214,7 @@ dtls1_buffer_record(SSL *s, record_pqueue *queue, unsigned char *priority)
 	/* Limit the size of the queue to prevent DOS attacks */
 	if (pqueue_size(queue->q) >= 100)
 		return 0;
-		
+
 	rdata = OPENSSL_malloc(sizeof(DTLS1_RECORD_DATA));
 	item = pitem_new(priority, rdata);
 	if (rdata == NULL || item == NULL)
@@ -249,18 +249,22 @@ dtls1_buffer_record(SSL *s, record_pqueue *queue, unsigned char *priority)
 	if (!ssl3_setup_buffers(s))
 		{
 		SSLerr(SSL_F_DTLS1_BUFFER_RECORD, ERR_R_INTERNAL_ERROR);
+		if (rdata->rbuf.buf != NULL)
+			OPENSSL_free(rdata->rbuf.buf);
 		OPENSSL_free(rdata);
 		pitem_free(item);
-		return(0);
+		return(-1);
 		}
 
 	/* insert should not fail, since duplicates are dropped */
 	if (pqueue_insert(queue->q, item) == NULL)
 		{
 		SSLerr(SSL_F_DTLS1_BUFFER_RECORD, ERR_R_INTERNAL_ERROR);
+		if (rdata->rbuf.buf != NULL)
+			OPENSSL_free(rdata->rbuf.buf);
 		OPENSSL_free(rdata);
 		pitem_free(item);
-		return(0);
+		return(-1);
 		}
 
 	return(1);
@@ -316,8 +320,9 @@ dtls1_process_buffered_records(SSL *s)
             dtls1_get_unprocessed_record(s);
             if ( ! dtls1_process_record(s))
                 return(0);
-            dtls1_buffer_record(s, &(s->d1->processed_rcds), 
-                s->s3->rrec.seq_num);
+            if(dtls1_buffer_record(s, &(s->d1->processed_rcds),
+                s->s3->rrec.seq_num)<0)
+                return -1;
             }
         }
 
@@ -532,7 +537,6 @@ printf("\n");
 
 	/* we have pulled in a full packet so zero things */
 	s->packet_length=0;
-	dtls1_record_bitmap_update(s, &(s->d1->bitmap));/* Mark receipt of record. */
 	return(1);
 
 f_err:
@@ -565,7 +569,8 @@ int dtls1_get_record(SSL *s)
 
 	/* The epoch may have changed.  If so, process all the
 	 * pending records.  This is a non-blocking operation. */
-	dtls1_process_buffered_records(s);
+	if(dtls1_process_buffered_records(s)<0)
+		return -1;
 
 	/* if we're renegotiating, then there may be buffered records */
 	if (dtls1_get_processed_record(s))
@@ -644,8 +649,6 @@ again:
 		/* now s->packet_length == DTLS1_RT_HEADER_LENGTH */
 		i=rr->length;
 		n=ssl3_read_n(s,i,i,1);
-		if (n <= 0) return(n); /* error or non-blocking io */
-
 		/* this packet contained a partial record, dump it */
 		if ( n != i)
 			{
@@ -680,7 +683,8 @@ again:
 		 * would be dropped unnecessarily.
 		 */
 		if (!(s->d1->listen && rr->type == SSL3_RT_HANDSHAKE &&
-		    *p == SSL3_MT_CLIENT_HELLO) &&
+		    s->packet_length > DTLS1_RT_HEADER_LENGTH &&
+		    s->packet[DTLS1_RT_HEADER_LENGTH] == SSL3_MT_CLIENT_HELLO) &&
 		    !dtls1_record_replay_check(s, bitmap))
 			{
 			rr->length = 0;
@@ -703,7 +707,9 @@ again:
 		{
 		if ((SSL_in_init(s) || s->in_handshake) && !s->d1->listen)
 			{
-			dtls1_buffer_record(s, &(s->d1->unprocessed_rcds), rr->seq_num);
+			if(dtls1_buffer_record(s, &(s->d1->unprocessed_rcds), rr->seq_num)<0)
+				return -1;
+			dtls1_record_bitmap_update(s, bitmap);/* Mark receipt of record. */
 			}
 		rr->length = 0;
 		s->packet_length = 0;
@@ -716,6 +722,7 @@ again:
 		s->packet_length = 0;  /* dump this record */
 		goto again;   /* get another record */
 		}
+	dtls1_record_bitmap_update(s, bitmap);/* Mark receipt of record. */
 
 	return(1);
 
@@ -867,7 +874,11 @@ start:
 		 * buffer the application data for later processing rather
 		 * than dropping the connection.
 		 */
-		dtls1_buffer_record(s, &(s->d1->buffered_app_data), rr->seq_num);
+		if(dtls1_buffer_record(s, &(s->d1->buffered_app_data), rr->seq_num)<0)
+			{
+			SSLerr(SSL_F_DTLS1_READ_BYTES, ERR_R_INTERNAL_ERROR);
+			return -1;
+			}
 		rr->length = 0;
 		goto start;
 		}
@@ -1591,7 +1602,7 @@ static int do_dtls1_write(SSL *s, int type, const unsigned char *buf,
 		wr->length += bs;
 		}
 
-	s->method->ssl3_enc->enc(s,1);
+	if(s->method->ssl3_enc->enc(s,1) < 1) goto err;
 
 	/* record length after mac and block padding */
 /*	if (type == SSL3_RT_APPLICATION_DATA ||

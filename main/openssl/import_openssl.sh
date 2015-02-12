@@ -149,6 +149,8 @@ function gen_asm_mips () {
   CC=true $PERL_EXE "$1" o32 > "$OUT"
 }
 
+# TODO: gen_asm_mips64
+
 function gen_asm_x86 () {
   local OUT
   OUT=$(default_asm_file "$@")
@@ -409,7 +411,8 @@ print_defines_in_mk() {
 function generate_config_mk() {
   declare -r output="$1"
   declare -r prefix="$2"
-  declare -r all_archs="arm arm64 x86 x86_64 mips"
+  declare -r all_archs="arm arm64 x86 x86_64 mips mips64"
+  declare -r variant_archs="mips32r6"
 
   echo "Generating $(basename $output)"
   (
@@ -423,8 +426,11 @@ function generate_config_mk() {
 #    LOCAL_SRC_FILES_\$(TARGET_2ND_ARCH)
 #    LOCAL_CFLAGS_\$(TARGET_ARCH)
 #    LOCAL_CFLAGS_\$(TARGET_2ND_ARCH)
-#    LOCAL_ADDITIONAL_DEPENDENCIES
-
+#    LOCAL_ADDITIONAL_DEPENDENCIES"
+if [ $prefix != "APPS" ] ; then
+    echo "#    LOCAL_EXPORT_C_INCLUDE_DIRS"
+fi
+echo "
 
 LOCAL_ADDITIONAL_DEPENDENCIES += \$(LOCAL_PATH)/$(basename $output)
 "
@@ -438,7 +444,7 @@ LOCAL_ADDITIONAL_DEPENDENCIES += \$(LOCAL_PATH)/$(basename $output)
     common_includes=$(var_sorted_value OPENSSL_${prefix}_INCLUDES)
     print_vardef_with_prefix_in_mk common_c_includes external/openssl/ $common_includes
 
-    for arch in $all_archs; do
+    for arch in $all_archs $variant_archs; do
       arch_clang_asflags=$(var_sorted_value OPENSSL_${prefix}_CLANG_ASFLAGS_${arch})
       print_vardef_in_mk ${arch}_clang_asflags $arch_clang_asflags
 
@@ -452,6 +458,24 @@ LOCAL_ADDITIONAL_DEPENDENCIES += \$(LOCAL_PATH)/$(basename $output)
       print_vardef_in_mk ${arch}_exclude_files $arch_exclude_sources
 
     done
+
+    if [ $prefix == "CRYPTO" ]; then
+      echo "
+# \"Temporary\" hack until this can be fixed in openssl.config
+x86_64_cflags += -DRC4_INT=\"unsigned int\""
+    fi
+
+    if [ $prefix != "APPS" ] ; then
+      echo "
+LOCAL_EXPORT_C_INCLUDE_DIRS := \$(LOCAL_PATH)/include"
+    fi
+
+    echo "
+ifdef ARCH_MIPS_REV6
+mips_cflags := \$(mips32r6_cflags)
+mips_src_files := \$(mips32r6_src_files)
+mips_exclude_files := \$(mips32r6_exclude_files)
+endif"
 
     if [ $3 == "target" ]; then
       echo "
@@ -535,6 +559,10 @@ function import() {
   gen_asm_mips crypto/bn/asm/mips-mont.pl
   gen_asm_mips crypto/sha/asm/sha1-mips.pl
   gen_asm_mips crypto/sha/asm/sha512-mips.pl crypto/sha/asm/sha256-mips.S
+
+  # TODO: Generate mips32r6 asm
+
+  # TODO: Generate mips64 asm
 
   # Generate x86 asm
   gen_asm_x86 crypto/x86cpuid.pl

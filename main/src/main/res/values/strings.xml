@@ -369,5 +369,8 @@
     <string name="ab_not_route_to_vpn_title">Route to the configured IP address</string>
     <string name="ab_kitkat_mss_title">Wrong MSS value for VPN connection</string>
     <string name="ab_secondary_users_title">Secondary tablet users</string>
+    <string name="custom_connection_options_warng">Specify custom connection specific options. Use with care</string>
+    <string name="custom_connection_options">Custom Options</string>
+    <string name="remove_connection_entry">Remove connection entry</string>
 
 </resources>

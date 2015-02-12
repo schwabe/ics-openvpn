@@ -153,7 +153,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/udptcpradiogroup"
                 android:id="@+id/use_customoptions"
-                android:text="Custom Options" />
+                android:text="@string/custom_connection_options" />
 
             <LinearLayout
                 android:paddingLeft="10dp"
@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/warnung_custom"
-                    android:text="Specify custom connection specific options. Use with care"
+                    android:text="@string/custom_connection_options_warng"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -195,7 +195,8 @@
                 android:layout_alignEnd="@+id/portnumber"
                 android:layout_below="@id/remoteSwitch"
                 android:background="@drawable/ic_menu_delete_grey"
-                android:id="@+id/remove_connection" />
+                android:id="@+id/remove_connection"
+                android:contentDescription="@string/remove_connection_entry" />
 
 
         </RelativeLayout>

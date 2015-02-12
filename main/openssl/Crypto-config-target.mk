@@ -1,6 +1,6 @@
 # Auto-generated - DO NOT EDIT!
 # To regenerate, edit openssl.config, then run:
-#     ./import_openssl.sh import /path/to/openssl-1.0.1j.tar.gz
+#     ./import_openssl.sh import /path/to/openssl-1.0.1l.tar.gz
 #
 # This script will append to the following variables:
 #
@@ -11,6 +11,7 @@
 #    LOCAL_CFLAGS_$(TARGET_ARCH)
 #    LOCAL_CFLAGS_$(TARGET_2ND_ARCH)
 #    LOCAL_ADDITIONAL_DEPENDENCIES
+#    LOCAL_EXPORT_C_INCLUDE_DIRS
 
 
 LOCAL_ADDITIONAL_DEPENDENCIES += $(LOCAL_PATH)/Crypto-config-target.mk
@@ -707,6 +708,35 @@ mips_exclude_files := \
   crypto/aes/aes_core.c \
   crypto/bn/bn_asm.c \
 
+mips64_clang_asflags :=
+
+mips64_cflags := \
+  -DOPENSSL_NO_ASM \
+
+mips64_src_files :=
+
+mips64_exclude_files :=
+
+mips32r6_clang_asflags :=
+
+mips32r6_cflags := \
+  -DOPENSSL_NO_ASM \
+
+mips32r6_src_files :=
+
+mips32r6_exclude_files :=
+
+
+# "Temporary" hack until this can be fixed in openssl.config
+x86_64_cflags += -DRC4_INT="unsigned int"
+
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
+
+ifdef ARCH_MIPS_REV6
+mips_cflags := $(mips32r6_cflags)
+mips_src_files := $(mips32r6_src_files)
+mips_exclude_files := $(mips32r6_exclude_files)
+endif
 
 LOCAL_CFLAGS += $(common_cflags)
 LOCAL_C_INCLUDES += $(common_c_includes)
@@ -730,3 +760,7 @@ LOCAL_CLANG_ASFLAGS_x86_64 += $(x86_64_clang_asflags)
 LOCAL_SRC_FILES_mips += $(filter-out $(mips_exclude_files),$(common_src_files) $(mips_src_files))
 LOCAL_CFLAGS_mips += $(mips_cflags)
 LOCAL_CLANG_ASFLAGS_mips += $(mips_clang_asflags)
+
+LOCAL_SRC_FILES_mips64 += $(filter-out $(mips64_exclude_files),$(common_src_files) $(mips64_src_files))
+LOCAL_CFLAGS_mips64 += $(mips64_cflags)
+LOCAL_CLANG_ASFLAGS_mips64 += $(mips64_clang_asflags)

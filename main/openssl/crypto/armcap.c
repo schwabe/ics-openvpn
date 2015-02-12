@@ -68,6 +68,14 @@ static unsigned long (*getauxval)(unsigned long) = NULL;
 # define HWCAP_CE_SHA256	(1 << 6)
 #endif
 
+#ifdef ANDROID
+// Works around a bug where Android versions up to and including L don't
+// properly restore the signal mask when asked.
+#define sigsetjmp(env,savesigs) \
+	(sigprocmask(SIG_SETMASK,&ill_act.sa_mask,NULL), \
+	 sigsetjmp(env,savesigs))
+#endif
+
 void OPENSSL_cpuid_setup(void)
 	{
 	char *e;

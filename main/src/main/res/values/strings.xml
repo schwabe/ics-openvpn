@@ -353,7 +353,7 @@
     <string name="ignore_multicast_route">Ignoring multicast route: %s</string>
     <string name="ab_only_cidr">Android supports only CIDR routes to the VPN. Since non-CIDR routes are almost never used, OpenVPN for Android will use a /32 for routes that are not CIDR and issue a warning.</string>
     <string name="ab_tethering_44">Tethering works while the VPN is active. The tethered connection will NOT use the VPN.</string>
-    <string name="ab_kitkat_mss">Early KitKat version set the wrong MSS value on TCP connections (#61948). OpenVPN for will automatically enable mssfix option to workaround this bug.</string>
+    <string name="ab_kitkat_mss">Early KitKat version set the wrong MSS value on TCP connections (#61948). Try to enable the mssfix option to workaround this bug.</string>
     <string name="ab_proxy">Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.<p>When a VPN sets a DNS server Android will not a proxy. There is no API to set a proxy for a VPN connection.</p></string>
     <string name="ab_lollipop_reinstall">VPN apps may stop working when uninstalled and reinstalled again. For details see #80074</string>
     <string name="ab_not_route_to_vpn">The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask</string>

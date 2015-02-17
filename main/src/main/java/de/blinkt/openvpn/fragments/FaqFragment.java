@@ -48,16 +48,21 @@ public class FaqFragment extends Fragment {
                     return true;
 
                 String release = Build.VERSION.RELEASE;
-                boolean isAtLeast442 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
-                        !release.startsWith("4.4.3") && !release.startsWith("4.4.3")
-                        && !release.startsWith("4.4.4") && !release.startsWith("4.4.5") && !release.startsWith("4.4.6");
+                boolean isOlderThan443 =  !release.startsWith("4.4.3")  && !release.startsWith("4.4.4") &&
+                        !release.startsWith("4.4.5") && !release.startsWith("4.4.6");
 
-                boolean isAtLeast443 = isAtLeast442 && !release.startsWith("4.4.2");
-                if (endVersion == -441 && !isAtLeast442)
-                    return true;
+                boolean isOlderThan442 = isOlderThan443 && !release.startsWith("4.4.2");
 
-                if (endVersion == -442 && !isAtLeast443)
-                    return true;
+
+                if(Build.VERSION.SDK_INT== Build.VERSION_CODES.KITKAT) {
+                    if (endVersion == -441 && isOlderThan442)
+                        return true;
+
+                    if (endVersion == -442 && isOlderThan443)
+                        return true;
+                } else if (endVersion == -441 || endVersion == -442) {
+                    return Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT;
+                }
 
 
             }
@@ -140,10 +145,10 @@ public class FaqFragment extends Fragment {
             new FAQEntry(Build.VERSION_CODES.KITKAT, -441, R.string.ab_kitkat_mss_title, R.string.ab_kitkat_mss),
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.copying_log_entries, R.string.faq_copying),
 
-            new FAQEntry(Build.VERSION_CODES.KITKAT, -442, R.string.ab_persist_tun),
+            new FAQEntry(Build.VERSION_CODES.KITKAT, -442, R.string.ab_persist_tun_title, R.string.ab_persist_tun),
             new FAQEntry(Build.VERSION_CODES.KITKAT, -1, R.string.faq_routing_title, R.string.faq_routing),
-            new FAQEntry(Build.VERSION_CODES.KITKAT, Build.VERSION_CODES.KITKAT, R.string.ab_kitkat_reconnect),
-            new FAQEntry(Build.VERSION_CODES.KITKAT, Build.VERSION_CODES.KITKAT, R.string.ab_vpn_reachability_44),
+            new FAQEntry(Build.VERSION_CODES.KITKAT, Build.VERSION_CODES.KITKAT, R.string.ab_kitkat_reconnect_title, R.string.ab_kitkat_reconnect),
+            new FAQEntry(Build.VERSION_CODES.KITKAT, Build.VERSION_CODES.KITKAT, R.string.ab_vpn_reachability_44_title,  R.string.ab_vpn_reachability_44),
 
 
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.ab_only_cidr_title, R.string.ab_only_cidr),

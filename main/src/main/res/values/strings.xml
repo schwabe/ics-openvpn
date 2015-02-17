@@ -372,5 +372,8 @@
     <string name="custom_connection_options_warng">Specify custom connection specific options. Use with care</string>
     <string name="custom_connection_options">Custom Options</string>
     <string name="remove_connection_entry">Remove connection entry</string>
+    <string name="ab_kitkat_reconnect_title">Random disconnects from mobile network</string>
+    <string name="ab_vpn_reachability_44_title">Remote networks not reachable</string>
+    <string name="ab_persist_tun_title">Persist tun mode</string>
 
 </resources>

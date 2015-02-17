@@ -27,6 +27,10 @@ Do cd main;./misc/build-native.(sh|bat) in the main directory of the project.
 After that build the project using "gradle build" (Or use Android Studio). 
 The project is converted to gradle and building with Eclipse is no longer supported.
 
+The ndk fails to build on Windows currently. As a workaround build on Linux and copy the ovpnlibs directory over to 
+Windows or downlaod a released version (e.g. from plai.de/android) and extract the libs and assets directory and place them
+into main/ovpnlibs/
+
 FAQ
 
 Q: Why are you not answering my questions about modifying ics-openvpn/why do not help build my app on top 

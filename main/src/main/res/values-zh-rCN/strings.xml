@@ -350,4 +350,12 @@
   <string name="no_remote_defined">未定义任何远程服务器</string>
   <string name="duplicate_vpn">重复的VPN配置文件</string>
   <string name="duplicate_profile_title">创建配置文件副本： %s</string>
+  <string name="show_log">显示日志</string>
+  <string name="faq_androids_clients_title">不同OpenVPN安卓客户端的区别</string>
+  <string name="ignore_multicast_route">忽略多播路由:%s</string>
+  <string name="ab_tethering_44">在连接VPN时手机热点依然工作，但连接不会通过VPN。</string>
+  <string name="ab_only_cidr_title">非CIDR路由</string>
+  <string name="ab_lollipop_reinstall_title">正在重新安装VPN应用</string>
+  <string name="custom_connection_options">自定义选项</string>
+  <string name="remove_connection_entry">删除连接条目</string>
 </resources>

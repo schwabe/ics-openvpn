@@ -369,4 +369,6 @@
   <string name="custom_connection_options_warng">Definieren Sie benutzerdefinierte verbindungsspezifische Optionen. Seien Sie vorsichtig!</string>
   <string name="custom_connection_options">Benutzerdefinierte Optionen</string>
   <string name="remove_connection_entry">Verbindungseintrag zu entfernen</string>
+ <string name="version_and_later">%s und neuer</string>
+
 </resources>

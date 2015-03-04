@@ -375,5 +375,6 @@
     <string name="ab_kitkat_reconnect_title">Random disconnects from mobile network</string>
     <string name="ab_vpn_reachability_44_title">Remote networks not reachable</string>
     <string name="ab_persist_tun_title">Persist tun mode</string>
+    <string name="version_and_later">%s and later</string>
 
 </resources>

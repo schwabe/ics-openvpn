@@ -349,4 +349,21 @@
   <string name="no_remote_defined">Nedefinovaná protistrana</string>
   <string name="duplicate_vpn">Duplicitní VPN profil</string>
   <string name="duplicate_profile_title">Duplicitní profil: %s</string>
+  <string name="show_log">Zobrazit log</string>
+  <string name="faq_androids_clients_title">Rozdíly mezi OpenVPN klienty pro Android</string>
+  <string name="ignore_multicast_route">Ignorovat vícesměrovou trasu: %s</string>
+  <string name="ab_only_cidr">Android podporuje ve VPN síti podporuje pouze CIDR trasy. Protože ne-CIDR trasy nejsou téměř nikdy používány, OpenVPN pro Android použije /32 pro trasy, které nejsou CIDR a zobrazí varování.</string>
+  <string name="ab_tethering_44">Sdílení připojení funguje během aktivního VPN spojení. Sdílené připojení NEpoužije VPN.</string>
+  <string name="ab_kitkat_mss">Dřívější KitKat verze nastavovaly špatnou hodnotu MSS na TCP spojení (#61948). OpenVPN automaticky zapne mssfix možnost pro obejití chyby.</string>
+  <string name="ab_secondary_users">VPN vůbec nefunguje pro vedlejší uživatele.</string>
+  <string name="ab_only_cidr_title">Ne-CIDR trasy</string>
+  <string name="ab_proxy_title">Proxy chování pro VPN</string>
+  <string name="ab_lollipop_reinstall_title">Přeinstalování VPN aplikací</string>
+  <string name="version_upto">%s a starší</string>
+  <string name="copy_of_profile">Kopie %s</string>
+  <string name="ab_not_route_to_vpn_title">Trasa k nastavené IP adrese</string>
+  <string name="ab_kitkat_mss_title">Špatná hodnota MSS pro VPN spojení</string>
+  <string name="ab_secondary_users_title">Vedlejší uživaté tabletu</string>
+  <string name="custom_connection_options">Vlastní možnosti</string>
+  <string name="remove_connection_entry">Odstranit položku připojení</string>
 </resources>

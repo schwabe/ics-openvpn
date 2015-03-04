@@ -61,7 +61,9 @@
   <string name="cancel_connection_long">Desconectar VPN</string>
   <string name="clear_log">Limpar registo</string>
   <string name="title_cancel">Cancelar Confirmação</string>
+  <string name="cancel_connection_query">Desligar a ligação actual/Cancelar tentativa de ligação?</string>
   <string name="remove_vpn">Remover VPN</string>
+  <string name="check_remote_tlscert">Verifica se o servidor utiliza um certificado com extensões TLS Server (--remote-cert-tls server)</string>
   <string name="check_remote_tlscert_title">Esperar certificado do servidor TLS</string>
   <string name="remote_tlscn_check_title">Verificar nome de host do certificado</string>
   <string name="enter_tlscn_title">Assunto do certificado remoto</string>
@@ -77,11 +79,16 @@
   <string name="dns_server">Servidor DNS</string>
   <string name="secondary_dns_message">Servidor DNS secundário utilizado caso o servidor primário esteja inacessível.</string>
   <string name="backup_dns">Servidor DNS alternativo</string>
+  <string name="ignored_pushed_routes">Ignorar rotas empurradas</string>
+  <string name="ignore_routes_summary">Ignorar rotas definidas pelo servidor.</string>
   <string name="default_route_summary">Redireccionar todo o tráfego pela VPN</string>
   <string name="use_default_title">Usar rota padrão</string>
+  <string name="custom_route_message">Introduzir rotas personalizadas. Introduzir destino no formato CIDR. \"10.0.0.0/8 2002::/16\" iria direccionar as redes 10.0.0.0/8 e 2002::/16 pela VPN.</string>
+  <string name="custom_route_message_excluded">Rotas que NÃO deviam ser roteadas pela VPN. Usar a mesma sintaxe que as rotas incluídas.</string>
   <string name="custom_routes_title">Rotas personalizadas</string>
   <string name="custom_routes_title_excluded">Redes excluídas</string>
   <string name="log_verbosity_level">Nível de verbosidade do log</string>
+  <string name="float_summary">Autoriza pacotes autenticados vindos de qualquer IP</string>
   <string name="float_title">Permitir servidor flutuante</string>
   <string name="custom_options_title">Opções personalizadas</string>
   <string name="edit_vpn">Editar definições VPN</string>
@@ -115,6 +122,7 @@
   <string name="no_vpn_support_image">A imagem não suporta a API VPNService, lamentamos :(</string>
   <string name="encryption">Encriptação</string>
   <string name="cipher_dialog_title">Digite o método de encriptação</string>
+  <string name="chipher_dialog_message">Introduzir o algoritmo de cifra utilizado pelo OpenVPN. Deixar vazio para usar o defeito.</string>
   <string name="settings_auth">Autenticação/encriptação</string>
   <string name="file_explorer_tab">Explorador de ficheiros</string>
   <string name="inline_file_tab">Ficheiro embutido</string>
@@ -136,12 +144,14 @@
   <string name="faq_security_title">Considerações de segurança</string>
   <string name="faq_security">"Como OpenVPN é segurança sensíveis algumas notas sobre segurança são sensatas. Todos os dados no sdcard é inerentemente inseguro. Cada aplicativo pode lê-lo (por exemplo, este programa não requer direitos especiais cartão SD). Os dados desta aplicação só pode ser lido pelo próprio aplicativo. Ao usar a opção de importação para cacert / cert / chave no diálogo os dados do arquivo é armazenado no perfil de VPN. Os perfis de VPN são acessíveis apenas por esta aplicação. (Não se esqueça de apagar as cópias no sd cartão depois). Mesmo com acesso apenas por este aplicativo os dados ainda não é criptografado. torcendo por telefone ou outros exploits pode ser possível recuperar os dados. senhas salvas são armazenadas em texto simples assim. Para arquivos PKCS12 é altamente recomendável que você importá-los para o armazenamento de chaves android. "</string>
   <string name="import_vpn">Importar</string>
+  <string name="broken_image_cert_title">Erro a mostrar a selecção de certificados</string>
   <string name="ipv4">IPv4</string>
   <string name="ipv6">IPv6</string>
   <string name="speed_waiting">A esperar mensagem de estado...</string>
   <string name="converted_profile">perfil importado</string>
   <string name="converted_profile_i">Perfil importado %d</string>
   <string name="broken_images">Imagens quebradas</string>
+  <string name="pkcs12_file_encryption_key">Chave de crifra de ficheiros PKCS12</string>
   <string name="private_key_password">Senha de chave privada</string>
   <string name="password">Senha</string>
   <string name="file_icon">ícone de ficheiro</string>
@@ -251,4 +261,8 @@
   <string name="userpw_file">Ficheiro de utilizador/senha</string>
   <string name="imported_from_file">[Importado de: %s]</string>
   <string name="import_log">Log de importação:</string>
+  <string name="ignore_multicast_route">Ignorar caminho multicast: %s</string>
+  <string name="ab_only_cidr">Android apenas suporta rotas CIDR para a VPN. Pelo facto de as rotas não-CIDR quase nunca serem usadas, OpenVPN para Android irá usar uma rota /32 para rotas não-CIDR e emitir um aviso.</string>
+  <string name="ab_secondary_users">VPN não funcionar para utilizadores secundários.</string>
+  <string name="ab_only_cidr_title">Rotas não CIDR</string>
 </resources>

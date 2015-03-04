@@ -35,15 +35,54 @@ def genPage(javafile, lang):
     out =""
     out+= header
     for l in javafile:
-        m = re.search("\{.*R.string.([a-z_]+),.*R.string.([a-z_]+)\}", l)
+        m = re.search("FAQEntry.*\((.*),(.*), R.string.([a-z_]+),.*R.string.([a-z_]+)\)", l)
         if m:
-            (title, body) = m.groups()
-            
+            (ver1, ver2, title, body) = m.groups()
+            verHeader = getVerHeader(ver1.strip(), ver2.strip(), lang)
+
             out +=  "== %s ==\n" % getString(title,lang)
+            if verHeader:
+                out += "_%s_\n" % verHeader
+                
             out += "%s\n" % getString(body,lang)
             if body == "faq_system_dialogs_title":
                 out += "%s\n" % getString("faq_system_dialog_xposed",lang)
+
     return out
+
+def getVerHeader(startVersion, endVersion, lang):
+    if startVersion == "Build.VERSION_CODES.ICE_CREAM_SANDWICH":
+        if endVersion == "-1":
+            return None
+        else:
+            return getString("version_upto", lang) % getVersionString(endVersion)
+    if endVersion == "-1":
+        return getString("version_and_later", lang) % getVersionString(startVersion)
+
+    startver = getVersionString(startVersion)
+
+    if endVersion == startVersion:
+        return startver
+    else:
+        return "%s - %s" % (startver, getVersionString(endVersion))
+        
+
+def getVersionString(ver):
+    if ver == "Build.VERSION_CODES.ICE_CREAM_SANDWICH":
+        return "4.0 (Ice Cream Sandwich)"
+    elif ver == "-441":
+        return "4.4.1 (Kit Kat)"
+    elif ver == "-442":
+        return "4.4.2 (Kit Kat)"
+    elif ver == "Build.VERSION_CODES.JELLY_BEAN_MR2":
+        return "4.3 (Jelly Bean MR2)"
+    elif ver == "Build.VERSION_CODES.KITKAT":
+        return "4.4 (Kit Kat)"
+    elif ver == "Build.VERSION_CODES.LOLLIPOP":
+        return "5.0 (Lollipop)"
+    else:
+        return "API " + ver
+
             
 def genPageXML(faqdom,lang):
     out =""

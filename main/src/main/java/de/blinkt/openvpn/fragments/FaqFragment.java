@@ -78,7 +78,7 @@ public class FaqFragment extends Fragment {
             }
 
             if (endVersion == -1)
-                return getAndroidVersionString(c, startVersion) + " and later";
+                return c.getString(R.string.version_and_later, getAndroidVersionString(c, startVersion));
 
 
             String startver = getAndroidVersionString(c, startVersion);

@@ -8,15 +8,6 @@ package de.blinkt.openvpn.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import java.util.Vector;
 
 import de.blinkt.openvpn.R;
 
@@ -135,6 +126,8 @@ public class FaqFragment extends Fragment {
 
             new FAQEntry(Build.VERSION_CODES.JELLY_BEAN_MR2, Build.VERSION_CODES.JELLY_BEAN_MR2, R.string.ab_secondary_users_title, R.string.ab_secondary_users),
             new FAQEntry(Build.VERSION_CODES.JELLY_BEAN_MR2, -1, R.string.faq_vpndialog43_title, R.string.faq_vpndialog43),
+
+            new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.tls_cipher_alert_title, R.string.tls_cipher_alert),
 
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.faq_security_title, R.string.faq_security),
 

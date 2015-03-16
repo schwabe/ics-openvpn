@@ -28,6 +28,7 @@ import de.blinkt.openvpn.fragments.Settings_Connections;
 import de.blinkt.openvpn.fragments.Settings_IP;
 import de.blinkt.openvpn.fragments.Settings_Obscure;
 import de.blinkt.openvpn.fragments.Settings_Routing;
+import de.blinkt.openvpn.fragments.Settings_UserEditable;
 import de.blinkt.openvpn.fragments.ShowConfigFragment;
 import de.blinkt.openvpn.fragments.VPNProfileList;
 import de.blinkt.openvpn.views.ScreenSlidePagerAdapter;
@@ -134,19 +135,21 @@ public class VPNPreferences extends Activity {
         fragmentArguments.putString(getPackageName() + ".profileUUID",mProfileUUID);
         mPagerAdapter.setFragmentArgs(fragmentArguments);
 
-        mPagerAdapter.addTab(R.string.basic, Settings_Basic.class);
-        mPagerAdapter.addTab(R.string.server_list, Settings_Connections.class);
-        mPagerAdapter.addTab(R.string.ipdns, Settings_IP.class);
-        mPagerAdapter.addTab(R.string.routing, Settings_Routing.class);
-        mPagerAdapter.addTab(R.string.settings_auth, Settings_Authentication.class);
+        if (mProfile.mUserEditable) {
+            mPagerAdapter.addTab(R.string.basic, Settings_Basic.class);
+            mPagerAdapter.addTab(R.string.server_list, Settings_Connections.class);
+            mPagerAdapter.addTab(R.string.ipdns, Settings_IP.class);
+            mPagerAdapter.addTab(R.string.routing, Settings_Routing.class);
+            mPagerAdapter.addTab(R.string.settings_auth, Settings_Authentication.class);
 
-        mPagerAdapter.addTab(R.string.advanced, Settings_Obscure.class);
+            mPagerAdapter.addTab(R.string.advanced, Settings_Obscure.class);
+        } else {
+            mPagerAdapter.addTab(R.string.basic, Settings_UserEditable.class);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             mPagerAdapter.addTab(R.string.vpn_allowed_apps, Settings_Allowed_Apps.class);
 
         mPagerAdapter.addTab(R.string.generated_config, ShowConfigFragment.class);
-
-
 
 
         mPager.setAdapter(mPagerAdapter);

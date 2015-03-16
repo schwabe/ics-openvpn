@@ -48,7 +48,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
     private static final int SEND_TOALL = 0;
 
     final RemoteCallbackList<IOpenVPNStatusCallback> mCallbacks =
-            new RemoteCallbackList<IOpenVPNStatusCallback>();
+            new RemoteCallbackList<>();
 
     private OpenVPNService mService;
     private ExternalAppDatabase mExtAppDb;
@@ -87,19 +87,19 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
     private final IOpenVPNAPIService.Stub mBinder = new IOpenVPNAPIService.Stub() {
 
-        private void checkOpenVPNPermission() throws SecurityRemoteException {
+        private String checkOpenVPNPermission() throws SecurityRemoteException {
             PackageManager pm = getPackageManager();
 
-            for (String apppackage : mExtAppDb.getExtAppList()) {
+            for (String appPackage : mExtAppDb.getExtAppList()) {
                 ApplicationInfo app;
                 try {
-                    app = pm.getApplicationInfo(apppackage, 0);
+                    app = pm.getApplicationInfo(appPackage, 0);
                     if (Binder.getCallingUid() == app.uid) {
-                        return;
+                        return appPackage;
                     }
                 } catch (NameNotFoundException e) {
                     // App not found. Remove it from the list
-                    mExtAppDb.removeApp(apppackage);
+                    mExtAppDb.removeApp(appPackage);
                 }
 
             }
@@ -112,11 +112,11 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
             ProfileManager pm = ProfileManager.getInstance(getBaseContext());
 
-            List<APIVpnProfile> profiles = new LinkedList<APIVpnProfile>();
+            List<APIVpnProfile> profiles = new LinkedList<>();
 
             for (VpnProfile vp : pm.getProfiles()) {
                 if (!vp.profileDeleted)
-                    profiles.add(new APIVpnProfile(vp.getUUIDString(), vp.mName, vp.mUserEditable));
+                    profiles.add(new APIVpnProfile(vp.getUUIDString(), vp.mName, vp.mUserEditable, vp.mProfileCreator));
             }
 
             return profiles;
@@ -155,12 +155,12 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             startProfile(vp);
         }
 
-        public void startVPN(String inlineconfig) throws RemoteException {
+        public void startVPN(String inlineConfig) throws RemoteException {
             checkOpenVPNPermission();
 
             ConfigParser cp = new ConfigParser();
             try {
-                cp.parseConfig(new StringReader(inlineconfig));
+                cp.parseConfig(new StringReader(inlineConfig));
                 VpnProfile vp = cp.convertProfile();
                 if (vp.checkProfile(getApplicationContext()) != R.string.no_error_found)
                     throw new RemoteException(getString(vp.checkProfile(getApplicationContext())));
@@ -173,35 +173,41 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                 ProfileManager.setTemporaryProfile(vp);
                 startProfile(vp);
 
-            } catch (IOException e) {
-                throw new RemoteException(e.getMessage());
-            } catch (ConfigParseError e) {
+            } catch (IOException | ConfigParseError e) {
                 throw new RemoteException(e.getMessage());
             }
         }
 
 
-
         @Override
         public boolean addVPNProfile(String name, String config) throws RemoteException {
-            checkOpenVPNPermission();
+            return addNewVPNProfile(name, true, config) != null;
+        }
+
+
+        @Override
+        public APIVpnProfile addNewVPNProfile(String name, boolean userEditable, String config) throws RemoteException {
+            String callingPackage = checkOpenVPNPermission();
 
             ConfigParser cp = new ConfigParser();
             try {
                 cp.parseConfig(new StringReader(config));
                 VpnProfile vp = cp.convertProfile();
                 vp.mName = name;
+                vp.mProfileCreator = callingPackage;
+                vp.mUserEditable = userEditable;
                 ProfileManager pm = ProfileManager.getInstance(getBaseContext());
                 pm.addProfile(vp);
+                pm.saveProfile(ExternalOpenVPNService.this, vp);
+                pm.saveProfileList(ExternalOpenVPNService.this);
+                return new APIVpnProfile(vp.getUUIDString(), vp.mName, vp.mUserEditable, vp.mProfileCreator);
             } catch (IOException e) {
                 VpnStatus.logException(e);
-                return false;
+                return null;
             } catch (ConfigParseError e) {
                 VpnStatus.logException(e);
-                return false;
+                return null;
             }
-
-            return true;
         }
 
         @Override
@@ -226,8 +232,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
 
         @Override
-        public Intent prepare(String packagename) {
-            if (new ExternalAppDatabase(ExternalOpenVPNService.this).isAllowed(packagename))
+        public Intent prepare(String packageName) {
+            if (new ExternalAppDatabase(ExternalOpenVPNService.this).isAllowed(packageName))
                 return null;
 
             Intent intent = new Intent();
@@ -339,7 +345,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         WeakReference<ExternalOpenVPNService> service = null;
 
         private void setService(ExternalOpenVPNService eos) {
-            service = new WeakReference<ExternalOpenVPNService>(eos);
+            service = new WeakReference<>(eos);
         }
 
         @Override

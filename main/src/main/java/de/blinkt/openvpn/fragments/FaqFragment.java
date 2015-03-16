@@ -8,15 +8,20 @@ package de.blinkt.openvpn.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import java.util.Vector;
 
 import de.blinkt.openvpn.R;
 
 public class FaqFragment extends Fragment {
     static class FAQEntry {
-
-        public FAQEntry(int startVersion, int endVersion, int description) {
-            this(startVersion, endVersion, -1, description);
-        }
 
         public FAQEntry(int startVersion, int endVersion, int title, int description) {
             this.startVersion = startVersion;

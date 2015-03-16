@@ -44,6 +44,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
         v.findViewById(R.id.disconnect).setOnClickListener(this);
         v.findViewById(R.id.getMyIP).setOnClickListener(this);
         v.findViewById(R.id.startembedded).setOnClickListener(this);
+        v.findViewById(R.id.addNewProfile).setOnClickListener(this);
         mHelloWorld = (TextView) v.findViewById(R.id.helloworld);
         mStartVpn = (Button) v.findViewById(R.id.startVPN);
         mStatus = (TextView) v.findViewById(R.id.status);
@@ -59,6 +60,8 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
     private static final int START_PROFILE_EMBEDDED = 2;
     private static final int START_PROFILE_BYUUID = 3;
     private static final int ICS_OPENVPN_PERMISSION = 7;
+    private static final int PROFILE_ADD_NEW = 8;
+
 
     protected IOpenVPNAPIService mService=null;
     private Handler mHandler;
@@ -66,7 +69,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
 
 
 
-    private void startEmbeddedProfile()
+    private void startEmbeddedProfile(boolean addNew)
     {
         try {
             InputStream conf = getActivity().getAssets().open("test.conf");
@@ -82,12 +85,11 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
             }
             br.readLine();
 
-            //			mService.addVPNProfile("test", config);
-            mService.startVPN(config);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
-            // TODO Auto-generated catch block
+            if (addNew)
+                mService.addNewVPNProfile("nonEditable", false, config);
+            else
+                mService.startVPN(config);
+        } catch (IOException | RemoteException e) {
             e.printStackTrace();
         }
     }
@@ -252,6 +254,14 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
                     e.printStackTrace();
                 }
                 break;
+
+            case R.id.addNewProfile:
+                try {
+                    prepareStartProfile(PROFILE_ADD_NEW);
+                } catch (RemoteException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             default:
                 break;
         }
@@ -271,12 +281,11 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if(requestCode==START_PROFILE_EMBEDDED)
-                startEmbeddedProfile();
+                startEmbeddedProfile(false);
             if(requestCode==START_PROFILE_BYUUID)
                 try {
                     mService.startProfile(mStartUUID);
                 } catch (RemoteException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             if (requestCode == ICS_OPENVPN_PERMISSION) {
@@ -287,6 +296,9 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
                     e.printStackTrace();
                 }
 
+            }
+            if (requestCode == PROFILE_ADD_NEW) {
+                startEmbeddedProfile(true);
             }
         }
     };

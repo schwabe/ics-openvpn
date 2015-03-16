@@ -140,9 +140,7 @@ public class ProfileManager {
 	}
 	
 	
-	public void saveProfile(Context context,VpnProfile profile) {
-		// First let basic settings save its state
-		
+	public void saveProfile(Context context, VpnProfile profile) {
 		ObjectOutputStream vpnfile;
 		try {
 			vpnfile = new ObjectOutputStream(context.openFileOutput((profile.getUUID().toString() + ".vp"),Activity.MODE_PRIVATE));
@@ -150,10 +148,6 @@ public class ProfileManager {
 			vpnfile.writeObject(profile);
 			vpnfile.flush();
 			vpnfile.close();
-		} catch (FileNotFoundException e) {
-
-            VpnStatus.logException("saving VPN profile", e);
-			throw new RuntimeException(e);
 		} catch (IOException e) {
             VpnStatus.logException("saving VPN profile", e);
 			throw new RuntimeException(e);

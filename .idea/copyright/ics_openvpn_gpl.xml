@@ -1,6 +1,6 @@
 <component name="CopyrightManager">
   <copyright>
-    <option name="notice" value="Copyright (c) 2012-2014 Arne Schwabe&#10;Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt" />
+    <option name="notice" value="Copyright (c) 2012-2015 Arne Schwabe&#10;Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt" />
     <option name="keyword" value="Copyright" />
     <option name="allowReplaceKeyword" value="Copyright (c) 2012-2014 Arne Schwabe" />
     <option name="myName" value="ics-openvpn-gpl" />

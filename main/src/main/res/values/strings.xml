@@ -378,5 +378,6 @@
     <string name="version_and_later">%s and later</string>
     <string name="tls_cipher_alert_title">Connections fails with SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure</string>
     <string name="tls_cipher_alert">Newer OpenVPN for Android versions (0.6.29/March 2015) use a more secure default for the allowed cipher suites (tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Unfortunately, omitting the less secure cipher suites and export cipher suites, especially the omission of cipher suites that do not support Perfect Forward Secrecy (Diffie-Hellman) causes some problems. This usually caused by an well-intentioned but poorly executed attempts to strengthen TLS security by setting tls-cipher on the server.\nTo solve this problem the problem, set the tls-cipher settings on the server to reasonable default like tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". To work around the problem on the client add the custom option tls-cipher DEFAULT on the Android client.</string>
+    <string name="message_no_user_edit">This profile has been added from an external app (%s) and has been marked as not user editable.</string>
 
 </resources>

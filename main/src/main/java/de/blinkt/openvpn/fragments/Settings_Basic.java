@@ -9,7 +9,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.Fragment;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Build;
@@ -40,7 +39,7 @@ import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.X509Utils;
 import de.blinkt.openvpn.views.FileSelectLayout;
 
-public class Settings_Basic extends Fragment implements View.OnClickListener, OnItemSelectedListener, Callback, FileSelectLayout.FileSelectCallback {
+public class Settings_Basic extends Settings_Fragment implements View.OnClickListener, OnItemSelectedListener, Callback, FileSelectLayout.FileSelectCallback {
 	private static final int CHOOSE_FILE_OFFSET = 1000;
 	private static final int UPDATE_ALIAS = 20;
 
@@ -57,11 +56,10 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 	private EditText mUserName;
 	private EditText mPassword;
 	private View mView;
-	private VpnProfile mProfile;
 	private EditText mProfileName;
 	private EditText mKeyPassword;
 
-	private SparseArray<FileSelectLayout> fileselects = new SparseArray<FileSelectLayout>();
+	private SparseArray<FileSelectLayout> fileselects = new SparseArray<>();
 
 
 
@@ -73,9 +71,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String profileUuid = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		mProfile=ProfileManager.get(getActivity(),profileUuid);
-		getActivity().setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
+
 	}
 
 
@@ -191,15 +187,9 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 			changeType(position);
 		}
 	}
-	@Override
-	public void onPause() {
-		super.onPause();
-		savePreferences();
-	}
 
 
-
-	private void changeType(int type){
+    private void changeType(int type){
 		// hide everything
 		mView.findViewById(R.id.pkcs12).setVisibility(View.GONE);
 		mView.findViewById(R.id.certs).setVisibility(View.GONE);
@@ -266,7 +256,7 @@ public class Settings_Basic extends Fragment implements View.OnClickListener, On
 
 	}
 
-	void savePreferences() {
+	protected void savePreferences() {
 
 		mProfile.mName = mProfileName.getText().toString();
 		mProfile.mCaFilename = mCaCert.getData();

@@ -152,7 +152,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public boolean mRemoteRandom=false;
     public HashSet<String> mAllowedAppsVpn = new HashSet<String>();
     public boolean mAllowedAppsVpnAreDisallowed = true;
-
+    public String mProfileCreator;
 
     /* Options no long used in new profiles */
     public String mServerName = "openvpn.blinkt.de";

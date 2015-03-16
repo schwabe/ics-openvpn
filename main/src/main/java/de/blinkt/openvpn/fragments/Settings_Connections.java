@@ -25,8 +25,7 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
 
-public class Settings_Connections extends Fragment implements View.OnClickListener {
-    private VpnProfile mProfile;
+public class Settings_Connections extends Settings_Fragment implements View.OnClickListener {
     private ConnectionsAdapter mConnectionsAdapter;
     private TextView mWarning;
     private Checkable mUseRandomRemote;
@@ -35,9 +34,7 @@ public class Settings_Connections extends Fragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String profileUuid = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-        mProfile= ProfileManager.get(getActivity(), profileUuid);
-        getActivity().setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
+
 
         setHasOptionsMenu(true);
     }
@@ -82,8 +79,6 @@ public class Settings_Connections extends Fragment implements View.OnClickListen
         return v;
     }
 
-
-
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.add_new_remote) {
@@ -99,8 +94,7 @@ public class Settings_Connections extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    protected void savePreferences() {
         mConnectionsAdapter.saveProfile();
         mProfile.mRemoteRandom = mUseRandomRemote.isChecked();
     }

@@ -12,10 +12,14 @@ interface IOpenVPNAPIService {
 	
 	void startProfile (String profileUUID);
 	
-	/** Use a profile with all certificates etc. embedded */
+	/** Use a profile with all certificates etc. embedded,
+	 * old version which does not return the UUID of the addded profile, see
+	 * below for a version that return the UUID on add */
 	boolean addVPNProfile (String name, String config);
 	
-	/** start a profile using an config */
+	/** start a profile using a config as inline string. Make sure that all needed data is inlined,
+	 * e.g., using <ca>...</ca> or <auth-user-data>...</auth-user-data>
+	 * See the OpenVPN manual page for more on inlining files */
 	void startVPN (String inlineconfig);
 	
 	/** This permission framework is used  to avoid confused deputy style attack to the VPN
@@ -55,5 +59,8 @@ interface IOpenVPNAPIService {
 	  * Before calling this function you should make sure OpenVPN for Android may actually
 	  * this function by checking if prepareVPNService returns null; */
 	boolean protectSocket(in ParcelFileDescriptor fd);
-		
+
+
+    /** Use a profile with all certificates etc. embedded */
+    APIVpnProfile addNewVPNProfile (String name, boolean userEditable, String config);
 }

@@ -24,7 +24,6 @@ import android.os.ParcelFileDescriptor;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 
-import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.StringReader;
 import java.lang.ref.WeakReference;
@@ -115,8 +114,10 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
             List<APIVpnProfile> profiles = new LinkedList<APIVpnProfile>();
 
-            for (VpnProfile vp : pm.getProfiles())
-                profiles.add(new APIVpnProfile(vp.getUUIDString(), vp.mName, vp.mUserEditable));
+            for (VpnProfile vp : pm.getProfiles()) {
+                if (!vp.profileDeleted)
+                    profiles.add(new APIVpnProfile(vp.getUUIDString(), vp.mName, vp.mUserEditable));
+            }
 
             return profiles;
         }

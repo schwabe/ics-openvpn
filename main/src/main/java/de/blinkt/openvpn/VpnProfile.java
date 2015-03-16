@@ -94,7 +94,7 @@ public class VpnProfile implements Serializable, Cloneable {
     // variable named wrong and should haven beeen transient
     // but needs to keep wrong name to guarante loading of old
     // profiles
-    public transient boolean profileDleted = false;
+    public transient boolean profileDeleted = false;
     public int mAuthenticationType = TYPE_KEYSTORE;
     public String mName;
     public String mAlias;

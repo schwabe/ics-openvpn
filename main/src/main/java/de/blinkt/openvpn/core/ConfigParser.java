@@ -581,7 +581,6 @@ public class ConfigParser {
                 np.mAuthenticationType = VpnProfile.TYPE_USERPASS_KEYSTORE;
             }
             if (authuser.size() > 1) {
-                // Set option value to password get to embed later.
                 np.mUsername = null;
                 useEmbbedUserAuth(np, authuser.get(1));
             }

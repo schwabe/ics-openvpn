@@ -9,7 +9,6 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -18,8 +17,6 @@ import android.preference.PreferenceActivity;
 import android.support.v4n.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -81,7 +78,7 @@ public class VPNPreferences extends Activity {
         getProfile();
 		// When a profile is deleted from a category fragment in hadset mod we need to finish
 		// this activity as well when returning
-		if (mProfile==null || mProfile.profileDleted) {
+		if (mProfile==null || mProfile.profileDeleted) {
 			setResult(VPNProfileList.RESULT_VPN_DELETED);
 			finish();
 		}

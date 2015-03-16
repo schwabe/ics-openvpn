@@ -33,10 +33,16 @@ def getString(strid,lang):
 def genPage(javafile, lang):
     #{R.string.faq_howto_title, R.string.faq_howto},
     out =""
-    out+= header
+
+    notmatched = None
     for l in javafile:
-        m = re.search("FAQEntry.*\((.*),(.*), R.string.([a-z_]+),.*R.string.([a-z_]+)\)", l)
+        
+        m = re.search("FAQEntry.*\((.*),(.*), R.string.([a-z0-9_]+),.*R.string.([a-z0-9_]+)\)", l)
         if m:
+            if notmatched and notmatched.strip():
+                print "Line did not match: %s" % notmatched
+                
+            notmatched = None
             (ver1, ver2, title, body) = m.groups()
             verHeader = getVerHeader(ver1.strip(), ver2.strip(), lang)
 
@@ -48,7 +54,11 @@ def genPage(javafile, lang):
             if body == "faq_system_dialogs_title":
                 out += "%s\n" % getString("faq_system_dialog_xposed",lang)
 
-    return out
+        elif header:
+            notmatched = l
+
+
+    return header + out
 
 def getVerHeader(startVersion, endVersion, lang):
     if startVersion == "Build.VERSION_CODES.ICE_CREAM_SANDWICH":

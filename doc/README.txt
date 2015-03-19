@@ -12,7 +12,7 @@ When in doubt mail me about it.
 
 See  the file todo.txt for ideas/not yet implemented features (and the bug tracker).
 
-Build instraction:
+Build instructions:
 
 Disable Google breakcode (call build-native.sh with USE_BREAKPAD=0) or checkout google breakcode
 

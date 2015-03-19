@@ -226,7 +226,7 @@ public class VpnStatus {
 				} else {
 					String str = String.format(Locale.ENGLISH,"Log (no context) resid %d", mRessourceId);
 					if(mArgs !=null)
-						str += TextUtils.join(" ", mArgs);
+						str += TextUtils.join("|", mArgs);
 
 
 					return str;

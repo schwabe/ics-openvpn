@@ -14,6 +14,10 @@ import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
+
+import org.w3c.dom.Text;
+
 import de.blinkt.openvpn.R;
 
 import java.io.ByteArrayInputStream;
@@ -218,12 +222,12 @@ public class VpnStatus {
 					if(mArgs == null)
 						return c.getString(mRessourceId);
 					else
-						return c.getString(mRessourceId,mArgs);
+						return c.getString(mRessourceId, mArgs);
 				} else {
 					String str = String.format(Locale.ENGLISH,"Log (no context) resid %d", mRessourceId);
 					if(mArgs !=null)
-						for(Object o:mArgs)
-							str += "|" +  o.toString();
+						str += TextUtils.join(" ", mArgs);
+
 
 					return str;
 				}

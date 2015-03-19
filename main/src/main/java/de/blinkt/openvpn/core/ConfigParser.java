@@ -31,6 +31,9 @@ public class ConfigParser {
     public static final String CONVERTED_PROFILE = "converted Profile";
     private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
+    private String auth_user_pass_file;
+    private String crl_verify_file;
+
 
     public void parseConfig(Reader reader) throws IOException, ConfigParseError {
 
@@ -112,6 +115,14 @@ public class ConfigParser {
             args.add(inlinefile);
         }
 
+    }
+
+    public String getAuthUserPassFile() {
+        return auth_user_pass_file;
+    }
+
+    public String getCrlVerifyFile() {
+        return crl_verify_file;
     }
 
     enum linestate {
@@ -572,6 +583,7 @@ public class ConfigParser {
                 options.put("remotetls", remotetls);
 
         Vector<String> authuser = getOption("auth-user-pass", 0, 1);
+
         if (authuser != null) {
             if (noauthtypeset) {
                 np.mAuthenticationType = VpnProfile.TYPE_USERPASS;
@@ -581,10 +593,23 @@ public class ConfigParser {
                 np.mAuthenticationType = VpnProfile.TYPE_USERPASS_KEYSTORE;
             }
             if (authuser.size() > 1) {
+                if (!authuser.get(1).startsWith(VpnProfile.INLINE_TAG))
+                    auth_user_pass_file = authuser.get(1);
                 np.mUsername = null;
                 useEmbbedUserAuth(np, authuser.get(1));
             }
         }
+
+        Vector<String> crlfile = getOption("crl-verify", 1, 2);
+        if (crlfile != null) {
+            // If the 'dir' parameter is present just add it as custom option ..
+            np.mCustomConfigOptions += TextUtils.join(" ", crlfile) + "\n";
+            if (crlfile.size() == 2) {
+                // Save the filename for the config converter to add later
+                crl_verify_file = crlfile.get(1);
+            }
+        }
+
 
         Pair<Connection, Connection[]> conns = parseConnectionOptions(null);
         np.mConnections = conns.second;
@@ -760,6 +785,16 @@ public class ConfigParser {
         }
     }
 
+    public static void removeCRLCustomOption(VpnProfile np) {
+        String lines[] = np.mCustomConfigOptions.split("\\r?\\n");
+        Vector<String> keeplines = new Vector<>();
+        for (String l : lines) {
+            if (!l.startsWith("crl-verify "))
+                keeplines.add(l);
+        }
+        np.mCustomConfigOptions = TextUtils.join("\n", keeplines);
+    }
+
     private void checkIgnoreAndInvalidOptions(VpnProfile np) throws ConfigParseError {
         for (String option : unsupportedOptions)
             if (options.containsKey(option))
@@ -771,7 +806,8 @@ public class ConfigParser {
 
 
         if (options.size() > 0) {
-            np.mCustomConfigOptions += "# These Options were found in the config file do not map to config settings:\n";
+            np.mCustomConfigOptions = "# These options found in the config file do not map to config settings:\n"
+                    + np.mCustomConfigOptions;
 
             for (Vector<Vector<String>> option : options.values()) {
 

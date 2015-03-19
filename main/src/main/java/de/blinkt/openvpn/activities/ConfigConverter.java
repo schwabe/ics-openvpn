@@ -71,6 +71,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
     private Map<Utils.FileType, FileSelectLayout> fileSelectMap = new HashMap<Utils.FileType, FileSelectLayout>();
     private String mEmbeddedPwFile;
     private Vector<String> mLogEntries = new Vector<String>();
+    private String mCrlFileName;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -118,6 +119,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
         }
         outState.putIntArray("fileselects", fileselects);
         outState.putString("pwfile",mEmbeddedPwFile);
+        outState.putString("crlfile", mCrlFileName);
     }
 
     @Override
@@ -154,6 +156,9 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
                 case KEYFILE:
                     mResult.mClientKeyFilename = data;
                     break;
+                case CRL_FILE:
+                    mCrlFileName = data;
+                    break;
                 default:
                     Assert.fail();
             }
@@ -168,6 +173,13 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
 
         if (!TextUtils.isEmpty(mEmbeddedPwFile))
             ConfigParser.useEmbbedUserAuth(mResult, mEmbeddedPwFile);
+
+        if (!TextUtils.isEmpty(mCrlFileName))
+        {
+            // TODO: COnvert this to a real config option that is parsed
+            ConfigParser.removeCRLCustomOption(mResult);
+            mResult.mCustomConfigOptions += "crl-verify " + mCrlFileName;
+        }
 
         vpl.addProfile(mResult);
         vpl.saveProfile(this, mResult);
@@ -279,7 +291,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
         return true;
     }
 
-    private String embedFile(String filename, Utils.FileType type) {
+    private String embedFile(String filename, Utils.FileType type, boolean onlyFindFile) {
         if (filename == null)
             return null;
 
@@ -290,6 +302,8 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
         File possibleFile = findFile(filename, type);
         if (possibleFile == null)
             return filename;
+        else if (onlyFindFile)
+            return possibleFile.getAbsolutePath();
         else
             return readFileContent(possibleFile, type == Utils.FileType.PKCS12);
 
@@ -300,7 +314,8 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
 
         if (foundfile == null && filename != null && !filename.equals("")) {
             log(R.string.import_could_not_open, filename);
-            addFileSelectDialog(fileType);
+            if (fileType != Utils.FileType.CRL_FILE)
+                addFileSelectDialog(fileType);
         }
 
 
@@ -342,6 +357,10 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
                 value = mEmbeddedPwFile;
                 break;
 
+            case CRL_FILE:
+                titleRes = R.string.crl_file;
+                value = mCrlFileName;
+                break;
         }
 
         boolean isCert = type == Utils.FileType.CA_CERTIFICATE || type == Utils.FileType.CLIENT_CERTIFICATE;
@@ -462,7 +481,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
         return bytes;
     }
 
-    void embedFiles() {
+    void embedFiles(ConfigParser cp) {
         // This where I would like to have a c++ style
         // void embedFile(std::string & option)
 
@@ -476,12 +495,14 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
         }
 
 
-        mResult.mCaFilename = embedFile(mResult.mCaFilename, Utils.FileType.CA_CERTIFICATE);
-        mResult.mClientCertFilename = embedFile(mResult.mClientCertFilename, Utils.FileType.CLIENT_CERTIFICATE);
-        mResult.mClientKeyFilename = embedFile(mResult.mClientKeyFilename, Utils.FileType.KEYFILE);
-        mResult.mTLSAuthFilename = embedFile(mResult.mTLSAuthFilename, Utils.FileType.TLS_AUTH_FILE);
-        mResult.mPKCS12Filename = embedFile(mResult.mPKCS12Filename, Utils.FileType.PKCS12);
-        mEmbeddedPwFile = embedFile(mResult.mPassword, Utils.FileType.USERPW_FILE);
+        mResult.mCaFilename = embedFile(mResult.mCaFilename, Utils.FileType.CA_CERTIFICATE, false);
+        mResult.mClientCertFilename = embedFile(mResult.mClientCertFilename, Utils.FileType.CLIENT_CERTIFICATE, false);
+        mResult.mClientKeyFilename = embedFile(mResult.mClientKeyFilename, Utils.FileType.KEYFILE, false);
+        mResult.mTLSAuthFilename = embedFile(mResult.mTLSAuthFilename, Utils.FileType.TLS_AUTH_FILE, false);
+        mResult.mPKCS12Filename = embedFile(mResult.mPKCS12Filename, Utils.FileType.PKCS12, false);
+        mEmbeddedPwFile = cp.getAuthUserPassFile();
+        mEmbeddedPwFile = embedFile(cp.getAuthUserPassFile(), Utils.FileType.USERPW_FILE, false);
+        mCrlFileName = embedFile(cp.getCrlVerifyFile(), Utils.FileType.CRL_FILE, true);
     }
 
     @Override
@@ -494,6 +515,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
             mResult = (VpnProfile) savedInstanceState.getSerializable(VPNPROFILE);
             mAliasName = savedInstanceState.getString("mAliasName");
             mEmbeddedPwFile = savedInstanceState.getString("pwfile");
+            mCrlFileName = savedInstanceState.getString("crlfile");
 
             if (savedInstanceState.containsKey("logentries")) {
                 //noinspection ConstantConditions
@@ -599,7 +621,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
 
             cp.parseConfig(isr);
             mResult = cp.convertProfile();
-            embedFiles();
+            embedFiles(cp);
             displayWarnings();
             mResult.mName = getUniqueProfileName(newName);
 

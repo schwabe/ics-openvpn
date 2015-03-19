@@ -155,7 +155,8 @@ public class Utils {
         OVPN_CONFIG(3),
         KEYFILE(4),
         TLS_AUTH_FILE(5),
-        USERPW_FILE(6);
+        USERPW_FILE(6),
+        CRL_FILE(7);
 
         private int value;
 
@@ -179,6 +180,8 @@ public class Utils {
                     return TLS_AUTH_FILE;
                 case 6:
                     return USERPW_FILE;
+                case 7:
+                    return CRL_FILE;
                 default:
                     return null;
             }

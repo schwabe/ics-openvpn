@@ -1,0 +1,22 @@
+build/
+main/libs/
+main/ovpnlibs/
+main/obj/
+.DS_Store
+.navigation
+google-breakpad/
+ovpn3/boost
+polarssl
+local.properties
+proguard-project.txt
+build.xml
+cache.properties
+.gradle
+
+# User-specific configurations
+.idea
+*.iml
+
+main/openvpn3
+
+

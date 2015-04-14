@@ -4,7 +4,7 @@
 set -e
 
 # Generate git config if the openvpn directory is checked out from git
-if [ -d openvpn/.git ]; then
+if [ -e openvpn/.git ]; then
     GIT=git
     cd openvpn
 	CONFIGURE_GIT_CHFILES=$($GIT diff-files --name-status -r --ignore-submodules --quiet -- || echo "+")
@@ -20,6 +20,9 @@ if [ -d openvpn/.git ]; then
 		rm -f config-version.h.tmp
 	fi
     cd ..
+else
+    echo "Cannot find .git directory in openvpn, aborting"
+    exit 1
 fi
 
 if [ "x$1" = "x" ]; then

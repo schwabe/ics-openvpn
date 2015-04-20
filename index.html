@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Ics-openvpn : OpenVPN for Android">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Ics-openvpn</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/schwabe/ics-openvpn">View on GitHub</a>
+
+          <h1 id="project_title">Ics-openvpn</h1>
+          <h2 id="project_tagline">OpenVPN for Android</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/schwabe/ics-openvpn/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/schwabe/ics-openvpn/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="openvpn-for-android" class="anchor" href="#openvpn-for-android" aria-hidden="true"><span class="octicon octicon-link"></span></a>OpenVPN for Android</h1>
+
+<h2>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h2>
+
+<p>With the new VPNService of Android API level 14+ (Ice Cream Sandwhich) it is possible to create a VPN service that does not root access. This project is a port of OpenVPN.</p>
+
+<h2>
+<a id="read-the-readme" class="anchor" href="#read-the-readme" aria-hidden="true"><span class="octicon octicon-link"></span></a>Read the README</h2>
+
+<p>If you want to develop on ics-openvpn please read the <a href="http://code.google.com/p/ics-openvpn/source/browse/doc/README.txt">doc/README.txt</a> <em>before</em> opening issues or emailing me. </p>
+
+<h2>
+<a id="you-can-help" class="anchor" href="#you-can-help" aria-hidden="true"><span class="octicon octicon-link"></span></a>You can help</h2>
+
+<p>Even if you are no programmer you can help by translating the OpenVPN client into your native language. <a href="http://crowdin.net/project/ics-openvpn/invite">Crowdin provides a free service for non commercial open source projects</a> (Fixing/completing existing translations is very welcome as well)</p>
+
+<h2>
+<a id="faq" class="anchor" href="#faq" aria-hidden="true"><span class="octicon octicon-link"></span></a>FAQ</h2>
+
+<p>You can find the FAQ here (same as in app): <a href="http://code.google.com/p/ics-openvpn/wiki/FAQ">http://code.google.com/p/ics-openvpn/wiki/FAQ</a></p>
+
+<h2>
+<a id="note-to-administrators" class="anchor" href="#note-to-administrators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Note to administrators</h2>
+
+<p>You make your life and that of your users easier if you embed the certificates into the .ovpn file. You or the users can mail the .ovpn as a attachment to the phone and directly import and use it. Also downloading and importing the file works. The MIME Type should be application/x-openvpn-profile. </p>
+
+<p>Inline files are supported since OpenVPN 2.1rc1 and documented in the  <a href="https://community.openvpn.net/openvpn/wiki/Openvpn23ManPage">OpenVPN 2.3 man page</a> (under INLINE FILE SUPPORT) </p>
+
+<p>(Using inline certifaces can also make your life on non Android platforms easier since you have only one file.)</p>
+
+<p>For example <code>ca mycafile.pem</code> becomes</p>
+
+<p>
+  -----BEGIN CERTIFICATE-----
+  MIIHPTCCBSWgAwIBAgIBADANBgkqhkiG9w0BAQQFADB5MRAwDgYDVQQKEwdSb290
+  [...]
+  -----END CERTIFICATE-----
+  </p>
+
+<h2>
+<a id="fotnotes" class="anchor" href="#fotnotes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fotnotes</h2>
+
+<p>Please that OpenVPN used by this project is under GPLv2. </p>
+
+<p>If you cannot or do not want to use the Play Store you can <a href="http://plai.de/android/">download the apk files directly</a> . </p>
+
+<p>If you want to donate you can donate to <a href="https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;cmd=_s-xclick">arne-paypal@rfc2549.org via paypal</a>.</p>
+
+<p>The old official or main repository was a Mercurial (hg) repository at <a href="http://code.google.com/p/ics-openvpn/source/">http://code.google.com/p/ics-openvpn/source/</a></p>
+
+<p>The new git repository is now at GitHub under <a href="https://github.com/schwabe/ics-openvpn">https://github.com/schwabe/ics-openvpn</a></p>
+
+<p>Please read the doc/README before asking question or starting development.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Ics-openvpn maintained by <a href="https://github.com/schwabe">schwabe</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

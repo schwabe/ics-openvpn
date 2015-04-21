@@ -498,8 +498,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         VpnStatus.logInfo(R.string.last_openvpn_tun_config);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mProfile.mAllowLocalLAN)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mProfile.mAllowLocalLAN) {
             allowAllAFFamilies(builder);
         }
 
@@ -573,6 +572,26 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
+        if ("samsung".equals(Build.BRAND) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mDnslist != null && mDnslist.size() >= 1) {
+            // Check if the first DNS Server is in the VPN range
+            try {
+                ipAddress dnsServer = new ipAddress(new CIDRIP(mDnslist.get(0), 32), true);
+                boolean dnsIncluded=false;
+                for (ipAddress net : positiveIPv4Routes) {
+                    if (net.containsNet(dnsServer)) {
+                        dnsIncluded = true;
+                    }
+                }
+                if (!dnsIncluded) {
+                    String samsungwarning = String.format("Warning Samsung Android 5.0+ devices ignore DNS servers outside the VPN range. To enable DNS add a custom route to your DNS Server (%s) or change to a DNS inside your VPN range", mDnslist.get(0));
+                    VpnStatus.logWarning(samsungwarning);
+                }
+            } catch (Exception e) {
+                VpnStatus.logError("Error parsing DNS Server IP: " + mDnslist.get(0));
+            }
+        }
+
+
         if (mDomain != null)
             builder.addSearchDomain(mDomain);
 
@@ -613,7 +632,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         try {
             //Debug.stopMethodTracing();
             ParcelFileDescriptor tun = builder.establish();
-            if (tun==null)
+            if (tun == null)
                 throw new NullPointerException("Android establish() method returned null (Really broken network configuration?)");
             return tun;
         } catch (Exception e) {
@@ -664,11 +683,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     intf.startsWith("tun") || intf.startsWith("rmnet"))
                 continue;
 
-            if (ipAddr==null || netMask == null) {
+            if (ipAddr == null || netMask == null) {
                 VpnStatus.logError("Local routes are broken?! (Report to author) " + TextUtils.join("|", localRoutes));
                 continue;
             }
-            
+
             if (ipAddr.equals(mLocalIP.mIp))
                 continue;
 

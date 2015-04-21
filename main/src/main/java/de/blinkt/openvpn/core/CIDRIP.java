@@ -54,6 +54,7 @@ class CIDRIP {
         } else {
             return false;
         }
+
     }
 
     static long getInt(String ipaddr) {

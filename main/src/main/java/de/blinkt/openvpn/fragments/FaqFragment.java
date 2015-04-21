@@ -155,6 +155,7 @@ public class FaqFragment extends Fragment {
             new FAQEntry(Build.VERSION_CODES.LOLLIPOP, -1, R.string.ab_not_route_to_vpn_title, R.string.ab_not_route_to_vpn),
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.tap_mode, R.string.tap_faq3),
 
+            // DNS weirdness in Samsung 5.0: https://plus.google.com/117315704597472009168/posts/g78bZLWmqgD
     };
 
 

@@ -23,6 +23,11 @@ svn co http://google-breakpad.googlecode.com/svn/trunk/ google-breakpad
 - Install ndk (Version r10b is tested and used by me)
 - Make sure that ndk-build is in your build path.
 
+Fetch the git submodules:
+
+  git submodule init
+  git submodule update
+
 Do cd main;./misc/build-native.(sh|bat) in the main directory of the project.
 After that build the project using "gradle build" (Or use Android Studio). 
 The project is converted to gradle and building with Eclipse is no longer supported.

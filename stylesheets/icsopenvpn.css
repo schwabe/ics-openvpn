@@ -1,0 +1,10 @@
+a.section_anchor {
+  display: none;
+  text-decoration: none;
+  text-decoration-line: none;
+  text-decoration-style: initial;
+  text-decoration-color: initial;
+  margin-left: .7em;
+  font-weight: lighter;
+  font-size: 85%;
+}

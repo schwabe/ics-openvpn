@@ -65,7 +65,7 @@
   <string name="remove_vpn">Eliminar VPN</string>
   <string name="check_remote_tlscert">Comprueba si el servidor utiliza un certificado con las extensiones TLS de servidor (--remote-cert-tls server)</string>
   <string name="check_remote_tlscert_title">Espere certificado de servidor TLS</string>
-  <string name="remote_tlscn_check_summary">Checar el sujeto del DN del Certificado del Servidor Remoto</string>
+  <string name="remote_tlscn_check_summary">Verificar el sujeto del DN del Certificado del Servidor Remoto</string>
   <string name="remote_tlscn_check_title">Comprobación del certificado de nombre de host</string>
   <string name="enter_tlscn_dialog">Especifica el chequeo usado para verificar el certificado remoto DN (ej. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nEspecifica el DN completo o el RDN (openvpn.blinkt.de en el ejemplo) o un prefijo RDN para la verificación.\n\nCuando se usa un prefijo RDN como \"Server\" este coincide también con \"Server-1\" y \"Server-2\"\n\nDejando el campo de texto vacío verificara el RDN contra el nombre host del servidor.\n\nPara más detalles ve la página de manual (manpage) de OpenVPN 2.3.1+ en --verify-x509-name</string>
   <string name="enter_tlscn_title">Sujeto del Certificado Remoto</string>
@@ -217,7 +217,7 @@ hacia/de Móvil)</string>
   <string name="no_vpn_profiles_defined">No hay perfiles VPN definidos.</string>
   <string name="add_new_vpn_hint">Use el icono &lt;img src=\"ic_menu_add\"/&gt; para agregar una nueva VPN</string>
   <string name="vpn_import_hint">Use el icono &lt;img src=\"ic_menu_archive\"/&gt; para importar un perfil existente (.ovpn or .conf) de tu tarjeta.</string>
-  <string name="faq_hint">Asegúrese de checar también las preguntas frecuentes. Hay una guía de inicio rápido.</string>
+  <string name="faq_hint">Asegúrese de revisar también las preguntas frecuentes. Hay una guía de inicio rápido.</string>
   <string name="faq_routing_title">Configuración de enrutamiento o interfaz</string>
   <string name="faq_routing">El enrutamiento y la configuración de la interfaz no se realiza a través de comandos tradicionales ifconfig / ruta, pero mediante el uso de la API VPNService. Esto resulta en una configuración de enrutamiento diferente que en otros sistemas operativos. La configuración del túnel VPN consta de la dirección IP y las redes que deben ser colocados de través de esta interfaz. Se necesita Especialmente hay dirección compañero de estudios o de gateway. Rutas especiales para llegar a la VPN Server (por ejemplo agregan al usar redirect-gateway) no son necesarios, ya sea. La aplicación, en consecuencia ignorará esta configuración al importar una configuración. La aplicación asegura con la API VPNService que la conexión con el servidor no se encamina a través del túnel VPN. Sólo redes especificando ser enrutados a través del túnel es compatible. La aplicación intenta detectar las redes que no deben ser enrutados a través de túnel (por ejemplo, la ruta xxxx aaaa net_gateway) y calcula un conjunto de rutas que excluye este rutas para emular el comportamiento de otras plataformas. Las ventanas de registro muestra la configuración de la VPNService al establecer una conexión.</string>
   <string name="persisttun_summary">No regresar a modo sin conexión VPN cuando OpenVPN esta volviendose a conectar.</string>

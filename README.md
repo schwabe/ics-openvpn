@@ -1,32 +1,50 @@
-OpenVPN for Android
-=============
+# OpenVPN for Android
 
-Description
-------------
-With the new VPNService of Android API level 14+ (Ice Cream Sandwhich) it is possible to create a VPN service that does not root access. This project is a port of OpenVPN.
+Open Source OpenVPN client for Android.
 
-Read the README
----------------
-If you want to develop on ics-openvpn please read the [doc/README.txt](http://code.google.com/p/ics-openvpn/source/browse/doc/README.txt) *before* opening issues or emailing me. 
+![OpenVPN for Android][logo]
 
-You can help
-------------
-Even if you are no programmer you can help by translating the OpenVPN client into your native language. [Crowdin provides a free service for non commercial open source projects](http://crowdin.net/project/ics-openvpn/invite) (Fixing/completing existing translations is very welcome as well)
+## DESCRIPTION
+With the new [VPNService][vpnservice] of Android (API level 14+ / Ice Cream
+Sandwich) it is now possible to create a VPN services that do not require root
+privileges and hence can be used without any modifications to your device. This
+project is a port of [OpenVPN][openvpn] implementing this very API.
 
-FAQ
------
-You can find the FAQ here (same as in app): http://code.google.com/p/ics-openvpn/wiki/FAQ
+It differentiates itself from [OpenVPN Connect][openvpnconnect] by being
+completely Open Source, whereas the former is a proprietary product of OpenVPN
+Technologies, Inc.
 
-Note to administrators
-------------------------
+## DEVELOPERS
+If you want to develop on `ics-openvpn`, please read [doc/README.txt][readme]
+*before* opening any issues or mailing me. It contains not only instructions
+on how to build the software, but also some remarks on re-using this code
+within own projects.
 
-You make your life and that of your users easier if you embed the certificates into the .ovpn file. You or the users can mail the .ovpn as a attachment to the phone and directly import and use it. Also downloading and importing the file works. The MIME Type should be application/x-openvpn-profile. 
+## TRANSLATIONS
+Translations are managed through [Crowdin][crowdin], since they provide a free
+service for non commercial Open Source projects.
 
-Inline files are supported since OpenVPN 2.1rc1 and documented in the  [OpenVPN 2.3 man page](https://community.openvpn.net/openvpn/wiki/Openvpn23ManPage) (under INLINE FILE SUPPORT) 
+Fixing, extending and/or completing already existing translations is very
+welcomed and can also be easily handled by non-programmers.
 
-(Using inline certifaces can also make your life on non Android platforms easier since you have only one file.)
+## FAQ
+You can find the FAQ [here][faq]. It is the same version that is also embedded
+into the application itself and covers questions frequently asked.
 
-For example `ca mycafile.pem` becomes
+## NOTE TO ADMINISTRATORS
+You will make your life and that of your users easier, if you embed the
+certificates directly into the `.ovpn` file using the inline file support. You
+or the users can then mail the file as an attachment to the phone and directly
+import it there. Downloading and importing the file works also. The MIME-Type
+should be `application/x-openvpn-profile`.
+
+Inline files are supported since OpenVPN 2.1rc1 and are documented in the
+appropriate [man page][manpage] (section INLINE FILE SUPPORT).
+
+Using inline certificates will also make your life on non Android platforms
+easier, since you have only one file, which makes it more portable.
+
+For example `ca mycafile.pem` becomes:
 
   <ca>
   -----BEGIN CERTIFICATE-----
@@ -35,17 +53,38 @@ For example `ca mycafile.pem` becomes
   -----END CERTIFICATE-----
   </ca>
 
-Fotnotes
------------
-Please that OpenVPN used by this project is under GPLv2. 
+## DONATIONS
 
-If you cannot or do not want to use the Play Store you can [download the apk files directly](http://plai.de/android/) . 
+Developing this applications takes time and effort. Therefore donations are
+very appreciated.
 
-If you want to donate you can donate to [arne-paypal@rfc2549.org via paypal](https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&cmd=_s-xclick).
+[![PayPal donation](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif "PayPal")][paypal]
 
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png "Flattr This!")][flattr]
 
-The old official or main repository was a Mercurial (hg) repository at http://code.google.com/p/ics-openvpn/source/
+Thank you very much for your support!
 
-The new git repository is now at GitHub under https://github.com/schwabe/ics-openvpn
+## FOOTNOTES
+Please note that OpenVPN used in this project is licensed under [GPLv2][gplv2].
 
-Please read the doc/README before asking question or starting development.
+If you cannot or do not want to use the Play Store you can also download the
+APK files [directly][apk].
+
+The old official repository was based on Mercurial (hg) and residing over at
+[Google code][googlecode], but has since been migrated to [GitHub][github].
+
+[logo]: https://github.com/schwabe/ics-openvpn/blob/master/misc/icon-512.png
+[vpnservice]: https://developer.android.com/reference/android/net/VpnService.html
+[openvpn]: https://openvpn.net/
+[readme]: https://github.com/schwabe/ics-openvpn/blob/master/doc/README.txt
+[crowdin]: http://crowdin.net/project/ics-openvpn/invite
+[openvpnconnect]: https://play.google.com/store/apps/details?id=net.openvpn.openvpn
+[faq]: http://code.google.com/p/ics-openvpn/wiki/FAQ
+[manpage]: https://community.openvpn.net/openvpn/wiki/Openvpn23ManPage
+[paypal]: https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&cmd=_s-xclick
+[gplv2]: https://www.gnu.org/licenses/gpl-2.0.html
+[apk]: http://plai.de/android/
+[googlecode]: http://code.google.com/p/ics-openvpn/source/
+[github]: https://github.com/schwabe/ics-openvpn
+[flattr]: https://flattr.com/submit/auto?url=https://github.com/schwabe/ics-openvpn
+

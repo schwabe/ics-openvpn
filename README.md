@@ -46,12 +46,12 @@ easier, since you have only one file, which makes it more portable.
 
 For example `ca mycafile.pem` becomes:
 
-  <ca>
-  -----BEGIN CERTIFICATE-----
-  MIIHPTCCBSWgAwIBAgIBADANBgkqhkiG9w0BAQQFADB5MRAwDgYDVQQKEwdSb290
-  [...]
-  -----END CERTIFICATE-----
-  </ca>
+    <ca>
+    -----BEGIN CERTIFICATE-----
+    MIIHPTCCBSWgAwIBAgIBADANBgkqhkiG9w0BAQQFADB5MRAwDgYDVQQKEwdSb290
+    [...]
+    -----END CERTIFICATE-----
+    </ca>
 
 ## DONATIONS
 

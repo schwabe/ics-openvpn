@@ -56,7 +56,7 @@ For example `ca mycafile.pem` becomes:
 ## DONATIONS
 
 Developing this applications takes time and effort. Therefore donations are
-very appreciated.
+very appreciated through one of the following means:
 
 [![PayPal donation](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif "PayPal")][paypal]
 

@@ -9,7 +9,7 @@
     tools:ignore="InconsistentLayout">
 
     <ImageButton
-        android:id="@+id/add_button"
+        android:id="@+id/fab_import"
         android:layout_width="@dimen/round_button_diameter"
         android:layout_height="@dimen/round_button_diameter"
         android:layout_gravity="end|bottom"
@@ -23,7 +23,7 @@
 
     <ImageButton
         android:contentDescription="@string/add_profile"
-        android:id="@+id/import_button"
+        android:id="@+id/fab_add"
         android:layout_width="@dimen/round_button_diameter"
         android:layout_height="@dimen/round_button_diameter"
         android:layout_gravity="end|bottom"

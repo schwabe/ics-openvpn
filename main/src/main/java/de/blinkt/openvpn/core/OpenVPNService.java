@@ -16,7 +16,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
-import android.net.NetworkRequest;
 import android.net.VpnService;
 import android.os.Binder;
 import android.os.Build;
@@ -62,7 +61,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
     private static final int OPENVPN_STATUS = 1;
     private static boolean mNotificationAlwaysVisible = false;
-    private final Vector<String> mDnslist = new Vector<String>();
+    private final Vector<String> mDnslist = new Vector<>();
     private final NetworkSpace mRoutes = new NetworkSpace();
     private final NetworkSpace mRoutesv6 = new NetworkSpace();
     private final IBinder mBinder = new LocalBinder();
@@ -81,7 +80,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private String mLastTunCfg;
     private String mRemoteGW;
     private final Object mProcessLock = new Object();
-    private LollipopDeviceStateListener mLollipopDeviceStateListener;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean mbit) {
@@ -235,13 +233,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
 
             //ignore exception
-        } catch (NoSuchMethodException nsm) {
-            VpnStatus.logException(nsm);
-        } catch (IllegalArgumentException e) {
-            VpnStatus.logException(e);
-        } catch (IllegalAccessException e) {
-            VpnStatus.logException(e);
-        } catch (InvocationTargetException e) {
+        } catch (NoSuchMethodException | IllegalArgumentException |
+                InvocationTargetException | IllegalAccessException e) {
             VpnStatus.logException(e);
         }
 
@@ -325,6 +318,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         /* The intent is null when the service has been restarted */
         if (intent == null) {
             mProfile = ProfileManager.getLastConnectedProfile(this, false);
+            VpnStatus.logInfo(R.string.service_restarted);
 
             /* Got no profile, just stop */
             if (mProfile == null) {
@@ -412,7 +406,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
 
         } else {
-            HashMap<String, String> env = new HashMap<String, String>();
+            HashMap<String, String> env = new HashMap<>();
             processThread = new OpenVPNThread(this, argv, env, nativeLibraryDirectory);
         }
 
@@ -428,7 +422,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         ProfileManager.setConnectedVpnProfile(this, mProfile);
         /* TODO: At the moment we have no way to handle asynchronous PW input
-         * Fixing will also allow to handle challenge/responsee authentication */
+         * Fixing will also allow to handle challenge/response authentication */
         if (mProfile.needUserPWInput(true) != 0)
             return START_NOT_STICKY;
 
@@ -439,17 +433,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         try {
             Class cl = Class.forName("de.blinkt.openvpn.core.OpenVPNThreadv3");
             return (OpenVPNManagement) cl.getConstructor(OpenVPNService.class, VpnProfile.class).newInstance(this, mProfile);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IllegalArgumentException | InstantiationException | InvocationTargetException |
+                NoSuchMethodException | ClassNotFoundException | IllegalAccessException e ) {
             e.printStackTrace();
         }
         return null;
@@ -572,7 +557,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
-        if ("samsung".equals(Build.BRAND) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mDnslist != null && mDnslist.size() >= 1) {
+        if ("samsung".equals(Build.BRAND) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mDnslist.size() >= 1) {
             // Check if the first DNS Server is in the VPN range
             try {
                 ipAddress dnsServer = new ipAddress(new CIDRIP(mDnslist.get(0), 32), true);
@@ -650,22 +635,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private void allowAllAFFamilies(Builder builder) {
         builder.allowFamily(OsConstants.AF_INET);
         builder.allowFamily(OsConstants.AF_INET6);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    void removeLollipopCMListener() {
-        ConnectivityManager cm = (ConnectivityManager) getBaseContext().getSystemService(CONNECTIVITY_SERVICE);
-        cm.unregisterNetworkCallback(mLollipopDeviceStateListener);
-        mLollipopDeviceStateListener = null;
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    void addLollipopCMListener() {
-        ConnectivityManager cm = (ConnectivityManager) getBaseContext().getSystemService(CONNECTIVITY_SERVICE);
-        NetworkRequest.Builder nrb = new NetworkRequest.Builder();
-
-        mLollipopDeviceStateListener = new LollipopDeviceStateListener();
-        cm.registerNetworkCallback(nrb.build(), mLollipopDeviceStateListener);
     }
 
     private void addLocalNetworksToRoutes() {
@@ -879,8 +848,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             // CONNECTED
             // Does not work :(
             String msg = getString(resid);
-            String ticker = msg;
-            showNotification(msg + " " + logmessage, ticker, lowpriority, 0, level);
+            showNotification(msg + " " + logmessage, msg, lowpriority, 0, level);
 
         }
     }

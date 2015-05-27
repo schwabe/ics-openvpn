@@ -38,5 +38,4 @@ public class ICSOpenVPNApplication extends Application {
             //ACRA.init(this);
         }
     }
-
 }

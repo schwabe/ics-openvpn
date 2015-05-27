@@ -9,6 +9,7 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4n.view.ViewPager;
 import android.view.Menu;
@@ -18,6 +19,7 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.fragments.AboutFragment;
 import de.blinkt.openvpn.fragments.FaqFragment;
 import de.blinkt.openvpn.fragments.GeneralSettings;
+import de.blinkt.openvpn.fragments.LogFragment;
 import de.blinkt.openvpn.fragments.SendDumpFragment;
 import de.blinkt.openvpn.fragments.VPNProfileList;
 import de.blinkt.openvpn.views.ScreenSlidePagerAdapter;
@@ -57,7 +59,8 @@ public class MainActivity extends Activity {
             mPagerAdapter.addTab(R.string.crashdump, SendDumpFragment.class);
         }
 
-        //mPagerAdapter.addTab(R.string.openvpn_log, LogFragment.class);
+        if (isDirectToTV())
+            mPagerAdapter.addTab(R.string.openvpn_log, LogFragment.class);
 
         mPagerAdapter.addTab(R.string.about, AboutFragment.class);
         mPager.setAdapter(mPagerAdapter);
@@ -65,6 +68,11 @@ public class MainActivity extends Activity {
         TabBarView tabs = (TabBarView) findViewById(R.id.sliding_tabs);
         tabs.setViewPager(mPager);
 	}
+
+    private boolean isDirectToTV() {
+        return(getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEVISION)
+                || getPackageManager().hasSystemFeature(PackageManager.FEATURE_LEANBACK));
+    }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void disableToolbarElevation() {

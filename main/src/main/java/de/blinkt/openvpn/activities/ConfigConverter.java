@@ -25,8 +25,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import junit.framework.Assert;
 
@@ -54,7 +56,7 @@ import de.blinkt.openvpn.views.FileSelectLayout;
 
 import static de.blinkt.openvpn.views.FileSelectLayout.FileSelectCallback;
 
-public class ConfigConverter extends Activity implements FileSelectCallback {
+public class ConfigConverter extends Activity implements FileSelectCallback, View.OnClickListener {
 
     public static final String IMPORT_PROFILE = "de.blinkt.openvpn.IMPORT_PROFILE";
     private static final int RESULT_INSTALLPKCS12 = 7;
@@ -74,28 +76,39 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
     private String mCrlFileName;
 
     @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.fab_save)
+            userActionSaveProfile();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.cancel) {
             setResult(Activity.RESULT_CANCELED);
             finish();
         } else if (item.getItemId() == R.id.ok) {
-            if (mResult == null) {
-                log("Importing the config had error, cannot save it");
-                return true;
-            }
-
-            Intent in = installPKCS12();
-
-            if (in != null)
-                startActivityForResult(in, RESULT_INSTALLPKCS12);
-            else
-                saveProfile();
-
-            return true;
+            return userActionSaveProfile();
         }
 
         return super.onOptionsItemSelected(item);
 
+    }
+
+    private boolean userActionSaveProfile() {
+        if (mResult == null) {
+            log(R.string.import_config_error);
+            Toast.makeText(this, R.string.import_config_error, Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+        Intent in = installPKCS12();
+
+        if (in != null)
+            startActivityForResult(in, RESULT_INSTALLPKCS12);
+        else
+            saveProfile();
+
+        return true;
     }
 
     @Override
@@ -511,6 +524,10 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
         setContentView(R.layout.config_converter);
         super.onCreate(savedInstanceState);
 
+        ImageButton fab_button = (ImageButton) findViewById(R.id.fab_save);
+        if(fab_button!=null)
+            fab_button.setOnClickListener(this);
+
         if (savedInstanceState != null && savedInstanceState.containsKey(VPNPROFILE)) {
             mResult = (VpnProfile) savedInstanceState.getSerializable(VPNPROFILE);
             mAliasName = savedInstanceState.getString("mAliasName");
@@ -661,6 +678,5 @@ public class ConfigConverter extends Activity implements FileSelectCallback {
     private void log(int ressourceId, Object... formatArgs) {
         log(getString(ressourceId, formatArgs));
     }
-
 
 }

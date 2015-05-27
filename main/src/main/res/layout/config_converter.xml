@@ -3,10 +3,12 @@
   ~ Copyright (c) 2012-2014 Arne Schwabe
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/stdpadding"
             android:orientation="vertical">
@@ -43,6 +45,6 @@
                 android:id="@+id/textView"/>
 
     </LinearLayout>
-
-
-</ScrollView>
+    </ScrollView>
+    <include layout="@layout/save_fab" />
+</FrameLayout>

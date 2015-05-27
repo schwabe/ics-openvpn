@@ -8,7 +8,6 @@ package de.blinkt.openvpn.core;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.os.Build;
 
 import java.io.File;
@@ -67,14 +66,14 @@ public class VPNLaunchHelper {
 
 
     public static String[] buildOpenvpnArgv(Context c) {
-        Vector<String> args = new Vector<String>();
+        Vector<String> args = new Vector<>();
 
         // Add fixed paramenters
         //args.add("/data/data/de.blinkt.openvpn/lib/openvpn");
         args.add(writeMiniVPN(c));
 
         args.add("--config");
-        args.add(c.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE);
+        args.add(getConfigFilePath(c));
 
         return args.toArray(new String[args.size()]);
     }

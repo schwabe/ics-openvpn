@@ -312,8 +312,7 @@ public class VpnStatus {
 
     public void saveLogToDisk(Context c) {
 
-        new File(c.getCacheDir(), "log.xml");
-
+        File logOut = new File(c.getCacheDir(), "log.xml");
 
     }
 

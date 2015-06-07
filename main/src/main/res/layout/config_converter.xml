@@ -46,5 +46,5 @@
 
     </LinearLayout>
     </ScrollView>
-    <include layout="@layout/save_fab" />
+    <!-- <include layout="@layout/save_fab" /> -->
 </FrameLayout>

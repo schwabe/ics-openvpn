@@ -85,15 +85,24 @@
   <string name="ignore_routes_summary">Negeer routes ontvangen van de server.</string>
   <string name="default_route_summary">Leid al het Verkeer over de VPN</string>
   <string name="use_default_title">Gebruik standaard Route</string>
+  <string name="custom_route_message">Aangepaste routes invoeren. Voer alleen de bestemming in CIDR-formaat. \"10.0.0.0/8 2002::/16\" zou de netwerken 10.0.0.0/8 en 2002::/16 via de VPN routeren.</string>
+  <string name="custom_route_message_excluded">Routes die niet via de VPN moeten worden gerouteerd. Gebruik dezelfde syntaxis als voor opgenomen routes.</string>
   <string name="custom_routes_title">Eigen routes</string>
+  <string name="custom_routes_title_excluded">Uitgesloten netwerken</string>
+  <string name="log_verbosity_level">Logging nivo</string>
   <string name="float_summary">Geverifieerde pakketen zijn vanuit elk IP toegestaan</string>
   <string name="float_title">Zwevende server toestaan</string>
   <string name="custom_options_title">Aangepaste Opties</string>
   <string name="edit_vpn">VPN Instellingen Bewerken</string>
   <string name="remove_vpn_query">De VPN-profiel \'%s\' verwijderen?</string>
+  <string name="tun_open_error">Fout bij het openen van de tun interface</string>
   <string name="error">"Fout:"</string>
   <string name="clear">Leeg maken</string>
+  <string name="last_openvpn_tun_config">Openen tun interface:</string>
   <string name="local_ip_info">Lokaal IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
+  <string name="routes_info_incl">Routes: %1$s %2$s</string>
+  <string name="routes_info_excl">Uitgesloten routes: %1$s %2$s</string>
+  <string name="routes_debug">VpnService routes geïnstalleerd: %1$s %2$s</string>
   <string name="version_info">%1$s %2$s</string>
   <string name="send_logfile">Logboek verzenden</string>
   <string name="send">Verzenden</string>
@@ -124,5 +133,8 @@
   <string name="file_icon">bestands pictogram</string>
   <string name="tls_authentication">TLS Verificatie</string>
   <string name="generated_config">Gegenereerde Configuratie</string>
+  <string name="generalsettings">Instellingen</string>
+  <string name="edit_profile_title">Bewerken van \"%s\"</string>
+  <string name="building_configration">Opbouwen configuratie&#8230;</string>
   <string name="ipdns">IP en DNS</string>
 </resources>

@@ -22,7 +22,7 @@
   <string name="no_certificate">Bạn phải chọn một chứng chỉ</string>
   <string name="copyright_guicode">Mã nguồn và theo dõi lỗi hiện có tại http://code.google.com/p/ics-openvpn/</string>
   <string name="copyright_others">Chương trình này sử dụng các thành phần sau: xem mã nguồn đầy đủ trong giấy phép</string>
-  <string name="about">Về</string>
+  <string name="about">Thông tin ứng dụng</string>
   <string name="vpn_list_title">Hồ sơ</string>
   <string name="vpn_type">Loại</string>
   <string name="pkcs12pwquery">Mật khẩu PKCS12</string>
@@ -90,7 +90,7 @@
   <string name="custom_route_message_excluded">Định tuyến KHÔNG nên chuyển tải qua VPN. Sử dụng cú pháp tương tự như với bao gồm các định tuyến.</string>
   <string name="custom_routes_title">Định tuyến tùy chỉnh</string>
   <string name="custom_routes_title_excluded">Các mạng loại trừ</string>
-  <string name="log_verbosity_level">Đăng nhập mức chậm</string>
+  <string name="log_verbosity_level">Mức độ hiển thị bản ghi</string>
   <string name="float_summary">Cho phép các gói tin xác thực từ IP bất kỳ</string>
   <string name="float_title">Cho phép các máy chủ nổi</string>
   <string name="custom_options_title">Cấu hình tùy chỉnh</string>
@@ -159,7 +159,7 @@
   <string name="converted_profile">hồ sơ đã nhập</string>
   <string name="converted_profile_i">hồ sơ đã nhập %d</string>
   <string name="broken_images">Ảnh bị hỏng</string>
-  <string name="broken_images_faq">&lt;p&gt;Thông tin chính thức của HTC có một số vấn đề định tuyến đường truyền xảy ea khi không lưu thông được (Xem thêm &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; trong báo cáo theo dõi lỗi.)&lt;/p&gt;&lt;p&gt;Thông tin chính thức từ Sony dòng Xperia Arc S và Xperia Ray đã được báo cáo về việc mất kết nối với dịch vụ VPN. (Xem thêm &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; trong báo cáo theo dõi lỗi.)&lt;/p&gt;&lt;p&gt;Mật số bản dựng tùy chỉnh cho tun module có thể bị thiếu /dev/tun hoặc có thể sai. Một vài ROM CM9 cần phải \"Sửa tùy chọn chủ sở hữu\" bên dưới \"Sư xâm nhập thiết bị cụ thể\" được bật..&lt;/p&gt;&lt;p&gt;Quan trọng nhất, nếu thiết bị của bạn hỏng ROM Android, hãy báo cáo cho nhà phát triển. Càng nhiều người báo cáo vấn đề đến nhà phát triển thì càng có nhiều khả năng họ sẽ sửa lỗi đó.&lt;/p&gt;</string>
+  <string name="broken_images_faq">&lt;p&gt;Thông tin chính thức của HTC có một số vấn đề định tuyến đường truyền xảy ra khi không lưu thông được (Xem thêm &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; trong báo cáo theo dõi lỗi).&lt;/p&gt;&lt;p&gt;Thông tin chính thức từ Sony dòng Xperia Arc S và Xperia Ray đã được báo cáo về việc mất kết nối với dịch vụ VPN. (Xem thêm &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; trong báo cáo theo dõi lỗi.)&lt;/p&gt;&lt;p&gt;Một số bản dựng tùy chỉnh cho tun module có thể bị thiếu /dev/tun hoặc có thể sai. Một vài ROM CM9 cần phải \"Sửa tùy chọn chủ sở hữu\" bên dưới \"Sự xâm nhập thiết bị cụ thể\" được bật.&lt;/p&gt;&lt;p&gt;Quan trọng nhất, nếu thiết bị của bạn hỏng ROM Android, hãy báo cáo cho nhà phát triển. Càng nhiều người báo cáo vấn đề đến nhà phát triển thì càng có nhiều khả năng họ sẽ sửa lỗi đó.&lt;/p&gt;</string>
   <string name="pkcs12_file_encryption_key">Tập tin khóa mã hóa PKCS12</string>
   <string name="private_key_password">Khóa mật khẩu riêng tư</string>
   <string name="password">Mật khẩu</string>
@@ -184,7 +184,7 @@
   <string name="error_rsa_sign">Lỗi đăng ký với khóa lưu trữ Android %1$s: %2$s</string>
   <string name="faq_system_dialogs">Các kết nối VPN đang cảnh báo bạn rằng ứng dụng này có thể chặn tất cả lưu lượng được đặt bởi hệ thống để chặn tình trạng lạm dụng VPN API. \nThông báo kết nối VPN (Biểu tượng chìa khóa) cũng được đặt bởi hệ thống Android để báo hiệu một kết nối VPN đang hoạt động. Với một số trường hợp thông báo này sẽ phát một âm thanh. \nAndroid giới thiệu những đoạn hội thoại này vì sự an toàn của bạn và chắn chắn rằng chúng không thể bị xâm nhập phá hoại. (Trên một số trường hợp thật không may không bao gồm âm thanh thông báo)</string>
   <string name="faq_system_dialogs_title">Cảnh báo kết nối và thông báo âm thanh</string>
-  <string name="translationby">Bản dịch tiếng Anh bởi Tojido Takarin&lt;arne@tojidotakarin@gmail.com&gt;</string>
+  <string name="translationby">Phiên dịch tiếng Việt bởi Tojido Takarin&lt;tojidotakarin@gmail.com&gt;</string>
   <string name="ipdns">IP và DNS</string>
   <string name="basic">Cơ bản</string>
   <string name="routing">Định tuyến</string>
@@ -203,7 +203,7 @@
   <string name="using_proxy">Đang sử dụng proxy %1$s %2$d</string>
   <string name="use_system_proxy">Sử dụng proxy hệ thống</string>
   <string name="use_system_proxy_summary">Sử dụng các cấu hình hệ thống rộng cho HTTP/HTTPS proxy để kết nối.</string>
-  <string name="donatewithpaypal">Bạn có thể &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;tặng với PayPal&lt;/a&gt; </string>
+  <string name="donatewithpaypal">Bạn có thể &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;ủng hộ cho ứng dụng với PayPal&lt;/a&gt; </string>
   <string name="onbootrestartsummary">OpenVPN sẽ kết nối lại VPN nếu nó đã hoạt động khi hệ thống khởi động lại/tắt máy. Xin vui lòng đọc phần cảnh báo kết nối trong các câu hỏi thường gặp trước khi sử dụng tùy chọn này.</string>
   <string name="onbootrestart">Kết nối lại khi khởi động lại máy</string>
   <string name="ignore">Bỏ qua</string>
@@ -224,7 +224,7 @@
   <string name="openvpn_log">Đăng nhập OpenVPN</string>
   <string name="import_config">Nhập cấu hình OpenVPN</string>
   <string name="battery_consumption_title">Mức tiêu thụ pin</string>
-  <string name="baterry_consumption">Trong các lần thử nghiệm của tôi thì lý do chính ở việc tiêu thụ pin cao của OpenVPN là do các gói dữ liệu trực tuyến liên tục. Hầu hết các máy chủ OpenVPN có một chỉ thị cấu hình như \'trực tuyến liên tục 10 60\' mà nguyên nhân của máy trạm và máy chủ trao đổi với nhau các gói dữ liệu trực tuyến này mỗi 10 giây. &lt;p&gt; Trong khi các gói dữ liệu nhỏ và không sử dụng nhiều lưu lượng truy cập. (Xem thêm &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Nhà phát triển Android&lt;/a&gt;) &lt;p&gt; Gói dữ liệu trực tuyến này không thể thay đổi trên máy trạm. Chỉ quản trị viên hệ thống của OpenVPN mới có thể thay đổi. &lt;p&gt; Không may là nếu sử dụng các gói dữ liệu trực tuyến này hơn 60 giây với UDP có thể gây ra hiện tượng các cổng NAT thả các kết nối do chờ một thời gian mà không hoạt động. Sử dụng TCP với một thời gian dài không hoạt động, nhưng thông lượng TCP qua cấu hình TCP thực hiện rất kém trên kết nối với độ mất mát gói cao. (Xem &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Tại sao TCP qua TCP lại là mo65y ý kiến tồi&lt;/a&gt;)</string>
+  <string name="baterry_consumption">Trong các lần thử nghiệm của tôi thì lý do chính ở việc tiêu thụ pin cao của OpenVPN là do các gói dữ liệu trực tuyến liên tục. Hầu hết các máy chủ OpenVPN có một chỉ thị cấu hình như \'trực tuyến liên tục 10 60\' mà nguyên nhân của máy trạm và máy chủ trao đổi với nhau các gói dữ liệu trực tuyến này mỗi 10 giây. &lt;p&gt; Trong khi các gói dữ liệu nhỏ và không sử dụng nhiều lưu lượng truy cập. (Xem thêm &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Nhà phát triển Android&lt;/a&gt;) &lt;p&gt; Gói dữ liệu trực tuyến này không thể thay đổi trên máy trạm. Chỉ quản trị viên hệ thống của OpenVPN mới có thể thay đổi. &lt;p&gt; Không may là nếu sử dụng các gói dữ liệu trực tuyến này hơn 60 giây với UDP có thể gây ra hiện tượng các cổng NAT thả các kết nối do chờ một thời gian mà không hoạt động. Sử dụng TCP với một thời gian dài không hoạt động, nhưng thông lượng TCP qua cấu hình TCP thực hiện rất kém trên kết nối với độ mất mát gói cao. (Xem &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Tại sao TCP qua TCP lại là một ý kiến tồi?&lt;/a&gt;)</string>
   <string name="faq_tethering">Các tính năng Android Tethering (thông qua Wifi, USB hoặc Bluetooth) và các dịch vụ VPN API (được sử dụng bởi chương trình này) không làm việc cùng nhau. Để biết thêm chi tiết xin xem tại &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;issue #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN và Tethering</string>
   <string name="connection_retries">Thử lại kết nối</string>
@@ -344,7 +344,7 @@
   <string name="server_list">Danh sách máy chủ</string>
   <string name="vpn_allowed_apps">Cho phép ứng dụng</string>
   <string name="advanced_settings">Cài đặt nâng cao</string>
-  <string name="payload_options">Tùy chọn trả phí</string>
+  <string name="payload_options">Tùy chọn Payload</string>
   <string name="tls_settings">Cài đặt TLS</string>
   <string name="no_remote_defined">Không xác định điều khiển từ xa</string>
   <string name="duplicate_vpn">Hồ sơ VPN trùng lặp</string>

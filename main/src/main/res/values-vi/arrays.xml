@@ -7,9 +7,9 @@
     <item>Chứng nhận Android</item>
     <item>Tên người dùng/Mật khẩu</item>
     <item>Khóa tĩnh</item>
-    <item>Người dùng/PW+Chứng nhận</item>
-    <item>Người dùng/PW + PKCS12 </item>
-    <item>Người dùng/PW + Android</item>
+    <item>Người dùng/Mật khẩu+Chứng nhận</item>
+    <item>Người dùng/Mật khẩu + PKCS12 </item>
+    <item>User / PW + Android</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item>0</item>

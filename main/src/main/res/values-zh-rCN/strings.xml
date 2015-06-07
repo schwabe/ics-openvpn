@@ -341,6 +341,7 @@
   <string name="keep">Thorny</string>
   <string name="delete">删除</string>
   <string name="add_remote">添加新的远程服务器</string>
+  <string name="remote_random">连接时随机选择配置文件</string>
   <string name="remote_no_server_selected">您需要至少定义并启用一个远程服务器。</string>
   <string name="server_list">服务器列表</string>
   <string name="vpn_allowed_apps">允许的应用程序</string>
@@ -351,9 +352,13 @@
   <string name="duplicate_vpn">重复的VPN配置文件</string>
   <string name="duplicate_profile_title">创建配置文件副本： %s</string>
   <string name="show_log">显示日志</string>
+  <string name="faq_android_clients">OpenVPN 的 Android 客户端目前市面上已经有了一些了，其中最常见的有 OpenVPN for Android（也就本应用）、OpenVPN Connect 以及 OpenVPN Settings 。
+这些客户端可以被分为两类：使用官方VPNService API (Android 4.0+) 并且不需要 root 权限的 OpenVPN for Android 和 OpenVPN Connect 以及需要 root 权限的 OpenVPN Settings 。</string>
   <string name="faq_androids_clients_title">不同OpenVPN安卓客户端的区别</string>
   <string name="ignore_multicast_route">忽略多播路由:%s</string>
+  <string name="ab_only_cidr">安卓只支持CIDR路由。由于非CIDR路由几乎不用，OpenVPN for Android将使用/32路由并对非CIDR路由发出警告。</string>
   <string name="ab_tethering_44">在连接VPN时手机热点依然工作，但连接不会通过VPN。</string>
+  <string name="ab_kitkat_mss">早期的KitKat版本在TCP连接上设置了错误的MSS值 (#61948)。OpenVPN将自动启动mssfix选项来解决这个Bug。</string>
   <string name="ab_only_cidr_title">非CIDR路由</string>
   <string name="ab_lollipop_reinstall_title">正在重新安装VPN应用</string>
   <string name="custom_connection_options">自定义选项</string>

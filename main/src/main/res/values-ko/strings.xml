@@ -87,7 +87,9 @@
   <string name="default_route_summary">VPN을 통해 모든 트래픽을 보냅니다.</string>
   <string name="use_default_title">기본 라우트 사용하기</string>
   <string name="custom_route_message">사용자 지정 라우트를 입력하십시오. 목적지는 CIDR 형식으로만 입력하십시오. \"10.0.0.0/8 2002::/16\"은 10.0.0.0/8 과 2002::/16 네트워크를 VPN으로 보냅니다.</string>
+  <string name="custom_route_message_excluded">VPN을 통해 라우팅하지 말아 경로. 포함 경로와 동일한 구문을 사용합니다.</string>
   <string name="custom_routes_title">사용자 지정 라우트</string>
+  <string name="custom_routes_title_excluded">123456</string>
   <string name="log_verbosity_level">로그의 자세한 정도</string>
   <string name="float_summary">인증된 패킷은 IP와 상관없이 허용</string>
   <string name="float_title">플로팅 서버 허용</string>

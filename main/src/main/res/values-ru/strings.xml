@@ -322,4 +322,5 @@
   <string name="files_missing_hint">Некоторые файлы не найдены. Выберите файлы для импорта в профиль:</string>
   <string name="openvpn_is_no_free_vpn">Для использования данного приложения Вам необходим VPN провайдер/шлюз поддерживающий OpenVPN. Для получения информации по настройке собственного OpenVPN сервера: http://community.openvpn.net/</string>
   <string name="import_log">Лог импорта:</string>
+  <string name="ip_looks_like_subnet">VPN топологии «%3$s» указан но ifconfig %1$s %2$s выглядит больше как IP-адрес с маской сети. Если топология «подсеть».</string>
 </resources>

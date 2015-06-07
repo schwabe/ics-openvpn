@@ -1,3 +1,5 @@
+import com.android.builder.model.ProductFlavor
+
 apply plugin: 'com.android.application'
 
 repositories {

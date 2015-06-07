@@ -280,7 +280,7 @@
   <string name="no_external_app_allowed">Keine App für die Verwendung der API freigegeben</string>
   <string name="allowed_apps">Freigegebene Apps: %s</string>
   <string name="clearappsdialog">Liste der freigegeben externen Apps löschen? \nAktuelle Liste der freigegebenen Apps:\n\n%s</string>
-  <string name="screenoff_summary">Pausiert das VPN, wenn der Bildschirm aus ist und weniger als 64 kB in 60 Sekunden übertragen wurden. Falls die Option \"Persistentes tun Device\" ausgewählt wird durch das Pausieren des VPNs das Gerät KEINE Netzwerkverbindung haben. Ohne die \"Persistentes tun Device\" Option, benutzt das Gerät die normal (ungesicherte) Internetverbindung, wenn das VPN pausiert wird.</string>
+  <string name="screenoff_summary">Pausiert das VPN, wenn der Bildschirm aus ist und weniger als 64 kB in 60 Sekunden übertragen wurden. Falls die Option \"Persistentes tun Device\" ausgewählt ist, wird durch das Pausieren des VPNs das Gerät KEINE Netzwerkverbindung haben. Ohne die \"Persistentes tun Device\" Option, benutzt das Gerät die normal (ungesicherte) Internetverbindung, wenn das VPN pausiert wird.</string>
   <string name="screenoff_title">Bei ausgeschalteten Bildschirm VPN Verbindung pausieren</string>
   <string name="screenoff_pause">Pausiere VPN Verbindung da weniger als %1$s in %2$ss.</string>
   <string name="screen_nopersistenttun">Warnung: Persistentes tun Device für dieses VPN nicht aktiviert. Der Netzwerkverkehr nutzt die normale Internet Verbindung, wenn der Bildschirm aus ist.</string>
@@ -296,7 +296,7 @@
   <string name="allow_vpn_changes">Änderungen an VPN-profilen zulassen</string>
   <string name="hwkeychain">Im Hardware Keystore gespeichert:</string>
   <string name="permission_icon_app">Symbol der Anwendung, die versucht OpenVPN für Android zu kontrollieren</string>
-  <string name="faq_vpndialog43">Beginnend mit Android 4.3 wird der VPN-Bestätigungsdialog vor \"überlappenden Anwendungen\" geschützt. Dadurch kann es vorkommen, dass der Dialog nicht auf Eingaben reagiert. Eine Anwendung benutzen, die Overlays verwendet, kann es dieses Verhalten verursachen. Sollten Sie die verursachende Anwendung finden, kontaktieren Sie dessen Author. Dieses Problem betrifft alle VPN-Anwendungen ab Android 4.3. Siehe auch &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\" &gt; Issue 185 &lt;a&gt; für zusätzliche Details \"</string>
+  <string name="faq_vpndialog43">Beginnend mit Android 4.3 wird der VPN-Bestätigungsdialog vor \"überlappenden Anwendungen\" geschützt. Dadurch kann es vorkommen, dass der Dialog nicht auf Eingaben reagiert. Eine Anwendung benutzen, die Overlays verwendet, kann dieses Verhalten verursachen. Sollten Sie solch eine verursachende Anwendung finden, kontaktieren Sie dessen Entwickler. Dieses Problem betrifft alle VPN-Anwendungen ab Android 4.3. Siehe auch &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\" &gt; Issue 185 &lt;a&gt; für zusätzliche Details \"</string>
   <string name="faq_vpndialog43_title">VPN-Bestätigungsdialog ab Android 4.3</string>
   <string name="donatePlayStore">Alternativ können Sie mir per Play Store Geld zukommen lassen:</string>
   <string name="thanks_for_donation">Vielen Dank für die %s Spende!</string>
@@ -330,8 +330,8 @@
   <string name="client_behaviour">Client-Verhalten</string>
   <string name="clear_external_apps">Widerrufe Berechtigungen OpenVPN zu steuern</string>
   <string name="loading">Wird geladen&#8230;</string>
-  <string name="allowed_vpn_apps_info">Apps erlaubt für das VPN: %1$s</string>
-  <string name="disallowed_vpn_apps_info">Apps, die nicht das VPN nutzen: %1$s</string>
+  <string name="allowed_vpn_apps_info">Erlaubte Apps für das VPN: %1$s</string>
+  <string name="disallowed_vpn_apps_info">Verbotene Apps für das VPN: %1$s</string>
   <string name="app_no_longer_exists">Anwendung mit Paketnamen \'%s\' ist nicht mehr installiert, wird von der Liste der erlaubten/nicht erlaubten VPN Anwendungen gelöscht.</string>
   <string name="vpn_disallow_radio">VPN für alle Anwendung ausgenommen den ausgewählten</string>
   <string name="vpn_allow_radio">VPN nur für die ausgewählten Anwendungen</string>
@@ -350,11 +350,15 @@
   <string name="duplicate_vpn">VPN Profil duplizieren</string>
   <string name="duplicate_profile_title">VPN Profil duplizieren: %s</string>
   <string name="show_log">Log anzeigen</string>
+  <string name="faq_android_clients">Mehrere OpenVPN-Clients für Android gibt. Die häufigsten sind OpenVPN für Android (das Client), OpenVPN Connect und OpenVPN Settings <p> Die Kunden können in zwei Gruppen eingeteilt werden:. OpenVPN für Android und OpenVPN Connect verwenden Sie die offizielle VPNService API (Android 4.0 +) und erfordern keine Wurzel und OpenVPN Settings die Wurzel verwendet. <p> OpenVPN für Android ist ein Open Source-Client und von Arne Schwabe entwickelt. Es richtet sich an fortgeschrittene Benutzer gezielt und bietet viele Einstellungen und die Möglichkeit, Profile-Dateien zu importieren und zu konfigurieren / ändern Profile innerhalb der App. Der Kunde ist auf der Community-Version von OpenVPN basiert. Es basiert auf dem OpenVPN 2.x Quellcode basiert. Dieser Client kann als halb offiziell Client der Gemeinschaft gesehen werden. <P> OpenVPN Connect ist nicht Open-Source-Client, der von OpenVPN Technologies entwickelt wird, Inc. Der Kunde eingerückt, um den allgemeinen Gebrauch Client und moree bei den durchschnittlichen Benutzer gezielt sein und ermöglicht den Import von OpenVPN-Profilen. Dieser Client wird auf dem OpenVPN C ++ Neuimplementierung des OpenVPN-Protokoll (Dies war erforderlich, um OpenVPN Technologies, Inc erlauben, eine iOS App OpenVPN veröffentlichen). Dieser Client ist der offizielle Client der OpenVPN-Technologien <p> OpenVPN Settings ist die älteste der Kunden und auch ein UI für die Open Source OpenVPN. Im Gegensatz zu OpenVPN für Android erfordert root und verwendet nicht die VPNService API. Es kommt nicht auf Android 4.0 und höher hängen</string>
   <string name="faq_androids_clients_title">Unterschiede zwischen Android OpenVPN Apps</string>
   <string name="ignore_multicast_route">Ignoriere Multicastroute: %s</string>
   <string name="ab_only_cidr">Android unterstützt nur CIDR Routen. Da Routen, die nicht CIDR sind, fast nie verwendet werden, wird OpenVPN für Android eine /32 Route für nicht  konforme Routen verwenden und eine Warnung ausgegeben.</string>
   <string name="ab_tethering_44">Verbindungsfreigabe (WiFi-Hotspot/Tethering) funktioniert, während ein VPN aktiv ist, nutzt aber NICHT die VPN Verbindung.</string>
   <string name="ab_kitkat_mss">Frühe KitKat-Version setzen einen falschen MSS-Wert für TCP-Verbindungen (#61948). Versuchen Sie  die mssfix-Option zu aktivieren, um dieses Problem zu umgehen.</string>
+  <string name="ab_proxy">Android wird ihre Proxy-Einstellungen für die WLan-Verbindung beibehalten wenn keine DNS-Servereinstellungen vorhanden sind. OpenVPN für Android gibt einen entsprechenden Warnhinweis in der Log-Datei aus.<p> Wenn eine VPN-Verbindung einen DNS-Server vorgibt kann kein Proxy genutzt werden. Es gibt keine API um einen Proxy-Server  für eine VPN-Verbindung zu nutzen.</p></string>
+  <string name="ab_lollipop_reinstall">Ihre VPN-Anwendung funktioniert möglicherweise nicht mehr wenn diese erst de- und später neu installiert wird. Für Details siehe #80074</string>
+  <string name="ab_not_route_to_vpn">Die konfigurierte Klient-IP-Adresse und die IP-Adressen in die Netzwerkmaske sind nicht in das VPN geroutet. OpenVPN umgeht diesen Fehler, indem eine Route hinzugefügt wird, die zu der Client-IP-Adresse und deren Netzmaske passt.</string>
   <string name="ab_secondary_users">VPN funktioniert überhaupt nicht für die Sekundärnutzer.</string>
   <string name="ab_kitkat_reconnect">Mehrere Benutzer berichten, dass die mobile Verbindung/Mobile Datenverbindung häufig getrennt wird, wenn ein VPN aktiv. Das Verhalten scheint nur einige Anbieter/Mobilgerät-Kombination beeinflussen und bisher konnte weder Ursache noch Lösung für den Bug identifiziert werden.</string>
   <string name="ab_vpn_reachability_44">Nur Ziele, die ohne VPN erreichbar sind, sind auch mit VPN erreichbar. IPv6 VPNs funktionieren überhaupt nicht.</string>
@@ -368,7 +372,5 @@
   <string name="ab_secondary_users_title">Sekundäre Tablet-Nutzer</string>
   <string name="custom_connection_options_warng">Definieren Sie benutzerdefinierte verbindungsspezifische Optionen. Seien Sie vorsichtig!</string>
   <string name="custom_connection_options">Benutzerdefinierte Optionen</string>
-  <string name="remove_connection_entry">Verbindungseintrag zu entfernen</string>
- <string name="version_and_later">%s und neuer</string>
-
+  <string name="remove_connection_entry">Verbindung entfernen</string>
 </resources>

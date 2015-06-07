@@ -88,6 +88,7 @@
   <string name="default_route_summary">Tüm trafiği VPN üzerinden kullan</string>
   <string name="use_default_title">Varsayılan Yolu kullan</string>
   <string name="custom_route_message">Özel yolları girin. CIDR biçimde tek hedef girin. \"10.0.0.0 / 8 2002 :: / 16\" ağlar VPN üzerinden 10.0.0.0 / 8 ve 2002 :: / 16 doğrudan.</string>
+  <string name="custom_route_message_excluded">VPN üzerinden yönlendirilir olmaMAlıdır Yolları. Dahil rotalar için aynı sözdizimini kullanın.</string>
   <string name="custom_routes_title">Özel Yollar</string>
   <string name="custom_routes_title_excluded">Dışlanan Ağlar</string>
   <string name="log_verbosity_level">Ayrıntı düzeyi Log</string>
@@ -104,6 +105,8 @@
   <string name="local_ip_info">Yerel IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS sunucusu: %1$s, etki alanı: %2$s</string>
   <string name="routes_info_incl">Routes: %1$s %2$s</string>
+  <string name="routes_info_excl">Routes excluded: %1$s %2$s</string>
+  <string name="routes_debug">VPN Servis Yolları Yüklendi: %1$s %2$s</string>
   <string name="ip_not_cidr">Arabirim bilgileri %1$s ve %2$s var, tabii ikinci eş adresi uzaktan adresidir. /32 Kullanarak için yerel IP ağ maskesi. OpenVPN tarafından verilen \"%3$s\" modudur.</string>
   <string name="route_not_cidr">%1$s ve %2$s olarak IP yolu ile CIDR ağ maskesi, ağ maskesi /32 kullanarak yapamazsınız.</string>
   <string name="route_not_netip">Rota %1$s/%2$s %3$s/%2$s için düzeltilmiş</string>
@@ -331,5 +334,15 @@
   <string name="server_list">Sunucu Listesi</string>
   <string name="vpn_allowed_apps">İzin verilen uygulamalar</string>
   <string name="advanced_settings">Gelişmiş Ayarlar</string>
+  <string name="payload_options">Yük seçenekleri</string>
   <string name="tls_settings">TLS Ayarları</string>
+  <string name="show_log">Günlüğü göster</string>
+  <string name="ab_proxy_title">VPN\'ler için Proxy davranışı</string>
+  <string name="ab_lollipop_reinstall_title">VPN uygulamaları yeniden yükleme</string>
+  <string name="version_upto">%s ve önceki</string>
+  <string name="copy_of_profile">%s kopyası</string>
+  <string name="ab_kitkat_mss_title">VPN bağlantısı için yanlış MSS değeri</string>
+  <string name="ab_secondary_users_title">İkincil tablet kullanıcıları</string>
+  <string name="custom_connection_options_warng">Özel bağlantı seçenekleri belirtin. Dikkatli kullanın</string>
+  <string name="custom_connection_options">Özel Seçenekler</string>
 </resources>

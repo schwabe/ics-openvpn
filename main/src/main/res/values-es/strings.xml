@@ -140,7 +140,7 @@
   <string name="menu_import_short">Importar</string>
   <string name="import_content_resolve_error">No se pudo leer el perfil a importar</string>
   <string name="error_reading_config_file">Error al leer el archivo de configuración</string>
-  <string name="add_profile">Agregar perfil</string>
+  <string name="add_profile">Añadir perfil</string>
   <string name="import_could_not_open">No se pudo encontrar el archivo %1$s mencionado en el archivo de configuracion importado</string>
   <string name="importing_config">Importando archivo de configuración del origen %1$s</string>
   <string name="import_warning_custom_options">Su configuración tiene algunas opciones de configuración que no están establecidas en la interfaz de usuario . Estas opciones fueron agregadas como opciones de configuración personalizadas. A continuación se muestra la configuración personalizada:</string>
@@ -160,7 +160,7 @@
   <string name="converted_profile_i">perfil importado %d</string>
   <string name="broken_images">Imágenes rotas</string>
   <string name="broken_images_faq">&lt;p&gt;Las imágenes oficiales de HTC son conocidas por tener un extraño problema de enrutamiento, causando que el tráfico no fluya a través del túnel (Ver también &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; en el bug tracker.)&lt;/p&gt;&lt;p&gt; Han reportado que el VPNService hace falta completamente de las imagenes oficiales de SONY más viejas del XPeria Arc S y Xperia Ray. (Ver también &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; en el bug tracker.)&lt;/p&gt;&lt;p&gt;Puede faltar el módulo tun o los permisos de /dev/tun/ pueden estar incorrectos. Algunas imágenes de CM9 necesitan habilitada la opcion \"Fix ownership\" option bajo \"Hacks específicos del dispositivo\".&lt;/p&gt;&lt;p&gt;De mayor importancia: Si tu dispositivo tiene una imágen corrupta de Android, reportalo a tu proveedor. Entre mayor gente reporte el problema al proveedor, mayores son las probabilidades de que lo reparen.&lt;/p&gt;</string>
-  <string name="pkcs12_file_encryption_key">Clave PKCS12 de cifrado de archivos</string>
+  <string name="pkcs12_file_encryption_key">Clave de cifrado del fichero PKCS12</string>
   <string name="private_key_password">Contraseña de clave privada</string>
   <string name="password">Contraseña</string>
   <string name="file_icon">icono de archivo</string>
@@ -203,7 +203,7 @@ hacia/de Móvil)</string>
   <string name="getproxy_error">Error al obtener la configuración de proxy: %s</string>
   <string name="using_proxy">Usando proxy %1$s %2$d</string>
   <string name="use_system_proxy">Usar el proxy del sistema</string>
-  <string name="use_system_proxy_summary">Utilice la configuración del sistema para los proxies HTTP/HTTPS a conectar.</string>
+  <string name="use_system_proxy_summary">Utilice la configuración del sistema para los proxies HTTP/HTTPS al conectar.</string>
   <string name="donatewithpaypal">Usted puede &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;donar con PayPal&lt;/a&gt; </string>
   <string name="onbootrestartsummary">OpenVPN volvera a conectar a una VPN si estaba activa en el apagado/reinicio del sistema. Por favor lea la P+F de advertencia de conexión antes de usar esta opción.</string>
   <string name="onbootrestart">Vuelva a conectar al reiniciar</string>
@@ -217,8 +217,8 @@ hacia/de Móvil)</string>
   <string name="no_vpn_profiles_defined">No hay perfiles VPN definidos.</string>
   <string name="add_new_vpn_hint">Use el icono &lt;img src=\"ic_menu_add\"/&gt; para agregar una nueva VPN</string>
   <string name="vpn_import_hint">Use el icono &lt;img src=\"ic_menu_archive\"/&gt; para importar un perfil existente (.ovpn or .conf) de tu tarjeta.</string>
-  <string name="faq_hint">Asegúrese de checar también las preguntas frecuentes. Hay una guía de inicio rápido.</string>
-  <string name="faq_routing_title">Configuración de enrutamiento o interfaz</string>
+  <string name="faq_hint">Asegúrese de revisar también las preguntas frecuentes. Hay una guía de inicio rápido.</string>
+  <string name="faq_routing_title">Configuración de enrutamiento/interfaz</string>
   <string name="faq_routing">El enrutamiento y la configuración de la interfaz no se realiza a través de comandos tradicionales ifconfig / ruta, pero mediante el uso de la API VPNService. Esto resulta en una configuración de enrutamiento diferente que en otros sistemas operativos. La configuración del túnel VPN consta de la dirección IP y las redes que deben ser colocados de través de esta interfaz. Se necesita Especialmente hay dirección compañero de estudios o de gateway. Rutas especiales para llegar a la VPN Server (por ejemplo agregan al usar redirect-gateway) no son necesarios, ya sea. La aplicación, en consecuencia ignorará esta configuración al importar una configuración. La aplicación asegura con la API VPNService que la conexión con el servidor no se encamina a través del túnel VPN. Sólo redes especificando ser enrutados a través del túnel es compatible. La aplicación intenta detectar las redes que no deben ser enrutados a través de túnel (por ejemplo, la ruta xxxx aaaa net_gateway) y calcula un conjunto de rutas que excluye este rutas para emular el comportamiento de otras plataformas. Las ventanas de registro muestra la configuración de la VPNService al establecer una conexión.</string>
   <string name="persisttun_summary">No regresar a modo sin conexión VPN cuando OpenVPN esta volviendose a conectar.</string>
   <string name="persistent_tun_title">Tun persistente</string>
@@ -289,7 +289,7 @@ hacia/de Móvil)</string>
   <string name="pauseVPN">Pausar VPN</string>
   <string name="resumevpn">Reanudar VPN</string>
   <string name="state_userpause">VPN pausado por solicitud del usuario</string>
-  <string name="state_screenoff">VPN pausado - pantalla fuera</string>
+  <string name="state_screenoff">VPN pausado - pantalla apagada</string>
   <string name="device_specific">Hacks específicos del Dispositivo</string>
   <string name="cannotparsecert">No se puede mostrar la información del certificado</string>
   <string name="appbehaviour">Comportamiento de la aplicación</string>
@@ -350,4 +350,29 @@ hacia/de Móvil)</string>
   <string name="no_remote_defined">Servidor remoto no definido</string>
   <string name="duplicate_vpn">Duplicar perfil VPN</string>
   <string name="duplicate_profile_title">Duplicando Perfil: %s</string>
+  <string name="show_log">Mostrar registro</string>
+  <string name="faq_android_clients">Existen múltiples clientes OpenVPN para Android. Los más comunes son OpenVPN para Android (este cliente), OpenVPN Connect y Configuración de OpenVPN&lt;p&gt;Los clientes se pueden agrupar en dos grupos:. OpenVPN para Android y OpenVPN Conectar utilizar la API VPNService oficial (Android 4.0+) y requieren ninguna raíz y Configuración de OpenVPN que utiliza la raíz.&lt;p&gt;OpenVPN para Android es un cliente de código abierto y desarrollado por Arne Schwabe. Está dirigido a los usuarios más avanzados y ofrece muchas opciones y la posibilidad de importar los perfiles de los archivos y configurar perfiles / cambio dentro de la aplicación. El cliente se basa en la versión de la comunidad de OpenVPN. Se basa en el código fuente 2.x OpenVPN. Este cliente puede ser visto como el semi oficialmente cliente de la comunidad.&Lt;p&gt;OpenVPN Connect es cliente de código abierto no que es desarrollado por OpenVPN Technologies, Inc. El cliente tiene sangría para ser cliente de uso general y moree dirigido al usuario medio y permite la importación de perfiles de OpenVPN. Este cliente se basa en la reimplementación OpenVPN C ++ del protocolo OpenVPN (Esto fue necesario para permitir Tecnologías OpenVPN, Inc para publicar una aplicación para iOS OpenVPN). Este cliente es el cliente oficial de las tecnologías de&ltOpenVPN;p&gt; OpenVPN Ajustes es el más antiguo de los clientes y también una interfaz de usuario para el software libre OpenVPN. En contraste con OpenVPN para Android requiere raíz y no utiliza el API VPNService. No depende de Android 4.0+</string>
+  <string name="faq_androids_clients_title">Differences between the OpenVPN Android clients</string>
+  <string name="ignore_multicast_route">Haciendo caso omiso de ruta multidifusión: %s</string>
+  <string name="ab_only_cidr">Android sólo admite rutas CIDR a la VPN. Desde rutas no CIDR casi nunca se usan, OpenVPN para Android utilizará un / 32 para las rutas que no son CIDR y emitir una advertencia.</string>
+  <string name="ab_tethering_44">Tethering funciona mientras que el VPN está activa. La conexión atada no utilizará el VPN.</string>
+  <string name="ab_kitkat_mss">Primera versión KitKat establece el valor incorrecto MSS sobre conexiones TCP (# 61948). OpenVPN para automáticamente permitirá mssfix opción para solucionar este error.</string>
+  <string name="ab_proxy">Android seguirá utilizando la configuración del proxy especificados para la conexión / Wi-Fi móvil cuando no están definidos los servidores DNS. OpenVPN para Android le advertirá sobre esto en el registro.<p>Cuando una VPN establece un servidor DNS Android no lo hará un proxy. No hay ninguna API para configurar un proxy para una conexión VPN.</p></string>
+  <string name="ab_lollipop_reinstall">Aplicaciones VPN pueden dejar de funcionar cuando desinstalado y reinstalado de nuevo. Para más detalles ver # 80074</string>
+  <string name="ab_not_route_to_vpn">La IP del cliente configurado y las IPs en su máscara de red no se enrutan a la VPN. OpenVPN soluciona este error al agregar explícitamente una ruta que corrosponds a la IP del cliente y su máscara de red</string>
+  <string name="ab_persist_tun">La apertura de un dispositivo tun mientras que otro dispositivo tun está activo, que se utiliza para el apoyo tun-persistir, bloquea los VPNServices en el dispositivo. Es necesario reiniciar para que el trabajo VPN de nuevo. OpenVPN para Android intenta evitar reabrir el dispositivo tun y si realmente se necesita primero cierra el TUN actual antes de abrir el nuevo dispositivo TUN para evitar estrellarse. Esto puede conducir a una corta ventana donde los paquetes se envían a través de la conexión no VPN. Incluso con esta solución los VPNServices a veces se bloquea y requiere un reinicio del dispositivo.</string>
+  <string name="ab_secondary_users">VPN no funciona en absoluto para los usuarios secundarios.</string>
+  <string name="ab_kitkat_reconnect">"Varios usuarios reportan que la conexión móvil / conexión de datos móviles se cae con frecuencia durante el uso de la aplicación VPN. El comportamiento parece afectar sólo alguna combinación móvil proveedor / dispositivo y hasta ahora ninguna causa / solución para el bug se pudo identificar."</string>
+  <string name="ab_vpn_reachability_44">Sólo destino puede llegar a través de la VPN que se puede llegar sin VPN. IPv6 VPNs no funciona en absoluto.</string>
+  <string name="ab_only_cidr_title">Rutas no CIDR</string>
+  <string name="ab_proxy_title">Comportamiento Proxy para VPN</string>
+  <string name="ab_lollipop_reinstall_title">Reinstalación de aplicaciones VPN</string>
+  <string name="version_upto">%s y anteriores</string>
+  <string name="copy_of_profile">copia de %s</string>
+  <string name="ab_not_route_to_vpn_title">Ruta a la dirección IP configurada</string>
+  <string name="ab_kitkat_mss_title">Valor MSS incorrecto para la conexión VPN</string>
+  <string name="ab_secondary_users_title">Los usuarios de tabletas secundarias</string>
+  <string name="custom_connection_options_warng">Especifique las opciones específicas de conexión personalizada. Úselo con cuidado</string>
+  <string name="custom_connection_options">Opciones personalizadas</string>
+  <string name="remove_connection_entry">Eliminar entrada de conexión</string>
 </resources>

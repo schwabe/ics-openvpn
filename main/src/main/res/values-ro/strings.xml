@@ -54,7 +54,7 @@
   <string name="shortcut_profile_notfound">Profilul specificat în comanda rapidă nu a fost găsit</string>
   <string name="random_host_prefix">Prefix host aleator</string>
   <string name="random_host_summary">Adaugă 6 caractere aleatoare în faţa hostname</string>
-  <string name="custom_config_title">Activare opţiuni particularizate</string>
+  <string name="custom_config_title">Activează opţiunile particularizate</string>
   <string name="custom_config_summary">Specificaţi opţiunile particularizate. Folosiţi cu grijă!</string>
   <string name="route_rejected">Rută respinsă de Android</string>
   <string name="cancel_connection">Deconectaţi</string>

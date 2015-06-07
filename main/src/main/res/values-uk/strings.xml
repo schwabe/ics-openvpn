@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-  <string name="app">OpenVPN для Android</string>
+  <string name="app">OpenVPN for Android</string>
   <string name="address">Адреса сервера:</string>
   <string name="port">Порт сервера:</string>
   <string name="location">Розташування</string>
@@ -63,7 +63,7 @@
   <string name="title_cancel">Підтвердження скасування</string>
   <string name="cancel_connection_query">Відключення активних VPN/скасувати спробу підключення?</string>
   <string name="remove_vpn">Видалити VPN</string>
-  <string name="check_remote_tlscert">Перевіряє, чи є сервер використовує сертифікат з сервера TLS розширень (--remote-cert-tls server)</string>
+  <string name="check_remote_tlscert">Перевіряє, чи використовує сервер сертифікат з TLS розширень сервера (--remote-cert-tls server)</string>
   <string name="check_remote_tlscert_title">Очікувати TLS сертифікат сервера</string>
   <string name="remote_tlscn_check_summary">Перевірка DN об\'єкта віддаленого сертифіката</string>
   <string name="remote_tlscn_check_title">Перевірка імені вузла сертифікату</string>
@@ -87,6 +87,7 @@
   <string name="default_route_summary">Перенаправляти увесь трафік через VPN</string>
   <string name="use_default_title">Використовувати типовий маршрут</string>
   <string name="custom_route_message"> Введіть користувацькі маршрути. Тільки введіть адресу призначення в форматі CIDR. \"10.0.0.0/8 2002::/16\" буде використано для 10.0.0.0/8 і 2002::/16 мереж через VPN.</string>
+  <string name="custom_route_message_excluded">Маршрути які НЕ СЛІД направляти через VPN. Використовуйте той-же синтаксис як і у випадку з іншими маршрутами.</string>
   <string name="custom_routes_title">Власні маршрути</string>
   <string name="custom_routes_title_excluded">Виключені Мережі</string>
   <string name="log_verbosity_level">Рівень деталізації журналу</string>
@@ -126,6 +127,7 @@
   <string name="no_vpn_support_image">Ваша прошивка не підтримує VPNService API, вибачте :(</string>
   <string name="encryption">Шифрування</string>
   <string name="cipher_dialog_title">Введіть метод шифрування</string>
+  <string name="chipher_dialog_message">Вкажіть алгоритм шифрування,  для використання OpenVPN. Залиште пустим, якщо треба шифрування за замовчуванням.</string>
   <string name="auth_dialog_message">Введіть the authentication digest для OpenVPN. Залиште порожнім для використання стандартних значень.</string>
   <string name="settings_auth">Автентифікація/Шифрування</string>
   <string name="file_explorer_tab">Провідник файлів</string>
@@ -141,7 +143,7 @@
   <string name="add_profile">додати профіль</string>
   <string name="import_could_not_open">Не можливо знайти файл %1$s, згаданий у імпортованому файлі конфігурації</string>
   <string name="importing_config">Імпорт файлу конфігурації з джерела %1$s</string>
-  <string name="import_warning_custom_options">Ваша конфігурація мала кілька варіантів конфігурації, які не відображені в інтерфейсі конфігурації. Ці варіанти були додані в якості користувача параметрів конфігурації. Призначена для користувача конфігурація відображається нижче:</string>
+  <string name="import_warning_custom_options">Ваша конфігурація мала декілька налаштувань, які не відображені в інтерфейсі конфігурації. Ці варіанти були додані в конфігурації в розділ параметрів користувача. Користувацька конфігурація відображається нижче:</string>
   <string name="import_done">Файл конфігурації успішно прочитаний.</string>
   <string name="nobind_summary">Не прив\'язувати до локальної адреси і порту</string>
   <string name="no_bind">Нема локальної прив\'язки</string>
@@ -182,7 +184,7 @@
   <string name="error_rsa_sign">Помилка підпису з використанням ключа із сховища Андроїд %1$s: %2$s</string>
   <string name="faq_system_dialogs">Попередження VPN з\'єднання повідомляє вам, що цей додаток може перехоплювати весь мережевий трафік, і повідомляється системою попереджень VPNService API. \nСповіщення про VPN з\'єднання (символ \"Ключа\") також формується системою Android для сигналізації про вихідне VPN з\'єднання. У деяких прошивках це сповіщення супроводжується сигналом. \nAndroid використовує ці cповіщення для вашої власної безпеки і їх не можна обійти. (На жаль, на деяких прошивках також  сповіщення супроводжується звуком)</string>
   <string name="faq_system_dialogs_title">Повідомлення про підключення та звук сповіщеня</string>
-  <string name="translationby">Переклад українською від wvolov</string>
+  <string name="translationby">Переклад українською виконан спільнотою code.google.com</string>
   <string name="ipdns">IP-адреса та DNS</string>
   <string name="basic">Основне</string>
   <string name="routing">Маршрутизація</string>
@@ -191,6 +193,7 @@
   <string name="export_config_title">ICS Openvpn конфігурація</string>
   <string name="warn_no_dns">Жодний DNS сервер не використовується. Дозвіл імен може не працювати. Розгляньте питання про створення користувацьких серверів DNS. Зверніть увагу, що Android буде продовжувати використовувати налаштування проксі-сервера, вказаного для вашого мобільного / Wi-Fi з\'єднання, коли не задано DNS сервери.</string>
   <string name="dns_add_error">Не можливо додати DNS-сервер \"%1$s\", відхилено системою: %2$s</string>
+  <string name="ip_add_error">Не вдалося налаштувати IP-адресу \"%1$s\", відхилено системою: %2$s</string>
   <string name="faq_howto">&lt;p&gt; Використовуйте готову конфігурацію (протестовану на вашому комп\'ютері або отриману від вашого провайдера) &lt;/p&gt; &lt;p&gt; Якщо це простий файл без pem/pks12 ви можете відправити його по email на свій пристрій. Якщо ж це декілька файлів, ви можете використовувати їх зі своєї карти пам\'яті. &lt;/p&gt; &lt;p&gt; Просто натисніть на .сonf файл або виберіть його за допомогою меню в програмі для імпорту конфігурації &lt;/p&gt; &lt;p&gt; Якщо програма видасть помилку про брак деяких файлів, просто помістіть ці файли на карту пам\'яті &lt;/p&gt; &lt;p&gt; Натисніть Збереження для додавання імпортованої конфігурації в програму &lt;/p&gt; &lt;p&gt; Запустіть ваш VPN-тунель, натиснувши на його назву в списку &lt;/p&gt; &lt;p&gt; Якщо при запуску виникли помилки спробуйте розібратися і усунути їх. &lt;/p&gt;</string>
   <string name="faq_howto_title">Швидкий старт</string>
   <string name="setting_loadtun_summary">Спробуйте завантажити модуль ядра tun.ko перш ніж з\'єднатися. Необхідний пристрій з правами root.</string>
@@ -208,15 +211,16 @@
   <string name="restart_vpn_after_change">Після перезапуску VPN застосувати зміни конфігурації. (Пере)запустити VPN тепер?</string>
   <string name="configuration_changed">Конфігурація змінена</string>
   <string name="log_no_last_vpn">Не вдалося визначити останній підключений профіль для редагування</string>
-  <string name="faq_duplicate_notification_title">Дублювати сповіщення</string>
+  <string name="faq_duplicate_notification_title">Повторювати повідомлення</string>
   <string name="faq_duplicate_notification">Якщо в Android виникає нестача оперативної пам\'яті (RAM), непотрібні служби і програми зупиняються. Через це переривається встановлене VPN-з\'єднання. Щоб уникнути цього, програму потрібно запускати з підвищеним пріоритетом. Для запуску з високим пріоритетом програма повинна вивести попередження. Піктограма  ключа сповіщення виводиться системою, як описано в попередньому пункті ЧаП. Це не вважається як програмне сповіщення з метою запуску з вищим пріоритетом.</string>
   <string name="no_vpn_profiles_defined">VPN профіль не визначено.</string>
   <string name="add_new_vpn_hint">Використовуйте &lt;img src=\"ic_menu_add\"/&gt; піктограму для додання нової VPN</string>
-  <string name="vpn_import_hint">Використовуйте &lt;img src=\"ic_menu_archive\"/&gt; піктограму для імпорту існуючого (.ovpn or .conf) профілю з вашої карти пам\'яті.</string>
+  <string name="vpn_import_hint">Використовуйте &lt;img src=\"ic_menu_archive\"/&gt; піктограму для імпорту існуючого (.ovpn чи .conf) профілю з вашої карти пам\'яті.</string>
   <string name="faq_hint">Не забудьте заглянути у ЧаП. Там також є короткий посібник.</string>
   <string name="faq_routing_title">Конфігурація маршрутизації/інтерфейсу</string>
+  <string name="faq_routing">Налаштування маршрутизації та інтерфейсу проводиться не через традиційні команди ifconfig/route, а за допомогою VPNService API. Це призводить до створення іншій конфігурації маршрутизації, відмінної від конфігурацій, використовуваних на інших ОС. \nКонфігурація VPN-тунелю складається з IP-адрес і мереж, які повинні направлятися через цей інтерфейс. Ніяких особливих партнерських адреса або адреса шлюзу не потрібно. Також не потрібні і спеціальні маршрути для з\'єднання з VPN-сервером (наприклад, додані при використанні redirect-gateway). Тому, програма буде ігнорувати ці параметри при імпорті конфігурації. Програма за допомогою VPNService API гарантує, що підключення до сервера не надсилається через VPN-тунель.\nПідтримуэться напрямок через тунель тільки певних мереж. Програма намагається визначити мережі, які не повинні бути спрямовані через тунель (наприклад, route x.x.x.x y.y.y.y net_gateway) і обчислює список маршрутів, в який не включаються ці маршрути, щоб емулювати поведінку на інших платформах. Вікна журналів і логів показують конфігурацію сервісу VPN після встановлення з\'єднання.\nЗа кулісами : в Android 4.4+ не використовуються політики маршрутизації. Використання route/ifconfig не покаже які встановлени маршрути. Замість цього використовуйте ip правила, iptables -t mangle -L</string>
   <string name="persisttun_summary">Не повертатися до жодного VPN з\'єднання, коли OpenVPN перепідключається.</string>
-  <string name="persistent_tun_title">Стійкість tun</string>
+  <string name="persistent_tun_title">Постійний tun</string>
   <string name="openvpn_log">Журнал OpenVPN</string>
   <string name="import_config">Імпорт конфігурації OpenVPN</string>
   <string name="battery_consumption_title">Споживання акумулятора</string>
@@ -271,28 +275,103 @@
   <string name="tls_remote_deprecated">tls-remote (ЗАСТАРІЛЕ)</string>
   <string name="help_translate">Ви можете допомогти в перекладі, відвідавши http://crowdin.net/project/ics-openvpn/invite</string>
   <string name="prompt">%1$s спроб контролювати %2$s</string>
+  <string name="remote_warning">Продовжуючи, ви даєте дозвіл на застосування повного контролю OpenVPN для Android і щоб перехоплювати весь мережевий трафік.<b>Не приймайте, якщо ви не довіряєте програмі.</b> В іншому випадку ви ризикуєте мати скомпрометовані шкідливим програмним забезпеченням дані.\"</string>
   <string name="remote_trust">Я довіряю цьому додатку.</string>
   <string name="no_external_app_allowed">Не дозволяється використовувати зовнішнє API</string>
   <string name="allowed_apps">Дозволенi додатки: %s</string>
   <string name="clearappsdialog">Очистити список дозволених зовнішніх програм \nПоточний список дозволених програм:\n\n%s</string>
-  <string name="screenoff_summary">&quot;Пауза VPN, коли екран вимкнений і менш ніж 64 Кб переданих даних за 60с. Коли  „Постійний тун“ увімкнений пауза VPN залишить ваш пристрій без відсутності мережевого підключення. Без параметра „Постійний тун“ пристрій не буде мати ніякого VPN підключення / захисту.</string>
+  <string name="screenoff_summary">\"Пауза VPN, коли екран вимкнений і менш ніж 64 кб були передані за 60 секунд. Якщо увімкена опція \"Постійний tun\", то Пауза VPN залишить ваш пристрій БЕЗ мережевого підключення. Без опції \"Постійний tun\", пристрій використовує нормальне (незахище) підключення до інтернету, коли VPN в паузі.</string>
   <string name="screenoff_title">Пауза VPN з\'єднання після вимкнення екрану</string>
   <string name="screenoff_pause">Призупинення зв\'язку в екрані вимкненого стану: менше %1$s у %2$sс.</string>
-  <string name="screen_nopersistenttun">Попередження: Постійний тут не увімкнений для цього VPN. Трафік буде використовувати звичайне інтернет-з\'єднання, коли екран вимкнений.</string>
+  <string name="screen_nopersistenttun">Попередження: Постійний tun не увімкнений для цього VPN. Трафік буде використовувати звичайне інтернет-з\'єднання, коли екран вимкнений.</string>
   <string name="save_password">Зберегти пароль</string>
   <string name="pauseVPN">Призупинити VPN</string>
   <string name="resumevpn">Відновити VPN</string>
   <string name="state_userpause">VPN пауза на вимогу користувача</string>
+  <string name="state_screenoff">VPN призупинено - screen off</string>
+  <string name="device_specific">Хак для цього пристрою</string>
   <string name="cannotparsecert">Неможливо відобразити інформацію про сертифікат</string>
+  <string name="appbehaviour">Поведінка програми</string>
   <string name="vpnbehaviour">Поведінка VPN</string>
   <string name="allow_vpn_changes">Дозволити зміни в профілі VPN</string>
+  <string name="hwkeychain">Апаратне сховище ключів:</string>
   <string name="permission_icon_app">Іконка додатка намагається використовувати OpenVPN для Android</string>
+  <string name="faq_vpndialog43">"Починаючи з Android 4.3, запит підтвердження VPN-з\'єднання захищено від програм, які \"накладаються поверх екрану\". Це призводить до того, що діалогове вікно підтвердження не реагує на сенсорні натискання. Якщо у вас є програма, що використовує накладення, то це може викликати таке поведінку. Якщо ви виявите де-небудь таку програмe, зв\'яжіться з автором програми Ця проблема зачіпає всі VPN програми на Android 4.3 та пізніших версіях Дивіться також &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\"&gt;Issue 185&lt;a&gt; для отримання додаткової інформації"</string>
+  <string name="faq_vpndialog43_title">Вікно підтвердження VPN</string>
+  <string name="donatePlayStore">Також Ви можете висловити подяку у вигляді пожертвувань на Play Store:</string>
   <string name="thanks_for_donation">Дякуємо за пожертвування %s!</string>
   <string name="logCleared">Журнал очищено.</string>
   <string name="show_password">Показати пароль</string>
+  <string name="keyChainAccessError">Помилка при доступі до сховища ключів:%s</string>
+  <string name="timestamp_short">Стисло</string>
   <string name="timestamp_iso">ISO</string>
   <string name="timestamps">Часові позначки</string>
+  <string name="timestamps_none">Нема</string>
+  <string name="uploaded_data">Вивантажено</string>
+  <string name="downloaded_data">Завантажити</string>
+  <string name="vpn_status">Vpn Статус</string>
+  <string name="logview_options">Подивитися налаштування</string>
+  <string name="unhandled_exception">Невідома помилка: %1$s\n\n%2$s</string>
+  <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
+  <string name="faq_system_dialog_xposed">Якщо на Вашому пристрої встановлені root права, Ви можете встановити &lt;a href=\"http://xposed.info/\"&gt;Xposed framework&lt;/a&gt; та  &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN Dialog confirm module&lt;/a&gt;  на свій страх і ризик\"</string>
   <string name="full_licenses">Повні ліцензії</string>
+  <string name="blocklocal_summary">Мережі, безпосередньо доступні через локальний інтерфейс  не направлятимуться на VPN. Відключіть цю опцію щоб направити увесь трафік через VPN.</string>
+  <string name="blocklocal_title">Не використовувати VPN для локальних мереж</string>
+  <string name="userpw_file">Файл з Ім\'ям користувача та Паролєм</string>
   <string name="imported_from_file">[Імпортовано з: %s]</string>
+  <string name="files_missing_hint">Деякі файли не були знайдені. Будь ласка, виберіть файли для імпорту профілю:</string>
+  <string name="openvpn_is_no_free_vpn">Щоб користуватися цією програмою, Вам знадобиться VPN провайдер/шлюз з підтримкою OpenVPN (часто наданий роботодавцем). Для отримання інформації з налаштування власного OpenVPN сервера: http://community.openvpn.net/</string>
   <string name="import_log">Журнал імпорту :</string>
+  <string name="ip_looks_like_subnet">Vpn топологія \"%3$s\" визначена, але ifconfig %1$s %2$s більше схожий на IP-адресу з маскою мережі. Припускаемо, що це топологія \"мережі\".</string>
+  <string name="mssfix_invalid_value">Значення MSS являє собою ціле число від 0 до 9000</string>
+  <string name="mssfix_value_dialog">Зміни в TCP з\'єднанні, які проходять через тунель, так що отриманий в результаті розмір пакета UDP, після инкапсуляції по OpenVPN обмежується цим значенням. (За замовчуванням 1450)</string>
+  <string name="mssfix_checkbox">Зміна значення MSS навантаження TCP</string>
+  <string name="mssfix_dialogtitle">Встановка значення MSS навантаження TCP</string>
+  <string name="client_behaviour">Поведінка VPN</string>
+  <string name="clear_external_apps">Відкликати права для управління OpenVPN</string>
+  <string name="loading">Завантаження&#8230;</string>
+  <string name="allowed_vpn_apps_info">Дозволенi VPN програми: %1$s</string>
+  <string name="disallowed_vpn_apps_info">Заборонені VPN програми: %1$s</string>
+  <string name="app_no_longer_exists">Пакет програм з ім\'ям %s не встановлений, та буде вилучений зі списку дозволених/заборонених VPN програм.</string>
+  <string name="vpn_disallow_radio">VPN використовується для всіх програм, але виключити вибрані</string>
+  <string name="vpn_allow_radio">VPN використовується тільки для обраних програм</string>
+  <string name="query_delete_remote">Видалити запис про сервер?</string>
+  <string name="keep">Втримати</string>
+  <string name="delete">Видалити</string>
+  <string name="add_remote">Додати новий сервер</string>
+  <string name="remote_random">Використовувать список серверів у випадковому порядку при підключенні</string>
+  <string name="remote_no_server_selected">Вам потрібно вказати і включити принаймні один сервер.</string>
+  <string name="server_list">Список серверів</string>
+  <string name="vpn_allowed_apps">Дозволенi програми</string>
+  <string name="advanced_settings">Додаткові налаштування</string>
+  <string name="payload_options">Варіанти Payload</string>
+  <string name="tls_settings">Налаштування TLS</string>
+  <string name="no_remote_defined">Не визначен сервер</string>
+  <string name="duplicate_vpn">Дублікат VPN профіля</string>
+  <string name="duplicate_profile_title">Дублікат VPN профіля: %s</string>
+  <string name="show_log">Показати журнал</string>
+  <string name="faq_android_clients">Є декілька клієнтів для Android OpenVPN. Найбільш поширеним є OpenVPN for Android (цей клієнт), OpenVPN Connect і OpenVPN Settings.&lt;p&gt;Клієнти можуть бути розділені на дві групи: OpenVPN for Android і OpenVPN Connect використовують офіційний VPNService API (Android 4.0+), який не вимагає права root, та OpenVPN Settings який використовує зміну маршрутизації (потребує root права).&lt;p&gt;OpenVPN for Android розроблено Arne Schwabe і є безкоштовним клієнтом з відкритим ісходним кодом. Клієнт орієнтован на більш просунутих користувачів, пропонуючи безліч варіантів в рамках програми, і можливість імпорту профілів з файлів конфігурації/зміни. Клієнт на основі безкоштовної версії OpenVPN спільноти, який заснован на OpenVPN 2.x коді. Цей клієнт можна розглядати як напівофіційний безкоштовний клієнт.&lt;p&gt;OpenVPN Connect не є клієнтом з відкритим кодом, він розвивається OpenVPN Technologies, Inc. Даний клієнт призначений для загального користування, і спрямована на середнього користувача, він дозволяє імпорт профілів OpenVPN. Цей клієнт виконан на основі OpenVPN C++ протоколу OpenVPN(Це необхідно для дозволу OpenVPN Technologies, Inc. опублікувати версію iOS програми OpenVPN). Цей клієнт є офіційним OpenVPN technologies клієнтом &lt;p&gt; OpenVPN Settings є найстарішим із трьох згаданих, і також безкоштовниї OpenVPN клієнт з відкритим ісходним кодом. На відміну від OpenVPN для Android вимагає root права і не використовує VPNService API. Таким чином, вона також буде працювати в більш ранніх версіях як Android 4.0+</string>
+  <string name="faq_androids_clients_title">Відмінності між клієнтами OpenVPN для Android</string>
+  <string name="ignore_multicast_route">Ігнорувати multicast маршрут:%s</string>
+  <string name="ab_only_cidr">Android підтримує тільки CIDR маршрути для VPN. Так, не-CIDR маршрути майже ніколи не використовуються, OpenVPN for Android використовує /32 для маршрутів, які не є CIDR і видає попередження.</string>
+  <string name="ab_tethering_44">Загальний доступ до підключення (WiFi точки/модему) працює як VPN активний, але НЕ використовує VPN.</string>
+  <string name="ab_kitkat_mss">Рання версія KitKat встановлюе невірне значення MSS з\'єднань TCP (#61948). OpenVPN активує опцію mssfix щоб обійти цю проблему.</string>
+  <string name="ab_proxy">Android буде продовжувати використовувати налаштування проксі-сервера для мобільного зв\'язку/Wi-Fi, коли немає встановленого DNS-сервера. OpenVPN for Android попередить вас про це в журналі.<p>Коли VPN встановить DNS-сервер Android не буде використовувати проксі-сервер. Зараз немає API для використання проксі-серверу для VPN-підключення.</p></string>
+  <string name="ab_lollipop_reinstall">VPN програма може перестати працювати, як вона була видалена і перевстановлена знову. Більш детальну інформацію дивіться #80074</string>
+  <string name="ab_not_route_to_vpn">Налаштований клієнтом IP і IP-адреси в цій мережевій масці не направляються до VPN. OpenVPN обробляє цю помилку явно додаючи маршрут, який відповідає IP клієнта і його маскою мережі</string>
+  <string name="ab_persist_tun">Відкриття tun пристрію поки інший tun пристрій активний, який використовує persist-tun, приводе до аварії VPNServices на пристрої. Потрібне перезавантаження, щоб VPN запрацював знову. OpenVPN for Android намагається уникнути повторне відкриття tun пристрію, а якщо дійсно необхідно в першу чергу закриває поточний TUN перед відкриттям нового TUN пристрої, щоб уникнути помилки. Це може призвести до виникнення короткого вікна, в якому пакети пересилаються по мережі без VPN. Навіть це тимчасове рішення іноді призводить до краху VPNServices і вимагає перезавантаження пристрою.</string>
+  <string name="ab_secondary_users">VPN не працює для других користувачів.</string>
+  <string name="ab_kitkat_reconnect">"Декілька користувачів повідомили, що мобільний зв\'язок/мобільні дані часто відключається, коли VPN активний. Поведінка, здається, впливає тільки для комбінації деякіх провайдерів/пристріїв і досі ні причини, ні рішення для цієї помилки не визначені. "</string>
+  <string name="ab_vpn_reachability_44">Тільки призначення, які досяжні без VPN, також доступні по VPN. IPv6 VPN не працює взагалі.</string>
+  <string name="ab_only_cidr_title">Несумісні CIDR маршрути</string>
+  <string name="ab_proxy_title">Поведінка проксі для VPN</string>
+  <string name="ab_lollipop_reinstall_title">Перевстановлення VPN-програми</string>
+  <string name="version_upto">%s і раніше</string>
+  <string name="copy_of_profile">Копія %s</string>
+  <string name="ab_not_route_to_vpn_title">Шлях до налаштованого VPN IP адреса</string>
+  <string name="ab_kitkat_mss_title">Невірне значення MSS для VPN підключення</string>
+  <string name="ab_secondary_users_title">Другі користувачі планшету</string>
+  <string name="custom_connection_options_warng">Визначені параметри користувача при з\'єднанні. Будьте обережні!</string>
+  <string name="custom_connection_options">Власні налаштовування</string>
+  <string name="remove_connection_entry">Видалити запис підключення</string>
 </resources>

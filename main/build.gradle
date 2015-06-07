@@ -1,5 +1,3 @@
-import com.android.builder.model.ProductFlavor
-
 apply plugin: 'com.android.application'
 
 repositories {
@@ -8,20 +6,20 @@ repositories {
 
 dependencies {
     compile 'com.intellij:annotations:12.0'
-    compile 'com.android.support:cardview-v7:21.0.+'
-    compile 'com.android.support:recyclerview-v7:21.0.+'
+    compile 'com.android.support:cardview-v7:22.2.0'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
 //    compile 'ch.acra:acra:4.5.0'
 }
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode = 110
-        versionName = "0.6.29"
+        versionCode = 111
+        versionName = "0.6.30"
     }
 
     sourceSets {

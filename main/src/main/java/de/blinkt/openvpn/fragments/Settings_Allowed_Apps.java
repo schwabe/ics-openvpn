@@ -6,8 +6,8 @@
 package de.blinkt.openvpn.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Fragment;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -30,7 +30,6 @@ import android.widget.SearchView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
@@ -109,7 +108,7 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
 
 
     class PackageAdapter extends BaseAdapter implements Filterable {
-        private final List<ApplicationInfo> mPackages;
+        private Vector<ApplicationInfo> mPackages;
         private final LayoutInflater mInflater;
         private final PackageManager mPm;
         private ItemFilter mFilter = new ItemFilter();
@@ -127,10 +126,6 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
 
                 int count = mPackages.size();
                 final Vector<ApplicationInfo> nlist = new Vector<>(count);
-
-                String filterableString ;
-
-
 
                 for (int i = 0; i < count; i++) {
                     ApplicationInfo pInfo = mPackages.get(i);
@@ -165,8 +160,14 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
         PackageAdapter(Context c, VpnProfile vp) {
             mPm = c.getPackageManager();
             mProfile = vp;
-            List<ApplicationInfo> installedPackages = mPm.getInstalledApplications(PackageManager.GET_META_DATA);
             mInflater = LayoutInflater.from(c);
+
+            mPackages = new Vector<>();
+            mFilteredData = mPackages;
+        }
+
+        private void populateList(Activity c) {
+            List<ApplicationInfo> installedPackages = mPm.getInstalledApplications(PackageManager.GET_META_DATA);
 
             // Remove apps not using Internet
 
@@ -194,6 +195,12 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
             Collections.sort(apps, new ApplicationInfo.DisplayNameComparator(mPm));
             mPackages = apps;
             mFilteredData = apps;
+            c.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            });
         }
 
         @Override
@@ -271,14 +278,18 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
             @Override
             public boolean onQueryTextChange(String newText) {
                 mListView.setFilterText(newText);
-                mListView.setTextFilterEnabled(true);
+                if (TextUtils.isEmpty(newText))
+                    mListView.setTextFilterEnabled(false);
+                else
+                    mListView.setTextFilterEnabled(true);
+
                 return true;
             }
         });
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                mListView.setTextFilterEnabled(false);
+                mListView.clearTextFilter();
                 return false;
             }
         });
@@ -311,6 +322,14 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
         mListView.setAdapter(mListAdapter);
         mListView.setOnItemClickListener(this);
 
+        mListView.setEmptyView(v.findViewById(R.id.loading_container));
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mListAdapter.populateList(getActivity());
+            }
+        }).start();
 
         return v;
     }

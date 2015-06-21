@@ -382,5 +382,6 @@
     <string name="crl_file">Certificate Revocation List</string>
     <string name="service_restarted">Restarting OpenVPN Service (App crashed probably crashed or killed for memory pressure)</string>
     <string name="import_config_error">Importing the config yielded an error, cannot save it</string>
+    <string name="Search">Search</string>
 
 </resources>

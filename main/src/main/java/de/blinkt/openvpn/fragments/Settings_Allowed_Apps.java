@@ -290,6 +290,7 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
             @Override
             public boolean onClose() {
                 mListView.clearTextFilter();
+                mListAdapter.getFilter().filter("");
                 return false;
             }
         });

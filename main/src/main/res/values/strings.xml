@@ -383,5 +383,6 @@
     <string name="service_restarted">Restarting OpenVPN Service (App crashed probably crashed or killed for memory pressure)</string>
     <string name="import_config_error">Importing the config yielded an error, cannot save it</string>
     <string name="Search">Search</string>
+    <string name="lastdumpdate">(Last dump is %1$d:%2$dh old (%3$s))</string>
 
 </resources>

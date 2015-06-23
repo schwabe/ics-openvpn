@@ -7,6 +7,7 @@ package de.blinkt.openvpn.fragments;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -15,10 +16,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.core.VpnStatus;
 
@@ -28,7 +32,7 @@ public class SendDumpFragment extends Fragment  {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View v = inflater.inflate(R.layout.fragment_senddump, container, false);
+		final View v = inflater.inflate(R.layout.fragment_senddump, container, false);
 		v.findViewById(R.id.senddump).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -36,6 +40,28 @@ public class SendDumpFragment extends Fragment  {
 				emailMiniDumps();
 			}
 		});
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				final Pair<File, Long> ldump = getLastestDump(getActivity());
+				if (ldump==null)
+					return;
+				// Do in background since it does I/O
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						TextView dumpDateText = (TextView) v.findViewById(R.id.dumpdate);
+						String datestr = (new Date(ldump.second)).toString();
+                        long timediff = System.currentTimeMillis() - ldump.second;
+						long minutes = timediff / 1000 / 60 % 60;
+						long hours = timediff / 1000 / 60 / 60;
+						dumpDateText.setText(getString(R.string.lastdumpdate, hours, minutes, datestr));
+
+					}
+				});
+			}
+		}).start();
 		return v;
 	}
 
@@ -62,22 +88,22 @@ public class SendDumpFragment extends Fragment  {
 
 		emailIntent.putExtra(Intent.EXTRA_TEXT, "Please describe the issue you have experienced");
 
-		ArrayList<Uri> uris = new ArrayList<Uri>();
+		ArrayList<Uri> uris = new ArrayList<>();
 
-		File ldump = getLastestDump(getActivity());
+		Pair<File, Long> ldump = getLastestDump(getActivity());
 		if(ldump==null) {
 			VpnStatus.logError("No Minidump found!");
 		}
 
-		uris.add(Uri.parse("content://de.blinkt.openvpn.FileProvider/" + ldump.getName()));
-		uris.add(Uri.parse("content://de.blinkt.openvpn.FileProvider/" + ldump.getName() + ".log"));
+		uris.add(Uri.parse("content://de.blinkt.openvpn.FileProvider/" + ldump.first.getName()));
+		uris.add(Uri.parse("content://de.blinkt.openvpn.FileProvider/" + ldump.first.getName() + ".log"));
 
 		emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 		startActivity(emailIntent);
 	}
 
-	static public File getLastestDump(Context c) {
+	static public Pair<File,Long> getLastestDump(Context c) {
 		long newestDumpTime=0;
 		File newestDumpFile=null;
 
@@ -97,6 +123,6 @@ public class SendDumpFragment extends Fragment  {
 		if(System.currentTimeMillis() - 48 * 60 * 1000 > newestDumpTime )
 		    return null;
 
-		return newestDumpFile;
+		return Pair.create(newestDumpFile, newestDumpTime);
 	}
 }

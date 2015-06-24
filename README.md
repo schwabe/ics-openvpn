@@ -9,7 +9,7 @@ Developing
 ---------------
 If you want to develop on ics-openvpn please read the [doc/README.txt](http://code.google.com/p/ics-openvpn/source/browse/doc/README.txt) *before* opening issues or emailing me. 
 
-Also please note that before contributing to the project that I would like to retain my ability to relicense the project for different third parties and therefore probably need a contributers agreement from any contributing party.
+Also please note that before contributing to the project that I would like to retain my ability to relicense the project for different third parties and therefore probably need a contributers agreement from any contributing party. To get started, [sign the Contributor License Agreement](https://www.clahub.com/agreements/schwabe/ics-openvpn).
 
 You can help
 ------------

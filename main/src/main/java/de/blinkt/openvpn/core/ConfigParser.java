@@ -838,13 +838,21 @@ public class ConfigParser {
         return false;
     }
 
+    //! Generate options for custom options
     private String getOptionStrings(Vector<Vector<String>> option) {
         String custom = "";
         for (Vector<String> optionsline : option) {
             if (!ignoreThisOption(optionsline)) {
-                for (String arg : optionsline)
-                    custom += VpnProfile.openVpnEscape(arg) + " ";
-                custom += "\n";
+                // Check if option had been inlined and inline again
+                if (optionsline.size() == 2 && "extra-certs".equals(optionsline.get(0)) ) {
+                    custom += VpnProfile.insertFileData(optionsline.get(0), optionsline.get(1));
+
+
+                } else {
+                    for (String arg : optionsline)
+                        custom += VpnProfile.openVpnEscape(arg) + " ";
+                    custom += "\n";
+                }
             }
         }
         return custom;

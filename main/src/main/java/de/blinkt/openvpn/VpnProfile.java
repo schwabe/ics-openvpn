@@ -539,7 +539,7 @@ public class VpnProfile implements Serializable, Cloneable {
     }
 
     //! Put inline data inline and other data as normal escaped filename
-    private String insertFileData(String cfgentry, String filedata) {
+    public static String insertFileData(String cfgentry, String filedata) {
         if (filedata == null) {
             // TODO: generate good error
             return String.format("%s %s\n", cfgentry, "missing");

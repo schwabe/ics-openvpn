@@ -384,5 +384,6 @@
     <string name="import_config_error">Importing the config yielded an error, cannot save it</string>
     <string name="Search">Search</string>
     <string name="lastdumpdate">(Last dump is %1$d:%2$dh old (%3$s))</string>
+    <string name="clear_log_on_connect">Clear log on new connection</string>
 
 </resources>

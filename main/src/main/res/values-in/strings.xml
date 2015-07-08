@@ -20,8 +20,8 @@
   <string name="client_pkcs12_title">Berkas PKCS12</string>
   <string name="ca_title">Sertifikat CA</string>
   <string name="no_certificate">Anda harus memilih sertifikat</string>
-  <string name="copyright_guicode">Kode program dan perekam masalah tersedia di</string>
-  <string name="copyright_others">Aplikasi memakai komponen berikut; lihat kode program untuk lebih jelas mengenai lisensi</string>
+  <string name="copyright_guicode">Kode sumber dan pelacak masalah tersedia di http://code.google.com/p/ics-openvpn/</string>
+  <string name="copyright_others">Program ini menggunakan komponen-komponen berikut ini; lihat kode sumber penjelasan lengkap mengenai lisensi</string>
   <string name="about">Tentang…</string>
   <string name="vpn_list_title">Profil</string>
   <string name="vpn_type">Tipe</string>
@@ -104,6 +104,8 @@
   <string name="local_ip_info">IPv4 lokal : %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS Server: %1$s, Domain: %2$s</string>
   <string name="routes_info_incl">Rute: %1$s %2$s</string>
+  <string name="routes_info_excl">Rute terkecualikan: %1$s %2$s</string>
+  <string name="routes_debug">Rute LayananVpn telah terpasang: %1$s %2$s</string>
   <string name="ip_not_cidr">Memilki informasi antarmuka %1$s dan %2$s, asumsi alamat kedua adalah alamat remote. Menggunakan netmask /32 untuk IP lokal. Mode yang diberikan oleh OpenVPN adalah \"%3$s\".</string>
   <string name="route_not_cidr">Tidak masuk akal membuat %1$s dan %2$s sebagai rute IP dengan netmask CIDR, Gunakan /32 sebagai netmask.</string>
   <string name="route_not_netip">rute yang diperbaiki %1$s/%2$s hingga %3$s/%2$s</string>
@@ -191,6 +193,7 @@
   <string name="export_config_title">Konfigurasi ICS Openvpn</string>
   <string name="warn_no_dns">Tidak DNS server yang digunakan. Name Resolution mungkin akan gagal bekerja. Pertimbangkan pengaturan server DNS. Harap dicatat Android akan terus memakai pengaturan proxy untuk koneksi mobile/wifi saat tidak ada server DNS diatur.</string>
   <string name="dns_add_error">Tak bisa menambahkan Server DNS \"%1$s\", ditolak oleh sistem: %2$s</string>
+  <string name="ip_add_error">Tidak bisa mengkonfigurasi IP Address \"%1$s\", ditolak oleh sistem: %2$s</string>
   <string name="faq_howto">&lt;p&gt; Ambil konfigurasi yang dapat berjalan (diuji pada komputer Anda atau download dari penyedia/organisasi) &lt;/p&gt; &lt;p&gt; Satu file(berkas) saja tanpa tambahan berkas pem/pks12. Anda dapat kirim imel berkas dan membuka lampirannya. Jika Anda memiliki beberapa berkas, salin ke sd-card &lt;/p&gt; &lt;p&gt; klik pada lampiran imel atau gunakan ikon folder dalam daftar vpn untuk mengimpor berkas konfigurasi &lt;/p&gt; &lt;p&gt; jika ada  berkas yang kurang, salin file hilang ke sd-card. &lt;/p&gt; &lt;p&gt; klik pada simbol Simpan untuk menambahkan VPN yang diimpor ke daftar VPN &lt;/p&gt; &lt;p &gt; Connect VPN dengan mengklik nama VPN &lt;/p&gt; &lt;p&gt; jika ada kesalahan atau peringatan di catatan, coba pahami peringatannya dan coba untuk memperbaikinya &lt;/p&gt; </string>
   <string name="faq_howto_title">Mulai Cepat</string>
   <string name="setting_loadtun_summary">Coba pakai tun.ko kernel sebelum mencoba koneksi. Membutuhkan perangkat yang sudah diroot. Google: android superuser</string>
@@ -288,4 +291,6 @@
   <string name="cannotparsecert">Tidak dapat menampilkan informasi sertifikat</string>
   <string name="appbehaviour">Prilaku Aplikasi</string>
   <string name="vpnbehaviour">Prilaku VPN</string>
+  <string name="loading">Memuat&#8230;</string>
+  <string name="delete">Hapus</string>
 </resources>

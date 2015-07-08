@@ -9,7 +9,7 @@
     <item>Khóa tĩnh</item>
     <item>Người dùng/Mật khẩu+Chứng nhận</item>
     <item>Người dùng/Mật khẩu + PKCS12 </item>
-    <item>User / PW + Android</item>
+    <item>Chuate/chimto+Android</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item>0</item>

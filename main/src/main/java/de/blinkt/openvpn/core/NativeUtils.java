@@ -5,6 +5,8 @@
 
 package de.blinkt.openvpn.core;
 
+import android.os.Build;
+
 import java.security.InvalidKeyException;
 
 public class NativeUtils {
@@ -15,5 +17,7 @@ public class NativeUtils {
 	static {
         System.loadLibrary("stlport_shared");
 		System.loadLibrary("opvpnutil");
+		if (Build.VERSION.SDK_INT== Build.VERSION_CODES.JELLY_BEAN)
+			System.loadLibrary("jbcrypto");
 	}
 }

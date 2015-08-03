@@ -38,8 +38,8 @@ if [ $? = 0 ]; then
 	mkdir -p ../ovpnlibs/assets
 	for i in *
 	do
-		cp -v $i/nopievpn ../ovpnlibs/assets/nopievpn.$i
-		cp -v $i/pievpn ../ovpnlibs/assets/pievpn.$i
+		cp -v $i/nopie_openvpn ../ovpnlibs/assets/nopie_openvpn.$i
+		cp -v $i/pie_openvpn ../ovpnlibs/assets/pie_openvpn.$i
 	done
 	# Removed compiled openssl libs, will use platform so libs 
 	# Reduces size of apk

@@ -15,7 +15,6 @@ public class NativeUtils {
 	static native void jniclose(int fdint);
 
 	static {
-        System.loadLibrary("stlport_shared");
 		System.loadLibrary("opvpnutil");
 		if (Build.VERSION.SDK_INT== Build.VERSION_CODES.JELLY_BEAN)
 			System.loadLibrary("jbcrypto");

@@ -4,11 +4,12 @@ set -o shwordsplit
 if [ "$ICSCROWDAPIKEY" != "" ]
 then
 	echo "Generating new translation archives"
-	fetch -q -1 -o - "http://api.crowdin.net/api/project/ics-openvpn/export?key=$ICSCROWDAPIKEY"
+	#fetch -q -1 -o - "http://api.crowdin.net/api/project/ics-openvpn/export?key=$ICSCROWDAPIKEY"
+    curl "http://api.crowdin.net/api/project/ics-openvpn/export?key=$ICSCROWDAPIKEY"
 fi
 
 echo "Fetch translation archive"
-fetch -q http://crowdin.net/download/project/ics-openvpn.zip
+wget -q http://crowdin.net/download/project/ics-openvpn.zip
 
 
 # Chinese language require zh-CN and zh-TW

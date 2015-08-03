@@ -218,6 +218,7 @@
   <string name="vpn_import_hint">Gunakan ikon &lt; img src = \"ic_menu_archive\" / &gt; untuk mengimpor profil (.ovpn atau .conf) yang ada dari sdcard Anda.</string>
   <string name="faq_hint">Pastikan untuk juga memeriksa FAQ. Ada petunjuk untuk memudahkan anda.</string>
   <string name="faq_routing_title">Konfigurasi rute\antarmuka</string>
+  <string name="faq_routing">Konfigurasi Routing dan antarmuka tidak dilakukan melalui perintah ifconfig/rute tradisional tetapi dengan menggunakan VPNService API. Ini hasil dalam konfigurasi perutean berbeda daripada pada OS lain. \nThe konfigurasi VPN terowongan terdiri dari alamat IP dan jaringan yang harus dialihkan melalui antarmuka ini. Terutama, tidak ada rekan mitra alamat atau alamat gateway adalah diperlukan atau diperlukan. Khusus rute untuk mencapai VPN Server (misalnya ditambahkan dengan menggunakan redirect-gateway) tidak diperlukan baik. Aplikasi akibatnya akan mengabaikan pengaturan ini ketika mengimpor konfigurasi. App menjamin dengan VPNService API bahwa koneksi ke server tidak diarahkan melalui VPN terowongan. \nThe VPNService API tidak memungkinkan menentukan jaringan yang tidak dapat diteruskan melalui VPN. Sebagai solusi app mencoba untuk mendeteksi jaringan yang tidak dapat diteruskan melalui terowongan (misalnya rute x.x.x.x y.y.y.y net_gateway) dan menghitung seperangkat rute yang mengecualikan ini rute untuk meniru perilaku platform lainnya. Jendela log menunjukkan konfigurasi VPNService berdasarkan membangun koneksi. \nBehind adegan: Android 4,4 + menggunakan kebijakan routing. Menggunakan rute ifconfig tidak akan menunjukkan rute yang diinstal. Alih-alih menggunakan aturan ip, iptables -t mangle -L</string>
   <string name="persisttun_summary">Jangan kembali ke status tidak ada koneksi VPN ketika OpenVPN mencoba terhubung kembali.</string>
   <string name="persistent_tun_title">Paksa mode TUN</string>
   <string name="openvpn_log">Catatan OpenVPN</string>
@@ -291,6 +292,23 @@
   <string name="cannotparsecert">Tidak dapat menampilkan informasi sertifikat</string>
   <string name="appbehaviour">Prilaku Aplikasi</string>
   <string name="vpnbehaviour">Prilaku VPN</string>
+  <string name="allow_vpn_changes">Memungkinkan perubahan Profil VPN</string>
+  <string name="hwkeychain">Hardware Keystore:</string>
+  <string name="permission_icon_app">Ikon aplikasi mencoba menggunakan OpenVPN untuk Android</string>
+  <string name="faq_vpndialog43">"Dimulai dengan Android 4.3 konfirmasi VPN dijaga terhadap\" overlay aplikasi \". Hal ini menyebabkan dialog tidak bereaksi menyentuh masukan. Jika Anda memiliki sebuah aplikasi yang menggunakan lapisan itu dapat menyebabkan perilaku ini. Jika Anda menemukan kontak aplikasi menyinggung penulis app. Masalah ini mempengaruhi semua aplikasi VPN di Android 4.3 dan kemudian. Lihat juga <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=185"> Issue 185 <a> untuk rincian tambahan "</string>
+  <string name="faq_vpndialog43_title">VPN Konfirmasi Dialog</string>
+  <string name="donatePlayStore">Atau Anda dapat mengirimkan saya donasi dengan Play Store:</string>
+  <string name="thanks_for_donation">Terima kasih untuk menyumbangkan %s!</string>
+  <string name="logCleared">Log dibersihkan.</string>
+  <string name="show_password">Tampilkan sandi</string>
+  <string name="keyChainAccessError">Keychain Akses error: %s</string>
+  <string name="timestamp_short">Pendek</string>
+  <string name="full_licenses">Lisensi penuh</string>
+  <string name="blocklocal_summary">Jaringan langsung terhubung ke antarmuka lokal tidak akan diarahkan melalui VPN. Tidak memilih opsi ini akan mengarahkan semua lalu lintas menjorok untuk jaringan lokal ke VPN.</string>
+  <string name="blocklocal_title">Bypass VPN for local networks</string>
+  <string name="userpw_file">Username Password File /</string>
+  <string name="imported_from_file">[Impor dari: %s]</string>
+  <string name="openvpn_is_no_free_vpn">Untuk menggunakan aplikasi ini Anda membutuhkan penyedia VPN / gateway VPN mendukung OpenVPN (sering disediakan oleh majikan Anda). Periksa http://community.openvpn.net/ untuk informasi lebih lanjut tentang OpenVPN dan cara men-setup OpenVPN server Anda sendiri.</string>
   <string name="loading">Memuat&#8230;</string>
   <string name="delete">Hapus</string>
 </resources>

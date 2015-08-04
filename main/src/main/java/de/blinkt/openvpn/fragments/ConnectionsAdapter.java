@@ -125,7 +125,6 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             {
                 connection.mUseCustomConfig = isChecked;
                 cH.mCustomOptionsLayout.setVisibility(connection.mUseCustomConfig ? View.VISIBLE : View.GONE);
-                notifyItemChanged(i);
             }
         });
 

@@ -65,7 +65,6 @@ public class Settings_Connections extends Settings_Fragment implements View.OnCl
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         mRecyclerView.setAdapter(mConnectionsAdapter);
 
-
         ImageButton fab_button = (ImageButton) v.findViewById(R.id.add_new_remote);
         if(fab_button!=null)
                 fab_button.setOnClickListener(this);

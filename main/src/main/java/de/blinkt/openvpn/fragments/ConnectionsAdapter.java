@@ -30,14 +30,16 @@ import de.blinkt.openvpn.core.Connection;
 /**
  * Created by arne on 30.10.14.
  */
-public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.ConnectionsHolder>  {
+public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.ConnectionsHolder> {
     private final Context mContext;
     private final VpnProfile mProfile;
     private final Settings_Connections mConnectionFragment;
     private Connection[] mConnections;
 
-    public ConnectionsAdapter(Context c, Settings_Connections connections_fragments, VpnProfile vpnProfile)
-    {
+    private static final int TYPE_NORMAL = 0;
+    private static final int TYPE_FOOTER = TYPE_NORMAL + 1;
+
+    public ConnectionsAdapter(Context c, Settings_Connections connections_fragments, VpnProfile vpnProfile) {
         mContext = c;
         mConnections = vpnProfile.mConnections;
         mProfile = vpnProfile;
@@ -58,7 +60,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             super(card);
             mServerNameView = (EditText) card.findViewById(R.id.servername);
             mPortNumberView = (EditText) card.findViewById(R.id.portnumber);
-            mRemoteSwitch = (Switch) card.findViewById (R.id.remoteSwitch);
+            mRemoteSwitch = (Switch) card.findViewById(R.id.remoteSwitch);
             mCustomOptionCB = (CheckBox) card.findViewById(R.id.use_customoptions);
             mCustomOptionText = (EditText) card.findViewById(R.id.customoptions);
             mProtoGroup = (RadioGroup) card.findViewById(R.id.udptcpradiogroup);
@@ -68,12 +70,20 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         }
     }
 
-    @Override
-    public ConnectionsAdapter.ConnectionsHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        LayoutInflater li = LayoutInflater.from(mContext);
-        View card = li.inflate(R.layout.server_card, viewGroup, false);
 
+    @Override
+    public ConnectionsAdapter.ConnectionsHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        LayoutInflater li = LayoutInflater.from(mContext);
+
+        View card;
+        if (viewType == TYPE_NORMAL) {
+            card = li.inflate(R.layout.server_card, viewGroup, false);
+
+        } else { // TYPE_FOOTER
+            card = li.inflate(R.layout.server_footer, viewGroup, false);
+        }
         return new ConnectionsHolder(card);
+
     }
 
     static abstract class OnTextChangedWatcher implements TextWatcher {
@@ -89,8 +99,12 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final ConnectionsAdapter.ConnectionsHolder cH, final int i) {
-        final Connection connection = mConnections[i];
+    public void onBindViewHolder(final ConnectionsAdapter.ConnectionsHolder cH, final int position) {
+        if (position == mConnections.length) {
+            // Footer
+            return;
+        }
+        final Connection connection = mConnections[position];
         cH.mPortNumberView.setText(connection.mServerPort);
         cH.mServerNameView.setText(connection.mServerName);
         cH.mPortNumberView.setText(connection.mServerPort);
@@ -109,9 +123,9 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.udp_proto)
-                    connection.mUseUdp=true;
+                    connection.mUseUdp = true;
                 else if (checkedId == R.id.tcp_proto)
-                    connection.mUseUdp=false;
+                    connection.mUseUdp = false;
             }
         });
 
@@ -121,8 +135,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         cH.mCustomOptionCB.setChecked(connection.mUseCustomConfig);
         cH.mCustomOptionCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 connection.mUseCustomConfig = isChecked;
                 cH.mCustomOptionsLayout.setVisibility(connection.mUseCustomConfig ? View.VISIBLE : View.GONE);
             }
@@ -138,8 +151,8 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
                         ab.setNegativeButton(R.string.delete, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                removeRemote(i);
-                                notifyItemRemoved(i);
+                                removeRemote(position);
+                                notifyItemRemoved(position);
                             }
                         });
                         ab.create().show();
@@ -172,9 +185,9 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
     }
 
     private void removeRemote(int idx) {
-        Connection[] mConnections2 = Arrays.copyOf(mConnections, mConnections.length-1);
-        for (int i=idx+1;i<mConnections.length;i++){
-            mConnections2[i-1]=mConnections[i];
+        Connection[] mConnections2 = Arrays.copyOf(mConnections, mConnections.length - 1);
+        for (int i = idx + 1; i < mConnections.length; i++) {
+            mConnections2[i - 1] = mConnections[i];
         }
         mConnections = mConnections2;
 
@@ -182,27 +195,34 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
 
     @Override
     public int getItemCount() {
-        return mConnections.length;
+        return mConnections.length + 1; //for footer
     }
 
-    public void displayWarningifNoneEnabled()
-     {
+    public void displayWarningifNoneEnabled() {
         int showWarning = View.VISIBLE;
-        for(Connection conn:mConnections) {
-            if(conn.mEnabled)
-                showWarning= View.GONE;
+        for (Connection conn : mConnections) {
+            if (conn.mEnabled)
+                showWarning = View.GONE;
         }
         mConnectionFragment.setWarningVisible(showWarning);
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (position == mConnections.length)
+            return TYPE_FOOTER;
+        else
+            return TYPE_NORMAL;
+    }
+
     public void addRemote() {
-        mConnections = Arrays.copyOf(mConnections, mConnections.length+1);
-        mConnections[mConnections.length-1] = new Connection();
-        notifyItemInserted(mConnections.length-1);
+        mConnections = Arrays.copyOf(mConnections, mConnections.length + 1);
+        mConnections[mConnections.length - 1] = new Connection();
+        notifyItemInserted(mConnections.length - 1);
         displayWarningifNoneEnabled();
     }
 
     public void saveProfile() {
-        mProfile.mConnections= mConnections;
+        mProfile.mConnections = mConnections;
     }
 }

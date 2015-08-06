@@ -63,7 +63,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
     public static final String VPNPROFILE = "vpnProfile";
 
     private VpnProfile mResult;
-    
+
     private transient List<String> mPathsegments;
 
     private String mAliasName = null;
@@ -118,7 +118,6 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
         outState.putString("mAliasName", mAliasName);
 
 
-
         String[] logentries = mLogEntries.toArray(new String[mLogEntries.size()]);
 
         outState.putStringArray("logentries", logentries);
@@ -130,7 +129,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
             k++;
         }
         outState.putIntArray("fileselects", fileselects);
-        outState.putString("pwfile",mEmbeddedPwFile);
+        outState.putString("pwfile", mEmbeddedPwFile);
         outState.putString("crlfile", mCrlFileName);
     }
 
@@ -186,11 +185,12 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
         if (!TextUtils.isEmpty(mEmbeddedPwFile))
             ConfigParser.useEmbbedUserAuth(mResult, mEmbeddedPwFile);
 
-        if (!TextUtils.isEmpty(mCrlFileName))
-        {
-            // TODO: COnvert this to a real config option that is parsed
-            ConfigParser.removeCRLCustomOption(mResult);
-            mResult.mCustomConfigOptions += "crl-verify " + mCrlFileName;
+
+        // Only use crl on import if it is found
+        ConfigParser.removeCRLCustomOption(mResult);
+        if (TextUtils.isEmpty(mCrlFileName)) {
+            // TODO: Convert this to a real config option that is parsed
+            mResult.mCustomConfigOptions += "\ncrl-verify " + mCrlFileName;
         }
 
         vpl.addProfile(mResult);
@@ -303,7 +303,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
         return true;
     }
 
-    private String embedFile(String filename, Utils.FileType type, boolean onlyFindFile) {
+    private String embedFile(String filename, Utils.FileType type, boolean onlyFindFileAndNullonNotFound) {
         if (filename == null)
             return null;
 
@@ -313,8 +313,11 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
 
         File possibleFile = findFile(filename, type);
         if (possibleFile == null)
-            return filename;
-        else if (onlyFindFile)
+            if (onlyFindFileAndNullonNotFound)
+                return null;
+            else
+                return filename;
+        else if (onlyFindFileAndNullonNotFound)
             return possibleFile.getAbsolutePath();
         else
             return readFileContent(possibleFile, type == Utils.FileType.PKCS12);
@@ -524,7 +527,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
         super.onCreate(savedInstanceState);
 
         ImageButton fab_button = (ImageButton) findViewById(R.id.fab_save);
-        if(fab_button!=null)
+        if (fab_button != null)
             fab_button.setOnClickListener(this);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(VPNPROFILE)) {
@@ -571,12 +574,12 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
                     mPathsegments = data.getPathSegments();
 
                     Cursor cursor = null;
-                    if (data!=null)
-                         cursor = getContentResolver().query(data, null, null, null, null);
+                    if (data != null)
+                        cursor = getContentResolver().query(data, null, null, null, null);
 
                     try {
 
-                        if (cursor!=null && cursor.moveToFirst()) {
+                        if (cursor != null && cursor.moveToFirst()) {
                             int columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
 
                             if (columnIndex != -1) {
@@ -590,7 +593,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
                             }
                         }
                     } finally {
-                        if(cursor!=null)
+                        if (cursor != null)
                             cursor.close();
                     }
                     if (possibleName != null) {

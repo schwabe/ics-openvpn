@@ -199,8 +199,12 @@ public class Utils {
         int nRead;
         byte[] data = new byte[16384];
 
-        while ((nRead = input.read(data, 0, data.length)) != -1) {
+        ;
+
+        long totalread = 0;
+        while ((nRead = input.read(data, 0, data.length)) != -1 && totalread <VpnProfile.MAX_EMBED_FILE_SIZE ) {
             buffer.write(data, 0, nRead);
+            totalread+=nRead;
         }
 
         buffer.flush();

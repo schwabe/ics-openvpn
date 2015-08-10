@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
  */
 
 
-#include "lzo/lzoconf.h"
+#include <lzo/lzoconf.h>
 
 #if (LZO_CC_MSC && (_MSC_VER >= 1000 && _MSC_VER < 1200))
    /* avoid '-W4' warnings in system header files */

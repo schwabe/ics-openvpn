@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -57,25 +57,21 @@ extern const lzo_compress_t _lzo1c_99_compress_func;
 //
 ************************************************************************/
 
-LZO_EXTERN(lzo_bytep )
+LZO_LOCAL_DECL(lzo_bytep )
 _lzo1c_store_run ( lzo_bytep const oo, const lzo_bytep const ii,
                    lzo_uint r_len);
 
 #define STORE_RUN   _lzo1c_store_run
 
 
-lzo_compress_t _lzo1c_get_compress_func(int clevel);
-
-int _lzo1c_do_compress   ( const lzo_bytep in,  lzo_uint  in_len,
-                                 lzo_bytep out, lzo_uintp out_len,
-                                 lzo_voidp wrkmem,
-                                 lzo_compress_t func );
+LZO_LOCAL_DECL(int)
+_lzo1c_do_compress ( const lzo_bytep in,  lzo_uint  in_len,
+                           lzo_bytep out, lzo_uintp out_len,
+                           lzo_voidp wrkmem,
+                           lzo_compress_t func );
 
 
 #endif /* already included */
 
-/*
-vi:ts=4:et
-*/
 
-
+/* vim:set ts=4 sw=4 et: */

@@ -1,5 +1,5 @@
 #! /bin/sh
-# vi:ts=4:et
+## vim:set ts=4 sw=4 et:
 
 test "X${top_srcdir}" = X && top_srcdir=`echo "$0" | sed 's,[^/]*$,,'`../..
 

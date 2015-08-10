@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -35,9 +35,9 @@
 // the algorithm that achieves the best compression ratio.
 **************************************************************************/
 
-#include "lzo/lzoconf.h"
-#include "lzo/lzo1x.h"
-#include "lzo/lzo1y.h"
+#include <lzo/lzoconf.h>
+#include <lzo/lzo1x.h>
+#include <lzo/lzo1y.h>
 
 #define USE_LZO1X 1
 #define USE_LZO1Y 1
@@ -89,7 +89,7 @@ int __lzo_cdecl_main main(int argc, char *argv[])
 
     printf("\nLZO real-time data compression library (v%s, %s).\n",
            lzo_version_string(), lzo_version_date());
-    printf("Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer\nAll Rights Reserved.\n\n");
+    printf("Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer\nAll Rights Reserved.\n\n");
 
     progname = argv[0];
     if (argc < 2 || argc > 3)

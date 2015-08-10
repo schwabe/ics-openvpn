@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -118,6 +118,14 @@ _lzo_config_check(void)
     r &= UA_GET_LE16(p) == 0;
     u.b[1] = 128;
     r &= UA_GET_LE16(p) == 128;
+    u.b[2] = 129;
+    r &= UA_GET_LE16(p) == LZO_UINT16_C(0x8180);
+#if (LZO_ABI_BIG_ENDIAN)
+    r &= UA_GET_NE16(p) == LZO_UINT16_C(0x8081);
+#endif
+#if (LZO_ABI_LITTLE_ENDIAN)
+    r &= UA_GET_NE16(p) == LZO_UINT16_C(0x8180);
+#endif
     u.a[0] = u.a[1] = 0;
     u.b[0] = 3; u.b[5] = 4;
     p = u2p(&u, 1);
@@ -125,6 +133,14 @@ _lzo_config_check(void)
     r &= UA_GET_LE32(p) == 0;
     u.b[1] = 128;
     r &= UA_GET_LE32(p) == 128;
+    u.b[2] = 129; u.b[3] = 130; u.b[4] = 131;
+    r &= UA_GET_LE32(p) == LZO_UINT32_C(0x83828180);
+#if (LZO_ABI_BIG_ENDIAN)
+    r &= UA_GET_NE32(p) == LZO_UINT32_C(0x80818283);
+#endif
+#if (LZO_ABI_LITTLE_ENDIAN)
+    r &= UA_GET_NE32(p) == LZO_UINT32_C(0x83828180);
+#endif
 #if defined(UA_GET_NE64)
     u.c[0] = u.c[1] = 0;
     u.b[0] = 5; u.b[9] = 6;
@@ -220,6 +236,4 @@ __lzo_init_v2(unsigned v, int s1, int s2, int s3, int s4, int s5,
 #endif
 
 
-/*
-vi:ts=4:et
-*/
+/* vim:set ts=4 sw=4 et: */

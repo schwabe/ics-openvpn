@@ -1,6 +1,5 @@
 #! /usr/bin/perl
-##
-## vi:ts=4:et
+## vim:set ts=4 sw=4 et: -*- coding: utf-8 -*-
 ##
 ##---------------------------------------------------------------------------##
 ##
@@ -10,7 +9,7 @@
 ##  Description:
 ##      Convert the output of the LZO lzotest program into a nice table.
 ##
-##  Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+##  Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
 ##
 ##---------------------------------------------------------------------------##
 

@@ -2,17 +2,26 @@
 User visible changes for LZO -- a real-time data compression library
 ============================================================================
 
+Changes in 2.09 (04 Feb 2015)
+  * Work around gcc bug #64516 that could affect architectures like
+    armv4, armv5 and sparc.
+
+Changes in 2.08 (29 Jun 2014)
+  * Updated the Autoconf scripts to fix some reported build problems.
+  * Added CMake build support.
+  * Fixed lzo_init() on big-endian architectures like Sparc.
+
 Changes in 2.07 (25 Jun 2014)
   * Fixed a potential integer overflow condition in the "safe" decompressor
     variants which could result in a possible buffer overrun when
     processing maliciously crafted compressed input data.
 
-    As this issue only affects 32-bit systems and also can only happen if
-    you use uncommonly huge buffer sizes where you have to decompress more
-    than 16 MiB (2^24 bytes) compressed bytes within a single function call,
-    the practical implications are limited.
+    Fortunately this issue only affects 32-bit systems and also can only happen
+    if you use uncommonly huge buffer sizes where you have to decompress more
+    than 16 MiB (> 2^24 bytes) untrusted compressed bytes within a single
+    function call, so the practical implications are limited.
 
-    POTENTIAL SECURITY ISSUE.
+    POTENTIAL SECURITY ISSUE. CVE-2014-4607.
 
   * Removed support for ancient configurations like 16-bit "huge" pointers -
     LZO now requires a flat 32-bit or 64-bit memory model.

@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -109,7 +109,7 @@ code_match ( LZO_COMPRESS_T *c, lzo_bytep op, lzo_uint m_len, lzo_uint m_off )
     lzo_uint x_len = m_len;
     lzo_uint x_off = m_off;
 
-    c->match_bytes += (unsigned long) m_len;
+    c->match_bytes += m_len;
 
 #if 0
 /*
@@ -265,7 +265,7 @@ code_match ( LZO_COMPRESS_T *c, lzo_bytep op, lzo_uint m_len, lzo_uint m_off )
 static lzo_bytep
 STORE_RUN ( LZO_COMPRESS_T *c, lzo_bytep op, const lzo_bytep ii, lzo_uint t )
 {
-    c->lit_bytes += (unsigned long) t;
+    c->lit_bytes += t;
 
     if (op == c->out && t <= 238)
     {
@@ -864,7 +864,4 @@ lzo1x_999_compress  ( const lzo_bytep in , lzo_uint  in_len,
 }
 
 
-/*
-vi:ts=4:et
-*/
-
+/* vim:set ts=4 sw=4 et: */

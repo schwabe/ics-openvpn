@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -61,18 +61,20 @@ __lzo_align_gap(const lzo_voidp ptr, lzo_uint size)
 #error "__LZO_UINTPTR_T_IS_POINTER is unsupported"
 #else
     lzo_uintptr_t p, n;
+    if (size < 2) return 0;
     p = __lzo_ptr_linear(ptr);
+#if 0
     n = (((p + size - 1) / size) * size) - p;
+#else
+    if ((size & (size - 1)) != 0)
+        return 0;
+    n = size; n = ((p + n - 1) & ~(n - 1)) - p;
 #endif
-
-    assert(size > 0);
+#endif
     assert((long)n >= 0);
     assert(n <= size);
     return (unsigned)n;
 }
 
 
-
-/*
-vi:ts=4:et
-*/
+/* vim:set ts=4 sw=4 et: */

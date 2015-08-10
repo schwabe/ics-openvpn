@@ -1,7 +1,7 @@
 #! /bin/sh
-# vi:ts=4:et
+## vim:set ts=4 sw=4 et:
 set -e
-echo "// Copyright (C) 1996-2014 Markus F.X.J. Oberhumer"
+echo "// Copyright (C) 1996-2015 Markus F.X.J. Oberhumer"
 echo "//"
 echo "//   Generic Posix/Unix system"
 echo "//   Generic C compiler"

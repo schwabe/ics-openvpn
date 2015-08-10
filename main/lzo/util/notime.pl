@@ -1,6 +1,5 @@
 #! /usr/bin/perl
-##
-## vi:ts=4
+## vim:set ts=4 sw=4 et: -*- coding: utf-8 -*-
 ##
 ##---------------------------------------------------------------------------##
 ##
@@ -10,7 +9,7 @@
 ##  Description:
 ##      Remove timing values from a table created by table.pl
 ##
-##  Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+##  Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
 ##
 ##---------------------------------------------------------------------------##
 

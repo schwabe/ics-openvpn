@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -27,36 +27,60 @@
 
 /***** DO NOT EDIT - GENERATED AUTOMATICALLY *****/
 
+#ifndef NAME1
 #if (defined(__MACH__) && defined(__APPLE__))
-#  define NAME1(x)      _ ## x
+#  define NAME1(a)      _ ## a
 #else
-#  define NAME1(x)      _ ## x
-#  define NAME2(x)           x
+#  define NAME1(a)      _ ## a
+#  define NAME2(a)           a
+#endif
+#endif
+#ifndef LZO_PP_CONCAT2
+#  define LZO_PP_CONCAT2(a,b)   a ## b
 #endif
 #ifndef p2align
-#  define p2align(x)    .p2align x
+#  define p2align(a)        .p2align a
 #endif
 #ifndef globalf
-#  define globalf(x)    .globl x
+#  define globalf(a)        .globl a
+#endif
+#ifndef hiddenf
+#  if defined(__ELF__)
+#    define hiddenf(a)      .hidden a
+#  elif (defined(__MACH__) && defined(__APPLE__))
+#    define hiddenf(a)      .private_extern a
+#  else
+#    define hiddenf(a)
+#  endif
 #endif
 #ifndef typef
 #  if defined(__ELF__)
-#    define typef(x)    .type x,@function
+#    define typef(a)        .type a,@function
 #  else
-#    define typef(x)
+#    define typef(a)
 #  endif
 #endif
 #ifndef sizef
 #  if defined(__ELF__)
-#    define sizef(x,s)  .size x,s
+#    define sizef(a,b)      .size a,b
 #  else
-#    define sizef(x,s)
+#    define sizef(a,b)
 #  endif
 #endif
 #if defined(__ELF__)
 .section .note.GNU-stack,"",@progbits
 #endif
 .text
+#if defined(_WIN32) || defined(__WIN32__)
+#  if defined(LZO_WIN32_FEAT_00)
+#    LZO_WIN32_FEAT_00
+#  else
+#if defined(__GNUC__) && !defined(__clang__)
+.globl @feat.00
+#endif
+@feat.00 = 1
+#  endif
+#endif
 #if defined(__ELF__) || (defined(__MACH__) && defined(__APPLE__)) || defined(_WIN32) || defined(__WIN32__) || defined(_WIN64) || defined(__WIN64__)
 p2align(6)
 #else

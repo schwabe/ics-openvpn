@@ -1,5 +1,5 @@
 #! /bin/sh
-# vi:ts=4:et
+## vim:set ts=4 sw=4 et:
 set -e
 echo "// Using GNU C compiler."
 echo "//"

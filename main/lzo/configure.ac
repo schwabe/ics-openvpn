@@ -3,7 +3,7 @@
 #
 #  This file is part of the LZO data compression library.
 #
-#  Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+#  Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
 #  All Rights Reserved.
 #
 #  The LZO library is free software; you can redistribute it and/or
@@ -31,13 +31,13 @@
 # // Init
 # ************************************************************************/
 
-AC_COPYRIGHT([Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer.
+AC_COPYRIGHT([Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer.
 All Rights Reserved.
 This configure script may be copied, distributed and modified under the
 terms of the GNU General Public License; see COPYING for more details.])
 
 AC_PREREQ(2.69)
-AC_INIT([LZO],[2.07],[markus@oberhumer.com],[lzo],[http://www.oberhumer.com/opensource/lzo/])
+AC_INIT([LZO],[2.09],[markus@oberhumer.com],[lzo],[http://www.oberhumer.com/opensource/lzo/])
 AC_MSG_NOTICE([Configuring LZO $PACKAGE_VERSION])
 AC_CONFIG_SRCDIR(src/lzo_init.c)
 AC_CONFIG_AUX_DIR(autoconf)
@@ -60,6 +60,7 @@ fi
 
 AC_PROG_CC
 AM_PROG_CC_C_O
+AM_PROG_AR
 AM_PROG_AS
 AC_PROG_CPP
 mfx_PROG_CPPFLAGS
@@ -67,9 +68,12 @@ AC_C_CONST
 mfx_LZO_CHECK_ENDIAN
 AC_SYS_LARGEFILE
 
-AM_INIT_AUTOMAKE([1.14.1 gnu subdir-objects])
+AM_INIT_AUTOMAKE([1.15 gnu subdir-objects -Wall -Werror])
 AM_SILENT_RULES([yes])
 AC_CONFIG_HEADERS([config.h:config.hin])
+AH_TOP([#ifndef __LZO_AUTOCONF_CONFIG_H_INCLUDED
+#define __LZO_AUTOCONF_CONFIG_H_INCLUDED 1])
+AH_BOTTOM([#endif /* already included */])
 
 AC_ENABLE_STATIC
 AC_DISABLE_SHARED
@@ -164,7 +168,7 @@ AM_CONDITIONAL(LZO_USE_ASM_i386_obj_elf32, [false])
 # // Write output files
 # ************************************************************************/
 
-mfx_LZO_LZOCHK(["-I$srcdir"],["include/lzo/lzodefs.h"],["src/lzo_supp.h"])
+mfx_LZO_LZOCHK(["-I$srcdir/include -I$srcdir"],[#include <lzo/lzoconf.h>],[<src/lzo_supp.h>])
 
 if test -r .Conf.settings2; then
     . ./.Conf.settings2
@@ -203,7 +207,7 @@ cat <<EOF
 
    LZO ${PACKAGE_VERSION} configured.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -221,9 +225,11 @@ cat <<EOF
    http://www.oberhumer.com/opensource/lzo/
 
 
-Type \`make' to build LZO. Type \`make install' to install LZO.
-After installing LZO, please read the accompanied documentation.
+Type 'make' to build LZO.
+Type 'make check' and 'make test' to test LZO.
+Type 'make install' to install LZO.
+After installing LZO, please have a look at 'examples/simple.c'.
 
 EOF
 
-# vi:ts=4:et
+# vim:set ts=4 sw=4 et:

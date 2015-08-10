@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -125,6 +125,5 @@ extern lzo1b_stats_t * const lzo1b_stats;
 
 #endif /* already included */
 
-/*
-vi:ts=4:et
-*/
+
+/* vim:set ts=4 sw=4 et: */

@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -30,7 +30,7 @@
 // store a literal run (internal)
 ************************************************************************/
 
-LZO_PUBLIC(lzo_bytep )
+LZO_LOCAL_IMPL(lzo_bytep )
 STORE_RUN ( lzo_bytep const oo, const lzo_bytep const ii, lzo_uint r_len)
 {
     lzo_bytep op;
@@ -99,7 +99,4 @@ STORE_RUN ( lzo_bytep const oo, const lzo_bytep const ii, lzo_uint r_len)
 }
 
 
-/*
-vi:ts=4:et
-*/
-
+/* vim:set ts=4 sw=4 et: */

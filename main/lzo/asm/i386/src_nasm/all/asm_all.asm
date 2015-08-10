@@ -2,7 +2,7 @@
 ;
 ;  This file is part of the LZO real-time data compression library.
 ;
-;  Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+;  Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
 ;  All Rights Reserved.
 ;
 ;  The LZO library is free software; you can redistribute it and/or
@@ -49,23 +49,36 @@ bits 32
 %define __OUTPUT_FORMAT__ win64
 %endif
 %endif
+%ifndef NAME1
 %ifidni __OUTPUT_FORMAT__,macho32
-%define NAME1(x)        _ %+ x
+%define NAME1(a)        _ %+ a
 %elifidni __OUTPUT_FORMAT__,macho64
-%define NAME1(x)        _ %+ x
+%define NAME1(a)        _ %+ a
 %else
-%define NAME1(x)        _ %+ x
-%define NAME2(x)             x
+%define NAME1(a)        _ %+ a
+%define NAME2(a)             a
+%endif
 %endif
 %ifidni __OUTPUT_FORMAT__,elf32
-%define globalf(x)      global x:function (x %+ _end - x)
-%define globalf_end(x)  x %+ _end:
+%define globalf(a)      global a:function (a %+ _end - a)
+%define globalfh(a)     global a:function hidden (a %+ _end - a)
+%define globalf_end(a)  a %+ _end:
 %elifidni __OUTPUT_FORMAT__,elf64
-%define globalf(x)      global x:function (x %+ _end - x)
-%define globalf_end(x)  x %+ _end:
+%define globalf(a)      global a:function (a %+ _end - a)
+%define globalfh(a)     global a:function hidden (a %+ _end - a)
+%define globalf_end(a)  a %+ _end:
 %else
-%define globalf(x)      global x
-%define globalf_end(x)
+%define globalf(a)      global a
+%define globalfh(a)     global a
+%define globalf_end(a)
+%endif
+%ifndef LZO_SEH_EXCEPTIONS
+%ifidni __OUTPUT_FORMAT__,win64
+%define LZO_SEH_EXCEPTIONS  1
+%endif
+%endif
+%ifndef LZO_SEH_EXCEPTIONS
+%define LZO_SEH_EXCEPTIONS  0
 %endif
 %ifidni __OUTPUT_FORMAT__,elf32
 section .note.GNU-stack noalloc noexec nowrite progbits

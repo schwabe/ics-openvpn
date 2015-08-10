@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -46,13 +46,26 @@
 #if defined(__LZOCONF_H) || defined(__LZOCONF_H_INCLUDED)
 #  error "include this file first"
 #endif
-#include "lzo/lzoconf.h"
+#if defined(LZO_CFG_BUILD_DLL) && (LZO_CFG_BUILD_DLL+0) && !defined(__LZO_EXPORT1) && !defined(__LZO_EXPORT2) && 0
+  /* idea: we could auto-define __LZO_EXPORT1 for DLL exports */
+#ifndef __LZODEFS_H_INCLUDED
+#if defined(LZO_HAVE_CONFIG_H)
+#  include <config.h>
+#endif
+#include <limits.h>
+#include <stddef.h>
+#include <lzo/lzodefs.h>
+#endif
+  /* #define __LZO_EXPORT1 __attribute__((__visibility__("default"))) */
+  /* #define __LZO_EXPORT1 __declspec(dllexport) */
+#endif
+#include <lzo/lzoconf.h>
 #if defined(LZO_CFG_EXTRA_CONFIG_HEADER2)
 #  include LZO_CFG_EXTRA_CONFIG_HEADER2
 #endif
-#endif
+#endif /* !defined(__LZO_IN_MINILZO) */
 
-#if (LZO_VERSION < 0x2070) || !defined(__LZOCONF_H_INCLUDED)
+#if !defined(__LZOCONF_H_INCLUDED) || (LZO_VERSION+0 != 0x2090)
 #  error "version mismatch"
 #endif
 
@@ -78,6 +91,10 @@
    /* disable '-Wall' warnings in system header files */
 #  pragma warning(disable: 4746)
 #endif
+#if (LZO_CC_INTELC && (__INTEL_COMPILER >= 900))
+   /* disable pedantic warnings in system header files */
+#  pragma warning(disable: 1684)
+#endif
 
 #if (LZO_CC_SUNPROC)
 #if !defined(__cplusplus)
@@ -85,6 +102,37 @@
 #  pragma error_messages(off,E_LOOP_NOT_ENTERED_AT_TOP)
 #  pragma error_messages(off,E_STATEMENT_NOT_REACHED)
 #endif
+#endif
+
+
+/***********************************************************************
+// function types
+************************************************************************/
+
+#if !defined(__LZO_NOEXPORT1)
+#  define __LZO_NOEXPORT1       /*empty*/
+#endif
+#if !defined(__LZO_NOEXPORT2)
+#  define __LZO_NOEXPORT2       /*empty*/
+#endif
+
+#if 1
+#  define LZO_PUBLIC_DECL(r)    LZO_EXTERN(r)
+#endif
+#if 1
+#  define LZO_PUBLIC_IMPL(r)    LZO_PUBLIC(r)
+#endif
+#if !defined(LZO_LOCAL_DECL)
+#  define LZO_LOCAL_DECL(r)     __LZO_EXTERN_C LZO_LOCAL_IMPL(r)
+#endif
+#if !defined(LZO_LOCAL_IMPL)
+#  define LZO_LOCAL_IMPL(r)     __LZO_NOEXPORT1 r __LZO_NOEXPORT2 __LZO_CDECL
+#endif
+#if 1
+#  define LZO_STATIC_DECL(r)    LZO_PRIVATE(r)
+#endif
+#if 1
+#  define LZO_STATIC_IMPL(r)    LZO_PRIVATE(r)
 #endif
 
 
@@ -384,7 +432,5 @@ LZO_EXTERN(const lzo_bytep) lzo_copyright(void);
 
 #endif /* already included */
 
-/*
-vi:ts=4:et
-*/
 
+/* vim:set ts=4 sw=4 et: */

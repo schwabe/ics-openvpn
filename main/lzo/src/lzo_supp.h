@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -1517,7 +1517,7 @@ LZOLIB_EXTERN(int, lzo_spawnve) (int mode, const char* fn, const char* const * a
     LZOCHK_ASSERT(__LZO_MASK_GEN(1u,2) == 3)
     LZOCHK_ASSERT(__LZO_MASK_GEN(1u,3) == 7)
     LZOCHK_ASSERT(__LZO_MASK_GEN(1u,8) == 255)
-#if (SIZEOF_INT >= 2)
+#if (LZO_SIZEOF_INT >= 2)
     LZOCHK_ASSERT(__LZO_MASK_GEN(1,15) == 32767)
     LZOCHK_ASSERT(__LZO_MASK_GEN(1u,16) == 0xffffU)
     LZOCHK_ASSERT(__LZO_MASK_GEN(0u,16) == 0u)
@@ -1525,22 +1525,22 @@ LZOLIB_EXTERN(int, lzo_spawnve) (int mode, const char* fn, const char* const * a
     LZOCHK_ASSERT(__LZO_MASK_GEN(1ul,16) == 0xffffUL)
     LZOCHK_ASSERT(__LZO_MASK_GEN(0ul,16) == 0ul)
 #endif
-#if (SIZEOF_INT >= 4)
+#if (LZO_SIZEOF_INT >= 4)
     LZOCHK_ASSERT(__LZO_MASK_GEN(1,31) == 2147483647)
     LZOCHK_ASSERT(__LZO_MASK_GEN(1u,32) == 0xffffffffU)
     LZOCHK_ASSERT(__LZO_MASK_GEN(0u,32) == 0u)
 #endif
-#if (SIZEOF_LONG >= 4)
+#if (LZO_SIZEOF_LONG >= 4)
     LZOCHK_ASSERT(__LZO_MASK_GEN(1ul,32) == 0xffffffffUL)
     LZOCHK_ASSERT(__LZO_MASK_GEN(0ul,32) == 0ul)
 #endif
-#if (SIZEOF_LONG >= 8)
+#if (LZO_SIZEOF_LONG >= 8)
     LZOCHK_ASSERT(__LZO_MASK_GEN(1ul,64) == 0xffffffffffffffffUL)
     LZOCHK_ASSERT(__LZO_MASK_GEN(0ul,64) == 0ul)
 #endif
 #if !(LZO_BROKEN_INTEGRAL_PROMOTION)
-    LZOCHK_ASSERT(__LZO_MASK_GEN(1u,SIZEOF_INT*8) == ~0u)
-    LZOCHK_ASSERT(__LZO_MASK_GEN(1ul,SIZEOF_LONG*8) == ~0ul)
+    LZOCHK_ASSERT(__LZO_MASK_GEN(1u,LZO_SIZEOF_INT*8) == ~0u)
+    LZOCHK_ASSERT(__LZO_MASK_GEN(1ul,LZO_SIZEOF_LONG*8) == ~0ul)
 #endif
 #if 1
     LZOCHK_ASSERT(__LZO_MASK_GEN(0,0) == 0)
@@ -1575,10 +1575,10 @@ LZOLIB_EXTERN(int, lzo_spawnve) (int mode, const char* fn, const char* const * a
     LZOCHK_ASSERT((~0ul & ~0)  == ~0ul)
     LZOCHK_ASSERT((~0ul & ~0u) == ~0u)
 #if defined(__MSDOS__) && defined(__TURBOC__) && (__TURBOC__ < 0x0150)
-#elif (SIZEOF_INT == 2)
+#elif (LZO_SIZEOF_INT == 2)
     LZOCHK_ASSERT((~0l  & ~0u) == 0xffffU)
     LZOCHK_ASSERT((~0ul & ~0u) == 0xffffU)
-#elif (SIZEOF_INT == 4)
+#elif (LZO_SIZEOF_INT == 4)
     LZOCHK_ASSERT((~0l  & ~0u) == 0xffffffffU)
     LZOCHK_ASSERT((~0ul & ~0u) == 0xffffffffU)
 #endif
@@ -1626,8 +1626,8 @@ LZOLIB_EXTERN(int, lzo_spawnve) (int mode, const char* fn, const char* const * a
 #else
     LZOCHK_ASSERT(sizeof(short) == sizeof(LZO_STATIC_CAST(short, 0)))
 #endif
-#if (SIZEOF_SHORT > 0)
-    LZOCHK_ASSERT(sizeof(short) == SIZEOF_SHORT)
+#if (LZO_SIZEOF_SHORT > 0)
+    LZOCHK_ASSERT(sizeof(short) == LZO_SIZEOF_SHORT)
 #endif
     LZOCHK_ASSERT_IS_SIGNED_T(int)
     LZOCHK_ASSERT_IS_UNSIGNED_T(unsigned int)
@@ -1638,8 +1638,8 @@ LZOLIB_EXTERN(int, lzo_spawnve) (int mode, const char* fn, const char* const * a
     LZOCHK_ASSERT(sizeof(int) >= sizeof(short))
     LZOCHK_ASSERT(sizeof(int) == sizeof(0))
     LZOCHK_ASSERT(sizeof(int) == sizeof(LZO_STATIC_CAST(int, 0)))
-#if (SIZEOF_INT > 0)
-    LZOCHK_ASSERT(sizeof(int) == SIZEOF_INT)
+#if (LZO_SIZEOF_INT > 0)
+    LZOCHK_ASSERT(sizeof(int) == LZO_SIZEOF_INT)
 #endif
     LZOCHK_ASSERT(sizeof(0) == sizeof(int))
     LZOCHK_ASSERT_IS_SIGNED_T(long)
@@ -1651,15 +1651,15 @@ LZOLIB_EXTERN(int, lzo_spawnve) (int mode, const char* fn, const char* const * a
     LZOCHK_ASSERT(sizeof(long) >= sizeof(int))
     LZOCHK_ASSERT(sizeof(long) == sizeof(0L))
     LZOCHK_ASSERT(sizeof(long) == sizeof(LZO_STATIC_CAST(long, 0)))
-#if (SIZEOF_LONG > 0)
-    LZOCHK_ASSERT(sizeof(long) == SIZEOF_LONG)
+#if (LZO_SIZEOF_LONG > 0)
+    LZOCHK_ASSERT(sizeof(long) == LZO_SIZEOF_LONG)
 #endif
     LZOCHK_ASSERT(sizeof(0L) == sizeof(long))
     LZOCHK_ASSERT_IS_UNSIGNED_T(size_t)
     LZOCHK_ASSERT(sizeof(size_t) >= sizeof(int))
     LZOCHK_ASSERT(sizeof(size_t) == sizeof(sizeof(0)))
-#if (SIZEOF_SIZE_T > 0)
-    LZOCHK_ASSERT(sizeof(size_t) == SIZEOF_SIZE_T)
+#if (LZO_SIZEOF_SIZE_T > 0)
+    LZOCHK_ASSERT(sizeof(size_t) == LZO_SIZEOF_SIZE_T)
 #endif
     LZOCHK_ASSERT_IS_SIGNED_T(ptrdiff_t)
     LZOCHK_ASSERT(sizeof(ptrdiff_t) >= sizeof(int))
@@ -1670,13 +1670,13 @@ LZOLIB_EXTERN(int, lzo_spawnve) (int mode, const char* fn, const char* const * a
     LZOCHK_ASSERT(4 == sizeof(LZO_STATIC_CAST(char __huge*, 0) - LZO_STATIC_CAST(char __huge*, 0)))
 # endif
 #endif
-#if (SIZEOF_PTRDIFF_T > 0)
-    LZOCHK_ASSERT(sizeof(ptrdiff_t) == SIZEOF_PTRDIFF_T)
+#if (LZO_SIZEOF_PTRDIFF_T > 0)
+    LZOCHK_ASSERT(sizeof(ptrdiff_t) == LZO_SIZEOF_PTRDIFF_T)
 #endif
     LZOCHK_ASSERT(sizeof(void*) >= sizeof(char*))
-#if (SIZEOF_VOID_P > 0)
-    LZOCHK_ASSERT(sizeof(void*) == SIZEOF_VOID_P)
-    LZOCHK_ASSERT(sizeof(char*) == SIZEOF_VOID_P)
+#if (LZO_SIZEOF_VOID_P > 0)
+    LZOCHK_ASSERT(sizeof(void*) == LZO_SIZEOF_VOID_P)
+    LZOCHK_ASSERT(sizeof(char*) == LZO_SIZEOF_VOID_P)
 #endif
 #if (LZO_HAVE_MM_HUGE_PTR)
     LZOCHK_ASSERT(4 == sizeof(void __huge*))
@@ -1692,14 +1692,14 @@ LZOLIB_EXTERN(int, lzo_spawnve) (int mode, const char* fn, const char* const * a
 #if defined(LZOCHK_CFG_PEDANTIC)
 #if defined(__MSDOS__) && defined(__TURBOC__) && (__TURBOC__ < 0x0150)
 #else
-    LZOCHK_ASSERT((1   << (8*SIZEOF_INT-1)) < 0)
+    LZOCHK_ASSERT((1   << (8*LZO_SIZEOF_INT-1)) < 0)
 #endif
 #endif
-    LZOCHK_ASSERT((1u  << (8*SIZEOF_INT-1)) > 0)
+    LZOCHK_ASSERT((1u  << (8*LZO_SIZEOF_INT-1)) > 0)
 #if defined(LZOCHK_CFG_PEDANTIC)
-    LZOCHK_ASSERT((1l  << (8*SIZEOF_LONG-1)) < 0)
+    LZOCHK_ASSERT((1l  << (8*LZO_SIZEOF_LONG-1)) < 0)
 #endif
-    LZOCHK_ASSERT((1ul << (8*SIZEOF_LONG-1)) > 0)
+    LZOCHK_ASSERT((1ul << (8*LZO_SIZEOF_LONG-1)) > 0)
 #if defined(lzo_int16e_t)
     LZOCHK_ASSERT(sizeof(lzo_int16e_t) == 2)
     LZOCHK_ASSERT(sizeof(lzo_int16e_t) == LZO_SIZEOF_LZO_INT16E_T)
@@ -1852,13 +1852,13 @@ LZOLIB_EXTERN(int, lzo_spawnve) (int mode, const char* fn, const char* const * a
     LZOCHK_ASSERT((LZO_UINT64_C(0xffffffffffffffff) >> 63) == 1)
     LZOCHK_ASSERT((LZO_UINT64_C(0xffffffffffffffff) & ~0)  == LZO_UINT64_C(0xffffffffffffffff))
     LZOCHK_ASSERT((LZO_UINT64_C(0xffffffffffffffff) & ~0l) == LZO_UINT64_C(0xffffffffffffffff))
-#if (SIZEOF_INT == 4)
+#if (LZO_SIZEOF_INT == 4)
 # if (LZO_CC_GNUC && (LZO_CC_GNUC < 0x020000ul))
 # else
     LZOCHK_ASSERT((LZO_UINT64_C(0xffffffffffffffff) & (~0u+0u)) == 0xffffffffu)
 # endif
 #endif
-#if (SIZEOF_LONG == 4)
+#if (LZO_SIZEOF_LONG == 4)
 # if (LZO_CC_GNUC && (LZO_CC_GNUC < 0x020000ul))
 # else
     LZOCHK_ASSERT((LZO_UINT64_C(0xffffffffffffffff) & (~0ul+0ul)) == 0xfffffffful)
@@ -1940,13 +1940,13 @@ LZOLIB_EXTERN(int, lzo_spawnve) (int mode, const char* fn, const char* const * a
     LZOCHK_ASSERT(sizeof(void (*)(void)) == 8)
 #endif
 #if (LZO_CC_NDPC)
-#elif (SIZEOF_INT > 1)
+#elif (LZO_SIZEOF_INT > 1)
     LZOCHK_ASSERT( LZO_STATIC_CAST(int, LZO_STATIC_CAST(unsigned char, LZO_STATIC_CAST(signed char, -1))) == 255)
 #endif
 #if defined(LZOCHK_CFG_PEDANTIC)
 #if (LZO_CC_KEILC)
 #elif (LZO_CC_NDPC)
-#elif !(LZO_BROKEN_INTEGRAL_PROMOTION) && (SIZEOF_INT > 1)
+#elif !(LZO_BROKEN_INTEGRAL_PROMOTION) && (LZO_SIZEOF_INT > 1)
     LZOCHK_ASSERT( ((LZO_STATIC_CAST(unsigned char, 128)) << LZO_STATIC_CAST(int, (8*sizeof(int)-8))) < 0)
 #endif
 #endif

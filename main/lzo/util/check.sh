@@ -4,24 +4,32 @@ set -e
 #
 # usage: util/check.sh [directory]
 #
-# This script runs lzotest with all algorithms on a complete directory tree.
+# This script runs lzotest with all algorithms
+# on a complete directory tree.
 # It is not suitable for accurate timings.
 #
-# Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+# Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
 #
 
-LZOTEST="lzotest"
-test -x ./lzotest/lzotest && LZOTEST="./lzotest/lzotest"
-test -x ./lzotest.exe && LZOTEST="./lzotest.exe"
-test -x ./lzotest.out && LZOTEST="./lzotest.out"
+if test "X$LZOTEST" = X; then
+LZOTEST="./lzotest/lzotest"
+for d in ./lzotest .; do
+    for ext in "" .exe .out; do
+        if test -f "$d/lzotest$ext" && test -x "$d/lzotest$ext"; then
+            LZOTEST="$d/lzotest$ext"
+            break 2
+        fi
+    done
+done
+fi
 
-dir="${*-.}"
+dir="${1-.}"
 
-TMPFILE="/tmp/lzo_$$.tmp"
-rm -f $TMPFILE
-(find $dir/ -type f -print > $TMPFILE) || true
+TMPFILE="/tmp/lzotest_$$.tmp"
+rm -f "$TMPFILE"
+(find "$dir/." -type f -print | LC_ALL=C sort > "$TMPFILE") || true
 
-## methods=`$LZOTEST -m | sed -n 's/^ *-m\([0-9]*\).*/\1/p'`
+## methods=`"$LZOTEST" -m | sed -n 's/^ *-m\([0-9]*\).*/\1/p'`
 ## methods="9721 9722 9723 9724 9725 9726 9727 9728 9729"
 methods="21 31 1 2 3 4 5 6 7 8 9 11 12 13 14 15 16 17 18 19 61 71 81"
 methods="$methods 111 112 115"
@@ -33,11 +41,12 @@ methods="$methods 902 912 942 962 972 982 992"
 LFLAGS="-q -T -n2 -S"
 LFLAGS="-q -T -n2"
 
-for i in $methods; do
-    cat $TMPFILE | $LZOTEST -m${i} -@ $LFLAGS
+for m in $methods; do
+    cat "$TMPFILE" | "$LZOTEST" "-m$m" -@ $LFLAGS
 done
 
-rm -f $TMPFILE
+rm -f "$TMPFILE"
 echo "Done."
 exit 0
 
+# vim:set ts=4 sw=4 et:

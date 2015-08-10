@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
  */
 
 
-#include "lzo/lzoconf.h"
+#include <lzo/lzoconf.h>
 
 
 /*************************************************************************
@@ -90,43 +90,34 @@
 
 /* LZO algorithms */
 #if defined(HAVE_LZO1_H)
-#  include "lzo/lzo1.h"
+#  include <lzo/lzo1.h>
 #endif
 #if defined(HAVE_LZO1A_H)
-#  include "lzo/lzo1a.h"
+#  include <lzo/lzo1a.h>
 #endif
 #if defined(HAVE_LZO1B_H)
-#  include "lzo/lzo1b.h"
+#  include <lzo/lzo1b.h>
 #endif
 #if defined(HAVE_LZO1C_H)
-#  include "lzo/lzo1c.h"
+#  include <lzo/lzo1c.h>
 #endif
 #if defined(HAVE_LZO1F_H)
-#  include "lzo/lzo1f.h"
+#  include <lzo/lzo1f.h>
 #endif
 #if defined(HAVE_LZO1X_H)
-#  include "lzo/lzo1x.h"
-#  if defined(__LZO_PROFESSIONAL__)
-#    include "lzo/lzopro/lzo1x.h"
-#  endif
+#  include <lzo/lzo1x.h>
 #endif
 #if defined(HAVE_LZO1Y_H)
-#  include "lzo/lzo1y.h"
-#  if defined(__LZO_PROFESSIONAL__)
-#    include "lzo/lzopro/lzo1y.h"
-#  endif
+#  include <lzo/lzo1y.h>
 #endif
 #if defined(HAVE_LZO1Z_H)
-#  include "lzo/lzo1z.h"
+#  include <lzo/lzo1z.h>
 #endif
 #if defined(HAVE_LZO2A_H)
-#  include "lzo/lzo2a.h"
+#  include <lzo/lzo2a.h>
 #endif
 #if defined(HAVE_LZO2B_H)
-#  include "lzo/lzo2b.h"
-#endif
-#if defined(__LZO_PROFESSIONAL__)
-#  include "lzopro/t_config.ch"
+#  include <lzo/lzo2b.h>
 #endif
 /* other compressors */
 #if defined(HAVE_ZLIB_H)
@@ -205,10 +196,6 @@ enum {
 #if defined(ALG_ZLIB)
     M_Z_ADLER32   =  6011,
     M_Z_CRC32     =  6012,
-#endif
-
-#if defined(__LZO_PROFESSIONAL__)
-#  include "lzopro/m_enum.ch"
 #endif
 
     M_UNUSED
@@ -619,7 +606,7 @@ lzo_bool is_compressor ( const compress_t *c )
 // check that memory gets accessed within bounds
 **************************************************************************/
 
-static void memchecker_init ( mblock_t *mb, lzo_xint l, unsigned char random_byte )
+static void memchecker_init ( mblock_t *mb, lzo_uint l, unsigned char random_byte )
 {
     lzo_uint i;
     lzo_uint len = (lzo_uint) l;
@@ -645,7 +632,7 @@ static void memchecker_init ( mblock_t *mb, lzo_xint l, unsigned char random_byt
 }
 
 
-static int memchecker_check ( mblock_t *mb, lzo_xint l, unsigned char random_byte )
+static int memchecker_check ( mblock_t *mb, lzo_uint l, unsigned char random_byte )
 {
     lzo_uint i;
     lzo_uint len = (lzo_uint) l;
@@ -1495,9 +1482,6 @@ void license(void)
     fp = stdout;
     fflush(stdout); fflush(stderr);
 
-#if defined(__LZO_PROFESSIONAL__)
-#  include "lzopro/license.ch"
-#else
 fprintf(fp,
 "   The LZO library is free software; you can redistribute it and/or\n"
 "   modify it under the terms of the GNU General Public License as\n"
@@ -1521,7 +1505,6 @@ fprintf(fp,
 "   http://www.oberhumer.com/opensource/lzo/\n"
 "\n"
     );
-#endif
 
     fflush(fp);
     exit(EXIT_OK);
@@ -1645,9 +1628,6 @@ static void parse_methods(const char *p)
 #if defined(ALG_BZIP2)
         else if (m_strcmp(p,"bzip2") == 0)
             add_all_methods(M_BZIP2_1,M_BZIP2_9);
-#endif
-#if defined(__LZO_PROFESSIONAL__)
-#  include "lzopro/t_opt_m.ch"
 #endif
         else if (m_strisdigit(p))
             add_method(atoi(p));
@@ -1922,15 +1902,9 @@ int __lzo_cdecl_main main(int argc, char *argv[])
         if ((*s == '/' || *s == '\\') && s[1])
             progname = s + 1;
 
-#if defined(__LZO_PROFESSIONAL__)
-    printf("\nLZO Professional real-time data compression library (v%s, %s).\n",
-           lzo_version_string(), lzo_version_date());
-    printf("Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer\nAll Rights Reserved.\n\n");
-#else
     printf("\nLZO real-time data compression library (v%s, %s).\n",
            lzo_version_string(), lzo_version_date());
-    printf("Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer\nAll Rights Reserved.\n\n");
-#endif
+    printf("Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer\nAll Rights Reserved.\n\n");
 
 
 /*
@@ -2089,7 +2063,4 @@ int __lzo_cdecl_main main(int argc, char *argv[])
 }
 
 
-/*
-vi:ts=4:et
-*/
-
+/* vim:set ts=4 sw=4 et: */

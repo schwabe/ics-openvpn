@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -37,25 +37,27 @@
  * keep this copyright string in the executable of your product.
 .*/
 
-static const char __lzo_copyright[] =
+static const char lzo_copyright_[] =
 #if !defined(__LZO_IN_MINLZO)
     /* save space as some people want a really small decompressor */
     LZO_VERSION_STRING;
 #else
     "\r\n\n"
     "LZO data compression library.\n"
-    "$Copyright: LZO Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer\n"
+    "$Copyright: LZO Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer\n"
     "<markus@oberhumer.com>\n"
     "http://www.oberhumer.com $\n\n"
     "$Id: LZO version: v" LZO_VERSION_STRING ", " LZO_VERSION_DATE " $\n"
     "$Info: " LZO_INFO_STRING " $\n";
 #endif
+static const char lzo_version_string_[] = LZO_VERSION_STRING;
+static const char lzo_version_date_[] = LZO_VERSION_DATE;
 
 
 LZO_PUBLIC(const lzo_bytep)
 lzo_copyright(void)
 {
-    return (const lzo_bytep) __lzo_copyright;
+    return (const lzo_bytep) lzo_copyright_;
 }
 
 LZO_PUBLIC(unsigned)
@@ -67,25 +69,25 @@ lzo_version(void)
 LZO_PUBLIC(const char *)
 lzo_version_string(void)
 {
-    return LZO_VERSION_STRING;
+    return lzo_version_string_;
 }
 
 LZO_PUBLIC(const char *)
 lzo_version_date(void)
 {
-    return LZO_VERSION_DATE;
+    return lzo_version_date_;
 }
 
 LZO_PUBLIC(const lzo_charp)
 _lzo_version_string(void)
 {
-    return LZO_VERSION_STRING;
+    return lzo_version_string_;
 }
 
 LZO_PUBLIC(const lzo_charp)
 _lzo_version_date(void)
 {
-    return LZO_VERSION_DATE;
+    return lzo_version_date_;
 }
 
 
@@ -100,10 +102,10 @@ _lzo_version_date(void)
 /* NMAX is the largest n such that 255n(n+1)/2 + (n+1)(BASE-1) <= 2^32-1 */
 
 #define LZO_DO1(buf,i)  s1 += buf[i]; s2 += s1
-#define LZO_DO2(buf,i)  LZO_DO1(buf,i); LZO_DO1(buf,i+1);
-#define LZO_DO4(buf,i)  LZO_DO2(buf,i); LZO_DO2(buf,i+2);
-#define LZO_DO8(buf,i)  LZO_DO4(buf,i); LZO_DO4(buf,i+4);
-#define LZO_DO16(buf,i) LZO_DO8(buf,i); LZO_DO8(buf,i+8);
+#define LZO_DO2(buf,i)  LZO_DO1(buf,i); LZO_DO1(buf,i+1)
+#define LZO_DO4(buf,i)  LZO_DO2(buf,i); LZO_DO2(buf,i+2)
+#define LZO_DO8(buf,i)  LZO_DO4(buf,i); LZO_DO4(buf,i+4)
+#define LZO_DO16(buf,i) LZO_DO8(buf,i); LZO_DO8(buf,i+8)
 
 LZO_PUBLIC(lzo_uint32_t)
 lzo_adler32(lzo_uint32_t adler, const lzo_bytep buf, lzo_uint len)
@@ -143,6 +145,4 @@ lzo_adler32(lzo_uint32_t adler, const lzo_bytep buf, lzo_uint len)
 #undef LZO_DO16
 
 
-/*
-vi:ts=4:et
-*/
+/* vim:set ts=4 sw=4 et: */

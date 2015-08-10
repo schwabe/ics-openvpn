@@ -1,5 +1,8 @@
 /* config.hin.  Generated from configure.ac by autoheader.  */
 
+#ifndef __LZO_AUTOCONF_CONFIG_H_INCLUDED
+#define __LZO_AUTOCONF_CONFIG_H_INCLUDED 1
+
 /* Define if building universal (internal helper macro) */
 #undef AC_APPLE_UNIVERSAL_BUILD
 
@@ -388,3 +391,5 @@
 
 /* Define to `unsigned int' if <sys/types.h> does not define. */
 #undef size_t
+
+#endif /* already included */

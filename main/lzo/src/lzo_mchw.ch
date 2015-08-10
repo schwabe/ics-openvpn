@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -55,16 +55,16 @@ typedef struct
     lzo_uint printcount;    /* counter for reporting progress every 1K bytes */
 
     /* some stats */
-    unsigned long lit_bytes;
-    unsigned long match_bytes;
-    unsigned long rep_bytes;
-    unsigned long lazy;
+    lzo_uint lit_bytes;
+    lzo_uint match_bytes;
+    lzo_uint rep_bytes;
+    lzo_uint lazy;
 
 #if defined(LZO1B)
     lzo_uint r1_m_len;
 
     /* some stats */
-    unsigned long r1_r, m3_r, m2_m, m3_m;
+    lzo_uint r1_r, m3_r, m2_m, m3_m;
 #endif
 
 #if defined(LZO1C)
@@ -72,7 +72,7 @@ typedef struct
     lzo_bytep m3;
 
     /* some stats */
-    unsigned long r1_r, m3_r, m2_m, m3_m;
+    lzo_uint r1_r, m3_r, m2_m, m3_m;
 #endif
 
 #if defined(LZO1F)
@@ -80,7 +80,7 @@ typedef struct
     lzo_uint r1_m_len;
 
     /* some stats */
-    unsigned long r1_r, m2_m, m3_m;
+    lzo_uint r1_r, m2_m, m3_m;
 #endif
 
 #if defined(LZO1X) || defined(LZO1Y) || defined(LZO1Z)
@@ -88,13 +88,13 @@ typedef struct
     lzo_uint r1_m_len;
 
     /* some stats */
-    unsigned long m1a_m, m1b_m, m2_m, m3_m, m4_m;
-    unsigned long lit1_r, lit2_r, lit3_r;
+    lzo_uint m1a_m, m1b_m, m2_m, m3_m, m4_m;
+    lzo_uint lit1_r, lit2_r, lit3_r;
 #endif
 
 #if defined(LZO2A)
     /* some stats */
-    unsigned long m1, m2, m3, m4;
+    lzo_uint m1, m2, m3, m4;
 #endif
 }
 LZO_COMPRESS_T;
@@ -219,7 +219,4 @@ find_match ( LZO_COMPRESS_T *c, lzo_swd_p s,
 }
 
 
-/*
-vi:ts=4:et
-*/
-
+/* vim:set ts=4 sw=4 et: */

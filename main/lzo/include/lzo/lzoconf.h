@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -29,9 +29,9 @@
 #ifndef __LZOCONF_H_INCLUDED
 #define __LZOCONF_H_INCLUDED 1
 
-#define LZO_VERSION             0x2070
-#define LZO_VERSION_STRING      "2.07"
-#define LZO_VERSION_DATE        "Jun 25 2014"
+#define LZO_VERSION             0x2090
+#define LZO_VERSION_STRING      "2.09"
+#define LZO_VERSION_DATE        "Feb 04 2015"
 
 /* internal Autoconf configuration file - only used when building LZO */
 #if defined(LZO_HAVE_CONFIG_H)
@@ -57,7 +57,7 @@
 
 /* get OS and architecture defines */
 #ifndef __LZODEFS_H_INCLUDED
-#include "lzodefs.h"
+#include <lzo/lzodefs.h>
 #endif
 
 
@@ -94,25 +94,29 @@ extern "C" {
 #    if (LZO_OS_WIN64)
      typedef unsigned __int64   lzo_uint;
      typedef __int64            lzo_int;
+#    define LZO_TYPEOF_LZO_INT  LZO_TYPEOF___INT64
 #    else
      typedef lzo_ullong_t       lzo_uint;
      typedef lzo_llong_t        lzo_int;
+#    define LZO_TYPEOF_LZO_INT  LZO_TYPEOF_LONG_LONG
 #    endif
-#    define LZO_SIZEOF_LZO_UINT 8
+#    define LZO_SIZEOF_LZO_INT  8
 #    define LZO_UINT_MAX        0xffffffffffffffffull
 #    define LZO_INT_MAX         9223372036854775807LL
 #    define LZO_INT_MIN         (-1LL - LZO_INT_MAX)
 #  elif (LZO_ABI_IP32L64) /* MIPS R5900 */
      typedef unsigned int       lzo_uint;
      typedef int                lzo_int;
-#    define LZO_SIZEOF_LZO_UINT LZO_SIZEOF_INT
+#    define LZO_SIZEOF_LZO_INT  LZO_SIZEOF_INT
+#    define LZO_TYPEOF_LZO_INT  LZO_TYPEOF_INT
 #    define LZO_UINT_MAX        UINT_MAX
 #    define LZO_INT_MAX         INT_MAX
 #    define LZO_INT_MIN         INT_MIN
 #  elif (ULONG_MAX >= LZO_0xffffffffL)
      typedef unsigned long      lzo_uint;
      typedef long               lzo_int;
-#    define LZO_SIZEOF_LZO_UINT LZO_SIZEOF_LONG
+#    define LZO_SIZEOF_LZO_INT  LZO_SIZEOF_LONG
+#    define LZO_TYPEOF_LZO_INT  LZO_TYPEOF_LONG
 #    define LZO_UINT_MAX        ULONG_MAX
 #    define LZO_INT_MAX         LONG_MAX
 #    define LZO_INT_MIN         LONG_MIN
@@ -122,7 +126,7 @@ extern "C" {
 #endif
 
 /* The larger type of lzo_uint and lzo_uint32_t. */
-#if (LZO_SIZEOF_LZO_UINT >= 4)
+#if (LZO_SIZEOF_LZO_INT >= 4)
 #  define lzo_xint              lzo_uint
 #else
 #  define lzo_xint              lzo_uint32_t
@@ -131,7 +135,8 @@ extern "C" {
 typedef int lzo_bool;
 
 /* sanity checks */
-LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(lzo_uint) == LZO_SIZEOF_LZO_UINT)
+LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(lzo_int)  == LZO_SIZEOF_LZO_INT)
+LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(lzo_uint) == LZO_SIZEOF_LZO_INT)
 LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(lzo_xint) >= sizeof(lzo_uint))
 LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(lzo_xint) >= sizeof(lzo_uint32_t))
 
@@ -163,14 +168,14 @@ LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(lzo_xint) >= sizeof(lzo_uint32_t))
 #endif
 
 /* Older LZO versions used to support ancient systems and memory models
- * like 16-bit MSDOS with __huge pointers and Cray PVP, but these
+ * such as 16-bit MSDOS with __huge pointers or Cray PVP, but these
  * obsolete configurations are not supported any longer.
  */
 #if defined(__LZO_MMODEL_HUGE)
-#error "__LZO_MMODEL_HUGE is unsupported"
+#error "__LZO_MMODEL_HUGE memory model is unsupported"
 #endif
 #if (LZO_MM_PVP)
-#error "LZO_MM_PVP is unsupported"
+#error "LZO_MM_PVP memory model is unsupported"
 #endif
 #if (LZO_SIZEOF_INT < 4)
 #error "LZO_SIZEOF_INT < 4 is unsupported"
@@ -221,13 +226,13 @@ LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(char *)   == sizeof(lzo_bytep))
 
 /* __cdecl calling convention for public C and assembly functions */
 #if !defined(LZO_PUBLIC)
-#  define LZO_PUBLIC(_rettype)  __LZO_EXPORT1 _rettype __LZO_EXPORT2 __LZO_CDECL
+#  define LZO_PUBLIC(r)         __LZO_EXPORT1 r __LZO_EXPORT2 __LZO_CDECL
 #endif
 #if !defined(LZO_EXTERN)
-#  define LZO_EXTERN(_rettype)  __LZO_EXTERN_C LZO_PUBLIC(_rettype)
+#  define LZO_EXTERN(r)         __LZO_EXTERN_C LZO_PUBLIC(r)
 #endif
 #if !defined(LZO_PRIVATE)
-#  define LZO_PRIVATE(_rettype) static _rettype __LZO_CDECL
+#  define LZO_PRIVATE(r)        static r  __LZO_CDECL
 #endif
 
 /* function types */
@@ -399,6 +404,10 @@ LZO_EXTERN(unsigned) __lzo_align_gap(const lzo_voidp p, lzo_uint size);
 /* deprecated types */
 typedef union { lzo_bytep a; lzo_uint b; } __lzo_pu_u;
 typedef union { lzo_bytep a; lzo_uint32_t b; } __lzo_pu32_u;
+/* deprecated defines */
+#if !defined(LZO_SIZEOF_LZO_UINT)
+#  define LZO_SIZEOF_LZO_UINT   LZO_SIZEOF_LZO_INT
+#endif
 
 #if defined(LZO_CFG_COMPAT)
 
@@ -441,4 +450,4 @@ typedef union { lzo_bytep a; lzo_uint32_t b; } __lzo_pu32_u;
 #endif /* already included */
 
 
-/* vim:set ts=4 et: */
+/* vim:set ts=4 sw=4 et: */

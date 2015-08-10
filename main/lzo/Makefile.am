@@ -4,7 +4,7 @@
 #
 #  This file is part of the LZO data compression library.
 #
-#  Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+#  Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
 #  All Rights Reserved.
 #
 
@@ -20,7 +20,7 @@ noinst_PROGRAMS =
 ##************************************************************************/
 
 doc_DATA = AUTHORS COPYING NEWS THANKS doc/LZO.FAQ doc/LZO.TXT doc/LZOAPI.TXT
-EXTRA_DIST += BUGS autoconf/shtool
+EXTRA_DIST += BUGS CMakeLists.txt autoconf/shtool
 
 # hooks for Automake targets
 dist-hook: dist-hook-1
@@ -31,7 +31,7 @@ dist-hook-1:
 check-local: all-am
 	./lzotest/lzotest -mlzo -n2 -q $(top_srcdir)/COPYING
 	@echo
-	@echo "All checks passed."
+	@echo "===== All checks passed. Type 'make test' for more exhaustive testing. ====="
 	@echo
 
 # special targets
@@ -44,13 +44,13 @@ basic-test: all
 
 test: all
 	./lzotest/lzotest -mavail -n10 -q $(top_srcdir)/COPYING
-	$(SHELL) -e $(top_srcdir)/util/check.sh $(top_srcdir)
+	LZOTEST=./lzotest/lzotest$(EXEEXT) $(SHELL) -e "$(top_srcdir)/util/check.sh" "$(top_srcdir)"
 	./tests/align
 	./tests/chksum
 	./examples/simple
 	./minilzo/testmini
 	@echo
-	@echo "All tests passed. Now you are ready to install LZO."
+	@echo "===== All tests passed. Now you are ready to install LZO. ====="
 	@echo
 
 

@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -105,10 +105,10 @@ lzo_get_crc32_table(void)
 #define LZO_DO1(buf,i) \
     crc = table[(unsigned char)((unsigned char)crc ^ buf[i])] ^ (crc >> 8)
 #endif
-#define LZO_DO2(buf,i)  LZO_DO1(buf,i); LZO_DO1(buf,i+1);
-#define LZO_DO4(buf,i)  LZO_DO2(buf,i); LZO_DO2(buf,i+2);
-#define LZO_DO8(buf,i)  LZO_DO4(buf,i); LZO_DO4(buf,i+4);
-#define LZO_DO16(buf,i) LZO_DO8(buf,i); LZO_DO8(buf,i+8);
+#define LZO_DO2(buf,i)  LZO_DO1(buf,i); LZO_DO1(buf,i+1)
+#define LZO_DO4(buf,i)  LZO_DO2(buf,i); LZO_DO2(buf,i+2)
+#define LZO_DO8(buf,i)  LZO_DO4(buf,i); LZO_DO4(buf,i+4)
+#define LZO_DO16(buf,i) LZO_DO8(buf,i); LZO_DO8(buf,i+8)
 
 
 LZO_PUBLIC(lzo_uint32_t)
@@ -150,6 +150,4 @@ lzo_crc32(lzo_uint32_t c, const lzo_bytep buf, lzo_uint len)
 #undef LZO_DO16
 
 
-/*
-vi:ts=4:et
-*/
+/* vim:set ts=4 sw=4 et: */

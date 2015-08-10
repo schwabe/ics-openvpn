@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -74,6 +74,9 @@ __lzo_static_forceinline unsigned lzo_bitops_ctlz32_func(lzo_uint32_t v)
 #elif (LZO_BITOPS_USE_GNUC_BITSCAN) && (LZO_SIZEOF_INT == 4)
     unsigned r; r = (unsigned) __builtin_clz(v); return r;
 #define lzo_bitops_ctlz32(v)    ((unsigned) __builtin_clz(v))
+#elif (LZO_BITOPS_USE_GNUC_BITSCAN) && (LZO_SIZEOF_LONG == 8) && (LZO_WORDSIZE >= 8)
+    unsigned r; r = (unsigned) __builtin_clzl(v); return r ^ 32;
+#define lzo_bitops_ctlz32(v)    (((unsigned) __builtin_clzl(v)) ^ 32)
 #else
     LZO_UNUSED(v); return 0;
 #endif
@@ -143,20 +146,15 @@ __lzo_static_forceinline unsigned lzo_bitops_cttz64_func(lzo_uint64_t v)
 }
 #endif
 
-#if 1 && (LZO_CC_ARMCC_GNUC || LZO_CC_CLANG || (LZO_CC_GNUC >= 0x020700ul) || LZO_CC_INTELC_GNUC || LZO_CC_LLVM || LZO_CC_PATHSCALE || LZO_CC_PGI)
-static void __attribute__((__unused__))
-#else
-__lzo_static_forceinline void
-#endif
-lzo_bitops_unused_funcs(void)
+lzo_unused_funcs_impl(void, lzo_bitops_unused_funcs)(void)
 {
+    LZO_UNUSED_FUNC(lzo_bitops_unused_funcs);
     LZO_UNUSED_FUNC(lzo_bitops_ctlz32_func);
     LZO_UNUSED_FUNC(lzo_bitops_cttz32_func);
 #if defined(lzo_uint64_t)
     LZO_UNUSED_FUNC(lzo_bitops_ctlz64_func);
     LZO_UNUSED_FUNC(lzo_bitops_cttz64_func);
 #endif
-    LZO_UNUSED_FUNC(lzo_bitops_unused_funcs);
 }
 
 
@@ -165,8 +163,9 @@ lzo_bitops_unused_funcs(void)
 ************************************************************************/
 
 #if defined(__lzo_alignof) && !(LZO_CFG_NO_UNALIGNED)
-#ifndef __lzo_memops_tcheck
-#define __lzo_memops_tcheck(t,a,b) ((void)0, sizeof(t) == (a) && __lzo_alignof(t) == (b))
+/* CBUG: disabled because of gcc bug 64516 */
+#if !defined(lzo_memops_tcheck__) && 0
+#define lzo_memops_tcheck__(t,a,b) ((void)0, sizeof(t) == (a) && __lzo_alignof(t) == (b))
 #endif
 #endif
 #ifndef lzo_memops_TU0p
@@ -283,9 +282,9 @@ LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(*(lzo_memops_TU1p)0)==1)
 LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(*(lzo_memops_TU2p)0)==2)
 #define LZO_MEMOPS_COPY2(dd,ss) \
     * (lzo_memops_TU2p) (lzo_memops_TU0p) (dd) = * (const lzo_memops_TU2p) (const lzo_memops_TU0p) (ss)
-#elif defined(__lzo_memops_tcheck)
+#elif defined(lzo_memops_tcheck__)
 #define LZO_MEMOPS_COPY2(dd,ss) \
-    LZO_BLOCK_BEGIN if (__lzo_memops_tcheck(lzo_memops_TU2,2,1)) { \
+    LZO_BLOCK_BEGIN if (lzo_memops_tcheck__(lzo_memops_TU2,2,1)) { \
         * (lzo_memops_TU2p) (lzo_memops_TU0p) (dd) = * (const lzo_memops_TU2p) (const lzo_memops_TU0p) (ss); \
     } else { LZO_MEMOPS_MOVE2(dd,ss); } LZO_BLOCK_END
 #else
@@ -295,9 +294,9 @@ LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(*(lzo_memops_TU2p)0)==2)
 LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(*(lzo_memops_TU4p)0)==4)
 #define LZO_MEMOPS_COPY4(dd,ss) \
     * (lzo_memops_TU4p) (lzo_memops_TU0p) (dd) = * (const lzo_memops_TU4p) (const lzo_memops_TU0p) (ss)
-#elif defined(__lzo_memops_tcheck)
+#elif defined(lzo_memops_tcheck__)
 #define LZO_MEMOPS_COPY4(dd,ss) \
-    LZO_BLOCK_BEGIN if (__lzo_memops_tcheck(lzo_memops_TU4,4,1)) { \
+    LZO_BLOCK_BEGIN if (lzo_memops_tcheck__(lzo_memops_TU4,4,1)) { \
         * (lzo_memops_TU4p) (lzo_memops_TU0p) (dd) = * (const lzo_memops_TU4p) (const lzo_memops_TU0p) (ss); \
     } else { LZO_MEMOPS_MOVE4(dd,ss); } LZO_BLOCK_END
 #else
@@ -314,9 +313,9 @@ LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(*(lzo_memops_TU8p)0)==8)
 #elif (LZO_OPT_UNALIGNED32)
 #define LZO_MEMOPS_COPY8(dd,ss) \
     LZO_BLOCK_BEGIN LZO_MEMOPS_COPY4(dd,ss); LZO_MEMOPS_COPY4((lzo_memops_TU1p)(lzo_memops_TU0p)(dd)+4,(const lzo_memops_TU1p)(const lzo_memops_TU0p)(ss)+4); LZO_BLOCK_END
-#elif defined(__lzo_memops_tcheck)
+#elif defined(lzo_memops_tcheck__)
 #define LZO_MEMOPS_COPY8(dd,ss) \
-    LZO_BLOCK_BEGIN if (__lzo_memops_tcheck(lzo_memops_TU8,8,1)) { \
+    LZO_BLOCK_BEGIN if (lzo_memops_tcheck__(lzo_memops_TU8,8,1)) { \
         * (lzo_memops_TU8p) (lzo_memops_TU0p) (dd) = * (const lzo_memops_TU8p) (const lzo_memops_TU0p) (ss); \
     } else { LZO_MEMOPS_MOVE8(dd,ss); } LZO_BLOCK_END
 #else
@@ -350,7 +349,7 @@ __lzo_static_forceinline lzo_uint16_t lzo_memops_get_le16(const lzo_voidp ss)
     return v;
 }
 #if (LZO_OPT_UNALIGNED16) && (LZO_ABI_LITTLE_ENDIAN)
-#define LZO_MEMOPS_GET_LE16(ss)    * (const lzo_memops_TU2p) (const lzo_memops_TU0p) (ss)
+#define LZO_MEMOPS_GET_LE16(ss)    (* (const lzo_memops_TU2p) (const lzo_memops_TU0p) (ss))
 #else
 #define LZO_MEMOPS_GET_LE16(ss)    lzo_memops_get_le16(ss)
 #endif
@@ -367,18 +366,18 @@ __lzo_static_forceinline lzo_uint32_t lzo_memops_get_le32(const lzo_voidp ss)
     v = (lzo_uint32_t) vv;
 #else
     const lzo_memops_TU1p s = (const lzo_memops_TU1p) ss;
-    v = (lzo_uint32_t) (((lzo_uint32_t)s[0] << 24) | ((lzo_uint32_t)s[1] << 16) | ((lzo_uint32_t)s[2] << 8) | ((lzo_uint32_t)s[3]));
+    v = (lzo_uint32_t) (((lzo_uint32_t)s[0]) | ((lzo_uint32_t)s[1] << 8) | ((lzo_uint32_t)s[2] << 16) | ((lzo_uint32_t)s[3] << 24));
 #endif
     return v;
 }
 #if (LZO_OPT_UNALIGNED32) && (LZO_ABI_LITTLE_ENDIAN)
-#define LZO_MEMOPS_GET_LE32(ss)    * (const lzo_memops_TU4p) (const lzo_memops_TU0p) (ss)
+#define LZO_MEMOPS_GET_LE32(ss)    (* (const lzo_memops_TU4p) (const lzo_memops_TU0p) (ss))
 #else
 #define LZO_MEMOPS_GET_LE32(ss)    lzo_memops_get_le32(ss)
 #endif
 
 #if (LZO_OPT_UNALIGNED64) && (LZO_ABI_LITTLE_ENDIAN)
-#define LZO_MEMOPS_GET_LE64(ss)    * (const lzo_memops_TU8p) (const lzo_memops_TU0p) (ss)
+#define LZO_MEMOPS_GET_LE64(ss)    (* (const lzo_memops_TU8p) (const lzo_memops_TU0p) (ss))
 #endif
 
 __lzo_static_forceinline lzo_uint16_t lzo_memops_get_ne16(const lzo_voidp ss)
@@ -388,7 +387,8 @@ __lzo_static_forceinline lzo_uint16_t lzo_memops_get_ne16(const lzo_voidp ss)
     return v;
 }
 #if (LZO_OPT_UNALIGNED16)
-#define LZO_MEMOPS_GET_NE16(ss)    * (const lzo_memops_TU2p) (const lzo_memops_TU0p) (ss)
+LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(*(lzo_memops_TU2p)0)==2)
+#define LZO_MEMOPS_GET_NE16(ss)    (* (const lzo_memops_TU2p) (const lzo_memops_TU0p) (ss))
 #else
 #define LZO_MEMOPS_GET_NE16(ss)    lzo_memops_get_ne16(ss)
 #endif
@@ -400,13 +400,15 @@ __lzo_static_forceinline lzo_uint32_t lzo_memops_get_ne32(const lzo_voidp ss)
     return v;
 }
 #if (LZO_OPT_UNALIGNED32)
-#define LZO_MEMOPS_GET_NE32(ss)    * (const lzo_memops_TU4p) (const lzo_memops_TU0p) (ss)
+LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(*(lzo_memops_TU4p)0)==4)
+#define LZO_MEMOPS_GET_NE32(ss)    (* (const lzo_memops_TU4p) (const lzo_memops_TU0p) (ss))
 #else
 #define LZO_MEMOPS_GET_NE32(ss)    lzo_memops_get_ne32(ss)
 #endif
 
 #if (LZO_OPT_UNALIGNED64)
-#define LZO_MEMOPS_GET_NE64(ss)    * (const lzo_memops_TU8p) (const lzo_memops_TU0p) (ss)
+LZO_COMPILE_TIME_ASSERT_HEADER(sizeof(*(lzo_memops_TU8p)0)==8)
+#define LZO_MEMOPS_GET_NE64(ss)    (* (const lzo_memops_TU8p) (const lzo_memops_TU0p) (ss))
 #endif
 
 __lzo_static_forceinline void lzo_memops_put_le16(lzo_voidp dd, lzo_uint16_t vv)
@@ -471,13 +473,9 @@ __lzo_static_forceinline void lzo_memops_put_ne32(lzo_voidp dd, lzo_uint32_t vv)
 #define LZO_MEMOPS_PUT_NE32(dd,vv) lzo_memops_put_ne32(dd,vv)
 #endif
 
-#if 1 && (LZO_CC_ARMCC_GNUC || LZO_CC_CLANG || (LZO_CC_GNUC >= 0x020700ul) || LZO_CC_INTELC_GNUC || LZO_CC_LLVM || LZO_CC_PATHSCALE || LZO_CC_PGI)
-static void __attribute__((__unused__))
-#else
-__lzo_static_forceinline void
-#endif
-lzo_memops_unused_funcs(void)
+lzo_unused_funcs_impl(void, lzo_memops_unused_funcs)(void)
 {
+    LZO_UNUSED_FUNC(lzo_memops_unused_funcs);
     LZO_UNUSED_FUNC(lzo_memops_get_le16);
     LZO_UNUSED_FUNC(lzo_memops_get_le32);
     LZO_UNUSED_FUNC(lzo_memops_get_ne16);
@@ -486,7 +484,6 @@ lzo_memops_unused_funcs(void)
     LZO_UNUSED_FUNC(lzo_memops_put_le32);
     LZO_UNUSED_FUNC(lzo_memops_put_ne16);
     LZO_UNUSED_FUNC(lzo_memops_put_ne32);
-    LZO_UNUSED_FUNC(lzo_memops_unused_funcs);
 }
 
 #endif /* already included */

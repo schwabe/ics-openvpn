@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -27,7 +27,7 @@
 
 
 #include "lzo_conf.h"
-#include "lzo/lzo1.h"
+#include <lzo/lzo1.h>
 
 
 /***********************************************************************
@@ -618,6 +618,4 @@ lzo1_compress ( const lzo_bytep in , lzo_uint  in_len,
 }
 
 
-/*
-vi:ts=4:et
-*/
+/* vim:set ts=4 sw=4 et: */

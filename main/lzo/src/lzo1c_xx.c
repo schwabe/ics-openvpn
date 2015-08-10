@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2014 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -47,7 +47,7 @@ static const lzo_compress_t * const c_funcs [9] =
 };
 
 
-lzo_compress_t _lzo1c_get_compress_func(int clevel)
+static lzo_compress_t lzo1c_get_compress_func(int clevel)
 {
     const lzo_compress_t *f;
 
@@ -56,7 +56,7 @@ lzo_compress_t _lzo1c_get_compress_func(int clevel)
         if (clevel == LZO1C_DEFAULT_COMPRESSION)
             clevel = LZO1C_BEST_SPEED;
         else
-            return 0;
+            return (lzo_compress_t) 0;
     }
     f = c_funcs[clevel-1];
     assert(f && *f);
@@ -72,15 +72,11 @@ lzo1c_compress ( const lzo_bytep src, lzo_uint  src_len,
 {
     lzo_compress_t f;
 
-    f = _lzo1c_get_compress_func(clevel);
+    f = lzo1c_get_compress_func(clevel);
     if (!f)
         return LZO_E_ERROR;
     return _lzo1c_do_compress(src,src_len,dst,dst_len,wrkmem,f);
 }
 
 
-
-/*
-vi:ts=4:et
-*/
-
+/* vim:set ts=4 sw=4 et: */

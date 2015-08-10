@@ -248,7 +248,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 Log.i(TAG, "Got unrecognized command" + command);
             }
         } else if (command.startsWith("SUCCESS:")) {
-			/* Ignore this kind of message too */
+            /* Ignore this kind of message too */
             return;
         } else if (command.startsWith("PROTECTFD: ")) {
             FileDescriptor fdtoprotect = mFDList.pollFirst();
@@ -558,9 +558,12 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     }
 
     @Override
-    public void networkChange() {
+    public void networkChange(boolean samenetwork) {
         if (!mWaitingForRelease)
-            managmentCommand("network-change\n");
+            if (samenetwork)
+                managmentCommand("network-change samenetwork\n");
+            else
+                managmentCommand("network-change\n");
     }
 
     public void signalusr1() {

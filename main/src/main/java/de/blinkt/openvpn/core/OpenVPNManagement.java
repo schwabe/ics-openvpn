@@ -25,5 +25,5 @@ public interface OpenVPNManagement {
     /*
      * Rebind the interface
      */
-    void networkChange();
+    void networkChange(boolean sameNetwork);
 }

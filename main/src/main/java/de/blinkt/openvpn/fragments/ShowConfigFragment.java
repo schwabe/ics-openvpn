@@ -49,13 +49,13 @@ public class ShowConfigFragment extends Fragment {
 		
 		new Thread() {
 			public void run() {
-				final String cfg=vp.getConfigFile(getActivity(),false);
-				configtext= cfg;
+				/* Add a few newlines to make the textview scrollable past the FAB */
+				final String cfg=vp.getConfigFile(getActivity(),false) + "\n\n\n";
 				getActivity().runOnUiThread(new Runnable() {
 					
 					@Override
 					public void run() {
-						cv.setText(cfg);		
+						cv.setText(cfg);
 					}
 				});
 				

@@ -188,7 +188,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
 
         // Only use crl on import if it is found
         ConfigParser.removeCRLCustomOption(mResult);
-        if (TextUtils.isEmpty(mCrlFileName)) {
+        if (!TextUtils.isEmpty(mCrlFileName)) {
             // TODO: Convert this to a real config option that is parsed
             mResult.mCustomConfigOptions += "\ncrl-verify " + mCrlFileName;
         }

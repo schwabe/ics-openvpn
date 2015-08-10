@@ -32,6 +32,7 @@ import android.widget.TextView;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 
 import de.blinkt.openvpn.R;
@@ -119,7 +120,7 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
 
-                String filterString = constraint.toString().toLowerCase();
+                String filterString = constraint.toString().toLowerCase(Locale.getDefault());
 
                 FilterResults results = new FilterResults();
 
@@ -135,10 +136,10 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
                         appName = pInfo.packageName;
 
                     if (appName instanceof  String) {
-                        if (((String) appName).toLowerCase().contains(filterString))
+                        if (((String) appName).toLowerCase(Locale.getDefault()).contains(filterString))
                                 nlist.add(pInfo);
                     } else {
-                        if (appName.toString().toLowerCase().contains(filterString))
+                        if (appName.toString().toLowerCase(Locale.getDefault()).contains(filterString))
                             nlist.add(pInfo);
                     }
                 }

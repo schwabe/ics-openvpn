@@ -69,9 +69,12 @@ public class MainActivity extends Activity {
         tabs.setViewPager(mPager);
 	}
 
+    private static final String FEATURE_TELEVISION = "android.hardware.type.television";
+    private static final String FEATURE_LEANBACK = "android.software.leanback";
+
     private boolean isDirectToTV() {
-        return(getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEVISION)
-                || getPackageManager().hasSystemFeature(PackageManager.FEATURE_LEANBACK));
+        return(getPackageManager().hasSystemFeature(FEATURE_TELEVISION)
+                || getPackageManager().hasSystemFeature(FEATURE_LEANBACK));
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

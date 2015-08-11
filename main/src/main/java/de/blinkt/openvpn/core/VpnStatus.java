@@ -261,6 +261,7 @@ public class VpnStatus {
 
             String version = "error getting version";
             try {
+                @SuppressLint("PackageManagerGetSignatures")
                 Signature raw = c.getPackageManager().getPackageInfo(c.getPackageName(), PackageManager.GET_SIGNATURES).signatures[0];
                 CertificateFactory cf = CertificateFactory.getInstance("X.509");
                 X509Certificate cert = (X509Certificate) cf.generateCertificate(new ByteArrayInputStream(raw.toByteArray()));

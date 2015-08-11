@@ -527,8 +527,10 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
         super.onCreate(savedInstanceState);
 
         ImageButton fab_button = (ImageButton) findViewById(R.id.fab_save);
-        if (fab_button != null)
+        if (fab_button != null) {
             fab_button.setOnClickListener(this);
+            findViewById(R.id.fab_footerspace).setVisibility(View.VISIBLE);
+        }
 
         if (savedInstanceState != null && savedInstanceState.containsKey(VPNPROFILE)) {
             mResult = (VpnProfile) savedInstanceState.getSerializable(VPNPROFILE);
@@ -630,7 +632,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
         TextView tv = new TextView(this);
         tv.setText(logmessage);
         LinearLayout logLayout = (LinearLayout) findViewById(R.id.config_convert_root);
-        logLayout.addView(tv);
+        logLayout.addView(tv, logLayout.getChildCount() - 1);
     }
 
     private void doImport(InputStream is, String newName) {

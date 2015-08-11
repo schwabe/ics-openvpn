@@ -6,6 +6,7 @@
 
 <ImageButton xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="InconsistentLayout"
     android:id="@+id/share_config"
     android:layout_width="@dimen/round_button_diameter"
     android:layout_height="@dimen/round_button_diameter"

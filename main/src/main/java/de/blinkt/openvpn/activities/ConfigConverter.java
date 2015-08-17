@@ -185,14 +185,6 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
         if (!TextUtils.isEmpty(mEmbeddedPwFile))
             ConfigParser.useEmbbedUserAuth(mResult, mEmbeddedPwFile);
 
-
-        // Only use crl on import if it is found
-        ConfigParser.removeCRLCustomOption(mResult);
-        if (!TextUtils.isEmpty(mCrlFileName)) {
-            // TODO: Convert this to a real config option that is parsed
-            mResult.mCustomConfigOptions += "\ncrl-verify " + mCrlFileName;
-        }
-
         vpl.addProfile(mResult);
         vpl.saveProfile(this, mResult);
         vpl.saveProfileList(this);
@@ -518,6 +510,15 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
         mEmbeddedPwFile = cp.getAuthUserPassFile();
         mEmbeddedPwFile = embedFile(cp.getAuthUserPassFile(), Utils.FileType.USERPW_FILE, false);
         mCrlFileName = embedFile(cp.getCrlVerifyFile(), Utils.FileType.CRL_FILE, true);
+
+        ConfigParser.removeCRLCustomOption(mResult);
+        if (!TextUtils.isEmpty(mCrlFileName)) {
+            // TODO: Convert this to a real config option that is parsed
+            ConfigParser.removeCRLCustomOption(mResult);
+            mResult.mCustomConfigOptions += "\ncrl-verify " + VpnProfile.openVpnEscape(mCrlFileName);
+        } else if (!TextUtils.isEmpty(cp.getCrlVerifyFile())) {
+            mResult.mCustomConfigOptions += "\n#crl-verify " + VpnProfile.openVpnEscape(cp.getCrlVerifyFile());
+        }
     }
 
     @Override

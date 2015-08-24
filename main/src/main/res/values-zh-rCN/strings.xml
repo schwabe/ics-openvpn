@@ -359,6 +359,8 @@
   <string name="ab_only_cidr">安卓只支持CIDR路由。由于非CIDR路由几乎不用，OpenVPN for Android将使用/32路由并对非CIDR路由发出警告。</string>
   <string name="ab_tethering_44">在连接VPN时手机热点依然工作，但连接不会通过VPN。</string>
   <string name="ab_kitkat_mss">早期的KitKat版本在TCP连接上设置了错误的MSS值 (#61948)。OpenVPN将自动启动mssfix选项来解决这个Bug。</string>
+  <string name="ab_proxy">在DNS服务没有设置的情况下，安卓会继续使用手机wifi的代理设置。 安卓OpenVPN会在日志文件中留下警告信息。在VPN设置DNS服务时，安卓不是代理；安卓系统里没有为vpn连接设置代理的程序接口。</string>
+  <string name="ab_lollipop_reinstall">在被卸载或重新安装时，VPN程序会停止工作；详细信息请参看 #80074</string>
   <string name="ab_only_cidr_title">非CIDR路由</string>
   <string name="ab_lollipop_reinstall_title">正在重新安装VPN应用</string>
   <string name="custom_connection_options">自定义选项</string>

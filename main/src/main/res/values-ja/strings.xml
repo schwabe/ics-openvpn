@@ -6,8 +6,8 @@
   -->
 <resources>
   <string name="app">OpenVPN for Android</string>
-  <string name="address">サーバアドレス</string>
-  <string name="port">ポート番号</string>
+  <string name="address">サーバーアドレス：</string>
+  <string name="port">サーバーポート：</string>
   <string name="location">場所</string>
   <string name="cant_read_folder">ディレクトリが読み取れません</string>
   <string name="select">選択</string>
@@ -331,4 +331,16 @@ OpenVPNの接続を保証するためには、アプリケーションを高い�
   <string name="files_missing_hint">いくつかのファイルが見つかりませんでした。プロファイルをインポートするファイルを選択してください：</string>
   <string name="openvpn_is_no_free_vpn">このアプリを使用するには、（多くの場合、あなたの雇用者によって提供される）OpenVPNをサポートするVPNプロバイダ/ VPNゲートウェイが必要です。あなた独自のOpenVPNサーバーをセットアップするためにはhttp://community.openvpn.net/ をチェックしてください。</string>
   <string name="import_log">インポートログ：</string>
+  <string name="ab_vpn_reachability_44">VPN</string>
+  <string name="ab_only_cidr_title">非CIDRルート</string>
+  <string name="ab_proxy_title">VPNのプロキシ動作</string>
+  <string name="ab_lollipop_reinstall_title">VPNアプリを再インストール</string>
+  <string name="version_upto">%sおよびそれ以前</string>
+  <string name="copy_of_profile">%sのコピー</string>
+  <string name="ab_not_route_to_vpn_title">設定されたIPアドレスへのルート</string>
+  <string name="ab_kitkat_mss_title">VPN接続のための間違ったMSS値</string>
+  <string name="ab_secondary_users_title">二タブレットユーザー</string>
+  <string name="custom_connection_options_warng">カスタム接続固有のオプションを指定します。注意して使用</string>
+  <string name="custom_connection_options">カスタム オプション</string>
+  <string name="remove_connection_entry">接続エントリを削除します</string>
 </resources>

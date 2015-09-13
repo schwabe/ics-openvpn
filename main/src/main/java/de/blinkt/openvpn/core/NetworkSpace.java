@@ -23,9 +23,6 @@ import de.blinkt.openvpn.BuildConfig;
 
 public class NetworkSpace {
 
-
-
-
     static class ipAddress implements Comparable<ipAddress> {
         private BigInteger netAddress;
         public int networkMask;
@@ -162,16 +159,20 @@ public class NetworkSpace {
         String getIPv6Address() {
             if (BuildConfig.DEBUG) Assert.assertTrue (!isV4);
             BigInteger r = netAddress;
-            if (r.compareTo(BigInteger.ZERO)==0 && networkMask==0)
-                return "::";
 
             Vector<String> parts = new Vector<String>();
-            while (r.compareTo(BigInteger.ZERO) == 1) {
-                parts.add(0, String.format(Locale.US, "%x", r.mod(BigInteger.valueOf(0x10000)).longValue()));
+            while (r.compareTo(BigInteger.ZERO) == 1 || parts.size() <3) {
+                long part = r.mod(BigInteger.valueOf(0x10000)).longValue();
+                if (part!=0)
+                    parts.add(0, String.format(Locale.US, "%x", part));
+                else
+                    parts.add(0, "");
                 r = r.shiftRight(16);
             }
-
-            return TextUtils.join(":", parts);
+            String ipv6str = TextUtils.join(":", parts);
+            while (ipv6str.contains(":::"))
+                ipv6str = ipv6str.replace(":::", "::");
+            return ipv6str;
         }
 
         public boolean containsNet(ipAddress network) {

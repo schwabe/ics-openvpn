@@ -25,22 +25,23 @@ import de.blinkt.openvpn.core.ProfileManager;
 public class ShowConfigFragment extends Fragment {
 	private String configtext;
     private TextView mConfigView;
+	private ImageButton mfabButton;
 
-    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View v=inflater.inflate(R.layout.viewconfig, container,false);
 		mConfigView = (TextView) v.findViewById(R.id.configview);
 		
 
-        ImageButton fabButton = (ImageButton) v.findViewById(R.id.share_config);
-        if (fabButton!=null)
-            fabButton.setOnClickListener( new View.OnClickListener() {
+		mfabButton = (ImageButton) v.findViewById(R.id.share_config);
+        if (mfabButton!=null)
+            mfabButton.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     shareConfig();
                 }
             });
-
+		mfabButton.setVisibility(View.INVISIBLE);
 
 		return v;
 	}
@@ -50,12 +51,13 @@ public class ShowConfigFragment extends Fragment {
 		new Thread() {
 			public void run() {
 				/* Add a few newlines to make the textview scrollable past the FAB */
-				final String cfg=vp.getConfigFile(getActivity(),false) + "\n\n\n";
+				configtext = vp.getConfigFile(getActivity(),false) + "\n\n\n";
 				getActivity().runOnUiThread(new Runnable() {
 					
 					@Override
 					public void run() {
-						cv.setText(cfg);
+						cv.setText(configtext);
+						mfabButton.setVisibility(View.VISIBLE);
 					}
 				});
 				

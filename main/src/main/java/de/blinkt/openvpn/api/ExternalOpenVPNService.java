@@ -7,9 +7,11 @@ package de.blinkt.openvpn.api;
 
 import android.annotation.TargetApi;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -72,6 +74,22 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
     };
 
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null && Intent.ACTION_UNINSTALL_PACKAGE.equals(intent.getAction())){
+                // Check if the running config is temporary and installed by the app being uninstalled
+                VpnProfile vp = ProfileManager.getLastConnectedVpn();
+                if (ProfileManager.isTempProfile()) {
+                    if(intent.getPackage().equals(vp.mProfileCreator)) {
+                        if (mService != null && mService.getManagement() != null)
+                            mService.getManagement().stopVPN();
+                    }
+                }
+            }
+        }
+    };
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -83,6 +101,9 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         mHandler.setService(this);
+        IntentFilter uninstallBroadcast = new IntentFilter(Intent.ACTION_PACKAGE_REMOVED );
+        registerReceiver(mBroadcastReceiver, uninstallBroadcast);
+
     }
 
     private final IOpenVPNAPIService.Stub mBinder = new IOpenVPNAPIService.Stub() {
@@ -129,9 +150,9 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             /* Check if we need to show the confirmation dialog,
              * Check if we need to ask for username/password */
 
-            int needpw = vp.needUserPWInput(false);
+            int neddPassword = vp.needUserPWInput(false);
 
-            if(vpnPermissionIntent != null || needpw != 0){
+            if(vpnPermissionIntent != null || neddPassword != 0){
                 Intent shortVPNIntent = new Intent(Intent.ACTION_MAIN);
                 shortVPNIntent.setClass(getBaseContext(), de.blinkt.openvpn.LaunchVPN.class);
                 shortVPNIntent.putExtra(de.blinkt.openvpn.LaunchVPN.EXTRA_KEY, vp.getUUIDString());
@@ -156,14 +177,18 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         }
 
         public void startVPN(String inlineConfig) throws RemoteException {
-            checkOpenVPNPermission();
+            String callingApp = checkOpenVPNPermission();
 
             ConfigParser cp = new ConfigParser();
             try {
                 cp.parseConfig(new StringReader(inlineConfig));
                 VpnProfile vp = cp.convertProfile();
+                vp.mName = "Remote APP VPN";
                 if (vp.checkProfile(getApplicationContext()) != R.string.no_error_found)
                     throw new RemoteException(getString(vp.checkProfile(getApplicationContext())));
+
+                vp.mProfileCreator = callingApp;
+
 
                 /*int needpw = vp.needUserPWInput(false);
                 if(needpw !=0)
@@ -171,6 +196,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                     */
 
                 ProfileManager.setTemporaryProfile(vp);
+
                 startProfile(vp);
 
             } catch (IOException | ConfigParseError e) {
@@ -312,7 +338,10 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         mCallbacks.kill();
         unbindService(mConnection);
         VpnStatus.removeStateListener(this);
+        unregisterReceiver(mBroadcastReceiver);
     }
+
+
 
     class UpdateMessage {
         public String state;
@@ -380,6 +409,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             broadcastItem.newStatus(um.vpnUUID, um.state, um.logmessage, um.level.name());
         }
     }
+
 
 
 }

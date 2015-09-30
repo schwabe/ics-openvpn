@@ -128,6 +128,11 @@ public class ProfileManager {
         ProfileManager.tmpprofile = tmp;
     }
 
+    public static boolean isTempProfile()
+    {
+        return mLastConnectedVpn == tmpprofile;
+    }
+
 
     public void saveProfile(Context context, VpnProfile profile) {
         ObjectOutputStream vpnfile;

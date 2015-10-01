@@ -159,8 +159,6 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mServerPort = "1194";
     public boolean mUseUdp = true;
 
-
-
     public VpnProfile(String name) {
         mUuid = UUID.randomUUID();
         mName = name;

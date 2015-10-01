@@ -19,6 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.Switch;
 
 import java.util.Arrays;
@@ -55,6 +56,8 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         private final CheckBox mCustomOptionCB;
         private final View mCustomOptionsLayout;
         private final ImageButton mDeleteButton;
+        private final EditText mConnectText;
+        private final SeekBar mConnectSlider;
 
         public ConnectionsHolder(View card) {
             super(card);
@@ -66,6 +69,8 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             mProtoGroup = (RadioGroup) card.findViewById(R.id.udptcpradiogroup);
             mCustomOptionsLayout = card.findViewById(R.id.custom_options_layout);
             mDeleteButton = (ImageButton) card.findViewById(R.id.remove_connection);
+            mConnectSlider = (SeekBar) card.findViewById(R.id.connect_silder);
+            mConnectText = (EditText) card.findViewById(R.id.connect_timeout);
 
         }
     }
@@ -109,6 +114,13 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         cH.mServerNameView.setText(connection.mServerName);
         cH.mPortNumberView.setText(connection.mServerPort);
         cH.mRemoteSwitch.setChecked(connection.mEnabled);
+        if (connection.mConnectTimeout==0) {
+            cH.mConnectText.setText("");
+        } else {
+            cH.mConnectText.setText(String.valueOf(connection.mConnectTimeout));
+        }
+        cH.mConnectSlider.setProgress(connection.mConnectTimeout);
+
         cH.mRemoteSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -179,6 +191,38 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             @Override
             public void afterTextChanged(Editable s) {
                 connection.mCustomConfiguration = s.toString();
+            }
+        });
+
+        cH.mConnectSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    cH.mConnectText.setText(String.valueOf(progress));
+                    connection.mConnectTimeout = progress;
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        cH.mConnectText.addTextChangedListener(new OnTextChangedWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    int t = Integer.valueOf(String.valueOf(s));
+                    cH.mConnectSlider.setProgress(t);
+                    connection.mConnectTimeout = t;
+                } catch (Exception ignored) {
+
+                }
             }
         });
 

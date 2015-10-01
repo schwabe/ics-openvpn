@@ -37,6 +37,8 @@ public class ConfigParser {
 
     public void parseConfig(Reader reader) throws IOException, ConfigParseError {
 
+        HashMap<String, String> optionAliases = new HashMap<>();
+        optionAliases.put("server-poll-timeout", "timeout-connect");
 
         BufferedReader br = new BufferedReader(reader);
 
@@ -76,6 +78,9 @@ public class ConfigParser {
                 checkinlinefile(args, br);
 
                 String optionname = args.get(0);
+                if (optionAliases.get(optionname)!=null)
+                    optionname = optionAliases.get(optionname);
+
                 if (!options.containsKey(optionname)) {
                     options.put(optionname, new Vector<Vector<String>>());
                 }
@@ -715,8 +720,12 @@ public class ConfigParser {
             conn.mUseUdp = isUdpProto(proto.get(1));
         }
 
+        Vector<String> connectTimeout = getOption("connect-timeout", 1, 1);
+        if (connectTimeout != null)
+            conn.mConnectTimeout = Integer.parseInt(connectTimeout.get(0));
 
-        // Parse remote config
+
+                    // Parse remote config
         Vector<Vector<String>> remotes = getAllOption("remote", 1, 3);
 
 

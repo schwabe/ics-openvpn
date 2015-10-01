@@ -385,5 +385,6 @@
     <string name="Search">Search</string>
     <string name="lastdumpdate">(Last dump is %1$d:%2$dh old (%3$s))</string>
     <string name="clear_log_on_connect">Clear log on new connection</string>
+    <string name="connect_timeout">Connect Timeout</string>
 
 </resources>

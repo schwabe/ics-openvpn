@@ -341,8 +341,10 @@
   <string name="ab_lollipop_reinstall_title">VPN uygulamaları yeniden yükleme</string>
   <string name="version_upto">%s ve önceki</string>
   <string name="copy_of_profile">%s kopyası</string>
+  <string name="ab_not_route_to_vpn_title">Yapılandırılmış IP adresine yönlendir</string>
   <string name="ab_kitkat_mss_title">VPN bağlantısı için yanlış MSS değeri</string>
   <string name="ab_secondary_users_title">İkincil tablet kullanıcıları</string>
   <string name="custom_connection_options_warng">Özel bağlantı seçenekleri belirtin. Dikkatli kullanın</string>
   <string name="custom_connection_options">Özel Seçenekler</string>
+  <string name="remove_connection_entry">Bağlantı girdisini kaldırın</string>
 </resources>

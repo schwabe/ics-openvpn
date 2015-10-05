@@ -106,8 +106,10 @@
   <string name="version_info">%1$s %2$s</string>
   <string name="send_logfile">Logboek verzenden</string>
   <string name="send">Verzenden</string>
+  <string name="copied_entry">Kopiëer de log ingave naar het clip bord</string>
   <string name="tap_mode">Tap mode</string>
   <string name="faq_tap_mode">De VPN API van Android werkt zonder rooten van de telefoon en ondersteunt alleen de tun modus. Daarom is de tap modus niet mogelijk met deze app.</string>
+  <string name="tap_faq2">Alweer? Maak je een grapje? Nee, tap mode wordt echt niet ondersteund en meer mails sturen met het verzoek of het ondersteund kan worden zal echt niet helpen, dus Neen.</string>
   <string name="faq">Veelgestelde vragen </string>
   <string name="encryption">Codering</string>
   <string name="cipher_dialog_title">Codering methode</string>

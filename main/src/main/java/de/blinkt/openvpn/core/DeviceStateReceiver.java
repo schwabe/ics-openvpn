@@ -23,7 +23,7 @@ import java.util.Objects;
 
 import static de.blinkt.openvpn.core.OpenVPNManagement.pauseReason;
 
-public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountListener {
+public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountListener, OpenVPNManagement.PausedStateCallback {
     private final Handler mDisconnectHandler;
     private int lastNetwork = -1;
     private OpenVPNManagement mManagement;
@@ -58,6 +58,11 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         }
     };
     private NetworkInfo lastConnectedNetwork;
+
+    @Override
+    public boolean shouldBeRunning() {
+        return shouldBeConnected();
+    }
 
     enum connectState {
         SHOULDBECONNECTED,
@@ -123,6 +128,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
     public DeviceStateReceiver(OpenVPNManagement magnagement) {
         super();
         mManagement = magnagement;
+        mManagement.setPauseCallback(this);
         mDisconnectHandler = new Handler();
     }
 
@@ -224,7 +230,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
                 mDisconnectHandler.removeCallbacks(mDelayDisconnectRunnable);
                 // Reprotect the sockets just be sure
                 mManagement.networkChange(true);
-            }  else {
+            } else {
                 /* Different network or connection not established anymore */
 
                 if (screen == connectState.PENDINGDISCONNECT)
@@ -233,8 +239,8 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
                 if (shouldBeConnected()) {
                     mDisconnectHandler.removeCallbacks(mDelayDisconnectRunnable);
 
-                    if (pendingDisconnect)
-                        mManagement.networkChange(false);
+                    if (pendingDisconnect || !sameNetwork)
+                        mManagement.networkChange(sameNetwork);
                     else
                         mManagement.resume();
                 }

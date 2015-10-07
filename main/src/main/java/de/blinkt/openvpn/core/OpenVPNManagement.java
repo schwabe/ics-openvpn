@@ -6,6 +6,10 @@
 package de.blinkt.openvpn.core;
 
 public interface OpenVPNManagement {
+    interface PausedStateCallback {
+        boolean shouldBeRunning();
+    }
+
     enum pauseReason {
         noNetwork,
         userPause,
@@ -26,4 +30,6 @@ public interface OpenVPNManagement {
      * Rebind the interface
      */
     void networkChange(boolean sameNetwork);
+
+    void setPauseCallback(PausedStateCallback callback);
 }

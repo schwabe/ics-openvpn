@@ -6,12 +6,10 @@
 package de.blinkt.openvpn.core;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.os.ParcelFileDescriptor;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -41,27 +39,20 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     private LocalSocket mSocket;
     private VpnProfile mProfile;
     private OpenVPNService mOpenVPNService;
-    private LinkedList<FileDescriptor> mFDList = new LinkedList<FileDescriptor>();
+    private LinkedList<FileDescriptor> mFDList = new LinkedList<>();
     private LocalServerSocket mServerSocket;
-    private boolean mReleaseHold = true;
     private boolean mWaitingForRelease = false;
     private long mLastHoldRelease = 0;
 
-    private static final Vector<OpenVpnManagementThread> active = new Vector<OpenVpnManagementThread>();
+    private static final Vector<OpenVpnManagementThread> active = new Vector<>();
     private LocalSocket mServerSocketLocal;
 
     private pauseReason lastPauseReason = pauseReason.noNetwork;
+    private PausedStateCallback mPauseCallback;
 
     public OpenVpnManagementThread(VpnProfile profile, OpenVPNService openVpnService) {
         mProfile = profile;
         mOpenVPNService = openVpnService;
-
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(openVpnService);
-        boolean managemeNetworkState = prefs.getBoolean("netchangereconnect", true);
-        if (managemeNetworkState)
-            mReleaseHold = false;
-
     }
 
     public boolean openManagementInterface(@NonNull Context c) {
@@ -81,7 +72,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 // wait 300 ms before retrying
                 try {
                     Thread.sleep(300);
-                } catch (InterruptedException e1) {
+                } catch (InterruptedException ignored) {
                 }
 
             }
@@ -166,7 +157,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     //! Hack O Rama 2000!
     private void protectFileDescriptor(FileDescriptor fd) {
-        Exception exp;
         try {
             Method getInt = FileDescriptor.class.getDeclaredMethod("getInt$");
             int fdint = (Integer) getInt.invoke(fd);
@@ -182,20 +172,12 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             //pfd.close();
             NativeUtils.jniclose(fdint);
             return;
-        } catch (NoSuchMethodException e) {
-            exp = e;
-        } catch (IllegalArgumentException e) {
-            exp = e;
-        } catch (IllegalAccessException e) {
-            exp = e;
-        } catch (InvocationTargetException e) {
-            exp = e;
-        } catch (NullPointerException e) {
-            exp = e;
+        } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException | IllegalAccessException | NullPointerException e) {
+            VpnStatus.logException("Failed to retrieve fd from socket (" + fd + ")", e);
         }
 
         Log.d("Openvpn", "Failed to retrieve fd from socket: " + fd);
-        VpnStatus.logException("Failed to retrieve fd from socket (" + fd + ")", exp);
+
     }
 
     private String processInput(String pendingInput) {
@@ -224,28 +206,38 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             String argument = parts[1];
 
 
-            if (cmd.equals("INFO")) {
+            switch (cmd) {
+                case "INFO":
                 /* Ignore greeting from management */
-                return;
-            } else if (cmd.equals("PASSWORD")) {
-                processPWCommand(argument);
-            } else if (cmd.equals("HOLD")) {
-                handleHold();
-            } else if (cmd.equals("NEED-OK")) {
-                processNeedCommand(argument);
-            } else if (cmd.equals("BYTECOUNT")) {
-                processByteCount(argument);
-            } else if (cmd.equals("STATE")) {
-                processState(argument);
-            } else if (cmd.equals("PROXY")) {
-                processProxyCMD(argument);
-            } else if (cmd.equals("LOG")) {
-                processLogMessage(argument);
-            } else if (cmd.equals("RSA_SIGN")) {
-                processSignCommand(argument);
-            } else {
-                VpnStatus.logWarning("MGMT: Got unrecognized command" + command);
-                Log.i(TAG, "Got unrecognized command" + command);
+                    return;
+                case "PASSWORD":
+                    processPWCommand(argument);
+                    break;
+                case "HOLD":
+                    handleHold();
+                    break;
+                case "NEED-OK":
+                    processNeedCommand(argument);
+                    break;
+                case "BYTECOUNT":
+                    processByteCount(argument);
+                    break;
+                case "STATE":
+                    processState(argument);
+                    break;
+                case "PROXY":
+                    processProxyCMD(argument);
+                    break;
+                case "LOG":
+                    processLogMessage(argument);
+                    break;
+                case "RSA_SIGN":
+                    processSignCommand(argument);
+                    break;
+                default:
+                    VpnStatus.logWarning("MGMT: Got unrecognized command" + command);
+                    Log.i(TAG, "Got unrecognized command" + command);
+                    break;
             }
         } else if (command.startsWith("SUCCESS:")) {
             /* Ignore this kind of message too */
@@ -277,16 +269,22 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         Log.d("OpenVPN", argument);
 
         VpnStatus.LogLevel level;
-        if (args[1].equals("I")) {
-            level = VpnStatus.LogLevel.INFO;
-        } else if (args[1].equals("W")) {
-            level = VpnStatus.LogLevel.WARNING;
-        } else if (args[1].equals("D")) {
-            level = VpnStatus.LogLevel.VERBOSE;
-        } else if (args[1].equals("F")) {
-            level = VpnStatus.LogLevel.ERROR;
-        } else {
-            level = VpnStatus.LogLevel.INFO;
+        switch (args[1]) {
+            case "I":
+                level = VpnStatus.LogLevel.INFO;
+                break;
+            case "W":
+                level = VpnStatus.LogLevel.WARNING;
+                break;
+            case "D":
+                level = VpnStatus.LogLevel.VERBOSE;
+                break;
+            case "F":
+                level = VpnStatus.LogLevel.ERROR;
+                break;
+            default:
+                level = VpnStatus.LogLevel.INFO;
+                break;
         }
 
         int ovpnlevel = Integer.parseInt(args[2]) & 0x0F;
@@ -298,8 +296,15 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         VpnStatus.logMessageOpenVPN(level, ovpnlevel, msg);
     }
 
+    boolean shouldBeRunning() {
+        if (mPauseCallback == null)
+            return false;
+        else
+            return mPauseCallback.shouldBeRunning();
+    }
+
     private void handleHold() {
-        if (mReleaseHold) {
+        if (shouldBeRunning()) {
             releaseHoldCmd();
         } else {
             mWaitingForRelease = true;
@@ -326,11 +331,10 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         //managmentCommand("log on all\n");
     }
 
+
     public void releaseHold() {
-        mReleaseHold = true;
         if (mWaitingForRelease)
             releaseHoldCmd();
-
     }
 
     private void processProxyCMD(String argument) {
@@ -390,15 +394,19 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         String status = "ok";
 
 
-        if (needed.equals("PROTECTFD")) {
-            FileDescriptor fdtoprotect = mFDList.pollFirst();
-            protectFileDescriptor(fdtoprotect);
-        } else if (needed.equals("DNSSERVER")) {
-            mOpenVPNService.addDNS(extra);
-        } else if (needed.equals("DNSDOMAIN")) {
-            mOpenVPNService.setDomain(extra);
-        } else if (needed.equals("ROUTE")) {
-            String[] routeparts = extra.split(" ");
+        switch (needed) {
+            case "PROTECTFD":
+                FileDescriptor fdtoprotect = mFDList.pollFirst();
+                protectFileDescriptor(fdtoprotect);
+                break;
+            case "DNSSERVER":
+                mOpenVPNService.addDNS(extra);
+                break;
+            case "DNSDOMAIN":
+                mOpenVPNService.setDomain(extra);
+                break;
+            case "ROUTE": {
+                String[] routeparts = extra.split(" ");
 
             /*
             buf_printf (&out, "%s %s %s dev %s", network, netmask, gateway, rgi->iface);
@@ -406,38 +414,46 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             buf_printf (&out, "%s %s %s", network, netmask, gateway);
             */
 
-            if (routeparts.length == 5) {
-                if (BuildConfig.DEBUG) Assert.assertEquals("dev", routeparts[3]);
-                mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], routeparts[4]);
-            } else if (routeparts.length >= 3) {
-                mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], null);
-            } else {
-                VpnStatus.logError("Unrecognized ROUTE cmd:" + Arrays.toString(routeparts) + " | " + argument);
+                if (routeparts.length == 5) {
+                    if (BuildConfig.DEBUG) Assert.assertEquals("dev", routeparts[3]);
+                    mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], routeparts[4]);
+                } else if (routeparts.length >= 3) {
+                    mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], null);
+                } else {
+                    VpnStatus.logError("Unrecognized ROUTE cmd:" + Arrays.toString(routeparts) + " | " + argument);
+                }
+
+                break;
             }
+            case "ROUTE6": {
+                String[] routeparts = extra.split(" ");
+                mOpenVPNService.addRoutev6(routeparts[0], routeparts[1]);
+                break;
+            }
+            case "IFCONFIG":
+                String[] ifconfigparts = extra.split(" ");
+                int mtu = Integer.parseInt(ifconfigparts[2]);
+                mOpenVPNService.setLocalIP(ifconfigparts[0], ifconfigparts[1], mtu, ifconfigparts[3]);
+                break;
+            case "IFCONFIG6":
+                mOpenVPNService.setLocalIPv6(extra);
 
-        } else if (needed.equals("ROUTE6")) {
-            String[] routeparts = extra.split(" ");
-            mOpenVPNService.addRoutev6(routeparts[0], routeparts[1]);
-        } else if (needed.equals("IFCONFIG")) {
-            String[] ifconfigparts = extra.split(" ");
-            int mtu = Integer.parseInt(ifconfigparts[2]);
-            mOpenVPNService.setLocalIP(ifconfigparts[0], ifconfigparts[1], mtu, ifconfigparts[3]);
-        } else if (needed.equals("IFCONFIG6")) {
-            mOpenVPNService.setLocalIPv6(extra);
+                break;
+            case "PERSIST_TUN_ACTION":
+                // check if tun cfg stayed the same
+                status = mOpenVPNService.getTunReopenStatus();
+                break;
+            case "OPENTUN":
+                if (sendTunFD(needed, extra))
+                    return;
+                else
+                    status = "cancel";
+                // This not nice or anything but setFileDescriptors accepts only FilDescriptor class :(
 
-        } else if (needed.equals("PERSIST_TUN_ACTION")) {
-            // check if tun cfg stayed the same
-            status = mOpenVPNService.getTunReopenStatus();
-        } else if (needed.equals("OPENTUN")) {
-            if (sendTunFD(needed, extra))
+                break;
+            default:
+                Log.e(TAG, "Unkown needok command " + argument);
                 return;
-            else
-                status = "cancel";
-            // This not nice or anything but setFileDescriptors accepts only FilDescriptor class :(
-
-        } else {
-            Log.e(TAG, "Unkown needok command " + argument);
-            return;
         }
 
         String cmd = String.format("needok '%s' %s\n", needed, status);
@@ -445,7 +461,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     }
 
     private boolean sendTunFD(String needed, String extra) {
-        Exception exp;
         if (!extra.equals("tun")) {
             // We only support tun
             VpnStatus.logError(String.format("Device type %s requested, but only tun is possible with the Android API, sorry!", extra));
@@ -479,18 +494,10 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             pfd.close();
 
             return true;
-        } catch (NoSuchMethodException e) {
-            exp = e;
-        } catch (IllegalArgumentException e) {
-            exp = e;
-        } catch (IllegalAccessException e) {
-            exp = e;
-        } catch (InvocationTargetException e) {
-            exp = e;
-        } catch (IOException e) {
-            exp = e;
+        } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException |
+                IOException | IllegalAccessException exp) {
+            VpnStatus.logException("Could not send fd over socket", exp);
         }
-        VpnStatus.logException("Could not send fd over socket", exp);
 
         return false;
     }
@@ -559,16 +566,20 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     @Override
     public void networkChange(boolean samenetwork) {
-        if (!mWaitingForRelease)
-            if (samenetwork)
-                managmentCommand("network-change samenetwork\n");
-            else
-                managmentCommand("network-change\n");
+        if (mWaitingForRelease)
+            releaseHold();
+        else if (samenetwork)
+            managmentCommand("network-change samenetwork\n");
+        else
+            managmentCommand("network-change\n");
+    }
+
+    @Override
+    public void setPauseCallback(PausedStateCallback callback) {
+        mPauseCallback = callback;
     }
 
     public void signalusr1() {
-        mReleaseHold = false;
-
         if (!mWaitingForRelease)
             managmentCommand("signal SIGUSR1\n");
         else

@@ -27,6 +27,16 @@
                 android:id="@+id/files_missing_hint"
                 tools:visibilty="visible"/>
 
+        <TextView
+            android:text="@string/query_permissions_sdcard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:visibility="visible"
+            android:visibility="gone"
+            android:id="@+id/permssion_hint"
+            android:padding="5dp"
+            android:textStyle="bold" />
+
         <CheckBox
                 android:id="@+id/importpkcs12"
                 android:layout_width="fill_parent"

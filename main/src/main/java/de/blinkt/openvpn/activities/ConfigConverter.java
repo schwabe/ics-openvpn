@@ -6,12 +6,16 @@
 
 package de.blinkt.openvpn.activities;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.OpenableColumns;
@@ -61,6 +65,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
     private static final int RESULT_INSTALLPKCS12 = 7;
     private static final int CHOOSE_FILE_OFFSET = 1000;
     public static final String VPNPROFILE = "vpnProfile";
+    private static final int PERMISSION_REQUEST = 37231;
 
     private VpnProfile mResult;
 
@@ -78,6 +83,20 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
     public void onClick(View v) {
         if (v.getId() == R.id.fab_save)
             userActionSaveProfile();
+        if (v.getId() == R.id.permssion_hint && Build.VERSION.SDK_INT == Build.VERSION_CODES.M)
+            doRequestSDCardPermission();
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void doRequestSDCardPermission() {
+        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST)
+            embedFiles(null);
     }
 
     @Override
@@ -377,10 +396,21 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
 
         ((LinearLayout) findViewById(R.id.config_convert_root)).addView(fl, 2);
         findViewById(R.id.files_missing_hint).setVisibility(View.VISIBLE);
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M)
+            checkPermission();
+
         fl.setData(value, this);
         int i = getFileLayoutOffset(type);
         fl.setCaller(this, i, type);
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void checkPermission() {
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            findViewById(R.id.permssion_hint).setVisibility(View.VISIBLE);
+            findViewById(R.id.permssion_hint).setOnClickListener(this);
+        }
     }
 
     private int getFileLayoutOffset(Utils.FileType type) {
@@ -507,17 +537,19 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
         mResult.mClientKeyFilename = embedFile(mResult.mClientKeyFilename, Utils.FileType.KEYFILE, false);
         mResult.mTLSAuthFilename = embedFile(mResult.mTLSAuthFilename, Utils.FileType.TLS_AUTH_FILE, false);
         mResult.mPKCS12Filename = embedFile(mResult.mPKCS12Filename, Utils.FileType.PKCS12, false);
-        mEmbeddedPwFile = cp.getAuthUserPassFile();
-        mEmbeddedPwFile = embedFile(cp.getAuthUserPassFile(), Utils.FileType.USERPW_FILE, false);
-        mCrlFileName = embedFile(cp.getCrlVerifyFile(), Utils.FileType.CRL_FILE, true);
+        if (cp != null) {
+            mEmbeddedPwFile = cp.getAuthUserPassFile();
+            mEmbeddedPwFile = embedFile(cp.getAuthUserPassFile(), Utils.FileType.USERPW_FILE, false);
+            mCrlFileName = embedFile(cp.getCrlVerifyFile(), Utils.FileType.CRL_FILE, true);
 
-        ConfigParser.removeCRLCustomOption(mResult);
-        if (!TextUtils.isEmpty(mCrlFileName)) {
-            // TODO: Convert this to a real config option that is parsed
             ConfigParser.removeCRLCustomOption(mResult);
-            mResult.mCustomConfigOptions += "\ncrl-verify " + VpnProfile.openVpnEscape(mCrlFileName);
-        } else if (!TextUtils.isEmpty(cp.getCrlVerifyFile())) {
-            mResult.mCustomConfigOptions += "\n#crl-verify " + VpnProfile.openVpnEscape(cp.getCrlVerifyFile());
+            if (!TextUtils.isEmpty(mCrlFileName)) {
+                // TODO: Convert this to a real config option that is parsed
+                ConfigParser.removeCRLCustomOption(mResult);
+                mResult.mCustomConfigOptions += "\ncrl-verify " + VpnProfile.openVpnEscape(mCrlFileName);
+            } else if (!TextUtils.isEmpty(cp.getCrlVerifyFile())) {
+                mResult.mCustomConfigOptions += "\n#crl-verify " + VpnProfile.openVpnEscape(cp.getCrlVerifyFile());
+            }
         }
     }
 

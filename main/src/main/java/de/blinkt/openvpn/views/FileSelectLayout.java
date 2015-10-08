@@ -43,9 +43,7 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
                     setData(fileData, c);
                 }
 
-            } catch (IOException e) {
-                VpnStatus.logException(e);
-            } catch (SecurityException e) {
+            } catch (IOException | SecurityException e) {
                 VpnStatus.logException(e);
             }
     }
@@ -75,29 +73,29 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
 
         TypedArray ta = context.obtainStyledAttributes(attrset, R.styleable.FileSelectLayout);
 
-        setupViews(ta.getString(R.styleable.FileSelectLayout_fileTitle), ta.getBoolean(R.styleable.FileSelectLayout_certificate, true),
-                    ta.getBoolean(R.styleable.FileSelectLayout_showClear,false));
+        setupViews(ta.getString(R.styleable.FileSelectLayout_fileTitle), ta.getBoolean(R.styleable.FileSelectLayout_certificate, true)
+        );
 
         ta.recycle();
     }
 
-    public FileSelectLayout (Context context, String title, boolean isCerticate, boolean showClear)
+    public FileSelectLayout (Context context, String title, boolean isCertificate, boolean showClear)
     {
         super(context);
 
-        setupViews(title, isCerticate, showClear);
+        setupViews(title, isCertificate);
         mShowClear = showClear;
 
     }
 
-    private void setupViews(String title, boolean isCertificate, boolean showClear) {
+    private void setupViews(String title, boolean isCertificate) {
         inflate(getContext(), R.layout.file_select, this);
 
         mTitle = title;
         mIsCertificate = isCertificate;
 
-        TextView tview = (TextView) findViewById(R.id.file_title);
-        tview.setText(mTitle);
+        TextView tView = (TextView) findViewById(R.id.file_title);
+        tView.setText(mTitle);
 
         mDataView = (TextView) findViewById(R.id.file_selected_item);
         mDataDetails = (TextView) findViewById(R.id.file_selected_description);

@@ -24,6 +24,7 @@ import android.security.KeyChainAliasCallback;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -74,9 +75,9 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
     private String mAliasName = null;
 
 
-    private Map<Utils.FileType, FileSelectLayout> fileSelectMap = new HashMap<Utils.FileType, FileSelectLayout>();
+    private Map<Utils.FileType, FileSelectLayout> fileSelectMap = new HashMap<>();
     private String mEmbeddedPwFile;
-    private Vector<String> mLogEntries = new Vector<String>();
+    private Vector<String> mLogEntries = new Vector<>();
     private String mCrlFileName;
 
     @Override
@@ -94,7 +95,18 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // Reset file select dialogs
+        findViewById(R.id.files_missing_hint).setVisibility(View.GONE);
+        findViewById(R.id.permssion_hint).setVisibility(View.GONE);
+        LinearLayout fileroot = (LinearLayout) findViewById(R.id.config_convert_root);
+        for (int i = 0; i < fileroot.getChildCount(); ) {
+            if (fileroot.getChildAt(i) instanceof FileSelectLayout)
+                fileroot.removeViewAt(i);
+            else
+                i++;
+        }
+
         if (requestCode == PERMISSION_REQUEST)
             embedFiles(null);
     }
@@ -335,20 +347,8 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
 
     }
 
-    private File findFile(String filename, Utils.FileType fileType) {
-        File foundfile = findFileRaw(filename);
 
-        if (foundfile == null && filename != null && !filename.equals("")) {
-            log(R.string.import_could_not_open, filename);
-            if (fileType != Utils.FileType.CRL_FILE)
-                addFileSelectDialog(fileType);
-        }
-
-
-        return foundfile;
-    }
-
-    private void addFileSelectDialog(Utils.FileType type) {
+    private Pair<Integer, String> getFileDialogInfo(Utils.FileType type) {
         int titleRes = 0;
         String value = null;
         switch (type) {
@@ -389,8 +389,29 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
                 break;
         }
 
+        return Pair.create(titleRes, value);
+
+    }
+
+    private File findFile(String filename, Utils.FileType fileType) {
+        File foundfile = findFileRaw(filename);
+
+        if (foundfile == null && filename != null && !filename.equals("")) {
+            log(R.string.import_could_not_open, filename);
+        }
+
+        if (fileType != Utils.FileType.CRL_FILE)
+            addFileSelectDialog(fileType);
+
+        return foundfile;
+    }
+
+    private void addFileSelectDialog(Utils.FileType type) {
+
+        Pair<Integer, String> fileDialogInfo = getFileDialogInfo(type);
+
         boolean isCert = type == Utils.FileType.CA_CERTIFICATE || type == Utils.FileType.CLIENT_CERTIFICATE;
-        FileSelectLayout fl = new FileSelectLayout(this, getString(titleRes), isCert, false);
+        FileSelectLayout fl = new FileSelectLayout(this, getString(fileDialogInfo.first), isCert, false);
         fileSelectMap.put(type, fl);
         fl.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
@@ -399,7 +420,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M)
             checkPermission();
 
-        fl.setData(value, this);
+        fl.setData(fileDialogInfo.second, this);
         int i = getFileLayoutOffset(type);
         fl.setCaller(this, i, type);
 
@@ -426,7 +447,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
         File sdcard = Environment.getExternalStorageDirectory();
         File root = new File("/");
 
-        HashSet<File> dirlist = new HashSet<File>();
+        HashSet<File> dirlist = new HashSet<>();
 
         for (int i = mPathsegments.size() - 1; i >= 0; i--) {
             String path = "";
@@ -463,11 +484,8 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
                     suffix = fileparts[i] + "/" + suffix;
 
                 File possibleFile = new File(rootdir, suffix);
-                if (!possibleFile.canRead())
-                    continue;
-
-                // read the file inline
-                return possibleFile;
+                if (possibleFile.canRead())
+                    return possibleFile;
 
             }
         }
@@ -551,7 +569,16 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
                 mResult.mCustomConfigOptions += "\n#crl-verify " + VpnProfile.openVpnEscape(cp.getCrlVerifyFile());
             }
         }
+
+        updateFileSelectDialogs();
     }
+
+    private void updateFileSelectDialogs() {
+        for (Map.Entry<Utils.FileType, FileSelectLayout> fl : fileSelectMap.entrySet()) {
+            fl.getValue().setData(getFileDialogInfo(fl.getKey()).second, this);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -609,8 +636,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
                     mPathsegments = data.getPathSegments();
 
                     Cursor cursor = null;
-                    if (data != null)
-                        cursor = getContentResolver().query(data, null, null, null, null);
+                    cursor = getContentResolver().query(data, null, null, null, null);
 
                     try {
 
@@ -682,10 +708,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
             log(R.string.import_done);
             return;
 
-        } catch (IOException e) {
-            log(R.string.error_reading_config_file);
-            log(e.getLocalizedMessage());
-        } catch (ConfigParseError e) {
+        } catch (IOException | ConfigParseError e) {
             log(R.string.error_reading_config_file);
             log(e.getLocalizedMessage());
         }

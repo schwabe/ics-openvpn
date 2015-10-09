@@ -373,4 +373,19 @@
   <string name="custom_connection_options_warng">Definieren Sie benutzerdefinierte verbindungsspezifische Optionen. Seien Sie vorsichtig!</string>
   <string name="custom_connection_options">Benutzerdefinierte Optionen</string>
   <string name="remove_connection_entry">Verbindung entfernen</string>
+  <string name="ab_kitkat_reconnect_title">Sporadische Verlust der Verbindung mit dem Mobilfunknetz</string>
+  <string name="ab_vpn_reachability_44_title">Entfernte Netzwerkresourcen nicht erreichbar</string>
+  <string name="ab_persist_tun_title">Persistenter tun Modus</string>
+  <string name="version_and_later">%s und neuer</string>
+  <string name="tls_cipher_alert_title">Verbindung schlägt mit \"SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure\" fehl</string>
+  <string name="tls_cipher_alert">OpenVPN für die Android Versionen ab 0.6.29 (März 2015) verwenden einen sicheren Default für die zulässigen TLS Chiffren (\"DEFAULT: EXP: PSK: SRP: KRSA\"). Leider hat Weglassen der weniger sicheren Verschlüsselungschiffren und Exportchfriffen, vor allem aber der Wegfall der Cipher Suites, die keine Unterstützung für Perfect-Forward-Secrecy (Diffie-Hellman) einige Probleme verursacht. In der Regel sind dies gut gemeinte, aber schlecht ausgeführte Versuche, die TLS Sicherheit durch eine händische Wahl zu verbessern oder bei einigen eingebetteten Betriebssysteme mit abgespeckten OpenSSL (z.B. MikroTik).\n Um dieses Problem lösen das Problem, setzen Sie die TLS-Verschlüsselung Einstellungen auf dem Server auf einen sinnvollen Standardwert wie z.B. tls-cipher \"DEFAULT: EXP: PSK: SRP: KRSA\". Als Workaround für Problem auf dem Client, fügen Sie die benutzerdefinierte Option tls-cipher DEFAULT dem VPN Profil hinzu um die weniger sicheren Chiffren wieder zuzulassen.</string>
+  <string name="message_no_user_edit">Dieses Profil wurde von einer externen Anwendung (%s) hinzugefügt und als nicht vom Benutzer bearbeitbar markiert.</string>
+  <string name="crl_file">Zertifikatsperrliste</string>
+  <string name="service_restarted">Neustarten von OpenVPN Service (App vermutlich abgestürzt oder wegen Speicherdruck beendet)</string>
+  <string name="import_config_error">Importieren der Config ergab einen Fehler, kann diese nicht speichern</string>
+  <string name="Search">Suche</string>
+  <string name="lastdumpdate">(Letzten Dump ist %1$d:%2$dh alt (%3$s))</string>
+  <string name="clear_log_on_connect">Protokoll bei neuer Verbindung leeren</string>
+  <string name="connect_timeout">Verbindungstimeout</string>
+  <string name="no_allowed_app">Keine erlaubte App hinzgefügt. Füge die App selbst (%s) hinzu um wenigsten eine App in der Liste der nicht erlaubten Anwendungen zu haben</string>
 </resources>

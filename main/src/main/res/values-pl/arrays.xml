@@ -4,12 +4,12 @@
   <string-array name="vpn_types">
     <item>Certyfikaty</item>
     <item>Plik PKCS12</item>
-    <item>Certyfikat Android</item>
-    <item>Nazwa użytkownika/Hasło</item>
-    <item>Klucze statyczne</item>
+    <item>Certyfikat z pęku kluczy Androida</item>
+    <item>Użytkownik/Hasło</item>
+    <item>Statyczne Klucze</item>
     <item>Użytkownik/Hasło + Certyfikaty</item>
     <item>Użytkownik/Hasło + PKCS12</item>
-    <item>Uzytkownik/Hasło + Android</item>
+    <item>Użytkownik/Hasło + Android</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item>0</item>

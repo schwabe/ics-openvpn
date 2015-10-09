@@ -52,32 +52,32 @@
   <string name="vpn_shortcut">Bližnjica OpenVPN</string>
   <string name="vpn_launch_title">Poveži se v VPN</string>
   <string name="shortcut_profile_notfound">Profila, določenega v bližnjici, ni bilo mogoče najti</string>
-  <string name="random_host_prefix">Predpona naključnega gostitelja</string>
+  <string name="random_host_prefix">Predpona naklj. gostitelja</string>
   <string name="random_host_summary">Doda 6 naključnih znakov pred ime gostitelja</string>
   <string name="custom_config_title">Omogoči možnosti po meri</string>
   <string name="custom_config_summary">Določite možnosti po meri. Uporabljajte previdno!</string>
   <string name="route_rejected">Android je pot zavrnil</string>
   <string name="cancel_connection">Prekini</string>
   <string name="cancel_connection_long">Prekini VPN</string>
-  <string name="clear_log">počisti dnevnik</string>
+  <string name="clear_log">Počisti dnevnik</string>
   <string name="title_cancel">Prekliči potrditev</string>
   <string name="cancel_connection_query">Prekini povezan VPN/Prekliči poizkus povezave?</string>
   <string name="remove_vpn">Odstrani VPN</string>
   <string name="check_remote_tlscert">Preveri, ali strežnik uporablja potrdilo s strežniškimi končnicami (--remote-cert-tls strežnik)</string>
-  <string name="check_remote_tlscert_title">Pričakuj potrdilo strežnika TLS</string>
+  <string name="check_remote_tlscert_title">Pričakuj potrdilo str. TLS</string>
   <string name="remote_tlscn_check_summary">Preveri DN zadeve potrdila oddaljenega strežnika</string>
-  <string name="remote_tlscn_check_title">Preverjanje imena gostitelja potrdila</string>
+  <string name="remote_tlscn_check_title">Preveri ime gost. potrdila</string>
   <string name="enter_tlscn_dialog">Določite preverjanje, ki naj se uporabi za preverjanje DN-a oddaljenega potrdila (npr. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de).\n\nDoločite celoten DN ali RDN (npr. openvpn.blinkt.de) ali predpono RDN-a za preverjanje.\n\nKadar uporabljate predpono RDN, se \"Strežnik\" primerja s \"Strežnik-1\" in \"Strežnik-2\".\n\nČe pustite besedilno polje prazno, bo RDN preverjen z imenom gostitelja.\n\nZa več podatkov glejte OpenVPN 2.3.1 + stran man v —verify-x509-name.</string>
   <string name="enter_tlscn_title">Zadeva oddaljenega potrdila</string>
-  <string name="tls_key_auth">Omogoči overitev ključa TLC</string>
+  <string name="tls_key_auth">Omogoči overitev ključa TLS</string>
   <string name="tls_auth_file">Datoteka overitve TLS</string>
   <string name="pull_on_summary">Zahteva naslove IP, poti in časovne možnosti od strežnika.</string>
   <string name="pull_off_summary">Nobeni podatki niso zahtevani od strežnika. Nastavitve morate določiti spodaj.</string>
-  <string name="use_pull">Nastavitve za vgradnjo</string>
+  <string name="use_pull">Dobi nast.</string>
   <string name="dns">DNS</string>
-  <string name="override_dns">Preglasi nastavitve DNS strežnika</string>
+  <string name="override_dns">Preglasi nast. DNS str.</string>
   <string name="dns_override_summary">Uporabi moje strežnike DNS</string>
-  <string name="searchdomain">išči po domeni</string>
+  <string name="searchdomain">Išči po domeni</string>
   <string name="dns1_summary">Strežnik DNS, ki naj se uporabi.</string>
   <string name="dns_server">Strežnik DNS</string>
   <string name="secondary_dns_message">Dodatni strežnik DNS, ki naj se uporabi, če običajni strežnik DNS ni dosegljiv.</string>
@@ -121,7 +121,7 @@
   <string name="tap_faq3">Tretjič? V bistvu bi nekdo lahko napisal posnemovalnik tapanja temelječ na TUN-u, ki bi dodal podatke 2. plasti ob pošiljanju in odstranil podatke 2. plasti ob prejemanju. Vendar bi ta posnemovalnik moral imeti izveden ARP in morda odjemalca DHCP. Nisem še slišal, da bi kdo delal na tem. Navežite stik z mano, če bi radi začeli pisati program o tem.</string>
   <string name="faq">Pogosta vprašanja</string>
   <string name="copying_log_entries">Kopiranje dnevniških vnosov</string>
-  <string name="faq_copying">Za kopiranje posameznega dnevniškega vnosa pritisnite in pridržite dnevniški vnos. Za kopiranje/pošiljanje celega dnevnika uporabite možnosti Pošlji dnevnik. Če v vmesniku gumb ni viden, uporabite menijski gumb naprave.</string>
+  <string name="faq_copying">Za kopiranje posameznega dnevniškega vnosa pritisnite in pridržite dnevniški vnos. Za kopiranje/pošiljanje celega dnevnika uporabite možnost Pošlji dnevnik. Če v vmesniku gumb ni viden, uporabite menijski gumb naprave.</string>
   <string name="faq_shortcut">Bližnjica za zagon</string>
   <string name="faq_howto_shortcut">Za zagon OpenVPN-a lahko na namizje vstavite bližnjico. Odvisno od vašega programa za domači zaslon boste morali dodati ali bližnjico ali pripomoček.</string>
   <string name="no_vpn_support_image">Vaš odtis žal ne podpira API-ja storitve VPN :(</string>
@@ -173,9 +173,9 @@
   <string name="edit_profile_title">Urejanje \"%s\"</string>
   <string name="building_configration">Izgrajevanje nastavitev &#8230;</string>
   <string name="netchange_summary">Vklop te storitve bo vsilil ponovno povezavo, če se stanje omrežja spremeni (npr. Wi-Fi v/iz mobilnega omrežja)</string>
-  <string name="netchange">Ponovno se poveži ob spremembi omrežja</string>
+  <string name="netchange">Pon. povez. ob spr. omr.</string>
   <string name="netstatus">Stanje omrežja: %s</string>
-  <string name="extracahint">Potrdilo CA je običajno vrnjeno iz Androidove shrambe ključev. Določite ločeno potrdilo, če dobite napake pri preverjanju potrdil.</string>
+  <string name="extracahint">Potrdilo CA običajno vrne Androidova shramba ključev. Določite ločeno potrdilo, če dobite napake pri preverjanju potrdil.</string>
   <string name="select_file">Izberi</string>
   <string name="keychain_nocacert">Nobeno potrdilo ni bilo vrnjeno med branjem Androidove shrambe ključev. Overitev bo verjetno spodletela.</string>
   <string name="show_log_summary">Prikaže okno dnevnika ob povezavi. Dostop do okna dnevnika je vedno možen iz stanja obvestila.</string>
@@ -194,18 +194,18 @@
   <string name="warn_no_dns">Noben strežnik DNS se ne uporablja. Razrešitev imen morda ne bo delovala. Razmislite o nastavitvi strežnikov DNS po meri. Upoštevajte tudi, da bo Android še naprej uporabljal vaše nastavitve posredniškega strežnika določene za vašo mobilno povezavo/Wi-Fi, ko ni nastavljen noben strežnik DNS.</string>
   <string name="dns_add_error">Strežnika DNS \"%1$s\" ni bilo mogoče dodati, zavrnil ga je sistem: %2$s</string>
   <string name="ip_add_error">Naslova IP \"%1$s\" ni bilo mogoče nastaviti, zavrnil ga je sistem: %2$s</string>
-  <string name="faq_howto">&lt;p&gt;Dobite delujoče nastavitve (preizkušene na vašem računalniku ali jih prejmite od vašega ponudnika/organizacije)&lt;/p&gt;&lt;p&gt;Če je to ena sama datoteka brez dodatnih datotek pem/pks12, jo lahko sami pošljete in odprete prilogo. Če imate več datotek, jih prestavite na svojo kartico SD.&lt;/p&gt;&lt;p&gt;Kliknite na e-poštno prilogo/uporabite ikono mape na seznamu VPN-ov, da uvozite nastavitveno datoteko&lt;/p&gt;&lt;p&gt;Če se pojavijo napake o manjkajočih datotekah, jih vstavite na kartico SD&lt;/p&gt;&lt;p&gt;Kliknite na simbol za shranjevanje, da dodate uvoženi VPN na svoj seznam VPN-ov&lt;/p&gt;&lt;p&gt;Povežite VPN s klikom na ime VPN-a&lt;/p&gt;&lt;p&gt;Če so v dnevniku napake ali opozorila, jih poizkusite razumeti in popraviti&lt;/p&gt; </string>
+  <string name="faq_howto">&lt;p&gt;Dobite delujoče nastavitve (preizkušene na vašem računalniku ali jih prejmite od vašega ponudnika/organizacije)&lt;/p&gt;&lt;p&gt;Če je to ena sama datoteka brez dodatnih datotek pem/pks12, jo lahko sami pošljete in odprete prilogo. Če imate več datotek, jih prestavite na svojo kartico SD.&lt;/p&gt;&lt;p&gt;Kliknite na e-poštno prilogo/uporabite ikono mape na seznamu VPN-ov, da uvozite nastavitveno datoteko.&lt;/p&gt;&lt;p&gt;Če se pojavijo napake o manjkajočih datotekah, jih vstavite na kartico SD.&lt;/p&gt;&lt;p&gt;Kliknite na simbol za shranjevanje, da dodate uvoženi VPN na svoj seznam VPN-ov.&lt;/p&gt;&lt;p&gt;Povežite VPN s klikom na ime VPN-a.&lt;/p&gt;&lt;p&gt;Če so v dnevniku napake ali opozorila, jih poizkusite razumeti in popraviti.&lt;/p&gt; </string>
   <string name="faq_howto_title">Hitri zagon</string>
   <string name="setting_loadtun_summary">Poizkusite naložiti jedro tun.ko pred poizkusom povezave. Zahteva skrbniški dostop.</string>
   <string name="setting_loadtun">Naloži modul TUN</string>
   <string name="importpkcs12fromconfig">Uvozi PKCS12 iz nastavitev v Androidovo shrambo ključev</string>
   <string name="getproxy_error">Napaka pri dobivanju nastavitev posredniškega strežnika: %s</string>
   <string name="using_proxy">Uporaba posredniškega strežnika %1$s %2$d</string>
-  <string name="use_system_proxy">Uporabi sistemski posredniški strežnik</string>
+  <string name="use_system_proxy">Uporabi sis. pos. str.</string>
   <string name="use_system_proxy_summary">Za povezavo uporabi nastavitve celega sistema za posredniške strežnike HTTP/HTTPS.</string>
   <string name="donatewithpaypal">Darujete lahko s &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;PayPalom&lt;/a&gt; </string>
   <string name="onbootrestartsummary">OpenVPN bo ponovno povezal VPN, če je bil dejaven ob zaustavitvi/ponovnem zagonu sistema. Preberite pogosta vprašanja opozoril o povezavi pred uporabo te možnosti.</string>
-  <string name="onbootrestart">Ponovno se poveži ob ponovnem zagonu</string>
+  <string name="onbootrestart">Pon. povez. ob pon. zag.</string>
   <string name="ignore">Prezri</string>
   <string name="restart">Ponovno zaženi</string>
   <string name="restart_vpn_after_change">Spremembe nastavitev se bodo uporabile po ponovnem zagonu VPN-a. (Ponovno) zaženi VPN zdaj?</string>
@@ -224,7 +224,7 @@
   <string name="openvpn_log">Dnevnik OpenVPN</string>
   <string name="import_config">Uvozi nastavitve OpenVPN</string>
   <string name="battery_consumption_title">Poraba baterije</string>
-  <string name="baterry_consumption">V mojih osebnih preizkusih so bili glaven vzrok za visoko porabo baterije OpenVPN-a dejavni paketi. Večina strežnikov OpenVPN ima smernico nastavitev, kot je \'ohrani dejavnost 10 60\', ki povzroči, da si odjemalec in strežnik izmenjata dejavne pakete vsakih 10 sekund. &lt;p&gt;Medtem, ko so ti paketi majhni in ne uporabijo veliko prometa, ohranijo mobilno radijsko omrežje dejavno in povečajo porabo energije (glejte tudi &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine| Razvijalci Androida&lt;/a&gt;).&lt;p&gt; Te nastavitve ohranjanja dejavnosti odjemalec ne more spremeniti. Spremeni jo lahko samo sistemski skrbnik OpenVPN-a.&lt;p&gt; Na žalost uporaba ohranjanja dejavnosti večje od 60-ih sekund z UDP-jem lahko povzroči, da nekatera vrata NAT prekinejo povezavo zaradi časovne omejitve nedejavnosti. Uporaba TCP-ja z dolgo časovno omejitvijo ohranjanja dejavnosti deluje, vendar se tuneliranje TCP-ja preko TCP-ja izkaže za zelo neučinkovito ob povezavah z visoko izgubo paketov (glejte &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;).</string>
+  <string name="baterry_consumption">V mojih osebnih preizkusih so bili glaven vzrok za visoko porabo baterije OpenVPN-a dejavni paketi. Večina strežnikov OpenVPN ima smernico nastavitev, kot je \'ohrani dejavnost 10 60\', ki povzroči, da si odjemalec in strežnik izmenjata dejavne pakete vsakih 10 sekund. &lt;p&gt;Medtem, ko so ti paketi majhni in ne uporabijo veliko prometa, ohranijo mobilno radijsko omrežje dejavno in povečajo porabo energije (glejte tudi &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Razvijalci Androida&lt;/a&gt;).&lt;p&gt; Te nastavitve ohranjanja dejavnosti odjemalec ne more spremeniti. Spremeni jo lahko samo sistemski skrbnik OpenVPN-a.&lt;p&gt; Na žalost uporaba ohranjanja dejavnosti večje od 60-ih sekund z UDP-jem lahko povzroči, da nekatera vrata NAT prekinejo povezavo zaradi časovne omejitve nedejavnosti. Uporaba TCP-ja z dolgo časovno omejitvijo ohranjanja dejavnosti deluje, vendar se tuneliranje TCP-ja preko TCP-ja izkaže za zelo neučinkovito ob povezavah z visoko izgubo paketov (glejte &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;).</string>
   <string name="faq_tethering">Androidova značilnost deljenja mobilnega interneta (preko omrežja Wi-Fi, USB-ja ali Bluetootha) in API storitve VPN (ki ga uporablja ta program) skupaj ne delujeta. Za več podrobnosti glejte &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;Težavo 34&lt;/a&gt;.</string>
   <string name="vpn_tethering_title">VPN in deljenje mobilnega interneta</string>
   <string name="connection_retries">Ponovni poizkusi povezave</string>
@@ -281,7 +281,7 @@
   <string name="allowed_apps">Programi z dovoljenjem: %s</string>
   <string name="clearappsdialog">Počisti seznam zunanjih programov z dovoljenjem?\nTrenutni seznam:\n\n%s</string>
   <string name="screenoff_summary">\"Premor VPN-a, ko je zaslon izklopljen in je v 60 s preneseno manj kot 64 kB. Ko je omogočena možnost \"Vztrajni TUN\", bo premor VPN-a odstranil VSO povezljivost naprave. Brez te možnosti naprava ne bo imela povezave VPN/zaščite.</string>
-  <string name="screenoff_title">Premor povezave VPN po izklopu zaslona</string>
+  <string name="screenoff_title">Premor VPN-a po izk. zas.</string>
   <string name="screenoff_pause">Premor povezave v stanju izklopljenega zaslona: manj kot %1$s v %2$s s</string>
   <string name="screen_nopersistenttun">Opozorilo: Vztrajni TUN za ta VPN ni mogočen. Promet bo uporabil običajno internetno povezavo, ko je zaslon izklopljen.</string>
   <string name="save_password">Shrani geslo</string>
@@ -316,7 +316,7 @@
   <string name="faq_system_dialog_xposed">Če imate na svoji napravi skrbniški dostop, lahko na svojo odgovornost namestite &lt;a href=\"http://xposed.info/\"&gt;ogrodje Xposed&lt;/a&gt; in &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;Modul za potrditev pog. okna VPN&lt;/a&gt;.</string>
   <string name="full_licenses">Polna dovoljenja</string>
   <string name="blocklocal_summary">Omrežja, ki so neposredno povezana s krajevnimi vmesniki, ne bodo usmerjena preko VPN-a. Odstranitev izbire te možnosti bo preusmerila ves promet namenjen krajevnim omrežjem v VPN.</string>
-  <string name="blocklocal_title">Zaobidi VPN za krajevna omrežja</string>
+  <string name="blocklocal_title">Zaobidi VPN za kraj. omr.</string>
   <string name="userpw_file">Datoteka uporabniškega imena/gesla</string>
   <string name="imported_from_file">[Uvoženo iz: %s]</string>
   <string name="files_missing_hint">Nekaterih datotek ni bilo mogoče najti. Izberite datoteke za uvoz profila:</string>
@@ -328,7 +328,7 @@
   <string name="mssfix_checkbox">Preglasi vrednost MSS vsebine TCP</string>
   <string name="mssfix_dialogtitle">Nastavi MSS vsebine TCP</string>
   <string name="client_behaviour">Vedenje odjemalca</string>
-  <string name="clear_external_apps">Počisti zunanje programe z dovoljenjem</string>
+  <string name="clear_external_apps">Počisti zun. prog. z dov.</string>
   <string name="loading">Nalaganje &#8230;</string>
   <string name="allowed_vpn_apps_info">Programi VPN z dovoljenjem: %1$s</string>
   <string name="disallowed_vpn_apps_info">Programi VPN brez dovoljenja: %1$s</string>
@@ -366,7 +366,7 @@
   <string name="ab_only_cidr_title">Poti brez načina CIDR</string>
   <string name="ab_proxy_title">Vedenje posredniškega strežnika za VPN-e</string>
   <string name="ab_lollipop_reinstall_title">Ponovno nameščenje programov VPN</string>
-  <string name="version_upto">%s in prejšnje</string>
+  <string name="version_upto">%s in prejšnji</string>
   <string name="copy_of_profile">Kopija %s</string>
   <string name="ab_not_route_to_vpn_title">Pot do nastavljenega naslova IP</string>
   <string name="ab_kitkat_mss_title">Napačna vrednost MSS za povezavo VPN</string>
@@ -374,4 +374,19 @@
   <string name="custom_connection_options_warng">Določite možnosti za povezave po meri. Uporabljajte previdno.</string>
   <string name="custom_connection_options">Možnosti po meri</string>
   <string name="remove_connection_entry">Odstrani vnos povezave</string>
+  <string name="ab_kitkat_reconnect_title">Naključne prekinitve mobilnega omrežja</string>
+  <string name="ab_vpn_reachability_44_title">Oddaljena omrežja niso dosegljiva</string>
+  <string name="ab_persist_tun_title">Vztrajaj v načinu TUN</string>
+  <string name="version_and_later">%s in kasnejši</string>
+  <string name="tls_cipher_alert_title">Povezava je spodletela z opozorilom izmenjave signalov SSL23_GET_SERVER_HELLO:sslv3</string>
+  <string name="tls_cipher_alert">Novejše različice OpenVPN-a za Android (0.6.29/marec 2015) uporabljajo bolj varne privzete vrednosti za dovoljene šifrirne pakete (tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Na žalost izpuščanje manj varnih šifrirnih paketov in šifrirnih paketov za izvoz, posebno izpuščanje šifrirnih paketov, ki ne podpirajo vnaprejšnje varnosti (Diffie-Hellman), povzroča težave. To običajno povzroči dobronamerni vendar slabo izvedeni poizkus ojačanja varnosti TLS-a z nastavljanjem možnosti tls-cipher na strežniku ali vstavljenih OS-ih z okrnjenim SSL-om (npr. MikroTik).\nZa razrešitev te težave na strežniku nastavite možnosti tls-cipher na razumljive privzete vrednosti, kot je tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". Za zaobidenje te težave na odjemalcu dodajte možnost po meri tls-cipher DEFAULT na odjemalcu Android.</string>
+  <string name="message_no_user_edit">Ta profil je bil dodan iz zunanjega programa (%s) in je bil označen kot uporabniško neuredljiv.</string>
+  <string name="crl_file">Seznam preklicanih potrdil</string>
+  <string name="service_restarted">Ponovno zaganjanje storitve OpenVPN (program se je verjetno sesul ali je bil uničen zaradi pomanjkanja pomnilnika)</string>
+  <string name="import_config_error">Pri uvozu nastavitev je prišlo do napake, nastavitev ni mogoče shraniti</string>
+  <string name="Search">Išči</string>
+  <string name="lastdumpdate">(zadnji izpis je star %1$d:%2$d ur (%3$s))</string>
+  <string name="clear_log_on_connect">Počisti dnevnik ob novi povezavi</string>
+  <string name="connect_timeout">Časovna omejitev povezave</string>
+  <string name="no_allowed_app">Noben program z dovoljenjem ni bil dodan. Samodejno dodajanje (%s), da se na seznamu programov z dovoljenjem nahaja vsaj en program, da ostali ne dobijo dovoljenja.</string>
 </resources>

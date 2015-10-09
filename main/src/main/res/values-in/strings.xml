@@ -50,7 +50,7 @@
   <string name="custom_route_format_error">Gagal menganalisa rute buatan</string>
   <string name="pw_query_hint">(biarkan kosong untuk antrian permintaan)</string>
   <string name="vpn_shortcut">Jalan Pintas OpenVPN</string>
-  <string name="vpn_launch_title">Připojit k VPN</string>
+  <string name="vpn_launch_title">Hubungkan VPN</string>
   <string name="shortcut_profile_notfound">Profil di shrotcut tidak ada</string>
   <string name="random_host_prefix">Acak awalan Host </string>
   <string name="random_host_summary">Tambah 6 karakter acak di depan nama host</string>
@@ -296,7 +296,7 @@
   <string name="allow_vpn_changes">Memungkinkan perubahan Profil VPN</string>
   <string name="hwkeychain">Hardware Keystore:</string>
   <string name="permission_icon_app">Ikon aplikasi mencoba menggunakan OpenVPN untuk Android</string>
-  <string name="faq_vpndialog43">"Dimulai dengan Android 4.3 konfirmasi VPN dijaga terhadap\" overlay aplikasi \". Hal ini menyebabkan dialog tidak bereaksi menyentuh masukan. Jika Anda memiliki sebuah aplikasi yang menggunakan lapisan itu dapat menyebabkan perilaku ini. Jika Anda menemukan kontak aplikasi menyinggung penulis app. Masalah ini mempengaruhi semua aplikasi VPN di Android 4.3 dan kemudian. Lihat juga <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=185"> Issue 185 </a> untuk rincian tambahan "</string>
+  <string name="faq_vpndialog43">"Dimulai dengan Android 4.3 konfirmasi VPN dijaga terhadap\" overlay apps \". Hal ini menyebabkan dialog tidak bereaksi menyentuh input. Jika Anda memiliki sebuah aplikasi yang menggunakan lapisan itu dapat menyebabkan perilaku ini. Jika Anda menemukan kontak aplikasi menyinggung penulis app. Masalah ini mempengaruhi semua aplikasi VPN di Android 4.3 dan kemudian. Lihat juga &lt;a href="https://github.com/schwabe/ics-openvpn/issues/185"&gt; Issue 185 &lt;a&gt; untuk rincian tambahan "</string>
   <string name="faq_vpndialog43_title">VPN Konfirmasi Dialog</string>
   <string name="donatePlayStore">Atau Anda dapat mengirimkan saya donasi dengan Play Store:</string>
   <string name="thanks_for_donation">Terima kasih untuk menyumbangkan %s!</string>

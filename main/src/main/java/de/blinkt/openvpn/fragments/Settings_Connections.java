@@ -5,13 +5,11 @@
 
 package de.blinkt.openvpn.fragments;
 
-import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,8 +21,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.core.ProfileManager;
 
 public class Settings_Connections extends Settings_Fragment implements View.OnClickListener {
     private ConnectionsAdapter mConnectionsAdapter;
@@ -74,7 +70,7 @@ public class Settings_Connections extends Settings_Fragment implements View.OnCl
         mUseRandomRemote.setChecked(mProfile.mRemoteRandom);
 
 
-        mConnectionsAdapter.displayWarningifNoneEnabled();
+        mConnectionsAdapter.displayWarningIfNoneEnabled();
 
         return v;
     }

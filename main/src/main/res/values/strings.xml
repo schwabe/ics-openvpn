@@ -388,5 +388,7 @@
     <string name="connect_timeout">Connect Timeout</string>
     <string name="no_allowed_app">No allowed app app added. Addding ourselves (%s) to have at least one app in the allowed app list to not allow all apps</string>
     <string name="query_permissions_sdcard">OpenVPN for Android can try to discover the missing file(s) on the sdcard automatically. Tap this message start the permission request.</string>
+    <string name="protocol">Protocol</string>
+    <string name="enabled_connection_entry">Enabled</string>
 
 </resources>

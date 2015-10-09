@@ -38,6 +38,8 @@
 
 
             <TextView
+                android:layout_toLeftOf="@id/port_label"
+                android:layout_toStartOf="@id/port_label"
                 android:id="@+id/server_label"
                 style="@style/item"
                 android:text="@string/address"
@@ -54,7 +56,8 @@
                 android:layout_below="@id/port_label"
                 android:inputType="numberDecimal"
                 android:text="1194"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                tools:ignore="HardcodedText" />
 
 
             <EditText
@@ -69,7 +72,8 @@
                 android:inputType="textUri"
                 android:singleLine="true"
                 android:text="openvpn.blinkt.de"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/protocol"
@@ -77,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/servername"
                 android:paddingTop="10dp"
-                android:text="Protocol" />
+                android:text="@string/protocol" />
 
             <RadioGroup
                 android:id="@+id/udptcpradiogroup"
@@ -85,13 +89,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/protocol"
                 android:orientation="horizontal"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
                 android:paddingLeft="20dp">
 
                 <RadioButton
                     android:id="@+id/udp_proto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="UDP" />
+                    android:text="UDP"
+                    tools:ignore="HardcodedText" />
 
                 <Space
                     android:layout_width="20dp"
@@ -101,7 +109,8 @@
                     android:id="@+id/tcp_proto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TCP" />
+                    android:text="TCP"
+                    tools:ignore="HardcodedText" />
             </RadioGroup>
 
 
@@ -189,6 +198,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/use_customoptions"
                 android:orientation="vertical"
+                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
                 android:paddingLeft="10dp"
                 android:paddingStart="10dp">
 
@@ -214,7 +225,7 @@
                 android:layout_alignRight="@+id/portnumber"
                 android:layout_below="@+id/portnumber"
                 android:layout_gravity="right|bottom"
-                android:text="Enable" />
+                android:text="@string/enabled_connection_entry" />
 
             <ImageButton
                 android:id="@+id/remove_connection"

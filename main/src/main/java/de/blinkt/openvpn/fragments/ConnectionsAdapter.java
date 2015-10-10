@@ -73,7 +73,10 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
 
             mConnectionsAdapter = connectionsAdapter;
 
-            addListeners();
+
+            /* This is totally weird */
+            if (mRemoteSwitch!=null)
+                addListeners();
         }
 
         public void addListeners() {

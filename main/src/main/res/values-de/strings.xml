@@ -388,4 +388,6 @@
   <string name="clear_log_on_connect">Protokoll bei neuer Verbindung leeren</string>
   <string name="connect_timeout">Verbindungstimeout</string>
   <string name="no_allowed_app">Keine erlaubte App hinzgefügt. Füge die App selbst (%s) hinzu um wenigsten eine App in der Liste der nicht erlaubten Anwendungen zu haben</string>
+  <string name="protocol">Protokoll</string>
+  <string name="enabled_connection_entry">Aktiviert</string>
 </resources>

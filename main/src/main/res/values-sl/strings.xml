@@ -389,4 +389,7 @@
   <string name="clear_log_on_connect">Počisti dnevnik ob novi povezavi</string>
   <string name="connect_timeout">Časovna omejitev povezave</string>
   <string name="no_allowed_app">Noben program z dovoljenjem ni bil dodan. Samodejno dodajanje (%s), da se na seznamu programov z dovoljenjem nahaja vsaj en program, da ostali ne dobijo dovoljenja.</string>
+  <string name="query_permissions_sdcard">OpenVPN za Android lahko samodejno poizkusi odkriti manjkajoče datoteke na kartici SD. Tapnite na to sporočilo, da zahtevate dovoljenje.</string>
+  <string name="protocol">Protokol</string>
+  <string name="enabled_connection_entry">Omogočeno</string>
 </resources>

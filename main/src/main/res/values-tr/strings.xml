@@ -347,4 +347,8 @@
   <string name="custom_connection_options_warng">Özel bağlantı seçenekleri belirtin. Dikkatli kullanın</string>
   <string name="custom_connection_options">Özel Seçenekler</string>
   <string name="remove_connection_entry">Bağlantı girdisini kaldırın</string>
+  <string name="Search">Arama</string>
+  <string name="connect_timeout">Bağlantı zaman aşımına uğradı</string>
+  <string name="protocol">Protokol</string>
+  <string name="enabled_connection_entry">Etkin</string>
 </resources>

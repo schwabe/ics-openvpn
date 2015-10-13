@@ -9,8 +9,6 @@ JNI_DIR := $(call my-dir)
 
 
 include lzo/Android.mk
-include snappy/Android.mk
-
 include openssl/Android.mk
 
 ifeq ($(TARGET_ARCH),mips)

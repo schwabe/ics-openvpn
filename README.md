@@ -29,14 +29,14 @@ Inline files are supported since OpenVPN 2.1rc1 and documented in the  [OpenVPN 
 (Using inline certifaces can also make your life on non Android platforms easier since you have only one file.)
 
 For example `ca mycafile.pem` becomes
-
+```
   <ca>
   -----BEGIN CERTIFICATE-----
   MIIHPTCCBSWgAwIBAgIBADANBgkqhkiG9w0BAQQFADB5MRAwDgYDVQQKEwdSb290
   [...]
   -----END CERTIFICATE-----
   </ca>
-
+```
 Fotnotes
 -----------
 Please that OpenVPN used by this project is under GPLv2. 

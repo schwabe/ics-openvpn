@@ -181,7 +181,6 @@
   <string name="keychain_nocacert">在 Android 密钥库中未找到任何 CA 证书。可能验证失败。</string>
   <string name="show_log_summary">连接时显示日志窗口。日志窗口可始终从通知栏访问。</string>
   <string name="show_log_window">显示日志窗口</string>
-  <string name="mobile_info">运行 %1$s （ %2$s ） %3$s ，Android API %4$d</string>
   <string name="error_rsa_sign">与 Android 密钥库 %1$s 签名时出错： %2$s</string>
   <string name="faq_system_dialogs">VPN 连接警告会告诉你有程序正要拦截所有的网络流量，这是为了确保 VPN 服务的 API 不被恶意应用滥用。\nVPN 连接通知（通知栏上的钥匙图标）是 Android 系统内建的，如果当前有 VPN 连接，Android 系统就会自动显示这个通知图标。一些系统上还会在 VPN 连接建立的时候发出提示音。Android 这么做的原因是为了保护你不受恶意应用的欺骗。</string>
   <string name="faq_system_dialogs_title">连接警告和通知声音</string>

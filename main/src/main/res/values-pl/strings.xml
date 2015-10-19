@@ -178,7 +178,6 @@
   <string name="keychain_nocacert">Brak certyfikatu CA zwróconego z pęku kluczy Androida. Autoryzacja najprawdopodobniej nie powiedzie się.</string>
   <string name="show_log_summary">Pokazuje okno dziennika przy łączeniu. Do okna dziennika można dostać się zawsze z paska powiadomień.</string>
   <string name="show_log_window">Pokaż okno loga</string>
-  <string name="mobile_info">Działa na %1$s (%2$s) %3$s, Android API %4$d</string>
   <string name="error_rsa_sign">Błąd podpisania kluczem z pęku kluczy Androida %1$s: %2$s</string>
   <string name="faq_system_dialogs_title">Ostrzeżenie połączeń oraz dźwięki powiadomień</string>
   <string name="translationby">Angielskie tłumaczenie Arne Schwabe&lt;arne@rfc2549.org&gt;</string>

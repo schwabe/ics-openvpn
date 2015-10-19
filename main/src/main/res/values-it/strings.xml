@@ -182,7 +182,6 @@ Effettuata la lettura del file di configurazione</string>
   <string name="keychain_nocacert">Nessun certificato della CA è stato prelevato dal Keystore di Android. E\' probabile che l\'autenticazione fallisca.</string>
   <string name="show_log_summary">Mostra la finestra dei log della connessione. Si può sempre accedere alla finestra dei log tramite la barra delle notifiche.</string>
   <string name="show_log_window">Visualizza la finestra dei log</string>
-  <string name="mobile_info">In esecuzione su %1$s (%2$s) %3$s, Android API %4$d</string>
   <string name="error_rsa_sign">Errore di firma con la chiave %1$s: %2$s del Keystore di Android.</string>
   <string name="faq_system_dialogs">L\'avvertimento durante la connessione VPN, in cui si informa che questo programma può intercettare tutto il traffico del sistema, serve a prevenire un uso fraudolento delle API del servizio VPN.\nL\'icona di notifica a forma di chiave è altresì imposta dal sistema Android per avvertire che si è connessi ad una VPN. Su alcuni apparecchi questa notifica è accompagnata da un suono.\nAndroid utilizza questi sistemi per la tua sicurezza e per assicurarsi che questi non vengano aggirati (in alcuni firmware questo sfortunamente è accompagnato da un suono di avvertimento).</string>
   <string name="faq_system_dialogs_title">Avviso di connessione e notifica sonora</string>

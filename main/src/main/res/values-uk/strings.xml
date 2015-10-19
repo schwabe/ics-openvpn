@@ -180,7 +180,6 @@
   <string name="keychain_nocacert">Не вдалося отримати СА сертифікат при читанні із сховища ключів Андроїд. Автентифікація не вдалася.</string>
   <string name="show_log_summary">Показати вікно журналу при з\'єднанні. Вікно журналу може бути завжди дрступним у панелі сповіщень.</string>
   <string name="show_log_window">Показати вікно журналу</string>
-  <string name="mobile_info">Працює на %1$s (%2$s) %3$s, Android API %4$d</string>
   <string name="error_rsa_sign">Помилка підпису з використанням ключа із сховища Андроїд %1$s: %2$s</string>
   <string name="faq_system_dialogs">Попередження VPN з\'єднання повідомляє вам, що цей додаток може перехоплювати весь мережевий трафік, і повідомляється системою попереджень VPNService API. \nСповіщення про VPN з\'єднання (символ \"Ключа\") також формується системою Android для сигналізації про вихідне VPN з\'єднання. У деяких прошивках це сповіщення супроводжується сигналом. \nAndroid використовує ці cповіщення для вашої власної безпеки і їх не можна обійти. (На жаль, на деяких прошивках також  сповіщення супроводжується звуком)</string>
   <string name="faq_system_dialogs_title">Повідомлення про підключення та звук сповіщеня</string>
@@ -374,4 +373,15 @@
   <string name="custom_connection_options_warng">Визначені параметри користувача при з\'єднанні. Будьте обережні!</string>
   <string name="custom_connection_options">Власні налаштовування</string>
   <string name="remove_connection_entry">Видалити запис підключення</string>
+  <string name="ab_kitkat_reconnect_title">Випадкове відключення від мережі мобільного зв\'язку</string>
+  <string name="ab_vpn_reachability_44_title">Віддалені мережі недоступні</string>
+  <string name="ab_persist_tun_title">Зберігати tun режим</string>
+  <string name="version_and_later">%s і подальше</string>
+  <string name="tls_cipher_alert_title">Підключення не вдається з \"SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure\"</string>
+  <string name="Search">Пошук</string>
+  <string name="lastdumpdate">(Останній Dump %1$d:%2$dh старий (%3$s))</string>
+  <string name="clear_log_on_connect">Очистити журнал при новому підключенні</string>
+  <string name="connect_timeout">Час очікування з\'єднання</string>
+  <string name="protocol">Протокол</string>
+  <string name="enabled_connection_entry">Ввімкнено</string>
 </resources>

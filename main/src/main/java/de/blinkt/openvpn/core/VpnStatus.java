@@ -6,7 +6,6 @@
 package de.blinkt.openvpn.core;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -339,7 +338,7 @@ public class VpnStatus {
     }
 
     private static void logInformation() {
-        logInfo(R.string.mobile_info, Build.MODEL, Build.BOARD, Build.BRAND, Build.VERSION.SDK_INT);
+        logInfo(R.string.mobile_info, Build.MODEL, Build.BOARD, Build.BRAND, Build.VERSION.SDK_INT, NativeUtils.getNativeAPI());
     }
 
     public synchronized static void addLogListener(LogListener ll) {

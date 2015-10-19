@@ -180,7 +180,6 @@
   <string name="keychain_nocacert">Androidi võtmehoidlast lugemine ei andnud ühtegi CA sertifikaati. Suure tõenäosusega autentimine ebaõnnestub.</string>
   <string name="show_log_summary">Näitab ühendumisel logiakent. Logiakna saab alati ette manada VPN teatisealast.</string>
   <string name="show_log_window">Näita logiakent</string>
-  <string name="mobile_info">Töötamas %1$s (%2$s) %3$s peal, Android API %4$d</string>
   <string name="error_rsa_sign">Viga allkirjastamisel Androidi võtmehoidla võtmega %1$s: %2$s</string>
   <string name="faq_system_dialogs">VPN ühendumisel ilmub ekraanile hoiatus et see programm võib pealt kuulata kogu võrguliiklust. Tegemist on VPNService API süsteemse hoiatusega et hoida ära väärkasutust.\nVPN ühenduse teatis (Võtme sümbol) on samuti VPNService API poolt kuvatav aktiivse VPN ühenduse indikaator. Mõne süsteemitarkvara puhul võib see indikaator anda märku ka heliga.\nNeed teatised on Androidi süsteemile lisatud teie turvalisuse tagamiseks ja samuti on välistatud nende kasutamisest mööda minemine. (Kahjuks tähendab see seda et mõne süsteemitarkvara puhul kaasneb ühendusega alati ka heliteade)</string>
   <string name="faq_system_dialogs_title">Hoiatused ja helimärguanded ühenduse loomisel</string>

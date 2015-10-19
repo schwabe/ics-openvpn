@@ -178,7 +178,7 @@
     <string name="keychain_nocacert">No CA Certificate returned while reading from Android keystore. Authentication will probably fail.</string>
     <string name="show_log_summary">Shows the log window on connect. The log window can always be accessed from the notification status.</string>
     <string name="show_log_window">Show log window</string>
-    <string name="mobile_info">Running on %1$s (%2$s) %3$s, Android API %4$d</string>
+    <string name="mobile_info">Running on %1$s (%2$s) %3$s, Android API %4$d, ABI %5$s</string>
     <string name="error_rsa_sign">Error signing with Android keystore key %1$s: %2$s</string>
     <string name="faq_system_dialogs">The VPN connection warning telling you that this app can intercept all traffic is imposed by the system to prevent abuse of the VPNService API.\nThe VPN connection notification (The key symbol) is also imposed by the Android system to signal an ongoing VPN connection. On some images this notification plays a sound.\nAndroid introduced these system dialogs for your own safety and made sure that they cannot be circumvented. (On some images this unfortunately includes a notification sound)</string>
     <string name="faq_system_dialogs_title">Connection warning and notification sound</string>
@@ -386,9 +386,10 @@
     <string name="lastdumpdate">(Last dump is %1$d:%2$dh old (%3$s))</string>
     <string name="clear_log_on_connect">Clear log on new connection</string>
     <string name="connect_timeout">Connect Timeout</string>
-    <string name="no_allowed_app">No allowed app app added. Addding ourselves (%s) to have at least one app in the allowed app list to not allow all apps</string>
+    <string name="no_allowed_app">No allowed app added. Addding ourselves (%s) to have at least one app in the allowed app list to not allow all apps</string>
     <string name="query_permissions_sdcard">OpenVPN for Android can try to discover the missing file(s) on the sdcard automatically. Tap this message start the permission request.</string>
     <string name="protocol">Protocol</string>
     <string name="enabled_connection_entry">Enabled</string>
+    <string name="abi_mismatch">Preferred native ABI predence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
 
 </resources>

@@ -174,7 +174,6 @@
   <string name="keychain_nocacert">Nici un certificat CA nu a fost returnat la citirea din keystore-ul Android. Autentificarea probabil va eşua.</string>
   <string name="show_log_summary">Afişează fereastra jurnal la conectare. Fereastra jurnal poate fi accesată oricând din statusul notificare.</string>
   <string name="show_log_window">Arată fereastra Jurnal</string>
-  <string name="mobile_info">Rulează pe %1$s (%2$s) %3$s, Android API %4$d</string>
   <string name="error_rsa_sign">Eroare semnare cu Android keystore key %1$s: %2$s</string>
   <string name="faq_system_dialogs">Avertizarea la conexiunea VPN ce vă spune că această aplicaţie poate intercepta întreg traficul este impusă de sistem pentru a preveni abuzul funcţiei API VPNService.\nNotificarea de conexiune VPN(simbolul cheie)este de asemenea impusă de sistemul Android pentru a semnala o conexiune VPN în derulare. În cadrul unor imagini această notificare face şi un sunet.\nAndroid a introdus aceste notificări pentru siguranţa dvs. şi este asigurat că nu pot fi evitate. (Din păcate în anumite imagini acestea includ şi un sunet de notificare)</string>
   <string name="faq_system_dialogs_title">Alertă conexiune şi sunet notificare</string>

@@ -145,7 +145,6 @@
   <string name="select_file">選擇</string>
   <string name="show_log_summary">連接時顯示記錄檔視窗。記錄檔視窗可以隨時從通知欄中進入。</string>
   <string name="show_log_window">顯示記錄視窗</string>
-  <string name="mobile_info">於 %1$s (%2$s) %3$s 上運行, Android API 版本: %4$d</string>
   <string name="faq_system_dialogs_title">連線警告和通知時發出音效</string>
   <string name="translationby">繁體中文</string>
   <string name="ipdns">IP和DNS</string>

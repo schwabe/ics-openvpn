@@ -180,7 +180,6 @@
   <string name="keychain_nocacert">Beim Abfragen des Android KeyStore wurde kein CA Zertifikat zurückgegeben. Überprüfen des Serverzertifikat wird wahrscheinlich fehlschlagen. Geben Sie manuell ein CA Zertifikat an.</string>
   <string name="show_log_summary">Zeigt das Status Log, wenn ein VPN verbunden wird. Das Status log kann immer über die Benachrichtigung aufgerufen werden.</string>
   <string name="show_log_window">Zeige Log</string>
-  <string name="mobile_info">Modell %1$s (%2$s) %3$s, Android API %4$d</string>
   <string name="error_rsa_sign">Fehler beim Zugriff auf den Android Keystore %1$s: %2$s</string>
   <string name="faq_system_dialogs">Die Meldung, dass OpenVPN versucht eine VPN-Verbindung aufzubauen und dabei den gesamten Netzwerkverkehr abhören kann, wird vom Android System selbst erzeugt. Diese wird vom System erzwungen, damit keine Anwendung vom Benutzer unbemerkt eine VPN Verbindung aufbauen kann\Die VPN Benachrichtigung (Das Schlüssel Symbol) wird genauso vom Android System angezeigt um eine bestehende VPN anzuzeigen.\nDiese beiden Features wurden in Android für die Sicherheit des Nutzers implementiert und können nicht umgangen werden. (Auf machen Telefon/Tablets wird die Benachrichtigung leider mit einem Ton signalisiert.)</string>
   <string name="faq_system_dialogs_title">Warnung beim Verbinden und Benachrichtigungston</string>

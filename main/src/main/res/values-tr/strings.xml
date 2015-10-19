@@ -181,7 +181,6 @@
   <string name="keychain_nocacert">Hayır CA sertifikasını okurken Android deposunu döndürdü. Kimlik doğrulama muhtemelen başarısız olur.</string>
   <string name="show_log_summary">Bağlama kütüğü penceresi üzerinde gösterir. Kütüğü penceresi her zaman bildirim durumu erişilebilir.</string>
   <string name="show_log_window">Günlüğü penceresini göster</string>
-  <string name="mobile_info">%1$s (%2$s) %3$s, Android API %4$d d\'çalışması</string>
   <string name="error_rsa_sign">Android deposunun anahtarı %1$s %2$s ile imzalama hatası</string>
   <string name="faq_system_dialogs">Bu app tüm trafiği geçirebilir belirten VPN bağlantısı uyarı dayatılan VPNService API.\nThe VPN bağlantısının istismarını önlemek için sistem tarafından bildirim (anahtar simgesi) da devam eden bir VPN bağlantısı sinyal için Android sistem tarafından uygulanmaktadır. Bu bildirim çalış bazı görüntülerde ses. \nAndroid kendi güvenliğiniz için bu sistem diyaloglar tanıttı ve circumenvented olamaz emin oldum. (Bazı görüntülerde bu unfortunely notifciation ses içerir)</string>
   <string name="faq_system_dialogs_title">Bağlantı uyarı ve bildirim sesi</string>

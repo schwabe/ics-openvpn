@@ -125,7 +125,6 @@
   <string name="netstatus">Nettverksstatus: %s</string>
   <string name="select_file">Velg</string>
   <string name="show_log_window">Vis logg-vindu</string>
-  <string name="mobile_info">Kjører på %1$s (%2$s) %3$s, Android API %4$d</string>
   <string name="translationby">Norsk oversettelse av Jonny</string>
   <string name="ipdns">IP og DNS</string>
   <string name="basic">Grunnleggende</string>

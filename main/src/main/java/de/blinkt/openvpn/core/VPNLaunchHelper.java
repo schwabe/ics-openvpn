@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Vector;
 
 import de.blinkt.openvpn.R;
@@ -29,15 +30,22 @@ public class VPNLaunchHelper {
     static private String writeMiniVPN(Context context) {
         String[] abis;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            abis = getSupportedAbisLollipop();
+            abis = getSupportedABIsLollipop();
         else
+            //noinspection deprecation
             abis = new String[]{Build.CPU_ABI, Build.CPU_ABI2};
+
+        String nativeAPI = NativeUtils.getNativeAPI();
+        if (!nativeAPI.equals(abis[0])) {
+            VpnStatus.logWarning(R.string.abi_mismatch, Arrays.toString(abis), nativeAPI);
+            abis = new String[] {nativeAPI};
+        }
 
         for (String abi: abis) {
 
-            File mvpnout = new File(context.getCacheDir(), getMiniVPNExecutableName() + "." + abi);
-            if ((mvpnout.exists() && mvpnout.canExecute()) || writeMiniVPNBinary(context, abi, mvpnout)) {
-                return mvpnout.getPath();
+            File vpnExecutable = new File(context.getCacheDir(), getMiniVPNExecutableName() + "." + abi);
+            if ((vpnExecutable.exists() && vpnExecutable.canExecute()) || writeMiniVPNBinary(context, abi, vpnExecutable)) {
+                return vpnExecutable.getPath();
             }
         }
 
@@ -45,7 +53,7 @@ public class VPNLaunchHelper {
 	}
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static String[] getSupportedAbisLollipop() {
+    private static String[] getSupportedABIsLollipop() {
         return Build.SUPPORTED_ABIS;
     }
 

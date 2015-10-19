@@ -180,7 +180,6 @@
   <string name="keychain_nocacert">Không có chứng chỉ CA phản hồi khi đọc khóa lưu trữ Android. Chứng thực có thể sẽ thất bại.</string>
   <string name="show_log_summary">Hiển thị cửa sổ đăng nhập khi kết nối. Cửa sổ đăng nhập có thể luôn truy cập từ thanh thông báo trạng thái.</string>
   <string name="show_log_window">Hiển thị cửa sổ đăng nhập</string>
-  <string name="mobile_info">Đang chạy trên %1$s (%2$s) %3$s, Android API %4$d</string>
   <string name="error_rsa_sign">Lỗi đăng ký với khóa lưu trữ Android %1$s: %2$s</string>
   <string name="faq_system_dialogs">Các kết nối VPN đang cảnh báo bạn rằng ứng dụng này có thể chặn tất cả lưu lượng được đặt bởi hệ thống để chặn tình trạng lạm dụng VPN API. \nThông báo kết nối VPN (Biểu tượng chìa khóa) cũng được đặt bởi hệ thống Android để báo hiệu một kết nối VPN đang hoạt động. Với một số trường hợp thông báo này sẽ phát một âm thanh. \nAndroid giới thiệu những đoạn hội thoại này vì sự an toàn của bạn và chắn chắn rằng chúng không thể bị xâm nhập phá hoại. (Trên một số trường hợp thật không may không bao gồm âm thanh thông báo)</string>
   <string name="faq_system_dialogs_title">Cảnh báo kết nối và thông báo âm thanh</string>
@@ -374,4 +373,22 @@
   <string name="custom_connection_options_warng">Xác định kết nối tùy chỉnh cụ thể. Dùng cẩn thận</string>
   <string name="custom_connection_options">Cấu hình tùy chỉnh</string>
   <string name="remove_connection_entry">Gỡ bỏ mục kết nối</string>
+  <string name="ab_kitkat_reconnect_title">Ngẫu nhiên ngắt kết nối từ mạng di động</string>
+  <string name="ab_vpn_reachability_44_title">Mạng từ xa không khả dụng</string>
+  <string name="ab_persist_tun_title">Chế độ tun cố định</string>
+  <string name="version_and_later">%s và sau</string>
+  <string name="tls_cipher_alert_title">Kết nối thất bại với lỗi cảnh báo SSL23_GET_SERVER_HELLO:sslv3</string>
+  <string name="tls_cipher_alert">Phiên bản OpenVPN cho Android mới hơn (0.6.29/tháng 3 năm 2015) sử dụng nhiều bảo mật mặc định trên những bộ mã hóa được cho phép (tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Thật không may, việc bỏ qua những mã hóa kém an toàn và xuất các mã hóa, đặc biệt là các thiếu sót của bộ mã hóa không hỗ trợ Perfect Forward Secrecy (Diffie-Hellman) nên gây ra một vài vấn đề. Điều này là ý định tốt nhưng nó thực hiện tăng cường bảo mật TLS kém hơn bằng cách thiết lập mật mã-tls trên máy chủ hoặc một số hệ điều hành với SSL hạ thấp (ví dụ MikroTik).\n Để khắc phục lỗi này, đặt cài đặt mật mã-tls mặc định trên máy chủ một cách hợp lý như mật mã-tls \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". Để làm việc xung quanh vấn đề trên máy trạm, hãy thêm tùy chọn tùy chỉnh mật mã-tls MẶC ĐỊNH trên máy trạm Android.</string>
+  <string name="message_no_user_edit">Hồ sơ này đã được thêm từ ứng dụng bên ngoài %s và đã được đánh dấu là người dùng không thể chỉnh sửa.</string>
+  <string name="crl_file">Danh sách thu hồi chứng nhận</string>
+  <string name="service_restarted">Đang khởi động lại dịch vụ OpenVPN (Ứng dụng gặp lỗi hoặc bị dừng do tràn bộ nhớ)</string>
+  <string name="import_config_error">Nhập cấu hình mạng bị lỗi, không thể lưu lại</string>
+  <string name="Search">Tìm kiếm</string>
+  <string name="lastdumpdate">(Kết xuất cuối là %1$d:%2$d cũ (%3$s))</string>
+  <string name="clear_log_on_connect">Xóa nhật ký trên kết nối mới</string>
+  <string name="connect_timeout">Hết thời gian kết nối</string>
+  <string name="no_allowed_app">Không có ứng dụng nào được phép thêm. Đang thêm (%s) có tối thiểu một ứng dụng trong danh sách những ứng dụng đã cho phép chứ không cho phép tất cả ứng dụng</string>
+  <string name="query_permissions_sdcard">OpenVPN cho Android có thể tìm những tập tin bị mất trên thẻ nhớ một cách tự động. Nhấn vào tin nhắn này để bắt đầu yêu cầu quyền.</string>
+  <string name="protocol">Giao thức</string>
+  <string name="enabled_connection_entry">Bật</string>
 </resources>

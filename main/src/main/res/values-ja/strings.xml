@@ -180,7 +180,6 @@ SDカード上のデータは本質的に無防備です。すべてのアプリ
   <string name="keychain_nocacert">認証局証明書（CA Cert）がAndroidのキーストアから取得できませんでした。認証はおそらく失敗します。</string>
   <string name="show_log_summary">接続時にログウィンドウを表示します。ログウィンドウは常に状態通知からアクセスできます。</string>
   <string name="show_log_window">ログウィンドウを表示</string>
-  <string name="mobile_info">実行中：%1$s (%2$s)%3$s Android API %4$d</string>
   <string name="error_rsa_sign">Androidキーストアに保存されたキー %1$s: %2$sの署名エラーです</string>
   <string name="faq_system_dialogs">VPN接続の警告は、このアプリケーションがVPNService APIを悪用してすべての通信を傍受できることを、システムがあなたに知らせるものです。\n
 VPN接続通知(鍵の形)は、VPN接続が稼働中であることをAndroidが知らせています。いくつかのシステムではこの通知で音を鳴らします。\n

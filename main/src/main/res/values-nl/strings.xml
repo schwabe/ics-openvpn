@@ -20,7 +20,7 @@
   <string name="client_pkcs12_title">PKCS12 Bestand</string>
   <string name="ca_title">CA Certificaat</string>
   <string name="no_certificate">Je moet een certificaat selecteren</string>
-  <string name="copyright_guicode">De broncode en bugs zijn te vinden op http://code.google.com/p/ics-openvpn/</string>
+  <string name="copyright_guicode">De broncode en bugs zijn te vinden op https://github.com/schwabe/ics-openvpn/</string>
   <string name="copyright_others">Het programma gebruikt de volgende componenten. Zie de broncode voor volledige details over de licenties.</string>
   <string name="about">Over</string>
   <string name="vpn_list_title">Profielen</string>
@@ -30,9 +30,9 @@
   <string name="file_nothing_selected">Je moet een bestand selecteren</string>
   <string name="useTLSAuth">Gebruik TLS autentificatie</string>
   <string name="tls_direction">TLS Richting</string>
-  <string name="ipv6_dialog_tile">Voer een IPv6 Adres/Netmask in met het CIDR Formaat (v.b. 2000:dd::23/64)</string>
-  <string name="ipv4_dialog_title">Voer een IPv4 Adres/Netmask in met het CIDR Formaat (v.b. 1.2.3.4/24)</string>
-  <string name="ipv4_address">IPv4 Adres</string>
+  <string name="ipv6_dialog_tile">Voer een IPv6 Adres/Netmask in met het CIDR Formaat (b.v. 2000:dd::23/64)</string>
+  <string name="ipv4_dialog_title">Voer een IPv4 Adres/Netmask in met het CIDR Formaat (b.v. 1.2.3.4/24)</string>
+  <string name="ipv4_address">IPv6 Adres</string>
   <string name="ipv6_address">IPv4 Adres</string>
   <string name="custom_option_warning">Geavanceerde OpenVPN opties. Veel van de tun gerelateerde OpenVPN instellingen worden niet ondersteund. Als u denkt dat een belangrijke optie ontbreekt, neem dan contact op met de auteur.</string>
   <string name="auth_username">Gebruikersnaam</string>

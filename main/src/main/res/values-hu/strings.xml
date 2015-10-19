@@ -178,7 +178,6 @@
   <string name="keychain_nocacert">Nem jött vissza CA tanúsítvány az Android keystore olvasása során. A hitelesítés valószínűleg sikertelen lesz.</string>
   <string name="show_log_summary">Napló ablak mutatása a csatlakozás alatt. A napló ablak mindig elérető a rolóról is.</string>
   <string name="show_log_window">Naplózási ablak mutatása</string>
-  <string name="mobile_info">%1$s (%2$s) %3$s, Android API %4$d</string>
   <string name="error_rsa_sign">Hiba az Android keystore %1$s: %2$s kulccsal való belépéskor</string>
   <string name="faq_system_dialogs_title">Kapcsolat figyelmeztetés és értesítés hang</string>
   <string name="translationby">A magyar fordítást készítette Juhász Sándor &lt;msc@digitaltrip.hu&gt;</string>

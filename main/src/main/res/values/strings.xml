@@ -390,6 +390,6 @@
     <string name="query_permissions_sdcard">OpenVPN for Android can try to discover the missing file(s) on the sdcard automatically. Tap this message start the permission request.</string>
     <string name="protocol">Protocol</string>
     <string name="enabled_connection_entry">Enabled</string>
-    <string name="abi_mismatch">Preferred native ABI predence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
+    <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
 
 </resources>

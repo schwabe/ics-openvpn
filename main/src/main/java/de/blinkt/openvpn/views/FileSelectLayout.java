@@ -151,8 +151,9 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
                 mDataView.setText(R.string.inline_file_data);
             else
                 mDataView.setText(data);
-            if (mIsCertificate)
+            if (mIsCertificate) {
                 mDataDetails.setText(X509Utils.getCertificateFriendlyName(c, data));
+            }
 
             // Show clear button if it should be shown
             mShowClearButton.setVisibility(mShowClear? VISIBLE : GONE);

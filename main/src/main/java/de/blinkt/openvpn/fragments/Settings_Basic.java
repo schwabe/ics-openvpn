@@ -89,8 +89,9 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
                                 certstr+=getString(R.string.hwkeychain);
                         }
                     }
-
+					certstr+=X509Utils.getCertificateValidityString(cert, getResources());
                     certstr+=X509Utils.getCertificateFriendlyName(cert);
+
                 } catch (Exception e) {
                     certstr="Could not get certificate from Keystore: " +e.getLocalizedMessage();
                 }

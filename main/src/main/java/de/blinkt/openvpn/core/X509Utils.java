@@ -6,6 +6,7 @@
 package de.blinkt.openvpn.core;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.text.TextUtils;
 
 import de.blinkt.openvpn.R;
@@ -20,8 +21,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
+import java.security.cert.CertificateExpiredException;
 import java.security.cert.CertificateFactory;
+import java.security.cert.CertificateNotYetValidException;
 import java.security.cert.X509Certificate;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Hashtable;
 
 public class X509Utils {
@@ -68,8 +74,9 @@ public class X509Utils {
 		if(!TextUtils.isEmpty(filename)) {
 			try {
 				X509Certificate cert = (X509Certificate) getCertificateFromFile(filename);
-
-                return getCertificateFriendlyName(cert);
+                String friendlycn = getCertificateFriendlyName(cert);
+                friendlycn = getCertificateValidityString(cert, c.getResources()) + friendlycn;
+                return friendlycn;
 
 			} catch (Exception e) {
 				VpnStatus.logError("Could not read certificate" + e.getLocalizedMessage());
@@ -77,6 +84,40 @@ public class X509Utils {
 		}
 		return c.getString(R.string.cannotparsecert);
 	}
+
+    public static String getCertificateValidityString(X509Certificate cert, Resources res) {
+        try {
+            cert.checkValidity();
+        } catch (CertificateExpiredException ce) {
+            return "EXPIRED: ";
+        } catch (CertificateNotYetValidException cny) {
+            return "NOT YET VALID: ";
+        }
+
+        Date certNotAfter = cert.getNotAfter();
+        Date now = new Date();
+        long timeLeft = certNotAfter.getTime() - now.getTime(); // Time left in ms
+
+        // More than 72h left, display days
+        // More than 3 months display months
+        if (timeLeft > 90l* 24 * 3600 * 1000) {
+            long months = getMonthsDifference(now, certNotAfter);
+            return res.getString(R.string.months_left, months);
+        } else if (timeLeft > 72 * 3600 * 1000) {
+            long days = timeLeft / (24 * 3600 * 1000);
+            return res.getString(R.string.days_left, days);
+        } else {
+            long hours = timeLeft / (3600 * 1000);
+
+            return res.getString(R.string.hours_left, hours);
+        }
+    }
+
+    public static int getMonthsDifference(Date date1, Date date2) {
+        int m1 = date1.getYear() * 12 + date1.getMonth();
+        int m2 = date2.getYear() * 12 + date2.getMonth();
+        return m2 - m1 + 1;
+    }
 
     public static String getCertificateFriendlyName(X509Certificate cert) {
         X500Principal principal = cert.getSubjectX500Principal();

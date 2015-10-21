@@ -287,11 +287,11 @@ public class VpnStatus {
                     NoSuchAlgorithmException ignored) {
             }
 
-            Object[] argsext = Arrays.copyOf(mArgs, mArgs.length + 2);
+            Object[] argsext = Arrays.copyOf(mArgs, mArgs.length);
             argsext[argsext.length - 1] = apksign;
             argsext[argsext.length - 2] = version;
 
-            return c.getString(R.string.mobile_info_extended, argsext);
+            return c.getString(R.string.mobile_info, argsext);
 
         }
 
@@ -338,7 +338,8 @@ public class VpnStatus {
     }
 
     private static void logInformation() {
-        logInfo(R.string.mobile_info, Build.MODEL, Build.BOARD, Build.BRAND, Build.VERSION.SDK_INT, NativeUtils.getNativeAPI());
+        logInfo(R.string.mobile_info, Build.MODEL, Build.BOARD, Build.BRAND, Build.VERSION.SDK_INT,
+                NativeUtils.getNativeAPI(), Build.VERSION.RELEASE, Build.ID, Build.FINGERPRINT, "", "");
     }
 
     public synchronized static void addLogListener(LogListener ll) {

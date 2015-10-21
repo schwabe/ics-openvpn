@@ -250,7 +250,6 @@
   <string name="encryption_cipher">Krypteringschiffer</string>
   <string name="packet_auth">Paketautentisering</string>
   <string name="auth_dialog_title">Ange autentiseringsmetod för paket</string>
-  <string name="mobile_info_extended">Kör på %1$s (%2$s) %3$s, Android API %4$d, version %5$s, %6$s</string>
   <string name="built_by">byggd av %s</string>
   <string name="debug_build">felsöknings bygge</string>
   <string name="official_build">officiellt bygge</string>

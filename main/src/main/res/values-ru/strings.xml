@@ -259,7 +259,6 @@
   <string name="encryption_cipher">Алгоритм шифрования</string>
   <string name="packet_auth">Проверка подлинности пакетов</string>
   <string name="auth_dialog_title">Укажите метод проверки подлинности пакетов</string>
-  <string name="mobile_info_extended">Запущен на %1$s (%2$s) %3$s, Android API %4$d, версии %5$s, %6$s</string>
   <string name="built_by">создан %s</string>
   <string name="debug_build">сборка для отладки</string>
   <string name="official_build">официальная сборка</string>

@@ -259,7 +259,6 @@
   <string name="encryption_cipher">Verschlüsselungsalgorithmus</string>
   <string name="packet_auth">Packetauthentifizierung</string>
   <string name="auth_dialog_title">Geben Sie den Authentifizierungsalgorithmus an</string>
-  <string name="mobile_info_extended">Modell %1$s (%2$s) %3$s, Android API %4$d, version %5$s, %6$s</string>
   <string name="built_by">compiliert von %s</string>
   <string name="debug_build">Testversion</string>
   <string name="official_build">offizielle Version</string>
@@ -358,6 +357,7 @@
   <string name="ab_proxy">Android wird ihre Proxy-Einstellungen für die WLan-Verbindung beibehalten wenn keine DNS-Servereinstellungen vorhanden sind. OpenVPN für Android gibt einen entsprechenden Warnhinweis in der Log-Datei aus.<p> Wenn eine VPN-Verbindung einen DNS-Server vorgibt kann kein Proxy genutzt werden. Es gibt keine API um einen Proxy-Server  für eine VPN-Verbindung zu nutzen.</p></string>
   <string name="ab_lollipop_reinstall">Ihre VPN-Anwendung funktioniert möglicherweise nicht mehr wenn diese erst de- und später neu installiert wird. Für Details siehe #80074</string>
   <string name="ab_not_route_to_vpn">Die konfigurierte Klient-IP-Adresse und die IP-Adressen in die Netzwerkmaske sind nicht in das VPN geroutet. OpenVPN umgeht diesen Fehler, indem eine Route hinzugefügt wird, die zu der Client-IP-Adresse und deren Netzmaske passt.</string>
+  <string name="ab_persist_tun">Beim Öffnen eines neuen VPN devices (tun) während eines bereits geöffnet ist (für persist-tun Unterstützung) führt zum Absturz des VPN Dienstes auf Android, der nur durch einen Neustart behoben werden kann. OpenVPN für Android versucht deshalb dieses erneute Öffnen zu vermeiden. Wenn ein erneutes Öffnen zwingend notwendig ist, wird erst das alte Device geschlossen before ein neues geöffnet wird. Dies kann dazu führen, dass teilweise Pakete unverschlüsselt über die normal Internetverbindung gesendet werden. Auch mit diesem Workaround stürzt teilweise der VPN Dienst ab und erfordert einen Neustart des Gerätes.</string>
   <string name="ab_secondary_users">VPN funktioniert überhaupt nicht für die Sekundärnutzer.</string>
   <string name="ab_kitkat_reconnect">Mehrere Benutzer berichten, dass die mobile Verbindung/Mobile Datenverbindung häufig getrennt wird, wenn ein VPN aktiv. Das Verhalten scheint nur einige Anbieter/Mobilgerät-Kombination beeinflussen und bisher konnte weder Ursache noch Lösung für den Bug identifiziert werden.</string>
   <string name="ab_vpn_reachability_44">Nur Ziele, die ohne VPN erreichbar sind, sind auch mit VPN erreichbar. IPv6 VPNs funktionieren überhaupt nicht.</string>
@@ -387,6 +387,8 @@
   <string name="clear_log_on_connect">Protokoll bei neuer Verbindung leeren</string>
   <string name="connect_timeout">Verbindungstimeout</string>
   <string name="no_allowed_app">Keine erlaubte App hinzgefügt. Füge die App selbst (%s) hinzu um wenigsten eine App in der Liste der nicht erlaubten Anwendungen zu haben</string>
+  <string name="query_permissions_sdcard">OpenVPN für Android kann versuchen, die fehlende(n) Datei(en) auf der SD-Karte automatisch zu finden. Tippen Sie auf diese Meldung um die Berechtigungsanfrage zu starten.</string>
   <string name="protocol">Protokoll</string>
   <string name="enabled_connection_entry">Aktiviert</string>
+  <string name="abi_mismatch">Bevorzugte native ABI Reihenfolge dieses Gerätes (%1$s) und die installierten nativen Bibliotheken (%2$s) unterscheiden sich</string>
 </resources>

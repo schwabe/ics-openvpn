@@ -251,7 +251,6 @@
   <string name="encryption_cipher">Cifru criptare</string>
   <string name="packet_auth">Autentificare pachete</string>
   <string name="auth_dialog_title">Introduceţi metoda de autentificare de pachete</string>
-  <string name="mobile_info_extended">Rulează pe %1$s (%2$s) %3$s, Android API %4$d, versiunea %5$s, %6$s</string>
   <string name="built_by">compilat de %s</string>
   <string name="debug_build">versiune debug</string>
   <string name="official_build">versiune oficială</string>

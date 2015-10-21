@@ -270,7 +270,6 @@ OpenVPNの接続を保証するためには、アプリケーションを高い�
   <string name="encryption_cipher">暗号化方式</string>
   <string name="packet_auth">パケット認証</string>
   <string name="auth_dialog_title">パケット認証方式を入力してください。</string>
-  <string name="mobile_info_extended">%1$s (%2$s) %3$s、Android API %4$d、バージョン %5$s %6$s において実行中</string>
   <string name="built_by">%s によりビルド</string>
   <string name="debug_build">デバッグ ビルド</string>
   <string name="official_build">正式ビルド</string>

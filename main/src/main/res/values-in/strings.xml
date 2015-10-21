@@ -259,7 +259,6 @@
   <string name="encryption_cipher">Enkripsi sandi</string>
   <string name="packet_auth">Otentikasi paket</string>
   <string name="auth_dialog_title">Masukkan metode otentikasi paket</string>
-  <string name="mobile_info_extended">Berjalan pada Android API %4$d, versi %5$s %1$s (%2$s) %3$s, %6$s</string>
   <string name="built_by">dibangun oleh %s</string>
   <string name="debug_build">Pengembangan debug</string>
   <string name="official_build">Build Resmi</string>

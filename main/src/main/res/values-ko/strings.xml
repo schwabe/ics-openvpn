@@ -257,7 +257,6 @@
   <string name="encryption_cipher">암호화 암호</string>
   <string name="packet_auth">패킷 인증</string>
   <string name="auth_dialog_title">패킷 인증 방법을 입력한다</string>
-  <string name="mobile_info_extended">%1$s (%2$s) %3$s, 안드로이드 API %4$d, 버전 %5$s, %6$s에서 실행</string>
   <string name="built_by">개발자 %s</string>
   <string name="debug_build">디버그 빌드</string>
   <string name="official_build">공식 빌드</string>

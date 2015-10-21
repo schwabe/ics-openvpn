@@ -259,7 +259,6 @@
   <string name="encryption_cipher">Алгоритм шифрування</string>
   <string name="packet_auth">Пакети автентифікації</string>
   <string name="auth_dialog_title">Введіть метод автентифікації пакетів</string>
-  <string name="mobile_info_extended">Запущено на %1$s (%2$s) %3$s, Android API %4$d, версії %5$s, %6$s</string>
   <string name="built_by">побудована по %s</string>
   <string name="debug_build">відлагоджувальна збірка</string>
   <string name="official_build">Офіційна збірка</string>

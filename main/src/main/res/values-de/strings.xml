@@ -180,6 +180,7 @@
   <string name="keychain_nocacert">Beim Abfragen des Android KeyStore wurde kein CA Zertifikat zurückgegeben. Überprüfen des Serverzertifikat wird wahrscheinlich fehlschlagen. Geben Sie manuell ein CA Zertifikat an.</string>
   <string name="show_log_summary">Zeigt das Status Log, wenn ein VPN verbunden wird. Das Status log kann immer über die Benachrichtigung aufgerufen werden.</string>
   <string name="show_log_window">Zeige Log</string>
+  <string name="mobile_info">%10$s %9$s läuft auf %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
   <string name="error_rsa_sign">Fehler beim Zugriff auf den Android Keystore %1$s: %2$s</string>
   <string name="faq_system_dialogs">Die Meldung, dass OpenVPN versucht eine VPN-Verbindung aufzubauen und dabei den gesamten Netzwerkverkehr abhören kann, wird vom Android System selbst erzeugt. Diese wird vom System erzwungen, damit keine Anwendung vom Benutzer unbemerkt eine VPN Verbindung aufbauen kann\Die VPN Benachrichtigung (Das Schlüssel Symbol) wird genauso vom Android System angezeigt um eine bestehende VPN anzuzeigen.\nDiese beiden Features wurden in Android für die Sicherheit des Nutzers implementiert und können nicht umgangen werden. (Auf machen Telefon/Tablets wird die Benachrichtigung leider mit einem Ton signalisiert.)</string>
   <string name="faq_system_dialogs_title">Warnung beim Verbinden und Benachrichtigungston</string>
@@ -391,4 +392,7 @@
   <string name="protocol">Protokoll</string>
   <string name="enabled_connection_entry">Aktiviert</string>
   <string name="abi_mismatch">Bevorzugte native ABI Reihenfolge dieses Gerätes (%1$s) und die installierten nativen Bibliotheken (%2$s) unterscheiden sich</string>
+  <string name="months_left">Noch %d Monate gültig</string>
+  <string name="days_left">Noch %d Tage gültig</string>
+  <string name="hours_left">Noch %d Stunden gültig</string>
 </resources>

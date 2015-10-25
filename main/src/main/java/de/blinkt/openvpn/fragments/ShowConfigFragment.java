@@ -34,15 +34,15 @@ public class ShowConfigFragment extends Fragment {
 		
 
 		mfabButton = (ImageButton) v.findViewById(R.id.share_config);
-        if (mfabButton!=null)
-            mfabButton.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    shareConfig();
-                }
-            });
-		mfabButton.setVisibility(View.INVISIBLE);
-
+        if (mfabButton!=null) {
+			mfabButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					shareConfig();
+				}
+			});
+			mfabButton.setVisibility(View.INVISIBLE);
+		}
 		return v;
 	}
 
@@ -57,7 +57,8 @@ public class ShowConfigFragment extends Fragment {
 					@Override
 					public void run() {
 						cv.setText(configtext);
-						mfabButton.setVisibility(View.VISIBLE);
+                        if (mfabButton!=null)
+						    mfabButton.setVisibility(View.VISIBLE);
 					}
 				});
 				

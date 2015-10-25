@@ -357,4 +357,6 @@
   <string name="clear_log_on_connect">Wyczyść dziennik przy nowym połączeniu</string>
   <string name="connect_timeout">Limit czasu połączenia</string>
   <string name="no_allowed_app">Dodano niedozwoloną aplikację. Dodaję siebie (%s), żeby mieć przynajmniej jedną aplikację w liście dozwolonych aplikacji, aby nie pozwolić wszystkim aplikacjom</string>
+  <string name="protocol">Protokół</string>
+  <string name="enabled_connection_entry">Włączony</string>
 </resources>

@@ -180,6 +180,7 @@
   <string name="keychain_nocacert">Nobeno potrdilo ni bilo vrnjeno med branjem Androidove shrambe ključev. Overitev bo verjetno spodletela.</string>
   <string name="show_log_summary">Prikaže okno dnevnika ob povezavi. Dostop do okna dnevnika je vedno možen iz stanja obvestila.</string>
   <string name="show_log_window">Prikaži okno dnevnika</string>
+  <string name="mobile_info">%10$s %9$s se izvaja na %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
   <string name="error_rsa_sign">Napaka pri podpisu s ključem Androidove shrambe ključev %1$s: %2$s</string>
   <string name="faq_system_dialogs">Opozorilo o povezavi VPN, ki vam sporoča, da lahko ta naprava prestreže ves promet, vsili sistem, da prepreči zlorabo API-ja storitve VPN.\nObvestilo o povezavi VPN (simbol ključa) tudi vsili sistem Android, da nakaže tekočo povezavo VPN. V nekaterih odtisih to obvestilo predvaja zvok.\nAndroid je vpeljal ta sistemska pogovorna okna zaradi vaše varnosti in je poskrbel, da se jih ne da zaobiti (v nekaterih odtisih to na žalost vključuje zvok obvestila).</string>
   <string name="faq_system_dialogs_title">Opozorilo o povezavi in zvok obvestila</string>
@@ -390,4 +391,8 @@
   <string name="query_permissions_sdcard">OpenVPN za Android lahko samodejno poizkusi odkriti manjkajoče datoteke na kartici SD. Tapnite na to sporočilo, da zahtevate dovoljenje.</string>
   <string name="protocol">Protokol</string>
   <string name="enabled_connection_entry">Omogočeno</string>
+  <string name="abi_mismatch">Prednostna izvirna predhodnost ABI (%1$s) in ABI, ki ga sporočajo izvirne knjižnice (%2$s), se ne ujemata.</string>
+  <string name="months_left">Preostalih še %d mesecev</string>
+  <string name="days_left">Preostalih še %d dni</string>
+  <string name="hours_left">Preostalih še %d ur</string>
 </resources>

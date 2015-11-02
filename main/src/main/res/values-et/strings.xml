@@ -180,6 +180,7 @@
   <string name="keychain_nocacert">Androidi võtmehoidlast lugemine ei andnud ühtegi CA sertifikaati. Suure tõenäosusega autentimine ebaõnnestub.</string>
   <string name="show_log_summary">Näitab ühendumisel logiakent. Logiakna saab alati ette manada VPN teatisealast.</string>
   <string name="show_log_window">Näita logiakent</string>
+  <string name="mobile_info">%10$s %9$s töötab seadmel %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
   <string name="error_rsa_sign">Viga allkirjastamisel Androidi võtmehoidla võtmega %1$s: %2$s</string>
   <string name="faq_system_dialogs">VPN ühendumisel ilmub ekraanile hoiatus et see programm võib pealt kuulata kogu võrguliiklust. Tegemist on VPNService API süsteemse hoiatusega et hoida ära väärkasutust.\nVPN ühenduse teatis (Võtme sümbol) on samuti VPNService API poolt kuvatav aktiivse VPN ühenduse indikaator. Mõne süsteemitarkvara puhul võib see indikaator anda märku ka heliga.\nNeed teatised on Androidi süsteemile lisatud teie turvalisuse tagamiseks ja samuti on välistatud nende kasutamisest mööda minemine. (Kahjuks tähendab see seda et mõne süsteemitarkvara puhul kaasneb ühendusega alati ka heliteade)</string>
   <string name="faq_system_dialogs_title">Hoiatused ja helimärguanded ühenduse loomisel</string>
@@ -372,4 +373,26 @@
   <string name="custom_connection_options_warng">Seadista kohandatavad ühendusespetsiifilised valikud. Kasuta ettevaatlikult</string>
   <string name="custom_connection_options">Kohandatavad valikud</string>
   <string name="remove_connection_entry">Eemalda ühenduse kirje</string>
+  <string name="ab_kitkat_reconnect_title">Pistelised mobiilivõrgu katkestused</string>
+  <string name="ab_vpn_reachability_44_title">Kaugvõrgud on väljaspool ulatust</string>
+  <string name="ab_persist_tun_title">Püsiv tun režiim</string>
+  <string name="version_and_later">%s ja hilisem</string>
+  <string name="tls_cipher_alert_title">Ühendused nurjuvad teatega SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure</string>
+  <string name="tls_cipher_alert">Uuemad OpenVPN for Android versioonid (0.6.29/Märts 2015) kasutavad turvalisemat vaikešifrikoplekti (tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Paraku tekitab nõrgemate šifri- ning eksportšifrikomplektide vältimine, eriti nende šifrikomplektide mis ei toeta Täiuslikku Edastussaladust (Diffie-Hellman), mõningaid probleeme. Probleemid esinevad tavaliselt heade kavatsustega, kuid viletsa teostusega TLS tugevdamise katsetel, valides serveris tls-šifri mõnede kärbitud SSL algoritmiga põim-operatsioonisüsteemidel (n.n. MkroTik).\nProbleemi lahendamiseks seadke serveri tls-šifri parameetrid mõistlikule vaikeväärtusele nagu \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". Kliendipoolseks lahenduseks lisage Androidi klientseadme tls-šifri kohandatud parameetriks DEFAULT.</string>
+  <string name="message_no_user_edit">Selle profiili lisas väline programm (%s) ning see on tähistatud kui kasutajale muudetamatu.</string>
+  <string name="crl_file">Sertifikaadi tühistusnimekiri</string>
+  <string name="service_restarted">OpenVPN teenuse taaskäivitamine (Programm jooksis tõenäoliselt kokku või suleti mälusurve tõttu)</string>
+  <string name="import_config_error">Seadistuse importimine lõppes veaga, salvestamine ebaõnnestus</string>
+  <string name="Search">Otsing</string>
+  <string name="lastdumpdate">(Viimne tõmmis on %1$d:%2$dh vana (%3$s))</string>
+  <string name="clear_log_on_connect">Järgmisel ühendumisel tühjenda logi</string>
+  <string name="connect_timeout">Ühenduse ajalõpp</string>
+  <string name="no_allowed_app">Lisati lubamatu programm. Lisame ennast (%s) et lubatud programmide seas oleks vähemalt üks ja ei lubataks kõiki programme</string>
+  <string name="query_permissions_sdcard">OpenVPN for Android võib üritada leida automaatselt sd-kaardi puuduvad failid. Koputa seda teadet et algatada õiguste tellimine.</string>
+  <string name="protocol">Protokoll</string>
+  <string name="enabled_connection_entry">Lubatud</string>
+  <string name="abi_mismatch">Selle seadme eelistatud ABI eelisjärjekord (%1$s) ja seadme kaasnevate teekide teatatud ABI (%2$s) ei ühildu</string>
+  <string name="months_left">Jäänud on %d kuud</string>
+  <string name="days_left">jäänud on %d päeva</string>
+  <string name="hours_left">Jäänud on %d tundi</string>
 </resources>

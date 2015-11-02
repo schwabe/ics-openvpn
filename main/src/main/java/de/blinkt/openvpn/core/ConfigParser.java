@@ -148,7 +148,7 @@ public class ConfigParser {
 
     }
 
-    public class ConfigParseError extends Exception {
+    public static class ConfigParseError extends Exception {
         private static final long serialVersionUID = -60L;
 
         public ConfigParseError(String msg) {
@@ -721,9 +721,15 @@ public class ConfigParser {
         }
 
         Vector<String> connectTimeout = getOption("connect-timeout", 1, 1);
-        if (connectTimeout != null)
-            conn.mConnectTimeout = Integer.parseInt(connectTimeout.get(0));
+        if (connectTimeout != null) {
+            try {
+                conn.mConnectTimeout = Integer.parseInt(connectTimeout.get(1));
+            } catch (NumberFormatException nfe) {
+                throw new ConfigParseError(String.format("Argument to connect-timeout (%s) must to be an integer: %s",
+                        connectTimeout.get(1), nfe.getLocalizedMessage()));
 
+            }
+        }
 
                     // Parse remote config
         Vector<Vector<String>> remotes = getAllOption("remote", 1, 3);

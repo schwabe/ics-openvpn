@@ -18,6 +18,7 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.NetworkOnMainThreadException;
 import android.provider.OpenableColumns;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
@@ -632,7 +633,7 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
                             possibleName = possibleName.substring(possibleName.lastIndexOf('/') + 1);
 
                     }
-                    InputStream is = getContentResolver().openInputStream(data);
+
                     mPathsegments = data.getPathSegments();
 
                     Cursor cursor = null;
@@ -661,8 +662,12 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
                         possibleName = possibleName.replace(".ovpn", "");
                         possibleName = possibleName.replace(".conf", "");
                     }
-
-                    doImport(is, possibleName);
+                    try {
+                        InputStream is = getContentResolver().openInputStream(data);
+                        doImport(is, possibleName);
+                    } catch (NetworkOnMainThreadException nom) {
+                        throw new RuntimeException("Network on Main: + " + data);
+                    }
 
                 } catch (FileNotFoundException e) {
                     log(R.string.import_content_resolve_error);

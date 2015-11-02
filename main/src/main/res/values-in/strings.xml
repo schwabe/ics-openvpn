@@ -334,7 +334,7 @@
   <string name="vpn_disallow_radio">VPN digunakan untuk semua aplikasi tapi mengecualikan yang dipilih</string>
   <string name="vpn_allow_radio">VPN digunakan untuk hanya untuk aplikasi yang dipilih</string>
   <string name="query_delete_remote">Hapus entri server jauh?</string>
-  <string name="keep">Menjaga</string>
+  <string name="keep">Biarkan</string>
   <string name="delete">Hapus</string>
   <string name="add_remote">Menambahkan baru remote</string>
   <string name="remote_random">Gunakan entri koneksi secara acak pada koneksi</string>

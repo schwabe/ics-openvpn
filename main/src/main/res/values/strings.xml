@@ -393,5 +393,6 @@
     <string name="months_left">%d months left</string>
     <string name="days_left">%d days left</string>
     <string name="hours_left">%d hours left</string>
+    <string name="permission_revoked">VPN permission revoked by OS (e.g. other VPN program started), stopping VPN</string>
 
 </resources>

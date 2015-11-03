@@ -108,6 +108,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     @Override
     public void onRevoke() {
+        VpnStatus.logInfo(R.string.permission_revoked);
         mManagement.stopVPN();
         endVpnService();
     }

@@ -27,7 +27,7 @@ import de.blinkt.openvpn.views.SlidingTabLayout;
 import de.blinkt.openvpn.views.TabBarView;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
     private ViewPager mPager;
     private ScreenSlidePagerAdapter mPagerAdapter;

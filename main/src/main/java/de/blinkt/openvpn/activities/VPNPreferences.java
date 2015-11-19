@@ -35,7 +35,7 @@ import de.blinkt.openvpn.views.ScreenSlidePagerAdapter;
 import de.blinkt.openvpn.views.TabBarView;
 
 
-public class VPNPreferences extends Activity {
+public class VPNPreferences extends BaseActivity {
 
     static final Class validFragments[] = new Class[] {
         Settings_Authentication.class, Settings_Basic.class, Settings_IP.class,

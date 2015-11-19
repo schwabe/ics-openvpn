@@ -12,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
@@ -20,6 +22,8 @@ import android.app.AlertDialog.Builder;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Base64;
@@ -29,15 +33,16 @@ import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.fragments.FileSelectionFragment;
 import de.blinkt.openvpn.fragments.InlineFileTab;
 
-public class FileSelect extends Activity {
+public class FileSelect extends BaseActivity {
 	public static final String RESULT_DATA = "RESULT_PATH";
 	public static final String START_DATA = "START_DATA";
 	public static final String WINDOW_TITLE = "WINDOW_TILE";
 	public static final String NO_INLINE_SELECTION = "de.blinkt.openvpn.NO_INLINE_SELECTION";
 	public static final String SHOW_CLEAR_BUTTON = "de.blinkt.openvpn.SHOW_CLEAR_BUTTON";
 	public static final String DO_BASE64_ENCODE = "de.blinkt.openvpn.BASE64ENCODE";
-	
-	private FileSelectionFragment mFSFragment;
+    private static final int PERMISSION_REQUEST = 23621;
+
+    private FileSelectionFragment mFSFragment;
 	private InlineFileTab mInlineFragment;
 	private String mData;
 	private Tab inlineFileTab;
@@ -52,7 +57,10 @@ public class FileSelect extends Activity {
 		super.onCreate(savedInstanceState); 
 		setContentView(R.layout.file_dialog);
 
-		mData = getIntent().getStringExtra(START_DATA);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            checkPermission();
+
+        mData = getIntent().getStringExtra(START_DATA);
 		if(mData==null)
 			mData=Environment.getExternalStorageDirectory().getPath();
 		
@@ -86,7 +94,17 @@ public class FileSelect extends Activity {
 
 		
 	}
-	
+
+
+	@TargetApi(Build.VERSION_CODES.M)
+	private void checkPermission() {
+		if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
+
+		}
+	}
+
+
 	public boolean showClear() {
 		if(mData == null || mData.equals(""))
 			return false;
@@ -145,8 +163,6 @@ public class FileSelect extends Activity {
 			mInlineFragment.setData(data);
 			getActionBar().selectTab(inlineFileTab); */
 			saveInlineData(ifile.getName(), data);
-		} catch (FileNotFoundException e) {
-			fe = e;
 		} catch (IOException e) {
 			fe =e;
 		}

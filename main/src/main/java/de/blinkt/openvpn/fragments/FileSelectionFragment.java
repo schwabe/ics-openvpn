@@ -5,14 +5,6 @@
 
 package de.blinkt.openvpn.fragments;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.TreeMap;
-
-import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,8 +16,17 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import de.blinkt.openvpn.activities.FileSelect;
+import android.widget.Toast;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.TreeMap;
+
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.activities.FileSelect;
 
 public class FileSelectionFragment extends ListFragment {
 
@@ -113,8 +114,9 @@ public class FileSelectionFragment extends ListFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);		
+		super.onCreate(savedInstanceState);
 	}
+
 
 	private void getDir(String dirPath) {
 
@@ -242,9 +244,9 @@ public class FileSelectionFragment extends ListFragment {
 				lastPositions.put(currentPath, position);
 				getDir(path.get(position));
 			} else {
-				new AlertDialog.Builder(getActivity()).setIcon(R.drawable.icon)
-				.setTitle("[" + file.getName() + "] " + getText(R.string.cant_read_folder))
-				.setPositiveButton("OK", null).show();
+				Toast.makeText(getActivity(),
+						"[" + file.getName() + "] " + getActivity().getText(R.string.cant_read_folder),
+						Toast.LENGTH_SHORT).show();
 			}
 		} else {
 			selectedFile = file;

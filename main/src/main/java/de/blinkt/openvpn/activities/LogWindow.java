@@ -15,7 +15,7 @@ import de.blinkt.openvpn.fragments.LogFragment;
 /**
  * Created by arne on 13.10.13.
  */
-public class LogWindow extends Activity {
+public class LogWindow extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

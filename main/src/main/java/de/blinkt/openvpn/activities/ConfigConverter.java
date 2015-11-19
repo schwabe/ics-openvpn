@@ -61,7 +61,7 @@ import de.blinkt.openvpn.views.FileSelectLayout;
 
 import static de.blinkt.openvpn.views.FileSelectLayout.FileSelectCallback;
 
-public class ConfigConverter extends Activity implements FileSelectCallback, View.OnClickListener {
+public class ConfigConverter extends BaseActivity implements FileSelectCallback, View.OnClickListener {
 
     public static final String IMPORT_PROFILE = "de.blinkt.openvpn.IMPORT_PROFILE";
     private static final int RESULT_INSTALLPKCS12 = 7;
@@ -583,9 +583,8 @@ public class ConfigConverter extends Activity implements FileSelectCallback, Vie
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        setContentView(R.layout.config_converter);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.config_converter);
 
         ImageButton fab_button = (ImageButton) findViewById(R.id.fab_save);
         if (fab_button != null) {

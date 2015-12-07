@@ -42,10 +42,9 @@ public class SeekBarTicks extends SeekBar {
         TypedArray a = context.obtainStyledAttributes(attrs,
                 new int[] { android.R.attr.secondaryProgress }, defStyle, 0);
 
-
-        int tickColor = a.getColor(0, android.R.color.black);
         mTickPaint = new Paint();
-        mTickPaint.setColor( context.getResources().getColor(tickColor));
+        //noinspection deprecation
+        mTickPaint.setColor( context.getResources().getColor(android.R.color.black));
         a.recycle();
     }
 

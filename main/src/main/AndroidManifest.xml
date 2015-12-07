@@ -17,6 +17,8 @@
 
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
+    <uses-feature android:name="android.software.leanback" android:required="false" />
+
     <application
         android:name=".core.ICSOpenVPNApplication"
         android:allowBackup="true"
@@ -121,7 +123,6 @@
                 <data android:mimeType="*/*" />
                 <data android:scheme="file" />
                 <data android:host="*" />
-                <data android:port="*" />
                 <data android:pathPattern=".*..*..*..*..*.ovpn" />
                 <data android:pathPattern=".*..*..*..*.ovpn" />
                 <data android:pathPattern=".*..*..*.ovpn" />

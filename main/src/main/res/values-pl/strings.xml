@@ -149,6 +149,7 @@
   <string name="no_bind">Nie wiąż lokalnie</string>
   <string name="import_configuration_file">Importuj plik konfiguracji</string>
   <string name="faq_security_title">Zagadnienia dotyczące bezpieczeństwa</string>
+  <string name="faq_security">"Jako, że OpenVPN jest wrażliwe na bezpieczeństwo, kilka rozsądnych zdań na ten temat. Wszystke dane na karcie SD z zasady nie są bezpieczne. Każda aplikacja może je odczytać - dla przykładu, ten program nie wymaga żadnych specjalnych uprawnień do odczytu karty SD. Dane tej aplikacji mogą być odczytywane tylko przez nią samą. Używając opcji importu certyfikatów/CA lub kluczy, dane przechowywane są w profilu VPN. Profile VPN odczytywalne są tylko przez tę aplikację. (Nie zapomnij usunąc kopii z karty SD po imporcie). Rootując telefon, lub używając innych exploitów istnieje pradopodobieństwo odczytu tych danych. Zapisane hasła przechowywane są w postaci czystego tekstu. W przypadku plików PKCS12, jest wysoce zalecane, aby zaimportować je do magazynu kluczy Android."</string>
   <string name="import_vpn">Importuj</string>
   <string name="broken_image_cert_title">Błąd przy wyświetlaniu wyboru certyfikatu</string>
   <string name="broken_image_cert">Wystąpił wyjątek w trakcie próby wyświetlenia okna z wyborem certyfikatu. To w ogóle nie powinno się zdarzyć, gdyż jest to standardowa opcja Androida 4.0+. Być może wsparcie dla magazynu certyfikatów w Twoim ROMie jest źle zaimplementowane</string>
@@ -158,6 +159,7 @@
   <string name="converted_profile">profil zaimportowany</string>
   <string name="converted_profile_i">zaimportowano profil %d</string>
   <string name="broken_images">Uszkodzone obrazy</string>
+  <string name="broken_images_faq">&lt;p&gt; Oficjalne obrazy HTC są znane z posiadania dziwnych problemów z routingiem powodując, że dane nie przepływają przez tunel (sprawdź także &lt;a href=\"https://github.com/schwabe/ics-openvpn/issues/18\"&gt;Issue 18&lt;/a&gt; w śledzeniu błędów). &lt;/p&gt;&lt;p&gt; Starsze oficjalne obrazy SONY dla Xperia Arc S oraz Xperia Ray są znane z całkowitego braku VPNService w obrazie. (Sprawdź także &lt;a href=\"https://github.com/schwabe/ics-openvpn/issues/29\"&gt;Issue 29&lt;/a&gt; w śledzeniu błędów). &lt;/p&gt;&lt;p&gt; We własnoręcznie kompilowanych obrazach może brakować modułu TUN, lub prawa dostępu do /dev/tun mogą być nieprawidłowe. Niektóre obrazy CM9 mogą wymagać opcji \"Popraw prawa dostępu\" w zakładce \"Dodatkowe opcje urządzenia\". &lt;/p&gt;&lt;p&gt;Co najważniejsze: jeśli Twoje urządzenie ma błędy w Android, zgłoś to producentowi. Im więcej osób zgłasza problemy, tym większe prawdopodobieństwo ich poprawy. &lt;/p&gt;</string>
   <string name="pkcs12_file_encryption_key">Klucz pliku PKCS12</string>
   <string name="private_key_password">Hasło klucza prywatnego</string>
   <string name="password">Hasło</string>
@@ -178,7 +180,9 @@
   <string name="keychain_nocacert">Brak certyfikatu CA zwróconego z pęku kluczy Androida. Autoryzacja najprawdopodobniej nie powiedzie się.</string>
   <string name="show_log_summary">Pokazuje okno dziennika przy łączeniu. Do okna dziennika można dostać się zawsze z paska powiadomień.</string>
   <string name="show_log_window">Pokaż okno loga</string>
+  <string name="mobile_info">%10$s %9$s na %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
   <string name="error_rsa_sign">Błąd podpisania kluczem z pęku kluczy Androida %1$s: %2$s</string>
+  <string name="faq_system_dialogs">Ostrzeżenie przy połączeniu VPN informuje Cię, że ta aplikacja przekierowuje cały ruch jest narzucona przez system w celu zapobieżenia nadużyciom API VPNService.\nPowiadomienie połączenia VPN (znak klucza) jest także narzucone przez Android, aby zasygnalizować połączenie z siecią VPN. Na niektórych obrazach Android to powiadomienie odtwarza dźwięk.\nAndroid wprowadził te dialogi systemowe dla Twojego bezpieczeństwa i aby upewnić się, że nie można ich obejść. (Niestety, na niektórych obrazach to także implikuje wydanie dźwięku)</string>
   <string name="faq_system_dialogs_title">Ostrzeżenie połączeń oraz dźwięki powiadomień</string>
   <string name="translationby">Angielskie tłumaczenie Arne Schwabe&lt;arne@rfc2549.org&gt;</string>
   <string name="ipdns">IP i DNS</string>
@@ -190,6 +194,7 @@
   <string name="warn_no_dns">Nie są używane żadne serwery DNS. Rozpoznawanie nazw może nie działać. Rozważ ustawienie własnych serwerów DNS. Miej również na uwadze, że Android nadal będzie korzystać z ustawień proxy Twojego połączenia mobilnego/Wi-Fi, nawet gdy opcje DNS nie są ustawione.</string>
   <string name="dns_add_error">Nie można dodać serwera DNS \"%1$s\", odrzucone przez system: %2$s</string>
   <string name="ip_add_error">Nie można skonfigurować adresu IP \"%1$s\", odrzucone przez system: %2$s</string>
+  <string name="faq_howto">&lt;p&gt;Przygotuj działającą konfigurację (sprawdzoną na Twoim komputerze lub pobraną od Twojego dostawcy/pracodawcy)&lt;/p&gt;&lt;p&gt;Jeśli, jest to jeden plik - bez dodatkowych plików pem/pkcs12 - możesz taki plik wysłać do siebie e-mailem i otworzyć załącznik. Jeśli masz więcej, niż jeden plik - pobierz je na kartę SD.&lt;/p&gt;&lt;p&gt;Kliknij na załącznik w e-mailu/użyj ikony folderu na liście VPN, aby zaimportować plik konfiguracyjny.&lt;/p&gt;&lt;p&gt;Jeśli występują błędy brakującego pliku - umieść je na karcie SD.&lt;/p&gt;&lt;p&gt;Kliknij na ikonę zapisu, aby dodać zaimportowaną konfigurację do Twojej listy.&lt;/p&gt;&lt;p&gt;Połącz się z VPN klikając na nazwę połączenia VPN&lt;/p&gt;&lt;p&gt;Jeśli występują błędy/ostrzeżenia w logu, spróbuj je namierzyć i poprawić&lt;/p&gt; </string>
   <string name="faq_howto_title">Szybki start</string>
   <string name="setting_loadtun_summary">Próba załadowania modułu tun.ko kernel przez próbą połączenia. Potrzeba rootowanych urządzeń.</string>
   <string name="setting_loadtun">Załaduj moduł tun</string>
@@ -207,16 +212,19 @@
   <string name="configuration_changed">Zmieniono konfigurację</string>
   <string name="log_no_last_vpn">Nie można ustalić ostatnio połączonego profilu do edycji</string>
   <string name="faq_duplicate_notification_title">Podwójne powiadomienia</string>
+  <string name="faq_duplicate_notification">Jeśli Android ma obciążoną pamięć (RAM), aplikacje i usługi, które nie są aktualnie potrzebne są usuwane z pamięci. To potrafi zakończyć aktualne połączenie VPN. Aby upewnić się, że połączenie/OpenVPN przetrwa usługa uruchomiona jest z wyższym priorytetem. Aby działać z wyższym priorytetem ta aplikacja musi wyświetlać powiadomienie. Ikona klucza jest narzucona przez system w sposób opisany w poprzednim wpisie FAQ. To nie liczy się jako powiadomienie w celu działania z wyższym priorytetem.</string>
   <string name="no_vpn_profiles_defined">Brak połączeń VPN.</string>
   <string name="add_new_vpn_hint">Użyj ikony &lt;img src=\"ic_menu_add\"/&gt; aby dodać nowe połączenie VPN</string>
   <string name="vpn_import_hint">Użyj ikony &lt;img src=\"ic_menu_archive\"/&gt; aby zaimportować istniejący profil (.ovpn lub .conf) z karty SD.</string>
   <string name="faq_hint">Sprawdź także nasze FAQ. Znajdziesz tam krótki poradnik dla początkujących.</string>
   <string name="faq_routing_title">Konfiguracja trasy/interfejsu</string>
+  <string name="faq_routing">Konfiguracja routingu i interfejsów nie odbywa się za pomocą tradycyjnych komend ifconfig/route, lecz za pomocą API VPNService. Powoduje to inną konfigurację trasowania, niż ma to miejsce w innych systemach operacyjnych.\nKonfiguracja tunelu VPN składa się z listy adresów IP oraz sieci, które powinny być trasowane przez interfejs. Dzięki temu nie jest potrzebny ani wymagany adres peer\'a lub bramy. Trasy specjalne wymagane do połączenia z serwerem VPN także nie są wymagane (np. te dodawane w przypadku użycia redirect-gateway). Aplikacja podczas importu konsekwentnie ignoruje te ustawienia. Aplikacja poprzez API VPNService upewnia się, że połączenie do serwera nie jest realizowane przez tunel VPN.\nAPI VPNService nie zezwala na ustawianie sieci, które NIE powinny być trasowane przez VPN, jako obejście aplikacja stara się wykryć te sieci, które nie powinny być trasowane przez tunel (np. route x.x.x.x y.y.y.y net_gateway) i oblicza zestaw tras, które wyklucza emulując zachowanie na innych platformach. Okno dziennika pokazuje konfigurację VPNService podczas wykonywania połączenia.\nZa kulisami: Android 4.4+ używa polityki trasowania. Użycie route/ifconfig nie pokaże aktualnie zainstalowanych tras. Zamiast tego użyj ip rule, iptables -t -mangle -L</string>
   <string name="persisttun_summary">Nie używaj sieci niezabezpieczonych VPN podczas ponownego łączenia przez OpenVPN.</string>
   <string name="persistent_tun_title">Persistent tun</string>
   <string name="openvpn_log">Log OpenVPN</string>
   <string name="import_config">Importuj konfigurację OpenVPN</string>
   <string name="battery_consumption_title">Zużycie baterii</string>
+  <string name="baterry_consumption">Podczas osobistych testów odkryłem, iż głównym powodem sporego zużycia baterii przez OpenVPN są pakiety keepalive. Większość serwerów OpenVPN ma ustawienie \'keepalive 10 60\', które narzuca klientowi oraz serwerowi wymianę pakietów keepalive co 10 sekund. &lt;p&gt; Podczas, gdy te pakiety są małe i nie zużywają wiele pasma, utrzymują one radio komórkowe w trybie pracy i zwiększają zużycie energii. (Sprawdź także &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Ustawienie keepalive nie może być zmienione po stronie klienta. Tylko administrator serwera OpenVPN jest w stanie zmienić to ustawienie. &lt;p&gt; Niestety, w przypadku UDP niektóre konfiguracje NAT źle tolerują ustawienie keepalive większe niż 60 sekund powodując odrzucanie pakietów z powodu nieaktywności połączenia.  Używanie protokółu TCP z większym timeout działa, jednak tunelowanie TCP-po-TCP bardzo źle się sprawuje przy połączeniach z dużą stratnością pakietów. (See &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
   <string name="faq_tethering">Funkcja Android Tethering (przez WiFi, USB lub Bluetooth) i interfejs API VPNService (stosowany przez ten program) nie działają razem. Aby uzyskać więcej informacji zobacz &lt;href=\"https://github.com/schwabe/ics-openvpn/issues/34\"&gt; problem #34 &lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN i Tethering</string>
   <string name="connection_retries">Próby połączenia</string>
@@ -305,6 +313,7 @@
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
   <string name="full_licenses">Pełne licencje</string>
   <string name="blocklocal_summary">Sieci połączone bezpośrednio do lokalnych interfejsów nie będą kierowane przez VPN. Odznaczając tę opcję przeniesiesz cały ruch przeznaczony dla sieci lokalnych przez VPN.</string>
+  <string name="blocklocal_title">Obejdź VPN dla sieci lokalnych</string>
   <string name="userpw_file">Plik użytkowników/haseł</string>
   <string name="imported_from_file">[Importowane z: %s]</string>
   <string name="files_missing_hint">Nie mogę odnaleźć niektórych plików. Wybierz je, aby zaimportować profil:</string>
@@ -338,17 +347,30 @@
   <string name="duplicate_vpn">Powiel profil VPN</string>
   <string name="duplicate_profile_title">Powielam profil: %s</string>
   <string name="show_log">Pokaż dziennik</string>
+  <string name="faq_androids_clients_title">Różnice pomiędzy klientami OpenVPN dla Androida</string>
   <string name="ignore_multicast_route">Ignoruj trasę multicast: %s</string>
   <string name="ab_only_cidr">Android wspiera tylko trasy CIDR w sieci VPN. Jako, że trasy nie-CIDR nie są powszechnie używane, OpenVPN dla Androida użyje /32 dla tras w formacie nie-CIDR i wyświetli błąd.</string>
   <string name="ab_tethering_44">Tethering działa podczas połączenia z VPN. Udostępnione połączenie NIE będzie używało VPN.</string>
   <string name="ab_kitkat_mss">Wczesne wersje KitKat ustawiają złą wartość MSS połączeń TCP (#61948). Spróbuj ustawić opcję mssfix w celu obejścia tego problemu.</string>
   <string name="ab_lollipop_reinstall">Aplikacje VPN mogą przestać działać po odinstalowaniu i ponownej instalacji. W celu uzyskania szczegółów zobacz #80074</string>
+  <string name="ab_secondary_users">VPN absolutnie nie działa dla dodatkowych użytkowników.</string>
+  <string name="ab_kitkat_reconnect">"Jest grono użytkowników, którzy donoszą, iż podczas używania aplikacji VPN połączenie danych/komórkowe jest często zrywane. Zachowanie to wydaje się dotykać niewielkiej liczby urządzeń/dostawców danych komórkowych - na tę chwilę nieznana jest przyczyna, ani rozwiązanie problemu."</string>
+  <string name="ab_only_cidr_title">Trasy nie-CIDR</string>
+  <string name="ab_proxy_title">Zachowanie Proxy w sieci VPN</string>
+  <string name="ab_lollipop_reinstall_title">Ponowna instalacja aplikacji VPN</string>
   <string name="version_upto">%s i wcześniejsze</string>
   <string name="copy_of_profile">Kopia %s</string>
+  <string name="ab_not_route_to_vpn_title">Trasa do skonfigurowanego adresu IP</string>
+  <string name="ab_kitkat_mss_title">Błędna wartość MSS dla połączenia VPN</string>
+  <string name="ab_secondary_users_title">Dodatkowi użytkownicy tabletu</string>
   <string name="custom_connection_options_warng">Określ własne opcje dla połączenia. Używaj z rozwagą</string>
   <string name="custom_connection_options">Opcje niestandardowe</string>
   <string name="remove_connection_entry">Usuń wpis połączenia</string>
+  <string name="ab_kitkat_reconnect_title">Losowe rozłączenia z sieci komórkowej</string>
+  <string name="ab_vpn_reachability_44_title">Zdalne sieci nie są osiągalne</string>
+  <string name="ab_persist_tun_title">Tryb persist tun</string>
   <string name="version_and_later">%s i późniejsze</string>
+  <string name="message_no_user_edit">Ten profil został dodany przez zewnętrzną aplikację (%s) i został oznaczony jako nie edytowalny przez użytkownika.</string>
   <string name="crl_file">Listy odwoławcze CRL</string>
   <string name="service_restarted">Restartuję usługę OpenVPN (Aplikacja wywaliła się lub zabito ją z powodu braku pamięci)</string>
   <string name="import_config_error">Importowanie konfiguracji wyrzuciło błąd, nie mogę tego zapisać</string>
@@ -357,6 +379,10 @@
   <string name="clear_log_on_connect">Wyczyść dziennik przy nowym połączeniu</string>
   <string name="connect_timeout">Limit czasu połączenia</string>
   <string name="no_allowed_app">Dodano niedozwoloną aplikację. Dodaję siebie (%s), żeby mieć przynajmniej jedną aplikację w liście dozwolonych aplikacji, aby nie pozwolić wszystkim aplikacjom</string>
+  <string name="query_permissions_sdcard">OpenVPN dla Android spróbuje automatycznie wykryć brakujące pliki na karcie SD. Dotknij tego komunikatu, aby żądać uprawnień.</string>
   <string name="protocol">Protokół</string>
   <string name="enabled_connection_entry">Włączony</string>
+  <string name="months_left">pozostało %d miesięcy</string>
+  <string name="days_left">pozostało %d dni</string>
+  <string name="hours_left">pozostało %d godzin</string>
 </resources>

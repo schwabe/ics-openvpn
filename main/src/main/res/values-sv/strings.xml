@@ -87,7 +87,9 @@
   <string name="default_route_summary">Omdirigerar all trafik över VPN-anslutningen</string>
   <string name="use_default_title">Använd standardrutt</string>
   <string name="custom_route_message">Ange anpassade rutter. Skriv destination i CIDR-format. \"10.0.0.0/8 2002:: / 16\" dirigerar nätverk 10.0.0.0/8 och 2002:: / 16 över VPN.</string>
+  <string name="custom_route_message_excluded">Rutter som INTE bör dirigeras över VPN. Använd samma syntax som för ingående rutter.</string>
   <string name="custom_routes_title">Anpassade rutter</string>
+  <string name="custom_routes_title_excluded">Exkluderade nätverk</string>
   <string name="log_verbosity_level">Utförlighetsnivå för log</string>
   <string name="float_summary">Tillåter autentiserade paket från alla IP-adresser</string>
   <string name="float_title">Tillåt flytande server</string>

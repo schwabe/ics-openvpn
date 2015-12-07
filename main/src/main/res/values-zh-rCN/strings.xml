@@ -363,4 +363,12 @@
   <string name="ab_lollipop_reinstall_title">正在重新安装VPN应用</string>
   <string name="custom_connection_options">自定义选项</string>
   <string name="remove_connection_entry">删除连接条目</string>
+  <string name="ab_persist_tun_title">保持 tun 通道模式</string>
+  <string name="crl_file">证书吊销列表</string>
+  <string name="Search">搜索</string>
+  <string name="clear_log_on_connect">建立新连接时清空日志</string>
+  <string name="connect_timeout">连接超时</string>
+  <string name="query_permissions_sdcard">OpenVPN for Android 可以尝试自动在 SD 卡上寻找缺失的文件。点击此消息开始请求权限许可。</string>
+  <string name="protocol">协议</string>
+  <string name="enabled_connection_entry">启用</string>
 </resources>

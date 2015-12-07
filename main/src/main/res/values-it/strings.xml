@@ -344,6 +344,7 @@ Effettuata la lettura del file di configurazione</string>
   <string name="tls_settings">Impostazioni TLS</string>
   <string name="duplicate_vpn">Profilo VPN duplicato</string>
   <string name="duplicate_profile_title">Duplicazione del profilo: %s</string>
+  <string name="show_log">Mostra il log</string>
   <string name="version_upto">%s e precedenti</string>
   <string name="copy_of_profile">Copia di %s</string>
 </resources>

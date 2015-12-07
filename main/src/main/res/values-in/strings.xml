@@ -180,6 +180,7 @@
   <string name="keychain_nocacert">Tidak ada sertifikat CA yang didapat saat membaca dari Android Keystore. Otentifikasi mungkin gagal</string>
   <string name="show_log_summary">Tampilkan jendela catatan saat terkoneksi. Jendela catatan juga dapat diakses melalui status notifikasi</string>
   <string name="show_log_window">Tampilkan jendela catatan</string>
+  <string name="mobile_info">%10$s %9$s berjalan pada %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
   <string name="error_rsa_sign">Kesalahan masuk dengan kunci Android keystore %1$s: %2$s</string>
   <string name="faq_system_dialogs">Peringatan sambungan VPN yang memberitahukan Anda bahwa aplikasi ini dapat mencegat semua lalu lintas dikeluarkan oleh sistem untuk mencegah penyalahgunaan dari sambungan VPNService API.\nPemberitahuan sambungan VPN (simbol kunci) juga dikeluarkan oleh sistem Android untuk memberitahu VPN yang sedang berlangsung. Pada beberapa gambar pemberitahuan ini memainkan suara. \nAndroid memperkenalkan sistem dialog ini untuk keselamatan Anda sendiri dan memastikan bahwa mereka tidak membuat masalah. (Pada beberapa gambar sayangnya ini termasuk peringatan suara)</string>
   <string name="faq_system_dialogs_title">Peringatan sambungan dan pemberitahuan melalui suara</string>

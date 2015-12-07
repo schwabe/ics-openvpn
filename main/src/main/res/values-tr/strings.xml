@@ -181,6 +181,7 @@
   <string name="keychain_nocacert">Hayır CA sertifikasını okurken Android deposunu döndürdü. Kimlik doğrulama muhtemelen başarısız olur.</string>
   <string name="show_log_summary">Bağlama kütüğü penceresi üzerinde gösterir. Kütüğü penceresi her zaman bildirim durumu erişilebilir.</string>
   <string name="show_log_window">Günlüğü penceresini göster</string>
+  <string name="mobile_info">%10$s %9$s %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s) üzerinde çalışıyor</string>
   <string name="error_rsa_sign">Android deposunun anahtarı %1$s %2$s ile imzalama hatası</string>
   <string name="faq_system_dialogs">Bu app tüm trafiği geçirebilir belirten VPN bağlantısı uyarı dayatılan VPNService API.\nThe VPN bağlantısının istismarını önlemek için sistem tarafından bildirim (anahtar simgesi) da devam eden bir VPN bağlantısı sinyal için Android sistem tarafından uygulanmaktadır. Bu bildirim çalış bazı görüntülerde ses. \nAndroid kendi güvenliğiniz için bu sistem diyaloglar tanıttı ve circumenvented olamaz emin oldum. (Bazı görüntülerde bu unfortunely notifciation ses içerir)</string>
   <string name="faq_system_dialogs_title">Bağlantı uyarı ve bildirim sesi</string>
@@ -218,6 +219,7 @@
   <string name="vpn_import_hint">Kullanım &lt; img src = \"ic_menu_archive\" / &gt; simgesi sdcard (.ovpn veya .conf) bir profili almak için.</string>
   <string name="faq_hint">Ayrıca SSS kontrol etmeyi unutmayın. Hızlı Başlangıç Kılavuzu vardır.</string>
   <string name="faq_routing_title">Yönlendirme/arabirimi yapılandırması</string>
+  <string name="faq_routing">Yönlendirme ve arayüz konfigürasyonu klasik ifconfig / rota komutlarıyla değil VPNService API kullanarak yapılmaktadır. Bu diğer işletim sistemlerindekinden farklı bir yönlendirme konfigürasyonu gerektirmektedir.\n VPN tünelinin konfigürasyonu IP adresleri ve bu adreslerin bu arayüz üstünden yönlendirileceği ağlardan oluşur. Özellikle hiçbir eş ortak adresi ya da ağ geçidi adresi gerekli degildir. VPN sunucusuna ulaşmak için özel yollar (redirect-gateway kullanıldığında eklenenler gibi) da gerekli değildir. Bu sebepten dolayı uygulama, bir konfigurasyon alırken bu ayarları yoksayar. App, VPN Servis API\'sı ile sunucuyla olan bağlantının VPN tüneline yönlendirilmesini engeller.\n VPN servisi APIsı VPN üstünden yönlendirilmemesi gereken ağların belirtilmesine izin vermemektedir. Çözüm olarak program tünel üstünden yönlendirilmemesi gereken ağları (örneğin x.x.x.x y.y.y.y net_gateway rotası) bulmaya çalışıp bu rotaları içermeyen bir rota grubu oluşturarak diğer işletim sistemlerindeki davranışı oluşturur. Kütük penceresi VPN servisinin bağlantı sonucu oluşan konfigürasyonunu gösterir.\n Arka planda Android 4.4+ kural tabanlı yönlendirme kullanır. route/ifconfig komutları kullanılan rotaları göstermeyecektir. Bu komutlar yerine ip rule, iptables -t mangle -L komutlarını kullanın</string>
   <string name="persisttun_summary">OpenVPN yeniden bağlamadan zaman VPN bağlantısı değil geri dönüş yap</string>
   <string name="persistent_tun_title">Kalıcı tun</string>
   <string name="openvpn_log">OpenVPN kayıtları</string>
@@ -312,12 +314,16 @@
   <string name="logview_options">Görünüm seçenekleri</string>
   <string name="unhandled_exception">Kural dışı durum: %1$s\n\n%2$s</string>
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
+  <string name="faq_system_dialog_xposed">Eğer android cihazınızı rootladıysanız &lt;a href=\"http://xposed.info/\"&gt;Xposed &lt;/a&gt; ve &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN Dialog confirm modülünü&lt;/a&gt; sorumluluğunu kendiniz alarak yükleyebilirsiniz</string>
   <string name="full_licenses">Lisanslar</string>
   <string name="blocklocal_title">Yerel ağlar için Bypass VPN</string>
   <string name="userpw_file">Kullanıcı adı / Şifre dosyası</string>
   <string name="imported_from_file">[Buradan içeri aktar: %s]</string>
+  <string name="files_missing_hint">Bazı dosyalar bulunamadı. Lütfen profile aktarılacak dosyaları seçiniz:</string>
   <string name="import_log">Kaydı içe aktar:</string>
+  <string name="mssfix_invalid_value">MSS değeri 0 ile 9000 arasında bir tamsayı olmak zorundadır</string>
   <string name="client_behaviour">İstemci davranışı</string>
+  <string name="clear_external_apps">İzin verilmiş harici uygulamaları temizle</string>
   <string name="loading">Yükleniyor&#8230;</string>
   <string name="allowed_vpn_apps_info">Izin verilen VPN uygulamaları: %1$s</string>
   <string name="disallowed_vpn_apps_info">İzin verilmeyen VPN uygulamaları: %1$s</string>
@@ -328,13 +334,18 @@
   <string name="keep">Sakla</string>
   <string name="delete">Sil</string>
   <string name="add_remote">Yenı uzak sunucu ekle</string>
+  <string name="remote_random">Bağlanmak için bağlantı girişlerini rasgele bir sırada kullan</string>
   <string name="remote_no_server_selected">En az bir uzak sunucu tanımlamalı ve etkinleştirmelisiniz.</string>
   <string name="server_list">Sunucu Listesi</string>
   <string name="vpn_allowed_apps">İzin verilen uygulamalar</string>
   <string name="advanced_settings">Gelişmiş Ayarlar</string>
   <string name="payload_options">Yük seçenekleri</string>
   <string name="tls_settings">TLS Ayarları</string>
+  <string name="duplicate_vpn">VPN profilini kopyala</string>
+  <string name="duplicate_profile_title">Profil kopyalama: %s</string>
   <string name="show_log">Günlüğü göster</string>
+  <string name="faq_androids_clients_title">Android için OpenVPN uygulamaları aralarındaki farklar</string>
+  <string name="ignore_multicast_route">Multicast rotasını yoksayma:%s</string>
   <string name="ab_proxy_title">VPN\'ler için Proxy davranışı</string>
   <string name="ab_lollipop_reinstall_title">VPN uygulamaları yeniden yükleme</string>
   <string name="version_upto">%s ve önceki</string>
@@ -345,8 +356,16 @@
   <string name="custom_connection_options_warng">Özel bağlantı seçenekleri belirtin. Dikkatli kullanın</string>
   <string name="custom_connection_options">Özel Seçenekler</string>
   <string name="remove_connection_entry">Bağlantı girdisini kaldırın</string>
+  <string name="ab_vpn_reachability_44_title">Uzak ağlar ulaşılamıyor</string>
+  <string name="ab_persist_tun_title">Sürekli tun modu</string>
+  <string name="version_and_later">%s ve daha sonra</string>
+  <string name="crl_file">Sertifika iptal listesi</string>
   <string name="Search">Arama</string>
+  <string name="clear_log_on_connect">Yeni bağlantıda günlüğü temizle</string>
   <string name="connect_timeout">Bağlantı zaman aşımına uğradı</string>
   <string name="protocol">Protokol</string>
   <string name="enabled_connection_entry">Etkin</string>
+  <string name="months_left">%d ay kaldı</string>
+  <string name="days_left">%d gün kaldı</string>
+  <string name="hours_left">%d saat kaldı</string>
 </resources>

@@ -60,7 +60,7 @@
   <string name="cancel_connection">Szétkapcsolás</string>
   <string name="cancel_connection_long">VPN kapcsolat szétkapcsolása</string>
   <string name="clear_log">napló törlése</string>
-  <string name="title_cancel">jóváhagyás törlése</string>
+  <string name="title_cancel">Megszakítás jóváhagyása</string>
   <string name="cancel_connection_query">VPN kapcsolat/kapcsolódás megszakítása?</string>
   <string name="remove_vpn">VPN kapcsolat eltávolítása</string>
   <string name="check_remote_tlscert">Ellenőrzi, hogy a kiszolgáló használ-e tanúsitványt TLS Server kiterjesztéssel (--remote-cert-tls server)</string>
@@ -111,7 +111,7 @@
   <string name="route_not_netip">Az %1$s/%2$s útvonal javítva: %3$s/%2$s</string>
   <string name="keychain_access">Nem sikerült hozzáférni az Android Keychain Tanúsivànyokhoz. Ezt egy firmware frissítés vagy az alkalmazás/beállításainak visszaállítása okozhatja. Kérem szerkessze meg a VPN-t, és újra válassza ki a tanúsítványokat az alapvető beállításoknál, hogy visszaálljanak a tanúsítványok hozzáférési jogai.</string>
   <string name="version_info">%1$s %2$s</string>
-  <string name="send_logfile">naplófájl küldése</string>
+  <string name="send_logfile">Naplófájl küldése</string>
   <string name="send">küld</string>
   <string name="ics_openvpn_log_file">ICS OpenVPN naplófájl</string>
   <string name="copied_entry">Naplóbejegyzés másolva a vágólapra</string>
@@ -272,6 +272,8 @@
   <string name="screenoff_pause">Kapcsolat szüneteltetése a képernyő kikapcsolt állapotában: kevesebb mint %1$s %2$ss alatt</string>
   <string name="screen_nopersistenttun">Figyelmeztetés: Megmaradó tun nem engedélyezett ehhez a VPN-hez. A forgalom a normál internetcsatlakozáson megy amikor a képernyő ki van kapcsolva.</string>
   <string name="save_password">Jelszó mentése</string>
+  <string name="logCleared">Napló törölve.</string>
+  <string name="show_password">Jelszó mutatása</string>
   <string name="timestamp_short">Rövid</string>
   <string name="timestamp_iso">ISO</string>
   <string name="timestamps">Időbélyegzők</string>
@@ -282,4 +284,24 @@
   <string name="logview_options">Nézet beállításai</string>
   <string name="unhandled_exception">Nem kezelt kivétel: %1$s\n\n%2$s</string>
   <string name="full_licenses">Teljes engedélyek</string>
+  <string name="userpw_file">Felhasználónév/Jelszó fájl</string>
+  <string name="imported_from_file">[Innen importálva: %s]</string>
+  <string name="files_missing_hint">Néhány fájl nem található. Kérlek válaszd ki a fájlokat a profil importálásához:</string>
+  <string name="import_log">Importálási napló:</string>
+  <string name="loading">Betöltés&#8230;</string>
+  <string name="allowed_vpn_apps_info">Engedélyezett VPN programok: %1$s</string>
+  <string name="disallowed_vpn_apps_info">Letiltott VPN programok: %1$s</string>
+  <string name="app_no_longer_exists">%s csomag már nincs telepítve, eltávolítás a program engedélyező/letiltó listáról</string>
+  <string name="keep">Megtartás</string>
+  <string name="delete">Törlés</string>
+  <string name="server_list">Szerver lista</string>
+  <string name="show_log">Napló mutatása</string>
+  <string name="custom_connection_options">Egyéni beállítások</string>
+  <string name="version_and_later">%s és később</string>
+  <string name="Search">Keresés</string>
+  <string name="protocol">Protokoll</string>
+  <string name="enabled_connection_entry">Engedélyezett</string>
+  <string name="months_left">%d hónap van hátra</string>
+  <string name="days_left">%d nap van hátra</string>
+  <string name="hours_left">%d óra van hátra</string>
 </resources>

@@ -73,6 +73,33 @@ public class VpnStatus {
 
     private static final int MAXLOGENTRIES = 1000;
 
+    public static String getCleanLogMessage(ConnectionStatus level, String logMessage) {
+        switch (level) {
+            case LEVEL_CONNECTED:
+                String[] parts = logMessage.split(",");
+                /*
+                   (a) the integer unix date/time,
+                   (b) the state name,
+                   0 (c) optional descriptive string (used mostly on RECONNECTING
+                    and EXITING to show the reason for the disconnect),
+
+                    1 (d) optional TUN/TAP local IPv4 address
+                   2 (e) optional address of remote server,
+                   3 (f) optional port of remote server,
+                   4 (g) optional local address,
+                   5 (h) optional local port, and
+                   6 (i) optional TUN/TAP local IPv6 address.
+*/
+                    // Return only the assigned IP addresses in the UI
+                if (parts.length < 7)
+                    return logMessage;
+                return String.format(Locale.US, "%s %s", parts[1], parts[6]);
+            default:
+                return logMessage;
+        }
+
+    }
+
     public enum ConnectionStatus {
         LEVEL_CONNECTED,
         LEVEL_VPNPAUSED,

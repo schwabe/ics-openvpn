@@ -64,7 +64,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
         mServerSocketLocal = new LocalSocket();
 
-        while (tries > 0 && !mServerSocketLocal.isConnected()) {
+        while (tries > 0 && !mServerSocketLocal.isBound()) {
             try {
                 mServerSocketLocal.bind(new LocalSocketAddress(socketName,
                         LocalSocketAddress.Namespace.FILESYSTEM));

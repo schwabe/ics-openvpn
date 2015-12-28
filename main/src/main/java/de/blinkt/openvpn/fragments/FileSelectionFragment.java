@@ -58,6 +58,22 @@ public class FileSelectionFragment extends ListFragment {
 
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                                     @Override
+                                                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                                                         onListItemClick(getListView(), view, position, id);
+                                                         onFileSelectionClick();
+                                                         return true;
+                                                     }
+                                                 }
+
+        );
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.file_dialog_main, container, false);
@@ -94,17 +110,6 @@ public class FileSelectionFragment extends ListFragment {
             mClearButton.setVisibility(View.GONE);
             mClearButton.setEnabled(false);
         }
-
-        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                                                     @Override
-                                                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                                                         onListItemClick(getListView(), view, position, id);
-                                                         onFileSelectionClick();
-                                                         return true;
-                                                     }
-                                                 }
-
-        );
 
         return v;
     }

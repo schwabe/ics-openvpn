@@ -117,7 +117,7 @@ public class Utils {
 
         //noinspection ConstantConditions
         if (!isIntentAvailable(c,i)) {
-            i.setAction(Intent.ACTION_OPEN_DOCUMENT);
+                i.setAction(Intent.ACTION_OPEN_DOCUMENT);
             i.setPackage(null);
 
             // Check for really broken devices ... :(
@@ -144,7 +144,19 @@ public class Utils {
         List<ResolveInfo> list =
                 packageManager.queryIntentActivities(i,
                         PackageManager.MATCH_DEFAULT_ONLY);
-        return list.size() > 0;
+
+        // Ignore the Android TV framework app in the list
+        int size = list.size();
+        for (ResolveInfo ri: list)
+        {
+            // Ignore stub apps
+            if ("com.google.android.tv.frameworkpackagestubs".equals(ri.activityInfo.packageName))
+            {
+                size--;
+            }
+        }
+
+        return size > 0;
     }
 
 

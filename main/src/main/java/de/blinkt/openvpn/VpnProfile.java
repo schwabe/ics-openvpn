@@ -158,6 +158,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mServerName = "openvpn.blinkt.de";
     public String mServerPort = "1194";
     public boolean mUseUdp = true;
+    public boolean mPushPeerInfo=false;
 
     public VpnProfile(String name) {
         mUuid = UUID.randomUUID();
@@ -193,6 +194,7 @@ public class VpnProfile implements Serializable, Cloneable {
         mCheckRemoteCN = false;
         mPersistTun = false;
         mAllowLocalLAN = true;
+        mPushPeerInfo =false;
         mMssFix = 0;
     }
 
@@ -262,8 +264,10 @@ public class VpnProfile implements Serializable, Cloneable {
         cfg += "management-query-passwords\n";
         cfg += "management-hold\n\n";
 
-        if (!configForOvpn3)
+        if (!configForOvpn3) {
             cfg += String.format("setenv IV_GUI_VER %s \n", openVpnEscape(getVersionEnvString(context)));
+            cfg += String.format("setenv IV_PLAT_VER %d \n", Build.VERSION.SDK_INT);
+        }
 
         cfg += "machine-readable-output\n";
 
@@ -496,6 +500,9 @@ public class VpnProfile implements Serializable, Cloneable {
             cfg += "# persist-tun also enables pre resolving to avoid DNS resolve problem\n";
             cfg += "preresolve\n";
         }
+
+        if (mPushPeerInfo)
+            cfg+="push-peer-info\n";
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean usesystemproxy = prefs.getBoolean("usesystemproxy", true);

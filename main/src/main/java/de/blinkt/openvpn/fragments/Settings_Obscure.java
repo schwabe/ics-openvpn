@@ -23,6 +23,7 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 	private EditTextPreference mCustomConfig;
     private EditTextPreference mMssFixValue;
     private CheckBoxPreference mMssFixCheckBox;
+    private CheckBoxPreference mPeerInfo;
 
     private CheckBoxPreference mPersistent;
     private ListPreference mConnectRetrymax;
@@ -33,6 +34,7 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
         mPersistent = (CheckBoxPreference) findPreference("usePersistTun");
         mConnectRetrymax = (ListPreference) findPreference("connectretrymax");
         mConnectRetry = (EditTextPreference) findPreference("connectretry");
+        mPeerInfo = (CheckBoxPreference) findPreference("peerInfo");
 
         mConnectRetrymax.setOnPreferenceChangeListener(this);
         mConnectRetrymax.setSummary("%s");
@@ -45,6 +47,7 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 
     protected void loadSettingsBehaviour() {
         mPersistent.setChecked(mProfile.mPersistTun);
+        mPeerInfo.setChecked(mProfile.mPushPeerInfo);
 
         mConnectRetrymax.setValue(mProfile.mConnectRetryMax);
         onPreferenceChange(mConnectRetrymax, mProfile.mConnectRetryMax);
@@ -58,6 +61,7 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
         mProfile.mConnectRetryMax = mConnectRetrymax.getValue();
         mProfile.mPersistTun = mPersistent.isChecked();
         mProfile.mConnectRetry = mConnectRetry.getText();
+        mProfile.mPushPeerInfo = mPeerInfo.isChecked();
     }
 
 

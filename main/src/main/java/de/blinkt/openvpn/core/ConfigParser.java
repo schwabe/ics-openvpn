@@ -578,6 +578,9 @@ public class ConfigParser {
         if (getOption("persist-tun", 0, 0) != null)
             np.mPersistTun = true;
 
+        if (getOption("push-peer-info", 0, 0) != null)
+            np.mPushPeerInfo = true;
+
         Vector<String> connectretry = getOption("connect-retry", 1, 1);
         if (connectretry != null)
             np.mConnectRetry = connectretry.get(1);

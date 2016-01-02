@@ -9,9 +9,14 @@
 
         <CheckBoxPreference
             android:key="usePersistTun"
+            android:persistent="false"
             android:summary="@string/persisttun_summary"
             android:title="@string/persistent_tun_title" />
 
+        <CheckBoxPreference
+            android:key="peerInfo"
+            android:summary="@string/pushpeerinfosummary"
+            android:title="@string/pushpeerinfo" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/reconnection_settings">
         <ListPreference

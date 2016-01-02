@@ -394,5 +394,7 @@
     <string name="days_left">%d days left</string>
     <string name="hours_left">%d hours left</string>
     <string name="permission_revoked">VPN permission revoked by OS (e.g. other VPN program started), stopping VPN</string>
+    <string name="pushpeerinfo">Push Peer info</string>
+    <string name="pushpeerinfosummary">Send extra information to the server, e.g. SSL version and Android version</string>
 
 </resources>

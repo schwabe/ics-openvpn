@@ -16,7 +16,7 @@ public class NativeUtils {
 
     static native void jniclose(int fdint);
 
-    static native String getNativeAPI();
+    public static native String getNativeAPI();
 
     static {
         System.loadLibrary("opvpnutil");

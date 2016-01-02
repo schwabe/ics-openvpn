@@ -266,7 +266,9 @@ public class VpnProfile implements Serializable, Cloneable {
 
         if (!configForOvpn3) {
             cfg += String.format("setenv IV_GUI_VER %s \n", openVpnEscape(getVersionEnvString(context)));
-            cfg += String.format("setenv IV_PLAT_VER %d \n", Build.VERSION.SDK_INT);
+            String versionString = String.format("%d %s %s %s %s %s", Build.VERSION.SDK_INT, Build.VERSION.RELEASE,
+                    NativeUtils.getNativeAPI(), Build.BRAND, Build.BOARD, Build.MODEL);
+            cfg += String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString)) ;
         }
 
         cfg += "machine-readable-output\n";

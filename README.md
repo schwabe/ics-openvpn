@@ -7,7 +7,7 @@ With the new VPNService of Android API level 14+ (Ice Cream Sandwhich) it is pos
 
 Developing
 ---------------
-If you want to develop on ics-openvpn please read the [doc/README.txt](http://code.google.com/p/ics-openvpn/source/browse/doc/README.txt) *before* opening issues or emailing me. 
+If you want to develop on ics-openvpn please read the [doc/README.txt](https://github.com/schwabe/ics-openvpn/blob/master/doc/README.txt) *before* opening issues or emailing me. 
 
 Also please note that before contributing to the project that I would like to retain my ability to relicense the project for different third parties and therefore probably need a contributers agreement from any contributing party. To get started, [sign the Contributor License Agreement](https://www.clahub.com/agreements/schwabe/ics-openvpn).
 
@@ -17,7 +17,7 @@ Even if you are no programmer you can help by translating the OpenVPN client int
 
 FAQ
 -----
-You can find the FAQ here (same as in app): http://code.google.com/p/ics-openvpn/wiki/FAQ
+You can find the FAQ here (same as in app): http://ics-openvpn.blinkt.de/FAQ.html
 
 Note to administrators
 ------------------------

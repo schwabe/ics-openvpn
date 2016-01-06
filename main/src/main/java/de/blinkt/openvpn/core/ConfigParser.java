@@ -398,6 +398,9 @@ public class ConfigParser {
 
             np.mCustomRoutesv6 = customIPv6Routes;
         }
+        
+        Vector<String> routeNoPull = getOption("route-nopull", 1, 1);
+        np.mRoutenopull=true;
 
         // Also recognize tls-auth [inline] direction ...
         Vector<Vector<String>> tlsauthoptions = getAllOption("tls-auth", 1, 2);

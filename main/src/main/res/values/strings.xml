@@ -385,7 +385,7 @@
     <string name="lastdumpdate">(Last dump is %1$d:%2$dh old (%3$s))</string>
     <string name="clear_log_on_connect">Clear log on new connection</string>
     <string name="connect_timeout">Connect Timeout</string>
-    <string name="no_allowed_app">No allowed app added. Addding ourselves (%s) to have at least one app in the allowed app list to not allow all apps</string>
+    <string name="no_allowed_app">No allowed app added. Adding ourselves (%s) to have at least one app in the allowed app list to not allow all apps</string>
     <string name="query_permissions_sdcard">OpenVPN for Android can try to discover the missing file(s) on the sdcard automatically. Tap this message start the permission request.</string>
     <string name="protocol">Protocol</string>
     <string name="enabled_connection_entry">Enabled</string>

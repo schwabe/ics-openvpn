@@ -17,7 +17,12 @@
 
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
-    <uses-feature android:name="android.software.leanback" android:required="false" />
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
 
     <application
         android:name=".core.ICSOpenVPNApplication"
@@ -33,9 +38,9 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
+            android:name=".activities.DisconnectVPN"
             android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
-            android:name=".activities.DisconnectVPN"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
 
         <activity
@@ -49,6 +54,7 @@
             tools:ignore="ExportedActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -64,9 +70,9 @@
         </service>
 
         <service
-            tools:ignore="ExportedService"
-            android:name=".api.ExternalOpenVPNService">
-          
+            android:name=".api.ExternalOpenVPNService"
+            tools:ignore="ExportedService">
+
             <intent-filter>
                 <action android:name="de.blinkt.openvpn.api.IOpenVPNAPIService" />
             </intent-filter>

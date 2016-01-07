@@ -860,7 +860,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             // CONNECTED
             // Does not work :(
             String msg = getString(resid);
-            showNotification(msg + " " + VpnStatus.getCleanLogMessage(level, logmessage),
+            showNotification(VpnStatus.getLastCleanLogMessage(this),
                     msg, lowpriority, 0, level);
 
         }

@@ -73,10 +73,12 @@ public class VpnStatus {
 
     private static final int MAXLOGENTRIES = 1000;
 
-    public static String getCleanLogMessage(ConnectionStatus level, String logMessage) {
-        switch (level) {
+
+    public static String getLastCleanLogMessage(Context c) {
+        String message = mLaststatemsg;
+        switch (mLastLevel) {
             case LEVEL_CONNECTED:
-                String[] parts = logMessage.split(",");
+                String[] parts = mLaststatemsg.split(",");
                 /*
                    (a) the integer unix date/time,
                    (b) the state name,
@@ -90,13 +92,20 @@ public class VpnStatus {
                    5 (h) optional local port, and
                    6 (i) optional TUN/TAP local IPv6 address.
 */
-                    // Return only the assigned IP addresses in the UI
-                if (parts.length < 7)
-                    return logMessage;
-                return String.format(Locale.US, "%s %s", parts[1], parts[6]);
-            default:
-                return logMessage;
+                // Return only the assigned IP addresses in the UI
+                if (parts.length >= 7)
+                    message = String.format(Locale.US, "%s %s", parts[1], parts[6]);
+                break;
         }
+
+        String prefix = c.getString(mLastStateresid) + ":";
+        String status = mLaststate;
+        if (status.equals("NOPROCESS"))
+            prefix = "";
+        if (mLastStateresid == R.string.unknown_state)
+            prefix += status;
+
+        return prefix + message;
 
     }
 
@@ -107,9 +116,10 @@ public class VpnStatus {
         LEVEL_CONNECTING_NO_SERVER_REPLY_YET,
         LEVEL_NONETWORK,
         LEVEL_NOTCONNECTED,
+        LEVEL_START,
         LEVEL_AUTH_FAILED,
         LEVEL_WAITING_FOR_USER_INPUT,
-        UNKNOWN_LEVEL
+        UNKNOWN_LEVEL;
     }
 
     public enum LogLevel {

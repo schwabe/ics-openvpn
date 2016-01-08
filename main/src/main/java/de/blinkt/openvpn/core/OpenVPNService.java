@@ -536,6 +536,26 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         Collection<ipAddress> positiveIPv4Routes = mRoutes.getPositiveIPList();
         Collection<ipAddress> positiveIPv6Routes = mRoutesv6.getPositiveIPList();
 
+        if ("samsung".equals(Build.BRAND) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mDnslist.size() >= 1) {
+            // Check if the first DNS Server is in the VPN range
+            try {
+                ipAddress dnsServer = new ipAddress(new CIDRIP(mDnslist.get(0), 32), true);
+                boolean dnsIncluded=false;
+                for (ipAddress net : positiveIPv4Routes) {
+                    if (net.containsNet(dnsServer)) {
+                        dnsIncluded = true;
+                    }
+                }
+                if (!dnsIncluded) {
+                    String samsungwarning = String.format("Warning Samsung Android 5.0+ devices ignore DNS servers outside the VPN range. To enable DNS resolution a route to your DNS Server (%s) has been added.", mDnslist.get(0));
+                    VpnStatus.logWarning(samsungwarning);
+                    positiveIPv4Routes.add(dnsServer);
+                }
+            } catch (Exception e) {
+                VpnStatus.logError("Error parsing DNS Server IP: " + mDnslist.get(0));
+            }
+        }
+
         ipAddress multicastRange = new ipAddress(new CIDRIP("224.0.0.0", 3), true);
 
         for (NetworkSpace.ipAddress route : positiveIPv4Routes) {
@@ -558,24 +578,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
-        if ("samsung".equals(Build.BRAND) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mDnslist.size() >= 1) {
-            // Check if the first DNS Server is in the VPN range
-            try {
-                ipAddress dnsServer = new ipAddress(new CIDRIP(mDnslist.get(0), 32), true);
-                boolean dnsIncluded=false;
-                for (ipAddress net : positiveIPv4Routes) {
-                    if (net.containsNet(dnsServer)) {
-                        dnsIncluded = true;
-                    }
-                }
-                if (!dnsIncluded) {
-                    String samsungwarning = String.format("Warning Samsung Android 5.0+ devices ignore DNS servers outside the VPN range. To enable DNS add a custom route to your DNS Server (%s) or change to a DNS inside your VPN range", mDnslist.get(0));
-                    VpnStatus.logWarning(samsungwarning);
-                }
-            } catch (Exception e) {
-                VpnStatus.logError("Error parsing DNS Server IP: " + mDnslist.get(0));
-            }
-        }
+
 
 
         if (mDomain != null)

@@ -85,6 +85,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private String mRemoteGW;
     private final Object mProcessLock = new Object();
     private Handler guiHandler;
+    private Toast mlastToast;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean mbit) {
@@ -180,17 +181,24 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         startForeground(OPENVPN_STATUS, notification);
 
         // Check if running on a TV
-        UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
-        if(uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION)
+        if(runningOnAndroidTV() && !lowpriority)
             guiHandler.post(new Runnable() {
 
                 @Override
                 public void run() {
 
+                    if (mlastToast!=null)
+                        mlastToast.cancel();
                     String toastText = String.format(Locale.getDefault(), "%s - %s", mProfile.mName, msg);
-                    Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT).show();
+                    mlastToast = Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT);
+                    mlastToast.show();
                 }
             });
+    }
+
+    private boolean runningOnAndroidTV() {
+        UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+        return uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 
     private int getIconByConnectionStatus(ConnectionStatus level) {
@@ -874,7 +882,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             } else if (level == LEVEL_CONNECTED) {
                 mDisplayBytecount = true;
                 mConnecttime = System.currentTimeMillis();
-                lowpriority = true;
+                if (!runningOnAndroidTV())
+                    lowpriority = true;
             } else {
                 mDisplayBytecount = false;
             }

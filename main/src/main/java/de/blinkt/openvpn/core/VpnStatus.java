@@ -98,6 +98,9 @@ public class VpnStatus {
                 break;
         }
 
+        while(message.endsWith(","))
+            message = message.substring(0, message.length()-1);
+
         String prefix = c.getString(mLastStateresid) + ":";
         String status = mLaststate;
         if (status.equals("NOPROCESS"))

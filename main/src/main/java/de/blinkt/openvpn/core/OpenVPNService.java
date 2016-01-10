@@ -10,15 +10,18 @@ import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.UiModeManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.VpnService;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.IBinder;
 import android.os.Message;
@@ -27,6 +30,7 @@ import android.preference.PreferenceManager;
 import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -80,6 +84,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private String mLastTunCfg;
     private String mRemoteGW;
     private final Object mProcessLock = new Object();
+    private Handler guiHandler;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean mbit) {
@@ -135,7 +140,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
     }
 
-    private void showNotification(String msg, String tickerText, boolean lowpriority, long when, ConnectionStatus status) {
+    private void showNotification(final String msg, String tickerText, boolean lowpriority, long when, ConnectionStatus status) {
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 
@@ -173,6 +178,19 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         mNotificationManager.notify(OPENVPN_STATUS, notification);
         startForeground(OPENVPN_STATUS, notification);
+
+        // Check if running on a TV
+        UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+        if(uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION)
+            guiHandler.post(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    String toastText = String.format(Locale.getDefault(), "%s - %s", mProfile.mName, msg);
+                    Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT).show();
+                }
+            });
     }
 
     private int getIconByConnectionStatus(ConnectionStatus level) {
@@ -296,6 +314,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         VpnStatus.addStateListener(this);
         VpnStatus.addByteCountListener(this);
+
+        guiHandler = new Handler(getMainLooper());
+
 
         if (intent != null && PAUSE_VPN.equals(intent.getAction())) {
             if (mDeviceStateReceiver != null)

@@ -18,9 +18,9 @@ ifeq ($(TARGET_ARCH),mips64)
 	USE_BREAKPAD=0
 endif
 
-ifneq ($(USE_BREAKPAD),0)
+ifeq ($(USE_BREAKPAD),1)
 	WITH_BREAKPAD=1
-	include google-breakpad/android/google_breakpad/Android.mk
+	include breakpad/android/google_breakpad/Android.mk 
 else
 	WITH_BREAKPAD=0
 endif

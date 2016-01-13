@@ -768,11 +768,12 @@ public class VpnProfile implements Serializable, Cloneable {
             String caout = null;
             if (!TextUtils.isEmpty(mCaFilename)) {
                 try {
-                    Certificate cacert = X509Utils.getCertificateFromFile(mCaFilename);
+                    Certificate[] cacerts = X509Utils.getCertificatesFromFile(mCaFilename);
                     StringWriter caoutWriter = new StringWriter();
                     PemWriter pw = new PemWriter(caoutWriter);
 
-                    pw.writeObject(new PemObject("CERTIFICATE", cacert.getEncoded()));
+                    for (Certificate cert: cacerts)
+                        pw.writeObject(new PemObject("CERTIFICATE", cert.getEncoded()));
                     pw.close();
                     caout= caoutWriter.toString();
 
@@ -844,8 +845,14 @@ public class VpnProfile implements Serializable, Cloneable {
             if (mIPv4Address == null || cidrToIPAndNetmask(mIPv4Address) == null)
                 return R.string.ipv4_format_error;
         }
-        if (!mUseDefaultRoute && (getCustomRoutes(mCustomRoutes).size() == 0|| getCustomRoutes(mExcludedRoutes).size() == 0))
-            return R.string.custom_route_format_error;
+        if (!mUseDefaultRoute) {
+            if (!TextUtils.isEmpty(mCustomRoutes) &&  getCustomRoutes(mCustomRoutes).size() == 0 )
+                return R.string.custom_route_format_error;
+
+            if (!TextUtils.isEmpty(mExcludedRoutes) &&  getCustomRoutes(mExcludedRoutes).size() == 0 )
+                return R.string.custom_route_format_error;
+
+        }
 
         boolean noRemoteEnabled = true;
         for (Connection c : mConnections)

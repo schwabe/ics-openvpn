@@ -400,7 +400,8 @@ public class ConfigParser {
         }
 
         Vector<String> routeNoPull = getOption("route-nopull", 1, 1);
-        np.mRoutenopull=true;
+        if (routeNoPull!=null)
+            np.mRoutenopull=true;
 
         // Also recognize tls-auth [inline] direction ...
         Vector<Vector<String>> tlsauthoptions = getAllOption("tls-auth", 1, 2);

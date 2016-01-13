@@ -25,31 +25,35 @@ import java.security.cert.CertificateExpiredException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.CertificateNotYetValidException;
 import java.security.cert.X509Certificate;
-import java.text.DateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Vector;
 
 public class X509Utils {
-	public static Certificate getCertificateFromFile(String certfilename) throws FileNotFoundException, CertificateException {
+	public static Certificate[] getCertificatesFromFile(String certfilename) throws FileNotFoundException, CertificateException {
 		CertificateFactory certFact = CertificateFactory.getInstance("X.509");
 
-		InputStream inStream;
-
+        Vector<Certificate> certificates = new Vector<>();
 		if(VpnProfile.isEmbedded(certfilename)) {
-            // The java certifcate reader is ... kind of stupid
-            // It does NOT ignore chars before the --BEGIN ...
             int subIndex = certfilename.indexOf("-----BEGIN CERTIFICATE-----");
-            subIndex = Math.max(0,subIndex);
-			inStream = new ByteArrayInputStream(certfilename.substring(subIndex).getBytes());
+            do {
+                // The java certifcate reader is ... kind of stupid
+                // It does NOT ignore chars before the --BEGIN ...
 
+                subIndex = Math.max(0, subIndex);
+                InputStream inStream = new ByteArrayInputStream(certfilename.substring(subIndex).getBytes());
+                certificates.add(certFact.generateCertificate(inStream));
 
+                subIndex = certfilename.indexOf("-----BEGIN CERTIFICATE-----", subIndex+1);
+            } while (subIndex > 0);
+            return certificates.toArray(new Certificate[certificates.size()]);
         } else {
-			inStream = new FileInputStream(certfilename);
+			InputStream inStream = new FileInputStream(certfilename);
+            return new Certificate[] {certFact.generateCertificate(inStream)};
         }
 
 
-		return certFact.generateCertificate(inStream);
 	}
 
 	public static PemObject readPemObjectFromFile (String keyfilename) throws IOException {
@@ -73,7 +77,7 @@ public class X509Utils {
 	public static String getCertificateFriendlyName (Context c, String filename) {
 		if(!TextUtils.isEmpty(filename)) {
 			try {
-				X509Certificate cert = (X509Certificate) getCertificateFromFile(filename);
+				X509Certificate cert = (X509Certificate) getCertificatesFromFile(filename)[0];
                 String friendlycn = getCertificateFriendlyName(cert);
                 friendlycn = getCertificateValidityString(cert, c.getResources()) + friendlycn;
                 return friendlycn;

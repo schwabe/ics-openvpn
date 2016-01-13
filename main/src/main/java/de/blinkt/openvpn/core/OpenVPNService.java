@@ -170,6 +170,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
             jbNotificationExtras(lowpriority, nbuilder);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            lpNotificationExtras(nbuilder);
+
         if (tickerText != null && !tickerText.equals(""))
             nbuilder.setTicker(tickerText);
 
@@ -194,6 +197,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     mlastToast.show();
                 }
             });
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void lpNotificationExtras(Notification.Builder nbuilder) {
+        nbuilder.setCategory(Notification.CATEGORY_SERVICE);
+        nbuilder.setLocalOnly(true);
+
     }
 
     private boolean runningOnAndroidTV() {

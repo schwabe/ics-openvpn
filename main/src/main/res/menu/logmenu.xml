@@ -39,5 +39,4 @@
             android:icon="@drawable/ic_menu_edit"
             android:showAsAction="withText|ifRoom"
             android:title="@string/edit_vpn"/>
-
 </menu>

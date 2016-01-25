@@ -1,16 +1,21 @@
+/*
+ * Copyright (c) 2012-2016 Arne Schwabe
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ */
+
 import com.android.builder.model.ProductFlavor
 
 apply plugin: 'com.android.application'
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
     compile 'com.android.support:support-annotations:23.1.1'
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
-//    compile 'ch.acra:acra:4.5.0'
+    //    compile 'ch.acra:acra:4.5.0'
 }
 
 android {
@@ -109,10 +114,7 @@ android {
 
 }
 
-/*
- * Copyright (c) 2012-2014 Arne Schwabe
- * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
- */
+
 
 // ~/.gradle/gradle.properties
 if (project.hasProperty('keystoreFile') &&

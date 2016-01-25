@@ -1,4 +1,9 @@
 /*
+ * Copyright (c) 2012-2016 Arne Schwabe
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ */
+
+/*
  * This file is auto-generated.  DO NOT MODIFY.
  * Original file: /Users/arne/software/icsopenvpn/vpndialogxposed/src/main/aidl/android/net/IConnectivityManager.aidl
  */

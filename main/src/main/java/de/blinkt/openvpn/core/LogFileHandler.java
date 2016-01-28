@@ -129,7 +129,7 @@ class LogFileHandler extends Handler {
                 read = logFile.read(buf, 0, 2);
             }
 
-        } catch (java.io.IOException e) {
+        } catch (java.io.IOException | java.lang.RuntimeException e) {
             VpnStatus.logError("Reading cached logfile failed");
             VpnStatus.logException(e);
             e.printStackTrace();

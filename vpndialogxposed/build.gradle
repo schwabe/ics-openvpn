@@ -1,5 +1,5 @@
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 configurations {
@@ -9,7 +9,7 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile 'com.intellij:annotations:12.0'
-    provided files ('libs/XposedBridgeApi.jar')
+    provided files('libs/XposedBridgeApi.jar')
 }
 
 

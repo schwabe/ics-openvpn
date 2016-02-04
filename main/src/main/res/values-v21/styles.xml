@@ -5,11 +5,22 @@
   -->
 
 <resources>
-    <style name="blinkt.baseTheme" parent="android:Theme.Material.Light.DarkActionBar" />
-
-
     <!-- http://www.google.de/design/spec/style/color.html#color-color-palette -->
-    <style name="blinkt" parent="blinkt.common">
+    <style name="blinkt.baseTheme" parent="android:Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:alertDialogTheme">@style/blinkt.alertDialog</item>
+    </style>
+
+    <style name="blinkt.dialog" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:alertDialogTheme">@style/blinkt.alertDialog</item>
+    </style>
+
+    <style name="blinkt.alertDialog" parent="android:Theme.Material.Light.Dialog.Alert">
         <item name="android:colorPrimary">@color/primary</item>
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <item name="android:colorAccent">@color/accent</item>

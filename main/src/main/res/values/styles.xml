@@ -6,14 +6,12 @@
 
 <resources>
     <style name="blinkt.baseTheme" parent="android:Theme.DeviceDefault.Light" />
-    <style name="blinkt.common" parent="blinkt.baseTheme" >
+    <style name="blinkt" parent="blinkt.baseTheme" >
         <!-- Shared between Holo and Material -->
         <item name="android:preferenceStyle">@style/BlinktPreferencePanel</item>
-
     </style>
 
-    <style name="blinkt" parent="blinkt.common">
-    </style>
+    <style name="blinkt.dialog" parent="android:Theme.DeviceDefault.Light.Dialog" />
 
     <!-- No margins or background by default. Not different for x-large screens -->
     <style name="BlinktPreferencePanel">

@@ -42,7 +42,7 @@
             android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
             android:taskAffinity=""
-            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
+            android:theme="@style/blinkt.dialog" />
 
         <activity
             android:name=".activities.LogWindow"
@@ -141,7 +141,7 @@
             android:name=".LaunchVPN"
             android:excludeFromRecents="true"
             android:label="@string/vpn_launch_title"
-            android:theme="@android:style/Theme.DeviceDefault.Light.Panel"
+            android:theme="@style/blinkt.dialog"
             tools:ignore="ExportedActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

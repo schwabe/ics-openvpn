@@ -6,6 +6,8 @@
 
 <resources>
     <drawable name="ic_menu_close_clear_cancel">@android:drawable/ic_menu_close_clear_cancel</drawable>
+    <drawable name="ic_menu_play">@android:drawable/ic_media_play</drawable>
+    <drawable name="ic_menu_pause">@android:drawable/ic_media_pause</drawable>
     <drawable name="ic_menu_share">@android:drawable/ic_menu_share </drawable>
     <drawable name="ic_menu_save">@android:drawable/ic_menu_save</drawable>
     <drawable name="ic_menu_view">@android:drawable/ic_menu_view</drawable>

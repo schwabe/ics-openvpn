@@ -6,6 +6,8 @@
 
 <resources>
     <drawable name="ic_menu_close_clear_cancel">@drawable/ic_close_white_24dp</drawable>
+    <drawable name="ic_menu_play">@drawable/ic_play_arrow_white_24dp</drawable>
+    <drawable name="ic_menu_pause">@drawable/ic_pause_white_24dp</drawable>
     <drawable name="ic_menu_share">@drawable/ic_share_white_24dp </drawable>
     <drawable name="ic_menu_save">@drawable/ic_check_white_24dp</drawable>
     <drawable name="ic_menu_view">@drawable/ic_filter_list_white_24dp</drawable>

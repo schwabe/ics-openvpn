@@ -251,20 +251,20 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             disconnectVPN.setAction(DISCONNECT_VPN);
             PendingIntent disconnectPendingIntent = PendingIntent.getActivity(this, 0, disconnectVPN, 0);
 
-            nbuilder.addAction(android.R.drawable.ic_menu_close_clear_cancel,
+            nbuilder.addAction(R.drawable.ic_menu_close_clear_cancel,
                     getString(R.string.cancel_connection), disconnectPendingIntent);
 
             Intent pauseVPN = new Intent(this, OpenVPNService.class);
             if (mDeviceStateReceiver == null || !mDeviceStateReceiver.isUserPaused()) {
                 pauseVPN.setAction(PAUSE_VPN);
                 PendingIntent pauseVPNPending = PendingIntent.getService(this, 0, pauseVPN, 0);
-                nbuilder.addAction(android.R.drawable.ic_media_pause,
+                nbuilder.addAction(R.drawable.ic_menu_pause,
                         getString(R.string.pauseVPN), pauseVPNPending);
 
             } else {
                 pauseVPN.setAction(RESUME_VPN);
                 PendingIntent resumeVPNPending = PendingIntent.getService(this, 0, pauseVPN, 0);
-                nbuilder.addAction(android.R.drawable.ic_media_play,
+                nbuilder.addAction(R.drawable.ic_menu_play,
                         getString(R.string.resumevpn), resumeVPNPending);
             }
 

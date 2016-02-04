@@ -396,5 +396,7 @@
     <string name="permission_revoked">VPN permission revoked by OS (e.g. other VPN program started), stopping VPN</string>
     <string name="pushpeerinfo">Push Peer info</string>
     <string name="pushpeerinfosummary">Send extra information to the server, e.g. SSL version and Android version</string>
-
+    <string name="pw_request_dialog_title">Need %1$s</string>
+    <string name="pw_request_dialog_prompt">Please enter the password for profile %1$s</string>
+    <string name="menu_use_inline_data">Use inline data</string>
 </resources>

@@ -103,12 +103,15 @@ public class VpnStatus {
         while (message.endsWith(","))
             message = message.substring(0, message.length() - 1);
 
-        String prefix = c.getString(mLastStateresid) + ":";
         String status = mLaststate;
         if (status.equals("NOPROCESS"))
-            prefix = "";
+            return message;
+
+        String prefix = c.getString(mLastStateresid);
         if (mLastStateresid == R.string.unknown_state)
-            prefix += status;
+            message = status + message;
+        if (message.length() > 0)
+            prefix += ": ";
 
         return prefix + message;
 

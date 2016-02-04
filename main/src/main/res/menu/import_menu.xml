@@ -8,14 +8,14 @@
     <item
         android:id="@+id/cancel"
         android:icon="@drawable/ic_menu_close_clear_cancel"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="ifRoom"
         android:title="@android:string/cancel"
         android:titleCondensed="@string/cancel"/>
     
     <item
         android:id="@+id/ok"
         android:icon="@drawable/ic_menu_save"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="ifRoom"
         android:title="@string/add_profile"
         android:titleCondensed="@string/import_vpn"/>
 

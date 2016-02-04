@@ -228,13 +228,13 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                 .setIcon(R.drawable.ic_menu_add)
                 .setAlphabeticShortcut('a')
                 .setTitleCondensed(getActivity().getString(R.string.add))
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         menu.add(0, MENU_IMPORT_PROFILE, 0, R.string.menu_import)
                 .setIcon(R.drawable.ic_menu_import)
                 .setAlphabeticShortcut('i')
                 .setTitleCondensed(getActivity().getString(R.string.menu_import_short))
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
     }
 
 

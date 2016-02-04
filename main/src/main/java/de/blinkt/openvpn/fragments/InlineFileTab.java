@@ -56,8 +56,7 @@ public class InlineFileTab extends Fragment
 		menu.add(0, MENU_SAVE, 0, R.string.menu_use_inline_data)
 		.setIcon(android.R.drawable.ic_menu_save)
 		.setAlphabeticShortcut('u')
-		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM
-				| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

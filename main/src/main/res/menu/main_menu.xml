@@ -8,7 +8,7 @@
     <item
         android:id="@+id/show_log"
         android:icon="@drawable/ic_receipt"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="ifRoom"
         android:title="@string/show_log_window"
         android:titleCondensed="@string/show_log"/>
 </menu>

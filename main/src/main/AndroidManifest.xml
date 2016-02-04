@@ -41,6 +41,7 @@
             android:name=".activities.DisconnectVPN"
             android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
+            android:taskAffinity=""
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" />
 
         <activity

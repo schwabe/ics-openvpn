@@ -84,7 +84,7 @@ public class ShowConfigFragment extends Fragment {
 		shareIntent.putExtra(Intent.EXTRA_TEXT, configtext);
 		shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.export_config_title));
 		shareIntent.setType("text/plain");
-		startActivity(Intent.createChooser(shareIntent, "Export Configfile"));
+		startActivity(Intent.createChooser(shareIntent, getString(R.string.export_config_chooser_title)));
 	}
 
 	@Override

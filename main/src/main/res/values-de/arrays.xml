@@ -3,9 +3,9 @@
 <resources>
   <string-array name="vpn_types">
     <item>Zertifikate</item>
-    <item>PKCS12 Datei</item>
-    <item>Android Zertifikat Speicher</item>
-    <item>Benutzerame/Passwort</item>
+    <item>PKCS12-Datei</item>
+    <item>Android-Zertifikatsspeicher</item>
+    <item>Benutzername/Passwort</item>
     <item>Statische Schlüssel</item>
     <item>Nutzer/PW + Zertifikate</item>
     <item>Nutzer/PW + PKCS12 </item>
@@ -18,9 +18,9 @@
   </string-array>
   <string-array name="crm_entries">
     <item>Keine erneuter Verbindungsversuch</item>
-    <item>Ein Versuch wieder zuverbinden</item>
+    <item>Ein Versuch, wieder zu verbinden</item>
     <item>Fünf Verbindungsversuche</item>
-    <item>Fünfzig Verbingsversuche</item>
+    <item>Fünfzig Verbindungsversuche</item>
     <item>Unbegrenzte Anzahl Verbindungsversuche</item>
   </string-array>
 </resources>

@@ -27,7 +27,7 @@
     <application
         android:name=".core.ICSOpenVPNApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app"
         android:supportsRtl="true"
         android:theme="@style/blinkt"

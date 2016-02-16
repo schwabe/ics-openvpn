@@ -452,7 +452,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
                 break;
             default:
-                Log.e(TAG, "Unkown needok command " + argument);
+                Log.e(TAG, "Unknown needok command " + argument);
                 return;
         }
 

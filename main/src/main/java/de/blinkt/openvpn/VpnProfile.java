@@ -155,11 +155,14 @@ public class VpnProfile implements Serializable, Cloneable {
     public boolean mAllowedAppsVpnAreDisallowed = true;
     public String mProfileCreator;
 
-    /* Options no long used in new profiles */
+
+    public boolean mPushPeerInfo=false;
+    public static final boolean mIsOpenVPN22 = false;
+
+    /* Options no longer used in new profiles */
     public String mServerName = "openvpn.blinkt.de";
     public String mServerPort = "1194";
     public boolean mUseUdp = true;
-    public boolean mPushPeerInfo=false;
 
     public VpnProfile(String name) {
         mUuid = UUID.randomUUID();
@@ -302,7 +305,8 @@ public class VpnProfile implements Serializable, Cloneable {
             mConnectRetry = "5";
 
 
-        cfg += "connect-retry " + mConnectRetry + "\n";
+        if (!mIsOpenVPN22 || !mUseUdp)
+            cfg += "connect-retry " + mConnectRetry + "\n";
 
         cfg += "resolv-retry 60\n";
 
@@ -509,7 +513,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean usesystemproxy = prefs.getBoolean("usesystemproxy", true);
-        if (usesystemproxy) {
+        if (usesystemproxy && !mIsOpenVPN22) {
             cfg += "# Use system proxy setting\n";
             cfg += "management-query-proxy\n";
         }

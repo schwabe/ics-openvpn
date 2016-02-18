@@ -15,6 +15,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -67,7 +68,8 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
     private static final int RESULT_INSTALLPKCS12 = 7;
     private static final int CHOOSE_FILE_OFFSET = 1000;
     public static final String VPNPROFILE = "vpnProfile";
-    private static final int PERMISSION_REQUEST = 37231;
+    private static final int PERMISSION_REQUEST_EMBED_FILES = 37231;
+    private static final int PERMISSION_REQUEST_READ_URL = PERMISSION_REQUEST_EMBED_FILES+1;
 
     private VpnProfile mResult;
 
@@ -80,19 +82,20 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
     private String mEmbeddedPwFile;
     private Vector<String> mLogEntries = new Vector<>();
     private String mCrlFileName;
+    private Uri mSourceUri;
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.fab_save)
             userActionSaveProfile();
         if (v.getId() == R.id.permssion_hint && Build.VERSION.SDK_INT == Build.VERSION_CODES.M)
-            doRequestSDCardPermission();
+            doRequestSDCardPermission(PERMISSION_REQUEST_EMBED_FILES);
 
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    private void doRequestSDCardPermission() {
-        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
+    private void doRequestSDCardPermission(int requestCode) {
+        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
     }
 
     @Override
@@ -108,8 +111,13 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
                 i++;
         }
 
-        if (requestCode == PERMISSION_REQUEST)
+        if (requestCode == PERMISSION_REQUEST_EMBED_FILES)
             embedFiles(null);
+
+        else if (requestCode == PERMISSION_REQUEST_READ_URL) {
+            if(mSourceUri!=null)
+                doImportUri(mSourceUri);
+        }
     }
 
     @Override
@@ -163,6 +171,8 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
         outState.putIntArray("fileselects", fileselects);
         outState.putString("pwfile", mEmbeddedPwFile);
         outState.putString("crlfile", mCrlFileName);
+
+        outState.putParcelable("mSourceUri", mSourceUri);
     }
 
     @Override
@@ -597,6 +607,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
             mAliasName = savedInstanceState.getString("mAliasName");
             mEmbeddedPwFile = savedInstanceState.getString("pwfile");
             mCrlFileName = savedInstanceState.getString("crlfile");
+            mSourceUri = savedInstanceState.getParcelable("mSourceUri");
 
             if (savedInstanceState.containsKey("logentries")) {
                 //noinspection ConstantConditions
@@ -616,64 +627,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
         final android.content.Intent intent = getIntent();
 
         if (intent != null) {
-            final android.net.Uri data = intent.getData();
-            if (data != null) {
-                //log(R.string.import_experimental);
-                log(R.string.importing_config, data.toString());
-                try {
-                    String possibleName = null;
-                    if ((data.getScheme() != null && data.getScheme().equals("file")) ||
-                            (data.getLastPathSegment() != null &&
-                                    (data.getLastPathSegment().endsWith(".ovpn") ||
-                                            data.getLastPathSegment().endsWith(".conf")))
-                            ) {
-                        possibleName = data.getLastPathSegment();
-                        if (possibleName.lastIndexOf('/') != -1)
-                            possibleName = possibleName.substring(possibleName.lastIndexOf('/') + 1);
-
-                    }
-
-                    mPathsegments = data.getPathSegments();
-
-                    Cursor cursor = null;
-                    cursor = getContentResolver().query(data, null, null, null, null);
-
-                    try {
-
-                        if (cursor != null && cursor.moveToFirst()) {
-                            int columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-
-                            if (columnIndex != -1) {
-                                String displayName = cursor.getString(columnIndex);
-                                if (displayName != null)
-                                    possibleName = displayName;
-                            }
-                            columnIndex = cursor.getColumnIndex("mime_type");
-                            if (columnIndex != -1) {
-                                log("Opening Mime TYPE: " + cursor.getString(columnIndex));
-                            }
-                        }
-                    } finally {
-                        if (cursor != null)
-                            cursor.close();
-                    }
-                    if (possibleName != null) {
-                        possibleName = possibleName.replace(".ovpn", "");
-                        possibleName = possibleName.replace(".conf", "");
-                    }
-                    try {
-                        InputStream is = getContentResolver().openInputStream(data);
-                        doImport(is, possibleName);
-                    } catch (NetworkOnMainThreadException nom) {
-                        throw new RuntimeException("Network on Main: + " + data);
-                    }
-
-                } catch (FileNotFoundException e) {
-                    log(R.string.import_content_resolve_error);
-                } catch (SecurityException se) {
-                    log(R.string.import_content_resolve_error + ":" + se.getLocalizedMessage());
-                }
-            }
+            doImportIntent(intent);
 
             // We parsed the intent, relay on saved instance for restoring
             setIntent(null);
@@ -682,12 +636,89 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
 
     }
 
+    private void doImportIntent(Intent intent) {
+        final Uri data = intent.getData();
+        if (data != null) {
+            mSourceUri = data;
+            doImportUri(data);
+        }
+    }
+
+    private void doImportUri(Uri data) {
+        //log(R.string.import_experimental);
+        log(R.string.importing_config, data.toString());
+        try {
+            String possibleName = null;
+            if ((data.getScheme() != null && data.getScheme().equals("file")) ||
+                    (data.getLastPathSegment() != null &&
+                            (data.getLastPathSegment().endsWith(".ovpn") ||
+                                    data.getLastPathSegment().endsWith(".conf")))
+                    ) {
+                possibleName = data.getLastPathSegment();
+                if (possibleName.lastIndexOf('/') != -1)
+                    possibleName = possibleName.substring(possibleName.lastIndexOf('/') + 1);
+
+            }
+
+            mPathsegments = data.getPathSegments();
+
+            Cursor cursor = null;
+            cursor = getContentResolver().query(data, null, null, null, null);
+
+            try {
+
+                if (cursor != null && cursor.moveToFirst()) {
+                    int columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+
+                    if (columnIndex != -1) {
+                        String displayName = cursor.getString(columnIndex);
+                        if (displayName != null)
+                            possibleName = displayName;
+                    }
+                    columnIndex = cursor.getColumnIndex("mime_type");
+                    if (columnIndex != -1) {
+                        log("Opening Mime TYPE: " + cursor.getString(columnIndex));
+                    }
+                }
+            } finally {
+                if (cursor != null)
+                    cursor.close();
+            }
+            if (possibleName != null) {
+                possibleName = possibleName.replace(".ovpn", "");
+                possibleName = possibleName.replace(".conf", "");
+            }
+            try {
+                InputStream is = getContentResolver().openInputStream(data);
+                doImport(is, possibleName);
+            } catch (NetworkOnMainThreadException nom) {
+                throw new RuntimeException("Network on Main: + " + data);
+            }
+
+        } catch (FileNotFoundException | SecurityException se) {
+            log(R.string.import_content_resolve_error + ":" + se.getLocalizedMessage());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                checkMarschmallowFileImportError(data);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void checkMarschmallowFileImportError(Uri data) {
+        // Permission already granted, not the source of the error
+        if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return;
+
+        // We got a file:/// URL and have no permission to read it. Technically an error of the calling app since
+        // it makes an assumption about other apps being able to read the url but well ...
+        if (data !=null && "file".equals(data.getScheme()))
+            doRequestSDCardPermission(PERMISSION_REQUEST_READ_URL);
+
+    }
+
 
     @Override
     protected void onStart() {
         super.onStart();
-
-
     }
 
     private void log(String logmessage) {

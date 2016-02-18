@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Base64;
+import android.widget.Toast;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -100,10 +101,18 @@ public class FileSelect extends BaseActivity {
 	private void checkPermission() {
 		if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
-
 		}
 	}
 
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+		if (grantResults[0]  == PackageManager.PERMISSION_DENIED) {
+			setResult(RESULT_CANCELED);
+			finish();
+		}
+	}
 
 	public boolean showClear() {
 		if(mData == null || mData.equals(""))

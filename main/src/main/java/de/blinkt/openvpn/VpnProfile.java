@@ -559,8 +559,7 @@ public class VpnProfile implements Serializable, Cloneable {
     //! Put inline data inline and other data as normal escaped filename
     public static String insertFileData(String cfgentry, String filedata) {
         if (filedata == null) {
-            // TODO: generate good error
-            return String.format("%s %s\n", cfgentry, "missing");
+            return String.format("%s %s\n", cfgentry, "file missing in config profile");
         } else if (isEmbedded(filedata)) {
             String dataWithOutHeader = getEmbeddedContent(filedata);
             return String.format(Locale.ENGLISH, "<%s>\n%s\n</%s>\n", cfgentry, dataWithOutHeader, cfgentry);
@@ -857,6 +856,19 @@ public class VpnProfile implements Serializable, Cloneable {
                 return R.string.custom_route_format_error;
 
         }
+
+        if (mUseTLSAuth && TextUtils.isEmpty(mTLSAuthFilename))
+            return R.string.missing_tlsauth;
+
+        if ((mAuthenticationType == TYPE_USERPASS_CERTIFICATES || mAuthenticationType == TYPE_CERTIFICATES)
+                && (TextUtils.isEmpty(mClientCertFilename) || TextUtils.isEmpty(mClientKeyFilename)))
+            return R.string.missing_certificates;
+
+        if (!(mAuthenticationType == TYPE_KEYSTORE || mAuthenticationType == TYPE_USERPASS_KEYSTORE)
+            && TextUtils.isEmpty(mCaFilename))
+            return R.string.missing_ca_certificate;
+
+
 
         boolean noRemoteEnabled = true;
         for (Connection c : mConnections)

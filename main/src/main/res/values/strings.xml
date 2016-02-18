@@ -136,7 +136,7 @@
     <string name="opentun_no_ipaddr">Refusing to open tun device without IP information</string>
     <string name="menu_import">Import Profile from ovpn file</string>
     <string name="menu_import_short">Import</string>
-    <string name="import_content_resolve_error">Could not read Profile to import</string>
+    <string name="import_content_resolve_error">Could not read profile to import</string>
     <string name="error_reading_config_file">Error reading config file</string>
     <string name="add_profile">add Profile</string>
     <string name="import_could_not_open">Could not find file %1$s mentioned in the imported config file</string>
@@ -400,4 +400,7 @@
     <string name="pw_request_dialog_prompt">Please enter the password for profile %1$s</string>
     <string name="menu_use_inline_data">Use inline data</string>
     <string name="export_config_chooser_title">Export configuration file</string>
+    <string name="missing_tlsauth">tls-auth file is missing</string>
+    <string name="missing_certificates">Missing user certificate or user certifcate key file</string>
+    <string name="missing_ca_certificate">Missing CA certificate</string>
 </resources>

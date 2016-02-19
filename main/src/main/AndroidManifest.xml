@@ -139,9 +139,11 @@
         </activity>
         <activity
             android:name=".LaunchVPN"
+            android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
             android:label="@string/vpn_launch_title"
-            android:theme="@style/blinkt.dialog"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.NoDisplay"
             tools:ignore="ExportedActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

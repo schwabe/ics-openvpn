@@ -6,15 +6,21 @@
     <item>PCKCS12 Dosyası</item>
     <item>Android Sertifikası</item>
     <item>Kullanıcı Adı/Parola</item>
-    <item>Statik Anahtarlar(Şifre)</item>
+    <item>Sabit Anahtarlar</item>
     <item>Kullanıcı/Parola + Sertifikalar</item>
     <item>Kullanıcı/Parola + PKCS12 </item>
     <item>Kullanıcı/Parola + Android</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item>0</item>
-    <item>1
-</item>
+    <item>1</item>
     <item>Belirtilmemiş</item>
+  </string-array>
+  <string-array name="crm_entries">
+    <item>Yeniden bağlanma denemesi yok</item>
+    <item>Bir yeniden bağlanma denemesi</item>
+    <item>Beş yeniden bağlanma denemesi</item>
+    <item>Elli yeniden bağlanma denemesi</item>
+    <item>Sınırsız yeniden bağlanma denemesi</item>
   </string-array>
 </resources>

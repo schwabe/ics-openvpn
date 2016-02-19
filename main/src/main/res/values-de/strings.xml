@@ -20,7 +20,7 @@
   <string name="client_pkcs12_title">PKCS12-Datei</string>
   <string name="ca_title">CA-Zertifikat</string>
   <string name="no_certificate">Kein Zertifikat ausgewählt</string>
-  <string name="copyright_guicode">Quellcode und Issue-Tracker sind verfügbar unter http://code.google.com/p/ics-openvpn/</string>
+  <string name="copyright_guicode">Quellcode und Issue-Tracker sind verfügbar unter https://github.com/schwabe/ics-openvpn</string>
   <string name="copyright_others">Dieses Programm nutzt die folgenden Komponenten. Die kompletten Lizenzdetails sind im Quelltext verfügbar.</string>
   <string name="about">Über</string>
   <string name="vpn_list_title">Profile</string>

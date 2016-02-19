@@ -395,4 +395,10 @@
   <string name="months_left">Preostalih še %d mesecev</string>
   <string name="days_left">Preostalih še %d dni</string>
   <string name="hours_left">Preostalih še %d ur</string>
+  <string name="permission_revoked">OS je preklical dovoljenje VPN (npr. zagnan je bil drug program VPN), ustavljanje VPN-a</string>
+  <string name="pushpeerinfo">Potisni podatke o soležniku</string>
+  <string name="pushpeerinfosummary">Pošlji dodatne podatke na strežnik, npr. različico SSL in Android</string>
+  <string name="pw_request_dialog_title">Zahtevano %1$s</string>
+  <string name="pw_request_dialog_prompt">Vnesite geslo za profil %1$s</string>
+  <string name="menu_use_inline_data">Uporabi podatke v besedilu</string>
 </resources>

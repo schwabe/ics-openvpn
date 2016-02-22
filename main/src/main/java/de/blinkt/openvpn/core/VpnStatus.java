@@ -291,7 +291,6 @@ public class VpnStatus {
                         if (mArgs != null)
                             str += TextUtils.join("|", mArgs);
 
-
                         return str;
                     }
                 }
@@ -368,6 +367,16 @@ public class VpnStatus {
                 return mLevel.getInt();
             }
             return mVerbosityLevel;
+        }
+
+        public boolean verify() {
+            if (mLevel == null)
+                return false;
+            
+            if (mMessage == null && mRessourceId == 0)
+                return false;
+
+            return true;
         }
     }
 

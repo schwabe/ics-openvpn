@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Parcel;
+import android.text.TextUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -17,6 +18,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Locale;
+
+import de.blinkt.openvpn.fragments.Utils;
 
 /**
  * Created by arne on 23.01.16.
@@ -122,7 +126,13 @@ class LogFileHandler extends Handler {
                 p.unmarshall(buf, 0, read);
                 p.setDataPosition(0);
                 VpnStatus.LogItem li = VpnStatus.LogItem.CREATOR.createFromParcel(p);
-                VpnStatus.newLogItem(li, true);
+                if (li.verify()) {
+                    VpnStatus.newLogItem(li, true);
+                } else {
+                    VpnStatus.logError(String.format(Locale.getDefault(),
+                            "Could not read log item from file: %d/%d: %s",
+                            read,len, Utils.bytesToHex(buf, read)));
+                }
                 p.recycle();
 
                 //Next item

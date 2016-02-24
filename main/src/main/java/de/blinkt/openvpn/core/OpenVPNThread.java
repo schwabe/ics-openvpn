@@ -179,7 +179,13 @@ public class OpenVPNThread implements Runnable {
 
                     VpnStatus.logMessageOpenVPN(logStatus,logLevel,msg);
                 } else {
-                    VpnStatus.logInfo("P:" + logline);
+					// Connection refused by server.
+					if (logline.matches("^.*?(ECONNREFUSED|Connection refused).*$")){
+						VpnStatus.updateStateString("ECONNREJECTED", "Connection refused by server.", R.string.state_refused, ConnectionStatus.LEVEL_REFUSED);
+						// Do not reconnect to refused server
+						mService.getManagement().stopVPN();
+					}
+					VpnStatus.logInfo("P:" + logline);
                 }
 			}
 			

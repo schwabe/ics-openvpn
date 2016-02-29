@@ -81,7 +81,7 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
         if (which == DialogInterface.BUTTON_POSITIVE) {
             ProfileManager.setConntectedVpnProfileDisconnected(this);
             if (mService != null && mService.getManagement() != null)
-                mService.getManagement().stopVPN();
+                mService.getManagement().stopVPN(false);
         }
         finish();
     }

@@ -372,7 +372,7 @@ public class VpnStatus {
         public boolean verify() {
             if (mLevel == null)
                 return false;
-            
+
             if (mMessage == null && mRessourceId == 0)
                 return false;
 

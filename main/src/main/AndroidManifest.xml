@@ -27,6 +27,7 @@
     <application
         android:name=".core.ICSOpenVPNApplication"
         android:allowBackup="true"
+        android:banner="@drawable/icon"
         android:icon="@drawable/icon"
         android:label="@string/app"
         android:supportsRtl="true"
@@ -41,6 +42,7 @@
             android:name=".activities.DisconnectVPN"
             android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
+            android:noHistory="true"
             android:taskAffinity=""
             android:theme="@style/blinkt.dialog" />
 
@@ -141,6 +143,7 @@
             android:name=".LaunchVPN"
             android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
+            android:noHistory="true"
             android:label="@string/vpn_launch_title"
             android:taskAffinity=""
             android:theme="@android:style/Theme.NoDisplay"

@@ -79,12 +79,11 @@ public class LaunchVPN extends Activity {
 		super.onCreate(icicle);
 
 		mPM =ProfileManager.getInstance(this);
-
+		startVpnFromIntent();
+		finish();
 	}	
 
-	@Override
-	protected void onStart() {
-		super.onStart();
+	protected void startVpnFromIntent() {
 		// Resolve the intent
 
 		final Intent intent = getIntent();

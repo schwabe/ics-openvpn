@@ -49,6 +49,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     private pauseReason lastPauseReason = pauseReason.noNetwork;
     private PausedStateCallback mPauseCallback;
+    private boolean mShuttingDown;
 
     public OpenVpnManagementThread(VpnProfile profile, OpenVPNService openVpnService) {
         mProfile = profile;
@@ -223,7 +224,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                     processByteCount(argument);
                     break;
                 case "STATE":
-                    processState(argument);
+                    if (!mShuttingDown)
+                        processState(argument);
                     break;
                 case "PROXY":
                     processProxyCMD(argument);
@@ -621,7 +623,9 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     }
 
     @Override
-    public boolean stopVPN() {
+    public boolean stopVPN(boolean replaceConnection) {
+        mShuttingDown = true;
         return stopOpenVPN();
     }
+
 }

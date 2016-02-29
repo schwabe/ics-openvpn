@@ -27,7 +27,7 @@ public class VPNLaunchHelper {
 
 
 
-    static private String writeMiniVPN(Context context) {
+    private static String writeMiniVPN(Context context) {
         String[] abis;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             abis = getSupportedABIsLollipop();
@@ -73,12 +73,18 @@ public class VPNLaunchHelper {
     }
 
 
-    public static String[] buildOpenvpnArgv(Context c) {
+    static String[] buildOpenvpnArgv(Context c) {
         Vector<String> args = new Vector<>();
 
+        String binaryName = writeMiniVPN(c);
         // Add fixed paramenters
         //args.add("/data/data/de.blinkt.openvpn/lib/openvpn");
-        args.add(writeMiniVPN(c));
+        if(binaryName==null) {
+            VpnStatus.logError("Error writing minivpn binary");
+            return null;
+        }
+
+        args.add(binaryName);
 
         args.add("--config");
         args.add(getConfigFilePath(c));
@@ -126,14 +132,6 @@ public class VPNLaunchHelper {
 	
 
 	public static void startOpenVpn(VpnProfile startprofile, Context context) {
-        VpnStatus.logInfo(R.string.building_configration);
-        VpnStatus.updateStateString("VPN_GENERATE_CONFIG", "", R.string.building_configration, VpnStatus.ConnectionStatus.LEVEL_START);
-        if(writeMiniVPN(context)==null) {
-			VpnStatus.logError("Error writing minivpn binary");
-			return;
-		}
-
-
 		Intent startVPN = startprofile.prepareStartService(context);
 		if(startVPN!=null)
 			context.startService(startVPN);

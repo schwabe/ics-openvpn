@@ -24,7 +24,10 @@ public interface OpenVPNManagement {
 
 	void resume();
 
-	boolean stopVPN();
+    /**
+     * @param replaceConnection True if the VPN is connected by a new connection.
+     */
+	boolean stopVPN(boolean replaceConnection);
 
     /*
      * Rebind the interface

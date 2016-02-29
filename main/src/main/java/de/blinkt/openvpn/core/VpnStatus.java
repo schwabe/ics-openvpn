@@ -622,8 +622,8 @@ public class VpnStatus {
     public static synchronized void updateByteCount(long in, long out) {
         long lastIn = mlastByteCount[0];
         long lastOut = mlastByteCount[1];
-        long diffIn = mlastByteCount[2] = in - lastIn;
-        long diffOut = mlastByteCount[3] = out - lastOut;
+        long diffIn = mlastByteCount[2] = Math.max(0, in - lastIn);
+        long diffOut = mlastByteCount[3] = Math.max(0, out - lastOut);
 
 
         mlastByteCount = new long[]{in, out, diffIn, diffOut};

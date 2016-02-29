@@ -146,7 +146,7 @@
             android:noHistory="true"
             android:label="@string/vpn_launch_title"
             android:taskAffinity=""
-            android:theme="@android:style/Theme.NoDisplay"
+            android:theme="@style/blinkt.dialog"
             tools:ignore="ExportedActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

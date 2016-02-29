@@ -32,6 +32,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Inet6Address;
@@ -115,7 +116,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     @Override
     public void onRevoke() {
         VpnStatus.logInfo(R.string.permission_revoked);
-        mManagement.stopVPN();
+        mManagement.stopVPN(false);
         endVpnService();
     }
 
@@ -184,13 +185,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         startForeground(OPENVPN_STATUS, notification);
 
         // Check if running on a TV
-        if(runningOnAndroidTV() && !lowpriority)
+        if (runningOnAndroidTV() && !lowpriority)
             guiHandler.post(new Runnable() {
 
                 @Override
                 public void run() {
 
-                    if (mlastToast!=null)
+                    if (mlastToast != null)
                         mlastToast.cancel();
                     String toastText = String.format(Locale.getDefault(), "%s - %s", mProfile.mName, msg);
                     mlastToast = Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT);
@@ -377,21 +378,49 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             mProfile = ProfileManager.get(this, profileUUID);
         }
 
+        /* start the OpenVPN process itself in a background thread */
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                startOpenVPN();
+            }
+        }).start();
+
+
+        ProfileManager.setConnectedVpnProfile(this, mProfile);
+        /* TODO: At the moment we have no way to handle asynchronous PW input
+         * Fixing will also allow to handle challenge/response authentication */
+        if (mProfile.needUserPWInput(true) != 0)
+            return START_NOT_STICKY;
+
+        return START_STICKY;
+    }
+
+    private void startOpenVPN() {
+        VpnStatus.logInfo(R.string.building_configration);
+        VpnStatus.updateStateString("VPN_GENERATE_CONFIG", "", R.string.building_configration, VpnStatus.ConnectionStatus.LEVEL_START);
+
+
+        try {
+            mProfile.writeConfigFile(this);
+        } catch (IOException e) {
+            VpnStatus.logException("Error writing config file", e);
+            endVpnService();
+            return;
+        }
 
         // Extract information from the intent.
         String prefix = getPackageName();
-        String[] argv = intent.getStringArrayExtra(prefix + ".ARGV");
-        String nativeLibraryDirectory = intent.getStringExtra(prefix + ".nativelib");
+        String nativeLibraryDirectory = getApplicationInfo().nativeLibraryDir;
 
-        String startTitle = getString(R.string.start_vpn_title, mProfile.mName);
-        String startTicker = getString(R.string.start_vpn_ticker, mProfile.mName);
-        showNotification(startTitle, startTicker,
-                false, 0, LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
+        // Also writes OpenVPN binary
+        String[] argv = VPNLaunchHelper.buildOpenvpnArgv(this);
+
 
         // Set a flag that we are starting a new VPN
         mStarting = true;
         // Stop the previous session by interrupting the thread.
-        if (mManagement != null && mManagement.stopVPN())
+        if (mManagement != null && mManagement.stopVPN(true))
             // an old was asked to exit, wait 1s
             try {
                 Thread.sleep(1000);
@@ -432,10 +461,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 mManagement = ovpnManagementThread;
                 VpnStatus.logInfo("started Socket Thread");
             } else {
-                return START_NOT_STICKY;
+                endVpnService();
+                return;
             }
         }
-
 
         Runnable processThread;
         if (mOvpn3) {
@@ -454,19 +483,16 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
             mProcessThread.start();
         }
-        if (mDeviceStateReceiver != null)
-            unregisterDeviceStateReceiver();
 
-        registerDeviceStateReceiver(mManagement);
+        new Handler(getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (mDeviceStateReceiver != null)
+                    unregisterDeviceStateReceiver();
 
-
-        ProfileManager.setConnectedVpnProfile(this, mProfile);
-        /* TODO: At the moment we have no way to handle asynchronous PW input
-         * Fixing will also allow to handle challenge/response authentication */
-        if (mProfile.needUserPWInput(true) != 0)
-            return START_NOT_STICKY;
-
-        return START_STICKY;
+                registerDeviceStateReceiver(mManagement);
+            }
+        });
     }
 
     private OpenVPNManagement instantiateOpenVPN3Core() {
@@ -474,7 +500,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             Class cl = Class.forName("de.blinkt.openvpn.core.OpenVPNThreadv3");
             return (OpenVPNManagement) cl.getConstructor(OpenVPNService.class, VpnProfile.class).newInstance(this, mProfile);
         } catch (IllegalArgumentException | InstantiationException | InvocationTargetException |
-                NoSuchMethodException | ClassNotFoundException | IllegalAccessException e ) {
+                NoSuchMethodException | ClassNotFoundException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
@@ -484,7 +510,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     public void onDestroy() {
         synchronized (mProcessLock) {
             if (mProcessThread != null) {
-                mManagement.stopVPN();
+                mManagement.stopVPN(true);
             }
         }
 
@@ -580,7 +606,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             // Check if the first DNS Server is in the VPN range
             try {
                 ipAddress dnsServer = new ipAddress(new CIDRIP(mDnslist.get(0), 32), true);
-                boolean dnsIncluded=false;
+                boolean dnsIncluded = false;
                 for (ipAddress net : positiveIPv4Routes) {
                     if (net.containsNet(dnsServer)) {
                         dnsIncluded = true;
@@ -617,8 +643,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 VpnStatus.logError(getString(R.string.route_rejected) + route6 + " " + ia.getLocalizedMessage());
             }
         }
-
-
 
 
         if (mDomain != null)
@@ -715,7 +739,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setAllowedVpnPackages(Builder builder) {
-        boolean atLeastOneAllowedApp=false;
+        boolean atLeastOneAllowedApp = false;
         for (String pkg : mProfile.mAllowedAppsVpn) {
             try {
                 if (mProfile.mAllowedAppsVpnAreDisallowed) {

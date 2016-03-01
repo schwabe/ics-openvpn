@@ -16,18 +16,19 @@ public interface OpenVPNManagement {
         screenOff
     }
 
-	int mBytecountInterval =2;
+    int mBytecountInterval = 2;
 
-	void reconnect();
+    void reconnect();
 
-	void pause(pauseReason reason);
+    void pause(pauseReason reason);
 
-	void resume();
+    void resume();
 
     /**
      * @param replaceConnection True if the VPN is connected by a new connection.
+     * @return true if there was a process that has been send a stop signal
      */
-	boolean stopVPN(boolean replaceConnection);
+    boolean stopVPN(boolean replaceConnection);
 
     /*
      * Rebind the interface

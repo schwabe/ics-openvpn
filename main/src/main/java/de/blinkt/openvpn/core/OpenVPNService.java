@@ -87,6 +87,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private final Object mProcessLock = new Object();
     private Handler guiHandler;
     private Toast mlastToast;
+    private Runnable mOpenVPNThread;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean mbit) {
@@ -132,6 +133,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         VpnStatus.removeByteCountListener(this);
         unregisterDeviceStateReceiver();
         ProfileManager.setConntectedVpnProfileDisconnected(this);
+        mOpenVPNThread = null;
         if (!mStarting) {
             stopForeground(!mNotificationAlwaysVisible);
 
@@ -420,24 +422,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         // Set a flag that we are starting a new VPN
         mStarting = true;
         // Stop the previous session by interrupting the thread.
-        if (mManagement != null && mManagement.stopVPN(true))
-            // an old was asked to exit, wait 1s
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                //ignore
-            }
 
-        synchronized (mProcessLock) {
-            if (mProcessThread != null) {
-                mProcessThread.interrupt();
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    //ignore
-                }
-            }
-        }
+        stopOldOpenVPNProcess();
         // An old running VPN should now be exited
         mStarting = false;
 
@@ -448,10 +434,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (!"ovpn3".equals(BuildConfig.FLAVOR))
             mOvpn3 = false;
 
-
         // Open the Management Interface
         if (!mOvpn3) {
-
             // start a Thread that handles incoming messages of the managment socket
             OpenVpnManagementThread ovpnManagementThread = new OpenVpnManagementThread(mProfile, this);
             if (ovpnManagementThread.openManagementInterface(this)) {
@@ -467,7 +451,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         Runnable processThread;
-        if (mOvpn3) {
+        if (mOvpn3)
+
+        {
 
             OpenVPNManagement mOpenVPN3 = instantiateOpenVPN3Core();
             processThread = (Runnable) mOpenVPN3;
@@ -477,22 +463,53 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         } else {
             HashMap<String, String> env = new HashMap<>();
             processThread = new OpenVPNThread(this, argv, env, nativeLibraryDirectory);
+            mOpenVPNThread = processThread;
         }
 
-        synchronized (mProcessLock) {
+        synchronized (mProcessLock)
+
+        {
             mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
             mProcessThread.start();
         }
 
         new Handler(getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                if (mDeviceStateReceiver != null)
-                    unregisterDeviceStateReceiver();
+                         @Override
+                         public void run() {
+                             if (mDeviceStateReceiver != null)
+                                 unregisterDeviceStateReceiver();
 
-                registerDeviceStateReceiver(mManagement);
+                             registerDeviceStateReceiver(mManagement);
+                         }
+                     }
+
+                );
+    }
+
+    private void stopOldOpenVPNProcess() {
+        if (mManagement != null) {
+            if (mOpenVPNThread!=null)
+                ((OpenVPNThread) mOpenVPNThread).setReplaceConnection();
+            if (mManagement.stopVPN(true)) {
+                // an old was asked to exit, wait 1s
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    //ignore
+                }
             }
-        });
+        }
+
+        synchronized (mProcessLock) {
+            if (mProcessThread != null) {
+                mProcessThread.interrupt();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    //ignore
+                }
+            }
+        }
     }
 
     private OpenVPNManagement instantiateOpenVPN3Core() {

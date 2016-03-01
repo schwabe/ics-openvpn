@@ -46,6 +46,7 @@ public class OpenVPNThread implements Runnable {
     private String mDumpPath;
     private Map<String, String> mProcessEnv;
     private boolean mBrokenPie = false;
+    private boolean mNoProcessExitStatus = false;
 
     public OpenVPNThread(OpenVPNService service, String[] argv, Map<String, String> processEnv, String nativelibdir) {
         mArgv = argv;
@@ -56,6 +57,11 @@ public class OpenVPNThread implements Runnable {
 
     public void stopProcess() {
         mProcess.destroy();
+    }
+
+    void setReplaceConnection()
+    {
+        mNoProcessExitStatus=true;
     }
 
     @Override
@@ -95,7 +101,9 @@ public class OpenVPNThread implements Runnable {
 
             }
 
-            VpnStatus.updateStateString("NOPROCESS", "No process running.", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
+            if (!mNoProcessExitStatus)
+                VpnStatus.updateStateString("NOPROCESS", "No process running.", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
+
             if (mDumpPath != null) {
                 try {
                     BufferedWriter logout = new BufferedWriter(new FileWriter(mDumpPath + ".log"));

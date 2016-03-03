@@ -853,7 +853,7 @@ public class VpnProfile implements Serializable, Cloneable {
                 && (TextUtils.isEmpty(mClientCertFilename) || TextUtils.isEmpty(mClientKeyFilename)))
             return R.string.missing_certificates;
 
-        if (!(mAuthenticationType == TYPE_KEYSTORE || mAuthenticationType == TYPE_USERPASS_KEYSTORE)
+        if ((mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES)
                 && TextUtils.isEmpty(mCaFilename))
             return R.string.missing_ca_certificate;
 

@@ -13,11 +13,23 @@
             android:layout_margin="@dimen/stdpadding"
             android:orientation="vertical">
 
+
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:id="@+id/config_convert_root"
             android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/item"
+            android:text="@string/profilename"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            />
+
+        <EditText
+            android:id="@+id/profilename"
+            style="@style/item"
+            android:inputType="text" />
 
         <TextView
                 android:layout_width="match_parent"

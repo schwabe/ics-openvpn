@@ -33,6 +33,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -82,6 +83,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
     private String mEmbeddedPwFile;
     private Vector<String> mLogEntries = new Vector<>();
     private Uri mSourceUri;
+    private EditText mProfilename;
 
     @Override
     public void onClick(View v) {
@@ -140,6 +142,13 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
         if (mResult == null) {
             log(R.string.import_config_error);
             Toast.makeText(this, R.string.import_config_error, Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+        mResult.mName = mProfilename.getText().toString();
+        ProfileManager vpl = ProfileManager.getInstance(this);
+        if (vpl.getProfileByName(mResult.mName)!=null) {
+            mProfilename.setError(getString(R.string.duplicate_profile_name));
             return true;
         }
 
@@ -594,11 +603,14 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
             findViewById(R.id.fab_footerspace).setVisibility(View.VISIBLE);
         }
 
+        mProfilename = (EditText) findViewById(R.id.profilename);
+
         if (savedInstanceState != null && savedInstanceState.containsKey(VPNPROFILE)) {
             mResult = (VpnProfile) savedInstanceState.getSerializable(VPNPROFILE);
             mAliasName = savedInstanceState.getString("mAliasName");
             mEmbeddedPwFile = savedInstanceState.getString("pwfile");
             mSourceUri = savedInstanceState.getParcelable("mSourceUri");
+            mProfilename.setText(mResult.mName);
 
             if (savedInstanceState.containsKey("logentries")) {
                 //noinspection ConstantConditions
@@ -729,6 +741,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
             embedFiles(cp);
             displayWarnings();
             mResult.mName = getUniqueProfileName(newName);
+            mProfilename.setText(mResult.getName());
 
             log(R.string.import_done);
             return;

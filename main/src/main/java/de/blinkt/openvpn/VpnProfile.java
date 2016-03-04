@@ -383,7 +383,7 @@ public class VpnProfile implements Serializable, Cloneable {
         }
 
         if (!TextUtils.isEmpty(mCrlFilename))
-            insertFileData("crl-verify",mCrlFilename);
+            cfg += insertFileData("crl-verify", mCrlFilename);
 
         if (mUseLzo) {
             cfg += "comp-lzo\n";

@@ -293,7 +293,8 @@ public class ConfigParser {
             {
                     {"setenv", "IV_GUI_VER"},
                     {"setenv", "IV_OPENVPN_GUI_VERSION"},
-                    {"engine", "dynamic"}
+                    {"engine", "dynamic"},
+                    {"setenv", "CLIENT_CERT"}
             };
 
     final String[] connectionOptions = {

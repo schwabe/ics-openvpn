@@ -43,7 +43,7 @@
             android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
             android:noHistory="true"
-            android:taskAffinity=""
+            android:taskAffinity=".DisconnectVPN"
             android:theme="@style/blinkt.dialog" />
 
         <activity
@@ -103,6 +103,8 @@
         <activity
             android:name=".activities.ConfigConverter"
             android:label="Convert Config File"
+            android:excludeFromRecents="true"
+            android:taskAffinity=".ConfigConverter"
             android:uiOptions="splitActionBarWhenNarrow"
             tools:ignore="ExportedActivity">
             <intent-filter android:label="@string/import_config">
@@ -145,7 +147,7 @@
             android:excludeFromRecents="true"
             android:noHistory="true"
             android:label="@string/vpn_launch_title"
-            android:taskAffinity=""
+            android:taskAffinity=".LaunchVPN"
             android:theme="@style/blinkt.dialog"
             tools:ignore="ExportedActivity">
             <intent-filter>
@@ -160,6 +162,7 @@
             android:name=".activities.CreateShortcuts"
             android:excludeFromRecents="true"
             android:label="@string/vpn_shortcut"
+            android:taskAffinity=".CreateShortcuts"
             android:theme="@android:style/Theme.DeviceDefault.Light.DialogWhenLarge">
             <intent-filter>
                 <action android:name="android.intent.action.CREATE_SHORTCUT" />

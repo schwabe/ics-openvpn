@@ -69,7 +69,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
     private static final int CHOOSE_FILE_OFFSET = 1000;
     public static final String VPNPROFILE = "vpnProfile";
     private static final int PERMISSION_REQUEST_EMBED_FILES = 37231;
-    private static final int PERMISSION_REQUEST_READ_URL = PERMISSION_REQUEST_EMBED_FILES+1;
+    private static final int PERMISSION_REQUEST_READ_URL = PERMISSION_REQUEST_EMBED_FILES + 1;
 
     private VpnProfile mResult;
 
@@ -81,7 +81,6 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
     private Map<Utils.FileType, FileSelectLayout> fileSelectMap = new HashMap<>();
     private String mEmbeddedPwFile;
     private Vector<String> mLogEntries = new Vector<>();
-    private String mCrlFileName;
     private Uri mSourceUri;
 
     @Override
@@ -119,7 +118,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
             embedFiles(null);
 
         else if (requestCode == PERMISSION_REQUEST_READ_URL) {
-            if(mSourceUri!=null)
+            if (mSourceUri != null)
                 doImportUri(mSourceUri);
         }
     }
@@ -174,8 +173,6 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
         }
         outState.putIntArray("fileselects", fileselects);
         outState.putString("pwfile", mEmbeddedPwFile);
-        outState.putString("crlfile", mCrlFileName);
-
         outState.putParcelable("mSourceUri", mSourceUri);
     }
 
@@ -214,7 +211,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
                     mResult.mClientKeyFilename = data;
                     break;
                 case CRL_FILE:
-                    mCrlFileName = data;
+                    mResult.mCrlFilename = data;
                     break;
                 default:
                     Assert.fail();
@@ -241,6 +238,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
 
     public void showCertDialog() {
         try {
+            //noinspection WrongConstant
             KeyChain.choosePrivateKeyAlias(this,
                     new KeyChainAliasCallback() {
 
@@ -400,7 +398,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
 
             case CRL_FILE:
                 titleRes = R.string.crl_file;
-                value = mCrlFileName;
+                value = mResult.mCrlFilename;
                 break;
         }
 
@@ -415,8 +413,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
             log(R.string.import_could_not_open, filename);
         }
 
-        if (fileType != Utils.FileType.CRL_FILE)
-            addFileSelectDialog(fileType);
+        addFileSelectDialog(fileType);
 
         return foundfile;
     }
@@ -570,19 +567,10 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
         mResult.mClientKeyFilename = embedFile(mResult.mClientKeyFilename, Utils.FileType.KEYFILE, false);
         mResult.mTLSAuthFilename = embedFile(mResult.mTLSAuthFilename, Utils.FileType.TLS_AUTH_FILE, false);
         mResult.mPKCS12Filename = embedFile(mResult.mPKCS12Filename, Utils.FileType.PKCS12, false);
+        mResult.mCrlFilename = embedFile(mResult.mCrlFilename, Utils.FileType.CRL_FILE, true);
         if (cp != null) {
             mEmbeddedPwFile = cp.getAuthUserPassFile();
             mEmbeddedPwFile = embedFile(cp.getAuthUserPassFile(), Utils.FileType.USERPW_FILE, false);
-            mCrlFileName = embedFile(cp.getCrlVerifyFile(), Utils.FileType.CRL_FILE, true);
-
-            ConfigParser.removeCRLCustomOption(mResult);
-            if (!TextUtils.isEmpty(mCrlFileName)) {
-                // TODO: Convert this to a real config option that is parsed
-                ConfigParser.removeCRLCustomOption(mResult);
-                mResult.mCustomConfigOptions += "\ncrl-verify " + VpnProfile.openVpnEscape(mCrlFileName);
-            } else if (!TextUtils.isEmpty(cp.getCrlVerifyFile())) {
-                mResult.mCustomConfigOptions += "\n#crl-verify " + VpnProfile.openVpnEscape(cp.getCrlVerifyFile());
-            }
         }
 
         updateFileSelectDialogs();
@@ -610,7 +598,6 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
             mResult = (VpnProfile) savedInstanceState.getSerializable(VPNPROFILE);
             mAliasName = savedInstanceState.getString("mAliasName");
             mEmbeddedPwFile = savedInstanceState.getString("pwfile");
-            mCrlFileName = savedInstanceState.getString("crlfile");
             mSourceUri = savedInstanceState.getParcelable("mSourceUri");
 
             if (savedInstanceState.containsKey("logentries")) {
@@ -666,8 +653,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
 
             mPathsegments = data.getPathSegments();
 
-            Cursor cursor = null;
-            cursor = getContentResolver().query(data, null, null, null, null);
+            Cursor cursor = getContentResolver().query(data, null, null, null, null);
 
             try {
 
@@ -709,12 +695,12 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
     @TargetApi(Build.VERSION_CODES.M)
     private void checkMarschmallowFileImportError(Uri data) {
         // Permission already granted, not the source of the error
-        if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
             return;
 
         // We got a file:/// URL and have no permission to read it. Technically an error of the calling app since
         // it makes an assumption about other apps being able to read the url but well ...
-        if (data !=null && "file".equals(data.getScheme()))
+        if (data != null && "file".equals(data.getScheme()))
             doRequestSDCardPermission(PERMISSION_REQUEST_READ_URL);
 
     }

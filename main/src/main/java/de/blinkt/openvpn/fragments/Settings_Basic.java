@@ -51,6 +51,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 	private CheckBox mUseLzo;
 	private Spinner mType;
 	private FileSelectLayout mpkcs12;
+	private FileSelectLayout mCrlFile;
 	private TextView mPKCS12Password;
 	private Handler mHandler;
 	private EditText mUserName;
@@ -62,8 +63,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 	private SparseArray<FileSelectLayout> fileselects = new SparseArray<>();
 
 
-
-    private void addFileSelectLayout (FileSelectLayout fsl, Utils.FileType type) {
+	private void addFileSelectLayout (FileSelectLayout fsl, Utils.FileType type) {
 		int i = fileselects.size() + CHOOSE_FILE_OFFSET;
 		fileselects.put(i, fsl);
 		fsl.setCaller(this, i, type);
@@ -126,6 +126,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 		mClientKey = (FileSelectLayout) mView.findViewById(R.id.keyselect);
 		mCaCert = (FileSelectLayout) mView.findViewById(R.id.caselect);
 		mpkcs12 = (FileSelectLayout) mView.findViewById(R.id.pkcs12select);
+		mCrlFile = (FileSelectLayout) mView.findViewById(id.crlfile);
 		mUseLzo = (CheckBox) mView.findViewById(R.id.lzo);
 		mType = (Spinner) mView.findViewById(R.id.type);
 		mPKCS12Password = (TextView) mView.findViewById(R.id.pkcs12password);
@@ -140,6 +141,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 		addFileSelectLayout(mClientCert, Utils.FileType.CLIENT_CERTIFICATE);
 		addFileSelectLayout(mClientKey, Utils.FileType.KEYFILE);
 		addFileSelectLayout(mpkcs12, Utils.FileType.PKCS12);
+		addFileSelectLayout(mCrlFile, Utils.FileType.CRL_FILE);
 		mCaCert.setShowClear();
 
 		mType.setOnItemSelectedListener(this);
@@ -244,6 +246,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 		mClientCert.setData(mProfile.mClientCertFilename, getActivity());
 		mClientKey.setData(mProfile.mClientKeyFilename, getActivity());
 		mCaCert.setData(mProfile.mCaFilename, getActivity());
+        mCrlFile.setData(mProfile.mCrlFilename, getActivity());
 
 		mUseLzo.setChecked(mProfile.mUseLzo);
 		mType.setSelection(mProfile.mAuthenticationType);
@@ -263,6 +266,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 		mProfile.mCaFilename = mCaCert.getData();
 		mProfile.mClientCertFilename = mClientCert.getData();
 		mProfile.mClientKeyFilename = mClientKey.getData();
+        mProfile.mCrlFilename = mCrlFile.getData();
 
 		mProfile.mUseLzo = mUseLzo.isChecked();
 		mProfile.mAuthenticationType = mType.getSelectedItemPosition();
@@ -287,7 +291,8 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 		}
 	}
 
-	public void showCertDialog () {
+	@SuppressWarnings("WrongConstant")
+    public void showCertDialog () {
 		try	{
 			KeyChain.choosePrivateKeyAlias(getActivity(),
 					new KeyChainAliasCallback() {

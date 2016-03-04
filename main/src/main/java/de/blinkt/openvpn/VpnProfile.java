@@ -153,6 +153,8 @@ public class VpnProfile implements Serializable, Cloneable {
     public boolean mRemoteRandom = false;
     public HashSet<String> mAllowedAppsVpn = new HashSet<>();
     public boolean mAllowedAppsVpnAreDisallowed = true;
+
+    public String mCrlFilename;
     public String mProfileCreator;
 
 
@@ -379,6 +381,9 @@ public class VpnProfile implements Serializable, Cloneable {
                 cfg += "auth-user-pass\n";
                 cfg += insertFileData("ca", mCaFilename);
         }
+
+        if (!TextUtils.isEmpty(mCrlFilename))
+            insertFileData("crl-verify",mCrlFilename);
 
         if (mUseLzo) {
             cfg += "comp-lzo\n";

@@ -203,6 +203,13 @@
                 android:singleLine="false"
                 android:text="@string/static_keys_info" />
         </LinearLayout>
+        <de.blinkt.openvpn.views.FileSelectLayout
+            android:id="@+id/crlfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            blinkt:certificate="false"
+            blinkt:showClear="true"
+            blinkt:fileTitle="@string/crl_title" />
     </LinearLayout>
 
 </ScrollView>

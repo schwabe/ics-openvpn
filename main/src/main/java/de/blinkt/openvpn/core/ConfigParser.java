@@ -32,8 +32,6 @@ public class ConfigParser {
     private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
     private String auth_user_pass_file;
-    private String crl_verify_file;
-
 
     public void parseConfig(Reader reader) throws IOException, ConfigParseError {
 
@@ -130,10 +128,6 @@ public class ConfigParser {
 
     public String getAuthUserPassFile() {
         return auth_user_pass_file;
-    }
-
-    public String getCrlVerifyFile() {
-        return crl_verify_file;
     }
 
     enum linestate {
@@ -621,11 +615,12 @@ public class ConfigParser {
         Vector<String> crlfile = getOption("crl-verify", 1, 2);
         if (crlfile != null) {
             // If the 'dir' parameter is present just add it as custom option ..
-            np.mCustomConfigOptions += TextUtils.join(" ", crlfile) + "\n";
-            if (crlfile.size() == 2) {
+            if (crlfile.size() == 3 && crlfile.get(2).equals("dir"))
+                np.mCustomConfigOptions += TextUtils.join(" ", crlfile) + "\n";
+            else
                 // Save the filename for the config converter to add later
-                crl_verify_file = crlfile.get(1);
-            }
+                np.mCrlFilename = crlfile.get(1);
+
         }
 
 
@@ -811,16 +806,6 @@ public class ConfigParser {
             np.mUsername = parts[0];
             np.mPassword = parts[1];
         }
-    }
-
-    public static void removeCRLCustomOption(VpnProfile np) {
-        String lines[] = np.mCustomConfigOptions.split("\\r?\\n");
-        Vector<String> keeplines = new Vector<>();
-        for (String l : lines) {
-            if (!l.startsWith("crl-verify "))
-                keeplines.add(l);
-        }
-        np.mCustomConfigOptions = TextUtils.join("\n", keeplines);
     }
 
     private void checkIgnoreAndInvalidOptions(VpnProfile np) throws ConfigParseError {

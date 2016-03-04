@@ -149,6 +149,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     @Override
     public void onResume() {
         super.onResume();
+        setListAdapter();
         VpnStatus.addStateListener(this);
     }
 
@@ -211,14 +212,18 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
     private void setListAdapter() {
-        mArrayadapter = new VPNArrayAdapter(getActivity(), R.layout.vpn_list_item, R.id.vpn_item_title);
-        Collection<VpnProfile> allvpn = getPM().getProfiles();
+        if (mArrayadapter==null) {
+            mArrayadapter = new VPNArrayAdapter(getActivity(), R.layout.vpn_list_item, R.id.vpn_item_title);
 
+        }
+        Collection<VpnProfile> allvpn = getPM().getProfiles();
         TreeSet<VpnProfile> sortedset = new TreeSet<VpnProfile>(new VpnProfileNameComparator());
         sortedset.addAll(allvpn);
+        mArrayadapter.clear();
         mArrayadapter.addAll(sortedset);
 
         setListAdapter(mArrayadapter);
+        mArrayadapter.notifyDataSetChanged();
     }
 
 

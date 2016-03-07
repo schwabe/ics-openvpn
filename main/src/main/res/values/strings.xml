@@ -246,6 +246,7 @@
     <string name="state_reconnecting">Reconnecting</string>
     <string name="state_exiting">Exiting</string>
     <string name="state_noprocess">Not running</string>
+    <string name="state_refused">Connection was refused</string>
     <string name="state_resolve">Resolving host names</string>
     <string name="state_tcp_connect">Connecting (TCP)</string>
     <string name="state_auth_failed">Authentication failed</string>

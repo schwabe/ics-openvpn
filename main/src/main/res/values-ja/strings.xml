@@ -13,7 +13,7 @@
   <string name="select">選択</string>
   <string name="cancel">キャンセル</string>
   <string name="no_data">データなし</string>
-  <string name="useLZO">LZO 圧縮</string>
+  <string name="useLZO">LZO圧縮</string>
   <string name="client_no_certificate">証明書がありません。</string>
   <string name="client_certificate_title">クライアント証明書</string>
   <string name="client_key_title">クライアント証明書のキー</string>

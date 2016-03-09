@@ -73,7 +73,7 @@ public class VpnStatus {
         logException(LogLevel.ERROR, context, e);
     }
 
-    private static final int MAXLOGENTRIES = 1000;
+    static final int MAXLOGENTRIES = 1000;
 
 
     public static String getLastCleanLogMessage(Context c) {

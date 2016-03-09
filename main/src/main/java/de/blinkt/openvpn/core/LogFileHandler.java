@@ -105,16 +105,20 @@ class LogFileHandler extends Handler {
     private void readLogCache(File cacheDir) {
         File logfile = new File(cacheDir, LOGFILE_NAME);
 
+
         if (!logfile.exists() || !logfile.canRead())
             return;
 
         VpnStatus.logDebug("Reread log items from cache file");
 
+
         try {
+
             BufferedInputStream logFile = new BufferedInputStream(new FileInputStream(logfile));
 
             byte[] buf = new byte[8192];
             int read = logFile.read(buf, 0, 2);
+            int itemsRead=0;
 
             while (read > 0) {
                 // Marshalled LogItem
@@ -131,12 +135,17 @@ class LogFileHandler extends Handler {
                 } else {
                     VpnStatus.logError(String.format(Locale.getDefault(),
                             "Could not read log item from file: %d/%d: %s",
-                            read,len, Utils.bytesToHex(buf, read)));
+                            read, len, Utils.bytesToHex(buf, read)));
                 }
                 p.recycle();
 
                 //Next item
                 read = logFile.read(buf, 0, 2);
+                itemsRead++;
+                if (itemsRead > 2*VpnStatus.MAXLOGENTRIES) {
+                    VpnStatus.logError("Too many logentries read from cache, aborting.");
+                    read = 0;
+                }
             }
 
         } catch (java.io.IOException | java.lang.RuntimeException e) {

@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 
+import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.fragments.Utils;
 
 /**
@@ -45,6 +46,8 @@ class LogFileHandler extends Handler {
     public void handleMessage(Message msg) {
         try {
             if (msg.what == LOG_INIT) {
+                if (mLogFile != null)
+                    throw new RuntimeException("mLogFile not null");
                 readLogCache((File) msg.obj);
                 openLogFile((File) msg.obj);
             } else if (msg.what == LOG_MESSAGE && msg.obj instanceof VpnStatus.LogItem) {
@@ -109,7 +112,6 @@ class LogFileHandler extends Handler {
         if (!logfile.exists() || !logfile.canRead())
             return;
 
-        VpnStatus.logDebug("Reread log items from cache file");
 
 
         try {
@@ -146,7 +148,11 @@ class LogFileHandler extends Handler {
                     VpnStatus.logError("Too many logentries read from cache, aborting.");
                     read = 0;
                 }
+
             }
+            VpnStatus.logDebug(R.string.reread_log, itemsRead);
+
+
 
         } catch (java.io.IOException | java.lang.RuntimeException e) {
             VpnStatus.logError("Reading cached logfile failed");

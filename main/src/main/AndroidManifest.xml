@@ -14,6 +14,7 @@
     <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" /> -->
 
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
@@ -66,7 +67,7 @@
 
         <service
             android:name=".core.OpenVPNService"
-            android:permission="android.permission.BIND_VPN_SERVICE">
+            android:permission="android.permission.BIND_VPN_SERVICE" >
             <intent-filter>
                 <action android:name="android.net.VpnService" />
             </intent-filter>
@@ -102,8 +103,8 @@
 
         <activity
             android:name=".activities.ConfigConverter"
-            android:label="Convert Config File"
             android:excludeFromRecents="true"
+            android:label="Convert Config File"
             android:taskAffinity=".ConfigConverter"
             android:uiOptions="splitActionBarWhenNarrow"
             tools:ignore="ExportedActivity">
@@ -145,8 +146,8 @@
             android:name=".LaunchVPN"
             android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
-            android:noHistory="true"
             android:label="@string/vpn_launch_title"
+            android:noHistory="true"
             android:taskAffinity=".LaunchVPN"
             android:theme="@style/blinkt.dialog"
             tools:ignore="ExportedActivity">

@@ -85,7 +85,6 @@ class LogFileHandler extends Handler {
         }
     }
 
-
     private void writeLogItemToDisk(VpnStatus.LogItem li) throws IOException {
         Parcel p = Parcel.obtain();
         li.writeToParcel(p, 0);

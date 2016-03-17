@@ -17,6 +17,7 @@ import android.os.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -34,6 +35,7 @@ import java.util.Locale;
 import java.util.UnknownFormatConversionException;
 import java.util.Vector;
 
+import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
 
 public class VpnStatus {
@@ -583,6 +585,9 @@ public class VpnStatus {
                 logbuffer.removeFirst();
             mLogFileHandler.sendMessage(mLogFileHandler.obtainMessage(LogFileHandler.TRIM_LOG_FILE));
         }
+
+        if (BuildConfig.DEBUG && !cachedLine)
+            Log.d("OpenVPN", logItem.getString(null));
 
 
         for (LogListener ll : logListener) {

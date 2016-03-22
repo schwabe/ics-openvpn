@@ -18,6 +18,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Locale;
 
 import de.blinkt.openvpn.R;
@@ -79,7 +80,6 @@ class LogFileHandler extends Handler {
         try {
             mBufLogfile.flush();
             mLogFile.getChannel().truncate(0);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,8 +93,8 @@ class LogFileHandler extends Handler {
         // write binary format to disc
         byte[] liBytes = p.marshall();
 
-        mLogFile.write(liBytes.length & 0xff);
-        mLogFile.write(liBytes.length >> 8);
+        byte[] lenBytes = ByteBuffer.allocate(4).putInt(liBytes.length).array();
+        mLogFile.write(lenBytes);
         mLogFile.write(liBytes);
         p.recycle();
     }
@@ -119,13 +119,13 @@ class LogFileHandler extends Handler {
             BufferedInputStream logFile = new BufferedInputStream(new FileInputStream(logfile));
 
             byte[] buf = new byte[8192];
-            int read = logFile.read(buf, 0, 2);
+            int read = logFile.read(buf, 0, 4);
             int itemsRead=0;
 
-            while (read > 0) {
-                // Marshalled LogItem
-                int len = (0xff & buf[0]) | buf[1] << 8;
+            while (read >= 4) {
+                int len = ByteBuffer.wrap(buf, 0, 4).asIntBuffer().get();
 
+                // Marshalled LogItem
                 read = logFile.read(buf, 0, len);
 
                 Parcel p = Parcel.obtain();

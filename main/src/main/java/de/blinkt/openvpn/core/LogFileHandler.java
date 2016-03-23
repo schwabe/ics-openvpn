@@ -136,12 +136,12 @@ class LogFileHandler extends Handler {
                 } else {
                     VpnStatus.logError(String.format(Locale.getDefault(),
                             "Could not read log item from file: %d/%d: %s",
-                            read, len, Utils.bytesToHex(buf, read)));
+                            read, len, bytesToHex(buf, Math.max(read,80))));
                 }
                 p.recycle();
 
                 //Next item
-                read = logFile.read(buf, 0, 2);
+                read = logFile.read(buf, 0, 4);
                 itemsRead++;
                 if (itemsRead > 2*VpnStatus.MAXLOGENTRIES) {
                     VpnStatus.logError("Too many logentries read from cache, aborting.");
@@ -160,5 +160,18 @@ class LogFileHandler extends Handler {
             // ignore reading file error
         }
     }
+
+    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    public static String bytesToHex(byte[] bytes, int len) {
+        len = Math.min(bytes.length, len);
+        char[] hexChars = new char[len * 2];
+        for ( int j = 0; j < len; j++ ) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
+
 
 }

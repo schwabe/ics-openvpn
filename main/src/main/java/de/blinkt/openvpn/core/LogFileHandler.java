@@ -9,10 +9,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Parcel;
-import android.text.TextUtils;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,7 +20,6 @@ import java.nio.ByteBuffer;
 import java.util.Locale;
 
 import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.fragments.Utils;
 
 /**
  * Created by arne on 23.01.16.
@@ -33,7 +30,6 @@ class LogFileHandler extends Handler {
     static final int LOG_INIT = 102;
     public static final int LOG_MESSAGE = 103;
     private static FileOutputStream mLogFile;
-    private static BufferedOutputStream mBufLogfile;
 
     public static final String LOGFILE_NAME = "logcache.dat";
 
@@ -78,7 +74,7 @@ class LogFileHandler extends Handler {
 
     private static void trimLogFile() {
         try {
-            mBufLogfile.flush();
+            mLogFile.flush();
             mLogFile.getChannel().truncate(0);
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,7 +97,6 @@ class LogFileHandler extends Handler {
     private void openLogFile (File cacheDir) throws FileNotFoundException {
         File logfile = new File(cacheDir, LOGFILE_NAME);
         mLogFile = new FileOutputStream(logfile);
-        mBufLogfile = new BufferedOutputStream(mLogFile);
     }
 
     private void readLogCache(File cacheDir) {

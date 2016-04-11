@@ -358,8 +358,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             return START_REDELIVER_INTENT;
         }
 
-        /* The intent is null when the service has been restarted */
-        if (intent == null) {
+        if (intent != null && intent.hasExtra(getPackageName() + ".profileUUID")) {
+            String profileUUID = intent.getStringExtra(getPackageName() + ".profileUUID");
+            mProfile = ProfileManager.get(this, profileUUID);
+        } else {
+            /* The intent is null when we are set as always-on or the service has been restarted. */
             mProfile = ProfileManager.getLastConnectedProfile(this, false);
             VpnStatus.logInfo(R.string.service_restarted);
 
@@ -374,10 +377,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
             /* Recreate the intent */
             intent = mProfile.getStartServiceIntent(this);
-
-        } else {
-            String profileUUID = intent.getStringExtra(getPackageName() + ".profileUUID");
-            mProfile = ProfileManager.get(this, profileUUID);
         }
 
         /* start the OpenVPN process itself in a background thread */

@@ -16,6 +16,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.Locale;
 
@@ -29,7 +31,8 @@ class LogFileHandler extends Handler {
     static final int FLUSH_TO_DISK = 101;
     static final int LOG_INIT = 102;
     public static final int LOG_MESSAGE = 103;
-    private static FileOutputStream mLogFile;
+    public static final int MAGIC_BYTE = 0x55;
+    protected OutputStream mLogFile;
 
     public static final String LOGFILE_NAME = "logcache.dat";
 
@@ -72,10 +75,10 @@ class LogFileHandler extends Handler {
         mLogFile.flush();
     }
 
-    private static void trimLogFile() {
+    private void trimLogFile() {
         try {
             mLogFile.flush();
-            mLogFile.getChannel().truncate(0);
+            ((FileOutputStream) mLogFile).getChannel().truncate(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -88,65 +91,50 @@ class LogFileHandler extends Handler {
         // write binary format to disc
         byte[] liBytes = p.marshall();
 
-        byte[] lenBytes = ByteBuffer.allocate(4).putInt(liBytes.length).array();
-        mLogFile.write(lenBytes);
-        mLogFile.write(liBytes);
+        writeEscapedBytes(liBytes);
         p.recycle();
     }
 
-    private void openLogFile (File cacheDir) throws FileNotFoundException {
+    public void writeEscapedBytes(byte[] bytes) throws IOException {
+        int magic = 0;
+        for (byte b : bytes)
+            if (b == MAGIC_BYTE || b == MAGIC_BYTE + 1)
+                magic++;
+
+        byte eBytes[] = new byte[bytes.length + magic];
+
+        int i = 0;
+        for (byte b : bytes) {
+            if (b == MAGIC_BYTE || b == MAGIC_BYTE + 1) {
+                eBytes[i++] = MAGIC_BYTE + 1;
+                eBytes[i++] = (byte) (b - MAGIC_BYTE);
+            } else {
+                eBytes[i++] = b;
+            }
+        }
+
+        byte[] lenBytes = ByteBuffer.allocate(4).putInt(bytes.length).array();
+        synchronized (mLogFile) {
+            mLogFile.write(MAGIC_BYTE);
+            mLogFile.write(lenBytes);
+            mLogFile.write(eBytes);
+        }
+    }
+
+    private void openLogFile(File cacheDir) throws FileNotFoundException {
         File logfile = new File(cacheDir, LOGFILE_NAME);
         mLogFile = new FileOutputStream(logfile);
     }
 
     private void readLogCache(File cacheDir) {
-        File logfile = new File(cacheDir, LOGFILE_NAME);
-
-
-        if (!logfile.exists() || !logfile.canRead())
-            return;
-
-
-
         try {
-
-            BufferedInputStream logFile = new BufferedInputStream(new FileInputStream(logfile));
-
-            byte[] buf = new byte[8192];
-            int read = logFile.read(buf, 0, 4);
-            int itemsRead=0;
-
-            while (read >= 4) {
-                int len = ByteBuffer.wrap(buf, 0, 4).asIntBuffer().get();
-
-                // Marshalled LogItem
-                read = logFile.read(buf, 0, len);
-
-                Parcel p = Parcel.obtain();
-                p.unmarshall(buf, 0, read);
-                p.setDataPosition(0);
-                VpnStatus.LogItem li = VpnStatus.LogItem.CREATOR.createFromParcel(p);
-                if (li.verify()) {
-                    VpnStatus.newLogItem(li, true);
-                } else {
-                    VpnStatus.logError(String.format(Locale.getDefault(),
-                            "Could not read log item from file: %d/%d: %s",
-                            read, len, bytesToHex(buf, Math.max(read,80))));
-                }
-                p.recycle();
-
-                //Next item
-                read = logFile.read(buf, 0, 4);
-                itemsRead++;
-                if (itemsRead > 2*VpnStatus.MAXLOGENTRIES) {
-                    VpnStatus.logError("Too many logentries read from cache, aborting.");
-                    read = 0;
-                }
-
-            }
-            VpnStatus.logDebug(R.string.reread_log, itemsRead);
+            File logfile = new File(cacheDir, LOGFILE_NAME);
 
 
+            if (!logfile.exists() || !logfile.canRead())
+                return;
+
+            readCacheContents(new FileInputStream(logfile));
 
         } catch (java.io.IOException | java.lang.RuntimeException e) {
             VpnStatus.logError("Reading cached logfile failed");
@@ -156,11 +144,94 @@ class LogFileHandler extends Handler {
         }
     }
 
+
+    protected void readCacheContents(InputStream in) throws IOException {
+
+
+        BufferedInputStream logFile = new BufferedInputStream(in);
+
+        byte[] buf = new byte[16384];
+        int read = logFile.read(buf, 0, 5);
+        int itemsRead = 0;
+
+
+        readloop:
+        while (read >= 5) {
+            int skipped = 0;
+            while (buf[skipped] != MAGIC_BYTE) {
+                skipped++;
+                if (!(logFile.read(buf, skipped + 4, 1) == 1) || skipped + 10 > buf.length) {
+                    VpnStatus.logDebug(String.format(Locale.US, "Skipped %d bytes and no a magic byte found", skipped));
+                    break readloop;
+                }
+            }
+            if (skipped > 0)
+                VpnStatus.logDebug(String.format(Locale.US, "Skipped %d bytes before finding a magic byte", skipped));
+
+            int len = ByteBuffer.wrap(buf, skipped+1, 4).asIntBuffer().get();
+
+            // Marshalled LogItem
+            int pos = 0;
+            byte buf2[] = new byte[buf.length];
+
+            while (pos < len) {
+                byte b = (byte) logFile.read();
+                if (b == MAGIC_BYTE) {
+                    VpnStatus.logDebug(String.format(Locale.US, "Unexpected magic byte found at pos %d, abort current log item", pos));
+                    read = logFile.read(buf, 1, 4) + 1;
+                    continue readloop;
+                } else if (b == MAGIC_BYTE + 1) {
+                    b = (byte) logFile.read();
+                    if (b == 0)
+                        b = MAGIC_BYTE;
+                    else if (b == 1)
+                        b = MAGIC_BYTE + 1;
+                    else {
+                        VpnStatus.logDebug(String.format(Locale.US, "Escaped byte not 0 or 1: %d", b));
+                        read = logFile.read(buf, 1, 4) + 1;
+                        continue readloop;
+                    }
+                }
+                buf2[pos++] = b;
+            }
+
+            restoreLogItem(buf2, len);
+
+            //Next item
+            read = logFile.read(buf, 0, 5);
+            itemsRead++;
+            if (itemsRead > 2 * VpnStatus.MAXLOGENTRIES) {
+                VpnStatus.logError("Too many logentries read from cache, aborting.");
+                read = 0;
+            }
+
+        }
+        VpnStatus.logDebug(R.string.reread_log, itemsRead);
+
+
+    }
+
+    protected void restoreLogItem(byte[] buf, int len) {
+        Parcel p = Parcel.obtain();
+        p.unmarshall(buf, 0, len);
+        p.setDataPosition(0);
+        VpnStatus.LogItem li = VpnStatus.LogItem.CREATOR.createFromParcel(p);
+        if (li.verify()) {
+            VpnStatus.newLogItem(li, true);
+        } else {
+            VpnStatus.logError(String.format(Locale.getDefault(),
+                    "Could not read log item from file: %d: %s",
+                     len, bytesToHex(buf, Math.max(len, 80))));
+        }
+        p.recycle();
+    }
+
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+
     public static String bytesToHex(byte[] bytes, int len) {
         len = Math.min(bytes.length, len);
         char[] hexChars = new char[len * 2];
-        for ( int j = 0; j < len; j++ ) {
+        for (int j = 0; j < len; j++) {
             int v = bytes[j] & 0xFF;
             hexChars[j * 2] = hexArray[v >>> 4];
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];

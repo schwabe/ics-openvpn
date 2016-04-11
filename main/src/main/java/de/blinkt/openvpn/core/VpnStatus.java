@@ -56,6 +56,7 @@ public class VpnStatus {
     private static int mLastStateresid = R.string.state_noprocess;
 
     private static long mlastByteCount[] = {0, 0, 0, 0};
+    private static HandlerThread mHandlerThread;
 
     public static void logException(LogLevel ll, String context, Exception e) {
         StringWriter sw = new StringWriter();
@@ -122,6 +123,11 @@ public class VpnStatus {
     }
 
     public static void initLogCache(File cacheDir) {
+        mHandlerThread = new HandlerThread("LogFileWriter", Thread.MIN_PRIORITY);
+        mHandlerThread.start();
+        mLogFileHandler = new LogFileHandler(mHandlerThread.getLooper());
+
+
         Message m = mLogFileHandler.obtainMessage(LogFileHandler.LOG_INIT, cacheDir);
         mLogFileHandler.sendMessage(m);
 
@@ -186,7 +192,7 @@ public class VpnStatus {
 
     private static ConnectionStatus mLastLevel = ConnectionStatus.LEVEL_NOTCONNECTED;
 
-    private static final LogFileHandler mLogFileHandler;
+    private static LogFileHandler mLogFileHandler;
 
     static {
         logbuffer = new LinkedList<>();
@@ -194,9 +200,6 @@ public class VpnStatus {
         stateListener = new Vector<>();
         byteCountListener = new Vector<>();
 
-        HandlerThread mHandlerThread = new HandlerThread("LogFileWriter", Thread.MIN_PRIORITY);
-        mHandlerThread.start();
-        mLogFileHandler = new LogFileHandler(mHandlerThread.getLooper());
 
         logInformation();
 
@@ -293,7 +296,7 @@ public class VpnStatus {
                     } else {
                         String str = String.format(Locale.ENGLISH, "Log (no context) resid %d", mRessourceId);
                         if (mArgs != null)
-                            str += TextUtils.join("|", mArgs);
+                            str += join("|", mArgs);
 
                         return str;
                     }
@@ -311,6 +314,24 @@ public class VpnStatus {
             }
 
         }
+
+
+        // TextUtils.join will cause not macked exeception in tests ....
+        public static String join(CharSequence delimiter, Object[] tokens) {
+            StringBuilder sb = new StringBuilder();
+            boolean firstTime = true;
+            for (Object token: tokens) {
+                if (firstTime) {
+                    firstTime = false;
+                } else {
+                    sb.append(delimiter);
+                }
+                sb.append(token);
+            }
+            return sb.toString();
+        }
+
+
 
         public LogLevel getLogLevel() {
             return mLevel;
@@ -404,12 +425,20 @@ public class VpnStatus {
     public synchronized static void clearLog() {
         logbuffer.clear();
         logInformation();
-        mLogFileHandler.sendEmptyMessage(LogFileHandler.TRIM_LOG_FILE);
+        if (mLogFileHandler!=null)
+            mLogFileHandler.sendEmptyMessage(LogFileHandler.TRIM_LOG_FILE);
     }
 
     private static void logInformation() {
+        String nativeAPI;
+        try {
+            nativeAPI = NativeUtils.getNativeAPI();
+        } catch (UnsatisfiedLinkError ignore) {
+            nativeAPI = "error";
+        }
+
         logInfo(R.string.mobile_info, Build.MODEL, Build.BOARD, Build.BRAND, Build.VERSION.SDK_INT,
-                NativeUtils.getNativeAPI(), Build.VERSION.RELEASE, Build.ID, Build.FINGERPRINT, "", "");
+                nativeAPI , Build.VERSION.RELEASE, Build.ID, Build.FINGERPRINT, "", "");
     }
 
     public synchronized static void addLogListener(LogListener ll) {
@@ -578,18 +607,21 @@ public class VpnStatus {
             logbuffer.addFirst(logItem);
         } else {
             logbuffer.addLast(logItem);
-            Message m = mLogFileHandler.obtainMessage(LogFileHandler.LOG_MESSAGE, logItem);
-            mLogFileHandler.sendMessage(m);
+            if (mLogFileHandler!=null) {
+                Message m = mLogFileHandler.obtainMessage(LogFileHandler.LOG_MESSAGE, logItem);
+                mLogFileHandler.sendMessage(m);
+            }
         }
 
         if (logbuffer.size() > MAXLOGENTRIES + MAXLOGENTRIES / 2) {
             while (logbuffer.size() > MAXLOGENTRIES)
                 logbuffer.removeFirst();
-            mLogFileHandler.sendMessage(mLogFileHandler.obtainMessage(LogFileHandler.TRIM_LOG_FILE));
+            if (mLogFileHandler!=null)
+                mLogFileHandler.sendMessage(mLogFileHandler.obtainMessage(LogFileHandler.TRIM_LOG_FILE));
         }
 
-        if (BuildConfig.DEBUG && !cachedLine)
-            Log.d("OpenVPN", logItem.getString(null));
+        //if (BuildConfig.DEBUG && !cachedLine && !BuildConfig.FLAVOR.equals("test"))
+        //    Log.d("OpenVPN", logItem.getString(null));
 
 
         for (LogListener ll : logListener) {

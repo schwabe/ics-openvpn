@@ -42,6 +42,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="all"
+            android:text="@string/copyright_logo" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
             android:text="@string/copyright_guicode" />
 
         <Space

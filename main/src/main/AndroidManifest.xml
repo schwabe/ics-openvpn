@@ -147,7 +147,6 @@
             android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
             android:label="@string/vpn_launch_title"
-            android:noHistory="true"
             android:taskAffinity=".LaunchVPN"
             android:theme="@style/blinkt.dialog"
             tools:ignore="ExportedActivity">

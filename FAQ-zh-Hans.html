@@ -7,6 +7,15 @@
             <p>获取你的 VPN 配置文件，可以是在电脑上正在使用的 OpenVPN 客户端配置文件，也可以向你的 VPN 服务商索取配置文件。</p><p>如果配置文件只有一个，可以把配置文件发到你自己的邮箱然后从手机上下载。如果配置文件有很多个，可以将它们复制到存储卡内。</p><p>从邮件中下载附件，或者在 VPN 列表中点击文件夹图标来导入配置文件。</p><p>如果提示找不到文件，那就将缺失的文件复制到存储卡内。</p><p>点击保存，将配置文件保存到你的 VPN 列表中。</p><p>在 VPN 列表中点击 VPN 的连接的名字，就可以连接到 VPN 了。</p><p>如果发生错误，可以看日志窗口中的日志，然后设法解决问题。</p> 
 
             <h2>
+            <a name="samsung_broken_title"></a>
+            Samsung phones
+            <a href="#samsung_broken_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+
+            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
+
+            <h2>
             <a name="faq_duplicate_notification_title"></a>
             重复的通知
             <a href="#faq_duplicate_notification_title" class="section_anchor"> </a>
@@ -20,7 +29,8 @@
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
-            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and moree targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
+            OpenVPN 的 Android 客户端目前市面上已经有了一些了，其中最常见的有 OpenVPN for Android（也就本应用）、OpenVPN Connect 以及 OpenVPN Settings 。
+这些客户端可以被分为两类：使用官方VPNService API (Android 4.0+) 并且不需要 root 权限的 OpenVPN for Android 和 OpenVPN Connect 以及需要 root 权限的 OpenVPN Settings 。
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
@@ -29,7 +39,7 @@
             </h2>
             <small><i>5.0 (Lollipop) and later</i></small> <br/>
 
-            VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
+            在被卸载或重新安装时，VPN程序会停止工作；详细信息请参看 #80074
 
             <h2>
             <a name="vpn_tethering_title"></a>
@@ -146,7 +156,7 @@
             <small><i>4.4 (Kit Kat) and later</i></small> <br/>
 <small><i>4.4 (Kit Kat) - 4.4.1 (Kit Kat)</i></small> <br/>
 
-            Early KitKat version set the wrong MSS value on TCP connections (#61948). Try to enable the mssfix option to workaround this bug.
+            早期的KitKat版本在TCP连接上设置了错误的MSS值 (#61948)。OpenVPN将自动启动mssfix选项来解决这个Bug。
 
             <h2>
             <a name="copying_log_entries"></a>
@@ -158,7 +168,7 @@
 
             <h2>
             <a name="ab_persist_tun_title"></a>
-            Persist tun mode
+            保持 tun 通道模式
             <a href="#ab_persist_tun_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
@@ -204,7 +214,7 @@
             <a href="#ab_only_cidr_title" class="section_anchor"> </a>
             </h2>
             
-            Android supports only CIDR routes to the VPN. Since non-CIDR routes are almost never used, OpenVPN for Android will use a /32 for routes that are not CIDR and issue a warning.
+            安卓只支持CIDR路由。由于非CIDR路由几乎不用，OpenVPN for Android将使用/32路由并对非CIDR路由发出警告。
 
             <h2>
             <a name="ab_proxy_title"></a>
@@ -212,7 +222,7 @@
             <a href="#ab_proxy_title" class="section_anchor"> </a>
             </h2>
             
-            Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.
+            在DNS服务没有设置的情况下，安卓会继续使用手机wifi的代理设置。 安卓OpenVPN会在日志文件中留下警告信息。在VPN设置DNS服务时，安卓不是代理；安卓系统里没有为vpn连接设置代理的程序接口。
 
             <h2>
             <a name="ab_not_route_to_vpn_title"></a>

@@ -4,7 +4,16 @@
             <a href="#faq_howto_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Get a working config (tested on your computer or download from your provider/organisation)</p><p>If it is a single file with no extra pem/pks12 files you can email the file yourself and open the attachment. If you have multiple files put them on your sd card.</p><p>Click on the email attachment/Use the folder icon in the vpn list to import the config file</p><p>If there are errors about missing files put the missing files on your sd card.</p><p>Click on the save symbol to add the imported VPN to your VPN list</p><p>Connect the VPN by clicking on the name of the VPN</p><p>If there are error or warnings in the log try to understand the warnings/error and try to fix them</p> 
+            <p>Get工作的配置（從供應商/機構檢測您的電腦或下載）</p><p>If它沒有多餘的PEM / pks12文件，你可以自己通過電子郵件發送文件和打開附件的單個文件。如果您有多個文件，把它們放在你的SD card.</p><p>Click上的電子郵件附件/使用的文件夾圖標，在VPN列表導入配置file</p><p>If大約有丟失的文件將丟失的文件在你的SD card.</p><p>Click上保存錯誤標誌將導入的VPN添加到您的VPN list</p><p>Connect的VPN通過點擊VPN</p><p>If的名字有錯誤或警告日誌試著去了解警告/錯誤，並嘗試修復them</p> 
+
+            <h2>
+            <a name="samsung_broken_title"></a>
+            Samsung phones
+            <a href="#samsung_broken_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+
+            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
 
             <h2>
             <a name="faq_duplicate_notification_title"></a>
@@ -12,7 +21,7 @@
             <a href="#faq_duplicate_notification_title" class="section_anchor"> </a>
             </h2>
             
-            If Android is under system memory (RAM) pressure, apps and service which are not needed at the moment are removed from active memory. This terminates an ongoing VPN connection. To ensure that the connection/OpenVPN survives the service runs with higher priority. To run with higher priority the application must display a notification. The key notification icon is imposed by the system as described in the previous FAQ entry. It does not count as app notification for purpose of running with higher priority.
+            如果Android是在系統內存中的一些並不需要的時刻（RAM）的壓力，應用程序和服務，從積極的內存中刪除。這將終止正在進行的VPN連接。為了確保連接/ OpenVPN的生存服務的運行具有更高的優先級。於具有較高優先級運行的應用程序必須顯示通知。關鍵的通知圖標是由系統中的前一個FAQ條目中描述的罰款。它並不能算作應用程序通知具有較高優先級運行的目的。
 
             <h2>
             <a name="faq_androids_clients_title"></a>
@@ -20,7 +29,7 @@
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
-            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and moree targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
+            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and more targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
@@ -43,14 +52,14 @@
 
             <h2>
             <a name="broken_images"></a>
-            Broken Images
+            破碎的形象
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
             <small><i>5.0 (Lollipop) and later</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
 
-            <p>Official HTC images are known to have a strange routing problem causing traffic not to flow through the tunnel (See also <a href="https://github.com/schwabe/ics-openvpn/issues/18">Issue 18</a> in the bug tracker.)</p><p>Older official SONY images from Xperia Arc S and Xperia Ray have been reported to be missing the VPNService completely from the image. (See also <a href="https://github.com/schwabe/ics-openvpn/issues/29">Issue 29</a> in the bug tracker.)</p><p>On custom build images the tun module might be missing or the rights of /dev/tun might be wrong. Some CM9 images need the "Fix ownership" option under "Device specific hacks" enabled.</p><p>Most importantly: If your device has a broken Android image, report it to your vendor. The more people who report an issue to the vendor, the more likely they are to fix it.</p>
+            <p>Official HTC圖像，已知有一種奇怪的路由問題造成交通不流過隧道（也<a href="https://github.com/schwabe/ics-openvpn/issues/18">Issue 18</a>看到bug跟踪系統。）的的Xperia弧S和的Xperia雷</p><p>Older官方SONY圖像已被報導完全缺少VPNService從圖像。 （也<a href="https://github.com/schwabe/ics-openvpn/issues/29">Issue 29</a>看到bug跟踪系統。）</p><p>On自定義生成的TUN模塊可能會丟失照片或為/ dev / TUN的權利可能是錯誤的。一些CM9圖像需要在“設備特定的黑客”enabled.</p><p>Most重要的是“修復所有權”選項：如果您的設備有一個破碎的機器人形象，報告給你的供應商。越多的人誰給供應商報告問題時，他們越有可能解決it.</p>
 
             <h2>
             <a name="battery_consumption_title"></a>
@@ -67,15 +76,15 @@
             </h2>
             <small><i>4.4 (Kit Kat) and earlier</i></small> <br/>
 
-            The VPN connection warning telling you that this app can intercept all traffic is imposed by the system to prevent abuse of the VPNService API.<p>The VPN connection notification (The key symbol) is also imposed by the Android system to signal an ongoing VPN connection. On some images this notification plays a sound.<p>Android introduced these system dialogs for your own safety and made sure that they cannot be circumvented. (On some images this unfortunately includes a notification sound)
+            VPN連接警告信息，告訴你，這個程序可以攔截所有流量是由系統施加的防止濫用VPNService的API。\ n此VPN連接的通知（關鍵標誌）也徵收Android系統的信號持續VPN連接。在某些圖像此通知播放聲音。\ nAndroid介紹這些系統對話框為自己的安全，並確保他們無法規避。 （在某些圖片這個不幸的是包括通知聲音）
 
             <h2>
             <a name="tap_mode"></a>
-            Tap模式
+            點擊模式
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            Android內置的VPN API並不支援Tap介面，故此本程序並不支援Tap模式。
+            點擊模式是不可能的非根VPN API。因此，該應用程序不能提供自來水的支持
 
             <h2>
             <a name="ab_secondary_users_title"></a>
@@ -88,13 +97,13 @@
 
             <h2>
             <a name="faq_vpndialog43_title"></a>
-            Vpn Confirmation Dialog
+            Vpn確認對話框
             <a href="#faq_vpndialog43_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) and later</i></small> <br/>
 
-            "Starting with Android 4.3 the VPN confirmation is guarded against "overlaying apps". This results in the dialog not reacting to touch input. If you have an app that uses overlays it may cause this behaviour. If you find an offending app contact the author of the app. This problem affect all VPN applications on Android 4.3 and later. See also <a href="https://github.com/schwabe/ics-openvpn/issues/185">Issue 185<a> for additional details"
+            “與Android 4.3啟動VPN確認是防範”覆蓋應用程序“，這將導致該對話框沒有反應，觸摸輸入。如果你有一個使用覆蓋一個應用程序可能會導致此行為。如果發現違規應用程序聯繫作者該應用程序的。這個問題影響到在Android 4.3及更高版本的所有VPN應用。另見<a href="https://github.com/schwabe/ics-openvpn/issues/185">Issue 185<a>了解更多詳細信息“
 
             <h2>
             <a name="tls_cipher_alert_title"></a>
@@ -110,7 +119,7 @@
             <a href="#faq_security_title" class="section_anchor"> </a>
             </h2>
             
-            "As OpenVPN is security sensitive a few notes about security are sensible. All data on the sdcard is inherently insecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the VPN profile. The VPN profiles are only accessible by this application. (Do not forget to delete the copies on the sd card afterwards). Even though accessible only by this application the data is still unencrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."
+            “由於OpenVPN是安全敏感的有關安全性的幾個音符都是明智的。在​​SD卡的所有數據本質上是不安全的。每一個應用程序可以讀取它（比如這個方案並不需要特別的SD卡的權限）。此應用程序的數據只能讀由應用程序本身。通過使用CACERT /證書/密鑰的文件對話框中的數據導入選項存儲在VPN配置文件的VPN配置文件只能由該應用程序進行訪問。（不要忘了刪除在SD副本卡後）。即使只能由該應用程序中的數據仍然是未加密的，通過生根電話或其他攻擊有可能檢索數據。保存的密碼是明文存儲以及對於PKCS12文件，強烈建議你將它們導入到android的密鑰庫。“
 
             <h2>
             <a name="faq_shortcut"></a>
@@ -118,15 +127,15 @@
             <a href="#faq_shortcut" class="section_anchor"> </a>
             </h2>
             
-            You can place a shortcut to start OpenVPN on your desktop. Depending on your homescreen program you will have to add either a shortcut or a widget.
+            您可以將快捷方式啟動 OpenVPN 在您的桌面上。根據您的主畫面程式必須添加一個快捷方式或小部件。
 
             <h2>
             <a name="tap_mode"></a>
-            Tap模式
+            點擊模式
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            Again? Are you kidding? No, tap mode is really not supported and sending more mail asking if it will be supported will not help.
+            了嗎？你在開玩笑吧？不，攻牙模式真的不支持和發送更多的郵件，詢問是否將支持也無濟於事。
 
             <h2>
             <a name="vpn_tethering_title"></a>
@@ -153,7 +162,7 @@
             <a href="#copying_log_entries" class="section_anchor"> </a>
             </h2>
             
-            To copy a single log entry press and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button, if the button is not visible in the GUI.
+            要複製單個日誌條目按住上的日誌條目。若要複製/發送全部日誌請使用發送日誌選項。使用硬件菜單按鈕時，如果按鈕沒有在GUI可見。
 
             <h2>
             <a name="ab_persist_tun_title"></a>
@@ -172,7 +181,7 @@
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
 <small><i>4.4 (Kit Kat) and later</i></small> <br/>
 
-            The Routing and interface configuration is not done via traditional ifconfig/route commands but by using the VPNService API. This results in a different routing configuration than on other OSes. <p>The configuration of the VPN tunnel consists of the IP address and the networks that should be routed over this interface. Especially, no peer partner address or gateway address is needed or required. Special routes to reach the VPN Server (for example added when using redirect-gateway) are not needed either. The application will consequently ignore these settings when importing a configuration. The app ensures with the VPNService API that the connection to the server is not routed through the VPN tunnel.<p>The VPNService API does not allow specifying networks that should not be routed via the VPN. As a workaround the app tries to detect networks that should not be routed over tunnel (e.g. route x.x.x.x y.y.y.y net_gateway) and calculates a set of routes that excludes this routes to emulate the behaviour of other platforms. The log windows shows the configuration of the VPNService upon establishing a connection.<p>Behind the scenes: Android 4.4+ does use policy routing. Using route/ifconfig will not show the installed routes. Instead use ip rule, iptables -t mangle -L
+            路由和接口配置不經由傳統的ifconfig /路由命令，但通過使用VPNService API來完成。這將導致比其他操作系統不同的路由配置。 \ n此VPN隧道的配置包括IP地址和應該被路由通過該接口的網絡。特別是，沒有同行夥伴地址或網關地址是必要的或需要。特殊的路由到達VPN服務器不需要任一（例如，當使用重定向網關加）。導入配置時，應用程序將因此而忽略這些設置。該應用程序可確保與連接到服務器沒有通過VPN隧道路由到的VPNService API。\ n此VPNService API不允許指定網絡不應該通過VPN路由。作為一種變通方法的應用程序會自動檢測網絡，不應該被路由到隧道（如航線XXXX YYYY net_gateway），並計算一組路由排除此路線效仿其他平台的行為。日誌窗口顯示VPNService的在建立一個連接的配置\ nBehind場景：安卓4.4+確實使用策略路由。利用路由/ ifconfig命令將不顯示已安裝的路線。相反，使用IP規則，iptables的-t軋-L
 
             <h2>
             <a name="ab_kitkat_reconnect_title"></a>
@@ -224,7 +233,7 @@
 
             <h2>
             <a name="tap_mode"></a>
-            Tap模式
+            點擊模式
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             

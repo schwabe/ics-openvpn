@@ -4,7 +4,16 @@
             <a href="#faq_howto_title" class="section_anchor"> </a>
             </h2>
             
-            (bilgisayarınızdaki veya sağlayıcı/organizasyon yüklenebilir test) bir çalışma config <p> olsun </p> <p> Hayır hiçbir ilave pem/pks12 ile tek bir dosya dosyaları ise dosyayı kendiniz e-posta ve eki açın. Birden çok dosya varsa koymak onları üstünde senin sd kartı </p> <p> e-posta eki/kullanım üzerinde klasör simgesini tıklatın, sd eksik dosyaları koyun dosyaları eksik hakkında hatalar varsa config dosyasının </p> <p> almak için vpn listedeki kayıt tıklayın kartı </p> <p> sembol alınan VPN </p> VPN listenize eklemek için <p > VPN varsa hata veya uyarılar günlüğüne uyarı/hata anlamak ve onları </p> gidermek çalışın VPN </p> <p> adını tıklatarak bağlanmak 
+            <p>Çalışan bir yapılandırma edinin (bilgisayarınızda test edilmiş veya kurumunuzdan alınmış)</p><p>Ek pem/pkcs12 dosyaları bulunmayan tek bir dosya ise, dosyayı kendinize e-posta olarak gönderebilir ve eki açabilirsiniz. Birden fazla dosya varsa, SD kartınıza koyun.</p><p>Yapılandırma dosyasını içe aktarmak için e-posta ekine tıklayın/VPN listesindeki klasör simgesini kullanın</p><p>Eksik dosyalar ile ilgili hata mesajı varsa, eksik dosyaları SD kartınıza koyun.</p><p>İçe aktarılan VPN'yi VPN listenize eklemek için kaydet simgesine tıklayın.</p><p>VPN'ye, adına tıklayarak bağlanın</p><p>Günlükte hata veya uyarı varsa, uyarı/hataları anlamaya ve düzeltmeye çalışın</p> 
+
+            <h2>
+            <a name="samsung_broken_title"></a>
+            Samsung phones
+            <a href="#samsung_broken_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>5.0 (Lollipop) ve daha sonrası</i></small> <br/>
+
+            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
 
             <h2>
             <a name="faq_duplicate_notification_title"></a>
@@ -12,45 +21,45 @@
             <a href="#faq_duplicate_notification_title" class="section_anchor"> </a>
             </h2>
             
-            Android sistem belleği (RAM) basınç altında ise, apps ve hizmet hangi anda gerekli değildir aktif bellekten kaldırılır. Bu devam eden bir VPN bağlantısını sonlandırır. Bağlantı/OpenVPN ile daha yüksek öncelikli hizmet çalışır hayatta emin olmak için. Daha yüksek öncelik ile çalıştırmak için uygulama bir bildirim görüntülemeniz gerekir. Anahtar bildirim simgesini, önceki SSS girdisi içinde açıklandığı gibi sistem tarafından uygulanmaktadır. Daha yüksek öncelik ile çalışan amaç için app bildirim olarak sayılmaz.
+            Android sistem belleği (RAM) altında ise, o anda gerekli olmayan uygulama ve hizmetler etkin bellekten kaldırılır. Bu, süregelen bir VPN bağlantısını durdurur. Bağlantının/OpenVPN'nin hayatta kalabilmesi için daha yüksek öncelik gerekir. Daha yüksek öncelikte çalışabilmesi için, uygulama bir bildirim görüntülemelidir. Bir önceki SSS girdisinde belirtilen anahtar bildirim simgesi, sistem tarafından gösterilmektedir. Bu, uygulamanın daha yüksek öncelikte çalışmasını sağlayan bildirim niteliği taşımaz.
 
             <h2>
             <a name="faq_androids_clients_title"></a>
-            Differences between the OpenVPN Android clients
+            Android için OpenVPN uygulamaları aralarındaki farklar
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
-            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and moree targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
+            Android için birçok OpenVPN istemcisi mevcut. En çok kullanılanlar Android için OpenVPN (bu istemci), OpenVPN Connect ve OpenVPN Settings'tir.<p>Bu istemciler iki gruba ayrılabilir. Android için OpenVPN ve OpenVPN Connect, resmi VPNService API (Android 4.0+) kullanır ve root erişimi gerektirmez. Ancak OpenVPN Settings, root gerektirir.<p>Android için OpenVPN açık kaynaklı bir yazılımdır ve  Arne Schwabe tarafından geliştirilmiştir. Daha çok gelişmiş kullanıcılar hedef alınmıştır ve birçok seçenek sunar. Ayrıca uygulama içerisinde profilleri içeri aktarma ve profilleri yapılandırma/değiştirme imkanı sunar. İstemci OpenVPN'in topluluk sürümü baz alınarak geliştirilmiştir ve OpenVPN 2.x kaynak kodu tabanlıdır. Bu istemci topluluğun yarı resmi istemcisi olarak görülebilir. <p>OpenVPN Connect, OpenVPN Technologies, Inc. tarafından geliştirilmiş kapalı kaynak istemcidir. İstemci genel kullanım istemcisi olup, daha genel kullanıcılara hitap ederek OpenVPN profillerini içe aktarmayı sağlar. Bu istemci OpenVPN protokolünün OpenVPN C++ tekrar geliştirilmiş sürümü tabanlıdır (Bu OpenVPN Technologies, Inc.'in iOS OpenVPN uygulaması sunabilmesi için gerekliydi). Bu istemci OpenVPN teknolojilerinin resmi istemcisidir <p> OpenVPN Settings ise istemcilerin en eskisi olup, açık kaynak OpenVPN için bir arayüzüdür. Android için OpenVPN'nin aksine root erişimi gerektirir ve VPNService API'i kullanmaz. Android 4.0+ gereksinimi yoktur
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
-            Reinstalling VPN apps
+            VPN uygulamalarını yeniden yükleme
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) ve daha sonrası</i></small> <br/>
 
-            VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
+            VPN uygulamaları kaldırılıp tekrar yüklendiklerinde çalışmayabilirler. Ayrıntılar için bkz. #80074
 
             <h2>
             <a name="vpn_tethering_title"></a>
             VPN ve Paylaşım
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+            <small><i>5.0 (Lollipop) ve daha sonrası</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) ve önceki</i></small> <br/>
 
-            Android hayvan zinciri özelliğin (üzerindeki, WiFi, USB veya Bluetooth) ve VPNService (Bu program tarafından kullanılan) API birlikte çalışmayabilir. Daha fazla ayrıntı için bkz: < bir href="http://code.google.com/p/ics-openvpn/issues/detail?id=34" > #34 </a> yayın
+            Android Bağlantı Paylaşma özelliği (WiFi, USB veya Bluetooth üzerinden) ve VPNService API'si (bu program tarafından kullanılan) birlikte çalışamaz. Daha fazla bilgi için bkz. <a href="https://github.com/schwabe/ics-openvpn/issues/34">issue #34</a>
 
             <h2>
             <a name="broken_images"></a>
-            Kırık görüntüleri
+            Bozuk Kalıplar
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+            <small><i>5.0 (Lollipop) ve daha sonrası</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) ve önceki</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) ve önceki</i></small> <br/>
 
-            <p> Resmi HTC görüntüleri tünelden değil trafiğe neden garip bir yönlendirme sorunu var için bilinen (Ayrıca bkz: < bir href="http://code.google.com/p/ics-openvpn/issues/detail?id=18" > sorunu 18 </a> hata izci içinde.)</p> <p> büyük resmi SONY Xperia Arc S ve görüntüleri Xperia Ray VPNService tamamen görüntüden eksik bildirilmiştir. (Ayrıca bkz: < bir href="http://code.google.com/p/ics-openvpn/issues/detail?id=29" > sayı 29 </a> hata izci içinde.)</p> <p> ya da eksik/dev haklarını tun modülü olabilir görüntüleri üzerinde özel yapı/tun-ebilmek var olmak yanlış. Bazı CM9 görüntü "etkin aygıt belirli kesmek" altında "mülkiyet saptamak" seçeneği gerek. </p> <p> en önemlisi: cihazınızda kopuk Android resmi varsa, senin satıcısına bildirin. Daha fazla kişi kim daha onlar bunu </p> düzeltmek için olabilir satıcıya, sorun bildir
+            <p>Resmi HTC kalıpları, trafiğin tünelden geçmesini engelleyen garip yönlendirme sorunlarına sahip (Ayrıca hata izleyicisinde bkz. <a href="https://github.com/schwabe/ics-openvpn/issues/18">Issue 18</a>.)</p><p>Daha eski resmi Xperia Arc S ve Xperia Ray SONY kalıpları, VPNService'in kalıplardan tamamen kaldırdığı bildirildi (Ayrıca hata izleyicisinde bkz. <a href="https://github.com/schwabe/ics-openvpn/issues/29">Issue 29</a>.)</p><p>Özel derleme kalıplarında, tun modülü eksik veya /dev/tun yetkileri hatalı olabilir. Bazı CM9 kalıplarının "Aygıta bağlı ayarlar (Device specific hacks)" altında "İzinleri düzelt (Fix ownership)" seçeneğini kullanmaları gereklidir.</p><p>En önemlisi: Cihazınızda bozuk bir Android kalıbı varsa, üreticinize bildirin. Ne kadar çok kişi bu sorunu üreticiye bildirirse, o kadar düzeltilme şansı olur.</p>
 
             <h2>
             <a name="battery_consumption_title"></a>
@@ -58,51 +67,51 @@
             <a href="#battery_consumption_title" class="section_anchor"> </a>
             </h2>
             
-            Benim kişisel testlerinde yüksek pil tüketimi OpenVPN ana sebebi canlı tutma paketleri var. Bir yapılandırma yönergesi gibi çoğu OpenVPN sunucusu var ' keepalive 10 60 istemci ve sunucu 10 saniyede canlı tutma paketleri alışverişi neden '. <p> Bunlar süre paketleri küçük ve çok trafik kullanmayın, mobil radyo ağ meşgul ve enerji tüketimini artırır. (Ayrıca bkz: < bir href="http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine" > Radyo durum makinesi | Android geliştiriciler </a>) <p> Bu canlı tutma ayarı istemcide değiştirilemez. Yalnızca sistem yöneticisinin OpenVPN in ayarı değiştirebilirsiniz. <p> Ne yazık ki 60 saniyeden daha büyük bir canlı tutma ile UDP kullanarak bazı NAT ağ geçitleri işlem zaman aşımı nedeniyle bağlantıyı kesmek neden olabilir. TCP kullanarak uzun canlı tutma zaman aşımı ile çalışır, ancak TCP TCP üzerinden tünel son derece kötü bağlantılarında yüksek paket kaybı ile gerçekleştirir. (Bkz: < bir href="http://sites.inka.de/bigred/devel/tcp-tcp.html" > neden TCP üzerinden TCP A kötü düşünce </a>)
+            Şahsi testlerimde, OpenVPN'in yüksek pil tüketiminin sebebi canlı tutma (keepalive) paketleri. Çoğu OpenVPN sunucuları, istemci ve sunucu arasında canlı tutma paketlerini her on saniyede değiştiren 'keepalive 10 60' benzeri yönergeler bulundurur.<p> Bu paketler çok küçük olduğundan ve çok trafik kullanmadıklarından mobil anten ağını meşgul tutar ve enerji tüketimini arttırırlar. (ayrıca bkz. <a href="http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine">The Radio State Machine | Android Developers</a>) <p> Bu canlı tutma ayarı istemci tarafından değiştirilemez. Ayarı sadece OpenVPN sistem yöneticisi değiştirebilir. <p> Ne yazık ki, canlı tutma ayarını 60 saniyeden daha fazla tutmak UDP'nin durağan durum zaman aşımına takıldığından bazı NAT ağ geçitlerinde bağlantıyı bırakmalarına sebep olmaktadır. Uzun canlı tutma zaman aşımları TCP kullanarak mümkün, ancak TCP üzerinden TCP tünelleme, yüksek paket kaybı ile bağlantılarda düşük kalitededir (Bkz. <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">Why TCP Over TCP Is A Bad Idea</a>)
 
             <h2>
             <a name="faq_system_dialogs_title"></a>
-            Bağlantı uyarı ve bildirim sesi
+            Bağlantı uyarısı ve bildirim sesi
             <a href="#faq_system_dialogs_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and earlier</i></small> <br/>
+            <small><i>4.4 (Kit Kat) ve önceki</i></small> <br/>
 
-            Bu app tüm trafiği geçirebilir belirten VPN bağlantısı uyarı dayatılan VPNService API.<p>The VPN bağlantısının istismarını önlemek için sistem tarafından bildirim (anahtar simgesi) da devam eden bir VPN bağlantısı sinyal için Android sistem tarafından uygulanmaktadır. Bu bildirim çalış bazı görüntülerde ses. <p>Android kendi güvenliğiniz için bu sistem diyaloglar tanıttı ve circumenvented olamaz emin oldum. (Bazı görüntülerde bu unfortunely notifciation ses içerir)
+            VPN bağlantı uyarısı, VPNService API'sinin kötüye kullanımını önlemek için bu uygulamanın sistem tarafından oluşturulan tüm trafiği izleyebileceğini söylüyor.<p>VPN bağlantı bildirimi (anahtar simgesi) ayrıca giden bir VPN bağlantısı olduğunu belirtmek için Android sistemi tarafından gösteriliyor. Bazı kalıplarda bu bildirim bir ses çalar.<p>Android bu sistem pencerelerini kendi güvenliğiniz için koydu ve aşılmasını engelledi.
 
             <h2>
             <a name="tap_mode"></a>
-            Moda dokunun
+            Tap Kipi
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            Dokunun modu olmayan kök VPN API ile mümkün değildir. Bu nedenle bu uygulama dokunun destek sağlayamaz
+            Tap Kipi kök olmayan VPN API'si ile mümkün değil. Bu nedenle bu uygulama tap desteği sağlayamaz
 
             <h2>
             <a name="ab_secondary_users_title"></a>
-            Secondary tablet users
+            İkincil tablet kullanıcıları
             <a href="#ab_secondary_users_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
 
-            VPN does not work at all for secondary users.
+            VPN ikincil kullanıcılar için hiç çalışmamaktadır.
 
             <h2>
             <a name="faq_vpndialog43_title"></a>
-            VPN Onayla iletişim Android 4.3 ve üstü
+            VPN Onay Penceresi
             <a href="#faq_vpndialog43_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and later</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) ve daha sonrası</i></small> <br/>
 
-            "Android 4.3 ile VPN onay başlayan"overlaying apps"karşı korunuyor. Bu giriş dokunmaya tepki değil iletişim kutusunda olur. Bindirmeleri kullanan bir uygulama varsa, bu davranışa neden olabilir. Kusurlu bir app temas yazar app bulursanız. Bu sorun tüm VPN uygulamaları Android 4.3 ve daha sonra etkiler. Ayrıca bkz: < bir href="http://code.google.com/p/ics-openvpn/issues/detail?id=185" > sayı 185 <a> ek ayrıntılar için "
+            "Android 4.3'ten itibaren, VPN onayları "kaplayan uygulamalara" karşı güven altına alındı. Bu da pencerenin dokunma girdisine yanıt vermemesiyle sonuçlanır. Kaplamaları kullanan bir uygulamanız varsa, bu davranışa bu uygulama sebep olmuş olabilir. Saldırgan bir uygulama bulursanız, uygulamanın geliştiricisine ulaşın. Bu sorun Android 4.3 ve sonrasındaki tüm VPN uygulamalarını etkilemektedir. Ayrıca ayrıntılar için bkz. <a href="https://github.com/schwabe/ics-openvpn/issues/185">Issue 185<a>"
 
             <h2>
             <a name="tls_cipher_alert_title"></a>
-            Connections fails with SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure
+            Bağlantı SSL23_GET_SERVER_HELLO:sslv3 uyarı el sıkışma hatası ile başarısız oluyor
             <a href="#tls_cipher_alert_title" class="section_anchor"> </a>
             </h2>
             
-            Newer OpenVPN for Android versions (0.6.29/March 2015) use a more secure default for the allowed cipher suites (tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA"). Unfortunately, omitting the less secure cipher suites and export cipher suites, especially the omission of cipher suites that do not support Perfect Forward Secrecy (Diffie-Hellman) causes some problems. This usually caused by an well-intentioned but poorly executed attempt to strengthen TLS security by setting tls-cipher on the server or some embedded OSes with stripped down SSL (e.g. MikroTik).<p>To solve this problem the problem, set the tls-cipher settings on the server to reasonable default like tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA". To work around the problem on the client add the custom option tls-cipher DEFAULT on the Android client.
+            Daha yeni Android için OpenVPN sürümleri (0.6.29/Mart 2015) izin verilen şifreleyici takımları için (tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA") daha güvenli varsayılanı kullanıyor. Ancak, Perfect Forward Secrecy (Diffie-Hellman) desteklemeyen daha az güvenli şifreleyici ve dışa aktarıcı şifreleyici takımlarını yoksaymak bazı sorunlara yol açmaktadır. Bu, genellikle TSL güvenliğini sunucuda veya bazı gömülü işletim sistemlerinde arttırmak için tls-cipher ayarlayarak düşürülen SSL (örn. MikroTik) girişiminin iyi amaçlanması ancak zayıf uygulanmasından dolayı meydana gelir. <p>Bu sorunu çözmek için sunucuda, kullanışlı bir varsayılan değer yapın. Örneğin: tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA". İstemcide bu sorunun geçici çözümü için, Android istemcide tls-cipher DEFAULT özel seçeneğini ekleyin.
 
             <h2>
             <a name="faq_security_title"></a>
@@ -110,124 +119,124 @@
             <a href="#faq_security_title" class="section_anchor"> </a>
             </h2>
             
-            OpenVPN güvenlik duyarlı olduğu gibi güvenlik hakkında birkaç not mantıklı bulunmaktadır. Sdcard üzerindeki tüm verileri doğal olarak güvensiz. Her app (örneğin bu program herhangi özel bir sd kartı hak gerektirir) okuyabilirsiniz. Bu uygulama verileri yalnızca uygulama tarafından okunabilir. Cacert/cert/anahtarında dosya iletişim kutusu için içe aktarma seçeneğini kullanarak verileri VPN profilinizde saklanır. VPN profilleri yalnızca bu uygulama tarafından erişilebilir. (Daha sonra sd kartta kopyaları sil unutmayın). Bile erişilebilir rağmen bu uygulama tarafından yalnızca verileri hala şifreli değildir. Telefon veya diğer olağanüstü köklenme tarafından veri almak mümkün olabilir. Kurtarmak parola düz metin olarak depolanır. Pkcs12 dosyaları için onları android deposunun almak önerilir.
+            "OpenVPN'de güvenlik hassas bir konu olduğundan, güvenlikle ilgili birkaç not yerinde olacak. SD kart üzerindeki tüm veriler başlangıcından beri güvensizdir. Her uygulama okuyabilir (örneğin bu uygulama özel SD kart hakları gerektirmiyor). Bu uygulamanın verisi sadece uygulama tarafından okunabilir. cacert/cert/key için içe aktarma seçeneğini kullanmak, veriyi VPN profilinde saklar. VPN profilleri sadece bu uygulama tarafından okunabilir (ardından SD karttaki kopyalarını silmeyi unutmayın). Sadece bu uygulama tarafından erişilebilir olmasına rağmen, veri hala şifrelenmeden saklanır. Telefonu root'lamak veya diğer açıklar verinin ele geçirilmesine yol açabilir. Kaydedilen parolalar da düz metin olarak saklanır. PKCS12 dosyalarını Android anahtar deposuna içe aktarmanız şiddetle önerilir."
 
             <h2>
             <a name="faq_shortcut"></a>
-            Kısayolları başlatmak için
+            Başlatma kısayolu
             <a href="#faq_shortcut" class="section_anchor"> </a>
             </h2>
             
-            Masaüstünüzde OpenVPN başlatmak için bir kısayol yerleştirebilirsiniz. Homescreen programınıza bağlı olarak bir kısayol ya da bir widget eklemeniz gerekecek.
+            Masaüstünüzde OpenVPN başlatmak için bir kısayol yerleştirebilirsiniz. Ana sayfa programınıza bağlı olarak bir kısayol ya da bir widget eklemeniz gerekecek.
 
             <h2>
             <a name="tap_mode"></a>
-            Moda dokunun
+            Tap Kipi
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            Yine? Dalga mı geçiyorsun? Hayır, dokunun modu gerçekten desteklenmez ve bu desteklenecektir soran daha fazla posta gönderme değil yardımcı olacaktır.
+            Yine mi? Dalga mı geçiyorsun? Hayır, tap kipi gerçekten desteklenmiyor ve fazla posta göndererek desteklenip desteklenmeyeceğini sormak bir şeyi değiştirmeyecek.
 
             <h2>
             <a name="vpn_tethering_title"></a>
             VPN ve Paylaşım
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) ve daha sonrası</i></small> <br/>
 
-            Tethering works while the VPN is active. The tethered connection will NOT use the VPN.
+            Paylaşım sadece VPN etkinken çalışır. Paylaşılan bağlantı VPN'i KULLANMAYACAKTIR.
 
             <h2>
             <a name="ab_kitkat_mss_title"></a>
-            Wrong MSS value for VPN connection
+            VPN bağlantısı için yanlış MSS değeri
             <a href="#ab_kitkat_mss_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) ve daha sonrası</i></small> <br/>
 <small><i>4.4 (Kit Kat) - 4.4.1 (Kit Kat)</i></small> <br/>
 
-            Early KitKat version set the wrong MSS value on TCP connections (#61948). Try to enable the mssfix option to workaround this bug.
+            Önceki KitKat sürümü TCP bağlantılarında MSS değerini yanlış ayarladı (#61948). Bu sorunu geçici olarak çözebilmek için mssfix seçeneğini etkinleştirmeyi deneyin.
 
             <h2>
             <a name="copying_log_entries"></a>
-            Günlük girdisi kopyalama
+            Günlük girdilerini kopyalama
             <a href="#copying_log_entries" class="section_anchor"> </a>
             </h2>
             
-            Bir tek günlük girişi basın kopyalamak ve günlük girdisi üzerinde tutun. Tüm günlük kopyala ve gönderme göndermek günlük seçeneğini kullanın. Görünür değil Eğer GUI donanım menü düğmesini kullanın.
+            Bir tek günlük girişi kopyalamak için günlük girdisine basın ve tutun. Tüm günlüğü kopyalamak ve göndermek için Günlük Gönder seçeneğini kullanın. Bu menü arayüzde görünmüyorsa donanım menü tuşunu kullanın.
 
             <h2>
             <a name="ab_persist_tun_title"></a>
-            Persist tun mode
+            Kalıcı tun kipi
             <a href="#ab_persist_tun_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
 
-            Opening a tun device while another tun device is active, which is used for persist-tun support, crashes the VPNServices on the device. A reboot is required to make VPN work again. OpenVPN for Android tries to avoid reopening the tun device and if really needed first closes the current TUN before opening the new TUN device to avoid to crash. This may lead to a short window where packets are sent over the non-VPN connection. Even with this workaround the VPNServices sometimes crashes and requires a reboot of the device.
+            Persist-tun desteği için kullanılmak üzere bir tun aygıtı etkin iken başka bir tun aygını açmak cihazdaki VPN hizmetlerinin çökmesine neden olur. VPN'in tekrar çalışması için yeniden başlatma gereklidir. Android için OpenVPN, tun aygıtını yeniden açmayı önlemeye çalışır, ancak gerçekten gerekli olduğunda çökmeyi önlemek için yeni TUN aygıtı açmadan önce geçerli TUN aygıtını kapatır. Bu VPN olmayan bağlantılar üzerinde paketlerin gönderildiği kısa bir aralığa sebep olabilir. Bu çözüme rağmen VPN hizmetleri hala çökmekte ve aygıtınızın yeniden başlatılmasını gerektirir.
 
             <h2>
             <a name="faq_routing_title"></a>
-            Yönlendirme/arabirimi yapılandırması
+            Yönlendirme/Arayüz Yapılandırması
             <a href="#faq_routing_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) ve daha sonrası</i></small> <br/>
 
-            The Routing and interface configuration is not done via traditional ifconfig/route commands but by using the VPNService API. This results in a different routing configuration than on other OSes. <p>The configuration of the VPN tunnel consists of the IP address and the networks that should be routed over this interface. Especially, no peer partner address or gateway address is needed or required. Special routes to reach the VPN Server (for example added when using redirect-gateway) are not needed either. The application will consequently ignore these settings when importing a configuration. The app ensures with the VPNService API that the connection to the server is not routed through the VPN tunnel.<p>The VPNService API does not allow specifying networks that should not be routed via the VPN. As a workaround the app tries to detect networks that should not be routed over tunnel (e.g. route x.x.x.x y.y.y.y net_gateway) and calculates a set of routes that excludes this routes to emulate the behaviour of other platforms. The log windows shows the configuration of the VPNService upon establishing a connection.<p>Behind the scenes: Android 4.4+ does use policy routing. Using route/ifconfig will not show the installed routes. Instead use ip rule, iptables -t mangle -L
+            Yönlendirme ve arayüz yapılandırması klasik ifconfig/rota komutlarıyla değil VPNService API kullanarak yapılmaktadır. Bu, diğer işletim sistemlerindekinden farklı bir yönlendirme yapılandırması gerektirmektedir.<p>VPN tünelinin yapılandırması, IP adresleri ve bu adreslerin bu arayüz üstünden yönlendirileceği ağlardan oluşur. Özellikle hiçbir eş ortak adresi ya da ağ geçidi adresi gerekli degildir. VPN sunucusuna ulaşmak için özel yollar (redirect-gateway kullanıldığında eklenenler gibi) da gerekli değildir. Bu sebepten dolayı uygulama, bir yapılandırma alırken bu ayarları yoksayar. Uygulama, VPN Servis API'si ile sunucuyla olan bağlantının VPN tüneline yönlendirilmesini engeller.<p>VPNService API'si VPN üstünden yönlendirilmemesi gereken ağların belirtilmesine izin vermemektedir. Geçici çözüm olarak program, tünel üstünden yönlendirilmemesi gereken ağları (örneğin x.x.x.x y.y.y.y net_gateway rotası) bulmaya çalışıp bu rotaları içermeyen bir rota grubu oluşturarak diğer işletim sistemlerindeki davranışı oluşturur. Günlük penceresi VPNService'in bağlantı sonucu oluşan yapılandırmasını gösterir.<p>Kamera Arkası: Android 4.4+ kural tabanlı yönlendirme kullanır. route/ifconfig komutları kullanılan rotaları göstermeyecektir. Bu komutlar yerine ip rule, iptables -t mangle -L komutlarını kullanın
 
             <h2>
             <a name="ab_kitkat_reconnect_title"></a>
-            Random disconnects from mobile network
+            Mobil ağda rastgele bağlantı kesilmeleri
             <a href="#ab_kitkat_reconnect_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) ve daha sonrası</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            "Multiple users report that the mobile connection/mobile data connection is frequently dropped while using the VPN app. The behaviour seems to affect only some mobile provider/device combination and so far no cause/workaround for the bug could be identified. "
+            "Birçok kullanıcı mobil bağlantı/mobil veri bağlantısının VPN uygulaması kullanırken koptuğunu bildiriyor. Bu davranış bazı mobil operatörü/cihaz kombinasyonunu etkiliyor gibi görünüyor ve şimdiye kadar bu soruna bir çözüm bulunamadı."
 
             <h2>
             <a name="ab_vpn_reachability_44_title"></a>
-            Remote networks not reachable
+            Uzak ağlara ulaşılamıyor
             <a href="#ab_vpn_reachability_44_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) ve daha sonrası</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            Only destination can be reached over the VPN that are reachable without VPN. IPv6 VPNs does not work at all.
+            VPN'siz ulaşılabilen hedefe sadece VPN üzerinde ulaşılabilir. IPv6 VPN'leri hiç çalışmıyor.
 
             <h2>
             <a name="ab_only_cidr_title"></a>
-            Non CIDR Routes
+            CIDR Olmayan Rotalar
             <a href="#ab_only_cidr_title" class="section_anchor"> </a>
             </h2>
             
-            Android supports only CIDR routes to the VPN. Since non-CIDR routes are almost never used, OpenVPN for Android will use a /32 for routes that are not CIDR and issue a warning.
+            Android, VPN'e sadece CIDR rotalarını destekler. CIDR olmayan rotalar neredeyse hiç kullanılmadığından, Android için OpenVPN, rotalar için CIDR olmayan bir /32 kullanacak ve bir uyarı gösterecektir.
 
             <h2>
             <a name="ab_proxy_title"></a>
-            Proxy behaviour for VPNs
+            VPN'ler için Vekil Sunucu davranışı
             <a href="#ab_proxy_title" class="section_anchor"> </a>
             </h2>
             
-            Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.
+            Hiçbir DNS sunucusu ayarlanmadığında Android mobil/kablosuz bağlantı için belirtilmiş vekil sunucu ayarlarını kullanmaya devam edecek. Android için OpenVPN, günlüğünde bunu size gösterecek.
 
             <h2>
             <a name="ab_not_route_to_vpn_title"></a>
-            Route to the configured IP address
+            Yapılandırılmış IP adresine yönlendir
             <a href="#ab_not_route_to_vpn_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) ve daha sonrası</i></small> <br/>
 
-            The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask
+            Yapılandırılan istemci IP ve ağ maskesindeki IP adresleri VPN'e yönlendirilmemektedir. OpenVPN bu sorunu istemci IP ve ağ maskesine çözümlenen bir rote ekleyerek çözmektedir
 
             <h2>
             <a name="tap_mode"></a>
-            Moda dokunun
+            Tap Kipi
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            Üçüncü kez? Aslında, bir yazabilirsiniz bir Katman2 bilgi göndermek eklemek ve şerit Katman2 bilgi tun dayalı bir dokunun emülatör alırsınız. Ama bu dokunun emülatör da ARP ve muhtemelen bir DHCP istemci uygulamak gerekir. Herkes bu yönde herhangi bir işi farkında değilim. Bu konuda kodlama başlatmak istiyorsanız bana ulaşın.
+            Üçüncü kez? Aslında, biri tun tabanlı bir tap öykünücüsü yazabilir. Bu gönderirken layer2 bilgisi ekleyip, alırken layer2 bilgisini ayıklayabilir. Ancak bu tap öykünücüsü ARP'yi ve muhtemelen DHCP istemcisini de sağlamalı. Bu yönde bir çalışma yapan birini tanımıyorum. Bu konuda kodlamaya başlamak istiyorsanız bana ulaşın.
 
             

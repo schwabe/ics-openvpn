@@ -7,6 +7,15 @@
             <p>Hämta en fungerande konfiguration (testad på din dator eller nerladdad från din leverantör/organisation)</p><p>Om det är en enda fil utan extra pem/pks12 filer kan du maila den till dig själv och öppna den bifogade filen. Om du har flera filer lägg dem på ditt sd-kort.</p><p>Klicka på den i mailet bifogade filen/Användning mappikonen i VPN-listan för att importera konfigurationsfilen</p><p>Om det ger fel ang. saknade filer lägg dessa på ditt sd-kort.</p><p>Klicka på spara symbolen för att lägga till den importerade konfigurationen i VPN-listan</p><p>Anslut din VPN genom att klicka på konfigurationsnamnet</p><p>Om det finns fel eller varningar i loggen försöka förstå dessa varningar/fel och försök att åtgärda dem</p> 
 
             <h2>
+            <a name="samsung_broken_title"></a>
+            Samsung phones
+            <a href="#samsung_broken_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+
+            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
+
+            <h2>
             <a name="faq_duplicate_notification_title"></a>
             Dubblerade meddelanden
             <a href="#faq_duplicate_notification_title" class="section_anchor"> </a>
@@ -16,20 +25,20 @@
 
             <h2>
             <a name="faq_androids_clients_title"></a>
-            Differences between the OpenVPN Android clients
+            Skillnader mellan OpenVPN Android klienterna
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
-            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and moree targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
+            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and more targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
-            Reinstalling VPN apps
+            Installera om VPN appar
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
             <small><i>5.0 (Lollipop) and later</i></small> <br/>
 
-            VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
+            VPN appar kan sluta fungera när avinstalleras och installeras igen. För mer information se # 80074
 
             <h2>
             <a name="vpn_tethering_title"></a>
@@ -37,7 +46,7 @@
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
             <small><i>5.0 (Lollipop) and later</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) och tidigare</i></small> <br/>
 
             Funktionen Internetdelning i Android (över WiFi, USB eller Bluetooth) och VPNService API (används av denna applikation) fungerar inte tillsammans. För mer information se <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=34">ärende #34</a>
 
@@ -47,8 +56,8 @@
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
             <small><i>5.0 (Lollipop) and later</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) och tidigare</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) och tidigare</i></small> <br/>
 
             lt;pgt;Officiella HTC ROM är kända för att ha ett konstigt rutt problem som orsakar att trafik inte går genom tunneln (Se även <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=18">Ärende 18</a> i äredehanteringen.)</p><p>Äldre officiella SONY ROM för Xperia Arc S och Xperia Ray har rapporterats sakna VPNService helt. (Se även <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=29">Ärende 29</a> i ärendehanteringen.)</p><p>I anpassade/modifierade ROM kan tun modulen saknas eller rättigheterna på /dev/tun kan vara fel. Vissa CM9 ROM behöver alternativet "Fixa ägande" under "Modellanpassade hack" ikryssat.</p><p>Viktigt: Om du har en trasig ROM, rapportera det till din leverantör. Ju fler människor som rapportera problemet till leverantören desto mer sannolikt är det att det kommer en rättning.</p>
 
@@ -65,7 +74,7 @@
             Anslutnings varning och ljud
             <a href="#faq_system_dialogs_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and earlier</i></small> <br/>
+            <small><i>4.4 (Kit Kat) och tidigare</i></small> <br/>
 
             Varningen vid VPN-anslutning som berättar att denna app kan avlyssna all trafik utfärdas av systemet för att förhindra missbruk av VPNService API.<p>Notifieringen om VPN-anslutning (nyckelsymbolen) tillhandahålles också av Android-systemet för att signalera en pågående VPN-anslutning. På vissa ROM spelar denna notifiering ett ljud.<p>Android har infört dessa dialogrutor och notifieringar för din egen säkerhet och kan inte undvikas. (På vissa ROM innehåller dessa tyvärr ljud)
 
@@ -88,7 +97,7 @@
 
             <h2>
             <a name="faq_vpndialog43_title"></a>
-            Vpn Confirmation Dialog
+            Vpn Bekräftelse Dialog
             <a href="#faq_vpndialog43_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
@@ -145,7 +154,7 @@
             <small><i>4.4 (Kit Kat) and later</i></small> <br/>
 <small><i>4.4 (Kit Kat) - 4.4.1 (Kit Kat)</i></small> <br/>
 
-            Early KitKat version set the wrong MSS value on TCP connections (#61948). Try to enable the mssfix option to workaround this bug.
+            Tidigt KitKat version anger fel MSS värdet på TCP-anslutningar (# 61.948). Försök att göra det möjligt för mssfix möjlighet att kringgå denna bugg.
 
             <h2>
             <a name="copying_log_entries"></a>
@@ -199,7 +208,7 @@
 
             <h2>
             <a name="ab_only_cidr_title"></a>
-            Non CIDR Routes
+            Icke CIDR rutter
             <a href="#ab_only_cidr_title" class="section_anchor"> </a>
             </h2>
             

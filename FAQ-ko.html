@@ -7,6 +7,15 @@
             <p>문제없는 설정을 확보하세요 (당신의 컴퓨터에서 테스트 된것 또는 공급자/조직에서 다운받은)</p><p>이것이 단일 파일이며 추가 pem/pks12 파일이 없는 경우면 본인에게 이메일로 보내어 첨부파일을 열면 됩니다. 여러 파일인 경우 당신의 sd card에 넣으세요.</p><p>이메일 첨부파일을 클릭하세요/vpn목록에 있는 폴더 아이콘을 사용하여 설정 파일을 가져옵니다.</p><p>파일 누락 오류 발생시 누락된 파일을 sd card에 복사하세요.</p><p>저장 기호를 클릭하여 VPN 목록에 가져온 VPN을 추가 하세요.</p><p>VPN 이름을 클릭하여 VPN을 연결하세요.</p><p>오류 또는 경고가 로그에 있는 경우 오류/경고를 이해하여 이들을 해결하십시오.</p> 
 
             <h2>
+            <a name="samsung_broken_title"></a>
+            Samsung phones
+            <a href="#samsung_broken_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+
+            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
+
+            <h2>
             <a name="faq_duplicate_notification_title"></a>
             중복 알림
             <a href="#faq_duplicate_notification_title" class="section_anchor"> </a>
@@ -16,11 +25,11 @@
 
             <h2>
             <a name="faq_androids_clients_title"></a>
-            Differences between the OpenVPN Android clients
+            안드로이드 OpenVPN 클라이언트 간의 차이
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
-            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and moree targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
+            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and more targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
@@ -110,7 +119,7 @@
             <a href="#faq_security_title" class="section_anchor"> </a>
             </h2>
             
-            "OpenVPN은 보안에 민감하기 때문에 보안에 관련된 부분을 알고가는것이 현명합니다. SD카드의 있는 데이터는 기본적으로 보안이 취약합니다. 모든 앱이 읽을 수 있기 때문입니다 (예로 이 프로그램 또한 SD카드의 읽기 권한이 필요없습니다). 본앱의 데이터는 본앱만이 읽을 수 있습니다. cacert/cert/key를 파일 탐색기의 가져오기 옵션을 사용하면 데이터는 VPN 프로파일 내에 저장됩니다. VPN 프로파일은 본앱만이 접근할 수 있습니다. (잊지말고 SD카드에 있는 것을 삭제하세요). 접근은 본앱만이 가능하더라도 데이터는 암호화가 되어있지 않습니다. 루팅을 비롯한 다른 방법을 악용하여 데이터를 빼낼 수 있습니다. 암호 또한 일반 텍스트로 저장되어 있습니다. pkcs12 파일은 안드로이드 keystore에 보관할것을 강력하게 추천합니다."
+            "OpenVPN은 보안에 민감하기 때문에 보안에 관련된 부분을 알고가는것이 현명합니다. SD 카드에 있는 데이터는 모든 앱이 읽을 수 있기 때문에 보안이 취약합니다. (이 OpenVPN 앱은 SD 카드 읽기 권한이 필요없습니다) 이 OpenVPN 앱의 데이터는 이 OpenVPN 앱만이 읽을 수 있습니다. cacert/cert/key를 파일 탐색기의 가져오기 옵션을 사용하면 데이터는 VPN 프로파일 내에 저장됩니다. 이 VPN 프로파일은 이 OpenVPN 앱만이 접근할 수 있습니다. (잊지 말고 SD 카드에 남아있는 파일들을 삭제하세요.) 접근은 이 OpenVPN 앱만 가능하더라도 데이터는 암호화가 되어 있지 않습니다. 루팅을 비롯한 다른 악의적인 방법으로 데이터를 빼낼 수 있습니다. 암호 또한 일반 텍스트로 저장되어 있습니다. pkcs12 파일은 안드로이드 keystore에 보관할 것을 강력하게 추천합니다."
 
             <h2>
             <a name="faq_shortcut"></a>

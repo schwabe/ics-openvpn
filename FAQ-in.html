@@ -7,6 +7,15 @@
             <p> Ambil konfigurasi yang dapat berjalan (diuji pada komputer Anda atau download dari penyedia/organisasi) </p> <p> Satu file(berkas) saja tanpa tambahan berkas pem/pks12. Anda dapat kirim imel berkas dan membuka lampirannya. Jika Anda memiliki beberapa berkas, salin ke sd-card </p> <p> klik pada lampiran imel atau gunakan ikon folder dalam daftar vpn untuk mengimpor berkas konfigurasi </p> <p> jika ada  berkas yang kurang, salin file hilang ke sd-card. </p> <p> klik pada simbol Simpan untuk menambahkan VPN yang diimpor ke daftar VPN </p> <p > Connect VPN dengan mengklik nama VPN </p> <p> jika ada kesalahan atau peringatan di catatan, coba pahami peringatannya dan coba untuk memperbaikinya </p> 
 
             <h2>
+            <a name="samsung_broken_title"></a>
+            Samsung phones
+            <a href="#samsung_broken_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>5.0 (Lollipop) dan yang lebih baru</i></small> <br/>
+
+            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
+
+            <h2>
             <a name="faq_duplicate_notification_title"></a>
             Pemberitahuan berganda
             <a href="#faq_duplicate_notification_title" class="section_anchor"> </a>
@@ -16,28 +25,28 @@
 
             <h2>
             <a name="faq_androids_clients_title"></a>
-            Differences between the OpenVPN Android clients
+            Perbedaan antara klien OpenVPN Android
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
-            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and moree targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
+            Ada beberapa klien OpenVPN untuk Android. Yang paling umum adalah OpenVPN untuk Android (ini klien), OpenVPN Connect dan OpenVPN pengaturan. < p > klien dapat dikelompokkan menjadi dua kelompok: OpenVPN untuk Android dan OpenVPN Connect menggunakan API VPNService resmi (Android 4.0 +) dan memerlukan tanpa akar dan pengaturan OpenVPN yang menggunakan akar. < p > OpenVPN untuk Android adalah klien sumber terbuka dan dikembangkan oleh Arne Schwabe.  Ini ditargetkan untuk pengguna yang lebih maju dan menawarkan banyak pengaturan dan kemampuan untuk mengimpor profil dari file dan mengkonfigurasi/Ubah profil di dalam app. Klien didasarkan pada versi komunitas OpenVPN. Hal ini didasarkan pada kode sumber 2.x OpenVPN. Klien ini dapat dilihat sebagai semi resmi klien masyarakat. < p > OpenVPN Connect adalah klien sumber terbuka bebas yang dikembangkan oleh OpenVPN Technologies, Inc Klien indentasi untuk penggunaan umum klien dan moree ditargetkan untuk pengguna rata-rata dan memungkinkan impor OpenVPN profil. Klien ini didasarkan pada reimplementation OpenVPN C++ OpenVPN Protokol (ini diperlukan untuk memungkinkan OpenVPN Technologies, Inc untuk menerbitkan sebuah aplikasi OpenVPN iOS). Klien ini adalah resmi klien OpenVPN teknologi < p > OpenVPN pengaturan tertua klien dan juga UI untuk open source OpenVPN. Berbeda dengan OpenVPN untuk Android itu memerlukan akar dan tidak menggunakan VPNService API. Tidak tergantung pada Android 4.0 +
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
-            Reinstalling VPN apps
+            Menginstal ulang aplikasi VPN
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) dan yang lebih baru</i></small> <br/>
 
-            VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
+            Aplikasi VPN dapat berhenti bekerja ketika dihapus dan diinstal ulang lagi. Untuk jelasnya lihat # 80074
 
             <h2>
             <a name="vpn_tethering_title"></a>
             VPN dan penarikan
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+            <small><i>5.0 (Lollipop) dan yang lebih baru</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) dan sebelumnya</i></small> <br/>
 
             Fitur penggandengan Android (melalui WiFi, USB atau Bluetooth) dan API VPNService (digunakan oleh program ini) tidak bekerja bersama-sama. Untuk keterangan lanjut lihat < href="http://code.google.com/p/ics-openvpn/issues/detail?id=34" > mengeluarkan #34 </a>
 
@@ -46,9 +55,9 @@
             Gambar rusak
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+            <small><i>5.0 (Lollipop) dan yang lebih baru</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) dan sebelumnya</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) dan sebelumnya</i></small> <br/>
 
             Image HTC yang resmi diketahui memiliki masalah routing yang ganjilyang menyebabkan trafik data tidak melalui tunnel (Lihat di <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=18">Issue 18</a> di bagian bug tracker.))</p><p> Image SONY resmi yang lama dari Xperia Arc S and Xperia Ray telah dilaporkan tidak memiliki VPNService dalam Imagenya.  (Lihat juga  <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=29">Issue 29</a> di bagian bug tracker.))</p><p>Pada image yang dibuat non resmi, modul TUN mungkin tak ada atau hak /dev/tun mungkin salah. Beberapa image CM9 memerlukan pilihan "Fix ownership" di bagian "Device specific hacks" diaktfikan. .</p><p> Lebih penting lagi, jika device anda memiliki image android yang lengkap, laporkan pada vendor anda. Semakin banyak laporan masuk, semakin tinggi kemungkinan vendor melakukan perbaikan.</p>
 
@@ -65,13 +74,13 @@
             Peringatan sambungan dan pemberitahuan melalui suara
             <a href="#faq_system_dialogs_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and earlier</i></small> <br/>
+            <small><i>4.4 (Kit Kat) dan sebelumnya</i></small> <br/>
 
             Peringatan sambungan VPN yang memberitahukan Anda bahwa aplikasi ini dapat mencegat semua lalu lintas dikeluarkan oleh sistem untuk mencegah penyalahgunaan dari sambungan VPNService API.<p>Pemberitahuan sambungan VPN (simbol kunci) juga dikeluarkan oleh sistem Android untuk memberitahu VPN yang sedang berlangsung. Pada beberapa gambar pemberitahuan ini memainkan suara. <p>Android memperkenalkan sistem dialog ini untuk keselamatan Anda sendiri dan memastikan bahwa mereka tidak membuat masalah. (Pada beberapa gambar sayangnya ini termasuk peringatan suara)
 
             <h2>
             <a name="tap_mode"></a>
-            Mode TAP
+            Mode Tap
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
@@ -79,26 +88,26 @@
 
             <h2>
             <a name="ab_secondary_users_title"></a>
-            Secondary tablet users
+            Pengguna tablet sekunder
             <a href="#ab_secondary_users_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
 
-            VPN does not work at all for secondary users.
+            VPN tidak bekerja sama sekali bagi pengguna sekunder.
 
             <h2>
             <a name="faq_vpndialog43_title"></a>
-            Vpn Confirmation Dialog
+            VPN Konfirmasi Dialog
             <a href="#faq_vpndialog43_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and later</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) dan yang lebih baru</i></small> <br/>
 
-            "Starting with Android 4.3 the VPN confirmation is guarded against "overlaying apps". This results in the dialog not reacting to touch input. If you have an app that uses overlays it may cause this behaviour. If you find an offending app contact the author of the app. This problem affect all VPN applications on Android 4.3 and later. See also <a href="https://github.com/schwabe/ics-openvpn/issues/185">Issue 185<a> for additional details"
+            "Dimulai dengan Android 4.3 konfirmasi VPN dijaga terhadap" overlay apps ". Hal ini menyebabkan dialog tidak bereaksi menyentuh input. Jika Anda memiliki sebuah aplikasi yang menggunakan lapisan itu dapat menyebabkan perilaku ini. Jika Anda menemukan kontak aplikasi menyinggung penulis app. Masalah ini mempengaruhi semua aplikasi VPN di Android 4.3 dan kemudian. Lihat juga <a href="https://github.com/schwabe/ics-openvpn/issues/185"> Issue 185 <a> untuk rincian tambahan "
 
             <h2>
             <a name="tls_cipher_alert_title"></a>
-            Connections fails with SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure
+            Sambungan gagal dengan peringatan kegagalan jabat tangan SSL23_GET_SERVER_HELLO:sslv3
             <a href="#tls_cipher_alert_title" class="section_anchor"> </a>
             </h2>
             
@@ -122,30 +131,30 @@
 
             <h2>
             <a name="tap_mode"></a>
-            Mode TAP
+            Mode Tap
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            Lagi ? Becanda ? mode TAP benar-benar tidak didukung dan mengirim email menanyakan apakah akan ada dukungan TAP, tidak akan membantu
+            Lagi? Becanda? mode Tap benar-benar tidak didukung dan mengirim email menanyakan apakah akan ada dukungan Tap, tidak akan membantu.
 
             <h2>
             <a name="vpn_tethering_title"></a>
             VPN dan penarikan
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) dan yang lebih baru</i></small> <br/>
 
-            Tethering works while the VPN is active. The tethered connection will NOT use the VPN.
+            Penarikan bekerja sementara VPN aktif. Ditambatkan sambungan tidak akan menggunakan VPN.
 
             <h2>
             <a name="ab_kitkat_mss_title"></a>
-            Wrong MSS value for VPN connection
+            Nilai MSS yang salah untuk koneksi VPN
             <a href="#ab_kitkat_mss_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) dan yang lebih baru</i></small> <br/>
 <small><i>4.4 (Kit Kat) - 4.4.1 (Kit Kat)</i></small> <br/>
 
-            Early KitKat version set the wrong MSS value on TCP connections (#61948). Try to enable the mssfix option to workaround this bug.
+            Versi KitKat awal menetapkan nilai MSS salah pada TCP koneksi (# 61948). OpenVPN untuk secara otomatis mengaktifkan mssfix pilihan untuk solusi bug ini.
 
             <h2>
             <a name="copying_log_entries"></a>
@@ -157,12 +166,12 @@
 
             <h2>
             <a name="ab_persist_tun_title"></a>
-            Persist tun mode
+            Modus terowongan bertahan
             <a href="#ab_persist_tun_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
 
-            Opening a tun device while another tun device is active, which is used for persist-tun support, crashes the VPNServices on the device. A reboot is required to make VPN work again. OpenVPN for Android tries to avoid reopening the tun device and if really needed first closes the current TUN before opening the new TUN device to avoid to crash. This may lead to a short window where packets are sent over the non-VPN connection. Even with this workaround the VPNServices sometimes crashes and requires a reboot of the device.
+            Membuka perangkat tun saat perangkat tun lain sedang aktif, yang digunakan untuk dukungan bertahan-tun, crash VPNServices pada perangkat. A reboot diperlukan untuk membuat pekerjaan VPN lagi. OpenVPN untuk Android mencoba untuk menghindari membuka kembali perangkat tun dan jika benar-benar diperlukan pertama menutup TUN saat sebelum membuka perangkat TUN baru untuk menghindari crash. Hal ini dapat menyebabkan jendela pendek di mana paket dikirim melalui koneksi non-VPN. Bahkan dengan solusi ini VPNServices kadang-kadang crash dan memerlukan reboot perangkat.
 
             <h2>
             <a name="faq_routing_title"></a>
@@ -170,61 +179,61 @@
             <a href="#faq_routing_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) dan yang lebih baru</i></small> <br/>
 
-            The Routing and interface configuration is not done via traditional ifconfig/route commands but by using the VPNService API. This results in a different routing configuration than on other OSes. <p>The configuration of the VPN tunnel consists of the IP address and the networks that should be routed over this interface. Especially, no peer partner address or gateway address is needed or required. Special routes to reach the VPN Server (for example added when using redirect-gateway) are not needed either. The application will consequently ignore these settings when importing a configuration. The app ensures with the VPNService API that the connection to the server is not routed through the VPN tunnel.<p>The VPNService API does not allow specifying networks that should not be routed via the VPN. As a workaround the app tries to detect networks that should not be routed over tunnel (e.g. route x.x.x.x y.y.y.y net_gateway) and calculates a set of routes that excludes this routes to emulate the behaviour of other platforms. The log windows shows the configuration of the VPNService upon establishing a connection.<p>Behind the scenes: Android 4.4+ does use policy routing. Using route/ifconfig will not show the installed routes. Instead use ip rule, iptables -t mangle -L
+            Konfigurasi Routing dan antarmuka tidak dilakukan melalui perintah ifconfig/rute tradisional tetapi dengan menggunakan VPNService API. Ini hasil dalam konfigurasi perutean berbeda daripada pada OS lain. <p>The konfigurasi VPN terowongan terdiri dari alamat IP dan jaringan yang harus dialihkan melalui antarmuka ini. Terutama, tidak ada rekan mitra alamat atau alamat gateway adalah diperlukan atau diperlukan. Khusus rute untuk mencapai VPN Server (misalnya ditambahkan dengan menggunakan redirect-gateway) tidak diperlukan baik. Aplikasi akibatnya akan mengabaikan pengaturan ini ketika mengimpor konfigurasi. App menjamin dengan VPNService API bahwa koneksi ke server tidak diarahkan melalui VPN terowongan. <p>The VPNService API tidak memungkinkan menentukan jaringan yang tidak dapat diteruskan melalui VPN. Sebagai solusi app mencoba untuk mendeteksi jaringan yang tidak dapat diteruskan melalui terowongan (misalnya rute x.x.x.x y.y.y.y net_gateway) dan menghitung seperangkat rute yang mengecualikan ini rute untuk meniru perilaku platform lainnya. Jendela log menunjukkan konfigurasi VPNService berdasarkan membangun koneksi. <p>Behind adegan: Android 4,4 + menggunakan kebijakan routing. Menggunakan rute ifconfig tidak akan menunjukkan rute yang diinstal. Alih-alih menggunakan aturan ip, iptables -t mangle -L
 
             <h2>
             <a name="ab_kitkat_reconnect_title"></a>
-            Random disconnects from mobile network
+            Terputus acak dari jaringan selular
             <a href="#ab_kitkat_reconnect_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) dan yang lebih baru</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            "Multiple users report that the mobile connection/mobile data connection is frequently dropped while using the VPN app. The behaviour seems to affect only some mobile provider/device combination and so far no cause/workaround for the bug could be identified. "
+            "Beberapa pengguna melaporkan bahwa koneksi mobile / koneksi data mobile sering menjatuhkan saat menggunakan aplikasi VPN. Perilaku tampaknya hanya mempengaruhi beberapa kombinasi perangkat mobile provider / dan sejauh ini tidak ada penyebab / solusi untuk bug dapat diidentifikasi."
 
             <h2>
             <a name="ab_vpn_reachability_44_title"></a>
-            Remote networks not reachable
+            Rangkaian remote tak terjangkau
             <a href="#ab_vpn_reachability_44_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) dan yang lebih baru</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            Only destination can be reached over the VPN that are reachable without VPN. IPv6 VPNs does not work at all.
+            Hanya tujuan yang bisa dicapai melalui VPN yang bisa dijangkau tanpa VPN. VPN IPv6 tidak bekerja sama sekali.
 
             <h2>
             <a name="ab_only_cidr_title"></a>
-            Non CIDR Routes
+            Rute non CIDR
             <a href="#ab_only_cidr_title" class="section_anchor"> </a>
             </h2>
             
-            Android supports only CIDR routes to the VPN. Since non-CIDR routes are almost never used, OpenVPN for Android will use a /32 for routes that are not CIDR and issue a warning.
+            Android hanya mendukung rute CIDR ke VPN. Sejak non-CIDR rute yang hampir tidak pernah digunakan, OpenVPN untuk Android akan menggunakan / 32 untuk rute yang tidak CIDR dan mengeluarkan peringatan.
 
             <h2>
             <a name="ab_proxy_title"></a>
-            Proxy behaviour for VPNs
+            Tindakan Proxy untuk VPN
             <a href="#ab_proxy_title" class="section_anchor"> </a>
             </h2>
             
-            Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.
+            Android akan tetap menggunakan pengaturan proxy Anda ditentukan untuk mobile koneksi / Wi-Fi ketika tidak ada server DNS diatur. OpenVPN untuk Android akan memperingatkan Anda tentang hal ini dalam log. 
 
             <h2>
             <a name="ab_not_route_to_vpn_title"></a>
-            Route to the configured IP address
+            Alihkan ke alamat IP yang telah ditentukan
             <a href="#ab_not_route_to_vpn_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) dan yang lebih baru</i></small> <br/>
 
-            The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask
+            IP klien dikonfigurasi dan IP di topeng jaringan tidak diteruskan ke VPN. OpenVPN bekerja di sekitar bug ini dengan secara eksplisit menambahkan rute yang corrosponds ke IP klien dan netmask nya
 
             <h2>
             <a name="tap_mode"></a>
-            Mode TAP
+            Mode Tap
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             

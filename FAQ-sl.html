@@ -1,0 +1,242 @@
+<h2>
+            <a name="faq_howto_title"></a>
+            Hitri zagon
+            <a href="#faq_howto_title" class="section_anchor"> </a>
+            </h2>
+            
+            <p>Dobite delujoče nastavitve (preizkušene na vašem računalniku ali jih prejmite od vašega ponudnika/organizacije)</p><p>Če je to ena sama datoteka brez dodatnih datotek pem/pks12, jo lahko sami pošljete in odprete prilogo. Če imate več datotek, jih prestavite na svojo kartico SD.</p><p>Kliknite na e-poštno prilogo/uporabite ikono mape na seznamu VPN-ov, da uvozite nastavitveno datoteko.</p><p>Če se pojavijo napake o manjkajočih datotekah, jih vstavite na kartico SD.</p><p>Kliknite na simbol za shranjevanje, da dodate uvoženi VPN na svoj seznam VPN-ov.</p><p>Povežite VPN s klikom na ime VPN-a.</p><p>Če so v dnevniku napake ali opozorila, jih poizkusite razumeti in popraviti.</p> 
+
+            <h2>
+            <a name="samsung_broken_title"></a>
+            Samsung phones
+            <a href="#samsung_broken_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>5.0 (Lollipop) in kasnejši</i></small> <br/>
+
+            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
+
+            <h2>
+            <a name="faq_duplicate_notification_title"></a>
+            Podvojena obvestila
+            <a href="#faq_duplicate_notification_title" class="section_anchor"> </a>
+            </h2>
+            
+            Če Androidu primanjkuje sistemskega pomnilnika (RAM-a), se programi in storitve, ki trenutno niso potrebne, odstranijo iz dejavnega pomnilnika. To uniči delujočo povezavo VPN. Zaradi zagotovitve, da povezava/OpenVPN preživi, se storitev izvaja z višjo prednostjo. Za izvajanje z višjo prednostjo mora program prikazati obvestilo. Ikono obvestila ključa vsili sistem, kot je to opisano v prejšnjem vnosu pogostih vprašanj. Ne šteje kot obvestilo programa za namen izvajanja z višjo prednostjo.
+
+            <h2>
+            <a name="faq_androids_clients_title"></a>
+            Razlike med Androidovimi odjemalci OpenVPN
+            <a href="#faq_androids_clients_title" class="section_anchor"> </a>
+            </h2>
+            
+            Obstaja več odjemalcev OpenVPN za Android. Najbolj pogosti so OpenVPN za Andorid (ta odjemalec), OpenVPN Connect in OpenVPN Settings.<p>Odjemalce lahko združite v dve skupini: OpenVPN za Android in OpenVPN Connect uporabljata uraden API storitve VPN (Android 4.0+) in ne zahtevata skrbniškega dostopa, in OpenVPN Settings, ki ga zahteva.<p> OpenVPN za Android je odprtokodni odjemalec, ki ga razvija Arne Schwabe. Cilja na bolj napredene uporabnike, in ponuja veliko nastavitev, zmožnost uvoza profilov iz datotek in nastavitev/spreminjanje profilov v programu. Odjemalec temelji na skupnostni različici OpenVPN-a in na izvorni kodi OpenVPN 2.x. Tega odjemalca je mogoče razumeti kot poluradnega odjemalca skupnosti. <p>OpenVPN Connect ni odprtokodni odjemalec in ga razvija OpenVPN Technologies, Inc. Namenjen je za splošno uporabo, cilja na povprečnega uporabnika in omogoča uvoz profilov OpenVPN. Temelji na ponovni izvedbi C++ OpenVPN protokola OpenVPN (to je bilo zahtevano, da je OpenVPN Technologies, Inc lahko izdal program OpenVPN za iOS). Je uradni odjemalec podjetja OpenVPN Technologies. <p> OpenVPN Settings je najstarejši od teh in tudi uporabniški vmesnik za odprtokodni OpenVPN. V nasprotju z OpenVPN-om za Android zahteva skrbniški dostop in ne uporablja API-ja storitve VPN. Ni odvisen od Androida 4.0+.
+
+            <h2>
+            <a name="ab_lollipop_reinstall_title"></a>
+            Ponovno nameščenje programov VPN
+            <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>5.0 (Lollipop) in kasnejši</i></small> <br/>
+
+            Programi VPN lahko prenehajo delovati, ko se jih odstrani in ponovno namesti. Za podrobnosti glejte #80074.
+
+            <h2>
+            <a name="vpn_tethering_title"></a>
+            VPN in deljenje mobilnega interneta
+            <a href="#vpn_tethering_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>5.0 (Lollipop) in kasnejši</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) in prejšnji</i></small> <br/>
+
+            Androidova značilnost deljenja mobilnega interneta (preko omrežja Wi-Fi, USB-ja ali Bluetootha) in API storitve VPN (ki ga uporablja ta program) skupaj ne delujeta. Za več podrobnosti glejte <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=34">Težavo 34</a>.
+
+            <h2>
+            <a name="broken_images"></a>
+            Pokvarjeni odtisi
+            <a href="#broken_images" class="section_anchor"> </a>
+            </h2>
+            <small><i>5.0 (Lollipop) in kasnejši</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) in prejšnji</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) in prejšnji</i></small> <br/>
+
+            <p>Uradni HTC-jevi odtisi imajo znano čudno težavo pri usmerjanju, ki povzroča, da promet ne teče skozi tunel (glejte <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=18">Težavo 18</a> v sledilniku hroščev.)</p><p>Za starejše uradne Sonyjeve odtise iz Xperie Arc S in Xperie Ray je bilo sporočeno, da jim v celoti manjka storitev VPN (glejte <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=18">Težavo 18</a> v sledilniku hroščev.)</p><p>V odtisih izgrajenih po meri lahko manjka modul TUN ali so dovoljenja za /dev/tun napačna. Nekateri odtisi CM9 potrebujejo omogočeno možnost "Popravi lastništvo" v "Prilagoditvah za naprave".</p><p>Najbolj pomembno: če ima vaša naprava pokvarjen odtis Android, ga prijavite svojemu proizvajalcu. Več ljudi kot prijavi težavo proizvajalcu, bolj verjetno je, da jo bodo popravili.</p>
+
+            <h2>
+            <a name="battery_consumption_title"></a>
+            Poraba baterije
+            <a href="#battery_consumption_title" class="section_anchor"> </a>
+            </h2>
+            
+            V mojih osebnih preizkusih so bili glaven vzrok za visoko porabo baterije OpenVPN-a dejavni paketi. Večina strežnikov OpenVPN ima smernico nastavitev, kot je 'ohrani dejavnost 10 60', ki povzroči, da si odjemalec in strežnik izmenjata dejavne pakete vsakih 10 sekund. <p>Medtem, ko so ti paketi majhni in ne uporabijo veliko prometa, ohranijo mobilno radijsko omrežje dejavno in povečajo porabo energije (glejte tudi <a href="http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine">The Radio State Machine | Razvijalci Androida</a>).<p> Te nastavitve ohranjanja dejavnosti odjemalec ne more spremeniti. Spremeni jo lahko samo sistemski skrbnik OpenVPN-a.<p> Na žalost uporaba ohranjanja dejavnosti večje od 60-ih sekund z UDP-jem lahko povzroči, da nekatera vrata NAT prekinejo povezavo zaradi časovne omejitve nedejavnosti. Uporaba TCP-ja z dolgo časovno omejitvijo ohranjanja dejavnosti deluje, vendar se tuneliranje TCP-ja preko TCP-ja izkaže za zelo neučinkovito ob povezavah z visoko izgubo paketov (glejte <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">Why TCP Over TCP Is A Bad Idea</a>).
+
+            <h2>
+            <a name="faq_system_dialogs_title"></a>
+            Opozorilo o povezavi in zvok obvestila
+            <a href="#faq_system_dialogs_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>4.4 (Kit Kat) in prejšnji</i></small> <br/>
+
+            Opozorilo o povezavi VPN, ki vam sporoča, da lahko ta naprava prestreže ves promet, vsili sistem, da prepreči zlorabo API-ja storitve VPN.<p>Obvestilo o povezavi VPN (simbol ključa) tudi vsili sistem Android, da nakaže tekočo povezavo VPN. V nekaterih odtisih to obvestilo predvaja zvok.<p>Android je vpeljal ta sistemska pogovorna okna zaradi vaše varnosti in je poskrbel, da se jih ne da zaobiti (v nekaterih odtisih to na žalost vključuje zvok obvestila).
+
+            <h2>
+            <a name="tap_mode"></a>
+            Način tapanja
+            <a href="#tap_mode" class="section_anchor"> </a>
+            </h2>
+            
+            Način tapanja ni mogoč z API-jem VPN brez skrbniškega dostopa. Zato ta program ne more omogočiti podpore za tapanje.
+
+            <h2>
+            <a name="ab_secondary_users_title"></a>
+            Sekundarni uporabniki tabilc
+            <a href="#ab_secondary_users_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
+
+            VPN sploh ne deluje za sekundarne uporabnike.
+
+            <h2>
+            <a name="faq_vpndialog43_title"></a>
+            Potrditev pogovornega okna VPN
+            <a href="#faq_vpndialog43_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) in kasnejši</i></small> <br/>
+
+            "Z začetkom v Androidu 4.3 je potrditev VPN zaščitena proti "prekrivajočimi programi". To povzroči, da se pogovorna okna ne odzovejo na vnos z dotikom. Če imate program, ki uporablja prekrivanja, lahko povzroči to vedenje. Če najdete tak program, navežite stik z avtorjem programa. Ta težava vpliva na vse programe VPN na Androidu 4.3 ali kasnejših. Za dodatne podrobnosti glejte tudi <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=185">Težavo 185<a>".
+
+            <h2>
+            <a name="tls_cipher_alert_title"></a>
+            Povezava je spodletela z opozorilom izmenjave signalov SSL23_GET_SERVER_HELLO:sslv3
+            <a href="#tls_cipher_alert_title" class="section_anchor"> </a>
+            </h2>
+            
+            Novejše različice OpenVPN-a za Android (0.6.29/marec 2015) uporabljajo bolj varne privzete vrednosti za dovoljene šifrirne pakete (tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA"). Na žalost izpuščanje manj varnih šifrirnih paketov in šifrirnih paketov za izvoz, posebno izpuščanje šifrirnih paketov, ki ne podpirajo vnaprejšnje varnosti (Diffie-Hellman), povzroča težave. To običajno povzroči dobronamerni vendar slabo izvedeni poizkus ojačanja varnosti TLS-a z nastavljanjem možnosti tls-cipher na strežniku ali vstavljenih OS-ih z okrnjenim SSL-om (npr. MikroTik).<p>Za razrešitev te težave na strežniku nastavite možnosti tls-cipher na razumljive privzete vrednosti, kot je tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA". Za zaobidenje te težave na odjemalcu dodajte možnost po meri tls-cipher DEFAULT na odjemalcu Android.
+
+            <h2>
+            <a name="faq_security_title"></a>
+            Varnostne zahteve
+            <a href="#faq_security_title" class="section_anchor"> </a>
+            </h2>
+            
+            "Ker je OpenVPN občutljiv na varnost, je smiselno povedati nekaj opomb o varnosti. Vsi podatki na kartici SD po svoji naravi niso varni. Vsak program jih lahko bere (npr. ta program ne zahteva posebnih dovoljenj za kartico SD). Podatke tega programa lahko bere samo program sam. Z uporabo možnosti uvoza za potrdila CA/potrdila/ključe v pogovornem oknu datoteke se podatki shranijo v profilu VPN. Do profilov VPN ima dostop samo ta program (ne pozabite potem izbrisati kopij na kartici SD). Čeprav ima do podatkov dostop samo ta program, so ti še vedno nešifrirani. Z omogočanjem skrbniškega dostopa do telefona ali izkoriščanjem drugih varnostnih ranljivosti je možno pridobiti te podatke. Poleg tega so gesla shranjena v golem besedilu. Za datoteke pkcs12 je zelo priporočljivo, da jih uvozite v Androidovo shrambo ključev."
+
+            <h2>
+            <a name="faq_shortcut"></a>
+            Bližnjica za zagon
+            <a href="#faq_shortcut" class="section_anchor"> </a>
+            </h2>
+            
+            Za zagon OpenVPN-a lahko na namizje vstavite bližnjico. Odvisno od vašega programa za domači zaslon boste morali dodati ali bližnjico ali pripomoček.
+
+            <h2>
+            <a name="tap_mode"></a>
+            Način tapanja
+            <a href="#tap_mode" class="section_anchor"> </a>
+            </h2>
+            
+            Spet? Ali se hecate? Ne, način tapanja resnično ni podprt in pošiljanje še več pošte z vprašanji, ali bo podprt, ne bo pomagalo.
+
+            <h2>
+            <a name="vpn_tethering_title"></a>
+            VPN in deljenje mobilnega interneta
+            <a href="#vpn_tethering_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>4.4 (Kit Kat) in kasnejši</i></small> <br/>
+
+            Deljenje mobilnega interneta deluje, ko je VPN dejaven. Deljena povezava NE bo uporabila VPN-a.
+
+            <h2>
+            <a name="ab_kitkat_mss_title"></a>
+            Napačna vrednost MSS za povezavo VPN
+            <a href="#ab_kitkat_mss_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>4.4 (Kit Kat) in kasnejši</i></small> <br/>
+<small><i>4.4 (Kit Kat) - 4.4.1 (Kit Kat)</i></small> <br/>
+
+            Zgodnja različica KitKata je nastavila napačno vrednost MSS ob povezavah TCP (#61948). OpenVPN bo samodejno omogočil možnost mssfix, da zaobide ta hrošč.
+
+            <h2>
+            <a name="copying_log_entries"></a>
+            Kopiranje dnevniških vnosov
+            <a href="#copying_log_entries" class="section_anchor"> </a>
+            </h2>
+            
+            Za kopiranje posameznega dnevniškega vnosa pritisnite in pridržite dnevniški vnos. Za kopiranje/pošiljanje celega dnevnika uporabite možnost Pošlji dnevnik. Če v vmesniku gumb ni viden, uporabite menijski gumb naprave.
+
+            <h2>
+            <a name="ab_persist_tun_title"></a>
+            Vztrajaj v načinu TUN
+            <a href="#ab_persist_tun_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
+
+            Odpiranje naprave TUN, ko je dejavna druga naprava, kar se uporablja za podporo vztrajnega TUN-a, sesuje storitve VPN na napravi. Za ponovno delovanje VPN-a je zahtevan ponovni zagon. OpenVPN za Android bo poizkusil ponovno odpreti napravo TUN in če je zelo potrebno, pred tem zaprl trenutni TUN, da se izogne sesutju. To lahko privede do kratkega postanka, kjer se paketi pošljejo preko običajne povezave. Tudi pri tem zaobidenju se storitve VPN včasih sesujejo in je zahtevan ponovni zagon naprave.
+
+            <h2>
+            <a name="faq_routing_title"></a>
+            Nastavitve usmerjanja/vmesnika
+            <a href="#faq_routing_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
+<small><i>4.4 (Kit Kat) in kasnejši</i></small> <br/>
+
+            Nastavitve usmerjanja in vmesnika se ne opravijo preko tradicionalnih ukazov ifconfig/route, toda z uporabo API-ja storitve VPN. To se pokaže v drugačnih nastavitvah usmerjanja, kot v drugih OS-ih.<p>Nastavitve tunela IP so sestavljene iz naslova IP in omrežij, ki jih je treba usmeriti preko tega vmesnika. Pri tem ni potreben ali zahtevan noben družabniški naslov soležnika ali naslov vrat. Posebne poti za doseganje strežnika VPN (npr. dodane med uporabo ukaza redirect-gateway) tudi niso potrebne. Program po zaradi tega ob uvozu nastavitev prezrl te nastavitve. Program z API-jem storitve VPN zagotovi, da povezava s strežnikom ni usmerjena preko tunela VPN.<p>API storitve VPN ne dovoli določanje omrežij, ki se ne smejo usmeriti preko tunela (npr. pot x.x.x.x y.y.y.y net_gateway) in izračuna nabor poti, ki izključijo te poti, da posnema vedenje drugih okolij. Okno dnevnika prikazuje nastavitve API-ja storitve VPN, ko se povezava vzpostavi.<p>Neuradno: Android 4.4+ uporablja pravilnik usmerjanja. Uporaba ukazov route/ifconfig ne bo prikazala nameščene poti. Namesto tega uporabite pravilo IP iptables -t mangle -L.
+
+            <h2>
+            <a name="ab_kitkat_reconnect_title"></a>
+            Naključne prekinitve mobilnega omrežja
+            <a href="#ab_kitkat_reconnect_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
+<small><i>4.4 (Kit Kat) in kasnejši</i></small> <br/>
+<small><i>4.4 (Kit Kat)</i></small> <br/>
+
+            "Več uporabnikov poroča, da se ob uporabi programa VPN mobilna povezava/podatki pogosto prekinejo. Videti je, da se to nanaša samo na nekatere kombinacije mobilnih ponudnikov/naprav in do sedaj za ta hrošč še ni bilo odkritega vzroka/zaobidenja."
+
+            <h2>
+            <a name="ab_vpn_reachability_44_title"></a>
+            Oddaljena omrežja niso dosegljiva
+            <a href="#ab_vpn_reachability_44_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
+<small><i>4.4 (Kit Kat) in kasnejši</i></small> <br/>
+<small><i>4.4 (Kit Kat)</i></small> <br/>
+<small><i>4.4 (Kit Kat)</i></small> <br/>
+
+            Preko VPN-a so dosegljivi samo cilji, ki so dosegljivi tudi brez njega. VPN-i IPv6 sploh ne delujejo.
+
+            <h2>
+            <a name="ab_only_cidr_title"></a>
+            Poti brez načina CIDR
+            <a href="#ab_only_cidr_title" class="section_anchor"> </a>
+            </h2>
+            
+            Android podpira samo poti CIDR v VPN. Ker se druge poti skoraj nikoli ne uporabljajo, bo OpenVPN za Android za te poti uporabil /32 in izdal opozorilo.
+
+            <h2>
+            <a name="ab_proxy_title"></a>
+            Vedenje posredniškega strežnika za VPN-e
+            <a href="#ab_proxy_title" class="section_anchor"> </a>
+            </h2>
+            
+            Android bo še naprej uporabljal nastavitve posredniškega strežnika, ki so določene za mobilno povezavo/Wi-Fi, ko ni nastavljenih strežnikov DNS. OpenVPN za Android vas bo o tem opozoril v dnevniku.
+
+            <h2>
+            <a name="ab_not_route_to_vpn_title"></a>
+            Pot do nastavljenega naslova IP
+            <a href="#ab_not_route_to_vpn_title" class="section_anchor"> </a>
+            </h2>
+            <small><i>5.0 (Lollipop) in kasnejši</i></small> <br/>
+
+            IP nastavljenega odjemalca in IP-ji v njegovi maski omrežja se ne usmerijo v VPN. OpenVPN zaobide tega hrošča z izrecnim dodajanjem poti, ki ustreza IP-ju odjemalca in njegovi maski omrežja.
+
+            <h2>
+            <a name="tap_mode"></a>
+            Način tapanja
+            <a href="#tap_mode" class="section_anchor"> </a>
+            </h2>
+            
+            Tretjič? V bistvu bi nekdo lahko napisal posnemovalnik tapanja temelječ na TUN-u, ki bi dodal podatke 2. plasti ob pošiljanju in odstranil podatke 2. plasti ob prejemanju. Vendar bi ta posnemovalnik moral imeti izveden ARP in morda odjemalca DHCP. Nisem še slišal, da bi kdo delal na tem. Navežite stik z mano, če bi radi začeli pisati program o tem.
+
+            

@@ -371,8 +371,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 Log.d("OpenVPN", "Got no last connected profile on null intent. Assuming always on.");
                 mProfile = ProfileManager.getAlwaysOnVPN(this);
 
-                stopSelf(startId);
-                return START_NOT_STICKY;
+                if (mProfile==null) {
+                    stopSelf(startId);
+                    return START_NOT_STICKY;
+                }
             }
             /* Do the asynchronous keychain certificate stuff */
             mProfile.checkForRestart(this);

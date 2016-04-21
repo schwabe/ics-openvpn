@@ -5,6 +5,7 @@
 
 package de.blinkt.openvpn.fragments;
 import java.io.File;
+import java.util.Collection;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -17,18 +18,24 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 
 import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.api.ExternalAppDatabase;
+import de.blinkt.openvpn.core.ProfileManager;
 
-public class GeneralSettings extends PreferenceFragment implements OnPreferenceClickListener, OnClickListener {
+
+public class GeneralSettings extends PreferenceFragment implements OnPreferenceClickListener, OnClickListener, Preference.OnPreferenceChangeListener {
 
 	private ExternalAppDatabase mExtapp;
+	private ListPreference mAlwaysOnVPN;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,8 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 
 
         PreferenceCategory devHacks = (PreferenceCategory) findPreference("device_hacks");
+		mAlwaysOnVPN = (ListPreference) findPreference("alwaysOnVpn");
+        mAlwaysOnVPN.setOnPreferenceChangeListener(this);
 
 
         Preference loadtun = findPreference("loadTunModule");
@@ -70,7 +79,45 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 		setClearApiSummary();
 	}
 
-	private void setClearApiSummary() {
+	@Override
+	public void onResume() {
+		super.onResume();
+
+        ProfileManager pm = ProfileManager.getInstance(getActivity());
+        Collection<VpnProfile> profiles = pm.getProfiles();
+        CharSequence[] entries = new CharSequence[profiles.size()];
+        CharSequence[] entryValues = new CharSequence[profiles.size()];;
+
+        int i=0;
+        for (VpnProfile p: profiles)
+        {
+            entries[i]=p.getName();
+            entryValues[i]=p.getUUIDString();
+            i++;
+        }
+
+        mAlwaysOnVPN.setEntries(entries);
+        mAlwaysOnVPN.setEntryValues(entryValues);
+
+
+        VpnProfile vpn = ProfileManager.getAlwaysOnVPN(getActivity());
+        if (vpn== null)
+            mAlwaysOnVPN.setSummary(R.string.novpn_selected);
+        else
+            mAlwaysOnVPN.setSummary(vpn.getName());
+
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference== mAlwaysOnVPN) {
+            VpnProfile vpn = ProfileManager.get(getActivity(), (String) newValue);
+            mAlwaysOnVPN.setSummary(vpn.getName());
+        }
+        return true;
+    }
+
+    private void setClearApiSummary() {
 		Preference clearapi = findPreference("clearapi");
 
 		if(mExtapp.getExtAppList().isEmpty()) {

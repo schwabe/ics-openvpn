@@ -4,13 +4,15 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <PreferenceCategory android:title="@string/appbehaviour" android:key="app_behaviour">
         <CheckBoxPreference
                 android:defaultValue="true"
                 android:key="showlogwindow"
                 android:summary="@string/show_log_summary"
                 android:title="@string/show_log_window"/>
+
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -19,6 +21,12 @@
             android:summaryOff="Use OpenVPN 2.3"
             android:title="OpenVPN 3 Core"/>
 
+
+        <ListPreference
+            android:key="alwaysOnVpn"
+            android:title="@string/alwaysonvpn"
+            tools:summary="foo bar baz VPN"
+            />
 
         <CheckBoxPreference
                 android:defaultValue="false"

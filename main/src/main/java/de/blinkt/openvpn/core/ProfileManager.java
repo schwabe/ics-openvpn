@@ -76,13 +76,10 @@ public class ProfileManager {
 
     }
 
-    public static VpnProfile getLastConnectedProfile(Context c, boolean onBoot) {
+    public static VpnProfile getLastConnectedProfile(Context c) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 
-        boolean useStartOnBoot = prefs.getBoolean("restartvpnonboot", false);
 
-        if (onBoot && !useStartOnBoot)
-            return null;
 
         String lastConnectedProfile = prefs.getString(LAST_CONNECTED_PROFILE, null);
         if (lastConnectedProfile != null)
@@ -195,4 +192,12 @@ public class ProfileManager {
         return mLastConnectedVpn;
     }
 
+    public static VpnProfile getAlwaysOnVPN(Context context) {
+        checkInstance(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        String uuid = prefs.getString("alwaysOnVpn", null);
+        return get(uuid);
+
+    }
 }

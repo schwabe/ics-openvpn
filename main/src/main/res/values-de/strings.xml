@@ -46,7 +46,7 @@
   <string name="no_keystore_cert_selected">Kein Benutzerzertifikat ausgewählt</string>
   <string name="no_error_found">Kein Fehler.</string>
   <string name="config_error_found">Fehler in der Konfiguration</string>
-  <string name="ipv4_format_error">Fehler beim Auflösen der IPv4-Adresse</string>
+  <string name="ipv4_format_error">Kann die konfigurierte IPv4 Adresse nicht parsen</string>
   <string name="custom_route_format_error">Kann die manuell angegeben Routen nicht verarbeiten</string>
   <string name="pw_query_hint">(Leer lassen, um nicht zu speichern)</string>
   <string name="vpn_shortcut">OpenVPN-Verknüpfung</string>

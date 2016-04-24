@@ -395,4 +395,5 @@
   <string name="months_left">%d tháng còn lại</string>
   <string name="days_left">%d ngày còn lại</string>
   <string name="hours_left">%d giờ còn lại</string>
+  <string name="permission_revoked">cho phép VPN bị thu hồi bởi hệ điều hành (ví dụ như chương trình VPN khác bắt đầu), dừng VPN</string>
 </resources>

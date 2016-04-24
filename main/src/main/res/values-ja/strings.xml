@@ -6,15 +6,15 @@
   -->
 <resources>
   <string name="app">OpenVPN for Android</string>
-  <string name="address">サーバーアドレス：</string>
+  <string name="address">サーバーアドレス:</string>
   <string name="port">ポート番号：</string>
   <string name="location">場所</string>
-  <string name="cant_read_folder">ディレクトリが読み取れません</string>
+  <string name="cant_read_folder">ディレクトリを読み取れません</string>
   <string name="select">選択</string>
   <string name="cancel">キャンセル</string>
-  <string name="no_data">データなし</string>
+  <string name="no_data">データがありません</string>
   <string name="useLZO">LZO圧縮</string>
-  <string name="client_no_certificate">証明書がありません。</string>
+  <string name="client_no_certificate">証明書がありません</string>
   <string name="client_certificate_title">クライアント証明書</string>
   <string name="client_key_title">クライアント証明書のキー</string>
   <string name="client_pkcs12_title">PKCS12ファイル</string>
@@ -58,8 +58,8 @@
   <string name="custom_config_summary">カスタムオプションを指定します。注意して使用してください!</string>
   <string name="route_rejected">経路がAndroidにより拒否されました。</string>
   <string name="cancel_connection">切断</string>
-  <string name="cancel_connection_long">VPNを切断します</string>
-  <string name="clear_log">ログをクリア</string>
+  <string name="cancel_connection_long">VPN接続を解除しています</string>
+  <string name="clear_log">ログを消去</string>
   <string name="title_cancel">キャンセルの確認</string>
   <string name="cancel_connection_query">接続中または試行中の接続をキャンセルしますか？</string>
   <string name="remove_vpn">VPN を削除</string>
@@ -94,12 +94,12 @@
   <string name="float_summary">認証済みパケットをどのIPからでも受け付けます。</string>
   <string name="float_title">フローティング サーバーを許可</string>
   <string name="custom_options_title">カスタムオプション</string>
-  <string name="edit_vpn">VPN 設定の編集</string>
-  <string name="remove_vpn_query">VPN プロファイル %s を削除しますか？</string>
+  <string name="edit_vpn">VPN設定の編集</string>
+  <string name="remove_vpn_query">VPNプロファイル %s を削除しますか？</string>
   <string name="tun_error_helpful">いくつかのカスタムICSイメージは、/dev/tunのパーミッションが異常か、TUNモジュールが含まれていません。CM9イメージの場合は全般設定で所有権設定を修正してください。</string>
   <string name="tun_open_error">TUNデバイスを開こうとして失敗しました。</string>
   <string name="error">"エラー:"</string>
-  <string name="clear">クリア</string>
+  <string name="clear">消去</string>
   <string name="last_openvpn_tun_config">tunインターフェースを開いています:</string>
   <string name="local_ip_info">ローカル IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNSサーバ: %1$s, ドメイン: %2$s</string>
@@ -111,14 +111,14 @@
   <string name="route_not_netip">経路情報%1$s/%2$sを%3$s/%2$sに修正しました。</string>
   <string name="keychain_access">Androidの証明書管理にアクセスできません。(ファームウェアの更新、アプリケーションまたはその設定のリストアによって発生する場合があります)。VPNの設定で証明書の選択を再度行ってください。</string>
   <string name="version_info">%1$s %2$s</string>
-  <string name="send_logfile">ログファイルを送信</string>
+  <string name="send_logfile">ログファイルの送信</string>
   <string name="send">送信</string>
   <string name="ics_openvpn_log_file">ICS OpenVPN ログ ファイル</string>
   <string name="copied_entry">ログ エントリをクリップボードにコピーしました</string>
   <string name="tap_mode">TAPモード</string>
-  <string name="faq_tap_mode">TAPモードは非root化環境では動作しません。よってこのアプリケーションではTAPをサポートできません。</string>
+  <string name="faq_tap_mode">TAPモードはroot化されていないVPN APIでは動作しません。よってこのアプリケーションではTAPをサポートできません。</string>
   <string name="tap_faq2">またですか？TAPモードはサポートされていませんし、サポートされるかどうかメールを送ることは何の役にも立ちません。</string>
-  <string name="tap_faq3">３回目です。本当のところ、TUN上で動くレイヤ2エミュレータを書くことはできました。(送信時の情報追加と受信時の情報削除で)。しかしこのエミュレータはARPやおそらくはDHCPをも実装しなければならないでしょう。誰もこのことに気がついていません。もしあなたがこの機能を作る気になったのであれば、どうぞ私に連絡してください。</string>
+  <string name="tap_faq3">3回目ですか？本当のところ、TUN上で動くレイヤ2エミュレータを書くことはできました。(送信時の情報追加と受信時の情報削除で)。しかしこのエミュレータはARPやおそらくはDHCPをも実装しなければならないでしょう。誰もこのことに気がついていません。もしあなたがこの機能を作る気になったのであれば、どうぞ私に連絡してください。</string>
   <string name="faq">よくある質問</string>
   <string name="copying_log_entries">ログ エントリのコピー</string>
   <string name="faq_copying">1行のログエントリをコピーするには、そのエントリをタッチし続けます。コピー／送信するには「ログエントリを送信」を使用します。GUIで表示されない場合はハードウェアのメニューボタンを使用してください。</string>
@@ -197,7 +197,7 @@ Androidはあなた自身の安全性のために、これらを迂回できな�
   <string name="basic">基本</string>
   <string name="routing">経路設定</string>
   <string name="obscure">特殊なOpenVPNの設定。通常は必要ありません</string>
-  <string name="advanced">高度</string>
+  <string name="advanced">高度な設定</string>
   <string name="export_config_title">ICSのOpenVPN設定</string>
   <string name="warn_no_dns">DNSサーバーが使用されていません。名前解決が動作しない可能性があります。カスタムDNSの設定を検討してください。また、DNSが指定されていない場合Androidはモバイル回線/WiFi接続に設定したプロキシを使用し続けることにも注意してください。</string>
   <string name="dns_add_error">DNSサーバ \"%1$s\" の追加に失敗しました。%2$sに拒否されました。</string>
@@ -255,14 +255,14 @@ VPNService APIはVPNを経由すべきでないネットワークの指定を許
 Android 4.4以上はポリシールーティングを使用します。route/ifconfigコマンドは設定された経路を表示しません。代わりにip ruleまたはiptables -t mangle -Lを使用します。</string>
   <string name="persisttun_summary">OpenVPNが再接続試行中は、VPNなし状態を報告しません。</string>
   <string name="persistent_tun_title">永続的なTUNデバイス</string>
-  <string name="openvpn_log">OpenVPN のログ</string>
+  <string name="openvpn_log">OpenVPNログ</string>
   <string name="import_config">OpenVPN の構成のインポート</string>
   <string name="battery_consumption_title">バッテリー消費量</string>
   <string name="baterry_consumption">個人的な検証では、OpenVPNがバッテリを多く消費する主な原因はkeepaliveパケットです。 
 大部分のOpenVPNサーバは\'keepalive 10 60\'のような設定を持っており、これは10秒ごとにサーバとクライアントで相互にkeepaliveパケットを送信しあうことを意味します。 &lt;p&gt;これらのパケットは小さく多くの帯域は使用しませんが、モバイル回線機能を常に稼動させ続け電力消費を増大させます。 &lt;p&gt;
 (参考 &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt;このkeepalive設定はクライアント側からは変更できません。OpenVPNのシステム管理者のみが変更可能です。 &lt;p&gt; 残念なことに、60秒より大きな間隔のUDP keepaliveはいくつかのNATゲートウェイにおいては接続状態が維持できず、それより短い時間でタイムアウトします(検証では60秒)。 TCP keepaliveと長いタイムアウト時間の使用は、動作はしますがTCP over TCP問題を引き起こします。(詳細は&lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;なぜTCP over TCPは悪いアイディアなのか&lt;/a&gt;を参照)</string>
   <string name="faq_tethering">Androidのテザリング機能(WiFi, USB, Bluetooth経由)とVPNService API(このプログラムから使用する機能)は同時に利用できません。詳細については&lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=34\"&gt;issue #34&lt;/a&gt;を参照</string>
-  <string name="vpn_tethering_title">VPN とテザリング</string>
+  <string name="vpn_tethering_title">VPNとテザリング</string>
   <string name="connection_retries">接続の再試行回数</string>
   <string name="reconnection_settings">再接続の設定</string>
   <string name="connectretrymessage">再接続を試行する際の間隔(秒)</string>
@@ -273,15 +273,15 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="session_ipv4string">%1$s - %2$s</string>
   <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
-  <string name="state_connecting">接続中</string>
-  <string name="state_wait">サーバーの応答を待っています。</string>
+  <string name="state_connecting">接続しています</string>
+  <string name="state_wait">サーバーの応答を待っています</string>
   <string name="state_auth">認証中</string>
   <string name="state_get_config">クライアントの構成を取得中</string>
   <string name="state_assign_ip">IPアドレスを割り当て中</string>
   <string name="state_add_routes">経路を追加中</string>
-  <string name="state_connected">接続しました</string>
+  <string name="state_connected">接続されました</string>
   <string name="state_disconnected">切断</string>
-  <string name="state_reconnecting">再接続中</string>
+  <string name="state_reconnecting">再接続しています</string>
   <string name="state_exiting">終了中</string>
   <string name="state_noprocess">停止中</string>
   <string name="state_resolve">ホスト名を解決中</string>
@@ -289,14 +289,14 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="state_auth_failed">認証に失敗しました</string>
   <string name="state_nonetwork">使用可能なネットワークを待機中</string>
   <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
-  <string name="notifcation_title_notconnect">未接続</string>
+  <string name="notifcation_title_notconnect">接続されていません</string>
   <string name="start_vpn_title">VPN %sに接続中</string>
   <string name="start_vpn_ticker">VPN %sに接続中</string>
   <string name="jelly_keystore_alphanumeric_bug">Android 4.1の一部のバージョンで、キーストアの証明書の名前にアルファベット以外の特殊な文字(スペース、アンダーバー、ダッシュ等)を含む場合に問題が発生します。証明書の名前から特殊な文字を外して再度インポートを試みてください。</string>
   <string name="encryption_cipher">暗号化方式</string>
   <string name="packet_auth">パケット認証</string>
   <string name="auth_dialog_title">パケット認証方式を入力してください。</string>
-  <string name="built_by">%s によりビルド</string>
+  <string name="built_by">%s によりビルドされました</string>
   <string name="debug_build">デバッグ ビルド</string>
   <string name="official_build">正式ビルド</string>
   <string name="make_selection_inline">プロファイルにコピー</string>

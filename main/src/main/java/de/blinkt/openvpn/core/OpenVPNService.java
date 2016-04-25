@@ -11,6 +11,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.UiModeManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -27,6 +28,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
+import android.service.quicksettings.TileService;
 import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.Log;
@@ -44,6 +46,7 @@ import java.util.Locale;
 import java.util.Vector;
 
 import de.blinkt.openvpn.BuildConfig;
+import de.blinkt.openvpn.OpenVPNTileService;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.activities.DisconnectVPN;
@@ -926,6 +929,12 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (mProcessThread == null && !mNotificationAlwaysVisible)
             return;
 
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M)
+            tileUpdateN();
+
+
+
         boolean lowpriority = false;
         // Display byte count only after being connected
 
@@ -952,6 +961,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     msg, lowpriority, 0, level);
 
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    private void tileUpdateN() {
+        TileService.requestListeningState(this, new ComponentName(this, OpenVPNTileService.class));
     }
 
     private void doSendBroadcast(String state, ConnectionStatus level) {

@@ -59,6 +59,9 @@ public class VpnStatus {
 
     static final int MAXLOGENTRIES = 1000;
 
+    public static boolean isVPNActive() {
+        return mLastLevel != ConnectionStatus.LEVEL_AUTH_FAILED && !(mLastLevel == ConnectionStatus.LEVEL_NOTCONNECTED);
+    }
 
     public static String getLastCleanLogMessage(Context c) {
         String message = mLaststatemsg;

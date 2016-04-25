@@ -409,4 +409,7 @@
     <string name="samsung_broken_title">Samsung phones</string>
     <string name="novpn_selected">No VPN selected.</string>
     <string name="alwaysonvpn">VPN used on boot and for Always-On</string>
+    <string name="qs_title">Toggle VPN</string>
+    <string name="qs_connect">Connect to %s</string>
+    <string name="qs_disconnect">Disconnect %s</string>
 </resources>

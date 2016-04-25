@@ -5,39 +5,18 @@
 
 package de.blinkt.openvpn.core;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.Signature;
 import android.os.Build;
 import android.os.HandlerThread;
 import android.os.Message;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.text.TextUtils;
-import android.util.Log;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.Arrays;
-import java.util.FormatFlagsConversionMismatchException;
 import java.util.LinkedList;
 import java.util.Locale;
-import java.util.UnknownFormatConversionException;
 import java.util.Vector;
 
-import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
 
 public class VpnStatus {
@@ -206,205 +185,6 @@ public class VpnStatus {
     }
 
 
-    public static class LogItem implements Parcelable {
-        private Object[] mArgs = null;
-        private String mMessage = null;
-        private int mRessourceId;
-        // Default log priority
-        LogLevel mLevel = LogLevel.INFO;
-        private long logtime = System.currentTimeMillis();
-        private int mVerbosityLevel = -1;
-
-        private LogItem(int ressourceId, Object[] args) {
-            mRessourceId = ressourceId;
-            mArgs = args;
-        }
-
-        public LogItem(LogLevel level, int verblevel, String message) {
-            mMessage = message;
-            mLevel = level;
-            mVerbosityLevel = verblevel;
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeArray(mArgs);
-            dest.writeString(mMessage);
-            dest.writeInt(mRessourceId);
-            dest.writeInt(mLevel.getInt());
-            dest.writeInt(mVerbosityLevel);
-
-            dest.writeLong(logtime);
-        }
-
-        public LogItem(Parcel in) {
-            mArgs = in.readArray(Object.class.getClassLoader());
-            mMessage = in.readString();
-            mRessourceId = in.readInt();
-            mLevel = LogLevel.getEnumByValue(in.readInt());
-            mVerbosityLevel = in.readInt();
-            logtime = in.readLong();
-        }
-
-        public static final Parcelable.Creator<LogItem> CREATOR
-                = new Parcelable.Creator<LogItem>() {
-            public LogItem createFromParcel(Parcel in) {
-                return new LogItem(in);
-            }
-
-            public LogItem[] newArray(int size) {
-                return new LogItem[size];
-            }
-        };
-
-        public LogItem(LogLevel loglevel, int ressourceId, Object... args) {
-            mRessourceId = ressourceId;
-            mArgs = args;
-            mLevel = loglevel;
-        }
-
-
-        public LogItem(LogLevel loglevel, String msg) {
-            mLevel = loglevel;
-            mMessage = msg;
-        }
-
-
-        public LogItem(LogLevel loglevel, int ressourceId) {
-            mRessourceId = ressourceId;
-            mLevel = loglevel;
-        }
-
-        public String getString(Context c) {
-            try {
-                if (mMessage != null) {
-                    return mMessage;
-                } else {
-                    if (c != null) {
-                        if (mRessourceId == R.string.mobile_info)
-                            return getMobileInfoString(c);
-                        if (mArgs == null)
-                            return c.getString(mRessourceId);
-                        else
-                            return c.getString(mRessourceId, mArgs);
-                    } else {
-                        String str = String.format(Locale.ENGLISH, "Log (no context) resid %d", mRessourceId);
-                        if (mArgs != null)
-                            str += join("|", mArgs);
-
-                        return str;
-                    }
-                }
-            } catch (UnknownFormatConversionException e) {
-                if (c != null)
-                    throw new UnknownFormatConversionException(e.getLocalizedMessage() + getString(null));
-                else
-                    throw e;
-            } catch (java.util.FormatFlagsConversionMismatchException e) {
-                if (c != null)
-                    throw new FormatFlagsConversionMismatchException(e.getLocalizedMessage() + getString(null), e.getConversion());
-                else
-                    throw e;
-            }
-
-        }
-
-
-        // TextUtils.join will cause not macked exeception in tests ....
-        public static String join(CharSequence delimiter, Object[] tokens) {
-            StringBuilder sb = new StringBuilder();
-            boolean firstTime = true;
-            for (Object token: tokens) {
-                if (firstTime) {
-                    firstTime = false;
-                } else {
-                    sb.append(delimiter);
-                }
-                sb.append(token);
-            }
-            return sb.toString();
-        }
-
-
-
-        public LogLevel getLogLevel() {
-            return mLevel;
-        }
-
-        // The lint is wrong here
-        @SuppressLint("StringFormatMatches")
-        private String getMobileInfoString(Context c) {
-            c.getPackageManager();
-            String apksign = "error getting package signature";
-
-            String version = "error getting version";
-            try {
-                @SuppressLint("PackageManagerGetSignatures")
-                Signature raw = c.getPackageManager().getPackageInfo(c.getPackageName(), PackageManager.GET_SIGNATURES).signatures[0];
-                CertificateFactory cf = CertificateFactory.getInstance("X.509");
-                X509Certificate cert = (X509Certificate) cf.generateCertificate(new ByteArrayInputStream(raw.toByteArray()));
-                MessageDigest md = MessageDigest.getInstance("SHA-1");
-                byte[] der = cert.getEncoded();
-                md.update(der);
-                byte[] digest = md.digest();
-
-                if (Arrays.equals(digest, officalkey))
-                    apksign = c.getString(R.string.official_build);
-                else if (Arrays.equals(digest, officaldebugkey))
-                    apksign = c.getString(R.string.debug_build);
-                else if (Arrays.equals(digest, amazonkey))
-                    apksign = "amazon version";
-                else if (Arrays.equals(digest, fdroidkey))
-                    apksign = "F-Droid built and signed version";
-                else
-                    apksign = c.getString(R.string.built_by, cert.getSubjectX500Principal().getName());
-
-                PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
-                version = packageinfo.versionName;
-
-            } catch (NameNotFoundException | CertificateException |
-                    NoSuchAlgorithmException ignored) {
-            }
-
-            Object[] argsext = Arrays.copyOf(mArgs, mArgs.length);
-            argsext[argsext.length - 1] = apksign;
-            argsext[argsext.length - 2] = version;
-
-            return c.getString(R.string.mobile_info, argsext);
-
-        }
-
-        public long getLogtime() {
-            return logtime;
-        }
-
-
-        public int getVerbosityLevel() {
-            if (mVerbosityLevel == -1) {
-                // Hack:
-                // For message not from OpenVPN, report the status level as log level
-                return mLevel.getInt();
-            }
-            return mVerbosityLevel;
-        }
-
-        public boolean verify() {
-            if (mLevel == null)
-                return false;
-
-            if (mMessage == null && mRessourceId == 0)
-                return false;
-
-            return true;
-        }
-    }
-
     public interface LogListener {
         void newLog(LogItem logItem);
     }
@@ -425,7 +205,7 @@ public class VpnStatus {
     public synchronized static void clearLog() {
         logbuffer.clear();
         logInformation();
-        if (mLogFileHandler!=null)
+        if (mLogFileHandler != null)
             mLogFileHandler.sendEmptyMessage(LogFileHandler.TRIM_LOG_FILE);
     }
 
@@ -438,7 +218,7 @@ public class VpnStatus {
         }
 
         logInfo(R.string.mobile_info, Build.MODEL, Build.BOARD, Build.BRAND, Build.VERSION.SDK_INT,
-                nativeAPI , Build.VERSION.RELEASE, Build.ID, Build.FINGERPRINT, "", "");
+                nativeAPI, Build.VERSION.RELEASE, Build.ID, Build.FINGERPRINT, "", "");
     }
 
     public synchronized static void addLogListener(LogListener ll) {
@@ -607,7 +387,7 @@ public class VpnStatus {
             logbuffer.addFirst(logItem);
         } else {
             logbuffer.addLast(logItem);
-            if (mLogFileHandler!=null) {
+            if (mLogFileHandler != null) {
                 Message m = mLogFileHandler.obtainMessage(LogFileHandler.LOG_MESSAGE, logItem);
                 mLogFileHandler.sendMessage(m);
             }
@@ -616,7 +396,7 @@ public class VpnStatus {
         if (logbuffer.size() > MAXLOGENTRIES + MAXLOGENTRIES / 2) {
             while (logbuffer.size() > MAXLOGENTRIES)
                 logbuffer.removeFirst();
-            if (mLogFileHandler!=null)
+            if (mLogFileHandler != null)
                 mLogFileHandler.sendMessage(mLogFileHandler.obtainMessage(LogFileHandler.TRIM_LOG_FILE));
         }
 

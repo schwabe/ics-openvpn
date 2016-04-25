@@ -8,7 +8,6 @@ package de.blinkt.openvpn.core;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.Parcel;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -18,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.Locale;
 
@@ -50,14 +50,14 @@ class LogFileHandler extends Handler {
                     throw new RuntimeException("mLogFile not null");
                 readLogCache((File) msg.obj);
                 openLogFile((File) msg.obj);
-            } else if (msg.what == LOG_MESSAGE && msg.obj instanceof VpnStatus.LogItem) {
+            } else if (msg.what == LOG_MESSAGE && msg.obj instanceof LogItem) {
                 // Ignore log messages if not yet initialized
                 if (mLogFile == null)
                     return;
-                writeLogItemToDisk((VpnStatus.LogItem) msg.obj);
+                writeLogItemToDisk((LogItem) msg.obj);
             } else if (msg.what == TRIM_LOG_FILE) {
                 trimLogFile();
-                for (VpnStatus.LogItem li : VpnStatus.getlogbuffer())
+                for (LogItem li : VpnStatus.getlogbuffer())
                     writeLogItemToDisk(li);
             } else if (msg.what == FLUSH_TO_DISK) {
                 flushToDisk();
@@ -84,15 +84,13 @@ class LogFileHandler extends Handler {
         }
     }
 
-    private void writeLogItemToDisk(VpnStatus.LogItem li) throws IOException {
-        Parcel p = Parcel.obtain();
-        li.writeToParcel(p, 0);
+    private void writeLogItemToDisk(LogItem li) throws IOException {
+
         // We do not really care if the log cache breaks between Android upgrades,
         // write binary format to disc
-        byte[] liBytes = p.marshall();
+        byte[] liBytes = li.getMarschaledBytes();
 
         writeEscapedBytes(liBytes);
-        p.recycle();
     }
 
     public void writeEscapedBytes(byte[] bytes) throws IOException {
@@ -211,11 +209,9 @@ class LogFileHandler extends Handler {
 
     }
 
-    protected void restoreLogItem(byte[] buf, int len) {
-        Parcel p = Parcel.obtain();
-        p.unmarshall(buf, 0, len);
-        p.setDataPosition(0);
-        VpnStatus.LogItem li = VpnStatus.LogItem.CREATOR.createFromParcel(p);
+    protected void restoreLogItem(byte[] buf, int len) throws UnsupportedEncodingException {
+
+        LogItem li = new LogItem(buf, len);
         if (li.verify()) {
             VpnStatus.newLogItem(li, true);
         } else {
@@ -223,7 +219,6 @@ class LogFileHandler extends Handler {
                     "Could not read log item from file: %d: %s",
                      len, bytesToHex(buf, Math.max(len, 80))));
         }
-        p.recycle();
     }
 
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();

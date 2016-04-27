@@ -151,6 +151,8 @@ public class LogItem implements Parcelable {
         if (len == 0) {
             mMessage = null;
         } else {
+            if (len > bb.remaining())
+                throw new IndexOutOfBoundsException("String length " + len + " is bigger than remaining bytes " + bb.remaining());
             byte[] utf8bytes = new byte[len];
             bb.get(utf8bytes);
             mMessage = new String(utf8bytes, "UTF-8");

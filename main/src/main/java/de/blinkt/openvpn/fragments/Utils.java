@@ -91,6 +91,7 @@ public class Utils {
             case CRL_FILE:
                 supportedMimeTypes.add("application/x-pkcs7-crl");
                 supportedMimeTypes.add("application/pkix-crl");
+                break;
 
             case USERPW_FILE:
                 i.setType("text/plain");

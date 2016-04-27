@@ -204,9 +204,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="using_proxy">"Utilisation du proxy %1$s %2$d"</string>
   <string name="use_system_proxy">"Utiliser le proxy système"</string>
   <string name="use_system_proxy_summary">"Utiliser la configuration générale du système pour que les proxy HTTP / HTTPS se connectent."</string>
-  <string name="donatewithpaypal">"Vous pouvez faire un &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;cmd=_s-xclick\"&gt;don avec PayPal&lt;/ a&gt; "</string>
-  <string name="onbootrestartsummary">"Reconnecter OpenVPN automatiquement si une connexion était active lors de l\'extinction/redémarrage de l\'appareil. Veuillez lire l\'avertissement de connexion dans la FAQ avant d\'utiliser cette option."</string>
-  <string name="onbootrestart">"Connexion automatique au redémarrage"</string>
   <string name="ignore">"Ignorer"</string>
   <string name="restart">"Redémarrer"</string>
   <string name="restart_vpn_after_change">Les changements de configuration sont appliqués après redémarrage du VPN. (Re)démarrer le VPN maintenant ?</string>

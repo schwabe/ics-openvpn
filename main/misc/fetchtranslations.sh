@@ -9,7 +9,7 @@ then
 fi
 
 echo "Fetch translation archive"
-wget -q http://crowdin.net/download/project/ics-openvpn.zip
+wget -q https://crowdin.com/download/project/ics-openvpn.zip
 
 
 # Chinese language require zh-CN and zh-TW

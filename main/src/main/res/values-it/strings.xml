@@ -204,9 +204,6 @@ Effettuata la lettura del file di configurazione</string>
   <string name="using_proxy">Si sta utilizzando il proxy %1$s %2$d</string>
   <string name="use_system_proxy">Utilizza il proxy di sistema</string>
   <string name="use_system_proxy_summary">Utilizza la configurazione generale del sistema relativa ai proxy HTTP/HTTPS per connettersi.</string>
-  <string name="donatewithpaypal">Puoi &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;donare tramite PayPal&lt;/a&gt; </string>
-  <string name="onbootrestartsummary">OpenVPN is riconnetterà alla VPN se era in funzione durante un riavvio od un spegnimento dell\'apparecchio. Leggi con attenzione le FAQ con gli avvertimenti sulla connessione prima di scegliere questa opzione.</string>
-  <string name="onbootrestart">Riconnetti al riavvio</string>
   <string name="ignore">Ignora</string>
   <string name="restart">Riavvia</string>
   <string name="restart_vpn_after_change">Le modifiche sarannoi applicate dopo aver riavviato la connessione VPN. Riavviare ora la connessione?</string>

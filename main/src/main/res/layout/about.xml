@@ -54,17 +54,6 @@
             android:autoLink="all"
             android:text="@string/copyright_guicode" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="12sp" />
-
-        <TextView
-            android:id="@+id/donatestring"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/donatewithpaypal"
-            tools:ignore="SelectableText" />
-
 
         <TextView
                 android:paddingTop="12sp"

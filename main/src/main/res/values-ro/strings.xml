@@ -195,9 +195,6 @@
   <string name="using_proxy">Folosesc proxy %1$s %2$d</string>
   <string name="use_system_proxy">Foloseşte proxy sistem</string>
   <string name="use_system_proxy_summary">Foloseşte configurarea sistem pentru proxy HTTP/HTTPS folosit la conectare.</string>
-  <string name="donatewithpaypal">Puteţi &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;dona prin PayPal&lt;/a&gt; </string>
-  <string name="onbootrestartsummary">OpenVPN va reconecta un VPN dacă a fost activ la reboot/shutdown. Citiţi avertizarea la Conexiune din FAQ înainte de a folosi această funcţie.</string>
-  <string name="onbootrestart">Reconectarea la reboot</string>
   <string name="ignore">Ignora</string>
   <string name="restart">Restart</string>
   <string name="restart_vpn_after_change">Schimbările de configurare vor fi aplicate după restartarea VPN-ului. (Re)startaţi VPN-ul acum?</string>

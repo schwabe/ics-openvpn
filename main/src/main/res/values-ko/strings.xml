@@ -201,9 +201,6 @@
   <string name="using_proxy">프록시 %1$s %2$d 을 사용</string>
   <string name="use_system_proxy">시스템 프록시를 사용</string>
   <string name="use_system_proxy_summary">연결시 전 시스템 설정에 있는 HTTP/HTTPS 프록시를 사용합니다.</string>
-  <string name="donatewithpaypal">당신은 &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;PayPal을 통해 기부할 수 있습니다.&lt;/a&gt; </string>
-  <string name="onbootrestartsummary">OpenVPN은 시스템 재부팅/종료에 활성화 되었으면 VPN을 다시 연결합니다. 이 옵션을 사용 하기 전에 연결 경고 FAQ를 읽어 보시기 바랍니다.</string>
-  <string name="onbootrestart">재시작 후 다시 연결</string>
   <string name="ignore">무시</string>
   <string name="restart">다시 시작</string>
   <string name="restart_vpn_after_change">VPN을 다시 시작한 후 설정 변경 내용이 적용 됩니다. VPN을 지금 (재)시작?</string>

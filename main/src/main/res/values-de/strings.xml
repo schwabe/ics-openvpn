@@ -203,9 +203,8 @@
   <string name="using_proxy">Verwende Proxy %1$s %2$d</string>
   <string name="use_system_proxy">System-Proxys verwenden</string>
   <string name="use_system_proxy_summary">Systemweite Einstellungen für HTTP- und HTTPS-Proxys beim Verbinden verwenden.</string>
-  <string name="donatewithpaypal">&lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;Spenden mit PayPal&lt;/a&gt; </string>
-  <string name="onbootrestartsummary">OpenVPN wird bei einem Neustart des Telefons das beim Herunterfahren aktive VPN wieder verbinden. Bitte lesen Sie die FAQ \"Warnung beim Verbinden\", bevor Sie diese Option verwenden.</string>
-  <string name="onbootrestart">Nach Neustart verbinden</string>
+  <string name="onbootrestartsummary">Beim Systemstart das angebene VPN verbinden. Bitte die FAQ zum Bestätigungsdialog lesen für Android Version &lt; 5.0.</string>
+  <string name="onbootrestart">Beim Gerätestart verbinden</string>
   <string name="ignore">Ignorieren</string>
   <string name="restart">Neu verbinden</string>
   <string name="restart_vpn_after_change">Konfigurationsänderungen werden erst nach einem Neustart des VPNs aktiv. Jetzt neu verbinden?</string>
@@ -401,4 +400,12 @@
   <string name="pw_request_dialog_title">%1$s benötigt</string>
   <string name="pw_request_dialog_prompt">Geben Sie bitte das Passwort für das Profil %1$s ein</string>
   <string name="menu_use_inline_data">Inline-Daten verwenden</string>
+  <string name="export_config_chooser_title">Konfigurationsdatei exportieren</string>
+  <string name="missing_tlsauth">TLS-Auth-Datei fehlt</string>
+  <string name="missing_certificates">Fehlendes Benutzerzertifikat oder privater Schlüssel</string>
+  <string name="missing_ca_certificate">Fehlendes CA-Zertifikat</string>
+  <string name="crl_title">Zertifikatswiderrufsliste (optional)</string>
+  <string name="reread_log">%d Einträge vom Logcache gelesen</string>
+  <string name="samsung_broken_title">Samsung Geräte</string>
+  <string name="novpn_selected">kein VPN ausgewählt</string>
 </resources>

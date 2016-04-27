@@ -203,9 +203,6 @@
   <string name="using_proxy">%1$s %2$d vekil sunucusu kullanarak</string>
   <string name="use_system_proxy">Sistem vekil sunucusunu kullan</string>
   <string name="use_system_proxy_summary">Bağlanmak için sistem çapındaki HTTP/HTTPS vekil sunucularını kullan.</string>
-  <string name="donatewithpaypal">&lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;PayPal ile bağış&lt;/a&gt; yapabilirsiniz; </string>
-  <string name="onbootrestartsummary">OpenVPN, sistem yeniden başlatma/kapatma sırasında etkinse, tekrar bir VPN\'ye bağlanacak. Lütfen bu seçeneği kullanmadan önce Bağlantı uyarı SSS\'sini okuyun.</string>
-  <string name="onbootrestart">Yeniden başlatmada tekrar bağlan</string>
   <string name="ignore">Yoksay</string>
   <string name="restart">Yeniden Başlat</string>
   <string name="restart_vpn_after_change">Yapılandırma değişiklikleri, VPN yeniden başlattıktan sonra geçerli olur. VPN (yeniden) başlatılsın mı?</string>

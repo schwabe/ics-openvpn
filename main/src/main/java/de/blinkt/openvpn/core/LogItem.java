@@ -18,6 +18,7 @@ import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -89,7 +90,7 @@ public class LogItem implements Parcelable {
 
     }
 
-    public byte[] getMarschaledBytes() throws UnsupportedEncodingException {
+    public byte[] getMarschaledBytes() throws UnsupportedEncodingException, BufferOverflowException {
         ByteBuffer bb = ByteBuffer.allocate(16384);
 
 

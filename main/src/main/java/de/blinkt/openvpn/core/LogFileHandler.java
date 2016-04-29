@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.util.Locale;
 
@@ -63,7 +64,7 @@ class LogFileHandler extends Handler {
                 flushToDisk();
             }
 
-        } catch (IOException e) {
+        } catch (IOException| BufferOverflowException e) {
             e.printStackTrace();
             VpnStatus.logError("Error during log cache: " + msg.what);
             VpnStatus.logException(e);
@@ -88,6 +89,7 @@ class LogFileHandler extends Handler {
 
         // We do not really care if the log cache breaks between Android upgrades,
         // write binary format to disc
+
         byte[] liBytes = li.getMarschaledBytes();
 
         writeEscapedBytes(liBytes);

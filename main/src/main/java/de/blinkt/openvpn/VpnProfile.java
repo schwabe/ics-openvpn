@@ -272,7 +272,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         if (!configForOvpn3) {
             cfg += String.format("setenv IV_GUI_VER %s \n", openVpnEscape(getVersionEnvString(context)));
-            String versionString = String.format("%d %s %s %s %s %s", Build.VERSION.SDK_INT, Build.VERSION.RELEASE,
+            String versionString = String.format(Locale.US, "%d %s %s %s %s %s", Build.VERSION.SDK_INT, Build.VERSION.RELEASE,
                     NativeUtils.getNativeAPI(), Build.BRAND, Build.BOARD, Build.MODEL);
             cfg += String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString));
         }
@@ -450,7 +450,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         if (mMssFix != 0) {
             if (mMssFix != 1450) {
-                cfg += String.format("mssfix %d\n", mMssFix, Locale.US);
+                cfg += String.format(Locale.US, "mssfix %d\n", mMssFix);
             } else
                 cfg += "mssfix\n";
         }

@@ -5,6 +5,7 @@
 
 package de.blinkt.openvpn;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -13,6 +14,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.VpnService;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.InputType;
@@ -233,7 +235,25 @@ public class LaunchVPN extends Activity {
 
             }
         });
+        d.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                finish();
+            }
+        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
+            setOnDismissListener(d);
         d.show();
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private void setOnDismissListener(AlertDialog.Builder d) {
+        d.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                finish();
+            }
+        });
     }
 
     void launchVPN() {

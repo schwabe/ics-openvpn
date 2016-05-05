@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import de.blinkt.openvpn.*;
 import de.blinkt.openvpn.activities.ConfigConverter;
+import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.activities.VPNPreferences;
 import de.blinkt.openvpn.core.ProfileManager;
@@ -82,7 +83,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             titleview.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startVPN(profile);
+                    startOrStopVPN(profile);
                 }
             });
 
@@ -107,6 +108,15 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
 
             return v;
+        }
+    }
+
+    private void startOrStopVPN(VpnProfile profile) {
+        if (VpnStatus.isVPNActive()) {
+            Intent disconnectVPN = new Intent(getActivity(), DisconnectVPN.class);
+            startActivity(disconnectVPN);
+        } else {
+            startVPN(profile);
         }
     }
 
@@ -212,7 +222,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
     private void setListAdapter() {
-        if (mArrayadapter==null) {
+        if (mArrayadapter == null) {
             mArrayadapter = new VPNArrayAdapter(getActivity(), R.layout.vpn_list_item, R.id.vpn_item_title);
 
         }

@@ -2,9 +2,9 @@
 JNI_DIR := $(call my-dir)
 
 #optional arguments
-#WITH_POLAR=1
+#WITH_MBEDTLS=1
 #WITH_OPENVPN3=1
-# Build openvpn with polar (OpenVPN3 core is always build with polar)
+# Build openvpn with mbedTLS (OpenVPN3 core is always build with mbedTLS)
 #WITH_BREAKPAD=0
 
 
@@ -25,15 +25,15 @@ else
 	WITH_BREAKPAD=0
 endif
 
-ifeq ($(WITH_POLAR),1)
-	USE_POLAR=1
+ifeq ($(WITH_MBEDTLS),1)
+	USE_MBEDTLS=1
 endif
 ifeq ($(WITH_OPENVPN3),1)
-	USE_POLAR=1
+	USE_MBEDTLS=1
 endif
 
-ifeq ($(USE_POLAR),1)
-	include polarssl/Android.mk
+ifeq ($(USE_MBEDTLS),1)
+	include mbedtls/Android.mk
 endif
 
 include openvpn/Android.mk

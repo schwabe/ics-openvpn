@@ -16,10 +16,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.NetworkOnMainThreadException;
 import android.provider.OpenableColumns;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
@@ -36,6 +36,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +85,9 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
     private Vector<String> mLogEntries = new Vector<>();
     private Uri mSourceUri;
     private EditText mProfilename;
+    private AsyncTask<Void, Void, Integer> mImportTask;
+    private LinearLayout mLogLayout;
+    private TextView mProfilenameLabel;
 
     @Override
     public void onClick(View v) {
@@ -147,7 +151,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
 
         mResult.mName = mProfilename.getText().toString();
         ProfileManager vpl = ProfileManager.getInstance(this);
-        if (vpl.getProfileByName(mResult.mName)!=null) {
+        if (vpl.getProfileByName(mResult.mName) != null) {
             mProfilename.setError(getString(R.string.duplicate_profile_name));
             return true;
         }
@@ -603,7 +607,11 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
             findViewById(R.id.fab_footerspace).setVisibility(View.VISIBLE);
         }
 
+        mLogLayout = (LinearLayout) findViewById(R.id.config_convert_root);
+
+
         mProfilename = (EditText) findViewById(R.id.profilename);
+        mProfilenameLabel = (TextView) findViewById(R.id.profilename_label);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(VPNPROFILE)) {
             mResult = (VpnProfile) savedInstanceState.getSerializable(VPNPROFILE);
@@ -650,59 +658,98 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
     private void doImportUri(Uri data) {
         //log(R.string.import_experimental);
         log(R.string.importing_config, data.toString());
-        try {
-            String possibleName = null;
-            if ((data.getScheme() != null && data.getScheme().equals("file")) ||
-                    (data.getLastPathSegment() != null &&
-                            (data.getLastPathSegment().endsWith(".ovpn") ||
-                                    data.getLastPathSegment().endsWith(".conf")))
-                    ) {
-                possibleName = data.getLastPathSegment();
-                if (possibleName.lastIndexOf('/') != -1)
-                    possibleName = possibleName.substring(possibleName.lastIndexOf('/') + 1);
+        String possibleName = null;
+        if ((data.getScheme() != null && data.getScheme().equals("file")) ||
+                (data.getLastPathSegment() != null &&
+                        (data.getLastPathSegment().endsWith(".ovpn") ||
+                                data.getLastPathSegment().endsWith(".conf")))
+                ) {
+            possibleName = data.getLastPathSegment();
+            if (possibleName.lastIndexOf('/') != -1)
+                possibleName = possibleName.substring(possibleName.lastIndexOf('/') + 1);
 
-            }
-
-            mPathsegments = data.getPathSegments();
-
-            Cursor cursor = getContentResolver().query(data, null, null, null, null);
-
-            try {
-
-                if (cursor != null && cursor.moveToFirst()) {
-                    int columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-
-                    if (columnIndex != -1) {
-                        String displayName = cursor.getString(columnIndex);
-                        if (displayName != null)
-                            possibleName = displayName;
-                    }
-                    columnIndex = cursor.getColumnIndex("mime_type");
-                    if (columnIndex != -1) {
-                        log("Opening Mime TYPE: " + cursor.getString(columnIndex));
-                    }
-                }
-            } finally {
-                if (cursor != null)
-                    cursor.close();
-            }
-            if (possibleName != null) {
-                possibleName = possibleName.replace(".ovpn", "");
-                possibleName = possibleName.replace(".conf", "");
-            }
-            try {
-                InputStream is = getContentResolver().openInputStream(data);
-                doImport(is, possibleName);
-            } catch (NetworkOnMainThreadException nom) {
-                throw new RuntimeException("Network on Main: + " + data);
-            }
-
-        } catch (FileNotFoundException | SecurityException se) {
-            log(R.string.import_content_resolve_error + ":" + se.getLocalizedMessage());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                checkMarschmallowFileImportError(data);
         }
+
+        mPathsegments = data.getPathSegments();
+
+        Cursor cursor = getContentResolver().query(data, null, null, null, null);
+
+        try {
+
+            if (cursor != null && cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+
+                if (columnIndex != -1) {
+                    String displayName = cursor.getString(columnIndex);
+                    if (displayName != null)
+                        possibleName = displayName;
+                }
+                columnIndex = cursor.getColumnIndex("mime_type");
+                if (columnIndex != -1) {
+                    log("Mime type: " + cursor.getString(columnIndex));
+                }
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        if (possibleName != null) {
+            possibleName = possibleName.replace(".ovpn", "");
+            possibleName = possibleName.replace(".conf", "");
+        }
+
+        startImportTask(data, possibleName);
+
+
     }
+
+    private void startImportTask(final Uri data, final String possibleName) {
+        mImportTask = new AsyncTask<Void, Void, Integer>() {
+            private ProgressBar mProgress;
+
+            @Override
+            protected void onPreExecute() {
+                mProgress = new ProgressBar(ConfigConverter.this);
+                addViewToLog(mProgress);
+            }
+
+            @Override
+            protected Integer doInBackground(Void... params) {
+                try {
+                    InputStream is = getContentResolver().openInputStream(data);
+
+                    doImport(is);
+                    if (mResult==null)
+                        return -3;
+                } catch (FileNotFoundException |
+                        SecurityException se)
+
+                {
+                    log(R.string.import_content_resolve_error + ":" + se.getLocalizedMessage());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                        checkMarschmallowFileImportError(data);
+                    return -2;
+                }
+
+                return 0;
+            }
+
+            @Override
+            protected void onPostExecute(Integer errorCode) {
+                mLogLayout.removeView(mProgress);
+                if (errorCode == 0) {
+                    displayWarnings();
+                    mResult.mName = getUniqueProfileName(possibleName);
+                    mProfilename.setVisibility(View.VISIBLE);
+                    mProfilenameLabel.setVisibility(View.VISIBLE);
+                    mProfilename.setText(mResult.getName());
+
+                    log(R.string.import_done);
+                }
+            }
+        }.execute();
+    }
+
 
     @TargetApi(Build.VERSION_CODES.M)
     private void checkMarschmallowFileImportError(Uri data) {
@@ -723,15 +770,24 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
         super.onStart();
     }
 
-    private void log(String logmessage) {
-        mLogEntries.add(logmessage);
-        TextView tv = new TextView(this);
-        tv.setText(logmessage);
-        LinearLayout logLayout = (LinearLayout) findViewById(R.id.config_convert_root);
-        logLayout.addView(tv, logLayout.getChildCount() - 1);
+    private void log(final String logmessage) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView tv = new TextView(ConfigConverter.this);
+                mLogEntries.add(logmessage);
+                tv.setText(logmessage);
+
+                addViewToLog(tv);
+            }
+        });
     }
 
-    private void doImport(InputStream is, String newName) {
+    private void addViewToLog(View view) {
+        mLogLayout.addView(view, mLogLayout.getChildCount() - 1);
+    }
+
+    private void doImport(InputStream is) {
         ConfigParser cp = new ConfigParser();
         try {
             InputStreamReader isr = new InputStreamReader(is);
@@ -739,11 +795,6 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
             cp.parseConfig(isr);
             mResult = cp.convertProfile();
             embedFiles(cp);
-            displayWarnings();
-            mResult.mName = getUniqueProfileName(newName);
-            mProfilename.setText(mResult.getName());
-
-            log(R.string.import_done);
             return;
 
         } catch (IOException | ConfigParseError e) {

@@ -112,7 +112,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
     private void startOrStopVPN(VpnProfile profile) {
-        if (VpnStatus.isVPNActive()) {
+        if (VpnStatus.isVPNActive() && ProfileManager.getLastConnectedVpn() == profile) {
             Intent disconnectVPN = new Intent(getActivity(), DisconnectVPN.class);
             startActivity(disconnectVPN);
         } else {

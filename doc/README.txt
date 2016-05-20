@@ -24,7 +24,7 @@ svn co http://google-breakpad.googlecode.com/svn/trunk/ google-breakpad
 - Install ndk (Version r10b is tested and used by me)
 - Make sure that ndk-build is in your build path.
 
-Fetch the git submodules (the default urls for the submoles use ssh,
+Fetch the git submodules (the default urls for the submodules use ssh,
 setup your own github ssh key or change the url to http in .gitmodules):
 
   git submodule init

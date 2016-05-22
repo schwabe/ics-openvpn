@@ -136,7 +136,7 @@ public class CreateShortcuts extends ListActivity implements OnItemClickListener
         intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
         intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, profile.getName());
         Parcelable iconResource = Intent.ShortcutIconResource.fromContext(
-                this, R.drawable.icon);
+                this, R.mipmap.ic_launcher);
         intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
         // Now, return the result to the launcher

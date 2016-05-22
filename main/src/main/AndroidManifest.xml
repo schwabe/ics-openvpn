@@ -86,7 +86,7 @@
             android:name=".OpenVPNTileService"
             android:value="true"
             android:label="@string/qs_title"
-            android:icon="@drawable/icon"
+            android:icon="@drawable/ic_quick"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />

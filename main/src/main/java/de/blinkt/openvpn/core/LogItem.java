@@ -18,6 +18,7 @@ import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -89,7 +90,7 @@ public class LogItem implements Parcelable {
 
     }
 
-    public byte[] getMarschaledBytes() throws UnsupportedEncodingException {
+    public byte[] getMarschaledBytes() throws UnsupportedEncodingException, BufferOverflowException {
         ByteBuffer bb = ByteBuffer.allocate(16384);
 
 
@@ -151,6 +152,8 @@ public class LogItem implements Parcelable {
         if (len == 0) {
             mMessage = null;
         } else {
+            if (len > bb.remaining())
+                throw new IndexOutOfBoundsException("String length " + len + " is bigger than remaining bytes " + bb.remaining());
             byte[] utf8bytes = new byte[len];
             bb.get(utf8bytes);
             mMessage = new String(utf8bytes, "UTF-8");

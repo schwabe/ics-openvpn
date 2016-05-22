@@ -26,10 +26,10 @@ android {
     buildToolsVersion '24.0.0-rc1'
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 'N'
         targetSdkVersion 'N'
-        versionCode = 132
-        versionName = "0.6.52"
+        versionCode = 136
+        versionName = "0.6.55"
     }
 
     sourceSets {
@@ -80,7 +80,9 @@ android {
       normal
 
 
-                        
+        modern {
+            minSdkVersion 21
+        }
       /*                   
       x86 {
             versionCode Integer.parseInt("6" + defaultConfig.versionCode)

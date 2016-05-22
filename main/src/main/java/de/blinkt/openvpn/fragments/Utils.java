@@ -49,10 +49,12 @@ public class Utils {
                 supportedMimeTypes.add("application/x-x509-ca-cert");
                 supportedMimeTypes.add("application/x-x509-user-cert");
                 supportedMimeTypes.add("application/x-pem-file");
+                supportedMimeTypes.add("application/pkix-cert");
                 supportedMimeTypes.add("text/plain");
 
                 extensions.add("pem");
                 extensions.add("crt");
+                extensions.add("cer");
                 break;
             case KEYFILE:
                 i.setType("application/x-pem-file");
@@ -84,6 +86,11 @@ public class Utils {
                 supportedMimeTypes.add("text/plain");
                 extensions.add("ovpn");
                 extensions.add("conf");
+                break;
+
+            case CRL_FILE:
+                supportedMimeTypes.add("application/x-pkcs7-crl");
+                supportedMimeTypes.add("application/pkix-crl");
                 break;
 
             case USERPW_FILE:

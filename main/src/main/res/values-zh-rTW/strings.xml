@@ -202,9 +202,6 @@
   <string name="using_proxy">使用代理伺服器 %1$s %2$d</string>
   <string name="use_system_proxy">使用系統代理</string>
   <string name="use_system_proxy_summary">使用系統配置的 HTTP/HTTPS 代理伺服器進行連線。</string>
-  <string name="donatewithpaypal">你可以透過 &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;PayPal&lt;/a&gt; 提供捐助</string>
-  <string name="onbootrestartsummary">如果在重新開機或關機前正連線VPN，開機時自動重新連線。在使用這個選項之前請先閱讀連線警告FAQ。</string>
-  <string name="onbootrestart">開機時重新連線</string>
   <string name="ignore">忽略</string>
   <string name="restart">重置</string>
   <string name="restart_vpn_after_change">配置變更只會在重新啟動VPN時才生效，現在要(重新)啟動VPN嗎？</string>

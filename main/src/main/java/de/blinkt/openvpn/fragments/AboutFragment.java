@@ -16,7 +16,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -54,7 +53,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
     private static final String[] donationSkus = { "donation1eur", "donation2eur", "donation5eur", "donation10eur",
             "donation1337eur","donation23eur","donation25eur",};
     IInAppBillingService mService;
-    Hashtable<View, String> viewToProduct = new Hashtable<View, String>();
+    Hashtable<View, String> viewToProduct = new Hashtable<>();
     ServiceConnection mServiceConn = new ServiceConnection() {
         @Override
         public void onServiceDisconnected(ComponentName name) {
@@ -272,12 +271,8 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
 
         ver.setText(getString(R.string.version_info, name, version));
 
-        TextView paypal = (TextView) v.findViewById(R.id.donatestring);
 
-        String donatetext = getActivity().getString(R.string.donatewithpaypal);
-        Spanned htmltext = Html.fromHtml(donatetext);
-        paypal.setText(htmltext);
-        paypal.setMovementMethod(LinkMovementMethod.getInstance());
+
         gmsTextView = (TextView) v.findViewById(R.id.donategms);
         /* recreating view without onCreate/onDestroy cycle */
 

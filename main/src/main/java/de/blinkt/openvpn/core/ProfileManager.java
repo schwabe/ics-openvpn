@@ -66,20 +66,24 @@ public class ProfileManager {
 
     }
 
-    public static void setConnectedVpnProfile(Context c, VpnProfile connectedrofile) {
+    /**
+     * Sets the profile that is connected (to connect if the service restarts)
+     */
+    public static void setConnectedVpnProfile(Context c, VpnProfile connectedProfile) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         Editor prefsedit = prefs.edit();
 
-        prefsedit.putString(LAST_CONNECTED_PROFILE, connectedrofile.getUUIDString());
+        prefsedit.putString(LAST_CONNECTED_PROFILE, connectedProfile.getUUIDString());
         prefsedit.apply();
-        mLastConnectedVpn = connectedrofile;
+        mLastConnectedVpn = connectedProfile;
 
     }
 
+    /**
+     * Returns the profile that was last connected (to connect if the service restarts)
+     */
     public static VpnProfile getLastConnectedProfile(Context c) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
-
-
 
         String lastConnectedProfile = prefs.getString(LAST_CONNECTED_PROFILE, null);
         if (lastConnectedProfile != null)

@@ -217,9 +217,6 @@ Androidはあなた自身の安全性のために、これらを迂回できな�
   <string name="using_proxy">プロキシを使用します %1$s %2$d</string>
   <string name="use_system_proxy">システムのプロキシ設定を使用</string>
   <string name="use_system_proxy_summary">システム全体の構成の HTTP/HTTPS プロキシ接続を使用します。</string>
-  <string name="donatewithpaypal">以下のURLより寄付いただけます。 &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;PayPalで寄付&lt;/a&gt; </string>
-  <string name="onbootrestartsummary">OpenVPNはシステムの再起動やシャットダウン時に再接続するようになります。このオプションを使用する前にFAQをご一読ください。</string>
-  <string name="onbootrestart">システム起動後に再接続</string>
   <string name="ignore">無視</string>
   <string name="restart">再起動</string>
   <string name="restart_vpn_after_change">設定の変更はVPNの再起動後に反映されます。VPNを(再)起動しますか？</string>

@@ -817,7 +817,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         NetworkSpace.ipAddress gatewayIP = new NetworkSpace.ipAddress(new CIDRIP(gateway, 32), false);
 
         if (mLocalIP == null) {
-            VpnStatus.logError("Local IP address unset but adding route?! This is broken! Please contact author with log");
+            VpnStatus.logError("Local IP address unset and received. Neither pushed server config nor local config specifies an IP addresses. Opening tun device is most likely going to fail.");
             return;
         }
         NetworkSpace.ipAddress localNet = new NetworkSpace.ipAddress(mLocalIP, true);

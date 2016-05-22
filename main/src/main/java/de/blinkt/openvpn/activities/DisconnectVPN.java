@@ -10,7 +10,9 @@ import android.app.AlertDialog;
 import android.content.*;
 import android.os.IBinder;
 
+import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.ProfileManager;
 
@@ -53,24 +55,13 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
         unbindService(mConnection);
     }
 
-    //    if (getIntent() !=null && OpenVpnService.DISCONNECT_VPN.equals(getIntent().getAction()))
-
-  //      setIntent(null);
-
-        /*
-        @Override
-        protected void onNewIntent(Intent intent) {
-            super.onNewIntent(intent);
-            setIntent(intent);
-        }
-     */
-
     private void showDisconnectDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.title_cancel);
         builder.setMessage(R.string.cancel_connection_query);
         builder.setNegativeButton(android.R.string.no, this);
-        builder.setPositiveButton(android.R.string.yes,this);
+        builder.setNeutralButton(R.string.reconnect, this);
+        builder.setPositiveButton(android.R.string.yes, this);
         builder.setOnCancelListener(this);
 
         builder.show();
@@ -78,10 +69,16 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
+        VpnProfile lastVPN = ProfileManager.getLastConnectedVpn();
         if (which == DialogInterface.BUTTON_POSITIVE) {
             ProfileManager.setConntectedVpnProfileDisconnected(this);
             if (mService != null && mService.getManagement() != null)
                 mService.getManagement().stopVPN(false);
+        } else if (which == DialogInterface.BUTTON_NEUTRAL && lastVPN !=null) {
+            Intent intent = new Intent(this, LaunchVPN.class);
+            intent.putExtra(LaunchVPN.EXTRA_KEY, lastVPN.getUUID().toString());
+            intent.setAction(Intent.ACTION_MAIN);
+            startActivity(intent);
         }
         finish();
     }

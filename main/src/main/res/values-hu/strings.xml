@@ -198,9 +198,6 @@
   <string name="using_proxy">Proxy használatban: %1$s %2$d</string>
   <string name="use_system_proxy">Rendszerproxy használata</string>
   <string name="use_system_proxy_summary">Rendszerszintű konfiguráció használata a HTTP/HTTPS proxy csatlakozáshoz.</string>
-  <string name="donatewithpaypal">&lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;Adakozhat PayPal-al&lt;/a&gt; </string>
-  <string name="onbootrestartsummary">Az OpenVPN újracsatlakozik a VPN-hez ha az aktív volt az újraindításkoz/leállításkor.</string>
-  <string name="onbootrestart">Újracsatlakozás újraindításkor</string>
   <string name="ignore">Hagyja figyelmen kívül</string>
   <string name="restart">Újraindítás</string>
   <string name="restart_vpn_after_change">A konfiguráció változások a VPN újraindítása után lépnek életbe. (Újra)indítja most a VPN-t?</string>

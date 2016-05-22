@@ -203,9 +203,6 @@
   <string name="using_proxy">Đang sử dụng proxy %1$s %2$d</string>
   <string name="use_system_proxy">Sử dụng proxy hệ thống</string>
   <string name="use_system_proxy_summary">Sử dụng các cấu hình hệ thống rộng cho HTTP/HTTPS proxy để kết nối.</string>
-  <string name="donatewithpaypal">Bạn có thể &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;ủng hộ cho ứng dụng với PayPal&lt;/a&gt; </string>
-  <string name="onbootrestartsummary">OpenVPN sẽ kết nối lại VPN nếu nó đã hoạt động khi hệ thống khởi động lại/tắt máy. Xin vui lòng đọc phần cảnh báo kết nối trong các câu hỏi thường gặp trước khi sử dụng tùy chọn này.</string>
-  <string name="onbootrestart">Kết nối lại khi khởi động lại máy</string>
   <string name="ignore">Bỏ qua</string>
   <string name="restart">Khởi động lại</string>
   <string name="restart_vpn_after_change">Cấu hình sẽ được áp dụng sau khi khởi động lại VPN. (Khởi động) bắt đầu VPN lại ngay bây giờ?</string>

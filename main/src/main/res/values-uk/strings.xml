@@ -202,9 +202,6 @@
   <string name="using_proxy">Використовується проксі %1$s %2$d</string>
   <string name="use_system_proxy">Використовувати системний проксі</string>
   <string name="use_system_proxy_summary">Використовувати системну конфігурацію HTTP/HTTPS проксі для з\'єднання.</string>
-  <string name="donatewithpaypal">Ви можете &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;пожертвувати через PayPal&lt;/a&gt; </string>
-  <string name="onbootrestartsummary">OpenVPN буде перепідключатися, якщо він був активний в момент вимикання/перезавантаження. Будь ласка, прочитайте ЧаП перед тим, як використовувати цей параметр.</string>
-  <string name="onbootrestart">Перепідключати при перезавантаженні</string>
   <string name="ignore">Ігнорувати</string>
   <string name="restart">Перезапустити</string>
   <string name="restart_vpn_after_change">Після перезапуску VPN застосувати зміни конфігурації. (Пере)запустити VPN тепер?</string>

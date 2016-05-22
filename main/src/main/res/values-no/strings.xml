@@ -138,8 +138,6 @@
   <string name="using_proxy">Bruker proxy %1$s %2$d</string>
   <string name="use_system_proxy">Bruk systemet proxy</string>
   <string name="use_system_proxy_summary">Bruk global systemkonfigurasjon for HTTP/HTTPS proxy for å koble til.</string>
-  <string name="donatewithpaypal">Du kan &lt;a href=\"https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&amp;amp;cmd=_s-xclick\"&gt;donere med PayPal&lt;/a&gt; </string>
-  <string name="onbootrestart">Koble til på nytt ved restart</string>
   <string name="ignore">Ignorer</string>
   <string name="restart">Start på nytt</string>
   <string name="configuration_changed">Konfigurasjon endret</string>

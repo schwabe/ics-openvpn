@@ -173,7 +173,6 @@
   <string name="faq_howto_title">Início Rápido</string>
   <string name="using_proxy">A utilizar proxy %1$s %2$d</string>
   <string name="use_system_proxy">Usar a proxy do sistema</string>
-  <string name="onbootrestart">Volte a ligar na reinicialização</string>
   <string name="ignore">Ignorar</string>
   <string name="restart">Reiniciar</string>
   <string name="restart_vpn_after_change">As alterações de configuração são aplicadas depois de reiniciar a VPN. Reiniciar a VPN agora?</string>

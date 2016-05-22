@@ -79,7 +79,9 @@ android {
       normal
 
 
-                        
+        modern {
+            minSdkVersion 21
+        }
       /*                   
       x86 {
             versionCode Integer.parseInt("6" + defaultConfig.versionCode)

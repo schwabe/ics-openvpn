@@ -929,12 +929,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (mProcessThread == null && !mNotificationAlwaysVisible)
             return;
 
-
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M)
-            tileUpdateN();
-
-
-
         boolean lowpriority = false;
         // Display byte count only after being connected
 
@@ -961,11 +955,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     msg, lowpriority, 0, level);
 
         }
-    }
-
-    @TargetApi(Build.VERSION_CODES.N)
-    private void tileUpdateN() {
-        TileService.requestListeningState(this, new ComponentName(this, OpenVPNTileService.class));
     }
 
     private void doSendBroadcast(String state, ConnectionStatus level) {

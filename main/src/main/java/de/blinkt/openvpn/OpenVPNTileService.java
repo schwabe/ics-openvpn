@@ -59,7 +59,7 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
             bindService(intent, new ServiceConnection() {
                 @Override
                 public void onServiceConnected(ComponentName componentName, IBinder binder) {
-                    OpenVPNService  service = ((OpenVPNService.LocalBinder) binder).getService();
+                    OpenVPNService service = ((OpenVPNService.LocalBinder) binder).getService();
 
                     if (service != null && service.getManagement() != null)
                         service.getManagement().stopVPN(false);
@@ -72,8 +72,7 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
 
                 }
             }, Context.BIND_AUTO_CREATE);
-        }
-        else
+        } else
             launchVPN(bootProfile, this);
     }
 
@@ -90,11 +89,9 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
         context.startActivity(startVpnIntent);
     }
 
-    @SuppressLint("Override")
     @TargetApi(Build.VERSION_CODES.N)
     @Override
-    public int onTileAdded() {
-        return TILE_MODE_ACTIVE;
+    public void onTileAdded() {
     }
 
     @Override
@@ -125,9 +122,16 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
             }
         } else {
             vpn = ProfileManager.getLastConnectedVpn();
-            t.setLabel(getString(R.string.qs_disconnect, vpn.getName()));
+            String name;
+            if (vpn == null)
+                name = "null?!";
+            else
+                name = vpn.getName();
+            t.setLabel(getString(R.string.qs_disconnect, name));
             t.setState(Tile.STATE_ACTIVE);
         }
+
+
         t.updateTile();
     }
 

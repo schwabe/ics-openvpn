@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.Connection;
 
 public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.ConnectionsHolder> {
+    private static final String TAG = ConnectionsAdapter.class.getSimpleName();
     private final Context mContext;
     private final VpnProfile mProfile;
     private final Settings_Connections mConnectionFragment;
@@ -173,7 +175,41 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         View card;
         if (viewType == TYPE_NORMAL) {
             card = li.inflate(R.layout.server_card, viewGroup, false);
+            final ConnectionsHolder H = new ConnectionsHolder(card, this);
+            H.mServerNameView.addTextChangedListener(new OnTextChangedWatcher() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    H.mConnection.mServerName = s.toString();
+                }
 
+            });
+
+            H.mPortNumberView.addTextChangedListener(new OnTextChangedWatcher() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    H.mConnection.mServerPort = s.toString();
+                }
+            });
+
+            H.mCustomOptionText.addTextChangedListener(new OnTextChangedWatcher() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    H.mConnection.mCustomConfiguration = s.toString();
+                }
+            });
+            H.mConnectText.addTextChangedListener(new OnTextChangedWatcher() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    try {
+                        int t = Integer.valueOf(String.valueOf(s));
+                        H.mConnectSlider.setProgress(t);
+                        H.mConnection.mConnectTimeout = t;
+                    } catch (Exception ignored) {
+
+                    }
+                }
+            });
+            return H;
         } else { // TYPE_FOOTER
             card = li.inflate(R.layout.server_footer, viewGroup, false);
         }
@@ -242,28 +278,6 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
                 }
         );
 
-        cH.mServerNameView.addTextChangedListener(new OnTextChangedWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                connection.mServerName = s.toString();
-            }
-
-        });
-
-        cH.mPortNumberView.addTextChangedListener(new OnTextChangedWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                connection.mServerPort = s.toString();
-            }
-        });
-
-        cH.mCustomOptionText.addTextChangedListener(new OnTextChangedWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                connection.mCustomConfiguration = s.toString();
-            }
-        });
-
         cH.mConnectSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -283,21 +297,14 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
 
             }
         });
-        cH.mConnectText.addTextChangedListener(new OnTextChangedWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    int t = Integer.valueOf(String.valueOf(s));
-                    cH.mConnectSlider.setProgress(t);
-                    connection.mConnectTimeout = t;
-                } catch (Exception ignored) {
-
-                }
-            }
-        });
-
     }
 
+    public static void dumpConnection(Connection[] mConnections) {
+
+        for (int i = 0 ; i < mConnections.length && mConnections[i] != null; i++){
+            Log.d(TAG, "connection: " + i + ":" + mConnections[i].mServerName);
+        }
+    }
 
     private void removeRemote(int idx) {
         Connection[] mConnections2 = Arrays.copyOf(mConnections, mConnections.length - 1);
@@ -323,9 +330,24 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
 
     public void addRemote() {
         mConnections = Arrays.copyOf(mConnections, mConnections.length + 1);
-        mConnections[mConnections.length - 1] = new Connection();
+        mConnections[mConnections.length - 1] = getDefaultConnection();
         notifyItemInserted(mConnections.length - 1);
         displayWarningIfNoneEnabled();
+    }
+
+    public Connection getDefaultConnection(){
+        Connection defaultConn = new Connection();
+        if (mConnections.length > 0) {
+            for (int i = mConnections.length - 1 ; i >= 0 ; i--){
+                Connection c = mConnections[i];
+                if (null != c){
+                    defaultConn = new Connection(c);
+                    break;
+                }
+            }
+        }
+
+        return defaultConn;
     }
 
     protected void displayWarningIfNoneEnabled() {

@@ -425,10 +425,17 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
         if (foundfile == null && filename != null && !filename.equals("")) {
             log(R.string.import_could_not_open, filename);
         }
-
-        addFileSelectDialog(fileType);
+        fileSelectMap.put(fileType, null);
 
         return foundfile;
+    }
+
+    private void addMissingFileDialogs()
+    {
+        for (Map.Entry<Utils.FileType, FileSelectLayout> item: fileSelectMap.entrySet()) {
+            if (item.getValue()==null)
+                addFileSelectDialog(item.getKey());
+        }
     }
 
     private void addFileSelectDialog(Utils.FileType type) {
@@ -586,7 +593,6 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
             mEmbeddedPwFile = embedFile(cp.getAuthUserPassFile(), Utils.FileType.USERPW_FILE, false);
         }
 
-        updateFileSelectDialogs();
     }
 
     private void updateFileSelectDialogs() {
@@ -737,6 +743,9 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
             @Override
             protected void onPostExecute(Integer errorCode) {
                 mLogLayout.removeView(mProgress);
+                addMissingFileDialogs();
+                updateFileSelectDialogs();
+
                 if (errorCode == 0) {
                     displayWarnings();
                     mResult.mName = getUniqueProfileName(possibleName);

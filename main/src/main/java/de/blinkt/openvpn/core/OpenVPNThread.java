@@ -42,15 +42,13 @@ public class OpenVPNThread implements Runnable {
     private String mNativeDir;
     private OpenVPNService mService;
     private String mDumpPath;
-    private Map<String, String> mProcessEnv;
     private boolean mBrokenPie = false;
     private boolean mNoProcessExitStatus = false;
 
-    public OpenVPNThread(OpenVPNService service, String[] argv, Map<String, String> processEnv, String nativelibdir) {
+    public OpenVPNThread(OpenVPNService service, String[] argv, String nativelibdir) {
         mArgv = argv;
         mNativeDir = nativelibdir;
         mService = service;
-        mProcessEnv = processEnv;
     }
 
     public void stopProcess() {
@@ -66,7 +64,7 @@ public class OpenVPNThread implements Runnable {
     public void run() {
         try {
             Log.i(TAG, "Starting openvpn");
-            startOpenVPNThreadArgs(mArgv, mProcessEnv);
+            startOpenVPNThreadArgs(mArgv);
             Log.i(TAG, "OpenVPN process exited");
         } catch (Exception e) {
             VpnStatus.logException("Starting OpenVPN Thread", e);
@@ -122,7 +120,7 @@ public class OpenVPNThread implements Runnable {
         }
     }
 
-    private void startOpenVPNThreadArgs(String[] argv, Map<String, String> env) {
+    private void startOpenVPNThreadArgs(String[] argv) {
         LinkedList<String> argvlist = new LinkedList<String>();
 
         Collections.addAll(argvlist, argv);
@@ -134,10 +132,6 @@ public class OpenVPNThread implements Runnable {
 
         pb.environment().put("LD_LIBRARY_PATH", lbpath);
 
-        // Add extra variables
-        for (Entry<String, String> e : env.entrySet()) {
-            pb.environment().put(e.getKey(), e.getValue());
-        }
         pb.redirectErrorStream(true);
         try {
             mProcess = pb.start();

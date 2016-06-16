@@ -448,7 +448,7 @@ public class ConfigParser {
                     throw new ConfigParseError("Argument to --mssfix has to be an integer");
                 }
             } else {
-                np.mMssFix = VpnProfile.DEFAULT_MSSFIX_SIZE;
+                np.mMssFix = 1450; // OpenVPN default size
             }
         }
 

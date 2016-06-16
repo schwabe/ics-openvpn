@@ -59,7 +59,7 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 
 		@Override
 		protected void loadSettings() {
-		
+
 			mUsePull.setChecked(mProfile.mUsePull);
 			mIPv4.setText(mProfile.mIPv4Address);
 			mIPv6.setText(mProfile.mIPv6Address);
@@ -70,6 +70,8 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 			mNobind.setChecked(mProfile.mNobind);
             if (mProfile.mAuthenticationType == VpnProfile.TYPE_STATICKEYS)
                 mUsePull.setChecked(false);
+
+			mUsePull.setEnabled(mProfile.mAuthenticationType == VpnProfile.TYPE_STATICKEYS);
 
 			// Sets Summary
 			onPreferenceChange(mIPv4, mIPv4.getText());

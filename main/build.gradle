@@ -21,12 +21,12 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    compileSdkVersion 24
+    buildToolsVersion '24.0.0'
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 23
+        minSdkVersion '14'
+        targetSdkVersion '24'
         versionCode = 136
         versionName = "0.6.55"
     }

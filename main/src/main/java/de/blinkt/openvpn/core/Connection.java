@@ -21,6 +21,20 @@ public class Connection implements Serializable, Cloneable {
     private static final long serialVersionUID = 92031902903829089L;
 
 
+    public Connection(){
+
+    }
+
+    public Connection(Connection other){
+        this.mServerName = other.mServerName;
+        this.mServerPort = other.mServerPort;
+        this.mUseUdp = other.mUseUdp;
+        this.mUseCustomConfig = other.mUseCustomConfig;
+        this.mCustomConfiguration = other.mCustomConfiguration;
+        this.mEnabled = other.mEnabled;
+        this.mConnectTimeout = other.mConnectTimeout;
+    }
+
     public String getConnectionBlock() {
         String cfg="";
 

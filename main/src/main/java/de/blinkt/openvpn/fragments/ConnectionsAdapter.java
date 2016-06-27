@@ -37,14 +37,14 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
     private static final int TYPE_NORMAL = 0;
     private static final int TYPE_FOOTER = TYPE_NORMAL + 1;
 
-    public ConnectionsAdapter(Context c, Settings_Connections connections_fragments, VpnProfile vpnProfile) {
+    ConnectionsAdapter(Context c, Settings_Connections connections_fragments, VpnProfile vpnProfile) {
         mContext = c;
         mConnections = vpnProfile.mConnections;
         mProfile = vpnProfile;
         mConnectionFragment = connections_fragments;
     }
 
-    public static class ConnectionsHolder extends RecyclerView.ViewHolder {
+    class ConnectionsHolder extends RecyclerView.ViewHolder {
         private final EditText mServerNameView;
         private final EditText mPortNumberView;
         private final Switch mRemoteSwitch;
@@ -56,9 +56,10 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         private final EditText mConnectText;
         private final SeekBar mConnectSlider;
         private final ConnectionsAdapter mConnectionsAdapter;
-        private Connection mConnection;
+        private Connection mConnection; // Set to null on update
 
-        public ConnectionsHolder(View card, ConnectionsAdapter connectionsAdapter) {
+
+        ConnectionsHolder(View card, ConnectionsAdapter connectionsAdapter, int viewType) {
             super(card);
             mServerNameView = (EditText) card.findViewById(R.id.servername);
             mPortNumberView = (EditText) card.findViewById(R.id.portnumber);
@@ -73,44 +74,59 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
 
             mConnectionsAdapter = connectionsAdapter;
 
-
-            /* This is totally weird */
-            if (mRemoteSwitch!=null)
+            if (viewType == TYPE_NORMAL)
                 addListeners();
         }
 
-        public void addListeners() {
+
+        void addListeners() {
             mRemoteSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    mConnection.mEnabled = isChecked;
-                    mConnectionsAdapter.displayWarningIfNoneEnabled();
+                    if (mConnection != null) {
+                        mConnection.mEnabled = isChecked;
+                        mConnectionsAdapter.displayWarningIfNoneEnabled();
+                    }
                 }
             });
 
             mProtoGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    if (checkedId == R.id.udp_proto)
-                        mConnection.mUseUdp = true;
-                    else if (checkedId == R.id.tcp_proto)
-                        mConnection.mUseUdp = false;
-                }
-            });
-            mCustomOptionCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    mConnection.mUseCustomConfig = isChecked;
-                    mCustomOptionsLayout.setVisibility(mConnection.mUseCustomConfig ? View.VISIBLE : View.GONE);
+                    if (mConnection != null) {
+                        if (checkedId == R.id.udp_proto)
+                            mConnection.mUseUdp = true;
+                        else if (checkedId == R.id.tcp_proto)
+                            mConnection.mUseUdp = false;
+                    }
                 }
             });
 
+            mCustomOptionText.addTextChangedListener(new OnTextChangedWatcher() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (mConnection != null)
+                        mConnection.mCustomConfiguration = s.toString();
+                }
+            });
+
+            mCustomOptionCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (mConnection != null) {
+                        mConnection.mUseCustomConfig = isChecked;
+                        mCustomOptionsLayout.setVisibility(mConnection.mUseCustomConfig ? View.VISIBLE : View.GONE);
+                    }
+                }
+            });
 
 
             mServerNameView.addTextChangedListener(new OnTextChangedWatcher() {
                 @Override
                 public void afterTextChanged(Editable s) {
-                    mConnection.mServerName = s.toString();
+                    if (mConnection != null) {
+                        mConnection.mServerName = s.toString();
+                    }
                 }
 
             });
@@ -118,14 +134,18 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             mPortNumberView.addTextChangedListener(new OnTextChangedWatcher() {
                 @Override
                 public void afterTextChanged(Editable s) {
-                    mConnection.mServerPort = s.toString();
+                    if (mConnection != null) {
+                        mConnection.mServerPort = s.toString();
+                    }
                 }
             });
 
             mCustomOptionText.addTextChangedListener(new OnTextChangedWatcher() {
                 @Override
                 public void afterTextChanged(Editable s) {
-                    mConnection.mCustomConfiguration = s.toString();
+                    if (mConnection != null) {
+                        mConnection.mCustomConfiguration = s.toString();
+                    }
                 }
             });
 
@@ -151,18 +171,60 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             mConnectText.addTextChangedListener(new OnTextChangedWatcher() {
                 @Override
                 public void afterTextChanged(Editable s) {
-                    try {
-                        int t = Integer.valueOf(String.valueOf(s));
-                        mConnectSlider.setProgress(t);
-                        mConnection.mConnectTimeout = t;
-                    } catch (Exception ignored) {
-
+                    if (mConnection != null) {
+                        try {
+                            int t = Integer.valueOf(String.valueOf(s));
+                            mConnectSlider.setProgress(t);
+                            mConnection.mConnectTimeout = t;
+                        } catch (Exception ignored) {
+                        }
                     }
                 }
             });
 
+            mDeleteButton.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder ab = new AlertDialog.Builder(mContext);
+                            ab.setTitle(R.string.query_delete_remote);
+                            ab.setPositiveButton(R.string.keep, null);
+                            ab.setNegativeButton(R.string.delete, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    removeRemote(getAdapterPosition());
+                                    notifyItemRemoved(getAdapterPosition());
+                                }
+                            });
+                            ab.create().show();
+                        }
+                    }
+            );
+
+
+            mConnectSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    if (fromUser && mConnection!=null) {
+                        mConnectText.setText(String.valueOf(progress));
+                        mConnection.mConnectTimeout = progress;
+                    }
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
 
         }
+
+
     }
 
 
@@ -177,7 +239,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         } else { // TYPE_FOOTER
             card = li.inflate(R.layout.server_footer, viewGroup, false);
         }
-        return new ConnectionsHolder(card, this);
+        return new ConnectionsHolder(card, this, viewType);
 
     }
 
@@ -194,21 +256,21 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final ConnectionsAdapter.ConnectionsHolder cH, final int position) {
+    public void onBindViewHolder(final ConnectionsAdapter.ConnectionsHolder cH, int position) {
         if (position == mConnections.length) {
             // Footer
             return;
         }
         final Connection connection = mConnections[position];
 
-        cH.mConnection = connection;
+        cH.mConnection = null;
 
         cH.mPortNumberView.setText(connection.mServerPort);
         cH.mServerNameView.setText(connection.mServerName);
         cH.mPortNumberView.setText(connection.mServerPort);
         cH.mRemoteSwitch.setChecked(connection.mEnabled);
 
-        if (connection.mConnectTimeout==0) {
+        if (connection.mConnectTimeout == 0) {
             cH.mConnectText.setText("");
         } else {
             cH.mConnectText.setText(String.valueOf(connection.mConnectTimeout));
@@ -222,79 +284,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         cH.mCustomOptionText.setText(connection.mCustomConfiguration);
 
         cH.mCustomOptionCB.setChecked(connection.mUseCustomConfig);
-
-        cH.mDeleteButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder ab = new AlertDialog.Builder(mContext);
-                        ab.setTitle(R.string.query_delete_remote);
-                        ab.setPositiveButton(R.string.keep, null);
-                        ab.setNegativeButton(R.string.delete, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                removeRemote(position);
-                                notifyItemRemoved(position);
-                            }
-                        });
-                        ab.create().show();
-                    }
-                }
-        );
-
-        cH.mServerNameView.addTextChangedListener(new OnTextChangedWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                connection.mServerName = s.toString();
-            }
-
-        });
-
-        cH.mPortNumberView.addTextChangedListener(new OnTextChangedWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                connection.mServerPort = s.toString();
-            }
-        });
-
-        cH.mCustomOptionText.addTextChangedListener(new OnTextChangedWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                connection.mCustomConfiguration = s.toString();
-            }
-        });
-
-        cH.mConnectSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) {
-                    cH.mConnectText.setText(String.valueOf(progress));
-                    connection.mConnectTimeout = progress;
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        cH.mConnectText.addTextChangedListener(new OnTextChangedWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    int t = Integer.valueOf(String.valueOf(s));
-                    cH.mConnectSlider.setProgress(t);
-                    connection.mConnectTimeout = t;
-                } catch (Exception ignored) {
-
-                }
-            }
-        });
+        cH.mConnection=connection;
 
     }
 
@@ -321,14 +311,14 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             return TYPE_NORMAL;
     }
 
-    public void addRemote() {
+    void addRemote() {
         mConnections = Arrays.copyOf(mConnections, mConnections.length + 1);
         mConnections[mConnections.length - 1] = new Connection();
         notifyItemInserted(mConnections.length - 1);
         displayWarningIfNoneEnabled();
     }
 
-    protected void displayWarningIfNoneEnabled() {
+    void displayWarningIfNoneEnabled() {
         int showWarning = View.VISIBLE;
         for (Connection conn : mConnections) {
             if (conn.mEnabled)
@@ -338,7 +328,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
     }
 
 
-    public void saveProfile() {
+    void saveProfile() {
         mProfile.mConnections = mConnections;
     }
 }

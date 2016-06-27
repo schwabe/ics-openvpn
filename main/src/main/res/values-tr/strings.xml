@@ -203,6 +203,7 @@
   <string name="using_proxy">%1$s %2$d vekil sunucusu kullanarak</string>
   <string name="use_system_proxy">Sistem vekil sunucusunu kullan</string>
   <string name="use_system_proxy_summary">Bağlanmak için sistem çapındaki HTTP/HTTPS vekil sunucularını kullan.</string>
+  <string name="onbootrestartsummary">Üstünde sistem çizme etkin OpenVPN belirtilen VPN bağlanır. Lütfen bağlantı uyarı SSS Android &lt; 5.0 bu seçeneği kullanmadan önce okuyun.</string>
   <string name="ignore">Yoksay</string>
   <string name="restart">Yeniden Başlat</string>
   <string name="restart_vpn_after_change">Yapılandırma değişiklikleri, VPN yeniden başlattıktan sonra geçerli olur. VPN (yeniden) başlatılsın mı?</string>
@@ -398,4 +399,5 @@
   <string name="pw_request_dialog_title">%1$s gerekli</string>
   <string name="pw_request_dialog_prompt">Lütfen %1$s profili için parola girin</string>
   <string name="menu_use_inline_data">Satır içi veri kullan</string>
+  <string name="samsung_broken_title">Samsung telefonlar</string>
 </resources>

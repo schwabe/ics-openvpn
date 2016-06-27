@@ -203,6 +203,7 @@
   <string name="using_proxy">Używam proxy %1$s%2$d</string>
   <string name="use_system_proxy">Użyj proxy systemowego</string>
   <string name="use_system_proxy_summary">Połącz używając systemowej konfiguracji proxy HTTP/HTTPS.</string>
+  <string name="onbootrestart">Połącz przy starcie</string>
   <string name="ignore">Ignoruj</string>
   <string name="restart">Uruchom ponownie</string>
   <string name="restart_vpn_after_change">Zmiany konfiguracji będą zatwierdzone po restarcie VPN. Uruchomić ponowie teraz?</string>
@@ -308,6 +309,7 @@
   <string name="logview_options">Opcje widoku</string>
   <string name="unhandled_exception">Nieobsługiwany wyjątek: %1$s\n\n%2$s</string>
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
+  <string name="faq_system_dialog_xposed">Jeśli masz dostęp do roota możesz zaisntalować &lt;a href=\"http://xposed.info/\"&gt;Xposed framework&lt;/a&gt; oraz  &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN potwierdzi moduł&lt;/a&gt;na wsłasne ryzyko\"</string>
   <string name="full_licenses">Pełne licencje</string>
   <string name="blocklocal_summary">Sieci połączone bezpośrednio do lokalnych interfejsów nie będą kierowane przez VPN. Odznaczając tę opcję przeniesiesz cały ruch przeznaczony dla sieci lokalnych przez VPN.</string>
   <string name="blocklocal_title">Obejdź VPN dla sieci lokalnych</string>
@@ -349,6 +351,8 @@
   <string name="ab_only_cidr">Android wspiera tylko trasy CIDR w sieci VPN. Jako, że trasy nie-CIDR nie są powszechnie używane, OpenVPN dla Androida użyje /32 dla tras w formacie nie-CIDR i wyświetli błąd.</string>
   <string name="ab_tethering_44">Tethering działa podczas połączenia z VPN. Udostępnione połączenie NIE będzie używało VPN.</string>
   <string name="ab_kitkat_mss">Wczesne wersje KitKat ustawiają złą wartość MSS połączeń TCP (#61948). Spróbuj ustawić opcję mssfix w celu obejścia tego problemu.</string>
+  <string name="ab_proxy">Android będzie używał Twoich ustawień proxy dla połączenia mobilnego/Wi-Fi kiedy nie jest sprecyzowany serwer DNS.
+OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS Android nie będzie używał więcej proxy. Nie ma żadnego API do ustawienia proxy dla połączenia VPN.</p></string>
   <string name="ab_lollipop_reinstall">Aplikacje VPN mogą przestać działać po odinstalowaniu i ponownej instalacji. W celu uzyskania szczegółów zobacz #80074</string>
   <string name="ab_secondary_users">VPN absolutnie nie działa dla dodatkowych użytkowników.</string>
   <string name="ab_kitkat_reconnect">"Jest grono użytkowników, którzy donoszą, iż podczas używania aplikacji VPN połączenie danych/komórkowe jest często zrywane. Zachowanie to wydaje się dotykać niewielkiej liczby urządzeń/dostawców danych komórkowych - na tę chwilę nieznana jest przyczyna, ani rozwiązanie problemu."</string>
@@ -382,4 +386,14 @@
   <string name="months_left">pozostało %d miesięcy</string>
   <string name="days_left">pozostało %d dni</string>
   <string name="hours_left">pozostało %d godzin</string>
+  <string name="permission_revoked">Pozwolenie VPN odwołane przez system (na przykład inny program VPN jest uruchomiony), zatrzymuję VPN</string>
+  <string name="pushpeerinfosummary">Wyślij dodatkowe informację do serwera, na przykład wersję SSL oraz Androida</string>
+  <string name="pw_request_dialog_title">Potrzeba %1$s</string>
+  <string name="pw_request_dialog_prompt">Proszę podać hasło do profilu %1$s</string>
+  <string name="export_config_chooser_title">Eksportuj plik konfiguracyjny</string>
+  <string name="missing_tlsauth">Plik tls-auth nie odnaleziony</string>
+  <string name="missing_ca_certificate">Brak certyfikatu CA</string>
+  <string name="samsung_broken_title">Telefony Samsung</string>
+  <string name="novpn_selected">Nie wybrano VPN.</string>
+  <string name="alwaysonvpn">VPN używany podczas rozruchu i zawsze włączony</string>
 </resources>

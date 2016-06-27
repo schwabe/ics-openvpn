@@ -181,6 +181,7 @@ hacia/de Móvil)</string>
   <string name="keychain_nocacert">No se obtuvo ningún certificado de CA al leer el almacén de claves de Android. La autenticación probablemente fallará.</string>
   <string name="show_log_summary">Muestra la ventana de registro el conectarse. La ventana de registro siempre puede accederse desde el estado de la notificación.</string>
   <string name="show_log_window">Mostrar ventana de registro</string>
+  <string name="mobile_info">%10$s %9$s corriendo en %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
   <string name="error_rsa_sign">Error al firmar con la llave del almacén de llaves de Android %1$s: %2$s</string>
   <string name="faq_system_dialogs">El aviso de conectividad VPN que esta aplicación puede interceptar todo el trafico esta impuesta por el sistema para evitar abusos de la API VPNService.\nLa notificación de conectividad (El símbolo de llave) también esta impuesta por el sistema Android para notificar una conexión VPN en curso. En algunas imágenes, esta notificación también emite un sonido.\nAndroid ha introducido estos diálogos de sistema para su seguridad e se ha asegurado que no pueden ser evitados. (En algunas imágenes, esto incluye la notificación sonora)</string>
   <string name="faq_system_dialogs_title">Advertencia de conexión y sonido de notificación</string>
@@ -203,6 +204,8 @@ hacia/de Móvil)</string>
   <string name="using_proxy">Usando proxy %1$s %2$d</string>
   <string name="use_system_proxy">Usar el proxy del sistema</string>
   <string name="use_system_proxy_summary">Utilice la configuración del sistema para los proxies HTTP/HTTPS al conectar.</string>
+  <string name="onbootrestartsummary">OpenVPN se conectará la VPN se especifica si está activa en el arranque del sistema. Por favor, lea las preguntas frecuentes de aviso de conexión antes de utilizar esta opción en Android &lt; 5.0.</string>
+  <string name="onbootrestart">Volver a conectar al reiniciar</string>
   <string name="ignore">Ignorar</string>
   <string name="restart">Reiniciar</string>
   <string name="restart_vpn_after_change">Los cambios de configuración se aplican después de reiniciar la VPN. ¿(Re)iniciar la VPN ahora?</string>
@@ -370,4 +373,30 @@ hacia/de Móvil)</string>
   <string name="custom_connection_options_warng">Especifique las opciones específicas de conexión personalizada. Úselo con cuidado</string>
   <string name="custom_connection_options">Opciones personalizadas</string>
   <string name="remove_connection_entry">Eliminar entrada de conexión</string>
+  <string name="ab_kitkat_reconnect_title">Desconexiones aleatorias de la red móvil</string>
+  <string name="ab_vpn_reachability_44_title">Redes remotas inalcanzables</string>
+  <string name="ab_persist_tun_title">Modo Tun Persistente</string>
+  <string name="version_and_later">%s y siguientes</string>
+  <string name="tls_cipher_alert_title">Falló la conexion con SSL23_GET_SERVER_HELLO: sslv3 alerta de falla de handshake</string>
+  <string name="tls_cipher_alert">OpenVPN más reciente de las versiones de Android (0.6.29 / marzo de 2015) utilizan un defecto más seguro para los conjuntos de cifrado permitidos (TLS-cifrado \"DEFAULT: EXP: PSK: SRP: KRSA\"). Por desgracia, omitiendo el cifrado y la exportación de cifrado menos seguro, especialmente la omisión de conjuntos de cifrado que no admiten la confidencialidad directa perfecta (Diffie-Hellman) causa algunos problemas. Esto suele deberse a un intento bien intencionado pero mal ejecutada para reforzar la seguridad TLS configurando TLS-cifrado en el servidor o algunos sistemas operativos embebidos con simplificada SSL (por ejemplo MikroTik). \ N Para resolver este problema el problema, establezca el TLS-cifrado configuración en el servidor a los valores razonables como TLS-cifrado \"dEFAULT: EXP: PSK: SRP: KRSA\". Para solucionar el problema en el cliente agregar la omisión de las opciones de encargo-TLS cifrado en el cliente Android.</string>
+  <string name="message_no_user_edit">Este perfil ha sido añadido desde una aplicación externa (%s) y se ha marcado como no editable por el usuario.</string>
+  <string name="crl_file">Lista de revocación de certificados</string>
+  <string name="service_restarted">Servicio OpenVPN reinicio (App estrelló probablemente se estrelló o muerto por la presión de memoria)</string>
+  <string name="import_config_error">Importación de la configuración produjo un error, no puede guardarlo</string>
+  <string name="Search">Buscar</string>
+  <string name="lastdumpdate">(Última volcado tiene %1$d: %2$dh de edad (%3$s))</string>
+  <string name="clear_log_on_connect">Borrar registro de nueva conexión</string>
+  <string name="connect_timeout">Timeout de conexion</string>
+  <string name="query_permissions_sdcard">OpenVPN para Android puede tratar de encontrar el/los archivo/s faltante/s en la tarjeta de memoria automáticamente. Toque este mensaje de iniciar la solicitud de permiso.</string>
+  <string name="protocol">Protocolo</string>
+  <string name="enabled_connection_entry">Activo</string>
+  <string name="months_left">%d meses faltantes</string>
+  <string name="days_left">%d días faltantes</string>
+  <string name="hours_left">%d horas faltantes</string>
+  <string name="missing_ca_certificate">Falta certificado CA</string>
+  <string name="reread_log">Vuelva a leer (%d) artículos de archivo de caché de registro log</string>
+  <string name="samsung_broken">A pesar de que los teléfonos Samsung son algunos de los teléfonos Android más vendidos, el firmware de Samsung se encuentran entre los firmware con más errores. Los errores no se limitan a la operación del VPN en estos dispositivos, pero muchos de ellos se pueden solucionar. A continuación de describen algunos errores. \n\n El DNS no funciona a menos que el servidor DNS en el rango del VPN. \n \n En muchos dispositivos Samsung 5.x la funcionalidad de aplicaciones permitidas y no permitidas no funciona. \n En Samsung 6.x Se reporta que VPN no funcionará a menos que la aplicación de VPN se encuentre por fuera de la funcionalidad de ahorro de energía.</string>
+  <string name="samsung_broken_title">Celulares Samsung</string>
+  <string name="novpn_selected">VPN no seleccionado.</string>
+  <string name="alwaysonvpn">VPN al reiniciar y siempre activo</string>
 </resources>

@@ -4,12 +4,12 @@
   <!--  Keep the order the same as the TYPE_ constants in VPNProfile -->
   <string-array name="vpn_types">
     <item>証明書</item>
-    <item>PKCS12 ファイル</item>
+    <item>PKCS12ファイル</item>
     <item>Androidの証明書管理</item>
     <item>User/PW</item>
-    <item>共有鍵</item>
-    <item>ユーザ名/パスワードと証明書</item>
-    <item>ユーザ名/パスワードとPKCS12ファイル</item>
+    <item>静的鍵</item>
+    <item>User/PWと証明書</item>
+    <item>User/PWとPKCS12ファイル</item>
     <item>User/PWとAndroidの証明書管理</item>
   </string-array>
   <string-array name="tls_directions_entries">

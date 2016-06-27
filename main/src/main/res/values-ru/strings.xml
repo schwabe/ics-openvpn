@@ -203,6 +203,8 @@
   <string name="using_proxy">Используется прокси-сервер %1$s %2$d</string>
   <string name="use_system_proxy">Использовать прокси-сервер системы</string>
   <string name="use_system_proxy_summary">Использовать системную конфигурацию прокси HTTP/HTTPS для соединения.</string>
+  <string name="onbootrestartsummary">OpenVPN будет подключаться к указанному VPN, если он был активен при загрузке системы. Пожалуйста, прочитайте FAQ о предупреждении при подключении перед тем как использовать эту опцию на Android &lt; 5.0.</string>
+  <string name="onbootrestart">Подключение при загрузке</string>
   <string name="ignore">Игнорировать</string>
   <string name="restart">Перезапуск</string>
   <string name="restart_vpn_after_change">Изменения конфигурации применяются после перезапуска VPN. (Пере)запустить VPN сейчас?</string>
@@ -217,7 +219,7 @@
   <string name="faq_routing_title">Конфигурация маршрутизации/интерфейса</string>
   <string name="faq_routing">Конфигурация маршрутизации и интерфейса производится не через традиционные ifconfig/route команды, а с помощью VPNService API. Это приводит к созданию другой конфигурации маршрутизации, отличной от конфигураций, используемых на других ОС. Конфигурация VPN-туннеля состоит из IP-адресов и сетей, которые должны направляться через этот интерфейс. Никаких особых партнерских адресов или адресов шлюза не требуется. Также не требуются и специальные маршруты для соединения с VPN-сервером (например, добавленные при использовании redirect-gateway). Следовательно, приложение будет игнорировать эти параметры при импорте конфигурации. Приложение с помощью VPNService API гарантирует, что подключение к серверу не направляется через VPN-туннель. Поддерживается направление через туннель только определенных сетей. Приложение пытается определить сети, которые не должны быть направлены через туннель (например, маршрут x.x.x.x y.y.y.y net_gateway) и вычисляет список маршрутов, в который не включаются эти маршруты, чтобы эмулировать поведение других платформ. Окна журналов и логов показывают конфигурацию сервиса VPN после установления соединения.</string>
   <string name="persisttun_summary">Не открывать диалог, когда происходит переподключение VPN.</string>
-  <string name="persistent_tun_title">Постоянный tun</string>
+  <string name="persistent_tun_title">Постоянный туннель</string>
   <string name="openvpn_log">OpenVPN Журнал</string>
   <string name="import_config">Импорт конфигурации OpenVPN</string>
   <string name="battery_consumption_title">Потребление батареи</string>
@@ -276,10 +278,10 @@
   <string name="no_external_app_allowed">Нет приложений, авторизованных для внешнего API</string>
   <string name="allowed_apps">Авторизованные приложения: %s</string>
   <string name="clearappsdialog">Очистить список авторизованных внешних приложений?\nСписок разрешенных приложений:\n\n%s</string>
-  <string name="screenoff_summary">VPN-соединение приостанавливается, если экран выключен или объем данных меньше 64kb за 60сек. Если включена опция \"Удержание соединения\", VPN-соединение будет постоянно активным. Без этого параметра оно будет приостанавливаться при этих условиях..</string>
+  <string name="screenoff_summary">Приостанавливать VPN, если экран выключен и передано меньше 64kb данных за 60 сек. Когда включена опция \"Постоянный туннель\", приостановка VPN оставит ваше устройство без сетевого подключения. Без опции \"Постоянный туннель\" устройство не будет иметь VPN-соединения/защиты.</string>
   <string name="screenoff_title">Приостановить VPN-соединение при выключенном экране</string>
   <string name="screenoff_pause">Приостановка соединения при выключенном экране: меньше, чем %1$s in %2$ss</string>
-  <string name="screen_nopersistenttun">Внимание: постоянный tun не включен для этого VPN. Трафик будет проходить через обычный доступ в Интернет, когда экран выключен.</string>
+  <string name="screen_nopersistenttun">Внимание: Постоянный туннель не включен для этого VPN. Трафик будет использовать обычное интернет соединение, когда экран выключен.</string>
   <string name="save_password">Сохранить пароль</string>
   <string name="pauseVPN">Приостановить VPN</string>
   <string name="resumevpn">Продолжить VPN</string>
@@ -398,4 +400,14 @@
   <string name="pw_request_dialog_title">Требуется %1$s</string>
   <string name="pw_request_dialog_prompt">Пожалуйста, введите пароль для профиля %1$s</string>
   <string name="menu_use_inline_data">Использовать встроенные данные</string>
+  <string name="export_config_chooser_title">Экспорт файла конфигурации</string>
+  <string name="missing_tlsauth">файл tls-auth отсутствует</string>
+  <string name="missing_certificates">Отсутствует сертификат пользователя или файл ключа сертификата пользователя</string>
+  <string name="missing_ca_certificate">Отсутствует сертификат CA</string>
+  <string name="crl_title">Список отозванных сертификатов (опционально)</string>
+  <string name="reread_log">Перечитать (%d) элементов лога из файла кэша лога</string>
+  <string name="samsung_broken">Даже несмотря на то, что телефоны Samsung являются одними из наиболее продаваемых телефонов на Android, прошивки Samsung также являются наиболее забагованными прошивками на Android. Баги не ограничиваются только VPN-операциями на этих устройствах, но многие из них можно обойти. Далее описаны некоторые из этих ошибок.\n\nDNS не работает, пока сервер DNS не в диапазоне VPN.\n\nНа многих устройствах Samsung 5.x функция разрешенных/запрещенных приложений не работает.\nНа Samsung 6.x VPN, как сообщается, не работает, пока приложение VPN не исключено из функций энергосбережения.</string>
+  <string name="samsung_broken_title">Телефоны Samsung</string>
+  <string name="novpn_selected">Не выбрано VPN.</string>
+  <string name="alwaysonvpn">VPN, используемый при загрузке и для Always-On</string>
 </resources>

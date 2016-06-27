@@ -205,6 +205,8 @@
   <string name="using_proxy">使用代理 %1$s %2$d</string>
   <string name="use_system_proxy">使用系统代理</string>
   <string name="use_system_proxy_summary">使用系统设置连接 HTTP/HTTPS 代理服务器。</string>
+  <string name="onbootrestartsummary">如果在系统启动时OpenVPN处于活动状态，那么它会连接指定的VPN。在Android 5.0上使用这个选项前，请阅读连接警告的常见问题。</string>
+  <string name="onbootrestart">启动时连接</string>
   <string name="ignore">忽略</string>
   <string name="restart">重启</string>
   <string name="restart_vpn_after_change">配置的变更将在重启 VPN 后生效，是否立即重启？</string>
@@ -359,6 +361,8 @@
   <string name="ab_lollipop_reinstall">在被卸载或重新安装时，VPN程序会停止工作；详细信息请参看 #80074</string>
   <string name="ab_not_route_to_vpn">The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask</string>
   <string name="ab_persist_tun">Opening a tun device while another tun device is active, which is used for persist-tun support, crashes the VPNServices on the device. A reboot is required to make VPN work again. OpenVPN for Android tries to avoid reopening the tun device and if really needed first closes the current TUN before opening the new TUN device to avoid to crash. This may lead to a short window where packets are sent over the non-VPN connection. Even with this workaround the VPNServices sometimes crashes and requires a reboot of the device.</string>
+  <string name="ab_secondary_users">对于次级用户而言，VPN是不会起作用的。</string>
+  <string name="ab_kitkat_reconnect">有多个用户报告说，在使用VPN应用时，移动连接/移动数据连接经常会掉线。该行为似乎只影响一些移动运营商/设备组合，目前为止尚未确定原因及bug解决方案。</string>
   <string name="ab_only_cidr_title">非CIDR路由</string>
   <string name="ab_lollipop_reinstall_title">正在重新安装VPN应用</string>
   <string name="custom_connection_options">自定义选项</string>

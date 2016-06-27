@@ -105,6 +105,7 @@
   <string name="dns_server_info">DNS 서버: %1$s, 도메인: %2$s</string>
   <string name="routes_info_incl">경로: %1$s %2$s</string>
   <string name="routes_info_excl">제외된 경로: %1$s %2$s</string>
+  <string name="routes_debug">VpnService routes installed: %1$s %2$s</string>
   <string name="ip_not_cidr">인터페이스 정보 %1$s와 %2$s에 있어, 두 번째 주소를 원격 피어 주소로 가정 하겠습니다. 로컬 IP의 넷마스크로는 /32를 사용하겠습니다. OpenVPN에 의해 주어진 모드는 \"%3$s\" 입니다.</string>
   <string name="route_not_cidr">CIDR 넷마스크가 있는 IP 라우트 %1$s 와 %2$s 에 있어서 처리가 불가능합니다. /32를 넷마스크로 사용하겠습니다.</string>
   <string name="route_not_netip">%1$s/%2$s 에서 %3$s/%2$s로 라우트 수정</string>
@@ -201,6 +202,8 @@
   <string name="using_proxy">프록시 %1$s %2$d 을 사용</string>
   <string name="use_system_proxy">시스템 프록시를 사용</string>
   <string name="use_system_proxy_summary">연결시 전 시스템 설정에 있는 HTTP/HTTPS 프록시를 사용합니다.</string>
+  <string name="onbootrestartsummary">OpenVPN will connect the specified VPN if it was active on system boot. Please read the connection warning FAQ before using this option on Android &lt; 5.0.</string>
+  <string name="onbootrestart">부팅에 연결</string>
   <string name="ignore">무시</string>
   <string name="restart">다시 시작</string>
   <string name="restart_vpn_after_change">VPN을 다시 시작한 후 설정 변경 내용이 적용 됩니다. VPN을 지금 (재)시작?</string>
@@ -213,6 +216,7 @@
   <string name="vpn_import_hint">이 &lt;img src=\"ic_menu_archive\"/&gt; 아이콘을 사용하여 귀하의 sdcard에서 기존 (.ovpn 또는 .conf) 프로파일을 가져오세요.</string>
   <string name="faq_hint">꼭 FAQ를 확인 하세요. 빠른 시작 가이드가 있습니다.</string>
   <string name="faq_routing_title">라우팅/인터페이스 설정</string>
+  <string name="faq_routing">The Routing and interface configuration is not done via traditional ifconfig/route commands but by using the VPNService API. This results in a different routing configuration than on other OSes. \nThe configuration of the VPN tunnel consists of the IP address and the networks that should be routed over this interface. Especially, no peer partner address or gateway address is needed or required. Special routes to reach the VPN Server (for example added when using redirect-gateway) are not needed either. The application will consequently ignore these settings when importing a configuration. The app ensures with the VPNService API that the connection to the server is not routed through the VPN tunnel.\nThe VPNService API does not allow specifying networks that should not be routed via the VPN. As a workaround the app tries to detect networks that should not be routed over tunnel (e.g. route x.x.x.x y.y.y.y net_gateway) and calculates a set of routes that excludes this routes to emulate the behaviour of other platforms. The log windows shows the configuration of the VPNService upon establishing a connection.\nBehind the scenes: Android 4.4+ does use policy routing. Using route/ifconfig will not show the installed routes. Instead use ip rule, iptables -t mangle -L</string>
   <string name="persisttun_summary">OpenVPN을 다시 연결 하는 경우 VPN 연결 없음으로 표기하지 마십시오.</string>
   <string name="persistent_tun_title">지속적인 TUN</string>
   <string name="openvpn_log">OpenVPN 로그</string>

@@ -203,7 +203,7 @@
   <string name="using_proxy">Verwende Proxy %1$s %2$d</string>
   <string name="use_system_proxy">System-Proxys verwenden</string>
   <string name="use_system_proxy_summary">Systemweite Einstellungen für HTTP- und HTTPS-Proxys beim Verbinden verwenden.</string>
-  <string name="onbootrestartsummary">Beim Systemstart das angebene VPN verbinden. Bitte die FAQ zum Bestätigungsdialog lesen für Android Version &lt; 5.0.</string>
+  <string name="onbootrestartsummary">Beim Systemstart das angegebene VPN verbinden. Auf Geräten mit Android 5.0 und höher bitte vor der Verwendung dieser Option die FAQ zum Bestätigungsdialog lesen.</string>
   <string name="onbootrestart">Beim Gerätestart verbinden</string>
   <string name="ignore">Ignorieren</string>
   <string name="restart">Neu verbinden</string>
@@ -218,7 +218,7 @@
   <string name="faq_hint">Werfen Sie auch einen Blick in die FAQ. Dort befindet sich eine Schnellstart-Anleitung.</string>
   <string name="faq_routing_title">Routing-/Netzwerk-Konfiguration</string>
   <string name="faq_routing">In dieser App wird die Routing- und Netzwerkkonfiguration nicht mit den traditionellen ifconfig-/route-Kommandos konfiguriert, sondern mittels der VPNService-API. Diese erwartet eine Tunnel-IP-Adresse und die Netze, die über den Tunnel geroutet werden sollen. Insbesondere wird keine Gateway- oder Peer-IP-Adresse benötigt. Die Anwendung ignoriert diese daher auch beim Import. Die VPNService-API stellt weiterhin sicher, dass die Verbindung zum VPN-Server nicht über den Tunnel geroutet wird, ohne dass hierfür spezielle Routen nötig sind. Da nur Netze, die über den Tunnel geroutet werden sollen, angeben werden können, ist es nicht möglich andere Routen zu unterstützen. Die Anwendung versucht daher andere Routen (wie z.B. route x.x.x.x y.y.y.y net_gateway), die nicht über den Tunnel geroutet werden sollen, zu erkennen, und eine Menge von Routen zu berechnen, die das Verhalten auf anderen Plattformen emulieren. Das Verbindungsprotokoll zeigt die genaue Konfiguration und die errechneten Routen beim Verbinden an.</string>
-  <string name="persisttun_summary">Verhindere Zurückfallen auf nicht VPN Verbindungen während OpenVPN neu verbindet.</string>
+  <string name="persisttun_summary">Während Neuaufbau von VPN-Verbindungen nicht auf andere Verbindungen zurückfallen</string>
   <string name="persistent_tun_title">Persistentes tun-Device</string>
   <string name="openvpn_log">OpenVPN-Protokoll</string>
   <string name="import_config">OpenVPN-Konfiguration importieren</string>
@@ -405,7 +405,9 @@
   <string name="missing_certificates">Fehlendes Benutzerzertifikat oder privater Schlüssel</string>
   <string name="missing_ca_certificate">Fehlendes CA-Zertifikat</string>
   <string name="crl_title">Zertifikatswiderrufsliste (optional)</string>
-  <string name="reread_log">%d Einträge vom Logcache gelesen</string>
-  <string name="samsung_broken_title">Samsung Geräte</string>
-  <string name="novpn_selected">kein VPN ausgewählt</string>
+  <string name="reread_log">%d Einträge aus Protokoll-Cache gelesen</string>
+  <string name="samsung_broken">Wenngleich Samsung-Telefone unter den meistverkauften Android-Geräten sind, gehört deren Firmware auch zu den fehlerbehaftetsten aller Android-Geräte. Diese Fehler betreffen nicht nur den Aufbau von VPN-Verbindungen; viele von ihnen können allerdings umgangen werden. Im Folgenden sind einige dieser Fehler beschrieben.\n\nDNS funktioniert nicht, wenn sich der DNS-Server nicht im VPN befindet.\n\nBei vielen Samsung-Geräten mit Android 5.x funktioniert das Sperren/Zulassen von einzelnen Apps nicht.\n\nBei Samsung-Geräten mit Android 6.x wurde berichtet, dass VPN nicht funktioniert, wenn die VPN-App nicht als Ausnahme in den Energiespareinstellungen eingetragen wird.</string>
+  <string name="samsung_broken_title">Samsung-Geräte</string>
+  <string name="novpn_selected">Kein VPN ausgewählt</string>
+  <string name="alwaysonvpn">VPN beim Gerätestart und für Always-On verwenden</string>
 </resources>

@@ -65,6 +65,7 @@
   <string name="remove_vpn">Remover VPN</string>
   <string name="check_remote_tlscert">Verifica se o servidor utiliza um certificado com extensões TLS Server (--remote-cert-tls server)</string>
   <string name="check_remote_tlscert_title">Esperar certificado do servidor TLS</string>
+  <string name="remote_tlscn_check_summary">Verifica o assunto DN do certificado do servidor remoto</string>
   <string name="remote_tlscn_check_title">Verificar nome de host do certificado</string>
   <string name="enter_tlscn_title">Assunto do certificado remoto</string>
   <string name="tls_key_auth">Ativa a autenticação de chave TLS</string>
@@ -169,10 +170,16 @@
   <string name="ipdns">IP e DNS</string>
   <string name="basic">Básico</string>
   <string name="routing">Encaminhamento</string>
+  <string name="obscure">Definições obscuras OpenVPN. Raramente necessário.</string>
   <string name="advanced">Avançado</string>
+  <string name="export_config_title">Configuração Openvpn ICS</string>
   <string name="faq_howto_title">Início Rápido</string>
+  <string name="setting_loadtun_summary">Tente carregar o módulo tun.ko do kernel antes de ligar. Necessita de acesso root ao dispositivo.</string>
+  <string name="setting_loadtun">Carregar o módulo tun</string>
+  <string name="getproxy_error">Erro ao obter definições proxy %s</string>
   <string name="using_proxy">A utilizar proxy %1$s %2$d</string>
   <string name="use_system_proxy">Usar a proxy do sistema</string>
+  <string name="onbootrestart">Ligar no arranque</string>
   <string name="ignore">Ignorar</string>
   <string name="restart">Reiniciar</string>
   <string name="restart_vpn_after_change">As alterações de configuração são aplicadas depois de reiniciar a VPN. Reiniciar a VPN agora?</string>
@@ -181,6 +188,7 @@
   <string name="no_vpn_profiles_defined">Não há perfis de VPN definidos.</string>
   <string name="add_new_vpn_hint">Use o &lt; img src = \"ic_menu_add\" / &gt; ícone para adicionar uma nova VPN</string>
   <string name="vpn_import_hint">Use o &lt; img src = \"ic_menu_archive\" / &gt; ícone para importar um perfil existente (ovpn ou conf) do seu sdcard.</string>
+  <string name="faq_hint">Verifique as FAQ. Existe um guia rápido.</string>
   <string name="faq_routing_title">Configuração de roteamento/Interface</string>
   <string name="persistent_tun_title">Tun Persistente</string>
   <string name="openvpn_log">OpenVPN Log</string>
@@ -191,6 +199,7 @@
   <string name="reconnection_settings">Configurações de religação</string>
   <string name="connectretrywait">Segundos entre ligações</string>
   <string name="send_minidump">Enviar Minidump para desenvolvedor</string>
+  <string name="send_minidump_summary">Envia informação de depuração sobre falhas para o programador</string>
   <string name="notifcation_title">OpenVPN - %s</string>
   <string name="session_ipv4string">%1$s - %2$s</string>
   <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
@@ -232,6 +241,8 @@
   <string name="remote_trust">Confio nesta aplicação.</string>
   <string name="no_external_app_allowed">Nenhuma app pode usar a API externa</string>
   <string name="allowed_apps">Aplicações permitidas:%s</string>
+  <string name="screenoff_title">Pausar a ligação VPN após desligar o ecrã</string>
+  <string name="screen_nopersistenttun">Aviso: Tun persistente não está ativado para esta VPN. Quando o ecrã estiver desligado o tráfego de internet usa a ligação normal.</string>
   <string name="save_password">Guardar senha</string>
   <string name="pauseVPN">Pausar VPN</string>
   <string name="resumevpn">Retomar VPN</string>
@@ -260,8 +271,25 @@
   <string name="userpw_file">Ficheiro de utilizador/senha</string>
   <string name="imported_from_file">[Importado de: %s]</string>
   <string name="import_log">Log de importação:</string>
+  <string name="mssfix_dialogtitle">Definir MSS do TCP payload</string>
+  <string name="client_behaviour">Comportamento cliente</string>
+  <string name="loading">A carregar&#8230;</string>
+  <string name="allowed_vpn_apps_info">Aplicações permitidas:%s</string>
+  <string name="query_delete_remote">Remover entrada do servidor remoto?</string>
+  <string name="keep">Manter</string>
+  <string name="delete">Eliminar</string>
+  <string name="server_list">Lista servidores</string>
+  <string name="vpn_allowed_apps">Aplicações permitidas</string>
+  <string name="advanced_settings">Definições avançadas</string>
+  <string name="tls_settings">Definições TLS</string>
+  <string name="duplicate_vpn">Perfil VPN duplicado</string>
+  <string name="show_log">Mostrar registo</string>
   <string name="ignore_multicast_route">Ignorar caminho multicast: %s</string>
   <string name="ab_only_cidr">Android apenas suporta rotas CIDR para a VPN. Pelo facto de as rotas não-CIDR quase nunca serem usadas, OpenVPN para Android irá usar uma rota /32 para rotas não-CIDR e emitir um aviso.</string>
   <string name="ab_secondary_users">VPN não funcionar para utilizadores secundários.</string>
   <string name="ab_only_cidr_title">Rotas não CIDR</string>
+  <string name="ab_proxy_title">Comportamento proxy para VPNs</string>
+  <string name="version_upto">%s e anteriores</string>
+  <string name="copy_of_profile">Copiar de %s</string>
+  <string name="custom_connection_options">Opções personalizadas</string>
 </resources>

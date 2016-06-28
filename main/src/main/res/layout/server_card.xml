@@ -170,6 +170,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/connect_timeout_label"
                 android:ems="3"
+                tools:text="232"
+                android:gravity="end"
                 android:inputType="numberDecimal" />
 
             <SeekBar

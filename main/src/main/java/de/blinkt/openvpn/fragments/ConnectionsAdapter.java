@@ -152,7 +152,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             mConnectSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    if (fromUser) {
+                    if (fromUser && mConnection != null) {
                         mConnectText.setText(String.valueOf(progress));
                         mConnection.mConnectTimeout = progress;
                     }
@@ -202,26 +202,6 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             );
 
 
-            mConnectSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    if (fromUser && mConnection!=null) {
-                        mConnectText.setText(String.valueOf(progress));
-                        mConnection.mConnectTimeout = progress;
-                    }
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
-                }
-            });
-
         }
 
 
@@ -270,12 +250,10 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         cH.mPortNumberView.setText(connection.mServerPort);
         cH.mRemoteSwitch.setChecked(connection.mEnabled);
 
-        if (connection.mConnectTimeout == 0) {
-            cH.mConnectText.setText("");
-        } else {
-            cH.mConnectText.setText(String.valueOf(connection.mConnectTimeout));
-        }
-        cH.mConnectSlider.setProgress(connection.mConnectTimeout);
+
+        cH.mConnectText.setText(String.valueOf(connection.getTimeout()));
+
+        cH.mConnectSlider.setProgress(connection.getTimeout());
 
 
         cH.mProtoGroup.check(connection.mUseUdp ? R.id.udp_proto : R.id.tcp_proto);
@@ -284,7 +262,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         cH.mCustomOptionText.setText(connection.mCustomConfiguration);
 
         cH.mCustomOptionCB.setChecked(connection.mUseCustomConfig);
-        cH.mConnection=connection;
+        cH.mConnection = connection;
 
     }
 

@@ -59,7 +59,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mLastStatusMessage = getString(localizedResId);
+                mLastStatusMessage = VpnStatus.getLastCleanLogMessage(getActivity());
                 mArrayadapter.notifyDataSetChanged();
             }
         });

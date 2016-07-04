@@ -13,7 +13,7 @@ public interface OpenVPNManagement {
     enum pauseReason {
         noNetwork,
         userPause,
-        screenOff
+        screenOff,
     }
 
     int mBytecountInterval = 2;

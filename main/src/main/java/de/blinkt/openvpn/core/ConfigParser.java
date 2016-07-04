@@ -582,9 +582,12 @@ public class ConfigParser {
         if (getOption("push-peer-info", 0, 0) != null)
             np.mPushPeerInfo = true;
 
-        Vector<String> connectretry = getOption("connect-retry", 1, 1);
-        if (connectretry != null)
+        Vector<String> connectretry = getOption("connect-retry", 1, 2);
+        if (connectretry != null) {
             np.mConnectRetry = connectretry.get(1);
+            if (connectretry.size() > 2)
+                np.mConnectRetryMaxTime = connectretry.get(2);
+        }
 
         Vector<String> connectretrymax = getOption("connect-retry-max", 1, 1);
         if (connectretrymax != null)

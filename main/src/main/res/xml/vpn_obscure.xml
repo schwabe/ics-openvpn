@@ -18,20 +18,6 @@
             android:summary="@string/pushpeerinfosummary"
             android:title="@string/pushpeerinfo" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/reconnection_settings">
-        <ListPreference
-            android:entries="@array/crm_entries"
-            android:entryValues="@array/crm_values"
-            android:key="connectretrymax"
-            android:persistent="false"
-            android:title="@string/connection_retries" />
-
-        <EditTextPreference
-            android:dialogMessage="@string/connectretrymessage"
-            android:key="connectretry"
-            android:persistent="false"
-            android:title="@string/connectretrywait" />
-    </PreferenceCategory>
 
     <CheckBoxPreference
         android:key="useRandomHostname"
@@ -69,6 +55,26 @@
             android:key="customOptions"
             android:persistent="false"
             android:title="@string/custom_options_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/reconnection_settings">
+        <ListPreference
+            android:entries="@array/crm_entries"
+            android:entryValues="@array/crm_values"
+            android:key="connectretrymax"
+            android:persistent="false"
+            android:title="@string/connection_retries" />
+
+        <EditTextPreference
+            android:dialogMessage="@string/connectretrymessage"
+            android:key="connectretry"
+            android:persistent="false"
+            android:title="@string/connectretrywait" />
+
+        <EditTextPreference
+            android:dialogMessage="@string/connectretrymaxmessage"
+            android:key="connectretrymaxtime"
+            android:persistent="false"
+            android:title="@string/connectretrymaxtitle" />
     </PreferenceCategory>
 
 </PreferenceScreen>

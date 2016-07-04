@@ -412,4 +412,7 @@
     <string name="qs_title">Toggle VPN</string>
     <string name="qs_connect">Connect to %s</string>
     <string name="qs_disconnect">Disconnect %s</string>
+    <string name="connectretrymaxmessage">Enter the maximum time between connection attempts. OpenVPN will slowly raise its waiting time after an unsuccessful connection attempt up to this value. Defaults to 300s.</string>
+    <string name="connectretrymaxtitle">Maximum time between connection attempts</string>
+    <string name="state_waitconnectretry">Waiting %ss seconds between connection attempt</string>
 </resources>

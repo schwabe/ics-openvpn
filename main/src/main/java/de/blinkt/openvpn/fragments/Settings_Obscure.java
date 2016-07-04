@@ -28,18 +28,22 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
     private CheckBoxPreference mPersistent;
     private ListPreference mConnectRetrymax;
     private EditTextPreference mConnectRetry;
+    private EditTextPreference mConnectRetryMaxTime;
 
     public void onCreateBehaviour(Bundle savedInstanceState) {
 
         mPersistent = (CheckBoxPreference) findPreference("usePersistTun");
         mConnectRetrymax = (ListPreference) findPreference("connectretrymax");
         mConnectRetry = (EditTextPreference) findPreference("connectretry");
+        mConnectRetryMaxTime = (EditTextPreference) findPreference("connectretrymaxtime");
+
         mPeerInfo = (CheckBoxPreference) findPreference("peerInfo");
 
         mConnectRetrymax.setOnPreferenceChangeListener(this);
         mConnectRetrymax.setSummary("%s");
 
         mConnectRetry.setOnPreferenceChangeListener(this);
+        mConnectRetryMaxTime.setOnPreferenceChangeListener(this);
 
 
 
@@ -54,6 +58,10 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 
         mConnectRetry.setText(mProfile.mConnectRetry);
         onPreferenceChange(mConnectRetry, mProfile.mConnectRetry);
+
+        mConnectRetryMaxTime.setText(mProfile.mConnectRetryMaxTime);
+        onPreferenceChange(mConnectRetryMaxTime, mProfile.mConnectRetryMaxTime);
+
     }
 
 
@@ -62,6 +70,7 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
         mProfile.mPersistTun = mPersistent.isChecked();
         mProfile.mConnectRetry = mConnectRetry.getText();
         mProfile.mPushPeerInfo = mPeerInfo.isChecked();
+        mProfile.mConnectRetryMaxTime = mConnectRetryMaxTime.getText();
     }
 
 
@@ -79,9 +88,14 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 
         } else if (preference == mConnectRetry) {
             if(newValue==null || newValue=="")
-                newValue="5";
+                newValue="2";
             mConnectRetry.setSummary(String.format("%s s", newValue));
+        } else if (preference == mConnectRetryMaxTime) {
+            if(newValue==null || newValue=="")
+                newValue="300";
+            mConnectRetryMaxTime.setSummary(String.format("%s s", newValue));
         }
+
 
         return true;
     }

@@ -135,8 +135,9 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mCustomRoutesv6 = "";
     public String mKeyPassword = "";
     public boolean mPersistTun = false;
-    public String mConnectRetryMax = "5";
-    public String mConnectRetry = "5";
+    public String mConnectRetryMax = "-1";
+    public String mConnectRetry = "2";
+    public String mConnectRetryMaxTime = "300";
     public boolean mUserEditable = true;
     public String mAuth = "";
     public int mX509AuthType = X509_VERIFY_TLSREMOTE_RDN;
@@ -297,18 +298,24 @@ public class VpnProfile implements Serializable, Cloneable {
         cfg += "verb " + MAXLOGLEVEL + "\n";
 
         if (mConnectRetryMax == null) {
-            mConnectRetryMax = "5";
+            mConnectRetryMax = "-1";
         }
 
         if (!mConnectRetryMax.equals("-1"))
             cfg += "connect-retry-max " + mConnectRetryMax + "\n";
 
-        if (mConnectRetry == null)
-            mConnectRetry = "5";
+        if (TextUtils.isEmpty(mConnectRetry))
+            mConnectRetry = "2";
+
+        if (TextUtils.isEmpty(mConnectRetryMaxTime))
+            mConnectRetryMaxTime="300";
 
 
-        if (!mIsOpenVPN22 || !mUseUdp)
+        if (!mIsOpenVPN22)
+            cfg += "connect-retry " + mConnectRetry + " " + mConnectRetryMaxTime + "\n";
+        else if (mIsOpenVPN22 && mUseUdp)
             cfg += "connect-retry " + mConnectRetry + "\n";
+
 
         cfg += "resolv-retry 60\n";
 

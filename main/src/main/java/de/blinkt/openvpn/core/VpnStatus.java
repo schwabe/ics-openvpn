@@ -94,6 +94,10 @@ public class VpnStatus {
         if (status.equals("NOPROCESS"))
             return message;
 
+        if (mLastStateresid == R.string.state_waitconnectretry) {
+            return c.getString(R.string.state_waitconnectretry, mLaststatemsg);
+        }
+
         String prefix = c.getString(mLastStateresid);
         if (mLastStateresid == R.string.unknown_state)
             message = status + message;

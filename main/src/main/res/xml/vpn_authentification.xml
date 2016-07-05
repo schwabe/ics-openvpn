@@ -18,6 +18,14 @@
             android:dependency="checkRemoteCN"
             android:key="remotecn"
             android:title="@string/enter_tlscn_title" />
+
+        <EditTextPreference
+            android:dependency="checkRemoteCN"
+            android:key="remotex509name"
+            android:persistent="false"
+            android:dialogMessage="Field  in  the X.509 certificate subject to be used as the username (default=CN)."
+            android:title="X509 Username Field" />
+
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/tls_authentication">
         <SwitchPreference

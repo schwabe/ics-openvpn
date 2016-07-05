@@ -141,6 +141,8 @@ public class VpnProfile implements Serializable, Cloneable {
     public boolean mUserEditable = true;
     public String mAuth = "";
     public int mX509AuthType = X509_VERIFY_TLSREMOTE_RDN;
+    public String mx509UsernameField = null;
+
     private transient PrivateKey mPrivateKey;
     // Public attributes, since I got mad with getter/setter
     // set members to default values
@@ -470,7 +472,7 @@ public class VpnProfile implements Serializable, Cloneable {
         if (mAuthenticationType != TYPE_STATICKEYS) {
             if (mCheckRemoteCN) {
                 if (mRemoteCN == null || mRemoteCN.equals(""))
-                    cfg += "verify-x509-name " + mConnections[0].mServerName + " name\n";
+                    cfg += "verify-x509-name " + openVpnEscape(mConnections[0].mServerName) + " name\n";
                 else
                     switch (mX509AuthType) {
 
@@ -493,6 +495,8 @@ public class VpnProfile implements Serializable, Cloneable {
                             cfg += "verify-x509-name " + openVpnEscape(mRemoteCN) + "\n";
                             break;
                     }
+                if (!TextUtils.isEmpty(mx509UsernameField))
+                    cfg+= "x509-username-field " + openVpnEscape(mx509UsernameField) +"\n";
             }
             if (mExpectTLSCert)
                 cfg += "remote-cert-tls server\n";

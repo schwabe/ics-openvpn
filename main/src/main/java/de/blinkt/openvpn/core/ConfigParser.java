@@ -566,6 +566,11 @@ public class ConfigParser {
 
         }
 
+        Vector<String> x509usernamefield = getOption("x509-username-field", 1,1);
+        if (x509usernamefield!=null) {
+            np.mx509UsernameField =  x509usernamefield.get(1);
+        }
+
 
         Vector<String> verb = getOption("verb", 1, 1);
         if (verb != null) {

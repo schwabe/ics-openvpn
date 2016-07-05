@@ -16,6 +16,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.SwitchPreference;
+import android.text.TextUtils;
 import android.util.Pair;
 import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.R;
@@ -38,8 +39,9 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 	private EditTextPreference mCipher;
 	private String mTlsAuthFileData;
 	private EditTextPreference mAuth;
+    private EditTextPreference mRemoteX509Name;
 
-	@Override
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -50,6 +52,9 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 		mCheckRemoteCN = (CheckBoxPreference) findPreference("checkRemoteCN");
 		mRemoteCN = (RemoteCNPreference) findPreference("remotecn");
 		mRemoteCN.setOnPreferenceChangeListener(this);
+
+		mRemoteX509Name = (EditTextPreference) findPreference("remotex509name");
+        mRemoteX509Name.setOnPreferenceChangeListener(this);
 
 		mUseTLSAuth = (SwitchPreference) findPreference("useTLSAuth" );
 		mTLSAuthFile = findPreference("tlsAuthFile");
@@ -77,6 +82,9 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 		mRemoteCN.setAuthType(mProfile.mX509AuthType);
 		onPreferenceChange(mRemoteCN,
 				new Pair<Integer, String>(mProfile.mX509AuthType, mProfile.mRemoteCN));
+
+        mRemoteX509Name.setText(mProfile.mx509UsernameField);
+        onPreferenceChange(mRemoteX509Name, mProfile.mx509UsernameField);
 
 		mUseTLSAuth.setChecked(mProfile.mUseTLSAuth);
 		mTlsAuthFileData= mProfile.mTLSAuthFilename;
@@ -107,6 +115,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 
 		mProfile.mUseTLSAuth = mUseTLSAuth.isChecked();
 		mProfile.mTLSAuthFilename = mTlsAuthFileData;
+        mProfile.mx509UsernameField = mRemoteX509Name.getText();
 
 		if(mTLSAuthDirection.getValue()==null)
 			mProfile.mTLSAuthDirection=null;
@@ -147,7 +156,9 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 
 		} else if (preference == mCipher || preference == mAuth) {
 			preference.setSummary((CharSequence) newValue);
-		}
+		} else if (preference == mRemoteX509Name) {
+            preference.setSummary(TextUtils.isEmpty((CharSequence) newValue) ? "CN (default)" : (CharSequence)newValue);
+        }
 		return true;
 	}
 	private CharSequence getX509String(int authtype, String dn) {

@@ -15,13 +15,8 @@ See  the file todo.txt for ideas/not yet implemented features (and the bug track
 
 Build instructions:
 
-Disable Google breakcode (call build-native.sh with USE_BREAKPAD=0) or checkout google breakcode
-
-svn co http://google-breakpad.googlecode.com/svn/trunk/ google-breakpad
-
-
 - Install sdk
-- Install ndk (Version r10b is tested and used by me)
+- Install ndk (Latest version should work as long as you use gcc)
 - Make sure that ndk-build is in your build path.
 
 Fetch the git submodules (the default urls for the submodules use ssh,

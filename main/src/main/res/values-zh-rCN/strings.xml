@@ -7,8 +7,8 @@
 <resources>
   <string name="app">OpenVPN for Android</string>
   <string name="address">服务器地址：</string>
-  <string name="port">服务器端口：</string>
-  <string name="location">地点</string>
+  <string name="port">Server Port:</string>
+  <string name="location">位置</string>
   <string name="cant_read_folder">无法读取目录</string>
   <string name="select">选择</string>
   <string name="cancel">取消</string>
@@ -363,8 +363,11 @@
   <string name="ab_persist_tun">Opening a tun device while another tun device is active, which is used for persist-tun support, crashes the VPNServices on the device. A reboot is required to make VPN work again. OpenVPN for Android tries to avoid reopening the tun device and if really needed first closes the current TUN before opening the new TUN device to avoid to crash. This may lead to a short window where packets are sent over the non-VPN connection. Even with this workaround the VPNServices sometimes crashes and requires a reboot of the device.</string>
   <string name="ab_secondary_users">对于次级用户而言，VPN是不会起作用的。</string>
   <string name="ab_kitkat_reconnect">有多个用户报告说，在使用VPN应用时，移动连接/移动数据连接经常会掉线。该行为似乎只影响一些移动运营商/设备组合，目前为止尚未确定原因及bug解决方案。</string>
+  <string name="ab_vpn_reachability_44">只有目标可以通过VPN，可以到达VPN没有达到。 IPv6的VPN不能在所有工作。</string>
   <string name="ab_only_cidr_title">非CIDR路由</string>
+  <string name="ab_proxy_title">对于VPN的代理行为</string>
   <string name="ab_lollipop_reinstall_title">正在重新安装VPN应用</string>
+  <string name="version_upto">%s及更早版本</string>
   <string name="custom_connection_options">自定义选项</string>
   <string name="remove_connection_entry">删除连接条目</string>
   <string name="ab_persist_tun_title">保持 tun 通道模式</string>

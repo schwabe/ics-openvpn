@@ -410,4 +410,11 @@
   <string name="samsung_broken_title">Samsung-Geräte</string>
   <string name="novpn_selected">Kein VPN ausgewählt</string>
   <string name="alwaysonvpn">VPN beim Gerätestart und für Always-On verwenden</string>
+  <string name="reconnect">Neu verbinden</string>
+  <string name="qs_title">VPN an/auschalten</string>
+  <string name="qs_connect">Verbinding mit %s</string>
+  <string name="qs_disconnect">%s trennen</string>
+  <string name="connectretrymaxmessage">Maximale Zeit zwischen Verbindungsversuchen. OpenVPN erhöht die Wartezeit zwischen zwei Verbindungsversuchen schrittweise bis zu dieser Zeit. Der Standardwert ist 300s.</string>
+  <string name="connectretrymaxtitle">Maximale Zeit zwischen Verbindungsversuchen</string>
+  <string name="state_waitconnectretry">Warte %ss Sekunden bis zwischen zwei Verbindungsversuchen.</string>
 </resources>

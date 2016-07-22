@@ -20,7 +20,7 @@
   <string name="client_pkcs12_title">PKCS12 файл</string>
   <string name="ca_title">CA сертификат</string>
   <string name="no_certificate">Вам необходимо выбрать сертификат</string>
-  <string name="copyright_guicode">Исходники и информация о версиях находятся по адресу http://code.google.com/p/ics-openvpn/</string>
+  <string name="copyright_guicode">Исходный код и отслеживание проблем доступны на http://code.google.com/p/ics-openvpn/</string>
   <string name="copyright_others">Данная программа использует следующие компоненты; смотрите исходный код для получения подробной информации о лицензии</string>
   <string name="about">О программе</string>
   <string name="vpn_list_title">Профили</string>

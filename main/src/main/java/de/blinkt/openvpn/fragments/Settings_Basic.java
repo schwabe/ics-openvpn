@@ -81,7 +81,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
             public void run() {
                 String certstr="";
                 try {
-                    X509Certificate cert = KeyChain.getCertificateChain(getActivity(), mProfile.mAlias)[0];
+                    X509Certificate cert = KeyChain.getCertificateChain(getActivity().getApplicationContext(), mProfile.mAlias)[0];
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                         {
@@ -111,7 +111,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private boolean isInHardwareKeystore() throws KeyChainException, InterruptedException {
-        String algorithm = KeyChain.getPrivateKey(getActivity(), mProfile.mAlias).getAlgorithm();
+        String algorithm = KeyChain.getPrivateKey(getActivity().getApplicationContext(), mProfile.mAlias).getAlgorithm();
         return KeyChain.isBoundKeyAlgorithm(algorithm);
     }
 

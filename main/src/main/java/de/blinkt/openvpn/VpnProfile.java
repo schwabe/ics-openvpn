@@ -747,6 +747,10 @@ public class VpnProfile implements Serializable, Cloneable {
     }
 
     synchronized String[] getKeyStoreCertificates(Context context, int tries) {
+        // Force application context- KeyChain methods will block long enough that by the time they
+        // are finished and try to unbind, the original activity context might have been destroyed.
+        context = context.getApplicationContext();
+
         try {
             PrivateKey privateKey = KeyChain.getPrivateKey(context, mAlias);
             mPrivateKey = privateKey;

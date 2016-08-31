@@ -12,9 +12,9 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:support-annotations:24.0.0'
-    compile 'com.android.support:cardview-v7:24.0.0'
-    compile 'com.android.support:recyclerview-v7:24.0.0'
+    compile 'com.android.support:support-annotations:24.2.0'
+    compile 'com.android.support:cardview-v7:24.2.0'
+    compile 'com.android.support:recyclerview-v7:24.2.0'
     //    compile 'ch.acra:acra:4.5.0'
 
     testCompile 'junit:junit:4.12'

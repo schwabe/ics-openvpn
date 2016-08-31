@@ -251,6 +251,7 @@ public class ConfigParser {
             "route-up",
             "route-pre-down",
             "auth-user-pass-verify",
+            "block-outside-dns",
             "dhcp-release",
             "dhcp-renew",
             "dh",

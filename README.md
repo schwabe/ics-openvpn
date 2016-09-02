@@ -37,9 +37,9 @@ For example `ca mycafile.pem` becomes
   -----END CERTIFICATE-----
   </ca>
 ```
-Fotnotes
+Footnotes
 -----------
-Please that OpenVPN used by this project is under GPLv2. 
+Please note that OpenVPN used by this project is under GPLv2. 
 
 If you cannot or do not want to use the Play Store you can [download the apk files directly](http://plai.de/android/) . 
 

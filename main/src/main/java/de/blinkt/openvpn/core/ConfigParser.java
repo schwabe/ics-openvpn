@@ -274,6 +274,7 @@ public class ConfigParser {
             "plugin",
             "machine-readable-output",
             "persist-key",
+            "push",
             "register-dns",
             "route-delay",
             "route-gateway",

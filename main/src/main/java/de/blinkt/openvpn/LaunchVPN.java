@@ -210,6 +210,9 @@ public class LaunchVPN extends Activity {
                 VpnStatus.updateStateString("USER_VPN_PERMISSION_CANCELLED", "", R.string.state_user_vpn_permission_cancelled,
                         ConnectionStatus.LEVEL_NOTCONNECTED);
 
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    VpnStatus.logError(R.string.nought_alwayson_warning);
+
                 finish();
             }
         }

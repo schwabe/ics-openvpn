@@ -9,3 +9,4 @@ APP_STL:=stlport_static
 #LOCAL_ARM_MODE := arm
 
 #NDK_TOOLCHAIN_VERSION=clang
+APP_CPPFLAGS += -std=c++11

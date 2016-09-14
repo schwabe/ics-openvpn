@@ -11,6 +11,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListFragment;
+import android.app.TaskStackBuilder;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.text.SpannableString;
 import android.text.format.DateFormat;
 import android.text.style.ImageSpan;
@@ -440,14 +442,8 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         } else if (item.getItemId() == android.R.id.home) {
             // This is called when the Home (Up) button is pressed
             // in the Action Bar.
-            Intent parentActivityIntent = new Intent(getActivity(), MainActivity.class);
-            parentActivityIntent.addFlags(
-                    Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(parentActivityIntent);
-            getActivity().finish();
+            NavUtils.navigateUpFromSameTask(getActivity());
             return true;
-
         }
         return super.onOptionsItemSelected(item);
 

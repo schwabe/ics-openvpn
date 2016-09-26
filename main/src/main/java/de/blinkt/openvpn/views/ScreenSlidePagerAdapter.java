@@ -33,7 +33,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public Class<? extends Fragment> fragmentClass;
         String mName;
 
-        public Tab(Class<? extends Fragment> fClass, @StringRes String name){
+        public Tab(Class<? extends Fragment> fClass, String name){
             mName = name;
             fragmentClass = fClass;
         }

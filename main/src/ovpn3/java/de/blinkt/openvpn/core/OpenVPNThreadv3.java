@@ -22,7 +22,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	static {
 		/*System.loadLibrary("crypto");
 		System.loadLibrary("ssl");*/
-        System.loadLibrary("polarssl-dynamic");
+        //System.loadLibrary("polarssl-dynamic");
 		System.loadLibrary("ovpn3");
 	}
 
@@ -77,7 +77,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		statuspoller.stop();
 	}
 
-	@Override
+
+    @Override
 	public boolean tun_builder_set_remote_address(String address, boolean ipv6) {
 		mService.setMtu(1500);
 		return true;
@@ -94,9 +95,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		return true;
 	}
 
-	@Override
-	public boolean tun_builder_add_route(String address, int prefix_length,
-			boolean ipv6) {
+    @Override
+    public boolean tun_builder_add_route(String address, int prefix_length, int metric, boolean ipv6) {
 		if (address.equals("remote_host"))
 			return false;
 		
@@ -107,7 +107,20 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		return true;
 	}
 
-	@Override
+    @Override
+    public boolean tun_builder_exclude_route(String address, int prefix_length, int metric, boolean ipv6) {
+        if(ipv6)
+            mService.addRoutev6(address + "/" + prefix_length, "wifi0");
+        else {
+            //TODO
+            mService.addRoute(address, String.valueOf(prefix_length), "1.2.3.4" , "wifi0");
+        }
+        return true;
+    }
+
+
+
+    @Override
 	public boolean tun_builder_add_search_domain(String domain) {
 		mService.setDomain(domain);
 		return true;
@@ -126,15 +139,15 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 
 
-	@Override
-	public boolean tun_builder_add_address(String address, int prefix_length,
-			boolean ipv6) {
-		if(!ipv6)
-			mService.setLocalIP(new CIDRIP(address, prefix_length));
-		else
-			mService.setLocalIPv6(address+ "/" + prefix_length);
-		return true;
-	}
+
+    @Override
+    public boolean tun_builder_add_address(String address, int prefix_length, String gateway, boolean ipv6, boolean net30) {
+        if(!ipv6)
+            mService.setLocalIP(new CIDRIP(address, prefix_length));
+        else
+            mService.setLocalIPv6(address+ "/" + prefix_length);
+        return true;
+    }
 
 	@Override
 	public boolean tun_builder_new() {
@@ -142,19 +155,19 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		return true;
 	}
 
-	@Override
-	public boolean tun_builder_reroute_gw(String server_address,
-			boolean server_address_ipv6, boolean ipv4, boolean ipv6, long flags) {
-		// ignore
-		return true;
-	}
 
-	@Override
-	public boolean tun_builder_exclude_route(String address, int prefix_length,
-			boolean ipv6) {
-		//ignore
-		return true;
-	}
+    @Override
+    public boolean tun_builder_set_layer(int layer) {
+        return layer == 3;
+    }
+
+
+    @Override
+    public boolean tun_builder_reroute_gw(boolean ipv4, boolean ipv6, long flags) {
+        //ignore
+        return true;
+    }
+
 
 
 	private boolean setConfig(String vpnconfig) {
@@ -228,11 +241,20 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		mService =openVpnService;
 	}
 
-    @Override
-    public void pause(pauseReason pauseReason)
-    {
-        pause();
-    }
+
+	@Override
+	public boolean stopVPN(boolean replaceConnection) {
+		return false;
+	}
+
+	@Override
+	public void networkChange(boolean sameNetwork) {
+
+	}
+
+	@Override
+	public void setPauseCallback(PausedStateCallback callback) {
+	}
 
 	@Override
 	public void log(ClientAPI_LogInfo arg0) {
@@ -262,14 +284,20 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		return true; 
 	}
 
-	public boolean stopVPN() {
-		stop();
-		return true;
+
+	@Override
+	public void stop() {
+		super.stop();
 	}
 
 	@Override
 	public void reconnect() {
 		reconnect(1);
+	}
+
+	@Override
+	public void pause(pauseReason reason) {
+		super.pause(reason.toString());
 	}
 
 }

@@ -377,7 +377,6 @@
   <string name="ab_persist_tun_title">Modus terowongan bertahan</string>
   <string name="version_and_later">%s dan yang lebih baru</string>
   <string name="tls_cipher_alert_title">Sambungan gagal dengan peringatan kegagalan jabat tangan SSL23_GET_SERVER_HELLO:sslv3</string>
-  <string name="tls_cipher_alert">Newer OpenVPN for Android versions (0.6.29/March 2015) use a more secure default for the allowed cipher suites (tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Unfortunately, omitting the less secure cipher suites and export cipher suites, especially the omission of cipher suites that do not support Perfect Forward Secrecy (Diffie-Hellman) causes some problems. This usually caused by an well-intentioned but poorly executed attempt to strengthen TLS security by setting tls-cipher on the server or some embedded OSes with stripped down SSL (e.g. MikroTik).\nTo solve this problem the problem, set the tls-cipher settings on the server to reasonable default like tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". To work around the problem on the client add the custom option tls-cipher DEFAULT on the Android client.</string>
   <string name="message_no_user_edit">Profil ini telah ditambahkan dari aplikasi eksternal (%s) dan telah ditandai sebagai pengguna tidak dapat diedit.</string>
   <string name="crl_file">Certificate Revocation List</string>
   <string name="service_restarted">Restart layanan OpenVPN (App jatuh mungkin jatuh atau dibunuh untuk memori tekanan)</string>

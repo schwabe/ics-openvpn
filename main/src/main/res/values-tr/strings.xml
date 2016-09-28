@@ -204,6 +204,7 @@
   <string name="use_system_proxy">Sistem vekil sunucusunu kullan</string>
   <string name="use_system_proxy_summary">Bağlanmak için sistem çapındaki HTTP/HTTPS vekil sunucularını kullan.</string>
   <string name="onbootrestartsummary">Üstünde sistem çizme etkin OpenVPN belirtilen VPN bağlanır. Lütfen bağlantı uyarı SSS Android &lt; 5.0 bu seçeneği kullanmadan önce okuyun.</string>
+  <string name="onbootrestart">Açılışta bağlan</string>
   <string name="ignore">Yoksay</string>
   <string name="restart">Yeniden Başlat</string>
   <string name="restart_vpn_after_change">Yapılandırma değişiklikleri, VPN yeniden başlattıktan sonra geçerli olur. VPN (yeniden) başlatılsın mı?</string>
@@ -399,5 +400,21 @@
   <string name="pw_request_dialog_title">%1$s gerekli</string>
   <string name="pw_request_dialog_prompt">Lütfen %1$s profili için parola girin</string>
   <string name="menu_use_inline_data">Satır içi veri kullan</string>
+  <string name="export_config_chooser_title">Yapılandırma dosyasını dışa aktar</string>
+  <string name="missing_tlsauth">tls-auth dosyası kayıp</string>
+  <string name="missing_certificates">Kullanıcı sertifikası ve ya kullanıcı sertifika anahtar dosyası kayıp</string>
+  <string name="missing_ca_certificate">CA sertifikası kayıp</string>
+  <string name="crl_title">Sertifika İptal Listesi (isteğe bağlı)</string>
+  <string name="reread_log">Günlük önbellek dosyasındaki tekrar okunmuş (%d) günlük öğeler</string>
+  <string name="samsung_broken">Samsung telefonlar en çok satan Android telefonlar arasında yer alıyor olsa da, Samsung\'un firmware en adamcağız Android yazılımlar arasında yer almaktadır. böcek, bu cihazlarda, VPN işlemi ile sınırlı değildir, ancak birçoğu Examples edilebilir. Bu hataların bazıları aşağıda. açıklanmıştır \ n \ nDNS VPN aralığında DNS sunucusu sürece çalışmaz. \ n \ izin / izin verilmeyen uygulamalar özelliği nOn birçok Samsung 5.x cihazları çalışmaz. \ nOn Samsung 6 .x VPN uygulaması Güç tasarrufu özellikleri muaf sürece çalışmaya rapor edilmektedir.</string>
   <string name="samsung_broken_title">Samsung telefonlar</string>
+  <string name="novpn_selected">Seçili VPN yok.</string>
+  <string name="alwaysonvpn">VPN açılışta ve Always-On için kullanılır</string>
+  <string name="reconnect">Yeniden bağlan</string>
+  <string name="qs_title">VPN Geçişi</string>
+  <string name="qs_connect">%s \'e bağlan</string>
+  <string name="qs_disconnect">%s bağlantısını kes</string>
+  <string name="connectretrymaxmessage">Bağlantı denemeleri arasındaki en uzun süreyi girin. OpenVPN bir başarısız bağlantı girişiminden sonra bu değer kadar onun bekleme süresini yavaş yavaş arttıracak. Varsayılan 300s.</string>
+  <string name="connectretrymaxtitle">Bağlantı denemeleri arasındaki maksimum süre</string>
+  <string name="state_waitconnectretry">Bağlantı denemesi arasında %ss saniye bekleniyor</string>
 </resources>

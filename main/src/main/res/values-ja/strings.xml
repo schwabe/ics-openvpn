@@ -449,4 +449,11 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="samsung_broken_title">サムスン製の機種</string>
   <string name="novpn_selected">VPNが選択されていません</string>
   <string name="alwaysonvpn">起動時と常時接続に使用するVPN</string>
+  <string name="reconnect">再接続</string>
+  <string name="qs_title">VPNを切り替える</string>
+  <string name="qs_connect">%sに接続</string>
+  <string name="qs_disconnect">%sを切断</string>
+  <string name="connectretrymaxmessage">最大接続試行間隔を入力します。OpenVPNは接続に失敗するとこの値まで少しずつ待機時間を増やしていきます。デフォルトは300秒です。</string>
+  <string name="connectretrymaxtitle">接続試行の最大間隔</string>
+  <string name="state_waitconnectretry">接続試行の間隔として%s秒を待っています</string>
 </resources>

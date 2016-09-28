@@ -410,4 +410,11 @@
   <string name="samsung_broken_title">Телефоны Samsung</string>
   <string name="novpn_selected">Не выбрано VPN.</string>
   <string name="alwaysonvpn">VPN, используемый при загрузке и для Always-On</string>
+  <string name="reconnect">Повторное подключение</string>
+  <string name="qs_title">Переключение VPN</string>
+  <string name="qs_connect">Подключиться к %s</string>
+  <string name="qs_disconnect">Отключиться от %s</string>
+  <string name="connectretrymaxmessage">Введите максимальное время между попытками соединения. OpenVPN будет медленно поднимать свое время ожидания после неудачной попытки подключения до этого значения. По умолчанию 300s.</string>
+  <string name="connectretrymaxtitle">Максимальное время между попытками соединения</string>
+  <string name="state_waitconnectretry">Ожидание %ss секунд между попыткой подключения</string>
 </resources>

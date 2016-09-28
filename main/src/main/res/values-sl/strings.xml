@@ -410,4 +410,11 @@
   <string name="samsung_broken_title">Telefoni Samsung</string>
   <string name="novpn_selected">VPN ni izbran.</string>
   <string name="alwaysonvpn">VPN se uporablja ob zagonu in ob stalno vklopljeni napravi</string>
+  <string name="reconnect">Ponovno poveži</string>
+  <string name="qs_title">Preklopi VPN</string>
+  <string name="qs_connect">Poveži se v %s</string>
+  <string name="qs_disconnect">Prekini povezavo s/z %s</string>
+  <string name="connectretrymaxmessage">Vnesite najdaljši čas med poizkusi povezave. OpenVPN bo po neuspešnem poizkusu povezave počasi povečeval čakalni čas do te vrednosti. Privzeto je 300 s.</string>
+  <string name="connectretrymaxtitle">Najdaljši čas med poizkusi povezave</string>
+  <string name="state_waitconnectretry">Čakanje %s s med poizkusi povezave</string>
 </resources>

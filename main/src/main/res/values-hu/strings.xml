@@ -410,4 +410,11 @@
   <string name="samsung_broken_title">Samsung telefonok</string>
   <string name="novpn_selected">Nincs VPN kiválasztva.</string>
   <string name="alwaysonvpn">VPN használata rendszer indításkor és legyen mindig aktív</string>
+  <string name="reconnect">Újracsatlakozás</string>
+  <string name="qs_title">VPN be/kikapcsolás</string>
+  <string name="qs_connect">Csatlakozás %s-hez</string>
+  <string name="qs_disconnect">%s bontása</string>
+  <string name="connectretrymaxmessage">Adja meg a csatlakozási kísérletek közötti maximális időt. Az OpenVPN eddig az értékig fokozatosan növeli a sikertelen csatlakozási kísérletek közötti várakozási időt. 300 másodperc az alapértelmezett.</string>
+  <string name="connectretrymaxtitle">Csatlakozási kísérletek közötti maximális idő</string>
+  <string name="state_waitconnectretry">%s másodperc várakozás a csatlakozási kísérletek között</string>
 </resources>

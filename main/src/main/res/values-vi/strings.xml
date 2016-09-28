@@ -395,4 +395,6 @@
   <string name="days_left">%d ngày còn lại</string>
   <string name="hours_left">%d giờ còn lại</string>
   <string name="permission_revoked">cho phép VPN bị thu hồi bởi hệ điều hành (ví dụ như chương trình VPN khác bắt đầu), dừng VPN</string>
+  <string name="novpn_selected">Không VPN được chọn.</string>
+  <string name="alwaysonvpn">VPN sử dụng khởi động và luôn luôn trênandroid</string>
 </resources>

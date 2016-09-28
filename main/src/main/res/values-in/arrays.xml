@@ -4,7 +4,8 @@
   <!--  Keep the order the same as the TYPE_ constants in VPNProfile -->
   <string-array name="vpn_types">
     <item>Sertifikat</item>
-    <item>Berkas PKCS12</item>
+    <item>Berkas PKCS1
+2</item>
     <item>Android Certificate</item>
     <item>Nama Pengguna\Sandi</item>
     <item>Kunci Tetap</item>

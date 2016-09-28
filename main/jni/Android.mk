@@ -5,24 +5,29 @@ JNI_DIR := $(call my-dir)
 #WITH_MBEDTLS=1
 #WITH_OPENVPN3=1
 # Build openvpn with mbedTLS (OpenVPN3 core is always build with mbedTLS)
-#WITH_BREAKPAD=0
+#USE_BREAKPAD=0
 
 
 include lzo/Android.mk
 include openssl/Android.mk
 
 ifeq ($(TARGET_ARCH),mips)
-	USE_BREAKPAD=0
-endif
-ifeq ($(TARGET_ARCH),mips64)
-	USE_BREAKPAD=0
-endif
-
-ifeq ($(USE_BREAKPAD),1)
+	WITH_BREAKPAD=0
+else ifeq ($(TARGET_ARCH),mips64)
+	WITH_BREAKPAD=0
+else ifeq ($(USE_BREAKPAD),1)
 	WITH_BREAKPAD=1
-	include breakpad/android/google_breakpad/Android.mk 
 else
 	WITH_BREAKPAD=0
+endif
+
+#ifeq ($(TARGET_ARCH),x86)
+#	USE_BREAKPAD=0
+#endif
+
+
+ifeq ($(WITH_BREAKPAD),1)
+	include breakpad/android/google_breakpad/Android.mk 
 endif
 
 ifeq ($(WITH_MBEDTLS),1)

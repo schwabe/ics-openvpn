@@ -416,4 +416,5 @@
     <string name="connectretrymaxtitle">Maximum time between connection attempts</string>
     <string name="state_waitconnectretry">Waiting %ss seconds between connection attempt</string>
     <string name="nought_alwayson_warning"><![CDATA[If you did not get a VPN confirmation dialog, you have \"Always on VPN\" enabled for another app. In that case only that app is allowed to connect to a VPN. Check under Settings-> Networks more .. -> VPNS]]></string>
+    <string name="management_socket_closed">Connection to OpenVPN closed (%s)</string>
 </resources>

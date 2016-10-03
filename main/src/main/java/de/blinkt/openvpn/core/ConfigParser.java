@@ -6,7 +6,7 @@
 package de.blinkt.openvpn.core;
 
 import android.text.TextUtils;
-import android.util.Pair;
+import android.support.v4.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -118,6 +118,9 @@ public class ConfigParser {
                     inlinefile += "\n";
                 }
             } while (true);
+
+            if(inlinefile.endsWith("\n"))
+                inlinefile = inlinefile.substring(0, inlinefile.length()-1);
 
             args.clear();
             args.add(argname);
@@ -870,10 +873,9 @@ public class ConfigParser {
         for (Vector<String> optionsline : option) {
             if (!ignoreThisOption(optionsline)) {
                 // Check if option had been inlined and inline again
-                if (optionsline.size() == 2 && "extra-certs".equals(optionsline.get(0)) ) {
+                if (optionsline.size() == 2 &&
+                        ("extra-certs".equals(optionsline.get(0)) || "http-proxy-user-pass".equals(optionsline.get(0)))) {
                     custom += VpnProfile.insertFileData(optionsline.get(0), optionsline.get(1));
-
-
                 } else {
                     for (String arg : optionsline)
                         custom += VpnProfile.openVpnEscape(arg) + " ";

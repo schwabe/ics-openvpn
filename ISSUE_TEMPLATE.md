@@ -1,4 +1,4 @@
-To make issues more managable, I would appriciate if you fill out the details if applicable
+To make issues more manageable, I would appreciate if you fill out the details if applicable
 
 # General information
 1. Android Version

@@ -60,8 +60,8 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
         builder.setTitle(R.string.title_cancel);
         builder.setMessage(R.string.cancel_connection_query);
         builder.setNegativeButton(android.R.string.no, this);
-        builder.setNeutralButton(R.string.reconnect, this);
         builder.setPositiveButton(android.R.string.yes, this);
+        builder.setNeutralButton(R.string.reconnect, this);
         builder.setOnCancelListener(this);
 
         builder.show();

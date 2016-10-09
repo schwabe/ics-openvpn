@@ -410,7 +410,7 @@
   <string name="samsung_broken_title">Телефоны Samsung</string>
   <string name="novpn_selected">Не выбрано VPN.</string>
   <string name="alwaysonvpn">VPN, используемый при загрузке и для Always-On</string>
-  <string name="reconnect">Повторное подключение</string>
+  <string name="reconnect">переподключить</string>
   <string name="qs_title">Переключение VPN</string>
   <string name="qs_connect">Подключиться к %s</string>
   <string name="qs_disconnect">Отключиться от %s</string>

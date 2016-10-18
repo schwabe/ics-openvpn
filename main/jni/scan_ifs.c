@@ -61,8 +61,8 @@ jobjectArray Java_de_blinkt_openvpn_core_NativeUtils_getIfconfig(JNIEnv* env)
         /* get interface addr, prefilled by SIOGIFCONF */
         
         int err;
-        if (err=getnameinfo(&ifr->ifr_addr, sizeof(struct sockaddr_in), buf, NI_MAXHOST, NULL, 0,
-                                NI_NUMERICHOST) !=0) {
+        if ((err=getnameinfo(&ifr->ifr_addr, sizeof(struct sockaddr_in), buf, NI_MAXHOST, NULL, 0,
+                             NI_NUMERICHOST)) !=0) {
             __android_log_print(ANDROID_LOG_DEBUG, "openvpn", "getnameinfo failed for  %s: %s", ifr->ifr_name,  gai_strerror(err));
             continue;
         }
@@ -90,8 +90,8 @@ jobjectArray Java_de_blinkt_openvpn_core_NativeUtils_getIfconfig(JNIEnv* env)
             continue;
         }
        
-        if (err=getnameinfo(&ifreq.ifr_netmask, sizeof(struct sockaddr_in), buf, NI_MAXHOST, NULL, 0,
-                                NI_NUMERICHOST) !=0) {
+        if ((err=getnameinfo(&ifreq.ifr_netmask, sizeof(struct sockaddr_in), buf, NI_MAXHOST, NULL, 0,
+                             NI_NUMERICHOST)) !=0) {
             __android_log_print(ANDROID_LOG_DEBUG, "openvpn", "getnameinfo failed for  %s: %s", ifr->ifr_name,  gai_strerror(err));
             continue;
         }

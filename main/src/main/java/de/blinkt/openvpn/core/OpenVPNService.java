@@ -500,6 +500,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
+        forceStopOpenVpnProcess();
+    }
+
+    public void forceStopOpenVpnProcess() {
         synchronized (mProcessLock) {
             if (mProcessThread != null) {
                 mProcessThread.interrupt();

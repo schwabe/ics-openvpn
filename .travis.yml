@@ -1,0 +1,15 @@
+language: android
+jdk: oraclejdk8
+android:
+  components:
+    - tools
+    - platform-tools
+    - android-24
+    - android-23
+    - build-tools-24.0.0
+    - build-tools-23.0.2
+    - extra-android-support
+    - add-on
+    - extra
+  licenses:
+    - 'android-sdk-license-.+'

@@ -105,15 +105,21 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     }
 
-    public void managmentCommand(String cmd) {
+    /**
+     * @param cmd command to write to management socket
+     * @return true if command have been sent
+     */
+    public boolean managmentCommand(String cmd) {
         try {
             if (mSocket != null && mSocket.getOutputStream() != null) {
                 mSocket.getOutputStream().write(cmd.getBytes());
                 mSocket.getOutputStream().flush();
+                return true;
             }
         } catch (IOException e) {
             // Ignore socket stack traces
         }
+        return false;
     }
 
 
@@ -134,8 +140,12 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 
             // Close the management socket after client connected
+            try {
+                mServerSocket.close();
+            } catch (IOException e){
+                VpnStatus.logException(e);
+            }
 
-            mServerSocket.close();
             // Closing one of the two sockets also closes the other
             //mServerSocketLocal.close();
 
@@ -164,7 +174,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
             }
         } catch (IOException e) {
-            VpnStatus.logDebug(R.string.management_socket_closed, e.getLocalizedMessage());
+            if (!e.getMessage().equals("socket closed") && !e.getMessage().equals("Connection reset by peer"))
+                VpnStatus.logException(e);
         }
         synchronized (active) {
             active.remove(this);
@@ -577,8 +588,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         synchronized (active) {
             boolean sendCMD = false;
             for (OpenVpnManagementThread mt : active) {
-                mt.managmentCommand("signal SIGINT\n");
-                sendCMD = true;
+                sendCMD = mt.managmentCommand("signal SIGINT\n");
                 try {
                     if (mt.mSocket != null)
                         mt.mSocket.close();
@@ -649,8 +659,12 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     @Override
     public boolean stopVPN(boolean replaceConnection) {
-        mShuttingDown = true;
-        return stopOpenVPN();
+        boolean stopSucceed = stopOpenVPN();
+        if (stopSucceed) {
+            mShuttingDown = true;
+
+        }
+        return stopSucceed;
     }
 
 }

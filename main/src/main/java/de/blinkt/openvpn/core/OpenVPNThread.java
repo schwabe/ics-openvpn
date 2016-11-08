@@ -180,10 +180,12 @@ public class OpenVPNThread implements Runnable {
                 } else {
                     VpnStatus.logInfo("P:" + logline);
                 }
+
+                if (Thread.interrupted()) {
+                    throw new InterruptedException("OpenVpn process was killed form java code");
+                }
             }
-
-
-        } catch (IOException e) {
+        } catch (InterruptedException | IOException e) {
             VpnStatus.logException("Error reading from output of OpenVPN process", e);
             stopProcess();
         }

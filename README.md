@@ -1,5 +1,12 @@
-OpenVPN for Android
+OpenVPN for Android -EduVPN fork
 =============
+
+The EduVPN changes are:
+
+* [Librarify module](https://github.com/egeniq/ics-openvpn/commit/a7529a8093db723b2dd1809adcde84700d9dd7c4): This converts the submodule to a library with as less changes as possible.
+* [Change activity which opens when tapping notification](https://github.com/egeniq/ics-openvpn/commit/5d1778af0b5e43faaa24e2356c5383f5fd457dfe): Opens a different activity when tapping on the notification
+* [Ability to get IPv4 and IPv6 addresses from the service](https://github.com/egeniq/ics-openvpn/commit/ec9097df75af7be93beaea0e82ab544420d0569e): Allows us to get the IPv4 and IPv6 addresses.
+* [Fix parent activity problem](https://github.com/egeniq/ics-openvpn/commit/6ba82fdccb86ccd61b11c92d527ac7014f9ff06f): Opens the correct parent activity from the log window.
 
 Description
 ------------

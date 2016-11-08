@@ -7,6 +7,7 @@ package de.blinkt.openvpn.core;
 
 import android.Manifest.permission;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -86,6 +87,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private Handler guiHandler;
     private Toast mlastToast;
     private Runnable mOpenVPNThread;
+    private static Class mNotificationActivityClass;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean mbit) {
@@ -278,9 +280,22 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     }
 
+    /**
+     * Sets the activity which should be opened when tapped on the permanent notification tile.
+     *
+     * @param activityClass The activity class to open
+     */
+    public static void setNotificationActivityClass(Class<? extends Activity> activityClass) {
+        mNotificationActivityClass = activityClass;
+    }
+
     PendingIntent getLogPendingIntent() {
         // Let the configure Button show the Log
-        Intent intent = new Intent(getBaseContext(), LogWindow.class);
+        Class activityClass = LogWindow.class;
+        if (mNotificationActivityClass != null) {
+            activityClass = mNotificationActivityClass;
+        }
+        Intent intent = new Intent(getBaseContext(), activityClass);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         PendingIntent startLW = PendingIntent.getActivity(this, 0, intent, 0);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

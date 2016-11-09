@@ -42,6 +42,7 @@ import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
@@ -87,6 +88,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private Handler guiHandler;
     private Toast mlastToast;
     private Runnable mOpenVPNThread;
+    private String mLastLocalIp;
+    private String mLastLocalIpV6;
+    
     private static Class mNotificationActivityClass;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
@@ -489,16 +493,16 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         new Handler(getMainLooper()).post(new Runnable() {
-                         @Override
-                         public void run() {
-                             if (mDeviceStateReceiver != null)
-                                 unregisterDeviceStateReceiver();
+                                              @Override
+                                              public void run() {
+                                                  if (mDeviceStateReceiver != null)
+                                                      unregisterDeviceStateReceiver();
 
-                             registerDeviceStateReceiver(mManagement);
-                         }
-                     }
+                                                  registerDeviceStateReceiver(mManagement);
+                                              }
+                                          }
 
-                );
+        );
     }
 
     private void stopOldOpenVPNProcess() {
@@ -707,6 +711,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             VpnStatus.logInfo(R.string.warn_no_dns);
 
         mLastTunCfg = getTunConfigString();
+
+        // Store the IPs
+        mLastLocalIp = mLocalIP == null ? null : mLocalIP.mIp;
+        mLastLocalIpV6 = (mLocalIPv6 != null && mLocalIPv6.contains("/")) ? mLocalIPv6.split(Pattern.quote("/"))[0] : mLocalIPv6;
 
         // Reset information
         mDnslist.clear();
@@ -931,6 +939,21 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     public void setLocalIPv6(String ipv6addr) {
         mLocalIPv6 = ipv6addr;
+    }
+
+    /**
+     * Returns the lastly used IPv4 address used with the VPN.
+     * @return The lastly used IPv4 address. This property is not cleared on disconnection.
+     */
+    public String getLastLocalIpV4Address() {
+        return mLastLocalIp;
+    }
+    /**
+     * Returns the lastly used IPv6 address used with the VPN.
+     * @return The lastly used IPv6 address. This property is not cleared on disconnection.
+     */
+    public String getLastLocalIpV6Address() {
+        return mLastLocalIpV6;
     }
 
     @Override

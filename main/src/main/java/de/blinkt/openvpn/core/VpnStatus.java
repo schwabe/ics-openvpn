@@ -123,18 +123,6 @@ public class VpnStatus {
         mLogFileHandler.sendEmptyMessage(LogFileHandler.FLUSH_TO_DISK);
     }
 
-    public enum ConnectionStatus {
-        LEVEL_CONNECTED,
-        LEVEL_VPNPAUSED,
-        LEVEL_CONNECTING_SERVER_REPLIED,
-        LEVEL_CONNECTING_NO_SERVER_REPLY_YET,
-        LEVEL_NONETWORK,
-        LEVEL_NOTCONNECTED,
-        LEVEL_START,
-        LEVEL_AUTH_FAILED,
-        LEVEL_WAITING_FOR_USER_INPUT,
-        UNKNOWN_LEVEL
-    }
 
     public enum LogLevel {
         INFO(2),
@@ -341,7 +329,7 @@ public class VpnStatus {
 
     }
 
-    public static void updateStateString(String state, String msg) {
+    static void updateStateString(String state, String msg) {
         int rid = getLocalizedState(state);
         ConnectionStatus level = getLevel(state);
         updateStateString(state, msg, rid, level);
@@ -384,7 +372,7 @@ public class VpnStatus {
         newLogItem(new LogItem(LogLevel.DEBUG, resourceId, args));
     }
 
-    private static void newLogItem(LogItem logItem) {
+    static void newLogItem(LogItem logItem) {
         newLogItem(logItem, false);
     }
 

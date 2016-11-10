@@ -49,12 +49,11 @@ import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.activities.LogWindow;
 import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
-import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 import de.blinkt.openvpn.core.VpnStatus.StateListener;
 
 import static de.blinkt.openvpn.core.NetworkSpace.ipAddress;
-import static de.blinkt.openvpn.core.VpnStatus.ConnectionStatus.LEVEL_CONNECTED;
-import static de.blinkt.openvpn.core.VpnStatus.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
+import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_CONNECTED;
+import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
 
 public class OpenVPNService extends VpnService implements StateListener, Callback, ByteCountListener {
     public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";
@@ -64,11 +63,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private static final String PAUSE_VPN = "de.blinkt.openvpn.PAUSE_VPN";
     private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
     private static final int OPENVPN_STATUS = 1;
+    public static final int DISCONNECT_VPN_MSG = 100;
     private static boolean mNotificationAlwaysVisible = false;
     private final Vector<String> mDnslist = new Vector<>();
     private final NetworkSpace mRoutes = new NetworkSpace();
     private final NetworkSpace mRoutesv6 = new NetworkSpace();
-    private final IBinder mBinder = new LocalBinder();
     private Thread mProcessThread = null;
     private VpnProfile mProfile;
     private String mDomain = null;
@@ -416,7 +415,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     private void startOpenVPN() {
         VpnStatus.logInfo(R.string.building_configration);
-        VpnStatus.updateStateString("VPN_GENERATE_CONFIG", "", R.string.building_configration, VpnStatus.ConnectionStatus.LEVEL_START);
+        VpnStatus.updateStateString("VPN_GENERATE_CONFIG", "", R.string.building_configration, ConnectionStatus.LEVEL_START);
 
 
         try {
@@ -1020,13 +1019,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 return "OPEN_AFTER_CLOSE";
             else
                 return "OPEN_BEFORE_CLOSE";
-        }
-    }
-
-    public class LocalBinder extends Binder {
-        public OpenVPNService getService() {
-            // Return this instance of LocalService so clients can call public methods
-            return OpenVPNService.this;
         }
     }
 }

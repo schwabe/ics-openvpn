@@ -31,6 +31,7 @@ import de.blinkt.openvpn.activities.ConfigConverter;
 import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.activities.VPNPreferences;
+import de.blinkt.openvpn.core.ConnectionStatus;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
 
@@ -55,7 +56,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private String mLastStatusMessage;
 
     @Override
-    public void updateState(String state, String logmessage, final int localizedResId, VpnStatus.ConnectionStatus level) {
+    public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

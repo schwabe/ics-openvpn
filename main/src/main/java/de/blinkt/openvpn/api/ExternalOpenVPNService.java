@@ -36,12 +36,12 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
 import de.blinkt.openvpn.core.ConfigParser.ConfigParseError;
+import de.blinkt.openvpn.core.ConnectionStatus;
 import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.OpenVPNService.LocalBinder;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 import de.blinkt.openvpn.core.VpnStatus;
-import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 import de.blinkt.openvpn.core.VpnStatus.StateListener;
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)

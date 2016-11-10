@@ -32,7 +32,6 @@ import java.util.Vector;
 import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 
 public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 

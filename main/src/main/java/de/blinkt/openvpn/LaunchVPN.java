@@ -28,10 +28,10 @@ import android.widget.EditText;
 import java.io.IOException;
 
 import de.blinkt.openvpn.activities.LogWindow;
+import de.blinkt.openvpn.core.ConnectionStatus;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 import de.blinkt.openvpn.core.VpnStatus;
-import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 
 /**
  * This Activity actually handles two stages of a launcher shortcut's life cycle.

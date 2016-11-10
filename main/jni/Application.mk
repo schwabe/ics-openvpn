@@ -9,6 +9,6 @@ APP_STL:=stlport_static
 
 #LOCAL_ARM_MODE := arm
 
-#NDK_TOOLCHAIN_VERSION=clang
+NDK_TOOLCHAIN_VERSION=4.9
 APP_CPPFLAGS += -std=c++1y
 APP_CFLAGS += -funwind-tables

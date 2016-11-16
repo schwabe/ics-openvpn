@@ -431,7 +431,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         } else if (item.getItemId() == R.id.send) {
             ladapter.shareLog();
         } else if (item.getItemId() == R.id.edit_vpn) {
-            VpnProfile lastConnectedprofile = ProfileManager.getLastConnectedVpn();
+            VpnProfile lastConnectedprofile = ProfileManager.get(getActivity(), VpnStatus.getLastConnectedVPNProfile());
 
             if (lastConnectedprofile != null) {
                 Intent vprefintent = new Intent(getActivity(), VPNPreferences.class)
@@ -672,6 +672,10 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
                 }
             });
         }
+    }
+
+    @Override
+    public void setConnectedVPN(String uuid) {
     }
 
 

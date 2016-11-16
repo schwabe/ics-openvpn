@@ -13,6 +13,7 @@ interface IServiceStatus {
 
          /**
            * Remove a previously registered callback interface.
-                 */
+           */
         void unregisterStatusCallback(in IStatusCallbacks cb);
+
 }

@@ -27,6 +27,7 @@ import android.os.Handler.Callback;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.system.OsConstants;
 import android.text.TextUtils;
@@ -34,6 +35,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Inet6Address;
@@ -55,7 +57,7 @@ import static de.blinkt.openvpn.core.NetworkSpace.ipAddress;
 import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_CONNECTED;
 import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
 
-public class OpenVPNService extends VpnService implements StateListener, Callback, ByteCountListener {
+public class OpenVPNService extends VpnService implements StateListener, Callback, ByteCountListener, IOpenVPNServiceInternal {
     public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";
     public static final String START_SERVICE_STICKY = "de.blinkt.openvpn.START_SERVICE_STICKY";
     public static final String ALWAYS_SHOW_NOTIFICATION = "de.blinkt.openvpn.NOTIFICATION_ALWAYS_VISIBLE";
@@ -63,7 +65,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private static final String PAUSE_VPN = "de.blinkt.openvpn.PAUSE_VPN";
     private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
     private static final int OPENVPN_STATUS = 1;
-    public static final int DISCONNECT_VPN_MSG = 100;
     private static boolean mNotificationAlwaysVisible = false;
     private final Vector<String> mDnslist = new Vector<>();
     private final NetworkSpace mRoutes = new NetworkSpace();
@@ -87,6 +88,24 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private Toast mlastToast;
     private Runnable mOpenVPNThread;
     private static Class mNotificationActivityClass;
+
+    private final IBinder mBinder = new IOpenVPNServiceInternal.Stub() {
+
+        @Override
+        public boolean protect(int fd) throws RemoteException {
+            return OpenVPNService.this.protect(fd);
+        }
+
+        @Override
+        public void userPause(boolean shouldbePaused) throws RemoteException {
+            OpenVPNService.this.userPause(shouldbePaused);
+        }
+
+        @Override
+        public boolean stopVPN(boolean replaceConnection) throws RemoteException {
+            return OpenVPNService.this.stopVPN(replaceConnection);
+        }
+    };
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean mbit) {
@@ -340,6 +359,14 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     @Override
+    public boolean stopVPN(boolean replaceConnection) throws RemoteException {
+        if(getManagement() !=null)
+            return  getManagement().stopVPN(replaceConnection);
+        else
+            return false;
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         if (intent != null && intent.getBooleanExtra(ALWAYS_SHOW_NOTIFICATION, false))
@@ -405,6 +432,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
 
         ProfileManager.setConnectedVpnProfile(this, mProfile);
+        VpnStatus.setConnectedVPNProfile(mProfile.getUUIDString());
         /* TODO: At the moment we have no way to handle asynchronous PW input
          * Fixing will also allow to handle challenge/response authentication */
         if (mProfile.needUserPWInput(true) != 0)
@@ -542,6 +570,16 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     @Override
+    public IBinder asBinder() {
+        return mBinder;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    @Override
     public void onDestroy() {
         synchronized (mProcessLock) {
             if (mProcessThread != null) {
@@ -555,7 +593,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         // Just in case unregister for state
         VpnStatus.removeStateListener(this);
         VpnStatus.flushLog();
-
     }
 
     private String getTunConfigString() {
@@ -967,6 +1004,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     msg, lowpriority, 0, level);
 
         }
+    }
+
+    @Override
+    public void setConnectedVPN(String uuid) {
     }
 
     private void doSendBroadcast(String state, ConnectionStatus level) {

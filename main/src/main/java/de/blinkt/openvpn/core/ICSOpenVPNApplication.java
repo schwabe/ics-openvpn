@@ -24,10 +24,6 @@ public class ICSOpenVPNApplication extends Application {
         super.onCreate();
         PRNGFixes.apply();
 
-        if (BuildConfig.DEBUG) {
-            //ACRA.init(this);
-        }
-
         VpnStatus.initLogCache(getApplicationContext().getCacheDir());
 
         mStatus = new StatusListener();

@@ -66,8 +66,11 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         });
     }
 
+    @Override
+    public void setConnectedVPN(String uuid) {
+    }
 
-    class VPNArrayAdapter extends ArrayAdapter<VpnProfile> {
+    private class VPNArrayAdapter extends ArrayAdapter<VpnProfile> {
 
         public VPNArrayAdapter(Context context, int resource,
                                int textViewResourceId) {
@@ -99,7 +102,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             });
 
             TextView subtitle = (TextView) v.findViewById(R.id.vpn_item_subtitle);
-            if (ProfileManager.getLastConnectedVpn() == profile) {
+            if (profile.getUUIDString().equals(VpnStatus.getLastConnectedVPNProfile())) {
                 subtitle.setText(mLastStatusMessage);
                 subtitle.setVisibility(View.VISIBLE);
             } else {
@@ -113,7 +116,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
     private void startOrStopVPN(VpnProfile profile) {
-        if (VpnStatus.isVPNActive() && ProfileManager.getLastConnectedVpn() == profile) {
+        if (VpnStatus.isVPNActive() && profile.getUUIDString().equals(VpnStatus.getLastConnectedVPNProfile())) {
             Intent disconnectVPN = new Intent(getActivity(), DisconnectVPN.class);
             startActivity(disconnectVPN);
         } else {

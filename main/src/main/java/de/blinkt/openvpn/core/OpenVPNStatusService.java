@@ -104,11 +104,18 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
         msg.sendToTarget();
     }
 
+    @Override
+    public void setConnectedVPN(String uuid) {
+        Message msg = mHandler.obtainMessage(SEND_NEW_CONNECTED_VPN, uuid);
+        msg.sendToTarget();
+    }
+
     private static final OpenVPNStatusHandler mHandler = new OpenVPNStatusHandler();
 
     private static final int SEND_NEW_LOGITEM = 100;
     private static final int SEND_NEW_STATE = 101;
     private static final int SEND_NEW_BYTECOUNT = 102;
+    private static final int SEND_NEW_CONNECTED_VPN = 103;
 
     static class OpenVPNStatusHandler extends Handler {
         WeakReference<OpenVPNStatusService> service = null;
@@ -141,6 +148,10 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
                             break;
                         case SEND_NEW_STATE:
                             sendUpdate(broadcastItem, (UpdateMessage) msg.obj);
+                            break;
+
+                        case SEND_NEW_CONNECTED_VPN:
+                            broadcastItem.connectedVPN((String) msg.obj);
                             break;
                     }
                 } catch (RemoteException e) {

@@ -72,6 +72,11 @@ public class StatusListener  {
         public void updateByteCount(long inBytes, long outBytes) throws RemoteException {
             VpnStatus.updateByteCount(inBytes, outBytes);
         }
+
+        @Override
+        public void connectedVPN(String uuid) throws RemoteException {
+            VpnStatus.setConnectedVPNProfile(uuid);
+        }
     };
 
 }

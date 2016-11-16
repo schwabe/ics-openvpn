@@ -18,4 +18,6 @@ interface IStatusCallbacks {
     oneway void updateStateString(in String state, in String msg, in int resid, in ConnectionStatus level);
 
     oneway void updateByteCount(long inBytes, long outBytes);
+
+    oneway void connectedVPN(String uuid);
 }

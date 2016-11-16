@@ -18,6 +18,7 @@ import java.util.Locale;
 import java.util.Vector;
 
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 
 public class VpnStatus {
 
@@ -36,6 +37,8 @@ public class VpnStatus {
 
     private static long mlastByteCount[] = {0, 0, 0, 0};
     private static HandlerThread mHandlerThread;
+
+    private static String mLastConnectedVPNUUID;
 
     public static void logException(LogLevel ll, String context, Exception e) {
         StringWriter sw = new StringWriter();
@@ -123,6 +126,18 @@ public class VpnStatus {
         mLogFileHandler.sendEmptyMessage(LogFileHandler.FLUSH_TO_DISK);
     }
 
+    public static void setConnectedVPNProfile(String uuid) {
+        mLastConnectedVPNUUID = uuid;
+        for (StateListener sl: stateListener)
+            sl.setConnectedVPN(uuid);
+    }
+
+
+    public static String getLastConnectedVPNProfile()
+    {
+        return mLastConnectedVPNUUID;
+    }
+
 
     public enum LogLevel {
         INFO(2),
@@ -158,10 +173,10 @@ public class VpnStatus {
     }
 
     // keytool -printcert -jarfile de.blinkt.openvpn_85.apk
-    public static final byte[] officalkey = {-58, -42, -44, -106, 90, -88, -87, -88, -52, -124, 84, 117, 66, 79, -112, -111, -46, 86, -37, 109};
-    public static final byte[] officaldebugkey = {-99, -69, 45, 71, 114, -116, 82, 66, -99, -122, 50, -70, -56, -111, 98, -35, -65, 105, 82, 43};
-    public static final byte[] amazonkey = {-116, -115, -118, -89, -116, -112, 120, 55, 79, -8, -119, -23, 106, -114, -85, -56, -4, 105, 26, -57};
-    public static final byte[] fdroidkey = {-92, 111, -42, -46, 123, -96, -60, 79, -27, -31, 49, 103, 11, -54, -68, -27, 17, 2, 121, 104};
+    static final byte[] officalkey = {-58, -42, -44, -106, 90, -88, -87, -88, -52, -124, 84, 117, 66, 79, -112, -111, -46, 86, -37, 109};
+    static final byte[] officaldebugkey = {-99, -69, 45, 71, 114, -116, 82, 66, -99, -122, 50, -70, -56, -111, 98, -35, -65, 105, 82, 43};
+    static final byte[] amazonkey = {-116, -115, -118, -89, -116, -112, 120, 55, 79, -8, -119, -23, 106, -114, -85, -56, -4, 105, 26, -57};
+    static final byte[] fdroidkey = {-92, 111, -42, -46, 123, -96, -60, 79, -27, -31, 49, 103, 11, -54, -68, -27, 17, 2, 121, 104};
 
 
     private static ConnectionStatus mLastLevel = ConnectionStatus.LEVEL_NOTCONNECTED;
@@ -186,6 +201,8 @@ public class VpnStatus {
 
     public interface StateListener {
         void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level);
+
+        void setConnectedVPN(String uuid);
     }
 
     public interface ByteCountListener {

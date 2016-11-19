@@ -399,7 +399,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         if (intent != null && intent.hasExtra(getPackageName() + ".profileUUID")) {
             String profileUUID = intent.getStringExtra(getPackageName() + ".profileUUID");
-            mProfile = ProfileManager.get(this, profileUUID);
+            int profileVersion = intent.getIntExtra(getPackageName() + ".profileVersion", 0);
+            // Try for 10s to get current version of the profile
+            mProfile = ProfileManager.get(this, profileUUID, profileVersion, 100);
         } else {
             /* The intent is null when we are set as always-on or the service has been restarted. */
             mProfile = ProfileManager.getLastConnectedProfile(this);

@@ -27,8 +27,11 @@ public class StatusListener  {
             IServiceStatus serviceStatus = IServiceStatus.Stub.asInterface(service);
             try {
                 /* Check if this a local service ... */
-                if (service.queryLocalInterface("de.blinkt.openvpn.core.IServiceStatus") == null)
+                if (service.queryLocalInterface("de.blinkt.openvpn.core.IServiceStatus") == null) {
+                    VpnStatus.setConnectedVPNProfile(serviceStatus.getLastConnectedVPN());
                     serviceStatus.registerStatusCallback(mCallback);
+
+                }
 
             } catch (RemoteException e) {
                 e.printStackTrace();

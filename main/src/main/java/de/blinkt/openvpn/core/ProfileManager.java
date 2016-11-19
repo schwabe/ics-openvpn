@@ -129,13 +129,13 @@ public class ProfileManager {
         ProfileManager.tmpprofile = tmp;
     }
 
-    public static boolean isTempProfile()
-    {
+    public static boolean isTempProfile() {
         return mLastConnectedVpn == tmpprofile;
     }
 
 
     public void saveProfile(Context context, VpnProfile profile) {
+        profile.mVersion += 1;
         ObjectOutputStream vpnfile;
         try {
             vpnfile = new ObjectOutputStream(context.openFileOutput((profile.getUUID().toString() + ".vp"), Activity.MODE_PRIVATE));
@@ -188,8 +188,30 @@ public class ProfileManager {
     }
 
     public static VpnProfile get(Context context, String profileUUID) {
+        return get(context, profileUUID, 0, 10);
+    }
+
+    public static VpnProfile get(Context context, String profileUUID, int version, int tries) {
         checkInstance(context);
-        return get(profileUUID);
+        VpnProfile profile = get(profileUUID);
+        int tried = 0;
+        while ((profile == null || profile.mVersion < version) && (tried++ < tries)) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ignored) {
+            }
+            instance.loadVPNList(context);
+            profile = get(profileUUID);
+            int ver = profile == null ? -1 : profile.mVersion;
+        }
+
+        if (tried != 0)
+
+        {
+            int ver = profile == null ? -1 : profile.mVersion;
+            VpnStatus.logError(String.format("Used x %d tries to get current version (%d/%d) of the profile", tried, ver, version));
+        }
+        return profile;
     }
 
     public static VpnProfile getLastConnectedVpn() {

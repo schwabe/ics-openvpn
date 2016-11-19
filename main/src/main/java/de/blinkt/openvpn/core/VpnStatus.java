@@ -158,14 +158,17 @@ public class VpnStatus {
 
         public static LogLevel getEnumByValue(int value) {
             switch (value) {
-                case 1:
-                    return INFO;
                 case 2:
+                    return INFO;
+                case -2:
                     return ERROR;
-                case 3:
+                case 1:
                     return WARNING;
+                case 3:
+                    return VERBOSE;
                 case 4:
                     return DEBUG;
+
                 default:
                     return null;
             }

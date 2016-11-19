@@ -61,12 +61,16 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
         @Override
         public void registerStatusCallback(IStatusCallbacks cb) throws RemoteException {
             mCallbacks.register(cb);
-
         }
 
         @Override
         public void unregisterStatusCallback(IStatusCallbacks cb) throws RemoteException {
             mCallbacks.unregister(cb);
+        }
+
+        @Override
+        public String getLastConnectedVPN() throws RemoteException {
+            return VpnStatus.getLastConnectedVPNProfile();
         }
     };
 

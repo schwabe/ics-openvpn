@@ -422,6 +422,12 @@ public class ConfigParser {
         if (direction != null)
             np.mTLSAuthDirection = direction.get(1);
 
+        Vector<String> tlscrypt = getOption("tls-crypt", 1, 1);
+        if (tlscrypt!=null) {
+            np.mUseTLSAuth = true;
+            np.mTLSAuthDirection = "tls-crypt";
+        }
+
         Vector<Vector<String>> defgw = getAllOption("redirect-gateway", 0, 5);
         if (defgw != null) {
             np.mUseDefaultRoute = true;

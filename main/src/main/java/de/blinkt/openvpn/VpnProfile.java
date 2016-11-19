@@ -399,12 +399,16 @@ public class VpnProfile implements Serializable, Cloneable {
         }
 
         if (mUseTLSAuth) {
+            boolean useTlsCrypt = mTLSAuthDirection.equals("tls-crypt");
+
             if (mAuthenticationType == TYPE_STATICKEYS)
                 cfg += insertFileData("secret", mTLSAuthFilename);
+            else if(useTlsCrypt)
+                cfg += insertFileData("tls-crypt", mTLSAuthFilename);
             else
                 cfg += insertFileData("tls-auth", mTLSAuthFilename);
 
-            if (!TextUtils.isEmpty(mTLSAuthDirection)) {
+            if (!TextUtils.isEmpty(mTLSAuthDirection) && !useTlsCrypt) {
                 cfg += "key-direction ";
                 cfg += mTLSAuthDirection;
                 cfg += "\n";

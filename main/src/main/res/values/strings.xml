@@ -162,7 +162,7 @@
     <string name="private_key_password">Private Key Password</string>
     <string name="password">Password</string>
     <string name="file_icon">file icon</string>
-    <string name="tls_authentication">TLS Authentication</string>
+    <string name="tls_authentication">TLS Authentication/Encryption</string>
     <string name="generated_config">Generated Config</string>
     <string name="generalsettings">Settings</string>
     <string name="owner_fix_summary">Tries to set the owner of /dev/tun to system. Some CM9 images need this to make the VPNService API work. Requires root.</string>

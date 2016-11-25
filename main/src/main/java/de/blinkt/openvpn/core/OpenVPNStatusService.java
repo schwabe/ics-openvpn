@@ -10,11 +10,15 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.ParcelFileDescriptor;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import de.blinkt.openvpn.api.ExternalOpenVPNService;
@@ -59,8 +63,45 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
     private static final IServiceStatus.Stub mBinder = new IServiceStatus.Stub() {
 
         @Override
-        public void registerStatusCallback(IStatusCallbacks cb) throws RemoteException {
+        public ParcelFileDescriptor registerStatusCallback(IStatusCallbacks cb) throws RemoteException {
+            final LogItem[] logbuffer = VpnStatus.getlogbuffer();
             mCallbacks.register(cb);
+            try {
+                final ParcelFileDescriptor[] pipe = ParcelFileDescriptor.createPipe();
+                new Thread("pushLogs") {
+                    @Override
+                    public void run() {
+                        DataOutputStream fd = new DataOutputStream(new ParcelFileDescriptor.AutoCloseOutputStream(pipe[1]));
+                        try {
+                            synchronized (VpnStatus.readFileLock) {
+                                if (!VpnStatus.readFileLog) {
+                                    VpnStatus.readFileLock.wait();
+                                }
+                            }
+                        } catch (InterruptedException e) {
+                            VpnStatus.logException(e);
+                        }
+                        try {
+
+                            for (LogItem logItem : logbuffer) {
+                                byte[] bytes = logItem.getMarschaledBytes();
+                                fd.writeShort(bytes.length);
+                                fd.write(bytes);
+                            }
+                            // Mark end
+                            fd.writeShort(0x7fff);
+                            fd.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }.start();
+                return pipe[0];
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RemoteException(e.getMessage());
+            }
         }
 
         @Override

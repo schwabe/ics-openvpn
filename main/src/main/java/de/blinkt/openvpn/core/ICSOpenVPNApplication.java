@@ -24,8 +24,6 @@ public class ICSOpenVPNApplication extends Application {
         super.onCreate();
         PRNGFixes.apply();
 
-        VpnStatus.initLogCache(getApplicationContext().getCacheDir());
-
         mStatus = new StatusListener();
         mStatus.init(getApplicationContext());
     }

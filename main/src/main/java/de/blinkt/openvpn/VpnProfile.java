@@ -167,7 +167,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public int mVersion=0;
 
     /* Options no longer used in new profiles */
-    public String mServerName = "openvpn.blinkt.de";
+    public String mServerName = "openvpn.example.com";
     public String mServerPort = "1194";
     public boolean mUseUdp = true;
 

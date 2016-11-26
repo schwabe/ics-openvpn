@@ -207,8 +207,10 @@ class LogFileHandler extends Handler {
             }
             VpnStatus.logDebug(R.string.reread_log, itemsRead);
         } finally {
-            VpnStatus.readFileLog = true;
-            VpnStatus.readFileLock.notifyAll();
+            synchronized (VpnStatus.readFileLock) {
+                VpnStatus.readFileLog = true;
+                VpnStatus.readFileLock.notifyAll();
+            }
         }
     }
 

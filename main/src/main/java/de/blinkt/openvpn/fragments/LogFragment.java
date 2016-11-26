@@ -667,7 +667,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
                             mSpeedView.setText(cleanLogMessage);
                         }
                         if (mConnectStatus != null)
-                            mConnectStatus.setText(getString(resId));
+                            mConnectStatus.setText(cleanLogMessage);
                     }
                 }
             });

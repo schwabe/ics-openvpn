@@ -425,6 +425,7 @@ public class ConfigParser {
         Vector<String> tlscrypt = getOption("tls-crypt", 1, 1);
         if (tlscrypt!=null) {
             np.mUseTLSAuth = true;
+            np.mTLSAuthFilename = tlscrypt.get(1);
             np.mTLSAuthDirection = "tls-crypt";
         }
 

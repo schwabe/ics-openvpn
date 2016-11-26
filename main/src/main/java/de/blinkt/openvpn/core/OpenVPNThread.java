@@ -87,7 +87,6 @@ public class OpenVPNThread implements Runnable {
                         mArgv = noPieArgv;
                         VpnStatus.logInfo("PIE Version could not be executed. Trying no PIE version");
                         run();
-                        return;
                     }
 
                 }

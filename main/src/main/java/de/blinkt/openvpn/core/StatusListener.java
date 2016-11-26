@@ -39,7 +39,7 @@ public class StatusListener {
                     DataInputStream fd = new DataInputStream(new ParcelFileDescriptor.AutoCloseInputStream(pfd));
 
                     short len = fd.readShort();
-                    byte[] buf = new byte[4095];
+                    byte[] buf = new byte[65336];
                     while (len != 0x7fff) {
                         fd.readFully(buf, 0, len);
                         LogItem logitem = new LogItem(buf, len);

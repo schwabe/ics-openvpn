@@ -71,7 +71,7 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
             if (mProfile.mAuthenticationType == VpnProfile.TYPE_STATICKEYS)
                 mUsePull.setChecked(false);
 
-			mUsePull.setEnabled(mProfile.mAuthenticationType == VpnProfile.TYPE_STATICKEYS);
+			mUsePull.setEnabled(mProfile.mAuthenticationType != VpnProfile.TYPE_STATICKEYS);
 
 			// Sets Summary
 			onPreferenceChange(mIPv4, mIPv4.getText());

@@ -141,77 +141,75 @@ class LogFileHandler extends Handler {
             VpnStatus.logException(e);
             e.printStackTrace();
             // ignore reading file error
-        }
-    }
-
-
-    protected void readCacheContents(InputStream in) throws IOException {
-        try {
-            BufferedInputStream logFile = new BufferedInputStream(in);
-
-            byte[] buf = new byte[16384];
-            int read = logFile.read(buf, 0, 5);
-            int itemsRead = 0;
-
-
-            readloop:
-            while (read >= 5) {
-                int skipped = 0;
-                while (buf[skipped] != MAGIC_BYTE) {
-                    skipped++;
-                    if (!(logFile.read(buf, skipped + 4, 1) == 1) || skipped + 10 > buf.length) {
-                        VpnStatus.logDebug(String.format(Locale.US, "Skipped %d bytes and no a magic byte found", skipped));
-                        break readloop;
-                    }
-                }
-                if (skipped > 0)
-                    VpnStatus.logDebug(String.format(Locale.US, "Skipped %d bytes before finding a magic byte", skipped));
-
-                int len = ByteBuffer.wrap(buf, skipped + 1, 4).asIntBuffer().get();
-
-                // Marshalled LogItem
-                int pos = 0;
-                byte buf2[] = new byte[buf.length];
-
-                while (pos < len) {
-                    byte b = (byte) logFile.read();
-                    if (b == MAGIC_BYTE) {
-                        VpnStatus.logDebug(String.format(Locale.US, "Unexpected magic byte found at pos %d, abort current log item", pos));
-                        read = logFile.read(buf, 1, 4) + 1;
-                        continue readloop;
-                    } else if (b == MAGIC_BYTE + 1) {
-                        b = (byte) logFile.read();
-                        if (b == 0)
-                            b = MAGIC_BYTE;
-                        else if (b == 1)
-                            b = MAGIC_BYTE + 1;
-                        else {
-                            VpnStatus.logDebug(String.format(Locale.US, "Escaped byte not 0 or 1: %d", b));
-                            read = logFile.read(buf, 1, 4) + 1;
-                            continue readloop;
-                        }
-                    }
-                    buf2[pos++] = b;
-                }
-
-                restoreLogItem(buf2, len);
-
-                //Next item
-                read = logFile.read(buf, 0, 5);
-                itemsRead++;
-                if (itemsRead > 2 * VpnStatus.MAXLOGENTRIES) {
-                    VpnStatus.logError("Too many logentries read from cache, aborting.");
-                    read = 0;
-                }
-
-            }
-            VpnStatus.logDebug(R.string.reread_log, itemsRead);
         } finally {
             synchronized (VpnStatus.readFileLock) {
                 VpnStatus.readFileLog = true;
                 VpnStatus.readFileLock.notifyAll();
             }
         }
+    }
+
+
+    protected void readCacheContents(InputStream in) throws IOException {
+        BufferedInputStream logFile = new BufferedInputStream(in);
+
+        byte[] buf = new byte[16384];
+        int read = logFile.read(buf, 0, 5);
+        int itemsRead = 0;
+
+
+        readloop:
+        while (read >= 5) {
+            int skipped = 0;
+            while (buf[skipped] != MAGIC_BYTE) {
+                skipped++;
+                if (!(logFile.read(buf, skipped + 4, 1) == 1) || skipped + 10 > buf.length) {
+                    VpnStatus.logDebug(String.format(Locale.US, "Skipped %d bytes and no a magic byte found", skipped));
+                    break readloop;
+                }
+            }
+            if (skipped > 0)
+                VpnStatus.logDebug(String.format(Locale.US, "Skipped %d bytes before finding a magic byte", skipped));
+
+            int len = ByteBuffer.wrap(buf, skipped + 1, 4).asIntBuffer().get();
+
+            // Marshalled LogItem
+            int pos = 0;
+            byte buf2[] = new byte[buf.length];
+
+            while (pos < len) {
+                byte b = (byte) logFile.read();
+                if (b == MAGIC_BYTE) {
+                    VpnStatus.logDebug(String.format(Locale.US, "Unexpected magic byte found at pos %d, abort current log item", pos));
+                    read = logFile.read(buf, 1, 4) + 1;
+                    continue readloop;
+                } else if (b == MAGIC_BYTE + 1) {
+                    b = (byte) logFile.read();
+                    if (b == 0)
+                        b = MAGIC_BYTE;
+                    else if (b == 1)
+                        b = MAGIC_BYTE + 1;
+                    else {
+                        VpnStatus.logDebug(String.format(Locale.US, "Escaped byte not 0 or 1: %d", b));
+                        read = logFile.read(buf, 1, 4) + 1;
+                        continue readloop;
+                    }
+                }
+                buf2[pos++] = b;
+            }
+
+            restoreLogItem(buf2, len);
+
+            //Next item
+            read = logFile.read(buf, 0, 5);
+            itemsRead++;
+            if (itemsRead > 2 * VpnStatus.MAXLOGENTRIES) {
+                VpnStatus.logError("Too many logentries read from cache, aborting.");
+                read = 0;
+            }
+
+        }
+        VpnStatus.logDebug(R.string.reread_log, itemsRead);
     }
 
     protected void restoreLogItem(byte[] buf, int len) throws UnsupportedEncodingException {

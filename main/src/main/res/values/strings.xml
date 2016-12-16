@@ -42,13 +42,14 @@
     <string name="duplicate_profile_name">Please enter a unique Profile Name</string>
     <string name="profilename">Profile Name</string>
     <string name="no_keystore_cert_selected">You must select a User certificate</string>
+    <string name="no_ca_cert_selected">You must select a CA certificate</string>
     <string name="no_error_found">No error found</string>
     <string name="config_error_found">Error in Configuration</string>
     <string name="ipv4_format_error">Error parsing the IPv4 address</string>
     <string name="custom_route_format_error">Error parsing the custom routes</string>
     <string name="pw_query_hint">(leave empty to query on demand)</string>
     <string name="vpn_shortcut">OpenVPN Shortcut</string>
-    <string name="vpn_launch_title">Connect to VPN</string>
+    <string name="vpn_launch_title">Connecting to VPN…</string>
     <string name="shortcut_profile_notfound">Profile specified in shortcut not found</string>
     <string name="random_host_prefix">Random Host Prefix</string>
     <string name="random_host_summary">Adds 6 random chars in front of hostname</string>

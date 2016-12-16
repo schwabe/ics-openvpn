@@ -113,6 +113,12 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
         public String getLastConnectedVPN() throws RemoteException {
             return VpnStatus.getLastConnectedVPNProfile();
         }
+
+        @Override
+        public void setCachedPassword(String uuid, int type, String password) {
+            PasswordCache.setCachedPassword(uuid, type, password);
+        }
+
     };
 
     @Override
@@ -162,7 +168,7 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
     private static final int SEND_NEW_BYTECOUNT = 102;
     private static final int SEND_NEW_CONNECTED_VPN = 103;
 
-    static class OpenVPNStatusHandler extends Handler {
+    private static class OpenVPNStatusHandler extends Handler {
         WeakReference<OpenVPNStatusService> service = null;
 
         private void setService(OpenVPNStatusService statusService) {
@@ -188,7 +194,7 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
                             broadcastItem.newLogItem((LogItem) msg.obj);
                             break;
                         case SEND_NEW_BYTECOUNT:
-                            Pair<Long, Long> inout = (Pair<Long, Long>) msg.obj;
+                        Pair<Long, Long> inout = (Pair<Long, Long>) msg.obj;
                             broadcastItem.updateByteCount(inout.first, inout.second);
                             break;
                         case SEND_NEW_STATE:

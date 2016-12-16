@@ -9,13 +9,18 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.net.VpnService;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -29,6 +34,9 @@ import java.io.IOException;
 
 import de.blinkt.openvpn.activities.LogWindow;
 import de.blinkt.openvpn.core.ConnectionStatus;
+import de.blinkt.openvpn.core.IServiceStatus;
+import de.blinkt.openvpn.core.OpenVPNStatusService;
+import de.blinkt.openvpn.core.PasswordCache;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 import de.blinkt.openvpn.core.VpnStatus;
@@ -73,13 +81,41 @@ public class LaunchVPN extends Activity {
     private boolean mhideLog = false;
 
     private boolean mCmfixed = false;
+    private String mTransientAuthPW;
+    private String mTransientCertOrPCKS12PW;
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-
+        setContentView(R.layout.launchvpn);
         startVpnFromIntent();
     }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder binder) {
+            IServiceStatus service = IServiceStatus.Stub.asInterface(binder);
+            try {
+                if (mTransientAuthPW != null)
+
+                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.AUTHPASSWORD, mTransientAuthPW);
+                if (mTransientCertOrPCKS12PW != null)
+                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
+
+                onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
+
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+            unbindService(this);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
 
     protected void startVpnFromIntent() {
         // Resolve the intent
@@ -161,13 +197,13 @@ public class LaunchVPN extends Activity {
                                 mSelectedProfile.mPassword = pw;
                             } else {
                                 mSelectedProfile.mPassword = null;
-                                mSelectedProfile.mTransientPW = pw;
+                                mTransientAuthPW = pw;
                             }
                         } else {
-                            mSelectedProfile.mTransientPCKS12PW = entry.getText().toString();
+                            mTransientCertOrPCKS12PW = entry.getText().toString();
                         }
-                        onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
-
+                        Intent intent = new Intent(LaunchVPN.this, OpenVPNStatusService.class);
+                        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
                     }
 
                 });
@@ -191,7 +227,7 @@ public class LaunchVPN extends Activity {
 
         if (requestCode == START_VPN_PROFILE) {
             if (resultCode == Activity.RESULT_OK) {
-                int needpw = mSelectedProfile.needUserPWInput(false);
+                int needpw = mSelectedProfile.needUserPWInput(mTransientCertOrPCKS12PW, mTransientAuthPW);
                 if (needpw != 0) {
                     VpnStatus.updateStateString("USER_VPN_PASSWORD", "", R.string.state_user_vpn_password,
                             ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);

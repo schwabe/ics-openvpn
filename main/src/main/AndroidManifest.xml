@@ -198,6 +198,7 @@
             android:grantUriPermissions="true"
             tools:ignore="ExportedContentProvider" />
 
+
         <!--
         <receiver android:name="core.GetRestrictionReceiver">
             <intent-filter>

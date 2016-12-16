@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -52,6 +51,7 @@ import javax.crypto.NoSuchPaddingException;
 import de.blinkt.openvpn.core.Connection;
 import de.blinkt.openvpn.core.NativeUtils;
 import de.blinkt.openvpn.core.OpenVPNService;
+import de.blinkt.openvpn.core.PasswordCache;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.X509Utils;
@@ -74,10 +74,6 @@ public class VpnProfile implements Serializable, Cloneable {
     public static final int DEFAULT_MSSFIX_SIZE = 1280;
     public static String DEFAULT_DNS1 = "8.8.8.8";
     public static String DEFAULT_DNS2 = "8.8.4.4";
-
-    public transient String mTransientPW = null;
-    public transient String mTransientPCKS12PW = null;
-
 
     public static final int TYPE_CERTIFICATES = 0;
     public static final int TYPE_PKCS12 = 1;
@@ -164,7 +160,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public boolean mPushPeerInfo = false;
     public static final boolean mIsOpenVPN22 = false;
 
-    public int mVersion=0;
+    public int mVersion = 0;
 
     /* Options no longer used in new profiles */
     public String mServerName = "openvpn.example.com";
@@ -313,7 +309,7 @@ public class VpnProfile implements Serializable, Cloneable {
             mConnectRetry = "2";
 
         if (TextUtils.isEmpty(mConnectRetryMaxTime))
-            mConnectRetryMaxTime="300";
+            mConnectRetryMaxTime = "300";
 
 
         if (!mIsOpenVPN22)
@@ -406,7 +402,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
             if (mAuthenticationType == TYPE_STATICKEYS)
                 cfg += insertFileData("secret", mTLSAuthFilename);
-            else if(useTlsCrypt)
+            else if (useTlsCrypt)
                 cfg += insertFileData("tls-crypt", mTLSAuthFilename);
             else
                 cfg += insertFileData("tls-auth", mTLSAuthFilename);
@@ -503,7 +499,7 @@ public class VpnProfile implements Serializable, Cloneable {
                             break;
                     }
                 if (!TextUtils.isEmpty(mx509UsernameField))
-                    cfg+= "x509-username-field " + openVpnEscape(mx509UsernameField) +"\n";
+                    cfg += "x509-username-field " + openVpnEscape(mx509UsernameField) + "\n";
             }
             if (mExpectTLSCert)
                 cfg += "remote-cert-tls server\n";
@@ -858,7 +854,11 @@ public class VpnProfile implements Serializable, Cloneable {
         if (mAuthenticationType == TYPE_KEYSTORE || mAuthenticationType == TYPE_USERPASS_KEYSTORE) {
             if (mAlias == null)
                 return R.string.no_keystore_cert_selected;
+        } else {
+            if (TextUtils.isEmpty(mCaFilename))
+                return R.string.no_ca_cert_selected;
         }
+
 
         if (!mUsePull || mAuthenticationType == TYPE_STATICKEYS) {
             if (mIPv4Address == null || cidrToIPAndNetmask(mIPv4Address) == null)
@@ -901,10 +901,9 @@ public class VpnProfile implements Serializable, Cloneable {
     //! Openvpn asks for a "Private Key", this should be pkcs12 key
     //
     public String getPasswordPrivateKey() {
-        if (mTransientPCKS12PW != null) {
-            String pwcopy = mTransientPCKS12PW;
-            mTransientPCKS12PW = null;
-            return pwcopy;
+        String cachedPw = PasswordCache.getPKCS12orCertificatePassword(mUuid, true);
+        if (cachedPw != null) {
+            return cachedPw;
         }
         switch (mAuthenticationType) {
             case TYPE_PKCS12:
@@ -969,33 +968,32 @@ public class VpnProfile implements Serializable, Cloneable {
             return false;
     }
 
-    public int needUserPWInput(boolean ignoreTransient) {
+    public int needUserPWInput(String transientCertOrPkcs12PW, String mTransientAuthPW) {
         if ((mAuthenticationType == TYPE_PKCS12 || mAuthenticationType == TYPE_USERPASS_PKCS12) &&
                 (mPKCS12Password == null || mPKCS12Password.equals(""))) {
-            if (ignoreTransient || mTransientPCKS12PW == null)
+            if (transientCertOrPkcs12PW == null)
                 return R.string.pkcs12_file_encryption_key;
         }
 
         if (mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) {
             if (requireTLSKeyPassword() && TextUtils.isEmpty(mKeyPassword))
-                if (ignoreTransient || mTransientPCKS12PW == null) {
+                if (transientCertOrPkcs12PW == null) {
                     return R.string.private_key_password;
                 }
         }
 
         if (isUserPWAuth() &&
                 (TextUtils.isEmpty(mUsername) ||
-                        (TextUtils.isEmpty(mPassword) && (mTransientPW == null || ignoreTransient)))) {
+                        (TextUtils.isEmpty(mPassword) && mTransientAuthPW == null))) {
             return R.string.password;
         }
         return 0;
     }
 
     public String getPasswordAuth() {
-        if (mTransientPW != null) {
-            String pwcopy = mTransientPW;
-            mTransientPW = null;
-            return pwcopy;
+        String cachedPw = PasswordCache.getAuthPassword(mUuid, true);
+        if (cachedPw != null) {
+            return cachedPw;
         } else {
             return mPassword;
         }

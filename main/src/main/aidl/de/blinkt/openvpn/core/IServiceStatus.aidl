@@ -18,7 +18,12 @@ interface IServiceStatus {
         void unregisterStatusCallback(in IStatusCallbacks cb);
 
         /**
-         *
+         * Returns the last connedcted VPN
          */
         String getLastConnectedVPN();
+
+        /**
+          * Sets a cached password
+          */
+       void setCachedPassword(in String uuid, int type, String password);
 }

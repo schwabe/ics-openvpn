@@ -12,6 +12,7 @@ import android.net.LocalSocketAddress;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 
 import junit.framework.Assert;
@@ -141,7 +142,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             // Close the management socket after client connected
             try {
                 mServerSocket.close();
-            } catch (IOException e){
+            } catch (IOException e) {
                 VpnStatus.logException(e);
             }
 
@@ -564,15 +565,16 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         if (needed.equals("Private Key")) {
             pw = mProfile.getPasswordPrivateKey();
         } else if (needed.equals("Auth")) {
-            String usercmd = String.format("username '%s' %s\n",
-                    needed, VpnProfile.openVpnEscape(mProfile.mUsername));
-            managmentCommand(usercmd);
             pw = mProfile.getPasswordAuth();
         }
         if (pw != null) {
+            String usercmd = String.format("username '%s' %s\n",
+                    needed, VpnProfile.openVpnEscape(mProfile.mUsername));
+            managmentCommand(usercmd);
             String cmd = String.format("password '%s' %s\n", needed, VpnProfile.openVpnEscape(pw));
             managmentCommand(cmd);
         } else {
+            mOpenVPNService.requestInputFromUser(R.string.password, needed);
             VpnStatus.logError(String.format("Openvpn requires Authentication type '%s' but no password/key information available", needed));
         }
 

@@ -356,7 +356,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                 return 1;
 
             // Copied from Long.compare
-            return (lhs.mLastUsed < rhs.mLastUsed) ? -1 : ((lhs.mLastUsed == rhs.mLastUsed) ? 0 : 1);
+            return (lhs.mLastUsed > rhs.mLastUsed) ? -1 : ((lhs.mLastUsed == rhs.mLastUsed) ? 0 : 1);
         }
 
     }

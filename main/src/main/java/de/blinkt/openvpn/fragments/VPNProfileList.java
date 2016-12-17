@@ -406,7 +406,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                 .setIcon(R.drawable.ic_sort)
                 .setAlphabeticShortcut('s')
                 .setTitleCondensed(getString(R.string.sort))
-                .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+                .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
     }
 

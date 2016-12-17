@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.ShortcutManager;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.VpnService;
@@ -30,6 +31,7 @@ import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.Log;
@@ -421,6 +423,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             int profileVersion = intent.getIntExtra(getPackageName() + ".profileVersion", 0);
             // Try for 10s to get current version of the profile
             mProfile = ProfileManager.get(this, profileUUID, profileVersion, 100);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+                updateShortCutUsage(mProfile);
+            }
+
         } else {
             /* The intent is null when we are set as always-on or the service has been restarted. */
             mProfile = ProfileManager.getLastConnectedProfile(this);
@@ -453,6 +459,14 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         VpnStatus.setConnectedVPNProfile(mProfile.getUUIDString());
 
         return START_STICKY;
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N_MR1)
+    private void updateShortCutUsage(VpnProfile profile) {
+        if (profile == null)
+            return;
+        ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
+        shortcutManager.reportShortcutUsed(profile.getUUIDString());
     }
 
     private void startOpenVPN() {

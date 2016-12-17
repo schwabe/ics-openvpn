@@ -238,6 +238,7 @@ public class LaunchVPN extends Activity {
 
                     if (!mhideLog && showLogWindow)
                         showLogWindow();
+                    ProfileManager.updateLRU(this, mSelectedProfile);
                     VPNLaunchHelper.startOpenVpn(mSelectedProfile, getBaseContext());
                     finish();
                 }

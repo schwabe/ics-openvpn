@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.ShortcutManager;
 import android.preference.PreferenceManager;
 
 import java.io.IOException;
@@ -133,9 +134,14 @@ public class ProfileManager {
         return mLastConnectedVpn == tmpprofile;
     }
 
-
     public void saveProfile(Context context, VpnProfile profile) {
-        profile.mVersion += 1;
+        saveProfile(context, profile, true);
+    }
+
+    private void saveProfile(Context context, VpnProfile profile, boolean updateVersion) {
+
+        if (updateVersion)
+            profile.mVersion += 1;
         ObjectOutputStream vpnfile;
         try {
             vpnfile = new ObjectOutputStream(context.openFileOutput((profile.getUUID().toString() + ".vp"), Activity.MODE_PRIVATE));
@@ -225,5 +231,11 @@ public class ProfileManager {
         String uuid = prefs.getString("alwaysOnVpn", null);
         return get(uuid);
 
+    }
+
+    public static void updateLRU(Context c, VpnProfile profile) {
+        profile.mLastUsed = System.currentTimeMillis();
+        // LRU does not change the profile, no need for the service to refresh
+        getInstance(c).saveProfile(c, profile, false);
     }
 }

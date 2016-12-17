@@ -162,6 +162,9 @@ public class VpnProfile implements Serializable, Cloneable {
 
     public int mVersion = 0;
 
+    // timestamp when the profile was last used
+    public long mLastUsed;
+
     /* Options no longer used in new profiles */
     public String mServerName = "openvpn.example.com";
     public String mServerPort = "1194";
@@ -175,6 +178,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         mConnections = new Connection[1];
         mConnections[0] = new Connection();
+        mLastUsed = System.currentTimeMillis();
     }
 
     public static String openVpnEscape(String unescaped) {
@@ -190,6 +194,17 @@ public class VpnProfile implements Serializable, Cloneable {
             return unescaped;
         else
             return '"' + escapedString + '"';
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof VpnProfile) {
+            VpnProfile vpnProfile = (VpnProfile) obj;
+            return mUuid.equals(vpnProfile.mUuid);
+        } else {
+            return false;
+        }
     }
 
     public void clearDefaults() {

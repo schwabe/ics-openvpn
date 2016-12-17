@@ -344,6 +344,8 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
     static class VpnProfileLRUComparator implements Comparator<VpnProfile> {
 
+        VpnProfileNameComparator nameComparator = new VpnProfileNameComparator();
+
         @Override
         public int compare(VpnProfile lhs, VpnProfile rhs) {
             if (lhs == rhs)
@@ -356,9 +358,13 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                 return 1;
 
             // Copied from Long.compare
-            return (lhs.mLastUsed > rhs.mLastUsed) ? -1 : ((lhs.mLastUsed == rhs.mLastUsed) ? 0 : 1);
+            if (lhs.mLastUsed > rhs.mLastUsed)
+                return -1;
+            if (lhs.mLastUsed < rhs.mLastUsed)
+                return 1;
+            else
+                return nameComparator.compare(lhs, rhs);
         }
-
     }
 
 
@@ -375,10 +381,10 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         Collection<VpnProfile> allvpn = getPM().getProfiles();
         TreeSet<VpnProfile> sortedset;
         if (sortByLRU)
-            sortedset= new TreeSet<>(new VpnProfileLRUComparator());
+            sortedset = new TreeSet<>(new VpnProfileLRUComparator());
         else
             sortedset = new TreeSet<>(new VpnProfileNameComparator());
-        
+
         sortedset.addAll(allvpn);
         mArrayadapter.clear();
         mArrayadapter.addAll(sortedset);
@@ -419,7 +425,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             return true;
         } else if (itemId == MENU_IMPORT_PROFILE) {
             return startImportConfigFilePicker();
-        } else if (itemId == MENU_CHANGE_SORTING){
+        } else if (itemId == MENU_CHANGE_SORTING) {
             return changeSorting();
         } else {
             return super.onOptionsItemSelected(item);

@@ -7,6 +7,7 @@ package de.blinkt.openvpn.core;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -100,7 +101,10 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
                 return pipe[0];
             } catch (IOException e) {
                 e.printStackTrace();
-                throw new RemoteException(e.getMessage());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+                    throw new RemoteException(e.getMessage());
+                }
+                return null;
             }
         }
 

@@ -869,7 +869,7 @@ public class VpnProfile implements Serializable, Cloneable {
         if (mAuthenticationType == TYPE_KEYSTORE || mAuthenticationType == TYPE_USERPASS_KEYSTORE) {
             if (mAlias == null)
                 return R.string.no_keystore_cert_selected;
-        } else {
+        } else if (mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES){
             if (TextUtils.isEmpty(mCaFilename))
                 return R.string.no_ca_cert_selected;
         }

@@ -175,6 +175,8 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                 .build();
 
         LinkedList<ShortcutInfo> newShortcuts = new LinkedList<>();
+        LinkedList<ShortcutInfo> updateShortcuts = new LinkedList<>();
+
         LinkedList<String> removeShortcuts = new LinkedList<>();
         LinkedList<String> disableShortcuts = new LinkedList<>();
 
@@ -186,6 +188,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         sortedProfilesLRU.addAll(profileManager.getProfiles());
 
         LinkedList<VpnProfile> LRUProfiles = new LinkedList<>();
+        maxvpn = Math.min(maxvpn, sortedProfilesLRU.size());
 
         for (int i = 0; i < maxvpn; i++) {
             LRUProfiles.add(sortedProfilesLRU.pollFirst());
@@ -209,8 +212,10 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                         LRUProfiles.remove(p);
                     else
                         removeShortcuts.add(p.getUUIDString());
-                    //}
-                    // XXX: Update Shortcut
+
+                    if (!p.getName().equals(shortcut.getShortLabel()))
+                        updateShortcuts.add(createShortcut(p));
+
                 }
 
             }
@@ -221,6 +226,8 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         for (VpnProfile p : LRUProfiles)
             newShortcuts.add(createShortcut(p));
 
+        if (updateShortcuts.size() > 0)
+            shortcutManager.updateShortcuts(updateShortcuts);
         if (removeShortcuts.size() > 0)
             shortcutManager.removeDynamicShortcuts(removeShortcuts);
         if (newShortcuts.size() > 0)
@@ -235,6 +242,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         shortcutIntent.setClass(getActivity(), LaunchVPN.class);
         shortcutIntent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
         shortcutIntent.setAction(Intent.ACTION_MAIN);
+        shortcutIntent.putExtra("EXTRA_HIDELOG", true);
 
         return new ShortcutInfo.Builder(getContext(), profile.getUUIDString())
                 .setShortLabel(profile.getName())

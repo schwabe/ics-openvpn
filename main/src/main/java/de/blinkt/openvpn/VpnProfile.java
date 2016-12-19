@@ -295,6 +295,7 @@ public class VpnProfile implements Serializable, Cloneable {
         }
 
         cfg += "machine-readable-output\n";
+        cfg += "allow-recursive-routing\n";
 
         // Users are confused by warnings that are misleading...
         cfg += "ifconfig-nowarn\n";
@@ -466,11 +467,17 @@ public class VpnProfile implements Serializable, Cloneable {
         cfg += routes;
 
         if (mOverrideDNS || !mUsePull) {
-            if (!TextUtils.isEmpty(mDNS1))
-                cfg += "dhcp-option DNS " + mDNS1 + "\n";
-            if (!TextUtils.isEmpty(mDNS2))
-                cfg += "dhcp-option DNS " + mDNS2 + "\n";
-            if (!TextUtils.isEmpty(mSearchDomain))
+            if (!TextUtils.isEmpty(mDNS1)) {
+                if (mDNS1.contains(":"))
+                    cfg += "dhcp-option DNS6 " + mDNS1 + "\n";
+                else
+                    cfg += "dhcp-option DNS " + mDNS1 + "\n";
+            } if (!TextUtils.isEmpty(mDNS2)) {
+                if (mDNS2.contains(":"))
+                    cfg += "dhcp-option DNS6 " + mDNS2 + "\n";
+                else
+                    cfg += "dhcp-option DNS " + mDNS2 + "\n";
+            } if (!TextUtils.isEmpty(mSearchDomain))
                 cfg += "dhcp-option DOMAIN " + mSearchDomain + "\n";
 
         }
@@ -874,6 +881,8 @@ public class VpnProfile implements Serializable, Cloneable {
                 return R.string.no_ca_cert_selected;
         }
 
+        if (mCheckRemoteCN && mX509AuthType==X509_VERIFY_TLSREMOTE)
+            return R.string.deprecated_tls_remote;
 
         if (!mUsePull || mAuthenticationType == TYPE_STATICKEYS) {
             if (mIPv4Address == null || cidrToIPAndNetmask(mIPv4Address) == null)

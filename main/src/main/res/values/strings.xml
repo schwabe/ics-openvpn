@@ -422,5 +422,6 @@
     <string name="sort">Sort</string>
     <string name="sorted_lru">Profiles sorted by last recently used</string>
     <string name="sorted_az">Profiles sorted by name</string>
+    <string name="deprecated_tls_remote">Config uses option tls-remote that was deprecated in 2.3 and finally removed in 2.4</string>
 
 </resources>

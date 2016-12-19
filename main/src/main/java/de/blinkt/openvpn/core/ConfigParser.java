@@ -259,6 +259,7 @@ public class ConfigParser {
             "dhcp-renew",
             "dh",
             "group",
+            "allow-recursive-routing",
             "ip-win32",
             "management-hold",
             "management",

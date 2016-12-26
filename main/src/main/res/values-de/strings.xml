@@ -164,6 +164,7 @@
   <string name="private_key_password">Passphrase des privaten Schlüssels</string>
   <string name="password">Passwort</string>
   <string name="file_icon">Dateisymbol</string>
+  <string name="tls_authentication">TLS-Authentifizierung</string>
   <string name="generated_config">Generierte Konfiguration</string>
   <string name="generalsettings">Einstellungen</string>
   <string name="owner_fix_summary">Versucht, den Eigentümer von /dev/tun auf system zu ändern. Einige Cyanogenmod 9-ROM-Versionen benötigen diese Option, damit die VPN-API funktioniert. Benötigt root.</string>
@@ -411,9 +412,9 @@
   <string name="alwaysonvpn">VPN beim Gerätestart und für Always-On verwenden</string>
   <string name="reconnect">Neu verbinden</string>
   <string name="qs_title">VPN an-/ausschalten</string>
-  <string name="qs_connect">Verbinding mit %s</string>
+  <string name="qs_connect">Mit %s verbinden</string>
   <string name="qs_disconnect">%s trennen</string>
-  <string name="connectretrymaxmessage">Geben Sie die maximale Zeit zwischen Verbindungsversuchen ein. OpenVPN wird die Wartezeit nach einem fehlgeschlagenen Verbindungsversuch langsam bis zu diesem Wert anheben. Standardwert ist 300 Sekunden.</string>
+  <string name="connectretrymaxmessage">Maximale Zeit zwischen Verbindungsversuchen. OpenVPN erhöht die Wartezeit zwischen zwei Verbindungsversuchen schrittweise bis zu dieser Zeit. Der Standardwert ist 300s.</string>
   <string name="connectretrymaxtitle">Maximale Zeit zwischen Verbindungsversuchen</string>
   <string name="state_waitconnectretry">Warte %ss Sekunden zwischen zwei Verbindungsversuchen</string>
 </resources>

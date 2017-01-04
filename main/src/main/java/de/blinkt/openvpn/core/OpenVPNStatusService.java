@@ -66,6 +66,9 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
         @Override
         public ParcelFileDescriptor registerStatusCallback(IStatusCallbacks cb) throws RemoteException {
             final LogItem[] logbuffer = VpnStatus.getlogbuffer();
+            if (mLastUpdateMessage != null)
+                sendUpdate(cb, mLastUpdateMessage);
+
             mCallbacks.register(cb);
             try {
                 final ParcelFileDescriptor[] pipe = ParcelFileDescriptor.createPipe();
@@ -137,13 +140,15 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
         msg.sendToTarget();
     }
 
-    class UpdateMessage {
+    static UpdateMessage mLastUpdateMessage;
+
+    static class UpdateMessage {
         public String state;
         public String logmessage;
         public ConnectionStatus level;
-        public int resId;
+        int resId;
 
-        public UpdateMessage(String state, String logmessage, int resId, ConnectionStatus level) {
+        UpdateMessage(String state, String logmessage, int resId, ConnectionStatus level) {
             this.state = state;
             this.resId = resId;
             this.logmessage = logmessage;
@@ -155,7 +160,8 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
     @Override
     public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level) {
 
-        Message msg = mHandler.obtainMessage(SEND_NEW_STATE, new UpdateMessage(state, logmessage, localizedResId, level));
+        mLastUpdateMessage = new UpdateMessage(state, logmessage, localizedResId, level);
+        Message msg = mHandler.obtainMessage(SEND_NEW_STATE, mLastUpdateMessage);
         msg.sendToTarget();
     }
 
@@ -198,7 +204,7 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
                             broadcastItem.newLogItem((LogItem) msg.obj);
                             break;
                         case SEND_NEW_BYTECOUNT:
-                        Pair<Long, Long> inout = (Pair<Long, Long>) msg.obj;
+                            Pair<Long, Long> inout = (Pair<Long, Long>) msg.obj;
                             broadcastItem.updateByteCount(inout.first, inout.second);
                             break;
                         case SEND_NEW_STATE:

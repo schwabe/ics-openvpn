@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">解析自訂路由時發生錯誤</string>
   <string name="pw_query_hint">(如需查詢，請留空)</string>
   <string name="vpn_shortcut">OpenVPN 捷徑</string>
-  <string name="vpn_launch_title">連線到 VPN</string>
   <string name="shortcut_profile_notfound">在捷徑中找不到指定的設定檔</string>
   <string name="random_host_prefix">隨機主機名稱的前綴字</string>
   <string name="random_host_summary">在主機名稱前加入 6 個隨機字元</string>
@@ -163,7 +162,6 @@
   <string name="private_key_password">私密金鑰密碼</string>
   <string name="password">密碼</string>
   <string name="file_icon">檔案圖標</string>
-  <string name="tls_authentication">傳輸層防火牆(TLS Firewall)</string>
   <string name="generated_config">生成的設定檔</string>
   <string name="generalsettings">設定</string>
   <string name="owner_fix_summary">嘗試修正/dev/tun擁有者權限。已知有些CM9 ROM需要透過這個來才能使得VPN服務API得以運作。本功能需要Root。</string>

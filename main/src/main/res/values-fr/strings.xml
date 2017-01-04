@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Impossible d\'analyser les redirections personnalisées</string>
   <string name="pw_query_hint">(Laisser vide pour interroger sur demande)</string>
   <string name="vpn_shortcut">"Raccourci OpenVPN"</string>
-  <string name="vpn_launch_title">"Se connecter au VPN"</string>
   <string name="shortcut_profile_notfound">"Profil spécifié dans raccourci introuvable"</string>
   <string name="random_host_prefix">Préfixe de l\'hôte aléatoire</string>
   <string name="random_host_summary">"Ajoute 6 caractères aléatoires en face du nom d\'hôte"</string>
@@ -164,7 +163,6 @@
   <string name="private_key_password">Mot de passe de la clé privée</string>
   <string name="password">Mot de passe</string>
   <string name="file_icon">icône du fichier</string>
-  <string name="tls_authentication">Authentification TLS</string>
   <string name="generated_config">Configuration générée</string>
   <string name="generalsettings">Paramètres</string>
   <string name="owner_fix_summary">Essaie de définir le propriétaire de l\'interface /dev/tun. Certaines images CM9 en ont besoin pour faire fonctionner l\'API VPNService. Nécessite les droits root.</string>

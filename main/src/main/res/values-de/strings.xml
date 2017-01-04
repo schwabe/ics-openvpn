@@ -44,13 +44,14 @@
   <string name="duplicate_profile_name">Profilname bereits vorhanden. Bitte vergeben Sie einen eindeutigen Profilnamen.</string>
   <string name="profilename">Profilname</string>
   <string name="no_keystore_cert_selected">Kein Benutzerzertifikat ausgewählt</string>
+  <string name="no_ca_cert_selected">Kein Benutzerzertifikat ausgewählt.</string>
   <string name="no_error_found">Kein Fehler.</string>
   <string name="config_error_found">Fehler in der Konfiguration</string>
   <string name="ipv4_format_error">Kann die konfigurierte IPv4 Adresse nicht parsen</string>
   <string name="custom_route_format_error">Kann die manuell angegeben Routen nicht verarbeiten</string>
   <string name="pw_query_hint">(Leer lassen, um nicht zu speichern)</string>
   <string name="vpn_shortcut">OpenVPN-Verknüpfung</string>
-  <string name="vpn_launch_title">VPN verbinden</string>
+  <string name="vpn_launch_title">Verbinde VPN&#8230;</string>
   <string name="shortcut_profile_notfound">Von der Verknüpfung referenziertes Profil konnte nicht gefunden werden</string>
   <string name="random_host_prefix">Zufälliger Host-Präfix</string>
   <string name="random_host_summary">Fügt 6 zufällige Zeichen am Anfang des Hostnamens hinzu</string>
@@ -164,7 +165,6 @@
   <string name="private_key_password">Passphrase des privaten Schlüssels</string>
   <string name="password">Passwort</string>
   <string name="file_icon">Dateisymbol</string>
-  <string name="tls_authentication">TLS-Authentifizierung</string>
   <string name="generated_config">Generierte Konfiguration</string>
   <string name="generalsettings">Einstellungen</string>
   <string name="owner_fix_summary">Versucht, den Eigentümer von /dev/tun auf system zu ändern. Einige Cyanogenmod 9-ROM-Versionen benötigen diese Option, damit die VPN-API funktioniert. Benötigt root.</string>

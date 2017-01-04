@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Lỗi phân tích cú pháp định tuyến tùy chỉnh</string>
   <string name="pw_query_hint">(để trống để truy vấn theo yêu cầu)</string>
   <string name="vpn_shortcut">Lối tắt Open VPN</string>
-  <string name="vpn_launch_title">Kết nối đến VPN</string>
   <string name="shortcut_profile_notfound">Hồ sơ quy định tại lối tắt không tìm thấy</string>
   <string name="random_host_prefix">Tiền tố miền ngẫu nhiên</string>
   <string name="random_host_summary">Thêm 6 ký tự ngẫu nhiên ở phía trước tên miền</string>
@@ -164,7 +163,6 @@
   <string name="private_key_password">Khóa mật khẩu riêng tư</string>
   <string name="password">Mật khẩu</string>
   <string name="file_icon">biểu tượng tập tin</string>
-  <string name="tls_authentication">Xác thực TLS</string>
   <string name="generated_config">Tạo cấu hình</string>
   <string name="generalsettings">Cài đặt</string>
   <string name="owner_fix_summary">Cố gắng thiết lập chủ sở hữu của /dev/tun vào hệ thống. Một vài ROM CM9 cần việc này để thực hiện thiết lập VPN API. Yêu cầu root.</string>

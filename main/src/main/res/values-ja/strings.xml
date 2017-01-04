@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">カスタム経路の解析エラー</string>
   <string name="pw_query_hint">必要に応じて入力するには空欄にしてください</string>
   <string name="vpn_shortcut">OpenVPN のショートカット</string>
-  <string name="vpn_launch_title">VPNに接続</string>
   <string name="shortcut_profile_notfound">ショートカットで指定されたプロファイルが見つかりません</string>
   <string name="random_host_prefix">ランダムなホスト プレフィックス</string>
   <string name="random_host_summary">ランダムな6文字をホスト名の前に付加します。</string>
@@ -170,7 +169,6 @@ SDカード上のデータは本質的に無防備です。すべてのアプリ
   <string name="private_key_password">秘密鍵のパスワード</string>
   <string name="password">パスワード</string>
   <string name="file_icon">ファイルのアイコン</string>
-  <string name="tls_authentication">TLS認証</string>
   <string name="generated_config">生成された設定</string>
   <string name="generalsettings">設定</string>
   <string name="owner_fix_summary">システムに/dev/tunの所有者を設定します。いくつかのCM9のイメージでVPNService APIを動作させるために必要です。root権限が必要です。</string>

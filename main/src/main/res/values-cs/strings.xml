@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Chyba při zpracování vlastního směrování</string>
   <string name="pw_query_hint">(nechej prázdné pro dotazování, až bude potřeba)</string>
   <string name="vpn_shortcut">OpenVPN zkratka</string>
-  <string name="vpn_launch_title">Připojit k VPN</string>
   <string name="shortcut_profile_notfound">Profil zvolený ve zkratce nenalezen</string>
   <string name="random_host_prefix">Náhodný prefix klienta</string>
   <string name="random_host_summary">Přidej 6 náhodných znaků před jméno klienta (hostname)</string>
@@ -164,7 +163,6 @@
   <string name="private_key_password">Heslo k soukromému klíči</string>
   <string name="password">Heslo</string>
   <string name="file_icon">ikona souboru</string>
-  <string name="tls_authentication">TLS autentikace</string>
   <string name="generated_config">Vygenerované nastavení</string>
   <string name="generalsettings">Nastavení</string>
   <string name="owner_fix_summary">Pokusit se nastavit vlastníka /dev/tun zařízení. Na některých systémech s CM9 je toto potřeba pro zprovoznění VPNService API. Vyžaduje root zařízení.</string>

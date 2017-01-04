@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Det går inte att tolka de anpassade rutterna</string>
   <string name="pw_query_hint">(lämna tom för förfrågan vid behov)</string>
   <string name="vpn_shortcut">OpenVPN genväg</string>
-  <string name="vpn_launch_title">Ansluta till VPN</string>
   <string name="shortcut_profile_notfound">Profilen som anges i genvägen hittades inte</string>
   <string name="random_host_prefix">Slumpmässigt värd-prefix</string>
   <string name="random_host_summary">Lägger till 6 slumpmässiga tecken framför hostname</string>
@@ -164,7 +163,6 @@
   <string name="private_key_password">Lösenord för privat nyckel</string>
   <string name="password">Lösenord</string>
   <string name="file_icon">filikon</string>
-  <string name="tls_authentication">TLS-autentisering</string>
   <string name="generated_config">Genererad konfiguration</string>
   <string name="generalsettings">Inställningar</string>
   <string name="owner_fix_summary">Försöker att sätta ägaren av /dev/tun till system. Vissa CM9 ROM behöver detta för att VPNService API ska fungera. Detta kräver root.</string>

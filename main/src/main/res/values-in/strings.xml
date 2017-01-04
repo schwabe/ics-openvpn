@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Gagal menganalisa rute buatan</string>
   <string name="pw_query_hint">(biarkan kosong untuk antrian permintaan)</string>
   <string name="vpn_shortcut">Jalan Pintas OpenVPN</string>
-  <string name="vpn_launch_title">Hubungkan VPN</string>
   <string name="shortcut_profile_notfound">Profil di shrotcut tidak ada</string>
   <string name="random_host_prefix">Acak awalan Host </string>
   <string name="random_host_summary">Tambah 6 karakter acak di depan nama host</string>
@@ -164,7 +163,6 @@
   <string name="private_key_password">Sandi kunci pribadi</string>
   <string name="password">Sandi</string>
   <string name="file_icon">ikon berkas</string>
-  <string name="tls_authentication">Otentikasi TLS</string>
   <string name="generated_config">Konfigurasi Dibuat</string>
   <string name="generalsettings">Pengaturan</string>
   <string name="owner_fix_summary">Mencoba menetapkan pemilik /dev/tun ke sistem. Beberapa gambar CM9 memerlukan ini untuk membuat API VPNService bekerja. Memerlukan akses Root.</string>

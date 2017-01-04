@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Kohandatud marsruudid ei allu süntaksianalüüsile</string>
   <string name="pw_query_hint">(jäta tühjaks, küsitakse vajadusel)</string>
   <string name="vpn_shortcut">OpenVPN kiirkäivitus</string>
-  <string name="vpn_launch_title">Ühendu VPN\'iga</string>
   <string name="shortcut_profile_notfound">Lühivalikus määratud profiil puudub</string>
   <string name="random_host_prefix">Juhuslik serveri eesliide</string>
   <string name="random_host_summary">Lisab 6 juhuslikku tähte serveri nime ette</string>
@@ -164,7 +163,6 @@
   <string name="private_key_password">Privaatse võtme salasõna</string>
   <string name="password">Salasõna</string>
   <string name="file_icon">faili ikoon</string>
-  <string name="tls_authentication">TLS autentimine</string>
   <string name="generated_config">Genereeritud konfiguratsioon</string>
   <string name="generalsettings">Seaded</string>
   <string name="owner_fix_summary">Püütakse seada /dev/tun omanikku system\'iks. VPNService API nõuab seda mõne CM9 versiooni puhul. Seade peab olema ruuditud.</string>

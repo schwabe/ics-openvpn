@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Error al analizar las rutas personalizadas</string>
   <string name="pw_query_hint">(Deje en blanco para consultar sobre demanda)</string>
   <string name="vpn_shortcut">Acceso directo de OpenVPN</string>
-  <string name="vpn_launch_title">Conectar a VPN</string>
   <string name="shortcut_profile_notfound">Perfil especificado en el acceso directo no encontrado</string>
   <string name="random_host_prefix">Prefijo aleatorio de Host</string>
   <string name="random_host_summary">Agrega 6 caracteres al azar delante del nombre de host</string>
@@ -164,7 +163,6 @@
   <string name="private_key_password">Contraseña de clave privada</string>
   <string name="password">Contraseña</string>
   <string name="file_icon">icono de archivo</string>
-  <string name="tls_authentication">Autenticación TLS</string>
   <string name="generated_config">Configuración generada</string>
   <string name="generalsettings">Preferencias</string>
   <string name="owner_fix_summary">Intenta establecer el propietario de /dev/tun a system. Algunas imágenes de CM9 lo necesitan hacer funcionar la API de VPNService. Requiere permisos root.</string>

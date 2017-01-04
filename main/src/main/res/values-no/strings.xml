@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Feil ved analyse av egendefinerte ruter</string>
   <string name="pw_query_hint">(La stå tomt for å søke på forespørsel)</string>
   <string name="vpn_shortcut">OpenVPN snarvei</string>
-  <string name="vpn_launch_title">Koble til VPN</string>
   <string name="shortcut_profile_notfound">Profilen som er angitt i snarveien ble ikke funnet</string>
   <string name="random_host_prefix">Tilfeldig vert prefiks</string>
   <string name="random_host_summary">Legger til 6 tilfeldige tegn foran vertsnavn</string>
@@ -135,7 +134,6 @@
   <string name="private_key_password">Privat nøkkel passord</string>
   <string name="password">Passord</string>
   <string name="file_icon">fil ikon</string>
-  <string name="tls_authentication">TLS-godkjenning</string>
   <string name="generated_config">Generert konfigurasjon</string>
   <string name="generalsettings">Innstillinger</string>
   <string name="owner_fix">Fiks eierskap av /dev/tun</string>

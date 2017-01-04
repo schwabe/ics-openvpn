@@ -37,7 +37,6 @@
   <string name="no_error_found">No s\'ha trobat cap error</string>
   <string name="config_error_found">S\'ha trobat un error a la configuració</string>
   <string name="vpn_shortcut">Acces directe de OpenVPN</string>
-  <string name="vpn_launch_title">Conecta a la VPN</string>
   <string name="shortcut_profile_notfound">No s\'ha trobat el perfil especificat a l\'accès directe</string>
   <string name="random_host_prefix">Prefix aleatoria del host</string>
   <string name="route_rejected">La ruta ha estat refusas per Android</string>
@@ -90,7 +89,6 @@
   <string name="private_key_password">Contrasenya de la clau privada</string>
   <string name="password">Contrasenya</string>
   <string name="file_icon">Icona del fitxer</string>
-  <string name="tls_authentication">Autentificació TLS</string>
   <string name="generated_config">Configuració generada</string>
   <string name="owner_fix">Corregir els permisos de /dev/tun</string>
   <string name="generated_config_summary">Mostra el fitxer de configuració d\'OpenVPN generat</string>

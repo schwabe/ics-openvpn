@@ -9,8 +9,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.ShortcutManager;
-import android.preference.PreferenceManager;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -60,7 +58,7 @@ public class ProfileManager {
     }
 
     public static void setConntectedVpnProfileDisconnected(Context c) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
         Editor prefsedit = prefs.edit();
         prefsedit.putString(LAST_CONNECTED_PROFILE, null);
         prefsedit.apply();
@@ -71,7 +69,7 @@ public class ProfileManager {
      * Sets the profile that is connected (to connect if the service restarts)
      */
     public static void setConnectedVpnProfile(Context c, VpnProfile connectedProfile) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
         Editor prefsedit = prefs.edit();
 
         prefsedit.putString(LAST_CONNECTED_PROFILE, connectedProfile.getUUIDString());
@@ -84,7 +82,7 @@ public class ProfileManager {
      * Returns the profile that was last connected (to connect if the service restarts)
      */
     public static VpnProfile getLastConnectedProfile(Context c) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
 
         String lastConnectedProfile = prefs.getString(LAST_CONNECTED_PROFILE, null);
         if (lastConnectedProfile != null)
@@ -108,7 +106,7 @@ public class ProfileManager {
     }
 
     public void saveProfileList(Context context) {
-        SharedPreferences sharedprefs = context.getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
+        SharedPreferences sharedprefs = Preferences.getSharedPreferencesMulti(PREFS_NAME, context);
         Editor editor = sharedprefs.edit();
         editor.putStringSet("vpnlist", profiles.keySet());
 
@@ -158,7 +156,7 @@ public class ProfileManager {
 
     private void loadVPNList(Context context) {
         profiles = new HashMap<>();
-        SharedPreferences listpref = context.getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
+        SharedPreferences listpref = Preferences.getSharedPreferencesMulti(PREFS_NAME, context);
         Set<String> vlist = listpref.getStringSet("vpnlist", null);
         if (vlist == null) {
             vlist = new HashSet<>();
@@ -226,7 +224,7 @@ public class ProfileManager {
 
     public static VpnProfile getAlwaysOnVPN(Context context) {
         checkInstance(context);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
 
         String uuid = prefs.getString("alwaysOnVpn", null);
         return get(uuid);

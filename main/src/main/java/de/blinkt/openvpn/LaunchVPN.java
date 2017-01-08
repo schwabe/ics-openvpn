@@ -37,6 +37,7 @@ import de.blinkt.openvpn.core.ConnectionStatus;
 import de.blinkt.openvpn.core.IServiceStatus;
 import de.blinkt.openvpn.core.OpenVPNStatusService;
 import de.blinkt.openvpn.core.PasswordCache;
+import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 import de.blinkt.openvpn.core.VpnStatus;
@@ -128,7 +129,7 @@ public class LaunchVPN extends Activity {
 
         if (Intent.ACTION_MAIN.equals(action)) {
             // Check if we need to clear the log
-            if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(CLEARLOG, true))
+            if (Preferences.getDefaultSharedPreferences(this).getBoolean(CLEARLOG, true))
                 VpnStatus.clearLog();
 
             // we got called to be the starting point, most likely a shortcut
@@ -233,7 +234,7 @@ public class LaunchVPN extends Activity {
                             ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
                     askForPW(needpw);
                 } else {
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                    SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
                     boolean showLogWindow = prefs.getBoolean("showlogwindow", true);
 
                     if (!mhideLog && showLogWindow)
@@ -305,7 +306,7 @@ public class LaunchVPN extends Activity {
 
         Intent intent = VpnService.prepare(this);
         // Check if we want to fix /dev/tun
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
         boolean usecm9fix = prefs.getBoolean("useCM9Fix", false);
         boolean loadTunModule = prefs.getBoolean("loadTunModule", false);
 

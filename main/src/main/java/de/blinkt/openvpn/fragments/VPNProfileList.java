@@ -51,6 +51,7 @@ import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.activities.VPNPreferences;
 import de.blinkt.openvpn.core.ConnectionStatus;
+import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
 
@@ -377,7 +378,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
     private void populateVpnList() {
-        boolean sortByLRU = PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean(PREF_SORT_BY_LRU, false);
+        boolean sortByLRU = Preferences.getDefaultSharedPreferences(getActivity()).getBoolean(PREF_SORT_BY_LRU, false);
         Collection<VpnProfile> allvpn = getPM().getProfiles();
         TreeSet<VpnProfile> sortedset;
         if (sortByLRU)
@@ -433,7 +434,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
     private boolean changeSorting() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(getActivity());
         boolean oldValue = prefs.getBoolean(PREF_SORT_BY_LRU, false);
         SharedPreferences.Editor prefsedit = prefs.edit();
         if (oldValue) {

@@ -135,7 +135,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
 
 
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
@@ -181,7 +181,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
     public void networkStateChange(Context context) {
         NetworkInfo networkInfo = getCurrentNetworkInfo(context);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
         boolean sendusr1 = prefs.getBoolean("netchangereconnect", true);
 
 

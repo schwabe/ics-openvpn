@@ -60,6 +60,7 @@ import de.blinkt.openvpn.activities.VPNPreferences;
 import de.blinkt.openvpn.core.ConnectionStatus;
 import de.blinkt.openvpn.core.OpenVPNManagement;
 import de.blinkt.openvpn.core.OpenVPNService;
+import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.LogItem;
@@ -603,7 +604,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         mClearLogCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean(LaunchVPN.CLEARLOG, isChecked).apply();
+                Preferences.getDefaultSharedPreferences(getActivity()).edit().putBoolean(LaunchVPN.CLEARLOG, isChecked).apply();
             }
         });
 

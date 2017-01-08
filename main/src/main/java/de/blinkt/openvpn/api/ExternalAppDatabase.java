@@ -22,7 +22,7 @@ public class ExternalAppDatabase {
 		mContext =c;
 	}
 
-	private final String PREFERENCES_KEY = "PREFERENCES_KEY";
+	private final String PREFERENCES_KEY = "allowed_apps";
 
 	boolean isAllowed(String packagename) {
 		Set<String> allowedapps = getExtAppList();
@@ -46,7 +46,11 @@ public class ExternalAppDatabase {
 	private void saveExtAppList( Set<String> allowedapps) {
 		SharedPreferences prefs = Preferences.getDefaultSharedPreferences(mContext);
 		Editor prefedit = prefs.edit();
+
+		// Workaround for bug
 		prefedit.putStringSet(PREFERENCES_KEY, allowedapps);
+		int counter = prefs.getInt("counter", 0);
+		prefedit.putInt("counter", counter + 1);
 		prefedit.apply();
 	}
 	

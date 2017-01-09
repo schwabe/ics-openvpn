@@ -227,7 +227,7 @@ public class VpnProfile implements Serializable, Cloneable {
     }
 
     public String getName() {
-        if (mName == null)
+        if (TextUtils.isEmpty(mName))
             return "No profile name";
         return mName;
     }

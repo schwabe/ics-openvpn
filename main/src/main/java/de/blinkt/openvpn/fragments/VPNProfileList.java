@@ -20,7 +20,7 @@ import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.os.PersistableBundle;
 import android.support.annotation.RequiresApi;
 import android.text.Html;
 import android.text.Html.ImageGetter;
@@ -157,8 +157,13 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
 
+    // Shortcut version is increased to refresh all shortcuts
+    final static int SHORTCUT_VERSION = 1;
+
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     void updateDynamicShortcuts() {
+        PersistableBundle versionExtras = new PersistableBundle();
+        versionExtras.putInt("version", SHORTCUT_VERSION);
 
         ShortcutManager shortcutManager = getContext().getSystemService(ShortcutManager.class);
         if (shortcutManager.isRateLimitingActive())
@@ -173,6 +178,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                 .setLongLabel("Disconnect VPN")
                 .setIntent(new Intent(getContext(), DisconnectVPN.class).setAction(DISCONNECT_VPN))
                 .setIcon(Icon.createWithResource(getContext(), R.drawable.ic_shortcut_cancel))
+                .setExtras(versionExtras)
                 .build();
 
         LinkedList<ShortcutInfo> newShortcuts = new LinkedList<>();
@@ -198,6 +204,10 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         for (ShortcutInfo shortcut : shortcuts) {
             if (shortcut.getId().equals("disconnectVPN")) {
                 addDisconnect = false;
+                if (shortcut.getExtras() == null
+                        || shortcut.getExtras().getInt("version") != SHORTCUT_VERSION)
+                    updateShortcuts.add(disconnectShortcut);
+
             } else {
                 VpnProfile p = ProfileManager.get(getContext(), shortcut.getId());
                 if (p == null || p.profileDeleted) {
@@ -214,8 +224,11 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                     else
                         removeShortcuts.add(p.getUUIDString());
 
-                    if (!p.getName().equals(shortcut.getShortLabel()))
+                    if (!p.getName().equals(shortcut.getShortLabel())
+                            || shortcut.getExtras() == null
+                            || shortcut.getExtras().getInt("version") != SHORTCUT_VERSION)
                         updateShortcuts.add(createShortcut(p));
+
 
                 }
 
@@ -245,11 +258,15 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         shortcutIntent.setAction(Intent.ACTION_MAIN);
         shortcutIntent.putExtra("EXTRA_HIDELOG", true);
 
+        PersistableBundle versionExtras = new PersistableBundle();
+        versionExtras.putInt("version", SHORTCUT_VERSION);
+
         return new ShortcutInfo.Builder(getContext(), profile.getUUIDString())
                 .setShortLabel(profile.getName())
                 .setLongLabel(getString(R.string.qs_connect, profile.getName()))
                 .setIcon(Icon.createWithResource(getContext(), R.drawable.ic_shortcut_vpn_key))
                 .setIntent(shortcutIntent)
+                .setExtras(versionExtras)
                 .build();
     }
 

@@ -172,7 +172,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                 .setShortLabel("Disconnect")
                 .setLongLabel("Disconnect VPN")
                 .setIntent(new Intent(getContext(), DisconnectVPN.class).setAction(DISCONNECT_VPN))
-                .setIcon(Icon.createWithResource(getContext(), R.drawable.ic_menu_close_clear_cancel))
+                .setIcon(Icon.createWithResource(getContext(), R.drawable.ic_shortcut_cancel))
                 .build();
 
         LinkedList<ShortcutInfo> newShortcuts = new LinkedList<>();
@@ -248,7 +248,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         return new ShortcutInfo.Builder(getContext(), profile.getUUIDString())
                 .setShortLabel(profile.getName())
                 .setLongLabel(getString(R.string.qs_connect, profile.getName()))
-                .setIcon(Icon.createWithResource(getContext(), R.mipmap.ic_launcher))
+                .setIcon(Icon.createWithResource(getContext(), R.drawable.ic_shortcut_vpn_key))
                 .setIntent(shortcutIntent)
                 .build();
     }

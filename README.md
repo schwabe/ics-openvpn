@@ -39,7 +39,7 @@ For example `ca mycafile.pem` becomes
 ```
 Footnotes
 -----------
-Please that OpenVPN used by this project is under GPLv2. 
+The OpenVPN used by this project is under GPLv2. 
 
 If you cannot or do not want to use the Play Store you can [download the apk files directly](http://plai.de/android/) . 
 

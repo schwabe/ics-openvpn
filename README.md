@@ -37,7 +37,7 @@ For example `ca mycafile.pem` becomes
   -----END CERTIFICATE-----
   </ca>
 ```
-Fotnotes
+Footnotes
 -----------
 Please that OpenVPN used by this project is under GPLv2. 
 

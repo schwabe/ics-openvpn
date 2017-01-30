@@ -21,8 +21,8 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 
 public class VPNLaunchHelper {
-    private static final String MININONPIEVPN = "c_nopie_openvpn";
-    private static final String MINIPIEVPN = "c_pie_openvpn";
+    private static final String MININONPIEVPN = "nopie_openvpn";
+    private static final String MINIPIEVPN = "pie_openvpn";
     private static final String OVPNCONFIGFILE = "android.conf";
 
 
@@ -43,7 +43,7 @@ public class VPNLaunchHelper {
 
         for (String abi: abis) {
 
-            File vpnExecutable = new File(context.getCacheDir(), getMiniVPNExecutableName() + "." + abi);
+            File vpnExecutable = new File(context.getCacheDir(), "c_" + getMiniVPNExecutableName() + "." + abi);
             if ((vpnExecutable.exists() && vpnExecutable.canExecute()) || writeMiniVPNBinary(context, abi, vpnExecutable)) {
                 return vpnExecutable.getPath();
             }

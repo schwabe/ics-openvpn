@@ -338,15 +338,15 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 VpnStatus.updateStateString("CONNECTRETRY", String.valueOf(waittime),
                         R.string.state_waitconnectretry, ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
             mResumeHandler.postDelayed(mResumeHoldRunnable, waittime * 1000);
-            if (waittime > 5) {
+            if (waittime > 5)
                 VpnStatus.logInfo(R.string.state_waitconnectretry, String.valueOf(waittime));
+            else
+                VpnStatus.logDebug(R.string.state_waitconnectretry, String.valueOf(waittime));
 
-            }
         } else {
             mWaitingForRelease = true;
 
             VpnStatus.updateStatePause(lastPauseReason);
-
 
         }
     }

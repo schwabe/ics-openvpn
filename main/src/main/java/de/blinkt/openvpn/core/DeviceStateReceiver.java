@@ -20,6 +20,7 @@ import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.StringTokenizer;
 
 import static de.blinkt.openvpn.core.OpenVPNManagement.pauseReason;
 
@@ -173,10 +174,10 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
     private void fillTrafficData() {
         trafficdata.add(new Datapoint(System.currentTimeMillis(), TRAFFIC_LIMIT));
     }
+
     public static boolean equalsObj(Object a, Object b) {
         return (a == null) ? (b == null) : a.equals(b);
     }
-
 
 
     public void networkStateChange(Context context) {
@@ -261,6 +262,8 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
         if (!netstatestring.equals(lastStateMsg))
             VpnStatus.logInfo(R.string.netstatus, netstatestring);
+        VpnStatus.logDebug(String.format("Debug state info: %s, pause: %s, shouldbeconnected: %s, network: %s ",
+                netstatestring, getPauseReason(), shouldBeConnected(), network));
         lastStateMsg = netstatestring;
 
     }

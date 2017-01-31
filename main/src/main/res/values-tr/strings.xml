@@ -389,9 +389,6 @@
   <string name="protocol">Protokol</string>
   <string name="enabled_connection_entry">Etkin</string>
   <string name="abi_mismatch">Tercih edilen bu cihazın yerli ABI önceliği (%1$s) ile yerli kütüphanelerden bildirilen ABI (%2$s) uyuşmuyor</string>
-  <string name="months_left">%d ay kaldı</string>
-  <string name="days_left">%d gün kaldı</string>
-  <string name="hours_left">%d saat kaldı</string>
   <string name="permission_revoked">VPN izni işletim sistemi tarafından (örn. başlatılan diğer VPN programı) reddedildi, VPN durduruluyor</string>
   <string name="pushpeerinfo">Eş bilgisini it</string>
   <string name="pushpeerinfosummary">Sunucuya ek bilgi gönder, örn. SSL sürümü ve Android sürümü</string>

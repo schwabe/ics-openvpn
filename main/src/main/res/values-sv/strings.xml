@@ -389,9 +389,6 @@
   <string name="protocol">Protokoll</string>
   <string name="enabled_connection_entry">Aktiverad</string>
   <string name="abi_mismatch">Önskemålet av ABI för denna enhet (%1$s) och det ABI som rapporteras av de inlästa biblioteken (%2$s) stämmer inte överens</string>
-  <string name="months_left">%d månader kvar</string>
-  <string name="days_left">%d dagar kvar</string>
-  <string name="hours_left">%d timmar kvar</string>
   <string name="permission_revoked">VPN-tillstånd återkallas av operativsystemet (t.ex. andra VPN-program har startats), stoppar VPN</string>
   <string name="pushpeerinfo">Skicka klientinformation till servern</string>
   <string name="pushpeerinfosummary">Skicka extra information till servern, t.ex. SSL-versionen och Android-version</string>

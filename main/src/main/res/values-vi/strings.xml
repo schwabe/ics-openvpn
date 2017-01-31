@@ -50,6 +50,7 @@
   <string name="custom_route_format_error">Lỗi phân tích cú pháp định tuyến tùy chỉnh</string>
   <string name="pw_query_hint">(để trống để truy vấn theo yêu cầu)</string>
   <string name="vpn_shortcut">Lối tắt Open VPN</string>
+  <string name="vpn_launch_title">Đang kết nối tới VPN&#8230;</string>
   <string name="shortcut_profile_notfound">Hồ sơ quy định tại lối tắt không tìm thấy</string>
   <string name="random_host_prefix">Tiền tố miền ngẫu nhiên</string>
   <string name="random_host_summary">Thêm 6 ký tự ngẫu nhiên ở phía trước tên miền</string>
@@ -163,6 +164,7 @@
   <string name="private_key_password">Khóa mật khẩu riêng tư</string>
   <string name="password">Mật khẩu</string>
   <string name="file_icon">biểu tượng tập tin</string>
+  <string name="tls_authentication">Xác thực/mã hoá TLS</string>
   <string name="generated_config">Tạo cấu hình</string>
   <string name="generalsettings">Cài đặt</string>
   <string name="owner_fix_summary">Cố gắng thiết lập chủ sở hữu của /dev/tun vào hệ thống. Một vài ROM CM9 cần việc này để thực hiện thiết lập VPN API. Yêu cầu root.</string>
@@ -389,9 +391,6 @@
   <string name="protocol">Giao thức</string>
   <string name="enabled_connection_entry">Bật</string>
   <string name="abi_mismatch">Ưu tiên ABI gốc của thiết bị này (%1$s) và ABI được báo cáo bởi thư viện gốc (%2$s) bất đối xứng</string>
-  <string name="months_left">%d tháng còn lại</string>
-  <string name="days_left">%d ngày còn lại</string>
-  <string name="hours_left">%d giờ còn lại</string>
   <string name="permission_revoked">cho phép VPN bị thu hồi bởi hệ điều hành (ví dụ như chương trình VPN khác bắt đầu), dừng VPN</string>
   <string name="pushpeerinfo">Đẩy thông tin ngang nhau</string>
   <string name="pushpeerinfosummary">Gửi thông tin đến máy chủ, ví dụ như phiên bản SSL và phiên bản Android</string>

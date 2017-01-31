@@ -165,6 +165,7 @@
   <string name="private_key_password">Passphrase des privaten Schlüssels</string>
   <string name="password">Passwort</string>
   <string name="file_icon">Dateisymbol</string>
+  <string name="tls_authentication">Authentifizierung/Verschlüsselung</string>
   <string name="generated_config">Generierte Konfiguration</string>
   <string name="generalsettings">Einstellungen</string>
   <string name="owner_fix_summary">Versucht, den Eigentümer von /dev/tun auf system zu ändern. Einige Cyanogenmod 9-ROM-Versionen benötigen diese Option, damit die VPN-API funktioniert. Benötigt root.</string>
@@ -391,9 +392,6 @@
   <string name="protocol">Protokoll</string>
   <string name="enabled_connection_entry">Aktiviert</string>
   <string name="abi_mismatch">Bevorzugte native ABI-Reihenfolge dieses Gerätes (%1$s) und die installierten nativen Bibliotheken (%2$s) unterscheiden sich</string>
-  <string name="months_left">Noch %d Monate gültig</string>
-  <string name="days_left">Noch %d Tage gültig</string>
-  <string name="hours_left">Noch %d Stunden gültig</string>
   <string name="permission_revoked">VPN-Berechtigung wurde vom Betriebssytem widerrufen (z.B. weil ein anderes VPN gestartet wurde); VPN wird gestoppt</string>
   <string name="pushpeerinfo">Peer-Informationen senden</string>
   <string name="pushpeerinfosummary">Weitere Informationen, wie z.B. SSL- und Android-Version, an den Server senden</string>

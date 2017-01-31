@@ -389,9 +389,6 @@
   <string name="protocol">Protokoll</string>
   <string name="enabled_connection_entry">Lubatud</string>
   <string name="abi_mismatch">Selle seadme eelistatud ABI eelisjärjekord (%1$s) ja seadme kaasnevate teekide teatatud ABI (%2$s) ei ühildu</string>
-  <string name="months_left">Jäänud on %d kuud</string>
-  <string name="days_left">jäänud on %d päeva</string>
-  <string name="hours_left">Jäänud on %d tundi</string>
   <string name="permission_revoked">OS tühistas VPN õigused (nt. töötab teine VPN programm). VPN peatatakse</string>
   <string name="pushpeerinfo">Saada partneri andmed</string>
   <string name="pushpeerinfosummary">Saada serverile lisaandmeid, nt. SSL versioon ja Android versioon</string>

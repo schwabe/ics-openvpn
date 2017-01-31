@@ -20,6 +20,6 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>Niet-gespecificeerd</item>
-    <item>Encryption (tls-crypt)</item>
+    <item>Encryptie (tls-crypt)</item>
   </string-array>
 </resources>

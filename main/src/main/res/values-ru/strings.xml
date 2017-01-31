@@ -389,9 +389,6 @@
   <string name="protocol">Протокол</string>
   <string name="enabled_connection_entry">Включено</string>
   <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
-  <string name="months_left">%d мес. осталось</string>
-  <string name="days_left">%d д. осталось</string>
-  <string name="hours_left">%d ч. осталось</string>
   <string name="permission_revoked">Разрешение VPN отозвано ОС (например, запущена другая программа VPN), останавливаем VPN</string>
   <string name="pushpeerinfo">Получить информацию о Пире</string>
   <string name="pushpeerinfosummary">Отправить дополнительную информацию на сервер, например, версию SSL и версию Android</string>

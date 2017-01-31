@@ -389,9 +389,6 @@
   <string name="protocol">Protokoll</string>
   <string name="enabled_connection_entry">Engedélyezett</string>
   <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
-  <string name="months_left">%d hónap van hátra</string>
-  <string name="days_left">%d nap van hátra</string>
-  <string name="hours_left">%d óra van hátra</string>
   <string name="permission_revoked">A VPN engedélyt visszavonta az OS (pl.: másik VPN program indult), VPN leállítása</string>
   <string name="pushpeerinfo">Peer információ küldése</string>
   <string name="pushpeerinfosummary">Extra információ küldése a kiszolgálónak, pl.: SSL verzió és Android verzió</string>

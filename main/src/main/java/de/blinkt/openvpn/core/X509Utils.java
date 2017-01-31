@@ -106,14 +106,14 @@ public class X509Utils {
         // More than 3 months display months
         if (timeLeft > 90l* 24 * 3600 * 1000) {
             long months = getMonthsDifference(now, certNotAfter);
-            return res.getString(R.string.months_left, months);
+            return res.getQuantityString(R.plurals.months_left, (int) months, months);
         } else if (timeLeft > 72 * 3600 * 1000) {
             long days = timeLeft / (24 * 3600 * 1000);
-            return res.getString(R.string.days_left, days);
+            return res.getQuantityString(R.plurals.days_left, (int) days, days);
         } else {
             long hours = timeLeft / (3600 * 1000);
 
-            return res.getString(R.string.hours_left, hours);
+            return res.getQuantityString(R.plurals.hours_left, (int)hours, hours);
         }
     }
 

@@ -386,9 +386,6 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
   <string name="query_permissions_sdcard">OpenVPN dla Android spróbuje automatycznie wykryć brakujące pliki na karcie SD. Dotknij tego komunikatu, aby żądać uprawnień.</string>
   <string name="protocol">Protokół</string>
   <string name="enabled_connection_entry">Włączony</string>
-  <string name="months_left">pozostało %d miesięcy</string>
-  <string name="days_left">pozostało %d dni</string>
-  <string name="hours_left">pozostało %d godzin</string>
   <string name="permission_revoked">Pozwolenie VPN odwołane przez system (na przykład inny program VPN jest uruchomiony), zatrzymuję VPN</string>
   <string name="pushpeerinfo">Naciśnij \"Peer info\"</string>
   <string name="pushpeerinfosummary">Wyślij dodatkowe informację do serwera, na przykład wersję SSL oraz Androida</string>

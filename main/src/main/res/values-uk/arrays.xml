@@ -20,6 +20,6 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>Невказано</item>
-    <item>Encryption (tls-crypt)</item>
+    <item>Шифрування (TLS-crypt)</item>
   </string-array>
 </resources>

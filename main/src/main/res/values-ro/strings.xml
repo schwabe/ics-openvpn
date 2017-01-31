@@ -313,8 +313,5 @@
   <string name="Search">Căutare</string>
   <string name="protocol">Protocol</string>
   <string name="enabled_connection_entry">Activat</string>
-  <string name="months_left">%d luni rămase</string>
-  <string name="days_left">%d zile rămase</string>
-  <string name="hours_left">%d ore rămase</string>
   <string name="missing_ca_certificate">Certificatul CA lipsește</string>
 </resources>

@@ -392,9 +392,6 @@
   <string name="protocol">协议</string>
   <string name="enabled_connection_entry">启用</string>
   <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
-  <string name="months_left">已使用 %d月</string>
-  <string name="days_left">已使用%d天</string>
-  <string name="hours_left">已使用%d 小时</string>
   <string name="permission_revoked">VPN权限被操作系统撤销 (比如其他VPN程序启动了) ，VPN停止中</string>
   <string name="pushpeerinfo">推送客户端信息</string>
   <string name="pushpeerinfosummary">将额外的信息发送到服务器，例如 SSL 版本和 Android 版本</string>

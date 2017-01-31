@@ -379,9 +379,6 @@ http://crowdin.net/project/ics-openvpn/invite
   <string name="protocol">協定</string>
   <string name="enabled_connection_entry">啟用</string>
   <string name="abi_mismatch">該設備的優先考慮的母語ABI優先級（%1$s）和ABI報告本地庫（%2$s）不匹配</string>
-  <string name="months_left">離開%d個月</string>
-  <string name="days_left">離開%d天</string>
-  <string name="hours_left">%d小時離開</string>
   <string name="pushpeerinfo">發送端資訊</string>
   <string name="pushpeerinfosummary">傳送額外的資訊到伺服器，例如 SSL 版本與 Android 版本</string>
   <string name="pw_request_dialog_title">需要 %1$s</string>

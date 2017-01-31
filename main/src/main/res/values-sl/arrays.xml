@@ -20,6 +20,6 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>Nedoločeno</item>
-    <item>Encryption (tls-crypt)</item>
+    <item>Šifriranje (tls-crypt)</item>
   </string-array>
 </resources>

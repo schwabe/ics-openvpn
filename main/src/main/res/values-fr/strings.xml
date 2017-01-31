@@ -44,12 +44,14 @@
   <string name="duplicate_profile_name">Veuillez entrer un nom de profil unique</string>
   <string name="profilename">"Nom de profil"</string>
   <string name="no_keystore_cert_selected">"Aucun certificat utilisateur sélectionné."</string>
+  <string name="no_ca_cert_selected">Vous devez sélectionner un certificat CA</string>
   <string name="no_error_found">"Aucune erreur"</string>
   <string name="config_error_found">"Erreur dans la configuration"</string>
   <string name="ipv4_format_error">"Impossible d\'analyser l\'adresse IPv4"</string>
   <string name="custom_route_format_error">Impossible d\'analyser les redirections personnalisées</string>
   <string name="pw_query_hint">(Laisser vide pour interroger sur demande)</string>
   <string name="vpn_shortcut">"Raccourci OpenVPN"</string>
+  <string name="vpn_launch_title">Connexion à VPN &#8230;</string>
   <string name="shortcut_profile_notfound">"Profil spécifié dans raccourci introuvable"</string>
   <string name="random_host_prefix">Préfixe de l\'hôte aléatoire</string>
   <string name="random_host_summary">"Ajoute 6 caractères aléatoires en face du nom d\'hôte"</string>
@@ -163,6 +165,7 @@
   <string name="private_key_password">Mot de passe de la clé privée</string>
   <string name="password">Mot de passe</string>
   <string name="file_icon">icône du fichier</string>
+  <string name="tls_authentication">TLS Authentification/Cryptage</string>
   <string name="generated_config">Configuration générée</string>
   <string name="generalsettings">Paramètres</string>
   <string name="owner_fix_summary">Essaie de définir le propriétaire de l\'interface /dev/tun. Certaines images CM9 en ont besoin pour faire fonctionner l\'API VPNService. Nécessite les droits root.</string>
@@ -386,9 +389,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="query_permissions_sdcard">OpenVPN pour Android va essayer de chercher le(s) fichier(s) manquant(s) sur une sdcard. Tapoter cette fenêtre de dialogue va démarrer une demande d\'autorisation.</string>
   <string name="protocol">Protocole</string>
   <string name="enabled_connection_entry">Activé</string>
-  <string name="months_left">%d mois restants</string>
-  <string name="days_left">%d jours restants</string>
-  <string name="hours_left">%d heures restantes</string>
   <string name="permission_revoked">Autorisation de VPN révoquée par le système d\'exploitation (ex : un autre programme VPN est lancé), arrêt du VPN</string>
   <string name="pushpeerinfo">Envoyer plus d\'infos</string>
   <string name="pushpeerinfosummary">Envoyer des informations supplémentaires sur le serveur, par exemple la version SSL et la version Android</string>
@@ -411,4 +411,9 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="connectretrymaxmessage">Entrez le temps maximum entre les tentatives de connexion. OpenVPN va lentement augmenter son temps d\'attente après une tentative de connexion infructueuse jusqu\'à atteindre cette valeur. Par défaut, 300sec.</string>
   <string name="connectretrymaxtitle">Temps maximum entre les tentatives de connexion</string>
   <string name="state_waitconnectretry">%s secondes avant la prochaine tentative de connexion</string>
+  <string name="management_socket_closed">Connexion à OpenVPN fermé (%s)</string>
+  <string name="change_sorting">Changer de tri</string>
+  <string name="sort">Trier</string>
+  <string name="sorted_lru">Profils triés par dernier récemment utilisé</string>
+  <string name="sorted_az">Profils triés par nom</string>
 </resources>

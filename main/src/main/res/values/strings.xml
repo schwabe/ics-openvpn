@@ -390,9 +390,6 @@
     <string name="protocol">Protocol</string>
     <string name="enabled_connection_entry">Enabled</string>
     <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
-    <string name="months_left">%d months left</string>
-    <string name="days_left">%d days left</string>
-    <string name="hours_left">%d hours left</string>
     <string name="permission_revoked">VPN permission revoked by OS (e.g. other VPN program started), stopping VPN</string>
     <string name="pushpeerinfo">Push Peer info</string>
     <string name="pushpeerinfosummary">Send extra information to the server, e.g. SSL version and Android version</string>

@@ -349,6 +349,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_SCREEN_ON);
         mDeviceStateReceiver = new DeviceStateReceiver(magnagement);
+
+        // Fetch initial network state
+        mDeviceStateReceiver.networkStateChange(this);
+
         registerReceiver(mDeviceStateReceiver, filter);
         VpnStatus.addByteCountListener(mDeviceStateReceiver);
 

@@ -65,13 +65,13 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         return shouldBeConnected();
     }
 
-    enum connectState {
+    private enum connectState {
         SHOULDBECONNECTED,
         PENDINGDISCONNECT,
         DISCONNECTED
     }
 
-    static class Datapoint {
+    private static class Datapoint {
         private Datapoint(long t, long d) {
             timestamp = t;
             data = d;
@@ -81,7 +81,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         long data;
     }
 
-    LinkedList<Datapoint> trafficdata = new LinkedList<DeviceStateReceiver.Datapoint>();
+    private LinkedList<Datapoint> trafficdata = new LinkedList<>();
 
 
     @Override

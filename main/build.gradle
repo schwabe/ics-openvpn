@@ -27,8 +27,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode = 145
-        versionName = "0.6.64"
+        versionCode = 146
+        versionName = "0.6.65"
     }
 
     sourceSets {
@@ -63,6 +63,7 @@ android {
 
     lintOptions {
         enable 'BackButton', 'EasterEgg', 'StopShip', 'IconExpectedSize', 'GradleDynamicVersion', 'NewerVersionAvailable'
+        warning 'ImpliedQuantity'
         disable 'MissingTranslation'
     }
 

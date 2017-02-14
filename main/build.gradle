@@ -12,23 +12,23 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:support-annotations:24.2.1'
-    compile 'com.android.support:cardview-v7:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.android.support:support-annotations:25.1.0'
+    compile 'com.android.support:cardview-v7:25.1.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
     //    compile 'ch.acra:acra:4.5.0'
 
     testCompile 'junit:junit:4.12'
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.0'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 24
-        versionCode = 141
-        versionName = "0.6.60"
+        targetSdkVersion 25
+        versionCode = 146
+        versionName = "0.6.65"
     }
 
     sourceSets {
@@ -63,6 +63,7 @@ android {
 
     lintOptions {
         enable 'BackButton', 'EasterEgg', 'StopShip', 'IconExpectedSize', 'GradleDynamicVersion', 'NewerVersionAvailable'
+        warning 'ImpliedQuantity'
         disable 'MissingTranslation'
     }
 

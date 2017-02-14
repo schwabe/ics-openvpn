@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Özel yolları ayrıştırma hatası</string>
   <string name="pw_query_hint">(talep üzerine sorgulamak için boş bırakın)</string>
   <string name="vpn_shortcut">OpenVPN Kısayolu</string>
-  <string name="vpn_launch_title">VPN\'e Bağlan</string>
   <string name="shortcut_profile_notfound">Kısayolu belirtilen profil bulunamadı</string>
   <string name="random_host_prefix">Rastgele Ana Makine Ön Eki</string>
   <string name="random_host_summary">Makine ismine 6 rastgele karakter ekler</string>
@@ -164,7 +163,6 @@
   <string name="private_key_password">Özel Anahtar Parolası</string>
   <string name="password">Parola</string>
   <string name="file_icon">dosya simgesi</string>
-  <string name="tls_authentication">TLS Kimlik Doğrulama</string>
   <string name="generated_config">Oluşturulan Yapılandırma</string>
   <string name="generalsettings">Ayarlar</string>
   <string name="owner_fix_summary">/dev/tun sahipliğini sisteme vermeye çalışır. Bazı CM9 kalıpları VPNService API\'sinin çalışabilmesi için buna ihtiyaç duyar. Root gerektirir.</string>
@@ -391,9 +389,6 @@
   <string name="protocol">Protokol</string>
   <string name="enabled_connection_entry">Etkin</string>
   <string name="abi_mismatch">Tercih edilen bu cihazın yerli ABI önceliği (%1$s) ile yerli kütüphanelerden bildirilen ABI (%2$s) uyuşmuyor</string>
-  <string name="months_left">%d ay kaldı</string>
-  <string name="days_left">%d gün kaldı</string>
-  <string name="hours_left">%d saat kaldı</string>
   <string name="permission_revoked">VPN izni işletim sistemi tarafından (örn. başlatılan diğer VPN programı) reddedildi, VPN durduruluyor</string>
   <string name="pushpeerinfo">Eş bilgisini it</string>
   <string name="pushpeerinfosummary">Sunucuya ek bilgi gönder, örn. SSL sürümü ve Android sürümü</string>

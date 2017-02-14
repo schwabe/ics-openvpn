@@ -20,6 +20,7 @@ import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.StringTokenizer;
 
 import static de.blinkt.openvpn.core.OpenVPNManagement.pauseReason;
 
@@ -64,13 +65,13 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         return shouldBeConnected();
     }
 
-    enum connectState {
+    private enum connectState {
         SHOULDBECONNECTED,
         PENDINGDISCONNECT,
         DISCONNECTED
     }
 
-    static class Datapoint {
+    private static class Datapoint {
         private Datapoint(long t, long d) {
             timestamp = t;
             data = d;
@@ -80,7 +81,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         long data;
     }
 
-    LinkedList<Datapoint> trafficdata = new LinkedList<DeviceStateReceiver.Datapoint>();
+    private LinkedList<Datapoint> trafficdata = new LinkedList<>();
 
 
     @Override
@@ -135,7 +136,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
 
 
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
@@ -173,15 +174,15 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
     private void fillTrafficData() {
         trafficdata.add(new Datapoint(System.currentTimeMillis(), TRAFFIC_LIMIT));
     }
+
     public static boolean equalsObj(Object a, Object b) {
         return (a == null) ? (b == null) : a.equals(b);
     }
 
 
-
     public void networkStateChange(Context context) {
         NetworkInfo networkInfo = getCurrentNetworkInfo(context);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
         boolean sendusr1 = prefs.getBoolean("netchangereconnect", true);
 
 
@@ -261,6 +262,8 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
         if (!netstatestring.equals(lastStateMsg))
             VpnStatus.logInfo(R.string.netstatus, netstatestring);
+        VpnStatus.logDebug(String.format("Debug state info: %s, pause: %s, shouldbeconnected: %s, network: %s ",
+                netstatestring, getPauseReason(), shouldBeConnected(), network));
         lastStateMsg = netstatestring;
 
     }

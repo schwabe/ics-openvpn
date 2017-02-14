@@ -101,10 +101,13 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 
 
         VpnProfile vpn = ProfileManager.getAlwaysOnVPN(getActivity());
+		StringBuffer sb = new StringBuffer(getString(R.string.defaultvpnsummary));
+		sb.append('\n');
         if (vpn== null)
-            mAlwaysOnVPN.setSummary(R.string.novpn_selected);
+            sb.append(getString(R.string.novpn_selected));
         else
-            mAlwaysOnVPN.setSummary(vpn.getName());
+           sb.append(getString(R.string.vpnselected, vpn.getName()));
+		mAlwaysOnVPN.setSummary(sb.toString());
 
     }
 

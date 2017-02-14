@@ -44,13 +44,14 @@
   <string name="duplicate_profile_name">プロファイル名が重複しています。</string>
   <string name="profilename">プロファイル名</string>
   <string name="no_keystore_cert_selected">ユーザー証明書を選択する必要があります</string>
+  <string name="no_ca_cert_selected">証明書を選択する必要があります</string>
   <string name="no_error_found">エラーは見つかりませんでした</string>
   <string name="config_error_found">設定に誤りがあります</string>
   <string name="ipv4_format_error">IPv4 アドレスの解析エラー</string>
   <string name="custom_route_format_error">カスタム経路の解析エラー</string>
   <string name="pw_query_hint">必要に応じて入力するには空欄にしてください</string>
   <string name="vpn_shortcut">OpenVPN のショートカット</string>
-  <string name="vpn_launch_title">VPNに接続</string>
+  <string name="vpn_launch_title">VPNに接続しています...</string>
   <string name="shortcut_profile_notfound">ショートカットで指定されたプロファイルが見つかりません</string>
   <string name="random_host_prefix">ランダムなホスト プレフィックス</string>
   <string name="random_host_summary">ランダムな6文字をホスト名の前に付加します。</string>
@@ -170,7 +171,7 @@ SDカード上のデータは本質的に無防備です。すべてのアプリ
   <string name="private_key_password">秘密鍵のパスワード</string>
   <string name="password">パスワード</string>
   <string name="file_icon">ファイルのアイコン</string>
-  <string name="tls_authentication">TLS認証</string>
+  <string name="tls_authentication">TLS認証/暗号化</string>
   <string name="generated_config">生成された設定</string>
   <string name="generalsettings">設定</string>
   <string name="owner_fix_summary">システムに/dev/tunの所有者を設定します。いくつかのCM9のイメージでVPNService APIを動作させるために必要です。root権限が必要です。</string>
@@ -430,9 +431,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="protocol">プロトコル</string>
   <string name="enabled_connection_entry">有効</string>
   <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
-  <string name="months_left">残り %dヵ月</string>
-  <string name="days_left">残り %d日</string>
-  <string name="hours_left">残り %d時間</string>
   <string name="permission_revoked">OSによりVPNの権限が取り消されました (ほかのVPNプログラムが動作した場合など)。VPNを停止します</string>
   <string name="pushpeerinfo">ピア情報を送信する</string>
   <string name="pushpeerinfosummary">追加の情報をサーバに送信します。 (SSLやAndroidのバージョン等)</string>
@@ -456,4 +454,9 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="connectretrymaxmessage">最大接続試行間隔を入力します。OpenVPNは接続に失敗するとこの値まで少しずつ待機時間を増やしていきます。デフォルトは300秒です。</string>
   <string name="connectretrymaxtitle">接続試行の最大間隔</string>
   <string name="state_waitconnectretry">接続試行の間隔として%s秒を待っています</string>
+  <string name="change_sorting">並べ替えの変更</string>
+  <string name="sort">並べ替え</string>
+  <string name="sorted_lru">プロファイルを最近使った順に並べ替えました</string>
+  <string name="sorted_az">プロファイルを名前順に並べ替えました</string>
+  <string name="deprecated_tls_remote">設定はtls-remoteを使用しています(2.3で非推奨、2.4で削除されました)</string>
 </resources>

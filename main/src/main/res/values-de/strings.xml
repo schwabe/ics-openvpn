@@ -44,13 +44,14 @@
   <string name="duplicate_profile_name">Profilname bereits vorhanden. Bitte vergeben Sie einen eindeutigen Profilnamen.</string>
   <string name="profilename">Profilname</string>
   <string name="no_keystore_cert_selected">Kein Benutzerzertifikat ausgewählt</string>
+  <string name="no_ca_cert_selected">Kein Benutzerzertifikat ausgewählt.</string>
   <string name="no_error_found">Kein Fehler.</string>
   <string name="config_error_found">Fehler in der Konfiguration</string>
   <string name="ipv4_format_error">Kann die konfigurierte IPv4 Adresse nicht parsen</string>
   <string name="custom_route_format_error">Kann die manuell angegeben Routen nicht verarbeiten</string>
   <string name="pw_query_hint">(Leer lassen, um nicht zu speichern)</string>
   <string name="vpn_shortcut">OpenVPN-Verknüpfung</string>
-  <string name="vpn_launch_title">VPN verbinden</string>
+  <string name="vpn_launch_title">Verbinde VPN&#8230;</string>
   <string name="shortcut_profile_notfound">Von der Verknüpfung referenziertes Profil konnte nicht gefunden werden</string>
   <string name="random_host_prefix">Zufälliger Host-Präfix</string>
   <string name="random_host_summary">Fügt 6 zufällige Zeichen am Anfang des Hostnamens hinzu</string>
@@ -164,7 +165,7 @@
   <string name="private_key_password">Passphrase des privaten Schlüssels</string>
   <string name="password">Passwort</string>
   <string name="file_icon">Dateisymbol</string>
-  <string name="tls_authentication">TLS-Authentifizierung</string>
+  <string name="tls_authentication">Authentifizierung/Verschlüsselung</string>
   <string name="generated_config">Generierte Konfiguration</string>
   <string name="generalsettings">Einstellungen</string>
   <string name="owner_fix_summary">Versucht, den Eigentümer von /dev/tun auf system zu ändern. Einige Cyanogenmod 9-ROM-Versionen benötigen diese Option, damit die VPN-API funktioniert. Benötigt root.</string>
@@ -391,9 +392,6 @@
   <string name="protocol">Protokoll</string>
   <string name="enabled_connection_entry">Aktiviert</string>
   <string name="abi_mismatch">Bevorzugte native ABI-Reihenfolge dieses Gerätes (%1$s) und die installierten nativen Bibliotheken (%2$s) unterscheiden sich</string>
-  <string name="months_left">Noch %d Monate gültig</string>
-  <string name="days_left">Noch %d Tage gültig</string>
-  <string name="hours_left">Noch %d Stunden gültig</string>
   <string name="permission_revoked">VPN-Berechtigung wurde vom Betriebssytem widerrufen (z.B. weil ein anderes VPN gestartet wurde); VPN wird gestoppt</string>
   <string name="pushpeerinfo">Peer-Informationen senden</string>
   <string name="pushpeerinfosummary">Weitere Informationen, wie z.B. SSL- und Android-Version, an den Server senden</string>
@@ -412,9 +410,9 @@
   <string name="alwaysonvpn">VPN beim Gerätestart und für Always-On verwenden</string>
   <string name="reconnect">Neu verbinden</string>
   <string name="qs_title">VPN an-/ausschalten</string>
-  <string name="qs_connect">Verbinding mit %s</string>
+  <string name="qs_connect">Mit %s verbinden</string>
   <string name="qs_disconnect">%s trennen</string>
-  <string name="connectretrymaxmessage">Geben Sie die maximale Zeit zwischen Verbindungsversuchen ein. OpenVPN wird die Wartezeit nach einem fehlgeschlagenen Verbindungsversuch langsam bis zu diesem Wert anheben. Standardwert ist 300 Sekunden.</string>
+  <string name="connectretrymaxmessage">Maximale Zeit zwischen Verbindungsversuchen. OpenVPN erhöht die Wartezeit zwischen zwei Verbindungsversuchen schrittweise bis zu dieser Zeit. Der Standardwert ist 300s.</string>
   <string name="connectretrymaxtitle">Maximale Zeit zwischen Verbindungsversuchen</string>
   <string name="state_waitconnectretry">Warte %ss Sekunden zwischen zwei Verbindungsversuchen</string>
 </resources>

@@ -57,11 +57,12 @@ import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.activities.MainActivity;
 import de.blinkt.openvpn.activities.VPNPreferences;
+import de.blinkt.openvpn.core.ConnectionStatus;
 import de.blinkt.openvpn.core.OpenVPNManagement;
 import de.blinkt.openvpn.core.OpenVPNService;
+import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
-import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 import de.blinkt.openvpn.core.LogItem;
 import de.blinkt.openvpn.core.VpnStatus.LogListener;
 import de.blinkt.openvpn.core.VpnStatus.StateListener;
@@ -431,7 +432,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         } else if (item.getItemId() == R.id.send) {
             ladapter.shareLog();
         } else if (item.getItemId() == R.id.edit_vpn) {
-            VpnProfile lastConnectedprofile = ProfileManager.getLastConnectedVpn();
+            VpnProfile lastConnectedprofile = ProfileManager.get(getActivity(), VpnStatus.getLastConnectedVPNProfile());
 
             if (lastConnectedprofile != null) {
                 Intent vprefintent = new Intent(getActivity(), VPNPreferences.class)
@@ -603,7 +604,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         mClearLogCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putBoolean(LaunchVPN.CLEARLOG, isChecked).apply();
+                Preferences.getDefaultSharedPreferences(getActivity()).edit().putBoolean(LaunchVPN.CLEARLOG, isChecked).apply();
             }
         });
 
@@ -667,11 +668,15 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
                             mSpeedView.setText(cleanLogMessage);
                         }
                         if (mConnectStatus != null)
-                            mConnectStatus.setText(getString(resId));
+                            mConnectStatus.setText(cleanLogMessage);
                     }
                 }
             });
         }
+    }
+
+    @Override
+    public void setConnectedVPN(String uuid) {
     }
 
 

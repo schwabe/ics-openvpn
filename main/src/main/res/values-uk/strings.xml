@@ -44,13 +44,14 @@
   <string name="duplicate_profile_name">Введіть унікальне ім\'я профілю</string>
   <string name="profilename">Ім\'я профілю</string>
   <string name="no_keystore_cert_selected">Потрібно вибрати сертифікат користувача</string>
+  <string name="no_ca_cert_selected">Ви повинні обрати кореневий (СА) сертифікат</string>
   <string name="no_error_found">Помилок не знайдено</string>
   <string name="config_error_found">Помилка конфігурації</string>
   <string name="ipv4_format_error">Помилка при розборі адреси IPv4</string>
   <string name="custom_route_format_error">Помилка аналізу налаштованих маршрутів</string>
   <string name="pw_query_hint">(залиште порожнім для запиту на вимогу)</string>
   <string name="vpn_shortcut">Ярлик OpenVPN</string>
-  <string name="vpn_launch_title">Підключення до VPN</string>
+  <string name="vpn_launch_title">Підключення до VPN ...</string>
   <string name="shortcut_profile_notfound">Профіль, вказаний у ярлику, не знайдено</string>
   <string name="random_host_prefix">Випадковий префікс вузла</string>
   <string name="random_host_summary">Додає 6 випадкових символів перед іменем вузла</string>
@@ -164,7 +165,7 @@
   <string name="private_key_password">Пароль закритого ключа</string>
   <string name="password">Пароль</string>
   <string name="file_icon">Піктограма файлу</string>
-  <string name="tls_authentication">Аутентифікація TLS</string>
+  <string name="tls_authentication">TLS-аутентифікація / Шифрування</string>
   <string name="generated_config">Згенерована конфігурація</string>
   <string name="generalsettings">Параметри</string>
   <string name="owner_fix_summary">Спробуйте змінити власника для /dev/tun. Деякі прошивки CM9 вимагають цього для коректної роботи API OpenVPN. Потрібний root.</string>
@@ -389,9 +390,6 @@
   <string name="query_permissions_sdcard">OpenVPN для Android може спробувати знайти відсутні файли на Sd карті автоматично. Натисніть на це повідомлення, щоб отримати права на дозвіл.</string>
   <string name="protocol">Протокол</string>
   <string name="enabled_connection_entry">Ввімкнено</string>
-  <string name="months_left">%d місяців залишилося</string>
-  <string name="days_left">%d днів залишилося</string>
-  <string name="hours_left">%d годин залишилося</string>
   <string name="permission_revoked">Дозвіл VPN відкликано ОС (наприклад, інша програма VPN запущена), зупинка VPN</string>
   <string name="pushpeerinfo">Отримати інформацію про піра</string>
   <string name="pushpeerinfosummary">Надіслати додаткову інформацію на сервер, наприклад версію SSL та Android</string>
@@ -408,4 +406,5 @@
   <string name="samsung_broken_title">телефони Samsung</string>
   <string name="novpn_selected">VPN не вибрано.</string>
   <string name="alwaysonvpn">VPN завжди включений</string>
+  <string name="reconnect">Перепідключитись</string>
 </resources>

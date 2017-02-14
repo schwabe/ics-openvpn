@@ -44,13 +44,13 @@
   <string name="duplicate_profile_name">Por favor, introduzca un nombre de perfil único</string>
   <string name="profilename">Nombre del Perfil</string>
   <string name="no_keystore_cert_selected">Debe seleccionar un certificado de usuario</string>
+  <string name="no_ca_cert_selected">Debe seleccionar un certificado</string>
   <string name="no_error_found">No se encontraron errores</string>
   <string name="config_error_found">Error en la configuración</string>
   <string name="ipv4_format_error">Error al analizar la dirección IPv4</string>
   <string name="custom_route_format_error">Error al analizar las rutas personalizadas</string>
   <string name="pw_query_hint">(Deje en blanco para consultar sobre demanda)</string>
   <string name="vpn_shortcut">Acceso directo de OpenVPN</string>
-  <string name="vpn_launch_title">Conectar a VPN</string>
   <string name="shortcut_profile_notfound">Perfil especificado en el acceso directo no encontrado</string>
   <string name="random_host_prefix">Prefijo aleatorio de Host</string>
   <string name="random_host_summary">Agrega 6 caracteres al azar delante del nombre de host</string>
@@ -164,7 +164,6 @@
   <string name="private_key_password">Contraseña de clave privada</string>
   <string name="password">Contraseña</string>
   <string name="file_icon">icono de archivo</string>
-  <string name="tls_authentication">Autenticación TLS</string>
   <string name="generated_config">Configuración generada</string>
   <string name="generalsettings">Preferencias</string>
   <string name="owner_fix_summary">Intenta establecer el propietario de /dev/tun a system. Algunas imágenes de CM9 lo necesitan hacer funcionar la API de VPNService. Requiere permisos root.</string>
@@ -387,13 +386,11 @@ hacia/de Móvil)</string>
   <string name="lastdumpdate">(Última volcado tiene %1$d: %2$dh de edad (%3$s))</string>
   <string name="clear_log_on_connect">Borrar registro de nueva conexión</string>
   <string name="connect_timeout">Timeout de conexion</string>
+  <string name="no_allowed_app">No aplicación permitido añadió. Adición de nosotros mismos (%s) que tiene al menos una aplicación en la lista de aplicaciones permitido para no permitir que todas las aplicaciones
+</string>
   <string name="query_permissions_sdcard">OpenVPN para Android puede tratar de encontrar el/los archivo/s faltante/s en la tarjeta de memoria automáticamente. Toque este mensaje de iniciar la solicitud de permiso.</string>
   <string name="protocol">Protocolo</string>
   <string name="enabled_connection_entry">Activo</string>
-  <string name="months_left">%d meses faltantes</string>
-  <string name="days_left">%d días faltantes</string>
-  <string name="hours_left">%d horas faltantes</string>
-  <string name="permission_revoked">VPN permission revoked by OS (e.g. other VPN program started), stopping VPN</string>
   <string name="missing_ca_certificate">Falta certificado CA</string>
   <string name="reread_log">Vuelva a leer (%d) artículos de archivo de caché de registro log</string>
   <string name="samsung_broken">A pesar de que los teléfonos Samsung son algunos de los teléfonos Android más vendidos, el firmware de Samsung se encuentran entre los firmware con más errores. Los errores no se limitan a la operación del VPN en estos dispositivos, pero muchos de ellos se pueden solucionar. A continuación de describen algunos errores. \n\n El DNS no funciona a menos que el servidor DNS en el rango del VPN. \n \n En muchos dispositivos Samsung 5.x la funcionalidad de aplicaciones permitidas y no permitidas no funciona. \n En Samsung 6.x Se reporta que VPN no funcionará a menos que la aplicación de VPN se encuentre por fuera de la funcionalidad de ahorro de energía.</string>

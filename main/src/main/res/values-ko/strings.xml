@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">사용자 지정 경로 구문 분석 오류</string>
   <string name="pw_query_hint">(비워두면 요청시 쿼리됨)</string>
   <string name="vpn_shortcut">OpenVPN 바로 가기</string>
-  <string name="vpn_launch_title">VPN에 연결 하기</string>
   <string name="shortcut_profile_notfound">바로가기에 지정 된 프로파일을 찾을 수 없습니다.</string>
   <string name="random_host_prefix">임의의 호스트 접두사</string>
   <string name="random_host_summary">6개 임의의 문자를 호스트 이름 앞에 추가</string>
@@ -105,6 +104,7 @@
   <string name="dns_server_info">DNS 서버: %1$s, 도메인: %2$s</string>
   <string name="routes_info_incl">경로: %1$s %2$s</string>
   <string name="routes_info_excl">제외된 경로: %1$s %2$s</string>
+  <string name="routes_debug">VpnService 노선 설치: %1$s %2$s</string>
   <string name="ip_not_cidr">인터페이스 정보 %1$s와 %2$s에 있어, 두 번째 주소를 원격 피어 주소로 가정 하겠습니다. 로컬 IP의 넷마스크로는 /32를 사용하겠습니다. OpenVPN에 의해 주어진 모드는 \"%3$s\" 입니다.</string>
   <string name="route_not_cidr">CIDR 넷마스크가 있는 IP 라우트 %1$s 와 %2$s 에 있어서 처리가 불가능합니다. /32를 넷마스크로 사용하겠습니다.</string>
   <string name="route_not_netip">%1$s/%2$s 에서 %3$s/%2$s로 라우트 수정</string>
@@ -163,7 +163,6 @@
   <string name="private_key_password">개인 키 암호</string>
   <string name="password">암호</string>
   <string name="file_icon">파일 아이콘</string>
-  <string name="tls_authentication">TLS 인증</string>
   <string name="generated_config">생성 된 설정</string>
   <string name="generalsettings">설정</string>
   <string name="owner_fix_summary">/dev/tun의 소유권을 시스템으로 설정 하려고 합니다. 일부 CM9 이미지에서 VPNService API를 사용하기 위해서는 앞의 작업이 요구됩니다. root권한을 가져야합니다.</string>
@@ -201,6 +200,8 @@
   <string name="using_proxy">프록시 %1$s %2$d 을 사용</string>
   <string name="use_system_proxy">시스템 프록시를 사용</string>
   <string name="use_system_proxy_summary">연결시 전 시스템 설정에 있는 HTTP/HTTPS 프록시를 사용합니다.</string>
+  <string name="onbootrestartsummary">이 시스템 부팅에 활성화 된 경우 OpenVPN을 지정된 VPN을 연결합니다. 안드로이드 &lt; 5.0에이 옵션을 사용하기 전에 연결 경고 FAQ를 읽어 보시기 바랍니다.</string>
+  <string name="onbootrestart">부팅에 연결</string>
   <string name="ignore">무시</string>
   <string name="restart">다시 시작</string>
   <string name="restart_vpn_after_change">VPN을 다시 시작한 후 설정 변경 내용이 적용 됩니다. VPN을 지금 (재)시작?</string>

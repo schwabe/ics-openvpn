@@ -106,7 +106,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         // Permission declined, do nothing
-        if (grantResults[0] == PackageManager.PERMISSION_DENIED)
+        if (grantResults.length == 0 || grantResults[0] == PackageManager.PERMISSION_DENIED)
             return;
 
         // Reset file select dialogs

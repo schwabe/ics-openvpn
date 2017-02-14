@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Erro ao analisar as rotas personalizadas</string>
   <string name="pw_query_hint">(deixe em branco para consulta a pedido)</string>
   <string name="vpn_shortcut">Atalho do OpenVPN</string>
-  <string name="vpn_launch_title">Ligar à VPN</string>
   <string name="shortcut_profile_notfound">Perfil especificado no atalho não encontrado</string>
   <string name="random_host_prefix">Prefixo de Host aleatório</string>
   <string name="random_host_summary">Adiciona 6 caracteres aleatórios ao nome do host</string>
@@ -156,7 +155,6 @@
   <string name="private_key_password">Senha de chave privada</string>
   <string name="password">Senha</string>
   <string name="file_icon">ícone de ficheiro</string>
-  <string name="tls_authentication">Autenticação TLS</string>
   <string name="generated_config">Config gerado</string>
   <string name="generalsettings">Configurações</string>
   <string name="owner_fix">Corrija a propriedade de /dev/tun</string>

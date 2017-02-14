@@ -16,28 +16,15 @@ import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.core.PRNGFixes;
 
-/*
-@ReportsCrashes(
-        formKey = "",
-        formUri = "http://reports.blinkt.de/report-icsopenvpn",
-        reportType = org.acra.sender.HttpSender.Type.JSON,
-        httpMethod = org.acra.sender.HttpSender.Method.PUT,
-        formUriBasicAuthLogin="report-icsopenvpn",
-        formUriBasicAuthPassword="Tohd4neiF9Ai!!!!111eleven",
-        mode = ReportingInteractionMode.TOAST,
-        resToastText = R.string.crash_toast_text
-)
-*/
 public class ICSOpenVPNApplication extends Application {
+    private StatusListener mStatus;
+
     @Override
     public void onCreate() {
         super.onCreate();
         PRNGFixes.apply();
 
-        if (BuildConfig.DEBUG) {
-            //ACRA.init(this);
-        }
-
-        VpnStatus.initLogCache(getApplicationContext().getCacheDir());
+        mStatus = new StatusListener();
+        mStatus.init(getApplicationContext());
     }
 }

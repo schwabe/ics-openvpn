@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Kohandatud marsruudid ei allu süntaksianalüüsile</string>
   <string name="pw_query_hint">(jäta tühjaks, küsitakse vajadusel)</string>
   <string name="vpn_shortcut">OpenVPN kiirkäivitus</string>
-  <string name="vpn_launch_title">Ühendu VPN\'iga</string>
   <string name="shortcut_profile_notfound">Lühivalikus määratud profiil puudub</string>
   <string name="random_host_prefix">Juhuslik serveri eesliide</string>
   <string name="random_host_summary">Lisab 6 juhuslikku tähte serveri nime ette</string>
@@ -164,7 +163,6 @@
   <string name="private_key_password">Privaatse võtme salasõna</string>
   <string name="password">Salasõna</string>
   <string name="file_icon">faili ikoon</string>
-  <string name="tls_authentication">TLS autentimine</string>
   <string name="generated_config">Genereeritud konfiguratsioon</string>
   <string name="generalsettings">Seaded</string>
   <string name="owner_fix_summary">Püütakse seada /dev/tun omanikku system\'iks. VPNService API nõuab seda mõne CM9 versiooni puhul. Seade peab olema ruuditud.</string>
@@ -203,6 +201,8 @@
   <string name="using_proxy">Kasutusel proxy %1$s %2$d</string>
   <string name="use_system_proxy">Kasuta süsteemset proxy\'t</string>
   <string name="use_system_proxy_summary">Kasuta ühendumisel süsteemse HTTP/HTTPS proxy konfiguratsiooni.</string>
+  <string name="onbootrestartsummary">OpenVPN ühendab määratud VPN kui see oli süsteemi käivitumisel aktiivne. Palun tutvuge, enne Android &lt; 5.0 peal selle võimaluse kasutamist, KKK hoiatusega ühendumise kohta.</string>
+  <string name="onbootrestart">Ühenda käivitamisel</string>
   <string name="ignore">Ignoreeri</string>
   <string name="restart">Uuestilaadimine</string>
   <string name="restart_vpn_after_change">Konfiguratsioonimuudatused rakendatakse peale VPN uuestilaadimist. Kas soovite VPN kohe (uuesti)laadida?</string>
@@ -389,7 +389,27 @@
   <string name="protocol">Protokoll</string>
   <string name="enabled_connection_entry">Lubatud</string>
   <string name="abi_mismatch">Selle seadme eelistatud ABI eelisjärjekord (%1$s) ja seadme kaasnevate teekide teatatud ABI (%2$s) ei ühildu</string>
-  <string name="months_left">Jäänud on %d kuud</string>
-  <string name="days_left">jäänud on %d päeva</string>
-  <string name="hours_left">Jäänud on %d tundi</string>
+  <string name="permission_revoked">OS tühistas VPN õigused (nt. töötab teine VPN programm). VPN peatatakse</string>
+  <string name="pushpeerinfo">Saada partneri andmed</string>
+  <string name="pushpeerinfosummary">Saada serverile lisaandmeid, nt. SSL versioon ja Android versioon</string>
+  <string name="pw_request_dialog_title">Vaja %1$s</string>
+  <string name="pw_request_dialog_prompt">Palun sisestage profiili %1$s salasõna</string>
+  <string name="menu_use_inline_data">Kasutage tekstisiseseid andmeid</string>
+  <string name="export_config_chooser_title">Konfiguratsioonifaili eksportimine</string>
+  <string name="missing_tlsauth">puudub tls-auth fail</string>
+  <string name="missing_certificates">Puudub kasutajasertifikaat või kasutajasertifikaadi võtmefail</string>
+  <string name="missing_ca_certificate">Puudub CA sertifikaat</string>
+  <string name="crl_title">Sertifikaatide tühistusnimekiri (valikuline)</string>
+  <string name="reread_log">Taasloe logi puhverfailist (%d) logikirjet</string>
+  <string name="samsung_broken">Vaatamata sellele et Samsungi telefonid on ühed populaarsemad Android telefonid, on Samsungi tarkvara üks auklikumatest Android tarkvarade seas. Probleemid ei piirdu vaid nende seadmete VPN toimingutega kuid on enamasti lahendatavad. Edasine kirjeldab mõnda probleemi.\n\nDNS ei toimi kui DNS server pole VPN vahemikus.\n\nPaljudel Samsungi 5.x seadmetel ei toimi programmide lubamise/keelamise võimalus.\nSamsung 6.x telefonide kohta on teateid et VPN ei tööta kui VPN programmil pole välistatud toitesääst.</string>
+  <string name="samsung_broken_title">Samsungi telefonid</string>
+  <string name="novpn_selected">VPN valimata.</string>
+  <string name="alwaysonvpn">VPN käivitamisel ja pidevalt-sees</string>
+  <string name="reconnect">Taasühenda</string>
+  <string name="qs_title">VPN lülitamine</string>
+  <string name="qs_connect">Ühendu %s külge</string>
+  <string name="qs_disconnect">Lahuta %s küljest</string>
+  <string name="connectretrymaxmessage">Sisestage suurim ühendumiskatsete vaheline aeg. OpenVPN tõstab ebaõnnestunud ühendumiskatsete puhul aegamööda ooteaega kuni jõuab selle väärtuseni. Vaikeväärtus on 300s.</string>
+  <string name="connectretrymaxtitle">Suurim lubatud ühendumiskatsete vaheline aeg</string>
+  <string name="state_waitconnectretry">Ühendumiskatsete vahel oodatakse %ss sekundit</string>
 </resources>

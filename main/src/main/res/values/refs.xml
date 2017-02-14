@@ -22,6 +22,6 @@
     <drawable name="ic_menu_delete_grey">@android:drawable/ic_menu_delete</drawable>
     <drawable name="ic_menu_copy">@drawable/ic_menu_copy_holo_light</drawable>
     <drawable name="ic_receipt">@drawable/ic_menu_log</drawable>
-
+    <drawable name="ic_sort">@android:drawable/ic_menu_sort_by_size</drawable>
 
 </resources>

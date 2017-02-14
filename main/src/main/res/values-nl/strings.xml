@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Fout bij inlezen van aangepaste routes</string>
   <string name="pw_query_hint">(vrij laten voor query op aanvraag)</string>
   <string name="vpn_shortcut">Open VPN shortcut</string>
-  <string name="vpn_launch_title">Met VPN verbinden</string>
   <string name="shortcut_profile_notfound">Het profiel zoals aangegeven in de snelkoppeling kon niet gevonden worden.</string>
   <string name="random_host_prefix">Willekeurig Host Voorvoegsel</string>
   <string name="random_host_summary">Voegt 6 willekeurige tekens toe voor de hostname</string>
@@ -133,7 +132,6 @@
   <string name="private_key_password">Privé Sleutel Wachtwoord</string>
   <string name="password">Wachtwoord</string>
   <string name="file_icon">bestands pictogram</string>
-  <string name="tls_authentication">TLS Verificatie</string>
   <string name="generated_config">Gegenereerde Configuratie</string>
   <string name="generalsettings">Instellingen</string>
   <string name="edit_profile_title">Bewerken van \"%s\"</string>

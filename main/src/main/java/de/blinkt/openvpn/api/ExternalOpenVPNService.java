@@ -36,12 +36,12 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
 import de.blinkt.openvpn.core.ConfigParser.ConfigParseError;
+import de.blinkt.openvpn.core.ConnectionStatus;
+import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
 import de.blinkt.openvpn.core.OpenVPNService;
-import de.blinkt.openvpn.core.OpenVPNService.LocalBinder;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 import de.blinkt.openvpn.core.VpnStatus;
-import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 import de.blinkt.openvpn.core.VpnStatus.StateListener;
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
@@ -52,7 +52,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
     final RemoteCallbackList<IOpenVPNStatusCallback> mCallbacks =
             new RemoteCallbackList<>();
 
-    private OpenVPNService mService;
+    private IOpenVPNServiceInternal mService;
     private ExternalAppDatabase mExtAppDb;
 
 
@@ -63,8 +63,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
-            LocalBinder binder = (LocalBinder) service;
-            mService = binder.getService();
+            mService = (IOpenVPNServiceInternal) (service);
         }
 
         @Override
@@ -82,8 +81,12 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                 VpnProfile vp = ProfileManager.getLastConnectedVpn();
                 if (ProfileManager.isTempProfile()) {
                     if(intent.getPackage().equals(vp.mProfileCreator)) {
-                        if (mService != null && mService.getManagement() != null)
-                            mService.getManagement().stopVPN(false);
+                        if (mService != null)
+                            try {
+                                mService.stopVPN(false);
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                            }
                     }
                 }
             }
@@ -150,7 +153,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             /* Check if we need to show the confirmation dialog,
              * Check if we need to ask for username/password */
 
-            int neddPassword = vp.needUserPWInput(false);
+            int neddPassword = vp.needUserPWInput(null, null);
 
             if(vpnPermissionIntent != null || neddPassword != 0){
                 Intent shortVPNIntent = new Intent(Intent.ACTION_MAIN);
@@ -304,8 +307,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         @Override
         public void disconnect() throws RemoteException {
             checkOpenVPNPermission();
-            if (mService != null && mService.getManagement() != null)
-                mService.getManagement().stopVPN(false);
+            if (mService != null)
+                mService.stopVPN(false);
         }
 
         @Override
@@ -347,9 +350,9 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         public String state;
         public String logmessage;
         public ConnectionStatus level;
-        public String vpnUUID;
+        String vpnUUID;
 
-        public UpdateMessage(String state, String logmessage, ConnectionStatus level) {
+        UpdateMessage(String state, String logmessage, ConnectionStatus level) {
             this.state = state;
             this.logmessage = logmessage;
             this.level = level;
@@ -364,6 +367,11 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
         Message msg = mHandler.obtainMessage(SEND_TOALL, mMostRecentState);
         msg.sendToTarget();
+
+    }
+
+    @Override
+    public void setConnectedVPN(String uuid) {
 
     }
 

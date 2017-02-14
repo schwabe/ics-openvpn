@@ -12,6 +12,7 @@ import android.net.LocalSocketAddress;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 
 import junit.framework.Assert;
@@ -32,7 +33,6 @@ import java.util.Vector;
 import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 
 public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
@@ -105,15 +105,21 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     }
 
-    public void managmentCommand(String cmd) {
+    /**
+     * @param cmd command to write to management socket
+     * @return true if command have been sent
+     */
+    public boolean managmentCommand(String cmd) {
         try {
             if (mSocket != null && mSocket.getOutputStream() != null) {
                 mSocket.getOutputStream().write(cmd.getBytes());
                 mSocket.getOutputStream().flush();
+                return true;
             }
         } catch (IOException e) {
             // Ignore socket stack traces
         }
+        return false;
     }
 
 
@@ -134,8 +140,12 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 
             // Close the management socket after client connected
+            try {
+                mServerSocket.close();
+            } catch (IOException e) {
+                VpnStatus.logException(e);
+            }
 
-            mServerSocket.close();
             // Closing one of the two sockets also closes the other
             //mServerSocketLocal.close();
 
@@ -164,7 +174,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
             }
         } catch (IOException e) {
-            VpnStatus.logDebug(R.string.management_socket_closed, e.getLocalizedMessage());
+            if (!e.getMessage().equals("socket closed") && !e.getMessage().equals("Connection reset by peer"))
+                VpnStatus.logException(e);
         }
         synchronized (active) {
             active.remove(this);
@@ -327,15 +338,15 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 VpnStatus.updateStateString("CONNECTRETRY", String.valueOf(waittime),
                         R.string.state_waitconnectretry, ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
             mResumeHandler.postDelayed(mResumeHoldRunnable, waittime * 1000);
-            if (waittime > 5) {
+            if (waittime > 5)
                 VpnStatus.logInfo(R.string.state_waitconnectretry, String.valueOf(waittime));
+            else
+                VpnStatus.logDebug(R.string.state_waitconnectretry, String.valueOf(waittime));
 
-            }
         } else {
             mWaitingForRelease = true;
 
             VpnStatus.updateStatePause(lastPauseReason);
-
 
         }
     }
@@ -426,6 +437,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 protectFileDescriptor(fdtoprotect);
                 break;
             case "DNSSERVER":
+            case "DNS6SERVER":
                 mOpenVPNService.addDNS(extra);
                 break;
             case "DNSDOMAIN":
@@ -553,15 +565,17 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         if (needed.equals("Private Key")) {
             pw = mProfile.getPasswordPrivateKey();
         } else if (needed.equals("Auth")) {
+            pw = mProfile.getPasswordAuth();
+
             String usercmd = String.format("username '%s' %s\n",
                     needed, VpnProfile.openVpnEscape(mProfile.mUsername));
             managmentCommand(usercmd);
-            pw = mProfile.getPasswordAuth();
         }
         if (pw != null) {
             String cmd = String.format("password '%s' %s\n", needed, VpnProfile.openVpnEscape(pw));
             managmentCommand(cmd);
         } else {
+            mOpenVPNService.requestInputFromUser(R.string.password, needed);
             VpnStatus.logError(String.format("Openvpn requires Authentication type '%s' but no password/key information available", needed));
         }
 
@@ -577,8 +591,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         synchronized (active) {
             boolean sendCMD = false;
             for (OpenVpnManagementThread mt : active) {
-                mt.managmentCommand("signal SIGINT\n");
-                sendCMD = true;
+                sendCMD = mt.managmentCommand("signal SIGINT\n");
                 try {
                     if (mt.mSocket != null)
                         mt.mSocket.close();
@@ -649,8 +662,12 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     @Override
     public boolean stopVPN(boolean replaceConnection) {
-        mShuttingDown = true;
-        return stopOpenVPN();
+        boolean stopSucceed = stopOpenVPN();
+        if (stopSucceed) {
+            mShuttingDown = true;
+
+        }
+        return stopSucceed;
     }
 
 }

@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Hiba az egyéni útvonalak elemzésekor</string>
   <string name="pw_query_hint">(hagyja üresen esetenkénti bekéréshez)</string>
   <string name="vpn_shortcut">OpenVPN parancsikon</string>
-  <string name="vpn_launch_title">Csatlakozás a VPN-hez</string>
   <string name="shortcut_profile_notfound">A parancsikonban kiválasztott Profil nem létezik</string>
   <string name="random_host_prefix">Véletlen Host Prefix</string>
   <string name="random_host_summary">6 random karakter hozzáadása a hosztnév elejére</string>
@@ -164,7 +163,6 @@
   <string name="private_key_password">Privát kulcs jelszó</string>
   <string name="password">Jelszó</string>
   <string name="file_icon">fájl ikon</string>
-  <string name="tls_authentication">TLS hitelesítés</string>
   <string name="generated_config">Generált konfiguráció</string>
   <string name="generalsettings">Beállítások</string>
   <string name="owner_fix_summary">/dev/tun tulajdonosának beállítása. Néhány CM9 image-hez ez kell, hogy a VPNService API működjön. Root szükséges.</string>
@@ -391,9 +389,6 @@
   <string name="protocol">Protokoll</string>
   <string name="enabled_connection_entry">Engedélyezett</string>
   <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
-  <string name="months_left">%d hónap van hátra</string>
-  <string name="days_left">%d nap van hátra</string>
-  <string name="hours_left">%d óra van hátra</string>
   <string name="permission_revoked">A VPN engedélyt visszavonta az OS (pl.: másik VPN program indult), VPN leállítása</string>
   <string name="pushpeerinfo">Peer információ küldése</string>
   <string name="pushpeerinfosummary">Extra információ küldése a kiszolgálónak, pl.: SSL verzió és Android verzió</string>

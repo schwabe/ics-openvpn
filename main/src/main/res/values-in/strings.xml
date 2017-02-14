@@ -44,13 +44,14 @@
   <string name="duplicate_profile_name">Silakan masukan nama profil yang berbeda</string>
   <string name="profilename">Nama profil</string>
   <string name="no_keystore_cert_selected">Anda harus memilih sertifikat pengguna</string>
+  <string name="no_ca_cert_selected">Opoeo</string>
   <string name="no_error_found">Tidak ada kesalahan</string>
   <string name="config_error_found">Konfigurasi Salah</string>
   <string name="ipv4_format_error">Kesalahan penulisan alamat IPV4</string>
   <string name="custom_route_format_error">Gagal menganalisa rute buatan</string>
   <string name="pw_query_hint">(biarkan kosong untuk antrian permintaan)</string>
   <string name="vpn_shortcut">Jalan Pintas OpenVPN</string>
-  <string name="vpn_launch_title">Hubungkan VPN</string>
+  <string name="vpn_launch_title">Dyan</string>
   <string name="shortcut_profile_notfound">Profil di shrotcut tidak ada</string>
   <string name="random_host_prefix">Acak awalan Host </string>
   <string name="random_host_summary">Tambah 6 karakter acak di depan nama host</string>
@@ -164,7 +165,7 @@
   <string name="private_key_password">Sandi kunci pribadi</string>
   <string name="password">Sandi</string>
   <string name="file_icon">ikon berkas</string>
-  <string name="tls_authentication">Otentikasi TLS</string>
+  <string name="tls_authentication">TLS Authentication / Enkripsi</string>
   <string name="generated_config">Konfigurasi Dibuat</string>
   <string name="generalsettings">Pengaturan</string>
   <string name="owner_fix_summary">Mencoba menetapkan pemilik /dev/tun ke sistem. Beberapa gambar CM9 memerlukan ini untuk membuat API VPNService bekerja. Memerlukan akses Root.</string>
@@ -377,8 +378,10 @@
   <string name="ab_persist_tun_title">Modus terowongan bertahan</string>
   <string name="version_and_later">%s dan yang lebih baru</string>
   <string name="tls_cipher_alert_title">Sambungan gagal dengan peringatan kegagalan jabat tangan SSL23_GET_SERVER_HELLO:sslv3</string>
+  <string name="tls_cipher_alert">Dyankoclok</string>
   <string name="message_no_user_edit">Profil ini telah ditambahkan dari aplikasi eksternal (%s) dan telah ditandai sebagai pengguna tidak dapat diedit.</string>
   <string name="crl_file">Certificate Revocation List</string>
   <string name="service_restarted">Restart layanan OpenVPN (App jatuh mungkin jatuh atau dibunuh untuk memori tekanan)</string>
   <string name="import_config_error">Mengimpor konfigurasi menghasilkan kesalahan, tidak bisa menyimpannya</string>
+  <string name="Search">Pencarian</string>
 </resources>

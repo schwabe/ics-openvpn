@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Błąd analizowania niestandardowych tras</string>
   <string name="pw_query_hint">(Pozostaw puste, aby wywołać na żądanie)</string>
   <string name="vpn_shortcut">Skrót OpenVPN</string>
-  <string name="vpn_launch_title">Połącz się z siecią VPN</string>
   <string name="shortcut_profile_notfound">Nie odnaleziono profilu określonego w skrócie</string>
   <string name="random_host_prefix">Losowy prefiks hosta</string>
   <string name="random_host_summary">Dodaje 6 losowych znaków przed nazwą hosta</string>
@@ -164,7 +163,6 @@
   <string name="private_key_password">Hasło klucza prywatnego</string>
   <string name="password">Hasło</string>
   <string name="file_icon">plik ikony</string>
-  <string name="tls_authentication">Uwierzytelnianie TLS</string>
   <string name="generated_config">Utworzona konfiguracja</string>
   <string name="generalsettings">Ustawienia</string>
   <string name="owner_fix_summary">Stara się ustawić właściciela /dev/tun na system. Niektóre obrazy CM9 wymagają tego, aby API VPNService zaczęło działać. Wymaga root-a.</string>
@@ -388,9 +386,6 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
   <string name="query_permissions_sdcard">OpenVPN dla Android spróbuje automatycznie wykryć brakujące pliki na karcie SD. Dotknij tego komunikatu, aby żądać uprawnień.</string>
   <string name="protocol">Protokół</string>
   <string name="enabled_connection_entry">Włączony</string>
-  <string name="months_left">pozostało %d miesięcy</string>
-  <string name="days_left">pozostało %d dni</string>
-  <string name="hours_left">pozostało %d godzin</string>
   <string name="permission_revoked">Pozwolenie VPN odwołane przez system (na przykład inny program VPN jest uruchomiony), zatrzymuję VPN</string>
   <string name="pushpeerinfo">Naciśnij \"Peer info\"</string>
   <string name="pushpeerinfosummary">Wyślij dodatkowe informację do serwera, na przykład wersję SSL oraz Androida</string>

@@ -13,13 +13,13 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 import android.widget.Toast;
 
-import java.util.Locale;
-
-import de.blinkt.openvpn.core.OpenVPNManagement;
+import de.blinkt.openvpn.core.ConnectionStatus;
+import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
 import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
@@ -59,10 +59,14 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
             bindService(intent, new ServiceConnection() {
                 @Override
                 public void onServiceConnected(ComponentName componentName, IBinder binder) {
-                    OpenVPNService service = ((OpenVPNService.LocalBinder) binder).getService();
+                    IOpenVPNServiceInternal service = IOpenVPNServiceInternal.Stub.asInterface(binder);
 
-                    if (service != null && service.getManagement() != null)
-                        service.getManagement().stopVPN(false);
+                    if (service != null)
+                        try {
+                            service.stopVPN(false);
+                        } catch (RemoteException e) {
+                            VpnStatus.logException(e);
+                        }
 
                     unbindService(this);
                 }
@@ -107,10 +111,10 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
     }
 
     @Override
-    public void updateState(String state, String logmessage, int localizedResId, VpnStatus.ConnectionStatus level) {
+    public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level) {
         VpnProfile vpn;
         Tile t = getQsTile();
-        if (level == VpnStatus.ConnectionStatus.LEVEL_AUTH_FAILED || level == VpnStatus.ConnectionStatus.LEVEL_NOTCONNECTED) {
+        if (level == ConnectionStatus.LEVEL_AUTH_FAILED || level == ConnectionStatus.LEVEL_NOTCONNECTED) {
             // No VPN connected, use stadnard VPN
             vpn = getQSVPN();
             if (vpn == null) {
@@ -121,7 +125,7 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
                 t.setState(Tile.STATE_INACTIVE);
             }
         } else {
-            vpn = ProfileManager.getLastConnectedVpn();
+            vpn = ProfileManager.get(getBaseContext(), VpnStatus.getLastConnectedVPNProfile());
             String name;
             if (vpn == null)
                 name = "null?!";
@@ -131,8 +135,12 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
             t.setState(Tile.STATE_ACTIVE);
         }
 
-
         t.updateTile();
+    }
+
+    @Override
+    public void setConnectedVPN(String uuid) {
+
     }
 
     @Override

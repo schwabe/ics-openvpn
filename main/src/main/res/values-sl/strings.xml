@@ -44,13 +44,14 @@
   <string name="duplicate_profile_name">Vnesite edinstveno ime profila</string>
   <string name="profilename">Ime profila</string>
   <string name="no_keystore_cert_selected">Izbrati morate uporabniško potrdilo</string>
+  <string name="no_ca_cert_selected">Izbrati morate potrdilo overitelja potrdil</string>
   <string name="no_error_found">Nobene napake ni bilo najdene</string>
   <string name="config_error_found">Napaka v nastavitvah</string>
   <string name="ipv4_format_error">Napaka pri razčlenjevanju naslova IPv4</string>
   <string name="custom_route_format_error">Napaka pri razčlenjevanju poti po meri</string>
   <string name="pw_query_hint">(pustite prazno za poizvedbo na zahtevo)</string>
   <string name="vpn_shortcut">Bližnjica OpenVPN</string>
-  <string name="vpn_launch_title">Poveži se v VPN</string>
+  <string name="vpn_launch_title">Povezovanje v VPN &#8230;</string>
   <string name="shortcut_profile_notfound">Profila, določenega v bližnjici, ni bilo mogoče najti</string>
   <string name="random_host_prefix">Predpona naklj. gostitelja</string>
   <string name="random_host_summary">Doda 6 naključnih znakov pred ime gostitelja</string>
@@ -164,7 +165,7 @@
   <string name="private_key_password">Geslo zasebnega ključa</string>
   <string name="password">Geslo</string>
   <string name="file_icon">ikona datoteke</string>
-  <string name="tls_authentication">Overitev TLS</string>
+  <string name="tls_authentication">Overitev/Šifriranje TLS</string>
   <string name="generated_config">Ustvarjene nastavitve</string>
   <string name="generalsettings">Nastavitve</string>
   <string name="owner_fix_summary">Poizkusi nastaviti lastnika mape /dev/tun na sistem. Nekateri odtisi CM9 to potrebujejo za delovanje API-ja storitve VPN. Zahteva skrbniški dostop.</string>
@@ -391,9 +392,6 @@
   <string name="protocol">Protokol</string>
   <string name="enabled_connection_entry">Omogočeno</string>
   <string name="abi_mismatch">Prednostna izvirna predhodnost ABI (%1$s) in ABI, ki ga sporočajo izvirne knjižnice (%2$s), se ne ujemata.</string>
-  <string name="months_left">Preostalih še %d mesecev</string>
-  <string name="days_left">Preostalih še %d dni</string>
-  <string name="hours_left">Preostalih še %d ur</string>
   <string name="permission_revoked">OS je preklical dovoljenje VPN (npr. zagnan je bil drug program VPN), ustavljanje VPN-a</string>
   <string name="pushpeerinfo">Potisni podatke o soležniku</string>
   <string name="pushpeerinfosummary">Pošlji dodatne podatke na strežnik, npr. različico SSL in Android</string>
@@ -417,4 +415,11 @@
   <string name="connectretrymaxmessage">Vnesite najdaljši čas med poizkusi povezave. OpenVPN bo po neuspešnem poizkusu povezave počasi povečeval čakalni čas do te vrednosti. Privzeto je 300 s.</string>
   <string name="connectretrymaxtitle">Najdaljši čas med poizkusi povezave</string>
   <string name="state_waitconnectretry">Čakanje %s s med poizkusi povezave</string>
+  <string name="nought_alwayson_warning"><![CDATA[Če niste dobili potrditvenega pogovornega okna VPN, imate v drugem programu omogočeno \"Vedno z VPN-om\". V tem primeru se lahko v VPN poveže samo ta program. Preverite v Nastavitve -> Omrežje (več) ... -> VPN-i]]></string>
+  <string name="management_socket_closed">Povezava v OmenVPN zaprta (%s)</string>
+  <string name="change_sorting">Spremeni razvrščanje</string>
+  <string name="sort">Razvrsti</string>
+  <string name="sorted_lru">Profili, razvrščeni po nazadnje uporabljenem</string>
+  <string name="sorted_az">Profili, razvrščeni po imenu</string>
+  <string name="deprecated_tls_remote">Nastavitve uporabljajo možnost tls-remote, ki je bila opuščena v raz. 2.3 in končno odstranjena v raz. 2.4</string>
 </resources>

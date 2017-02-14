@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Невозможно распознать пользовательские маршруты</string>
   <string name="pw_query_hint">(оставьте пустым для запроса по требованию)</string>
   <string name="vpn_shortcut">Ярлык OpenVPN</string>
-  <string name="vpn_launch_title">Подключиться к VPN</string>
   <string name="shortcut_profile_notfound">Не найден профиль, указанный в ярлыке</string>
   <string name="random_host_prefix">Случайный префикс узла</string>
   <string name="random_host_summary">Добавляет 6 случайных символов перед именем хоста</string>
@@ -164,7 +163,6 @@
   <string name="private_key_password">Пароль закрытого ключа</string>
   <string name="password">Пароль</string>
   <string name="file_icon">файл значка</string>
-  <string name="tls_authentication">TLS-аутентификация</string>
   <string name="generated_config">Сгенерированая конфигурация</string>
   <string name="generalsettings">Настройки</string>
   <string name="owner_fix_summary">Попытаться изменить владельца для /dev/tun. Некоторые прошивки CM9 требуют этого для корректной работы API OpenVPN. Требуется root.</string>
@@ -391,9 +389,6 @@
   <string name="protocol">Протокол</string>
   <string name="enabled_connection_entry">Включено</string>
   <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
-  <string name="months_left">%d мес. осталось</string>
-  <string name="days_left">%d д. осталось</string>
-  <string name="hours_left">%d ч. осталось</string>
   <string name="permission_revoked">Разрешение VPN отозвано ОС (например, запущена другая программа VPN), останавливаем VPN</string>
   <string name="pushpeerinfo">Получить информацию о Пире</string>
   <string name="pushpeerinfosummary">Отправить дополнительную информацию на сервер, например, версию SSL и версию Android</string>
@@ -410,7 +405,7 @@
   <string name="samsung_broken_title">Телефоны Samsung</string>
   <string name="novpn_selected">Не выбрано VPN.</string>
   <string name="alwaysonvpn">VPN, используемый при загрузке и для Always-On</string>
-  <string name="reconnect">переподключить</string>
+  <string name="reconnect">Переподключить</string>
   <string name="qs_title">Переключение VPN</string>
   <string name="qs_connect">Подключиться к %s</string>
   <string name="qs_disconnect">Отключиться от %s</string>

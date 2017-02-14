@@ -50,7 +50,6 @@
   <string name="custom_route_format_error">Det går inte att tolka de anpassade rutterna</string>
   <string name="pw_query_hint">(lämna tom för förfrågan vid behov)</string>
   <string name="vpn_shortcut">OpenVPN genväg</string>
-  <string name="vpn_launch_title">Ansluta till VPN</string>
   <string name="shortcut_profile_notfound">Profilen som anges i genvägen hittades inte</string>
   <string name="random_host_prefix">Slumpmässigt värd-prefix</string>
   <string name="random_host_summary">Lägger till 6 slumpmässiga tecken framför hostname</string>
@@ -159,12 +158,11 @@
   <string name="converted_profile">importerad profil</string>
   <string name="converted_profile_i">importerad profil %d</string>
   <string name="broken_images">Trasiga ROM</string>
-  <string name="broken_images_faq">lt;pgt;Officiella HTC ROM är kända för att ha ett konstigt rutt problem som orsakar att trafik inte går genom tunneln (Se även &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Ärende 18&lt;/a&gt; i äredehanteringen.)&lt;/p&gt;&lt;p&gt;Äldre officiella SONY ROM för Xperia Arc S och Xperia Ray har rapporterats sakna VPNService helt. (Se även &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Ärende 29&lt;/a&gt; i ärendehanteringen.)&lt;/p&gt;&lt;p&gt;I anpassade/modifierade ROM kan tun modulen saknas eller rättigheterna på /dev/tun kan vara fel. Vissa CM9 ROM behöver alternativet \"Fixa ägande\" under \"Modellanpassade hack\" ikryssat.&lt;/p&gt;&lt;p&gt;Viktigt: Om du har en trasig ROM, rapportera det till din leverantör. Ju fler människor som rapportera problemet till leverantören desto mer sannolikt är det att det kommer en rättning.&lt;/p&gt;</string>
+  <string name="broken_images_faq">&lt;p&gt;Officiella HTC ROM är kända för att ha ett konstigt rutt problem som orsakar att trafik inte går genom tunneln (Se även &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Ärende 18&lt;/a&gt; i äredehanteringen.)&lt;/p&gt;&lt;p&gt;Äldre officiella SONY ROM för Xperia Arc S och Xperia Ray har rapporterats sakna VPNService helt. (Se även &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Ärende 29&lt;/a&gt; i ärendehanteringen.)&lt;/p&gt;&lt;p&gt;I anpassade/modifierade ROM kan tun modulen saknas eller rättigheterna på /dev/tun kan vara fel. Vissa CM9 ROM behöver alternativet \"Fixa ägande\" under \"Modellanpassade hack\" ikryssat.&lt;/p&gt;&lt;p&gt;Viktigt: Om du har en trasig ROM, rapportera det till din leverantör. Ju fler människor som rapportera problemet till leverantören desto mer sannolikt är det att det kommer en rättning.&lt;/p&gt;</string>
   <string name="pkcs12_file_encryption_key">Krypteringsnyckel för PKCS12-filen</string>
   <string name="private_key_password">Lösenord för privat nyckel</string>
   <string name="password">Lösenord</string>
   <string name="file_icon">filikon</string>
-  <string name="tls_authentication">TLS-autentisering</string>
   <string name="generated_config">Genererad konfiguration</string>
   <string name="generalsettings">Inställningar</string>
   <string name="owner_fix_summary">Försöker att sätta ägaren av /dev/tun till system. Vissa CM9 ROM behöver detta för att VPNService API ska fungera. Detta kräver root.</string>
@@ -210,7 +208,7 @@
   <string name="restart_vpn_after_change">Konfigurationsändringar tillämpas efter omstart av VPN. Starta(om) VPN nu?</string>
   <string name="configuration_changed">Konfigurationen ändrades</string>
   <string name="log_no_last_vpn">Kunde inte avgöra vilken den sista anslutna profilen var för redigering</string>
-  <string name="faq_duplicate_notification_title">Dubblerade meddelanden</string>
+  <string name="faq_duplicate_notification_title">Dubbla noteringar</string>
   <string name="faq_duplicate_notification">Om Android tillfälligt har brist på systemminne (RAM), tas program och tjänster som inte behövs just nu bort från aktiva minnet. Detta avslutar en pågående VPN-anslutning. För att se till att pågående anslutning/OpenVPN överlever körs denna tjänst med högre prioritet. För att köra med högre prioritet måste applikationen visa en notifikation. Nyckelikonen visas av systemet, som beskrivs i FAQ tidigare, och räknas inte som ett meddelande som ger rättighet att köra med högre prioritet.</string>
   <string name="no_vpn_profiles_defined">Inga VPN-profiler har definierats.</string>
   <string name="add_new_vpn_hint">Använd &lt;img src=\"ic_menu_add\"/&gt; ikonen för att lägga till en ny VPN</string>
@@ -348,6 +346,7 @@
   <string name="duplicate_vpn">Duplicera VPN-profil</string>
   <string name="duplicate_profile_title">Duplicerar profil: %s</string>
   <string name="show_log">Visa logg</string>
+  <string name="faq_android_clients">Flera OpenVPN klienter för Android finns. Den vanligaste är OpenVPN för Android (denna klient), OpenVPN Connect och OpenVPN Settings.&lt;p&gt;Klienterna kan delas in i två grupper: OpenVPN för Android och OpenVPN Connect använder den officiella VPNService API:n (Android 4.0+) och kräver ingen rot och OpenVPN Settings som använder rot.&lt;p&gt;OpenVPN for Android är en klient med öppen källkod som har utvecklats av Arne Schwabe. Den riktar sig till mer avancerade användare och erbjuder många inställningar och möjligheten som att importera profiler från filer och konfigurera/ändra profiler inuti appen. Klienten bygger på den gemensamma versionen av OpenVPN. Den är baserad på OpenVPN 2.x källkod. Denna klient kan ses som den halvt officiella klienten i gemenskapen. &lt;p&gt;OpenVPN Connect har inte öppen källkod klient och är utvecklad av OpenVPN Technologies, Inc. Klienten indragen för allmänt bruk och mer inriktad på den genomsnittlige användaren och tillåter importering av OpenVPN profiler. Denna klient är baserad på OpenVPN C ++ reimplementation av OpenVPN protokollet (detta krävdes för att tillåta OpenVPN Technologies, Inc att publicera en iOS OpenVPN app). Denna klient är den officiella klienten av OpenVPN teknik &lt;p&gt; OpenVPN Settings är den äldsta av klienterna och även för UI för OpenVPN öppna källkod. I motsats till OpenVPN för Android kräver den rot och använder inte VPNService API. Den beror inte på Android 4.0+</string>
   <string name="faq_androids_clients_title">Skillnader mellan OpenVPN Android klienterna</string>
   <string name="ignore_multicast_route">Ignorera multicast rutt: %s</string>
   <string name="ab_only_cidr">Android stödjer bara rutter specifierade i CIDR-format för VPNet. Eftersom rutter specifierade utan CIDR nästan aldrig används, så kommer OpenVPN för Android använda /32 för dessa rutter, och ge en varning.</string>
@@ -390,9 +389,6 @@
   <string name="protocol">Protokoll</string>
   <string name="enabled_connection_entry">Aktiverad</string>
   <string name="abi_mismatch">Önskemålet av ABI för denna enhet (%1$s) och det ABI som rapporteras av de inlästa biblioteken (%2$s) stämmer inte överens</string>
-  <string name="months_left">%d månader kvar</string>
-  <string name="days_left">%d dagar kvar</string>
-  <string name="hours_left">%d timmar kvar</string>
   <string name="permission_revoked">VPN-tillstånd återkallas av operativsystemet (t.ex. andra VPN-program har startats), stoppar VPN</string>
   <string name="pushpeerinfo">Skicka klientinformation till servern</string>
   <string name="pushpeerinfosummary">Skicka extra information till servern, t.ex. SSL-versionen och Android-version</string>
@@ -405,7 +401,15 @@
   <string name="missing_ca_certificate">CA-certifikat saknas</string>
   <string name="crl_title">Lista över återkallade certifikat (valfri)</string>
   <string name="reread_log">Läs in (%d) loggrader från loggens cachefil på nytt</string>
+  <string name="samsung_broken">Även om Samsung telefoner är bland de mest säljande Android-telefoner, Samsungs mjukvara är också bland de mest buggiga Android mjukvarorna. Buggarna är inte begränsade till VPN driften på dessa enheter, men många av dem kan gås runt. Till följd beskrivs några av dessa buggar.\n\nDNS fungerar inte om inte DNS-servern finns VPN intervallet.\n\nPå många Samsung 5.x enheter fungerar inte de tillåtna/otillåtna programmen.\nSamsung 6.x VPN har rapporteras att inte fungera om VPN-appen är undantagen från energisparfunktioner.</string>
   <string name="samsung_broken_title">Samsung-telefoner</string>
   <string name="novpn_selected">Ingen VPN-anslutning vald.</string>
   <string name="alwaysonvpn">VPN som används för uppstart och för Alltid-Aktiv</string>
+  <string name="reconnect">Återansluta</string>
+  <string name="qs_title">Omkoppla VPN</string>
+  <string name="qs_connect">Anslut till %s</string>
+  <string name="qs_disconnect">Koppla från %s</string>
+  <string name="connectretrymaxmessage">Ange den maximala tiden mellan anslutningsförsök. OpenVPN kommer sakta höja dess väntetid efter ett misslyckat anslutningsförsök upp till detta värde. Standardvärdet är 300s.</string>
+  <string name="connectretrymaxtitle">Maximal tid mellan anslutningsförsök</string>
+  <string name="state_waitconnectretry">Vänta %ss sekunder mellan anslutningsförsök</string>
 </resources>

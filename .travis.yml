@@ -3,6 +3,6 @@ jdk: oraclejdk8
 android:
   components:
     - android-25
-    - build-tools-25.0.1
+    - build-tools
   licenses:
     - '.+'

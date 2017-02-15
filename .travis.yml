@@ -4,6 +4,7 @@ android:
   components:
     - tools
     - platform-tools
+    - android-25
     - android-24
     - android-23
     - build-tools-25.0.2

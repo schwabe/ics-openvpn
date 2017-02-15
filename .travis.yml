@@ -7,6 +7,7 @@ android:
     - android-25
     - android-24
     - android-23
+    - build-tools-25
     - build-tools-25.0.2
     - build-tools-24.0.0
     - build-tools-23.0.2

@@ -12,4 +12,4 @@ android:
     - add-on
     - extra
   licenses:
-    - 'android-sdk-license-.+'
+    - '.+'

@@ -333,6 +333,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     private void handleHold(String argument) {
         int waittime = Integer.parseInt(argument.split(":")[1]);
+        waittime=15;
         if (shouldBeRunning()) {
             if (waittime > 1)
                 VpnStatus.updateStateString("CONNECTRETRY", String.valueOf(waittime),
@@ -608,7 +609,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         if (mWaitingForRelease)
             releaseHold();
         else if (samenetwork)
-            managmentCommand("network-change samenetwork\n");
+            managmentCommand("network-change\n");
         else
             managmentCommand("network-change\n");
     }

@@ -16,7 +16,9 @@ import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
+import java.util.UUID;
 
 import de.blinkt.openvpn.VpnProfile;
 
@@ -24,6 +26,7 @@ public class ProfileManager {
     private static final String PREFS_NAME = "VPNList";
 
     private static final String LAST_CONNECTED_PROFILE = "lastConnectedProfile";
+    private static final String TEMPORARY_PROFILE_FILENAME = "temporary-vpn-profile";
     private static ProfileManager instance;
 
     private static VpnProfile mLastConnectedVpn = null;
@@ -124,29 +127,35 @@ public class ProfileManager {
 
     }
 
-    public static void setTemporaryProfile(VpnProfile tmp) {
+    public static void setTemporaryProfile(Context c, VpnProfile tmp) {
         ProfileManager.tmpprofile = tmp;
+        saveProfile(c, tmp, true, true);
     }
 
     public static boolean isTempProfile() {
-        return mLastConnectedVpn == tmpprofile;
+        return mLastConnectedVpn != null && mLastConnectedVpn  == tmpprofile;
     }
 
     public void saveProfile(Context context, VpnProfile profile) {
-        saveProfile(context, profile, true);
+        saveProfile(context, profile, true, false);
     }
 
-    private void saveProfile(Context context, VpnProfile profile, boolean updateVersion) {
+    private static void saveProfile(Context context, VpnProfile profile, boolean updateVersion, boolean isTemporary) {
 
         if (updateVersion)
             profile.mVersion += 1;
-        ObjectOutputStream vpnfile;
-        try {
-            vpnfile = new ObjectOutputStream(context.openFileOutput((profile.getUUID().toString() + ".vp"), Activity.MODE_PRIVATE));
+        ObjectOutputStream vpnFile;
 
-            vpnfile.writeObject(profile);
-            vpnfile.flush();
-            vpnfile.close();
+        String filename = profile.getUUID().toString() + ".vp";
+        if (isTemporary)
+            filename = TEMPORARY_PROFILE_FILENAME + ".vp";
+
+        try {
+            vpnFile = new ObjectOutputStream(context.openFileOutput(filename, Activity.MODE_PRIVATE));
+
+            vpnFile.writeObject(profile);
+            vpnFile.flush();
+            vpnFile.close();
         } catch (IOException e) {
             VpnStatus.logException("saving VPN profile", e);
             throw new RuntimeException(e);
@@ -161,6 +170,8 @@ public class ProfileManager {
         if (vlist == null) {
             vlist = new HashSet<>();
         }
+        // Always try to load the temporary profile
+        vlist.add(TEMPORARY_PROFILE_FILENAME);
 
         for (String vpnentry : vlist) {
             try {
@@ -172,10 +183,15 @@ public class ProfileManager {
                     continue;
 
                 vp.upgradeProfile();
-                profiles.put(vp.getUUID().toString(), vp);
+                if (vpnentry.equals(TEMPORARY_PROFILE_FILENAME)) {
+                    tmpprofile = vp;
+                } else {
+                    profiles.put(vp.getUUID().toString(), vp);
+                }
 
             } catch (IOException | ClassNotFoundException e) {
-                VpnStatus.logException("Loading VPN List", e);
+                if (!vpnentry.equals(TEMPORARY_PROFILE_FILENAME))
+                    VpnStatus.logException("Loading VPN List", e);
             }
         }
     }
@@ -209,11 +225,11 @@ public class ProfileManager {
             int ver = profile == null ? -1 : profile.mVersion;
         }
 
-        if (tried != 0)
+        if (tried > 5)
 
         {
             int ver = profile == null ? -1 : profile.mVersion;
-            VpnStatus.logError(String.format("Used x %d tries to get current version (%d/%d) of the profile", tried, ver, version));
+            VpnStatus.logError(String.format(Locale.US, "Used x %d tries to get current version (%d/%d) of the profile", tried, ver, version));
         }
         return profile;
     }
@@ -234,6 +250,7 @@ public class ProfileManager {
     public static void updateLRU(Context c, VpnProfile profile) {
         profile.mLastUsed = System.currentTimeMillis();
         // LRU does not change the profile, no need for the service to refresh
-        getInstance(c).saveProfile(c, profile, false);
+        if (profile!=tmpprofile)
+            saveProfile(c, profile, false, false);
     }
 }

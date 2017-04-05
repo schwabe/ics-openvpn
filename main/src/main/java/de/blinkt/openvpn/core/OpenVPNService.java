@@ -652,7 +652,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         VpnStatus.logInfo(R.string.last_openvpn_tun_config);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mProfile.mAllowLocalLAN) {
-            allowAllAFFamilies(builder);
+            //allowAllAFFamilies(builder);
+            //Never allow other than IPv4 for PIA
         }
 
         if (mLocalIP == null && mLocalIPv6 == null) {

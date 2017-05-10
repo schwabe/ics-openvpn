@@ -7,9 +7,6 @@ package de.blinkt.openvpn.core;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
-import de.blinkt.openvpn.LaunchVPN;
 
 /**
  * Created by arne on 08.01.17.

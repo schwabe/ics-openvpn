@@ -17,13 +17,9 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-
-import de.blinkt.openvpn.api.ExternalOpenVPNService;
-import de.blinkt.openvpn.api.IOpenVPNStatusCallback;
 
 /**
  * Created by arne on 08.11.16.

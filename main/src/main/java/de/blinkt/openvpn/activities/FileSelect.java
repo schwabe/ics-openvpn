@@ -60,39 +60,10 @@ public class FileSelect extends BaseActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             checkPermission();
-
-        mData = getIntent().getStringExtra(START_DATA);
-		if(mData==null)
-			mData=Environment.getExternalStorageDirectory().getPath();
-		
-		String title = getIntent().getStringExtra(WINDOW_TITLE);
-		int titleId = getIntent().getIntExtra(WINDOW_TITLE, 0);
-		if(titleId!=0) 
-			title =getString(titleId);
-		if(title!=null)
-			setTitle(title);
-		
-		mNoInline = getIntent().getBooleanExtra(NO_INLINE_SELECTION, false);
-		mShowClear = getIntent().getBooleanExtra(SHOW_CLEAR_BUTTON, false);
-		mBase64Encode = getIntent().getBooleanExtra(DO_BASE64_ENCODE, false);
-		
-		ActionBar bar = getActionBar();
-		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); 
-		fileExplorerTab = bar.newTab().setText(R.string.file_explorer_tab);
-		inlineFileTab = bar.newTab().setText(R.string.inline_file_tab); 
-
-		mFSFragment = new FileSelectionFragment();
-		fileExplorerTab.setTabListener(new MyTabsListener<FileSelectionFragment>(this, mFSFragment));
-		bar.addTab(fileExplorerTab);
-		
-		if(!mNoInline) {
-			mInlineFragment = new InlineFileTab();
-			inlineFileTab.setTabListener(new MyTabsListener<InlineFileTab>(this, mInlineFragment));
-			bar.addTab(inlineFileTab);
-		} else {
-			mFSFragment.setNoInLine();
-		}
-
+	else
+		onRequestPermissionsResult(PERMISSION_REQUEST,
+			new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+			new int[]{PackageManager.PERMISSION_GRANTED});
 		
 	}
 
@@ -111,6 +82,39 @@ public class FileSelect extends BaseActivity {
 		if (grantResults[0]  == PackageManager.PERMISSION_DENIED) {
 			setResult(RESULT_CANCELED);
 			finish();
+		} else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+			mData = getIntent().getStringExtra(START_DATA);
+			if(mData==null)
+				mData=Environment.getExternalStorageDirectory().getPath();
+			
+			String title = getIntent().getStringExtra(WINDOW_TITLE);
+			int titleId = getIntent().getIntExtra(WINDOW_TITLE, 0);
+			if(titleId!=0) 
+				title =getString(titleId);
+			if(title!=null)
+				setTitle(title);
+			
+			mNoInline = getIntent().getBooleanExtra(NO_INLINE_SELECTION, false);
+			mShowClear = getIntent().getBooleanExtra(SHOW_CLEAR_BUTTON, false);
+			mBase64Encode = getIntent().getBooleanExtra(DO_BASE64_ENCODE, false);
+			
+			ActionBar bar = getActionBar();
+			bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS); 
+			fileExplorerTab = bar.newTab().setText(R.string.file_explorer_tab);
+			inlineFileTab = bar.newTab().setText(R.string.inline_file_tab); 
+
+			mFSFragment = new FileSelectionFragment();
+			fileExplorerTab.setTabListener(new MyTabsListener<FileSelectionFragment>(this, mFSFragment));
+			bar.addTab(fileExplorerTab);
+			
+			if(!mNoInline) {
+				mInlineFragment = new InlineFileTab();
+				inlineFileTab.setTabListener(new MyTabsListener<InlineFileTab>(this, mInlineFragment));
+				bar.addTab(inlineFileTab);
+			} else {
+				mFSFragment.setNoInLine();
+			}
 		}
 	}
 

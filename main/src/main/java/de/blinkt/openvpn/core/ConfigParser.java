@@ -811,10 +811,12 @@ public class ConfigParser {
 
     private boolean isUdpProto(String proto) throws ConfigParseError {
         boolean isudp;
-        if (proto.equals("udp") || proto.equals("udp6"))
+        if (proto.equals("udp") || proto.equals("udp4") || proto.equals("udp6"))
             isudp = true;
         else if (proto.equals("tcp-client") ||
                 proto.equals("tcp") ||
+                proto.equals("tcp4") ||
+                proto.endsWith("tcp4-client") ||
                 proto.equals("tcp6") ||
                 proto.endsWith("tcp6-client"))
             isudp = false;

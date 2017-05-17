@@ -430,15 +430,14 @@ public class ConfigParser {
             np.mTLSAuthDirection = "tls-crypt";
         }
 
-        Vector<Vector<String>> defgw = getAllOption("redirect-gateway", 0, 5);
+        Vector<Vector<String>> defgw = getAllOption("redirect-gateway", 0, 7);
         if (defgw != null) {
-            np.mUseDefaultRoute = true;
-            checkRedirectParameters(np, defgw);
+            checkRedirectParameters(np, defgw, true);
         }
 
         Vector<Vector<String>> redirectPrivate = getAllOption("redirect-private", 0, 5);
         if (redirectPrivate != null) {
-            checkRedirectParameters(np, redirectPrivate);
+            checkRedirectParameters(np, redirectPrivate, false);
         }
         Vector<String> dev = getOption("dev", 1, 1);
         Vector<String> devtype = getOption("dev-type", 1, 1);
@@ -799,14 +798,24 @@ public class ConfigParser {
 
     }
 
-    private void checkRedirectParameters(VpnProfile np, Vector<Vector<String>> defgw) {
+    private void checkRedirectParameters(VpnProfile np, Vector<Vector<String>> defgw, boolean defaultRoute) {
+
+        boolean noIpv4 = false;
+        if (defaultRoute)
+
         for (Vector<String> redirect : defgw)
             for (int i = 1; i < redirect.size(); i++) {
                 if (redirect.get(i).equals("block-local"))
                     np.mAllowLocalLAN = false;
                 else if (redirect.get(i).equals("unblock-local"))
                     np.mAllowLocalLAN = true;
+                else if (redirect.get(i).equals("!ipv4"))
+                    noIpv4=true;
+                else if (redirect.get(i).equals("ipv6"))
+                    np.mUseDefaultRoutev6=true;
             }
+        if (defaultRoute && !noIpv4)
+            np.mUseDefaultRoute=true;
     }
 
     private boolean isUdpProto(String proto) throws ConfigParseError {

@@ -7,6 +7,7 @@ package de.blinkt.openvpn.fragments;
 
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -134,7 +135,7 @@ public class FileSelectionFragment extends ListFragment {
     }
 
     public void refresh() {
-        getDir(currentPath);
+        getDir(Environment.getExternalStorageDirectory().getAbsolutePath());
     }
 
     @Override

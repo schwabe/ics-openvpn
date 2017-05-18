@@ -88,6 +88,12 @@ public class VpnProfile implements Serializable, Cloneable {
     public static final int X509_VERIFY_TLSREMOTE_DN = 2;
     public static final int X509_VERIFY_TLSREMOTE_RDN = 3;
     public static final int X509_VERIFY_TLSREMOTE_RDN_PREFIX = 4;
+
+
+    public static final int AUTH_RETRY_NONE_FORGET = 0;
+    private static final int AUTH_RETRY_NONE_KEEP = 1;
+    public static final int AUTH_RETRY_NOINTERACT = 2;
+    private static final int AUTH_RETRY_INTERACT = 3;
     // variable named wrong and should haven beeen transient
     // but needs to keep wrong name to guarante loading of old
     // profiles
@@ -156,6 +162,9 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mCrlFilename;
     public String mProfileCreator;
 
+    public int mAuthRetry = AUTH_RETRY_NONE_FORGET;
+    public int mTunMtu;
+
 
     public boolean mPushPeerInfo = false;
     public static final boolean mIsOpenVPN22 = false;
@@ -169,6 +178,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mServerName = "openvpn.example.com";
     public String mServerPort = "1194";
     public boolean mUseUdp = true;
+
 
 
     public VpnProfile(String name) {
@@ -406,6 +416,12 @@ public class VpnProfile implements Serializable, Cloneable {
                 cfg += insertFileData("ca", mCaFilename);
         }
 
+        if (isUserPWAuth())
+        {
+            if (mAuthenticationType == AUTH_RETRY_NOINTERACT)
+                cfg += "auth-retry nointeract";
+        }
+
         if (!TextUtils.isEmpty(mCrlFilename))
             cfg += insertFileData("crl-verify", mCrlFilename);
 
@@ -487,6 +503,11 @@ public class VpnProfile implements Serializable, Cloneable {
                 cfg += String.format(Locale.US, "mssfix %d\n", mMssFix);
             } else
                 cfg += "mssfix\n";
+        }
+
+        if (mTunMtu >= 48 && mTunMtu != 1500)
+        {
+            cfg+= String.format(Locale.US, "tun-mtu %d\n", mTunMtu);
         }
 
         if (mNobind)
@@ -762,6 +783,10 @@ public class VpnProfile implements Serializable, Cloneable {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void pwDidFail(Context c) {
+
     }
 
 

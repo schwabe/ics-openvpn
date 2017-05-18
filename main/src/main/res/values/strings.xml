@@ -321,6 +321,7 @@
     <string name="import_log">Import log:</string>
     <string name="ip_looks_like_subnet">Vpn topology \"%3$s\" specified but ifconfig %1$s %2$s looks more like an IP address with a network mask. Assuming \"subnet\" topology.</string>
     <string name="mssfix_invalid_value">The MSS override value has to be a integer between 0 and 9000</string>
+    <string name="mtu_invalid_value">The MTU override value has to be a integer between 64 and 9000</string>
     <string name="mssfix_value_dialog">Announce to TCP sessions running over the tunnel that they should limit their send packet sizes such that after OpenVPN has encapsulated them, the resulting UDP packet size that OpenVPN sends to its peer will not exceed this number of bytes. (default is 1450)</string>
     <string name="mssfix_checkbox">Override MSS value of TCP payload</string>
     <string name="mssfix_dialogtitle">Set MSS of TCP payload</string>
@@ -422,5 +423,6 @@
     <string name="sorted_lru">Profiles sorted by last recently used</string>
     <string name="sorted_az">Profiles sorted by name</string>
     <string name="deprecated_tls_remote">Config uses option tls-remote that was deprecated in 2.3 and finally removed in 2.4</string>
+    <string name="auth_failed_behaviour">Behaviour on AUTH_FAILED</string>
 
 </resources>

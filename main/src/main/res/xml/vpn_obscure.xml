@@ -41,6 +41,10 @@
             android:key="mssFixValue"
             android:persistent="false"
             android:title="@string/mssfix_dialogtitle" />
+        <EditTextPreference
+            android:key="tunmtu"
+            android:persistent="false"
+            android:title="Tunnel MTU (tun-mtu)"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/custom_config_title">
         <CheckBoxPreference

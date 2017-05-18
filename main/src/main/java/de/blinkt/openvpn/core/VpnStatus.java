@@ -125,7 +125,8 @@ public class VpnStatus {
     }
 
     public static void flushLog() {
-        mLogFileHandler.sendEmptyMessage(LogFileHandler.FLUSH_TO_DISK);
+        if (mLogFileHandler!=null)
+            mLogFileHandler.sendEmptyMessage(LogFileHandler.FLUSH_TO_DISK);
     }
 
     public static void setConnectedVPNProfile(String uuid) {

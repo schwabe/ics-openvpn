@@ -29,4 +29,9 @@
         <item>Fifty reconnection retries</item>
         <item>Unlimited reconnection retries</item>
     </string-array>
+    <string-array name="auth_retry_type">
+        <item>Disconnect, forget password</item>
+        <item>Disconnect, keep password</item>
+        <item>Ignore, retry</item>
+    </string-array>
 </resources>

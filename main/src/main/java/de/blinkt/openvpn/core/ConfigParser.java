@@ -328,7 +328,6 @@ public class ConfigParser {
             "socks-proxy",
             "socks-proxy-retry",
             "explicit-exit-notify",
-            "mssfix"
     };
 
 
@@ -463,6 +462,18 @@ public class ConfigParser {
                 np.mMssFix = 1450; // OpenVPN default size
             }
         }
+
+
+        Vector<String> tunmtu = getOption("mtu", 1, 1);
+
+        if (tunmtu != null) {
+            try {
+                np.mTunMtu = Integer.parseInt(tunmtu.get(1));
+            } catch (NumberFormatException e) {
+                throw new ConfigParseError("Argument to --tun-mtu has to be an integer");
+            }
+        }
+
 
 
         Vector<String> mode = getOption("mode", 1, 1);
@@ -634,6 +645,19 @@ public class ConfigParser {
                 useEmbbedUserAuth(np, authuser.get(1));
             }
         }
+
+        Vector<String> authretry = getOption("auth-retry", 1, 1);
+        if (authretry != null) {
+            if (authretry.get(1).equals("none"))
+                np.mAuthRetry = VpnProfile.AUTH_RETRY_NONE_FORGET;
+            else if (authretry.get(1).equals("nointeract"))
+                np.mAuthRetry = VpnProfile.AUTH_RETRY_NOINTERACT;
+            else if (authretry.get(1).equals("interact"))
+                np.mAuthRetry = VpnProfile.AUTH_RETRY_NOINTERACT;
+            else
+                throw new ConfigParseError("Unknown parameter to auth-retry: " + authretry.get(2));
+        }
+
 
         Vector<String> crlfile = getOption("crl-verify", 1, 2);
         if (crlfile != null) {

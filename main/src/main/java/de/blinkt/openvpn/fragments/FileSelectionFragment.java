@@ -133,6 +133,10 @@ public class FileSelectionFragment extends ListFragment {
         getDir(mStartPath);
     }
 
+    public void refresh() {
+        getDir(currentPath);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,11 +157,6 @@ public class FileSelectionFragment extends ListFragment {
 
     }
 
-    /**
-     * Monta a estrutura de arquivos e diretorios filhos do diretorio fornecido.
-     *
-     * @param dirPath Diretorio pai.
-     */
     private void getDirImpl(final String dirPath) {
 
         currentPath = dirPath;
@@ -172,6 +171,9 @@ public class FileSelectionFragment extends ListFragment {
             currentPath = ROOT;
             f = new File(currentPath);
             files = f.listFiles();
+
+            if (files == null)
+                files = new File [] {};
         }
 
         myPath.setText(getText(R.string.location) + ": " + currentPath);

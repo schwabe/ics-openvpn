@@ -111,6 +111,8 @@ public class FileSelect extends BaseActivity {
 		if (grantResults[0]  == PackageManager.PERMISSION_DENIED) {
 			setResult(RESULT_CANCELED);
 			finish();
+		} else {
+			mFSFragment.refresh();
 		}
 	}
 

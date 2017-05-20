@@ -1029,9 +1029,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             // This also mean we are no longer connected, ignore bytecount messages until next
             // CONNECTED
             // Does not work :(
-            String msg = getString(resid);
             showNotification(VpnStatus.getLastCleanLogMessage(this),
-                    msg, priority, 0, level);
+                    VpnStatus.getLastCleanLogMessage(this), priority, 0, level);
 
         }
     }

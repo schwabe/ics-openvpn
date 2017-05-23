@@ -59,7 +59,7 @@ public class ConfigParser {
                 }
 
                 // Check for OpenVPN Access Server Meta information
-                if (line.startsWith("# OVPN_ACCESS_SERVER_")) {
+                if(line.matches("^#(\\s+)?OVPN_ACCESS_SERVER_.*")) {
                     Vector<String> metaarg = parsemeta(line);
                     meta.put(metaarg.get(0), metaarg);
                     continue;
@@ -90,12 +90,17 @@ public class ConfigParser {
     }
 
     private Vector<String> parsemeta(String line) {
-        String meta = line.split("#\\sOVPN_ACCESS_SERVER_", 2)[1];
-        String[] parts = meta.split("=", 2);
+        String meta = line.split("OVPN_ACCESS_SERVER_", 2)[1];
+        String[] parts = meta.split("=",2);
+        
+        //trimming
+        for(int i=0; i<parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+        
         Vector<String> rval = new Vector<String>();
         Collections.addAll(rval, parts);
         return rval;
-
     }
 
     private void checkinlinefile(Vector<String> args, BufferedReader br) throws IOException, ConfigParseError {

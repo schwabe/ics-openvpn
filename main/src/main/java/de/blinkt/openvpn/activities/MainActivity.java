@@ -23,6 +23,7 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.fragments.AboutFragment;
 import de.blinkt.openvpn.fragments.FaqFragment;
 import de.blinkt.openvpn.fragments.GeneralSettings;
+import de.blinkt.openvpn.fragments.GraphFragment;
 import de.blinkt.openvpn.fragments.LogFragment;
 import de.blinkt.openvpn.fragments.SendDumpFragment;
 import de.blinkt.openvpn.fragments.VPNProfileList;
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity {
 
 
         mPagerAdapter.addTab(R.string.vpn_list_title, VPNProfileList.class);
+        mPagerAdapter.addTab(R.string.graph, GraphFragment.class);
 
         mPagerAdapter.addTab(R.string.generalsettings, GeneralSettings.class);
         mPagerAdapter.addTab(R.string.faq, FaqFragment.class);
@@ -62,6 +64,7 @@ public class MainActivity extends BaseActivity {
         if(SendDumpFragment.getLastestDump(this)!=null) {
             mPagerAdapter.addTab(R.string.crashdump, SendDumpFragment.class);
         }
+
 
         if (isDirectToTV())
             mPagerAdapter.addTab(R.string.openvpn_log, LogFragment.class);

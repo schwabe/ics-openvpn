@@ -15,7 +15,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.Queue;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -35,12 +37,14 @@ public class VpnStatus {
 
     private static int mLastStateresid = R.string.state_noprocess;
 
-    private static long mlastByteCount[] = {0, 0, 0, 0};
     private static HandlerThread mHandlerThread;
 
     private static String mLastConnectedVPNUUID;
     static boolean readFileLog =false;
     final static java.lang.Object readFileLock = new Object();
+
+
+    public static TrafficHistory trafficHistory;
 
     public static void logException(LogLevel ll, String context, Exception e) {
         StringWriter sw = new StringWriter();
@@ -141,6 +145,10 @@ public class VpnStatus {
         return mLastConnectedVPNUUID;
     }
 
+    public static void setTrafficHistory(TrafficHistory trafficHistory) {
+        VpnStatus.trafficHistory = trafficHistory;
+    }
+
 
     public enum LogLevel {
         INFO(2),
@@ -194,7 +202,7 @@ public class VpnStatus {
         logListener = new Vector<>();
         stateListener = new Vector<>();
         byteCountListener = new Vector<>();
-
+        trafficHistory = new TrafficHistory();
 
         logInformation();
 
@@ -248,7 +256,8 @@ public class VpnStatus {
     }
 
     public synchronized static void addByteCountListener(ByteCountListener bcl) {
-        bcl.updateByteCount(mlastByteCount[0], mlastByteCount[1], mlastByteCount[2], mlastByteCount[3]);
+        TrafficHistory.LastDiff diff = trafficHistory.getLastDiff(null);
+        bcl.updateByteCount(diff.getIn(), diff.getOut(), diff.getDiffIn(),diff.getDiffOut());
         byteCountListener.add(bcl);
     }
 
@@ -457,17 +466,10 @@ public class VpnStatus {
 
 
     public static synchronized void updateByteCount(long in, long out) {
-        long lastIn = mlastByteCount[0];
-        long lastOut = mlastByteCount[1];
-        long diffIn = mlastByteCount[2] = Math.max(0, in - lastIn);
-        long diffOut = mlastByteCount[3] = Math.max(0, out - lastOut);
+        TrafficHistory.LastDiff diff = trafficHistory.add(in, out);
 
-
-        mlastByteCount = new long[]{in, out, diffIn, diffOut};
         for (ByteCountListener bcl : byteCountListener) {
-            bcl.updateByteCount(in, out, diffIn, diffOut);
+            bcl.updateByteCount(in, out, diff.getDiffIn(), diff.getDiffOut());
         }
     }
-
-
 }

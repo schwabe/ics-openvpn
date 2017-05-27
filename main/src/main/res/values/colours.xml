@@ -18,4 +18,7 @@
 
     <color name="background_tab_pressed">#1AFFFFFF</color>
 
+
+    <color name="dataIn">#ff0000</color>
+    <color name="dataOut">#0000ff</color>
 </resources>

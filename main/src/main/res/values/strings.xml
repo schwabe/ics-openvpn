@@ -424,5 +424,11 @@
     <string name="sorted_az">Profiles sorted by name</string>
     <string name="deprecated_tls_remote">Config uses option tls-remote that was deprecated in 2.3 and finally removed in 2.4</string>
     <string name="auth_failed_behaviour">Behaviour on AUTH_FAILED</string>
+    <string name="graph">Graph</string>
+    <string name="use_logarithmic_scale">Use logarithmic scale</string>
+    <string name="notenoughdata">Not enough data</string>
+    <string name="avghour">Average per hour</string>
+    <string name="avgmin">Average per minute</string>
+    <string name="last5minutes">Last 5 minutes</string>
 
 </resources>

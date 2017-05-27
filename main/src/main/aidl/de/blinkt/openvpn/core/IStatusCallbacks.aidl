@@ -9,6 +9,7 @@ import de.blinkt.openvpn.core.LogItem;
 import de.blinkt.openvpn.core.ConnectionStatus;
 
 
+
 interface IStatusCallbacks {
     /**
      * Called when the service has a new status for you.

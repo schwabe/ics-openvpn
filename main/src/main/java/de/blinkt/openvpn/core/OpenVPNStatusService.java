@@ -122,6 +122,11 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
             PasswordCache.setCachedPassword(uuid, type, password);
         }
 
+        @Override
+        public TrafficHistory getTrafficHistory() throws RemoteException {
+            return VpnStatus.trafficHistory;
+        }
+
     };
 
     @Override

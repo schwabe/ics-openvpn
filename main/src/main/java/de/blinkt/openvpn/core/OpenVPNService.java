@@ -122,7 +122,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             bytes = bytes * 8;
         int unit = mbit ? 1000 : 1024;
         if (bytes < unit)
-            return bytes + (mbit ? " bit" : " B");
+            return bytes + (mbit ? "\u2009bit" : "\u2009B");
 
         int exp = (int) (Math.log(bytes) / Math.log(unit));
         String pre = (mbit ? "kMGTPE" : "KMGTPE").charAt(exp - 1) + (mbit ? "" : "");

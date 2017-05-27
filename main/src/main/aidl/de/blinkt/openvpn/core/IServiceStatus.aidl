@@ -4,6 +4,8 @@ package de.blinkt.openvpn.core;
 // Declare any non-default types here with import statements
 import de.blinkt.openvpn.core.IStatusCallbacks;
 import android.os.ParcelFileDescriptor;
+import de.blinkt.openvpn.core.TrafficHistory;
+
 
 interface IServiceStatus {
          /**
@@ -26,4 +28,9 @@ interface IServiceStatus {
           * Sets a cached password
           */
        void setCachedPassword(in String uuid, int type, String password);
+
+       /**
+       * Gets the traffic history
+       */
+       TrafficHistory getTrafficHistory();
 }

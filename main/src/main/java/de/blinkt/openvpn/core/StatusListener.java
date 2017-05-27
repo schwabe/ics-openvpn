@@ -36,6 +36,7 @@ public class StatusListener {
                 if (service.queryLocalInterface("de.blinkt.openvpn.core.IServiceStatus") == null) {
                     // Not a local service
                     VpnStatus.setConnectedVPNProfile(serviceStatus.getLastConnectedVPN());
+                    VpnStatus.setTrafficHistory(serviceStatus.getTrafficHistory());
                     ParcelFileDescriptor pfd = serviceStatus.registerStatusCallback(mCallback);
                     DataInputStream fd = new DataInputStream(new ParcelFileDescriptor.AutoCloseInputStream(pfd));
 

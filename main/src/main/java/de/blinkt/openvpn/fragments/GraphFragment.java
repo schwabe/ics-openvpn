@@ -53,8 +53,9 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
     private ListView mListView;
 
     private ChartDataAdapter mChartAdapter;
-    private int mColorIn;
-    private int mColorOut;
+    private int mColourIn;
+    private int mColourOut;
+    private int mColourPoint;
 
     private long firstTs;
     private TextView mSpeedStatus;
@@ -83,9 +84,9 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
         mChartAdapter = new ChartDataAdapter(getActivity(), charts);
         mListView.setAdapter(mChartAdapter);
 
-        mColorIn = getActivity().getResources().getColor(R.color.dataIn);
-        mColorOut = getActivity().getResources().getColor(R.color.dataOut);
-
+        mColourIn = getActivity().getResources().getColor(R.color.dataIn);
+        mColourOut = getActivity().getResources().getColor(R.color.dataOut);
+        mColourPoint = getActivity().getResources().getColor(android.R.color.black);
 
         logScaleView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -228,11 +229,11 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                 @Override
                 public String getFormattedValue(float value, AxisBase axis) {
                     if (mLogScale && value < 2.1f)
-                        return "< 100\u2009bit";
+                        return "< 100\u2009bit/s";
                     if (mLogScale)
                         value = (float) Math.pow(10, value)/8;
 
-                    return humanReadableByteCount((long) value, true);
+                    return humanReadableByteCount((long) value, true) + "/s";
                 }
             });
 
@@ -302,6 +303,11 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
             long lastBytecountOut  = list.peek().out;
 
             long lastts=0;
+            float zeroValue;
+            if (mLogScale)
+                zeroValue=2;
+            else
+                zeroValue=0;
 
             for (TrafficHistory.TrafficDatapoint tdp: list){
                 float t = (tdp.timestamp - firstTimestamp) / 100f;
@@ -318,11 +324,11 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                 }
 
                 if (lastts > 0 && ( tdp.timestamp -lastts> 2 * interval*1000)){
-                    dataIn.add(new Entry((lastts- firstTimestamp+ interval)/100f, 0));
-                    dataOut.add(new Entry((lastts- firstTimestamp+ interval)/100f, 0));
+                    dataIn.add(new Entry((lastts- firstTimestamp + interval*1000)/100f, zeroValue));
+                    dataOut.add(new Entry((lastts- firstTimestamp + interval*1000)/100f, zeroValue));
 
-                    dataIn.add(new Entry(t - interval/100f, 0));
-                    dataOut.add(new Entry(t - interval/100f, 0));
+                    dataIn.add(new Entry(t - interval*10f, zeroValue));
+                    dataOut.add(new Entry(t - interval*10f, zeroValue));
                 }
 
                 lastts = tdp.timestamp;
@@ -332,24 +338,25 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
 
             }
             long now = System.currentTimeMillis();
-            if (list.peekLast().timestamp < now-interval*1000l) {
-                dataIn.add(new Entry((now-firstTimestamp)/100, 0));
-                dataOut.add(new Entry((now-firstTimestamp) /100, 0));
+            if (lastts < now-interval* 1000L) {
 
                 if (now -lastts > 2 * interval*1000) {
-                    dataIn.add(new Entry((lastts- firstTimestamp+ interval)/100f, 0));
-                    dataOut.add(new Entry((lastts- firstTimestamp+ interval)/100f, 0));
+                    dataIn.add(new Entry((lastts- firstTimestamp+ interval*1000)/100f, zeroValue));
+                    dataOut.add(new Entry((lastts- firstTimestamp+ interval*1000)/100f, zeroValue));
                 }
+
+                dataIn.add(new Entry((now-firstTimestamp)/100, zeroValue));
+                dataOut.add(new Entry((now-firstTimestamp) /100, zeroValue));
             }
 
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
 
-            LineDataSet indata = new LineDataSet(dataIn, "In");
-            LineDataSet outdata = new LineDataSet(dataOut, "Out");
+            LineDataSet indata = new LineDataSet(dataIn, getString(R.string.data_in));
+            LineDataSet outdata = new LineDataSet(dataOut, getString(R.string.data_out));
 
-            setLineDataAttributes(indata, mColorIn);
-            setLineDataAttributes(outdata, mColorOut);
+            setLineDataAttributes(indata, mColourIn);
+            setLineDataAttributes(outdata, mColourOut);
 
             dataSets.add(indata);
             dataSets.add(outdata);
@@ -360,7 +367,8 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
         private void setLineDataAttributes(LineDataSet dataSet, int colour) {
             dataSet.setLineWidth(2);
             dataSet.setCircleRadius(1);
-            dataSet.setDrawCircles(false);
+            dataSet.setDrawCircles(true);
+            dataSet.setCircleColor(mColourPoint);
             dataSet.setDrawFilled(true);
             dataSet.setFillAlpha(42);
             dataSet.setFillColor(colour);

@@ -430,5 +430,7 @@
     <string name="avghour">Average per hour</string>
     <string name="avgmin">Average per minute</string>
     <string name="last5minutes">Last 5 minutes</string>
+    <string name="data_in">In</string>
+    <string name="data_out">Out</string>
 
 </resources>

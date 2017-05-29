@@ -44,12 +44,14 @@
   <string name="duplicate_profile_name">請輸入不重複的設定檔名稱</string>
   <string name="profilename">設定檔名稱</string>
   <string name="no_keystore_cert_selected">你必須選擇一個使用者憑證</string>
+  <string name="no_ca_cert_selected">您必須選擇一個憑證</string>
   <string name="no_error_found">未找到錯誤</string>
   <string name="config_error_found">設定中含有錯誤</string>
   <string name="ipv4_format_error">解析 IPv4 地址時發生錯誤</string>
   <string name="custom_route_format_error">解析自訂路由時發生錯誤</string>
   <string name="pw_query_hint">(如需查詢，請留空)</string>
   <string name="vpn_shortcut">OpenVPN 捷徑</string>
+  <string name="vpn_launch_title">正在連線到 VPN...</string>
   <string name="shortcut_profile_notfound">在捷徑中找不到指定的設定檔</string>
   <string name="random_host_prefix">隨機主機名稱的前綴字</string>
   <string name="random_host_summary">在主機名稱前加入 6 個隨機字元</string>
@@ -162,6 +164,7 @@
   <string name="private_key_password">私密金鑰密碼</string>
   <string name="password">密碼</string>
   <string name="file_icon">檔案圖標</string>
+  <string name="tls_authentication">TLS 驗證/加密</string>
   <string name="generated_config">生成的設定檔</string>
   <string name="generalsettings">設定</string>
   <string name="owner_fix_summary">嘗試修正/dev/tun擁有者權限。已知有些CM9 ROM需要透過這個來才能使得VPN服務API得以運作。本功能需要Root。</string>
@@ -391,11 +394,12 @@ http://crowdin.net/project/ics-openvpn/invite
   <string name="crl_title">憑證撤銷清單 (可選)</string>
   <string name="samsung_broken_title">三星手機</string>
   <string name="novpn_selected">沒有 VPN 被選擇</string>
-  <string name="alwaysonvpn">啟動時，保持使用 VPN</string>
   <string name="reconnect">重新連線</string>
   <string name="qs_title">切換 VPN</string>
   <string name="qs_connect">連線到 %s</string>
   <string name="qs_disconnect">中斷連線 %s</string>
   <string name="connectretrymaxtitle">連線嘗試最大間隔</string>
   <string name="state_waitconnectretry">連線重試間，等待 %s 秒。</string>
+  <string name="change_sorting">更改排序</string>
+  <string name="sort">排序</string>
 </resources>

@@ -8,8 +8,8 @@
   <!--  Keep the order the same as the TYPE_ constants in VPNProfile -->
   <string-array name="vpn_types">
     <item>证书</item>
-    <item>PKCS12 File</item>
-    <item>安卓证书</item>
+    <item>PKCS12 文件</item>
+    <item>Android 证书</item>
     <item>用户名/密码</item>
     <item>静态密钥</item>
     <item>用户名/密码 + 证书</item>
@@ -20,6 +20,6 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>未指定</item>
-    <item>Encryption (tls-crypt)</item>
+    <item>加密（tls-crypt）</item>
   </string-array>
 </resources>

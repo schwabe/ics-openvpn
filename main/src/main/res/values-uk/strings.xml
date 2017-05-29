@@ -405,6 +405,14 @@
   <string name="samsung_broken">Навіть не зважаючи на те, що телефони Samsung є одними з найбільш популярних телефонів на Android, прошивка від Samsung також є однією з найбільш дирявими прошивками на Android. Ці помилки не обмежуються лише VPN операціями на цих пристроях, але багато з них можна уникнути. Дальше деякі з цих помилок описані. \n\nDNS не працює, якщо сервер DNS в межах віртуальної приватної мережі. \n\nНа багатьох пристроях Samsung 5.x функція дозволених/заборонених програм не працює. \n\nНа Samsung 6.x VPN не працює, якщо додаток VPN не звільняється від PowerSave функцій.</string>
   <string name="samsung_broken_title">телефони Samsung</string>
   <string name="novpn_selected">VPN не вибрано.</string>
-  <string name="alwaysonvpn">VPN завжди включений</string>
   <string name="reconnect">Перепідключитись</string>
+  <string name="qs_connect">Підключення до %s</string>
+  <string name="qs_disconnect">Відключення %s</string>
+  <string name="connectretrymaxtitle">Максимальний час між спробами підключення</string>
+  <string name="state_waitconnectretry">Очікування %ss секунд між спробами підключення</string>
+  <string name="management_socket_closed">Підключення до OpenVPN закрито (%s)</string>
+  <string name="change_sorting">Змінити сортування</string>
+  <string name="sort">Cортувати</string>
+  <string name="sorted_lru">Профілі відсортовано за часом використовувався</string>
+  <string name="sorted_az">Профілі відсортовані за назвою</string>
 </resources>

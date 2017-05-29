@@ -44,12 +44,14 @@
   <string name="duplicate_profile_name">Kérem, egyedi profilnevet válasszon</string>
   <string name="profilename">Profil név</string>
   <string name="no_keystore_cert_selected">Válasszon egy felhasználói tanúsítványt</string>
+  <string name="no_ca_cert_selected">Ki kell választania egy CA tanúsítványt</string>
   <string name="no_error_found">Hiba nem található</string>
   <string name="config_error_found">Hiba a beállításokban</string>
   <string name="ipv4_format_error">Hiba az IPv4 cím elemzésekor</string>
   <string name="custom_route_format_error">Hiba az egyéni útvonalak elemzésekor</string>
   <string name="pw_query_hint">(hagyja üresen esetenkénti bekéréshez)</string>
   <string name="vpn_shortcut">OpenVPN parancsikon</string>
+  <string name="vpn_launch_title">Csatlakozás a VPN-hez&#8230;</string>
   <string name="shortcut_profile_notfound">A parancsikonban kiválasztott Profil nem létezik</string>
   <string name="random_host_prefix">Véletlen Host Prefix</string>
   <string name="random_host_summary">6 random karakter hozzáadása a hosztnév elejére</string>
@@ -163,6 +165,7 @@
   <string name="private_key_password">Privát kulcs jelszó</string>
   <string name="password">Jelszó</string>
   <string name="file_icon">fájl ikon</string>
+  <string name="tls_authentication">TLS hitelesítés / titkosítás</string>
   <string name="generated_config">Generált konfiguráció</string>
   <string name="generalsettings">Beállítások</string>
   <string name="owner_fix_summary">/dev/tun tulajdonosának beállítása. Néhány CM9 image-hez ez kell, hogy a VPNService API működjön. Root szükséges.</string>
@@ -404,7 +407,6 @@
   <string name="samsung_broken">Annak ellenére, hogy a Samsung telefonok a legtöbbet eladott Android telefonok közé tartoznak, a Samsung firmware-ek a leg bug-osabb Android firmware-ek. Ezeken az eszközökön a hibák nem csak a VPN működésre korlátozódnak, de nagy részük kiküszöbölhető. A következő néhány ilyen hiba leírása.\n\nA DNS nem működik hacsak nem a DNS kiszolgáló a VPN tartományban van.\n\nSok Samsung 5.x eszközön nem működik az engedélyezett/tiltott alkalmazások funkció.\nSamsung 6.0-n a VPN nem működik hacsak nem adjuk hozzá kivételként az alkalmazást a Powersave funkcióknál.</string>
   <string name="samsung_broken_title">Samsung telefonok</string>
   <string name="novpn_selected">Nincs VPN kiválasztva.</string>
-  <string name="alwaysonvpn">VPN használata rendszer indításkor és legyen mindig aktív</string>
   <string name="reconnect">Újracsatlakozás</string>
   <string name="qs_title">VPN be/kikapcsolás</string>
   <string name="qs_connect">Csatlakozás %s-hez</string>
@@ -412,4 +414,11 @@
   <string name="connectretrymaxmessage">Adja meg a csatlakozási kísérletek közötti maximális időt. Az OpenVPN eddig az értékig fokozatosan növeli a sikertelen csatlakozási kísérletek közötti várakozási időt. 300 másodperc az alapértelmezett.</string>
   <string name="connectretrymaxtitle">Csatlakozási kísérletek közötti maximális idő</string>
   <string name="state_waitconnectretry">%s másodperc várakozás a csatlakozási kísérletek között</string>
+  <string name="nought_alwayson_warning"><![CDATA[Ha nem jelent meg a VPN megerősítés ablak, akkor egy másik alkalmazáshoz engedélyezve van a \"Mindig VPN-en\". Ebben az esetben csak az az alkalmazás csatlakozhat VPN-hez. Ellenőrizze a Beállítások -> Hálózatok további... -> VPN-ek alatt]]></string>
+  <string name="management_socket_closed">OpenVPN kapcsolatot lezárva (%s)</string>
+  <string name="change_sorting">Rendezés megváltoztatása</string>
+  <string name="sort">Rendezés</string>
+  <string name="sorted_lru">A profilok a legutóbbi használat szerint rendezve</string>
+  <string name="sorted_az">A profilok név szerint rendezve</string>
+  <string name="deprecated_tls_remote">A konfiguráció tls-remote opciót használ, ami a 2.3-ban elavulttá vált és a 2.4-ben végleg eltávolították</string>
 </resources>

@@ -165,7 +165,7 @@
   <string name="private_key_password">Passphrase des privaten Schlüssels</string>
   <string name="password">Passwort</string>
   <string name="file_icon">Dateisymbol</string>
-  <string name="tls_authentication">Authentifizierung/Verschlüsselung</string>
+  <string name="tls_authentication">TLS Authentifizierung/Verschlüsselung</string>
   <string name="generated_config">Generierte Konfiguration</string>
   <string name="generalsettings">Einstellungen</string>
   <string name="owner_fix_summary">Versucht, den Eigentümer von /dev/tun auf system zu ändern. Einige Cyanogenmod 9-ROM-Versionen benötigen diese Option, damit die VPN-API funktioniert. Benötigt root.</string>
@@ -323,6 +323,7 @@
   <string name="import_log">Import-Protokoll:</string>
   <string name="ip_looks_like_subnet">VPN-Topologie \"%3$s\" wurde angegeben, die Interface-Konfiguration \'ifconfig %1$s %2$s sieht allerdings wie eine IP-Adresse mit einer Netzwerkmaske aus. Topologie \"subnet\" wird angenommen.</string>
   <string name="mssfix_invalid_value">Wert muss eine Zahl zwischen 0 und 9000 sein</string>
+  <string name="mtu_invalid_value">Der MTU-Wert muss eine Zahle zwischen 64 und 9000 sein</string>
   <string name="mssfix_value_dialog">TCP-Verbindungen, die über den Tunnel laufen, anweisen, ihre maximale Paketgröße so einzustellen, dass die resultierende UDP-Paketgröße nach der Enkapsulierung durch OpenVPN auf den hier eingestellten Wert beschränkt bleibt. (Standardwert ist 1450)</string>
   <string name="mssfix_checkbox">MSS-Wert der TCP-Nutzlast überschreiben</string>
   <string name="mssfix_dialogtitle">MSS der TCP-Nutzlast</string>
@@ -407,7 +408,9 @@
   <string name="samsung_broken">Wenngleich Samsung-Telefone unter den meistverkauften Android-Geräten sind, gehört deren Firmware auch zu den fehlerbehaftetsten aller Android-Geräte. Diese Fehler betreffen nicht nur den Aufbau von VPN-Verbindungen; viele von ihnen können allerdings umgangen werden. Im Folgenden sind einige dieser Fehler beschrieben.\n\nDNS funktioniert nicht, wenn sich der DNS-Server nicht im VPN befindet.\n\nBei vielen Samsung-Geräten mit Android 5.x funktioniert das Sperren/Zulassen von einzelnen Apps nicht.\n\nBei Samsung-Geräten mit Android 6.x wurde berichtet, dass VPN nicht funktioniert, wenn die VPN-App nicht als Ausnahme in den Energiespareinstellungen eingetragen wird.</string>
   <string name="samsung_broken_title">Samsung-Geräte</string>
   <string name="novpn_selected">Kein VPN ausgewählt</string>
-  <string name="alwaysonvpn">VPN beim Gerätestart und für Always-On verwenden</string>
+  <string name="defaultvpn">Standard-VPN</string>
+  <string name="defaultvpnsummary">Standard VPN. Wird momentan für VPN beim Booten, Always-On-Modus und die Schnellzugriffskachel benutzt.</string>
+  <string name="vpnselected">Derzeit ausgewähltes VPN: \'%s\'</string>
   <string name="reconnect">Neu verbinden</string>
   <string name="qs_title">VPN an-/ausschalten</string>
   <string name="qs_connect">Mit %s verbinden</string>
@@ -415,4 +418,20 @@
   <string name="connectretrymaxmessage">Maximale Zeit zwischen Verbindungsversuchen. OpenVPN erhöht die Wartezeit zwischen zwei Verbindungsversuchen schrittweise bis zu dieser Zeit. Der Standardwert ist 300s.</string>
   <string name="connectretrymaxtitle">Maximale Zeit zwischen Verbindungsversuchen</string>
   <string name="state_waitconnectretry">Warte %ss Sekunden zwischen zwei Verbindungsversuchen</string>
+  <string name="nought_alwayson_warning"><![CDATA[Wenn der VPN-Bestätigungs-Dialog nicht geöffnet wurde, ist \"Immer auf VPN\" für eine andere Anwendung aktiviert. In diesem Fall darf nur diese APP über VPN verbunden werden. Überprüfen Sie unter Einstellungen-> Netzwerke mehr... -> VPNS]]></string>
+  <string name="management_socket_closed">Verbindung mit OpenVPN getrennt (%s)</string>
+  <string name="change_sorting">Sortierung ändern</string>
+  <string name="sort">Sortieren</string>
+  <string name="sorted_lru">Profile nach letzter Verwendung sortiert</string>
+  <string name="sorted_az">Profile nach Namen sortiert</string>
+  <string name="deprecated_tls_remote">Konfiguration verwendet die Option tls-remote, die in 2.3 als veraltet markiert und schließlich in 2.4 entfernt wurde</string>
+  <string name="auth_failed_behaviour">Verhalten bei AUTH_FAILED</string>
+  <string name="graph">Kurven</string>
+  <string name="use_logarithmic_scale">logarithmische Skala verwnden</string>
+  <string name="notenoughdata">noch keine Daten</string>
+  <string name="avghour">Durchschnitt pro Stunde</string>
+  <string name="avgmin">Durchschnitt pro Minute</string>
+  <string name="last5minutes">letzten 5 Minuten</string>
+  <string name="data_in">Eingehend</string>
+  <string name="data_out">Ausgehend</string>
 </resources>

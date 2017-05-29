@@ -9,7 +9,7 @@
   <string-array name="vpn_types">
     <item>Certificaten</item>
     <item>PKCS12 Bestand</item>
-    <item>Certifikata Android</item>
+    <item>Android Certificaat</item>
     <item>Gebruikersnaam/Wachtwoord</item>
     <item>Statische Sleutels</item>
     <item>Gebruiker/WW + Certificaten</item>
@@ -20,6 +20,6 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>Niet-gespecificeerd</item>
-    <item>Encryptie (tls-crypt)</item>
+    <item>Versleuteling (tls-crypt)</item>
   </string-array>
 </resources>

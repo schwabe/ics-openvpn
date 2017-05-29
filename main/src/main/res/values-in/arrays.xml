@@ -9,7 +9,7 @@
   <string-array name="vpn_types">
     <item>Sertifikat</item>
     <item>Berkas PKCS1
-2</item>
+20</item>
     <item>Android Certificate</item>
     <item>Nama Pengguna\Sandi</item>
     <item>Kunci Tetap</item>

@@ -396,5 +396,4 @@ hacia/de Móvil)</string>
   <string name="samsung_broken">A pesar de que los teléfonos Samsung son algunos de los teléfonos Android más vendidos, el firmware de Samsung se encuentran entre los firmware con más errores. Los errores no se limitan a la operación del VPN en estos dispositivos, pero muchos de ellos se pueden solucionar. A continuación de describen algunos errores. \n\n El DNS no funciona a menos que el servidor DNS en el rango del VPN. \n \n En muchos dispositivos Samsung 5.x la funcionalidad de aplicaciones permitidas y no permitidas no funciona. \n En Samsung 6.x Se reporta que VPN no funcionará a menos que la aplicación de VPN se encuentre por fuera de la funcionalidad de ahorro de energía.</string>
   <string name="samsung_broken_title">Celulares Samsung</string>
   <string name="novpn_selected">VPN no seleccionado.</string>
-  <string name="alwaysonvpn">VPN al reiniciar y siempre activo</string>
 </resources>

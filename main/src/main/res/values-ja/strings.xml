@@ -446,7 +446,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="samsung_broken">サムスン製の携帯電話は最も販売されているAndroid機ですが、サムスン製のファームウェアは最もバグを引き起こすAndroidファームウェアです。これらのデバイスのバグはVPN操作に限ったことではありませんが、それらの多くは回避可能です。以下にいくつかのバグを記載します。\n\nDNSサーバがVPNの範囲内にないとDNSが動作しません。\n\nサムスン製Android 5.0の多くの機種では、アプリの許可／不許可機能が動作しません。\nサムスン製Android 6.0機種のVPNは、VPNアプリを省電力機能から除外しない限り動作しないことが報告されています。</string>
   <string name="samsung_broken_title">サムスン製の機種</string>
   <string name="novpn_selected">VPNが選択されていません</string>
-  <string name="alwaysonvpn">起動時と常時接続に使用するVPN</string>
   <string name="reconnect">再接続</string>
   <string name="qs_title">VPNを切り替える</string>
   <string name="qs_connect">%sに接続</string>
@@ -454,6 +453,8 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="connectretrymaxmessage">最大接続試行間隔を入力します。OpenVPNは接続に失敗するとこの値まで少しずつ待機時間を増やしていきます。デフォルトは300秒です。</string>
   <string name="connectretrymaxtitle">接続試行の最大間隔</string>
   <string name="state_waitconnectretry">接続試行の間隔として%s秒を待っています</string>
+  <string name="nought_alwayson_warning"><![CDATA[VPNの確認ダイアログが表示されない場合、ほかのアプリのために「常時VPN接続」が有効になっているかもしれません。この場合、そのアプリだけがVPNに接続できます。「設定」-「ネットワーク」-「もっと見る」-「VPN」を確認してください。]]></string>
+  <string name="management_socket_closed">OpenVPNへの接続が閉じられました (%s)</string>
   <string name="change_sorting">並べ替えの変更</string>
   <string name="sort">並べ替え</string>
   <string name="sorted_lru">プロファイルを最近使った順に並べ替えました</string>

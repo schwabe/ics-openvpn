@@ -6,6 +6,7 @@
   -->
 <resources>
   <string name="app">OpenVPN for Android</string>
+  <string name="address">服务器地址</string>
   <string name="port">Server Port:</string>
   <string name="location">位置</string>
   <string name="cant_read_folder">无法读取目录</string>
@@ -13,12 +14,32 @@
   <string name="cancel">取消</string>
   <string name="no_data">未收到数据</string>
   <string name="useLZO">启用 LZO 压缩算法</string>
+  <string name="client_no_certificate">没有证书</string>
+  <string name="client_certificate_title">客户端证书</string>
+  <string name="client_key_title">客户端证书密钥</string>
   <string name="client_pkcs12_title">PKCS12 证书文件</string>
-  <string name="copyright_guicode">请前往 http://code.google.com/p/ics-openvpn/ 查看源码或提供问题反馈</string>
+  <string name="ca_title">CA 证书</string>
+  <string name="no_certificate">你必须选择一个证书</string>
+  <string name="copyright_guicode">请前往 https://github.com/schwabe/ics-openvpn/ 查看源码或提供问题反馈</string>
+  <string name="copyright_others">该程序使用以下组件，有关许可证的详细信息请参阅源代码</string>
+  <string name="about">关于</string>
   <string name="vpn_list_title">配置文件</string>
+  <string name="vpn_type">类型</string>
+  <string name="pkcs12pwquery">PKCS12 密码</string>
   <string name="file_select">请选择&#8230;</string>
+  <string name="file_nothing_selected">你必须选择一个文件</string>
+  <string name="useTLSAuth">使用 TLS 认证</string>
+  <string name="ipv6_dialog_tile">输入 CIDR 格式的 IPv6 地址/网络掩码（例如 2000:dd::23/64）</string>
+  <string name="ipv4_dialog_title">输入 CIDR 格式的 IPv4 地址/网络掩码（例如 1.2.3.4/24）</string>
+  <string name="ipv4_address">IPv4 地址</string>
+  <string name="ipv6_address">IPv6 地址</string>
   <string name="custom_option_warning">请谨慎输入 OpenVPN 的自定义选项。此外请注意许多与 tun 模块有关的 OpenVPN 设置由于系统 VPN 功能的设计而不能得到支持。如果您觉得缺少一个很重要的选项，请与作者联系。</string>
+  <string name="auth_username">用户名</string>
+  <string name="auth_pwquery">密码</string>
   <string name="static_keys_info">静态配置中 TLS 身份验证密钥将被用作静态密钥</string>
+  <string name="configure_the_vpn">配置 VPN</string>
+  <string name="menu_add_profile">添加配置文件</string>
+  <string name="add_profile_name_prompt">输入新配置文件的名字</string>
   <string name="duplicate_profile_name">请输入一个唯一的配置文件名称</string>
   <string name="profilename">配置文件名称</string>
   <string name="no_keystore_cert_selected">您必须选择一个用户证书</string>
@@ -78,7 +99,7 @@
   <string name="generalsettings">设置</string>
   <string name="owner_fix_summary">尝试设定 /dev/tun 的属主为 system。一些 CM9 ROM 需要它以使 VPNService API 工作。本操作需要 root 权限。</string>
   <string name="owner_fix">修复 /dev/tun 的权限</string>
-  <string name="netchange_summary">启用该选项以在网络变化(例如从蜂窝数据到 WiFi)时强制重新连接</string>
+  <string name="netchange_summary">启用该选项以在网络变化（例如在蜂窝数据和 WiFi 之间切换）时强制重新连接</string>
   <string name="extracahint">Android 密钥库通常会自带 CA 证书。如果您获取的证书发生验证错误，请单独指定一个证书。</string>
   <string name="keychain_nocacert">在 Android 密钥库中未找到任何 CA 证书。可能验证失败。</string>
   <string name="show_log_summary">连接时显示日志窗口。日志窗口可始终从通知栏访问。</string>
@@ -295,7 +316,6 @@
   <string name="samsung_broken">三星手机几乎是最热销的安卓机，同时三星的固件也是bug最多的 Android 固件。Bug 并不局限于运行在这些设备上的VPN，但其中许多可以是可以想办法绕开的。下面列出几个已知Bug：\n\nDNS 不工作，除非其在VPN 地址池内.\n\n很多三星5.X设备上 允许/禁止 应用程序的特性并不能工作。 \n在三星 6.x 机器上只有VPN应用被加入省电模式白名单之后VPN才能工作。</string>
   <string name="samsung_broken_title">三星手机</string>
   <string name="novpn_selected">没有选定的 VPN。</string>
-  <string name="alwaysonvpn">用于开机后始终保持连接的VPN配置</string>
   <string name="reconnect">重新连接</string>
   <string name="qs_title">VPN切换</string>
   <string name="qs_connect">连接到%s</string>

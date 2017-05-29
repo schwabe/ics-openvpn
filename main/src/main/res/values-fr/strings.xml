@@ -403,7 +403,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="reread_log">Relire (%d) éléments du fichier de log</string>
   <string name="samsung_broken_title">Téléphones Samsung</string>
   <string name="novpn_selected">Aucun VPN sélectionné.</string>
-  <string name="alwaysonvpn">VPN utilisé au démarrage et pour toujours lancé</string>
   <string name="reconnect">Reconnecter</string>
   <string name="qs_title">Activer VPN</string>
   <string name="qs_connect">Connecter à %s</string>

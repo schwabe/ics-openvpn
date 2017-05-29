@@ -5,6 +5,7 @@
 
 package de.blinkt.openvpn;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -156,7 +157,6 @@ public class LaunchVPN extends Activity {
     private void askForPW(final int type) {
 
         final EditText entry = new EditText(this);
-        final View userpwlayout = getLayoutInflater().inflate(R.layout.userpass, null, false);
 
         entry.setSingleLine();
         entry.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -165,6 +165,9 @@ public class LaunchVPN extends Activity {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle(getString(R.string.pw_request_dialog_title, getString(type)));
         dialog.setMessage(getString(R.string.pw_request_dialog_prompt, mSelectedProfile.mName));
+
+
+        @SuppressLint("InflateParams") final View userpwlayout = getLayoutInflater().inflate(R.layout.userpass, null, false);
 
         if (type == R.string.password) {
             ((EditText) userpwlayout.findViewById(R.id.username)).setText(mSelectedProfile.mUsername);

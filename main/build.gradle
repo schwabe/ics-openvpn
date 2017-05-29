@@ -65,8 +65,8 @@ android {
 
     lintOptions {
         enable 'BackButton', 'EasterEgg', 'StopShip', 'IconExpectedSize', 'GradleDynamicVersion', 'NewerVersionAvailable'
-        warning 'ImpliedQuantity'
-        disable 'MissingTranslation'
+        warning 'ImpliedQuantity', 'MissingQuantity'
+        disable 'MissingTranslation', 'UnsafeNativeCodeLocation'
     }
 
     buildTypes {

@@ -5,6 +5,7 @@
 
 package de.blinkt.openvpn.core;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
@@ -131,7 +132,7 @@ public class X509Utils {
         /* Hack so we do not have to ship a whole Spongy/bouncycastle */
         Exception exp=null;
         try {
-            Class X509NameClass = Class.forName("com.android.org.bouncycastle.asn1.x509.X509Name");
+            @SuppressLint("PrivateApi") Class X509NameClass = Class.forName("com.android.org.bouncycastle.asn1.x509.X509Name");
             Method getInstance = X509NameClass.getMethod("getInstance",Object.class);
 
             Hashtable defaultSymbols = (Hashtable) X509NameClass.getField("DefaultSymbols").get(X509NameClass);

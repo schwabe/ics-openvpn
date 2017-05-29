@@ -129,7 +129,8 @@
             android:taskAffinity=".ConfigConverter"
             android:uiOptions="splitActionBarWhenNarrow"
             tools:ignore="ExportedActivity">
-            <intent-filter android:label="@string/import_config">
+            <intent-filter android:label="@string/import_config"
+                tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -137,7 +138,8 @@
 
                 <data android:mimeType="application/x-openvpn-profile" />
             </intent-filter>
-            <intent-filter android:label="@string/import_config">
+            <intent-filter android:label="@string/import_config"
+                tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -165,6 +167,22 @@
         </activity>
         <activity
             android:name=".LaunchVPN"
+            android:autoRemoveFromRecents="true"
+            android:excludeFromRecents="true"
+            android:label="@string/vpn_launch_title"
+            android:taskAffinity=".LaunchVPN"
+            android:theme="@style/blinkt.dialog"
+            tools:ignore="ExportedActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".api.Intents"
             android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
             android:label="@string/vpn_launch_title"

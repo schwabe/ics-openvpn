@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity {
     private SlidingTabLayout mSlidingTabLayout;
 
     protected void onCreate(android.os.Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_activity);
 
@@ -54,14 +54,13 @@ public class MainActivity extends BaseActivity {
         }
 
 
-
         mPagerAdapter.addTab(R.string.vpn_list_title, VPNProfileList.class);
         mPagerAdapter.addTab(R.string.graph, GraphFragment.class);
 
         mPagerAdapter.addTab(R.string.generalsettings, GeneralSettings.class);
         mPagerAdapter.addTab(R.string.faq, FaqFragment.class);
 
-        if(SendDumpFragment.getLastestDump(this)!=null) {
+        if (SendDumpFragment.getLastestDump(this) != null) {
             mPagerAdapter.addTab(R.string.crashdump, SendDumpFragment.class);
         }
 
@@ -74,22 +73,6 @@ public class MainActivity extends BaseActivity {
 
         TabBarView tabs = (TabBarView) findViewById(R.id.sliding_tabs);
         tabs.setViewPager(mPager);
-
-       // requestDozeDisable();
-	}
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private void requestDozeDisable() {
-        Intent intent = new Intent();
-        String packageName = getPackageName();
-        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        if (pm.isIgnoringBatteryOptimizations(packageName))
-            intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
-        else {
-            intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-            intent.setData(Uri.parse("package:" + packageName));
-        }
-        startActivity(intent);
     }
 
     private static final String FEATURE_TELEVISION = "android.hardware.type.television";

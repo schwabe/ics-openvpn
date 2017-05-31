@@ -16,6 +16,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -117,8 +118,9 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     @Override
     public void updateByteCount(long in, long out, long diffIn, long diffOut) {
         //%2$s/s %1$s - ↑%4$s/s %3$s
-        final String down = String.format("%2$s/s %1$s", humanReadableByteCount(in, false), humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true));
-        final String up = String.format("%2$s/s %1$s", humanReadableByteCount(out, false), humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true));
+        Resources res = getActivity().getResources();
+        final String down = String.format("%2$s %1$s", humanReadableByteCount(in, false, res), humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true, res));
+        final String up = String.format("%2$s %1$s", humanReadableByteCount(out, false, res), humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true, res));
 
         if (mUpStatus != null && mDownStatus != null) {
             if (getActivity() != null) {

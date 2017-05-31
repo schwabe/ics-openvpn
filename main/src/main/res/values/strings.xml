@@ -250,7 +250,7 @@
     <string name="state_tcp_connect">Connecting (TCP)</string>
     <string name="state_auth_failed">Authentication failed</string>
     <string name="state_nonetwork">Waiting for usable network</string>
-    <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
+    <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
     <string name="notifcation_title_notconnect">Not connected</string>
     <string name="start_vpn_title">Connecting to VPN %s</string>
     <string name="start_vpn_ticker">Connecting to VPN %s</string>
@@ -408,7 +408,7 @@
     <string name="novpn_selected">No VPN selected.</string>
     <string name="defaultvpn">Default VPN</string>
     <string name="defaultvpnsummary">VPN used in places where a default VPN needed. These are currently on boot, for Always-On and the Quick Settings Tile.</string>
-    <string name="vpnselected">Currently slected VPN: \'%s\'</string>
+    <string name="vpnselected">Currently selected VPN: \'%s\'</string>
     <string name="reconnect">Reconnect</string>
     <string name="qs_title">Toggle VPN</string>
     <string name="qs_connect">Connect to %s</string>
@@ -432,5 +432,14 @@
     <string name="last5minutes">Last 5 minutes</string>
     <string name="data_in">In</string>
     <string name="data_out">Out</string>
+    <string name="bits_per_second">%.0f bit/s</string>
+    <string name="kbits_per_second">%.1f kbit/s</string>
+    <string name="mbits_per_second">%.1f Mbit/s</string>
+    <string name="gbits_per_second">%.1f Gbit/s</string>
+
+    <string name="volume_byte">%.0f B</string>
+    <string name="volume_kbyte">%.1f kB</string>
+    <string name="volume_mbyte">%.1f MB</string>
+    <string name="volume_gbyte">%.1f GB</string>
 
 </resources>

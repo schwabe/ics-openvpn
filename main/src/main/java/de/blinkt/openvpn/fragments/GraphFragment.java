@@ -7,6 +7,7 @@ package de.blinkt.openvpn.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -135,12 +136,13 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
 
         long now = (System.currentTimeMillis() / 100) - firstTs;
         int interval = OpenVPNManagement.mBytecountInterval * 10;
+        Resources res = getActivity().getResources();
 
         final String netstat = String.format(getString(R.string.statusline_bytecount),
-                humanReadableByteCount(in, false),
-                humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true),
-                humanReadableByteCount(out, false),
-                humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true));
+                humanReadableByteCount(in, false, res),
+                humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true, res),
+                humanReadableByteCount(out, false, res),
+                humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true, res));
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -225,6 +227,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
             YAxis yAxis = holder.chart.getAxisLeft();
             yAxis.setLabelCount(5, false);
 
+            final Resources res = getActivity().getResources();
             yAxis.setValueFormatter(new IAxisValueFormatter() {
                 @Override
                 public String getFormattedValue(float value, AxisBase axis) {
@@ -233,7 +236,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                     if (mLogScale)
                         value = (float) Math.pow(10, value)/8;
 
-                    return humanReadableByteCount((long) value, true) + "/s";
+                    return humanReadableByteCount((long) value, true, res);
                 }
             });
 
@@ -263,13 +266,6 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
             //holder.chart.animateX(750);
 
             return convertView;
-        }
-
-
-        public void getAverageForGraphList(boolean in, int timeperiod) {
-
-
-
         }
 
         private LineData getDataSet(int timeperiod) {

@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.VpnService;
 import android.os.Binder;
@@ -117,19 +118,42 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     };
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
-    public static String humanReadableByteCount(long bytes, boolean mbit) {
-        if (mbit)
+    public static String humanReadableByteCount(long bytes, boolean speed, Resources res) {
+        if (speed)
             bytes = bytes * 8;
-        int unit = mbit ? 1000 : 1024;
-        if (bytes < unit)
-            return bytes + (mbit ? "\u2009bit" : "\u2009B");
+        int unit = speed ? 1000 : 1024;
 
-        int exp = (int) (Math.log(bytes) / Math.log(unit));
-        String pre = (mbit ? "kMGTPE" : "KMGTPE").charAt(exp - 1) + (mbit ? "" : "");
-        if (mbit)
-            return String.format(Locale.getDefault(), "%.1f %sbit", bytes / Math.pow(unit, exp), pre);
+
+        int exp = Math.min((int) (Math.log(bytes) / Math.log(unit)), 3);
+
+        float bytesUnit = Math.round(bytes / Math.pow(unit, exp));
+
+        if (speed)
+            switch (exp) {
+                case 0:
+                    return res.getString(R.string.bits_per_second, bytesUnit);
+                case 1:
+                    return res.getString(R.string.kbits_per_second, bytesUnit);
+                case 2:
+                    return res.getString(R.string.mbits_per_second, bytesUnit);
+                default:
+                    return res.getString(R.string.gbits_per_second, bytesUnit);
+            }
         else
-            return String.format(Locale.getDefault(), "%.1f %sB", bytes / Math.pow(unit, exp), pre);
+            switch (exp) {
+                case 0:
+                    return res.getString(R.string.volume_byte, bytesUnit);
+                case 1:
+                    return res.getString(R.string.volume_kbyte, bytesUnit);
+                case 2:
+                    return res.getString(R.string.volume_mbyte, bytesUnit);
+                default:
+                    return res.getString(R.string.volume_gbyte, bytesUnit);
+
+            }
+
+
+
     }
 
     @Override
@@ -1051,10 +1075,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     public void updateByteCount(long in, long out, long diffIn, long diffOut) {
         if (mDisplayBytecount) {
             String netstat = String.format(getString(R.string.statusline_bytecount),
-                    humanReadableByteCount(in, false),
-                    humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true),
-                    humanReadableByteCount(out, false),
-                    humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true));
+                    humanReadableByteCount(in, false, getResources()),
+                    humanReadableByteCount(diffIn / OpenVPNManagement.mBytecountInterval, true, getResources()),
+                    humanReadableByteCount(out, false, getResources()),
+                    humanReadableByteCount(diffOut / OpenVPNManagement.mBytecountInterval, true, getResources()));
 
             int priority = mNotificationAlwaysVisible ? PRIORITY_DEFAULT : PRIORITY_MIN;
             showNotification(netstat, null, priority, mConnecttime, LEVEL_CONNECTED);

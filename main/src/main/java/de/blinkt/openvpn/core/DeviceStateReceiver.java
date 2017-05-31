@@ -103,7 +103,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         if (windowtraffic < TRAFFIC_LIMIT) {
             screen = connectState.DISCONNECTED;
             VpnStatus.logInfo(R.string.screenoff_pause,
-                    OpenVPNService.humanReadableByteCount(TRAFFIC_LIMIT, false), TRAFFIC_WINDOW);
+                    "64 kB", TRAFFIC_WINDOW);
 
             mManagement.pause(getPauseReason());
         }

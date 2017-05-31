@@ -290,7 +290,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="state_tcp_connect">接続中(TCP)</string>
   <string name="state_auth_failed">認証に失敗しました</string>
   <string name="state_nonetwork">使用可能なネットワークを待機中</string>
-  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
   <string name="notifcation_title_notconnect">未接続</string>
   <string name="start_vpn_title">VPN %sに接続中</string>
   <string name="start_vpn_ticker">VPN %sに接続中</string>

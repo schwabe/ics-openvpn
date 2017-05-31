@@ -252,7 +252,6 @@
   <string name="state_tcp_connect">Ansluter (TCP)</string>
   <string name="state_auth_failed">Autentisering misslyckades</string>
   <string name="state_nonetwork">Väntar på användbart nätverk</string>
-  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
   <string name="notifcation_title_notconnect">Inte ansluten</string>
   <string name="start_vpn_title">Ansluter till VPN %s</string>
   <string name="start_vpn_ticker">Ansluter till VPN %s</string>
@@ -323,6 +322,7 @@
   <string name="import_log">Importloggen:</string>
   <string name="ip_looks_like_subnet">Vpn-topologi \"%3$s\" specifierad, men ifconfig %1$s %2$s ser ut att vara en IP-adress med en nätmask. Antar \"subnet\"-topologi.</string>
   <string name="mssfix_invalid_value">MSS överbelastningsvärde måste vara en heltal mellan 0 och 9000</string>
+  <string name="mtu_invalid_value">MTU-överskridningsvärdet måste vara ett heltal mellan 64 och 9000</string>
   <string name="mssfix_value_dialog">Meddela TCP-sessioner som körs över tunneln att de ska begränsa sina sändningspaketstorlekar så att efter OpenVPN har inkapslat dem, kommer den resulterande UDP-paketstorleken som OpenVPN skickar till dess peerer inte överstiga detta antal byte. (Standard är 1450)</string>
   <string name="mssfix_checkbox">Kringgå MSS-värdet för innehållet i TCP-paket</string>
   <string name="mssfix_dialogtitle">Ställ in MSS för innehållet i TCP-paket</string>
@@ -407,6 +407,8 @@
   <string name="samsung_broken">Även om Samsung telefoner är bland de mest säljande Android-telefoner, Samsungs mjukvara är också bland de mest buggiga Android mjukvarorna. Buggarna är inte begränsade till VPN driften på dessa enheter, men många av dem kan gås runt. Till följd beskrivs några av dessa buggar.\n\nDNS fungerar inte om inte DNS-servern finns VPN intervallet.\n\nPå många Samsung 5.x enheter fungerar inte de tillåtna/otillåtna programmen.\nSamsung 6.x VPN har rapporteras att inte fungera om VPN-appen är undantagen från energisparfunktioner.</string>
   <string name="samsung_broken_title">Samsung-telefoner</string>
   <string name="novpn_selected">Ingen VPN-anslutning vald.</string>
+  <string name="defaultvpn">Förvald VPN</string>
+  <string name="defaultvpnsummary">VPN används på platser där en förvald VPN behövs. Dessa är för närvarande vid uppstart, för Always-On och Quick Settings Tile.</string>
   <string name="reconnect">Återansluta</string>
   <string name="qs_title">Omkoppla VPN</string>
   <string name="qs_connect">Anslut till %s</string>
@@ -421,4 +423,13 @@
   <string name="sorted_lru">Profiler sorterade efter senast använt</string>
   <string name="sorted_az">Profiler sorterade efter namn</string>
   <string name="deprecated_tls_remote">Config använder alternativ tls-fjärrkontroll som avlägsnades i 2.3 och slutligen avlägsnades i 2.4</string>
+  <string name="auth_failed_behaviour">Beteende vid AUTH_FAILED</string>
+  <string name="graph">Graf</string>
+  <string name="use_logarithmic_scale">Använd logaritmisk skala</string>
+  <string name="notenoughdata">Inte tillräckligt med data</string>
+  <string name="avghour">Genomsnitt per timme</string>
+  <string name="avgmin">Genomsnitt per minut</string>
+  <string name="last5minutes">Senaste 5 minuter</string>
+  <string name="data_in">In</string>
+  <string name="data_out">Ut</string>
 </resources>

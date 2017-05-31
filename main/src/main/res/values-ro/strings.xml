@@ -252,7 +252,6 @@
   <string name="state_tcp_connect">Se conectează (TCP)</string>
   <string name="state_auth_failed">Autentificare a eşuat</string>
   <string name="state_nonetwork">Se aşteaptă o reţea utilizabilă</string>
-  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
   <string name="notifcation_title_notconnect">Nu este conectat</string>
   <string name="start_vpn_title">Conectare la VPN %s</string>
   <string name="start_vpn_ticker">Conectare la VPN %s</string>

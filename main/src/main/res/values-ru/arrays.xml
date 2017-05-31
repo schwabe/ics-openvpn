@@ -20,6 +20,11 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>Не указан</item>
-    <item>Шифрование (tls-crypt)</item>
+    <item>Шифрование (--tls-crypt)</item>
+  </string-array>
+  <string-array name="auth_retry_type">
+    <item>Отключиться, забыть пароль</item>
+    <item>Отключиться, сохранить пароль</item>
+    <item>Игнорировать, повторить</item>
   </string-array>
 </resources>

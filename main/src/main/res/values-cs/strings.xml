@@ -246,7 +246,6 @@
   <string name="state_tcp_connect">Připojuji (TCP)</string>
   <string name="state_auth_failed">Přihlášení nebylo úspěšné</string>
   <string name="state_nonetwork">Čekání na použitelnou síť</string>
-  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
   <string name="notifcation_title_notconnect">Nepřipojeno</string>
   <string name="start_vpn_title">Připojování k VPN %s</string>
   <string name="start_vpn_ticker">Připojování k VPN %s</string>

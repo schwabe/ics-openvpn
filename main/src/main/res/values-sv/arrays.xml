@@ -22,4 +22,9 @@
     <item>Ospecificerad</item>
     <item>Kryptering (tls-crypt)</item>
   </string-array>
+  <string-array name="auth_retry_type">
+    <item>Koppla bort, glöm lösenordet</item>
+    <item>Koppla bort, behåll lösenordet</item>
+    <item>Ignorera, försök igen</item>
+  </string-array>
 </resources>

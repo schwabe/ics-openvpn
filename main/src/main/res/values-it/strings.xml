@@ -248,7 +248,6 @@ Effettuata la lettura del file di configurazione</string>
   <string name="state_tcp_connect">Connessione in corso (TCP)</string>
   <string name="state_auth_failed">Autenticazione fallita</string>
   <string name="state_nonetwork">In attesa di una rete utilizzabile</string>
-  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
   <string name="notifcation_title_notconnect">Non connesso</string>
   <string name="start_vpn_title">Connessione alla VPN %s in corso</string>
   <string name="start_vpn_ticker">Connessione alla VPN %s in corso</string>

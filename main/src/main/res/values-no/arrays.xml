@@ -20,6 +20,11 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>Uspesifisert</item>
-    <item>Encryption (--tls-crypt)</item>
+    <item>Kryptering (-tls-krypt)</item>
+  </string-array>
+  <string-array name="auth_retry_type">
+    <item>Koble fra, glem passordet</item>
+    <item>Koble fra, behold passord</item>
+    <item>Ignorer, prøv igjen</item>
   </string-array>
 </resources>

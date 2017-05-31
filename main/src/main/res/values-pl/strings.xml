@@ -252,7 +252,6 @@
   <string name="state_tcp_connect">Łączenie (TCP)</string>
   <string name="state_auth_failed">Błąd autentykacji</string>
   <string name="state_nonetwork">Czekam na sieć</string>
-  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
   <string name="notifcation_title_notconnect">Niepołączony</string>
   <string name="start_vpn_title">Łączę z VPN %s</string>
   <string name="start_vpn_ticker">Łączę z VPN %s</string>

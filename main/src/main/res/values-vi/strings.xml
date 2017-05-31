@@ -251,7 +251,6 @@
   <string name="state_tcp_connect">Đang kết nối (TCP)</string>
   <string name="state_auth_failed">Chứng thực không thành công</string>
   <string name="state_nonetwork">Đang đợi mạng khả dụng</string>
-  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
   <string name="notifcation_title_notconnect">Không kết nối</string>
   <string name="start_vpn_title">Đang kết nối VPN %s</string>
   <string name="start_vpn_ticker">Đang kết nối VPN %s</string>

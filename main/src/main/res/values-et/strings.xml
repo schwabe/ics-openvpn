@@ -44,12 +44,14 @@
   <string name="duplicate_profile_name">Palun sisestage unikaalne profiilinimi</string>
   <string name="profilename">Profiili nimi</string>
   <string name="no_keystore_cert_selected">Peate valima kasutaja sertifikaadi</string>
+  <string name="no_ca_cert_selected">Peate valima CA sertifikaadi</string>
   <string name="no_error_found">Vigu ei leitud</string>
   <string name="config_error_found">Konfiguratsiooni viga</string>
   <string name="ipv4_format_error">Sisestatud IPv4 aadress ei allu süntaksianalüüsile</string>
   <string name="custom_route_format_error">Kohandatud marsruudid ei allu süntaksianalüüsile</string>
   <string name="pw_query_hint">(jäta tühjaks, küsitakse vajadusel)</string>
   <string name="vpn_shortcut">OpenVPN kiirkäivitus</string>
+  <string name="vpn_launch_title">Ühendumine VPN külge&#8230;</string>
   <string name="shortcut_profile_notfound">Lühivalikus määratud profiil puudub</string>
   <string name="random_host_prefix">Juhuslik serveri eesliide</string>
   <string name="random_host_summary">Lisab 6 juhuslikku tähte serveri nime ette</string>
@@ -163,6 +165,7 @@
   <string name="private_key_password">Privaatse võtme salasõna</string>
   <string name="password">Salasõna</string>
   <string name="file_icon">faili ikoon</string>
+  <string name="tls_authentication">TLS Autentimine/Krüpteerimine</string>
   <string name="generated_config">Genereeritud konfiguratsioon</string>
   <string name="generalsettings">Seaded</string>
   <string name="owner_fix_summary">Püütakse seada /dev/tun omanikku system\'iks. VPNService API nõuab seda mõne CM9 versiooni puhul. Seade peab olema ruuditud.</string>
@@ -249,6 +252,7 @@
   <string name="state_tcp_connect">Ühendumine (TCP)</string>
   <string name="state_auth_failed">Autentimine ebaõnnestus</string>
   <string name="state_nonetwork">Oodatakse kasutatavat võrku</string>
+  <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
   <string name="notifcation_title_notconnect">Pole ühendatud</string>
   <string name="start_vpn_title">Ühendumine VPN %s külge</string>
   <string name="start_vpn_ticker">Ühendumine VPN %s külge</string>
@@ -403,6 +407,7 @@
   <string name="samsung_broken">Vaatamata sellele et Samsungi telefonid on ühed populaarsemad Android telefonid, on Samsungi tarkvara üks auklikumatest Android tarkvarade seas. Probleemid ei piirdu vaid nende seadmete VPN toimingutega kuid on enamasti lahendatavad. Edasine kirjeldab mõnda probleemi.\n\nDNS ei toimi kui DNS server pole VPN vahemikus.\n\nPaljudel Samsungi 5.x seadmetel ei toimi programmide lubamise/keelamise võimalus.\nSamsung 6.x telefonide kohta on teateid et VPN ei tööta kui VPN programmil pole välistatud toitesääst.</string>
   <string name="samsung_broken_title">Samsungi telefonid</string>
   <string name="novpn_selected">VPN valimata.</string>
+  <string name="defaultvpn">Vaikimisi VPN</string>
   <string name="reconnect">Taasühenda</string>
   <string name="qs_title">VPN lülitamine</string>
   <string name="qs_connect">Ühendu %s külge</string>
@@ -410,4 +415,7 @@
   <string name="connectretrymaxmessage">Sisestage suurim ühendumiskatsete vaheline aeg. OpenVPN tõstab ebaõnnestunud ühendumiskatsete puhul aegamööda ooteaega kuni jõuab selle väärtuseni. Vaikeväärtus on 300s.</string>
   <string name="connectretrymaxtitle">Suurim lubatud ühendumiskatsete vaheline aeg</string>
   <string name="state_waitconnectretry">Ühendumiskatsete vahel oodatakse %ss sekundit</string>
+  <string name="change_sorting">Muuda sorteerimist</string>
+  <string name="sort">Sorteeri</string>
+  <string name="last5minutes">Viimased 5 minutit</string>
 </resources>

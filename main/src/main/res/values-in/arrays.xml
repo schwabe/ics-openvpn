@@ -23,4 +23,9 @@
     <item>Belum ditentukan</item>
     <item>Encryption (tls-crypt)</item>
   </string-array>
+  <string-array name="auth_retry_type">
+    <item>Disconnect, forget password</item>
+    <item>Disconnect, keep password</item>
+    <item>Abaikan, coba lagi</item>
+  </string-array>
 </resources>

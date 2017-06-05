@@ -274,20 +274,25 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
             LinkedList<Entry> dataOut = new LinkedList<>();
 
             long interval;
+            long totalInterval;
 
             LinkedList<TrafficHistory.TrafficDatapoint> list;
             switch (timeperiod) {
                 case TIME_PERIOD_HOURS:
                     list = VpnStatus.trafficHistory.getHours();
-                    interval = 3600 ;
+                    interval = TrafficHistory.TIME_PERIOD_HOURS;
+                    totalInterval = 0;
                     break;
                 case TIME_PERIOD_MINUTES:
                     list = VpnStatus.trafficHistory.getMinutes();
-                    interval = 60;
+                    interval = TrafficHistory.TIME_PERIOD_MINTUES;
+                    totalInterval = TrafficHistory.TIME_PERIOD_HOURS * TrafficHistory.PERIODS_TO_KEEP;;
+
                     break;
                 default:
                     list = VpnStatus.trafficHistory.getSeconds();
-                    interval = OpenVPNManagement.mBytecountInterval ;
+                    interval = OpenVPNManagement.mBytecountInterval * 1000;
+                    totalInterval = TrafficHistory.TIME_PERIOD_MINTUES * TrafficHistory.PERIODS_TO_KEEP;
                     break;
             }
             if (list.size()==0) {
@@ -305,11 +310,17 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
             else
                 zeroValue=0;
 
+            long now = System.currentTimeMillis();
+
+
             for (TrafficHistory.TrafficDatapoint tdp: list){
+                if (totalInterval !=0 && (now - tdp.timestamp) > totalInterval)
+                    continue;
+
                 float t = (tdp.timestamp - firstTimestamp) / 100f;
 
-                float in = (tdp.in - lastBytecountIn)/ (float) interval;
-                float out = (tdp.out - lastBytecountOut) / (float) interval;
+                float in = (tdp.in - lastBytecountIn)/ (float) (interval/1000);
+                float out = (tdp.out - lastBytecountOut) / (float) (interval/1000);
 
                 lastBytecountIn = tdp.in;
                 lastBytecountOut = tdp.out;
@@ -319,12 +330,12 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                     out = max(2f, (float) Math.log10(out* 8));
                 }
 
-                if (lastts > 0 && ( tdp.timestamp -lastts> 2 * interval*1000)){
-                    dataIn.add(new Entry((lastts- firstTimestamp + interval*1000)/100f, zeroValue));
-                    dataOut.add(new Entry((lastts- firstTimestamp + interval*1000)/100f, zeroValue));
+                if (lastts > 0 && ( tdp.timestamp -lastts> 2 * interval)){
+                    dataIn.add(new Entry((lastts- firstTimestamp + interval)/100f, zeroValue));
+                    dataOut.add(new Entry((lastts- firstTimestamp + interval)/100f, zeroValue));
 
-                    dataIn.add(new Entry(t - interval*10f, zeroValue));
-                    dataOut.add(new Entry(t - interval*10f, zeroValue));
+                    dataIn.add(new Entry(t - interval/100f, zeroValue));
+                    dataOut.add(new Entry(t - interval/100f, zeroValue));
                 }
 
                 lastts = tdp.timestamp;
@@ -333,8 +344,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                 dataOut.add(new Entry(t,out));
 
             }
-            long now = System.currentTimeMillis();
-            if (lastts < now-interval* 1000L) {
+            if (lastts < now-interval) {
 
                 if (now -lastts > 2 * interval*1000) {
                     dataIn.add(new Entry((lastts- firstTimestamp+ interval*1000)/100f, zeroValue));

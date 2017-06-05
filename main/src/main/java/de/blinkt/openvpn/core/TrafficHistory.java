@@ -20,6 +20,9 @@ import static java.lang.Math.max;
 
 public class TrafficHistory implements Parcelable {
 
+    public static final long PERIODS_TO_KEEP = 5;
+    public static final int TIME_PERIOD_MINTUES = 60 * 1000;
+    public static final int TIME_PERIOD_HOURS = 3600 * 1000;
     private LinkedList<TrafficDatapoint> trafficHistorySeconds = new LinkedList<>();
     private LinkedList<TrafficDatapoint> trafficHistoryMinutes = new LinkedList<>();
     private LinkedList<TrafficDatapoint> trafficHistoryHours = new LinkedList<>();
@@ -179,12 +182,12 @@ public class TrafficHistory implements Parcelable {
         TrafficDatapoint lastTsPeriod;
 
         if (seconds) {
-            timePeriod = 60 * 1000;
+            timePeriod = TIME_PERIOD_MINTUES;
             tpList = trafficHistorySeconds;
             nextList = trafficHistoryMinutes;
             lastTsPeriod = lastSecondUsedForMinute;
         } else {
-            timePeriod = 3600 * 1000;
+            timePeriod = TIME_PERIOD_HOURS;
             tpList = trafficHistoryMinutes;
             nextList = trafficHistoryHours;
             lastTsPeriod = lastMinuteUsedForHours;
@@ -201,7 +204,7 @@ public class TrafficHistory implements Parcelable {
 
             for (TrafficDatapoint tph : tpList) {
                 // List is iteratered from oldest to newest, remembert first one that we did not
-                if ((newTdp.timestamp - tph.timestamp) / timePeriod > 4)
+                if ((newTdp.timestamp - tph.timestamp) / timePeriod >= PERIODS_TO_KEEP)
                     toRemove.add(tph);
             }
             tpList.removeAll(toRemove);

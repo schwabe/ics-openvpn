@@ -20,7 +20,7 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>Belirtilmemiş</item>
-    <item>Şifreleme (tls-crypt)</item>
+    <item>Şifreleme (--tls-crypt)</item>
   </string-array>
   <string-array name="crm_entries">
     <item>Yeniden bağlanma denemesi yok</item>
@@ -28,5 +28,10 @@
     <item>Beş yeniden bağlanma denemesi</item>
     <item>Elli yeniden bağlanma denemesi</item>
     <item>Sınırsız yeniden bağlanma denemesi</item>
+  </string-array>
+  <string-array name="auth_retry_type">
+    <item>Bağlantıyı kes, parolayı unut</item>
+    <item>Bağlantıyı kes, parolayı sakla</item>
+    <item>Yoksay, yeniden dene</item>
   </string-array>
 </resources>

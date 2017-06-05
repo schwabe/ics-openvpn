@@ -252,6 +252,7 @@
   <string name="state_tcp_connect">Подключение (TCP)</string>
   <string name="state_auth_failed">Ошибка аутентификации</string>
   <string name="state_nonetwork">Ожидание работы сети</string>
+  <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
   <string name="notifcation_title_notconnect">Разъединено</string>
   <string name="start_vpn_title">Подключение к VPN %s</string>
   <string name="start_vpn_ticker">Подключение к VPN %s</string>
@@ -429,4 +430,12 @@
   <string name="avghour">В среднем за час</string>
   <string name="avgmin">В среднем за минуту</string>
   <string name="last5minutes">Последние 5 минут</string>
+  <string name="bits_per_second">%.0f бит/с</string>
+  <string name="kbits_per_second">%.1f Кбит/с</string>
+  <string name="mbits_per_second">%.1f Мбит/с</string>
+  <string name="gbits_per_second">%.1f Гбит/с</string>
+  <string name="volume_byte">%.0f Б</string>
+  <string name="volume_kbyte">%.1f КБ</string>
+  <string name="volume_mbyte">%.1f МБ</string>
+  <string name="volume_gbyte">%.1f ГБ</string>
 </resources>

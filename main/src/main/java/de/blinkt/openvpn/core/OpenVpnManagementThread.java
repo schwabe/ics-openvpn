@@ -332,6 +332,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     }
 
     private void handleHold(String argument) {
+        mWaitingForRelease = true;
         int waittime = Integer.parseInt(argument.split(":")[1]);
         if (shouldBeRunning()) {
             if (waittime > 1)
@@ -344,10 +345,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 VpnStatus.logDebug(R.string.state_waitconnectretry, String.valueOf(waittime));
 
         } else {
-            mWaitingForRelease = true;
-
             VpnStatus.updateStatePause(lastPauseReason);
-
         }
     }
 

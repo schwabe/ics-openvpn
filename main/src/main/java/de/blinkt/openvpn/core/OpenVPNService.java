@@ -22,7 +22,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.VpnService;
-import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,7 +30,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
-import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.system.OsConstants;
 import android.text.TextUtils;
@@ -39,7 +37,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Inet6Address;
@@ -55,6 +52,7 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.activities.LogWindow;
+import de.blinkt.openvpn.activities.MainActivity;
 import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 import de.blinkt.openvpn.core.VpnStatus.StateListener;
 
@@ -216,7 +214,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (status == LEVEL_WAITING_FOR_USER_INPUT)
             nbuilder.setContentIntent(getUserInputIntent(msg));
         else
-            nbuilder.setContentIntent(getLogPendingIntent());
+            nbuilder.setContentIntent(getGraphPendingIntent());
 
         if (when != 0)
             nbuilder.setWhen(when);
@@ -352,13 +350,14 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         return pIntent;
     }
 
-    PendingIntent getLogPendingIntent() {
+    PendingIntent getGraphPendingIntent() {
         // Let the configure Button show the Log
-        Class activityClass = LogWindow.class;
+        Class activityClass = MainActivity.class;
         if (mNotificationActivityClass != null) {
             activityClass = mNotificationActivityClass;
         }
         Intent intent = new Intent(getBaseContext(), activityClass);
+        intent.putExtra("PAGE", "graph");
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         PendingIntent startLW = PendingIntent.getActivity(this, 0, intent, 0);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -806,7 +805,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         mLocalIPv6 = null;
         mDomain = null;
 
-        builder.setConfigureIntent(getLogPendingIntent());
+        builder.setConfigureIntent(getGraphPendingIntent());
 
         try {
             //Debug.stopMethodTracing();

@@ -89,6 +89,16 @@ public class MainActivity extends BaseActivity {
         toolbar.setElevation(0);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getIntent()!=null) {
+            String page = getIntent().getStringExtra("PAGE");
+            if ("graph".equals(page))
+                mPager.setCurrentItem(1);
+            setIntent(null);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

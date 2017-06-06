@@ -109,7 +109,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
         @Override
         public void run() {
             mChartAdapter.notifyDataSetChanged();
-            mHandler.postDelayed(triggerRefresh, OpenVPNManagement.mBytecountInterval*1500);
+            mHandler.postDelayed(triggerRefresh, OpenVPNManagement.mBytecountInterval * 1500);
         }
     };
 
@@ -118,7 +118,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
         super.onResume();
 
         VpnStatus.addByteCountListener(this);
-        mHandler.postDelayed(triggerRefresh, OpenVPNManagement.mBytecountInterval*1500);
+        mHandler.postDelayed(triggerRefresh, OpenVPNManagement.mBytecountInterval * 1500);
     }
 
     @Override
@@ -150,7 +150,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                 mHandler.removeCallbacks(triggerRefresh);
                 mSpeedStatus.setText(netstat);
                 mChartAdapter.notifyDataSetChanged();
-                mHandler.postDelayed(triggerRefresh, OpenVPNManagement.mBytecountInterval*1500);
+                mHandler.postDelayed(triggerRefresh, OpenVPNManagement.mBytecountInterval * 1500);
             }
         });
 
@@ -194,7 +194,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
             xAxis.setDrawGridLines(false);
             xAxis.setDrawAxisLine(true);
 
-            switch (position){
+            switch (position) {
                 case TIME_PERIOD_HOURS:
                     holder.title.setText(R.string.avghour);
                     break;
@@ -211,11 +211,11 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
 
                 @Override
                 public String getFormattedValue(float value, AxisBase axis) {
-                    switch (position){
+                    switch (position) {
                         case TIME_PERIOD_HOURS:
-                            return String.format(Locale.getDefault(), "%.0f\u2009h ago", (axis.getAxisMaximum() - value) / 10/3600);
+                            return String.format(Locale.getDefault(), "%.0f\u2009h ago", (axis.getAxisMaximum() - value) / 10 / 3600);
                         case TIME_PERIOD_MINUTES:
-                            return String.format(Locale.getDefault(), "%.0f\u2009m ago", (axis.getAxisMaximum() - value) / 10/60);
+                            return String.format(Locale.getDefault(), "%.0f\u2009m ago", (axis.getAxisMaximum() - value) / 10 / 60);
                         default:
                             return String.format(Locale.getDefault(), "%.0f\u2009s ago", (axis.getAxisMaximum() - value) / 10);
                     }
@@ -234,7 +234,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                     if (mLogScale && value < 2.1f)
                         return "< 100\u2009bit/s";
                     if (mLogScale)
-                        value = (float) Math.pow(10, value)/8;
+                        value = (float) Math.pow(10, value) / 8;
 
                     return humanReadableByteCount((long) value, true, res);
                 }
@@ -247,8 +247,8 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
 
             if (mLogScale) {
                 yAxis.setAxisMinimum(2f);
-                yAxis.setAxisMaximum((float)  Math.ceil(ymax));
-                yAxis.setLabelCount((int) (Math.ceil(ymax -2f)));
+                yAxis.setAxisMaximum((float) Math.ceil(ymax));
+                yAxis.setLabelCount((int) (Math.ceil(ymax - 2f)));
             } else {
                 yAxis.setAxisMinimum(0f);
                 yAxis.resetAxisMaximum();
@@ -286,7 +286,8 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                 case TIME_PERIOD_MINUTES:
                     list = VpnStatus.trafficHistory.getMinutes();
                     interval = TrafficHistory.TIME_PERIOD_MINTUES;
-                    totalInterval = TrafficHistory.TIME_PERIOD_HOURS * TrafficHistory.PERIODS_TO_KEEP;;
+                    totalInterval = TrafficHistory.TIME_PERIOD_HOURS * TrafficHistory.PERIODS_TO_KEEP;
+                    ;
 
                     break;
                 default:
@@ -295,64 +296,71 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                     totalInterval = TrafficHistory.TIME_PERIOD_MINTUES * TrafficHistory.PERIODS_TO_KEEP;
                     break;
             }
-            if (list.size()==0) {
+            if (list.size() == 0) {
                 list = TrafficHistory.getDummyList();
             }
 
-            long firstTimestamp = list.peek().timestamp;
-            long lastBytecountIn  = list.peek().in;
-            long lastBytecountOut  = list.peek().out;
 
-            long lastts=0;
+            long lastts = 0;
             float zeroValue;
             if (mLogScale)
-                zeroValue=2;
+                zeroValue = 2;
             else
-                zeroValue=0;
+                zeroValue = 0;
 
             long now = System.currentTimeMillis();
 
 
-            for (TrafficHistory.TrafficDatapoint tdp: list){
-                if (totalInterval !=0 && (now - tdp.timestamp) > totalInterval)
+            long firstTimestamp = 0;
+            long lastBytecountOut = 0;
+            long lastBytecountIn = 0;
+
+            for (TrafficHistory.TrafficDatapoint tdp : list) {
+                if (totalInterval != 0 && (now - tdp.timestamp) > totalInterval)
                     continue;
+
+                if (firstTimestamp == 0) {
+                    firstTimestamp = list.peek().timestamp;
+                    lastBytecountIn = list.peek().in;
+                    lastBytecountOut = list.peek().out;
+                }
 
                 float t = (tdp.timestamp - firstTimestamp) / 100f;
 
-                float in = (tdp.in - lastBytecountIn)/ (float) (interval/1000);
-                float out = (tdp.out - lastBytecountOut) / (float) (interval/1000);
+                float in = (tdp.in - lastBytecountIn) / (float) (interval / 1000);
+                float out = (tdp.out - lastBytecountOut) / (float) (interval / 1000);
 
                 lastBytecountIn = tdp.in;
                 lastBytecountOut = tdp.out;
 
                 if (mLogScale) {
-                    in = max(2f, (float) Math.log10(in*8));
-                    out = max(2f, (float) Math.log10(out* 8));
+                    in = max(2f, (float) Math.log10(in * 8));
+                    out = max(2f, (float) Math.log10(out * 8));
                 }
 
-                if (lastts > 0 && ( tdp.timestamp -lastts> 2 * interval)){
-                    dataIn.add(new Entry((lastts- firstTimestamp + interval)/100f, zeroValue));
-                    dataOut.add(new Entry((lastts- firstTimestamp + interval)/100f, zeroValue));
+                if (lastts > 0 && (tdp.timestamp - lastts > 2 * interval)) {
+                    dataIn.add(new Entry((lastts - firstTimestamp + interval) / 100f, zeroValue));
+                    dataOut.add(new Entry((lastts - firstTimestamp + interval) / 100f, zeroValue));
 
-                    dataIn.add(new Entry(t - interval/100f, zeroValue));
-                    dataOut.add(new Entry(t - interval/100f, zeroValue));
+                    dataIn.add(new Entry(t - interval / 100f, zeroValue));
+                    dataOut.add(new Entry(t - interval / 100f, zeroValue));
                 }
 
                 lastts = tdp.timestamp;
 
-                dataIn.add(new Entry(t,in));
-                dataOut.add(new Entry(t,out));
+                dataIn.add(new Entry(t, in));
+                dataOut.add(new Entry(t, out));
 
             }
-            if (lastts < now-interval) {
+            if (lastts < now - interval) {
 
-                if (now -lastts > 2 * interval*1000) {
-                    dataIn.add(new Entry((lastts- firstTimestamp+ interval*1000)/100f, zeroValue));
-                    dataOut.add(new Entry((lastts- firstTimestamp+ interval*1000)/100f, zeroValue));
+                if (now - lastts > 2 * interval * 1000) {
+                    dataIn.add(new Entry((lastts - firstTimestamp + interval * 1000) / 100f, zeroValue));
+                    dataOut.add(new Entry((lastts - firstTimestamp + interval * 1000) / 100f, zeroValue));
                 }
 
-                dataIn.add(new Entry((now-firstTimestamp)/100, zeroValue));
-                dataOut.add(new Entry((now-firstTimestamp) /100, zeroValue));
+                dataIn.add(new Entry((now - firstTimestamp) / 100, zeroValue));
+                dataOut.add(new Entry((now - firstTimestamp) / 100, zeroValue));
             }
 
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();

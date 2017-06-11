@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity {
     private ViewPager mPager;
     private ScreenSlidePagerAdapter mPagerAdapter;
     private SlidingTabLayout mSlidingTabLayout;
+    private TabBarView mTabs;
 
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +72,8 @@ public class MainActivity extends BaseActivity {
         mPagerAdapter.addTab(R.string.about, AboutFragment.class);
         mPager.setAdapter(mPagerAdapter);
 
-        TabBarView tabs = (TabBarView) findViewById(R.id.sliding_tabs);
-        tabs.setViewPager(mPager);
+        mTabs = (TabBarView) findViewById(R.id.sliding_tabs);
+        mTabs.setViewPager(mPager);
     }
 
     private static final String FEATURE_TELEVISION = "android.hardware.type.television";
@@ -94,8 +95,9 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         if (getIntent()!=null) {
             String page = getIntent().getStringExtra("PAGE");
-            if ("graph".equals(page))
+            if ("graph".equals(page)) {
                 mPager.setCurrentItem(1);
+            }
             setIntent(null);
         }
     }

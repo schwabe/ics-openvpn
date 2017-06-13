@@ -68,7 +68,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private static final String PAUSE_VPN = "de.blinkt.openvpn.PAUSE_VPN";
     private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
     private static final int OPENVPN_STATUS = 1;
-    private static final String NOTIFICATION_CHANNEL_ID="openvpn";
+    public static final String NOTIFICATION_CHANNEL_BG_ID="openvpn_bg";
+    public static final String NOTIFICATION_CHANNEL_NEWSTATUS_ID="openvpn_newstat";
+
     private static boolean mNotificationAlwaysVisible = false;
     private final Vector<String> mDnslist = new Vector<>();
     private final NetworkSpace mRoutes = new NetworkSpace();
@@ -229,8 +231,15 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             lpNotificationExtras(nbuilder);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            nbuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (priority ==0 )
+                nbuilder.setChannelId(NOTIFICATION_CHANNEL_BG_ID);
+            else
+                nbuilder.setChannelId(NOTIFICATION_CHANNEL_NEWSTATUS_ID);
+            if (mProfile != null)
+                nbuilder.setShortcutId(mProfile.getUUIDString());
+
+        }
 
         if (tickerText != null && !tickerText.equals(""))
             nbuilder.setTicker(tickerText);

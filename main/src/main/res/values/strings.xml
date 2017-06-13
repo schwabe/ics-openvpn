@@ -441,5 +441,9 @@
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
     <string name="volume_gbyte">%.1f GB</string>
+    <string name="channel_name_background">Connection statistics</string>
+    <string name="channel_description_background">Ongoing statistics of the established OpenVPN connection</string>
+    <string name="channel_name_status">Connection status change</string>
+    <string name="channel_description_status">Status changes of the  OpenVPN connection (Connecting, authenticating,…)</string>
 
 </resources>

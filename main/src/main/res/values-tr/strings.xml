@@ -62,7 +62,7 @@
   <string name="cancel_connection_long">VPN Bağlantısını Kes</string>
   <string name="clear_log">kayıtları temizle</string>
   <string name="title_cancel">İptal Onayı</string>
-  <string name="cancel_connection_query">Bağlı VPN bağlantısını kesilsin veya bağlantı girişimini iptal edilsin mi?</string>
+  <string name="cancel_connection_query">Bağlı VPN bağlantısı kesilsin ya da bağlantı girişimi iptal edilsin mi?</string>
   <string name="remove_vpn">VPN\'i Kaldır</string>
   <string name="check_remote_tlscert">Sunucunun TLS Sunucu uzantıları ile bir sertifika kullanıp kullanmadığını denetler (--remote-cert-tls server)</string>
   <string name="check_remote_tlscert_title">TLS sunucu sertifikası bekle</string>
@@ -239,7 +239,7 @@
   <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
   <string name="state_connecting">Bağlanıyor</string>
   <string name="state_wait">Sunucudan yanıt bekleniyor</string>
-  <string name="state_auth">Kimlik Doğrulanıyor</string>
+  <string name="state_auth">Kimlik doğrulanıyor</string>
   <string name="state_get_config">İstemci yapılandırması alınıyor</string>
   <string name="state_assign_ip">IP adresleri atanıyor</string>
   <string name="state_add_routes">Yollar ekleniyor</string>

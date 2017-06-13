@@ -290,6 +290,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="state_tcp_connect">接続中(TCP)</string>
   <string name="state_auth_failed">認証に失敗しました</string>
   <string name="state_nonetwork">使用可能なネットワークを待機中</string>
+  <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
   <string name="notifcation_title_notconnect">未接続</string>
   <string name="start_vpn_title">VPN %sに接続中</string>
   <string name="start_vpn_ticker">VPN %sに接続中</string>
@@ -361,6 +362,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="import_log">インポートログ：</string>
   <string name="ip_looks_like_subnet">VPNトポロジ \"%3$s\" が設定されていますが ifconfig %1$s %2$s はIPアドレスとネットマスクのように見えます。\"サブネット\"トポロジを仮定します。</string>
   <string name="mssfix_invalid_value">MSSに指定できる値は0~9000の整数です</string>
+  <string name="mtu_invalid_value">MTUに指定できる値は64~9000の整数です</string>
   <string name="mssfix_value_dialog">OpenVPNがカプセル化したあとのパケットサイズで制限するようトンネル越しのTCPセッションに通知します。結果、OpenVPNが相手に送信するUDPパケットサイズはこのバイト数を超えなくなります。(デフォルトは1450)</string>
   <string name="mssfix_checkbox">TCPペイロードのMSSを指定する</string>
   <string name="mssfix_dialogtitle">TCPペイロードのMSSを設定</string>
@@ -445,6 +447,8 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="samsung_broken">サムスン製の携帯電話は最も販売されているAndroid機ですが、サムスン製のファームウェアは最もバグを引き起こすAndroidファームウェアです。これらのデバイスのバグはVPN操作に限ったことではありませんが、それらの多くは回避可能です。以下にいくつかのバグを記載します。\n\nDNSサーバがVPNの範囲内にないとDNSが動作しません。\n\nサムスン製Android 5.0の多くの機種では、アプリの許可／不許可機能が動作しません。\nサムスン製Android 6.0機種のVPNは、VPNアプリを省電力機能から除外しない限り動作しないことが報告されています。</string>
   <string name="samsung_broken_title">サムスン製の機種</string>
   <string name="novpn_selected">VPNが選択されていません</string>
+  <string name="defaultvpn">既定のVPN</string>
+  <string name="vpnselected">現在選択されているVPN： \'%s\'</string>
   <string name="reconnect">再接続</string>
   <string name="qs_title">VPNを切り替える</string>
   <string name="qs_connect">%sに接続</string>
@@ -459,4 +463,17 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="sorted_lru">プロファイルを最近使った順に並べ替えました</string>
   <string name="sorted_az">プロファイルを名前順に並べ替えました</string>
   <string name="deprecated_tls_remote">設定はtls-remoteを使用しています(2.3で非推奨、2.4で削除されました)</string>
+  <string name="use_logarithmic_scale">対数スケールを使用する</string>
+  <string name="notenoughdata">データが不十分です</string>
+  <string name="avghour">毎時間平均</string>
+  <string name="avgmin">毎分平均</string>
+  <string name="last5minutes">過去5分間</string>
+  <string name="bits_per_second">%.0f bit/s</string>
+  <string name="kbits_per_second">%.1f kbit/s</string>
+  <string name="mbits_per_second">%.1f Mbit/s</string>
+  <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="volume_byte">%.0f B</string>
+  <string name="volume_kbyte">%.1f kB</string>
+  <string name="volume_mbyte">%.1f MB</string>
+  <string name="volume_gbyte">%.1f GB</string>
 </resources>

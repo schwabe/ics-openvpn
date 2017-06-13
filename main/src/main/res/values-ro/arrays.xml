@@ -20,6 +20,11 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>Nespecificat</item>
-    <item>Encryption (--tls-crypt)</item>
+    <item>Criptare (--tls-crypt)</item>
+  </string-array>
+  <string-array name="auth_retry_type">
+    <item>Deconectați, uitați parola</item>
+    <item>Deconectați, păstrați parola</item>
+    <item>Ignorați, reîncercați</item>
   </string-array>
 </resources>

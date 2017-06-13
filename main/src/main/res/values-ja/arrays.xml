@@ -22,4 +22,9 @@
     <item>未指定</item>
     <item>暗号化(tls-crypt)</item>
   </string-array>
+  <string-array name="auth_retry_type">
+    <item>パスワードを破棄して切断</item>
+    <item>パスワードを維持して切断</item>
+    <item>無視して再試行</item>
+  </string-array>
 </resources>

@@ -7,6 +7,11 @@ import com.android.builder.model.ProductFlavor
 
 apply plugin: 'com.android.application'
 
+apply plugin: 'checkstyle'
+  checkstyle {
+    showViolations true
+  }
+
 repositories {
     jcenter()
     maven { url "https://jitpack.io" }

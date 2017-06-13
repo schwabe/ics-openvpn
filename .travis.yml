@@ -1,15 +1,24 @@
 language: android
+git:
+  depth: 1   # avoid cloning cmocka of openvpn
 jdk: oraclejdk8
 android:
   components:
-    - android-25
+    - tools
+    - android-26
     - build-tools
+    - build-tools-26.0.0
+    - ndk
+    - extra-android-m2repository
+    - platform-tools
+
   licenses:
     - '.+'
-install:
-  - echo y | android update sdk -u -a -t tools
-  - echo y | android update sdk -u -a -t platform-tools
-  - echo y | android update sdk -u -a -t build-tools-25.0.2
-  - echo y | android update sdk -u -a -t android-25
-  - echo y | android update sdk -u -a -t android-23
-  - echo y | android update sdk -u -a -t extra-android-m2repository
+
+  install:
+    sdkmanager ndk-bundle
+    
+  script:
+    - cd main &&  ./misc/build-native.sh  USE_BREAKPAD=1  -j8; cd ..
+    - ./gradlew build connectedCheck
+

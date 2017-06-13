@@ -418,7 +418,7 @@
   <string name="connectretrymaxmessage">Bağlantı denemeleri arasındaki en uzun süreyi girin. OpenVPN bir başarısız bağlantı girişiminden sonra bu değer kadar onun bekleme süresini yavaş yavaş arttıracak. Varsayılan 300 sn.</string>
   <string name="connectretrymaxtitle">Bağlantı denemeleri arasındaki azami süre</string>
   <string name="state_waitconnectretry">Bağlantı denemesi arasında %s saniye bekleniyor</string>
-  <string name="nought_alwayson_warning"><![CDATA[VPN onay ekranını almıyorsanız başka bir uygulama için \"Her zaman açık VPN\" ayarını etkinleştirmişsinizdir. Bu durumda sadece o uygulama VPN'e bağlanabilir. Ayarlar->Diğer Ağlar...->VPN bölümünden bu ayarı kontrol edin]]></string>
+  <string name="nought_alwayson_warning"><![CDATA[VPN onay ekranını almıyorsanız başka bir uygulama için \"Her zaman açık VPN\" ayarını etkinleştirmişsinizdir. Bu durumda sadece o uygulama VPN\'e bağlanabilir. Ayarlar->Diğer Ağlar...->VPN bölümünden bu ayarı kontrol edin]]></string>
   <string name="management_socket_closed">OpenVPN bağlantısı kapalı (%s)</string>
   <string name="change_sorting">Sıralamayı değiştir</string>
   <string name="sort">Sırala</string>

@@ -1,9 +1,9 @@
 [submodule "main/openvpn"]
 	path = main/openvpn
-	url = https://github.com/schwabe/openvpn.git
+	url = ../openvpn.git
 [submodule "main/openssl"]
 	path = main/openssl
-	url = https://github.com/schwabe/platform_external_openssl.git
+	url = ../platform_external_openssl.git
 [submodule "main/breakpad"]
 	path = main/breakpad
-	url = https://github.com/schwabe/breakpad.git
+	url = ../breakpad.git

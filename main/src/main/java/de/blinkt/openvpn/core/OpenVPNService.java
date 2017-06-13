@@ -127,7 +127,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         int exp = Math.max(0, Math.min((int) (Math.log(bytes) / Math.log(unit)), 3));
 
-        float bytesUnit = Math.round(bytes / Math.pow(unit, exp));
+        float bytesUnit = (float) (bytes / Math.pow(unit, exp));
 
         if (speed)
             switch (exp) {

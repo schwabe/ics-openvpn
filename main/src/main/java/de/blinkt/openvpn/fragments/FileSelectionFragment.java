@@ -6,6 +6,7 @@
 package de.blinkt.openvpn.fragments;
 
 import android.app.ListFragment;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -22,10 +23,12 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeMap;
+import java.util.Vector;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.activities.FileSelect;
@@ -45,13 +48,13 @@ public class FileSelectionFragment extends ListFragment {
 
 
     private String parentPath;
-    private String currentPath = ROOT;
+    private String currentPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 
 
     private String[] formatFilter = null;
 
     private File selectedFile;
-    private HashMap<String, Integer> lastPositions = new HashMap<String, Integer>();
+    private HashMap<String, Integer> lastPositions = new HashMap<>();
     private String mStartPath;
     private CheckBox mInlineImport;
     private Button mClearButton;
@@ -174,7 +177,7 @@ public class FileSelectionFragment extends ListFragment {
             files = f.listFiles();
 
             if (files == null)
-                files = new File [] {};
+                files = new File[]{};
         }
 
         myPath.setText(getText(R.string.location) + ": " + currentPath);
@@ -192,10 +195,18 @@ public class FileSelectionFragment extends ListFragment {
 
         }
 
+
         TreeMap<String, String> dirsMap = new TreeMap<String, String>();
         TreeMap<String, String> dirsPathMap = new TreeMap<String, String>();
         TreeMap<String, String> filesMap = new TreeMap<String, String>();
         TreeMap<String, String> filesPathMap = new TreeMap<String, String>();
+
+        // add default locations
+        for (String dir: getExternalStorages()) {
+            dirsMap.put(dir, dir);
+            dirsPathMap.put(dir, dir);
+        }
+
         for (File file : files) {
             if (file.isDirectory()) {
                 String dirName = file.getName();
@@ -204,7 +215,7 @@ public class FileSelectionFragment extends ListFragment {
             } else {
                 final String fileName = file.getName();
                 final String fileNameLwr = fileName.toLowerCase(Locale.getDefault());
-                // se ha um filtro de formatos, utiliza-o
+
                 if (formatFilter != null) {
                     boolean contains = false;
                     for (String aFormatFilter : formatFilter) {
@@ -218,7 +229,6 @@ public class FileSelectionFragment extends ListFragment {
                         filesMap.put(fileName, fileName);
                         filesPathMap.put(fileName, file.getPath());
                     }
-                    // senao, adiciona todos os arquivos
                 } else {
                     filesMap.put(fileName, fileName);
                     filesPathMap.put(fileName, file.getPath());
@@ -254,6 +264,30 @@ public class FileSelectionFragment extends ListFragment {
         mList.add(item);
     }
 
+    private Collection<String> getExternalStorages() {
+        Vector<String> dirs = new Vector<>();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            for (File d : getActivity().getExternalFilesDirs(null))
+                dirs.add(getRootOfInnerSdCardFolder(d));
+        } else {
+            dirs.add(Environment.getExternalStorageDirectory().getAbsolutePath());
+        }
+        return dirs;
+    }
+
+    private static String getRootOfInnerSdCardFolder(File file) {
+        if (file == null)
+            return null;
+        final long totalSpace = file.getTotalSpace();
+        while (true) {
+            final File parentFile = file.getParentFile();
+            if (parentFile == null || parentFile.getTotalSpace() != totalSpace
+                    || file.equals(Environment.getExternalStorageDirectory()))
+                return file.getAbsolutePath();
+            file = parentFile;
+        }
+    }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {

@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -118,7 +118,7 @@ DO_OPTIMIZE          (       lzo_bytep in , lzo_uint  in_len,
         {
             t = 15;
             while (*ip == 0)
-                t += 255, ip++;
+                { t += 255; ip++; }
             t += *ip++;
         }
         lit = t + 3;
@@ -240,7 +240,7 @@ match:
                         {
                             t = 31;
                             while (*ip == 0)
-                                t += 255, ip++;
+                                { t += 255; ip++; }
                             t += *ip++;
                         }
                         m_pos = op - 1;
@@ -256,7 +256,7 @@ match:
                         {
                             t = 7;
                             while (*ip == 0)
-                                t += 255, ip++;
+                                { t += 255; ip++; }
                             t += *ip++;
                         }
                         m_pos -= *ip++ >> 2;

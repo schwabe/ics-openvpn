@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -1456,7 +1456,7 @@ void usage ( const char *name, int exit_code, lzo_bool show_methods )
                 if (c->decompress_asm_fast_safe)
                     { fprintf(fp, "%s%s", sep, "fastasm+safe"); sep = ", "; }
                 if (c->optimize)
-                    { fprintf(fp, "%s%s", sep, "optimize"); sep = ", "; }
+                    { fprintf(fp, "%s%s", sep, "optimize"); /*sep = ", ";*/ }
                 fprintf(fp, "\n");
             }
         }
@@ -1904,7 +1904,7 @@ int __lzo_cdecl_main main(int argc, char *argv[])
 
     printf("\nLZO real-time data compression library (v%s, %s).\n",
            lzo_version_string(), lzo_version_date());
-    printf("Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer\nAll Rights Reserved.\n\n");
+    printf("Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer\nAll Rights Reserved.\n\n");
 
 
 /*

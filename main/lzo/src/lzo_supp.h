@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -71,12 +71,12 @@
 #if (LZO_OS_POSIX)
 #  if (LZO_OS_POSIX_AIX)
 #    define HAVE_SYS_RESOURCE_H 1
-#  elif (LZO_OS_POSIX_FREEBSD || LZO_OS_POSIX_MACOSX || LZO_OS_POSIX_NETBSD || LZO_OS_POSIX_OPENBSD)
+#  elif (LZO_OS_POSIX_DARWIN || LZO_OS_POSIX_FREEBSD || LZO_OS_POSIX_NETBSD || LZO_OS_POSIX_OPENBSD)
 #    define HAVE_STRINGS_H 1
 #    undef HAVE_MALLOC_H
 #  elif (LZO_OS_POSIX_HPUX || LZO_OS_POSIX_INTERIX)
 #    define HAVE_ALLOCA_H 1
-#  elif (LZO_OS_POSIX_MACOSX && LZO_LIBC_MSL)
+#  elif (LZO_OS_POSIX_DARWIN && LZO_LIBC_MSL)
 #    undef HAVE_SYS_TIME_H
 #    undef HAVE_SYS_TYPES_H
 #  elif (LZO_OS_POSIX_SOLARIS || LZO_OS_POSIX_SUNOS)
@@ -154,7 +154,7 @@
 #  undef HAVE_UTIME_H
 #  undef HAVE_SYS_TIME_H
 #  define HAVE_SYS_UTIME_H 1
-#elif (LZO_CC_GHS || LZO_CC_INTELC || LZO_CC_MSC)
+#elif (LZO_CC_CLANG_C2 || LZO_CC_CLANG_MSC || LZO_CC_GHS || LZO_CC_INTELC_MSC || LZO_CC_MSC)
 #  undef HAVE_DIRENT_H
 #  undef HAVE_UNISTD_H
 #  undef HAVE_UTIME_H
@@ -352,7 +352,7 @@
 #if (LZO_OS_POSIX)
 #  if (LZO_OS_POSIX_AIX)
 #    define HAVE_GETRUSAGE 1
-#  elif (LZO_OS_POSIX_MACOSX && LZO_LIBC_MSL)
+#  elif (LZO_OS_POSIX_DARWIN && LZO_LIBC_MSL)
 #    undef HAVE_CHOWN
 #    undef HAVE_LSTAT
 #  elif (LZO_OS_POSIX_UNICOS)
@@ -448,7 +448,7 @@
 #elif (LZO_CC_IBMC)
 #  undef HAVE_SNPRINTF
 #  undef HAVE_VSNPRINTF
-#elif (LZO_CC_INTELC)
+#elif (LZO_CC_CLANG_MSC || LZO_CC_INTELC_MSC)
 #  ifndef snprintf
 #  define snprintf _snprintf
 #  endif
@@ -457,7 +457,7 @@
 #  endif
 #elif (LZO_CC_LCCWIN32)
 #  define utime _utime
-#elif (LZO_CC_MSC)
+#elif (LZO_CC_CLANG_C2 || LZO_CC_MSC)
 #  if (_MSC_VER < 600)
 #    undef HAVE_STRFTIME
 #  endif
@@ -471,7 +471,7 @@
 #    ifndef vsnprintf
 #    define vsnprintf _vsnprintf
 #    endif
-#  else
+#  elif (_MSC_VER < 1900)
 #    ifndef snprintf
 #    define snprintf _snprintf
 #    endif
@@ -656,8 +656,6 @@ extern "C" {
 #endif
 #if (LZO_BROKEN_CDECL_ALT_SYNTAX)
 typedef void __lzo_cdecl_sighandler (*lzo_sighandler_t)(lzo_signo_t);
-#elif defined(RETSIGTYPE)
-typedef RETSIGTYPE (__lzo_cdecl_sighandler *lzo_sighandler_t)(lzo_signo_t);
 #else
 typedef void (__lzo_cdecl_sighandler *lzo_sighandler_t)(lzo_signo_t);
 #endif
@@ -812,7 +810,7 @@ typedef unsigned short wchar_t;
 #if (HAVE_SIGNAL_H)
 #  include <signal.h>
 #endif
-#if (TIME_WITH_SYS_TIME)
+#if (HAVE_SYS_TIME_H && HAVE_TIME_H)
 #  include <sys/time.h>
 #  include <time.h>
 #elif (HAVE_TIME_H)
@@ -1513,18 +1511,17 @@ LZOLIB_EXTERN(int, lzo_spawnve) (int mode, const char* fn, const char* const * a
 #  endif
 #endif
     LZOCHK_ASSERT(1 == 1)
-    LZOCHK_ASSERT(__LZO_MASK_GEN(1u,1) == 1)
-    LZOCHK_ASSERT(__LZO_MASK_GEN(1u,2) == 3)
-    LZOCHK_ASSERT(__LZO_MASK_GEN(1u,3) == 7)
-    LZOCHK_ASSERT(__LZO_MASK_GEN(1u,8) == 255)
+    LZOCHK_ASSERT(__LZO_MASK_GEN(1u,1) == 1u)
+    LZOCHK_ASSERT(__LZO_MASK_GEN(1u,2) == 3u)
+    LZOCHK_ASSERT(__LZO_MASK_GEN(1u,3) == 7u)
+    LZOCHK_ASSERT(__LZO_MASK_GEN(1u,8) == 255u)
 #if (LZO_SIZEOF_INT >= 2)
     LZOCHK_ASSERT(__LZO_MASK_GEN(1,15) == 32767)
     LZOCHK_ASSERT(__LZO_MASK_GEN(1u,16) == 0xffffU)
     LZOCHK_ASSERT(__LZO_MASK_GEN(0u,16) == 0u)
-#else
+#endif
     LZOCHK_ASSERT(__LZO_MASK_GEN(1ul,16) == 0xffffUL)
     LZOCHK_ASSERT(__LZO_MASK_GEN(0ul,16) == 0ul)
-#endif
 #if (LZO_SIZEOF_INT >= 4)
     LZOCHK_ASSERT(__LZO_MASK_GEN(1,31) == 2147483647)
     LZOCHK_ASSERT(__LZO_MASK_GEN(1u,32) == 0xffffffffU)
@@ -1921,6 +1918,14 @@ LZOLIB_EXTERN(int, lzo_spawnve) (int mode, const char* fn, const char* const * a
     LZOCHK_ASSERT(sizeof(ptrdiff_t) == sizeof(void*))
     LZOCHK_ASSERT(sizeof(size_t) == sizeof(void*))
     LZOCHK_ASSERT(sizeof(lzo_intptr_t) == sizeof(void *))
+#endif
+#if (LZO_ABI_IP32W64)
+    LZOCHK_ASSERT(sizeof(int) == 4)
+    LZOCHK_ASSERT(sizeof(void*) == 4)
+    LZOCHK_ASSERT(sizeof(ptrdiff_t) == sizeof(void*))
+    LZOCHK_ASSERT(sizeof(size_t) == sizeof(void*))
+    LZOCHK_ASSERT(sizeof(lzo_intptr_t) == sizeof(void *))
+    LZOCHK_ASSERT(LZO_WORDSIZE == 8)
 #endif
 #if (LZO_ARCH_I086)
     LZOCHK_ASSERT(sizeof(size_t) == 2)
@@ -2537,7 +2542,7 @@ LZOLIB_PUBLIC(int, lzo_getopt) (lzo_getopt_p g,
         if (!s || s[1] != ':')
         {
             if (!a[0])
-                ++g->optind, g->shortpos = 0;
+                { ++g->optind; g->shortpos = 0; }
             if (!s)
             {
                 g->optopt = c;
@@ -2546,7 +2551,7 @@ LZOLIB_PUBLIC(int, lzo_getopt) (lzo_getopt_p g,
         }
         else
         {
-            ++g->optind, g->shortpos = 0;
+            ++g->optind; g->shortpos = 0;
             if (a[0])
                 g->optarg = a;
             else if (s[2] != ':')
@@ -2656,7 +2661,7 @@ LZOLIB_PUBLIC(lzo_hvoid_p, lzo_halloc) (lzo_hsize_t size)
     p = lmalloc(size);
 #else
     if (size < LZO_STATIC_CAST(size_t, -1))
-        p = malloc((size_t) size);
+        p = malloc(LZO_STATIC_CAST(size_t, size));
 #endif
 }
 #endif
@@ -2866,25 +2871,25 @@ LZOLIB_PUBLIC(long, lzo_safe_hwrite) (int fd, const lzo_hvoid_p buf, long size)
 #if !defined(LZOLIB_PUBLIC)
 #  define LZOLIB_PUBLIC(r,f)    r __LZOLIB_FUNCNAME(f)
 #endif
-#if 1 && (LZO_OS_POSIX_LINUX && LZO_ARCH_AMD64 && LZO_ASM_SYNTAX_GNUC)
+#if 1 && (LZO_OS_POSIX_LINUX && LZO_ARCH_AMD64 && LZO_ASM_SYNTAX_GNUC && !LZO_CFG_NO_SYSCALL)
 #ifndef lzo_pclock_syscall_clock_gettime
 #define lzo_pclock_syscall_clock_gettime lzo_pclock_syscall_clock_gettime
 #endif
 __lzo_static_noinline long lzo_pclock_syscall_clock_gettime(long clockid, struct timespec *ts)
 {
     unsigned long r = 228;
-    __asm__ __volatile__("syscall\n" : "=a" (r) : "0" (r), "D" (clockid), "S" (ts) __LZO_ASM_CLOBBER_LIST_CC_MEMORY);
+    __asm__ __volatile__("syscall\n" : "=a" (r), "=m" (*ts) : "0" (r), "D" (clockid), "S" (ts) __LZO_ASM_CLOBBER_LIST_CC);
     return LZO_ICAST(long, r);
 }
 #endif
-#if 1 && (LZO_OS_POSIX_LINUX && LZO_ARCH_I386 && LZO_ASM_SYNTAX_GNUC) && defined(lzo_int64l_t)
+#if 1 && (LZO_OS_POSIX_LINUX && LZO_ARCH_I386 && LZO_ASM_SYNTAX_GNUC && !LZO_CFG_NO_SYSCALL) && defined(lzo_int64l_t)
 #ifndef lzo_pclock_syscall_clock_gettime
 #define lzo_pclock_syscall_clock_gettime lzo_pclock_syscall_clock_gettime
 #endif
 __lzo_static_noinline long lzo_pclock_syscall_clock_gettime(long clockid, struct timespec *ts)
 {
     unsigned long r = 265;
-    __asm__ __volatile__("pushl %%ebx\n pushl %%edx\n popl %%ebx\n int $0x80\n popl %%ebx\n" : "=a" (r) : "0" (r), "d" (clockid), "c" (ts) __LZO_ASM_CLOBBER_LIST_CC_MEMORY);
+    __asm__ __volatile__("pushl %%ebx\n pushl %%edx\n popl %%ebx\n int $0x80\n popl %%ebx\n": "=a" (r), "=m" (*ts) : "0" (r), "d" (clockid), "c" (ts) __LZO_ASM_CLOBBER_LIST_CC);
     return LZO_ICAST(long, r);
 }
 #endif
@@ -3283,14 +3288,6 @@ LZOLIB_PUBLIC(int, lzo_pclock_flush_cpu_cache) (lzo_pclock_handle_p h, unsigned 
     LZO_UNUSED(h); LZO_UNUSED(flags);
     return -1;
 }
-#if defined(__LZOLIB_PCLOCK_NEED_WARN_POP)
-#  if (LZO_CC_MSC && (_MSC_VER >= 1200))
-#    pragma warning(pop)
-#  else
-#    error "__LZOLIB_PCLOCK_NEED_WARN_POP"
-#  endif
-#  undef __LZOLIB_PCLOCK_NEED_WARN_POP
-#endif
 #endif
 #if defined(LZO_WANT_ACCLIB_MISC)
 #  undef LZO_WANT_ACCLIB_MISC
@@ -3510,11 +3507,6 @@ LZOLIB_PUBLIC(lzo_uint32e_t, lzo_muldiv32u) (lzo_uint32e_t a, lzo_uint32e_t b, l
     return r;
 }
 #endif
-#if 0
-LZOLIB_PUBLIC_NOINLINE(int, lzo_syscall_clock_gettime) (int c)
-{
-}
-#endif
 #if (LZO_OS_WIN16)
 LZO_EXTERN_C void __far __pascal DebugBreak(void);
 #endif
@@ -3642,7 +3634,8 @@ LZO_EXTERN_C int __lzo_cdecl _setargv(void) { return __setargv(); }
 #endif
 #endif
 #if (LZO_OS_WIN32 || LZO_OS_WIN64)
-#if (LZO_CC_INTELC || LZO_CC_MSC)
+#if (LZO_CC_MSC && (_MSC_VER >= 1900))
+#elif (LZO_CC_INTELC || LZO_CC_MSC)
 LZO_EXTERN_C int __lzo_cdecl __setargv(void);
 LZO_EXTERN_C int __lzo_cdecl _setargv(void);
 LZO_EXTERN_C int __lzo_cdecl _setargv(void) { return __setargv(); }

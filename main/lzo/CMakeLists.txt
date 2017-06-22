@@ -1,17 +1,26 @@
 #
-# CMakeLists.txt --- a simple "CMake" file for building LZO
+# CMakeLists.txt --- a "CMake" file for building LZO
 #
 # This file is part of the LZO data compression library.
+#   http://www.oberhumer.com/opensource/lzo/
 #
-# Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+# Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
 # All Rights Reserved.
 #
 
+cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+
 #
-# simple usage:
+# simple usage example (Unix):
 #     mkdir -p build && cd build && cmake .. && make
 #
-# another usage example:
+# simple usage example (Windows MSVC):
+#     md build
+#     cd build
+#     cmake .. -G "NMake Makefiles"
+#     nmake
+#
+# another usage example (Unix):
 #     mkdir -p build/release-i686
 #     cd       build/release-i686
 #     cmake ../.. -DENABLE_STATIC=0 -DENABLE_SHARED=1 \
@@ -23,11 +32,9 @@
 # see http://www.cmake.org/ for more info
 #
 
-#
-# init
-#
-
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
+# /***********************************************************************
+# // init
+# ************************************************************************/
 
 # Disallow in-source builds. Note that you will still have to manually
 # clean up a few files if you accidentally try an in-source build.
@@ -37,50 +44,86 @@ if(",${CMAKE_SOURCE_DIR}," STREQUAL ",${CMAKE_BINARY_DIR},")
     message(FATAL_ERROR "ERROR: In-source builds are not allowed.")
 endif()
 
-project(lzo C)
-
-#
-# configuration options
-#
-
-option(ENABLE_STATIC "Build static LZO library." ON)
-option(ENABLE_SHARED "Build shared LZO library." OFF)
-
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
 endif()
-if(NOT CMAKE_INSTALL_PREFIX)
-    set(CMAKE_INSTALL_PREFIX "/usr/local" CACHE PATH "" FORCE)
+
+project(lzo VERSION 2.10 LANGUAGES C)
+
+# configuration options
+option(ENABLE_STATIC "Build static LZO library." ON)
+option(ENABLE_SHARED "Build shared LZO library." OFF)
+if(NOT ENABLE_STATIC AND NOT ENABLE_SHARED)
+    set(ENABLE_STATIC ON)
+endif()
+if(ENABLE_SHARED AND WIN32)
+    cmake_minimum_required(VERSION 3.4.3 FATAL_ERROR) # needed for WINDOWS_EXPORT_ALL_SYMBOLS
 endif()
 
-#
-# targets
-#
+# install directories
+if(NOT CMAKE_INSTALL_PREFIX)
+    message(FATAL_ERROR "ERROR: CMAKE_INSTALL_PREFIX is not defined.")
+endif()
+include(FindPkgConfig QUIET)
+include(GNUInstallDirs)
+
+# /***********************************************************************
+# // targets
+# ************************************************************************/
 
 file(GLOB lzo_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c")
 list(SORT lzo_SOURCES)
 
 # LZO library
-if(NOT ENABLE_STATIC AND NOT ENABLE_SHARED)
-    set(ENABLE_STATIC ON)
+if(NOT DEFINED lzo_USE_OBJECT_LIB)
+    if(ENABLE_STATIC AND ENABLE_SHARED)
+        if(CMAKE_POSITION_INDEPENDENT_CODE OR MSVC)
+            # all objects are PIC on this system => can share objects
+            set(lzo_USE_OBJECT_LIB 1)
+        endif()
+    endif()
+endif()
+set(lzo_COMPILE_TARGETS )
+if(lzo_USE_OBJECT_LIB)
+    add_library(lzo_object_lib OBJECT ${lzo_SOURCES})
+    list(APPEND lzo_COMPILE_TARGETS lzo_object_lib)
+    set_property(TARGET lzo_object_lib PROPERTY POSITION_INDEPENDENT_CODE ON)
 endif()
 if(ENABLE_STATIC)
-    add_library(lzo_static STATIC ${lzo_SOURCES})
-    set_target_properties(lzo_static PROPERTIES OUTPUT_NAME lzo2)
+    if(lzo_USE_OBJECT_LIB)
+        add_library(lzo_static_lib STATIC $<TARGET_OBJECTS:lzo_object_lib>)
+    else()
+        add_library(lzo_static_lib STATIC ${lzo_SOURCES})
+        list(APPEND lzo_COMPILE_TARGETS lzo_static_lib)
+    endif()
+    set_target_properties(lzo_static_lib PROPERTIES OUTPUT_NAME lzo2)
 endif()
 if(ENABLE_SHARED)
-    add_library(lzo_shared SHARED ${lzo_SOURCES})
-    set_target_properties(lzo_shared PROPERTIES OUTPUT_NAME lzo2)
-    set_target_properties(lzo_shared PROPERTIES SOVERSION 2 VERSION 2.0.0)
+    if(lzo_USE_OBJECT_LIB)
+        add_library(lzo_shared_lib SHARED $<TARGET_OBJECTS:lzo_object_lib>)
+    else()
+        add_library(lzo_shared_lib SHARED ${lzo_SOURCES})
+        list(APPEND lzo_COMPILE_TARGETS lzo_shared_lib)
+    endif()
+    set_target_properties(lzo_shared_lib PROPERTIES OUTPUT_NAME lzo2)
+    if(ENABLE_STATIC)
+        # avoid name clash between static lzo2.lib and DLL import-lib lzo2.lib
+        set_target_properties(lzo_shared_lib PROPERTIES ARCHIVE_OUTPUT_NAME lzo2_dllimport)
+    endif()
+    set_target_properties(lzo_shared_lib PROPERTIES SOVERSION 2 VERSION 2.0.0) # ABI version is 2.0.0 !
+    set_target_properties(lzo_shared_lib PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 endif()
 
 # tests & examples
 macro(lzo_add_executable t)
     add_executable(${t} ${ARGN})
     if(ENABLE_STATIC)
-        target_link_libraries(${t} lzo_static)
+        target_link_libraries(${t} lzo_static_lib)
     else()
-        target_link_libraries(${t} lzo_shared)
+        target_link_libraries(${t} lzo_shared_lib)
+        if(DEFINED CMAKE_INSTALL_FULL_LIBDIR)
+            set_target_properties(${t} PROPERTIES INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}")
+        endif()
     endif()
 endmacro()
 # main test driver
@@ -103,15 +146,16 @@ endif()
 # miniLZO
 if(1)
     add_executable(testmini minilzo/testmini.c minilzo/minilzo.c)
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/lzo) # needed for "lzoconf.h"
+    target_include_directories(testmini PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include/lzo") # needed for "lzoconf.h"
 endif()
 
-#
-# compilation flags
-#
+# /***********************************************************************
+# // compilation flags
+# // this section currently mostly matches the Autoconf version
+# ************************************************************************/
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
 
 include(CheckFunctionExists)
 include(CheckIncludeFile)
@@ -119,6 +163,14 @@ include(CheckLibraryExists)
 include(CheckSymbolExists)
 include(CheckTypeSize)
 include(TestBigEndian)
+
+if(MSVC)
+    # disable silly warnings about using "deprecated" POSIX functions like fopen()
+    add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
+    add_definitions(-D_CRT_NONSTDC_NO_WARNINGS)
+    add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+endif()
 
 # Checks for header files
 macro(mfx_check_include_file f var)
@@ -187,48 +239,76 @@ endif()
 # LZO_HAVE_CONFIG_H
 add_definitions(-DLZO_CFG_NO_CONFIG_HEADER=1)
 
-#
-# "make install"
-#
+# warnings
+foreach(t ${lzo_COMPILE_TARGETS})
+    if(CMAKE_C_COMPILER_ID MATCHES "^(Clang|GNU)$")
+        target_compile_options(${t} PRIVATE -Wall -W -Wcast-qual)
+    endif()
+endforeach()
 
-# these subdirs are relative to CMAKE_INSTALL_PREFIX
-if(NOT DEFINED install_doc_subdir)
-    set(install_doc_subdir "share/doc/lzo")
-endif()
-if(NOT DEFINED install_include_subdir)
-    set(install_include_subdir "include/lzo")
-endif()
-if(NOT DEFINED install_lib_subdir)
-    set(install_lib_subdir "lib")
-endif()
-if(NOT DEFINED install_examples_subdir)
-    set(install_examples_subdir "libexec/lzo/examples")
-endif()
+# /***********************************************************************
+# // "make test"
+# ************************************************************************/
 
-set(doc_DATA AUTHORS COPYING NEWS THANKS doc/LZO.FAQ doc/LZO.TXT doc/LZOAPI.TXT)
-set(pkginclude_HEADERS
-    include/lzo/lzo1.h include/lzo/lzo1a.h include/lzo/lzo1b.h
+include(CTest)
+add_test(NAME simple     COMMAND simple)
+add_test(NAME testmini   COMMAND testmini)
+add_test(NAME lzotest-01 COMMAND lzotest -mlzo   -n2  -q "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
+add_test(NAME lzotest-02 COMMAND lzotest -mavail -n10 -q "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
+add_test(NAME lzotest-03 COMMAND lzotest -mall   -n10 -q "${CMAKE_CURRENT_SOURCE_DIR}/include/lzo/lzodefs.h")
+
+# /***********************************************************************
+# // "make install"
+# ************************************************************************/
+
+if(DEFINED CMAKE_INSTALL_FULL_LIBDIR)
+
+set(f AUTHORS COPYING NEWS THANKS doc/LZO.FAQ doc/LZO.TXT doc/LZOAPI.TXT)
+install(FILES ${f} DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}")
+
+set(f include/lzo/lzo1.h include/lzo/lzo1a.h include/lzo/lzo1b.h
     include/lzo/lzo1c.h include/lzo/lzo1f.h include/lzo/lzo1x.h
     include/lzo/lzo1y.h include/lzo/lzo1z.h include/lzo/lzo2a.h
     include/lzo/lzo_asm.h include/lzo/lzoconf.h include/lzo/lzodefs.h
     include/lzo/lzoutil.h
 )
+install(FILES ${f} DESTINATION "${CMAKE_INSTALL_FULL_INCLUDEDIR}/lzo")
 
-install(FILES ${doc_DATA} DESTINATION "${install_doc_subdir}")
-install(FILES ${pkginclude_HEADERS} DESTINATION "${install_include_subdir}")
 if(ENABLE_STATIC)
-    install(TARGETS lzo_static DESTINATION "${install_lib_subdir}")
+    install(TARGETS lzo_static_lib ARCHIVE DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}")
 endif()
 if(ENABLE_SHARED)
-    install(TARGETS lzo_shared DESTINATION "${install_lib_subdir}")
+    install(TARGETS lzo_shared_lib
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}"
+        LIBRARY DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}"
+        RUNTIME DESTINATION "${CMAKE_INSTALL_FULL_BINDIR}"
+    )
 endif()
-if(0)
-    set(lzo_EXAMPLES lzopack lzotest simple)
-    if(NOT ENABLE_STATIC)
-        set(d "${CMAKE_INSTALL_PREFIX}/${install_lib_subdir}")
-        set_target_properties(${lzo_EXAMPLES} PROPERTIES INSTALL_RPATH "${d}")
-    endif()
-    install(TARGETS ${lzo_EXAMPLES} DESTINATION "${install_examples_subdir}")
+
+if(1)
+    set(f lzopack lzotest simple testmini) # examples
+    install(TARGETS ${f} DESTINATION "${CMAKE_INSTALL_FULL_LIBEXECDIR}/lzo/examples")
+endif()
+
+if(PKG_CONFIG_FOUND)
+    configure_file(lzo2.pc.cmakein lzo2.pc @ONLY)
+    #if(EXISTS "${CMAKE_INSTALL_FULL_LIBDIR}/pkgconfig")
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/lzo2.pc" DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/pkgconfig")
+    #endif()
+endif()
+
+endif() # CMAKE_INSTALL_FULL_LIBDIR
+
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.maint.txt")
+include("${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.maint.txt")
+endif()
+
+# finally print some info about the build-type
+if(CMAKE_CONFIGURATION_TYPES)
+message(STATUS "CMAKE_CONFIGURATION_TYPES = ${CMAKE_CONFIGURATION_TYPES}")
+endif()
+if(CMAKE_BUILD_TYPE)
+message(STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 endif()
 
 # vim:set ft=cmake ts=4 sw=4 tw=0 et:

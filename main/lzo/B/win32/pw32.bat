@@ -1,4 +1,4 @@
-@echo // Copyright (C) 1996-2015 Markus F.X.J. Oberhumer
+@echo // Copyright (C) 1996-2017 Markus F.X.J. Oberhumer
 @echo //
 @echo //   Windows 32-bit
 @echo //   PW32 + gcc

@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -238,6 +238,7 @@ adler32_x_compress      ( const lzo_bytep src, lzo_uint  src_len,
     lzo_uint32_t adler;
     adler = lzo_adler32(0, NULL, 0);
     adler = lzo_adler32(adler, dst, src_len);
+    LZO_UNUSED_RESULT(adler);
     *dst_len = src_len;
     LZO_UNUSED(src); LZO_UNUSED(wrkmem);
     return 0;
@@ -252,6 +253,7 @@ crc32_x_compress        ( const lzo_bytep src, lzo_uint  src_len,
     lzo_uint32_t crc;
     crc = lzo_crc32(0, NULL, 0);
     crc = lzo_crc32(crc, dst, src_len);
+    LZO_UNUSED_RESULT(crc);
     *dst_len = src_len;
     LZO_UNUSED(src); LZO_UNUSED(wrkmem);
     return 0;

@@ -18,8 +18,9 @@
 #  Makefile --- Makefile for building the LZO library
 #
 #  This file is part of the LZO data compression library.
+#    http://www.oberhumer.com/opensource/lzo/
 #
-#  Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+#  Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
 #  All Rights Reserved.
 #
 
@@ -119,7 +120,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(SHELL) $(top_srcdir)/autoconf/mkinstalldirs
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = lzo2.pc
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -149,7 +150,7 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(docdir)" \
-	"$(DESTDIR)$(pkgincludedir)"
+	"$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(pkgincludedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 src_liblzo2_la_DEPENDENCIES = $(LZO_ASM_OBJECTS)
 am__dirstamp = $(am__leading_dot)dirstamp
@@ -298,7 +299,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-DATA = $(doc_DATA)
+DATA = $(doc_DATA) $(pkgconfig_DATA)
 HEADERS = $(pkginclude_HEADERS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) \
 	$(LISP)config.hin
@@ -323,7 +324,8 @@ CTAGS = ctags
 CSCOPE = cscope
 AM_RECURSIVE_TARGETS = cscope
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/config.hin \
-	$(top_srcdir)/autoconf/ar-lib $(top_srcdir)/autoconf/compile \
+	$(srcdir)/lzo2.pc.in $(top_srcdir)/autoconf/ar-lib \
+	$(top_srcdir)/autoconf/compile \
 	$(top_srcdir)/autoconf/config.guess \
 	$(top_srcdir)/autoconf/config.sub \
 	$(top_srcdir)/autoconf/depcomp \
@@ -460,6 +462,7 @@ mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
+pkgconfigdir = @pkgconfigdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
@@ -475,23 +478,25 @@ target_vendor = @target_vendor@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-EXTRA_DIST = BUGS CMakeLists.txt autoconf/shtool src/compr1b.h \
-	src/compr1c.h src/config1.h src/config1a.h src/config1b.h \
-	src/config1c.h src/config1f.h src/config1x.h src/config1y.h \
-	src/config1z.h src/config2a.h src/lzo1_cm.ch src/lzo1_d.ch \
-	src/lzo1a_cm.ch src/lzo1a_cr.ch src/lzo1a_de.h src/lzo1b_c.ch \
-	src/lzo1b_cc.h src/lzo1b_cm.ch src/lzo1b_cr.ch src/lzo1b_d.ch \
-	src/lzo1b_de.h src/lzo1b_r.ch src/lzo1b_sm.ch src/lzo1b_tm.ch \
-	src/lzo1c_cc.h src/lzo1f_d.ch src/lzo1x_c.ch src/lzo1x_d.ch \
-	src/lzo1x_oo.ch src/lzo2a_d.ch src/lzo_conf.h src/lzo_dict.h \
-	src/lzo_dll.ch src/lzo_func.h src/lzo_mchw.ch src/lzo_ptr.h \
-	src/lzo_supp.h src/lzo_swd.ch src/stats1a.h src/stats1b.h \
-	src/stats1c.h examples/portab.h examples/portab_a.h \
-	lzotest/asm.h lzotest/db.h lzotest/wrap.h lzotest/wrapmisc.h \
-	minilzo/Makefile.minilzo minilzo/README.LZO minilzo/minilzo.h
+EXTRA_DIST = BUGS CMakeLists.txt lzo2.pc.cmakein autoconf/shtool \
+	src/compr1b.h src/compr1c.h src/config1.h src/config1a.h \
+	src/config1b.h src/config1c.h src/config1f.h src/config1x.h \
+	src/config1y.h src/config1z.h src/config2a.h src/lzo1_cm.ch \
+	src/lzo1_d.ch src/lzo1a_cm.ch src/lzo1a_cr.ch src/lzo1a_de.h \
+	src/lzo1b_c.ch src/lzo1b_cc.h src/lzo1b_cm.ch src/lzo1b_cr.ch \
+	src/lzo1b_d.ch src/lzo1b_de.h src/lzo1b_r.ch src/lzo1b_sm.ch \
+	src/lzo1b_tm.ch src/lzo1c_cc.h src/lzo1f_d.ch src/lzo1x_c.ch \
+	src/lzo1x_d.ch src/lzo1x_oo.ch src/lzo2a_d.ch src/lzo_conf.h \
+	src/lzo_dict.h src/lzo_dll.ch src/lzo_func.h src/lzo_mchw.ch \
+	src/lzo_ptr.h src/lzo_supp.h src/lzo_swd.ch src/stats1a.h \
+	src/stats1b.h src/stats1c.h examples/portab.h \
+	examples/portab_a.h lzotest/asm.h lzotest/db.h lzotest/wrap.h \
+	lzotest/wrapmisc.h minilzo/Makefile.minilzo minilzo/README.LZO \
+	minilzo/minilzo.h
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)
 LDADD = src/liblzo2.la
 lib_LTLIBRARIES = src/liblzo2.la
+pkgconfig_DATA = lzo2.pc
 doc_DATA = AUTHORS COPYING NEWS THANKS doc/LZO.FAQ doc/LZO.TXT doc/LZOAPI.TXT
 pkginclude_HEADERS = \
     include/lzo/lzo1.h include/lzo/lzo1a.h include/lzo/lzo1b.h \
@@ -610,6 +615,8 @@ $(srcdir)/config.hin: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f config.h stamp-h1
+lzo2.pc: $(top_builddir)/config.status $(srcdir)/lzo2.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 install-libLTLIBRARIES: $(lib_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
@@ -1059,6 +1066,27 @@ uninstall-docDATA:
 	@list='$(doc_DATA)'; test -n "$(docdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(docdir)'; $(am__uninstall_files_from_dir)
+install-pkgconfigDATA: $(pkgconfig_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(pkgconfig_DATA)'; test -n "$(pkgconfigdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(pkgconfigdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(pkgconfigdir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(pkgconfigdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(pkgconfigdir)" || exit $$?; \
+	done
+
+uninstall-pkgconfigDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(pkgconfig_DATA)'; test -n "$(pkgconfigdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(pkgconfigdir)'; $(am__uninstall_files_from_dir)
 install-pkgincludeHEADERS: $(pkginclude_HEADERS)
 	@$(NORMAL_INSTALL)
 	@list='$(pkginclude_HEADERS)'; test -n "$(pkgincludedir)" || list=; \
@@ -1312,7 +1340,7 @@ check: check-am
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(DATA) $(HEADERS) \
 		config.h
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(docdir)" "$(DESTDIR)$(pkgincludedir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(docdir)" "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(pkgincludedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -1381,7 +1409,8 @@ info: info-am
 
 info-am:
 
-install-data-am: install-docDATA install-pkgincludeHEADERS
+install-data-am: install-docDATA install-pkgconfigDATA \
+	install-pkgincludeHEADERS
 
 install-dvi: install-dvi-am
 
@@ -1430,7 +1459,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-docDATA uninstall-libLTLIBRARIES \
-	uninstall-pkgincludeHEADERS
+	uninstall-pkgconfigDATA uninstall-pkgincludeHEADERS
 
 .MAKE: all check-am install-am install-strip
 
@@ -1447,13 +1476,13 @@ uninstall-am: uninstall-docDATA uninstall-libLTLIBRARIES \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am \
 	install-libLTLIBRARIES install-man install-pdf install-pdf-am \
-	install-pkgincludeHEADERS install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags tags-am uninstall uninstall-am \
-	uninstall-docDATA uninstall-libLTLIBRARIES \
-	uninstall-pkgincludeHEADERS
+	install-pkgconfigDATA install-pkgincludeHEADERS install-ps \
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
+	uninstall-am uninstall-docDATA uninstall-libLTLIBRARIES \
+	uninstall-pkgconfigDATA uninstall-pkgincludeHEADERS
 
 .PRECIOUS: Makefile
 
@@ -1461,30 +1490,30 @@ uninstall-am: uninstall-docDATA uninstall-libLTLIBRARIES \
 # hooks for Automake targets
 dist-hook: dist-hook-1
 dist-hook-1:
-	cp -pR $(srcdir)/B/ $(srcdir)/asm/ $(srcdir)/doc/ $(srcdir)/util/ "$(distdir)/"
+	cp -pR '$(srcdir)/B/' '$(srcdir)/asm/' '$(srcdir)/doc/' '$(srcdir)/util/' '$(distdir)/'
 	-rm -f $(distdir)/util/*.dat
 
 check-local: all-am
-	./lzotest/lzotest -mlzo -n2 -q $(top_srcdir)/COPYING
+	./lzotest/lzotest$(EXEEXT) -mlzo -n2 -q '$(top_srcdir)/COPYING'
 	@echo
 	@echo "===== All checks passed. Type 'make test' for more exhaustive testing. ====="
 	@echo
 
 # special targets
 basic-test: all
-	./lzotest/lzotest -mlzo -n2 -q $(top_srcdir)/COPYING
-	./tests/align
-	./tests/chksum
-	./examples/simple
-	./minilzo/testmini
+	./lzotest/lzotest$(EXEEXT) -mlzo -n2 -q '$(top_srcdir)/COPYING'
+	./tests/align$(EXEEXT)
+	./tests/chksum$(EXEEXT)
+	./examples/simple$(EXEEXT)
+	./minilzo/testmini$(EXEEXT)
 
 test: all
-	./lzotest/lzotest -mavail -n10 -q $(top_srcdir)/COPYING
-	LZOTEST=./lzotest/lzotest$(EXEEXT) $(SHELL) -e "$(top_srcdir)/util/check.sh" "$(top_srcdir)"
-	./tests/align
-	./tests/chksum
-	./examples/simple
-	./minilzo/testmini
+	./lzotest/lzotest$(EXEEXT) -mavail -n10 -q '$(top_srcdir)/COPYING'
+	LZOTEST=./lzotest/lzotest$(EXEEXT) $(SHELL) '$(top_srcdir)/util/check.sh' '$(top_srcdir)'
+	./tests/align$(EXEEXT)
+	./tests/chksum$(EXEEXT)
+	./examples/simple$(EXEEXT)
+	./minilzo/testmini$(EXEEXT)
 	@echo
 	@echo "===== All tests passed. Now you are ready to install LZO. ====="
 	@echo

@@ -2,7 +2,7 @@
 ;
 ;  This file is part of the LZO real-time data compression library.
 ;
-;  Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+;  Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
 ;  All Rights Reserved.
 ;
 ;  The LZO library is free software; you can redistribute it and/or
@@ -49,10 +49,18 @@ bits 32
 %endif
 
 %ifndef NAME1
-%ifidni __OUTPUT_FORMAT__,macho32
+%ifidni __OUTPUT_FORMAT__,elf32
+%define NAME1(a)             a
+%elifidni __OUTPUT_FORMAT__,elf64
+%define NAME1(a)             a
+%elifidni __OUTPUT_FORMAT__,macho32
 %define NAME1(a)        _ %+ a
 %elifidni __OUTPUT_FORMAT__,macho64
 %define NAME1(a)        _ %+ a
+%elifidni __OUTPUT_FORMAT__,win32
+%define NAME1(a)        _ %+ a
+%elifidni __OUTPUT_FORMAT__,win64
+%define NAME1(a)             a
 %else
 %define NAME1(a)        _ %+ a
 %define NAME2(a)             a

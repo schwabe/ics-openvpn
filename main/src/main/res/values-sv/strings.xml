@@ -252,6 +252,7 @@
   <string name="state_tcp_connect">Ansluter (TCP)</string>
   <string name="state_auth_failed">Autentisering misslyckades</string>
   <string name="state_nonetwork">Väntar på användbart nätverk</string>
+  <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
   <string name="notifcation_title_notconnect">Inte ansluten</string>
   <string name="start_vpn_title">Ansluter till VPN %s</string>
   <string name="start_vpn_ticker">Ansluter till VPN %s</string>
@@ -409,6 +410,7 @@
   <string name="novpn_selected">Ingen VPN-anslutning vald.</string>
   <string name="defaultvpn">Förvald VPN</string>
   <string name="defaultvpnsummary">VPN används på platser där en förvald VPN behövs. Dessa är för närvarande vid uppstart, för Always-On och Quick Settings Tile.</string>
+  <string name="vpnselected">För närvarande vald VPN: \'%s\'</string>
   <string name="reconnect">Återansluta</string>
   <string name="qs_title">Omkoppla VPN</string>
   <string name="qs_connect">Anslut till %s</string>
@@ -432,4 +434,12 @@
   <string name="last5minutes">Senaste 5 minuter</string>
   <string name="data_in">In</string>
   <string name="data_out">Ut</string>
+  <string name="bits_per_second">%.0f bit/s</string>
+  <string name="kbits_per_second">%.1f kbit/s</string>
+  <string name="mbits_per_second">%.1f Mbit/s</string>
+  <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="volume_byte">%.0f B</string>
+  <string name="volume_kbyte">%.1f kB</string>
+  <string name="volume_mbyte">%.1f MB</string>
+  <string name="volume_gbyte">%.1f GB</string>
 </resources>

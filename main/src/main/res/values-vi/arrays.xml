@@ -22,4 +22,9 @@
     <item>Không xác định</item>
     <item>Mã hóa (tls-crypt)</item>
   </string-array>
+  <string-array name="auth_retry_type">
+    <item>Ngắt kết nối, không lưu mật khẩu</item>
+    <item>Ngắt kết nối, giữ mật khẩu</item>
+    <item>Bỏ qua, thử lại</item>
+  </string-array>
 </resources>

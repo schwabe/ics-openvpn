@@ -8,7 +8,7 @@
   <!--  Keep the order the same as the TYPE_ constants in VPNProfile -->
   <string-array name="vpn_types">
     <item>Certificate</item>
-    <item>fişier PKCS12</item>
+    <item>Fişier PKCS12</item>
     <item>Certificat Android</item>
     <item>Utilizator/Parola</item>
     <item>Chei statice</item>

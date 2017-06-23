@@ -22,4 +22,9 @@
     <item>Nedoločeno</item>
     <item>Šifriranje (tls-crypt)</item>
   </string-array>
+  <string-array name="auth_retry_type">
+    <item>Prekini povezavo, pozabi geslo</item>
+    <item>Prekini povezavo, shrani geslo</item>
+    <item>Prezri, poskusi znova</item>
+  </string-array>
 </resources>

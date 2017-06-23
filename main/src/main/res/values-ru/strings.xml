@@ -410,6 +410,7 @@
   <string name="novpn_selected">Не выбрано VPN.</string>
   <string name="defaultvpn">VPN по умолчанию</string>
   <string name="defaultvpnsummary">VPN, который будет использоваться по умолчанию, когда это необходимо. А именно, при загрузке, для «Постоянной VPN» и для переключателя в «Быстрых настройках».</string>
+  <string name="vpnselected">В настоящее время выбран VPN: \'%s\'</string>
   <string name="reconnect">Переподключить</string>
   <string name="qs_title">Переключение VPN</string>
   <string name="qs_connect">Подключиться к %s</string>
@@ -426,10 +427,13 @@
   <string name="deprecated_tls_remote">Файл настройки использует опцию tls-remote, которая была объявлена устаревшей в версии 2.3 и окончательно удалена в версии 2.4</string>
   <string name="auth_failed_behaviour">Поведение при AUTH_FAILED</string>
   <string name="graph">График</string>
+  <string name="use_logarithmic_scale">Использовать логарифмическую шкалу</string>
   <string name="notenoughdata">Недостаточно данных</string>
   <string name="avghour">В среднем за час</string>
   <string name="avgmin">В среднем за минуту</string>
   <string name="last5minutes">Последние 5 минут</string>
+  <string name="data_in">Входящий</string>
+  <string name="data_out">Исходящий</string>
   <string name="bits_per_second">%.0f бит/с</string>
   <string name="kbits_per_second">%.1f Кбит/с</string>
   <string name="mbits_per_second">%.1f Мбит/с</string>

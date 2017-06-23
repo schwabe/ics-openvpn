@@ -448,6 +448,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="samsung_broken_title">サムスン製の機種</string>
   <string name="novpn_selected">VPNが選択されていません</string>
   <string name="defaultvpn">既定のVPN</string>
+  <string name="defaultvpnsummary">既定のVPNが必要な場面で使用されます。現在のところ、起動時、常時接続、クイック設定タイルで使用されます。</string>
   <string name="vpnselected">現在選択されているVPN： \'%s\'</string>
   <string name="reconnect">再接続</string>
   <string name="qs_title">VPNを切り替える</string>
@@ -463,11 +464,15 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="sorted_lru">プロファイルを最近使った順に並べ替えました</string>
   <string name="sorted_az">プロファイルを名前順に並べ替えました</string>
   <string name="deprecated_tls_remote">設定はtls-remoteを使用しています(2.3で非推奨、2.4で削除されました)</string>
+  <string name="auth_failed_behaviour">認証失敗時の挙動</string>
+  <string name="graph">グラフ</string>
   <string name="use_logarithmic_scale">対数スケールを使用する</string>
   <string name="notenoughdata">データが不十分です</string>
   <string name="avghour">毎時間平均</string>
   <string name="avgmin">毎分平均</string>
   <string name="last5minutes">過去5分間</string>
+  <string name="data_in">In</string>
+  <string name="data_out">Out</string>
   <string name="bits_per_second">%.0f bit/s</string>
   <string name="kbits_per_second">%.1f kbit/s</string>
   <string name="mbits_per_second">%.1f Mbit/s</string>

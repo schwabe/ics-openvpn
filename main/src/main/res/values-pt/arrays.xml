@@ -20,6 +20,11 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>Não especificado</item>
-    <item>Encryption (--tls-crypt)</item>
+    <item>Criptografia (--tls-crypt)</item>
+  </string-array>
+  <string-array name="auth_retry_type">
+    <item>Disconnect, forget password</item>
+    <item>Disconnect, keep password</item>
+    <item>Ignore, retry</item>
   </string-array>
 </resources>

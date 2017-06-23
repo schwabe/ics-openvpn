@@ -164,6 +164,7 @@
   <string name="private_key_password">Contraseña de clave privada</string>
   <string name="password">Contraseña</string>
   <string name="file_icon">icono de archivo</string>
+  <string name="tls_authentication">TLS autenticación/cifrado</string>
   <string name="generated_config">Configuración generada</string>
   <string name="generalsettings">Preferencias</string>
   <string name="owner_fix_summary">Intenta establecer el propietario de /dev/tun a system. Algunas imágenes de CM9 lo necesitan hacer funcionar la API de VPNService. Requiere permisos root.</string>

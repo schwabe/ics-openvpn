@@ -288,10 +288,12 @@
   <string name="resumevpn">Reluare VPN</string>
   <string name="state_userpause">Întrerupere VPN solicitată de utilizator</string>
   <string name="state_screenoff">VPN întrerupt - ecran stins</string>
+  <string name="device_specific">Trucuri specifice dispozitivului</string>
   <string name="cannotparsecert">Nu se pot afișa informații privind certificatul</string>
   <string name="appbehaviour">Comportamentul aplicației</string>
   <string name="vpnbehaviour">Comportamentul VPN</string>
   <string name="allow_vpn_changes">Permite modificări la Profilurile VPN</string>
+  <string name="hwkeychain">Hardware Keystore:</string>
   <string name="permission_icon_app">Iconița aplicației care încearcă să utilizeze OpenVPN pentru Android</string>
   <string name="faq_vpndialog43">"Începând cu versiunea Android 4.3, confirmarea VPN este protejată împotriva \"suprapunerii aplicațiilor\", și din acest motiv căsuța de dialog nu răspunde la atingere. Dacă aveți o aplicație care folosește suprapuneri, aceasta poate cauza acest comportament și contactați autorul acelei aplicații. Această problemă afectează toate aplicațiile VPN pe Android 4.3 și versiuni ulterioare. A se vedea, de asemenea, &lt;a href=\"https://github.com/schwabe/ics-openvpn/issues/185\"&gt;Issue 185&lt;a&gt; pentru detalii suplimentare"</string>
   <string name="faq_vpndialog43_title">Dialog de Confirmare VPN</string>
@@ -323,6 +325,8 @@
   <string name="mssfix_invalid_value">Valoarea de suprascriere MSS trebuie să fie un număr întreg între 0 și 9000</string>
   <string name="mtu_invalid_value">Valoarea suprascrierii MTU trebuie să fie un număr întreg între 64 și 9000</string>
   <string name="mssfix_value_dialog">Anunțați sesiunile TCP care rulează prin tunel că ar trebui să limiteze dimensiunile pachetelor de trimitere astfel încât, după ce OpenVPN le-a încapsulat, dimensiunea pachetului UDP rezultat pe care OpenVPN o trimite la partenerii săi nu va depăși acest număr de biți. (Implicit este 1450)</string>
+  <string name="mssfix_checkbox">Suprascrie valoarea MSS a datelor utile TCP</string>
+  <string name="mssfix_dialogtitle">Setați MSS a datelor utile TCP</string>
   <string name="client_behaviour">Comportamentul clientului</string>
   <string name="clear_external_apps">Ștergeți aplicațiile externe permise</string>
   <string name="loading">Se încarcă&#8230;</string>
@@ -340,7 +344,9 @@
   <string name="server_list">Listă de Servere</string>
   <string name="vpn_allowed_apps">Aplicații Permise</string>
   <string name="advanced_settings">Setări Avansate</string>
+  <string name="payload_options">Opțiuni de încărcare</string>
   <string name="tls_settings">Setări TLS</string>
+  <string name="no_remote_defined">Nici o sursă la distanţă definită</string>
   <string name="duplicate_vpn">Profil VPN duplicat</string>
   <string name="duplicate_profile_title">Duplicând profilul: %s</string>
   <string name="show_log">Arată jurnal</string>
@@ -350,9 +356,13 @@
   <string name="ab_only_cidr">Android acceptă doar rute CIDR către VPN. Din moment ce rutele non-CIDR nu sunt aproape niciodată folosite, OpenVPN pentru Android va folosi o /32 pentru rute care nu sunt CIDR și emite un avertisment.</string>
   <string name="ab_tethering_44">Funcția tethering funcționează în timp ce VPN-ul este activ. Conexiunea legată NU va utiliza VPN-ul.</string>
   <string name="ab_kitkat_mss">Primele versiuni KitKat setao o valoare MSS greșită pe conexiunile TCP (#61948). Încercați să activați opțiunea mssfix pentru a rezolva această eroare.</string>
+  <string name="ab_proxy">Android va continua să utilizeze setările proxy specificate pentru conexiunea mobilă/Wi-Fi atunci când nu sunt setate servere DNS. OpenVPN pentru Android vă va avertiza despre acest lucru în fișierul log.<p>Când VPN stabilește un server DNS, Android nu va utiliza un proxy. Nu există niciun API pentru a seta un proxy pentru o conexiune VPN.</p></string>
   <string name="ab_lollipop_reinstall">Aplicațiile VPN pot să nu mai funcționeze când sunt dezinstalate și reinstalate din nou. Pentru detalii, a se vedea #80074</string>
+  <string name="ab_not_route_to_vpn">IP-ul client configurat și IP-urile din masca sa de rețea nu sunt direcționate către VPN. OpenVPN funcționează în jurul acestui bug prin adăugarea explicită a unui traseu care corespunde IP-ului client și netmask-ului său</string>
   <string name="ab_persist_tun">Deschiderea unui dispozitiv tun în timp ce un alt dispozitiv tun este activ, care este utilizat pentru suportul tun persistent, blochează serviciile VPN de pe dispozitiv. Este necesară o repornire pentru ca VPN să funcționeze din nou. OpenVPN pentru Android încearcă să evite redeschiderea dispozitivului tun și, dacă este necesar, mai întâi închide TUN-ul curent înainte de a deschide noul dispozitiv TUN pentru a evita accidentarea. Acest lucru poate duce la o fereastră scurtă în care pachetele sunt trimise prin conexiunea non-VPN. Chiar și cu această soluție, VPNServices se blochează uneori și necesită repornirea dispozitivului.</string>
+  <string name="ab_secondary_users">VPN nu funcționează deloc pentru utilizatorii secundari.</string>
   <string name="ab_kitkat_reconnect">"Mai mulți utilizatori raportează că conexiunea mobilă/conexiunea de date mobilă se deconectează des în timp ce utilizați aplicația VPN. Comportamentul pare să afecteze numai o combinație de furnizori/dispozitive mobile și până în prezent nu a putut fi identificată nici o cauză/soluție pentru acest bug."</string>
+  <string name="ab_vpn_reachability_44">Numai destinația poate fi atinsă prin VPN care poate fi accesată fără VPN. Porturile IPv6 VPN nu funcționează deloc.</string>
   <string name="ab_only_cidr_title">Rute non-CIDR</string>
   <string name="ab_proxy_title">Comportamentul proxy pentru VPN-uri</string>
   <string name="ab_lollipop_reinstall_title">Reinstalarea aplicațiilor VPN</string>
@@ -360,6 +370,8 @@
   <string name="copy_of_profile">Copie a %s</string>
   <string name="ab_not_route_to_vpn_title">Rutează prin adresa IP configurată</string>
   <string name="ab_kitkat_mss_title">Valoare MSS greșită pentru conexiunea VPN</string>
+  <string name="ab_secondary_users_title">Utilizatori de tablete secundari</string>
+  <string name="custom_connection_options_warng">Specificați opțiunile specifice conexiunii personalizate. Folosiți cu grijă</string>
   <string name="custom_connection_options">Opţiunile Particularizate</string>
   <string name="remove_connection_entry">Ștergeți conexiunea</string>
   <string name="ab_kitkat_reconnect_title">Se deconectează aleatoriu de la rețeaua mobilă</string>
@@ -368,6 +380,7 @@
   <string name="version_and_later">%s şi mai târziu</string>
   <string name="tls_cipher_alert_title">Conexiunile eșuează cu SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure</string>
   <string name="tls_cipher_alert">Noile versiuni OpenVPN pentru Android (0.6.29 / martie 2015) utilizează o setare implicită mai sigură pentru suitele de cifruri permise (codul \"DEFAULT:!EXP:!PSK:!SRP:!KRSA\"). Din nefericire, omiterea suitelor de cifruri mai puțin sigure și a suitelor de cifruri de export, în special omiterea suitelor de cifru care nu acceptă Perfect Forward Secrecy (Diffie-Hellman) crează unele probleme. Acest lucru este cauzat, de obicei, de o încercare bine intenționată, dar prost executată, de a consolida securitatea TLS prin setarea tls-cipher pe server sau pe anumite sisteme embedded cu SSL (de ex. MikroTik).\nPentru a rezolva această problemă, setați tls-chipher settings de pe server la implicit ca TLS-cipher \"DEFAULT:!EXP:!PSK:!SRP:!KRSA\". Pentru a rezolva problema pe client, adăugați opțiunea personalizată tls-cipher DEFAULT pe clientul Android.</string>
+  <string name="message_no_user_edit">Acest profil a fost adăugat dintr-o aplicație externă (%s) și a fost marcat ca nemodificabil de utilizator.</string>
   <string name="crl_file">Lista de revocare a certificatelor</string>
   <string name="service_restarted">Repornirea serviciului OpenVPN (aplicația s-a blocat probabil a blocat sau terminat pentru presiunea de memorie)</string>
   <string name="import_config_error">Importarea configurației a dat o eroare, nu se poate salva</string>
@@ -376,6 +389,7 @@
   <string name="clear_log_on_connect">Ştergeți log-uri la conexiune nouă</string>
   <string name="connect_timeout">Timp de expirare a conexiunii</string>
   <string name="no_allowed_app">Nu a fost adăugată nicio aplicație permisă. Adăugându-ne (%s) să aibă cel puțin o aplicație în lista de aplicații permise pentru a nu permite tuturor aplicațiilor</string>
+  <string name="query_permissions_sdcard">OpenVPN pentru Android poate încerca să găsească automat fișierele lipsă pe cardul sdcard. Apăsați acest mesaj să porniți cererea de permisiune.</string>
   <string name="protocol">Protocol</string>
   <string name="enabled_connection_entry">Activat</string>
   <string name="abi_mismatch">Precedența ABI-ului nativ preferat a acestui dispozitiv (%1$s) și ABI-ul raportat de bibliotecile native (%2$s) diferă</string>

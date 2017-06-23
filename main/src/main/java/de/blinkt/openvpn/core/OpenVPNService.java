@@ -236,9 +236,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             lpNotificationExtras(nbuilder);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //noinspection NewApi
             nbuilder.setChannelId(channel);
             if (mProfile != null)
-                nbuilder.setShortcutId(mProfile.getUUIDString());
+             //noinspection NewApi
+            nbuilder.setShortcutId(mProfile.getUUIDString());
 
         }
 
@@ -695,8 +697,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         VpnStatus.logInfo(R.string.last_openvpn_tun_config);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mProfile.mAllowLocalLAN) {
-            //allowAllAFFamilies(builder);
-            //Never allow other than IPv4 for PIA
+            allowAllAFFamilies(builder);
         }
 
         if (mLocalIP == null && mLocalIPv6 == null) {

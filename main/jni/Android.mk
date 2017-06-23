@@ -60,7 +60,7 @@ include $(BUILD_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 LOCAL_LDLIBS := -llog  -lz
 LOCAL_CFLAGS = 
-LOCAL_C_INCLUDES := openssl/include openssl/crypto openssl
+LOCAL_C_INCLUDES := openssl/include openssl/crypto openssl openssl/crypto/include
 LOCAL_SRC_FILES:=  jbcrypto.cpp
 LOCAL_MODULE = jbcrypto
 LOCAL_SHARED_LIBRARIES :=  libcrypto

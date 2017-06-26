@@ -152,6 +152,7 @@ public class OpenVPNThread implements Runnable {
 
                 Pattern p = Pattern.compile("(\\d+).(\\d+) ([0-9a-f])+ (.*)");
                 Matcher m = p.matcher(logline);
+                int logerror = 0;
                 if (m.matches()) {
                     int flags = Integer.parseInt(m.group(3), 16);
                     String msg = m.group(4);
@@ -171,8 +172,13 @@ public class OpenVPNThread implements Runnable {
                     if (msg.startsWith("MANAGEMENT: CMD"))
                         logLevel = Math.max(4, logLevel);
 
+                    if ((msg.endsWith("md too weak") && msg.startsWith("OpenSSL: error")) || msg.contains("error:140AB18E"))
+                        logerror = 1;
 
                     VpnStatus.logMessageOpenVPN(logStatus, logLevel, msg);
+                    if (logerror==1)
+                        VpnStatus.logError("OpenSSL reproted a certificate with a weak hash, please the in app FAQ about weak hashes");
+
                 } else {
                     VpnStatus.logInfo("P:" + logline);
                 }

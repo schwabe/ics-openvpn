@@ -76,7 +76,8 @@ public class FaqViewAdapter extends RecyclerView.Adapter<FaqViewAdapter.FaqViewH
                 mHtmlEntriesTitle[i] = Html.fromHtml(title);
             }
 
-            mHtmlEntries[i] = Html.fromHtml(textColor + mContext.getString(faqItems[i].description));
+            String content = mContext.getString(faqItems[i].description);
+            mHtmlEntries[i] = Html.fromHtml(textColor + content);
 
             // Add hack R.string.faq_system_dialogs_title -> R.string.faq_system_dialog_xposed
             if (faqItems[i].title == R.string.faq_system_dialogs_title)

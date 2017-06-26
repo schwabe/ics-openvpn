@@ -7,6 +7,14 @@
             <p>Get a working config (tested on your computer or download from your provider/organisation)</p><p>If it is a single file with no extra pem/pkcs12 files you can email the file yourself and open the attachment. If you have multiple files put them on your sd card.</p><p>Click on the email attachment/Use the folder icon in the vpn list to import the config file</p><p>If there are errors about missing files put the missing files on your sd card.</p><p>Click on the save symbol to add the imported VPN to your VPN list</p><p>Connect the VPN by clicking on the name of the VPN</p><p>If there are error or warnings in the log try to understand the warnings/error and try to fix them</p> 
 
             <h2>
+            <a name="weakmd_title"></a>
+            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            <a href="#weakmd_title" class="section_anchor"> </a>
+            </h2>
+            
+            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+
+            <h2>
             <a name="samsung_broken_title"></a>
             Samsung phones
             <a href="#samsung_broken_title" class="section_anchor"> </a>
@@ -36,7 +44,7 @@
             Reinstalling VPN apps
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
             VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
 
@@ -45,7 +53,7 @@
             VPN and Tethering
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
 
             The Android Tethering feature (over WiFi, USB or Bluetooth) and the VPNService API (used by this program) do not work together. For more details see the <a href="https://github.com/schwabe/ics-openvpn/issues/34">issue #34</a>
@@ -55,7 +63,7 @@
             Ødelagte bilder
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
 
@@ -71,7 +79,7 @@
 
             <h2>
             <a name="faq_system_dialogs_title"></a>
-            Connection warning and notification sound
+            Tilkoblingsvarsel og varslingslyd
             <a href="#faq_system_dialogs_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) and earlier</i></small> <br/>
@@ -84,7 +92,7 @@
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            Tap Mode is not possible with the non root VPN API. Therefore this application cannot provide tap support
+            Tap-modus er ikke mulig med ikke-root APN API. Denne appen kan derfor ikke bidra med tap-støtte
 
             <h2>
             <a name="ab_secondary_users_title"></a>
@@ -119,7 +127,7 @@
             <a href="#faq_security_title" class="section_anchor"> </a>
             </h2>
             
-            "As OpenVPN is security sensitive a few notes about security are sensible. All data on the sdcard is inherently insecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the VPN profile. The VPN profiles are only accessible by this application. (Do not forget to delete the copies on the sd card afterwards). Even though accessible only by this application the data is still unencrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."
+            "Som OpenVPN er sikkerhetsfølsomt, er noen få notater om sikkerhet fornuftig. Alle data på SD-kortet er iboende usikre. Hvert program kan lese det (for eksempel krever dette programmet ingen spesielle SD-kortrettigheter). Dataene i denne applikasjonen kan bare leses Ved bruk av importalternativet for cacert/cert/nøkkel i fildialogen lagres dataene i VPN-profilen. VPN-profilene er bare tilgjengelige for dette programmet. (Ikke glem å slette kopier på SD Kort etterpå). Selv om det kun er tilgjengelig med denne applikasjonen, er dataene fortsatt ukrypterte. Ved å rote telefonen eller andre utnytelser kan det hende at dataene kan hentes. Lagrede passord lagres også i vanlig tekst. For pkcs12-filer anbefales det sterkt At du importerer dem inn i android-nøkkelbutikken. "
 
             <h2>
             <a name="faq_shortcut"></a>
@@ -127,7 +135,7 @@
             <a href="#faq_shortcut" class="section_anchor"> </a>
             </h2>
             
-            You can place a shortcut to start OpenVPN on your desktop. Depending on your homescreen program you will have to add either a shortcut or a widget.
+            Du kan legge inn en snarvei for å starte OpenVPN på skrivebordet. Avhengig av ditt startskjermprogram må du legge til enten en snarvei eller en widget.
 
             <h2>
             <a name="tap_mode"></a>
@@ -135,7 +143,7 @@
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            Again? Are you kidding? No, tap mode is really not supported and sending more mail asking if it will be supported will not help.
+            Igjen? Tuller du? Nei, Tap-modus støttes ikke. Flere e-poster med forespørsler om det vil bli støtte vil heller ikke hjelpe.
 
             <h2>
             <a name="vpn_tethering_title"></a>
@@ -237,6 +245,6 @@
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            A third time? Actually, one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would also have to implement ARP and possibly a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.
+            En tredje gang? Egentlig så kan man skrive en taå-emulator basert på tun-grensesnittet som ville gitt layer2-informasjon ved sending og fjernet layer2-informasjon ved mottakelse. Men, denne tap-emulatoren ville også måtte ha implementert ARP og muligens en DHSP-klient. Som utvikler er jeg ikke kjent med at noen arbeider med noe i denne retningen. Ta kontakt med meg dersom du ønsker å programmere dette.
 
             

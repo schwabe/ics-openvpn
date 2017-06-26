@@ -7,6 +7,14 @@
             <p>Ottieni una configurazione funzionante (testata sul tuo computer o fornita dal tuo provider o dalla tua ditta).</p><p>Se si tratta di un singolo file senza ulteriori file tipo pem/pkcs12, puoi spedire il file a te stesso via email ed aprire l'allegato. Se hai più file, salvali sulla scheda SD.</p><p>Clicca sull'allegato dell'email oppure utilizza l'icona della cartella nell'elenco delle VPN per importare il file di configurazione.</p><p>Se compaiono degli errori relativi a file non trovati, copia i file mancanti sulla tua scheda SD.</p><p>Clicca sull'icona di salvataggio per aggiungere la VPN importata nell'elenco delle tue VPN.</p><p>Connettiti alla VPN cliccando sul nome della VPN.</p><p>Se compaiono degli errori o degli avvertimenti nei log, si consiglia di non ignorarli, ma di cercare delle soluzioni.</p> 
 
             <h2>
+            <a name="weakmd_title"></a>
+            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            <a href="#weakmd_title" class="section_anchor"> </a>
+            </h2>
+            
+            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+
+            <h2>
             <a name="samsung_broken_title"></a>
             Samsung phones
             <a href="#samsung_broken_title" class="section_anchor"> </a>
@@ -36,7 +44,7 @@
             Reinstalling VPN apps
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
             VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
 
@@ -45,7 +53,7 @@
             VPN e Tethering
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) e precedenti</i></small> <br/>
 
             Il Tethering di Android (via WiFi, USB o Bluetooth) e le API del servizio VPN (utilizzate da questo programma) non possono funzionare contemporaneamente. Per maggiori informazioni, vedi <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=34">il problema #34</a>
@@ -55,7 +63,7 @@
             Firmware bacati
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) e precedenti</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) e precedenti</i></small> <br/>
 

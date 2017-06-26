@@ -7,13 +7,21 @@
             <p>Przygotuj działającą konfigurację (sprawdzoną na Twoim komputerze lub pobraną od Twojego dostawcy/pracodawcy)</p><p>Jeśli, jest to jeden plik - bez dodatkowych plików pem/pkcs12 - możesz taki plik wysłać do siebie e-mailem i otworzyć załącznik. Jeśli masz więcej, niż jeden plik - pobierz je na kartę SD.</p><p>Kliknij na załącznik w e-mailu/użyj ikony folderu na liście VPN, aby zaimportować plik konfiguracyjny.</p><p>Jeśli występują błędy brakującego pliku - umieść je na karcie SD.</p><p>Kliknij na ikonę zapisu, aby dodać zaimportowaną konfigurację do Twojej listy.</p><p>Połącz się z VPN klikając na nazwę połączenia VPN</p><p>Jeśli występują błędy/ostrzeżenia w logu, spróbuj je namierzyć i poprawić</p> 
 
             <h2>
+            <a name="weakmd_title"></a>
+            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            <a href="#weakmd_title" class="section_anchor"> </a>
+            </h2>
+            
+            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+
+            <h2>
             <a name="samsung_broken_title"></a>
-            Samsung phones
+            Telefony Samsung
             <a href="#samsung_broken_title" class="section_anchor"> </a>
             </h2>
             <small><i>5.0 (Lollipop) i późniejsze</i></small> <br/>
 
-            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
+            Pomimo, że telefony marki Samsung są jednymi z najliczniej sprzedawanych urządzeń z Androidem, oprogramowanie układowe Samsunga jest jednocześnie jednym z posiadających najwięcej błędów. Błędy nie ograniczają się wyłącznie do operacji związanych z VPN a wiele z nich zostało rozwiązanych technikami tymczasowymi. Poniższa lista przedstawia kilka ze wspomnianych błędów.<p><p>DNS nie działa poza zakresem VPN.<p><p>Na wielu urządzeniach marki Samsung z Androidem 5.x aplikacje dozwolone/niedozwolone nie działają.<p><p>Na urządzeniach marki Samsung z Androidem 6.x VPN może nie działać podczas aktywnego oszczędzania energii.
 
             <h2>
             <a name="faq_duplicate_notification_title"></a>
@@ -29,14 +37,14 @@
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
-            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and more targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
+            Istnieje wiele klientów OpenVPN dla systemu Android. Najpopularniejszym jest OpenVPN for Android (ten klient), OpenVPN Connect oraz OpenVPN Settings.<p>Aplikacje można podzielić na dwie grupy: OpenVPN for Android oraz OpenVPN Connect używają oficjalnego API VPNService (Android 4.0+) i nie wymagają rootowania urządzenia oraz OpenVPN Settings, który wymagania rootowania.<p>OpenVPN for Android jest klientem otwarto-źródłowym i stworzonym przez Arne Schwabe. Dedykowany jest dla bardziej zaawansowanych użytkowników oraz oferuje wiele opcji konfiguracji włącznie z możliwością importowania i modyfikacji konfiguracji zapisanych do pliku. Ten klient powstał w oparciu o społecznościową wersję OpenVPN w wersji 2.x. Ten klient może uchodzić za oficjalnego klienta używanego przez społeczność. <p>OpenVPN Connect nie jest aplikacją otwarto-źródłową i został stworzony przez OpenVPN Technologies, Inc. Klient przeznaczony jest do generalnego użytku, dedykowany dla przeciętnego użytkownika i również umożliwia importowanie konfiguracji. Ten klient bazuje na implementacji protokołu OpenVPN  w języku C++ (podyktowanego to było warunkami umożliwiającymi OpenVPN Technologies, Inc opublikowanie wersji klienta dla systemu iOS). Jest to oficjalny klient OpenVPN Technologies, Inc. <p> OpenVPN Settings jest najstarszym z wymienionych klientów i jednocześnie interfejsem graficznym dla otwarto-źródłowego OpenVPN. W odróżnieniu od OpenVPN for Android wymaga rootowania urządzenia i nie wykorzystuje VPNService API. Nie wymaga do działania Android 4.0+
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
             Ponowna instalacja aplikacji VPN
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) i późniejsze</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
             Aplikacje VPN mogą przestać działać po odinstalowaniu i ponownej instalacji. W celu uzyskania szczegółów zobacz #80074
 
@@ -45,7 +53,7 @@
             VPN i Tethering
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) i późniejsze</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) i wcześniejsze</i></small> <br/>
 
             Funkcja Android Tethering (przez WiFi, USB lub Bluetooth) i interfejs API VPNService (stosowany przez ten program) nie działają razem. Aby uzyskać więcej informacji zobacz <href="https://github.com/schwabe/ics-openvpn/issues/34"> problem #34 </a>
@@ -55,7 +63,7 @@
             Uszkodzone obrazy
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) i późniejsze</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) i wcześniejsze</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) i wcześniejsze</i></small> <br/>
 
@@ -107,11 +115,11 @@
 
             <h2>
             <a name="tls_cipher_alert_title"></a>
-            Connections fails with SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure
+            Uzgodnienie połączenia nie powiodło się z kodem błędu: SSL23_GET_SERVER_HELLO:sslv3
             <a href="#tls_cipher_alert_title" class="section_anchor"> </a>
             </h2>
             
-            Newer OpenVPN for Android versions (0.6.29/March 2015) use a more secure default for the allowed cipher suites (tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA"). Unfortunately, omitting the less secure cipher suites and export cipher suites, especially the omission of cipher suites that do not support Perfect Forward Secrecy (Diffie-Hellman) causes some problems. This usually caused by an well-intentioned but poorly executed attempt to strengthen TLS security by setting tls-cipher on the server or some embedded OSes with stripped down SSL (e.g. MikroTik).<p>To solve this problem the problem, set the tls-cipher settings on the server to reasonable default like tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA". To work around the problem on the client add the custom option tls-cipher DEFAULT on the Android client.
+            Nowsze wersje OpenVPN for Android (od wersji 0.6.29 z marca 2015) używają domyślnie bezpieczniejszego szyfrowania (tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA"). Niestety, pominięcie mniej bezpiecznego szyfrowania - w szczególności pominięcie metod szyfrowania niewspierających Perfekcyjnego Utajnienia Przekazywania - powoduje pewne problemy. Te, najczęściej są spowodowane przez dobrze motywowane lecz źle wykonane próby poprawienia bezpieczeństwa TLS przez ustawienie tls-cipher na serwerze lub niektórych systemach wbudowanych z ograniczonym SSL (np.: MikroTik).<p> W celu rozwiązania tego problemu, ustaw tls-cipher na serwerze na rozsądną wartość (np.: tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA"). W celu rozwiązania problemu po stronie klienta - ustaw niestandardową wartość: tls-cipher DEFAULT.
 
             <h2>
             <a name="faq_security_title"></a>
@@ -220,7 +228,8 @@
             <a href="#ab_proxy_title" class="section_anchor"> </a>
             </h2>
             
-            Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.
+            Android będzie używał Twoich ustawień proxy dla połączenia mobilnego/Wi-Fi kiedy nie jest sprecyzowany serwer DNS.
+OpenVPN dla Androida ostrzeże Cię o tym w logu.
 
             <h2>
             <a name="ab_not_route_to_vpn_title"></a>
@@ -229,7 +238,7 @@
             </h2>
             <small><i>5.0 (Lollipop) i późniejsze</i></small> <br/>
 
-            The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask
+            Brakuje konfiguracji tras dla adresu IP klienta oraz masek podsieci. OpenVPN rozwiązuje ten problem przez dodanie trasy odpowiedniej dla adresu IP klienta i maski jego podsieci
 
             <h2>
             <a name="tap_mode"></a>

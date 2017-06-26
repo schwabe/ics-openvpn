@@ -7,13 +7,21 @@
             <p>Verwenden Sie eine funktionierende Konfiguration (auf einem Computer getestet, oder von Ihrer Organisation/Ihrem Provider bereitgestellt).</p><p>Falls Sie nur eine einzelne Datei benötigen, können Sie sich diese als Email-Anhang zuschicken. Falls Ihre OpenVPN-Konfiguration aus mehreren Dateien besteht, müssen Sie alle Dateien auf die SD-Karte kopieren.</p><p>Klicken Sie auf den Email-Anhang im Android-Mail-Programm bzw. verwenden Sie das Ordnersymbol in der VPN-Liste und wählen Sie die .ovpn- bzw. .conf-Konfigurationsdatei aus.</p><p>Falls der Import fehlende Dateien anmerkt, kopieren Sie diese auf die SD-Karte und starten den Import erneut.</p><p>Verwenden Sie anschließend das "Speichern"-Symbol, um das VPN zur VPN-Liste hinzuzufügen.</p><p>Tippen Sie den Namen des VPNs an, um das VPN zu starten</p><p>Achten Sie auf Fehler und Warnungen im Verbindungsprotokoll.</p> 
 
             <h2>
+            <a name="weakmd_title"></a>
+            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            <a href="#weakmd_title" class="section_anchor"> </a>
+            </h2>
+            
+            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+
+            <h2>
             <a name="samsung_broken_title"></a>
-            Samsung phones
+            Samsung-Geräte
             <a href="#samsung_broken_title" class="section_anchor"> </a>
             </h2>
             <small><i>5.0 (Lollipop) und neuer</i></small> <br/>
 
-            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
+            Wenngleich Samsung-Telefone unter den meistverkauften Android-Geräten sind, gehört deren Firmware auch zu den fehlerbehaftetsten aller Android-Geräte. Diese Fehler betreffen nicht nur den Aufbau von VPN-Verbindungen; viele von ihnen können allerdings umgangen werden. Im Folgenden sind einige dieser Fehler beschrieben.<p><p>DNS funktioniert nicht, wenn sich der DNS-Server nicht im VPN befindet.<p><p>Bei vielen Samsung-Geräten mit Android 5.x funktioniert das Sperren/Zulassen von einzelnen Apps nicht.<p><p>Bei Samsung-Geräten mit Android 6.x wurde berichtet, dass VPN nicht funktioniert, wenn die VPN-App nicht als Ausnahme in den Energiespareinstellungen eingetragen wird.
 
             <h2>
             <a name="faq_duplicate_notification_title"></a>
@@ -36,7 +44,7 @@
             Neuinstallation von VPN-Apps
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) und neuer</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
             Ihre VPN-App funktioniert möglicherweise nicht mehr, wenn diese erst de- und später neu installiert wird. Für Details siehe #80074
 
@@ -45,7 +53,7 @@
             VPN und "Anbindung & mobiler WLAN-Hotspot"
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) und neuer</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) und früher</i></small> <br/>
 
             Die Funktion "Anbindung & mobiler WLAN-Hotspot" und die VPNService-API, die von dieser App verwendet wird, funktionieren nicht zusammen. Für weitere Details siehe <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=34"> Issue #34 </a>
@@ -55,7 +63,7 @@
             Fehlerhafte Firmwares
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) und neuer</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) und früher</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) und früher</i></small> <br/>
 

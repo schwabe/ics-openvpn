@@ -4,62 +4,70 @@
             <a href="#faq_howto_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Get a working config (tested on your computer or download from your provider/organisation)</p><p>If it is a single file with no extra pem/pkcs12 files you can email the file yourself and open the attachment. If you have multiple files put them on your sd card.</p><p>Click on the email attachment/Use the folder icon in the vpn list to import the config file</p><p>If there are errors about missing files put the missing files on your sd card.</p><p>Click on the save symbol to add the imported VPN to your VPN list</p><p>Connect the VPN by clicking on the name of the VPN</p><p>If there are error or warnings in the log try to understand the warnings/error and try to fix them</p> 
+            <p>Szerezzen be működő konfigurációt (számítógépen tesztelje vagy töltse le a szolgáltatótól/szervezettől)</p><p>Ha ez egyetlen fájl extra pem/pkcs12 fájlok nélkül, akkor küldje el önmagának email-ben és nyissa meg a csatolmányt. Ha több fájl akkor másolja az SD kártyára.</p><p>Kattintson az email csatolmányra/Használja a mappa ikont a VPN listában az importáláshoz</p><p>Ha hibaüzenetet kap hiányzó fájlokról, másolja azokat is az SD kártyára.</p><p>Kattintson a mentés szimbólumra az importált VPN kapcsolat VPN listához adásához</p><p>Csatlakozzon a VPN-hez a VPN nevére kattintva</p><p>Ha hiba- vagy figyelmeztető üzenetek vannak a log-ban, próbálja meg értelmezni és kijavítani őket. </p> 
+
+            <h2>
+            <a name="weakmd_title"></a>
+            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            <a href="#weakmd_title" class="section_anchor"> </a>
+            </h2>
+            
+            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
 
             <h2>
             <a name="samsung_broken_title"></a>
-            Samsung phones
+            Samsung telefonok
             <a href="#samsung_broken_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) és később</i></small> <br/>
+            <small><i>5.0 (Lollipop) és későbbi</i></small> <br/>
 
-            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
+            Annak ellenére, hogy a Samsung telefonok a legtöbbet eladott Android telefonok közé tartoznak, a Samsung firmware-ek a leg bug-osabb Android firmware-ek. Ezeken az eszközökön a hibák nem csak a VPN működésre korlátozódnak, de nagy részük kiküszöbölhető. A következő néhány ilyen hiba leírása.<p><p>A DNS nem működik hacsak nem a DNS kiszolgáló a VPN tartományban van.<p><p>Sok Samsung 5.x eszközön nem működik az engedélyezett/tiltott alkalmazások funkció.<p>Samsung 6.0-n a VPN nem működik hacsak nem adjuk hozzá kivételként az alkalmazást a Powersave funkcióknál.
 
             <h2>
             <a name="faq_duplicate_notification_title"></a>
-            Duplicate notifications
+            Kettőzött értesítések
             <a href="#faq_duplicate_notification_title" class="section_anchor"> </a>
             </h2>
             
-            If Android is under system memory (RAM) pressure, apps and service which are not needed at the moment are removed from active memory. This terminates an ongoing VPN connection. To ensure that the connection/OpenVPN survives the service runs with higher priority. To run with higher priority the application must display a notification. The key notification icon is imposed by the system as described in the previous FAQ entry. It does not count as app notification for purpose of running with higher priority.
+            Ha az Android rendszer memória (RAM) kényszer alatt áll, alkalmazások és szolgáltatások amik pillanatnyilag nem szükségesek el lesznek távolítva az aktív memóriából. Ez lezárja a folyamatban levő VPN kapcsolatot. A kapcsolat/OpenVPN túlélése érdekében a szolgáltatás magas prioritással fut. A magas prioritással való futáshoz az alkalmazásnak értesítést kell kijeleznie. A rendszer által mutatott kulcs értesítési ikonról az előző GYIK bejegyzésben olvashat. Ez nem az alkalmazás magas prioritással futásának értesítésére utal.
 
             <h2>
             <a name="faq_androids_clients_title"></a>
-            Differences between the OpenVPN Android clients
+            Különbségek az Android OpenVPN kliensek között
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
-            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and more targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
+            Több OpenVPN kliens létezik Androidra. A leggyakoribb az OpenVPN for Android (ez a kliens), OpenVPN Connect és OpenVPN Settings.<p>A kliensek két csoportra oszthatóak: az OpenVPN for Android és az OpenVPN Connect a hivatalos VPNService API-t (Android 4.0+) használják és nem igényelnek root jogokat, és az OpenVPN Settings, ami root-ot használ.<p>Az OpenVPN for Android egy nyílt forráskódú kliens, amit Arne Schwabe fejleszt. Hozzáértőbb felhasználókat céloz meg, mivel rengeteg beállítást kínál, lehetőséget ad profilok fájlból történő importálására és alkalmazáson belüli konfigurálására/váltására. A kliens az OpenVPN közösségi verziójára épül, az OpenVPN 2.x verzió forráskódja alapján. Ezt a klienst tekinthetjük úgy, mint a félhivatalos közösségi klienst.<p>Az OpenVPN Connect nem nyílt forráskódú, amit az OpenVPN Technologies cég fejleszt. A klienst általános célra szánták az átlag felhasználók számára és engedi profilok importálását. Ez a kliens az OpenVPN C++ OpenVPN protokolljának újra-implementációjára épül (Ez volt az elvárás hogy az OpenVPN Technologies cég közzé tehessen egy iOS OpenVPN alkalmazást is). Ez a kliens az OpenVPN Technologies cég hivatalos kliense. <p> Az OpenVPN Settings a legrégebbi a kliensek között, egy UI a nyílt forráskódú OpenVPN-hez. Az OpenVPN for Android-dal szemben root jogosultságot igényel és nem használja az OpenVPN API-t. Nincs Android 4.0+ függése
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
-            Reinstalling VPN apps
+            VPN alkalmazások újratelepítése
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) és később</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
-            VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
+            A VPN alkalmazások nem biztos hogy működnek ha uninstallálják majd újra installálják. A részleteket lásd #80074
 
             <h2>
             <a name="vpn_tethering_title"></a>
             VPN és Internetmegosztás
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) és később</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) és korábbi</i></small> <br/>
 
-            The Android Tethering feature (over WiFi, USB or Bluetooth) and the VPNService API (used by this program) do not work together. For more details see the <a href="https://github.com/schwabe/ics-openvpn/issues/34">issue #34</a>
+            Az Android internet megosztás funkció (WiFi-n, USB-n vagy Bluetooth-on) és a VPNService API (amit ez a program használ) nem működnek együtt. További részletekért lást <a href="https://github.com/schwabe/ics-openvpn/issues/34">issue #34</a>
 
             <h2>
             <a name="broken_images"></a>
             Működésképtelen image-ek
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) és később</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) és korábbi</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) és korábbi</i></small> <br/>
 
-            <p>Official HTC images are known to have a strange routing problem causing traffic not to flow through the tunnel (See also <a href="https://github.com/schwabe/ics-openvpn/issues/18">Issue 18</a> in the bug tracker.)</p><p>Older official SONY images from Xperia Arc S and Xperia Ray have been reported to be missing the VPNService completely from the image. (See also <a href="https://github.com/schwabe/ics-openvpn/issues/29">Issue 29</a> in the bug tracker.)</p><p>On custom build images the tun module might be missing or the rights of /dev/tun might be wrong. Some CM9 images need the "Fix ownership" option under "Device specific hacks" enabled.</p><p>Most importantly: If your device has a broken Android image, report it to your vendor. The more people who report an issue to the vendor, the more likely they are to fix it.</p>
+            <p>A hivatalos HTC lemezképek köztudottan különös útvonal választási problémákat tartalmaznak, amik azt okozzák, hogy az adatforgalom nem a csatornán kereszül folyik (Lást <a href="https://github.com/schwabe/ics-openvpn/issues/18">Issue 18</a> a bug tracker-ben.)</p><p>Régebbi hivatalos SONY Xperia Arc S és Xperia Ray lemezképekből jelentették, hogy a VPNService teljesen hiányzik. (Lásd <a href="https://github.com/schwabe/ics-openvpn/issues/29">Issue 29</a> a bug tracker-ben.)</p><p>Egyedi fordítású lemezképekben a tun modul hiányozhat vagy a /dev/tun hozzáférési joga lehet nem megfelelő. Néhány CM9 lemezképnél szükséges a "Fix ownership" opció engedélyezése a "Device specific hacks" alatt.</p><p>Legfontosabb: Ha az eszköz Android lemezképe sérült, jelezze a gyártónál. Minél több ember jelent egy esetet a gyártónál, annál esélyesebb hogy javítani fogja.</p>
 
             <h2>
             <a name="battery_consumption_title"></a>
@@ -67,16 +75,16 @@
             <a href="#battery_consumption_title" class="section_anchor"> </a>
             </h2>
             
-            In my personal tests the main reason for high battery consumption of OpenVPN are the keepalive packets. Most OpenVPN servers have a configuration directive like 'keepalive 10 60' which causes the client and server to exchange keepalive packets every ten seconds. <p> While these packets are small and do not use much traffic, they keep the mobile radio network busy and increase the energy consumption. (See also <a href="http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine">The Radio State Machine | Android Developers</a>) <p> This keepalive setting cannot be changed on the client. Only the system administrator of the OpenVPN can change the setting. <p> Unfortunately using a keepalive larger than 60 seconds with UDP can cause some NAT gateways to drop the connection due to an inactivity timeout. Using TCP with a long keep alive timeout works, but tunneling TCP over TCP performs extremely poorly on connections with high packet loss. (See <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">Why TCP Over TCP Is A Bad Idea</a>)
+            Személyes tesztjeim alapján a magas akkuhasználatot az OpenVPN keepalive csomagjai okozzák. A legtöbb OpenVPN szerver tartalmaz egy konfigurációs direktívát, mint 'keepalive 10 60' ami a kliens és a szerver között minden 10 másodpercben keepalive csomagok cseréjét eredményezi. <p> Ezek ugyan kis csomagok és nem okoznak nagy adatforgalmat, de lefoglalják a mobil rádiós részét és ezáltal növelik az energia fogyasztást. (Lásd még <a href="http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine">The Radio State Machine | Android Developers</a>) <p> Ez a keepalive küldés nem változtatható a kliensben. Csak az OpenVPN rendszer adminisztrátor tudja megváltoztatni ezt a beállítást. <p> Sajnos 60 másodpercnél nagyobb keepalive használata UDP kapcsolatnál néhány NAT átjárónál a kapcsolat eldobását okozza inaktivitási időtúllépés miatt. Hosszú keepalive timeout működőképes lehet TCP kapcsolat esetén, de TCP csomagok TCP kapcsolatban tunnel-ezése extrém rossz minőségű kapcsolatot eredményezhet magas csomagvesztésű hálózatokon. (Lásd <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">Why TCP Over TCP Is A Bad Idea</a>)
 
             <h2>
             <a name="faq_system_dialogs_title"></a>
             Kapcsolat figyelmeztetés és értesítés hang
             <a href="#faq_system_dialogs_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and earlier</i></small> <br/>
+            <small><i>4.4 (Kit Kat) és korábbi</i></small> <br/>
 
-            The VPN connection warning telling you that this app can intercept all traffic is imposed by the system to prevent abuse of the VPNService API.<p>The VPN connection notification (The key symbol) is also imposed by the Android system to signal an ongoing VPN connection. On some images this notification plays a sound.<p>Android introduced these system dialogs for your own safety and made sure that they cannot be circumvented. (On some images this unfortunately includes a notification sound)
+            A VPN csatlakozás figyelmeztetés azt jelzi, hogy ez az alkalmazás a rendszer általi teljes forgalmat lehallgathatja a VPNService API visszaélések elkerülése érdekében.<p>A VPN csatlakozás értesítés (A kulcs szimbólum) is az Android rendszer jelzése egy kimenő VPN kapcsolatról. Néhány lemezképen ez az értesítés hangot is lejátszik.<p>Az android az ön biztonsága érdekében vezette be ezeket a rendszer értesítéseket, és gondoskodott arról, hogy ne lehessen megkerülni. (Néhány lemezképen ez sajnos értesítési hangot is tartalmaz.)
 
             <h2>
             <a name="tap_mode"></a>
@@ -88,30 +96,30 @@
 
             <h2>
             <a name="ab_secondary_users_title"></a>
-            Secondary tablet users
+            Másodlagos tablet felhasználók
             <a href="#ab_secondary_users_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
 
-            VPN does not work at all for secondary users.
+            A VPN egyáltalán nem működik másodlagos felhasználóknak.
 
             <h2>
             <a name="faq_vpndialog43_title"></a>
-            Vpn Confirmation Dialog
+            VPN Megerősítés Dialógus
             <a href="#faq_vpndialog43_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) és később</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) és későbbi</i></small> <br/>
 
-            "Starting with Android 4.3 the VPN confirmation is guarded against "overlaying apps". This results in the dialog not reacting to touch input. If you have an app that uses overlays it may cause this behaviour. If you find an offending app contact the author of the app. This problem affect all VPN applications on Android 4.3 and later. See also <a href="https://github.com/schwabe/ics-openvpn/issues/185">Issue 185<a> for additional details"
+            "Android 4.3-tól kezdve a VPN jóváhagyás védett az "átlapoló alkalmazásoktól". Ez azt eredményezi, hogy a párbeszéd ablak nem reagál érintésre. Ha olyan alkalmazást futtat, ami átlapolást használ az okozhatja ezt a viselkedést. Ha jogsértő alkalmazást észlel, lépjen kapcsolatba az alkalmazás szerzőjével. Ez a probléma minden VPN alkalmazást érint Android 4.3 és későbbi verziókon. Lásd <a href="https://github.com/schwabe/ics-openvpn/issues/185">Issue 185<a> további részletekért"
 
             <h2>
             <a name="tls_cipher_alert_title"></a>
-            Connections fails with SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure
+            Kapcsolódás sikertelen SSL23_GET_SERVER_HELLO:sslv3 alert handshake hibával
             <a href="#tls_cipher_alert_title" class="section_anchor"> </a>
             </h2>
             
-            Newer OpenVPN for Android versions (0.6.29/March 2015) use a more secure default for the allowed cipher suites (tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA"). Unfortunately, omitting the less secure cipher suites and export cipher suites, especially the omission of cipher suites that do not support Perfect Forward Secrecy (Diffie-Hellman) causes some problems. This usually caused by an well-intentioned but poorly executed attempt to strengthen TLS security by setting tls-cipher on the server or some embedded OSes with stripped down SSL (e.g. MikroTik).<p>To solve this problem the problem, set the tls-cipher settings on the server to reasonable default like tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA". To work around the problem on the client add the custom option tls-cipher DEFAULT on the Android client.
+            Újabb OpenVPN for Android verziók (0.6.29/2015 március) biztonságosabb alapértelmezést használnak az engedélyezett rejtjelező kísérletekhez (tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA"). Sajnos a kevésbé biztonságos és export rejtjelező kísérletek kihagyása, különösen azoknak a rejtjelező kísérleteknek a kihagyása amik nem támogatják a Perfect Forward Security-t (Diffie-Hellman), néhány problémát okoz. Ezt általában egy jószándékú de gyengén végrehajtott TLS biztonság fokozás okozza a szerveren vagy néhány beágyazott OS-nél lecsupaszított SSL-el (pl.: MikroTik).<p>A probléma megoldásához állítsa a tls-rejtjelezés alapértelmezését ésszerűbbre a szerveren, mint például tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA". A probléma kliensen történő kiküszöböléséhez adja hozzá az Android kliensben az egyedi opciókhoz hogy tls-cipher DEFAULT.
 
             <h2>
             <a name="faq_security_title"></a>
@@ -119,7 +127,7 @@
             <a href="#faq_security_title" class="section_anchor"> </a>
             </h2>
             
-            "As OpenVPN is security sensitive a few notes about security are sensible. All data on the sdcard is inherently insecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the VPN profile. The VPN profiles are only accessible by this application. (Do not forget to delete the copies on the sd card afterwards). Even though accessible only by this application the data is still unencrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."
+            "Az OpenVPN biztonságérzékeny, ezért néhány megjegyzés indokolt. Az SD kártyán tárolt bármilyen adat eredendően nem biztonságos. Minden alkalmazás olvashatja (például ez a program sem kíván speciális SD kártya jogosultságokat). Az alkalmazás adait csak az alkalmazás önmaga képes olvasni. A cacert/cert/key fájl párbeszédablakban történő importálásával az adatok a VPN profilban tárolódnak. A VPN profil csak az alkalmazás által hozzáférhető. (Ne felejtse el törölni az SD kártyán tárolt másolatokat.) Az adatok nem titkosítottak, annak ellenére, hogy az adatok csak az alkalmazás számára hozzáférhetőek. A telefon root-olásával vagy egyéb exploit-olásával az adatok még mindig visszaállíthatóak lesznek. A pkcs12 fájlokat erősen ajánlott az android keystore-ba importálni."
 
             <h2>
             <a name="faq_shortcut"></a>
@@ -142,23 +150,23 @@
             VPN és Internetmegosztás
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) és később</i></small> <br/>
+            <small><i>4.4 (Kit Kat) és későbbi</i></small> <br/>
 
-            Tethering works while the VPN is active. The tethered connection will NOT use the VPN.
+            Internetmegosztás működik mialatt a VPN aktív. A megosztott kapcsolat NEM fogja használni a VPN-t.
 
             <h2>
             <a name="ab_kitkat_mss_title"></a>
-            Wrong MSS value for VPN connection
+            Rossz MSS érték a VPN kapcsolathoz
             <a href="#ab_kitkat_mss_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) és később</i></small> <br/>
+            <small><i>4.4 (Kit Kat) és későbbi</i></small> <br/>
 <small><i>4.4 (Kit Kat) - 4.4.1 (Kit Kat)</i></small> <br/>
 
-            Early KitKat version set the wrong MSS value on TCP connections (#61948). Try to enable the mssfix option to workaround this bug.
+            A korai KitKat verzió rosszul állítja be az MSS értéket a TCP kapcsolaton (#61948). Próbálja meg engedélyezni az mssfix opciót a hiba kiküszöbölésére.
 
             <h2>
             <a name="copying_log_entries"></a>
-            naplóbejegyzések másolása
+            Naplóbejegyzések másolása
             <a href="#copying_log_entries" class="section_anchor"> </a>
             </h2>
             
@@ -166,12 +174,12 @@
 
             <h2>
             <a name="ab_persist_tun_title"></a>
-            Persist tun mode
+            Megmaradó tun mód
             <a href="#ab_persist_tun_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
 
-            Opening a tun device while another tun device is active, which is used for persist-tun support, crashes the VPNServices on the device. A reboot is required to make VPN work again. OpenVPN for Android tries to avoid reopening the tun device and if really needed first closes the current TUN before opening the new TUN device to avoid to crash. This may lead to a short window where packets are sent over the non-VPN connection. Even with this workaround the VPNServices sometimes crashes and requires a reboot of the device.
+            Egy tun eszköz megnyitása, mialatt egy másik tun eszköz aktív, ami megmaradó-tun esetén használt, a VPNService összeomlását okozza az eszközön. A VPN újbóli működéséhez újraindítás szükséges. Az OpenVPN for Android megpróbálja elkerülni a tun eszköz újra megnyitását és ha valóban szükséges akkor először lezárja az aktuális TUN-t az új TUN megnyitása előtt az összeomlás elkerülése érdekében. Ez egy rövid ablakoz vezethet ami alatt csomagok továbbítódhatnak nem-VPN kapcsolaton keresztül. A VPNService ennek ellenére néha mégis összeomlik, ami az eszköz újraindítását igényli.
 
             <h2>
             <a name="faq_routing_title"></a>
@@ -179,57 +187,57 @@
             <a href="#faq_routing_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) és később</i></small> <br/>
+<small><i>4.4 (Kit Kat) és későbbi</i></small> <br/>
 
-            The Routing and interface configuration is not done via traditional ifconfig/route commands but by using the VPNService API. This results in a different routing configuration than on other OSes. <p>The configuration of the VPN tunnel consists of the IP address and the networks that should be routed over this interface. Especially, no peer partner address or gateway address is needed or required. Special routes to reach the VPN Server (for example added when using redirect-gateway) are not needed either. The application will consequently ignore these settings when importing a configuration. The app ensures with the VPNService API that the connection to the server is not routed through the VPN tunnel.<p>The VPNService API does not allow specifying networks that should not be routed via the VPN. As a workaround the app tries to detect networks that should not be routed over tunnel (e.g. route x.x.x.x y.y.y.y net_gateway) and calculates a set of routes that excludes this routes to emulate the behaviour of other platforms. The log windows shows the configuration of the VPNService upon establishing a connection.<p>Behind the scenes: Android 4.4+ does use policy routing. Using route/ifconfig will not show the installed routes. Instead use ip rule, iptables -t mangle -L
+            Az útválasztás és interfész konfiguráció nem a hagyományos ifconfig/route parancsokkal történik, hanem a VPNService API használatával. Ez különböző útválasztási konfigurációhoz vezet más operációs rendszereken.<p>A VPN csatorna konfigurációja az IP címből és a hálózatokból áll, amelyek útvonala ezen az interfészen keresztül kell vezessen. Tekintettel, hogy peer partner cím vagy átjáró megadása nem szükséges. A VPN szerver eléréséhez szükséges speciális útvonalak (például amik redirect-gateway használatakor vannak hozzáadva) megadása sem szükséges. Az alkalmazás ezeket logikusan figyelmen kívül fogja hagyni a beállítások importálása során. Az alkalmazás a VPNService API által biztosítja, hogy a szerverhez történő csatlakozás ne a VPN csatornán át menjen.<p>A VPNService API nem engedi azoknak a hálózatok a megadását, amiknek nem a VPN-en keresztül kellene menniük. Kerülőútként az alkalmazás megpróbálja meghatározni azokat a hálózatokat, amelyek útvonala nem VPN csatornán keresztül kellene haladjon (például x.x.x.x y.y.y.y net_gateway), kiszámolja és kizárja ezeket az útvonalakat, hogy más platformok viselkedését emulálja. Csatlakozási kísérletkor a log ablakban látható a VPNService konfiguráció.<p>A színfalak mögött: az Android 4.4+ nem használ policy routing-ot. A route/ifconfig parancsok nem fogják megmutatni a létrehozott útvonalakat. Ehelyett használhatóak az ip rule, iptables -t mangle -L parancsok
 
             <h2>
             <a name="ab_kitkat_reconnect_title"></a>
-            Random disconnects from mobile network
+            Véletlenszerű lecsatlakozások a mobil hálózatról
             <a href="#ab_kitkat_reconnect_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) és később</i></small> <br/>
+<small><i>4.4 (Kit Kat) és későbbi</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            "Multiple users report that the mobile connection/mobile data connection is frequently dropped while using the VPN app. The behaviour seems to affect only some mobile provider/device combination and so far no cause/workaround for the bug could be identified. "
+            "Több felhasználó jelentette, hogy a mobil kapcsolat/mobil adat gyakran megszakad a VPN használata alatt. Ez a viselkedés úgy tűnik csak néhány mobil szolgáltató/eszköz kombinációt érint és eddig nem azonosítottak okot/kiküszöbölést a hibára. "
 
             <h2>
             <a name="ab_vpn_reachability_44_title"></a>
-            Remote networks not reachable
+            A távoli hálózat nem elérhető
             <a href="#ab_vpn_reachability_44_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) és később</i></small> <br/>
+<small><i>4.4 (Kit Kat) és későbbi</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            Only destination can be reached over the VPN that are reachable without VPN. IPv6 VPNs does not work at all.
+            Csak azok a célállomások érhetőek el VPN-en, amik VPN nélkül is elérhetőek. Az IPv6 VPN egyáltalán nem működik.
 
             <h2>
             <a name="ab_only_cidr_title"></a>
-            Non CIDR Routes
+            Nem CIDR Útvonalak
             <a href="#ab_only_cidr_title" class="section_anchor"> </a>
             </h2>
             
-            Android supports only CIDR routes to the VPN. Since non-CIDR routes are almost never used, OpenVPN for Android will use a /32 for routes that are not CIDR and issue a warning.
+            Az Android csak a CIDR útvonalakat támogatja a VPN-nél. Mivel nem-CIDR útvonalakat majdnem soha sem használnak, ezért az OpenVPN for ANdroid /32-t használ a nem-CIDR útvonalakhoz és figyelmeztetést ad.
 
             <h2>
             <a name="ab_proxy_title"></a>
-            Proxy behaviour for VPNs
+            Proxy viselkedés a VPN-ekhez
             <a href="#ab_proxy_title" class="section_anchor"> </a>
             </h2>
             
-            Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.
+            Az Android továbbra is használni fogja a proxy beállításokat, amik a mobil/WiFi kapcsolathoz vannak megadva ameddig nincs beállítva DNS kiszolgáló. Az OpenVPN for Android erről figyelmeztetni fog a log-ban.
 
             <h2>
             <a name="ab_not_route_to_vpn_title"></a>
-            Route to the configured IP address
+            Útvonal a konfigurált IP címhez
             <a href="#ab_not_route_to_vpn_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) és később</i></small> <br/>
+            <small><i>5.0 (Lollipop) és későbbi</i></small> <br/>
 
-            The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask
+            A konfigurált kliens IP és a hálózati maszkjában levő IP-k útvonala nem a VPN-en keresztül vezet. Az OpenVPN úgy küszöböli ki ezt a hibát, hogy explicit hozzáad egy útvonalat ami a kliens IP és hálózati maszkjának megfelel
 
             <h2>
             <a name="tap_mode"></a>

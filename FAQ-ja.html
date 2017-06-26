@@ -5,21 +5,30 @@
             </h2>
             
             <p>動作確認済の設定ファイルを入手します。(あなたのコンピュータでテスト済のものや、プロバイダや会社などの組織からダウンロードしたもの)</p>
-<p>もしそれが単一のファイルでpemやpks12ファイルを伴わないなら、自分宛のメールに添付して送付し、それを開いてください。もし複数のファイルで構成されているならSDカードに格納してください。</p>
+<p>もしそれが単一のファイルでPEMやPKCS12ファイルを伴わないなら、自分宛のメールに添付して送付し、それを開いてください。もし複数のファイルで構成されているならSDカードに格納してください。</p>
 <p>メールの添付ファイルを開く、あるいはVPNリストのフォルダアイコンをクリックして設定ファイルをインポートします。</p>
 <p>もしファイルが足りないというエラーが表示されたら、足りなかったファイルをSDカード上に格納してください。</p>
 <p>インポートされたVPN設定をリストに追加するには、保存アイコンをクリックします。</p>
 <p>VPNを接続するには、VPNの名称をクリックします。</p>
 <p>もし警告やエラーがログエントリに表示されたら、それらを調べて解決してください。</p>
 
+
+            <h2>
+            <a name="weakmd_title"></a>
+            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            <a href="#weakmd_title" class="section_anchor"> </a>
+            </h2>
+            
+            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+
             <h2>
             <a name="samsung_broken_title"></a>
-            Samsung phones
+            サムスン製の機種
             <a href="#samsung_broken_title" class="section_anchor"> </a>
             </h2>
             <small><i>5.0 (Lollipop)以降</i></small> <br/>
 
-            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
+            サムスン製の携帯電話は最も販売されているAndroid機ですが、サムスン製のファームウェアは最もバグを引き起こすAndroidファームウェアです。これらのデバイスのバグはVPN操作に限ったことではありませんが、それらの多くは回避可能です。以下にいくつかのバグを記載します。<p><p>DNSサーバがVPNの範囲内にないとDNSが動作しません。<p><p>サムスン製Android 5.0の多くの機種では、アプリの許可／不許可機能が動作しません。<p>サムスン製Android 6.0機種のVPNは、VPNアプリを省電力機能から除外しない限り動作しないことが報告されています。
 
             <h2>
             <a name="faq_duplicate_notification_title"></a>
@@ -47,16 +56,16 @@ OpenVPNの接続を保証するためには、アプリケーションを高い�
             VPNアプリを再インストールする場合
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop)以降</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
             VPNアプリはアンインストール／再インストール時に正常に動作しなくなることがあります。詳細は#80074を参照してください。
 
             <h2>
             <a name="vpn_tethering_title"></a>
-            VPN とテザリング
+            VPNとテザリング
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop)以降</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2)およびそれ以前</i></small> <br/>
 
             Androidのテザリング機能(WiFi, USB, Bluetooth経由)とVPNService API(このプログラムから使用する機能)は同時に利用できません。詳細については<a href="http://code.google.com/p/ics-openvpn/issues/detail?id=34">issue #34</a>を参照
@@ -66,7 +75,7 @@ OpenVPNの接続を保証するためには、アプリケーションを高い�
             壊れたファームウェア
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop)以降</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2)およびそれ以前</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2)およびそれ以前</i></small> <br/>
 
@@ -100,7 +109,7 @@ Androidはあなた自身の安全性のために、これらを迂回できな�
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            TAPモードは非root化環境では動作しません。よってこのアプリケーションではTAPをサポートできません。
+            TAPモードはroot化されていないVPN APIでは動作しません。よってこのアプリケーションではTAPをサポートできません。
 
             <h2>
             <a name="ab_secondary_users_title"></a>
@@ -159,7 +168,7 @@ SDカード上のデータは本質的に無防備です。すべてのアプリ
 
             <h2>
             <a name="vpn_tethering_title"></a>
-            VPN とテザリング
+            VPNとテザリング
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat)以降</i></small> <br/>
@@ -243,7 +252,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
 
             <h2>
             <a name="ab_only_cidr_title"></a>
-            非CIDRルート
+            CIDR形式ではない経路
             <a href="#ab_only_cidr_title" class="section_anchor"> </a>
             </h2>
             
@@ -251,7 +260,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
 
             <h2>
             <a name="ab_proxy_title"></a>
-            VPNのプロキシ動作
+            VPNとプロキシの挙動
             <a href="#ab_proxy_title" class="section_anchor"> </a>
             </h2>
             
@@ -272,6 +281,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            ３回目です。本当のところ、TUN上で動くレイヤ2エミュレータを書くことはできました。(送信時の情報追加と受信時の情報削除で)。しかしこのエミュレータはARPやおそらくはDHCPをも実装しなければならないでしょう。誰もこのことに気がついていません。もしあなたがこの機能を作る気になったのであれば、どうぞ私に連絡してください。
+            3回目ですか？本当のところ、TUN上で動くレイヤ2エミュレータを書くことはできました。(送信時の情報追加と受信時の情報削除で)。しかしこのエミュレータはARPやおそらくはDHCPをも実装しなければならないでしょう。誰もこのことに気がついていません。もしあなたがこの機能を作る気になったのであれば、どうぞ私に連絡してください。
 
             

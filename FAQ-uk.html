@@ -7,13 +7,21 @@
             <p> Використовуйте готову конфігурацію (протестовану на вашому комп'ютері або отриману від вашого провайдера) </p> <p> Якщо це простий файл без pem/pks12 ви можете відправити його по email на свій пристрій. Якщо ж це декілька файлів, ви можете використовувати їх зі своєї карти пам'яті. </p> <p> Просто натисніть на .сonf файл або виберіть його за допомогою меню в програмі для імпорту конфігурації </p> <p> Якщо програма видасть помилку про брак деяких файлів, просто помістіть ці файли на карту пам'яті </p> <p> Натисніть Збереження для додавання імпортованої конфігурації в програму </p> <p> Запустіть ваш VPN-тунель, натиснувши на його назву в списку </p> <p> Якщо при запуску виникли помилки спробуйте розібратися і усунути їх. </p>
 
             <h2>
+            <a name="weakmd_title"></a>
+            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            <a href="#weakmd_title" class="section_anchor"> </a>
+            </h2>
+            
+            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+
+            <h2>
             <a name="samsung_broken_title"></a>
-            Samsung phones
+            телефони Samsung
             <a href="#samsung_broken_title" class="section_anchor"> </a>
             </h2>
             <small><i>5.0 (Lollipop) і подальше</i></small> <br/>
 
-            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
+            Навіть не зважаючи на те, що телефони Samsung є одними з найбільш популярних телефонів на Android, прошивка від Samsung також є однією з найбільш дирявими прошивками на Android. Ці помилки не обмежуються лише VPN операціями на цих пристроях, але багато з них можна уникнути. Дальше деякі з цих помилок описані. <p><p>DNS не працює, якщо сервер DNS в межах віртуальної приватної мережі. <p><p>На багатьох пристроях Samsung 5.x функція дозволених/заборонених програм не працює. <p><p>На Samsung 6.x VPN не працює, якщо додаток VPN не звільняється від PowerSave функцій.
 
             <h2>
             <a name="faq_duplicate_notification_title"></a>
@@ -36,7 +44,7 @@
             Перевстановлення VPN-програми
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) і подальше</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
             VPN програма може перестати працювати, як вона була видалена і перевстановлена знову. Більш детальну інформацію дивіться #80074
 
@@ -45,7 +53,7 @@
             VPN і тетерінг
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) і подальше</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) і раніше</i></small> <br/>
 
             Функція транзитного з'єднання на Android (через WiFi, USB або Bluetooth) та VPNService API (використовуване цією програмою) не працюють разом. Детальніше в <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=34"> Issue 34 </a>
@@ -55,7 +63,7 @@
             Пошкоджені зображення
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) і подальше</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) і раніше</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) і раніше</i></small> <br/>
 

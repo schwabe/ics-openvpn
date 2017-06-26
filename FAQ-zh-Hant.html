@@ -7,11 +7,19 @@
             <p>Get工作的配置（從供應商/機構檢測您的電腦或下載）</p><p>If它沒有多餘的PEM / pks12文件，你可以自己通過電子郵件發送文件和打開附件的單個文件。如果您有多個文件，把它們放在你的SD card.</p><p>Click上的電子郵件附件/使用的文件夾圖標，在VPN列表導入配置file</p><p>If大約有丟失的文件將丟失的文件在你的SD card.</p><p>Click上保存錯誤標誌將導入的VPN添加到您的VPN list</p><p>Connect的VPN通過點擊VPN</p><p>If的名字有錯誤或警告日誌試著去了解警告/錯誤，並嘗試修復them</p> 
 
             <h2>
+            <a name="weakmd_title"></a>
+            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            <a href="#weakmd_title" class="section_anchor"> </a>
+            </h2>
+            
+            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+
+            <h2>
             <a name="samsung_broken_title"></a>
-            Samsung phones
+            三星手機
             <a href="#samsung_broken_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) 及更高版本</i></small> <br/>
 
             Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
 
@@ -21,11 +29,11 @@
             <a href="#faq_duplicate_notification_title" class="section_anchor"> </a>
             </h2>
             
-            如果Android是在系統內存中的一些並不需要的時刻（RAM）的壓力，應用程序和服務，從積極的內存中刪除。這將終止正在進行的VPN連接。為了確保連接/ OpenVPN的生存服務的運行具有更高的優先級。於具有較高優先級運行的應用程序必須顯示通知。關鍵的通知圖標是由系統中的前一個FAQ條目中描述的罰款。它並不能算作應用程序通知具有較高優先級運行的目的。
+            如果 Android 在系統記憶體 (RAM) 壓力下，會從現用的記憶體中移除在當下不需要的應用程式和服務。這將中止正在進行的 VPN 連線。為了確保連線/OpenVPN 不被終止，因此，此應用程式必須顯示在通知列中，才將具有較高優先的順序執行。如之前常見問題中說明的，鑰匙圖示是系統產生的，這不能當作是應用程式為了以更高的執行順序。
 
             <h2>
             <a name="faq_androids_clients_title"></a>
-            Differences between the OpenVPN Android clients
+            OpenVPN Android 用戶端之間的差異
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
@@ -33,31 +41,31 @@
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
-            Reinstalling VPN apps
+            重新安裝 VPN 應用程式
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
-            VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
+            當解除安裝或重新安裝，VPN 應用程式也會停止運作。詳細資訊起參閱 #80074
 
             <h2>
             <a name="vpn_tethering_title"></a>
-            VPN與可攜式無線基地台
+            VPN 與網路共用
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) 及更早版本</i></small> <br/>
 
-            The Android Tethering feature (over WiFi, USB or Bluetooth) and the VPNService API (used by this program) do not work together. For more details see the <a href="https://github.com/schwabe/ics-openvpn/issues/34">issue #34</a>
+            網路共用的功能 (透過 Wi-Fi、USB 或藍牙) 和 VPNService API (此程式使用) 不一起作用。更多細節請看 <a href="https://github.com/schwabe/ics-openvpn/issues/34">issue #34</a>
 
             <h2>
             <a name="broken_images"></a>
-            破碎的形象
+            損壞的映像
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) 及更早版本</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) 及更早版本</i></small> <br/>
 
             <p>Official HTC圖像，已知有一種奇怪的路由問題造成交通不流過隧道（也<a href="https://github.com/schwabe/ics-openvpn/issues/18">Issue 18</a>看到bug跟踪系統。）的的Xperia弧S和的Xperia雷</p><p>Older官方SONY圖像已被報導完全缺少VPNService從圖像。 （也<a href="https://github.com/schwabe/ics-openvpn/issues/29">Issue 29</a>看到bug跟踪系統。）</p><p>On自定義生成的TUN模塊可能會丟失照片或為/ dev / TUN的權利可能是錯誤的。一些CM9圖像需要在“設備特定的黑客”enabled.</p><p>Most重要的是“修復所有權”選項：如果您的設備有一個破碎的機器人形象，報告給你的供應商。越多的人誰給供應商報告問題時，他們越有可能解決it.</p>
 
@@ -74,13 +82,13 @@
             連線警告和通知時發出音效
             <a href="#faq_system_dialogs_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and earlier</i></small> <br/>
+            <small><i>4.4 (Kit Kat) 及更早版本</i></small> <br/>
 
-            VPN連接警告信息，告訴你，這個程序可以攔截所有流量是由系統施加的防止濫用VPNService的API。\ n此VPN連接的通知（關鍵標誌）也徵收Android系統的信號持續VPN連接。在某些圖像此通知播放聲音。\ nAndroid介紹這些系統對話框為自己的安全，並確保他們無法規避。 （在某些圖片這個不幸的是包括通知聲音）
+            系統的 VPN 連線警告說明這個應用程式可以攔截所有流量，這是防止 VPNService API 被濫用。<p>為了提示正在進行的 VPN 連線， Android 系統會產生通知 (鑰匙符號) ，在一些系統中，會發出提示聲。<p>Android 這麼做是為了確保你的安全。
 
             <h2>
             <a name="tap_mode"></a>
-            點擊模式
+            Tap 模式
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
@@ -93,21 +101,21 @@
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
 
-            VPN does not work at all for secondary users.
+            VPN 不會對次級使用者作用。
 
             <h2>
             <a name="faq_vpndialog43_title"></a>
-            Vpn確認對話框
+            VPN 確認對話框
             <a href="#faq_vpndialog43_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and later</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) 及更高版本</i></small> <br/>
 
-            “與Android 4.3啟動VPN確認是防範”覆蓋應用程序“，這將導致該對話框沒有反應，觸摸輸入。如果你有一個使用覆蓋一個應用程序可能會導致此行為。如果發現違規應用程序聯繫作者該應用程序的。這個問題影響到在Android 4.3及更高版本的所有VPN應用。另見<a href="https://github.com/schwabe/ics-openvpn/issues/185">Issue 185<a>了解更多詳細信息“
+            "從 Android 4.3 開始，VPN 確認防止「覆蓋應用程式」，會導致對話框觸碰時沒有反應。如果你的應用程式中有使用覆蓋應用程式的功能，可能或造成這個現象。如果，發現造成這個問題的應用程式，請聯絡這個此應用程式的作者。這個問題會影響到所有在 Android 4.3 及更高版本的 VPN 應用程式。另請參見：See also <a href="https://github.com/schwabe/ics-openvpn/issues/185">Issue 185<a> 了解更多詳細資訊。
 
             <h2>
             <a name="tls_cipher_alert_title"></a>
-            Connections fails with SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure
+            連接失敗，SSL23_GET_SERVER_HELLO:sslv3 握手失敗
             <a href="#tls_cipher_alert_title" class="section_anchor"> </a>
             </h2>
             
@@ -131,42 +139,42 @@
 
             <h2>
             <a name="tap_mode"></a>
-            點擊模式
+            Tap 模式
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            了嗎？你在開玩笑吧？不，攻牙模式真的不支持和發送更多的郵件，詢問是否將支持也無濟於事。
+            再一次？你在開玩笑吧？這真的不支援 tap 模式，就算再寄電子郵件詢問能不能支援也是沒用的。
 
             <h2>
             <a name="vpn_tethering_title"></a>
-            VPN與可攜式無線基地台
+            VPN 與網路共用
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) 及更高版本</i></small> <br/>
 
-            Tethering works while the VPN is active. The tethered connection will NOT use the VPN.
+            當 VPN 啟用時，網路共用仍可運作，但網路共用的連線不會透過 VPN。
 
             <h2>
             <a name="ab_kitkat_mss_title"></a>
-            Wrong MSS value for VPN connection
+            VPN 連線錯誤的最大分段大小 (MSS) 值
             <a href="#ab_kitkat_mss_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) 及更高版本</i></small> <br/>
 <small><i>4.4 (Kit Kat) - 4.4.1 (Kit Kat)</i></small> <br/>
 
-            Early KitKat version set the wrong MSS value on TCP connections (#61948). Try to enable the mssfix option to workaround this bug.
+            早期的 KitKat 版本在 TCP 連線中，設定錯誤的最大分段大小 (MSS) 值 (#61948)。試著開啟 mssfix 選項來繞開這個 bug。
 
             <h2>
             <a name="copying_log_entries"></a>
-            複製記錄檔條目
+            複製記錄項目
             <a href="#copying_log_entries" class="section_anchor"> </a>
             </h2>
             
-            要複製單個日誌條目按住上的日誌條目。若要複製/發送全部日誌請使用發送日誌選項。使用硬件菜單按鈕時，如果按鈕沒有在GUI可見。
+            若要複製單筆記錄，在此記錄項目上點選。若要複製/送出整筆記錄，使用送出記錄選項。如果這個按鈕在畫面中無法顯示，請使用實體的選單按鈕。
 
             <h2>
             <a name="ab_persist_tun_title"></a>
-            Persist tun mode
+            保持 tun 模式
             <a href="#ab_persist_tun_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
@@ -179,7 +187,7 @@
             <a href="#faq_routing_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) 及更高版本</i></small> <br/>
 
             路由和接口配置不經由傳統的ifconfig /路由命令，但通過使用VPNService API來完成。這將導致比其他操作系統不同的路由配置。 \ n此VPN隧道的配置包括IP地址和應該被路由通過該接口的網絡。特別是，沒有同行夥伴地址或網關地址是必要的或需要。特殊的路由到達VPN服務器不需要任一（例如，當使用重定向網關加）。導入配置時，應用程序將因此而忽略這些設置。該應用程序可確保與連接到服務器沒有通過VPN隧道路由到的VPNService API。\ n此VPNService API不允許指定網絡不應該通過VPN路由。作為一種變通方法的應用程序會自動檢測網絡，不應該被路由到隧道（如航線XXXX YYYY net_gateway），並計算一組路由排除此路線效仿其他平台的行為。日誌窗口顯示VPNService的在建立一個連接的配置\ nBehind場景：安卓4.4+確實使用策略路由。利用路由/ ifconfig命令將不顯示已安裝的路線。相反，使用IP規則，iptables的-t軋-L
 
@@ -189,18 +197,18 @@
             <a href="#ab_kitkat_reconnect_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) 及更高版本</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
             "Multiple users report that the mobile connection/mobile data connection is frequently dropped while using the VPN app. The behaviour seems to affect only some mobile provider/device combination and so far no cause/workaround for the bug could be identified. "
 
             <h2>
             <a name="ab_vpn_reachability_44_title"></a>
-            Remote networks not reachable
+            遠端網路無法連線
             <a href="#ab_vpn_reachability_44_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) 及更高版本</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
@@ -208,32 +216,32 @@
 
             <h2>
             <a name="ab_only_cidr_title"></a>
-            Non CIDR Routes
+            非無類別域間 (CIDR) 路由
             <a href="#ab_only_cidr_title" class="section_anchor"> </a>
             </h2>
             
-            Android supports only CIDR routes to the VPN. Since non-CIDR routes are almost never used, OpenVPN for Android will use a /32 for routes that are not CIDR and issue a warning.
+            Android 只支援無類別域間 (CIDR) 路由到此 VPN。因為非無類別域間 (CIDR) 路由幾乎不會被使用，OpenVPN for Android 將使用 /32 非無類別域間 (CIDR) 路由處理這個警告。
 
             <h2>
             <a name="ab_proxy_title"></a>
-            Proxy behaviour for VPNs
+            VPN 的代理行為
             <a href="#ab_proxy_title" class="section_anchor"> </a>
             </h2>
             
-            Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.
+            Android 沒有 DNS 伺服器設定時，會繼續使用你指定的行動/Wi-Fi 連線代理設定。OpenVPN for Android 會在日誌中記錄警告訊息。
 
             <h2>
             <a name="ab_not_route_to_vpn_title"></a>
-            Route to the configured IP address
+            路由到設定的 IP 位址
             <a href="#ab_not_route_to_vpn_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) 及更高版本</i></small> <br/>
 
             The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask
 
             <h2>
             <a name="tap_mode"></a>
-            點擊模式
+            Tap 模式
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             

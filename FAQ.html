@@ -40,6 +40,14 @@
             <p>Get a working config (tested on your computer or download from your provider/organisation)</p><p>If it is a single file with no extra pem/pkcs12 files you can email the file yourself and open the attachment. If you have multiple files put them on your sd card.</p><p>Click on the email attachment/Use the folder icon in the vpn list to import the config file</p><p>If there are errors about missing files put the missing files on your sd card.</p><p>Click on the save symbol to add the imported VPN to your VPN list</p><p>Connect the VPN by clicking on the name of the VPN</p><p>If there are error or warnings in the log try to understand the warnings/error and try to fix them</p> 
 
             <h2>
+            <a name="weakmd_title"></a>
+            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            <a href="#weakmd_title" class="section_anchor"> </a>
+            </h2>
+            
+            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+
+            <h2>
             <a name="samsung_broken_title"></a>
             Samsung phones
             <a href="#samsung_broken_title" class="section_anchor"> </a>
@@ -69,7 +77,7 @@
             Reinstalling VPN apps
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
             VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
 
@@ -78,7 +86,7 @@
             VPN and Tethering
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
 
             The Android Tethering feature (over WiFi, USB or Bluetooth) and the VPNService API (used by this program) do not work together. For more details see the <a href="https://github.com/schwabe/ics-openvpn/issues/34">issue #34</a>
@@ -88,7 +96,7 @@
             Broken Images
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
 

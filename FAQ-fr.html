@@ -7,17 +7,25 @@
             "<p>Obtenez une configuration fonctionnelle (testé sur un ordinateur ou téléchargé depuis le site de votre fournisseur/entreprise)</p><p>S'il s'agit d'un seul fichier avec aucun fichier Pem/Pks12 supplémentaire, vous pouvez vous envoyer celui par mail et l'ouvrir directement. Si vous avez plusieurs fichiers de configuration, mettez les sur votre carte SD.</p><p>Cliquez sur la pièce jointe de votre e-mail / Utilisez l'icône du dossier dans la liste des VPN pour importer le fichier de configuration.</p><p>Si des erreurs concernant des fichiers manquants apparaissent, veuillez mettre les fichiers manquant sur la carte SD.</p><p>Cliquez sur l'icône "enregistrer" pour ajouter le profil VPN importé à la liste.</p><p>Connectez le VPN en cliquant sur son nom dans cette liste.</p><p>Si vous rencontrez des erreurs ou des avertissements, veuillez lire ce qu'il y a d'écrit dans le log pour les corriger.</p> "
 
             <h2>
+            <a name="weakmd_title"></a>
+            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            <a href="#weakmd_title" class="section_anchor"> </a>
+            </h2>
+            
+            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+
+            <h2>
             <a name="samsung_broken_title"></a>
-            Samsung phones
+            Téléphones Samsung
             <a href="#samsung_broken_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) et ultérieur</i></small> <br/>
 
             Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
 
             <h2>
             <a name="faq_duplicate_notification_title"></a>
-            "Notifications multiples"
+            Notifications en double
             <a href="#faq_duplicate_notification_title" class="section_anchor"> </a>
             </h2>
             
@@ -25,7 +33,7 @@
 
             <h2>
             <a name="faq_androids_clients_title"></a>
-            Differences between the OpenVPN Android clients
+            Différences entre les clients OpenVPN Android
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
@@ -33,31 +41,31 @@
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
-            Reinstalling VPN apps
+            Réinstallation des applications VPN
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
-            VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
+            Les applications VPN peuvent s'arrêter de fonctionner lors d'une désinstallation suivie d'une réinstallation. Pour plus de détails, voir #80074
 
             <h2>
             <a name="vpn_tethering_title"></a>
-            VPN et Tethering
+            VPN et Partage
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) et antérieur</i></small> <br/>
 
-            La fonctionnalité de Tethering Android (sur WiFi, USB ou Bluetooth) et l'API VPNService (utilisé par ce programme) ne fonctionnent pas ensemble. Pour plus de détails, voir la <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=34" > page #34 </a>
+            La fonctionnalité Partage de connexion Android (sur WiFi, USB ou Bluetooth) et l'API VPNService (utilisé par ce programme) ne fonctionnent pas ensemble. Pour plus de détails voir <a href="https://github.com/schwabe/ics-openvpn/issues/34">issue #34</a>
 
             <h2>
             <a name="broken_images"></a>
-            "Images corrompues "
+            Images corrompues
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+            <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) et antérieur</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) et antérieur</i></small> <br/>
 
             <>Les ROMs officielles HTC sont connues pour avoir des problèmes de routage entraînant que le trafic ne passe pas par le tunnel VPN. (C.f.: <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=18">Issue 18</a> dans le "bug tacker")</p><p>Les ROMs officielles de SONY pour le Xperia Arc S et le Xperia Ray ont été signalé comme ne possédant pas le service VPN. Toute autre ROM SONY peut avoir le même problème.  (C.f.: <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=29">Issue 29</a> dans le "bug tacker")</p><p>Sur les ROM personnalisées le module TUN peut être manquant ou les droits de /dev/tun peuvent être incorrects. Certaines ROM CM9 peuvent nécessiter d'utiliser l'option de correction des droits de /dev/tun accessible depuis les "Options générales"/</p><p>Important: Si votre ROM a un problème, contactez le vendeur, il se peut que qu'il vous fournisse un patch.</p>
 
@@ -74,14 +82,14 @@
             "Avertissement de connexion et son de notification"
             <a href="#faq_system_dialogs_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and earlier</i></small> <br/>
+            <small><i>4.4 (Kit Kat) et antérieur</i></small> <br/>
 
             "L'avertissement de connexion au VPN qui vous informe que cette application peut intercepter tout le trafic est imposé par le système pour éviter les abus de l'API du service VPN.<p>La notification de connexion au VPN (Le symbole qui ressemble à une clé) est aussi imposé par le système Android pour signaler une connexion VPN en cours de fonctionnement.
 Sur certaines images, cette notification joue un son.<p>Android à introduit ces dialogues système pour votre propre sécurité et à fait en sorte d'être impossible à contourner. (Cela peut inclure en plus une notification sonore pour certaines images)"
 
             <h2>
             <a name="tap_mode"></a>
-            "Mode TAP"
+            Mode Tap
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
@@ -89,26 +97,26 @@ Sur certaines images, cette notification joue un son.<p>Android à introduit ces
 
             <h2>
             <a name="ab_secondary_users_title"></a>
-            Secondary tablet users
+            Utilisateurs de tablettes secondaires
             <a href="#ab_secondary_users_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
 
-            VPN does not work at all for secondary users.
+            Le VPN ne fonctionnera pas du tout pour tous les utilisateurs secondaires.
 
             <h2>
             <a name="faq_vpndialog43_title"></a>
-            Dialogue de confirmation du VPN sur Android 4,3 et plus
+            Fenêtre de confirmation du VPN
             <a href="#faq_vpndialog43_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and later</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) et ultérieur</i></small> <br/>
 
             "À partir d'Android 4.3  la confirmation VPN est gardée contre les "applications recouvrante". Cela se traduit par la boîte de dialogue qui ne réagi pas à la saisie tactile. Si vous avez une application qui utilise des superpositions, elle peut causer ce comportement. Si vous trouvez une application délinquante contacter l'auteur de l'application. Ce problème affecte toutes les applications VPN sur Android 4.3 et plus. Voir aussi  <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=185">Issue 185<a> pour plus de détails"
 
             <h2>
             <a name="tls_cipher_alert_title"></a>
-            Connections fails with SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure
+            Échec de la connexion avec l'erreur SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure
             <a href="#tls_cipher_alert_title" class="section_anchor"> </a>
             </h2>
             
@@ -132,7 +140,7 @@ Sur certaines images, cette notification joue un son.<p>Android à introduit ces
 
             <h2>
             <a name="tap_mode"></a>
-            "Mode TAP"
+            Mode Tap
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
@@ -140,22 +148,22 @@ Sur certaines images, cette notification joue un son.<p>Android à introduit ces
 
             <h2>
             <a name="vpn_tethering_title"></a>
-            VPN et Tethering
+            VPN et Partage
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) et ultérieur</i></small> <br/>
 
-            Tethering works while the VPN is active. The tethered connection will NOT use the VPN.
+            Le partage fonctionne tandis que le VPN est actif. La connexion partagée n'utilisera pas le VPN.
 
             <h2>
             <a name="ab_kitkat_mss_title"></a>
-            Wrong MSS value for VPN connection
+            Valeur MSS erronée pour la connexion VPN
             <a href="#ab_kitkat_mss_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) et ultérieur</i></small> <br/>
 <small><i>4.4 (Kit Kat) - 4.4.1 (Kit Kat)</i></small> <br/>
 
-            Early KitKat version set the wrong MSS value on TCP connections (#61948). Try to enable the mssfix option to workaround this bug.
+            Les versions antérieures à KitKat définissent une valeur MSS erronée (#61948). Essayez d'activer l'option mssfix pour contourner ce bug.
 
             <h2>
             <a name="copying_log_entries"></a>
@@ -167,7 +175,7 @@ Sur certaines images, cette notification joue un son.<p>Android à introduit ces
 
             <h2>
             <a name="ab_persist_tun_title"></a>
-            Persist tun mode
+            Mode tun persistant
             <a href="#ab_persist_tun_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
@@ -180,28 +188,28 @@ Sur certaines images, cette notification joue un son.<p>Android à introduit ces
             <a href="#faq_routing_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) et ultérieur</i></small> <br/>
 
             La configuration du routage et des interfaces n'est pas faite par l'intermédiaire des commandes traditionnelles ifconfig/route, mais en utilisant l'API VPNService. Il en résulte une configuration de routage différente que sur les autres systèmes d'exploitation. <p>La configuration du tunnel VPN se compose de l'adresse IP et des réseaux qui doivent être routés via cette interface. En particulier aucune adresse de pair ou de passerelle n'est nécessaire ou requise. Des routes spéciales pour atteindre le serveur VPN (par exemple ajoutées lorsque vous utilisez "redirect-gateway") ne sont pas nécessaires. L'application ignore par conséquent ces paramètres lors de l'importation d'une configuration. L'application assure avec l'API VPNService que la connexion au serveur ne passe pas par le tunnel VPN.<p>L'API VPNService ne permet pas de spécifier les réseaux qui ne doivent pas être routés via le VPN. Pour contourner ce problème, l'application essaye de détecter les réseaux qui ne doivent pas être routés par le tunnel (ex. route x.x.x.x y.y.y.y net_gateway) et calcule un ensemble de routes qui exclut cette route pour mimer le comportement des autres plates-formes. La fenêtre des logs montre la configuration de VPNService lors d'une connexion.<p>En coulisse: Android 4.4+ n'utilise pas la politique du routage. Utiliser route/ifconfig n'affichera pas les routes installés. Utilisez plutôt ip rule, iptables -t mangle -L
 
             <h2>
             <a name="ab_kitkat_reconnect_title"></a>
-            Random disconnects from mobile network
+            Déconnexion aléatoire du réseau mobile
             <a href="#ab_kitkat_reconnect_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) et ultérieur</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            "Multiple users report that the mobile connection/mobile data connection is frequently dropped while using the VPN app. The behaviour seems to affect only some mobile provider/device combination and so far no cause/workaround for the bug could be identified. "
+            "Plusieurs utilisateurs ont signalés des prêtes de paquets durant l'utilisation d'un VPN sur leur connexion mobile. Ce comportement semble lier à certains fournisseurs, il n'y a pas de contournement connu ou de bug que l'on puisse régler."
 
             <h2>
             <a name="ab_vpn_reachability_44_title"></a>
-            Remote networks not reachable
+            Réseau distant injoignable
             <a href="#ab_vpn_reachability_44_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) et ultérieur</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
@@ -209,32 +217,32 @@ Sur certaines images, cette notification joue un son.<p>Android à introduit ces
 
             <h2>
             <a name="ab_only_cidr_title"></a>
-            Non CIDR Routes
+            Routes non CIDR
             <a href="#ab_only_cidr_title" class="section_anchor"> </a>
             </h2>
             
-            Android supports only CIDR routes to the VPN. Since non-CIDR routes are almost never used, OpenVPN for Android will use a /32 for routes that are not CIDR and issue a warning.
+            Android ne prend en charge que les routes CIDR vers VPN. Étant donné que les routes non-CIDR ne sont pratiquement jamais utilisées, OpenVPN pour Android utilisera un /32 pour les routes ne sont pas CIDR et émettre un avertissement.
 
             <h2>
             <a name="ab_proxy_title"></a>
-            Proxy behaviour for VPNs
+            Comportement proxy pour les VPN
             <a href="#ab_proxy_title" class="section_anchor"> </a>
             </h2>
             
-            Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.
+            Android va continuer à utiliser vos paramètres de proxy spécifiés pour la connexion mobile / Wi-Fi lorsque aucun serveur DNS n'est définis. OpenVPN pour Android vous avertira à ce sujet dans le log.
 
             <h2>
             <a name="ab_not_route_to_vpn_title"></a>
-            Route to the configured IP address
+            Route vers l'adresse IP configurée
             <a href="#ab_not_route_to_vpn_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) et ultérieur</i></small> <br/>
 
-            The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask
+            L'adresse IP du client, et les adresses IP de ce réseau ne sont pas routées par le VPN. OpenVPN contourne ce problème en ajoutant une route qui corresponds à l’adresse IP et le Masque de sous réseau du client
 
             <h2>
             <a name="tap_mode"></a>
-            "Mode TAP"
+            Mode Tap
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             

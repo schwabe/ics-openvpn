@@ -41,9 +41,9 @@ if not exist openvpn\.git (
 )
 
 if [%1] == [] (
-    ndk-build -j 8 USE_BREAKPAD=0
+    ndk-build USE_SHORT_COMMANDS=1 -j 8 USE_BREAKPAD=0
 ) else (
-    ndk-build %*
+    ndk-build USE_SHORT_COMMANDS=1 %*
 )
 
 if not errorlevel 0 goto error

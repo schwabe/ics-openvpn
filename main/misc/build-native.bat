@@ -48,7 +48,7 @@ if [%1] == [] (
 
 if not errorlevel 0 goto error
 
-rmdir /Q /S ovpnlibs
+if exist ovpnlibs rmdir /Q /S ovpnlibs
 
 cd libs
 mkdir ..\ovpnlibs

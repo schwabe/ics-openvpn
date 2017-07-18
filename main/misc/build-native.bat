@@ -41,14 +41,14 @@ if not exist openvpn\.git (
 )
 
 if [%1] == [] (
-    ndk-build USE_SHORT_COMMANDS=1 -j 8 USE_BREAKPAD=0
+    call ndk-build USE_SHORT_COMMANDS=1 -j 8 USE_BREAKPAD=0
 ) else (
-    ndk-build USE_SHORT_COMMANDS=1 %*
+    call ndk-build USE_SHORT_COMMANDS=1 %*
 )
 
 if not errorlevel 0 goto error
 
-rmdir /Q /S ovpnlibs
+if exist ovpnlibs rmdir /Q /S ovpnlibs
 
 cd libs
 mkdir ..\ovpnlibs

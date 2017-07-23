@@ -399,7 +399,7 @@ public class ConfigParser {
             np.mCustomRoutesv6 = customIPv6Routes;
         }
 
-        Vector<String> routeNoPull = getOption("route-nopull", 1, 1);
+        Vector<String> routeNoPull = getOption("route-nopull", 0, 0);
         if (routeNoPull!=null)
             np.mRoutenopull=true;
 

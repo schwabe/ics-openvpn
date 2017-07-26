@@ -451,8 +451,12 @@ public class VpnProfile implements Serializable, Cloneable {
             if (!TextUtils.isEmpty(mIPv4Address))
                 cfg += "ifconfig " + cidrToIPAndNetmask(mIPv4Address) + "\n";
 
-            if (!TextUtils.isEmpty(mIPv6Address))
-                cfg += "ifconfig-ipv6 " + mIPv6Address + "\n";
+            if (!TextUtils.isEmpty(mIPv6Address)) {
+                // Use our own ip as gateway since we ignore it anyway
+                String fakegw = mIPv6Address.split("/", 2)[0];
+                cfg += "ifconfig-ipv6 " + mIPv6Address + " " + fakegw  +"\n";
+            }
+
         }
 
         if (mUsePull && mRoutenopull)
@@ -1075,7 +1079,6 @@ public class VpnProfile implements Serializable, Cloneable {
 
 
         try {
-
             /* ECB is perfectly fine in this special case, since we are using it for
                the public/private part in the TLS exchange
              */

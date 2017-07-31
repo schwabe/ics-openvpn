@@ -21,9 +21,9 @@
 
         <EditTextPreference
             android:dependency="checkRemoteCN"
+            android:dialogMessage="Field  in  the X.509 certificate subject to be used as the username (default=CN)."
             android:key="remotex509name"
             android:persistent="false"
-            android:dialogMessage="Field  in  the X.509 certificate subject to be used as the username (default=CN)."
             android:title="X509 Username Field" />
 
     </PreferenceCategory>

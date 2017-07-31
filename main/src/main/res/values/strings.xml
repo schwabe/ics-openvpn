@@ -42,13 +42,14 @@
     <string name="duplicate_profile_name">Please enter a unique Profile Name</string>
     <string name="profilename">Profile Name</string>
     <string name="no_keystore_cert_selected">You must select a User certificate</string>
+    <string name="no_ca_cert_selected">You must select a CA certificate</string>
     <string name="no_error_found">No error found</string>
     <string name="config_error_found">Error in Configuration</string>
     <string name="ipv4_format_error">Error parsing the IPv4 address</string>
     <string name="custom_route_format_error">Error parsing the custom routes</string>
     <string name="pw_query_hint">(leave empty to query on demand)</string>
     <string name="vpn_shortcut">OpenVPN Shortcut</string>
-    <string name="vpn_launch_title">Connect to VPN</string>
+    <string name="vpn_launch_title">Connecting to VPN…</string>
     <string name="shortcut_profile_notfound">Profile specified in shortcut not found</string>
     <string name="random_host_prefix">Random Host Prefix</string>
     <string name="random_host_summary">Adds 6 random chars in front of hostname</string>
@@ -162,7 +163,7 @@
     <string name="private_key_password">Private Key Password</string>
     <string name="password">Password</string>
     <string name="file_icon">file icon</string>
-    <string name="tls_authentication">TLS Authentication</string>
+    <string name="tls_authentication">TLS Authentication/Encryption</string>
     <string name="generated_config">Generated Config</string>
     <string name="generalsettings">Settings</string>
     <string name="owner_fix_summary">Tries to set the owner of /dev/tun to system. Some CM9 images need this to make the VPNService API work. Requires root.</string>
@@ -249,7 +250,7 @@
     <string name="state_tcp_connect">Connecting (TCP)</string>
     <string name="state_auth_failed">Authentication failed</string>
     <string name="state_nonetwork">Waiting for usable network</string>
-    <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
+    <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
     <string name="notifcation_title_notconnect">Not connected</string>
     <string name="start_vpn_title">Connecting to VPN %s</string>
     <string name="start_vpn_ticker">Connecting to VPN %s</string>
@@ -276,7 +277,7 @@
     <string name="no_external_app_allowed">No app allowed to use external API</string>
     <string name="allowed_apps">Allowed apps: %s</string>
     <string name="clearappsdialog">Clear list of allowed external apps?\nCurrent list of allowed apps:\n\n%s</string>
-    <string name="screenoff_summary">"Pause VPN when screen is off and less than 64 kB transferred data in 60s. When the \"Persistent Tun\" option is enabled pausing the VPN will leave your device with NO network connectivity. Without the \"Persistent Tun\" option the device will have no VPN connection/protection.</string>
+    <string name="screenoff_summary">Pause VPN when screen is off and less than 64 kB transferred data in 60s. When the \"Persistent Tun\" option is enabled pausing the VPN will leave your device with NO network connectivity. Without the \"Persistent Tun\" option the device will have no VPN connection/protection.</string>
     <string name="screenoff_title">Pause VPN connection after screen off</string>
     <string name="screenoff_pause">Pausing connection in screen off state: less than %1$s in %2$ss</string>
     <string name="screen_nopersistenttun">Warning: Persistent tun not enabled for this VPN. Traffic will use the normal Internet connection when the screen is off.</string>
@@ -309,7 +310,7 @@
     <string name="logview_options">View options</string>
     <string name="unhandled_exception">Unhandled exception: %1$s\n\n%2$s</string>
     <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
-    <string name="faq_system_dialog_xposed">If you have rooted your Android device you can install the &lt;a href=\"http://xposed.info/\"&gt;Xposed framework&lt;/a&gt; and a the &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN Dialog confirm module&lt;/a&gt; at your own risk"</string>
+    <string name="faq_system_dialog_xposed">If you have rooted your Android device you can install the &lt;a href=\"http://xposed.info/\"&gt;Xposed framework&lt;/a&gt; and the &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;VPN Dialog confirm module&lt;/a&gt; at your own risk"</string>
     <string name="full_licenses">Full licenses</string>
     <string name="blocklocal_summary">Networks directly connected to the local interfaces will not be routed over the VPN. Deselecting this option will redirect all traffic intented for local networks to the VPN.</string>
     <string name="blocklocal_title">Bypass VPN for local networks</string>
@@ -320,6 +321,7 @@
     <string name="import_log">Import log:</string>
     <string name="ip_looks_like_subnet">Vpn topology \"%3$s\" specified but ifconfig %1$s %2$s looks more like an IP address with a network mask. Assuming \"subnet\" topology.</string>
     <string name="mssfix_invalid_value">The MSS override value has to be a integer between 0 and 9000</string>
+    <string name="mtu_invalid_value">The MTU override value has to be a integer between 64 and 9000</string>
     <string name="mssfix_value_dialog">Announce to TCP sessions running over the tunnel that they should limit their send packet sizes such that after OpenVPN has encapsulated them, the resulting UDP packet size that OpenVPN sends to its peer will not exceed this number of bytes. (default is 1450)</string>
     <string name="mssfix_checkbox">Override MSS value of TCP payload</string>
     <string name="mssfix_dialogtitle">Set MSS of TCP payload</string>
@@ -389,9 +391,6 @@
     <string name="protocol">Protocol</string>
     <string name="enabled_connection_entry">Enabled</string>
     <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
-    <string name="months_left">%d months left</string>
-    <string name="days_left">%d days left</string>
-    <string name="hours_left">%d hours left</string>
     <string name="permission_revoked">VPN permission revoked by OS (e.g. other VPN program started), stopping VPN</string>
     <string name="pushpeerinfo">Push Peer info</string>
     <string name="pushpeerinfosummary">Send extra information to the server, e.g. SSL version and Android version</string>
@@ -407,7 +406,9 @@
     <string name="samsung_broken">Even though Samsung phones are among the most selling Android phones, Samsung\'s firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.\n\nDNS does not work unless the DNS server in the VPN range.\n\nOn many Samsung 5.x devices the allowed/disallowed apps feature does not work.\nOn Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.</string>
     <string name="samsung_broken_title">Samsung phones</string>
     <string name="novpn_selected">No VPN selected.</string>
-    <string name="alwaysonvpn">VPN used on boot and for Always-On</string>
+    <string name="defaultvpn">Default VPN</string>
+    <string name="defaultvpnsummary">VPN used in places where a default VPN needed. These are currently on boot, for Always-On and the Quick Settings Tile.</string>
+    <string name="vpnselected">Currently selected VPN: \'%s\'</string>
     <string name="reconnect">Reconnect</string>
     <string name="qs_title">Toggle VPN</string>
     <string name="qs_connect">Connect to %s</string>
@@ -417,4 +418,34 @@
     <string name="state_waitconnectretry">Waiting %ss seconds between connection attempt</string>
     <string name="nought_alwayson_warning"><![CDATA[If you did not get a VPN confirmation dialog, you have \"Always on VPN\" enabled for another app. In that case only that app is allowed to connect to a VPN. Check under Settings-> Networks more .. -> VPNS]]></string>
     <string name="management_socket_closed">Connection to OpenVPN closed (%s)</string>
+    <string name="change_sorting">Change sorting</string>
+    <string name="sort">Sort</string>
+    <string name="sorted_lru">Profiles sorted by last recently used</string>
+    <string name="sorted_az">Profiles sorted by name</string>
+    <string name="deprecated_tls_remote">Config uses option tls-remote that was deprecated in 2.3 and finally removed in 2.4</string>
+    <string name="auth_failed_behaviour">Behaviour on AUTH_FAILED</string>
+    <string name="graph">Graph</string>
+    <string name="use_logarithmic_scale">Use logarithmic scale</string>
+    <string name="notenoughdata">Not enough data</string>
+    <string name="avghour">Average per hour</string>
+    <string name="avgmin">Average per minute</string>
+    <string name="last5minutes">Last 5 minutes</string>
+    <string name="data_in">In</string>
+    <string name="data_out">Out</string>
+    <string name="bits_per_second">%.0f bit/s</string>
+    <string name="kbits_per_second">%.1f kbit/s</string>
+    <string name="mbits_per_second">%.1f Mbit/s</string>
+    <string name="gbits_per_second">%.1f Gbit/s</string>
+    <string name="weakmd">&lt;p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.&lt;/p>&lt;p>&lt;b>MD5 signatures are insecure and should not be used anymore.&lt;/b> MD5 collisions can be created in &lt;a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.&lt;/a>. You should update the VPN certificates as soon as possible.&lt;/p>&lt;p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the &lt;a href="https://github.com/OpenVPN/easy-rsa/releases">latest version&lt;/a>) or change md5 to sha256 and regenerate your certificates.&lt;/p>&lt;p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration&lt;/p></string>
+
+<string name="volume_byte">%.0f B</string>
+    <string name="volume_kbyte">%.1f kB</string>
+    <string name="volume_mbyte">%.1f MB</string>
+    <string name="volume_gbyte">%.1f GB</string>
+    <string name="channel_name_background">Connection statistics</string>
+    <string name="channel_description_background">Ongoing statistics of the established OpenVPN connection</string>
+    <string name="channel_name_status">Connection status change</string>
+    <string name="channel_description_status">Status changes of the  OpenVPN connection (Connecting, authenticating,…)</string>
+    <string name="weakmd_title">Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)</string>
+
 </resources>

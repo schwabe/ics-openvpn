@@ -5,13 +5,14 @@
 
 package de.blinkt.openvpn.api;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import de.blinkt.openvpn.core.Preferences;
 
 public class ExternalAppDatabase {
 
@@ -21,7 +22,7 @@ public class ExternalAppDatabase {
 		mContext =c;
 	}
 
-	private final String PREFERENCES_KEY = "PREFERENCES_KEY";
+	private final String PREFERENCES_KEY = "allowed_apps";
 
 	boolean isAllowed(String packagename) {
 		Set<String> allowedapps = getExtAppList();
@@ -31,7 +32,7 @@ public class ExternalAppDatabase {
 	}
 
 	public Set<String> getExtAppList() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+		SharedPreferences prefs = Preferences.getDefaultSharedPreferences(mContext);
         return prefs.getStringSet(PREFERENCES_KEY, new HashSet<String>());
 	}
 	
@@ -43,9 +44,13 @@ public class ExternalAppDatabase {
 	}
 
 	private void saveExtAppList( Set<String> allowedapps) {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);        
+		SharedPreferences prefs = Preferences.getDefaultSharedPreferences(mContext);
 		Editor prefedit = prefs.edit();
+
+		// Workaround for bug
 		prefedit.putStringSet(PREFERENCES_KEY, allowedapps);
+		int counter = prefs.getInt("counter", 0);
+		prefedit.putInt("counter", counter + 1);
 		prefedit.apply();
 	}
 	

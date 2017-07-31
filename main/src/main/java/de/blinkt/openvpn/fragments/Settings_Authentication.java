@@ -231,7 +231,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 		if(result.startsWith(VpnProfile.INLINE_TAG))
 			mTLSAuthFile.setSummary(R.string.inline_file_data);
         else if (result.startsWith(VpnProfile.DISPLAYNAME_TAG))
-            mExpectTLSCert.setSummary(getString(R.string.imported_from_file, VpnProfile.getDisplayName(result)));
+			mTLSAuthFile.setSummary(getString(R.string.imported_from_file, VpnProfile.getDisplayName(result)));
 		else
 			mTLSAuthFile.setSummary(result);
 	}

@@ -9,7 +9,7 @@
 ##  Description:
 ##      Create short files for compression test
 ##
-##  Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+##  Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
 ##
 ##---------------------------------------------------------------------------##
 

@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -514,12 +514,13 @@ void swd_search(lzo_swd_p s, lzo_uint node, lzo_uint cnt)
     const lzo_bytep b  = s_b(s);
     const lzo_bytep bp = s_b(s) + s->bp;
     const lzo_bytep bx = s_b(s) + s->bp + s->look;
+    swd_uintp succ3 = s_succ3(s);
     unsigned char scan_end1;
 
     assert(s->m_len > 0);
 
     scan_end1 = bp[m_len - 1];
-    for ( ; cnt-- > 0; node = s_succ3(s)[node])
+    for ( ; cnt-- > 0; node = succ3[node])
     {
         p1 = bp;
         p2 = b + node;

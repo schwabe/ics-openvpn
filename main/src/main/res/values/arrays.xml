@@ -20,6 +20,7 @@
         <item translatable="false">0</item>
         <item translatable="false">1</item>
         <item>Unspecified</item>
+        <item>Encryption (--tls-crypt)</item>
     </string-array>
     <string-array name="crm_entries">
         <item>No reconnection retries</item>
@@ -27,5 +28,10 @@
         <item>Five reconnection retries</item>
         <item>Fifty reconnection retries</item>
         <item>Unlimited reconnection retries</item>
+    </string-array>
+    <string-array name="auth_retry_type">
+        <item>Disconnect, forget password</item>
+        <item>Disconnect, keep password</item>
+        <item>Ignore, retry</item>
     </string-array>
 </resources>

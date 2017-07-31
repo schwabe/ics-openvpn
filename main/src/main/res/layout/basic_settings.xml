@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <include layout="@layout/keystore_selector" />
 
@@ -105,7 +105,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone" >
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <TextView
                     style="@style/item"
@@ -159,6 +160,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            tools:visibility="visible"
             android:visibility="gone" >
 
             <TextView
@@ -189,6 +191,23 @@
                 android:layout_marginRight="8dip"
                 android:hint="@string/pw_query_hint"
                 android:inputType="textPassword" />
+
+            <TextView
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:text="@string/auth_failed_behaviour"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <Spinner
+                android:id="@+id/auth_retry"
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:prompt="@string/auth_failed_behaviour"
+                android:entries="@array/auth_retry_type"
+                />
+
         </LinearLayout>
 
         <LinearLayout

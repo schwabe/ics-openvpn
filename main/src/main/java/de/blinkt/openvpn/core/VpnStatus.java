@@ -15,14 +15,17 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.Queue;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 
 public class VpnStatus {
 
 
-    public static LinkedList<LogItem> logbuffer;
+    private static final LinkedList<LogItem> logbuffer;
 
     private static Vector<LogListener> logListener;
     private static Vector<StateListener> stateListener;
@@ -34,8 +37,14 @@ public class VpnStatus {
 
     private static int mLastStateresid = R.string.state_noprocess;
 
-    private static long mlastByteCount[] = {0, 0, 0, 0};
     private static HandlerThread mHandlerThread;
+
+    private static String mLastConnectedVPNUUID;
+    static boolean readFileLog =false;
+    final static java.lang.Object readFileLock = new Object();
+
+
+    public static TrafficHistory trafficHistory;
 
     public static void logException(LogLevel ll, String context, Exception e) {
         StringWriter sw = new StringWriter();
@@ -120,21 +129,26 @@ public class VpnStatus {
     }
 
     public static void flushLog() {
-        mLogFileHandler.sendEmptyMessage(LogFileHandler.FLUSH_TO_DISK);
+        if (mLogFileHandler!=null)
+            mLogFileHandler.sendEmptyMessage(LogFileHandler.FLUSH_TO_DISK);
     }
 
-    public enum ConnectionStatus {
-        LEVEL_CONNECTED,
-        LEVEL_VPNPAUSED,
-        LEVEL_CONNECTING_SERVER_REPLIED,
-        LEVEL_CONNECTING_NO_SERVER_REPLY_YET,
-        LEVEL_NONETWORK,
-        LEVEL_NOTCONNECTED,
-        LEVEL_START,
-        LEVEL_AUTH_FAILED,
-        LEVEL_WAITING_FOR_USER_INPUT,
-        UNKNOWN_LEVEL
+    public static void setConnectedVPNProfile(String uuid) {
+        mLastConnectedVPNUUID = uuid;
+        for (StateListener sl: stateListener)
+            sl.setConnectedVPN(uuid);
     }
+
+
+    public static String getLastConnectedVPNProfile()
+    {
+        return mLastConnectedVPNUUID;
+    }
+
+    public static void setTrafficHistory(TrafficHistory trafficHistory) {
+        VpnStatus.trafficHistory = trafficHistory;
+    }
+
 
     public enum LogLevel {
         INFO(2),
@@ -155,14 +169,17 @@ public class VpnStatus {
 
         public static LogLevel getEnumByValue(int value) {
             switch (value) {
-                case 1:
-                    return INFO;
                 case 2:
+                    return INFO;
+                case -2:
                     return ERROR;
-                case 3:
+                case 1:
                     return WARNING;
+                case 3:
+                    return VERBOSE;
                 case 4:
                     return DEBUG;
+
                 default:
                     return null;
             }
@@ -170,10 +187,10 @@ public class VpnStatus {
     }
 
     // keytool -printcert -jarfile de.blinkt.openvpn_85.apk
-    public static final byte[] officalkey = {-58, -42, -44, -106, 90, -88, -87, -88, -52, -124, 84, 117, 66, 79, -112, -111, -46, 86, -37, 109};
-    public static final byte[] officaldebugkey = {-99, -69, 45, 71, 114, -116, 82, 66, -99, -122, 50, -70, -56, -111, 98, -35, -65, 105, 82, 43};
-    public static final byte[] amazonkey = {-116, -115, -118, -89, -116, -112, 120, 55, 79, -8, -119, -23, 106, -114, -85, -56, -4, 105, 26, -57};
-    public static final byte[] fdroidkey = {-92, 111, -42, -46, 123, -96, -60, 79, -27, -31, 49, 103, 11, -54, -68, -27, 17, 2, 121, 104};
+    static final byte[] officalkey = {-58, -42, -44, -106, 90, -88, -87, -88, -52, -124, 84, 117, 66, 79, -112, -111, -46, 86, -37, 109};
+    static final byte[] officaldebugkey = {-99, -69, 45, 71, 114, -116, 82, 66, -99, -122, 50, -70, -56, -111, 98, -35, -65, 105, 82, 43};
+    static final byte[] amazonkey = {-116, -115, -118, -89, -116, -112, 120, 55, 79, -8, -119, -23, 106, -114, -85, -56, -4, 105, 26, -57};
+    static final byte[] fdroidkey = {-92, 111, -42, -46, 123, -96, -60, 79, -27, -31, 49, 103, 11, -54, -68, -27, 17, 2, 121, 104};
 
 
     private static ConnectionStatus mLastLevel = ConnectionStatus.LEVEL_NOTCONNECTED;
@@ -185,7 +202,7 @@ public class VpnStatus {
         logListener = new Vector<>();
         stateListener = new Vector<>();
         byteCountListener = new Vector<>();
-
+        trafficHistory = new TrafficHistory();
 
         logInformation();
 
@@ -198,6 +215,8 @@ public class VpnStatus {
 
     public interface StateListener {
         void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level);
+
+        void setConnectedVPN(String uuid);
     }
 
     public interface ByteCountListener {
@@ -237,7 +256,8 @@ public class VpnStatus {
     }
 
     public synchronized static void addByteCountListener(ByteCountListener bcl) {
-        bcl.updateByteCount(mlastByteCount[0], mlastByteCount[1], mlastByteCount[2], mlastByteCount[3]);
+        TrafficHistory.LastDiff diff = trafficHistory.getLastDiff(null);
+        bcl.updateByteCount(diff.getIn(), diff.getOut(), diff.getDiffIn(),diff.getDiffOut());
         byteCountListener.add(bcl);
     }
 
@@ -341,7 +361,7 @@ public class VpnStatus {
 
     }
 
-    public static void updateStateString(String state, String msg) {
+    static void updateStateString(String state, String msg) {
         int rid = getLocalizedState(state);
         ConnectionStatus level = getLevel(state);
         updateStateString(state, msg, rid, level);
@@ -365,7 +385,7 @@ public class VpnStatus {
         for (StateListener sl : stateListener) {
             sl.updateState(state, msg, resid, level);
         }
-        //newLogItem(new LogItem((LogLevel.DEBUG), String.format("New OpenVPN Status (%s->%s): %s",state,level.toString(),msg)));
+        newLogItem(new LogItem((LogLevel.DEBUG), String.format("New OpenVPN Status (%s->%s): %s",state,level.toString(),msg)));
     }
 
     public static void logInfo(String message) {
@@ -384,7 +404,7 @@ public class VpnStatus {
         newLogItem(new LogItem(LogLevel.DEBUG, resourceId, args));
     }
 
-    private static void newLogItem(LogItem logItem) {
+    static void newLogItem(LogItem logItem) {
         newLogItem(logItem, false);
     }
 
@@ -446,17 +466,10 @@ public class VpnStatus {
 
 
     public static synchronized void updateByteCount(long in, long out) {
-        long lastIn = mlastByteCount[0];
-        long lastOut = mlastByteCount[1];
-        long diffIn = mlastByteCount[2] = Math.max(0, in - lastIn);
-        long diffOut = mlastByteCount[3] = Math.max(0, out - lastOut);
+        TrafficHistory.LastDiff diff = trafficHistory.add(in, out);
 
-
-        mlastByteCount = new long[]{in, out, diffIn, diffOut};
         for (ByteCountListener bcl : byteCountListener) {
-            bcl.updateByteCount(in, out, diffIn, diffOut);
+            bcl.updateByteCount(in, out, diff.getDiffIn(), diff.getDiffOut());
         }
     }
-
-
 }

@@ -1,5 +1,6 @@
 OpenVPN for Android -EduVPN fork
 =============
+[![Build Status](https://travis-ci.org/schwabe/ics-openvpn.svg?branch=master)](https://travis-ci.org/schwabe/ics-openvpn)
 
 The EduVPN changes are:
 
@@ -10,7 +11,12 @@ The EduVPN changes are:
 
 Description
 ------------
-With the new VPNService of Android API level 14+ (Ice Cream Sandwhich) it is possible to create a VPN service that does not root access. This project is a port of OpenVPN.
+With the new VPNService of Android API level 14+ (Ice Cream Sandwich) it is possible to create a VPN service that does not need root access. This project is a port of OpenVPN.
+
+<a href="https://f-droid.org/repository/browse/?fdid=de.blinkt.openvpn" target="_blank">
+<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
+<a href="https://play.google.com/store/apps/details?id=de.blinkt.openvpn" target="_blank">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80"/></a>
 
 Developing
 ---------------
@@ -44,16 +50,13 @@ For example `ca mycafile.pem` becomes
   -----END CERTIFICATE-----
   </ca>
 ```
-Fotnotes
+Footnotes
 -----------
-Please that OpenVPN used by this project is under GPLv2. 
+Please note that OpenVPN used by this project is under GPLv2. 
 
 If you cannot or do not want to use the Play Store you can [download the apk files directly](http://plai.de/android/) . 
 
-The F-Droid project also [builds and distributes the application](https://f-droid.org/repository/browse/?fdid=de.blinkt.openvpn). 
-
-If you want to donate you can donate to [arne-paypal@rfc2549.org via paypal](https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&cmd=_s-xclick).
-
+If you want to donate you can donate to [arne-paypal@rfc2549.org via paypal](https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&cmd=_s-xclick), or alternatively if you believe in fancy Internet money you can use Bitcoin: 1EgjL1YQYS4V2TR4GuJtX1chmVCsZHDqSQ
 
 The old official or main repository was a Mercurial (hg) repository at http://code.google.com/p/ics-openvpn/source/
 

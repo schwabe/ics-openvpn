@@ -1,12 +1,17 @@
+/*
+ * Copyright (c) 2012-2017 Arne Schwabe
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ */
+
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.0'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }

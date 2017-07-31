@@ -48,6 +48,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -106,7 +108,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         // Permission declined, do nothing
-        if (grantResults[0] == PackageManager.PERMISSION_DENIED)
+        if (grantResults.length == 0 || grantResults[0] == PackageManager.PERMISSION_DENIED)
             return;
 
         // Reset file select dialogs
@@ -492,7 +494,14 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
 
             if (path.indexOf(':') != -1 && path.lastIndexOf('/') > path.indexOf(':')) {
                 String possibleDir = path.substring(path.indexOf(':') + 1, path.length());
+                // Unquote chars in the  path
+                try {
+                    possibleDir = URLDecoder.decode(possibleDir, "UTF-8");
+                } catch (UnsupportedEncodingException ignored) {}
+
                 possibleDir = possibleDir.substring(0, possibleDir.lastIndexOf('/'));
+
+
 
 
                 dirlist.add(new File(sdcard, possibleDir));

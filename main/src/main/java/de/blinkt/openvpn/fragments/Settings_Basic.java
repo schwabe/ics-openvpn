@@ -61,9 +61,10 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 	private EditText mKeyPassword;
 
 	private SparseArray<FileSelectLayout> fileselects = new SparseArray<>();
+    private Spinner mAuthRetry;
 
 
-	private void addFileSelectLayout (FileSelectLayout fsl, Utils.FileType type) {
+    private void addFileSelectLayout (FileSelectLayout fsl, Utils.FileType type) {
 		int i = fileselects.size() + CHOOSE_FILE_OFFSET;
 		fileselects.put(i, fsl);
 		fsl.setCaller(this, i, type);
@@ -136,6 +137,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 		mUserName = (EditText) mView.findViewById(R.id.auth_username);
 		mPassword = (EditText) mView.findViewById(R.id.auth_password);
 		mKeyPassword = (EditText) mView.findViewById(R.id.key_password);
+		mAuthRetry = (Spinner) mView.findViewById(id.auth_retry);
 
 		addFileSelectLayout(mCaCert, Utils.FileType.CA_CERTIFICATE);
 		addFileSelectLayout(mClientCert, Utils.FileType.CLIENT_CERTIFICATE);
@@ -145,6 +147,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 		mCaCert.setShowClear();
 
 		mType.setOnItemSelectedListener(this);
+		mAuthRetry.setOnItemSelectedListener(this);
 
 		mView.findViewById(R.id.select_keystore_button).setOnClickListener(this);
 
@@ -276,6 +279,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 		mProfile.mPassword = mPassword.getText().toString();
 		mProfile.mUsername = mUserName.getText().toString();
 		mProfile.mKeyPassword = mKeyPassword.getText().toString();
+		mProfile.mAuthRetry = mAuthRetry.getSelectedItemPosition();
 
 	}
 

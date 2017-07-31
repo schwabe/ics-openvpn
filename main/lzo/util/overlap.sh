@@ -7,7 +7,7 @@ set -e
 # This script runs the overlap example program
 # on a complete directory tree.
 #
-# Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+# Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
 #
 
 OVERLAP="./examples/overlap"

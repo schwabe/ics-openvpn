@@ -43,8 +43,9 @@
             style="@style/logWindowStatusTitle"/>
 
     <TextView
+
             android:id="@+id/speedStatus"
-            tools:text="Connected"
+            tools:text="Connected to a very long ipv4 and 3483489348238824829482384928"
             style="@style/logWindowStatusText"/>
 
 

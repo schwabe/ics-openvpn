@@ -1,9 +1,9 @@
 #!/bin/sh
 # Get modification time of a file or directory and pretty-print it.
 
-scriptversion=2010-08-21.06; # UTC
+scriptversion=2016-01-11.22; # UTC
 
-# Copyright (C) 1995-2015 Free Software Foundation, Inc.
+# Copyright (C) 1995-2017 Free Software Foundation, Inc.
 # written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, June 1995
 #
 # This program is free software; you can redistribute it and/or modify
@@ -219,6 +219,6 @@ echo $day $month $year
 # eval: (add-hook 'write-file-hooks 'time-stamp)
 # time-stamp-start: "scriptversion="
 # time-stamp-format: "%:y-%02m-%02d.%02H"
-# time-stamp-time-zone: "UTC"
+# time-stamp-time-zone: "UTC0"
 # time-stamp-end: "; # UTC"
 # End:

@@ -3,8 +3,9 @@
 #  Makefile --- Makefile for building the LZO library
 #
 #  This file is part of the LZO data compression library.
+#    http://www.oberhumer.com/opensource/lzo/
 #
-#  Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+#  Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
 #  All Rights Reserved.
 #
 
@@ -13,6 +14,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)
 LDADD = src/liblzo2.la
 lib_LTLIBRARIES =
 noinst_PROGRAMS =
+pkgconfig_DATA = lzo2.pc
 
 
 ##/***********************************************************************
@@ -20,35 +22,35 @@ noinst_PROGRAMS =
 ##************************************************************************/
 
 doc_DATA = AUTHORS COPYING NEWS THANKS doc/LZO.FAQ doc/LZO.TXT doc/LZOAPI.TXT
-EXTRA_DIST += BUGS CMakeLists.txt autoconf/shtool
+EXTRA_DIST += BUGS CMakeLists.txt lzo2.pc.cmakein autoconf/shtool
 
 # hooks for Automake targets
 dist-hook: dist-hook-1
 dist-hook-1:
-	cp -pR $(srcdir)/B/ $(srcdir)/asm/ $(srcdir)/doc/ $(srcdir)/util/ "$(distdir)/"
+	cp -pR '$(srcdir)/B/' '$(srcdir)/asm/' '$(srcdir)/doc/' '$(srcdir)/util/' '$(distdir)/'
 	-rm -f $(distdir)/util/*.dat
 
 check-local: all-am
-	./lzotest/lzotest -mlzo -n2 -q $(top_srcdir)/COPYING
+	./lzotest/lzotest$(EXEEXT) -mlzo -n2 -q '$(top_srcdir)/COPYING'
 	@echo
 	@echo "===== All checks passed. Type 'make test' for more exhaustive testing. ====="
 	@echo
 
 # special targets
 basic-test: all
-	./lzotest/lzotest -mlzo -n2 -q $(top_srcdir)/COPYING
-	./tests/align
-	./tests/chksum
-	./examples/simple
-	./minilzo/testmini
+	./lzotest/lzotest$(EXEEXT) -mlzo -n2 -q '$(top_srcdir)/COPYING'
+	./tests/align$(EXEEXT)
+	./tests/chksum$(EXEEXT)
+	./examples/simple$(EXEEXT)
+	./minilzo/testmini$(EXEEXT)
 
 test: all
-	./lzotest/lzotest -mavail -n10 -q $(top_srcdir)/COPYING
-	LZOTEST=./lzotest/lzotest$(EXEEXT) $(SHELL) -e "$(top_srcdir)/util/check.sh" "$(top_srcdir)"
-	./tests/align
-	./tests/chksum
-	./examples/simple
-	./minilzo/testmini
+	./lzotest/lzotest$(EXEEXT) -mavail -n10 -q '$(top_srcdir)/COPYING'
+	LZOTEST=./lzotest/lzotest$(EXEEXT) $(SHELL) '$(top_srcdir)/util/check.sh' '$(top_srcdir)'
+	./tests/align$(EXEEXT)
+	./tests/chksum$(EXEEXT)
+	./examples/simple$(EXEEXT)
+	./minilzo/testmini$(EXEEXT)
 	@echo
 	@echo "===== All tests passed. Now you are ready to install LZO. ====="
 	@echo

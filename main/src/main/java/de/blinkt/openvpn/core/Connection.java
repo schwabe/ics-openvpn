@@ -8,9 +8,10 @@ package de.blinkt.openvpn.core;
 import android.text.TextUtils;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 public class Connection implements Serializable, Cloneable {
-    public String mServerName = "openvpn.blinkt.de";
+    public String mServerName = "openvpn.example.com";
     public String mServerPort = "1194";
     public boolean mUseUdp = true;
     public String mCustomConfiguration = "";
@@ -36,7 +37,7 @@ public class Connection implements Serializable, Cloneable {
             cfg += " tcp-client\n";
 
         if (mConnectTimeout != 0)
-            cfg += String.format(" connect-timeout  %d\n", mConnectTimeout);
+            cfg += String.format(Locale.US, " connect-timeout  %d\n", mConnectTimeout);
 
 
         if (!TextUtils.isEmpty(mCustomConfiguration) && mUseCustomConfig) {

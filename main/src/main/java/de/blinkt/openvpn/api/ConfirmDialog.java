@@ -76,7 +76,6 @@ CompoundButton.OnCheckedChangeListener, DialogInterface.OnClickListener {
 			mAlert.setCanceledOnTouchOutside(false);
 			
 			mAlert.setOnShowListener (new OnShowListener() {
-				
 				@Override
 				public void onShow(DialogInterface dialog) {
 					mButton = mAlert.getButton(DialogInterface.BUTTON_POSITIVE);

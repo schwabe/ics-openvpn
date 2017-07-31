@@ -259,6 +259,7 @@ public class ConfigParser {
             "dhcp-renew",
             "dh",
             "group",
+            "allow-recursive-routing",
             "ip-win32",
             "management-hold",
             "management",
@@ -327,7 +328,6 @@ public class ConfigParser {
             "socks-proxy",
             "socks-proxy-retry",
             "explicit-exit-notify",
-            "mssfix"
     };
 
 
@@ -422,15 +422,21 @@ public class ConfigParser {
         if (direction != null)
             np.mTLSAuthDirection = direction.get(1);
 
-        Vector<Vector<String>> defgw = getAllOption("redirect-gateway", 0, 5);
+        Vector<String> tlscrypt = getOption("tls-crypt", 1, 1);
+        if (tlscrypt!=null) {
+            np.mUseTLSAuth = true;
+            np.mTLSAuthFilename = tlscrypt.get(1);
+            np.mTLSAuthDirection = "tls-crypt";
+        }
+
+        Vector<Vector<String>> defgw = getAllOption("redirect-gateway", 0, 7);
         if (defgw != null) {
-            np.mUseDefaultRoute = true;
-            checkRedirectParameters(np, defgw);
+            checkRedirectParameters(np, defgw, true);
         }
 
         Vector<Vector<String>> redirectPrivate = getAllOption("redirect-private", 0, 5);
         if (redirectPrivate != null) {
-            checkRedirectParameters(np, redirectPrivate);
+            checkRedirectParameters(np, redirectPrivate, false);
         }
         Vector<String> dev = getOption("dev", 1, 1);
         Vector<String> devtype = getOption("dev-type", 1, 1);
@@ -456,6 +462,18 @@ public class ConfigParser {
                 np.mMssFix = 1450; // OpenVPN default size
             }
         }
+
+
+        Vector<String> tunmtu = getOption("mtu", 1, 1);
+
+        if (tunmtu != null) {
+            try {
+                np.mTunMtu = Integer.parseInt(tunmtu.get(1));
+            } catch (NumberFormatException e) {
+                throw new ConfigParseError("Argument to --tun-mtu has to be an integer");
+            }
+        }
+
 
 
         Vector<String> mode = getOption("mode", 1, 1);
@@ -628,6 +646,19 @@ public class ConfigParser {
             }
         }
 
+        Vector<String> authretry = getOption("auth-retry", 1, 1);
+        if (authretry != null) {
+            if (authretry.get(1).equals("none"))
+                np.mAuthRetry = VpnProfile.AUTH_RETRY_NONE_FORGET;
+            else if (authretry.get(1).equals("nointeract"))
+                np.mAuthRetry = VpnProfile.AUTH_RETRY_NOINTERACT;
+            else if (authretry.get(1).equals("interact"))
+                np.mAuthRetry = VpnProfile.AUTH_RETRY_NOINTERACT;
+            else
+                throw new ConfigParseError("Unknown parameter to auth-retry: " + authretry.get(2));
+        }
+
+
         Vector<String> crlfile = getOption("crl-verify", 1, 2);
         if (crlfile != null) {
             // If the 'dir' parameter is present just add it as custom option ..
@@ -791,22 +822,34 @@ public class ConfigParser {
 
     }
 
-    private void checkRedirectParameters(VpnProfile np, Vector<Vector<String>> defgw) {
+    private void checkRedirectParameters(VpnProfile np, Vector<Vector<String>> defgw, boolean defaultRoute) {
+
+        boolean noIpv4 = false;
+        if (defaultRoute)
+
         for (Vector<String> redirect : defgw)
             for (int i = 1; i < redirect.size(); i++) {
                 if (redirect.get(i).equals("block-local"))
                     np.mAllowLocalLAN = false;
                 else if (redirect.get(i).equals("unblock-local"))
                     np.mAllowLocalLAN = true;
+                else if (redirect.get(i).equals("!ipv4"))
+                    noIpv4=true;
+                else if (redirect.get(i).equals("ipv6"))
+                    np.mUseDefaultRoutev6=true;
             }
+        if (defaultRoute && !noIpv4)
+            np.mUseDefaultRoute=true;
     }
 
     private boolean isUdpProto(String proto) throws ConfigParseError {
         boolean isudp;
-        if (proto.equals("udp") || proto.equals("udp6"))
+        if (proto.equals("udp") || proto.equals("udp4") || proto.equals("udp6"))
             isudp = true;
         else if (proto.equals("tcp-client") ||
                 proto.equals("tcp") ||
+                proto.equals("tcp4") ||
+                proto.endsWith("tcp4-client") ||
                 proto.equals("tcp6") ||
                 proto.endsWith("tcp6-client"))
             isudp = false;

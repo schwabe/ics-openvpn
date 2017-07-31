@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -133,7 +133,7 @@ static int do_file(const char *in_name, int compression_level)
 /*
  * Step 3: compress from 'in' to 'out' with LZO1X-999
  */
-    r = lzo1x_999_compress_level(in,in_len,out,&out_len,wrkmem,
+    r = lzo1x_999_compress_level(in, in_len, out, &out_len, wrkmem,
                                  dict, dict_len, 0, compression_level);
     if (r != LZO_E_OK)
     {
@@ -192,7 +192,7 @@ int __lzo_cdecl_main main(int argc, char *argv[])
 
     printf("\nLZO real-time data compression library (v%s, %s).\n",
            lzo_version_string(), lzo_version_date());
-    printf("Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer\nAll Rights Reserved.\n\n");
+    printf("Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer\nAll Rights Reserved.\n\n");
 
     progname = argv[0];
 

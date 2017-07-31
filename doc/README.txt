@@ -30,7 +30,8 @@ After that build the project using "gradle build" (Or use Android Studio).
 The project is converted to gradle and building with Eclipse is no longer supported.
 
 Alternatively, if the NDK build fails for some reason pre-built libraries can be downloaded
-(e.g. from plai.de/android) and placed under main/ovpnlibs/.
+(e.g. from plai.de/android) and placed under main/ovpnlibs/assets/(no)pie_openvpn.{ABI} 
+and main/ovpnlibs/jniLibs/{ABI}/*.so
 
 FAQ
 

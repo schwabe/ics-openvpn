@@ -764,7 +764,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     positiveIPv4Routes.add(dnsServer);
                 }
             } catch (Exception e) {
-                VpnStatus.logError("Error parsing DNS Server IP: " + mDnslist.get(0));
+                // If it looks like IPv6 ignore error
+                if (!mDnslist.get(0).contains(":"))
+                    VpnStatus.logError("Error parsing DNS Server IP: " + mDnslist.get(0));
             }
         }
 

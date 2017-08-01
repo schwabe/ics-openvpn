@@ -112,6 +112,7 @@ public class FaqFragment extends Fragment {
 
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.faq_howto_title, R.string.faq_howto),
 
+            new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.weakmd_title, R.string.weakmd),
             new FAQEntry(Build.VERSION_CODES.LOLLIPOP, -1, R.string.samsung_broken_title, R.string.samsung_broken),
 
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.faq_duplicate_notification_title, R.string.faq_duplicate_notification),
@@ -119,7 +120,7 @@ public class FaqFragment extends Fragment {
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, -1, R.string.faq_androids_clients_title, R.string.faq_android_clients),
 
 
-            new FAQEntry(Build.VERSION_CODES.LOLLIPOP, -1, R.string.ab_lollipop_reinstall_title, R.string.ab_lollipop_reinstall),
+            new FAQEntry(Build.VERSION_CODES.LOLLIPOP, Build.VERSION_CODES.LOLLIPOP_MR1, R.string.ab_lollipop_reinstall_title, R.string.ab_lollipop_reinstall),
 
 
             new FAQEntry(Build.VERSION_CODES.ICE_CREAM_SANDWICH, Build.VERSION_CODES.JELLY_BEAN_MR2, R.string.vpn_tethering_title, R.string.faq_tethering),

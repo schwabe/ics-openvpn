@@ -1,16 +1,23 @@
 OpenVPN for Android -EduVPN fork
 =============
+[![Build Status](https://travis-ci.org/schwabe/ics-openvpn.svg?branch=master)](https://travis-ci.org/schwabe/ics-openvpn)
 
 The EduVPN changes are:
 
-* [Librarify module](https://github.com/egeniq/ics-openvpn/commit/a7529a8093db723b2dd1809adcde84700d9dd7c4): This converts the submodule to a library with as less changes as possible.
-* [Change activity which opens when tapping notification](https://github.com/egeniq/ics-openvpn/commit/5d1778af0b5e43faaa24e2356c5383f5fd457dfe): Opens a different activity when tapping on the notification
-* [Ability to get IPv4 and IPv6 addresses from the service](https://github.com/egeniq/ics-openvpn/commit/ec9097df75af7be93beaea0e82ab544420d0569e): Allows us to get the IPv4 and IPv6 addresses.
-* [Fix parent activity problem](https://github.com/egeniq/ics-openvpn/commit/6ba82fdccb86ccd61b11c92d527ac7014f9ff06f): Opens the correct parent activity from the log window.
+* [Explicitly import support-v4 library](https://github.com/eduvpn/ics-openvpn/commit/b5eb68ea8749314342cd454cdda7766dbb36977c): Support-v4 was removed as a transitional dependency, so we have to import it explicitly now for the parent activity fix.
+* [Librarify module](https://github.com/eduvpn/ics-openvpn/commit/a7529a8093db723b2dd1809adcde84700d9dd7c4): This converts the submodule to a library with as less changes as possible.
+* [Change activity which opens when tapping notification](https://github.com/eduvpn/ics-openvpn/commit/5d1778af0b5e43faaa24e2356c5383f5fd457dfe): Opens a different activity when tapping on the notification
+* [Ability to get IPv4 and IPv6 addresses from the service](https://github.com/eduvpn/ics-openvpn/commit/ec9097df75af7be93beaea0e82ab544420d0569e): Allows us to get the IPv4 and IPv6 addresses.
+* [Fix parent activity problem](https://github.com/eduvpn/ics-openvpn/commit/6ba82fdccb86ccd61b11c92d527ac7014f9ff06f): Opens the correct parent activity from the log window.
 
 Description
 ------------
-With the new VPNService of Android API level 14+ (Ice Cream Sandwhich) it is possible to create a VPN service that does not root access. This project is a port of OpenVPN.
+With the new VPNService of Android API level 14+ (Ice Cream Sandwich) it is possible to create a VPN service that does not need root access. This project is a port of OpenVPN.
+
+<a href="https://f-droid.org/repository/browse/?fdid=de.blinkt.openvpn" target="_blank">
+<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
+<a href="https://play.google.com/store/apps/details?id=de.blinkt.openvpn" target="_blank">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80"/></a>
 
 Developing
 ---------------
@@ -44,16 +51,13 @@ For example `ca mycafile.pem` becomes
   -----END CERTIFICATE-----
   </ca>
 ```
-Fotnotes
+Footnotes
 -----------
-Please that OpenVPN used by this project is under GPLv2. 
+Please note that OpenVPN used by this project is under GPLv2. 
 
 If you cannot or do not want to use the Play Store you can [download the apk files directly](http://plai.de/android/) . 
 
-The F-Droid project also [builds and distributes the application](https://f-droid.org/repository/browse/?fdid=de.blinkt.openvpn). 
-
-If you want to donate you can donate to [arne-paypal@rfc2549.org via paypal](https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&cmd=_s-xclick).
-
+If you want to donate you can donate to [arne-paypal@rfc2549.org via paypal](https://www.paypal.com/cgi-bin/webscr?hosted_button_id=R2M6ZP9AF25LS&cmd=_s-xclick), or alternatively if you believe in fancy Internet money you can use Bitcoin: 1EgjL1YQYS4V2TR4GuJtX1chmVCsZHDqSQ
 
 The old official or main repository was a Mercurial (hg) repository at http://code.google.com/p/ics-openvpn/source/
 

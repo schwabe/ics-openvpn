@@ -24,8 +24,8 @@
 
         <ListPreference
             android:key="alwaysOnVpn"
-            android:title="@string/alwaysonvpn"
-            tools:summary="foo bar baz VPN"
+            android:title="@string/defaultvpn"
+            tools:summary="@string/defaultvpnsummary"
             />
 
         <CheckBoxPreference

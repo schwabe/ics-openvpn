@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -25,17 +25,31 @@
    http://www.oberhumer.com/opensource/lzo/
  */
 
+#undef _
 #ifndef NAME1
-#if (defined(__MACH__) && defined(__APPLE__))
+#if defined(__ELF__)
+#  define NAME1(a)           a
+#elif (defined(__MACH__) && defined(__APPLE__))
 #  define NAME1(a)      _ ## a
+#elif defined(_WIN32) && !defined(_WIN64)
+#  define NAME1(a)      _ ## a
+#elif defined(_WIN64)
+#  define NAME1(a)           a
 #else
 #  define NAME1(a)      _ ## a
 #  define NAME2(a)           a
 #endif
 #endif
+#define XNAME(a,b,c)    LZO_PP_ECONCAT3(NAME1(a),b,c)
 
 #ifndef LZO_PP_CONCAT2
 #  define LZO_PP_CONCAT2(a,b)   a ## b
+#endif
+#ifndef LZO_PP_CONCAT3
+#  define LZO_PP_CONCAT3(a,b,c) a ## b ## c
+#endif
+#ifndef LZO_PP_ECONCAT3
+#  define LZO_PP_ECONCAT3(a,b,c) LZO_PP_CONCAT3(a,b,c)
 #endif
 
 #ifndef p2align
@@ -50,21 +64,21 @@
 #  elif (defined(__MACH__) && defined(__APPLE__))
 #    define hiddenf(a)      .private_extern a
 #  else
-#    define hiddenf(a)
+#    define hiddenf(a)      /*empty*/
 #  endif
 #endif
 #ifndef typef
 #  if defined(__ELF__)
 #    define typef(a)        .type a,@function
 #  else
-#    define typef(a)
+#    define typef(a)        /*empty*/
 #  endif
 #endif
 #ifndef sizef
 #  if defined(__ELF__)
 #    define sizef(a,b)      .size a,b
 #  else
-#    define sizef(a,b)
+#    define sizef(a,b)      /*empty*/
 #  endif
 #endif
 
@@ -72,17 +86,17 @@
 .section .note.GNU-stack,"",@progbits
 #endif
 .text
-#if defined(_WIN32) || defined(__WIN32__)
-#  if defined(LZO_WIN32_FEAT_00)
-#    LZO_WIN32_FEAT_00
-#  else
+#if defined(_WIN32) && !defined(_WIN64)
+#if defined(LZO_WIN32_FEAT_00)
+LZO_WIN32_FEAT_00
+#else
 #if defined(__GNUC__) && !defined(__clang__)
 .globl @feat.00
 #endif
 @feat.00 = 1
-#  endif
 #endif
-#if defined(__ELF__) || (defined(__MACH__) && defined(__APPLE__)) || defined(_WIN32) || defined(__WIN32__) || defined(_WIN64) || defined(__WIN64__)
+#endif
+#if defined(__ELF__) || (defined(__MACH__) && defined(__APPLE__)) || defined(_WIN32) || defined(_WIN64)
 p2align(6)
 #else
 p2align(4)

@@ -2,6 +2,12 @@
 User visible changes for LZO -- a real-time data compression library
 ============================================================================
 
+Changes in 2.10 (01 Mar 2017)
+  * Improve CMake build support.
+  * Add support for pkg-config.
+  * Do not redefine "snprintf" so that the examples build with MSVC 2015.
+  * Assorted cleanups.
+
 Changes in 2.09 (04 Feb 2015)
   * Work around gcc bug #64516 that could affect architectures like
     armv4, armv5 and sparc.
@@ -16,10 +22,10 @@ Changes in 2.07 (25 Jun 2014)
     variants which could result in a possible buffer overrun when
     processing maliciously crafted compressed input data.
 
-    Fortunately this issue only affects 32-bit systems and also can only happen
+    Note that this issue only affects 32-bit systems and also can only happen
     if you use uncommonly huge buffer sizes where you have to decompress more
-    than 16 MiB (> 2^24 bytes) untrusted compressed bytes within a single
-    function call, so the practical implications are limited.
+    than 16 MiB (> 2^24 bytes) untrusted compressed bytes within a
+    *single* function call, so the practical implications are limited.
 
     POTENTIAL SECURITY ISSUE. CVE-2014-4607.
 

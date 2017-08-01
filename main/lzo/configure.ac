@@ -3,7 +3,7 @@
 #
 #  This file is part of the LZO data compression library.
 #
-#  Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+#  Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
 #  All Rights Reserved.
 #
 #  The LZO library is free software; you can redistribute it and/or
@@ -31,13 +31,13 @@
 # // Init
 # ************************************************************************/
 
-AC_COPYRIGHT([Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer.
+AC_COPYRIGHT([Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer.
 All Rights Reserved.
 This configure script may be copied, distributed and modified under the
 terms of the GNU General Public License; see COPYING for more details.])
 
 AC_PREREQ(2.69)
-AC_INIT([LZO],[2.09],[markus@oberhumer.com],[lzo],[http://www.oberhumer.com/opensource/lzo/])
+AC_INIT([LZO],[2.10],[markus@oberhumer.com],[lzo],[http://www.oberhumer.com/opensource/lzo/])
 AC_MSG_NOTICE([Configuring LZO $PACKAGE_VERSION])
 AC_CONFIG_SRCDIR(src/lzo_init.c)
 AC_CONFIG_AUX_DIR(autoconf)
@@ -78,6 +78,7 @@ AH_BOTTOM([#endif /* already included */])
 AC_ENABLE_STATIC
 AC_DISABLE_SHARED
 LT_INIT
+PKG_INSTALLDIR
 
 
 # /***********************************************************************
@@ -184,7 +185,7 @@ AC_CONFIG_COMMANDS_PRE([
     test "X$DEFS" != "X" && DEFS="$DEFS "
     DEFS="${DEFS}${my_DEFS}"
 ])
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile lzo2.pc])
 AC_OUTPUT
 
 
@@ -207,7 +208,7 @@ cat <<EOF
 
    LZO ${PACKAGE_VERSION} configured.
 
-   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or

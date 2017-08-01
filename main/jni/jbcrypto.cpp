@@ -8,6 +8,8 @@
 
 #include <jni.h>
 
+
+#include <internal/cryptlib.h>
 #include <openssl/ssl.h>
 #include <openssl/rsa.h>
 #include <openssl/objects.h>
@@ -15,6 +17,7 @@
 #include <android/log.h>
 #include <openssl/err.h>
 
+#include <internal/evp_int.h>
 
 extern "C" {
 jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsasign(JNIEnv* env, jclass, jbyteArray from, jint pkeyRef);

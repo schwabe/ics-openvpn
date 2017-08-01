@@ -9,8 +9,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
+import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 
 
@@ -21,7 +21,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 
 		final String action = intent.getAction();
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
 
 		boolean useStartOnBoot = prefs.getBoolean("restartvpnonboot", false);
 		if (!useStartOnBoot)

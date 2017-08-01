@@ -136,18 +136,21 @@ class LogFileHandler extends Handler {
 
             readCacheContents(new FileInputStream(logfile));
 
-        } catch (java.io.IOException | java.lang.RuntimeException e ) {
+        } catch (java.io.IOException | java.lang.RuntimeException e) {
             VpnStatus.logError("Reading cached logfile failed");
             VpnStatus.logException(e);
             e.printStackTrace();
             // ignore reading file error
+        } finally {
+            synchronized (VpnStatus.readFileLock) {
+                VpnStatus.readFileLog = true;
+                VpnStatus.readFileLock.notifyAll();
+            }
         }
     }
 
 
     protected void readCacheContents(InputStream in) throws IOException {
-
-
         BufferedInputStream logFile = new BufferedInputStream(in);
 
         byte[] buf = new byte[16384];
@@ -168,7 +171,7 @@ class LogFileHandler extends Handler {
             if (skipped > 0)
                 VpnStatus.logDebug(String.format(Locale.US, "Skipped %d bytes before finding a magic byte", skipped));
 
-            int len = ByteBuffer.wrap(buf, skipped+1, 4).asIntBuffer().get();
+            int len = ByteBuffer.wrap(buf, skipped + 1, 4).asIntBuffer().get();
 
             // Marshalled LogItem
             int pos = 0;
@@ -207,8 +210,6 @@ class LogFileHandler extends Handler {
 
         }
         VpnStatus.logDebug(R.string.reread_log, itemsRead);
-
-
     }
 
     protected void restoreLogItem(byte[] buf, int len) throws UnsupportedEncodingException {
@@ -219,11 +220,11 @@ class LogFileHandler extends Handler {
         } else {
             VpnStatus.logError(String.format(Locale.getDefault(),
                     "Could not read log item from file: %d: %s",
-                     len, bytesToHex(buf, Math.max(len, 80))));
+                    len, bytesToHex(buf, Math.max(len, 80))));
         }
     }
 
-    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     public static String bytesToHex(byte[] bytes, int len) {
         len = Math.min(bytes.length, len);

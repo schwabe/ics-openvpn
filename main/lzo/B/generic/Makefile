@@ -1,4 +1,4 @@
-# Copyright (C) 1996-2015 Markus F.X.J. Oberhumer
+# Copyright (C) 1996-2017 Markus F.X.J. Oberhumer
 #
 # this is modelled after build.sh; needs GNU make 3.80 or better
 

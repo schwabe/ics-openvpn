@@ -109,8 +109,15 @@ public class FileSelect extends BaseActivity {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
 		if (grantResults[0]  == PackageManager.PERMISSION_DENIED) {
-			setResult(RESULT_CANCELED);
-			finish();
+			if (mNoInline) {
+				setResult(RESULT_CANCELED);
+				finish();
+			} else {
+				if (fileExplorerTab!=null)
+					getActionBar().removeTab(fileExplorerTab);
+			}
+		} else {
+			mFSFragment.refresh();
 		}
 	}
 

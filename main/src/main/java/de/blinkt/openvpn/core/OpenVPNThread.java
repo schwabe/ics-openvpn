@@ -19,13 +19,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 
 public class OpenVPNThread implements Runnable {
     private static final String DUMP_PATH_STRING = "Dump path: ";
@@ -90,7 +87,6 @@ public class OpenVPNThread implements Runnable {
                         mArgv = noPieArgv;
                         VpnStatus.logInfo("PIE Version could not be executed. Trying no PIE version");
                         run();
-                        return;
                     }
 
                 }
@@ -156,6 +152,7 @@ public class OpenVPNThread implements Runnable {
 
                 Pattern p = Pattern.compile("(\\d+).(\\d+) ([0-9a-f])+ (.*)");
                 Matcher m = p.matcher(logline);
+                int logerror = 0;
                 if (m.matches()) {
                     int flags = Integer.parseInt(m.group(3), 16);
                     String msg = m.group(4);
@@ -175,15 +172,22 @@ public class OpenVPNThread implements Runnable {
                     if (msg.startsWith("MANAGEMENT: CMD"))
                         logLevel = Math.max(4, logLevel);
 
+                    if ((msg.endsWith("md too weak") && msg.startsWith("OpenSSL: error")) || msg.contains("error:140AB18E"))
+                        logerror = 1;
 
                     VpnStatus.logMessageOpenVPN(logStatus, logLevel, msg);
+                    if (logerror==1)
+                        VpnStatus.logError("OpenSSL reproted a certificate with a weak hash, please the in app FAQ about weak hashes");
+
                 } else {
                     VpnStatus.logInfo("P:" + logline);
                 }
+
+                if (Thread.interrupted()) {
+                    throw new InterruptedException("OpenVpn process was killed form java code");
+                }
             }
-
-
-        } catch (IOException e) {
+        } catch (InterruptedException | IOException e) {
             VpnStatus.logException("Error reading from output of OpenVPN process", e);
             stopProcess();
         }

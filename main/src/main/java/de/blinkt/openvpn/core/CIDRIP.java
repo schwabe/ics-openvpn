@@ -47,9 +47,9 @@ class CIDRIP {
     public boolean normalise() {
         long ip = getInt(mIp);
 
-        long newip = ip & (0xffffffffl << (32 - len));
+        long newip = ip & (0xffffffffL << (32 - len));
         if (newip != ip) {
-            mIp = String.format("%d.%d.%d.%d", (newip & 0xff000000) >> 24, (newip & 0xff0000) >> 16, (newip & 0xff00) >> 8, newip & 0xff);
+            mIp = String.format(Locale.US,"%d.%d.%d.%d", (newip & 0xff000000) >> 24, (newip & 0xff0000) >> 16, (newip & 0xff00) >> 8, newip & 0xff);
             return true;
         } else {
             return false;

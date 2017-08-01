@@ -12,31 +12,50 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.RequiresApi;
 import android.text.Html;
 import android.text.Html.ImageGetter;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import de.blinkt.openvpn.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.TreeSet;
+
+import de.blinkt.openvpn.LaunchVPN;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.activities.ConfigConverter;
 import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.activities.VPNPreferences;
+import de.blinkt.openvpn.core.ConnectionStatus;
+import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.TreeSet;
+import static de.blinkt.openvpn.core.OpenVPNService.DISCONNECT_VPN;
 
 
 public class VPNProfileList extends ListFragment implements OnClickListener, VpnStatus.StateListener {
@@ -52,10 +71,12 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private static final int FILE_PICKER_RESULT_KITKAT = 392;
 
     private static final int MENU_IMPORT_PROFILE = Menu.FIRST + 1;
+    private static final int MENU_CHANGE_SORTING = Menu.FIRST + 2;
+    private static final String PREF_SORT_BY_LRU = "sortProfilesByLRU";
     private String mLastStatusMessage;
 
     @Override
-    public void updateState(String state, String logmessage, final int localizedResId, VpnStatus.ConnectionStatus level) {
+    public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -65,8 +86,11 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         });
     }
 
+    @Override
+    public void setConnectedVPN(String uuid) {
+    }
 
-    class VPNArrayAdapter extends ArrayAdapter<VpnProfile> {
+    private class VPNArrayAdapter extends ArrayAdapter<VpnProfile> {
 
         public VPNArrayAdapter(Context context, int resource,
                                int textViewResourceId) {
@@ -98,7 +122,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             });
 
             TextView subtitle = (TextView) v.findViewById(R.id.vpn_item_subtitle);
-            if (ProfileManager.getLastConnectedVpn() == profile) {
+            if (profile.getUUIDString().equals(VpnStatus.getLastConnectedVPNProfile())) {
                 subtitle.setText(mLastStatusMessage);
                 subtitle.setVisibility(View.VISIBLE);
             } else {
@@ -112,7 +136,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
     private void startOrStopVPN(VpnProfile profile) {
-        if (VpnStatus.isVPNActive() && ProfileManager.getLastConnectedVpn() == profile) {
+        if (VpnStatus.isVPNActive() && profile.getUUIDString().equals(VpnStatus.getLastConnectedVPNProfile())) {
             Intent disconnectVPN = new Intent(getActivity(), DisconnectVPN.class);
             startActivity(disconnectVPN);
         } else {
@@ -130,9 +154,121 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
+
+    // Shortcut version is increased to refresh all shortcuts
+    final static int SHORTCUT_VERSION = 1;
+
+    @RequiresApi(api = Build.VERSION_CODES.N_MR1)
+    void updateDynamicShortcuts() {
+        PersistableBundle versionExtras = new PersistableBundle();
+        versionExtras.putInt("version", SHORTCUT_VERSION);
+
+        ShortcutManager shortcutManager = getContext().getSystemService(ShortcutManager.class);
+        if (shortcutManager.isRateLimitingActive())
+            return;
+
+        List<ShortcutInfo> shortcuts = shortcutManager.getDynamicShortcuts();
+        int maxvpn = shortcutManager.getMaxShortcutCountPerActivity() - 1;
+
+
+        ShortcutInfo disconnectShortcut = new ShortcutInfo.Builder(getContext(), "disconnectVPN")
+                .setShortLabel("Disconnect")
+                .setLongLabel("Disconnect VPN")
+                .setIntent(new Intent(getContext(), DisconnectVPN.class).setAction(DISCONNECT_VPN))
+                .setIcon(Icon.createWithResource(getContext(), R.drawable.ic_shortcut_cancel))
+                .setExtras(versionExtras)
+                .build();
+
+        LinkedList<ShortcutInfo> newShortcuts = new LinkedList<>();
+        LinkedList<ShortcutInfo> updateShortcuts = new LinkedList<>();
+
+        LinkedList<String> removeShortcuts = new LinkedList<>();
+        LinkedList<String> disableShortcuts = new LinkedList<>();
+
+        boolean addDisconnect = true;
+
+
+        TreeSet<VpnProfile> sortedProfilesLRU = new TreeSet<VpnProfile>(new VpnProfileLRUComparator());
+        ProfileManager profileManager = ProfileManager.getInstance(getContext());
+        sortedProfilesLRU.addAll(profileManager.getProfiles());
+
+        LinkedList<VpnProfile> LRUProfiles = new LinkedList<>();
+        maxvpn = Math.min(maxvpn, sortedProfilesLRU.size());
+
+        for (int i = 0; i < maxvpn; i++) {
+            LRUProfiles.add(sortedProfilesLRU.pollFirst());
+        }
+
+        for (ShortcutInfo shortcut : shortcuts) {
+            if (shortcut.getId().equals("disconnectVPN")) {
+                addDisconnect = false;
+                if (shortcut.getExtras() == null
+                        || shortcut.getExtras().getInt("version") != SHORTCUT_VERSION)
+                    updateShortcuts.add(disconnectShortcut);
+
+            } else {
+                VpnProfile p = ProfileManager.get(getContext(), shortcut.getId());
+                if (p == null || p.profileDeleted) {
+                    if (shortcut.isEnabled()) {
+                        disableShortcuts.add(shortcut.getId());
+                        removeShortcuts.add(shortcut.getId());
+                    }
+                    if (!shortcut.isPinned())
+                        removeShortcuts.add(shortcut.getId());
+                } else {
+
+                    if (LRUProfiles.contains(p))
+                        LRUProfiles.remove(p);
+                    else
+                        removeShortcuts.add(p.getUUIDString());
+
+                    if (!p.getName().equals(shortcut.getShortLabel())
+                            || shortcut.getExtras() == null
+                            || shortcut.getExtras().getInt("version") != SHORTCUT_VERSION)
+                        updateShortcuts.add(createShortcut(p));
+
+
+                }
+
+            }
+
+        }
+        if (addDisconnect)
+            newShortcuts.add(disconnectShortcut);
+        for (VpnProfile p : LRUProfiles)
+            newShortcuts.add(createShortcut(p));
+
+        if (updateShortcuts.size() > 0)
+            shortcutManager.updateShortcuts(updateShortcuts);
+        if (removeShortcuts.size() > 0)
+            shortcutManager.removeDynamicShortcuts(removeShortcuts);
+        if (newShortcuts.size() > 0)
+            shortcutManager.addDynamicShortcuts(newShortcuts);
+        if (disableShortcuts.size() > 0)
+            shortcutManager.disableShortcuts(disableShortcuts, "VpnProfile does not exist anymore.");
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N_MR1)
+    ShortcutInfo createShortcut(VpnProfile profile) {
+        Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
+        shortcutIntent.setClass(getActivity(), LaunchVPN.class);
+        shortcutIntent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
+        shortcutIntent.setAction(Intent.ACTION_MAIN);
+        shortcutIntent.putExtra("EXTRA_HIDELOG", true);
+
+        PersistableBundle versionExtras = new PersistableBundle();
+        versionExtras.putInt("version", SHORTCUT_VERSION);
+
+        return new ShortcutInfo.Builder(getContext(), profile.getUUIDString())
+                .setShortLabel(profile.getName())
+                .setLongLabel(getString(R.string.qs_connect, profile.getName()))
+                .setIcon(Icon.createWithResource(getContext(), R.drawable.ic_shortcut_vpn_key))
+                .setIntent(shortcutIntent)
+                .setExtras(versionExtras)
+                .build();
+    }
 
     class MiniImageGetter implements ImageGetter {
 
@@ -160,6 +296,9 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     public void onResume() {
         super.onResume();
         setListAdapter();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            updateDynamicShortcuts();
+        }
         VpnStatus.addStateListener(this);
     }
 
@@ -221,13 +360,49 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
     }
 
+    static class VpnProfileLRUComparator implements Comparator<VpnProfile> {
+
+        VpnProfileNameComparator nameComparator = new VpnProfileNameComparator();
+
+        @Override
+        public int compare(VpnProfile lhs, VpnProfile rhs) {
+            if (lhs == rhs)
+                // Catches also both null
+                return 0;
+
+            if (lhs == null)
+                return -1;
+            if (rhs == null)
+                return 1;
+
+            // Copied from Long.compare
+            if (lhs.mLastUsed > rhs.mLastUsed)
+                return -1;
+            if (lhs.mLastUsed < rhs.mLastUsed)
+                return 1;
+            else
+                return nameComparator.compare(lhs, rhs);
+        }
+    }
+
+
     private void setListAdapter() {
         if (mArrayadapter == null) {
             mArrayadapter = new VPNArrayAdapter(getActivity(), R.layout.vpn_list_item, R.id.vpn_item_title);
 
         }
+        populateVpnList();
+    }
+
+    private void populateVpnList() {
+        boolean sortByLRU = Preferences.getDefaultSharedPreferences(getActivity()).getBoolean(PREF_SORT_BY_LRU, false);
         Collection<VpnProfile> allvpn = getPM().getProfiles();
-        TreeSet<VpnProfile> sortedset = new TreeSet<VpnProfile>(new VpnProfileNameComparator());
+        TreeSet<VpnProfile> sortedset;
+        if (sortByLRU)
+            sortedset = new TreeSet<>(new VpnProfileLRUComparator());
+        else
+            sortedset = new TreeSet<>(new VpnProfileNameComparator());
+
         sortedset.addAll(allvpn);
         mArrayadapter.clear();
         mArrayadapter.addAll(sortedset);
@@ -250,6 +425,13 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                 .setAlphabeticShortcut('i')
                 .setTitleCondensed(getActivity().getString(R.string.menu_import_short))
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        menu.add(0, MENU_CHANGE_SORTING, 0, R.string.change_sorting)
+                .setIcon(R.drawable.ic_sort)
+                .setAlphabeticShortcut('s')
+                .setTitleCondensed(getString(R.string.sort))
+                .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
     }
 
 
@@ -261,9 +443,27 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             return true;
         } else if (itemId == MENU_IMPORT_PROFILE) {
             return startImportConfigFilePicker();
+        } else if (itemId == MENU_CHANGE_SORTING) {
+            return changeSorting();
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean changeSorting() {
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(getActivity());
+        boolean oldValue = prefs.getBoolean(PREF_SORT_BY_LRU, false);
+        SharedPreferences.Editor prefsedit = prefs.edit();
+        if (oldValue) {
+            Toast.makeText(getActivity(), R.string.sorted_az, Toast.LENGTH_SHORT).show();
+            prefsedit.putBoolean(PREF_SORT_BY_LRU, false);
+        } else {
+            prefsedit.putBoolean(PREF_SORT_BY_LRU, true);
+            Toast.makeText(getActivity(), R.string.sorted_lru, Toast.LENGTH_SHORT).show();
+        }
+        prefsedit.apply();
+        populateVpnList();
+        return true;
     }
 
     @Override

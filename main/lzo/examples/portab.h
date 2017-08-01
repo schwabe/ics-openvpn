@@ -2,7 +2,7 @@
 
    This file is part of the LZO real-time data compression library.
 
-   Copyright (C) 1996-2015 Markus Franz Xaver Johannes Oberhumer
+   Copyright (C) 1996-2017 Markus Franz Xaver Johannes Oberhumer
    All Rights Reserved.
 
    The LZO library is free software; you can redistribute it and/or
@@ -39,7 +39,9 @@
 #  pragma warning(disable: 4710 4711)
 #endif
 /* disable silly warnings about using "deprecated" POSIX functions like "fopen" */
-#if (LZO_CC_INTELC_MSC && (__INTEL_COMPILER >= 1100))
+#if (LZO_CC_CLANG_MSC && LZO_CC_CLANG >= 0x030500)
+#  pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#elif (LZO_CC_INTELC_MSC && (__INTEL_COMPILER >= 1100))
 #  pragma warning(disable: 1786)
 #elif (LZO_CC_INTELC_MSC && (__INTEL_COMPILER >= 1000))
 #  pragma warning(disable: 1478)
@@ -131,6 +133,7 @@ static lzo_voidp xmalloc(lzo_uint len)
     if (len >= align && __lzo_align_gap(p, align) != 0)
     {
         printf("%s: C library problem: malloc() returned misaligned pointer!\n", progname);
+        lzo_free(p);
         exit(1);
     }
     return p;

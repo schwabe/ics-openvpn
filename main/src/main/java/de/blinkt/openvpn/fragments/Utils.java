@@ -91,6 +91,7 @@ public class Utils {
             case CRL_FILE:
                 supportedMimeTypes.add("application/x-pkcs7-crl");
                 supportedMimeTypes.add("application/pkix-crl");
+                extensions.add("crl");
                 break;
 
             case USERPW_FILE:
@@ -118,7 +119,9 @@ public class Utils {
 
         /* Samsung has decided to do something strange, on stock Android GET_CONTENT opens the document UI */
         /* fist try with documentsui */
-        i.setPackage("com.android.documentsui");
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N)
+            i.setPackage("com.android.documentsui");
+
 
 
 

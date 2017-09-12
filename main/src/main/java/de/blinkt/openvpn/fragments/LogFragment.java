@@ -494,13 +494,16 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     @Override
     public void onResume() {
         super.onResume();
-        VpnStatus.addStateListener(this);
-        VpnStatus.addByteCountListener(this);
         Intent intent = new Intent(getActivity(), OpenVPNService.class);
         intent.setAction(OpenVPNService.START_SERVICE);
-
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        VpnStatus.addStateListener(this);
+        VpnStatus.addByteCountListener(this);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

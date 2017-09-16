@@ -436,9 +436,8 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.&lt;/p>&lt;p>&lt;b>MD5 signatures are insecure and should not be used anymore.&lt;/b> MD5 collisions can be created in &lt;a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.&lt;/a>. You should update the VPN certificates as soon as possible.&lt;/p>&lt;p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the &lt;a href="https://github.com/OpenVPN/easy-rsa/releases">latest version&lt;/a>) or change md5 to sha256 and regenerate your certificates.&lt;/p>&lt;p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration&lt;/p></string>
-
-<string name="volume_byte">%.0f B</string>
+    <string name="weakmd">&lt;p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.&lt;/p>&lt;p>&lt;b>MD5 signatures are completely insecure and should not be used anymore.&lt;/b> MD5 collisions can be created in &lt;a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.&lt;/a>. You should update the VPN certificates as soon as possible.&lt;/p>&lt;p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the &lt;a href="https://github.com/OpenVPN/easy-rsa/releases">latest version&lt;/a>) or change md5 to sha256 and regenerate your certificates.&lt;/p>&lt;p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration&lt;/p></string>
+    <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
     <string name="volume_gbyte">%.1f GB</string>

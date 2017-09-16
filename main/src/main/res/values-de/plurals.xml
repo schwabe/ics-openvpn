@@ -14,7 +14,7 @@
     <item quantity="other">%d Stunden verbleibend</item>
   </plurals>
   <plurals name="minutes_left">
-    <item quantity="one">Ein Minute verbleibend</item>
+    <item quantity="one">Eine Minute verbleibend</item>
     <item quantity="other">%d Minuten verbleibend</item>
   </plurals>
 </resources>

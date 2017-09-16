@@ -27,6 +27,7 @@
 
     <application
         android:name=".core.ICSOpenVPNApplication"
+        android:appCategory="productivity"
         android:allowBackup="true"
         android:banner="@mipmap/banner_tv"
         android:icon="@mipmap/ic_launcher"

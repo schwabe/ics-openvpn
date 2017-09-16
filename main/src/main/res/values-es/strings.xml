@@ -51,6 +51,7 @@
   <string name="custom_route_format_error">Error al analizar las rutas personalizadas</string>
   <string name="pw_query_hint">(Deje en blanco para consultar sobre demanda)</string>
   <string name="vpn_shortcut">Acceso directo de OpenVPN</string>
+  <string name="vpn_launch_title">Conectando a VPN&#8230;</string>
   <string name="shortcut_profile_notfound">Perfil especificado en el acceso directo no encontrado</string>
   <string name="random_host_prefix">Prefijo aleatorio de Host</string>
   <string name="random_host_summary">Agrega 6 caracteres al azar delante del nombre de host</string>
@@ -391,9 +392,12 @@ hacia/de Móvil)</string>
   <string name="query_permissions_sdcard">OpenVPN para Android puede tratar de encontrar el/los archivo/s faltante/s en la tarjeta de memoria automáticamente. Toque este mensaje de iniciar la solicitud de permiso.</string>
   <string name="protocol">Protocolo</string>
   <string name="enabled_connection_entry">Activo</string>
+  <string name="menu_use_inline_data">Utilizar datos en línea</string>
+  <string name="export_config_chooser_title">Exportar archivo de configuración</string>
   <string name="missing_ca_certificate">Falta certificado CA</string>
   <string name="reread_log">Vuelva a leer (%d) artículos de archivo de caché de registro log</string>
   <string name="samsung_broken">A pesar de que los teléfonos Samsung son algunos de los teléfonos Android más vendidos, el firmware de Samsung se encuentran entre los firmware con más errores. Los errores no se limitan a la operación del VPN en estos dispositivos, pero muchos de ellos se pueden solucionar. A continuación de describen algunos errores. \n\n El DNS no funciona a menos que el servidor DNS en el rango del VPN. \n \n En muchos dispositivos Samsung 5.x la funcionalidad de aplicaciones permitidas y no permitidas no funciona. \n En Samsung 6.x Se reporta que VPN no funcionará a menos que la aplicación de VPN se encuentre por fuera de la funcionalidad de ahorro de energía.</string>
   <string name="samsung_broken_title">Celulares Samsung</string>
   <string name="novpn_selected">VPN no seleccionado.</string>
+  <string name="defaultvpn">VPN predeterminado</string>
 </resources>

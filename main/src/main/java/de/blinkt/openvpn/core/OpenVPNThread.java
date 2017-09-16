@@ -177,7 +177,7 @@ public class OpenVPNThread implements Runnable {
 
                     VpnStatus.logMessageOpenVPN(logStatus, logLevel, msg);
                     if (logerror==1)
-                        VpnStatus.logError("OpenSSL reproted a certificate with a weak hash, please the in app FAQ about weak hashes");
+                        VpnStatus.logError("OpenSSL reported a certificate with a weak hash, please the in app FAQ about weak hashes");
 
                 } else {
                     VpnStatus.logInfo("P:" + logline);

@@ -32,6 +32,6 @@
   <string-array name="auth_retry_type">
     <item>Trennen, Passwort vergessen</item>
     <item>Trennen, Passwort merken</item>
-    <item>Fehler Ignorieren, neu verbinden</item>
+    <item>Fehler Ignorieren, erneut versuchen</item>
   </string-array>
 </resources>

@@ -7,7 +7,6 @@ JNI_DIR := $(call my-dir)
 # Build openvpn with mbedTLS (OpenVPN3 core is always build with mbedTLS)
 #USE_BREAKPAD=0
 
-
 include lzo/Android.mk
 include openssl/Android.mk
 

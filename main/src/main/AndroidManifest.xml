@@ -157,6 +157,7 @@
 
                 <data android:mimeType="*/*" />
                 <data android:scheme="file" />
+                <data android:scheme="content" />
                 <data android:host="*" />
                 <data android:pathPattern=".*..*..*..*..*.ovpn" />
                 <data android:pathPattern=".*..*..*..*.ovpn" />

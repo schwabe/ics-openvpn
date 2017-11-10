@@ -261,6 +261,7 @@ public class ConfigParser {
             "group",
             "allow-recursive-routing",
             "ip-win32",
+            "ifconfig-nowarn",
             "management-hold",
             "management",
             "management-client",
@@ -275,6 +276,7 @@ public class ConfigParser {
             "management-client-user",
             "management-client-group",
             "pause-exit",
+            "preresolve",
             "plugin",
             "machine-readable-output",
             "persist-key",
@@ -300,7 +302,8 @@ public class ConfigParser {
                     {"setenv", "IV_GUI_VER"},
                     {"setenv", "IV_OPENVPN_GUI_VERSION"},
                     {"engine", "dynamic"},
-                    {"setenv", "CLIENT_CERT"}
+                    {"setenv", "CLIENT_CERT"},
+                    {"resolve-retry","60"}
             };
 
     final String[] connectionOptions = {

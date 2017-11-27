@@ -8,9 +8,9 @@ import com.android.builder.model.ProductFlavor
 apply plugin: 'com.android.application'
 
 apply plugin: 'checkstyle'
-  checkstyle {
+checkstyle {
     showViolations true
-  }
+}
 
 repositories {
     jcenter()
@@ -19,9 +19,10 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:support-annotations:26.0.0'
-    compile 'com.android.support:cardview-v7:26.0.0'
-    compile 'com.android.support:recyclerview-v7:26.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:support-annotations:27.0.1'
+    compile 'com.android.support:cardview-v7:27.0.1'
+    compile 'com.android.support:recyclerview-v7:27.0.1'
     //    compile 'ch.acra:acra:4.5.0'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 
@@ -30,7 +31,7 @@ dependencies {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.0'
+    buildToolsVersion '27.0.1'
 
     defaultConfig {
         minSdkVersion 14
@@ -45,9 +46,9 @@ android {
             jniLibs.srcDirs = ['ovpnlibs/jniLibs']
             jni.srcDirs = [] //disable automatic ndk-build
         }
-        
+
         ovpn3 {
-         
+
         }
 
         debug {
@@ -84,21 +85,23 @@ android {
     flavorDimensions "implementation"
 
     productFlavors {
-   /*ovpn3 {
+        /*ovpn3 {
         dimension "implementation"
 
     } */
 
-      normal {
-          dimension "implementation"
-      }
+        normal {
+            dimension "implementation"
+        }
 
     }
 
 
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
-
-
 
 // ~/.gradle/gradle.properties
 if (project.hasProperty('keystoreFile') &&

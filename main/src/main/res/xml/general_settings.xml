@@ -59,6 +59,10 @@
                 android:summary="@string/screenoff_summary"
                 android:title="@string/screenoff_title"/>
 
+        <Preference
+            android:key="osslspeed"
+            android:persistent="false"
+            android:title="@string/osslspeedtest" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/device_specific" android:key="device_hacks">

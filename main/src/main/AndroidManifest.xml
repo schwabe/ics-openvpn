@@ -1,10 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2012-2016 Arne Schwabe
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
-  -->
-
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="de.blinkt.openvpn">
@@ -15,6 +12,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" /> -->
+
 
     <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
 
@@ -27,8 +25,8 @@
 
     <application
         android:name=".core.ICSOpenVPNApplication"
-        android:appCategory="productivity"
         android:allowBackup="true"
+        android:appCategory="productivity"
         android:banner="@mipmap/banner_tv"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app"
@@ -39,7 +37,6 @@
             android:name=".activities.VPNPreferences"
             android:exported="false"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".activities.DisconnectVPN"
             android:autoRemoveFromRecents="true"
@@ -47,7 +44,6 @@
             android:noHistory="true"
             android:taskAffinity=".DisconnectVPN"
             android:theme="@style/blinkt.dialog" />
-
         <activity
             android:name=".activities.LogWindow"
             android:allowTaskReparenting="true"
@@ -68,39 +64,36 @@
 
         <service
             android:name=".core.OpenVPNService"
-            android:process=":openvpn"
-            android:permission="android.permission.BIND_VPN_SERVICE" >
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:process=":openvpn">
             <intent-filter>
                 <action android:name="android.net.VpnService" />
             </intent-filter>
-
         </service>
-
         <service
             android:name=".api.ExternalOpenVPNService"
             android:process=":openvpn"
             tools:ignore="ExportedService">
-
             <intent-filter>
                 <action android:name="de.blinkt.openvpn.api.IOpenVPNAPIService" />
             </intent-filter>
         </service>
-
-        <service android:name=".core.OpenVPNStatusService"
-            android:process=":openvpn"
-            android:exported="false" />
-
-
+        <service
+            android:name=".core.OpenVPNStatusService"
+            android:exported="false"
+            android:process=":openvpn" />
         <service
             android:name=".OpenVPNTileService"
-            android:value="true"
-            android:label="@string/qs_title"
             android:icon="@drawable/ic_quick"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            android:label="@string/qs_title"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:value="true">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
-            <meta-data android:name="android.service.quicksettings.ACTIVE_TILE"
+
+            <meta-data
+                android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="false" />
         </service>
 
@@ -119,7 +112,6 @@
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-
             </intent-filter>
         </receiver>
 
@@ -130,7 +122,8 @@
             android:taskAffinity=".ConfigConverter"
             android:uiOptions="splitActionBarWhenNarrow"
             tools:ignore="ExportedActivity">
-            <intent-filter android:label="@string/import_config"
+            <intent-filter
+                android:label="@string/import_config"
                 tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -139,7 +132,8 @@
 
                 <data android:mimeType="application/x-openvpn-profile" />
             </intent-filter>
-            <intent-filter android:label="@string/import_config"
+            <intent-filter
+                android:label="@string/import_config"
                 tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -181,8 +175,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".api.Intents"
             android:autoRemoveFromRecents="true"
@@ -197,8 +189,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".activities.CreateShortcuts"
             android:excludeFromRecents="true"
@@ -207,6 +197,7 @@
             android:theme="@android:style/Theme.DeviceDefault.Light.DialogWhenLarge">
             <intent-filter>
                 <action android:name="android.intent.action.CREATE_SHORTCUT" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -218,7 +209,6 @@
             android:grantUriPermissions="true"
             tools:ignore="ExportedContentProvider" />
 
-
         <!--
         <receiver android:name="core.GetRestrictionReceiver">
             <intent-filter>
@@ -226,6 +216,14 @@
             </intent-filter>
         </receiver>
         -->
+        <activity
+            android:name=".activities.OpenSSLSpeed"
+            android:label="@string/title_activity_open_sslspeed"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.blinkt.openvpn.activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

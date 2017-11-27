@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2012-2016 Arne Schwabe
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
@@ -43,11 +42,12 @@
         <item>-1</item>
     </string-array>
     <string name="crash_toast_text">OpenVPN for Android crashed, crash reported</string>
-    
+
     <!-- These strings should not be visible to the user -->
     <string name="state_user_vpn_permission" translatable="false">Waiting for user permission to use VPN API</string>
     <string name="state_user_vpn_password" translatable="false">Waiting for user VPN password</string>
     <string name="state_user_vpn_password_cancelled" translatable="false">VPN password input dialog cancelled</string>
     <string name="state_user_vpn_permission_cancelled" translatable="false">VPN API permission dialog cancelled</string>
+    <string name="default_cipherlist_test" translatable="false">aes-256-gcm bf-cbc sha1</string>
 
 </resources>

@@ -446,5 +446,13 @@
     <string name="channel_name_status">Connection status change</string>
     <string name="channel_description_status">Status changes of the  OpenVPN connection (Connecting, authenticating,…)</string>
     <string name="weakmd_title">Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)</string>
+    <string name="title_activity_open_sslspeed">OpenSSL Speed Test</string>
+    <string name="testcommon">Test commonly used algorithms</string>
+    <string name="testspecific">Test common algorithm</string>
+    <string name="openssl_cipher_name">OpenSSL cipher names</string>
+    <string name="osslspeedtest">OpenSSL Crypto Speed test</string>
+    <string name="openssl_error">OpenSSL returned an error</string>
+    <string name="running_test">Running test…</string>
+    <string name="test_algoirhtms">Test selected algorithms</string>
 
 </resources>

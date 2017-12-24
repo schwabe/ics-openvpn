@@ -454,5 +454,6 @@
     <string name="openssl_error">OpenSSL returned an error</string>
     <string name="running_test">Running test…</string>
     <string name="test_algoirhtms">Test selected algorithms</string>
+    <string name="all_app_prompt">An external app tries to control %s. The app cannot be determined allowing now grants ALL apps access.</string>
 
 </resources>

@@ -21,6 +21,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
@@ -29,97 +30,113 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import de.blinkt.openvpn.R;
 
 
 public class ConfirmDialog extends Activity implements
-CompoundButton.OnCheckedChangeListener, DialogInterface.OnClickListener {
-	private static final String TAG = "OpenVPNVpnConfirm";
+        CompoundButton.OnCheckedChangeListener, DialogInterface.OnClickListener {
+    private static final String TAG = "OpenVPNVpnConfirm";
 
-	private String mPackage;
+    public static final String EXTRA_PACKAGE_NAME = "android.intent.extra.PACKAGE_NAME";
 
-	private Button mButton;
+    public static final String ANONYMOUS_PACKAGE = "de.blinkt.openvpn.ANYPACKAGE";
 
-	private AlertDialog mAlert;
+    private String mPackage;
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		try {
-			mPackage = getCallingPackage();
-			if (mPackage==null) {
-				finish();
-				return;
-			}
-				
+    private Button mButton;
 
-			PackageManager pm = getPackageManager();
-			ApplicationInfo app = pm.getApplicationInfo(mPackage, 0);
+    private AlertDialog mAlert;
 
-			View view = View.inflate(this, R.layout.api_confirm, null);
-			((ImageView) view.findViewById(R.id.icon)).setImageDrawable(app.loadIcon(pm));
-			((TextView) view.findViewById(R.id.prompt)).setText(
-					getString(R.string.prompt, app.loadLabel(pm), getString(R.string.app)));
-			((CompoundButton) view.findViewById(R.id.check)).setOnCheckedChangeListener(this);
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Intent intent = getIntent();
+        if (intent.getStringExtra(EXTRA_PACKAGE_NAME) != null) {
+            mPackage = intent.getStringExtra(EXTRA_PACKAGE_NAME);
+        } else {
+            mPackage = getCallingPackage();
+            if (mPackage == null) {
+                finish();
+                return;
+            }
+        }
+
+        try {
+            View view = View.inflate(this, R.layout.api_confirm, null);
+            CharSequence appString;
+            if (mPackage.equals(ANONYMOUS_PACKAGE)) {
+                appString = getString(R.string.all_app_prompt, getString(R.string.app));
+            } else {
+                PackageManager pm = getPackageManager();
+                ApplicationInfo app = pm.getApplicationInfo(mPackage, 0);
+                appString = getString(R.string.prompt, app.loadLabel(pm) , getString(R.string.app));
+                ((ImageView) view.findViewById(R.id.icon)).setImageDrawable(app.loadIcon(pm));
+            }
 
 
-			Builder builder = new AlertDialog.Builder(this);
+            ((TextView) view.findViewById(R.id.prompt)).setText(appString);
+            ((CompoundButton) view.findViewById(R.id.check)).setOnCheckedChangeListener(this);
 
-			builder.setView(view);
 
-			builder.setIconAttribute(android.R.attr.alertDialogIcon);
-			builder.setTitle(android.R.string.dialog_alert_title);
-			builder.setPositiveButton(android.R.string.ok,this);
-			builder.setNegativeButton(android.R.string.cancel,this);
-			
-			mAlert = builder.create();
-			mAlert.setCanceledOnTouchOutside(false);
-			
-			mAlert.setOnShowListener (new OnShowListener() {
-				@Override
-				public void onShow(DialogInterface dialog) {
-					mButton = mAlert.getButton(DialogInterface.BUTTON_POSITIVE);
-					mButton.setEnabled(false);
-										
-				}
-			});
-			
-			//setCloseOnTouchOutside(false);
-			
-			mAlert.show();
+            Builder builder = new AlertDialog.Builder(this);
 
-		} catch (Exception e) {
-			Log.e(TAG, "onResume", e);
-			finish();
-		}
-	}
+            builder.setView(view);
 
-	@Override
-	public void onBackPressed() {
-		setResult(RESULT_CANCELED);
-		finish();
-	}
+            builder.setIconAttribute(android.R.attr.alertDialogIcon);
+            builder.setTitle(android.R.string.dialog_alert_title);
+            builder.setPositiveButton(android.R.string.ok, this);
+            builder.setNegativeButton(android.R.string.cancel, this);
 
-	@Override
-	public void onCheckedChanged(CompoundButton button, boolean checked) {
-		mButton.setEnabled(checked);
-	}
+            mAlert = builder.create();
+            mAlert.setCanceledOnTouchOutside(false);
 
-	@Override
-	public void onClick(DialogInterface dialog, int which) {
+            mAlert.setOnShowListener(new OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialog) {
+                    mButton = mAlert.getButton(DialogInterface.BUTTON_POSITIVE);
+                    mButton.setEnabled(false);
 
-		if (which == DialogInterface.BUTTON_POSITIVE) {
-			ExternalAppDatabase extapps = new ExternalAppDatabase(this);
-			extapps.addApp(mPackage);
-			setResult(RESULT_OK);
-			finish();
-		}
-		
-		if (which == DialogInterface.BUTTON_NEGATIVE) {
-			setResult(RESULT_CANCELED);
-			finish();
-		}
-	}
+                }
+            });
+
+            //setCloseOnTouchOutside(false);
+
+            mAlert.show();
+
+        } catch (Exception e) {
+            Log.e(TAG, "onResume", e);
+            finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton button, boolean checked) {
+        mButton.setEnabled(checked);
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+
+        if (which == DialogInterface.BUTTON_POSITIVE) {
+            ExternalAppDatabase extapps = new ExternalAppDatabase(this);
+            extapps.addApp(mPackage);
+            setResult(RESULT_OK);
+            finish();
+        }
+
+        if (which == DialogInterface.BUTTON_NEGATIVE) {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+    }
 
 }
 

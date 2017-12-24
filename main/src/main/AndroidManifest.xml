@@ -224,6 +224,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.blinkt.openvpn.activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".api.RemoteAction"
+            />
+        <activity-alias
+            android:exported="true"
+            android:name=".api.DisconnectVPN"
+            android:targetActivity=".api.RemoteAction" />
     </application>
 
 </manifest>

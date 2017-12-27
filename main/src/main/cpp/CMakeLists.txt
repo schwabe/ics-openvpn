@@ -1,0 +1,179 @@
+cmake_minimum_required(VERSION 3.4.1)
+
+# Set mbedtls options
+OPTION(ENABLE_PROGRAMS "" OFF)
+OPTION(USE_SHARED_MBEDTLS_LIBRARY "" OFF)
+OPTION(ENABLE_TESTING ""  OFF)
+
+add_subdirectory(mbedtls)
+add_subdirectory(lzo)
+include(tools.cmake)
+include(openssl.cmake)
+
+# OpenVPN build config is here to not add extra files to openvpn3
+
+add_custom_command(OUTPUT "javacli/ovpncli_wrap.cxx"
+  file(MAKE_DIRECTORY ovpn3/java/net/openvpn/ovpn3)
+  COMMAND swig -outdir ovpn3/java/net/openvpn/ovpn3/ -c++ -java -package net.openvpn.ovpn3 -I${CMAKE_SOURCE_DIR}/openvpn3/client -I${CMAKE_SOURCE_DIR}/openvpn3 ${CMAKE_SOURCE_DIR}/openvpn3/javacli/ovpncli.i)
+
+set(ovpn3_SRCS
+  openvpn3/client/ovpncli.cpp
+  openvpn3/javacli/ovpncli_wrap.cxx)
+
+add_library(ovpn3 SHARED ${ovpn3_SRCS})
+
+target_include_directories(ovpn3 PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/lzo/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/openvpn3
+  ${CMAKE_CURRENT_SOURCE_DIR}/asio/asio/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/openvpn3/client
+  ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls/include
+  )
+
+target_compile_options(ovpn3 PRIVATE  -std=c++1y)
+target_compile_definitions(ovpn3 PRIVATE
+  -DHAVE_CONFIG_H
+  -DHAVE_LZO
+  -DASIO_STANDALONE
+  -DUSE_ASIO
+  -DUSE_MBEDTLS
+  )
+target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo_static_lib)
+
+add_library(opvpnutil SHARED opvpnutil/jniglue.c opvpnutil/scan_ifs.c opvpnutil/sslspeed.c)
+target_compile_definitions(opvpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\")
+target_link_libraries(opvpnutil log crypto ssl)
+
+
+add_library(jbcrypto SHARED jbcrypto/jbcrypto.cpp)
+target_link_libraries(jbcrypto log crypto)
+
+
+
+set(openvpn_srcs
+	src/compat/compat-basename.c 
+	src/compat/compat-daemon.c 
+	src/compat/compat-dirname.c 
+	src/compat/compat-gettimeofday.c 
+	src/compat/compat-inet_ntop.c 
+	src/compat/compat-inet_pton.c 
+	src/compat/compat-lz4.c 
+	src/openvpn/argv.c 
+	src/openvpn/base64.c 
+	src/openvpn/buffer.c 
+	src/openvpn/clinat.c 
+	src/openvpn/console.c 
+	src/openvpn/console_builtin.c 
+	src/openvpn/crypto.c 
+	src/openvpn/crypto_openssl.c 
+	src/openvpn/crypto_mbedtls.c 
+	src/openvpn/cryptoapi.c 
+	src/openvpn/dhcp.c 
+	src/openvpn/error.c 
+	src/openvpn/event.c 
+	src/openvpn/fdmisc.c 
+	src/openvpn/forward.c 
+	src/openvpn/fragment.c 
+	src/openvpn/gremlin.c 
+	src/openvpn/helper.c 
+	src/openvpn/httpdigest.c 
+	src/openvpn/init.c 
+	src/openvpn/interval.c 
+	src/openvpn/list.c 
+	src/openvpn/lladdr.c 
+	src/openvpn/lzo.c 
+	src/openvpn/manage.c 
+	src/openvpn/mbuf.c 
+	src/openvpn/misc.c 
+	src/openvpn/mroute.c 
+	src/openvpn/mss.c 
+	src/openvpn/mstats.c 
+	src/openvpn/mtcp.c 
+	src/openvpn/mtu.c 
+	src/openvpn/mudp.c 
+	src/openvpn/multi.c 
+	src/openvpn/ntlm.c 
+	src/openvpn/occ.c 
+	src/openvpn/openvpn.c 
+	src/openvpn/options.c 
+	src/openvpn/otime.c 
+	src/openvpn/packet_id.c 
+	src/openvpn/perf.c 
+	src/openvpn/pf.c 
+	src/openvpn/ping.c 
+	src/openvpn/pkcs11.c 
+	src/openvpn/pkcs11_openssl.c 
+	src/openvpn/platform.c 
+	src/openvpn/plugin.c 
+	src/openvpn/pool.c 
+	src/openvpn/proto.c 
+	src/openvpn/proxy.c 
+	src/openvpn/ps.c 
+	src/openvpn/push.c 
+	src/openvpn/reliable.c 
+	src/openvpn/route.c 
+	src/openvpn/schedule.c 
+	src/openvpn/session_id.c 
+	src/openvpn/shaper.c 
+	src/openvpn/sig.c 
+	src/openvpn/socket.c 
+	src/openvpn/socks.c 
+	src/openvpn/ssl.c 
+	src/openvpn/ssl_openssl.c 
+	src/openvpn/ssl_mbedtls.c 
+	src/openvpn/ssl_verify.c 
+	src/openvpn/ssl_verify_openssl.c 
+	src/openvpn/ssl_verify_mbedtls.c 
+	src/openvpn/status.c 
+	src/openvpn/tls_crypt.c 
+	src/openvpn/tun.c 
+	src/openvpn/comp-lz4.c 
+	src/openvpn/comp.c 
+	src/openvpn/compstub.c 
+	src/openvpn/env_set.c  
+	src/openvpn/run_command.c
+    )
+
+PREPEND(openvpn_srcs_with_path "openvpn" ${openvpn_srcs})  
+add_library(openvpn SHARED ${openvpn_srcs_with_path})
+target_include_directories(openvpn PRIVATE
+  openvpn/android-config/
+  openvpn/src/compat
+  openvpn/include
+  lzo/include
+  openvpn
+  )
+
+target_compile_definitions(openvpn PRIVATE
+  -DHAVE_CONFIG_H
+  -DTARGET_ABI=\"${ANDROID_ABI}\"
+  )
+
+target_compile_definitions(openvpn PRIVATE
+  -DENABLE_CRYPTO_OPENSSL=1
+  )
+target_link_libraries(openvpn crypto ssl lzo_static_lib)
+
+add_executable(pie_openvpn.${ANDROID_ABI} minivpn/minivpn.c)
+target_compile_options(pie_openvpn.${ANDROID_ABI} PRIVATE -fPIE)
+target_link_libraries(pie_openvpn.${ANDROID_ABI} PRIVATE openvpn -fPIE -pie)
+
+add_executable(nopie_openvpn.${ANDROID_ABI} minivpn/minivpn.c)
+target_link_libraries(nopie_openvpn.${ANDROID_ABI} PRIVATE openvpn)
+
+
+# Hack to copy OpenVPN binaries to assets directory
+SET(OVPN_ASSET_DIR ${CMAKE_SOURCE_DIR}/../../../build/ovpnassets)
+file(MAKE_DIRECTORY ${OVPN_ASSET_DIR})
+
+add_custom_command(TARGET nopie_openvpn.${ANDROID_ABI} POST_BUILD
+  COMMAND
+  ${CMAKE_COMMAND} -E copy
+  ${CMAKE_CURRENT_BINARY_DIR}/nopie_openvpn.${ANDROID_ABI}
+  ${OVPN_ASSET_DIR})
+
+add_custom_command(TARGET pie_openvpn.${ANDROID_ABI} POST_BUILD
+  COMMAND
+  ${CMAKE_COMMAND} -E copy
+  ${CMAKE_CURRENT_BINARY_DIR}/pie_openvpn.${ANDROID_ABI}
+  ${OVPN_ASSET_DIR})

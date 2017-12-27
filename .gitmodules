@@ -1,9 +1,15 @@
 [submodule "main/openvpn"]
-	path = main/openvpn
+	path = main/src/main/cpp/openvpn
 	url = ../openvpn.git
 [submodule "main/openssl"]
-	path = main/openssl
+	path = main/src/main/cpp/openssl
 	url = ../platform_external_openssl.git
 [submodule "main/breakpad"]
 	path = main/breakpad
 	url = ../breakpad.git
+[submodule "main/src/main/cpp/mbedtls"]
+	path = main/src/main/cpp/mbedtls
+	url = ../polarssl.git
+[submodule "main/src/main/cpp/openvpn3"]
+	path = main/src/main/cpp/openvpn3
+	url = ../openvpn3.git

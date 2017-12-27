@@ -20,31 +20,44 @@ repositories {
 
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:support-annotations:27.0.2'
-    compile 'com.android.support:cardview-v7:27.0.2'
-    compile 'com.android.support:recyclerview-v7:27.0.2'
+    implementation 'com.android.support:support-annotations:27.0.2'
+    implementation 'com.android.support:cardview-v7:27.0.2'
+    implementation 'com.android.support:recyclerview-v7:27.0.2'
     //    compile 'ch.acra:acra:4.5.0'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '27.0.1'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode = 153
         versionName = "0.6.73"
+
+        externalNativeBuild {
+            cmake {
+                arguments '-DANDROID_TOOLCHAIN=clang',
+                        '-DANDROID_STL=c++_static'
+                //abiFilters "arm64-v8a"
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+        }
     }
 
     sourceSets {
         main {
-            assets.srcDirs = ['src/main/assets', 'ovpnlibs/assets']
+            assets.srcDirs = ['src/main/assets', 'build/ovpnassets']
             jniLibs.srcDirs = ['ovpnlibs/jniLibs']
-            jni.srcDirs = [] //disable automatic ndk-build
         }
 
         ovpn3 {
@@ -59,12 +72,6 @@ android {
 
         }
     }
-
-    /*
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }*/
 
     signingConfigs {
         release
@@ -85,10 +92,10 @@ android {
     flavorDimensions "implementation"
 
     productFlavors {
-        /*ovpn3 {
-        dimension "implementation"
+        ovpn3 {
+            dimension "implementation"
 
-    } */
+        }
 
         normal {
             dimension "implementation"
@@ -115,9 +122,7 @@ if (project.hasProperty('keystoreFile') &&
     android.buildTypes.release.signingConfig = null
 }
 
-/*tasks.withType(com.android.build.gradle.tasks.PackageApplication) { pkgTask ->
-    pkgTask.jniFolders = new HashSet<File>()
-    pkgTask.jniFolders.add(new File(buildDir, 'native-libs'))
+// Ensure native build is run before assets, so assets are ready to be merged into the apk
+android.applicationVariants.all { variant ->
+    variant.mergeAssets.dependsOn(variant.externalNativeBuildTasks)
 }
-*/
-

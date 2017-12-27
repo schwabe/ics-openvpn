@@ -17,7 +17,7 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="ovpn3"
-            android:summaryOn="Use the C++ OpenVPN library"
+            android:summaryOn="Use the C++ OpenVPN library (experimental)"
             android:summaryOff="Use OpenVPN 2.3"
             android:title="OpenVPN 3 Core"/>
 

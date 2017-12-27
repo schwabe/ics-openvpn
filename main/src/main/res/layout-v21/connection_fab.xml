@@ -21,4 +21,4 @@
     android:src="@android:drawable/ic_input_add"
     android:stateListAnimator="@anim/fab_anim"
     android:tint="@android:color/white"
-    tools:showIn="@layout/connections" />
+ />

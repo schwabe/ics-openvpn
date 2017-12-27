@@ -24,6 +24,7 @@ public class RemoteAction extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mExtAppDb = new ExternalAppDatabase(this);
     }
 

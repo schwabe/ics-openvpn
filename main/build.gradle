@@ -29,6 +29,18 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
+
+
+def openvpn3SwigFiles = new File(buildDir, "ovpn3swig/")
+
+task ("generateOpenVPN3Swig" ,type:Exec) {
+    doFirst {
+        mkdir openvpn3SwigFiles
+    }
+    commandLine "swig", "-outdir", openvpn3SwigFiles, "-c++", "-java", "-package", "net.openvpn.ovpn3",
+            "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/", "src/main/cpp/openvpn3/javacli/ovpncli.i"
+}
+
 android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
@@ -61,7 +73,7 @@ android {
         }
 
         ovpn3 {
-
+            java.srcDirs += openvpn3SwigFiles
         }
 
         debug {
@@ -94,7 +106,6 @@ android {
     productFlavors {
         ovpn3 {
             dimension "implementation"
-
         }
 
         normal {
@@ -125,4 +136,8 @@ if (project.hasProperty('keystoreFile') &&
 // Ensure native build is run before assets, so assets are ready to be merged into the apk
 android.applicationVariants.all { variant ->
     variant.mergeAssets.dependsOn(variant.externalNativeBuildTasks)
+}
+
+android.applicationVariants.all { variant    ->
+    variant.getJavaCompiler().dependsOn(generateOpenVPN3Swig)
 }

@@ -5,40 +5,44 @@ OPTION(ENABLE_PROGRAMS "" OFF)
 OPTION(USE_SHARED_MBEDTLS_LIBRARY "" OFF)
 OPTION(ENABLE_TESTING ""  OFF)
 
-add_subdirectory(mbedtls)
 add_subdirectory(lzo)
 include(tools.cmake)
 include(openssl.cmake)
 
-# OpenVPN build config is here to not add extra files to openvpn3
+# Super hacky way to determine flavour
+#-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/arne/software/icsopenvpn/main/build/intermediates/cmake/normal/debug/obj/arm64-v8a
+if (${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*ovpn3.*/")
+    add_subdirectory(mbedtls)
+    add_custom_command(OUTPUT "javacli/ovpncli_wrap.cxx"
+      file(MAKE_DIRECTORY ovpn3/java/net/openvpn/ovpn3)
+      COMMAND swig -outdir ovpn3/java/net/openvpn/ovpn3/ -c++ -java -package net.openvpn.ovpn3 -I${CMAKE_SOURCE_DIR}/openvpn3/client -I${CMAKE_SOURCE_DIR}/openvpn3 ${CMAKE_SOURCE_DIR}/openvpn3/javacli/ovpncli.i)
 
-add_custom_command(OUTPUT "javacli/ovpncli_wrap.cxx"
-  file(MAKE_DIRECTORY ovpn3/java/net/openvpn/ovpn3)
-  COMMAND swig -outdir ovpn3/java/net/openvpn/ovpn3/ -c++ -java -package net.openvpn.ovpn3 -I${CMAKE_SOURCE_DIR}/openvpn3/client -I${CMAKE_SOURCE_DIR}/openvpn3 ${CMAKE_SOURCE_DIR}/openvpn3/javacli/ovpncli.i)
+    set(ovpn3_SRCS
+      openvpn3/client/ovpncli.cpp
+      openvpn3/javacli/ovpncli_wrap.cxx)
 
-set(ovpn3_SRCS
-  openvpn3/client/ovpncli.cpp
-  openvpn3/javacli/ovpncli_wrap.cxx)
+    add_library(ovpn3 SHARED ${ovpn3_SRCS})
 
-add_library(ovpn3 SHARED ${ovpn3_SRCS})
+    target_include_directories(ovpn3 PUBLIC
+      ${CMAKE_CURRENT_SOURCE_DIR}/lzo/include
+      ${CMAKE_CURRENT_SOURCE_DIR}/openvpn3
+      ${CMAKE_CURRENT_SOURCE_DIR}/asio/asio/include
+      ${CMAKE_CURRENT_SOURCE_DIR}/openvpn3/client
+      ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls/include
+      )
 
-target_include_directories(ovpn3 PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/lzo/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/openvpn3
-  ${CMAKE_CURRENT_SOURCE_DIR}/asio/asio/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/openvpn3/client
-  ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls/include
-  )
-
-target_compile_options(ovpn3 PRIVATE  -std=c++1y)
-target_compile_definitions(ovpn3 PRIVATE
-  -DHAVE_CONFIG_H
-  -DHAVE_LZO
-  -DASIO_STANDALONE
-  -DUSE_ASIO
-  -DUSE_MBEDTLS
-  )
-target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo_static_lib)
+    target_compile_options(ovpn3 PRIVATE  -std=c++1y)
+    target_compile_definitions(ovpn3 PRIVATE
+      -DHAVE_CONFIG_H
+      -DHAVE_LZO
+      -DASIO_STANDALONE
+      -DUSE_ASIO
+      -DUSE_MBEDTLS
+      )
+    target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo_static_lib)
+else()
+    message ("Not budiling OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+endif()
 
 add_library(opvpnutil SHARED opvpnutil/jniglue.c opvpnutil/scan_ifs.c opvpnutil/sslspeed.c)
 target_compile_definitions(opvpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\")
@@ -161,19 +165,25 @@ target_link_libraries(pie_openvpn.${ANDROID_ABI} PRIVATE openvpn -fPIE -pie)
 add_executable(nopie_openvpn.${ANDROID_ABI} minivpn/minivpn.c)
 target_link_libraries(nopie_openvpn.${ANDROID_ABI} PRIVATE openvpn)
 
-
 # Hack to copy OpenVPN binaries to assets directory
 SET(OVPN_ASSET_DIR ${CMAKE_SOURCE_DIR}/../../../build/ovpnassets)
-file(MAKE_DIRECTORY ${OVPN_ASSET_DIR})
+
+add_custom_target(makeassetdir ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory MAKE_DIRECTORY ${OVPN_ASSET_DIR})
 
 add_custom_command(TARGET nopie_openvpn.${ANDROID_ABI} POST_BUILD
   COMMAND
   ${CMAKE_COMMAND} -E copy
   ${CMAKE_CURRENT_BINARY_DIR}/nopie_openvpn.${ANDROID_ABI}
-  ${OVPN_ASSET_DIR})
+  ${OVPN_ASSET_DIR}
+  DEPENDS makeassetdir)
 
 add_custom_command(TARGET pie_openvpn.${ANDROID_ABI} POST_BUILD
   COMMAND
   ${CMAKE_COMMAND} -E copy
   ${CMAKE_CURRENT_BINARY_DIR}/pie_openvpn.${ANDROID_ABI}
-  ${OVPN_ASSET_DIR})
+  ${OVPN_ASSET_DIR}
+  DEPENDS makeassetdir)
+
+# Hack that these targets are really executed
+add_dependencies(opvpnutil pie_openvpn.${ANDROID_ABI} nopie_openvpn.${ANDROID_ABI})

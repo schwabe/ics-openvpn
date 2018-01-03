@@ -15,9 +15,7 @@ See  the file todo.txt for ideas/not yet implemented features (and the bug track
 
 Build instructions:
 
-- Install sdk
-- Install ndk (Latest version should work as long as you use gcc)
-- Make sure that ndk-build is in your build path.
+- Install sdk, ndk, cmake (e.g. with Android studio)
 
 Fetch the git submodules (the default urls for the submodules use ssh,
 setup your own github ssh key or change the url to http in .gitmodules):
@@ -25,13 +23,14 @@ setup your own github ssh key or change the url to http in .gitmodules):
   git submodule init
   git submodule update
 
-Do cd main;./misc/build-native.(sh|bat) in the main directory of the project.
-After that build the project using "gradle build" (Or use Android Studio). 
-The project is converted to gradle and building with Eclipse is no longer supported.
 
-Alternatively, if the NDK build fails for some reason pre-built libraries can be downloaded
-(e.g. from plai.de/android) and placed under main/ovpnlibs/assets/(no)pie_openvpn.{ABI} 
-and main/ovpnlibs/jniLibs/{ABI}/*.so
+Build the project using "gradle build" (Or use Android Studio). 
+
+Android studio tends to the whole build of binaries in its sync gradle
+phase to 15 minutes for initial gradle sync are completely normal.
+
+The native build is know not to work under Windows.
+
 
 FAQ
 

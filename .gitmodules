@@ -15,4 +15,4 @@
 	url = ../openvpn3.git
 [submodule "main/src/main/cpp/asio"]
 	path = main/src/main/cpp/asio
-	url = https://github.com/chriskohlhoff/asio/
+	url = http://github.com/chriskohlhoff/asio/

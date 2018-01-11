@@ -18,7 +18,7 @@
             android:defaultValue="false"
             android:key="ovpn3"
             android:summaryOn="Use the C++ OpenVPN library (experimental)"
-            android:summaryOff="Use OpenVPN 2.3"
+            android:summaryOff="Use OpenVPN 2.x"
             android:title="OpenVPN 3 Core"/>
 
 

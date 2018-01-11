@@ -31,7 +31,7 @@ dependencies {
 
 
 
-def openvpn3SwigFiles = new File(buildDir, "ovpn3swig/")
+def openvpn3SwigFiles = new File(buildDir, "generated/source/ovpn3swig/ovpn3")
 
 task ("generateOpenVPN3Swig" ,type:Exec) {
     doFirst {
@@ -69,11 +69,10 @@ android {
     sourceSets {
         main {
             assets.srcDirs = ['src/main/assets', 'build/ovpnassets']
-            jniLibs.srcDirs = ['ovpnlibs/jniLibs']
         }
 
         ovpn3 {
-            java.srcDirs += openvpn3SwigFiles
+            java.srcDirs =["src/ovpn3/java/", openvpn3SwigFiles]
         }
 
         debug {

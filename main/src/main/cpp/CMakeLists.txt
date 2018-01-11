@@ -5,8 +5,9 @@ OPTION(ENABLE_PROGRAMS "" OFF)
 OPTION(USE_SHARED_MBEDTLS_LIBRARY "" OFF)
 OPTION(ENABLE_TESTING ""  OFF)
 
-add_subdirectory(lzo)
+#add_subdirectory(lzo)
 include(tools.cmake)
+include(lzo.cmake)
 include(openssl.cmake)
 
 # Super hacky way to determine flavour

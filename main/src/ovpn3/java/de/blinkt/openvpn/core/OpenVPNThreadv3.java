@@ -244,6 +244,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public boolean stopVPN(boolean replaceConnection) {
+		stop();
 		return false;
 	}
 

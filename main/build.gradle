@@ -137,6 +137,13 @@ android.applicationVariants.all { variant ->
     variant.mergeAssets.dependsOn(variant.externalNativeBuildTasks)
 }
 
-android.applicationVariants.all { variant    ->
-    variant.getJavaCompiler().dependsOn(generateOpenVPN3Swig)
+
+android.variantFilter { variant ->
+    def dim = variant.flavors.collectEntries {
+        [(it.productFlavor.dimension): it.productFlavor.name]
+    }
+
+    if (dim.dimensionOne == 'implementation' && dim.dimensionSecond == 'ovpn3') {
+        variant.getJavaCompiler().dependsOn(generateOpenVPN3Swig)
+    }
 }

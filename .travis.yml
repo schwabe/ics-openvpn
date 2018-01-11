@@ -1,24 +1,46 @@
 language: android
 git:
-  depth: 1   # avoid cloning cmocka of openvpn
+  depth: 1
 jdk: oraclejdk8
 android:
   components:
     - tools
-    - android-26
-    - build-tools
-    - build-tools-26.0.0
-    - ndk
+    - build-tools-27.0.3
     - extra-android-m2repository
     - platform-tools
 
   licenses:
-    - '.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 
-  install:
-    sdkmanager ndk-bundle
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
     
-  script:
-    - cd main &&  ./misc/build-native.sh  USE_BREAKPAD=1  -j8; cd ..
-    - ./gradlew build connectedCheck
+script:
+  # Building one variant is enough and already takes quite a long time...
+  - ./gradlew assembleOvpn3Release
+
+before_script:
+  # Install packages
+  - sudo add-apt-repository ppa:teward/swig3.0 -y
+  - sudo apt-get update -q
+  - sudo apt-get install -q unzip swig3.0 cmake
+  
+  # Annoying workarounds #1
+  - sudo ln -s /usr/bin/swig3.0 /usr/bin/swig
+  - swig -version
+  # Annoying workarounds #2
+  - yes | sdkmanager "platforms;android-27"
+  - curl -L https://dl.google.com/android/repository/android-ndk-r16b-linux-x86_64.zip -O
+  - unzip -q android-ndk-r16b-linux-x86_64.zip 
+  - rm android-ndk-r16b-linux-x86_64.zip
+  - export ANDROID_NDK_HOME=`pwd`/android-ndk-r16b
+  - export LOCAL_ANDROID_NDK_HOME="$ANDROID_NDK_HOME"
+  - export PATH=$PATH:${ANDROID_NDK_HOME}
 

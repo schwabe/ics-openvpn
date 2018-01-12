@@ -177,14 +177,16 @@ add_custom_command(TARGET nopie_openvpn.${ANDROID_ABI} POST_BUILD
   ${CMAKE_COMMAND} -E copy
   ${CMAKE_CURRENT_BINARY_DIR}/nopie_openvpn.${ANDROID_ABI}
   ${OVPN_ASSET_DIR}
-  DEPENDS makeassetdir)
+)
 
 add_custom_command(TARGET pie_openvpn.${ANDROID_ABI} POST_BUILD
   COMMAND
   ${CMAKE_COMMAND} -E copy
   ${CMAKE_CURRENT_BINARY_DIR}/pie_openvpn.${ANDROID_ABI}
   ${OVPN_ASSET_DIR}
-  DEPENDS makeassetdir)
+)
 
 # Hack that these targets are really executed
 add_dependencies(opvpnutil pie_openvpn.${ANDROID_ABI} nopie_openvpn.${ANDROID_ABI})
+add_dependencies(pie_openvpn.${ANDROID_ABI} makeassetdir)
+add_dependencies(nopie_openvpn.${ANDROID_ABI} makeassetdir)

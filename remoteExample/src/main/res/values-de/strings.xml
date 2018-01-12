@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2012-2017 Arne Schwabe
+  ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+  -->
+
+<resources>
+
+    <string name="app_name">OpenVPN Remote</string>
+    <string name="hello_world">Hallo Welt!</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="permission_description">Ermöglicht einer anderen App, OpenVPN zu steuern</string>
+    <string name="no_status_yet">Noch kein Status</string>
+    <string name="no_now">Nicht jetzt</string>
+    <string name="show_my_ip">Zeige meine IP</string>
+    <string name="disconnect">Trennen</string>
+    <string name="start_embedded">Starte eingebettetes Profil</string>
+    <string name="addNew">Neues Profil hinzufügen</string>
+
+
+</resources>

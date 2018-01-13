@@ -138,12 +138,12 @@ android.applicationVariants.all { variant ->
 }
 
 
-android.variantFilter { variant ->
-    def dim = variant.flavors.collectEntries {
-        [(it.productFlavor.dimension): it.productFlavor.name]
+android.applicationVariants.all { variant ->
+    variant.productFlavors.each {
+        logger.warn("A warning log message. ${it.dimension}, ${it.name}")
+        if (it.dimension == 'implementation' &&  it.name == 'ovpn3')
+            variant.getJavaCompiler().dependsOn(generateOpenVPN3Swig)
+
     }
 
-    if (dim.dimensionOne == 'implementation' && dim.dimensionSecond == 'ovpn3') {
-        variant.getJavaCompiler().dependsOn(generateOpenVPN3Swig)
-    }
 }

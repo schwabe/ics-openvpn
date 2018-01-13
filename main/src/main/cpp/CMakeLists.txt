@@ -135,8 +135,6 @@ set(openvpn_srcs
 	src/openvpn/comp-lz4.c 
 	src/openvpn/comp.c 
 	src/openvpn/compstub.c 
-	src/openvpn/env_set.c  
-	src/openvpn/run_command.c
     )
 
 PREPEND(openvpn_srcs_with_path "openvpn" ${openvpn_srcs})  

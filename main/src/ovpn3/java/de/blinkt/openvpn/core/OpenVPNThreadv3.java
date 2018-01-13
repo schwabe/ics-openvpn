@@ -65,7 +65,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		setUserPW();
         VpnStatus.logInfo(copyright());
 
-		StatusPoller statuspoller = new StatusPoller(5000);
+		StatusPoller statuspoller = new StatusPoller(OpenVPNManagement.mBytecountInterval*1000);
 		new Thread(statuspoller,"Status Poller").start();
 
 		ClientAPI_Status status = connect();
@@ -179,7 +179,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		config.setContent(vpnconfig);
 		config.setTunPersist(mVp.mPersistTun);
         config.setGuiVersion(mVp.getVersionEnvString(mService));
-        config.setPlatformVersion(mVp.getPlatformVersionEnvString());
+        //config.setPlatformVersion(mVp.getPlatformVersionEnvString());
 		config.setExternalPkiAlias("extpki");
 
 		ClientAPI_EvalConfig ec = eval_config(config);

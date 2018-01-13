@@ -6,7 +6,7 @@
   -->
 <resources>
   <string name="app">OpenVPN for Android</string>
-  <string name="address">"Adresse du serveur:"</string>
+  <string name="address">Adresse du serveur :</string>
   <string name="port">Port du serveur :</string>
   <string name="location">"Emplacement"</string>
   <string name="cant_read_folder">Impossible de lire le dossier</string>
@@ -128,9 +128,9 @@
   <string name="no_vpn_support_image">"Votre ROM ne prend pas en charge l\'API VPNService, désolé :("</string>
   <string name="encryption">Chiffrement</string>
   <string name="cipher_dialog_title">Entrez la méthode de chiffrement</string>
-  <string name="chipher_dialog_message">Entrez l\'algorithme de chiffrement utilisé par OpenVPN. Laisser vide pour utiliser le cipher par défaut.</string>
+  <string name="chipher_dialog_message">Entrez l\'algorithme de chiffrement utilisé par OpenVPN. Laissez vide pour utiliser l\'algorithme par défaut.</string>
   <string name="auth_dialog_message">Entrez l\'authentification digest utilisé pour OpenVPN. Laisser vide pour utiliser le digest par défaut.</string>
-  <string name="settings_auth">Authentification / Chiffrement</string>
+  <string name="settings_auth">Authentification/Chiffrement</string>
   <string name="file_explorer_tab">Explorateur de fichiers</string>
   <string name="inline_file_tab">"Fichier personnalisé"</string>
   <string name="error_importing_file">"Impossible d\'importer le fichier"</string>
@@ -161,11 +161,11 @@
   <string name="converted_profile_i">profil importé %d</string>
   <string name="broken_images">Images corrompues</string>
   <string name="broken_images_faq">&lt;&gt;Les ROMs officielles HTC sont connues pour avoir des problèmes de routage entraînant que le trafic ne passe pas par le tunnel VPN. (C.f.: &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; dans le \"bug tacker\")&lt;/p&gt;&lt;p&gt;Les ROMs officielles de SONY pour le Xperia Arc S et le Xperia Ray ont été signalé comme ne possédant pas le service VPN. Toute autre ROM SONY peut avoir le même problème.  (C.f.: &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; dans le \"bug tacker\")&lt;/p&gt;&lt;p&gt;Sur les ROM personnalisées le module TUN peut être manquant ou les droits de /dev/tun peuvent être incorrects. Certaines ROM CM9 peuvent nécessiter d\'utiliser l\'option de correction des droits de /dev/tun accessible depuis les \"Options générales\"/&lt;/p&gt;&lt;p&gt;Important: Si votre ROM a un problème, contactez le vendeur, il se peut que qu\'il vous fournisse un patch.&lt;/p&gt;</string>
-  <string name="pkcs12_file_encryption_key">Fichier contenant la clé de chiffrement PKCS12</string>
+  <string name="pkcs12_file_encryption_key">Fichier avec la clé de chiffrement PKCS12</string>
   <string name="private_key_password">Mot de passe de la clé privée</string>
   <string name="password">Mot de passe</string>
   <string name="file_icon">icône du fichier</string>
-  <string name="tls_authentication">TLS Authentification/Cryptage</string>
+  <string name="tls_authentication">Authentification TLS/Chiffrement</string>
   <string name="generated_config">Configuration générée</string>
   <string name="generalsettings">Paramètres</string>
   <string name="owner_fix_summary">Essaie de définir le propriétaire de l\'interface /dev/tun. Certaines images CM9 en ont besoin pour faire fonctionner l\'API VPNService. Nécessite les droits root.</string>
@@ -174,7 +174,7 @@
   <string name="edit_profile_title">Modification \"%s\"</string>
   <string name="building_configration">Création de la configuration&#8230;</string>
   <string name="netchange_summary">Activer cette option forcera une reconnexion si l\'état du réseau est modifié (par exemple WiFi/Mobile)</string>
-  <string name="netchange">Se reconnecter lors d\'un changement de réseau</string>
+  <string name="netchange">Se reconnecter au changement de réseau</string>
   <string name="netstatus">État du réseau : %s</string>
   <string name="extracahint">"Le certificat CA est généralement renvoyé par le gestionnaire de clés Android. Spécifiez un certificat distinct si vous obtenez des erreurs de vérification de certificat."</string>
   <string name="select_file">"Sélectionner"</string>
@@ -205,7 +205,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="using_proxy">"Utilisation du proxy %1$s %2$d"</string>
   <string name="use_system_proxy">"Utiliser le proxy système"</string>
   <string name="use_system_proxy_summary">"Utiliser la configuration générale du système pour que les proxy HTTP / HTTPS se connectent."</string>
-  <string name="onbootrestartsummary">OpenVPN connecter le VPN spécifié si elle était active au démarrage du système. S\'il vous plaît lire l\'avertissement de connexion FAQ avant d\'utiliser cette option sur Android &lt; 5.0.</string>
+  <string name="onbootrestartsummary">OpenVPN connectera le VPN spécifié si elle était active au démarrage du système. Veuillez lire l\'avertissement de connexion FAQ avant d\'utiliser cette option sur Android &lt; 5.0.</string>
   <string name="onbootrestart">Se connecter au redémarrage</string>
   <string name="ignore">Ignorer</string>
   <string name="restart">Redémarrer</string>
@@ -215,8 +215,8 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="faq_duplicate_notification_title">Notifications en double</string>
   <string name="faq_duplicate_notification">"Si Android tourne sur la mémoire du système (RAM), les application et les services qui ne sont pas nécessaires à un moment sont automatiquement supprimés de la mémoire. Cela stoppe donc la connexion VPN en cours. Pour s\'assurer que celle-ci reste toujours lancée, le service est lancé avec une priorité plus élevée. Pour cela, l\'application doit afficher une notification permanente. L\'icône de \"clé\" dans la notification est imposée par le système comme expliqué dans l\'entrée de la FAQ précédente."</string>
   <string name="no_vpn_profiles_defined">Aucun profil VPN défini.</string>
-  <string name="add_new_vpn_hint">"Utilisez l\'icône &lt;img src=\"ic_menu_add\"/ pour ajouter un nouveau VPN"</string>
-  <string name="vpn_import_hint">"Utilisez l\'icône &lt;img src=\"ic_menu_archive\"/&gt; pour importer un fichier profil (.opvpn ou  .conf) de votre carte SD."</string>
+  <string name="add_new_vpn_hint">Utilisez l\'icône &lt;img src=\"ic_menu_add\"/&gt; pour ajouter un nouveau VPN.</string>
+  <string name="vpn_import_hint">Utilisez l\'icône &lt;img src=\"ic_menu_archive\"/&gt; pour importer un profil existant (.opvpn ou .conf) depuis votre carte SD.</string>
   <string name="faq_hint">"Veillez également à consulter la FAQ. Il s\'y trouve un guide de démarrage rapide."</string>
   <string name="faq_routing_title">"Redirections / Configuration de l\'interface"</string>
   <string name="faq_routing">La configuration du routage et des interfaces n\'est pas faite par l\'intermédiaire des commandes traditionnelles ifconfig/route, mais en utilisant l\'API VPNService. Il en résulte une configuration de routage différente que sur les autres systèmes d\'exploitation. \nLa configuration du tunnel VPN se compose de l\'adresse IP et des réseaux qui doivent être routés via cette interface. En particulier aucune adresse de pair ou de passerelle n\'est nécessaire ou requise. Des routes spéciales pour atteindre le serveur VPN (par exemple ajoutées lorsque vous utilisez \"redirect-gateway\") ne sont pas nécessaires. L\'application ignore par conséquent ces paramètres lors de l\'importation d\'une configuration. L\'application assure avec l\'API VPNService que la connexion au serveur ne passe pas par le tunnel VPN.\nL\'API VPNService ne permet pas de spécifier les réseaux qui ne doivent pas être routés via le VPN. Pour contourner ce problème, l\'application essaye de détecter les réseaux qui ne doivent pas être routés par le tunnel (ex. route x.x.x.x y.y.y.y net_gateway) et calcule un ensemble de routes qui exclut cette route pour mimer le comportement des autres plates-formes. La fenêtre des logs montre la configuration de VPNService lors d\'une connexion.\nEn coulisse: Android 4.4+ n\'utilise pas la politique du routage. Utiliser route/ifconfig n\'affichera pas les routes installés. Utilisez plutôt ip rule, iptables -t mangle -L</string>
@@ -253,6 +253,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="state_tcp_connect">Connexion (TCP)</string>
   <string name="state_auth_failed">Authentification échouée</string>
   <string name="state_nonetwork">En attente d\'un réseau utilisable</string>
+  <string name="statusline_bytecount">French</string>
   <string name="notifcation_title_notconnect">Non connecté</string>
   <string name="start_vpn_title">Connexion au VPN %s</string>
   <string name="start_vpn_ticker">Connexion au VPN %s</string>
@@ -273,7 +274,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="rdn_prefix">Préfixe RDN</string>
   <string name="tls_remote_deprecated">tls-remote (OBSOLÈTE)</string>
   <string name="help_translate">Vous pouvez aider à traduire en visitant http://crowdin.net/project/ics-openvpn/invite</string>
-  <string name="prompt">%1$s essais de controler %2$s</string>
+  <string name="prompt">%1$s essaye de contrôler %2$s</string>
   <string name="remote_warning">En poursuivant vous donnez la permission a l\'application de contrôler complètement OpenVPN pour Android et d\'intercepter tout le trafic réseau.<b>N\'acceptez que si vous faite confiance à l\'application.</b> Sinon vous vous exposez au risque de voir vos données compromises par un logiciel malveillant.\"</string>
   <string name="remote_trust">Faire confiance à cette application.</string>
   <string name="no_external_app_allowed">Aucune application n\'est autorisée à utiliser l\'API externe</string>
@@ -294,7 +295,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="vpnbehaviour">Comportement du VPN</string>
   <string name="allow_vpn_changes">Autoriser les modifications des profils VPN</string>
   <string name="hwkeychain">Clés du matériel :</string>
-  <string name="permission_icon_app">Icône de l\'application qui essaie d\'utiliser OpenVPN for Android</string>
+  <string name="permission_icon_app">Icône de l\'appli essayant d\'utiliser OpenVPN for Android</string>
   <string name="faq_vpndialog43">"À partir d\'Android 4.3  la confirmation VPN est gardée contre les \"applications recouvrante\". Cela se traduit par la boîte de dialogue qui ne réagi pas à la saisie tactile. Si vous avez une application qui utilise des superpositions, elle peut causer ce comportement. Si vous trouvez une application délinquante contacter l\'auteur de l\'application. Ce problème affecte toutes les applications VPN sur Android 4.3 et plus. Voir aussi  &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\"&gt;Issue 185&lt;a&gt; pour plus de détails"</string>
   <string name="faq_vpndialog43_title">Fenêtre de confirmation du VPN</string>
   <string name="donatePlayStore">Sinon vous pouvez m\'envoyer un don via le Play Store :</string>
@@ -319,10 +320,11 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="userpw_file">Fichier Nom d\'utilisateur/Mot de passe</string>
   <string name="imported_from_file">[Importé de : %s]</string>
   <string name="files_missing_hint">Certains fichiers sont introuvables. Sélectionner les fichiers pour importer le profil :</string>
-  <string name="openvpn_is_no_free_vpn">Pour utiliser cette application, vous avez besoin d\'un fournisseur/passerelle VPN qui soutient OpenVPN (souvent fourni par votre employeur). Vérifier ici http://community.openvpn.net/ pour plus d\'informations sur OpenVPN et comment configurer votre propre serveur OpenVPN.</string>
+  <string name="openvpn_is_no_free_vpn">Pour utiliser cette application, vous avez besoin d\'un fournisseur/passerelle VPN qui soutient OpenVPN (souvent fourni par votre employeur). Vérifier ici http://community.openvpn.net pour plus d\'informations sur OpenVPN et comment configurer votre propre serveur OpenVPN.</string>
   <string name="import_log">Journal d\'importation :</string>
   <string name="ip_looks_like_subnet">Topologie VPN «%3$s » spécifiée mais ifconfig %1$s %2$s ressemble plus à une adresse IP avec un masque de réseau. On suppose que la topologie « sous-réseau » est utilisée.</string>
   <string name="mssfix_invalid_value">La valeur de mssfix doit être un entier compris entre 0 et 9000</string>
+  <string name="mtu_invalid_value">La valeur de dépassement MTU doit être un entier compris entre 64 et 9000</string>
   <string name="mssfix_value_dialog">Annoncer aux sessions TCP en cours d\'exécution sur le tunnel qu\'ils devraient limiter leurs tailles de paquets d\'émission de telle sorte qu\'après OpenVPN les a encapsulé, la taille des paquets UDP résultant que OpenVPN envoie à son homologue ne dépassera pas ce nombre d\'octets. (Valeur par défaut est 1450)</string>
   <string name="mssfix_checkbox">Remplacer la valeur MSS de TCP payload</string>
   <string name="mssfix_dialogtitle">Définir MSS de TCP payload</string>
@@ -402,6 +404,9 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="reread_log">Relire (%d) éléments du fichier de log</string>
   <string name="samsung_broken_title">Téléphones Samsung</string>
   <string name="novpn_selected">Aucun VPN sélectionné.</string>
+  <string name="defaultvpn">VPN par défaut</string>
+  <string name="defaultvpnsummary">VPN utilisé dans les endroits où un VPN par défaut est nécessaire. Ceux-ci sont actuellement en cours de démarrage, pour Always-On et la tuile de paramétrage rapide.</string>
+  <string name="vpnselected">VPN actuellement sélectionné : \"%s\"</string>
   <string name="reconnect">Reconnecter</string>
   <string name="qs_title">Activer VPN</string>
   <string name="qs_connect">Connecter à %s</string>
@@ -414,4 +419,20 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="sort">Trier</string>
   <string name="sorted_lru">Profils triés par dernier récemment utilisé</string>
   <string name="sorted_az">Profils triés par nom</string>
+  <string name="graph">Graphique</string>
+  <string name="use_logarithmic_scale">Utiliser l\'échelle logarithmique</string>
+  <string name="notenoughdata">Données insuffisantes</string>
+  <string name="avghour">Moyenne par heure</string>
+  <string name="avgmin">Moyenne par minute</string>
+  <string name="last5minutes">5 dernières minutes</string>
+  <string name="data_in">Entré</string>
+  <string name="data_out">Sorti</string>
+  <string name="bits_per_second">%.0f bit/s</string>
+  <string name="kbits_per_second">%.1f kbit/s</string>
+  <string name="mbits_per_second">%.1f Mbit/s</string>
+  <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="volume_byte">%.0f B</string>
+  <string name="volume_kbyte">%.1f kB</string>
+  <string name="volume_mbyte">%.1f MB</string>
+  <string name="volume_gbyte">%.1f GB</string>
 </resources>

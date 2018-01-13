@@ -119,6 +119,7 @@
   <string name="tap_mode">Tap 模式</string>
   <string name="faq_tap_mode">點擊模式是不可能的非根VPN API。因此，該應用程序不能提供自來水的支持</string>
   <string name="tap_faq2">再一次？你在開玩笑吧？這真的不支援 tap 模式，就算再寄電子郵件詢問能不能支援也是沒用的。</string>
+  <string name="tap_faq3">第三次嗎？實際上，一個可以寫基於屯，並添加 2 層資訊發送帶 2 層資訊上水龍頭模擬器接收。但這個水龍頭模擬器還必須實施 ARP 和可能 DHCP 用戶端。我不知道的任何人做任何工作在這個方向。與我聯繫，如果你想要開始對此編碼。</string>
   <string name="faq">FAQ</string>
   <string name="copying_log_entries">複製記錄項目</string>
   <string name="faq_copying">若要複製單筆記錄，在此記錄項目上點選。若要複製/送出整筆記錄，使用送出記錄選項。如果這個按鈕在畫面中無法顯示，請使用實體的選單按鈕。</string>
@@ -223,6 +224,7 @@
   <string name="openvpn_log">OpenVPN 運作記錄</string>
   <string name="import_config">匯入 OpenVPN 配置</string>
   <string name="battery_consumption_title">電池消耗</string>
+  <string name="baterry_consumption">在我個人的測試中的 OpenVPN 高電池消耗的主要原因是保活資料包。大多數的 OpenVPN 伺服器有一個配置指令像 \' keepalive 10 60\'，這會導致用戶端和伺服器交換保活資料包每十秒。&lt; P &gt; 雖然這些資料包是小和不使用太多的交通，它們保持移動無線電網路忙，增加了能源消耗。(請參見 &lt; href =\"HTTP://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt; 無線電狀態機 |Android 開發者 &lt; /a &gt;） &lt; p &gt; 此 keepalive 設置不能更改用戶端上。只有 OpenVPN 的系統管理員可以更改的設置。&lt; P &gt; 不幸的 udp 使用保活大於 60 秒可以導致一些 NAT 閘道來斷開連接由於不活動超時。用不了多久使用 TCP 保持活著超時工作，但隧道 TCP 通過 TCP 表現極為不佳與高資料包丟失連接上。(請參閱 &lt; href =\"HTTP://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt; 為什麼 TCP 在 TCP 是一個壞點子 &lt; /a &gt;)</string>
   <string name="faq_tethering">網路共用的功能 (透過 Wi-Fi、USB 或藍牙) 和 VPNService API (此程式使用) 不一起作用。更多細節請看 &lt;a href=\"https://github.com/schwabe/ics-openvpn/issues/34\"&gt;issue #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN 與網路共用</string>
   <string name="connection_retries">連線重試次數</string>
@@ -250,6 +252,7 @@
   <string name="state_tcp_connect">連線中 (TCP)</string>
   <string name="state_auth_failed">身份驗證失敗</string>
   <string name="state_nonetwork">等待可使用的網路</string>
+  <string name="statusline_bytecount">↓%2$s/秒 %1$s - ↑%4$s/秒 %3$s</string>
   <string name="notifcation_title_notconnect">未連線</string>
   <string name="start_vpn_title">正在連接至 VPN %s</string>
   <string name="start_vpn_ticker">正在連接至 VPN %s</string>
@@ -322,6 +325,7 @@ http://crowdin.net/project/ics-openvpn/invite
   <string name="import_log">匯入日誌：</string>
   <string name="ip_looks_like_subnet">VPN拓撲“%3$s”規定，但使用ifconfig %1$s %2$s看起來更像是一個網絡掩碼的IP地址。假設“子網”的拓撲結構。</string>
   <string name="mssfix_invalid_value">MSS的覆蓋值必須在0到9000的整數</string>
+  <string name="mtu_invalid_value">MSS的覆蓋值必須在0到9000的整數</string>
   <string name="mssfix_value_dialog">宣布運行在他們應當限制其發送的包大小，使得後的OpenVPN已包封它們，將所得的UDP包大小的OpenVPN給對端發送將不超過此字節數的隧道的TCP會話。 （默認為1450）</string>
   <string name="mssfix_checkbox">覆寫TCP 裝載資料 (payload) 的最大分段大小 (MSS) 值</string>
   <string name="mssfix_dialogtitle">設定 TCP 裝載資料 (payload) 的最大分段大小 (MSS)</string>
@@ -348,6 +352,7 @@ http://crowdin.net/project/ics-openvpn/invite
   <string name="duplicate_vpn">重複的 VPN 設定檔</string>
   <string name="duplicate_profile_title">複製設定檔︰ %s</string>
   <string name="show_log">顯示記錄</string>
+  <string name="faq_android_clients">安卓系統的多個 OpenVPN 用戶端存在。最常見是 OpenVPN 為 Android （此用戶端），OpenVPN 連接和 OpenVPN 設置。 &lt; p &gt; 用戶端可以分為兩組： OpenVPN 為 Android 和 OpenVPN 連接使用官方的 VPNService API （安卓 4.0 +），需要無根、 無使用根 &lt; p &gt; 的 OpenVPN 設置 OpenVPN 的 Android 是開源用戶端和開發的 Arne 米爾克。 它針對更高級的使用者，並提供許多設置和能力，從檔導入設定檔，配置更改內部應用程式的設定檔。用戶端基於 OpenVPN 的社區版本。它基於 OpenVPN 2.x 原始程式碼。此用戶端可以被看作是半正式的社區用戶端。&lt; p &gt; OpenVPN 連接是由 OpenVPN 技術公司開發的非開源用戶端用戶端縮進是一般使用的用戶端和更多針對普通使用者，並允許的 OpenVPN 設定檔導入。此用戶端基於 OpenVPN c + + 重新實現的 OpenVPN 協定 （這要求允許 OpenVPN 技術，公司將發佈 iOS OpenVPN 應用程式）。此用戶端是最古老的用戶端和也的使用者介面對於開放源碼 OpenVPN OpenVPN 技術 &lt; p &gt; OpenVPN 設置的官方用戶端。與安卓系統的 OpenVPN 它需要根和不使用 VPNService API。它不依賴于安卓 4.0 +</string>
   <string name="faq_androids_clients_title">OpenVPN Android 用戶端之間的差異</string>
   <string name="ignore_multicast_route">忽略多點傳送路徑：%s</string>
   <string name="ab_only_cidr">Android 只支援無類別域間 (CIDR) 路由到此 VPN。因為非無類別域間 (CIDR) 路由幾乎不會被使用，OpenVPN for Android 將使用 /32 非無類別域間 (CIDR) 路由處理這個警告。</string>
@@ -355,7 +360,9 @@ http://crowdin.net/project/ics-openvpn/invite
   <string name="ab_kitkat_mss">早期的 KitKat 版本在 TCP 連線中，設定錯誤的最大分段大小 (MSS) 值 (#61948)。試著開啟 mssfix 選項來繞開這個 bug。</string>
   <string name="ab_proxy">Android 沒有 DNS 伺服器設定時，會繼續使用你指定的行動/Wi-Fi 連線代理設定。OpenVPN for Android 會在日誌中記錄警告訊息。<p>當 VPN 有設定 DNS 伺服器時，因為，Android API 中無法為 VPN 連線設定代理，所以，將不會使用代理設定。</p></string>
   <string name="ab_lollipop_reinstall">當解除安裝或重新安裝，VPN 應用程式也會停止運作。詳細資訊起參閱 #80074</string>
+  <string name="ab_not_route_to_vpn">台灣繁體中文</string>
   <string name="ab_secondary_users">VPN 不會對次級使用者作用。</string>
+  <string name="ab_vpn_reachability_44">Vpn是幹嗎？</string>
   <string name="ab_only_cidr_title">非無類別域間 (CIDR) 路由</string>
   <string name="ab_proxy_title">VPN 的代理行為</string>
   <string name="ab_lollipop_reinstall_title">重新安裝 VPN 應用程式</string>
@@ -363,9 +370,11 @@ http://crowdin.net/project/ics-openvpn/invite
   <string name="copy_of_profile">%s 的副本</string>
   <string name="ab_not_route_to_vpn_title">路由到設定的 IP 位址</string>
   <string name="ab_kitkat_mss_title">VPN 連線錯誤的最大分段大小 (MSS) 值</string>
+  <string name="ab_secondary_users_title">二级平板电脑用户</string>
   <string name="custom_connection_options_warng">指定自訂連線的特定選項，請小心使用</string>
   <string name="custom_connection_options">自定義選項</string>
   <string name="remove_connection_entry">刪除連線項目</string>
+  <string name="ab_kitkat_reconnect_title">了解!</string>
   <string name="ab_vpn_reachability_44_title">遠端網路無法連線</string>
   <string name="ab_persist_tun_title">保持 tun 模式</string>
   <string name="version_and_later">%s 及更高版本</string>
@@ -393,6 +402,8 @@ http://crowdin.net/project/ics-openvpn/invite
   <string name="crl_title">憑證撤銷清單 (可選)</string>
   <string name="samsung_broken_title">三星手機</string>
   <string name="novpn_selected">沒有 VPN 被選擇</string>
+  <string name="defaultvpn">預設 VPN</string>
+  <string name="defaultvpnsummary">VPN 在 VPN 需要預設使用在的地方。這些對於目前上啟動，總是在和快速設置平鋪。</string>
   <string name="reconnect">重新連線</string>
   <string name="qs_title">切換 VPN</string>
   <string name="qs_connect">連線到 %s</string>

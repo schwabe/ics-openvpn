@@ -22,4 +22,9 @@
     <item>Niet-gespecificeerd</item>
     <item>Versleuteling (tls-crypt)</item>
   </string-array>
+  <string-array name="auth_retry_type">
+    <item>Niet verbonden, vergeet wachtwoord</item>
+    <item>Niet verbonden, bewaar wachtwoord</item>
+    <item>Negeer, probeer opnieuw</item>
+  </string-array>
 </resources>

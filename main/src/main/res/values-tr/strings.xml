@@ -409,7 +409,7 @@
   <string name="samsung_broken_title">Samsung telefonlar</string>
   <string name="novpn_selected">Seçili VPN yok.</string>
   <string name="defaultvpn">Öntanımlı VPN</string>
-  <string name="defaultvpnsummary">Varsayılan olarak bir VPN gereken yerlerde VPN kullanılır. Bunlar şu anda: önyükleme sırasında, Her Zaman Açık ve Hızlı Ayarlar Döşemesi içindir.</string>
+  <string name="defaultvpnsummary">VPN, varsayılan bir VPN\'in gerekli olduğu yerlerde kullanılır. Bunlar şu anda: önyükleme sırasında, Her Zaman Açık ve Hızlı Ayarlar Döşemesi içindir.</string>
   <string name="vpnselected">Şu anda seçili VPN: \'%s\'</string>
   <string name="reconnect">Yeniden bağlan</string>
   <string name="qs_title">VPN\'i Aç/Kapat</string>

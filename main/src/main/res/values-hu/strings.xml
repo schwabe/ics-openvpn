@@ -252,6 +252,7 @@
   <string name="state_tcp_connect">Csatlakozás (TCP)</string>
   <string name="state_auth_failed">Hitelesítési hiba</string>
   <string name="state_nonetwork">Várakozás használható hálózatra</string>
+  <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
   <string name="notifcation_title_notconnect">Nincs kapcsolat</string>
   <string name="start_vpn_title">Csatlakozás a %s VPN-hez</string>
   <string name="start_vpn_ticker">Csatlakozás a %s VPN-hez</string>
@@ -322,6 +323,7 @@
   <string name="import_log">Importálási napló:</string>
   <string name="ip_looks_like_subnet">VPN topológia \"%3$s\" specifikálva, de ifconfig %1$s %2$s inkább IP címnek tűnik hálózati maszkkal. \"Alhálózat\" topológiát feltételezve.</string>
   <string name="mssfix_invalid_value">Az MSS felülbírálati értéknek egész számnak kell lennie 0 és 9000 között</string>
+  <string name="mtu_invalid_value">Az MTU felülbírálati értéknek egész számnak kell lennie 64 és 9000 között</string>
   <string name="mssfix_value_dialog">Jelentse be a TCP munkameneteknek, hogy korlátozniuk kell a küldendő csomagjaik méretét hogy miután az OpenVPN bekapszulázza őket a peer-nek küldendő eredmény UDP csomag mérete ne haladhassa meg ezt a byte számot. (az alapérték 1450)</string>
   <string name="mssfix_checkbox">TCP payload MSS felülbírálati érték</string>
   <string name="mssfix_dialogtitle">MSS beállítás a TCP payload-hoz</string>
@@ -406,6 +408,8 @@
   <string name="samsung_broken">Annak ellenére, hogy a Samsung telefonok a legtöbbet eladott Android telefonok közé tartoznak, a Samsung firmware-ek a leg bug-osabb Android firmware-ek. Ezeken az eszközökön a hibák nem csak a VPN működésre korlátozódnak, de nagy részük kiküszöbölhető. A következő néhány ilyen hiba leírása.\n\nA DNS nem működik hacsak nem a DNS kiszolgáló a VPN tartományban van.\n\nSok Samsung 5.x eszközön nem működik az engedélyezett/tiltott alkalmazások funkció.\nSamsung 6.0-n a VPN nem működik hacsak nem adjuk hozzá kivételként az alkalmazást a Powersave funkcióknál.</string>
   <string name="samsung_broken_title">Samsung telefonok</string>
   <string name="novpn_selected">Nincs VPN kiválasztva.</string>
+  <string name="defaultvpn">Alapértelmezett VPN</string>
+  <string name="vpnselected">Jelenleg kiválasztott VPN: \'%s\'</string>
   <string name="reconnect">Újracsatlakozás</string>
   <string name="qs_title">VPN be/kikapcsolás</string>
   <string name="qs_connect">Csatlakozás %s-hez</string>
@@ -420,4 +424,20 @@
   <string name="sorted_lru">A profilok a legutóbbi használat szerint rendezve</string>
   <string name="sorted_az">A profilok név szerint rendezve</string>
   <string name="deprecated_tls_remote">A konfiguráció tls-remote opciót használ, ami a 2.3-ban elavulttá vált és a 2.4-ben végleg eltávolították</string>
+  <string name="graph">Grafikon</string>
+  <string name="use_logarithmic_scale">Logaritmikus skála használata</string>
+  <string name="notenoughdata">Nincs elég adat</string>
+  <string name="avghour">Átlag óránként</string>
+  <string name="avgmin">Átlag percenként</string>
+  <string name="last5minutes">Utolsó 5 perc</string>
+  <string name="data_in">Be</string>
+  <string name="data_out">Ki</string>
+  <string name="bits_per_second">%.0f bit/s</string>
+  <string name="kbits_per_second">%.1f kbit/s</string>
+  <string name="mbits_per_second">%.1f Mbit/s</string>
+  <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="volume_byte">%.0f B</string>
+  <string name="volume_kbyte">%.1f kB</string>
+  <string name="volume_mbyte">%.1f MB</string>
+  <string name="volume_gbyte">%.1f GB</string>
 </resources>

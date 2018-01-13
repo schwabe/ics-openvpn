@@ -19,7 +19,12 @@
   <string-array name="tls_directions_entries">
     <item translatable="false">0</item>
     <item translatable="false">1</item>
-    <item>Невказано</item>
-    <item>Шифрування (TLS-crypt)</item>
+    <item>Не вказано</item>
+    <item>Шифрування (--tls-crypt)</item>
+  </string-array>
+  <string-array name="auth_retry_type">
+    <item>Відключитися, забути пароль</item>
+    <item>Відключитися, зберегти пароль</item>
+    <item>Ігнорувати, повторити</item>
   </string-array>
 </resources>

@@ -252,6 +252,7 @@
   <string name="state_tcp_connect">Łączenie (TCP)</string>
   <string name="state_auth_failed">Błąd autentykacji</string>
   <string name="state_nonetwork">Czekam na sieć</string>
+  <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
   <string name="notifcation_title_notconnect">Niepołączony</string>
   <string name="start_vpn_title">Łączę z VPN %s</string>
   <string name="start_vpn_ticker">Łączę z VPN %s</string>
@@ -294,6 +295,7 @@
   <string name="allow_vpn_changes">Zezwól na zmiany profili VPN</string>
   <string name="hwkeychain">Sprzętowy magazyn kluczy:</string>
   <string name="permission_icon_app">Ikona aplikacji próbującej użyć OpenVPN</string>
+  <string name="faq_vpndialog43">"Począwszy od Androida 4.3 potwiedzenie połączenia VPN jest strzeżone przed \"nakładaniem aplikacji\", co powoduje, że okno dialogowe nie reaguje na dotykowe dane wejściowe. Jeśli masz aplikację, która korzysta z nakładek, może to spowodować takie zachowanie. Problem ten dotyczy wszystkich aplikacji VPN na Androidzie 4.3 i nowszych wersjach. Zobacz także &lt;a href=\"https://github.com/schwabe/ics-openvpn/issues/185\"&gt;Issue 185&lt;a&gt; aby uzyskać dodatkowe informacje "</string>
   <string name="faq_vpndialog43_title">Potwierdzenie dla Android w wersji 4.3 i wyższych</string>
   <string name="donatePlayStore">Alternatywnie, dotację możesz przesłać za pomocą Google Play:</string>
   <string name="thanks_for_donation">Dziękujemy za wsparcie %s!</string>
@@ -321,6 +323,7 @@
   <string name="import_log">Dziennik importu:</string>
   <string name="ip_looks_like_subnet">Określono topologię \"%3$s\", jednak ifconfig %1$s %2$s wygląda bardziej na adres IP z maską. Zakładam, że chodzi o topologię \"subnet\".</string>
   <string name="mssfix_invalid_value">Wartość nadpisywania MSS musi być liczbą całkowitą pomiędzy 0 i 9000</string>
+  <string name="mtu_invalid_value">Wartość nadpisywania MTU musi być liczbą całkowitą pomiędzy 64 a 9000</string>
   <string name="mssfix_value_dialog">Ogłasza sesjom TCP przekazywanym przez tunel, że powinny ograniczyć wielkość pakietu tak, aby po enkapsulacji przez OpenVPN wynikowy rozmiar pakietu UDP wysyłanego przez VPN do peer\'a nie przekraczał tej liczby bajtów (domyślnie 1450)</string>
   <string name="mssfix_checkbox">Zastępuje wartość MSS pakietu TCP</string>
   <string name="mssfix_dialogtitle">Ustaw wartość MSS pakietu TCP</string>
@@ -357,8 +360,10 @@
 OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS Android nie będzie używał więcej proxy. Nie ma żadnego API do ustawienia proxy dla połączenia VPN.</p></string>
   <string name="ab_lollipop_reinstall">Aplikacje VPN mogą przestać działać po odinstalowaniu i ponownej instalacji. W celu uzyskania szczegółów zobacz #80074</string>
   <string name="ab_not_route_to_vpn">Brakuje konfiguracji tras dla adresu IP klienta oraz masek podsieci. OpenVPN rozwiązuje ten problem przez dodanie trasy odpowiedniej dla adresu IP klienta i maski jego podsieci</string>
+  <string name="ab_persist_tun">Otwieranie urządzenia tun, gdy inne urządzenie używane do obsługi persist-tun, jest otwarte, powoduje awarię VPNServices na urządzeniu. Ponowne uruchomienie urządzenia jest konieczne dla przywrócenia VPN. OpenVPN dla systemu Android próbuje uniknąć ponownego otwarcia urządzenia tun. Aby uniknąć awarii zamknij bieżący TUN przed otwarciem nowego TUN. Może to prowadzić do krótkiego momentu, gdzie pakiety są wysyłane poza siecią VPN. Nawet mimo zastosowania tego obejścia VPNServices czasami ulega awarii i wymaga ponownego uruchomienia urządzenia.</string>
   <string name="ab_secondary_users">VPN absolutnie nie działa dla dodatkowych użytkowników.</string>
   <string name="ab_kitkat_reconnect">"Jest grono użytkowników, którzy donoszą, iż podczas używania aplikacji VPN połączenie danych/komórkowe jest często zrywane. Zachowanie to wydaje się dotykać niewielkiej liczby urządzeń/dostawców danych komórkowych - na tę chwilę nieznana jest przyczyna, ani rozwiązanie problemu."</string>
+  <string name="ab_vpn_reachability_44">Przy użyciu VPN można dotrzeć tylko do miejsc, które są osiągalne bez sieci VPN. VPN protokołu IPv6 nie działa w ogóle.</string>
   <string name="ab_only_cidr_title">Trasy nie-CIDR</string>
   <string name="ab_proxy_title">Zachowanie Proxy w sieci VPN</string>
   <string name="ab_lollipop_reinstall_title">Ponowna instalacja aplikacji VPN</string>
@@ -403,6 +408,8 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
   <string name="samsung_broken">Pomimo, że telefony marki Samsung są jednymi z najliczniej sprzedawanych urządzeń z Androidem, oprogramowanie układowe Samsunga jest jednocześnie jednym z posiadających najwięcej błędów. Błędy nie ograniczają się wyłącznie do operacji związanych z VPN a wiele z nich zostało rozwiązanych technikami tymczasowymi. Poniższa lista przedstawia kilka ze wspomnianych błędów.\n\nDNS nie działa poza zakresem VPN.\n\nNa wielu urządzeniach marki Samsung z Androidem 5.x aplikacje dozwolone/niedozwolone nie działają.\n\nNa urządzeniach marki Samsung z Androidem 6.x VPN może nie działać podczas aktywnego oszczędzania energii.</string>
   <string name="samsung_broken_title">Telefony Samsung</string>
   <string name="novpn_selected">Nie wybrano VPN.</string>
+  <string name="defaultvpn">Domyślny VPN</string>
+  <string name="vpnselected">Obecnie wybrana sieć VPN: \'%s\'</string>
   <string name="reconnect">Podłącz ponownie</string>
   <string name="qs_title">Przełącz VPN</string>
   <string name="qs_connect">Połącz z %s</string>
@@ -415,4 +422,22 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
   <string name="sort">Sortowanie</string>
   <string name="sorted_lru">Profile posortowane według ostatnio używanych</string>
   <string name="sorted_az">Profile sortowane według nazwy</string>
+  <string name="deprecated_tls_remote">Konfigurcja używa opcji tls-remote, która została zaniechana w wersji 2.3 i ostatecznie usunięta w 2.4</string>
+  <string name="auth_failed_behaviour">Zachowanie na AUTH_FAILED</string>
+  <string name="graph">Grafika</string>
+  <string name="use_logarithmic_scale">Użyj skali logarytmicznej</string>
+  <string name="notenoughdata">Za mało danych</string>
+  <string name="avghour">Średnia na godzinę</string>
+  <string name="avgmin">Średnia za minutę</string>
+  <string name="last5minutes">Ostatnie 5 minut</string>
+  <string name="data_in">W</string>
+  <string name="data_out">Zewnątrz</string>
+  <string name="bits_per_second">%.0f bit/s</string>
+  <string name="kbits_per_second">%.1f kbit/s</string>
+  <string name="mbits_per_second">%.1f Mbit / s</string>
+  <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="volume_byte">%.0f B</string>
+  <string name="volume_kbyte">%.1f kB</string>
+  <string name="volume_mbyte">%.1f MB</string>
+  <string name="volume_gbyte">%.1f GB</string>
 </resources>

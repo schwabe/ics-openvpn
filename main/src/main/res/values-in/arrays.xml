@@ -15,7 +15,7 @@
     <item>Kunci Tetap</item>
     <item>Pengguna/Kata Sandi + Sertifikat</item>
     <item>Pengguna/Kata Sandi + PKCS12 </item>
-    <item>Pengguna/Kata Sandi + Android</item>
+    <item>Pengguna/Kata Sandi + Danian</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item translatable="false">0</item>
@@ -25,7 +25,7 @@
   </string-array>
   <string-array name="auth_retry_type">
     <item>Disconnect, forget password</item>
-    <item>Disconnect, keep password</item>
+    <item>Putus, simpan kata sandi</item>
     <item>Abaikan, coba lagi</item>
   </string-array>
 </resources>

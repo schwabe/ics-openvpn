@@ -22,4 +22,9 @@
     <item>不指定</item>
     <item>加密 (tls-crypt)</item>
   </string-array>
+  <string-array name="auth_retry_type">
+    <item>斷開連接，忘記了密碼</item>
+    <item>斷開連接，保存密碼</item>
+    <item>忽略，然後重試</item>
+  </string-array>
 </resources>

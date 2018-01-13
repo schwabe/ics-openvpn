@@ -135,6 +135,7 @@
   <string name="inline_file_tab">Indlejret fil</string>
   <string name="error_importing_file">Fejl under importering af fil</string>
   <string name="import_error_message">Kunne ikke importere fil fra filsytemet</string>
+  <string name="inline_file_data">[[Data inline fil]]</string>
   <string name="opentun_no_ipaddr">Nægter at åbne tun-enhed uden IP-information</string>
   <string name="menu_import">Importér profil fra ovpn fil</string>
   <string name="menu_import_short">Importér</string>
@@ -223,6 +224,8 @@
   <string name="openvpn_log">OpenVPN log</string>
   <string name="import_config">Importér OpenVPN konfiguration</string>
   <string name="battery_consumption_title">Batteriforbrug</string>
+  <string name="baterry_consumption">I mine personlige tests er hovedårsagen til OpenVPNs høje batteriforbrug keepalive-pakker. De fleste OpenVPN-servere har en konfigurationsregel såsom \'keepalive 10 60\', som får klienten og serveren til at udveksle keepalive-pakker hvert tiende sekund. &lt;p&gt; Selvom disse pakker er små og ikke udgør megen trafik, holder de mobilradioenetværk beskæftiget og øger dermed strømforbruget (se evt. &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt; Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt;. Denne keepalive-indstilling kan ikke ændres på klienten, men kun systemadministratoren for OpenVPN kan ændre denne. &lt;p&gt; Ved at benytte et keepalive-niveau længere end 60 sekunder med UDP kan visse NAT-gateways droppe forbindelsen grundet en inaktivitets-timeout. Brug af TCP med en høj keepalive-tid fungerer, men tunnelering af TCP over TCP udviser en ekstrem ringe ydelse på forbindelser med højt pakketab (se &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP over TCP is a bad idea&lt;/a&gt;).</string>
+  <string name="faq_tethering">Funktionen Android Tethering (via Wi.Fi, USB eller Bluetooth) og VPN-tjeneste-API\'et (som benyttes af denne app) fungerer ikke sammen. For yderligere oplysninger, se venligst &lt;a href=\"https://github.com/schwabe/ics-openvpn/issues/34\"&gt;problem #34&lt;/a&gt;</string>
   <string name="vpn_tethering_title">VPN og Tethering</string>
   <string name="connection_retries">Forbindelses-forsøg</string>
   <string name="reconnection_settings">Gentilslutningindstillinger</string>
@@ -258,6 +261,8 @@
   <string name="packet_auth">Pakkegodkendelse</string>
   <string name="auth_dialog_title">Angiv pakkegodkendelsesmetode</string>
   <string name="built_by">bygget af %s</string>
+  <string name="debug_build">fejlfindingskompilering</string>
+  <string name="official_build">officiel kompilering</string>
   <string name="make_selection_inline">Kopiér til profil</string>
   <string name="crashdump">Nedbruds-dump</string>
   <string name="add">Tilføj</string>
@@ -321,6 +326,51 @@
   <string name="mtu_invalid_value">MTU-tilsidesættelsesværdien skal være et helt tal mellem 64 og 9000</string>
   <string name="mssfix_value_dialog">Meddel TCP sessioner der kører gennem tunnelen at de skal begrænse deres sendte pakker så, efter at OpenVPN har indkapslet dem, de resulterende UDP-pakker OpenVPN sender til dets modtagere ikker bliver større end de valgte antal bytes. (standarden er 1450)</string>
   <string name="mssfix_checkbox">Tilsidesæt MSS-værdi af ​​TCP-nyttelast</string>
+  <string name="mssfix_dialogtitle">Opsæt MSSfor TCP-dataindhold</string>
+  <string name="client_behaviour">Klientadfærd</string>
+  <string name="clear_external_apps">Ryd tilladte eksterne apps</string>
+  <string name="loading">Indlæser&#8230;</string>
+  <string name="allowed_vpn_apps_info">Tilladte VPN-apps: %1$s</string>
+  <string name="disallowed_vpn_apps_info">Ikke-tilladte VPN apps: %1$s</string>
+  <string name="app_no_longer_exists">Pakken %s er ikke længere installeret, fjerner den fra app-listen Tilladte/Ikke-tilladte</string>
+  <string name="vpn_disallow_radio">VPN benyttes til alle apps, bortset fra de valgte</string>
+  <string name="vpn_allow_radio">VPN benyttes kun til valgte apps</string>
+  <string name="query_delete_remote">Fjern fjernserverangivelse?</string>
+  <string name="keep">Behold</string>
+  <string name="delete">Slet</string>
+  <string name="add_remote">Tilføj ny fjernserver</string>
+  <string name="remote_random">Benyt forbindelsesangivelser i tilfældig rækkefølge ved tilslutning</string>
+  <string name="remote_no_server_selected">Mindst én fjernserver skal definere og aktiveres.</string>
+  <string name="server_list">Serverliste</string>
+  <string name="vpn_allowed_apps">Tilladte apps</string>
+  <string name="advanced_settings">Avancerede Indstillinger</string>
+  <string name="payload_options">Dataindholdsmuligheder</string>
+  <string name="tls_settings">TLS-indstillinger</string>
+  <string name="no_remote_defined">Ingen fjernserver defineret</string>
+  <string name="duplicate_vpn">Duplicér VPN-profil</string>
+  <string name="duplicate_profile_title">Dupliceringsprofilnavn: %s</string>
+  <string name="show_log">Vis log</string>
+  <string name="faq_android_clients">Der findes flere OpenVPN-klienter til Android. De mest almindelige er OpenVPN for Android (denne klient), OpenVPN Connect og OpenVPN Settings.&lt;p&gt;Klienterne kan placeres i to grupper: OpenVPN for Android og OpenVPN Connect bruger den officielle VPN-tjeneste API (Android 4.0+) og kræver ingen root, og OpenVPN Settings, der benytter root.&lt;p&gt;OpenVPN for Android, er en open source-klient udviklet af Arne Schwabe. Den er målrettet mere avancerede brugere og tilbyder mange indstillinger og muligheden for at importere profiler fra filer samt til at konfigurere/ændre profiler i selve i app\'en. Klienten er baseret på fællesskabsversionen af ​​OpenVPN. Den er baseret på OpenVPN 2.x-kildekoden. Denne klient kan ses som fællesskabets semi-officielle klient. &lt;p&gt;OpenVPN Connect er en ikke-open source-klient, der er udviklet af OpenVPN Technologies, Inc. Klienten er tildigtet generelt brug og mere målrettet den gennemsnitlige bruger og tillader import af OpenVPN-profiler. Denne klient er baseret på OpenVPN C ++ genimplementering af OpenVPN-protokollen (dette var påkrævet for at tillade OpenVPN Technologies, Inc at offentliggøre en iOS OpenVPN-app). Denne klient er den officielle klient for OpenVPN-teknologierne &lt;p&gt; OpenVPN Settings er den ældste af klienterne og også en brugerflade til open source OpenVPN. I modsætning til OpenVPN for Android kræver den root og benytter ikke VPN-tjeneste API. Dem afhænger ikke af Android 4.0+</string>
+  <string name="faq_androids_clients_title">Forskelle mellem OpenVPN Android-klienter</string>
+  <string name="ignore_multicast_route">Ignorerer multicast-rute: %s</string>
+  <string name="ab_only_cidr">Android understøtter kun CIDR-ruter til VPN. Da ikke-CIDR-ruter næsten aldrig benyttes, vil OpenVPN for Android benytte en /32 til ruter, som ikke er CIDR, og udstede en advarsel.</string>
+  <string name="ab_tethering_44">Tøjring fungerer, mens VPN\'en er aktiv. Den kablede forbindelse benytter IKKE VPN\'en.</string>
+  <string name="ab_kitkat_mss">Tidlige KitKat-versioner indstiller den forkerte MSS-værdi på TCP-forbindelser (#61948). Prøv at aktivere mssfix-indstillingen for at løse denne fejl.</string>
+  <string name="ab_proxy">Android vil fortsat bruge de proxyindstillinger, som er angivet til mobil/Wi-Fi-forbindelsen, når ingen DNS-servere er opsat. OpenVPN for Android vil advare dig om dette i loggen.<p>Når en VPN indstiller en DNS-server vil Android ikke benytte en proxy. Der er intet API indstilling af en proxy for en VPN-forbindelse.</p></string>
+  <string name="ab_lollipop_reinstall">VPN-apps stoppe muligvis med at fungere, hvis de afinstalleres og geninstalleres. Se #80074 for yderligere oplysninger</string>
+  <string name="ab_not_route_to_vpn">Den opsatte klient-IP og IP\'erne i netværksmasken bliver ikke sendt til VPN\'en. OpenVPN kompenserer for denne fejl ved udtrykkeligt at tilføje en rute, der korresponderer med klientens IP og dens netmaske</string>
+  <string name="ab_persist_tun">Åbning af en tun-enhed, mens en anden tun-enhed, der benyttes til vedvarende tun-understøttelse, er aktiv, medfører fejl i VPN-tjenesten på enheden. En genstart er nødvendig for at gøre VPN funktionel igen. OpenVPN for Android forsøger at undgå at genåbne tun-enheden, og hvis det virkelig er nødvendigt, lukkes først den nuværende TUN, inden den nye TUN-enhed åbnes for at undgå nedbrud. Dette kan medføre et kort interval, hvori pakker sendes over en ikke-VPN-forbindelse. Selv med denne løsning går VPN-tjenesten somme tider ned og kræver genstart af enheden.</string>
+  <string name="ab_secondary_users">VPN fungerer slet ikke for sekundære brugere.</string>
+  <string name="ab_kitkat_reconnect">"Flere brugere rapporterer, at mobilforbindelse/-dataforbindelse ofte droppes under brug af VPN-app\'en. Denne adfærd synes kun at påvirke visse kombinationer af mobiludbydere/enheder, og indtil nu har ingen årsag/løsning på fejlen kunnet identificeres."</string>
+  <string name="ab_vpn_reachability_44">Kun destinationer, der også kan nås uden VPN, kan nås via VPN. IPv6 VPN\'er virker slet ikke.</string>
+  <string name="ab_only_cidr_title">Ikke-CIDR-ruter</string>
+  <string name="ab_proxy_title">Proxy-adfærd for VPN\'er</string>
+  <string name="ab_lollipop_reinstall_title">Geninstallerer VPN-apps</string>
+  <string name="version_upto">%s og tidligere</string>
+  <string name="copy_of_profile">Kopi af %s</string>
+  <string name="ab_not_route_to_vpn_title">Rute til den konfigurerede IP-adresse</string>
+  <string name="ab_kitkat_mss_title">Forkert MSS-værdi for VPN-forbindelse</string>
+  <string name="ab_secondary_users_title">Sekundære tabletbrugere</string>
   <string name="custom_connection_options_warng">Angiv tilpassede tilslutningsspecifikke indstillinger. Brug med omtanke</string>
   <string name="custom_connection_options">Tilpassede indstillinger</string>
   <string name="remove_connection_entry">Fjern forbindelsesindgang</string>
@@ -329,6 +379,7 @@
   <string name="ab_persist_tun_title">Fortsæt Tun tilstand</string>
   <string name="version_and_later">%s og senere</string>
   <string name="tls_cipher_alert_title">Forbindelser fejler SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure</string>
+  <string name="tls_cipher_alert">Nyere OpenVPN for Android-versioner (0.6.29/marts 2015) benytter en mere sikker standard for de tilladte chiffer-pakker (tls-chiffer \"DEFAULT:! EXP:! PSK:! SRP:! KRSA\"). Uheldigvis afstedkommer udeladelse af de mindre sikre chiffer-pakker og eksportchiffer-pakker, især udeladelsen af ​​chiffer-pakker, som ikke understøtter Perfect Forward Secrecy (Diffie-Hellman), visse problemer. Dette skyldes normalt et velment, men dårligt udført, forsøg på at styrke TLS-sikkerhed ved at opsætte tls-chiffer på serveren eller nogle indlejrede operativsystemer med fjernet SSL (f.eks. MikroTik).\nFor at løse dette problem bør tls-cipher-indstillinger på serverensættes til en rimelig standard såsom tls-chiffer \"DEFAULT:! EXP:! PSK:! SRP:! kRSA\". For at løse problemet på klienten kan den tilpassede indstilling tls-chiffer DEFAULT tilføjes på Android-klienten.</string>
   <string name="message_no_user_edit">Denne profil er tilføjet fra en ekstern app (%s) og er blevet markeret som ikke-bruger-redigerbar.</string>
   <string name="crl_file">Liste over tilbagekaldte certifikater</string>
   <string name="service_restarted">Genstarter OpenVPN Service (App\'en crashede, den crashede sandsynligvis eller blev stoppet på grund a RAM overbelastning)</string>
@@ -341,4 +392,8 @@
   <string name="protocol">Protokol</string>
   <string name="enabled_connection_entry">Aktiveret</string>
   <string name="permission_revoked">VPN tilladelse tilbagekaldt af styresystemet (f.eks. kan et andet VPN program være startet), stopper VPN</string>
+  <string name="volume_byte">%.0f B</string>
+  <string name="volume_kbyte">%.1f kB</string>
+  <string name="volume_mbyte">%.1f MB</string>
+  <string name="volume_gbyte">%.1f GB</string>
 </resources>

@@ -8,7 +8,7 @@
   <!--  Keep the order the same as the TYPE_ constants in VPNProfile -->
   <string-array name="vpn_types">
     <item>证书</item>
-    <item>PKCS12 文件</item>
+    <item>PKCS12 加密文件</item>
     <item>Android 证书</item>
     <item>用户名/密码</item>
     <item>静态密钥</item>
@@ -20,6 +20,11 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>未指定</item>
-    <item>加密（tls-crypt）</item>
+    <item>加密方式（--tls-crypt）</item>
+  </string-array>
+  <string-array name="auth_retry_type">
+    <item>断开，忘记密码</item>
+    <item>断开，保存密码</item>
+    <item>忽略，重试</item>
   </string-array>
 </resources>

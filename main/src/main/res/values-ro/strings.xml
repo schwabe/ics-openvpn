@@ -38,7 +38,7 @@
   <string name="auth_username">Utilizator</string>
   <string name="auth_pwquery">Parola</string>
   <string name="static_keys_info">Pentru configurarea statică Cheile TLS Auth vor fi utilizate ca şi chei statice</string>
-  <string name="configure_the_vpn">Configurare VPN</string>
+  <string name="configure_the_vpn">Configurați VPN-ul</string>
   <string name="menu_add_profile">Adaugă profil</string>
   <string name="add_profile_name_prompt">Introduceţi un nume ce identifică profilul nou</string>
   <string name="duplicate_profile_name">Vă rugăm să introduceţi un nume de profil unic</string>

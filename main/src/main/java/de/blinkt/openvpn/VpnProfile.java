@@ -32,9 +32,7 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
+import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -582,7 +580,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean usesystemproxy = prefs.getBoolean("usesystemproxy", true);
-        if (usesystemproxy && !mIsOpenVPN22 && !configForOvpn3)  {
+        if (usesystemproxy && !mIsOpenVPN22 && !configForOvpn3) {
             cfg += "# Use system proxy setting\n";
             cfg += "management-query-proxy\n";
         }
@@ -955,6 +953,15 @@ public class VpnProfile implements Serializable, Cloneable {
         if (noRemoteEnabled)
             return R.string.remote_no_server_selected;
 
+        if (doUseOpenVPN3(context)) {
+            if (mAuthenticationType == TYPE_STATICKEYS) {
+                return R.string.openvpn3_nostatickeys;
+            }
+            if (mAuthenticationType == TYPE_PKCS12 || mAuthenticationType == TYPE_USERPASS_PKCS12) {
+                return R.string.openvpn3_pkcs12;
+            }
+        }
+
         // Everything okay
         return R.string.no_error_found;
 
@@ -1088,19 +1095,33 @@ public class VpnProfile implements Serializable, Cloneable {
 
 
         try {
+            @SuppressLint("GetInstance")
+            String keyalgorithm = privkey.getAlgorithm();
+
+            byte[] signed_bytes;
+            if (keyalgorithm.equals("EC")) {
+                Signature signer = Signature.getInstance("NONEwithECDSA");
+
+                signer.initSign(privkey);
+                signer.update(data);
+                signed_bytes = signer.sign();
+
+            } else {
             /* ECB is perfectly fine in this special case, since we are using it for
                the public/private part in the TLS exchange
              */
-            @SuppressLint("GetInstance")
-            Cipher rsaSigner = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+                Cipher signer;
+                signer = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
 
-            rsaSigner.init(Cipher.ENCRYPT_MODE, privkey);
 
-            byte[] signed_bytes = rsaSigner.doFinal(data);
+                signer.init(Cipher.ENCRYPT_MODE, privkey);
+
+                signed_bytes = signer.doFinal(data);
+            }
             return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
 
         } catch (NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException
-                | BadPaddingException | NoSuchPaddingException e) {
+                | BadPaddingException | NoSuchPaddingException | SignatureException e)  {
             VpnStatus.logError(R.string.error_rsa_sign, e.getClass().toString(), e.getLocalizedMessage());
             return null;
         }

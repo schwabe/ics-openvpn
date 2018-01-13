@@ -48,8 +48,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode = 153
-        versionName = "0.6.73"
+        versionCode = 154
+        versionName = "0.7.0"
 
         externalNativeBuild {
             cmake {
@@ -140,7 +140,6 @@ android.applicationVariants.all { variant ->
 
 android.applicationVariants.all { variant ->
     variant.productFlavors.each {
-        logger.warn("A warning log message. ${it.dimension}, ${it.name}")
         if (it.dimension == 'implementation' &&  it.name == 'ovpn3')
             variant.getJavaCompiler().dependsOn(generateOpenVPN3Swig)
 

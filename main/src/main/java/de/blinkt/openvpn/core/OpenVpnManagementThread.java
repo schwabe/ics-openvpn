@@ -606,7 +606,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         if (mWaitingForRelease)
             releaseHold();
         else if (samenetwork)
-            managmentCommand("network-change\n");
+            managmentCommand("network-change samenetwork\n");
         else
             managmentCommand("network-change\n");
     }

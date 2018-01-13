@@ -179,6 +179,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		config.setContent(vpnconfig);
 		config.setTunPersist(mVp.mPersistTun);
         config.setGuiVersion(mVp.getVersionEnvString(mService));
+        config.setPlatformVersion(mVp.getPlatformVersionEnvString());
 		config.setExternalPkiAlias("extpki");
 
 		ClientAPI_EvalConfig ec = eval_config(config);
@@ -250,7 +251,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public void networkChange(boolean sameNetwork) {
-
+		reconnect(1);
 	}
 
 	@Override
@@ -289,6 +290,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	@Override
 	public void stop() {
 		super.stop();
+		mService.openvpnStopped();
 	}
 
 	@Override

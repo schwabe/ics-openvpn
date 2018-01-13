@@ -111,7 +111,8 @@ public class OpenVPNThread implements Runnable {
                 }
             }
 
-            mService.processDied();
+            if (mNoProcessExitStatus)
+                mService.openvpnStopped();
             Log.i(TAG, "Exiting");
         }
     }

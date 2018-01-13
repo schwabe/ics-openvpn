@@ -244,7 +244,7 @@
   <string name="state_assign_ip">Weise IP-Adressen zu</string>
   <string name="state_add_routes">Lege Routen an</string>
   <string name="state_connected">Verbunden</string>
-  <string name="state_disconnected">Trennen</string>
+  <string name="state_disconnected">Getrennt</string>
   <string name="state_reconnecting">Wiederverbinden</string>
   <string name="state_exiting">Beende</string>
   <string name="state_noprocess">OpenVPN läuft nicht</string>

@@ -87,7 +87,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private boolean mDisplayBytecount = false;
     private boolean mStarting = false;
     private long mConnecttime;
-    private boolean mOvpn3 = false;
     private OpenVPNManagement mManagement;
     private String mLastTunCfg;
     private String mRemoteGW;
@@ -175,7 +174,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     // Similar to revoke but do not try to stop process
-    public void processDied() {
+    public void openvpnStopped() {
         endVpnService();
     }
 
@@ -556,14 +555,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         mStarting = false;
 
         // Start a new session by creating a new thread.
-        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
-
-        mOvpn3 = prefs.getBoolean("ovpn3", false);
-        if (!"ovpn3".equals(BuildConfig.FLAVOR))
-            mOvpn3 = false;
+        boolean useOpenVPN3 = VpnProfile.doUseOpenVPN3(this);
 
         // Open the Management Interface
-        if (!mOvpn3) {
+        if (!useOpenVPN3) {
             // start a Thread that handles incoming messages of the managment socket
             OpenVpnManagementThread ovpnManagementThread = new OpenVpnManagementThread(mProfile, this);
             if (ovpnManagementThread.openManagementInterface(this)) {
@@ -579,15 +574,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         Runnable processThread;
-        if (mOvpn3)
-
+        if (useOpenVPN3)
         {
-
             OpenVPNManagement mOpenVPN3 = instantiateOpenVPN3Core();
             processThread = (Runnable) mOpenVPN3;
             mManagement = mOpenVPN3;
-
-
         } else {
             processThread = new OpenVPNThread(this, argv, nativeLibraryDirectory);
             mOpenVPNThread = processThread;
@@ -612,6 +603,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         );
     }
+
 
     private void stopOldOpenVPNProcess() {
         if (mManagement != null) {

@@ -19,6 +19,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import de.blinkt.openvpn.core.*;
 import org.spongycastle.util.io.pem.PemObject;
 import org.spongycastle.util.io.pem.PemWriter;
 
@@ -47,14 +48,6 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-
-import de.blinkt.openvpn.core.Connection;
-import de.blinkt.openvpn.core.NativeUtils;
-import de.blinkt.openvpn.core.OpenVPNService;
-import de.blinkt.openvpn.core.PasswordCache;
-import de.blinkt.openvpn.core.VPNLaunchHelper;
-import de.blinkt.openvpn.core.VpnStatus;
-import de.blinkt.openvpn.core.X509Utils;
 
 public class VpnProfile implements Serializable, Cloneable {
     // Note that this class cannot be moved to core where it belongs since
@@ -180,7 +173,6 @@ public class VpnProfile implements Serializable, Cloneable {
     public boolean mUseUdp = true;
 
 
-
     public VpnProfile(String name) {
         mUuid = UUID.randomUUID();
         mName = name;
@@ -280,29 +272,41 @@ public class VpnProfile implements Serializable, Cloneable {
 
     }
 
+
+    public static boolean doUseOpenVPN3(Context c) {
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
+        boolean useOpenVPN3 = prefs.getBoolean("ovpn3", false);
+        if (!"ovpn3".equals(BuildConfig.FLAVOR))
+            useOpenVPN3 = false;
+        return useOpenVPN3;
+    }
+
     public String getConfigFile(Context context, boolean configForOvpn3) {
 
         File cacheDir = context.getCacheDir();
         String cfg = "";
 
-        // Enable management interface
-        cfg += "# Enables connection to GUI\n";
-        cfg += "management ";
-
-        cfg += cacheDir.getAbsolutePath() + "/" + "mgmtsocket";
-        cfg += " unix\n";
-        cfg += "management-client\n";
-        // Not needed, see updated man page in 2.3
-        //cfg += "management-signal\n";
-        cfg += "management-query-passwords\n";
-        cfg += "management-hold\n\n";
-
         if (!configForOvpn3) {
+            // Enable management interface
+            cfg += "# Config for OpenVPN 2.x\n";
+            cfg += "# Enables connection to GUI\n";
+            cfg += "management ";
+
+            cfg += cacheDir.getAbsolutePath() + "/" + "mgmtsocket";
+            cfg += " unix\n";
+            cfg += "management-client\n";
+            // Not needed, see updated man page in 2.3
+            //cfg += "management-signal\n";
+            cfg += "management-query-passwords\n";
+            cfg += "management-hold\n\n";
+
             cfg += String.format("setenv IV_GUI_VER %s \n", openVpnEscape(getVersionEnvString(context)));
-            String versionString = String.format(Locale.US, "%d %s %s %s %s %s", Build.VERSION.SDK_INT, Build.VERSION.RELEASE,
-                    NativeUtils.getNativeAPI(), Build.BRAND, Build.BOARD, Build.MODEL);
+            String versionString = getPlatformVersionEnvString();
             cfg += String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString));
+        } else {
+            cfg += "# Config for OpeNVPN 3 C++\n";
         }
+
 
         cfg += "machine-readable-output\n";
         cfg += "allow-recursive-routing\n";
@@ -416,8 +420,7 @@ public class VpnProfile implements Serializable, Cloneable {
                 cfg += insertFileData("ca", mCaFilename);
         }
 
-        if (isUserPWAuth())
-        {
+        if (isUserPWAuth()) {
             if (mAuthenticationType == AUTH_RETRY_NOINTERACT)
                 cfg += "auth-retry nointeract";
         }
@@ -454,7 +457,7 @@ public class VpnProfile implements Serializable, Cloneable {
             if (!TextUtils.isEmpty(mIPv6Address)) {
                 // Use our own ip as gateway since we ignore it anyway
                 String fakegw = mIPv6Address.split("/", 2)[0];
-                cfg += "ifconfig-ipv6 " + mIPv6Address + " " + fakegw  +"\n";
+                cfg += "ifconfig-ipv6 " + mIPv6Address + " " + fakegw + "\n";
             }
 
         }
@@ -492,12 +495,14 @@ public class VpnProfile implements Serializable, Cloneable {
                     cfg += "dhcp-option DNS6 " + mDNS1 + "\n";
                 else
                     cfg += "dhcp-option DNS " + mDNS1 + "\n";
-            } if (!TextUtils.isEmpty(mDNS2)) {
+            }
+            if (!TextUtils.isEmpty(mDNS2)) {
                 if (mDNS2.contains(":"))
                     cfg += "dhcp-option DNS6 " + mDNS2 + "\n";
                 else
                     cfg += "dhcp-option DNS " + mDNS2 + "\n";
-            } if (!TextUtils.isEmpty(mSearchDomain))
+            }
+            if (!TextUtils.isEmpty(mSearchDomain))
                 cfg += "dhcp-option DOMAIN " + mSearchDomain + "\n";
 
         }
@@ -509,9 +514,8 @@ public class VpnProfile implements Serializable, Cloneable {
                 cfg += "mssfix\n";
         }
 
-        if (mTunMtu >= 48 && mTunMtu != 1500)
-        {
-            cfg+= String.format(Locale.US, "tun-mtu %d\n", mTunMtu);
+        if (mTunMtu >= 48 && mTunMtu != 1500) {
+            cfg += String.format(Locale.US, "tun-mtu %d\n", mTunMtu);
         }
 
         if (mNobind)
@@ -578,7 +582,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean usesystemproxy = prefs.getBoolean("usesystemproxy", true);
-        if (usesystemproxy && !mIsOpenVPN22) {
+        if (usesystemproxy && !mIsOpenVPN22 && !configForOvpn3)  {
             cfg += "# Use system proxy setting\n";
             cfg += "management-query-proxy\n";
         }
@@ -605,6 +609,11 @@ public class VpnProfile implements Serializable, Cloneable {
 
 
         return cfg;
+    }
+
+    public String getPlatformVersionEnvString() {
+        return String.format(Locale.US, "%d %s %s %s %s %s", Build.VERSION.SDK_INT, Build.VERSION.RELEASE,
+                NativeUtils.getNativeAPI(), Build.BRAND, Build.BOARD, Build.MODEL);
     }
 
     public String getVersionEnvString(Context c) {
@@ -905,12 +914,12 @@ public class VpnProfile implements Serializable, Cloneable {
         if (mAuthenticationType == TYPE_KEYSTORE || mAuthenticationType == TYPE_USERPASS_KEYSTORE) {
             if (mAlias == null)
                 return R.string.no_keystore_cert_selected;
-        } else if (mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES){
+        } else if (mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) {
             if (TextUtils.isEmpty(mCaFilename))
                 return R.string.no_ca_cert_selected;
         }
 
-        if (mCheckRemoteCN && mX509AuthType==X509_VERIFY_TLSREMOTE)
+        if (mCheckRemoteCN && mX509AuthType == X509_VERIFY_TLSREMOTE)
             return R.string.deprecated_tls_remote;
 
         if (!mUsePull || mAuthenticationType == TYPE_STATICKEYS) {

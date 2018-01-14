@@ -1,5 +1,15 @@
 cmake_minimum_required(VERSION 3.4.1)
 
+
+# Git version string
+
+include(GetGitRevisionDescription.cmake)
+git_describe(OPENVPN2_GIT "${CMAKE_CURRENT_SOURCE_DIR}/openvpn" "--tags" "--always" "--long")
+git_describe(OPENVPN3_GIT "${CMAKE_CURRENT_SOURCE_DIR}/openvpn3" "--tags" "--always" "--long")
+message ("OpenVPN 2.x version ${OPENVPN2_GIT}")
+message ("OpenVPN 3.x version ${OPENVPN3_GIT}")
+
+
 # Set mbedtls options
 OPTION(ENABLE_PROGRAMS "" OFF)
 OPTION(USE_SHARED_MBEDTLS_LIBRARY "" OFF)
@@ -39,6 +49,8 @@ if (${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*ovpn3
       -DASIO_STANDALONE
       -DUSE_ASIO
       -DUSE_MBEDTLS
+      -DGIT_VERSION_STRING=\"${OPENVPN3_GIT}\"
+
       )
     target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo_static_lib)
 else()
@@ -149,6 +161,8 @@ target_include_directories(openvpn PRIVATE
 
 target_compile_definitions(openvpn PRIVATE
   -DHAVE_CONFIG_H
+  -DCONFIGURE_GIT_REVISION=\"${OPENVPN2_GIT}\"
+  -DCONFIGURE_GIT_FLAGS=\"\"
   -DTARGET_ABI=\"${ANDROID_ABI}\"
   )
 

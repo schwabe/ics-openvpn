@@ -63,7 +63,9 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		if(!setConfig(configstr))
 			return;
 		setUserPW();
+		VpnStatus.logDebug(platform());
         VpnStatus.logInfo(copyright());
+
 
 		StatusPoller statuspoller = new StatusPoller(OpenVPNManagement.mBytecountInterval*1000);
 		new Thread(statuspoller,"Status Poller").start();
@@ -184,7 +186,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 		ClientAPI_EvalConfig ec = eval_config(config);
 		if(ec.getExternalPki()) {
-            VpnStatus.logError("OpenVPN seem to think as external PKI");
+            VpnStatus.logError("OpenVPN assumes an external PKI");
 		}
 		if (ec.getError()) {
             VpnStatus.logError("OpenVPN config file parse error: " + ec.getMessage());

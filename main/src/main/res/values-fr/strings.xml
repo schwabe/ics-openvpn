@@ -253,7 +253,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="state_tcp_connect">Connexion (TCP)</string>
   <string name="state_auth_failed">Authentification échouée</string>
   <string name="state_nonetwork">En attente d\'un réseau utilisable</string>
-  <string name="statusline_bytecount">French</string>
   <string name="notifcation_title_notconnect">Non connecté</string>
   <string name="start_vpn_title">Connexion au VPN %s</string>
   <string name="start_vpn_ticker">Connexion au VPN %s</string>

@@ -442,4 +442,18 @@
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="channel_name_background">Verbindungsstatistiken</string>
+  <string name="channel_description_background">Laufende Statistiken der OpenVPN-Verbindung</string>
+  <string name="channel_name_status">Verbindungsstatus Änderungen</string>
+  <string name="channel_description_status">Statusänderungen der OpenVPN-Verbindung (Verbindung, Authentifizierung,...)</string>
+  <string name="weakmd_title">Schwache (MD5) Hashes in Zertifikatssignatur (SSL_CTX_use_certificate md too weak)</string>
+  <string name="title_activity_open_sslspeed">OpenSSL Geschwindigkeitstest</string>
+  <string name="openssl_cipher_name">OpenSSL Chiffrenamen</string>
+  <string name="osslspeedtest">OpenSSL Crypto Geschwindigkeitstest</string>
+  <string name="openssl_error">OpenSSL hat einen Fehler gemeldet</string>
+  <string name="running_test">Test läuft&#8230;</string>
+  <string name="test_algoirhtms">Ausgewählte Algorithmen testen</string>
+  <string name="all_app_prompt">Eine andere App versucht, %s zu steuern. Die anforderne App kann nicht bestimmt werden. Wenn Sie diesen Zugriff zulassen, erhalten ALLE Apps Zugriff.</string>
+  <string name="openvpn3_nostatickeys">Die OpenVPN 3 C ++ - Implementierung unterstützt keine statischen Schlüssel. Bitte wechseln Sie zu OpenVPN 2.x unter den allgemeinen Einstellungen.</string>
+  <string name="openvpn3_pkcs12">Die Benutzung von PKCS12 Dateien mit der OpenVPN 3 C++ Implementierung wird nicht unterstützt. Bitte importieren Sie entweder die PKCS12 Datei in den Android Keystore oder nutzen Sie die Option OpenVPN 2.x in den allgemeinen Einstellungen auszuwählen.</string>
 </resources>

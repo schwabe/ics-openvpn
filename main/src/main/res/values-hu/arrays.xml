@@ -20,6 +20,11 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>Nincs megadva</item>
-    <item>Titkosítás (tls-crypt)</item>
+    <item>Titkosítás (--tls-crypt)</item>
+  </string-array>
+  <string-array name="auth_retry_type">
+    <item>Kapcsolat bontása, jelszó elfelejtése</item>
+    <item>Kapcsolat bontása, jelszó megőrzése</item>
+    <item>Figyelmen kívül hagy, újrapróbál</item>
   </string-array>
 </resources>

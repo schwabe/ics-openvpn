@@ -179,13 +179,13 @@
   <string name="extracahint">A CA tanúsítvány általában visszajön az Android Keystore-ból. Adjon meg egy külön tanúsítványt ha tanúsítvány-ellenőrzési hibát kap.</string>
   <string name="select_file">Választ</string>
   <string name="keychain_nocacert">Nem jött vissza CA tanúsítvány az Android keystore olvasása során. A hitelesítés valószínűleg sikertelen lesz.</string>
-  <string name="show_log_summary">Napló ablak mutatása a csatlakozás alatt. A napló ablak mindig elérető a rolóról is.</string>
+  <string name="show_log_summary">Napló ablak mutatása a csatlakozás alatt. A napló ablak mindig elérhető a rolóról is.</string>
   <string name="show_log_window">Naplózási ablak mutatása</string>
   <string name="mobile_info">%10$s %9$s futtatva %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
   <string name="error_rsa_sign">Hiba az Android keystore %1$s: %2$s kulccsal való belépéskor</string>
   <string name="faq_system_dialogs">A VPN csatlakozás figyelmeztetés azt jelzi, hogy ez az alkalmazás a rendszer általi teljes forgalmat lehallgathatja a VPNService API visszaélések elkerülése érdekében.\nA VPN csatlakozás értesítés (A kulcs szimbólum) is az Android rendszer jelzése egy kimenő VPN kapcsolatról. Néhány lemezképen ez az értesítés hangot is lejátszik.\nAz android az ön biztonsága érdekében vezette be ezeket a rendszer értesítéseket, és gondoskodott arról, hogy ne lehessen megkerülni. (Néhány lemezképen ez sajnos értesítési hangot is tartalmaz.)</string>
   <string name="faq_system_dialogs_title">Kapcsolat figyelmeztetés és értesítés hang</string>
-  <string name="translationby">A magyar fordítást készítették: kisjuhos, hd_adam, tomygee, Floo19, PettyBlue, ha1dfo</string>
+  <string name="translationby">A magyar fordítást készítették: kisjuhos, hd_adam, tomygee, Floo19, PettyBlue, ha1dfo, mmisi74, benewfy</string>
   <string name="ipdns">IP és DNS</string>
   <string name="basic">Alapvető</string>
   <string name="routing">Útválasztás</string>
@@ -409,6 +409,7 @@
   <string name="samsung_broken_title">Samsung telefonok</string>
   <string name="novpn_selected">Nincs VPN kiválasztva.</string>
   <string name="defaultvpn">Alapértelmezett VPN</string>
+  <string name="defaultvpnsummary">VPN használata azokon a helyeken ahol alapértelmezett VPN szükséges. Ezek jelenleg a boot-oláskor, a Mindig-BE és a Gyors Beállítások csempe.</string>
   <string name="vpnselected">Jelenleg kiválasztott VPN: \'%s\'</string>
   <string name="reconnect">Újracsatlakozás</string>
   <string name="qs_title">VPN be/kikapcsolás</string>
@@ -424,6 +425,7 @@
   <string name="sorted_lru">A profilok a legutóbbi használat szerint rendezve</string>
   <string name="sorted_az">A profilok név szerint rendezve</string>
   <string name="deprecated_tls_remote">A konfiguráció tls-remote opciót használ, ami a 2.3-ban elavulttá vált és a 2.4-ben végleg eltávolították</string>
+  <string name="auth_failed_behaviour">Viselkedés AUTH_FAILED-kor</string>
   <string name="graph">Grafikon</string>
   <string name="use_logarithmic_scale">Logaritmikus skála használata</string>
   <string name="notenoughdata">Nincs elég adat</string>
@@ -436,8 +438,40 @@
   <string name="kbits_per_second">%.1f kbit/s</string>
   <string name="mbits_per_second">%.1f Mbit/s</string>
   <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="weakmd">&lt;p&gt;Az OpenSSL az 1.1-es verziótól kezdve elutasítja a gyenge aláírásokat, mint például
+        az MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Az MD5 aláírások egyáltalán nem biztonságosak, a továbbiakban nem kellene használni.&lt;/b&gt; MD5
+        ütközést lehet létrehozni&lt;
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;néhány óra alatt minimális erőfeszítéssel.&lt;/a&gt;.
+        Frissítenie kellene a VPN tanúsítványokat amint lehetséges.&lt;/p&gt;&lt;p&gt;Sajnos, a régebbi easy-rsa disztribúciók a \"default_md md5\" beállítás opciót tartalmazták. Ha régi easy-rsa verziót használ, frissítsen
+        a &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;legutóbbi verzióra&lt;/a&gt;) vagy módosítsa az md5-ot sha256-ra és
+        generálja újra a tanúsítványokat.&lt;/p&gt;&lt;p&gt;Ha mégis a régi megtört tanúsítványokat szeretné használni, akkor használja
+        tls-cipher \"DEFAULT:@SECLEVEL=0\" konfiguráció opciót a haladó beállításoknál, vagy adja hozzá mint új sort
+        az importált konfigurációhoz.&lt;/p&gt;
+    </string>
   <string name="volume_byte">%.0f B</string>
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="channel_name_background">Kapcsolatstatisztika</string>
+  <string name="channel_description_background">A létrehozott OpenVPN kapcsolat pillanatnyi statisztikái</string>
+  <string name="channel_name_status">Kapcsolat állapot változás</string>
+  <string name="channel_description_status">Állapotváltozások az OpenVPN kapcsolatban (Csatlakozás, hitelesítés,&#8230;)
+    </string>
+  <string name="weakmd_title">Gyenge (MD5) hash-ek a tanúsítvány aláírásban (SSL_CTX_use_certificate md túl gyenge)
+    </string>
+  <string name="title_activity_open_sslspeed">OpenSSL Sebesség Teszt</string>
+  <string name="openssl_cipher_name">OpenSSL titkosítások</string>
+  <string name="osslspeedtest">OpenSSL Titkosítás Sebesség teszt</string>
+  <string name="openssl_error">Az OpenSSL hibával tért vissza</string>
+  <string name="running_test">A teszt fut&#8230;</string>
+  <string name="test_algoirhtms">Kijelölt algoritmusok tesztelése</string>
+  <string name="all_app_prompt">Egy külső alkalmazás megpróbálja vezérelni a(z) %s-t. Az alkalmazást nem lehet felismerni, a hozzáférés megadása
+        MINDEN alkalmazás számára elérhetőséget biztosít.
+    </string>
+  <string name="openvpn3_nostatickeys">Az OpenVPN 3 C++ implementáció nem támogatja a statikus kulcsokat, Kérem, váltson
+        OpenVPN 2.x-re az általános beállításokban.
+    </string>
+  <string name="openvpn3_pkcs12">PKCS12-fájlok közvetlen használata nem támogatott az OpenVPN 3 C++ implementációval.
+        Kérem, importálja az Android kulcstárba a pkcs12 fájlokat, vagy váltson OpenVPN 2.x-re az általános beállításokban.
+    </string>
 </resources>

@@ -466,14 +466,11 @@
     <string name="openssl_error">OpenSSL returned an error</string>
     <string name="running_test">Running test…</string>
     <string name="test_algoirhtms">Test selected algorithms</string>
-    <string name="all_app_prompt">An external app tries to control %s. The app cannot be determined allowing now grants
-        ALL apps access.
+    <string name="all_app_prompt">An external app tries to control %s. The app requesting access cannot be determined. Allowing this app grants ALL apps access.
     </string>
-    <string name="openvpn3_nostatickeys">The OpenVPN 3 C++ implementation does not support static keys. Please change to
-        OpenVPN 2.x under general settings.
+    <string name="openvpn3_nostatickeys">The OpenVPN 3 C++ implementation does not support static keys. Please change to OpenVPN 2.x under general settings.
     </string>
-    <string name="openvpn3_pkcs12">Using PKCS12 files directly with OpenVPN 3 C++ implementation is not supported.
-        Please import the pkcs12 files into the Android keystore or change to OpenVPN 2.x under general settings.
+    <string name="openvpn3_pkcs12">Using PKCS12 files directly with OpenVPN 3 C++ implementation is not supported. Please import the pkcs12 files into the Android keystore or change to OpenVPN 2.x under general settings.
     </string>
 
 </resources>

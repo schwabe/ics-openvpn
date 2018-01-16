@@ -260,7 +260,10 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                     processLogMessage(argument);
                     break;
                 case "RSA_SIGN":
-                    processSignCommand(argument);
+                    processSignCommand(argument, false);
+                    break;
+                case "ECDSA_SIGN":
+                    processSignCommand(argument, true);
                     break;
                 default:
                     VpnStatus.logWarning("MGMT: Got unrecognized command" + command);
@@ -631,16 +634,20 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         releaseHold();
     }
 
-    private void processSignCommand(String b64data) {
+    private void processSignCommand(String b64data, boolean ecdsa) {
 
-        String signed_string = mProfile.getSignedData(b64data);
+        String signed_string = mProfile.getSignedData(b64data, ecdsa);
+        String signcmd = "rsa-sig\n";
+        if (ecdsa)
+            signcmd = "ecdsa-sig\n";
+
         if (signed_string == null) {
-            managmentCommand("rsa-sig\n");
+            managmentCommand(signcmd);
             managmentCommand("\nEND\n");
             stopOpenVPN();
             return;
         }
-        managmentCommand("rsa-sig\n");
+        managmentCommand(signcmd);
         managmentCommand(signed_string);
         managmentCommand("\nEND\n");
     }

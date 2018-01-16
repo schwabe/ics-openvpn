@@ -223,7 +223,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public void external_pki_sign_request(ClientAPI_ExternalPKISignRequest signreq) {
-		signreq.setSig(mVp.getSignedData(signreq.getData()));
+		signreq.setSig(mVp.getSignedData(signreq.getData(), false));
 	}
 
 	void setUserPW() {

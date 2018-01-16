@@ -1082,7 +1082,7 @@ public class VpnProfile implements Serializable, Cloneable {
         return mPrivateKey;
     }
 
-    public String getSignedData(String b64data) {
+    public String getSignedData(String b64data, boolean ecdsa) {
         PrivateKey privkey = getKeystoreKey();
 
         byte[] data = Base64.decode(b64data, Base64.DEFAULT);
@@ -1121,7 +1121,7 @@ public class VpnProfile implements Serializable, Cloneable {
             return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
 
         } catch (NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException
-                | BadPaddingException | NoSuchPaddingException | SignatureException e)  {
+                | BadPaddingException | NoSuchPaddingException | SignatureException e) {
             VpnStatus.logError(R.string.error_rsa_sign, e.getClass().toString(), e.getLocalizedMessage());
             return null;
         }

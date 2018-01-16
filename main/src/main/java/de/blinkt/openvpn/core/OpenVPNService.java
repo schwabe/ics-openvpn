@@ -71,6 +71,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
     public static final String NOTIFICATION_CHANNEL_BG_ID = "openvpn_bg";
     public static final String NOTIFICATION_CHANNEL_NEWSTATUS_ID = "openvpn_newstat";
+    public static final String VPNSERVICE_TUN = "vpnservice-tun";
     private String lastChannel;
 
     private static boolean mNotificationAlwaysVisible = false;
@@ -987,7 +988,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     private boolean isAndroidTunDevice(String device) {
         return device != null &&
-                (device.startsWith("tun") || "(null)".equals(device) || "vpnservice-tun".equals(device));
+                (device.startsWith("tun") || "(null)".equals(device) || VPNSERVICE_TUN.equals(device));
     }
 
     public void setMtu(int mtu) {

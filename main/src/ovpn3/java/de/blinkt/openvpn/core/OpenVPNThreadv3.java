@@ -166,7 +166,12 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
     @Override
     public boolean tun_builder_reroute_gw(boolean ipv4, boolean ipv6, long flags) {
-        //ignore
+		if (ipv4)
+			mService.addRoute("0.0.0.0", "0.0.0.0", "127.0.0.1", OpenVPNService.VPNSERVICE_TUN);
+
+		if (ipv6)
+			mService.addRoutev6("::/0", OpenVPNService.VPNSERVICE_TUN);
+
         return true;
     }
 

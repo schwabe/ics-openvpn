@@ -8,20 +8,40 @@
 
 #include <jni.h>
 
-
-#include <internal/cryptlib.h>
-#include <openssl/ssl.h>
-#include <openssl/rsa.h>
-#include <openssl/objects.h>
-#include <openssl/md5.h>
 #include <android/log.h>
-#include <openssl/err.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <dlfcn.h>
 
-#include <internal/evp_int.h>
+// Minimal defines for openssl 1.0.x
+typedef void *RSA;
+
+struct EVP_PKEY
+{
+  int type;
+  int save_type;
+  int references;
+  void *ameth;
+  void *engine;
+  union {
+    RSA *rsa;
+  } pkey;
+};
+
+# define RSA_PKCS1_PADDING       1
 
 extern "C" {
     jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsasign(JNIEnv* env, jclass, jbyteArray from, jint pkeyRef);
     int jniThrowException(JNIEnv* env, const char* className, const char* msg);
+
+    int (*RSA_size_dyn)(const RSA *);
+    int (*RSA_private_encrypt_dyn)(int, const unsigned char *, unsigned char *, RSA *, int);
+
+    unsigned long (*ERR_get_error_dyn)();
+    void (*ERR_error_string_n_dyn)(unsigned long, char *, size_t);
+
+    void (*ERR_print_errors_fp_dyn)(FILE *);
+
 }
 
 int jniThrowException(JNIEnv* env, const char* className, const char* msg) {
@@ -47,6 +67,7 @@ int jniThrowException(JNIEnv* env, const char* className, const char* msg) {
 static char opensslerr[1024];
 jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsasign (JNIEnv* env, jclass, jbyteArray from, jint pkeyRef) {
 
+
 	//	EVP_MD_CTX* ctx = reinterpret_cast<EVP_MD_CTX*>(ctxRef);
 	EVP_PKEY* pkey = reinterpret_cast<EVP_PKEY*>(pkeyRef);
 
@@ -63,7 +84,8 @@ jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsasign (JNIEnv* env, jclass,
 		jniThrowException(env, "java/lang/NullPointerException", "data is null");
 
     int siglen;
-	unsigned char* sigret = (unsigned char*)malloc(RSA_size(pkey->pkey.rsa));
+    RSA_size_dyn= (int (*) (const RSA *)) dlsym(RTLD_DEFAULT, "RSA_size");
+	unsigned char* sigret = (unsigned char*)malloc(RSA_size_dyn(pkey->pkey.rsa));
 
 
 	//int RSA_sign(int type, const unsigned char *m, unsigned int m_len,
@@ -73,17 +95,20 @@ jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsasign (JNIEnv* env, jclass,
     /*	if (RSA_sign(NID_md5_sha1, (unsigned char*) data, datalen,
         sigret, &siglen, pkey->pkey.rsa) <= 0 ) */
 
-    siglen = RSA_private_encrypt(datalen,(unsigned char*) data,sigret,pkey->pkey.rsa,RSA_PKCS1_PADDING);
+    RSA_private_encrypt_dyn=(int (*)(int, const unsigned char *, unsigned char *, RSA *, int)) dlsym(RTLD_DEFAULT, "RSA_private_encrypt");
+    siglen = RSA_private_encrypt_dyn(datalen,(unsigned char*) data,sigret,pkey->pkey.rsa,RSA_PKCS1_PADDING);
 
     if (siglen < 0)
 	{
+        ERR_get_error_dyn = (unsigned long (*)()) dlsym(RTLD_DEFAULT, "ERR_get_error");
+        ERR_error_string_n_dyn = (void (*)(unsigned long, char *, size_t)) dlsym(RTLD_DEFAULT, "ERR_error_string_n");
 
-        ERR_error_string_n(ERR_get_error(), opensslerr ,1024);
+        ERR_error_string_n_dyn(ERR_get_error_dyn(), opensslerr ,1024);
 		jniThrowException(env, "java/security/InvalidKeyException", opensslerr);
 
-		ERR_print_errors_fp(stderr);
+        ERR_print_errors_fp_dyn = (void (*)(FILE *)) dlsym(RTLD_DEFAULT, "ERR_print_errors_fp");
+		ERR_print_errors_fp_dyn(stderr);
 		return NULL;
-
 
 	}
 

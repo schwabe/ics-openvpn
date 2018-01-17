@@ -1,6 +1,4 @@
 cmake_minimum_required(VERSION 3.4.1)
-
-
 # Git version string
 
 include(GetGitRevisionDescription.cmake)
@@ -63,8 +61,14 @@ target_link_libraries(opvpnutil log crypto ssl)
 
 
 add_library(jbcrypto SHARED jbcrypto/jbcrypto.cpp)
-target_link_libraries(jbcrypto log crypto)
+target_link_libraries(jbcrypto log dl)
+target_compile_options(jbcrypto PRIVATE)
+target_include_directories(jbcrypto PRIVATE
+  openssl/crypto/include
+  openssl/include
+  openssl)
 
+  
 
 
 set(openvpn_srcs

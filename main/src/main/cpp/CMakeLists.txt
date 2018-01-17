@@ -59,17 +59,10 @@ add_library(opvpnutil SHARED opvpnutil/jniglue.c opvpnutil/scan_ifs.c opvpnutil/
 target_compile_definitions(opvpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\")
 target_link_libraries(opvpnutil log crypto ssl)
 
-
+# The magic Jellybean keystore signing hack. Beware dragons and dlsyms magic ahead
 add_library(jbcrypto SHARED jbcrypto/jbcrypto.cpp)
 target_link_libraries(jbcrypto log dl)
 target_compile_options(jbcrypto PRIVATE)
-target_include_directories(jbcrypto PRIVATE
-  openssl/crypto/include
-  openssl/include
-  openssl)
-
-  
-
 
 set(openvpn_srcs
 	src/compat/compat-basename.c 

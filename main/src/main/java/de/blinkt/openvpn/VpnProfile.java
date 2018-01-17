@@ -489,16 +489,10 @@ public class VpnProfile implements Serializable, Cloneable {
 
         if (mOverrideDNS || !mUsePull) {
             if (!TextUtils.isEmpty(mDNS1)) {
-                if (mDNS1.contains(":"))
-                    cfg += "dhcp-option DNS6 " + mDNS1 + "\n";
-                else
-                    cfg += "dhcp-option DNS " + mDNS1 + "\n";
+                cfg += "dhcp-option DNS " + mDNS1 + "\n";
             }
             if (!TextUtils.isEmpty(mDNS2)) {
-                if (mDNS2.contains(":"))
-                    cfg += "dhcp-option DNS6 " + mDNS2 + "\n";
-                else
-                    cfg += "dhcp-option DNS " + mDNS2 + "\n";
+                cfg += "dhcp-option DNS " + mDNS2 + "\n";
             }
             if (!TextUtils.isEmpty(mSearchDomain))
                 cfg += "dhcp-option DOMAIN " + mSearchDomain + "\n";

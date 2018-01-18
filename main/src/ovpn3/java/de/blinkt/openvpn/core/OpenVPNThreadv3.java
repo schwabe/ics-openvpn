@@ -105,7 +105,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		if(ipv6)
 			mService.addRoutev6(address + "/" + prefix_length,"tun");
 		else
-			mService.addRoute(new CIDRIP(address, prefix_length));
+			mService.addRoute(new CIDRIP(address, prefix_length), true);
 		return true;
 	}
 
@@ -114,8 +114,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         if(ipv6)
             mService.addRoutev6(address + "/" + prefix_length, "wifi0");
         else {
-            //TODO
-            mService.addRoute(address, String.valueOf(prefix_length), "1.2.3.4" , "wifi0");
+			CIDRIP route = new CIDRIP(address, prefix_length);
+            mService.addRoute(route, false);
         }
         return true;
     }

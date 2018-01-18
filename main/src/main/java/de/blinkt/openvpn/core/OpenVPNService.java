@@ -935,8 +935,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     /**
      * Route that is always included, used by the v3 core
      */
-    public void addRoute(CIDRIP route) {
-        mRoutes.addIP(route, true);
+    public void addRoute(CIDRIP route, boolean include) {
+        mRoutes.addIP(route, include);
     }
 
     public void addRoute(String dest, String mask, String gateway, String device) {
@@ -1037,7 +1037,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (mLocalIP.len <= 31 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CIDRIP interfaceRoute = new CIDRIP(mLocalIP.mIp, mLocalIP.len);
             interfaceRoute.normalise();
-            addRoute(interfaceRoute);
+            addRoute(interfaceRoute ,true);
         }
 
 

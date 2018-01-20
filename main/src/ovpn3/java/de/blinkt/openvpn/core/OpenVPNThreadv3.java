@@ -63,7 +63,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		if(!setConfig(configstr))
 			return;
 		setUserPW();
-		VpnStatus.logDebug(platform());
+		VpnStatus.logInfo(platform());
         VpnStatus.logInfo(copyright());
 
 
@@ -74,7 +74,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		if(status.getError()) {
             VpnStatus.logError(String.format("connect() error: %s: %s",status.getStatus(),status.getMessage()));
 		} else {
-            VpnStatus.logInfo("OpenVPN3 thread finished");
+            VpnStatus.logDebug("OpenVPN3 thread finished");
 		}
 		statuspoller.stop();
 	}
@@ -135,7 +135,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public boolean tun_builder_set_session_name(String name) {
-        VpnStatus.logInfo("We should call this session" + name);
+        VpnStatus.logDebug("We should call this session" + name);
 		return true;
 	}
 
@@ -191,7 +191,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 		ClientAPI_EvalConfig ec = eval_config(config);
 		if(ec.getExternalPki()) {
-            VpnStatus.logError("OpenVPN assumes an external PKI");
+            VpnStatus.logDebug("OpenVPN3 core assumes an external PKI config");
 		}
 		if (ec.getError()) {
             VpnStatus.logError("OpenVPN config file parse error: " + ec.getMessage());
@@ -204,7 +204,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public void external_pki_cert_request(ClientAPI_ExternalPKICertRequest certreq) {
-        VpnStatus.logError("EXT PKI CERT");
+        VpnStatus.logDebug("Got external PKI certificate request from OpenVPN core");
 		String[] ks = mVp.getKeyStoreCertificates((Context) mService);
 		if(ks==null) {
 			certreq.setError(true);
@@ -223,6 +223,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public void external_pki_sign_request(ClientAPI_ExternalPKISignRequest signreq) {
+		VpnStatus.logDebug("Got external PKI signing request from OpenVPN core");
 		signreq.setSig(mVp.getSignedData(signreq.getData(), false));
 	}
 

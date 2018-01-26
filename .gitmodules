@@ -1,18 +1,18 @@
 [submodule "main/openvpn"]
 	path = main/src/main/cpp/openvpn
-	url = ../openvpn.git
+	url = ../../schwabe/openvpn.git
 [submodule "main/openssl"]
 	path = main/src/main/cpp/openssl
-	url = ../platform_external_openssl.git
+	url = ../../schwabe/platform_external_openssl.git
 [submodule "main/breakpad"]
 	path = main/breakpad
-	url = ../breakpad.git
+	url = ../../schwabe/breakpad.git
 [submodule "main/src/main/cpp/mbedtls"]
 	path = main/src/main/cpp/mbedtls
-	url = ../polarssl.git
+	url = ../../schwabe/polarssl.git
 [submodule "main/src/main/cpp/openvpn3"]
 	path = main/src/main/cpp/openvpn3
-	url = ../openvpn3.git
+	url = ../../schwabe/openvpn3.git
 [submodule "main/src/main/cpp/asio"]
 	path = main/src/main/cpp/asio
-	url = https://github.com/chriskohlhoff/asio/
+	url = ../../chriskohlhoff/asio/

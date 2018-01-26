@@ -15,7 +15,7 @@ See  the file todo.txt for ideas/not yet implemented features (and the bug track
 
 Build instructions:
 
-- Install sdk, ndk, cmake (e.g. with Android studio)
+- Install sdk, ndk, cmake (e.g. with Android studio), swig (3.0+)
 
 Fetch the git submodules (the default urls for the submodules use ssh,
 setup your own github ssh key or change the url to http in .gitmodules):
@@ -23,42 +23,45 @@ setup your own github ssh key or change the url to http in .gitmodules):
   git submodule init
   git submodule update
 
-
 Build the project using "gradle build" (Or use Android Studio). 
 
 Android studio tends to the whole build of binaries in its sync gradle
 phase to 15 minutes for initial gradle sync are completely normal.
 
-The native build is know not to work under Windows.
-
+The native build should with Windows and Linux but is rarely tested
+since my main development platform is Mac Os X
 
 FAQ
 
-Q: Why are you not answering my questions about modifying ics-openvpn/why do not help build my app on top 
-   of ics-openvpn? I thought this is open source.
+Q: Why are you not answering my questions about modifying
+   ics-openvpn/why do not help build my app on top of ics-openvpn? I
+   thought this is open source.
 
-A: There are many people building/wanting to build commercial VPN clients on top of my of my client. These
-   client often do not even honour the license my app or the license of OpenVPN. Even if these modified
-   software does honour the license I don't like doing unpaid work/giving advise for free to commerical
-   software developers. 
+A: There are many people building/wanting to build commercial VPN
+   clients on top of my of my client. These client often do not even
+   honour the license my app or the license of OpenVPN. Even if these
+   modified software does honour the license I don't like doing unpaid
+   work/giving advise for free to commerical software developers.
    
-   If you have a legitimate non commercial open source project I will gladly help you but please understand
-   my initial reservations.
+   If you have a legitimate non commercial open source project I will
+   gladly help you but please understand my initial reservations.
    
 
 Q: How is the OpenVPN version different from normal OpenVPN
 
-A: OpenVPN for Android uses a OpenVPN 2.4 master branch + dual stack client patches. 
-   A git repository of the OpenVPN source code and changes is under: 
-   https://github.com/schwabe/openvpn/
+A: OpenVPN for Android uses a OpenVPN  master branch + dual stack
+   client patches.  A git repository of the OpenVPN source code and
+   changes is under: https://github.com/schwabe/openvpn/
 
 Q: what is minivpn?
 
-A: minivpn is only a executable thats links against libopenvpn which is the normal openvpn build as
-   library. It is done this way so the Android Play/Store apk will treat the library as normal library
-   and update it on updates of the application. Also the application does not need to take care of 
-   keeping minivpn up to date because it contains no code. For almost all intents and purposes
-   minivpn + libopenvpn.so is the same as the normal openvpn binary
+A: minivpn is only a executable thats links against libopenvpn which
+   is the normal openvpn build as library. It is done this way so the
+   Android Play/Store apk will treat the library as normal library and
+   update it on updates of the application. Also the application does
+   not need to take care of keeping minivpn up to date because it
+   contains no code. For almost all intents and purposes minivpn +
+   libopenvpn.so is the same as the normal openvpn binary
 
 Q: How do I start a VPN by name from an external app?
 

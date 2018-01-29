@@ -71,8 +71,11 @@ android {
             assets.srcDirs = ['src/main/assets', 'build/ovpnassets']
         }
 
-        ovpn3 {
+        normal {
             java.srcDirs =["src/ovpn3/java/", openvpn3SwigFiles]
+        }
+
+        noovpn3 {
         }
 
         debug {
@@ -103,7 +106,7 @@ android {
     flavorDimensions "implementation"
 
     productFlavors {
-        ovpn3 {
+        noovpn3 {
             dimension "implementation"
         }
 
@@ -140,7 +143,7 @@ android.applicationVariants.all { variant ->
 
 android.applicationVariants.all { variant ->
     variant.productFlavors.each {
-        if (it.dimension == 'implementation' &&  it.name == 'ovpn3')
+        if (it.dimension == 'implementation' &&  it.name != 'noovpn3')
             variant.getJavaCompiler().dependsOn(generateOpenVPN3Swig)
 
     }

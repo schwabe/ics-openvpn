@@ -20,7 +20,7 @@ include(openssl.cmake)
 
 # Super hacky way to determine flavour
 #-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/arne/software/icsopenvpn/main/build/intermediates/cmake/normal/debug/obj/arm64-v8a
-if (${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*ovpn3.*/")
+if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*noovpn3.*/")
     add_subdirectory(mbedtls)
     add_custom_command(OUTPUT "javacli/ovpncli_wrap.cxx"
       file(MAKE_DIRECTORY ovpn3/java/net/openvpn/ovpn3)

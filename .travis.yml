@@ -24,7 +24,7 @@ cache:
     
 script:
   # Building one variant is enough and already takes quite a long time...
-  - ./gradlew assembleOvpn3Release
+  - ./gradlew assembleNormalRelease
 
 before_script:
   # Install packages

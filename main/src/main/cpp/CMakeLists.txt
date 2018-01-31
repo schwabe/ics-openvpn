@@ -22,13 +22,13 @@ include(openssl.cmake)
 #-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/arne/software/icsopenvpn/main/build/intermediates/cmake/normal/debug/obj/arm64-v8a
 if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*noovpn3.*/")
     add_subdirectory(mbedtls)
-    add_custom_command(OUTPUT "javacli/ovpncli_wrap.cxx"
-      file(MAKE_DIRECTORY ovpn3/java/net/openvpn/ovpn3/)
+    add_custom_command(OUTPUT "openvpn3/javacli/ovpncli_wrap.cxx"
+      COMMAND ${CMAKE_COMMAND} -E make_directory ovpn3/java/net/openvpn/ovpn3/
       COMMAND swig -outdir ovpn3/java/net/openvpn/ovpn3/ -c++ -java -package net.openvpn.ovpn3 -I${CMAKE_SOURCE_DIR}/openvpn3/client -I${CMAKE_SOURCE_DIR}/openvpn3 ${CMAKE_SOURCE_DIR}/openvpn3/javacli/ovpncli.i)
 
     set(ovpn3_SRCS
       openvpn3/client/ovpncli.cpp
-      javacli/ovpncli_wrap.cxx)
+      openvpn3/javacli/ovpncli_wrap.cxx)
 
     add_library(ovpn3 SHARED ${ovpn3_SRCS})
 
@@ -179,7 +179,7 @@ target_link_libraries(nopie_openvpn.${ANDROID_ABI} PRIVATE openvpn)
 SET(OVPN_ASSET_DIR ${CMAKE_SOURCE_DIR}/../../../build/ovpnassets)
 
 add_custom_target(makeassetdir ALL
-    COMMAND ${CMAKE_COMMAND} -E make_directory MAKE_DIRECTORY ${OVPN_ASSET_DIR})
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${OVPN_ASSET_DIR})
 
 add_custom_command(TARGET nopie_openvpn.${ANDROID_ABI} POST_BUILD
   COMMAND

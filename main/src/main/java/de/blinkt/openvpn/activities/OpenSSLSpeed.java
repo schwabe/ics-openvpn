@@ -147,7 +147,8 @@ public class OpenSSLSpeed extends Activity {
 
             for (String algorithm : strings) {
 
-                for (int i = 0; i < NativeUtils.openSSLlengths.length && !mCancel; i++) {
+                // Skip 16b and 16k as they are not relevevant for VPN
+                for (int i = 1; i < NativeUtils.openSSLlengths.length -1 && !mCancel; i++) {
                     SpeedResult result = new SpeedResult(algorithm);
                     result.length = NativeUtils.openSSLlengths[i];
                     mResult.add(result);

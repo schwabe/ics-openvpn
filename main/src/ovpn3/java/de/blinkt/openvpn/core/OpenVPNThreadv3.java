@@ -224,7 +224,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	@Override
 	public void external_pki_sign_request(ClientAPI_ExternalPKISignRequest signreq) {
 		VpnStatus.logDebug("Got external PKI signing request from OpenVPN core");
-		signreq.setSig(mVp.getSignedData(signreq.getData(), false));
+		signreq.setSig(mVp.getSignedData(signreq.getData()));
 	}
 
 	void setUserPW() {

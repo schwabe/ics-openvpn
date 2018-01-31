@@ -23,12 +23,12 @@ include(openssl.cmake)
 if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*noovpn3.*/")
     add_subdirectory(mbedtls)
     add_custom_command(OUTPUT "javacli/ovpncli_wrap.cxx"
-      file(MAKE_DIRECTORY ovpn3/java/net/openvpn/ovpn3)
+      file(MAKE_DIRECTORY ovpn3/java/net/openvpn/ovpn3/)
       COMMAND swig -outdir ovpn3/java/net/openvpn/ovpn3/ -c++ -java -package net.openvpn.ovpn3 -I${CMAKE_SOURCE_DIR}/openvpn3/client -I${CMAKE_SOURCE_DIR}/openvpn3 ${CMAKE_SOURCE_DIR}/openvpn3/javacli/ovpncli.i)
 
     set(ovpn3_SRCS
       openvpn3/client/ovpncli.cpp
-      openvpn3/javacli/ovpncli_wrap.cxx)
+      javacli/ovpncli_wrap.cxx)
 
     add_library(ovpn3 SHARED ${ovpn3_SRCS})
 

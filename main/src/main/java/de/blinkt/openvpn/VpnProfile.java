@@ -1076,7 +1076,7 @@ public class VpnProfile implements Serializable, Cloneable {
         return mPrivateKey;
     }
 
-    public String getSignedData(String b64data, boolean ecdsa) {
+    public String getSignedData(String b64data) {
         PrivateKey privkey = getKeystoreKey();
 
         byte[] data = Base64.decode(b64data, Base64.DEFAULT);

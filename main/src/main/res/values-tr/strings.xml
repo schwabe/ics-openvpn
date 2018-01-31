@@ -455,6 +455,7 @@
   <string name="openssl_error">OpenSSL bir hata döndürdü</string>
   <string name="running_test">Test çalışıyor&#8230;</string>
   <string name="test_algoirhtms">Seçilen algoritmaları test edin</string>
+  <string name="all_app_prompt">Harici bir uygulama, %s denetlemeyi deniyor. Erişim isteyen uygulama belirlenemedi. Uygulamaya TÜM uygulamalara erişim izni veriliyor.</string>
   <string name="openvpn3_nostatickeys">OpenVPN 3 C++ uygulaması statik anahtarları desteklemez. Lütfen genel ayarlar altında 
         OpenVPN 2.x\'e geçin.
     </string>

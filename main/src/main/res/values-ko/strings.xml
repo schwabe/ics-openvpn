@@ -257,7 +257,7 @@
   <string name="start_vpn_title">VPN %s 연결중</string>
   <string name="start_vpn_ticker">VPN %s 연결중</string>
   <string name="jelly_keystore_alphanumeric_bug">일부 버전의 안드로이드 4.1에서는 키 저장소 인증서의 이름에 비영숫자 문자(공백, 밑줄 또는 대시)가 포함된 경우 문제가 있습니다. 특수 문자 없는 인증서를 다시 가져와 보세요.</string>
-  <string name="encryption_cipher">암호화 암호</string>
+  <string name="encryption_cipher">암호화 알고리즘</string>
   <string name="packet_auth">패킷 인증</string>
   <string name="auth_dialog_title">패킷 인증 방법 입력</string>
   <string name="built_by">%s가 빌드</string>
@@ -438,8 +438,35 @@
   <string name="kbits_per_second">%.1f kbit/s</string>
   <string name="mbits_per_second">%.1f Mbit/s</string>
   <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="weakmd">&lt;p&gt;OpenSSL 1.1 버전부터, OpenSSL은 MD5와 같은, 인증서의 약한 서명을
+        거부합니다.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5 서명은 완전히 불안전하고 더이상 사용하지 않아야 합니다.&lt;/b&gt; MD5
+        충돌은 &lt;a
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;매우 적은 비용으로
+        수 시간 안에&lt;/a&gt; 만들 수 있습니다.
+        가능한 한 빨리 VPN 인증서를 업데이트해야 합니다.&lt;/p&gt;&lt;p&gt;불행하게도 오래된 easy-rsa 배포판은
+        구성 옵션 \"default_md md5\"가 포함되어 있습니다. 만약 오래된 easy-rsa 버전을
+        사용하신다면 &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;최신 버전&lt;/a&gt;으로 업데이트하시거나
+        md5를 sha256으로 바꾸고 당신의 인증서를
+        재생성하세요.&lt;/p&gt;&lt;p&gt;정말 오래되고 깨진 인증서를 사용하고 싶으시다면
+        사용자 지정 구성 옵션 tls-cipher \"DEFAULT:@SECLEVEL=0\"를 고급 구성에서 설정하거나
+        불러오는 구성 파일에 추가해 넣으세요.&lt;/p&gt;
+    </string>
   <string name="volume_byte">%.0f B</string>
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="channel_name_background">연결 통계</string>
+  <string name="channel_description_background">수립된 OpenVPN 연결의 진행 통계</string>
+  <string name="channel_name_status">연결 상태 변화</string>
+  <string name="channel_description_status">OpenVPN 연결의 상태 변화 (연결중, 인증중,&#8230;)</string>
+  <string name="weakmd_title">인증서 서명에 약한 (MD5) 해시 사용 (SSL_CTX_use_certificate md too weak)</string>
+  <string name="title_activity_open_sslspeed">OpenSSL 속도 테스트</string>
+  <string name="openssl_cipher_name">OpenSSL 암호화 알고리즘 이름</string>
+  <string name="osslspeedtest">OpenSSL 암호화 속도 테스트</string>
+  <string name="openssl_error">OpenSSL이 오류를 반환함</string>
+  <string name="running_test">테스트 수행 중&#8230;</string>
+  <string name="test_algoirhtms">선택한 알고리즘 테스트</string>
+  <string name="all_app_prompt">어떤 외부 앱이 %s를 제어하려고 합니다. 접근을 요청하는 앱을 정해 놓을 수 없습니다. 이 앱을 허용하면 모든 앱의 접근을 승인하게 됩니다.</string>
+  <string name="openvpn3_nostatickeys">OpenVPN 3 C++ 구현은 고정 키를 지원하지 않습니다. 일반 설정에서 OpenVPN 2.x로 변경해 주세요.</string>
+  <string name="openvpn3_pkcs12">OpenVPN 3 C++ 구현과 함께 PKCS12 파일을 직접 사용하는 것은 지원되지 않습니다. PKCS12 파일을 안드로이드 키 저장소로 가져 오거나 일반 설정에서 OpenVPN 2.x으로 변경하세요.</string>
 </resources>

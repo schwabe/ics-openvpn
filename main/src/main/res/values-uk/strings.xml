@@ -392,6 +392,7 @@
   <string name="query_permissions_sdcard">OpenVPN для Android може спробувати знайти відсутні файли на Sd карті автоматично. Натисніть на це повідомлення, щоб отримати права на дозвіл.</string>
   <string name="protocol">Протокол</string>
   <string name="enabled_connection_entry">Ввімкнено</string>
+  <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
   <string name="permission_revoked">Дозвіл VPN відкликано ОС (наприклад, інша програма VPN запущена), зупинка VPN</string>
   <string name="pushpeerinfo">Отримати інформацію про піра</string>
   <string name="pushpeerinfosummary">Надіслати додаткову інформацію на сервер, наприклад версію SSL та Android</string>
@@ -437,8 +438,25 @@
   <string name="kbits_per_second">%.1f Кбіт/с</string>
   <string name="mbits_per_second">%.1f Мбіт/с</string>
   <string name="gbits_per_second">%.1f Гбіт/с</string>
+  <string name="weakmd">&lt;p&gt; Починаючи з OpenSSL версії 1.1, OpenSSL відкидає слабкі підписи в таких сертифікатах, як MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5, підписи повністю небезпечні і більше не повинні використовуватись.&lt;/b&gt; Колізії MD5 можуть бути створені в &lt;a
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt; через декілька годин з мінімальними затратами.&lt;/a&gt;. Ви повинні якнайшвидше оновити сертифікати VPN. &lt;/p&gt;&lt;p&gt;Нажаль, старі дистрибутиви easy-rsa включали опцію конфігурації «default_md md5». Якщо ви використовуєте стару версію easy-rsa, оновітб її до &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;latest версії&lt;/a&gt;) або змініть md5 на sha256 та відновіть свої сертификати.&lt;/p&gt;&lt;p&gt;Якщо ви дійсно хочете використовувати старі та пошкоджені сертификати, використовуйте налаштовуваний параметр конфігурації tls-cipher «DEFAULT: @SECLEVEL = 0 \"в розширеній конфігурації або в якості додаткового рядку в вашій імпортованій конфігурації&lt;/p&gt;
+    </string>
   <string name="volume_byte">%.0f Б</string>
   <string name="volume_kbyte">%.1f КБ</string>
   <string name="volume_mbyte">%.1f МБ</string>
   <string name="volume_gbyte">%.1f ГБ</string>
+  <string name="channel_name_background">Статистика з\'єднання</string>
+  <string name="channel_description_background">Поточна статистика встановленого з\'єднання OpenVPN</string>
+  <string name="channel_name_status">Зміна статусу з\'єднання</string>
+  <string name="channel_description_status">Зміни статусу з\'єднання OpenVPN (підключення, автентифікація,...)</string>
+  <string name="weakmd_title">Слабкі (MD5) хеші в підписі сертифікату (SSL_CTX_use_certificate md надто слабкий)</string>
+  <string name="title_activity_open_sslspeed">Тест швидкості OpenSSL</string>
+  <string name="openssl_cipher_name">Назви шифрів OpenSSL</string>
+  <string name="osslspeedtest">Тест швидкості OpenSSL Crypto</string>
+  <string name="openssl_error">OpenSSL повернув помилку</string>
+  <string name="running_test">Запуск тесту&#8230;</string>
+  <string name="test_algoirhtms">Тестування вибраних алгоритмів</string>
+  <string name="all_app_prompt">Зовнішній застосунок намагається контролювати %s. Застосунок, що запитує про доступ, не може бути визначений. Дозвіл цьому застосунку надає доступ всім додаткам.</string>
+  <string name="openvpn3_nostatickeys">Реалізація OpenVPN 3 C ++ не підтримує статичні ключи. Перейдіть в OpenVPN 2.x під загальними налаштуваннями.</string>
+  <string name="openvpn3_pkcs12">Використання файлів PKCS12 напряму за допомогою OpenVPN 3 C ++ не підтримується. Імпортуйте файли pkcs12 в сховище ключів Android або замініть OpenVPN 2.x на загальні налаштування.</string>
 </resources>

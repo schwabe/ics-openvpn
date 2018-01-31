@@ -442,4 +442,15 @@
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="channel_name_background">Anslutningsstatistik</string>
+  <string name="channel_description_background">Löpande statistik för den etablerade OpenVPN-anslutningen</string>
+  <string name="channel_description_status">Statusändringar för OpenVPN-anslutningen (Anslutning, autentisering,...)</string>
+  <string name="weakmd_title">Svag (MD5) hashes i certifikat signatur (SSL_CTX_use_certificate md för svag)</string>
+  <string name="title_activity_open_sslspeed">OpenSSL-hastighetstest</string>
+  <string name="openssl_cipher_name">OpenSSL-ciffernamn</string>
+  <string name="openssl_error">OpenSSL returnerade ett fel</string>
+  <string name="running_test">Kör test&#8230;</string>
+  <string name="test_algoirhtms">Testa valda algoritmer</string>
+  <string name="all_app_prompt">En extern app försöker kontrollera %s. Appen som begär åtkomst kan inte bestämmas. Tillåtelse av den här appen ger åtkomst till ALLA program.</string>
+  <string name="openvpn3_nostatickeys">OpenVPN 3 C ++-implementeringen stöder inte statiska nycklar. Ändra till OpenVPN 2.x under allmänna inställningar.</string>
 </resources>

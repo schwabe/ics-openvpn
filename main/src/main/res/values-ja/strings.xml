@@ -481,4 +481,8 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="title_activity_open_sslspeed">OpenSSLスピードテスト</string>
+  <string name="openssl_error">OpenSSLがエラーを返しました</string>
+  <string name="running_test">テストを実行中...</string>
+  <string name="all_app_prompt">外部アプリが%sを制御しようとしています。アクセスをリクエストしているアプリは特定できません。このアプリを許可すると、すべてのアプリがアクセス許可されます。</string>
 </resources>

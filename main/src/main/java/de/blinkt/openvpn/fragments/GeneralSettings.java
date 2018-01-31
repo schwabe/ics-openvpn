@@ -73,9 +73,11 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
         if(devHacks.getPreferenceCount()==0)
             getPreferenceScreen().removePreference(devHacks);
 
-        if (!"ovpn3".equals(BuildConfig.FLAVOR)) {
+        if (!BuildConfig.openvpn3) {
             PreferenceCategory appBehaviour = (PreferenceCategory) findPreference("app_behaviour");
-            appBehaviour.removePreference(findPreference("ovpn3"));
+			CheckBoxPreference ovpn3 = (CheckBoxPreference) findPreference("ovpn3");
+			ovpn3.setEnabled(false);
+			ovpn3.setChecked(false);
         }
 
 

@@ -37,8 +37,11 @@ task ("generateOpenVPN3Swig" ,type:Exec) {
     doFirst {
         mkdir openvpn3SwigFiles
     }
-    commandLine "swig", "-outdir", openvpn3SwigFiles, "-c++", "-java", "-package", "net.openvpn.ovpn3",
-            "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/", "src/main/cpp/openvpn3/javacli/ovpncli.i"
+    commandLine "swig", "-outdir", openvpn3SwigFiles, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
+            "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
+            "-o", "${openvpn3SwigFiles}/ovpncli_wrap.cxx", "-oh", "${openvpn3SwigFiles}/ovpncli_wrap.h",
+            "src/main/cpp/openvpn3/javacli/ovpncli.i"
+
 }
 
 android {
@@ -108,10 +111,13 @@ android {
     productFlavors {
         noovpn3 {
             dimension "implementation"
+            buildConfigField 'boolean', 'openvpn3', 'false'
         }
 
         normal {
             dimension "implementation"
+            buildConfigField 'boolean', 'openvpn3', 'true'
+
         }
 
     }

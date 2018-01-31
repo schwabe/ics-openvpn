@@ -673,3 +673,5 @@ int res_init();
 #define HAVE_EVP_PKEY_GET0_EC_KEY 1
 #define HAVE_EC_GROUP_ORDER_BITS 1
 #define HAVE_RSA_METH_GET0_APP_DATA 1
+
+#define ENABLE_OFB_CFB_MODE 1

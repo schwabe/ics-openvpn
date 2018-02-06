@@ -56,7 +56,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*n
       -DGIT_VERSION_STRING=\"${OPENVPN3_GIT}\"
       -DNO_ROUTE_EXCLUDE_EMULATION
       )
-    target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo_static_lib)
+    target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo)
 else()
     message ("Not budiling OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 endif()
@@ -172,7 +172,7 @@ target_compile_definitions(openvpn PRIVATE
 target_compile_definitions(openvpn PRIVATE
   -DENABLE_CRYPTO_OPENSSL=1
   )
-target_link_libraries(openvpn crypto ssl lzo_static_lib)
+target_link_libraries(openvpn crypto ssl lzo)
 
 add_executable(pie_openvpn.${ANDROID_ABI} minivpn/minivpn.c)
 target_compile_options(pie_openvpn.${ANDROID_ABI} PRIVATE -fPIE)

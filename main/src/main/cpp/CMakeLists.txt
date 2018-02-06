@@ -21,16 +21,27 @@ include(openssl.cmake)
 # Super hacky way to determine flavour
 #-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/arne/software/icsopenvpn/main/build/intermediates/cmake/normal/debug/obj/arm64-v8a
 if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*noovpn3.*/")
+    FIND_PACKAGE(SWIG 3.0)
+
     add_subdirectory(mbedtls)
     add_custom_command(OUTPUT "ovpncli_wrap.cxx"
       COMMAND ${CMAKE_COMMAND} -E make_directory ovpn3
-      COMMAND swig -outdir ovpn3
+      COMMAND ${SWIG_EXECUTABLE}  -outdir ovpn3
                     -c++
                     -java -package net.openvpn.ovpn3
                     -outcurrentdir
                     -I${CMAKE_SOURCE_DIR}/openvpn3/client
                     -I${CMAKE_SOURCE_DIR}/openvpn3
                      ${CMAKE_SOURCE_DIR}/openvpn3/javacli/ovpncli.i)
+
+
+    # proper way bunt unfinished
+    #INCLUDE(${SWIG_USE_FILE})
+    #SET_SOURCE_FILES_PROPERTIES(openvpn3/javacli/ovpncli.i PROPERTIES SWIG_FLAGS "-package net.openvpn.ovpn3")
+    #SET_SOURCE_FILES_PROPERTIES(openvpn3/javacli/ovpncli.i PROPERTIES CPLUSPLUS ON)
+    #SWIG_ADD_MODULE(ovpen3cli java openvpn3/javacli/ovpncli.i)
+
+
 
     set(ovpn3_SRCS
       openvpn3/client/ovpncli.cpp

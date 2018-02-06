@@ -416,6 +416,10 @@ public class VpnProfile implements Serializable, Cloneable {
             case VpnProfile.TYPE_USERPASS:
                 cfg += "auth-user-pass\n";
                 cfg += insertFileData("ca", mCaFilename);
+                if (configForOvpn3) {
+                    // OpenVPN 3 needs to be told that a client certificate is not required
+                    cfg += "client-cert-not-required\n";
+                }
         }
 
         if (isUserPWAuth()) {

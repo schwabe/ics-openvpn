@@ -245,6 +245,7 @@ public class ConfigParser {
     // in most cases these won't work and user who wish to execute scripts will
     // figure out themselves
     final String[] ignoreOptions = {"tls-client",
+            "allow-recursive-routing",
             "askpass",
             "auth-nocache",
             "up",
@@ -255,11 +256,11 @@ public class ConfigParser {
             "route-pre-down",
             "auth-user-pass-verify",
             "block-outside-dns",
+            "client-cert-not-required",
             "dhcp-release",
             "dhcp-renew",
             "dh",
             "group",
-            "allow-recursive-routing",
             "ip-win32",
             "ifconfig-nowarn",
             "management-hold",

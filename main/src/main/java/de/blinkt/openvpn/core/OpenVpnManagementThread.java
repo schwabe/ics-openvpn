@@ -546,6 +546,9 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
 
         try {
+            // Ignore Auth token message, already managed by openvpn itself
+            if (argument.startsWith("Auth-Token:"))
+                return;
 
             int p1 = argument.indexOf('\'');
             int p2 = argument.indexOf('\'', p1 + 1);

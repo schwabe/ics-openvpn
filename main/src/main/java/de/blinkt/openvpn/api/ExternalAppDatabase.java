@@ -41,7 +41,7 @@ public class ExternalAppDatabase {
         return prefs.getStringSet(PREFERENCES_KEY, new HashSet<String>());
 	}
 	
-	void addApp(String packagename)
+	public void addApp(String packagename)
 	{
 		Set<String> allowedapps = getExtAppList();
 		allowedapps.add(packagename);

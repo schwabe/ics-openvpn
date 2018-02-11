@@ -53,6 +53,7 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.activities.MainActivity;
+import de.blinkt.openvpn.api.ExternalAppDatabase;
 import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 import de.blinkt.openvpn.core.VpnStatus.StateListener;
 
@@ -118,7 +119,20 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         public boolean stopVPN(boolean replaceConnection) throws RemoteException {
             return OpenVPNService.this.stopVPN(replaceConnection);
         }
+
+        @Override
+        public void addAllowedExternalApp(String packagename) throws RemoteException {
+            OpenVPNService.this.addAllowedExternalApp(packagename);
+        }
+
+
     };
+
+    @Override
+    public void addAllowedExternalApp(String packagename) throws RemoteException {
+        ExternalAppDatabase extapps = new ExternalAppDatabase(OpenVPNService.this);
+        extapps.addApp(packagename);
+    }
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean speed, Resources res) {

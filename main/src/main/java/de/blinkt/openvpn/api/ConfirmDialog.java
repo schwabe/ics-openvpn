@@ -19,11 +19,19 @@ package de.blinkt.openvpn.api;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.os.PersistableBundle;
+import android.os.RemoteException;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +40,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
+import de.blinkt.openvpn.core.OpenVPNService;
 
 
 public class ConfirmDialog extends Activity implements
@@ -48,9 +58,28 @@ public class ConfirmDialog extends Activity implements
 
     private AlertDialog mAlert;
 
+    private IOpenVPNServiceInternal mService;
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            mService = IOpenVPNServiceInternal.Stub.asInterface(service);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mService = null;
+        }
+
+    };
+
     @Override
     protected void onResume() {
         super.onResume();
+
+        Intent serviceintent = new Intent(this, OpenVPNService.class);
+        serviceintent.setAction(OpenVPNService.START_SERVICE);
+        bindService(serviceintent, mConnection, Context.BIND_AUTO_CREATE);
 
         Intent intent = getIntent();
         if (intent.getStringExtra(EXTRA_PACKAGE_NAME) != null) {
@@ -71,7 +100,7 @@ public class ConfirmDialog extends Activity implements
             } else {
                 PackageManager pm = getPackageManager();
                 ApplicationInfo app = pm.getApplicationInfo(mPackage, 0);
-                appString = getString(R.string.prompt, app.loadLabel(pm) , getString(R.string.app));
+                appString = getString(R.string.prompt, app.loadLabel(pm), getString(R.string.app));
                 ((ImageView) view.findViewById(R.id.icon)).setImageDrawable(app.loadIcon(pm));
             }
 
@@ -123,11 +152,22 @@ public class ConfirmDialog extends Activity implements
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(mConnection);
+
+    }
+
+    @Override
     public void onClick(DialogInterface dialog, int which) {
 
         if (which == DialogInterface.BUTTON_POSITIVE) {
-            ExternalAppDatabase extapps = new ExternalAppDatabase(this);
-            extapps.addApp(mPackage);
+            try {
+                mService.addAllowedExternalApp(mPackage);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                throw new RuntimeException(e);
+            }
             setResult(RESULT_OK);
             finish();
         }

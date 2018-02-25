@@ -60,7 +60,16 @@
                 android:key="screenoff"
                 android:summary="@string/screenoff_summary"
                 android:title="@string/screenoff_title"/>
-
+        <EditTextPreference
+            android:defaultValue="60"
+            android:title="@string/screenofftimetitle"
+            android:summary="@string/screenofftimedesc"
+            android:key="screenofftime"/>
+        <EditTextPreference
+            android:defaultValue="64"
+            android:title="@string/screenofftransfertitle"
+            android:summary="@string/screenofftransferdesc"
+            android:key="screenofftransfer"/>
         <Preference
                 android:dependency=""
             android:key="osslspeed"

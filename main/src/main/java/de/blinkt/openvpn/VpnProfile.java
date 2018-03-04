@@ -61,7 +61,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 7085688938959334563L;
     public static final int MAXLOGLEVEL = 4;
-    public static final int CURRENT_PROFILE_VERSION = 6;
+    public static final int CURRENT_PROFILE_VERSION = 7;
     public static final int DEFAULT_MSSFIX_SIZE = 1280;
     public static String DEFAULT_DNS1 = "8.8.8.8";
     public static String DEFAULT_DNS2 = "8.8.4.4";
@@ -244,6 +244,7 @@ public class VpnProfile implements Serializable, Cloneable {
         }
         if (mAllowedAppsVpn == null)
             mAllowedAppsVpn = new HashSet<>();
+
         if (mConnections == null)
             mConnections = new Connection[0];
 
@@ -251,7 +252,11 @@ public class VpnProfile implements Serializable, Cloneable {
             if (TextUtils.isEmpty(mProfileCreator))
                 mUserEditable = true;
         }
-
+        if (mProfileVersion < 7) {
+            for (Connection c: mConnections)
+                if (c.mProxyType == null)
+                    c.mProxyType = Connection.ProxyType.NONE;
+        }
 
         mProfileVersion = CURRENT_PROFILE_VERSION;
 

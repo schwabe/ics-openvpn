@@ -19,6 +19,16 @@ public class Connection implements Serializable, Cloneable {
     public boolean mEnabled = true;
     public int mConnectTimeout = 0;
     public static final int CONNECTION_DEFAULT_TIMEOUT = 120;
+    public ProxyType mProxyType = ProxyType.NONE;
+    public String mProxyName = "proxy.example.com";
+    public String mProxyPort = "8080";
+
+    public enum ProxyType {
+        NONE,
+        HTTP,
+        SOCKS5,
+        ORBOT
+    }
 
     private static final long serialVersionUID = 92031902903829089L;
 

@@ -813,6 +813,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setAllowedVpnPackages(builder);
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            // VPN always uses the default network
+            builder.setUnderlyingNetworks(null);
+        }
 
 
         String session = mProfile.mName;

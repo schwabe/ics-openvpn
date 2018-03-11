@@ -784,7 +784,28 @@ public class ConfigParser {
             }
         }
 
-                    // Parse remote config
+        Vector<String> proxy = getOption("socks-proxy", 1, 2);
+        if (proxy == null)
+            proxy = getOption("http-proxy", 2, 2);
+
+        if (proxy != null) {
+            if (proxy.get(0).equals("socks-proxy")) {
+                conn.mProxyType = Connection.ProxyType.SOCKS5;
+                // socks defaults to 1080, http always sets port
+                conn.mProxyPort = "1080";
+            } else {
+                conn.mProxyType = Connection.ProxyType.HTTP;
+            }
+
+            conn.mProxyName = proxy.get(1);
+            if (proxy.size() >= 3)
+                conn.mProxyPort = proxy.get(2);
+        }
+
+
+
+
+        // Parse remote config
         Vector<Vector<String>> remotes = getAllOption("remote", 1, 3);
 
 

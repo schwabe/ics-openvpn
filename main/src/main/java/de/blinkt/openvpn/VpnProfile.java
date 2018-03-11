@@ -312,7 +312,8 @@ public class VpnProfile implements Serializable, Cloneable {
 
 
         cfg += "machine-readable-output\n";
-        cfg += "allow-recursive-routing\n";
+        if (!mIsOpenVPN22)
+            cfg += "allow-recursive-routing\n";
 
         // Users are confused by warnings that are misleading...
         cfg += "ifconfig-nowarn\n";
@@ -347,7 +348,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         if (!mIsOpenVPN22)
             cfg += "connect-retry " + mConnectRetry + " " + mConnectRetryMaxTime + "\n";
-        else if (mIsOpenVPN22 && mUseUdp)
+        else if (mIsOpenVPN22 && !mUseUdp)
             cfg += "connect-retry " + mConnectRetry + "\n";
 
 
@@ -575,7 +576,8 @@ public class VpnProfile implements Serializable, Cloneable {
         if (mPersistTun) {
             cfg += "persist-tun\n";
             cfg += "# persist-tun also enables pre resolving to avoid DNS resolve problem\n";
-            cfg += "preresolve\n";
+            if (!mIsOpenVPN22)
+                cfg += "preresolve\n";
         }
 
         if (mPushPeerInfo)

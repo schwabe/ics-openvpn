@@ -27,6 +27,10 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.16.0'
+    testImplementation "org.robolectric:robolectric:3.7.1"
+
+
 }
 
 
@@ -37,10 +41,11 @@ task ("generateOpenVPN3Swig" ,type:Exec) {
     doFirst {
         mkdir openvpn3SwigFiles
     }
-    commandLine "swig", "-outdir", openvpn3SwigFiles, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
+    commandLine "/usr/local/bin/swig", "-outdir", openvpn3SwigFiles, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
             "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
             "-o", "${openvpn3SwigFiles}/ovpncli_wrap.cxx", "-oh", "${openvpn3SwigFiles}/ovpncli_wrap.h",
             "src/main/cpp/openvpn3/javacli/ovpncli.i"
+    environment 'PATH', "${environment.PATH}:/usr/local/bin/"
 
 }
 

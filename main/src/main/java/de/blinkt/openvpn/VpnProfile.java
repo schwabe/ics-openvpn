@@ -307,7 +307,7 @@ public class VpnProfile implements Serializable, Cloneable {
             String versionString = getPlatformVersionEnvString();
             cfg += String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString));
         } else {
-            cfg += "# Config for OpeNVPN 3 C++\n";
+            cfg += "# Config for OpenVPN 3 C++\n";
         }
 
 
@@ -429,8 +429,8 @@ public class VpnProfile implements Serializable, Cloneable {
         }
 
         if (isUserPWAuth()) {
-            if (mAuthenticationType == AUTH_RETRY_NOINTERACT)
-                cfg += "auth-retry nointeract";
+            if (mAuthRetry == AUTH_RETRY_NOINTERACT)
+                cfg += "auth-retry nointeract\n";
         }
 
         if (!TextUtils.isEmpty(mCrlFilename))

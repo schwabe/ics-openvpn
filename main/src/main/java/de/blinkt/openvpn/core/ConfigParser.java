@@ -5,8 +5,9 @@
 
 package de.blinkt.openvpn.core;
 
-import android.text.TextUtils;
+import android.os.Build;
 import android.support.v4.util.Pair;
+import android.text.TextUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class ConfigParser {
 
 
     public static final String CONVERTED_PROFILE = "converted Profile";
-    private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
+    private HashMap<String, Vector<Vector<String>>> options = new HashMap<>();
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
     private String auth_user_pass_file;
 
@@ -667,7 +668,7 @@ public class ConfigParser {
         if (crlfile != null) {
             // If the 'dir' parameter is present just add it as custom option ..
             if (crlfile.size() == 3 && crlfile.get(2).equals("dir"))
-                np.mCustomConfigOptions += TextUtils.join(" ", crlfile) + "\n";
+                np.mCustomConfigOptions += join(" ", crlfile) + "\n";
             else
                 // Save the filename for the config converter to add later
                 np.mCrlFilename = crlfile.get(1);
@@ -731,6 +732,13 @@ public class ConfigParser {
         fixup(np);
 
         return np;
+    }
+
+    private String join(String s, Vector<String> str) {
+        if (Build.VERSION.SDK_INT > 26)
+            return String.join(s, str);
+        else
+            return TextUtils.join(s, str);
     }
 
     private Pair<Connection, Connection[]> parseConnection(String connection, Connection defaultValues) throws IOException, ConfigParseError {
@@ -816,7 +824,7 @@ public class ConfigParser {
                 conn.mCustomConfiguration += getOptionStrings(option);
 
             }
-            if (!TextUtils.isEmpty(conn.mCustomConfiguration))
+            if (!(conn.mCustomConfiguration == null || "".equals(conn.mCustomConfiguration.trim())))
                 conn.mUseCustomConfig = true;
         }
         // Make remotes empty to simplify code

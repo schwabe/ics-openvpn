@@ -34,4 +34,42 @@ public class TestConfigParser {
         Assert.assertTrue(p.mCustomConfigOptions.contains(httpproxypass));
 
     }
+
+    @Test
+    public void testSockProxyImport() throws IOException, ConfigParser.ConfigParseError {
+        String proxy =
+                "<connection>\n" +
+                        "socks-proxy 13.23.3.2\n" +
+                        "remote foo.bar\n" +
+                        "</connection>\n" +
+                        "\n" +
+                        "<connection>\n" +
+                        "socks-proxy 1.2.3.4 1234\n" +
+                        "remote foo.bar\n" +
+                        "</connection>\n" +
+                        "\n" +
+                        "<connection>\n" +
+                        "http-proxy 1.2.3.7 8080\n" +
+                        "remote foo.bar\n" +
+                        "</connection>";
+
+        ConfigParser cp = new ConfigParser();
+        cp.parseConfig(new StringReader(proxy));
+        VpnProfile vp = cp.convertProfile();
+        Assert.assertEquals(3, vp.mConnections.length);
+
+        Assert.assertEquals("13.23.3.2", vp.mConnections[0].mProxyName);
+        Assert.assertEquals("1080", vp.mConnections[0].mProxyPort);
+        Assert.assertEquals(Connection.ProxyType.SOCKS5, vp.mConnections[0].mProxyType);
+
+        Assert.assertEquals("1.2.3.4", vp.mConnections[1].mProxyName);
+        Assert.assertEquals("1234", vp.mConnections[1].mProxyPort);
+        Assert.assertEquals(Connection.ProxyType.SOCKS5, vp.mConnections[0].mProxyType);
+
+        Assert.assertEquals("1.2.3.7", vp.mConnections[2].mProxyName);
+        Assert.assertEquals("8080", vp.mConnections[2].mProxyPort);
+        Assert.assertEquals(Connection.ProxyType.HTTP, vp.mConnections[2].mProxyType);
+    }
+
+
 }

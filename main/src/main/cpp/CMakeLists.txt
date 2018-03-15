@@ -101,7 +101,8 @@ set(openvpn_srcs
 	src/openvpn/cryptoapi.c 
 	src/openvpn/dhcp.c 
 	src/openvpn/error.c 
-	src/openvpn/event.c 
+	src/openvpn/event.c
+	src/openvpn/env_set.c
 	src/openvpn/fdmisc.c 
 	src/openvpn/forward.c 
 	src/openvpn/fragment.c 

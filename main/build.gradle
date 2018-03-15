@@ -41,7 +41,7 @@ task ("generateOpenVPN3Swig" ,type:Exec) {
     doFirst {
         mkdir openvpn3SwigFiles
     }
-    commandLine "/usr/local/bin/swig", "-outdir", openvpn3SwigFiles, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
+    commandLine "swig", "-outdir", openvpn3SwigFiles, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
             "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
             "-o", "${openvpn3SwigFiles}/ovpncli_wrap.cxx", "-oh", "${openvpn3SwigFiles}/ovpncli_wrap.h",
             "src/main/cpp/openvpn3/javacli/ovpncli.i"

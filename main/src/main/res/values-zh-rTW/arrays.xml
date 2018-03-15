@@ -12,7 +12,7 @@
     <item>Android 憑證</item>
     <item>用戶名稱/密碼</item>
     <item>固定金鑰(Static Keys)</item>
-    <item>用戶名稱/密碼 + 證書</item>
+    <item>用戶名稱/密碼 + 憑證</item>
     <item>用戶名稱/密碼 + PKCS12檔案</item>
     <item>用戶名稱/密碼 + Android</item>
   </string-array>

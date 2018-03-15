@@ -201,7 +201,6 @@
   <string name="setting_loadtun">Tun modülünü yükle</string>
   <string name="importpkcs12fromconfig">PKCS12 yapılandırmasını Android anahtar deposuna alma</string>
   <string name="getproxy_error">Vekil sunucu ayarları alınırken hata oluştu: %s</string>
-  <string name="using_proxy">%1$s %2$d vekil sunucusu kullanarak</string>
   <string name="use_system_proxy">Sistem vekil sunucusunu kullan</string>
   <string name="use_system_proxy_summary">Bağlanmak için sistem çapındaki HTTP/HTTPS vekil sunucularını kullan.</string>
   <string name="onbootrestartsummary">Sistem önyüklemesi üzerinde etkinse, OpenVPN belirtilen VPN bağlantısına bağlanır. Lütfen bu seçeneği Android &lt; 5.0 üzerinde kullanmadan önce bağlantı uyarısı için SSS bölümünü okuyun.</string>

@@ -201,7 +201,6 @@
   <string name="setting_loadtun">Indlæs tun-modul</string>
   <string name="importpkcs12fromconfig">Importer pkcs12 fra konfigurationen til Android Keystore</string>
   <string name="getproxy_error">Fejl under indlæsning af proxy-indstillinger: %s</string>
-  <string name="using_proxy">Anvender proxy %1$s %2$d</string>
   <string name="use_system_proxy">Anvend system-proxy</string>
   <string name="use_system_proxy_summary">Anvend systemets globale konfiguration til forbindelse af HTTP/HTTPS proxy\'er.</string>
   <string name="onbootrestartsummary">OpenVPN vil forbinde til den angivne VPN hvis den var aktiv under system opstart. Læs venligst forbindelses advarsel FAQ før du bruger demme valgmulighed på Android &lt; 5.0.</string>
@@ -385,6 +384,7 @@
   <string name="service_restarted">Genstarter OpenVPN Service (App\'en crashede, den crashede sandsynligvis eller blev stoppet på grund a RAM overbelastning)</string>
   <string name="import_config_error">Import af konfigurationsfilen gav en fejl, kan ikke gemme</string>
   <string name="Search">Søg</string>
+  <string name="lastdumpdate">(Sidste dump er %1$d:%2$dh gammel (%3$s))</string>
   <string name="clear_log_on_connect">Ryd log ved ny forbindelse</string>
   <string name="connect_timeout">Forbindelses-timeout</string>
   <string name="no_allowed_app">Ingen tilladt app tilføjet. Tilføjer selve appen (%s) for at have mindst én tilladt app, ellers vil alle apps være tilladte</string>

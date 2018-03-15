@@ -202,7 +202,6 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="setting_loadtun">"Charger le module TUN"</string>
   <string name="importpkcs12fromconfig">"Importer PKCS12 de la configuration dans le gestionnaire de clés Android"</string>
   <string name="getproxy_error">Erreur d\'obtention des paramètres de proxy : %s</string>
-  <string name="using_proxy">"Utilisation du proxy %1$s %2$d"</string>
   <string name="use_system_proxy">"Utiliser le proxy système"</string>
   <string name="use_system_proxy_summary">"Utiliser la configuration générale du système pour que les proxy HTTP / HTTPS se connectent."</string>
   <string name="onbootrestartsummary">OpenVPN connectera le VPN spécifié si elle était active au démarrage du système. Veuillez lire l\'avertissement de connexion FAQ avant d\'utiliser cette option sur Android &lt; 5.0.</string>
@@ -253,6 +252,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="state_tcp_connect">Connexion (TCP)</string>
   <string name="state_auth_failed">Authentification échouée</string>
   <string name="state_nonetwork">En attente d\'un réseau utilisable</string>
+  <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
   <string name="notifcation_title_notconnect">Non connecté</string>
   <string name="start_vpn_title">Connexion au VPN %s</string>
   <string name="start_vpn_ticker">Connexion au VPN %s</string>
@@ -359,6 +359,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="ab_proxy">Android va continuer à utiliser vos paramètres de proxy spécifiés pour la connexion mobile / Wi-Fi lorsque aucun serveur DNS n\'est définis. OpenVPN pour Android vous avertira à ce sujet dans le log.<p>Quand un VPN définit un serveur de DNS, Android n\'utilisera pas de proxy. Il n\'y a pas d\'API pour définir un proxy pour un connection VPN.</p></string>
   <string name="ab_lollipop_reinstall">Les applications VPN peuvent s\'arrêter de fonctionner lors d\'une désinstallation suivie d\'une réinstallation. Pour plus de détails, voir #80074</string>
   <string name="ab_not_route_to_vpn">L\'adresse IP du client, et les adresses IP de ce réseau ne sont pas routées par le VPN. OpenVPN contourne ce problème en ajoutant une route qui corresponds à l’adresse IP et le Masque de sous réseau du client</string>
+  <string name="ab_persist_tun">Ouvrir un appareil en mode TUN pendant qu\'un autre appareil en mode TUN est actif, ce qui est requis pour la prise en charge de la persistance TUN, produit une panne de VPNServices sur l\'appareil. Un redémarrage est nécessaire pour faire fonctionner le VPN à nouveau. OpenVPN pour Android tente d\'éviter de ré-ouvrir l\'appareil en mode TUN , et si cela est indispensable il arrête d\'abord le TUN actuel avant d\'ouvrir le nouveau TUN pour éviter une panne. Cela peut conduire à une courte période pendant laquelle les paquets sont envoyés hors de la connexion VPN. Même avec cette solution de contournement, VPNServices se bloque parfois et nécessite un redémarrage de l\'appareil.</string>
   <string name="ab_secondary_users">Le VPN ne fonctionnera pas du tout pour tous les utilisateurs secondaires.</string>
   <string name="ab_kitkat_reconnect">"Plusieurs utilisateurs ont signalés des prêtes de paquets durant l\'utilisation d\'un VPN sur leur connexion mobile. Ce comportement semble lier à certains fournisseurs, il n\'y a pas de contournement connu ou de bug que l\'on puisse régler."</string>
   <string name="ab_only_cidr_title">Routes non CIDR</string>
@@ -377,6 +378,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="ab_persist_tun_title">Mode tun persistant</string>
   <string name="version_and_later">%s et ultérieur</string>
   <string name="tls_cipher_alert_title">Échec de la connexion avec l\'erreur SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure</string>
+  <string name="tls_cipher_alert">Les nouvelles versions d\'OpenVPN pour Android (0.6.29 / Mars 2015) utilisent une valeur par défaut plus sécurisée pour les suites cryptographiques autorisées (tls-cipher \"DEFAULT:! EXP:! PSK:! SRP:! KRSA\"). Malheureusement, en omettant les suites cryptographiques moins sécurisées et les suites EXPORT, en particulier l\'omission de suites qui ne prennent pas en charge Perfect Forward Secrecy (Diffie-Hellman) pose certains problèmes. Cela est généralement dû à une tentative bien intentionnée mais mal exécutée de renforcer la sécurité TLS en configurant tls-cipher sur le serveur ou sur certains systèmes d\'exploitation embarqués avec un SSL dépouillé (par exemple MikroTik).\nPour résoudre ce problème, réglez le paramètre tls-cipher sur le serveur à une valeur par défaut raisonnable comme \"DEFAULT:! EXP:! PSK:! SRP:! kRSA\". Pour contourner le problème sur le client, ajoutez l\'option personnalisée tls-cipher DEFAULT sur le client Android.</string>
   <string name="message_no_user_edit">Ce profil a été ajouté à partir d\'une application externe (%s) et a été marqué comme non modifiable par l\'utilisateur.</string>
   <string name="crl_file">Liste des certificats révoqués</string>
   <string name="service_restarted">Redémarrage du service OpenVPN (l\'Application a probablement plantée ou a été tué pour cause d\'utilisation excessive de la mémoire)</string>

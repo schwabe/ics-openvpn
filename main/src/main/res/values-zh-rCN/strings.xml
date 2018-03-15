@@ -150,7 +150,7 @@
   <string name="no_bind">无本地绑定</string>
   <string name="import_configuration_file">导入配置文件</string>
   <string name="faq_security_title">安全注意事项</string>
-  <string name="faq_security">“OpenVPN 是非常注重安全的，所以在此提供一些安全方面的建议。所有保存在存储卡上的数据都是不安全的，任何应用都可以读取存储卡上的文件，即使这个应用没有‘写入存储卡’的权限也是如此。应用自身的数据只能被应用自己读取。在选择 CA 证书、证书文件或者密钥文件的时候请使用导入功能，这样这些数据就会保存在 OpenVPN 自身的数据文件中，保证不会被其他的应用恶意读取。当然导入证书之后记得要把证书从存储卡上删除掉。不过，虽然这些数据不能被其他应用读取，但是这些数据是明文保存的，如果你的系统是 rooted 的，那么这些数据将能够被任何拥有 root 权限的应用轻松地读取。保存在 OpenVPN 中的密码也是以明文保存的，如果设备被 rooted 了，这些密码也有可能被其他应用恶意读取。强烈建议使用 pkcs12 证书并将证书导入到 Android 自己的证书管理系统里。”</string>
+  <string name="faq_security">"As OpenVPN is security sensitive a few notes about security are sensible. All data on the sdcard is incoherently insecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the VPN profile. The VPN profiles are only accessible by this application. (Do not forget to delete the copies on the sd card afterwards). Even though accessible only by this application the data is still unencrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."</string>
   <string name="import_vpn">导入</string>
   <string name="broken_image_cert_title">显示证书选择错误</string>
   <string name="broken_image_cert">尝试显示 Android 4.0 + 证书选择对话框时出现异常。Android 4.0 以上的系统不可能出现该问题，因为这是标准的系统功能。可能您当前 ROM 中的证书存储已经损坏。</string>
@@ -203,7 +203,6 @@
   <string name="setting_loadtun">加载tun模块</string>
   <string name="importpkcs12fromconfig">将PKCS12从配置导入到Android Keystore</string>
   <string name="getproxy_error">获取代理设置时出错：%s</string>
-  <string name="using_proxy">使用代理 %1$s %2$d</string>
   <string name="use_system_proxy">使用系统代理</string>
   <string name="use_system_proxy_summary">使用系统设置连接 HTTP/HTTPS 代理服务器。</string>
   <string name="onbootrestartsummary">如果在系统启动时OpenVPN处于活动状态，那么它会连接指定的VPN。在Android 5.0上使用这个选项前，请阅读连接警告的常见问题。</string>
@@ -442,8 +441,24 @@
   <string name="kbits_per_second">%.1f kbit/s</string>
   <string name="mbits_per_second">%.1f Mbit/s</string>
   <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="weakmd">&lt;p&gt;Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like
+        MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5 signatures are completely insecure and should not be used anymore.&lt;/b&gt; MD5
+        collisions can be created in &lt;a
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;few hours at a minimal cost.&lt;/a&gt;.
+        You should update the VPN certificates as soon as possible.&lt;/p&gt;&lt;p&gt;Unfortunately, older easy-rsa
+        distributions included the config option \"default_md md5\". If you are using an old easy-rsa version, update to
+        the &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;latest version&lt;/a&gt;) or change md5 to sha256 and
+        regenerate your certificates.&lt;/p&gt;&lt;p&gt;If you really want to use old and broken certificates use the custom
+        configuration option tls-cipher \"DEFAULT:@SECLEVEL=0\" under advanced configuration or as additional line in your
+        imported configuration&lt;/p&gt;
+    </string>
   <string name="volume_byte">%.0f B</string>
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="channel_name_background">连接统计</string>
+  <string name="channel_description_background">正在建立的OpenVPN连接的统计数据</string>
+  <string name="channel_name_status">连接状态改变</string>
+  <string name="title_activity_open_sslspeed">OpenSSL 速度测试</string>
+  <string name="running_test">正在运行测试&#8230;</string>
 </resources>

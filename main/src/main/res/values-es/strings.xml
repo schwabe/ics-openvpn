@@ -202,7 +202,6 @@ hacia/de Móvil)</string>
   <string name="setting_loadtun">Cargar modulo tun</string>
   <string name="importpkcs12fromconfig">Importar PKCS12 de la configuración en el almacén de claves de Android</string>
   <string name="getproxy_error">Error al obtener la configuración de proxy: %s</string>
-  <string name="using_proxy">Usando proxy %1$s %2$d</string>
   <string name="use_system_proxy">Usar el proxy del sistema</string>
   <string name="use_system_proxy_summary">Utilice la configuración del sistema para los proxies HTTP/HTTPS al conectar.</string>
   <string name="onbootrestartsummary">OpenVPN se conectará la VPN se especifica si está activa en el arranque del sistema. Por favor, lea las preguntas frecuentes de aviso de conexión antes de utilizar esta opción en Android &lt; 5.0.</string>

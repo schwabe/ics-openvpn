@@ -201,7 +201,6 @@
   <string name="setting_loadtun">Încarcă modulul tun</string>
   <string name="importpkcs12fromconfig">Import PKCS12 configurare în Android Keystore</string>
   <string name="getproxy_error">Eroare la obţinerea setărilor proxy: %s</string>
-  <string name="using_proxy">Folosesc proxy %1$s %2$d</string>
   <string name="use_system_proxy">Foloseşte proxy sistem</string>
   <string name="use_system_proxy_summary">Foloseşte configurarea sistem pentru proxy HTTP/HTTPS folosit la conectare.</string>
   <string name="onbootrestartsummary">OpenVPN va conecta VPN-ul specificat dacă vs fi activ la pornirea sistemului. Citiți întrebările frecvente privind avertizare de conexiune înainte de a utiliza această opțiune pe Android &lt; 5.0.</string>

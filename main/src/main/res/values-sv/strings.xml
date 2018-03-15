@@ -201,7 +201,6 @@
   <string name="setting_loadtun">Ladda tun modul</string>
   <string name="importpkcs12fromconfig">Importera PKCS12 från konfigurationen till Android Keystore</string>
   <string name="getproxy_error">Fel vid hämtning av proxyinställningar: %s</string>
-  <string name="using_proxy">Använder proxy %1$s %2$d</string>
   <string name="use_system_proxy">Använd system proxy</string>
   <string name="use_system_proxy_summary">Använda systemkonfigurationen för HTTP/HTTPS proxy för att ansluta.</string>
   <string name="onbootrestartsummary">OpenVPN kommer att ansluta angiven VPN om den var aktivt vid systemets uppstart. Vänligen läs anslutningsvarnings FAQ innan du använder det här alternativet på Android &lt; 5.0.</string>

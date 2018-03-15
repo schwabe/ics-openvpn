@@ -201,7 +201,6 @@
   <string name="setting_loadtun">Tun-Modul laden</string>
   <string name="importpkcs12fromconfig">In der Konfiguration angegebene PKCS12-Datei in den Android-Zertifikatsspeicher importieren</string>
   <string name="getproxy_error">Fehler beim Ermitteln der Proxy-Einstellungen: %s</string>
-  <string name="using_proxy">Verwende Proxy %1$s %2$d</string>
   <string name="use_system_proxy">System-Proxys verwenden</string>
   <string name="use_system_proxy_summary">Systemweite Einstellungen für HTTP- und HTTPS-Proxys beim Verbinden verwenden.</string>
   <string name="onbootrestartsummary">Beim Systemstart das angegebene VPN verbinden. Auf Geräten mit Android 5.0 und höher bitte vor der Verwendung dieser Option die FAQ zum Bestätigungsdialog lesen.</string>
@@ -438,6 +437,12 @@
   <string name="kbits_per_second">%.1f kbit/s</string>
   <string name="mbits_per_second">%.1f Mbit/s</string>
   <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="weakmd">&lt;p&gt;Seit der OpenSSL Version 1.1, verweigert OpenSSL schwache Signaturen - wie MD5 - in Zertifikaten.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;MD5-Signaturen sind komplett unsicher und sollten nicht mehr verwendet werden.
+&lt;/b&gt;MD5-Kollisionen können in &lt;a  href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;wenigen Stunden mit minimalen Kosten&lt;/a&gt; erzeugt werden. Sie sollten die VPN-Zertifikate so schnell wie möglich aktualisieren.&lt;/p&gt;
+&lt;p&gt;Leider enthielten ältere easy-rsa Distributionen die config-Option \"default_md md5\". Falls Sie eine alte Version von easy-rsa verwenden, aktualisieren Sie auf die &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;neueste Version&lt;/a&gt; oder ändern Sie md5 auf sha256 und erzeugen Sie Ihre Zertifikate neu.&lt;/p&gt;
+&lt;p&gt;Falls Sie wirklich alte und unsichere Zertifikate verwenden wollen, benutzen Sie die benutzerdefinierte Konfigurationsoption tls-cipher \"DEFAULT:@SECLEVEL=0\" in der erweiterten Profil-Konfiguration oder als zusätzliche Zeile in Ihrer importierten Konfiguration.&lt;/p&gt;
+    </string>
   <string name="volume_byte">%.0f B</string>
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>

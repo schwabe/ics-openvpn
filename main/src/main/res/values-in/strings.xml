@@ -201,7 +201,6 @@
   <string name="setting_loadtun">Pakai modul TUN</string>
   <string name="importpkcs12fromconfig">Ambil PKCS12 dari konfigurasi ke Android Keystore</string>
   <string name="getproxy_error">Gagal mendapatkan pengaturan proxy: %s</string>
-  <string name="using_proxy">Menggunakan proxy %1$s %2$d</string>
   <string name="use_system_proxy">Gunakan sistem proxy</string>
   <string name="use_system_proxy_summary">Gunakan konfigurasi lebih luas untuk menyambung system melalui proxy HTTP/HTTPS</string>
   <string name="onbootrestartsummary">OpenVPN akan menghubungkan VPN ditentukan apakah itu aktif di sistem boot. Silakan baca koneksi peringatan FAQ sebelum menggunakan opsi ini pada Android &lt; 5.0.</string>

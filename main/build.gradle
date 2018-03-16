@@ -38,15 +38,20 @@ dependencies {
 def openvpn3SwigFiles = new File(buildDir, "generated/source/ovpn3swig/ovpn3")
 
 task ("generateOpenVPN3Swig" ,type:Exec) {
+    def swigcmd = "swig"
+    // Workaround for Mac OS X since it otherwise does not find swig and I cannot get
+    // the Exec task to respect the PATH environment :(
+    if (file("/usr/local/bin/swig").exists())
+        swigcmd = "/usr/local/bin/swig"
+
     doFirst {
         mkdir openvpn3SwigFiles
     }
-    commandLine "swig", "-outdir", openvpn3SwigFiles, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
+    commandLine swigcmd, "-outdir", openvpn3SwigFiles, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
             "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
             "-o", "${openvpn3SwigFiles}/ovpncli_wrap.cxx", "-oh", "${openvpn3SwigFiles}/ovpncli_wrap.h",
             "src/main/cpp/openvpn3/javacli/ovpncli.i"
-    environment 'PATH', "${environment.PATH}:/usr/local/bin/"
-
+\
 }
 
 android {

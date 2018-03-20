@@ -30,9 +30,9 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
     private OpenVPNManagement mManagement;
 
     // Window time in s
-    private final int TRAFFIC_WINDOW = 60;
+    private int TRAFFIC_WINDOW = 60;
     // Data traffic limit in bytes
-    private final long TRAFFIC_LIMIT = 64 * 1024;
+    private long TRAFFIC_LIMIT = 64 * 1024;
 
     // Time to wait after network disconnect to pause the VPN
     private final int DISCONNECT_WAIT = 20;
@@ -138,6 +138,8 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
     public void onReceive(Context context, Intent intent) {
         SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
 
+        TRAFFIC_WINDOW = Integer.parseInt(prefs.getString("screenofftime", "60"));
+        TRAFFIC_LIMIT = Integer.parseInt(prefs.getString("screenofftransfer", "64")) * 1024;
 
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
             networkStateChange(context);

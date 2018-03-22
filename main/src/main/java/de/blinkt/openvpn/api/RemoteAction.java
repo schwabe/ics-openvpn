@@ -13,29 +13,28 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.widget.Toast;
 
+import de.blinkt.openvpn.LaunchVPN;
+import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
 import de.blinkt.openvpn.core.OpenVPNService;
+import de.blinkt.openvpn.core.ProfileManager;
 
 public class RemoteAction extends Activity {
 
-        private ExternalAppDatabase mExtAppDb;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        mExtAppDb = new ExternalAppDatabase(this);
-    }
-
+    public static final String EXTRA_NAME = "de.blinkt.openvpn.api.profileName";
+    private ExternalAppDatabase mExtAppDb;
+    private boolean mDoDisconnect;
+    private IOpenVPNServiceInternal mService;
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
 
-            IOpenVPNServiceInternal myservice = IOpenVPNServiceInternal.Stub.asInterface(service);
+            mService = IOpenVPNServiceInternal.Stub.asInterface(service);
             try {
-                myservice.stopVPN(false);
+                performAction();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -48,27 +47,59 @@ public class RemoteAction extends Activity {
 
     };
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mExtAppDb = new ExternalAppDatabase(this);
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mExtAppDb.checkRemoteActionPermission(this))
-            performAction();
 
-        finish();
+        Intent intent = new Intent(this, OpenVPNService.class);
+        intent.setAction(OpenVPNService.START_SERVICE);
+        getApplicationContext().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
     }
 
-    private void performAction() {
-        Intent intent = new Intent(this, OpenVPNService.class);
-        intent.setAction(OpenVPNService.START_SERVICE);
+    private void performAction() throws RemoteException {
 
-        ComponentName component = getIntent().getComponent();
-        if (component.getShortClassName().equals(".api.DisconnectVPN")) {
-            boolean mDoDisconnect = true;
+        if (!mService.isAllowedExternalApp(getCallingPackage())) {
+            finish();
+            return;
         }
-        getApplicationContext().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        Intent intent = getIntent();
+        setIntent(null);
+        ComponentName component = intent.getComponent();
+        if (component.getShortClassName().equals(".api.DisconnectVPN")) {
+            mService.stopVPN(false);
+        } else if (component.getShortClassName().equals(".api.ConnectVPN")) {
+            String vpnName = intent.getStringExtra(EXTRA_NAME);
+            VpnProfile profile = ProfileManager.getInstance(this).getProfileByName(vpnName);
+            if (profile == null) {
+                Toast.makeText(this, String.format("Vpn profile %s from API call not found", vpnName), Toast.LENGTH_LONG).show();
+            } else {
+                Intent startVPN = new Intent(this, LaunchVPN.class);
+                startVPN.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
+                startVPN.setAction(Intent.ACTION_MAIN);
+                startActivity(startVPN);
+            }
+        }
+        finish();
 
 
+
+    }
+
+    @Override
+    public void finish() {
+        if(mService!=null) {
+            mService = null;
+            getApplicationContext().unbindService(mConnection);
+        }
+        super.finish();
     }
 }

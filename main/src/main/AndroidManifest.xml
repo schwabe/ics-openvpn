@@ -230,6 +230,12 @@
             android:exported="true"
             android:name=".api.DisconnectVPN"
             android:targetActivity=".api.RemoteAction" />
+
+        <activity-alias
+            android:exported="true"
+            android:name=".api.ConnectVPN"
+            android:targetActivity=".api.RemoteAction" />
+
     </application>
 
 </manifest>

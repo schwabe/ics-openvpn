@@ -142,7 +142,7 @@ public class LaunchVPN extends Activity {
             VpnProfile profileToConnect = ProfileManager.get(this, shortcutUUID);
             if (shortcutName != null && profileToConnect == null) {
                 profileToConnect = ProfileManager.getInstance(this).getProfileByName(shortcutName);
-                if (!(new ExternalAppDatabase(this).checkRemoteActionPermission(this))) {
+                if (!(new ExternalAppDatabase(this).checkRemoteActionPermission(this, getCallingPackage()))) {
                     finish();
                     return;
                 }

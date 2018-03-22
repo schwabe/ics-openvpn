@@ -36,6 +36,7 @@ import de.blinkt.openvpn.VpnProfile;
 
 public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
+    public static final int ORBOT_TIMEOUT_MS = 20 * 1000;
     private static final String TAG = "openvpn";
     private static final Vector<OpenVpnManagementThread> active = new Vector<>();
     private final Handler mResumeHandler;
@@ -51,12 +52,45 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     private pauseReason lastPauseReason = pauseReason.noNetwork;
     private PausedStateCallback mPauseCallback;
     private boolean mShuttingDown;
-    private Runnable mResumeHoldRunnable = new Runnable() {
+    private Runnable mResumeHoldRunnable = () -> {
+        if (shouldBeRunning()) {
+            releaseHoldCmd();
+        }
+    };
+    private Runnable orbotStatusTimeOutRunnable = new Runnable() {
         @Override
         public void run() {
-            if (shouldBeRunning()) {
-                releaseHoldCmd();
-            }
+            sendProxyCMD(Connection.ProxyType.SOCKS5, "127.0.0.1", Integer.toString(OrbotHelper.SOCKS_PROXY_PORT_DEFAULT));
+            OrbotHelper.get(mOpenVPNService).removeStatusCallback(statusCallback);
+
+        }
+    };
+    private OrbotHelper.StatusCallback statusCallback = new OrbotHelper.StatusCallback() {
+
+        @Override
+        public void onStatus(Intent statusIntent) {
+            String extras = "";
+            for (String key : statusIntent.getExtras().keySet())
+                extras += String.format(Locale.ENGLISH, "%s - '%s'", key, statusIntent.getExtras().getString(key, "[]"));
+            VpnStatus.logDebug("Got Orbot status: " + extras);
+
+        }
+
+        @Override
+        public void onNotYetInstalled() {
+            VpnStatus.logDebug("Orbot not yet installed");
+        }
+
+        @Override
+        public void onOrbotReady(Intent intent, String socksHost, int socksPort) {
+            mResumeHandler.removeCallbacks(orbotStatusTimeOutRunnable);
+            sendProxyCMD(Connection.ProxyType.SOCKS5, socksHost, Integer.toString(socksPort));
+            OrbotHelper.get(mOpenVPNService).removeStatusCallback(this);
+        }
+
+        @Override
+        public void onDisabled(Intent intent) {
+            VpnStatus.logWarning("Orbot integration for external applications is disabled. Waiting %ds before connecting to the default port. Enable external app integration in Orbot or use Socks v5 config instead of Orbot to avoid this delay.");
         }
     };
 
@@ -429,7 +463,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             if (!orbotHelper.checkTorReceier(mOpenVPNService))
                 VpnStatus.logError("Orbot does not seem to be installed!");
 
-            mResumeHandler.postDelayed(orbotStatusTimeOutRunnable, 20 * 1000);
+            mResumeHandler.postDelayed(orbotStatusTimeOutRunnable, ORBOT_TIMEOUT_MS);
             orbotHelper.addStatusCallback(mOpenVPNService, statusCallback);
 
             orbotHelper.sendOrbotStartAndStatusBroadcast();
@@ -438,40 +472,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             sendProxyCMD(proxyType, proxyname, proxyport);
         }
     }
-
-
-    private OrbotHelper.StatusCallback statusCallback = new OrbotHelper.StatusCallback() {
-
-        @Override
-        public void onStatus(Intent statusIntent) {
-            String extras = "";
-            for (String key : statusIntent.getExtras().keySet())
-                extras += String.format(Locale.ENGLISH, "%s - '%s'", key, statusIntent.getExtras().getString(key, "[]"));
-            VpnStatus.logDebug("Got Orbot status: " + extras);
-
-        }
-
-        @Override
-        public void onNotYetInstalled() {
-            VpnStatus.logDebug("Orbot not yet installed");
-        }
-
-        @Override
-        public void onOrbotReady(Intent intent, String socksHost, int socksPort) {
-            mResumeHandler.removeCallbacks(orbotStatusTimeOutRunnable);
-            sendProxyCMD(Connection.ProxyType.SOCKS5, socksHost, Integer.toString(socksPort));
-            OrbotHelper.get(mOpenVPNService).removeStatusCallback(this);
-        }
-    };
-
-    private Runnable orbotStatusTimeOutRunnable = new Runnable() {
-        @Override
-        public void run() {
-            sendProxyCMD(Connection.ProxyType.SOCKS5, "127.0.0.1", Integer.toString(OrbotHelper.SOCKS_PROXY_PORT_DEFAULT));
-            OrbotHelper.get(mOpenVPNService).removeStatusCallback(statusCallback);
-
-        }
-    };
 
     private void sendProxyCMD(Connection.ProxyType proxyType, String proxyname, String proxyport) {
         if (proxyType != Connection.ProxyType.NONE && proxyname != null) {

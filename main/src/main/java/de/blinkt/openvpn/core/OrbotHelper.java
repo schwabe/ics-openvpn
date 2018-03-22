@@ -51,6 +51,8 @@ public class OrbotHelper {
      */
     public final static String ACTION_STATUS = "org.torproject.android.intent.action.STATUS";
     public final static String STATUS_ON = "ON";
+    public final static String STATUS_STARTS_DISABLED = "STARTS_DISABLED";
+
     public final static String STATUS_STARTING = "STARTING";
     public final static String STATUS_STOPPING = "STOPPING";
     public final static String EXTRA_STATUS = "org.torproject.android.intent.extra.STATUS";
@@ -84,6 +86,9 @@ public class OrbotHelper {
                     for (StatusCallback cb : statusCallbacks) {
                         cb.onOrbotReady(intent, socksHost, socksPort);
                     }
+                } else if (TextUtils.equals(status, STATUS_STARTS_DISABLED)) {
+                    for (StatusCallback cb : statusCallbacks)
+                        cb.onDisabled(intent);
                 }
 
             }
@@ -110,6 +115,16 @@ public class OrbotHelper {
         intent.setPackage(ORBOT_PACKAGE_NAME);
         intent.putExtra(EXTRA_PACKAGE_NAME, context.getPackageName());
         return intent;
+    }
+
+    public static boolean checkTorReceier(Context c) {
+        Intent startOrbot = getOrbotStartIntent(c);
+        PackageManager pm = c.getPackageManager();
+        Intent result = null;
+        List<ResolveInfo> receivers =
+                pm.queryBroadcastReceivers(startOrbot, 0);
+
+        return receivers != null && receivers.size() > 0;
     }
 
     /**
@@ -156,16 +171,6 @@ public class OrbotHelper {
         mContext.startService(clearVPNMode);
     }
 
-    boolean checkTorReceier(Context c) {
-        Intent startOrbot = getOrbotStartIntent(c);
-        PackageManager pm = c.getPackageManager();
-        Intent result = null;
-        List<ResolveInfo> receivers =
-                pm.queryBroadcastReceivers(startOrbot, 0);
-
-        return receivers != null && receivers.size() > 0;
-    }
-
     public interface StatusCallback {
         /**
          * Called when Orbot is operational
@@ -187,5 +192,11 @@ public class OrbotHelper {
         void onNotYetInstalled();
 
         void onOrbotReady(Intent intent, String socksHost, int socksPort);
+
+        /**
+         * Called if Orbot background control is disabled.
+         * @param intent the intent delivered
+         */
+        void onDisabled(Intent intent);
     }
 }

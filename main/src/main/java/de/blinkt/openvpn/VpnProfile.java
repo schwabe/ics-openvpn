@@ -362,7 +362,7 @@ public class VpnProfile implements Serializable, Cloneable {
         boolean canUsePlainRemotes = true;
 
         if (mConnections.length == 1) {
-            cfg += mConnections[0].getConnectionBlock();
+            cfg += mConnections[0].getConnectionBlock(configForOvpn3);
         } else {
             for (Connection conn : mConnections) {
                 canUsePlainRemotes = canUsePlainRemotes && conn.isOnlyRemote();
@@ -374,7 +374,7 @@ public class VpnProfile implements Serializable, Cloneable {
             if (canUsePlainRemotes) {
                 for (Connection conn : mConnections) {
                     if (conn.mEnabled) {
-                        cfg += conn.getConnectionBlock();
+                        cfg += conn.getConnectionBlock(configForOvpn3);
                     }
                 }
             }
@@ -604,7 +604,7 @@ public class VpnProfile implements Serializable, Cloneable {
             for (Connection conn : mConnections) {
                 if (conn.mEnabled) {
                     cfg += "<connection>\n";
-                    cfg += conn.getConnectionBlock();
+                    cfg += conn.getConnectionBlock(configForOvpn3);
                     cfg += "</connection>\n";
                 }
             }
@@ -965,7 +965,14 @@ public class VpnProfile implements Serializable, Cloneable {
             if (mAuthenticationType == TYPE_PKCS12 || mAuthenticationType == TYPE_USERPASS_PKCS12) {
                 return R.string.openvpn3_pkcs12;
             }
+            for (Connection conn : mConnections) {
+                if (conn.mProxyType == Connection.ProxyType.ORBOT || conn.mProxyType == Connection.ProxyType.SOCKS5)
+                    return R.string.openvpn3_socksproxy;
+            }
         }
+        if (!OrbotHelper.checkTorReceier(context))
+            return R.string.no_orbotfound;
+
 
         // Everything okay
         return R.string.no_error_found;

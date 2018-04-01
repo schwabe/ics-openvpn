@@ -7,4 +7,10 @@
   <plurals name="days_left">
     <item quantity="other">%d hari lagi</item>
   </plurals>
+  <plurals name="hours_left">
+    <item quantity="other">Satu jam lagi</item>
+  </plurals>
+  <plurals name="minutes_left">
+    <item quantity="other">Satu menit lagi</item>
+  </plurals>
 </resources>

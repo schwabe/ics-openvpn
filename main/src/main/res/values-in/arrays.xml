@@ -24,7 +24,7 @@
     <item>Encryption (tls-crypt)</item>
   </string-array>
   <string-array name="auth_retry_type">
-    <item>1234</item>
+    <item>Disconnect, forget password</item>
     <item>Putus, simpan kata sandi</item>
     <item>Abaikan, coba lagi</item>
   </string-array>

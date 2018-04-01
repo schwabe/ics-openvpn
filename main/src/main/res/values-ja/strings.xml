@@ -216,6 +216,7 @@ Androidはあなた自身の安全性のために、これらを迂回できな�
   <string name="setting_loadtun">TUNモジュールをロード</string>
   <string name="importpkcs12fromconfig">PKCS12の設定をAndroidのキーストアにインポートします</string>
   <string name="getproxy_error">プロキシ設定でエラー： %s</string>
+  <string name="using_proxy">プロキシを使用します %1$s %2$s</string>
   <string name="use_system_proxy">システムのプロキシ設定を使用する</string>
   <string name="use_system_proxy_summary">接続にシステム全体の構成の HTTP/HTTPS プロキシを使用します。</string>
   <string name="onbootrestartsummary">有効にすると、OpenVPNはシステムの起動時に指定されたVPNに接続します。Android 5.0より前のバージョンでこのオプションを使用する場合は、接続時の警告に関する「よくある質問」を読んでください。</string>
@@ -480,8 +481,21 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="channel_name_background">Connection statistics</string>
+  <string name="channel_description_background">確立されたOpenVPN接続の継続的な統計</string>
+  <string name="channel_name_status">接続状態の変化</string>
+  <string name="channel_description_status">OpenVPN接続の状態変化(接続、認証等)</string>
+  <string name="weakmd_title">証明書の署名は弱いMD5です (SSL_CTX_use_certificate md は弱すぎます)</string>
   <string name="title_activity_open_sslspeed">OpenSSLスピードテスト</string>
+  <string name="openssl_cipher_name">OpenSSLの暗号名</string>
+  <string name="osslspeedtest">OpenSSLの暗号化スピードテスト</string>
   <string name="openssl_error">OpenSSLがエラーを返しました</string>
   <string name="running_test">テストを実行中...</string>
+  <string name="test_algoirhtms">選択したアルゴリズムをテストする</string>
   <string name="all_app_prompt">外部アプリが%sを制御しようとしています。アクセスをリクエストしているアプリは特定できません。このアプリを許可すると、すべてのアプリがアクセス許可されます。</string>
+  <string name="openvpn3_nostatickeys">OpenVPN 3 C ++実装は静的キーをサポートしていません。設定でOpenVPN 2.xに変更してください。</string>
+  <string name="openvpn3_pkcs12">OpenVPN 3 C++実装ではPKCS12ファイルを直接使用することはサポートされていません。 PKCS12ファイルをAndroidキーストアにインポートするか、設定でOpenVPN 2.xに変更してください。</string>
+  <string name="proxy">プロキシ</string>
+  <string name="Use_no_proxy">使用しない</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

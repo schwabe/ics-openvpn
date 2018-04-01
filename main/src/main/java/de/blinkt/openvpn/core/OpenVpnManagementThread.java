@@ -69,11 +69,13 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
         @Override
         public void onStatus(Intent statusIntent) {
-            String extras = "";
-            for (String key : statusIntent.getExtras().keySet())
-                extras += String.format(Locale.ENGLISH, "%s - '%s'", key, statusIntent.getExtras().getString(key, "[]"));
-            VpnStatus.logDebug("Got Orbot status: " + extras);
+            StringBuilder extras = new StringBuilder();
+            for (String key : statusIntent.getExtras().keySet()) {
+                Object val = statusIntent.getExtras().get(key);
 
+                extras.append(String.format(Locale.ENGLISH, "%s - '%s'", key, val == null ? "null" : val.toString()));
+            }
+            VpnStatus.logDebug("Got Orbot status: " + extras);
         }
 
         @Override

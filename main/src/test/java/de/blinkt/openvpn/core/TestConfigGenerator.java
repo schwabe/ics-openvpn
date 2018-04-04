@@ -60,6 +60,9 @@ public class TestConfigGenerator {
         vp.mAuthRetry = AUTH_RETRY_NOINTERACT;
         String config = vp.getConfigFile(RuntimeEnvironment.application, false);
         Assert.assertTrue(config.contains("\nauth-retry nointeract\n"));
+        for (Connection connection: vp.mConnections)
+            Assert.assertTrue(connection.mProxyType == Connection.ProxyType.NONE);
 
     }
+
 }

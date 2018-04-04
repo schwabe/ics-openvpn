@@ -912,8 +912,13 @@ public class VpnProfile implements Serializable, Cloneable {
 
     }
 
+    public int checkProfile(Context c)
+    {
+        return checkProfile(c, doUseOpenVPN3(c));
+    }
+
     //! Return an error if something is wrong
-    public int checkProfile(Context context) {
+    public int checkProfile(Context context, boolean useOpenVPN3) {
         if (mAuthenticationType == TYPE_KEYSTORE || mAuthenticationType == TYPE_USERPASS_KEYSTORE) {
             if (mAlias == null)
                 return R.string.no_keystore_cert_selected;
@@ -951,14 +956,15 @@ public class VpnProfile implements Serializable, Cloneable {
 
 
         boolean noRemoteEnabled = true;
-        for (Connection c : mConnections)
+        for (Connection c : mConnections) {
             if (c.mEnabled)
                 noRemoteEnabled = false;
 
+        }
         if (noRemoteEnabled)
             return R.string.remote_no_server_selected;
 
-        if (doUseOpenVPN3(context)) {
+        if (useOpenVPN3) {
             if (mAuthenticationType == TYPE_STATICKEYS) {
                 return R.string.openvpn3_nostatickeys;
             }
@@ -970,8 +976,11 @@ public class VpnProfile implements Serializable, Cloneable {
                     return R.string.openvpn3_socksproxy;
             }
         }
-        if (!OrbotHelper.checkTorReceier(context))
-            return R.string.no_orbotfound;
+        for (Connection c: mConnections) {
+            if (c.mProxyType == Connection.ProxyType.ORBOT)
+                if (!OrbotHelper.checkTorReceier(context))
+                    return R.string.no_orbotfound;
+        }
 
 
         // Everything okay

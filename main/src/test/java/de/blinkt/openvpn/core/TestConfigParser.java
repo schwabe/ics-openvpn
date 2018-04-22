@@ -40,7 +40,8 @@ public class TestConfigParser {
         ConfigParser cp = new ConfigParser();
         cp.parseConfig(new StringReader(miniconfig + httpproxypass));
         VpnProfile p = cp.convertProfile();
-        Assert.assertTrue(p.mCustomConfigOptions.contains(httpproxypass));
+        Assert.assertFalse(p.mCustomConfigOptions.contains(httpproxypass));
+
 
     }
 
@@ -124,9 +125,18 @@ public class TestConfigParser {
         ConfigParser cp = new ConfigParser();
         cp.parseConfig(new StringReader(proxy));
         VpnProfile vp = cp.convertProfile();
-        String config = vp.getConfigFile(RuntimeEnvironment.application, false);
+        String config = vp.getConfigFile(RuntimeEnvironment.application, true);
         Assert.assertTrue(config.contains("username12"));
         Assert.assertTrue(config.contains("http-proxy 1.2.3.4"));
-        }
+
+         config = vp.getConfigFile(RuntimeEnvironment.application, false);
+
+        Assert.assertFalse(config.contains("username12"));
+        Assert.assertFalse(config.contains("http-proxy 1.2.3.4"));
+
+        Assert.assertTrue(vp.mConnections[0].mUseProxyAuth);
+        Assert.assertEquals(vp.mConnections[0].mProxyAuthUser, "username12");
+        Assert.assertEquals(vp.mConnections[0].mProxyAuthPassword, "password34");
+    }
 
 }

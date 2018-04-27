@@ -17,8 +17,9 @@
         android:background="@drawable/white_rect"
         android:elevation="1dp"
             android:minWidth="300dp"
+
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="400dp"
             android:layout_height="match_parent">
 
         <include layout="@layout/log_silders"/>
@@ -27,6 +28,8 @@
     </LinearLayout>
 
     <ListView
+        android:minWidth="400dp"
+        android:layout_weight="4"
             android:id="@android:id/list"
             android:transcriptMode="normal"
             android:layout_width="fill_parent"

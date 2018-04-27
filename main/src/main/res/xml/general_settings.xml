@@ -17,8 +17,9 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="ovpn3"
-            android:summaryOn="Use the C++ OpenVPN library"
-            android:summaryOff="Use OpenVPN 2.3"
+            android:disableDependentsState="true"
+            android:summaryOn="Use the C++ OpenVPN library (experimental)"
+            android:summaryOff="Use OpenVPN 2.x"
             android:title="OpenVPN 3 Core"/>
 
 
@@ -44,6 +45,7 @@
         <CheckBoxPreference
                 android:defaultValue="true"
                 android:key="usesystemproxy"
+                android:dependency="ovpn3"
                 android:summary="@string/use_system_proxy_summary"
                 android:title="@string/use_system_proxy"/>
         <CheckBoxPreference
@@ -59,6 +61,11 @@
                 android:summary="@string/screenoff_summary"
                 android:title="@string/screenoff_title"/>
 
+        <Preference
+                android:dependency=""
+            android:key="osslspeed"
+            android:persistent="false"
+            android:title="@string/osslspeedtest" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/device_specific" android:key="device_hacks">

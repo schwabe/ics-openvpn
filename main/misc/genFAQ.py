@@ -108,6 +108,8 @@ def getVersionString(ver):
         return "4.4 (Kit Kat)"
     elif ver == "Build.VERSION_CODES.LOLLIPOP":
         return "5.0 (Lollipop)"
+    elif ver == "Build.VERSION_CODES.LOLLIPOP_MR1":
+        return "5.1 (Lollipop MR1)"
     else:
         return "API " + ver
 

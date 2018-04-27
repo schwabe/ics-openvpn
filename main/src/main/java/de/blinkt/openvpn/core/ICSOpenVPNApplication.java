@@ -57,7 +57,7 @@ public class ICSOpenVPNApplication extends Application {
 
         name = getString(R.string.channel_name_status);
         mChannel = new NotificationChannel(OpenVPNService.NOTIFICATION_CHANNEL_NEWSTATUS_ID,
-                name, NotificationManager.IMPORTANCE_DEFAULT);
+                name, NotificationManager.IMPORTANCE_LOW);
 
         mChannel.setDescription(getString(R.string.channel_description_status));
         mChannel.enableLights(true);

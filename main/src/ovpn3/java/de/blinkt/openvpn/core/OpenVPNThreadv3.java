@@ -63,16 +63,18 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		if(!setConfig(configstr))
 			return;
 		setUserPW();
+		VpnStatus.logInfo(platform());
         VpnStatus.logInfo(copyright());
 
-		StatusPoller statuspoller = new StatusPoller(5000);
+
+		StatusPoller statuspoller = new StatusPoller(OpenVPNManagement.mBytecountInterval*1000);
 		new Thread(statuspoller,"Status Poller").start();
 
 		ClientAPI_Status status = connect();
 		if(status.getError()) {
             VpnStatus.logError(String.format("connect() error: %s: %s",status.getStatus(),status.getMessage()));
 		} else {
-            VpnStatus.logInfo("OpenVPN3 thread finished");
+            VpnStatus.logDebug("OpenVPN3 thread finished");
 		}
 		statuspoller.stop();
 	}
@@ -103,7 +105,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		if(ipv6)
 			mService.addRoutev6(address + "/" + prefix_length,"tun");
 		else
-			mService.addRoute(new CIDRIP(address, prefix_length));
+			mService.addRoute(new CIDRIP(address, prefix_length), true);
 		return true;
 	}
 
@@ -112,8 +114,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         if(ipv6)
             mService.addRoutev6(address + "/" + prefix_length, "wifi0");
         else {
-            //TODO
-            mService.addRoute(address, String.valueOf(prefix_length), "1.2.3.4" , "wifi0");
+			CIDRIP route = new CIDRIP(address, prefix_length);
+            mService.addRoute(route, false);
         }
         return true;
     }
@@ -133,7 +135,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public boolean tun_builder_set_session_name(String name) {
-        VpnStatus.logInfo("We should call this session" + name);
+        VpnStatus.logDebug("We should call this session" + name);
 		return true;
 	}
 
@@ -164,7 +166,12 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
     @Override
     public boolean tun_builder_reroute_gw(boolean ipv4, boolean ipv6, long flags) {
-        //ignore
+		if (ipv4)
+			mService.addRoute("0.0.0.0", "0.0.0.0", "127.0.0.1", OpenVPNService.VPNSERVICE_TUN);
+
+		if (ipv6)
+			mService.addRoutev6("::/0", OpenVPNService.VPNSERVICE_TUN);
+
         return true;
     }
 
@@ -179,11 +186,12 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		config.setContent(vpnconfig);
 		config.setTunPersist(mVp.mPersistTun);
         config.setGuiVersion(mVp.getVersionEnvString(mService));
+        //config.setPlatformVersion(mVp.getPlatformVersionEnvString());
 		config.setExternalPkiAlias("extpki");
 
 		ClientAPI_EvalConfig ec = eval_config(config);
 		if(ec.getExternalPki()) {
-            VpnStatus.logError("OpenVPN seem to think as external PKI");
+            VpnStatus.logDebug("OpenVPN3 core assumes an external PKI config");
 		}
 		if (ec.getError()) {
             VpnStatus.logError("OpenVPN config file parse error: " + ec.getMessage());
@@ -196,7 +204,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public void external_pki_cert_request(ClientAPI_ExternalPKICertRequest certreq) {
-        VpnStatus.logError("EXT PKI CERT");
+        VpnStatus.logDebug("Got external PKI certificate request from OpenVPN core");
 		String[] ks = mVp.getKeyStoreCertificates((Context) mService);
 		if(ks==null) {
 			certreq.setError(true);
@@ -215,6 +223,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public void external_pki_sign_request(ClientAPI_ExternalPKISignRequest signreq) {
+		VpnStatus.logDebug("Got external PKI signing request from OpenVPN core");
 		signreq.setSig(mVp.getSignedData(signreq.getData()));
 	}
 
@@ -244,12 +253,13 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public boolean stopVPN(boolean replaceConnection) {
+		stop();
 		return false;
 	}
 
 	@Override
 	public void networkChange(boolean sameNetwork) {
-
+		reconnect(1);
 	}
 
 	@Override
@@ -288,6 +298,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	@Override
 	public void stop() {
 		super.stop();
+		mService.openvpnStopped();
 	}
 
 	@Override

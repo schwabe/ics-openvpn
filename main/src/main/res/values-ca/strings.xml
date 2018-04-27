@@ -105,7 +105,6 @@
   <string name="routing">Ruting</string>
   <string name="advanced">Avançat</string>
   <string name="faq_howto_title">Inici rapid</string>
-  <string name="using_proxy">Utilitzant el proxy %1$s %2$d</string>
   <string name="use_system_proxy">Utiliza el proxy del sistema</string>
   <string name="ignore">Ignorar</string>
   <string name="restart">Reinicia</string>

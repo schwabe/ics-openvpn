@@ -258,6 +258,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 		mUserName.setText(mProfile.mUsername);
 		mPassword.setText(mProfile.mPassword);
 		mKeyPassword.setText(mProfile.mKeyPassword);
+		mAuthRetry.setSelection(mProfile.mAuthRetry);
 
 		setAlias();
 
@@ -299,16 +300,11 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
     public void showCertDialog () {
 		try	{
 			KeyChain.choosePrivateKeyAlias(getActivity(),
-					new KeyChainAliasCallback() {
-
-				public void alias(String alias) {
-					// Credential alias selected.  Remember the alias selection for future use.
-					mProfile.mAlias=alias;
-					mHandler.sendEmptyMessage(UPDATE_ALIAS);
-				}
-
-
-			},
+					alias -> {
+                        // Credential alias selected.  Remember the alias selection for future use.
+                        mProfile.mAlias=alias;
+                        mHandler.sendEmptyMessage(UPDATE_ALIAS);
+                    },
 			new String[] {"RSA"}, // List of acceptable key types. null for any
 			null,                        // issuer, null for any
 			mProfile.mServerName,      // host name of server requesting the cert, null if unavailable

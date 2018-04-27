@@ -18,5 +18,5 @@
     android:elevation="1dp"
     android:src="@android:drawable/ic_menu_save"
     android:stateListAnimator="@anim/fab_anim"
-    android:tint="@android:color/white"
-    tools:showIn="@layout/config_converter" />
+    android:tint="@android:color/white" />
+    <!--tools:showIn="@layout/config_converter" -->

@@ -34,6 +34,7 @@ import android.widget.EditText;
 import java.io.IOException;
 
 import de.blinkt.openvpn.activities.LogWindow;
+import de.blinkt.openvpn.api.ExternalAppDatabase;
 import de.blinkt.openvpn.core.ConnectionStatus;
 import de.blinkt.openvpn.core.IServiceStatus;
 import de.blinkt.openvpn.core.OpenVPNStatusService;
@@ -139,8 +140,14 @@ public class LaunchVPN extends Activity {
             mhideLog = intent.getBooleanExtra(EXTRA_HIDELOG, false);
 
             VpnProfile profileToConnect = ProfileManager.get(this, shortcutUUID);
-            if (shortcutName != null && profileToConnect == null)
+            if (shortcutName != null && profileToConnect == null) {
                 profileToConnect = ProfileManager.getInstance(this).getProfileByName(shortcutName);
+                if (!(new ExternalAppDatabase(this).checkRemoteActionPermission(this))) {
+                    finish();
+                    return;
+                }
+            }
+
 
             if (profileToConnect == null) {
                 VpnStatus.logError(R.string.shortcut_profile_notfound);

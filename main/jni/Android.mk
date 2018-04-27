@@ -52,8 +52,10 @@ LOCAL_PATH := $(JNI_DIR)
 include $(CLEAR_VARS)
 LOCAL_LDLIBS := -llog  -lz
 LOCAL_CFLAGS =  -DTARGET_ARCH_ABI=\"${TARGET_ARCH_ABI}\"
-LOCAL_SRC_FILES:= jniglue.c  scan_ifs.c
+LOCAL_SRC_FILES:= jniglue.c  scan_ifs.c sslspeed.c
+LOCAL_C_INCLUDES := openssl/include openssl/crypto openssl openssl/crypto/include
 LOCAL_MODULE = opvpnutil
+LOCAL_STATIC_LIBRARIES := libssl_static libcrypto_static
 include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)

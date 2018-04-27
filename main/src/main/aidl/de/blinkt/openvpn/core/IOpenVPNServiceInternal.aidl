@@ -20,4 +20,6 @@ interface IOpenVPNServiceInternal {
      * @return true if there was a process that has been send a stop signal
      */
     boolean stopVPN(boolean replaceConnection);
+
+    void addAllowedExternalApp(String packagename);
 }

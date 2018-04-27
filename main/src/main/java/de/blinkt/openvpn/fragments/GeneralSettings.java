@@ -12,6 +12,7 @@ import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -28,6 +29,7 @@ import android.preference.PreferenceManager;
 import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.activities.OpenSSLSpeed;
 import de.blinkt.openvpn.api.ExternalAppDatabase;
 import de.blinkt.openvpn.core.ProfileManager;
 
@@ -66,13 +68,16 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 		Preference clearapi = findPreference("clearapi");
 		clearapi.setOnPreferenceClickListener(this);
 
+		findPreference("osslspeed").setOnPreferenceClickListener(this);
 
         if(devHacks.getPreferenceCount()==0)
             getPreferenceScreen().removePreference(devHacks);
 
-        if (!"ovpn3".equals(BuildConfig.FLAVOR)) {
+        if (!BuildConfig.openvpn3) {
             PreferenceCategory appBehaviour = (PreferenceCategory) findPreference("app_behaviour");
-            appBehaviour.removePreference(findPreference("ovpn3"));
+			CheckBoxPreference ovpn3 = (CheckBoxPreference) findPreference("ovpn3");
+			ovpn3.setEnabled(false);
+			ovpn3.setChecked(false);
         }
 
 
@@ -168,6 +173,8 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 			builder.setNegativeButton(android.R.string.cancel, null);
 			builder.setMessage(getString(R.string.clearappsdialog,getExtAppList("\n")));
 			builder.show();
+		} else if (preference.getKey().equals("osslspeed")) {
+			startActivity(new Intent(getActivity(), OpenSSLSpeed.class));
 		}
 			
 		return true;

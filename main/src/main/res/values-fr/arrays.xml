@@ -22,4 +22,9 @@
     <item>Non spécifié</item>
     <item>Chiffrement (tls-crypt)</item>
   </string-array>
+  <string-array name="auth_retry_type">
+    <item>Déconnecter, oublier le mot de passe</item>
+    <item>Déconnecter, garder le mot de passe</item>
+    <item>Ignorer, réessayer</item>
+  </string-array>
 </resources>

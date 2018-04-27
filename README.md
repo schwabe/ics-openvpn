@@ -9,6 +9,9 @@ The EduVPN changes are:
 * [Change activity which opens when tapping notification](https://github.com/eduvpn/ics-openvpn/commit/5d1778af0b5e43faaa24e2356c5383f5fd457dfe): Opens a different activity when tapping on the notification
 * [Ability to get IPv4 and IPv6 addresses from the service](https://github.com/eduvpn/ics-openvpn/commit/ec9097df75af7be93beaea0e82ab544420d0569e): Allows us to get the IPv4 and IPv6 addresses.
 * [Fix parent activity problem](https://github.com/eduvpn/ics-openvpn/commit/6ba82fdccb86ccd61b11c92d527ac7014f9ff06f): Opens the correct parent activity from the log window.
+* [Replace switch with if for library project](https://github.com/eduvpn/ics-openvpn/commit/336c0ba020b1b771851ef971fe0345ace5714c13)
+
+The last tracked upstream version is v0.7.4
 
 Description
 ------------

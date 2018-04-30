@@ -5,8 +5,9 @@
 
 package de.blinkt.openvpn.core;
 
-import android.text.TextUtils;
+import android.os.Build;
 import android.support.v4.util.Pair;
+import android.text.TextUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class ConfigParser {
 
 
     public static final String CONVERTED_PROFILE = "converted Profile";
-    private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
+    private HashMap<String, Vector<Vector<String>>> options = new HashMap<>();
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
     private String auth_user_pass_file;
 
@@ -245,6 +246,7 @@ public class ConfigParser {
     // in most cases these won't work and user who wish to execute scripts will
     // figure out themselves
     final String[] ignoreOptions = {"tls-client",
+            "allow-recursive-routing",
             "askpass",
             "auth-nocache",
             "up",
@@ -255,12 +257,13 @@ public class ConfigParser {
             "route-pre-down",
             "auth-user-pass-verify",
             "block-outside-dns",
+            "client-cert-not-required",
             "dhcp-release",
             "dhcp-renew",
             "dh",
             "group",
-            "allow-recursive-routing",
             "ip-win32",
+            "ifconfig-nowarn",
             "management-hold",
             "management",
             "management-client",
@@ -275,6 +278,7 @@ public class ConfigParser {
             "management-client-user",
             "management-client-group",
             "pause-exit",
+            "preresolve",
             "plugin",
             "machine-readable-output",
             "persist-key",
@@ -300,7 +304,8 @@ public class ConfigParser {
                     {"setenv", "IV_GUI_VER"},
                     {"setenv", "IV_OPENVPN_GUI_VERSION"},
                     {"engine", "dynamic"},
-                    {"setenv", "CLIENT_CERT"}
+                    {"setenv", "CLIENT_CERT"},
+                    {"resolve-retry","60"}
             };
 
     final String[] connectionOptions = {
@@ -663,7 +668,7 @@ public class ConfigParser {
         if (crlfile != null) {
             // If the 'dir' parameter is present just add it as custom option ..
             if (crlfile.size() == 3 && crlfile.get(2).equals("dir"))
-                np.mCustomConfigOptions += TextUtils.join(" ", crlfile) + "\n";
+                np.mCustomConfigOptions += join(" ", crlfile) + "\n";
             else
                 // Save the filename for the config converter to add later
                 np.mCrlFilename = crlfile.get(1);
@@ -729,6 +734,13 @@ public class ConfigParser {
         return np;
     }
 
+    private String join(String s, Vector<String> str) {
+        if (Build.VERSION.SDK_INT > 26)
+            return String.join(s, str);
+        else
+            return TextUtils.join(s, str);
+    }
+
     private Pair<Connection, Connection[]> parseConnection(String connection, Connection defaultValues) throws IOException, ConfigParseError {
         // Parse a connection Block as a new configuration file
 
@@ -780,7 +792,28 @@ public class ConfigParser {
             }
         }
 
-                    // Parse remote config
+        Vector<String> proxy = getOption("socks-proxy", 1, 2);
+        if (proxy == null)
+            proxy = getOption("http-proxy", 2, 2);
+
+        if (proxy != null) {
+            if (proxy.get(0).equals("socks-proxy")) {
+                conn.mProxyType = Connection.ProxyType.SOCKS5;
+                // socks defaults to 1080, http always sets port
+                conn.mProxyPort = "1080";
+            } else {
+                conn.mProxyType = Connection.ProxyType.HTTP;
+            }
+
+            conn.mProxyName = proxy.get(1);
+            if (proxy.size() >= 3)
+                conn.mProxyPort = proxy.get(2);
+        }
+
+
+
+
+        // Parse remote config
         Vector<Vector<String>> remotes = getAllOption("remote", 1, 3);
 
 
@@ -791,7 +824,7 @@ public class ConfigParser {
                 conn.mCustomConfiguration += getOptionStrings(option);
 
             }
-            if (!TextUtils.isEmpty(conn.mCustomConfiguration))
+            if (!(conn.mCustomConfiguration == null || "".equals(conn.mCustomConfiguration.trim())))
                 conn.mUseCustomConfig = true;
         }
         // Make remotes empty to simplify code

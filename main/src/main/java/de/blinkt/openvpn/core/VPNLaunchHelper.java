@@ -6,7 +6,6 @@
 package de.blinkt.openvpn.core;
 
 import android.annotation.TargetApi;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -49,7 +48,7 @@ public class VPNLaunchHelper {
             }
         }
 
-        return null;
+        throw new RuntimeException("Cannot find any execulte for this device's ABIs " + abis.toString());
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

@@ -51,7 +51,7 @@ public class ShowConfigFragment extends Fragment {
 		new Thread() {
 			public void run() {
 				/* Add a few newlines to make the textview scrollable past the FAB */
-				configtext = vp.getConfigFile(getActivity(),false) + "\n\n\n";
+				configtext = vp.getConfigFile(getActivity(), VpnProfile.doUseOpenVPN3(getActivity())) + "\n\n\n";
 				getActivity().runOnUiThread(new Runnable() {
 					
 					@Override

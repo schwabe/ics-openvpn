@@ -8,7 +8,7 @@
   <!--  Keep the order the same as the TYPE_ constants in VPNProfile -->
   <string-array name="vpn_types">
     <item>Sertifikalar</item>
-    <item>PCKCS12 Dosyası</item>
+    <item>PKCS12 Dosyası</item>
     <item>Android Sertifikası</item>
     <item>Kullanıcı Adı/Parola</item>
     <item>Sabit Anahtarlar</item>

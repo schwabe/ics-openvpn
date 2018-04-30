@@ -196,10 +196,10 @@ public class FileSelectionFragment extends ListFragment {
         }
 
 
-        TreeMap<String, String> dirsMap = new TreeMap<String, String>();
-        TreeMap<String, String> dirsPathMap = new TreeMap<String, String>();
-        TreeMap<String, String> filesMap = new TreeMap<String, String>();
-        TreeMap<String, String> filesPathMap = new TreeMap<String, String>();
+        TreeMap<String, String> dirsMap = new TreeMap<>();
+        TreeMap<String, String> dirsPathMap = new TreeMap<>();
+        TreeMap<String, String> filesMap = new TreeMap<>();
+        TreeMap<String, String> filesPathMap = new TreeMap<>();
 
         // add default locations
         for (String dir: getExternalStorages()) {

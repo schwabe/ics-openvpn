@@ -22,4 +22,9 @@
     <item>No especificado</item>
     <item>Cifrado (-tLS-cripta)</item>
   </string-array>
+  <string-array name="auth_retry_type">
+    <item>Desconectar, olvidar contraseña</item>
+    <item>Desconectar, guardar la contraseña</item>
+    <item>Ignorar, volver a intentar</item>
+  </string-array>
 </resources>

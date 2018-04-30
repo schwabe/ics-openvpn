@@ -10,8 +10,8 @@
     <item>Certyfikaty</item>
     <item>Plik PKCS12</item>
     <item>Certyfikat z pęku kluczy Androida</item>
-    <item>Użytkownik/Hasło</item>
-    <item>Statyczne Klucze</item>
+    <item>Nazwa użytkownika/Hasło</item>
+    <item>Klucze statyczne</item>
     <item>Użytkownik/Hasło + Certyfikaty</item>
     <item>Użytkownik/Hasło + PKCS12</item>
     <item>Użytkownik/Hasło + Android</item>
@@ -21,5 +21,10 @@
     <item translatable="false">1</item>
     <item>Nieokreślone</item>
     <item>Szyfrowanie (tls-crypt)</item>
+  </string-array>
+  <string-array name="auth_retry_type">
+    <item>Odłącz, zapomnij hasło</item>
+    <item>Odłącz, zachowaj hasło</item>
+    <item>Ignoruj, ponów próbę</item>
   </string-array>
 </resources>

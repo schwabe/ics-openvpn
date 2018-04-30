@@ -22,6 +22,13 @@
     <item>未指定</item>
     <item>暗号化(tls-crypt)</item>
   </string-array>
+  <string-array name="crm_entries">
+    <item>再接続を試行しない</item>
+    <item>1回再接続を試行する</item>
+    <item>5回再接続を試行する</item>
+    <item>50回再接続を試行する</item>
+    <item>無制限に再接続を試行する</item>
+  </string-array>
   <string-array name="auth_retry_type">
     <item>パスワードを破棄して切断</item>
     <item>パスワードを維持して切断</item>

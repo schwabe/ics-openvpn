@@ -23,8 +23,8 @@
     <item>Criptografia (--tls-crypt)</item>
   </string-array>
   <string-array name="auth_retry_type">
-    <item>Disconnect, forget password</item>
-    <item>Disconnect, keep password</item>
-    <item>Ignore, retry</item>
+    <item>Desconecte, esqueça a senha</item>
+    <item>Desconecte, mantenha a senha</item>
+    <item>Ignore, tente novamente</item>
   </string-array>
 </resources>

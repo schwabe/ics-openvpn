@@ -20,7 +20,7 @@
     <item translatable="false">0 (server)</item>
     <item translatable="false">1 (klient)</item>
     <item>Nespecifikováno</item>
-    <item>Encryption (--tls-crypt)</item>
+    <item>Šifrování (--tls-crypt)</item>
   </string-array>
   <string-array name="crm_entries">
     <item>Opětovně nepřipojovat</item>
@@ -28,5 +28,10 @@
     <item>Pět pokusů o připojení</item>
     <item>Padesát pokusů o připojení</item>
     <item>Neomezeně pokusů o připojení</item>
+  </string-array>
+  <string-array name="auth_retry_type">
+    <item>Odpojit, zapomenout heslo</item>
+    <item>Odpojit, zachovat heslo</item>
+    <item>Ignorovat, zkusit znovu</item>
   </string-array>
 </resources>

@@ -5,18 +5,24 @@
 
 apply plugin: 'com.android.application'
 
+repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
+    maven { url 'https://maven.google.com' }
+}
+
+
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.0'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 }

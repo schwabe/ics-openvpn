@@ -19,4 +19,4 @@
     android:src="@drawable/ic_menu_share"
     android:stateListAnimator="@anim/fab_anim"
     android:tint="@android:color/white"
-    tools:showIn="@layout/viewconfig" />
+    />

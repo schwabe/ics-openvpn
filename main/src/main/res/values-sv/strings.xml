@@ -452,4 +452,6 @@
   <string name="test_algoirhtms">Testa valda algoritmer</string>
   <string name="all_app_prompt">En extern app försöker kontrollera %s. Appen som begär åtkomst kan inte bestämmas. Tillåtelse av den här appen ger åtkomst till ALLA program.</string>
   <string name="openvpn3_nostatickeys">OpenVPN 3 C ++-implementeringen stöder inte statiska nycklar. Ändra till OpenVPN 2.x under allmänna inställningar.</string>
+  <string name="proxy">Proxy</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

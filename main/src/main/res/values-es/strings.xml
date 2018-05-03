@@ -202,6 +202,7 @@ hacia/de Móvil)</string>
   <string name="setting_loadtun">Cargar modulo tun</string>
   <string name="importpkcs12fromconfig">Importar PKCS12 de la configuración en el almacén de claves de Android</string>
   <string name="getproxy_error">Error al obtener la configuración de proxy: %s</string>
+  <string name="using_proxy">Using proxy %1$s %2$s</string>
   <string name="use_system_proxy">Usar el proxy del sistema</string>
   <string name="use_system_proxy_summary">Utilice la configuración del sistema para los proxies HTTP/HTTPS al conectar.</string>
   <string name="onbootrestartsummary">OpenVPN se conectará la VPN se especifica si está activa en el arranque del sistema. Por favor, lea las preguntas frecuentes de aviso de conexión antes de utilizar esta opción en Android &lt; 5.0.</string>
@@ -439,8 +440,12 @@ hacia/de Móvil)</string>
   <string name="kbits_per_second">%.1f kbit/s</string>
   <string name="mbits_per_second">%.1f Mbit/s</string>
   <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="weakmd">&lt;p&gt;a partir de la versión 1.1 de OpenSSL, OpenSSL rechaza débiles firmas en certificados como el MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5 firmas son totalmente inseguras y no deberían utilizarse nunca más.&lt;/b&gt; las colisiones MD5 pueden crearse en &lt;a
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;pocas horas a un costo mínimo.&lt;/a&gt;.         Debe actualizar los certificados VPN tan pronto como sea posible.&lt;p&gt;de&lt;/p&gt;Desafortunadamente, distribuciones antiguas de easy-rsa incluyeron la opción de configuración \"default_md md5\". Si está utilizando una versión antigua de easy-rsa, actualizar a la &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;última versión&lt;/a&gt;) o cambiar de md5 a sha256 y regenerar sus certificados.&lt;/p&gt;&lt;p&gt;si desea utilizar certificados viejos y rotos use el configuración personalizada opción tls-cipher \"DEFAULT:@SECLEVEL=0\" debajo de configuración avanzada o como línea adicional en su configuración importada&lt;/p&gt;
+    </string>
   <string name="volume_byte">%.0f B</string>
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="channel_description_background">Ongoing statistics of the established OpenVPN connection</string>
 </resources>

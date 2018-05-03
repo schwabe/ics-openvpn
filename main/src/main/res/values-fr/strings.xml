@@ -202,6 +202,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="setting_loadtun">"Charger le module TUN"</string>
   <string name="importpkcs12fromconfig">"Importer PKCS12 de la configuration dans le gestionnaire de clés Android"</string>
   <string name="getproxy_error">Erreur d\'obtention des paramètres de proxy : %s</string>
+  <string name="using_proxy">"Utilisation du proxy %1$s %2$s"</string>
   <string name="use_system_proxy">"Utiliser le proxy système"</string>
   <string name="use_system_proxy_summary">"Utiliser la configuration générale du système pour que les proxy HTTP / HTTPS se connectent."</string>
   <string name="onbootrestartsummary">OpenVPN connectera le VPN spécifié si elle était active au démarrage du système. Veuillez lire l\'avertissement de connexion FAQ avant d\'utiliser cette option sur Android &lt; 5.0.</string>

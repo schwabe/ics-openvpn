@@ -477,6 +477,10 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="kbits_per_second">%.1f kbit/s</string>
   <string name="mbits_per_second">%.1f Mbit/s</string>
   <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="weakmd">&lt;p&gt;OpenSSL version 1.1より、OpenSSLはMD5のような脆弱な署名による証明書を拒否するようになりました。&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5による署名は完全に脆弱でいかなる場面でも使われるべきではありません。&lt;/b&gt; 衝突するMD5の生成は&lt;a
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;最短で数時間&lt;/a&gt;で可能です。できるだけ早くVPNの証明書を更新すべきです。&lt;/p&gt;&lt;p&gt;残念なことに、古いeasy-rsaディストリビューションの中には設定として\"default_md md5\"が入っています。 もし古いeasy-rsaを使用しているようなら、&lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;最新版&lt;/a&gt;)にアップデートするか、MD5からSHA256に変更して証明書を再生成してください。
+&lt;/p&gt;&lt;p&gt;もしどうしても古く劣化した証明書を使いたいのなら、高度な設定のカスタムオプションでtls-cipher \"DEFAULT:@SECLEVEL=0\"を追加してください。&lt;/p&gt;
+  </string>
   <string name="volume_byte">%.0f B</string>
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>

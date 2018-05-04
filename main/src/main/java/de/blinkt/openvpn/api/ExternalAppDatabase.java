@@ -19,6 +19,8 @@ import java.util.Set;
 
 import de.blinkt.openvpn.core.Preferences;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class ExternalAppDatabase {
 
 	Context mContext;
@@ -89,19 +91,17 @@ public class ExternalAppDatabase {
 	}
 
 
-	public boolean checkRemoteActionPermission(Activity a) {
-
-		String callingPackage = a.getCallingPackage();
-
+	public boolean checkRemoteActionPermission(Context c, String callingPackage) {
 		if (callingPackage == null)
 			callingPackage = ConfirmDialog.ANONYMOUS_PACKAGE;
 
 		if (isAllowed(callingPackage)) {
 			return true;
 		} else {
-			Intent confirmDialog = new Intent(a, ConfirmDialog.class);
+			Intent confirmDialog = new Intent(c, ConfirmDialog.class);
+			confirmDialog.addFlags(FLAG_ACTIVITY_NEW_TASK);
 			confirmDialog.putExtra(ConfirmDialog.EXTRA_PACKAGE_NAME, callingPackage);
-			a.startActivity(confirmDialog);
+			c.startActivity(confirmDialog);
 			return false;
 		}
 	}

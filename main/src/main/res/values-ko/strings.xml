@@ -98,10 +98,10 @@
   <string name="edit_vpn">VPN 설정 편집</string>
   <string name="remove_vpn_query">VPN 프로파일 \'%s\'을 삭제할까요?</string>
   <string name="tun_error_helpful">일부 커스텀 ICS 이미지에서는 /dev/tun에 대한 권한이 잘못되어 있거나 tun 모듈 자체가 누락될 수 있습니다. CM9 이미지는 일반 설정에 있는 소유권 고치기 옵션을 사용해 보십시오.</string>
-  <string name="tun_open_error">TUN 인터페이스를 열지 못했습니다</string>
+  <string name="tun_open_error">Tun 인터페이스를 열지 못했습니다</string>
   <string name="error">"오류: "</string>
   <string name="clear">지우기</string>
-  <string name="last_openvpn_tun_config">TUN 인터페이스 열기:</string>
+  <string name="last_openvpn_tun_config">Tun 인터페이스 열기:</string>
   <string name="local_ip_info">로컬 IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
   <string name="dns_server_info">DNS 서버: %1$s, 도메인: %2$s</string>
   <string name="routes_info_incl">경로: %1$s %2$s</string>
@@ -116,7 +116,7 @@
   <string name="send">보내기</string>
   <string name="ics_openvpn_log_file">ICS OpenVPN 로그 파일</string>
   <string name="copied_entry">클립보드로 로그 복사</string>
-  <string name="tap_mode">TAP 모드</string>
+  <string name="tap_mode">Tap 모드</string>
   <string name="faq_tap_mode">TAP 모드는 루트가 아닌 VPN API에서는 불가능합니다. 따라서 본 앱은 TAP 지원을 제공할 수 없습니다</string>
   <string name="tap_faq2">또? 농담인가요? 아니요. 정말로 TAP 모드는 지원이 불가능합니다. 계속해서 메일을 보내면서 요구하신다고 도움될 일이 아닙니다.</string>
   <string name="tap_faq3">세 번째로? 실제로는 송신 때 레이어2 정보를 추가하고 수신 때 레이어2 정보를 떼내는 TUN을 이용한 TAP 에뮬레이터를 제작하는 것이 가능합니다. 하지만 이것만이 아닌 ARP 그리고 어쩌면 DHCP 클라이언트까지도 구현해야 합니다. 본인은 이 같은 작업을 하는 분을 알고 있지 않습니다. 코딩을 시작하려고 하시는 분이 계시면 제게 연락해 주십시오.</string>
@@ -201,6 +201,7 @@
   <string name="setting_loadtun">TUN 모듈 로드하기</string>
   <string name="importpkcs12fromconfig">구성에 있는 PKCS12를 안드로이드 키 저장소로 가져오기</string>
   <string name="getproxy_error">프록시 설정 가져오기 오류: %s</string>
+  <string name="using_proxy">%1$s</string>
   <string name="use_system_proxy">시스템 프록시를 사용</string>
   <string name="use_system_proxy_summary">연결할 HTTP/HTTPS 프록시로 시스템 범위의 설정을 사용합니다.</string>
   <string name="onbootrestartsummary">OpenVPN이 시스템 부팅시에 활성화되면 지정된 VPN에 연결합니다. 안드로이드 5.0 이전 버전에 이 옵션을 사용하기 전에 연결 경고 FAQ를 읽어 보시기 바랍니다.</string>
@@ -214,7 +215,7 @@
   <string name="faq_duplicate_notification">안드로이드는 시스템의 메모리(램)가 부족한 경우, 현재 필요하지 않는 앱들과 서비스들을 활성 메모리에서 삭제합니다. 이 과정에서 진행중인 VPN 연결이 끊어집니다. 이렇게 되지 않기 위해서 OpenVPN 서비스는 더 높은 우선 순위로 실행됩니다. 더 높은 우선 순위로 실행되기 위해서는 앱이 알림을 표시해야 합니다. 열쇠 알림 아이콘은 이전 FAQ에서 설명된 대로 시스템에서 강요하는 것입니다. 이것은 더 높은 우선 순위로 실행되기 위한 앱 알림이 아닙니다.</string>
   <string name="no_vpn_profiles_defined">정의된 VPN 프로파일이 없습니다.</string>
   <string name="add_new_vpn_hint">이 &lt;img src=\"ic_menu_add\"/&gt; 아이콘을 사용하여 VPN을 추가하세요</string>
-  <string name="vpn_import_hint">이 &lt;img src=\"ic_menu_archive\"/&gt; 아이콘을 사용하여 귀하의 SD 카드에서 기존 (.ovpn 또는 .conf) 프로파일을 가져오세요.</string>
+  <string name="vpn_import_hint">이 &lt;img src=\"ic_menu_archive\"/&gt; 아이콘을 사용하여 귀하의 Sd 카드에서 기존 (.ovpn 또는 .conf) 프로파일을 가져오세요.</string>
   <string name="faq_hint">꼭 FAQ를 확인하세요. 빠른 시작 가이드가 있습니다.</string>
   <string name="faq_routing_title">라우팅/인터페이스 구성</string>
   <string name="faq_routing">라우팅 및 인터페이스 구성은 기존 ifconfig/route 명령을 통하지 않고 VPNService API를 사용하여 수행됩니다. 그 결과 다른 OS와 다른 라우팅 구성이 생깁니다.\nVPN 터널의 구성은 IP 주소와 이 인터페이스를 통해 라우팅되어야 하는 네트워크들로 이루어져 있습니다. 특히 피어 파트너 주소 또는 게이트웨이 주소가 필요하거나 요구되지 않습니다. VPN 서버에 이르는 특수 경로들(예컨대 redirect-gateway 사용시 추가되는 것)도 필요하지 않습니다. 따라서 앱은 구성을 가져올 때 이러한 설정을 무시합니다. 이 앱은 VPNService API를 사용하여 서버에 대한 연결이 VPN 터널을 통해 라우팅되지 않도록 합니다.\nVPNService API는 VPN을 통해 라우트하지 않아야 할 네트워크들을 지정하는 걸 허용하지 않습니다. 우회 방법으로서 앱이 터널을 통해 라우팅해서는 안 되는 네트워크들(예: route x.x.x.x y.y.y.y net_gateway)을 감지하고 다른 플랫폼의 동작을 모방하기 위해 이 경로들을 제외한 일련의 경로들을 계산합니다. 로그 창은 연결을 수립할 때 VPNService의 설정을 보여줍니다.\n무대 뒤에서: Android 4.4 이상은 정책 라우팅을 사용합니다. route/ifconfig를 사용해선 설치된 경로를 볼 수 없을 것입니다. 대신 ip rule, iptables -t mangle -L을 사용하십시오.</string>
@@ -468,4 +469,7 @@
   <string name="all_app_prompt">어떤 외부 앱이 %s를 제어하려고 합니다. 접근을 요청하는 앱을 정해 놓을 수 없습니다. 이 앱을 허용하면 모든 앱의 접근을 승인하게 됩니다.</string>
   <string name="openvpn3_nostatickeys">OpenVPN 3 C++ 구현은 고정 키를 지원하지 않습니다. 일반 설정에서 OpenVPN 2.x로 변경해 주세요.</string>
   <string name="openvpn3_pkcs12">OpenVPN 3 C++ 구현과 함께 PKCS12 파일을 직접 사용하는 것은 지원되지 않습니다. PKCS12 파일을 안드로이드 키 저장소로 가져 오거나 일반 설정에서 OpenVPN 2.x으로 변경하세요.</string>
+  <string name="proxy">대리</string>
+  <string name="Use_no_proxy">없음</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

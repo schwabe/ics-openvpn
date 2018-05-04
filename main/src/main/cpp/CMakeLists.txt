@@ -16,6 +16,7 @@ OPTION(ENABLE_TESTING ""  OFF)
 #add_subdirectory(lzo)
 include(tools.cmake)
 include(lzo.cmake)
+include(lz4.cmake)
 include(openssl.cmake)
 
 # Super hacky way to determine flavour
@@ -61,13 +62,14 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*n
     target_compile_definitions(ovpn3 PRIVATE
       -DHAVE_CONFIG_H
       -DHAVE_LZO
+      -DHAVE_LZ4
       -DASIO_STANDALONE
       -DUSE_ASIO
       -DUSE_MBEDTLS
       -DGIT_VERSION_STRING=\"${OPENVPN3_GIT}\"
       -DNO_ROUTE_EXCLUDE_EMULATION
       )
-    target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo)
+    target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo lz4)
 else()
     message ("Not budiling OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 endif()

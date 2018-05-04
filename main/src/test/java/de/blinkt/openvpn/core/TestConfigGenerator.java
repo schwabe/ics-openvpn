@@ -6,9 +6,7 @@
 package de.blinkt.openvpn.core;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.test.mock.MockContext;
 
 import junit.framework.Assert;
 
@@ -18,17 +16,10 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import java.io.File;
-
-import static de.blinkt.openvpn.VpnProfile.TYPE_USERPASS;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import de.blinkt.openvpn.VpnProfile;
 
 import static de.blinkt.openvpn.VpnProfile.AUTH_RETRY_NOINTERACT;
+import static de.blinkt.openvpn.VpnProfile.TYPE_USERPASS;
 
 /**
  * Created by arne on 14.03.18.
@@ -69,6 +60,9 @@ public class TestConfigGenerator {
         vp.mAuthRetry = AUTH_RETRY_NOINTERACT;
         String config = vp.getConfigFile(RuntimeEnvironment.application, false);
         Assert.assertTrue(config.contains("\nauth-retry nointeract\n"));
+        for (Connection connection: vp.mConnections)
+            Assert.assertTrue(connection.mProxyType == Connection.ProxyType.NONE);
 
     }
+
 }

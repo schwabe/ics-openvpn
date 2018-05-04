@@ -201,6 +201,7 @@
   <string name="setting_loadtun">Załaduj moduł tun</string>
   <string name="importpkcs12fromconfig">Importuj PKCS12 z konfiguracji do pęku kluczy Androida</string>
   <string name="getproxy_error">Błąd pobierania ustawień proxy: %s</string>
+  <string name="using_proxy">Korzystanie z serwera proxy %1$s %2$s</string>
   <string name="use_system_proxy">Użyj proxy systemowego</string>
   <string name="use_system_proxy_summary">Połącz używając systemowej konfiguracji proxy HTTP/HTTPS.</string>
   <string name="onbootrestartsummary">OpenVPN połączy się z wybranym VPN jeżeli będzie aktywny podczas startu systemu. Przeczytaj FAQ dotyczący połączeń przed zastosowaniem tej opcji na Androidzie &lt; 5.0.</string>

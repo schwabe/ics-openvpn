@@ -201,6 +201,7 @@
   <string name="setting_loadtun">Tun-Modul laden</string>
   <string name="importpkcs12fromconfig">In der Konfiguration angegebene PKCS12-Datei in den Android-Zertifikatsspeicher importieren</string>
   <string name="getproxy_error">Fehler beim Ermitteln der Proxy-Einstellungen: %s</string>
+  <string name="using_proxy">Verwende Proxy %1$s %2$s</string>
   <string name="use_system_proxy">System-Proxys verwenden</string>
   <string name="use_system_proxy_summary">Systemweite Einstellungen für HTTP- und HTTPS-Proxys beim Verbinden verwenden.</string>
   <string name="onbootrestartsummary">Beim Systemstart das angegebene VPN verbinden. Auf Geräten mit Android 5.0 und höher bitte vor der Verwendung dieser Option die FAQ zum Bestätigungsdialog lesen.</string>
@@ -461,4 +462,6 @@
   <string name="all_app_prompt">Eine andere App versucht, %s zu steuern. Die anforderne App kann nicht bestimmt werden. Wenn Sie diesen Zugriff zulassen, erhalten ALLE Apps Zugriff.</string>
   <string name="openvpn3_nostatickeys">Die OpenVPN 3 C ++ - Implementierung unterstützt keine statischen Schlüssel. Bitte wechseln Sie zu OpenVPN 2.x unter den allgemeinen Einstellungen.</string>
   <string name="openvpn3_pkcs12">Die Benutzung von PKCS12 Dateien mit der OpenVPN 3 C++ Implementierung wird nicht unterstützt. Bitte importieren Sie entweder die PKCS12 Datei in den Android Keystore oder nutzen Sie die Option OpenVPN 2.x in den allgemeinen Einstellungen auszuwählen.</string>
+  <string name="proxy">Proxy</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

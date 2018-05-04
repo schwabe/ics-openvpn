@@ -26,7 +26,7 @@ void Java_de_blinkt_openvpn_core_NativeUtils_jniclose(JNIEnv *env,jclass jo, jin
 
 
 //! Hack to get the current installed ABI of the libraries. See also https://github.com/schwabe/ics-openvpn/issues/391
-jstring Java_de_blinkt_openvpn_core_NativeUtils_getNativeAPI(JNIEnv *env, jclass jo)
+jstring Java_de_blinkt_openvpn_core_NativeUtils_getJNIAPI(JNIEnv *env, jclass jo)
 {
 
     return (*env)->NewStringUTF(env, TARGET_ARCH_ABI);

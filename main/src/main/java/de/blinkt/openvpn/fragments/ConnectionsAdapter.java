@@ -13,12 +13,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RadioGroup;
-import android.widget.SeekBar;
-import android.widget.Switch;
+import android.widget.*;
 
 import java.util.Arrays;
 
@@ -97,6 +92,10 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
                 break;
         }
 
+        cH.mProxyAuthCb.setChecked(connection.mUseProxyAuth);
+        cH.mProxyAuthUser.setText(connection.mProxyAuthUser);
+        cH.mProxyAuthPassword.setText(connection.mProxyAuthPassword);
+
         cH.mCustomOptionsLayout.setVisibility(connection.mUseCustomConfig ? View.VISIBLE : View.GONE);
         cH.mCustomOptionText.setText(connection.mCustomConfiguration);
 
@@ -109,10 +108,14 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
 
     private void setVisibilityProxyServer(ConnectionsHolder cH, Connection connection) {
         int visible = (connection.mProxyType == Connection.ProxyType.HTTP || connection.mProxyType == Connection.ProxyType.SOCKS5) ? View.VISIBLE : View.GONE;
+        int authVisible = (connection.mProxyType == Connection.ProxyType.HTTP) ? View.VISIBLE : View.GONE;
 
         cH.mProxyNameView.setVisibility(visible);
         cH.mProxyPortNumberView.setVisibility(visible);
         cH.mProxyNameLabel.setVisibility(visible);
+
+        cH.mProxyAuthLayout.setVisibility(authVisible);
+
     }
 
     private void removeRemote(int idx) {
@@ -185,6 +188,11 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         private final EditText mProxyNameView;
         private final EditText mProxyPortNumberView;
         private final View mProxyNameLabel;
+        private final View mProxyAuthLayout;
+        private final EditText mProxyAuthUser;
+        private final EditText mProxyAuthPassword;
+        private final CheckBox mProxyAuthCb;
+
         private Connection mConnection; // Set to null on update
 
 
@@ -206,6 +214,10 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             mProxyPortNumberView = card.findViewById(R.id.proxyport);
             mProxyNameLabel = card.findViewById(R.id.proxyserver_label);
 
+            mProxyAuthLayout = card.findViewById(R.id.proxyauthlayout);
+            mProxyAuthCb = card.findViewById(R.id.enable_proxy_auth);
+            mProxyAuthUser = card.findViewById(R.id.proxyuser);
+            mProxyAuthPassword = card.findViewById(R.id.proxypassword);
 
             mConnectionsAdapter = connectionsAdapter;
 
@@ -215,7 +227,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
 
 
         void addListeners() {
-            mRemoteSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            mRemoteSwitch.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
                 if (mConnection != null) {
                     mConnection.mEnabled = isChecked;
                     mConnectionsAdapter.displayWarningIfNoneEnabled();
@@ -243,6 +255,14 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
                         mConnection.mProxyType = Connection.ProxyType.ORBOT;
 
                     }
+                    setVisibilityProxyServer(this, mConnection);
+                }
+            });
+
+            mProxyAuthCb.setOnCheckedChangeListener((group, isChecked) ->
+            {
+                if (mConnection != null) {
+                    mConnection.mUseProxyAuth = isChecked;
                     setVisibilityProxyServer(this, mConnection);
                 }
             });
@@ -300,6 +320,33 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
                     }
                 }
             });
+
+            mCustomOptionCB.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (mConnection != null) {
+                    mConnection.mUseProxyAuth = isChecked;
+                }
+            });
+
+             mProxyAuthPassword.addTextChangedListener(new OnTextChangedWatcher() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (mConnection != null) {
+                        mConnection.mProxyAuthPassword = s.toString();
+                    }
+                }
+            });
+
+
+            mProxyAuthUser.addTextChangedListener(new OnTextChangedWatcher() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (mConnection != null) {
+                        mConnection.mProxyAuthUser = s.toString();
+                    }
+                }
+            });
+
+
 
             mCustomOptionText.addTextChangedListener(new OnTextChangedWatcher() {
                 @Override

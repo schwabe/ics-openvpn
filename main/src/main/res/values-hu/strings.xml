@@ -201,6 +201,7 @@
   <string name="setting_loadtun">Tun modul betöltése</string>
   <string name="importpkcs12fromconfig">PKCS12 konfiguráció importálása az Android Keystore-ba</string>
   <string name="getproxy_error">Hiba a proxy beállítások lekérésekor: %s</string>
+  <string name="using_proxy">%1$s %2$s proxy használata</string>
   <string name="use_system_proxy">Rendszerproxy használata</string>
   <string name="use_system_proxy_summary">Rendszerszintű konfiguráció használata a HTTP/HTTPS proxy csatlakozáshoz.</string>
   <string name="onbootrestartsummary">Az OpenVPN csatlakozni fog a VPN-hez, ha az a rendszer indulásakor aktív. Kérem, olvassa el a csatlakozás figyelmeztető GYIK-et mielőtt ezt az opciót Android &lt; 5.0-n használná.</string>
@@ -473,4 +474,7 @@
   <string name="openvpn3_pkcs12">PKCS12-fájlok közvetlen használata nem támogatott az OpenVPN 3 C++ implementációval.
         Kérem, importálja az Android kulcstárba a pkcs12 fájlokat, vagy váltson OpenVPN 2.x-re az általános beállításokban.
     </string>
+  <string name="proxy">Proxy</string>
+  <string name="Use_no_proxy">Egyik sem</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

@@ -203,6 +203,7 @@
   <string name="setting_loadtun">加载tun模块</string>
   <string name="importpkcs12fromconfig">将PKCS12从配置导入到Android Keystore</string>
   <string name="getproxy_error">获取代理设置时出错：%s</string>
+  <string name="using_proxy">Using proxy %1$s %2$s</string>
   <string name="use_system_proxy">使用系统代理</string>
   <string name="use_system_proxy_summary">使用系统设置连接 HTTP/HTTPS 代理服务器。</string>
   <string name="onbootrestartsummary">如果在系统启动时OpenVPN处于活动状态，那么它会连接指定的VPN。在Android 5.0上使用这个选项前，请阅读连接警告的常见问题。</string>
@@ -459,6 +460,12 @@
   <string name="channel_name_background">连接统计</string>
   <string name="channel_description_background">正在建立的OpenVPN连接的统计数据</string>
   <string name="channel_name_status">连接状态改变</string>
+  <string name="channel_description_status">OpenVPN连接的状态更改（连接，身份验证...）</string>
+  <string name="weakmd_title">证书签名中的弱 (MD5) 哈希 (SSL_CTX_use_certificate md 太弱)</string>
   <string name="title_activity_open_sslspeed">OpenSSL 速度测试</string>
+  <string name="openssl_cipher_name">OpenSSL密码名称</string>
+  <string name="osslspeedtest">OpenSSL Crypto速度测试</string>
+  <string name="openssl_error">OpenSSL 返回错误</string>
   <string name="running_test">正在运行测试&#8230;</string>
+  <string name="test_algoirhtms">测试选定的算法</string>
 </resources>

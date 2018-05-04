@@ -201,6 +201,7 @@
   <string name="setting_loadtun">Tun modülünü yükle</string>
   <string name="importpkcs12fromconfig">PKCS12 yapılandırmasını Android anahtar deposuna alma</string>
   <string name="getproxy_error">Vekil sunucu ayarları alınırken hata oluştu: %s</string>
+  <string name="using_proxy">%1$s %2$s Vekil Sunucusu kullanılıyor</string>
   <string name="use_system_proxy">Sistem vekil sunucusunu kullan</string>
   <string name="use_system_proxy_summary">Bağlanmak için sistem çapındaki HTTP/HTTPS vekil sunucularını kullan.</string>
   <string name="onbootrestartsummary">Sistem önyüklemesi üzerinde etkinse, OpenVPN belirtilen VPN bağlantısına bağlanır. Lütfen bu seçeneği Android &lt; 5.0 üzerinde kullanmadan önce bağlantı uyarısı için SSS bölümünü okuyun.</string>
@@ -461,4 +462,7 @@
   <string name="openvpn3_pkcs12">PKCS12 dosyalarını doğrudan OpenVPN 3 C++ uygulamasıyla kullanmak desteklenmiyor.
         Lütfen, pkcs12 dosyalarını Android anahtar deposuna aktarın veya genel ayarlar altında OpenVPN 2.x\'e geçin.
     </string>
+  <string name="proxy">Vekil Sunucu</string>
+  <string name="Use_no_proxy">Hiçbiri</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

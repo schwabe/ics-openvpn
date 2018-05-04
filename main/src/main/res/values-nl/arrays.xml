@@ -20,10 +20,10 @@
     <item translatable="false">0</item>
     <item translatable="false">1</item>
     <item>Niet-gespecificeerd</item>
-    <item>Encryptie (tls-crypt)</item>
+    <item>Versleuteling (tls-crypt)</item>
   </string-array>
   <string-array name="auth_retry_type">
-    <item>Verbinding verbreken, wachtwoord vergeten</item>
+    <item>Verbinding verbreken, vergeet wachtwoord</item>
     <item>Verbinding verbreken, wachtwoord onthouden</item>
     <item>Negeer, probeer opnieuw</item>
   </string-array>

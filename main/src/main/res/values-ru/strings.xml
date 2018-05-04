@@ -201,6 +201,7 @@
   <string name="setting_loadtun">Загрузить tun-модуль</string>
   <string name="importpkcs12fromconfig">Импорт PKCS12 из хранилища ключей Android</string>
   <string name="getproxy_error">Ошибка при получении параметров прокси-сервера: %s</string>
+  <string name="using_proxy">Используется прокси-сервер %1$s %2$s</string>
   <string name="use_system_proxy">Использовать прокси-сервер системы</string>
   <string name="use_system_proxy_summary">Использовать системную конфигурацию прокси HTTP/HTTPS для соединения.</string>
   <string name="onbootrestartsummary">OpenVPN будет подключаться к указанному VPN, если он был активен при загрузке системы. Пожалуйста, прочитайте FAQ о предупреждении при подключении перед тем, как использовать эту опцию на Android &lt; 5.0.</string>
@@ -458,4 +459,7 @@
   <string name="all_app_prompt">Внешнее приложение пытается контролировать %s. Приложение, запрашивающее доступ, не может быть определено. Разрешение этого приложения предоставляет доступ всем приложениям.</string>
   <string name="openvpn3_nostatickeys">Реализация OpenVPN 3 C ++ не поддерживает статические ключи. Перейдите в OpenVPN 2.x под общие настройки.</string>
   <string name="openvpn3_pkcs12">Использование файлов PKCS12 напрямую с помощью OpenVPN 3 C ++ не поддерживается. Импортируйте файлы pkcs12 в хранилище ключей Android или замените OpenVPN 2.x на общие настройки.</string>
+  <string name="proxy">Прокси</string>
+  <string name="Use_no_proxy">Ничего</string>
+  <string name="tor_orbot">Тор (Орбот)</string>
 </resources>

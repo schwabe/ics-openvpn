@@ -201,6 +201,7 @@
   <string name="setting_loadtun">Laad tun module</string>
   <string name="importpkcs12fromconfig">Importeer PKCS12 van configuratie naar Android Keystore</string>
   <string name="getproxy_error">Fout bij het verkrijgen van proxy-instellingen: %s</string>
+  <string name="using_proxy">Proxy %1$s %2$s is in gebruik</string>
   <string name="use_system_proxy">Gebruik systeemproxy</string>
   <string name="use_system_proxy_summary">Gebruik de systeemconfiguratie voor HTTP/HTTPS proxies om te verbinden.</string>
   <string name="onbootrestartsummary">OpenVPN verbindt met de opgegeven VPN als deze actief was bij het opstarten van het systeem. Lees de FAQ over verbindingswaarschuwingen voordat u deze optie gebruikt op Android &lt; 5.0.</string>
@@ -463,4 +464,7 @@
   <string name="all_app_prompt">Een externe app probeert %s te besturen. De app die om toegang vraagt, kan niet worden vastgesteld. Als u deze app toestaat, krijgen ALLE apps toegang.</string>
   <string name="openvpn3_nostatickeys">De OpenVPN 3 C++ -implementatie ondersteunt geen statische sleutels. Verander naar OpenVPN 2.x onder algemene instellingen.</string>
   <string name="openvpn3_pkcs12">PKCS12-bestanden rechtstreeks gebruiken met OpenVPN 3 C++ -implementatie wordt niet ondersteund. Importeer de pkcs12-bestanden in de Android keystore of verander naar OpenVPN 2.x onder algemene instellingen.</string>
+  <string name="proxy">Proxy</string>
+  <string name="Use_no_proxy">Geen</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

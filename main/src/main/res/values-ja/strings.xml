@@ -216,6 +216,7 @@ Androidはあなた自身の安全性のために、これらを迂回できな�
   <string name="setting_loadtun">TUNモジュールをロード</string>
   <string name="importpkcs12fromconfig">PKCS12の設定をAndroidのキーストアにインポートします</string>
   <string name="getproxy_error">プロキシ設定でエラー： %s</string>
+  <string name="using_proxy">プロキシを使用します %1$s %2$s</string>
   <string name="use_system_proxy">システムのプロキシ設定を使用する</string>
   <string name="use_system_proxy_summary">接続にシステム全体の構成の HTTP/HTTPS プロキシを使用します。</string>
   <string name="onbootrestartsummary">有効にすると、OpenVPNはシステムの起動時に指定されたVPNに接続します。Android 5.0より前のバージョンでこのオプションを使用する場合は、接続時の警告に関する「よくある質問」を読んでください。</string>
@@ -476,12 +477,29 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
   <string name="kbits_per_second">%.1f kbit/s</string>
   <string name="mbits_per_second">%.1f Mbit/s</string>
   <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="weakmd">&lt;p&gt;OpenSSL version 1.1より、OpenSSLはMD5のような脆弱な署名による証明書を拒否するようになりました。&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5による署名は完全に脆弱でいかなる場面でも使われるべきではありません。&lt;/b&gt; 衝突するMD5の生成は&lt;a
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;最短で数時間&lt;/a&gt;で可能です。できるだけ早くVPNの証明書を更新すべきです。&lt;/p&gt;&lt;p&gt;残念なことに、古いeasy-rsaディストリビューションの中には設定として\"default_md md5\"が入っています。 もし古いeasy-rsaを使用しているようなら、&lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;最新版&lt;/a&gt;)にアップデートするか、MD5からSHA256に変更して証明書を再生成してください。
+&lt;/p&gt;&lt;p&gt;もしどうしても古く劣化した証明書を使いたいのなら、高度な設定のカスタムオプションでtls-cipher \"DEFAULT:@SECLEVEL=0\"を追加してください。&lt;/p&gt;
+  </string>
   <string name="volume_byte">%.0f B</string>
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="channel_name_background">Connection statistics</string>
+  <string name="channel_description_background">確立されたOpenVPN接続の継続的な統計</string>
+  <string name="channel_name_status">接続状態の変化</string>
+  <string name="channel_description_status">OpenVPN接続の状態変化(接続、認証等)</string>
+  <string name="weakmd_title">証明書の署名は弱いMD5です (SSL_CTX_use_certificate md は弱すぎます)</string>
   <string name="title_activity_open_sslspeed">OpenSSLスピードテスト</string>
+  <string name="openssl_cipher_name">OpenSSLの暗号名</string>
+  <string name="osslspeedtest">OpenSSLの暗号化スピードテスト</string>
   <string name="openssl_error">OpenSSLがエラーを返しました</string>
   <string name="running_test">テストを実行中...</string>
+  <string name="test_algoirhtms">選択したアルゴリズムをテストする</string>
   <string name="all_app_prompt">外部アプリが%sを制御しようとしています。アクセスをリクエストしているアプリは特定できません。このアプリを許可すると、すべてのアプリがアクセス許可されます。</string>
+  <string name="openvpn3_nostatickeys">OpenVPN 3 C ++実装は静的キーをサポートしていません。設定でOpenVPN 2.xに変更してください。</string>
+  <string name="openvpn3_pkcs12">OpenVPN 3 C++実装ではPKCS12ファイルを直接使用することはサポートされていません。 PKCS12ファイルをAndroidキーストアにインポートするか、設定でOpenVPN 2.xに変更してください。</string>
+  <string name="proxy">プロキシ</string>
+  <string name="Use_no_proxy">使用しない</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

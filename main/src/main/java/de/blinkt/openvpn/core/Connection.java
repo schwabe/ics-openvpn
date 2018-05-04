@@ -23,6 +23,10 @@ public class Connection implements Serializable, Cloneable {
     public String mProxyName = "proxy.example.com";
     public String mProxyPort = "8080";
 
+    public boolean mUseProxyAuth;
+    public String mProxyAuthUser = null;
+    public String mProxyAuthPassword = null;
+
     public enum ProxyType {
         NONE,
         HTTP,
@@ -33,7 +37,7 @@ public class Connection implements Serializable, Cloneable {
     private static final long serialVersionUID = 92031902903829089L;
 
 
-    public String getConnectionBlock() {
+    public String getConnectionBlock(boolean isOpenVPN3) {
         String cfg = "";
 
         // Server Address
@@ -49,11 +53,20 @@ public class Connection implements Serializable, Cloneable {
         if (mConnectTimeout != 0)
             cfg += String.format(Locale.US, " connect-timeout  %d\n", mConnectTimeout);
 
+        // OpenVPN 2.x manages proxy connection via management interface
+        if (isOpenVPN3 && mProxyType == ProxyType.HTTP)
+        {
+            cfg+=String.format(Locale.US,"http-proxy %s %s\n", mProxyName, mProxyPort);
+            if (mUseProxyAuth)
+                cfg+=String.format(Locale.US, "<http-proxy-user-pass>\n%s\n%s\n</http-proxy-user-pass>\n", mProxyAuthUser, mProxyAuthPassword);
+        }
 
         if (!TextUtils.isEmpty(mCustomConfiguration) && mUseCustomConfig) {
             cfg += mCustomConfiguration;
             cfg += "\n";
         }
+
+
         return cfg;
     }
 

@@ -8,14 +8,13 @@
   <!--  Keep the order the same as the TYPE_ constants in VPNProfile -->
   <string-array name="vpn_types">
     <item>Sertifikat</item>
-    <item>Berkas PKCS1
-20</item>
+    <item>PKCS12 File</item>
     <item>Android Certificate</item>
     <item>Nama Pengguna\Sandi</item>
     <item>Kunci Tetap</item>
     <item>Pengguna/Kata Sandi + Sertifikat</item>
     <item>Pengguna/Kata Sandi + PKCS12 </item>
-    <item>Pengguna/Kata Sandi + Danian</item>
+    <item>User/PW + Android</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item translatable="false">0</item>
@@ -24,7 +23,7 @@
     <item>Encryption (tls-crypt)</item>
   </string-array>
   <string-array name="auth_retry_type">
-    <item>1234</item>
+    <item>Disconnect, forget password</item>
     <item>Putus, simpan kata sandi</item>
     <item>Abaikan, coba lagi</item>
   </string-array>

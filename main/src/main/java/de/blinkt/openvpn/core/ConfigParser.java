@@ -332,6 +332,7 @@ public class ConfigParser {
             "http-proxy-option",
             "socks-proxy",
             "socks-proxy-retry",
+            "http-proxy-user-pass",
             "explicit-exit-notify",
     };
 
@@ -810,7 +811,9 @@ public class ConfigParser {
                 conn.mProxyPort = proxy.get(2);
         }
 
-
+        Vector<String> httpproxyauthhttp = getOption("http-proxy-user-pass", 1, 1);
+        if (httpproxyauthhttp!=null)
+            useEmbbedHttpAuth(conn, httpproxyauthhttp.get(1));
 
 
         // Parse remote config
@@ -900,6 +903,16 @@ public class ConfigParser {
         }
     }
 
+    static public void useEmbbedHttpAuth(Connection c, String inlinedata) {
+        String data = VpnProfile.getEmbeddedContent(inlinedata);
+        String[] parts = data.split("\n");
+        if (parts.length >= 2) {
+            c.mProxyAuthUser = parts[0];
+            c.mProxyAuthPassword = parts[1];
+            c.mUseProxyAuth = true;
+        }
+    }
+
     private void checkIgnoreAndInvalidOptions(VpnProfile np) throws ConfigParseError {
         for (String option : unsupportedOptions)
             if (options.containsKey(option))
@@ -950,7 +963,7 @@ public class ConfigParser {
             if (!ignoreThisOption(optionsline)) {
                 // Check if option had been inlined and inline again
                 if (optionsline.size() == 2 &&
-                        ("extra-certs".equals(optionsline.get(0)) || "http-proxy-user-pass".equals(optionsline.get(0)))) {
+                        "extra-certs".equals(optionsline.get(0))) {
                     custom += VpnProfile.insertFileData(optionsline.get(0), optionsline.get(1));
                 } else {
                     for (String arg : optionsline)

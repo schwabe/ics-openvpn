@@ -26,11 +26,13 @@ public class ICSOpenVPNApplication extends Application {
 
     @Override
     public void onCreate() {
+        if("robolectric".equals(Build.FINGERPRINT))
+            return;
+
         super.onCreate();
         PRNGFixes.apply();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-
             createNotificationChannels();
         mStatus = new StatusListener();
         mStatus.init(getApplicationContext());

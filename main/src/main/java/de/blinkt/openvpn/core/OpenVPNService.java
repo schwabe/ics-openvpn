@@ -113,6 +113,12 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             OpenVPNService.this.addAllowedExternalApp(packagename);
         }
 
+        @Override
+        public boolean isAllowedExternalApp(String packagename) throws RemoteException {
+            return OpenVPNService.this.isAllowedExternalApp(packagename);
+
+        }
+
 
     };
     private String mLastTunCfg;
@@ -173,6 +179,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         ExternalAppDatabase extapps = new ExternalAppDatabase(OpenVPNService.this);
         extapps.addApp(packagename);
     }
+
+    @Override
+    public boolean isAllowedExternalApp(String packagename) throws RemoteException {
+        ExternalAppDatabase extapps = new ExternalAppDatabase(OpenVPNService.this);
+        return extapps.checkRemoteActionPermission(this, packagename);
+    }
+
 
     @Override
     public IBinder onBind(Intent intent) {

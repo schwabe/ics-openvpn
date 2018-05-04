@@ -362,7 +362,7 @@ public class VpnProfile implements Serializable, Cloneable {
         boolean canUsePlainRemotes = true;
 
         if (mConnections.length == 1) {
-            cfg += mConnections[0].getConnectionBlock();
+            cfg += mConnections[0].getConnectionBlock(configForOvpn3);
         } else {
             for (Connection conn : mConnections) {
                 canUsePlainRemotes = canUsePlainRemotes && conn.isOnlyRemote();
@@ -374,7 +374,7 @@ public class VpnProfile implements Serializable, Cloneable {
             if (canUsePlainRemotes) {
                 for (Connection conn : mConnections) {
                     if (conn.mEnabled) {
-                        cfg += conn.getConnectionBlock();
+                        cfg += conn.getConnectionBlock(configForOvpn3);
                     }
                 }
             }
@@ -604,7 +604,7 @@ public class VpnProfile implements Serializable, Cloneable {
             for (Connection conn : mConnections) {
                 if (conn.mEnabled) {
                     cfg += "<connection>\n";
-                    cfg += conn.getConnectionBlock();
+                    cfg += conn.getConnectionBlock(configForOvpn3);
                     cfg += "</connection>\n";
                 }
             }
@@ -912,8 +912,13 @@ public class VpnProfile implements Serializable, Cloneable {
 
     }
 
+    public int checkProfile(Context c)
+    {
+        return checkProfile(c, doUseOpenVPN3(c));
+    }
+
     //! Return an error if something is wrong
-    public int checkProfile(Context context) {
+    public int checkProfile(Context context, boolean useOpenVPN3) {
         if (mAuthenticationType == TYPE_KEYSTORE || mAuthenticationType == TYPE_USERPASS_KEYSTORE) {
             if (mAlias == null)
                 return R.string.no_keystore_cert_selected;
@@ -951,21 +956,32 @@ public class VpnProfile implements Serializable, Cloneable {
 
 
         boolean noRemoteEnabled = true;
-        for (Connection c : mConnections)
+        for (Connection c : mConnections) {
             if (c.mEnabled)
                 noRemoteEnabled = false;
 
+        }
         if (noRemoteEnabled)
             return R.string.remote_no_server_selected;
 
-        if (doUseOpenVPN3(context)) {
+        if (useOpenVPN3) {
             if (mAuthenticationType == TYPE_STATICKEYS) {
                 return R.string.openvpn3_nostatickeys;
             }
             if (mAuthenticationType == TYPE_PKCS12 || mAuthenticationType == TYPE_USERPASS_PKCS12) {
                 return R.string.openvpn3_pkcs12;
             }
+            for (Connection conn : mConnections) {
+                if (conn.mProxyType == Connection.ProxyType.ORBOT || conn.mProxyType == Connection.ProxyType.SOCKS5)
+                    return R.string.openvpn3_socksproxy;
+            }
         }
+        for (Connection c: mConnections) {
+            if (c.mProxyType == Connection.ProxyType.ORBOT)
+                if (!OrbotHelper.checkTorReceier(context))
+                    return R.string.no_orbotfound;
+        }
+
 
         // Everything okay
         return R.string.no_error_found;

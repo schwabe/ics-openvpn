@@ -16,7 +16,15 @@ public class NativeUtils {
 
     static native void jniclose(int fdint);
 
-    public static native String getNativeAPI();
+    public static String getNativeAPI()
+    {
+        if (isRoboUnitTest())
+            return "ROBO";
+        else
+            return getJNIAPI();
+    }
+
+    private static native String getJNIAPI();
 
 
     public final static int[] openSSLlengths = {
@@ -26,8 +34,14 @@ public class NativeUtils {
     public static native double[] getOpenSSLSpeed(String algorithm, int testnum);
 
     static {
-        System.loadLibrary("opvpnutil");
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN)
-            System.loadLibrary("jbcrypto");
+        if (!isRoboUnitTest()) {
+            System.loadLibrary("opvpnutil");
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN)
+                System.loadLibrary("jbcrypto");
+        }
+    }
+
+    public static boolean isRoboUnitTest() {
+        return "robolectric".equals(Build.FINGERPRINT);
     }
 }

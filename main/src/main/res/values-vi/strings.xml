@@ -201,6 +201,7 @@
   <string name="setting_loadtun">Tải tun module</string>
   <string name="importpkcs12fromconfig">Nhập PKCS12 từ cấu hình vào Khóa lưu trữ Android</string>
   <string name="getproxy_error">Lỗi nhận cấu hình proxy: %s</string>
+  <string name="using_proxy">ใช้พร็อกซี% 1 $ s% 2 $ s</string>
   <string name="use_system_proxy">Sử dụng proxy hệ thống</string>
   <string name="use_system_proxy_summary">Sử dụng các cấu hình hệ thống rộng cho HTTP/HTTPS proxy để kết nối.</string>
   <string name="onbootrestartsummary">OpenVPN sẽ kết nối VPN xác định nếu nó đã hoạt động trên hệ thống khởi động. Xin vui lòng đọc hướng dẫn cảnh báo kết nối trước khi sử dụng tùy chọn này trên Android &lt; 5.0.</string>

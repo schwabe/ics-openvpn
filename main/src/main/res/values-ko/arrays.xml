@@ -10,8 +10,8 @@
     <item>인증서</item>
     <item>PKCS12 파일</item>
     <item>안드로이드 인증서</item>
-    <item>계정/암호</item>
-    <item>고정키</item>
+    <item>계정/암호1</item>
+    <item>고정키1</item>
     <item>계정/암호 + 인증서</item>
     <item>계정/암호 + PKCS12 </item>
     <item>계정/암호 + 안드로이드</item>
@@ -19,11 +19,11 @@
   <string-array name="tls_directions_entries">
     <item translatable="false">0</item>
     <item translatable="false">1</item>
-    <item>미지정</item>
-    <item>암호화 (--tls-crypt)</item>
+    <item>미지정1</item>
+    <item>암호화 (--tls-crypt) 1</item>
   </string-array>
   <string-array name="auth_retry_type">
-    <item>연결 해제, 암호 잊기</item>
+    <item>연결 해제, 암호 잊기1</item>
     <item>연결 해제, 암호 유지</item>
     <item>무시하기, 재시도</item>
   </string-array>

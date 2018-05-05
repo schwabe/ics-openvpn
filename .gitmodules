@@ -9,7 +9,7 @@
 	url = ../../schwabe/breakpad.git
 [submodule "main/src/main/cpp/mbedtls"]
 	path = main/src/main/cpp/mbedtls
-	url = ../../schwabe/polarssl.git
+	url = ../../ARMmbed/mbedtls.git
 [submodule "main/src/main/cpp/openvpn3"]
 	path = main/src/main/cpp/openvpn3
 	url = ../../schwabe/openvpn3.git

@@ -480,7 +480,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
     private boolean startImportConfigFilePicker() {
         boolean startOldFileDialog = true;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !Utils.alwaysUseOldFileChooser(getActivity() ))
             startOldFileDialog = !startFilePicker();
 
         if (startOldFileDialog)

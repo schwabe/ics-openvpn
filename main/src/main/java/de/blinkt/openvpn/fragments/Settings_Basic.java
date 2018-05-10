@@ -145,6 +145,7 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 		addFileSelectLayout(mpkcs12, Utils.FileType.PKCS12);
 		addFileSelectLayout(mCrlFile, Utils.FileType.CRL_FILE);
 		mCaCert.setShowClear();
+		mCrlFile.setShowClear();
 
 		mType.setOnItemSelectedListener(this);
 		mAuthRetry.setOnItemSelectedListener(this);

@@ -64,6 +64,12 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
             devHacks.removePreference(cm9hack);
         }
 
+        CheckBoxPreference useInternalFS = (CheckBoxPreference) findPreference("useInternalFileSelector");
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
+		{
+			devHacks.removePreference(useInternalFS);
+		}
+
 		mExtapp = new ExternalAppDatabase(getActivity());
 		Preference clearapi = findPreference("clearapi");
 		clearapi.setOnPreferenceClickListener(this);

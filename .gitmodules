@@ -4,9 +4,6 @@
 [submodule "main/openssl"]
 	path = main/src/main/cpp/openssl
 	url = ../../schwabe/platform_external_openssl.git
-[submodule "main/breakpad"]
-	path = main/breakpad
-	url = ../../schwabe/breakpad.git
 [submodule "main/src/main/cpp/mbedtls"]
 	path = main/src/main/cpp/mbedtls
 	url = ../../ARMmbed/mbedtls.git

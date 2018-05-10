@@ -68,6 +68,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*n
       -DUSE_MBEDTLS
       -DGIT_VERSION_STRING=\"${OPENVPN3_GIT}\"
       -DNO_ROUTE_EXCLUDE_EMULATION
+      -DOPENVPN_SHOW_SESSION_TOKEN
       )
     target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo lz4)
 else()

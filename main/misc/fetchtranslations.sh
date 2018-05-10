@@ -15,7 +15,7 @@ wget -q https://crowdin.com/download/project/ics-openvpn.zip
 # Chinese language require zh-CN and zh-TW
 
 typeset -A langhash
-langhash=(zh-CN zh-rCN zh-TW zh-rTW id-ID in ca-ES ca cs-CZ cs et-EE et ja-JP ja ko-KR ko sv-SE sv uk-UA uk vi-VN vi sl-SI sl da-DK da)
+langhash=(zh-CN zh-rCN zh-TW zh-rTW id-ID in ca-ES ca cs-CZ cs et-EE et ja-JP ja ko-KR ko sv-SE sv uk-UA uk vi-VN vi sl-SI sl da-DK da be-BY be)
 
 langtoinclude="de es fr hu it no nl pl pt ro ru tr"
 

@@ -287,57 +287,57 @@ public class VpnProfile implements Serializable, Cloneable {
     public String getConfigFile(Context context, boolean configForOvpn3) {
 
         File cacheDir = context.getCacheDir();
-        String cfg = "";
+        StringBuilder cfg = new StringBuilder();
 
         if (!configForOvpn3) {
             // Enable management interface
-            cfg += "# Config for OpenVPN 2.x\n";
-            cfg += "# Enables connection to GUI\n";
-            cfg += "management ";
+            cfg.append("# Config for OpenVPN 2.x\n");
+            cfg.append("# Enables connection to GUI\n");
+            cfg.append("management ");
 
-            cfg += cacheDir.getAbsolutePath() + "/" + "mgmtsocket";
-            cfg += " unix\n";
-            cfg += "management-client\n";
+            cfg.append(cacheDir.getAbsolutePath()).append("/").append("mgmtsocket");
+            cfg.append(" unix\n");
+            cfg.append("management-client\n");
             // Not needed, see updated man page in 2.3
             //cfg += "management-signal\n";
-            cfg += "management-query-passwords\n";
-            cfg += "management-hold\n\n";
+            cfg.append("management-query-passwords\n");
+            cfg.append("management-hold\n\n");
 
-            cfg += String.format("setenv IV_GUI_VER %s \n", openVpnEscape(getVersionEnvString(context)));
+            cfg.append(String.format("setenv IV_GUI_VER %s \n", openVpnEscape(getVersionEnvString(context))));
             String versionString = getPlatformVersionEnvString();
-            cfg += String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString));
+            cfg.append(String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString)));
         } else {
-            cfg += "# Config for OpenVPN 3 C++\n";
+            cfg.append("# Config for OpenVPN 3 C++\n");
         }
 
 
-        cfg += "machine-readable-output\n";
+        cfg.append("machine-readable-output\n");
         if (!mIsOpenVPN22)
-            cfg += "allow-recursive-routing\n";
+            cfg.append("allow-recursive-routing\n");
 
         // Users are confused by warnings that are misleading...
-        cfg += "ifconfig-nowarn\n";
+        cfg.append("ifconfig-nowarn\n");
 
 
         boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
 
         if (useTLSClient && mUsePull)
-            cfg += "client\n";
+            cfg.append("client\n");
         else if (mUsePull)
-            cfg += "pull\n";
+            cfg.append("pull\n");
         else if (useTLSClient)
-            cfg += "tls-client\n";
+            cfg.append("tls-client\n");
 
 
         //cfg += "verb " + mVerb + "\n";
-        cfg += "verb " + MAXLOGLEVEL + "\n";
+        cfg.append("verb " + MAXLOGLEVEL + "\n");
 
         if (mConnectRetryMax == null) {
             mConnectRetryMax = "-1";
         }
 
         if (!mConnectRetryMax.equals("-1"))
-            cfg += "connect-retry-max " + mConnectRetryMax + "\n";
+            cfg.append("connect-retry-max ").append(mConnectRetryMax).append("\n");
 
         if (TextUtils.isEmpty(mConnectRetry))
             mConnectRetry = "2";
@@ -347,34 +347,34 @@ public class VpnProfile implements Serializable, Cloneable {
 
 
         if (!mIsOpenVPN22)
-            cfg += "connect-retry " + mConnectRetry + " " + mConnectRetryMaxTime + "\n";
+            cfg.append("connect-retry ").append(mConnectRetry).append(" ").append(mConnectRetryMaxTime).append("\n");
         else if (mIsOpenVPN22 && !mUseUdp)
-            cfg += "connect-retry " + mConnectRetry + "\n";
+            cfg.append("connect-retry ").append(mConnectRetry).append("\n");
 
 
-        cfg += "resolv-retry 60\n";
+        cfg.append("resolv-retry 60\n");
 
 
         // We cannot use anything else than tun
-        cfg += "dev tun\n";
+        cfg.append("dev tun\n");
 
 
         boolean canUsePlainRemotes = true;
 
         if (mConnections.length == 1) {
-            cfg += mConnections[0].getConnectionBlock(configForOvpn3);
+            cfg.append(mConnections[0].getConnectionBlock(configForOvpn3));
         } else {
             for (Connection conn : mConnections) {
                 canUsePlainRemotes = canUsePlainRemotes && conn.isOnlyRemote();
             }
 
             if (mRemoteRandom)
-                cfg += "remote-random\n";
+                cfg.append("remote-random\n");
 
             if (canUsePlainRemotes) {
                 for (Connection conn : mConnections) {
                     if (conn.mEnabled) {
-                        cfg += conn.getConnectionBlock(configForOvpn3);
+                        cfg.append(conn.getConnectionBlock(configForOvpn3));
                     }
                 }
             }
@@ -383,95 +383,95 @@ public class VpnProfile implements Serializable, Cloneable {
 
         switch (mAuthenticationType) {
             case VpnProfile.TYPE_USERPASS_CERTIFICATES:
-                cfg += "auth-user-pass\n";
+                cfg.append("auth-user-pass\n");
             case VpnProfile.TYPE_CERTIFICATES:
                 // Ca
-                cfg += insertFileData("ca", mCaFilename);
+                cfg.append(insertFileData("ca", mCaFilename));
 
                 // Client Cert + Key
-                cfg += insertFileData("key", mClientKeyFilename);
-                cfg += insertFileData("cert", mClientCertFilename);
+                cfg.append(insertFileData("key", mClientKeyFilename));
+                cfg.append(insertFileData("cert", mClientCertFilename));
 
                 break;
             case VpnProfile.TYPE_USERPASS_PKCS12:
-                cfg += "auth-user-pass\n";
+                cfg.append("auth-user-pass\n");
             case VpnProfile.TYPE_PKCS12:
-                cfg += insertFileData("pkcs12", mPKCS12Filename);
+                cfg.append(insertFileData("pkcs12", mPKCS12Filename));
                 break;
 
             case VpnProfile.TYPE_USERPASS_KEYSTORE:
-                cfg += "auth-user-pass\n";
+                cfg.append("auth-user-pass\n");
             case VpnProfile.TYPE_KEYSTORE:
                 if (!configForOvpn3) {
                     String[] ks = getKeyStoreCertificates(context);
-                    cfg += "### From Keystore ####\n";
+                    cfg.append("### From Keystore ####\n");
                     if (ks != null) {
-                        cfg += "<ca>\n" + ks[0] + "\n</ca>\n";
+                        cfg.append("<ca>\n").append(ks[0]).append("\n</ca>\n");
                         if (ks[1] != null)
-                            cfg += "<extra-certs>\n" + ks[1] + "\n</extra-certs>\n";
-                        cfg += "<cert>\n" + ks[2] + "\n</cert>\n";
-                        cfg += "management-external-key\n";
+                            cfg.append("<extra-certs>\n").append(ks[1]).append("\n</extra-certs>\n");
+                        cfg.append("<cert>\n").append(ks[2]).append("\n</cert>\n");
+                        cfg.append("management-external-key\n");
                     } else {
-                        cfg += context.getString(R.string.keychain_access) + "\n";
+                        cfg.append(context.getString(R.string.keychain_access)).append("\n");
                         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN)
                             if (!mAlias.matches("^[a-zA-Z0-9]$"))
-                                cfg += context.getString(R.string.jelly_keystore_alphanumeric_bug) + "\n";
+                                cfg.append(context.getString(R.string.jelly_keystore_alphanumeric_bug)).append("\n");
                     }
                 }
                 break;
             case VpnProfile.TYPE_USERPASS:
-                cfg += "auth-user-pass\n";
-                cfg += insertFileData("ca", mCaFilename);
+                cfg.append("auth-user-pass\n");
+                cfg.append(insertFileData("ca", mCaFilename));
                 if (configForOvpn3) {
                     // OpenVPN 3 needs to be told that a client certificate is not required
-                    cfg += "client-cert-not-required\n";
+                    cfg.append("client-cert-not-required\n");
                 }
         }
 
         if (isUserPWAuth()) {
             if (mAuthRetry == AUTH_RETRY_NOINTERACT)
-                cfg += "auth-retry nointeract\n";
+                cfg.append("auth-retry nointeract\n");
         }
 
         if (!TextUtils.isEmpty(mCrlFilename))
-            cfg += insertFileData("crl-verify", mCrlFilename);
+            cfg.append(insertFileData("crl-verify", mCrlFilename));
 
         if (mUseLzo) {
-            cfg += "comp-lzo\n";
+            cfg.append("comp-lzo\n");
         }
 
         if (mUseTLSAuth) {
             boolean useTlsCrypt = mTLSAuthDirection.equals("tls-crypt");
 
             if (mAuthenticationType == TYPE_STATICKEYS)
-                cfg += insertFileData("secret", mTLSAuthFilename);
+                cfg.append(insertFileData("secret", mTLSAuthFilename));
             else if (useTlsCrypt)
-                cfg += insertFileData("tls-crypt", mTLSAuthFilename);
+                cfg.append(insertFileData("tls-crypt", mTLSAuthFilename));
             else
-                cfg += insertFileData("tls-auth", mTLSAuthFilename);
+                cfg.append(insertFileData("tls-auth", mTLSAuthFilename));
 
             if (!TextUtils.isEmpty(mTLSAuthDirection) && !useTlsCrypt) {
-                cfg += "key-direction ";
-                cfg += mTLSAuthDirection;
-                cfg += "\n";
+                cfg.append("key-direction ");
+                cfg.append(mTLSAuthDirection);
+                cfg.append("\n");
             }
 
         }
 
         if (!mUsePull) {
             if (!TextUtils.isEmpty(mIPv4Address))
-                cfg += "ifconfig " + cidrToIPAndNetmask(mIPv4Address) + "\n";
+                cfg.append("ifconfig ").append(cidrToIPAndNetmask(mIPv4Address)).append("\n");
 
             if (!TextUtils.isEmpty(mIPv6Address)) {
                 // Use our own ip as gateway since we ignore it anyway
                 String fakegw = mIPv6Address.split("/", 2)[0];
-                cfg += "ifconfig-ipv6 " + mIPv6Address + " " + fakegw + "\n";
+                cfg.append("ifconfig-ipv6 ").append(mIPv6Address).append(" ").append(fakegw).append("\n");
             }
 
         }
 
         if (mUsePull && mRoutenopull)
-            cfg += "route-nopull\n";
+            cfg.append("route-nopull\n");
 
         String routes = "";
 
@@ -489,129 +489,129 @@ public class VpnProfile implements Serializable, Cloneable {
 
 
         if (mUseDefaultRoutev6)
-            cfg += "route-ipv6 ::/0\n";
+            cfg.append("route-ipv6 ::/0\n");
         else
             for (String route : getCustomRoutesv6(mCustomRoutesv6)) {
                 routes += "route-ipv6 " + route + "\n";
             }
 
-        cfg += routes;
+        cfg.append(routes);
 
         if (mOverrideDNS || !mUsePull) {
             if (!TextUtils.isEmpty(mDNS1)) {
-                cfg += "dhcp-option DNS " + mDNS1 + "\n";
+                cfg.append("dhcp-option DNS ").append(mDNS1).append("\n");
             }
             if (!TextUtils.isEmpty(mDNS2)) {
-                cfg += "dhcp-option DNS " + mDNS2 + "\n";
+                cfg.append("dhcp-option DNS ").append(mDNS2).append("\n");
             }
             if (!TextUtils.isEmpty(mSearchDomain))
-                cfg += "dhcp-option DOMAIN " + mSearchDomain + "\n";
+                cfg.append("dhcp-option DOMAIN ").append(mSearchDomain).append("\n");
 
         }
 
         if (mMssFix != 0) {
             if (mMssFix != 1450) {
-                cfg += String.format(Locale.US, "mssfix %d\n", mMssFix);
+                cfg.append(String.format(Locale.US, "mssfix %d\n", mMssFix));
             } else
-                cfg += "mssfix\n";
+                cfg.append("mssfix\n");
         }
 
         if (mTunMtu >= 48 && mTunMtu != 1500) {
-            cfg += String.format(Locale.US, "tun-mtu %d\n", mTunMtu);
+            cfg.append(String.format(Locale.US, "tun-mtu %d\n", mTunMtu));
         }
 
         if (mNobind)
-            cfg += "nobind\n";
+            cfg.append("nobind\n");
 
 
         // Authentication
         if (mAuthenticationType != TYPE_STATICKEYS) {
             if (mCheckRemoteCN) {
                 if (mRemoteCN == null || mRemoteCN.equals(""))
-                    cfg += "verify-x509-name " + openVpnEscape(mConnections[0].mServerName) + " name\n";
+                    cfg.append("verify-x509-name ").append(openVpnEscape(mConnections[0].mServerName)).append(" name\n");
                 else
                     switch (mX509AuthType) {
 
                         // 2.2 style x509 checks
                         case X509_VERIFY_TLSREMOTE_COMPAT_NOREMAPPING:
-                            cfg += "compat-names no-remapping\n";
+                            cfg.append("compat-names no-remapping\n");
                         case X509_VERIFY_TLSREMOTE:
-                            cfg += "tls-remote " + openVpnEscape(mRemoteCN) + "\n";
+                            cfg.append("tls-remote ").append(openVpnEscape(mRemoteCN)).append("\n");
                             break;
 
                         case X509_VERIFY_TLSREMOTE_RDN:
-                            cfg += "verify-x509-name " + openVpnEscape(mRemoteCN) + " name\n";
+                            cfg.append("verify-x509-name ").append(openVpnEscape(mRemoteCN)).append(" name\n");
                             break;
 
                         case X509_VERIFY_TLSREMOTE_RDN_PREFIX:
-                            cfg += "verify-x509-name " + openVpnEscape(mRemoteCN) + " name-prefix\n";
+                            cfg.append("verify-x509-name ").append(openVpnEscape(mRemoteCN)).append(" name-prefix\n");
                             break;
 
                         case X509_VERIFY_TLSREMOTE_DN:
-                            cfg += "verify-x509-name " + openVpnEscape(mRemoteCN) + "\n";
+                            cfg.append("verify-x509-name ").append(openVpnEscape(mRemoteCN)).append("\n");
                             break;
                     }
                 if (!TextUtils.isEmpty(mx509UsernameField))
-                    cfg += "x509-username-field " + openVpnEscape(mx509UsernameField) + "\n";
+                    cfg.append("x509-username-field ").append(openVpnEscape(mx509UsernameField)).append("\n");
             }
             if (mExpectTLSCert)
-                cfg += "remote-cert-tls server\n";
+                cfg.append("remote-cert-tls server\n");
         }
 
         if (!TextUtils.isEmpty(mCipher)) {
-            cfg += "cipher " + mCipher + "\n";
+            cfg.append("cipher ").append(mCipher).append("\n");
         }
 
         if (!TextUtils.isEmpty(mAuth)) {
-            cfg += "auth " + mAuth + "\n";
+            cfg.append("auth ").append(mAuth).append("\n");
         }
 
         // Obscure Settings dialog
         if (mUseRandomHostname)
-            cfg += "#my favorite options :)\nremote-random-hostname\n";
+            cfg.append("#my favorite options :)\nremote-random-hostname\n");
 
         if (mUseFloat)
-            cfg += "float\n";
+            cfg.append("float\n");
 
         if (mPersistTun) {
-            cfg += "persist-tun\n";
-            cfg += "# persist-tun also enables pre resolving to avoid DNS resolve problem\n";
+            cfg.append("persist-tun\n");
+            cfg.append("# persist-tun also enables pre resolving to avoid DNS resolve problem\n");
             if (!mIsOpenVPN22)
-                cfg += "preresolve\n";
+                cfg.append("preresolve\n");
         }
 
         if (mPushPeerInfo)
-            cfg += "push-peer-info\n";
+            cfg.append("push-peer-info\n");
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean usesystemproxy = prefs.getBoolean("usesystemproxy", true);
-        if (usesystemproxy && !mIsOpenVPN22 && !configForOvpn3) {
-            cfg += "# Use system proxy setting\n";
-            cfg += "management-query-proxy\n";
+        if (usesystemproxy && !mIsOpenVPN22 && !configForOvpn3 && !usesExtraProxyOptions()) {
+            cfg.append("# Use system proxy setting\n");
+            cfg.append("management-query-proxy\n");
         }
 
 
         if (mUseCustomConfig) {
-            cfg += "# Custom configuration options\n";
-            cfg += "# You are on your on own here :)\n";
-            cfg += mCustomConfigOptions;
-            cfg += "\n";
+            cfg.append("# Custom configuration options\n");
+            cfg.append("# You are on your on own here :)\n");
+            cfg.append(mCustomConfigOptions);
+            cfg.append("\n");
 
         }
 
         if (!canUsePlainRemotes) {
-            cfg += "# Connection Options are at the end to allow global options (and global custom options) to influence connection blocks\n";
+            cfg.append("# Connection Options are at the end to allow global options (and global custom options) to influence connection blocks\n");
             for (Connection conn : mConnections) {
                 if (conn.mEnabled) {
-                    cfg += "<connection>\n";
-                    cfg += conn.getConnectionBlock(configForOvpn3);
-                    cfg += "</connection>\n";
+                    cfg.append("<connection>\n");
+                    cfg.append(conn.getConnectionBlock(configForOvpn3));
+                    cfg.append("</connection>\n");
                 }
             }
         }
 
 
-        return cfg;
+        return cfg.toString();
     }
 
     public String getPlatformVersionEnvString() {
@@ -977,9 +977,12 @@ public class VpnProfile implements Serializable, Cloneable {
             }
         }
         for (Connection c: mConnections) {
-            if (c.mProxyType == Connection.ProxyType.ORBOT)
+            if (c.mProxyType == Connection.ProxyType.ORBOT) {
+                if (usesExtraProxyOptions())
+                    return R.string.error_orbot_and_proxy_options;
                 if (!OrbotHelper.checkTorReceier(context))
                     return R.string.no_orbotfound;
+            }
         }
 
 
@@ -1173,6 +1176,17 @@ public class VpnProfile implements Serializable, Cloneable {
             VpnStatus.logError(R.string.error_rsa_sign, e.getClass().toString(), e.getLocalizedMessage());
             return null;
         }
+    }
+
+    private boolean usesExtraProxyOptions()
+    {
+        if (mUseCustomConfig && mCustomConfigOptions !=null && mCustomConfigOptions.contains("http-proxy-option "))
+            return true;
+        for (Connection c: mConnections)
+            if (c.usesExtraProxyOptions())
+                return  true;
+
+        return false;
     }
 
 

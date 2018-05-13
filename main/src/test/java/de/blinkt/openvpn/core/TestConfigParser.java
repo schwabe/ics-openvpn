@@ -16,6 +16,7 @@ import org.robolectric.RuntimeEnvironment;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Arrays;
 
 import de.blinkt.openvpn.VpnProfile;
 import org.robolectric.annotation.Config;
@@ -137,6 +138,79 @@ public class TestConfigParser {
         Assert.assertTrue(vp.mConnections[0].mUseProxyAuth);
         Assert.assertEquals(vp.mConnections[0].mProxyAuthUser, "username12");
         Assert.assertEquals(vp.mConnections[0].mProxyAuthPassword, "password34");
+    }
+
+    @Test
+    public void testConfigWithHttpProxyOptions() throws IOException, ConfigParser.ConfigParseError {
+        String proxyconf = "pull\n" +
+                "dev tun\n" +
+                "proto tcp-client\n" +
+                "cipher AES-128-CBC\n" +
+                "auth SHA1\n" +
+                "reneg-sec 0\n" +
+                "remote-cert-tls server\n" +
+                "tls-version-min 1.2 or-highest\n" +
+                "persist-tun\n" +
+                "nobind\n" +
+                "connect-retry 2 2\n" +
+                "dhcp-option DNS 1.1.1.1\n" +
+                "dhcp-option DNS 84.200.69.80\n" +
+                "auth-user-pass\n" +
+                "\n" +
+                "remote xx.xx.xx.xx 1194\n" +
+                "http-proxy 1.2.3.4 8080\n" +
+                "http-proxy-option VERSION 1.1\n" +
+                "http-proxy-option CUSTOM-HEADER \"Connection: Upgrade\"\n" +
+                "http-proxy-option CUSTOM-HEADER \"X-Forwarded-Proto: https\"\n" +
+                "http-proxy-option CUSTOM-HEADER \"Upgrade-Insecure-Requests: 1\"\n" +
+                "http-proxy-option CUSTOM-HEADER \"DNT: 1\"\n" +
+                "http-proxy-option CUSTOM-HEADER \"Tk: N\"\n" +
+                "\n" +
+                "<ca>\n" +
+                "-----BEGIN CERTIFICATE-----\n" +
+                "\n" +
+                "-----END CERTIFICATE-----\n" +
+                "\n" +
+                "</ca>\n" +
+                "\n" +
+                "<cert>\n" +
+                "-----BEGIN CERTIFICATE-----\n" +
+                "\n" +
+                "-----END CERTIFICATE-----\n" +
+                "\n" +
+                "</cert>\n" +
+                "\n" +
+                "<key>\n" +
+                "-----BEGIN PRIVATE KEY-----\n" +
+                "\n" +
+                "-----END PRIVATE KEY-----\n" +
+                "\n" +
+                "</key>";
+
+        ConfigParser cp = new ConfigParser();
+        cp.parseConfig(new StringReader(proxyconf));
+        VpnProfile vp = cp.convertProfile();
+        String config = vp.getConfigFile(RuntimeEnvironment.application, true);
+
+
+        Assert.assertEquals(vp.checkProfile(RuntimeEnvironment.application, true), R.string.no_error_found);
+        Assert.assertEquals(vp.checkProfile(RuntimeEnvironment.application, false), R.string.no_error_found);
+
+        config = vp.getConfigFile(RuntimeEnvironment.application, false);
+
+        Assert.assertTrue(config.contains("http-proxy 1.2.3.4"));
+        Assert.assertFalse(config.contains("management-query-proxy"));
+
+
+        Assert.assertTrue(config.contains("http-proxy-option CUSTOM-HEADER"));
+
+        vp.mConnections = Arrays.copyOf(vp.mConnections, vp.mConnections.length + 1);
+        vp.mConnections[vp.mConnections.length - 1] = new Connection();
+
+        vp.mConnections[vp.mConnections.length -1].mProxyType = Connection.ProxyType.ORBOT;
+
+        Assert.assertEquals(vp.checkProfile(RuntimeEnvironment.application, false), R.string.error_orbot_and_proxy_options);
+
     }
 
 }

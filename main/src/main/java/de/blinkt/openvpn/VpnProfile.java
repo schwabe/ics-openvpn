@@ -311,13 +311,14 @@ public class VpnProfile implements Serializable, Cloneable {
         }
 
 
-        cfg.append("machine-readable-output\n");
-        if (!mIsOpenVPN22)
-            cfg.append("allow-recursive-routing\n");
+        if (!configForOvpn3) {
+            cfg.append("machine-readable-output\n");
+            if (!mIsOpenVPN22)
+                cfg.append("allow-recursive-routing\n");
 
-        // Users are confused by warnings that are misleading...
-        cfg.append("ifconfig-nowarn\n");
-
+            // Users are confused by warnings that are misleading...
+            cfg.append("ifconfig-nowarn\n");
+        }
 
         boolean useTLSClient = (mAuthenticationType != TYPE_STATICKEYS);
 

@@ -126,7 +126,6 @@ android {
         normal {
             dimension "implementation"
             buildConfigField 'boolean', 'openvpn3', 'true'
-
         }
 
     }

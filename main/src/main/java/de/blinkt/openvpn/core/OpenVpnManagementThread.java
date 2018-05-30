@@ -312,6 +312,9 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 case "PK_SIGN":
                     processSignCommand(argument);
                     break;
+                case "INFOMSG":
+                    processInfoMessage(argument);
+                    break;
                 default:
                     VpnStatus.logWarning("MGMT: Got unrecognized command" + command);
                     Log.i(TAG, "Got unrecognized command" + command);
@@ -327,6 +330,14 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         } else {
             Log.i(TAG, "Got unrecognized line from managment" + command);
             VpnStatus.logWarning("MGMT: Got unrecognized line from management:" + command);
+        }
+    }
+
+    private void processInfoMessage(String info)
+    {
+        if (info.startsWith("OPEN_URL:"))
+        {
+            mOpenVPNService.trigger_url_open(info);
         }
     }
 

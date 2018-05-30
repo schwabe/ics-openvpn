@@ -1,5 +1,6 @@
 package de.blinkt.openvpn.core;
 
+import de.blinkt.openvpn.R;
 import net.openvpn.ovpn3.ClientAPI_Config;
 import net.openvpn.ovpn3.ClientAPI_EvalConfig;
 import net.openvpn.ovpn3.ClientAPI_Event;
@@ -189,6 +190,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         //config.setPlatformVersion(mVp.getPlatformVersionEnvString());
 		config.setExternalPkiAlias("extpki");
 		config.setCompressionMode("yes");
+		config.setInfo(true);
 
 		ClientAPI_EvalConfig ec = eval_config(config);
 		if(ec.getExternalPki()) {
@@ -278,9 +280,19 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public void event(ClientAPI_Event event) {
-		VpnStatus.updateStateString(event.getName(), event.getInfo());
+		String name = event.getName();
+		String info = event.getInfo();
+		if (name.equals("INFO")) {
+			VpnStatus.logInfo(R.string.info_from_server, info);
+			if (info.startsWith("OPEN_URL:"))
+			{
+				mService.trigger_url_open(info);
+			}
+		} else{
+			VpnStatus.updateStateString(name, info);
+		}
 		if(event.getError())
-            VpnStatus.logError(String.format("EVENT(Error): %s: %s",event.getName(),event.getInfo()));
+            VpnStatus.logError(String.format("EVENT(Error): %s: %s", name, info));
 	}
 
 

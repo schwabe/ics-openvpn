@@ -40,8 +40,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import junit.framework.Assert;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -229,7 +227,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
                     mResult.mCrlFilename = data;
                     break;
                 default:
-                    Assert.fail();
+                    throw new RuntimeException("Type is wrong somehow?");
             }
         }
 

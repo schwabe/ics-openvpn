@@ -10,12 +10,16 @@ import android.content.Intent;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
+import android.os.Build;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.system.ErrnoException;
+import android.system.Os;
 import android.util.Log;
-
-import junit.framework.Assert;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -24,15 +28,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Locale;
-import java.util.Vector;
-
-import de.blinkt.openvpn.BuildConfig;
-import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.VpnProfile;
+import java.util.*;
 
 public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
@@ -248,14 +244,27 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
             //ParcelFileDescriptor pfd = ParcelFileDescriptor.fromFd(fdint);
             //pfd.close();
-            NativeUtils.jniclose(fdint);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                fdCloseLollipop(fd);
+            } else {
+                NativeUtils.jniclose(fdint);
+            }
             return;
-        } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException | IllegalAccessException | NullPointerException e) {
+        } catch ( NoSuchMethodException | IllegalArgumentException | InvocationTargetException | IllegalAccessException | NullPointerException e) {
             VpnStatus.logException("Failed to retrieve fd from socket (" + fd + ")", e);
         }
 
         Log.d("Openvpn", "Failed to retrieve fd from socket: " + fd);
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void fdCloseLollipop(FileDescriptor fd) {
+        try {
+            Os.close(fd);
+        } catch (ErrnoException e) {
+            VpnStatus.logException("Failed to close fd (" + fd + ")", e);
+        }
     }
 
     private String processInput(String pendingInput) {
@@ -563,7 +572,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             */
 
                 if (routeparts.length == 5) {
-                    if (BuildConfig.DEBUG) Assert.assertEquals("dev", routeparts[3]);
+                    //if (BuildConfig.DEBUG)
+                    //                assertEquals("dev", routeparts[3]);
                     mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], routeparts[4]);
                 } else if (routeparts.length >= 3) {
                     mOpenVPNService.addRoute(routeparts[0], routeparts[1], routeparts[2], null);

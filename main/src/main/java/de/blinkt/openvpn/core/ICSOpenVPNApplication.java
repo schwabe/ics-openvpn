@@ -19,6 +19,8 @@ import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 */
 
+import android.os.StrictMode;
+import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
 
 public class ICSOpenVPNApplication extends Application {
@@ -36,6 +38,19 @@ public class ICSOpenVPNApplication extends Application {
             createNotificationChannels();
         mStatus = new StatusListener();
         mStatus.init(getApplicationContext());
+
+        if (BuildConfig.BUILD_TYPE.equals("debug"))
+            enableStrictModes();
+
+    }
+
+    private void enableStrictModes() {
+        StrictMode.VmPolicy policy = new StrictMode.VmPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .penaltyDeath()
+                .build();
+        StrictMode.setVmPolicy(policy);
 
     }
 

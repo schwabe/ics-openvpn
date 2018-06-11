@@ -174,8 +174,9 @@ public class ProfileManager {
         vlist.add(TEMPORARY_PROFILE_FILENAME);
 
         for (String vpnentry : vlist) {
+            ObjectInputStream vpnfile=null;
             try {
-                ObjectInputStream vpnfile = new ObjectInputStream(context.openFileInput(vpnentry + ".vp"));
+                 vpnfile = new ObjectInputStream(context.openFileInput(vpnentry + ".vp"));
                 VpnProfile vp = ((VpnProfile) vpnfile.readObject());
 
                 // Sanity check
@@ -189,9 +190,18 @@ public class ProfileManager {
                     profiles.put(vp.getUUID().toString(), vp);
                 }
 
+
             } catch (IOException | ClassNotFoundException e) {
                 if (!vpnentry.equals(TEMPORARY_PROFILE_FILENAME))
                     VpnStatus.logException("Loading VPN List", e);
+            } finally {
+                if (vpnfile!=null) {
+                    try {
+                        vpnfile.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }

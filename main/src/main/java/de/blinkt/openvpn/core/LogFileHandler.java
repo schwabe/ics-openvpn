@@ -134,7 +134,9 @@ class LogFileHandler extends Handler {
             if (!logfile.exists() || !logfile.canRead())
                 return;
 
-            readCacheContents(new FileInputStream(logfile));
+            FileInputStream log = new FileInputStream(logfile);
+            readCacheContents(log);
+            log.close();
 
         } catch (java.io.IOException | java.lang.RuntimeException e) {
             VpnStatus.logError("Reading cached logfile failed");

@@ -22,7 +22,7 @@ include(openssl.cmake)
 # Super hacky way to determine flavour
 #-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/arne/software/icsopenvpn/main/build/intermediates/cmake/normal/debug/obj/arm64-v8a
 if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*noovpn3.*/")
-    FIND_PACKAGE(SWIG 3.0)
+    FIND_PACKAGE(SWIG 3.0 REQUIRED)
 
     add_subdirectory(mbedtls)
     add_custom_command(OUTPUT "ovpncli_wrap.cxx"

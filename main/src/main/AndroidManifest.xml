@@ -22,6 +22,8 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
 
+
+
     <application
         android:name=".core.ICSOpenVPNApplication"
         android:allowBackup="true"
@@ -32,6 +34,11 @@
         android:supportsRtl="true"
         android:theme="@style/blinkt"
         tools:ignore="UnusedAttribute">
+
+
+        <meta-data android:name="android.content.APP_RESTRICTIONS"
+                   android:resource="@xml/app_restrictions" />
+
         <activity
             android:name=".activities.VPNPreferences"
             android:exported="false"
@@ -94,6 +101,7 @@
             <meta-data
                 android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="false" />
+
         </service>
 
         <activity android:name=".api.GrantPermissionsActivity">
@@ -235,6 +243,7 @@
             android:exported="true"
             android:name=".api.ConnectVPN"
             android:targetActivity=".api.RemoteAction" />
+
 
     </application>
 

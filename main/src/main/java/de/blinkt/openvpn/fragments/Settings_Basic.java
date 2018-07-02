@@ -5,55 +5,32 @@
 
 package de.blinkt.openvpn.fragments;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Handler.Callback;
-import android.os.Message;
-import android.security.KeyChain;
-import android.security.KeyChainAliasCallback;
-import android.security.KeyChainException;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.security.cert.X509Certificate;
-
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.R.id;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
-import de.blinkt.openvpn.core.X509Utils;
 import de.blinkt.openvpn.views.FileSelectLayout;
 
-public class Settings_Basic extends Settings_Fragment implements View.OnClickListener, OnItemSelectedListener, Callback, FileSelectLayout.FileSelectCallback {
+public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSelectedListener,  FileSelectLayout.FileSelectCallback {
 	private static final int CHOOSE_FILE_OFFSET = 1000;
-	private static final int UPDATE_ALIAS = 20;
 
 	private FileSelectLayout mClientCert;
 	private FileSelectLayout mCaCert;
 	private FileSelectLayout mClientKey;
-	private TextView mAliasName;
-    private TextView mAliasCertificate;
 	private CheckBox mUseLzo;
 	private Spinner mType;
 	private FileSelectLayout mpkcs12;
 	private FileSelectLayout mCrlFile;
 	private TextView mPKCS12Password;
-	private Handler mHandler;
 	private EditText mUserName;
 	private EditText mPassword;
 	private View mView;
@@ -76,45 +53,6 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 	}
 
 
-    private void setKeystoreCertficate()
-    {
-        new Thread() {
-            public void run() {
-                String certstr="";
-                try {
-                    X509Certificate cert = KeyChain.getCertificateChain(getActivity().getApplicationContext(), mProfile.mAlias)[0];
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        {
-                            if (isInHardwareKeystore())
-                                certstr+=getString(R.string.hwkeychain);
-                        }
-                    }
-					certstr+=X509Utils.getCertificateValidityString(cert, getResources());
-                    certstr+=X509Utils.getCertificateFriendlyName(cert);
-
-                } catch (Exception e) {
-                    certstr="Could not get certificate from Keystore: " +e.getLocalizedMessage();
-                }
-
-                final String certStringCopy=certstr;
-                getActivity().runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        mAliasCertificate.setText(certStringCopy);
-                    }
-                });
-
-            }
-        }.start();
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-    private boolean isInHardwareKeystore() throws KeyChainException, InterruptedException {
-        String algorithm = KeyChain.getPrivateKey(getActivity().getApplicationContext(), mProfile.mAlias).getAlgorithm();
-        return KeyChain.isBoundKeyAlgorithm(algorithm);
-    }
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -122,22 +60,20 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 
 		mView = inflater.inflate(R.layout.basic_settings,container,false);
 
-		mProfileName = (EditText) mView.findViewById(R.id.profilename);
-		mClientCert = (FileSelectLayout) mView.findViewById(R.id.certselect);
-		mClientKey = (FileSelectLayout) mView.findViewById(R.id.keyselect);
-		mCaCert = (FileSelectLayout) mView.findViewById(R.id.caselect);
-		mpkcs12 = (FileSelectLayout) mView.findViewById(R.id.pkcs12select);
-		mCrlFile = (FileSelectLayout) mView.findViewById(id.crlfile);
-		mUseLzo = (CheckBox) mView.findViewById(R.id.lzo);
-		mType = (Spinner) mView.findViewById(R.id.type);
-		mPKCS12Password = (TextView) mView.findViewById(R.id.pkcs12password);
-		mAliasName = (TextView) mView.findViewById(R.id.aliasname);
-        mAliasCertificate = (TextView) mView.findViewById(id.alias_certificate);
+		mProfileName = mView.findViewById(id.profilename);
+		mClientCert = mView.findViewById(id.certselect);
+		mClientKey = mView.findViewById(id.keyselect);
+		mCaCert = mView.findViewById(id.caselect);
+		mpkcs12 = mView.findViewById(id.pkcs12select);
+		mCrlFile = mView.findViewById(id.crlfile);
+		mUseLzo = mView.findViewById(id.lzo);
+		mType = mView.findViewById(id.type);
+		mPKCS12Password = mView.findViewById(id.pkcs12password);
 
-		mUserName = (EditText) mView.findViewById(R.id.auth_username);
-		mPassword = (EditText) mView.findViewById(R.id.auth_password);
-		mKeyPassword = (EditText) mView.findViewById(R.id.key_password);
-		mAuthRetry = (Spinner) mView.findViewById(id.auth_retry);
+		mUserName = mView.findViewById(id.auth_username);
+		mPassword = mView.findViewById(id.auth_password);
+		mKeyPassword = mView.findViewById(id.key_password);
+		mAuthRetry = mView.findViewById(id.auth_retry);
 
 		addFileSelectLayout(mCaCert, Utils.FileType.CA_CERTIFICATE);
 		addFileSelectLayout(mClientCert, Utils.FileType.CLIENT_CERTIFICATE);
@@ -150,25 +86,14 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 		mType.setOnItemSelectedListener(this);
 		mAuthRetry.setOnItemSelectedListener(this);
 
-		mView.findViewById(R.id.select_keystore_button).setOnClickListener(this);
 
 
-		if (mHandler == null) {
-			mHandler = new Handler(this);
-		}
+		initKeychainViews(mView);
 
 		return mView;
 	}
 
 
-	@Override
-	public void onStart() {
-		super.onStart();
-		String profileUuid =getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		mProfile=ProfileManager.get(getActivity(),profileUuid);
-		loadPreferences();
-
-	}
 
 	@Override
 	public void onActivityResult(int request, int result, Intent data) {
@@ -245,7 +170,8 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 
 	}
 
-	private void loadPreferences() {
+	protected void loadPreferences() {
+    	super.loadPreferences();
 		mProfileName.setText(mProfile.mName);
 		mClientCert.setData(mProfile.mClientCertFilename, getActivity());
 		mClientKey.setData(mProfile.mClientKeyFilename, getActivity());
@@ -260,13 +186,10 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 		mPassword.setText(mProfile.mPassword);
 		mKeyPassword.setText(mProfile.mKeyPassword);
 		mAuthRetry.setSelection(mProfile.mAuthRetry);
-
-		setAlias();
-
 	}
 
 	protected void savePreferences() {
-
+		super.savePreferences();
 		mProfile.mName = mProfileName.getText().toString();
 		mProfile.mCaFilename = mCaCert.getData();
 		mProfile.mClientCertFilename = mClientCert.getData();
@@ -285,48 +208,6 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 
 	}
 
-
-	private void setAlias() {
-		if(mProfile.mAlias == null) {
-			mAliasName.setText(R.string.client_no_certificate);
-            mAliasCertificate.setText("");
-		} else {
-            mAliasCertificate.setText("Loading certificate from Keystore...");
-			mAliasName.setText(mProfile.mAlias);
-            setKeystoreCertficate();
-		}
-	}
-
-	@SuppressWarnings("WrongConstant")
-    public void showCertDialog () {
-		try	{
-			KeyChain.choosePrivateKeyAlias(getActivity(),
-					alias -> {
-                        // Credential alias selected.  Remember the alias selection for future use.
-                        mProfile.mAlias=alias;
-                        mHandler.sendEmptyMessage(UPDATE_ALIAS);
-                    },
-			new String[] {"RSA"}, // List of acceptable key types. null for any
-			null,                        // issuer, null for any
-			mProfile.mServerName,      // host name of server requesting the cert, null if unavailable
-			-1,                         // port of server requesting the cert, -1 if unavailable
-			mProfile.mAlias);                       // alias to preselect, null if unavailable
-		} catch (ActivityNotFoundException anf) {
-			Builder ab = new AlertDialog.Builder(getActivity());
-			ab.setTitle(R.string.broken_image_cert_title);
-			ab.setMessage(R.string.broken_image_cert);
-			ab.setPositiveButton(android.R.string.ok, null);
-			ab.show();
-		}
-	}
-
-	@Override
-	public void onClick(View v) {
-		if (v == mView.findViewById(R.id.select_keystore_button)) {
-			showCertDialog();
-		}
-	}
-
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -338,13 +219,6 @@ public class Settings_Basic extends Settings_Fragment implements View.OnClickLis
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
-	}
-
-
-	@Override
-	public boolean handleMessage(Message msg) {
-		setAlias();
-		return true;
 	}
 
 

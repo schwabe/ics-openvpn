@@ -2719,7 +2719,7 @@ public class ViewPager extends ViewGroup {
     @Override
     public boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent event) {
         // Dispatch scroll events from this ViewPager.
-        if (event.getEventType() == AccessibilityEventCompat.TYPE_VIEW_SCROLLED) {
+        if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_SCROLLED) {
             return super.dispatchPopulateAccessibilityEvent(event);
         }
 
@@ -2767,7 +2767,7 @@ public class ViewPager extends ViewGroup {
             event.setClassName(ViewPager.class.getName());
             final AccessibilityRecordCompat recordCompat = AccessibilityRecordCompat.obtain();
             recordCompat.setScrollable(canScroll());
-            if (event.getEventType() == AccessibilityEventCompat.TYPE_VIEW_SCROLLED
+            if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_SCROLLED
                     && mAdapter != null) {
                 recordCompat.setItemCount(mAdapter.getCount());
                 recordCompat.setFromIndex(mCurItem);

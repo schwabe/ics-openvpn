@@ -165,10 +165,14 @@ public class VpnProfile implements Serializable, Cloneable {
     // timestamp when the profile was last used
     public long mLastUsed;
 
+
+    public String importedProfileHash;
+
     /* Options no longer used in new profiles */
     public String mServerName = "openvpn.example.com";
     public String mServerPort = "1194";
     public boolean mUseUdp = true;
+
 
 
     public VpnProfile(String name) {
@@ -224,6 +228,11 @@ public class VpnProfile implements Serializable, Cloneable {
     public UUID getUUID() {
         return mUuid;
 
+    }
+
+    // Only used for the special case of managed profiles
+    public void setUUID(UUID uuid){
+        mUuid = uuid;
     }
 
     public String getName() {
@@ -1100,7 +1109,7 @@ public class VpnProfile implements Serializable, Cloneable {
     }
 
     public String getUUIDString() {
-        return mUuid.toString();
+        return mUuid.toString().toLowerCase(Locale.ENGLISH);
     }
 
     public PrivateKey getKeystoreKey() {

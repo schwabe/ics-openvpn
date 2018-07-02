@@ -845,6 +845,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             session = getString(R.string.session_ipv6string, session, mLocalIP, mLocalIPv6);
         else if (mLocalIP != null)
             session = getString(R.string.session_ipv4string, session, mLocalIP);
+        else
+            session = getString(R.string.session_ipv4string, session, mLocalIPv6);
 
         builder.setSession(session);
 

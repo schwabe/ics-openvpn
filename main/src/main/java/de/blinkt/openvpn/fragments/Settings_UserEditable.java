@@ -14,36 +14,50 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.api.AppRestrictions;
 
-public class Settings_UserEditable extends OpenVpnPreferencesFragment {
-    @Override
-    protected void loadSettings() {
+public class Settings_UserEditable extends KeyChainSettingsFragment implements View.OnClickListener {
 
-    }
-
-    @Override
-    protected void saveSettings() {
-
-    }
+    private View mView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.settings_usereditable, container, false);
-        TextView messageView = (TextView) v.findViewById(R.id.messageUserEdit);
+        mView = inflater.inflate(R.layout.settings_usereditable, container, false);
+        TextView messageView = (TextView) mView.findViewById(R.id.messageUserEdit);
         messageView.setText(getString(R.string.message_no_user_edit, getPackageString(mProfile.mProfileCreator)));
-        return v;
+        initKeychainViews(this.mView);
+        return mView;
     }
 
 
     private String getPackageString(String packageName) {
+
+        if (AppRestrictions.PROFILE_CREATOR.equals(packageName))
+            return "Android Enterprise Management";
+
         final PackageManager pm = getActivity().getPackageManager();
         ApplicationInfo ai;
         try {
-            ai = pm.getApplicationInfo( packageName, 0);
+            ai = pm.getApplicationInfo(packageName, 0);
         } catch (final PackageManager.NameNotFoundException e) {
             ai = null;
         }
         final String applicationName = (String) (ai != null ? pm.getApplicationLabel(ai) : "(unknown)");
         return String.format("%s (%s)", applicationName, packageName);
+    }
+
+    @Override
+    protected void savePreferences() {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mView.findViewById(R.id.keystore).setVisibility(View.GONE);
+        if (mProfile.mAuthenticationType == VpnProfile.TYPE_USERPASS_KEYSTORE ||
+                mProfile.mAuthenticationType == VpnProfile.TYPE_KEYSTORE)
+            mView.findViewById(R.id.keystore).setVisibility(View.VISIBLE);
     }
 }

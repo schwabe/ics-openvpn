@@ -526,32 +526,25 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             dialog.setView(entry);
 
             dialog.setNeutralButton(R.string.menu_import_short,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            startImportConfigFilePicker();
-                        }
-                    });
+                    (dialog1, which) -> startImportConfigFilePicker());
             dialog.setPositiveButton(android.R.string.ok,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String name = entry.getText().toString();
-                            if (getPM().getProfileByName(name) == null) {
-                                VpnProfile profile;
-                                if (mCopyProfile != null)
-                                    profile = mCopyProfile.copy(name);
-                                else
-                                    profile = new VpnProfile(name);
+                    (dialog12, which) -> {
+                        String name = entry.getText().toString();
+                        if (getPM().getProfileByName(name) == null) {
+                            VpnProfile profile;
+                            if (mCopyProfile != null) {
+                                profile = mCopyProfile.copy(name);
+                                // Remove restrictions on copy profile
+                                profile.mProfileCreator = null;
+                                profile.mUserEditable = true;
+                            } else
+                                profile = new VpnProfile(name);
 
-                                addProfile(profile);
-                                editVPN(profile);
-                            } else {
-                                Toast.makeText(getActivity(), R.string.duplicate_profile_name, Toast.LENGTH_LONG).show();
-                            }
+                            addProfile(profile);
+                            editVPN(profile);
+                        } else {
+                            Toast.makeText(getActivity(), R.string.duplicate_profile_name, Toast.LENGTH_LONG).show();
                         }
-
-
                     });
             dialog.setNegativeButton(android.R.string.cancel, null);
             dialog.create().show();

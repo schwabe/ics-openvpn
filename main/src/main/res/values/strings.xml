@@ -482,4 +482,5 @@
     </string>
     <string name="openurl_requested">Open URL to continue VPN authentication</string>
     <string name="state_auth_pending">Authentication pending</string>
+
 </resources>

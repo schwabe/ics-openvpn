@@ -826,7 +826,16 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (mDomain != null)
             builder.addSearchDomain(mDomain);
 
-        VpnStatus.logInfo(R.string.local_ip_info, mLocalIP.mIp, mLocalIP.len, mLocalIPv6, mMtu);
+        String ipv4info;
+        int ipv4len;
+        if (mLocalIP!=null) {
+            ipv4len=mLocalIP.len;
+            ipv4info=mLocalIP.mIp;
+        } else {
+            ipv4len = -1;
+            ipv4info="(not set)";
+        }
+        VpnStatus.logInfo(R.string.local_ip_info, ipv4info, ipv4len, mLocalIPv6, mMtu);
         VpnStatus.logInfo(R.string.dns_server_info, TextUtils.join(", ", mDnslist), mDomain);
         VpnStatus.logInfo(R.string.routes_info_incl, TextUtils.join(", ", mRoutes.getNetworks(true)), TextUtils.join(", ", mRoutesv6.getNetworks(true)));
         VpnStatus.logInfo(R.string.routes_info_excl, TextUtils.join(", ", mRoutes.getNetworks(false)), TextUtils.join(", ", mRoutesv6.getNetworks(false)));

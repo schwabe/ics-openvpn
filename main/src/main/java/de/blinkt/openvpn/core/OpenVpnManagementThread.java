@@ -594,8 +594,10 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 mOpenVPNService.setLocalIP(ifconfigparts[0], ifconfigparts[1], mtu, ifconfigparts[3]);
                 break;
             case "IFCONFIG6":
-                mOpenVPNService.setLocalIPv6(extra);
-
+                String[] ifconfig6parts = extra.split(" ");
+                mtu = Integer.parseInt(ifconfig6parts[1]);
+                mOpenVPNService.setMtu(mtu);
+                mOpenVPNService.setLocalIPv6(ifconfig6parts[0]);
                 break;
             case "PERSIST_TUN_ACTION":
                 // check if tun cfg stayed the same

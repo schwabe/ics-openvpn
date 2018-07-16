@@ -16,6 +16,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -25,7 +26,6 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.android.vending.billing.IInAppBillingService;
@@ -33,6 +33,7 @@ import com.android.vending.billing.IInAppBillingService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -288,10 +289,28 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
         else
             translation.setText(R.string.translationby);
 
-        WebView wv = (WebView)v.findViewById(R.id.webView);
-        wv.loadUrl("file:///android_asset/full_licenses.html");
-
+        TextView wv = (TextView) v.findViewById(R.id.full_licenses);
+        wv.setText(Html.fromHtml(readHtmlFromAssets()));
         return v;
+    }
+
+    String readHtmlFromAssets()
+    {
+        InputStream mvpn;
+
+        try {
+            mvpn = getActivity().getAssets().open("full_licenses.html");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(mvpn));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+            reader.close();
+            return sb.toString();
+        } catch (IOException errabi) {
+            return "full_licenses.html not found";
+        }
     }
 
 

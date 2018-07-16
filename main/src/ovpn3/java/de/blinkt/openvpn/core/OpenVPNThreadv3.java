@@ -1,22 +1,30 @@
 package de.blinkt.openvpn.core;
 
+import android.net.*;
+import android.os.Build;
 import de.blinkt.openvpn.R;
-import net.openvpn.ovpn3.ClientAPI_Config;
-import net.openvpn.ovpn3.ClientAPI_EvalConfig;
-import net.openvpn.ovpn3.ClientAPI_Event;
-import net.openvpn.ovpn3.ClientAPI_ExternalPKICertRequest;
-import net.openvpn.ovpn3.ClientAPI_ExternalPKISignRequest;
-import net.openvpn.ovpn3.ClientAPI_LogInfo;
-import net.openvpn.ovpn3.ClientAPI_OpenVPNClient;
-import net.openvpn.ovpn3.ClientAPI_ProvideCreds;
-import net.openvpn.ovpn3.ClientAPI_Status;
-import net.openvpn.ovpn3.ClientAPI_TransportStats;
+import net.openvpn.ovpn3.*;
 
 import java.lang.Override;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.util.Locale;
+import java.util.Vector;
 
 import de.blinkt.openvpn.VpnProfile;
 
 import android.content.Context;
+import net.openvpn.ovpn3.*;
+import net.openvpn.ovpn3.*;
+import net.openvpn.ovpn3.*;
+import net.openvpn.ovpn3.*;
+import net.openvpn.ovpn3.*;
+import net.openvpn.ovpn3.*;
+import net.openvpn.ovpn3.*;
+import net.openvpn.ovpn3.ClientAPI_Config;
+import net.openvpn.ovpn3.ClientAPI_EvalConfig;
+import net.openvpn.ovpn3.ClientAPI_Event;
+import net.openvpn.ovpn3.ClientAPI_ExternalPKICertRequest;
 
 public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable, OpenVPNManagement {
 
@@ -165,8 +173,12 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
     }
 
 
-    @Override
+	final static long EmulateExcludeRoutes = (1 << 16);
+
+	@Override
     public boolean tun_builder_reroute_gw(boolean ipv4, boolean ipv6, long flags) {
+		if ((flags & EmulateExcludeRoutes) != 0)
+			return true;
 		if (ipv4)
 			mService.addRoute("0.0.0.0", "0.0.0.0", "127.0.0.1", OpenVPNService.VPNSERVICE_TUN);
 
@@ -191,6 +203,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		config.setExternalPkiAlias("extpki");
 		config.setCompressionMode("yes");
 		config.setInfo(true);
+		config.setAllowLocalLanAccess(mVp.mAllowLocalLAN);
 
 		ClientAPI_EvalConfig ec = eval_config(config);
 		if(ec.getExternalPki()) {
@@ -204,6 +217,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 			return true;
 		}
 	}
+
 
 	@Override
 	public void external_pki_cert_request(ClientAPI_ExternalPKICertRequest certreq) {
@@ -293,6 +307,16 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		}
 		if(event.getError())
             VpnStatus.logError(String.format("EVENT(Error): %s: %s", name, info));
+	}
+
+	@Override
+	public net.openvpn.ovpn3.ClientAPI_StringVec tun_builder_get_local_networks(boolean ipv6)
+	{
+
+		net.openvpn.ovpn3.ClientAPI_StringVec nets = new net.openvpn.ovpn3.ClientAPI_StringVec();
+		for (String net: NetworkUtils.getLocalNetworks(mService, ipv6))
+			nets.add(net);
+		return nets;
 	}
 
 

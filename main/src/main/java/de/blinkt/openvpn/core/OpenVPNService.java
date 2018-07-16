@@ -58,7 +58,7 @@ import de.blinkt.openvpn.core.VpnStatus.StateListener;
 
 import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_CONNECTED;
 import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
-import static de.blinkt.openvpn.core.NetworkSpace.ipAddress;
+import static de.blinkt.openvpn.core.NetworkSpace.IpAddress;
 
 public class OpenVPNService extends VpnService implements StateListener, Callback, ByteCountListener, IOpenVPNServiceInternal {
     public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";
@@ -590,7 +590,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             // start a Thread that handles incoming messages of the managment socket
             OpenVpnManagementThread ovpnManagementThread = new OpenVpnManagementThread(mProfile, this);
             if (ovpnManagementThread.openManagementInterface(this)) {
-
                 Thread mSocketManagerThread = new Thread(ovpnManagementThread, "OpenVPNManagementThread");
                 mSocketManagerThread.start();
                 mManagement = ovpnManagementThread;
@@ -736,7 +735,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         if (mLocalIP != null) {
-            addLocalNetworksToRoutes();
+            // OpenVPN3 manages excluded local networks by callback
+            if (!VpnProfile.doUseOpenVPN3(this))
+                addLocalNetworksToRoutes();
             try {
                 builder.addAddress(mLocalIP.mIp, mLocalIP.len);
             } catch (IllegalArgumentException iae) {
@@ -775,15 +776,15 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             builder.setMtu(mMtu);
         }
 
-        Collection<ipAddress> positiveIPv4Routes = mRoutes.getPositiveIPList();
-        Collection<ipAddress> positiveIPv6Routes = mRoutesv6.getPositiveIPList();
+        Collection<IpAddress> positiveIPv4Routes = mRoutes.getPositiveIPList();
+        Collection<IpAddress> positiveIPv6Routes = mRoutesv6.getPositiveIPList();
 
         if ("samsung".equals(Build.BRAND) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mDnslist.size() >= 1) {
             // Check if the first DNS Server is in the VPN range
             try {
-                ipAddress dnsServer = new ipAddress(new CIDRIP(mDnslist.get(0), 32), true);
+                IpAddress dnsServer = new IpAddress(new CIDRIP(mDnslist.get(0), 32), true);
                 boolean dnsIncluded = false;
-                for (ipAddress net : positiveIPv4Routes) {
+                for (IpAddress net : positiveIPv4Routes) {
                     if (net.containsNet(dnsServer)) {
                         dnsIncluded = true;
                     }
@@ -800,9 +801,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
-        ipAddress multicastRange = new ipAddress(new CIDRIP("224.0.0.0", 3), true);
+        IpAddress multicastRange = new IpAddress(new CIDRIP("224.0.0.0", 3), true);
 
-        for (NetworkSpace.ipAddress route : positiveIPv4Routes) {
+        for (IpAddress route : positiveIPv4Routes) {
             try {
 
                 if (multicastRange.containsNet(route))
@@ -814,7 +815,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
-        for (NetworkSpace.ipAddress route6 : positiveIPv6Routes) {
+        for (IpAddress route6 : positiveIPv6Routes) {
             try {
                 builder.addRoute(route6.getIPv6Address(), route6.networkMask);
             } catch (IllegalArgumentException ia) {
@@ -899,25 +900,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     private void addLocalNetworksToRoutes() {
-
-        // Add local network interfaces
-        String[] localRoutes = NativeUtils.getIfconfig();
-
-        // The format of mLocalRoutes is kind of broken because I don't really like JNI
-        for (int i = 0; i < localRoutes.length; i += 3) {
-            String intf = localRoutes[i];
-            String ipAddr = localRoutes[i + 1];
-            String netMask = localRoutes[i + 2];
-
-            if (intf == null || intf.equals("lo") ||
-                    intf.startsWith("tun") || intf.startsWith("rmnet"))
-                continue;
-
-            if (ipAddr == null || netMask == null) {
-                VpnStatus.logError("Local routes are broken?! (Report to author) " + TextUtils.join("|", localRoutes));
-                continue;
-            }
-
+        for (String net: NetworkUtils.getLocalNetworks(this, false))
+        {
+            String[] netparts = net.split("/");
+            String ipAddr = netparts[0];
+            int netMask = Integer.parseInt(netparts[1]);
             if (ipAddr.equals(mLocalIP.mIp))
                 continue;
 
@@ -927,6 +914,15 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mProfile.mAllowLocalLAN)
                 mRoutes.addIP(new CIDRIP(ipAddr, netMask), false);
         }
+
+        // IPv6 is Lollipop+ only so we can skip the lower than KITKAT case
+        if (mProfile.mAllowLocalLAN) {
+            for (String net : NetworkUtils.getLocalNetworks(this, true)) {
+                addRoutev6(net, false);;
+            }
+        }
+
+
     }
 
 
@@ -1006,13 +1002,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         CIDRIP route = new CIDRIP(dest, mask);
         boolean include = isAndroidTunDevice(device);
 
-        NetworkSpace.ipAddress gatewayIP = new NetworkSpace.ipAddress(new CIDRIP(gateway, 32), false);
+        IpAddress gatewayIP = new IpAddress(new CIDRIP(gateway, 32), false);
 
         if (mLocalIP == null) {
             VpnStatus.logError("Local IP address unset and received. Neither pushed server config nor local config specifies an IP addresses. Opening tun device is most likely going to fail.");
             return;
         }
-        NetworkSpace.ipAddress localNet = new NetworkSpace.ipAddress(mLocalIP, true);
+        IpAddress localNet = new IpAddress(mLocalIP, true);
         if (localNet.containsNet(gatewayIP))
             include = true;
 
@@ -1032,10 +1028,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     public void addRoutev6(String network, String device) {
-        String[] v6parts = network.split("/");
-        boolean included = isAndroidTunDevice(device);
-
         // Tun is opened after ROUTE6, no device name may be present
+        boolean included = isAndroidTunDevice(device);
+        addRoutev6(network, included);
+    }
+
+    public void addRoutev6(String network, boolean included) {
+        String[] v6parts = network.split("/");
 
         try {
             Inet6Address ip = (Inet6Address) InetAddress.getAllByName(v6parts[0])[0];

@@ -262,7 +262,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     private void fdCloseLollipop(FileDescriptor fd) {
         try {
             Os.close(fd);
-        } catch (ErrnoException e) {
+        } catch (Exception e) {
             VpnStatus.logException("Failed to close fd (" + fd + ")", e);
         }
     }
@@ -284,7 +284,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     private void processCommand(String command) {
         //Log.i(TAG, "Line from managment" + command);
-
 
         if (command.startsWith(">") && command.contains(":")) {
             String[] parts = command.split(":", 2);

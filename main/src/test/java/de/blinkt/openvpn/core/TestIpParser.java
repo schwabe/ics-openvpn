@@ -31,7 +31,7 @@ public class TestIpParser {
     void testAddress(String input, int mask, String output) throws UnknownHostException {
         Inet6Address ip = (Inet6Address) InetAddress.getByName(input);
 
-        NetworkSpace.ipAddress netIp = new NetworkSpace.ipAddress(ip, mask, true);
+        NetworkSpace.IpAddress netIp = new NetworkSpace.IpAddress(ip, mask, true);
 
         Assert.assertEquals(output, netIp.toString());
     }

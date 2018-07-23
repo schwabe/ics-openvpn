@@ -81,6 +81,7 @@ public class ConfigParser {
             "script-security",
             "show-net-up",
             "suppress-timestamps",
+            "tap-sleep",
             "tmp-dir",
             "tun-ipv6",
             "topology",

@@ -23,7 +23,7 @@
             android:title="OpenVPN 3 Core"/>
 
 
-        <ListPreference
+        <de.blinkt.openvpn.views.DefaultVPNListPreference
             android:key="alwaysOnVpn"
             android:title="@string/defaultvpn"
             tools:summary="@string/defaultvpnsummary"

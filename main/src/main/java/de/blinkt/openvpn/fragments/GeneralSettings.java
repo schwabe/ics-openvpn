@@ -94,21 +94,7 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 	public void onResume() {
 		super.onResume();
 
-        ProfileManager pm = ProfileManager.getInstance(getActivity());
-        Collection<VpnProfile> profiles = pm.getProfiles();
-        CharSequence[] entries = new CharSequence[profiles.size()];
-        CharSequence[] entryValues = new CharSequence[profiles.size()];;
 
-        int i=0;
-        for (VpnProfile p: profiles)
-        {
-            entries[i]=p.getName();
-            entryValues[i]=p.getUUIDString();
-            i++;
-        }
-
-        mAlwaysOnVPN.setEntries(entries);
-        mAlwaysOnVPN.setEntryValues(entryValues);
 
 
         VpnProfile vpn = ProfileManager.getAlwaysOnVPN(getActivity());

@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
             />
 
-            <RadioGroup
+            <de.blinkt.openvpn.views.MultiLineRadioGroup
                     android:id="@+id/proxyradiogroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -170,7 +170,7 @@
                         android:text="@string/tor_orbot"
                 />
 
-            </RadioGroup>
+            </de.blinkt.openvpn.views.MultiLineRadioGroup>
             <TextView
                     android:id="@+id/proxyport_label"
                     style="@style/item"

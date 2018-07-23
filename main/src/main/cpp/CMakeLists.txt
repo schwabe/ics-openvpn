@@ -146,7 +146,8 @@ set(openvpn_srcs
 	src/openvpn/ps.c 
 	src/openvpn/push.c 
 	src/openvpn/reliable.c 
-	src/openvpn/route.c 
+	src/openvpn/route.c
+	src/openvpn/run_command.c
 	src/openvpn/schedule.c 
 	src/openvpn/session_id.c 
 	src/openvpn/shaper.c 

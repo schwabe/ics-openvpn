@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
+import de.blinkt.openvpn.core.Connection;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
 
@@ -30,6 +31,7 @@ public class AppRestrictions {
     static boolean alreadyChecked = false;
     private static AppRestrictions mInstance;
     private RestrictionsManager mRestrictionsMgr;
+    private BroadcastReceiver mRestrictionsReceiver;
 
     private AppRestrictions(Context c) {
 
@@ -44,13 +46,17 @@ public class AppRestrictions {
     private void addChangesListener(Context c) {
         IntentFilter restrictionsFilter =
                 new IntentFilter(Intent.ACTION_APPLICATION_RESTRICTIONS_CHANGED);
-        BroadcastReceiver restrictionsReceiver = new BroadcastReceiver() {
+        mRestrictionsReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 applyRestrictions(context);
             }
         };
-        c.registerReceiver(restrictionsReceiver, restrictionsFilter);
+        c.registerReceiver(mRestrictionsReceiver, restrictionsFilter);
+    }
+
+    private void removeChangesListener(Context c) {
+        c.unregisterReceiver(mRestrictionsReceiver);
     }
 
     private String hashConfig(String config) {
@@ -178,5 +184,10 @@ public class AppRestrictions {
         alreadyChecked = true;
         addChangesListener(c);
         applyRestrictions(c);
+    }
+
+    public void pauseCheckRestrictions(Context c)
+    {
+        removeChangesListener(c);
     }
 }

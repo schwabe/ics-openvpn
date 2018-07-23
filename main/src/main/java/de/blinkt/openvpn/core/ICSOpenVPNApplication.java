@@ -22,6 +22,7 @@ import org.acra.annotation.ReportsCrashes;
 import android.os.StrictMode;
 import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.api.AppRestrictions;
 
 public class ICSOpenVPNApplication extends Application {
     private StatusListener mStatus;
@@ -42,6 +43,9 @@ public class ICSOpenVPNApplication extends Application {
         if (BuildConfig.BUILD_TYPE.equals("debug"))
             enableStrictModes();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AppRestrictions.getInstance(this).checkRestrictions(this);
+        }
     }
 
     private void enableStrictModes() {

@@ -64,7 +64,7 @@
         0E910C15–9A85-4DD9-AE0D-E6862392E638). Generate using uuidgen or similar tools
     </string>
     <string name="apprest_uuid">UUID</string>
-    <string name="apprest_ovpn_desc">Content of the OpenVPN configuration file</string>
+    <string name="apprest_ovpn_desc">Content of the OpenVPN configuration file. These files are usually have the extension .ovpn (sometimes also .conf) and are plain text multi line configuration files. If your MDM does not support multiline configuration entries, you can also use a base64 encoded string here. A text file can be converted to base64 using openssl base64 -A -in</string>
     <string name="apprest_ovpn">Config</string>
     <string name="apprest_name_desc">Name of the VPN profile</string>
     <string name="apprest_name">Name</string>

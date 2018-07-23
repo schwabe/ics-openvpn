@@ -34,10 +34,10 @@ public class BaseActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AppRestrictions.getInstance(this).checkRestrictions(this);
-
-        }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }

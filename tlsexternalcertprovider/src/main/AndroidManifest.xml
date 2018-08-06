@@ -14,7 +14,7 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            >
+    >
 
         <!--
              OpenVPN for android will search for all application that have a activity that fulfils this
@@ -24,9 +24,11 @@
              the already selected alias will be provided in the extra android.security.extra.KEY_ALIAS
              if applicable
         -->
-        <activity android:name=".SelectCertificateActivity">
+        <activity android:name=".SelectCertificateActivity"
+                  android:exported="true">
             <intent-filter>
-                <category android:name="de.blinkt.openvpn.CertProviderSelect"/>
+                <action android:name="de.blinkt.openvpn.api.ExternalCertificateConfiguration"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -35,7 +37,7 @@
                 android:name=".ExternalCertService"
                 tools:ignore="ExportedService">
             <intent-filter>
-                <action android:name="de.blinkt.openvpn.api.ExternalCertificateProvider" />
+                <action android:name="de.blinkt.openvpn.api.ExternalCertificateProvider"/>
             </intent-filter>
         </service>
     </application>

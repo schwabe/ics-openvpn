@@ -6,71 +6,122 @@
 package de.blinkt.openvpn.fragments;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.security.KeyChain;
 import android.security.KeyChainException;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.core.ProfileManager;
+import de.blinkt.openvpn.core.ExtAuthHelper;
 import de.blinkt.openvpn.core.X509Utils;
 
 import java.security.cert.X509Certificate;
 
 abstract class KeyChainSettingsFragment extends Settings_Fragment implements View.OnClickListener, Handler.Callback {
     private static final int UPDATE_ALIAS = 20;
+    private static final int UPDATEE_EXT_ALIAS = 210;
 
 
     private TextView mAliasCertificate;
     private TextView mAliasName;
     private Handler mHandler;
+    private TextView mExtAliasName;
+    private Spinner mExtAuthSpinner;
 
 
-
-    private void setAlias() {
-        if(mProfile.mAlias == null) {
+    private void setKeyStoreAlias() {
+        if (mProfile.mAlias == null) {
             mAliasName.setText(R.string.client_no_certificate);
             mAliasCertificate.setText("");
         } else {
             mAliasCertificate.setText("Loading certificate from Keystore...");
             mAliasName.setText(mProfile.mAlias);
-            setKeystoreCertficate();
+            setCertificate(false);
         }
     }
 
-    protected void setKeystoreCertficate()
-    {
+    private void setExtAlias() {
+        if (mProfile.mAlias == null) {
+            mExtAliasName.setText(R.string.extauth_not_configured);
+            mAliasCertificate.setText("");
+        } else {
+            mAliasCertificate.setText("Querying certificate from external provider...");
+            mExtAliasName.setText(mProfile.mAlias);
+            setCertificate(true);
+        }
+    }
+
+    private void fetchExtCertificateMetaData() {
         new Thread() {
+            @Override
             public void run() {
-                String certstr="";
                 try {
-                    X509Certificate cert = KeyChain.getCertificateChain(getActivity().getApplicationContext(), mProfile.mAlias)[0];
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        {
-                            if (isInHardwareKeystore())
-                                certstr+=getString(R.string.hwkeychain);
-                        }
-                    }
-                    certstr+= X509Utils.getCertificateValidityString(cert, getResources());
-                    certstr+=X509Utils.getCertificateFriendlyName(cert);
-
-                } catch (Exception e) {
-                    certstr="Could not get certificate from Keystore: " +e.getLocalizedMessage();
+                    Bundle b = ExtAuthHelper.getCertificateMetaData(getActivity(), mProfile.mExternalAuthenticator, mProfile.mAlias);
+                    mProfile.mAlias = b.getString(ExtAuthHelper.EXTRA_ALIAS);
+                    getActivity().runOnUiThread(() -> setAlias());
+                } catch (KeyChainException e) {
+                    e.printStackTrace();
                 }
 
-                final String certStringCopy=certstr;
-                getActivity().runOnUiThread(new Runnable() {
+            }
+        }.start();
+    }
 
-                    @Override
-                    public void run() {
-                        mAliasCertificate.setText(certStringCopy);
+
+    protected void setCertificate(boolean external) {
+        new Thread() {
+            public void run() {
+                String certstr = "";
+                Bundle metadata= null;
+                try {
+                    X509Certificate cert;
+
+                    if (external) {
+                        if (!TextUtils.isEmpty(mProfile.mExternalAuthenticator) && !TextUtils.isEmpty(mProfile.mAlias)) {
+                            cert = ExtAuthHelper.getCertificateChain(getActivity(), mProfile.mExternalAuthenticator, mProfile.mAlias)[0];
+                            metadata = ExtAuthHelper.getCertificateMetaData(getActivity(), mProfile.mExternalAuthenticator, mProfile.mAlias);
+                        } else {
+                            cert = null;
+                            certstr = getString(R.string.extauth_not_configured);
+                        }
+                    } else {
+                        cert = KeyChain.getCertificateChain(getActivity().getApplicationContext(), mProfile.mAlias)[0];
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                            {
+                                if (isInHardwareKeystore())
+                                    certstr += getString(R.string.hwkeychain);
+                            }
+                        }
                     }
+                    if (cert!=null) {
+                        certstr += X509Utils.getCertificateValidityString(cert, getResources());
+                        certstr += X509Utils.getCertificateFriendlyName(cert);
+                    }
+
+
+
+                } catch (Exception e) {
+                    certstr = "Could not get certificate from Keystore: " + e.getLocalizedMessage();
+                }
+
+                final String certStringCopy = certstr;
+                Bundle finalMetadata = metadata;
+                getActivity().runOnUiThread(() -> {
+                    mAliasCertificate.setText(certStringCopy);
+                    if (finalMetadata!=null)
+                        mExtAliasName.setText(finalMetadata.getString(ExtAuthHelper.EXTRA_DESCRIPTION));
+
                 });
 
             }
@@ -85,18 +136,37 @@ abstract class KeyChainSettingsFragment extends Settings_Fragment implements Vie
 
     protected void initKeychainViews(View v) {
         v.findViewById(R.id.select_keystore_button).setOnClickListener(this);
+        v.findViewById(R.id.configure_extauth_button).setOnClickListener(this);
         mAliasCertificate = v.findViewById(R.id.alias_certificate);
+        mExtAuthSpinner = v.findViewById(R.id.extauth_spinner);
+        mExtAliasName = v.findViewById(R.id.extauth_detail);
         mAliasName = v.findViewById(R.id.aliasname);
         if (mHandler == null) {
             mHandler = new Handler(this);
         }
+        ExtAuthHelper.setExternalAuthProviderSpinnerList(mExtAuthSpinner, mProfile.mExternalAuthenticator);
     }
 
     @Override
     public void onClick(View v) {
         if (v == v.findViewById(R.id.select_keystore_button)) {
             showCertDialog();
+        } else if (v == v.findViewById(R.id.configure_extauth_button)) {
+            startExternalAuthConfig();
         }
+    }
+
+    private void startExternalAuthConfig() {
+        ExtAuthHelper.ExternalAuthProvider eAuth = (ExtAuthHelper.ExternalAuthProvider) mExtAuthSpinner.getSelectedItem();
+        if (!eAuth.configurable) {
+            fetchExtCertificateMetaData();
+            return;
+        }
+        mProfile.mExternalAuthenticator = eAuth.packageName;
+        Intent extauth = new Intent(ExtAuthHelper.ACTION_CERT_CONFIGURATION);
+        extauth.setPackage(eAuth.packageName);
+        extauth.putExtra(ExtAuthHelper.EXTRA_ALIAS, mProfile.mAlias);
+        startActivityForResult(extauth, UPDATEE_EXT_ALIAS);
     }
 
     @Override
@@ -111,15 +181,15 @@ abstract class KeyChainSettingsFragment extends Settings_Fragment implements Vie
     }
 
     @SuppressWarnings("WrongConstant")
-    public void showCertDialog () {
-        try	{
+    public void showCertDialog() {
+        try {
             KeyChain.choosePrivateKeyAlias(getActivity(),
                     alias -> {
                         // Credential alias selected.  Remember the alias selection for future use.
-                        mProfile.mAlias=alias;
+                        mProfile.mAlias = alias;
                         mHandler.sendEmptyMessage(UPDATE_ALIAS);
                     },
-                    new String[] {"RSA"}, // List of acceptable key types. null for any
+                    new String[]{"RSA"}, // List of acceptable key types. null for any
                     null,                        // issuer, null for any
                     mProfile.mServerName,      // host name of server requesting the cert, null if unavailable
                     -1,                         // port of server requesting the cert, -1 if unavailable
@@ -133,14 +203,31 @@ abstract class KeyChainSettingsFragment extends Settings_Fragment implements Vie
         }
     }
 
-    protected void loadPreferences()
-    {
+    protected void loadPreferences() {
         setAlias();
+
+    }
+
+    private void setAlias() {
+        if (mProfile.mAuthenticationType == VpnProfile.TYPE_EXTERNAL_APP)
+            setExtAlias();
+        else
+            setKeyStoreAlias();
     }
 
     @Override
     public boolean handleMessage(Message msg) {
         setAlias();
         return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == UPDATEE_EXT_ALIAS && resultCode == Activity.RESULT_OK) {
+            mProfile.mAlias = data.getStringExtra(ExtAuthHelper.EXTRA_ALIAS);
+            mExtAliasName.setText(data.getStringExtra(ExtAuthHelper.EXTRA_DESCRIPTION));
+        }
     }
 }

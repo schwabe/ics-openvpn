@@ -11,6 +11,9 @@ import android.security.KeyChain;
 import android.os.Bundle;
 
 public class SelectCertificateActivity extends Activity {
+    public static final String EXTRA_ALIAS = "de.blinkt.openvpn.api.KEY_ALIAS";
+    public static final String EXTRA_DESCRIPTION = "de.blinkt.openvpn.api.KEY_DESCRIPTION";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +22,10 @@ public class SelectCertificateActivity extends Activity {
         findViewById(R.id.nicecert).setOnClickListener((v) ->
         {
             Intent intent = new Intent();
-            intent.putExtra(KeyChain.EXTRA_KEY_ALIAS, "mynicecert");
-            setResult(RESULT_OK);
+            intent.putExtra(EXTRA_ALIAS, "mynicecert");
+            intent.putExtra(EXTRA_DESCRIPTION, "Super secret example key!");
+            setResult(RESULT_OK, intent);
+            finish();
         });
     }
 }

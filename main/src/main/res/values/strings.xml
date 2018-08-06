@@ -181,6 +181,7 @@
     <string name="show_log_window">Show log window</string>
     <string name="mobile_info">%10$s %9$s running on %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">Error signing with Android keystore key %1$s: %2$s</string>
+    <string name="error_extapp_sign">Error signing with external authenticator app (%3$s): %1$s: %2$s</string>
     <string name="faq_system_dialogs">The VPN connection warning telling you that this app can intercept all traffic is imposed by the system to prevent abuse of the VPNService API.\nThe VPN connection notification (The key symbol) is also imposed by the Android system to signal an ongoing VPN connection. On some images this notification plays a sound.\nAndroid introduced these system dialogs for your own safety and made sure that they cannot be circumvented. (On some images this unfortunately includes a notification sound)</string>
     <string name="faq_system_dialogs_title">Connection warning and notification sound</string>
     <string name="translationby">English translation by Arne Schwabe&lt;arne@rfc2549.org&gt;</string>
@@ -482,5 +483,8 @@
     </string>
     <string name="openurl_requested">Open URL to continue VPN authentication</string>
     <string name="state_auth_pending">Authentication pending</string>
+    <string name="external_authenticator">External Authenticator</string>
+    <string name="configure">Configure</string>
+    <string name="extauth_not_configured">External Authneticator not configured</string>
 
 </resources>

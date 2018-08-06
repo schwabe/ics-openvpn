@@ -222,7 +222,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	@Override
 	public void external_pki_cert_request(ClientAPI_ExternalPKICertRequest certreq) {
         VpnStatus.logDebug("Got external PKI certificate request from OpenVPN core");
-		String[] ks = mVp.getKeyStoreCertificates((Context) mService);
+		String[] ks = mVp.getExternalCertificates(mService);
 		if(ks==null) {
 			certreq.setError(true);
 			certreq.setErrorText("Error in pki cert request");
@@ -241,7 +241,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	@Override
 	public void external_pki_sign_request(ClientAPI_ExternalPKISignRequest signreq) {
 		VpnStatus.logDebug("Got external PKI signing request from OpenVPN core");
-		signreq.setSig(mVp.getSignedData(signreq.getData()));
+		signreq.setSig(mVp.getSignedData(mService, signreq.getData()));
 	}
 
 	void setUserPW() {

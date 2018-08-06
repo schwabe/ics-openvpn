@@ -44,11 +44,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation (
-    'org.bouncycastle:bcprov-jdk15on:'  + bouncycastleVersion,
-    'org.bouncycastle:bcprov-ext-jdk15on:' + bouncycastleVersion,
-    'org.bouncycastle:bcpkix-jdk15on:' + bouncycastleVersion,
+    //'org.bouncycastle:bcprov-jdk15on:'  + bouncycastleVersion,
+    //'org.bouncycastle:bcprov-ext-jdk15on:' + bouncycastleVersion,
+    //'org.bouncycastle:bcpkix-jdk15on:' + bouncycastleVersion,
     'org.bouncycastle:bcmail-jdk15on:' + bouncycastleVersion,
-    'org.bouncycastle:bcpg-jdk15on:' + bouncycastleVersion
+    //'org.bouncycastle:bcpg-jdk15on:' + bouncycastleVersion
     )
 
+    testImplementation 'junit:junit:4.12'
 }

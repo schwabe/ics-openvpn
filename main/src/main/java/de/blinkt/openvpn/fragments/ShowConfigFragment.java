@@ -51,16 +51,18 @@ public class ShowConfigFragment extends Fragment {
 		new Thread() {
 			public void run() {
 				/* Add a few newlines to make the textview scrollable past the FAB */
-				configtext = vp.getConfigFile(getActivity(), VpnProfile.doUseOpenVPN3(getActivity())) + "\n\n\n";
-				getActivity().runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						cv.setText(configtext);
-                        if (mfabButton!=null)
-						    mfabButton.setVisibility(View.VISIBLE);
-					}
-				});
+				try {
+
+					configtext = vp.getConfigFile(getActivity(), VpnProfile.doUseOpenVPN3(getActivity())) + "\n\n\n";
+				} catch (Exception e) {
+					e.printStackTrace();
+					configtext = "Error generating config file: " + e.getLocalizedMessage();
+				}
+				getActivity().runOnUiThread(() -> {
+                    cv.setText(configtext);
+					if (mfabButton!=null)
+                        mfabButton.setVisibility(View.VISIBLE);
+                });
 				
 				
 			}
@@ -110,7 +112,7 @@ public class ShowConfigFragment extends Fragment {
 		final VpnProfile vp = ProfileManager.get(getActivity(),profileUUID);
 		int check=vp.checkProfile(getActivity());
 
-		if(check!= R.string.no_error_found) {
+		if(check != R.string.no_error_found) {
             mConfigView.setText(check);
             configtext = getString(check);
         }

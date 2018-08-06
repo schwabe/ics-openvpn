@@ -12,17 +12,28 @@ interface ExternalCertificateProvider {
      * for RSA certficate and with NONEwithECDSA for EC certificates
      * @parm alias the parameter that
      */
-    byte[] getSignedData(String alias, in byte[] data);
+    byte[] getSignedData(in String alias, in byte[] data);
 
     /**
-     * Requests a
+     * Requests the certificate chain for the selected alias
+     * The first certifcate returned is assumed to be
+     * the user certificate
      */
-    String[] getCertificateChain(in String alias);
+    byte[] getCertificateChain(in String alias);
 
     /**
-     * request an Intent that should be started when user uses the select certificate box
-     * the already selected alias will be provided in the extra android.security.extra.KEY_ALIAS
-     * if applicable
+     * This function is called for the app to get additional meta information from the
+     * external provider and will be called with the stored alias in the app
+     *
+     * For external app provider that do not provide an activity to configure them, this
+     * is used to get the alias that should be used.
+     * The format is the same as the activity should return, i.e.
+     *
+     * EXTRA_ALIAS = "de.blinkt.openvpn.api.KEY_ALIAS"
+     * EXTRA_DESCRIPTION = "de.blinkt.openvpn.api.KEY_DESCRIPTION"
+     *
+     * as the keys for the bundle.
+     *
      */
-
+    Bundle getCertificateMetaData(in String alias);
 }

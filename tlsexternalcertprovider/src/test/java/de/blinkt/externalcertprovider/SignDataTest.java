@@ -5,8 +5,10 @@
 
 package de.blinkt.externalcertprovider;
 
+import de.blinkt.openvpn.api.ExternalCertificateProvider;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
 
 /**
@@ -14,9 +16,10 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class SignDataTest {
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void testSignData() throws Exception
+    {
+        SimpleSigner.signData(new byte[]{1,2,3,4,5,6,7,8});
     }
 }

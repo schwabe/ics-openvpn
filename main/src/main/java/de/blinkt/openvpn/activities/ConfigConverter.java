@@ -732,10 +732,10 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
                     InputStream is = getContentResolver().openInputStream(data);
 
                     doImport(is);
+                    is.close();
                     if (mResult==null)
                         return -3;
-                } catch (FileNotFoundException |
-                        SecurityException se)
+                } catch (IOException| SecurityException se)
 
                 {
                     log(R.string.import_content_resolve_error + ":" + se.getLocalizedMessage());

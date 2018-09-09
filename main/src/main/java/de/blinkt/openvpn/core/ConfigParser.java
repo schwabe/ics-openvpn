@@ -27,20 +27,19 @@ public class ConfigParser {
 
 
     public static final String CONVERTED_PROFILE = "converted Profile";
-    final String[] unsupportedOptions = {"config",
+    final String[] unsupportedOptions = {
+            "config",
             "tls-server"
-
     };
     // Ignore all scripts
     // in most cases these won't work and user who wish to execute scripts will
     // figure out themselves
-    final String[] ignoreOptions = {"tls-client",
+    final String[] ignoreOptions = {
             "allow-recursive-routing",
             "askpass",
             "auth-nocache",
             "up",
             "down",
-            "route-up",
             "ipchange",
             "route-up",
             "route-pre-down",
@@ -82,6 +81,7 @@ public class ConfigParser {
             "show-net-up",
             "suppress-timestamps",
             "tap-sleep",
+            "tls-client",
             "tmp-dir",
             "tun-ipv6",
             "topology",

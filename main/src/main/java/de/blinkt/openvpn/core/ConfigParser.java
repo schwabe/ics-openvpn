@@ -31,7 +31,7 @@ public class ConfigParser {
             "config",
             "tls-server"
     };
-    // Ignore all scripts
+    // Ignore all scripts and Windows-specific options
     // in most cases these won't work and user who wish to execute scripts will
     // figure out themselves
     final String[] ignoreOptions = {

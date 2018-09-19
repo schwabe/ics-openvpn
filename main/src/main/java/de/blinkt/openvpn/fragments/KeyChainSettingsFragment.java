@@ -18,11 +18,13 @@ import android.security.KeyChain;
 import android.security.KeyChainException;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.api.ExternalCertificateProvider;
 import de.blinkt.openvpn.core.ExtAuthHelper;
 import de.blinkt.openvpn.core.X509Utils;
 
@@ -57,7 +59,7 @@ abstract class KeyChainSettingsFragment extends Settings_Fragment implements Vie
             mAliasCertificate.setText("");
         } else {
             mAliasCertificate.setText("Querying certificate from external provider...");
-            mExtAliasName.setText(mProfile.mAlias);
+            mExtAliasName.setText("");
             setCertificate(true);
         }
     }
@@ -139,6 +141,20 @@ abstract class KeyChainSettingsFragment extends Settings_Fragment implements Vie
         v.findViewById(R.id.configure_extauth_button).setOnClickListener(this);
         mAliasCertificate = v.findViewById(R.id.alias_certificate);
         mExtAuthSpinner = v.findViewById(R.id.extauth_spinner);
+        mExtAuthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ExtAuthHelper.ExternalAuthProvider selectedProvider = (ExtAuthHelper.ExternalAuthProvider) parent.getItemAtPosition(position);
+                if (!selectedProvider.packageName.equals(mProfile.mExternalAuthenticator)) {
+                    mProfile.mAlias = "";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         mExtAliasName = v.findViewById(R.id.extauth_detail);
         mAliasName = v.findViewById(R.id.aliasname);
         if (mHandler == null) {
@@ -158,11 +174,11 @@ abstract class KeyChainSettingsFragment extends Settings_Fragment implements Vie
 
     private void startExternalAuthConfig() {
         ExtAuthHelper.ExternalAuthProvider eAuth = (ExtAuthHelper.ExternalAuthProvider) mExtAuthSpinner.getSelectedItem();
+        mProfile.mExternalAuthenticator = eAuth.packageName;
         if (!eAuth.configurable) {
             fetchExtCertificateMetaData();
             return;
         }
-        mProfile.mExternalAuthenticator = eAuth.packageName;
         Intent extauth = new Intent(ExtAuthHelper.ACTION_CERT_CONFIGURATION);
         extauth.setPackage(eAuth.packageName);
         extauth.putExtra(ExtAuthHelper.EXTRA_ALIAS, mProfile.mAlias);

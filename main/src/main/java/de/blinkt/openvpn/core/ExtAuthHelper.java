@@ -47,6 +47,16 @@ public class ExtAuthHelper {
 
         int selectedPos = -1;
 
+        if (extProviders.size() ==0)
+        {
+            selectedApp = "";
+            ExternalAuthProvider noauthprovider = new ExternalAuthProvider();
+            noauthprovider.label = "No external auth provider found";
+            noauthprovider.packageName = selectedApp;
+            noauthprovider.configurable = false;
+            extProviders.add(noauthprovider);
+        }
+
 
         for (int i = 0; i < extProviders.size(); i++) {
             if (extProviders.get(i).packageName.equals(selectedApp))

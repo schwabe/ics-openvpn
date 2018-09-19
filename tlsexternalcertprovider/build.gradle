@@ -7,6 +7,8 @@ apply plugin: 'com.android.application'
 
 repositories {
     jcenter()
+    maven { url "https://jitpack.io" }
+    maven { url 'https://maven.google.com' }
 }
 
 ext {
@@ -38,6 +40,11 @@ android {
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
+    }
+
+    // This is just a demo package, don't care about it being perfect
+    lintOptions {
+        abortOnError false
     }
 }
 

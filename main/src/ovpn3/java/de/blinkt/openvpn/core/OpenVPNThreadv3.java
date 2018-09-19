@@ -201,7 +201,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         config.setGuiVersion(mVp.getVersionEnvString(mService));
         //config.setPlatformVersion(mVp.getPlatformVersionEnvString());
 		config.setExternalPkiAlias("extpki");
-		config.setCompressionMode("async");
+		config.setCompressionMode("asym");
 		config.setInfo(true);
 		config.setAllowLocalLanAccess(mVp.mAllowLocalLAN);
 

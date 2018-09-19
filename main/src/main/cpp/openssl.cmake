@@ -1,14 +1,15 @@
 enable_language(ASM)
 
 set(crypto_srcs
-  crypto/aes/aes_cbc.c 
+  crypto/aes/aes_cbc.c
   crypto/aes/aes_cfb.c 
   crypto/aes/aes_core.c 
   crypto/aes/aes_ecb.c 
   crypto/aes/aes_ige.c 
   crypto/aes/aes_misc.c 
   crypto/aes/aes_ofb.c 
-  crypto/aes/aes_wrap.c 
+  crypto/aes/aes_wrap.c
+  crypto/aria/aria.c
   crypto/asn1/a_bitstr.c 
   crypto/asn1/a_d2i_fp.c 
   crypto/asn1/a_digest.c 
@@ -167,7 +168,8 @@ set(crypto_srcs
   crypto/conf/conf_lib.c 
   crypto/conf/conf_mall.c 
   crypto/conf/conf_mod.c 
-  crypto/conf/conf_sap.c 
+  crypto/conf/conf_sap.c
+  crypto/conf/conf_ssl.c
   crypto/cpt_err.c 
   crypto/cryptlib.c 
   crypto/ct/ct_b64.c 
@@ -179,7 +181,8 @@ set(crypto_srcs
   crypto/ct/ct_sct.c 
   crypto/ct/ct_sct_ctx.c 
   crypto/ct/ct_vfy.c 
-  crypto/ct/ct_x509v3.c 
+  crypto/ct/ct_x509v3.c
+  crypto/ctype.c
   crypto/cversion.c 
   crypto/des/cbc_cksm.c 
   crypto/des/cbc_enc.c 
@@ -197,8 +200,7 @@ set(crypto_srcs
   crypto/des/pcbc_enc.c 
   crypto/des/qud_cksm.c 
   crypto/des/rand_key.c 
-  crypto/des/rpc_enc.c 
-  crypto/des/set_key.c 
+  crypto/des/set_key.c
   crypto/des/str2key.c 
   crypto/des/xcbc_enc.c 
   crypto/dh/dh_ameth.c 
@@ -212,7 +214,8 @@ set(crypto_srcs
   crypto/dh/dh_lib.c 
   crypto/dh/dh_meth.c 
   crypto/dh/dh_pmeth.c 
-  crypto/dh/dh_rfc5114.c 
+  crypto/dh/dh_rfc5114.c
+  crypto/dh/dh_rfc7919.c
   crypto/dsa/dsa_ameth.c 
   crypto/dsa/dsa_asn1.c 
   crypto/dsa/dsa_depr.c 
@@ -232,9 +235,14 @@ set(crypto_srcs
   crypto/dso/dso_lib.c 
   crypto/dso/dso_openssl.c 
   crypto/ebcdic.c 
-  crypto/ec/curve25519.c 
-  crypto/ec/ec2_mult.c 
-  crypto/ec/ec2_oct.c 
+  crypto/ec/curve25519.c
+  crypto/ec/curve448/curve448_tables.c
+  crypto/ec/curve448/curve448.c
+  crypto/ec/curve448/eddsa.c
+  crypto/ec/curve448/arch_32/f_impl.c
+  crypto/ec/curve448/scalar.c
+  crypto/ec/curve448/f_generic.c
+  crypto/ec/ec2_oct.c
   crypto/ec/ec2_smpl.c 
   crypto/ec/ec_ameth.c 
   crypto/ec/ec_asn1.c 
@@ -289,24 +297,26 @@ set(crypto_srcs
   crypto/evp/bio_enc.c 
   crypto/evp/bio_md.c 
   crypto/evp/bio_ok.c 
-  crypto/evp/c_allc.c 
+  crypto/evp/c_allc.c
   crypto/evp/c_alld.c 
   crypto/evp/cmeth_lib.c 
   crypto/evp/digest.c 
   crypto/evp/e_aes.c 
   crypto/evp/e_aes_cbc_hmac_sha1.c 
-  crypto/evp/e_aes_cbc_hmac_sha256.c 
-  crypto/evp/e_bf.c 
+  crypto/evp/e_aes_cbc_hmac_sha256.c
+  crypto/evp/e_aria.c
+  crypto/evp/e_bf.c
   crypto/evp/e_chacha20_poly1305.c 
   crypto/evp/e_des.c 
   crypto/evp/e_des3.c 
-  crypto/evp/e_null.c 
-  crypto/evp/e_old.c 
+  crypto/evp/e_null.c
+  crypto/evp/e_old.c
   crypto/evp/e_rc2.c 
   crypto/evp/e_rc4.c 
   crypto/evp/e_rc4_hmac_md5.c 
-  crypto/evp/e_rc5.c 
-  crypto/evp/e_xcbc_d.c 
+  crypto/evp/e_rc5.c
+  crypto/evp/e_sm4.c
+  crypto/evp/e_xcbc_d.c
   crypto/evp/encode.c 
   crypto/evp/evp_cnf.c 
   crypto/evp/evp_enc.c 
@@ -320,30 +330,32 @@ set(crypto_srcs
   crypto/evp/m_md5_sha1.c 
   crypto/evp/m_mdc2.c 
   crypto/evp/m_null.c 
-  crypto/evp/m_sha1.c 
+  crypto/evp/m_sha1.c
+  crypto/evp/m_sha3.c
   crypto/evp/m_sigver.c 
   crypto/evp/m_wp.c 
   crypto/evp/names.c 
   crypto/evp/p5_crpt.c 
-  crypto/evp/p5_crpt2.c 
+  crypto/evp/p5_crpt2.c
+  crypto/evp/pbe_scrypt.c
   crypto/evp/p_dec.c 
   crypto/evp/p_enc.c 
   crypto/evp/p_lib.c 
   crypto/evp/p_open.c 
   crypto/evp/p_seal.c 
   crypto/evp/p_sign.c 
-  crypto/evp/p_verify.c 
+  crypto/evp/p_verify.c
   crypto/evp/pmeth_fn.c 
   crypto/evp/pmeth_gn.c 
   crypto/evp/pmeth_lib.c 
-  crypto/evp/scrypt.c 
-  crypto/ex_data.c 
+  crypto/ex_data.c
   crypto/hmac/hm_ameth.c 
   crypto/hmac/hm_pmeth.c 
   crypto/hmac/hmac.c 
   crypto/init.c 
   crypto/kdf/hkdf.c 
-  crypto/kdf/kdf_err.c 
+  crypto/kdf/kdf_err.c
+  crypto/kdf/scrypt.c
   crypto/kdf/tls1_prf.c 
   crypto/lhash/lh_stats.c 
   crypto/lhash/lhash.c 
@@ -418,15 +430,18 @@ set(crypto_srcs
   crypto/pkcs7/pk7_mime.c 
   crypto/pkcs7/pk7_smime.c 
   crypto/pkcs7/pkcs7err.c 
-  crypto/poly1305/poly1305.c 
-  crypto/rand/md_rand.c 
-  crypto/rand/rand_egd.c 
+  crypto/poly1305/poly1305.c
+  crypto/poly1305/poly1305_ameth.c
+  crypto/poly1305/poly1305_pmeth.c
+  crypto/rand/drbg_lib.c
+  crypto/rand/drbg_ctr.c
+  crypto/rand/rand_egd.c
   crypto/rand/rand_err.c 
   crypto/rand/rand_lib.c 
   crypto/rand/rand_unix.c 
   crypto/rand/rand_win.c 
-  crypto/rand/randfile.c 
-  crypto/rc2/rc2_cbc.c 
+  crypto/rand/randfile.c
+  crypto/rc2/rc2_cbc.c
   crypto/rc2/rc2_ecb.c 
   crypto/rc2/rc2_skey.c 
   crypto/rc2/rc2cfb64.c 
@@ -440,10 +455,10 @@ set(crypto_srcs
   crypto/rsa/rsa_err.c 
   crypto/rsa/rsa_gen.c 
   crypto/rsa/rsa_lib.c 
-  crypto/rsa/rsa_meth.c 
+  crypto/rsa/rsa_meth.c
+  crypto/rsa/rsa_mp.c
   crypto/rsa/rsa_none.c 
-  crypto/rsa/rsa_null.c 
-  crypto/rsa/rsa_oaep.c 
+  crypto/rsa/rsa_oaep.c
   crypto/rsa/rsa_ossl.c 
   crypto/rsa/rsa_pk1.c 
   crypto/rsa/rsa_pmeth.c 
@@ -457,9 +472,26 @@ set(crypto_srcs
   crypto/sha/sha1_one.c 
   crypto/sha/sha1dgst.c 
   crypto/sha/sha256.c 
-  crypto/sha/sha512.c 
-  crypto/srp/srp_lib.c 
-  crypto/srp/srp_vfy.c 
+  crypto/sha/sha512.c
+  crypto/siphash/siphash_pmeth.c
+  crypto/siphash/siphash.c
+  crypto/siphash/siphash_ameth.c
+  crypto/sm2/sm2_err.c
+  crypto/sm2/sm2_crypt.c
+  crypto/sm2/sm2_sign.c
+  crypto/sm2/sm2_pmeth.c
+  crypto/sm3/m_sm3.c
+  crypto/sm3/sm3.c
+  crypto/sm4/sm4.c
+  crypto/srp/srp_lib.c
+  crypto/srp/srp_vfy.c
+  crypto/store/store_init.c
+  crypto/store/store_err.c
+  crypto/store/store_register.c
+  crypto/store/store_locl.h
+  crypto/store/store_lib.c
+  crypto/store/store_strings.c
+  crypto/store/loader_file.c
   crypto/stack/stack.c 
   crypto/threads_none.c 
   crypto/threads_pthread.c 
@@ -467,7 +499,8 @@ set(crypto_srcs
   crypto/ts/ts_err.c 
   crypto/txt_db/txt_db.c 
   crypto/ui/ui_err.c 
-  crypto/ui/ui_lib.c 
+  crypto/ui/ui_lib.c
+  crypto/ui/ui_null.c
   crypto/ui/ui_openssl.c 
   crypto/ui/ui_util.c 
   crypto/uid.c 
@@ -475,7 +508,7 @@ set(crypto_srcs
   crypto/x509/by_file.c 
   crypto/x509/t_crl.c 
   crypto/x509/t_req.c 
-  crypto/x509/t_x509.c 
+  crypto/x509/t_x509.c
   crypto/x509/x509_att.c 
   crypto/x509/x509_cmp.c 
   crypto/x509/x509_d2.c 
@@ -511,7 +544,8 @@ set(crypto_srcs
   crypto/x509v3/pcy_lib.c 
   crypto/x509v3/pcy_map.c 
   crypto/x509v3/pcy_node.c 
-  crypto/x509v3/pcy_tree.c 
+  crypto/x509v3/pcy_tree.c
+  crypto/x509v3/v3_admis.c
   crypto/x509v3/v3_akey.c 
   crypto/x509v3/v3_akeya.c 
   crypto/x509v3/v3_alt.c 
@@ -556,6 +590,7 @@ if (${ANDROID_ABI} STREQUAL "armeabi-v7a")
     crypto/sha/asm/sha1-armv4-large.S 
     crypto/sha/asm/sha256-armv4.S 
     crypto/sha/asm/sha512-armv4.S
+    crypto/sha/asm/keccak1600-armv4.S
     )
   list(REMOVE_ITEM crypto_srcs
     crypto/aes/aes_core.c 
@@ -573,6 +608,7 @@ elseif(${ANDROID_ABI} STREQUAL "arm64-v8a")
     crypto/sha/asm/sha1-armv8.S 
     crypto/sha/asm/sha256-armv8.S 
     crypto/sha/asm/sha512-armv8.S
+    crypto/sha/asm/keccak1600-armv8.S
     )
 elseif(${ANDROID_ABI} STREQUAL "x86")
   set(crypto_srcs ${crypto_srcs}
@@ -592,7 +628,8 @@ elseif(${ANDROID_ABI} STREQUAL "x86")
     crypto/poly1305/asm/poly1305-x86.S 
     crypto/sha/asm/sha1-586.S 
     crypto/sha/asm/sha256-586.S 
-    crypto/sha/asm/sha512-586.S 
+    crypto/sha/asm/sha512-586.S
+    crypto/sha/asm/keccak1600-mmx.S
     crypto/x86cpuid.S  
     )
   list(REMOVE_ITEM crypto_srcs
@@ -629,8 +666,13 @@ elseif(${ANDROID_ABI} STREQUAL "x86_64")
     crypto/sha/asm/sha1-x86_64.S 
     crypto/sha/asm/sha256-mb-x86_64.S 
     crypto/sha/asm/sha256-x86_64.S 
-    crypto/sha/asm/sha512-x86_64.S 
-    crypto/x86_64cpuid.S 
+    crypto/sha/asm/sha512-x86_64.S
+    crypto/sha/asm/keccak1600-x86_64.S
+    crypto/sha/asm/keccak1600-avx2.S
+    #crypto/sha/asm/keccak1600-avx512.S
+    #crypto/sha/asm/keccak1600-avx512vl.S
+    crypto/ec/asm/x25519-x86_64.S
+    crypto/x86_64cpuid.S
     )
 
   list(REMOVE_ITEM crypto_srcs
@@ -654,6 +696,9 @@ target_include_directories(crypto PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/openssl/crypto/include
   ${CMAKE_CURRENT_SOURCE_DIR}/openssl/
   ${CMAKE_CURRENT_SOURCE_DIR}/openssl/crypto/
+  ${CMAKE_CURRENT_SOURCE_DIR}/openssl/crypto/ec/curve448/arch_32
+  ${CMAKE_CURRENT_SOURCE_DIR}/openssl/crypto/ec/curve448/
+  # This last two seem more like a bug
   )
 
 target_include_directories(crypto PRIVATE
@@ -662,100 +707,64 @@ target_include_directories(crypto PRIVATE
   )
 
 target_compile_definitions(crypto PRIVATE -DNO_WINDOWS_BRAINDEATH)
-target_compile_options(crypto PRIVATE -Wno-missing-field-initializers -Wno-unused-parameter)
+target_compile_options(crypto PRIVATE -Wno-missing-field-initializers -Wno-unused-parameter
+      -DKECCAK1600_ASM
+      -DNDEBUG
+      -DECP_NISTZ256_ASM
+      -DSHA1_ASM
+      -DSHA256_ASM
+      -DSHA512_ASM
+      -DOPENSSL_PIC
+      -DOPENSSL_THREADS
+      -DOPENSSL_BN_ASM_MONT
+      -DOPENSSL_CPUID_OBJ
+
+       )
 
 if (${ANDROID_ABI} STREQUAL "armeabi-v7a") 
     target_compile_definitions(crypto PRIVATE
       -DAES_ASM
       -DBSAES_ASM 
-      -DDSO_DLFCN 
-      -DECP_NISTZ256_ASM 
-      -DGHASH_ASM 
-      -DHAVE_DLFCN_H 
-      -DL_ENDIAN 
-      -DNDEBUG 
+      -DGHASH_ASM
       -DOPENSSL_BN_ASM_GF2m 
-      -DOPENSSL_BN_ASM_MONT 
-      -DOPENSSL_CPUID_OBJ 
-      -DOPENSSL_NO_STATIC_ENGINE 
-      -DOPENSSL_PIC 
-      -DOPENSSL_THREADS 
-      -DSHA1_ASM 
-      -DSHA256_ASM 
-      -DSHA512_ASM 
       )
+
+
   elseif(${ANDROID_ABI} STREQUAL "arm64-v8a")
     target_compile_definitions(crypto PRIVATE    
-      -DDSO_DLFCN 
-      -DECP_NISTZ256_ASM 
-      -DHAVE_DLFCN_H 
-      -DL_ENDIAN 
-      -DNDEBUG 
-      -DOPENSSL_BN_ASM_MONT 
-      -DOPENSSL_CPUID_OBJ 
-      -DOPENSSL_NO_STATIC_ENGINE 
-      -DOPENSSL_PIC 
-      -DOPENSSL_THREADS 
-      -DPOLY1305_ASM 
-      -DSHA1_ASM 
-      -DSHA256_ASM 
-      -DSHA512_ASM 
-      -DVPAES_ASM  
+      -DPOLY1305_ASM
+      -DVPAES_ASM
       )
   elseif(${ANDROID_ABI} STREQUAL "x86")
     target_compile_definitions(crypto PRIVATE    
       -DAES_ASM 
-      -DDSO_DLFCN 
-      -DECP_NISTZ256_ASM 
-      -DGHASH_ASM 
-      -DHAVE_DLFCN_H 
-      -DL_ENDIAN 
+      -DECP_NISTZ256_ASM
+      -DGHASH_ASM
       -DMD5_ASM 
-      -DNDEBUG 
-      -DOPENSSL_BN_ASM_GF2m 
-      -DOPENSSL_BN_ASM_MONT 
-      -DOPENSSL_BN_ASM_PART_WORDS 
-      -DOPENSSL_CPUID_OBJ 
-      -DOPENSSL_IA32_SSE2 
-      -DOPENSSL_NO_STATIC_ENGINE 
-      -DOPENSSL_PIC 
-      -DOPENSSL_THREADS 
+      -DOPENSSL_BN_ASM_GF2m
+      -DOPENSSL_BN_ASM_PART_WORDS
+      -DOPENSSL_IA32_SSE2
       -DPADLOCK_ASM 
       -DPOLY1305_ASM 
       -DRC4_ASM 
       -DRMD160_ASM 
-      -DSHA1_ASM 
-      -DSHA256_ASM 
-      -DSHA512_ASM 
-      -DVPAES_ASM 
+      -DVPAES_ASM
       )
   elseif(${ANDROID_ABI} STREQUAL "x86_64")
     target_compile_definitions(crypto PRIVATE
       -DAES_ASM 
       -DBSAES_ASM 
-      -DDSO_DLFCN 
-      -DECP_NISTZ256_ASM 
-      -DGHASH_ASM 
-      -DHAVE_DLFCN_H 
-      -DL_ENDIAN 
-      -DMD5_ASM 
+      -DGHASH_ASM
+      -DMD5_ASM
       -DNDEBUG 
       -DOPENSSL_BN_ASM_GF2m 
-      -DOPENSSL_BN_ASM_MONT 
-      -DOPENSSL_BN_ASM_MONT5 
-      -DOPENSSL_CPUID_OBJ 
-      -DOPENSSL_IA32_SSE2 
-      -DOPENSSL_NO_STATIC_ENGINE 
-      -DOPENSSL_PIC 
-      -DOPENSSL_THREADS 
-      -DPADLOCK_ASM 
+      -DOPENSSL_BN_ASM_MONT5
+      -DOPENSSL_IA32_SSE2
+      -DPADLOCK_ASM
       -DPOLY1305_ASM 
       -DRC4_ASM 
-      -DSHA1_ASM 
-      -DSHA256_ASM 
-      -DSHA512_ASM 
-      -DVPAES_ASM 
-
+      -DVPAES_ASM
+      -DX25519_ASM
       )
   else()
     message( FATAL_ERROR "Unknown arch ${ANDROID_ABI} for flags" )
@@ -782,13 +791,15 @@ set (ssl_srcs
   ssl/d1_lib.c 
   ssl/d1_msg.c 
   ssl/d1_srtp.c 
-  ssl/methods.c 
-  ssl/pqueue.c 
+  ssl/methods.c
+  ssl/packet.c
+  ssl/pqueue.c
   ssl/record/dtls1_bitmap.c 
   ssl/record/rec_layer_d1.c 
   ssl/record/rec_layer_s3.c 
   ssl/record/ssl3_buffer.c 
-  ssl/record/ssl3_record.c 
+  ssl/record/ssl3_record.c
+  ssl/record/ssl3_record_tls13.c
   ssl/s3_cbc.c 
   ssl/s3_enc.c 
   ssl/s3_lib.c 
@@ -808,15 +819,18 @@ set (ssl_srcs
   ssl/ssl_utst.c 
   ssl/statem/statem.c 
   ssl/statem/statem_clnt.c 
-  ssl/statem/statem_dtls.c 
+  ssl/statem/statem_dtls.c
+  ssl/statem/extensions.c
+  ssl/statem/extensions_clnt.c
+  ssl/statem/extensions_srvr.c
+  ssl/statem/extensions_cust.c
   ssl/statem/statem_lib.c 
   ssl/statem/statem_srvr.c 
   ssl/t1_enc.c 
-  ssl/t1_ext.c 
-  ssl/t1_lib.c 
-  ssl/t1_reneg.c 
-  ssl/t1_trce.c 
-  ssl/tls_srp.c 
+  ssl/t1_lib.c
+  ssl/t1_trce.c
+  ssl/tls_srp.c
+  ssl/tls13_enc.c
 )
 
 PREPEND(ssl_srcs_with_path "openssl" ${ssl_srcs})

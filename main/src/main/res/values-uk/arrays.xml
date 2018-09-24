@@ -15,6 +15,7 @@
     <item>Користувач/Пароль + Сертифікати</item>
     <item>Користувач/Пароль + PKCS12 </item>
     <item>Користувач/Пароль + Android</item>
+    <item>External Auth Provider</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item translatable="false">0</item>

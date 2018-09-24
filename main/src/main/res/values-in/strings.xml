@@ -14,17 +14,17 @@
   <string name="cancel">Batal</string>
   <string name="no_data">Tidak ada data</string>
   <string name="useLZO">Kompresi LZO</string>
-  <string name="client_no_certificate">Tidak ada Sertifikat</string>
+  <string name="client_no_certificate">Sertifikat CA</string>
   <string name="client_certificate_title">Sertifikat Klien</string>
   <string name="client_key_title">Kunci Sertifikat Klien</string>
   <string name="client_pkcs12_title">Berkas PKCS12</string>
   <string name="ca_title">Sertifikat CA</string>
   <string name="no_certificate">Anda harus memilih sertifikat</string>
-  <string name="copyright_guicode">Kode sumber dan masalah pelacak tersedia di http://code.google.com/p/ics-openvpn/</string>
-  <string name="copyright_others">Program ini menggunakan komponen berikut ini; lihat kode sumber penjelasan lengkap mengenai lisensi</string>
+  <string name="copyright_guicode">Kode sumber dan pelacak masalah tersedia di https://github.com/schwabe/ics-openvpn/</string>
+  <string name="copyright_others">Program ini memakai komponen berikut ini. Lihat sumber untuk mengetahui rincian lisensi</string>
   <string name="about">Tentang</string>
   <string name="vpn_list_title">Profil</string>
-  <string name="vpn_type">Tipe</string>
+  <string name="vpn_type">Mengetik</string>
   <string name="pkcs12pwquery">Password PKCS12</string>
   <string name="file_select">Pilih&#8230;</string>
   <string name="file_nothing_selected">Anda harus memilih setidaknya satu berkas</string>
@@ -201,6 +201,7 @@
   <string name="setting_loadtun">Pakai modul TUN</string>
   <string name="importpkcs12fromconfig">Ambil PKCS12 dari konfigurasi ke Android Keystore</string>
   <string name="getproxy_error">Gagal mendapatkan pengaturan proxy: %s</string>
+  <string name="using_proxy">Menggunakan proxy %1$s %2$s</string>
   <string name="use_system_proxy">Gunakan sistem proxy</string>
   <string name="use_system_proxy_summary">Gunakan konfigurasi lebih luas untuk menyambung system melalui proxy HTTP/HTTPS</string>
   <string name="onbootrestartsummary">OpenVPN akan menghubungkan VPN ditentukan apakah itu aktif di sistem boot. Silakan baca koneksi peringatan FAQ sebelum menggunakan opsi ini pada Android &lt; 5.0.</string>
@@ -437,6 +438,17 @@
   <string name="kbits_per_second">%.1f kbit/s</string>
   <string name="mbits_per_second">%.1f Mbit/s</string>
   <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="weakmd">&lt;p&gt;Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like
+        MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5 signatures are completely insecure and should not be used anymore.&lt;/b&gt; MD5
+        collisions can be created in &lt;a
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;few hours at a minimal cost.&lt;/a&gt;.
+        You should update the VPN certificates as soon as possible.&lt;/p&gt;&lt;p&gt;Unfortunately, older easy-rsa
+        distributions included the config option \"default_md md5\". If you are using an old easy-rsa version, update to
+        the &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;latest version&lt;/a&gt;) or change md5 to sha256 and
+        regenerate your certificates.&lt;/p&gt;&lt;p&gt;If you really want to use old and broken certificates use the custom
+        configuration option tls-cipher \"DEFAULT:@SECLEVEL=0\" under advanced configuration or as additional line in your
+        imported configuration&lt;/p&gt;
+    </string>
   <string name="volume_byte">%.0f B</string>
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>

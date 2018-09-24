@@ -15,6 +15,7 @@
     <item>Jméno/Heslo + Certifikát</item>
     <item>Jméno/Heslo + PKCS12 </item>
     <item>Jméno/Heslo + Android</item>
+    <item>External Auth Provider</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item translatable="false">0 (server)</item>

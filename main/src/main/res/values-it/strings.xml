@@ -203,6 +203,7 @@ Effettuata la lettura del file di configurazione</string>
   <string name="setting_loadtun">Carica il modulo tun</string>
   <string name="importpkcs12fromconfig">Importa i PKCS12 dalla configurazione presente nel Keystore di Android</string>
   <string name="getproxy_error">Errore nell\'ottenere le impostazioni del proxy: %s</string>
+  <string name="using_proxy">Utilizzo del proxy %1$s %2$s</string>
   <string name="use_system_proxy">Utilizza il proxy di sistema</string>
   <string name="use_system_proxy_summary">Utilizza la configurazione generale del sistema relativa ai proxy HTTP/HTTPS per connettersi.</string>
   <string name="onbootrestartsummary">OpenVPN connetterà la VPN specificata se è attiva durante l\'avvio del sistema. Leggi le domande di avviso di connessione prima di utilizzare questa opzione in Android &lt; 5.0.</string>
@@ -419,6 +420,7 @@ Effettuata la lettura del file di configurazione</string>
   <string name="connectretrymaxmessage">Inserire il tempo massimo tra i tentativi di connessione. OpenVPN aumenterà lentamente il tempo di attesa dopo un tentativo di connessione non riuscito fino a questo valore. Il valore predefinito è 300s.</string>
   <string name="connectretrymaxtitle">Tempo massimo tra i tentativi di connessione</string>
   <string name="state_waitconnectretry">Attendere %ss secondi tra i tentativi di connessione</string>
+  <string name="nought_alwayson_warning"><![CDATA[Se non hai ottenuto una finestra di conferma VPN, hai abilitato \"Sempre in VPN \" per un\'altra applicazione. In questo caso solo l\'applicazione può connettersi a una VPN. Controlla in Impostazioni-> Altre reti .. -> VPNS]]></string>
   <string name="management_socket_closed">Connessione a OpenVPN chiusa (%s)</string>
   <string name="change_sorting">Cambia ordinamento</string>
   <string name="sort">Ordina</string>
@@ -438,6 +440,9 @@ Effettuata la lettura del file di configurazione</string>
   <string name="kbits_per_second">%.1f kbit/s</string>
   <string name="mbits_per_second">%.1f Mbit/s</string>
   <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="weakmd">&lt;p&gt;A partire da OpenSSL versione 1.1, OpenSSL rifiuta le firme deboli in certificati come MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;firme MD5 sono completamente insicure e non dovrebbero essere più utilizzate.&lt;/b&gt; collisioni MD5 possono essere create in &lt;a
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;ore a un costo minimo.&lt;/a&gt;. È necessario aggiornare i certificati VPN il prima possibile.&lt;/p&gt;&lt;p&gt;Sfortunatamente, le vecchie distribuzioni easy-rsa includevano l\'opzione di configurazione \"default_md md5\". Se si utilizza una vecchia versione easy-rsa, si aggiorna alla versione &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;più recente&lt;/a&gt;) o si modifica md5 in sha256 e si rigenerano i certificati.&lt;/p&gt;&lt;p&gt;Se si desidera utilizzare effettivamente certificati vecchi e guasti, utilizzare l\'opzione di configurazione personalizzata tls-cipher \"DEFAULT: @ SECLEVEL = 0\" in configurazione avanzata o come riga aggiuntiva nella configurazione importata&lt;/p&gt;
+    </string>
   <string name="volume_byte">%.0f B</string>
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
@@ -446,10 +451,17 @@ Effettuata la lettura del file di configurazione</string>
   <string name="channel_description_background">Statistiche in corso della connessione OpenVPN stabilita</string>
   <string name="channel_name_status">Cambio dello stato della connessione</string>
   <string name="channel_description_status">Cambiamenti di stato della connessione OpenVPN (Connessione, autenticazione, ...)</string>
+  <string name="weakmd_title">Hash (MD5) troppo deboli nella firma del certificato (SSL_CTX_use_certificate md too weak)</string>
   <string name="title_activity_open_sslspeed">Test di velocità OpenSSL</string>
   <string name="openssl_cipher_name">Nomi di cifratura OpenSSL</string>
   <string name="osslspeedtest">OpenSSL Crypto Speed ​​test</string>
   <string name="openssl_error">OpenSSL ha restituito un errore</string>
   <string name="running_test">Esecuzione di test&#8230;</string>
   <string name="test_algoirhtms">Testa gli algoritmi selezionati</string>
+  <string name="all_app_prompt">Un\'app esterna tenta di controllare %s. L\'app che richiede l\'accesso non può essere determinata. Consentendo questa app garantisce l\'accesso a TUTTE le app.</string>
+  <string name="openvpn3_nostatickeys">L\'implementazione di OpenVPN 3 C ++ non supporta le chiavi statiche. Passare a OpenVPN 2.x nelle impostazioni generali.</string>
+  <string name="openvpn3_pkcs12">L\'utilizzo di file PKCS12 direttamente con l\'implementazione di OpenVPN 3 C++ non è supportato. Importare i file pkcs12 nel keystore Android o passare a OpenVPN 2.x nelle impostazioni generali.</string>
+  <string name="proxy">Proxy</string>
+  <string name="Use_no_proxy">Nessuno</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

@@ -393,6 +393,7 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
   <string name="query_permissions_sdcard">OpenVPN dla Android spróbuje automatycznie wykryć brakujące pliki na karcie SD. Dotknij tego komunikatu, aby żądać uprawnień.</string>
   <string name="protocol">Protokół</string>
   <string name="enabled_connection_entry">Włączony</string>
+  <string name="abi_mismatch">Preferowane natywne pierwszeństwo ABI tego urządzenia (%1$s) i ABI zgłoszone przez niezgodność bibliotek (%2$s) natywnych</string>
   <string name="permission_revoked">Pozwolenie VPN odwołane przez system (na przykład inny program VPN jest uruchomiony), zatrzymuję VPN</string>
   <string name="pushpeerinfo">Naciśnij \"Peer info\"</string>
   <string name="pushpeerinfosummary">Wyślij dodatkowe informację do serwera, na przykład wersję SSL oraz Androida</string>
@@ -409,6 +410,7 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
   <string name="samsung_broken_title">Telefony Samsung</string>
   <string name="novpn_selected">Nie wybrano VPN.</string>
   <string name="defaultvpn">Domyślny VPN</string>
+  <string name="defaultvpnsummary">VPN używany w miejscach, gdzie trzeba domyślnego VPN. Obecnie przy uruchomieniu, dla Always-On i pliku Quick Settings.</string>
   <string name="vpnselected">Obecnie wybrana sieć VPN: \'%s\'</string>
   <string name="reconnect">Podłącz ponownie</string>
   <string name="qs_title">Przełącz VPN</string>
@@ -417,6 +419,7 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
   <string name="connectretrymaxmessage">Podaj maksymalny czas pomiędzy kolejnymi próbami połączenia. OpenVPN będzie powoli zwiększał czas oczekiwania po każdej nieudanej próbie połączenia aż do podanej wartości. Domyślna wartość to 300 sekund.</string>
   <string name="connectretrymaxtitle">Maksymalny czas między próbami połączenia</string>
   <string name="state_waitconnectretry">Oczekiwanie %s sekund pomiędzy kolejnymi próbami połączenia</string>
+  <string name="nought_alwayson_warning"><![CDATA[Jeśli nie dostałeś potwierdzenia VPN, masz włączony \"Always on VPN\" dla innej aplikacji. W tym przypadku tylko ona może łączyć się z VPN. Sprawdź Ustawienia-> Sieci więcej .. -> VPN]]></string>
   <string name="management_socket_closed">Połączenie OpenVPN zamknięte (%s)</string>
   <string name="change_sorting">Zmień sortowanie</string>
   <string name="sort">Sortowanie</string>
@@ -436,8 +439,29 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
   <string name="kbits_per_second">%.1f kbit/s</string>
   <string name="mbits_per_second">%.1f Mbit / s</string>
   <string name="gbits_per_second">%.1f Gbit/s</string>
+  <string name="weakmd">&lt;p&gt;Począwszy od wersji OpenSSL 1.1, OpenSSL odrzuca słabe sygnatury w certyfikatach takich jak MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Podpisy MD5 są całkowicie niezabezpieczone i nie powinny być już używane.&lt;/b&gt; Zderzenia MD5 można utworzyć w ciągu &lt;a
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;godzin przy minimalnych kosztach.&lt;/a&gt;. Należy zaktualizować certyfikaty VPN tak szybko, jak to możliwe.&lt;/p&gt;&lt;p&gt;Niestety, starsze dystrybucje easy-rsa zawierały opcję konfiguracji \"default_md md5\". Jeśli używasz starej wersji easy-rsa, zaktualizuj do &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;najnowszej wersji&lt;/a&gt;) lub zmień md5 na sha256 i zrestartuj swoje certyfikaty.&lt;/p&gt;&lt;p&gt;Jeśli naprawdę chcesz używać starych i uszkodzonych certyfikatów, użyj niestandardowej opcji konfiguracji tls-cipher \"DEFAULT: @ SECLEVEL = 0\" w konfiguracji zaawansowanej lub jako dodatkowej linii w zaimportowanej konfiguracji&lt;/p&gt;
+    </string>
   <string name="volume_byte">%.0f B</string>
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="channel_name_background">Statystyki połączenia</string>
+  <string name="channel_description_background">Statystyki obecnie nawiązanego połączenia OpenVPN</string>
+  <string name="channel_name_status">Zmiana statusu połączenia</string>
+  <string name="channel_description_status">Zmiana statusu połączenia OpenVPN (Łączenie, uwierzytelnianie,...)</string>
+  <string name="weakmd_title">Słabe hasze (MD5) w podpisie certyfikatu
+(SSL_CTX_use_certificate md za słabe)</string>
+  <string name="title_activity_open_sslspeed">OpenSSL Test Prędkości</string>
+  <string name="openssl_cipher_name">OpenSSL nazwy szyfrów</string>
+  <string name="osslspeedtest">OpenSSL Test Szybkości Crypto</string>
+  <string name="openssl_error">OpenSSL zwrócił błąd</string>
+  <string name="running_test">Testowanie&#8230;</string>
+  <string name="test_algoirhtms">Test wybranych algorytmów</string>
+  <string name="all_app_prompt">Zewnętrzna aplikacja próbuje przejąć kontrolę %s. Prośba o dostęp nie może być zweryfikowana. Zezwolenie da jej dostęp do WSZYSTKICH aplikacji.</string>
+  <string name="openvpn3_nostatickeys">Implementacja OpenVPN 3 C++ nie wspiera kluczy statycznych. Proszę zmienić na OpenVPN 2.x pod głównymi ustawieniami.</string>
+  <string name="openvpn3_pkcs12">Używanie plików PKCS22 bezpośrednio z implementacją OpenVPN 3 C++ nie jest wspierane. Proszę zaimportować pliki PKCS12 do magazynu kluczy Androida lub przejść na OpenVPN 2.x pod głównymi ustawieniami.</string>
+  <string name="proxy">Proxy</string>
+  <string name="Use_no_proxy">Żaden</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

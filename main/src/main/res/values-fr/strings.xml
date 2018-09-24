@@ -85,7 +85,7 @@
   <string name="backup_dns">Serveur DNS secondaire</string>
   <string name="ignored_pushed_routes">Ignorer les routes envoyées</string>
   <string name="ignore_routes_summary">Ignorer les règles de routage envoyées par le serveur.</string>
-  <string name="default_route_summary">Redirige tout le trafic vers la connexion VPN</string>
+  <string name="default_route_summary">"Redirige tout le trafic sur la connexion VPN"</string>
   <string name="use_default_title">Utiliser la route par défaut</string>
   <string name="custom_route_message">Entrer les règles de routage. Saisissez seulement les destinations au format CIDR. Exemple: \"10.0.0.0/8 2002::/16\" devrait router les réseaux 10.0.0.0/8 et 2002::/16 via le VPN.</string>
   <string name="custom_route_message_excluded">Routes qui ne devant pas être routées à travers le VPN. Utilisez la même syntaxe que pour les règles de routage.</string>
@@ -363,6 +363,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="ab_persist_tun">Ouvrir un appareil en mode TUN pendant qu\'un autre appareil en mode TUN est actif, ce qui est requis pour la prise en charge de la persistance TUN, produit une panne de VPNServices sur l\'appareil. Un redémarrage est nécessaire pour faire fonctionner le VPN à nouveau. OpenVPN pour Android tente d\'éviter de ré-ouvrir l\'appareil en mode TUN , et si cela est indispensable il arrête d\'abord le TUN actuel avant d\'ouvrir le nouveau TUN pour éviter une panne. Cela peut conduire à une courte période pendant laquelle les paquets sont envoyés hors de la connexion VPN. Même avec cette solution de contournement, VPNServices se bloque parfois et nécessite un redémarrage de l\'appareil.</string>
   <string name="ab_secondary_users">Le VPN ne fonctionnera pas du tout pour tous les utilisateurs secondaires.</string>
   <string name="ab_kitkat_reconnect">"Plusieurs utilisateurs ont signalés des prêtes de paquets durant l\'utilisation d\'un VPN sur leur connexion mobile. Ce comportement semble lier à certains fournisseurs, il n\'y a pas de contournement connu ou de bug que l\'on puisse régler."</string>
+  <string name="ab_vpn_reachability_44">Seulement la destination accessible sans VPN peut etre etteinte via VPN. Les VPNs IPv6 me fonctionnent Pas su tour.</string>
   <string name="ab_only_cidr_title">Routes non CIDR</string>
   <string name="ab_proxy_title">Comportement proxy pour les VPN</string>
   <string name="ab_lollipop_reinstall_title">Réinstallation des applications VPN</string>
@@ -392,6 +393,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="query_permissions_sdcard">OpenVPN pour Android va essayer de chercher le(s) fichier(s) manquant(s) sur une sdcard. Tapoter cette fenêtre de dialogue va démarrer une demande d\'autorisation.</string>
   <string name="protocol">Protocole</string>
   <string name="enabled_connection_entry">Activé</string>
+  <string name="abi_mismatch">A precedencia da ABI nativa preferida deste dispositivo (%1$s) e a ABI referenciada por bibliotecas intrínsecas (%2$s) não combinam</string>
   <string name="permission_revoked">Autorisation de VPN révoquée par le système d\'exploitation (ex : un autre programme VPN est lancé), arrêt du VPN</string>
   <string name="pushpeerinfo">Envoyer plus d\'infos</string>
   <string name="pushpeerinfosummary">Envoyer des informations supplémentaires sur le serveur, par exemple la version SSL et la version Android</string>
@@ -437,4 +439,11 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="channel_name_background">Statistiques de connexion</string>
+  <string name="title_activity_open_sslspeed">Test de vitesse OpenSSL</string>
+  <string name="openssl_error">OpenSSL a retourné une erreur</string>
+  <string name="test_algoirhtms">Tester les algorithmes sélectionnés</string>
+  <string name="proxy">Proxy</string>
+  <string name="Use_no_proxy">Aucun</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

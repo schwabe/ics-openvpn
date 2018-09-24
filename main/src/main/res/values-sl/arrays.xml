@@ -15,6 +15,7 @@
     <item>Uporabniško ime/geslo + potrdila</item>
     <item>Uporabniško ime/geslo + PKCS12 </item>
     <item>Uporabniško ime/geslo + Android</item>
+    <item>External Auth Provider</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item translatable="false">0</item>

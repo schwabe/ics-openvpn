@@ -468,4 +468,10 @@
   <string name="openssl_error">OpenSSL 返回错误</string>
   <string name="running_test">正在运行测试&#8230;</string>
   <string name="test_algoirhtms">测试选定的算法</string>
+  <string name="all_app_prompt">An external app tries to control %s. The app requesting access cannot be determined. Allowing this app grants ALL apps access.</string>
+  <string name="openvpn3_nostatickeys">OpenVPN 3 C ++实现不支持静态密钥。请在常规设置下更改为OpenVPN 2.x.</string>
+  <string name="openvpn3_pkcs12">不支持直接使用 OpenVPN 3 c++ 实现的 PKCS12 文件。请将 pkcs12 文件导入 Android 密钥库, 或在常规设置下更改为 OpenVPN 2.x。</string>
+  <string name="proxy">代理</string>
+  <string name="Use_no_proxy">无</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

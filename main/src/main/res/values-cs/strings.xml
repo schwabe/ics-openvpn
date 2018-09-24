@@ -356,6 +356,8 @@
   <string name="ab_kitkat_mss">Dřívější KitKat verze nastavovaly špatnou hodnotu MSS na TCP spojení (#61948). OpenVPN automaticky zapne mssfix možnost pro obejití chyby.</string>
   <string name="ab_lollipop_reinstall">Aplikace VPN mohou přestat fungovat po odinstalování a reinstalaci. Podrobnosti najdete v #80074</string>
   <string name="ab_secondary_users">VPN vůbec nefunguje pro vedlejší uživatele.</string>
+  <string name="ab_kitkat_reconnect">"Více uživatelů hlasí, že mobilní připojení / mobilní datové připojení má časté výpadky během používání této VPN aplikace, Vypadá, že chování ovlivňuje jen nějaké kombinace mobilních dodavatelů / zařizení a zatím jsme přes žádnou přičinu nemohli identifikovat chybu."</string>
+  <string name="ab_vpn_reachability_44">Jediná destinace může být dosažena přes VPN které nejsou dosažitelné bez VPN. Sítě IPv6 nefungují vůbec.</string>
   <string name="ab_only_cidr_title">Ne-CIDR trasy</string>
   <string name="ab_proxy_title">Proxy chování pro VPN</string>
   <string name="ab_lollipop_reinstall_title">Přeinstalování VPN aplikací</string>
@@ -380,6 +382,7 @@
   <string name="lastdumpdate">(Poslední výpis je %1$d: %2$dh starý (%3$s))</string>
   <string name="clear_log_on_connect">Vymazat log při novém připojení</string>
   <string name="connect_timeout">Časový limit připojení</string>
+  <string name="query_permissions_sdcard">Aplikace OpenVPN pro systém Android se může pokusit automaticky zjistit chybějící soubor(y) na sdcard. Klepnutím na tuto zprávu spusťte žádost o povolení.</string>
   <string name="protocol">Protokol</string>
   <string name="enabled_connection_entry">Povoleno</string>
   <string name="pushpeerinfo">Push Peer info</string>
@@ -426,4 +429,5 @@
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

@@ -447,5 +447,21 @@ hacia/de Móvil)</string>
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="channel_name_background">Estadísticas de conexión</string>
   <string name="channel_description_background">Ongoing statistics of the established OpenVPN connection</string>
+  <string name="channel_name_status">Cambio de estado de conexión</string>
+  <string name="channel_description_status">Cambios de estado de la conexión OpenVPN (Conexión, autenticación, ...)</string>
+  <string name="weakmd_title">Hashes débiles (MD5) en la firma del certificado (SSL_CTX_use_certificate md too weak)</string>
+  <string name="title_activity_open_sslspeed">Prueba de velocidad OpenSSL</string>
+  <string name="openssl_cipher_name">Nombres de cifrado OpenSSL</string>
+  <string name="osslspeedtest">Prueba de velocidad de Crypto OpenSSL</string>
+  <string name="openssl_error">OpenSSL devolvió un error</string>
+  <string name="running_test">Ejecutando prueba...</string>
+  <string name="test_algoirhtms">Pruebe los algoritmos seleccionados</string>
+  <string name="all_app_prompt">Una aplicación externa intenta controlar %s. La aplicación que solicita acceso no puede determinarse. Permitir que esta aplicación otorgue acceso a TODAS las aplicaciones.</string>
+  <string name="openvpn3_nostatickeys">La implementación OpenVPN 3 C ++ no admite claves estáticas. Cambie a OpenVPN 2.x en la configuración general.</string>
+  <string name="openvpn3_pkcs12">Usar archivos PKCS12 directamente con la implementación OpenVPN 3 C++ no esta soportada. Por favor, importe los ficheros pkcs12 en el almacén de claves de Android o cambie a OpenVPN 2.x en configuración general.</string>
+  <string name="proxy">Proxy</string>
+  <string name="Use_no_proxy">Ninguno</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

@@ -15,6 +15,7 @@
     <item>Kasutaja/Parool + Sertifikaadid</item>
     <item>Kasutaja/Parool + PKCS12 </item>
     <item>Kasutaja/Parool + Android</item>
+    <item>External Auth Provider</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item translatable="false">0</item>

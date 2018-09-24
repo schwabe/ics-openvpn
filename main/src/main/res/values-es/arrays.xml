@@ -15,6 +15,7 @@
     <item>Usuario/Contraseña + Certificados</item>
     <item>Usuario/Contraseña + PKCS12 </item>
     <item>Usuario/Contraseña + Android</item>
+    <item>External Auth Provider</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item translatable="false">0</item>

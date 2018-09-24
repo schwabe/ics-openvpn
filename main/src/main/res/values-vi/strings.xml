@@ -438,8 +438,36 @@
   <string name="kbits_per_second">%.1f kbit/giây</string>
   <string name="mbits_per_second">%.1f Mbit/giây</string>
   <string name="gbits_per_second">%.1f Gbit/giây</string>
+  <string name="weakmd">&lt;p&gt;Bắt đầu với OpenSSL phiên bản 1.1, OpenSSL từ chối chữ ký yếu trong các chứng chỉ như
+        MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Chữ ký MD5 hoàn toàn không an toàn và không nên sử dụng nữa.&lt;/b&gt; vụ va chạm MD5
+        có thể được tạo trong &lt;a
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;giờ với chi phí tối thiểu.&lt;/a&gt;.
+        Bạn nên cập nhật chứng chỉ VPN càng sớm càng tốt.&lt;/p&gt;&lt;p&gt;Thật không may, các bản phân phối
+        easy-rsa cũ hơn bao gồm tùy chọn cấu hình \"default_md md5\". Nếu bạn đang sử dụng phiên bản easy-rsa cũ, hãy cập nhật lên
+        phiên bản &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;mới nhất&lt;/a&gt;) hoặc thay đổi md5 thành sha256 và
+        tạo lại chứng chỉ của bạn.&lt;/p&gt;&lt;p&gt;Nếu bạn thực sự muốn sử dụng chứng chỉ cũ và bị hỏng, hãy sử dụng tùy chọn cấu hình tls-mật mã tùy chỉnh
+        \"DEFAULT: @ SECLEVEL = 0\" trong cấu hình nâng cao hoặc làm dòng bổ sung trong
+        cấu hình đã nhập của bạn&lt;/p&gt;
+    </string>
   <string name="volume_byte">%.0f B</string>
   <string name="volume_kbyte">%.1f kB</string>
   <string name="volume_mbyte">%.1f MB</string>
   <string name="volume_gbyte">%.1f GB</string>
+  <string name="channel_name_background">Connection statistics</string>
+  <string name="channel_description_background">Số liệu thống kê liên tục của kết nối OpenVPN đã được thiết lập</string>
+  <string name="channel_name_status">Thay đổi trạng thái kết nối</string>
+  <string name="channel_description_status">Thay đổi trạng thái của kết nối OpenVPN (Đang kết nối, xác thực,&#8230;)</string>
+  <string name="weakmd_title">Hàm băm yếu (MD5) trong chữ ký chứng chỉ (SSL_CTX_use_certificate md quá yếu)</string>
+  <string name="title_activity_open_sslspeed">Kiểm tra tốc độ OpenSSL</string>
+  <string name="openssl_cipher_name">Tên mã hóa OpenSSL</string>
+  <string name="osslspeedtest">Kiểm tra tốc độ OpenSSL Crypto</string>
+  <string name="openssl_error">OpenSSL trả về lỗi</string>
+  <string name="running_test">Đang chạy kiểm tra&#8230;</string>
+  <string name="test_algoirhtms">Kiểm tra các thuật toán đã chọn</string>
+  <string name="all_app_prompt">Một ứng dụng bên ngoài cố gắng kiểm soát %s. Không thể xác định ứng dụng yêu cầu quyền truy cập. Cho phép ứng dụng này cấp cho TẤT CẢ quyền truy cập ứng dụng.</string>
+  <string name="openvpn3_nostatickeys">Việc triển khai OpenVPN 3 C ++ không hỗ trợ các khóa tĩnh. Vui lòng thay đổi thành OpenVPN 2.x trong cài đặt chung.</string>
+  <string name="openvpn3_pkcs12">Việc sử dụng tệp PKCS12 trực tiếp với triển khai OpenVPN 3 C ++ không được hỗ trợ. Vui lòng nhập tệp pkcs12 vào kho khóa Android hoặc thay đổi thành OpenVPN 2.x trong cài đặt chung.</string>
+  <string name="proxy">Proxy</string>
+  <string name="Use_no_proxy">Không</string>
+  <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

@@ -15,6 +15,7 @@
     <item>Nom/MDP + Certificats</item>
     <item>Nom/MDP + PKCS12</item>
     <item>Nom/MDP + Android</item>
+    <item>External Auth Provider</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item translatable="false">0</item>

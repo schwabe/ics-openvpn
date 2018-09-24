@@ -15,6 +15,7 @@
     <item>用戶名稱/密碼 + 憑證</item>
     <item>用戶名稱/密碼 + PKCS12檔案</item>
     <item>用戶名稱/密碼 + Android</item>
+    <item>External Auth Provider</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item translatable="false">0</item>

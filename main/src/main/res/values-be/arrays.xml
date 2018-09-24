@@ -15,6 +15,7 @@
     <item>Логін/пароль + Сертыфікаты</item>
     <item>Логін/пароль + PKCS12 </item>
     <item>Логін/пароль + сертыфікат Android</item>
+    <item>External Auth Provider</item>
   </string-array>
   <string-array name="tls_directions_entries">
     <item translatable="false">0</item>

@@ -204,7 +204,7 @@
   <string name="using_proxy">Используется прокси-сервер %1$s %2$s</string>
   <string name="use_system_proxy">Использовать прокси-сервер системы</string>
   <string name="use_system_proxy_summary">Использовать системную конфигурацию прокси HTTP/HTTPS для соединения.</string>
-  <string name="onbootrestartsummary">OpenVPN будет подключаться к указанному VPN, если он был активен при загрузке системы. Пожалуйста, прочитайте FAQ о предупреждении при подключении перед тем, как использовать эту опцию на Android &lt; 5.0.</string>
+  <string name="onbootrestartsummary">OpenVPN будет подключаться к указанному VPN, если он был активен при загрузке системы. Пожалуйста, прочитайте FAQ о предупреждении при подключении перед тем, как использовать эту функцию на Android &lt; 5.0.</string>
   <string name="onbootrestart">Подключение при загрузке</string>
   <string name="ignore">Игнорировать</string>
   <string name="restart">Перезапуск</string>
@@ -268,7 +268,7 @@
   <string name="add">Добавить</string>
   <string name="send_config">Отправить конфигурационный файл</string>
   <string name="complete_dn">Полное DN</string>
-  <string name="remotetlsnote">Импортированная конфигурация использует УСТАРЕВШУЮ опцию tls-remote, которая имеет другой формат DN.</string>
+  <string name="remotetlsnote">Импортированная конфигурация использует УСТАРЕВШУЮ функцию tls-remote, которая имеет другой формат DN.</string>
   <string name="rdn">RDN (полное имя)</string>
   <string name="rdn_prefix">Префикс RDN</string>
   <string name="tls_remote_deprecated">tls-remote (УСТАРЕВШЕЕ)</string>
@@ -279,7 +279,7 @@
   <string name="no_external_app_allowed">Нет приложений, авторизованных для внешнего API</string>
   <string name="allowed_apps">Разрешённые приложения: %s</string>
   <string name="clearappsdialog">Очистить список авторизованных внешних приложений?\nСписок разрешенных приложений:\n\n%s</string>
-  <string name="screenoff_summary">Приостанавливать VPN, если экран выключен и передано меньше 64kb данных за 60 сек. Когда включена опция \"Постоянный туннель\", приостановка VPN оставит ваше устройство без сетевого подключения. Без опции \"Постоянный туннель\" устройство не будет иметь VPN-соединения/защиты.</string>
+  <string name="screenoff_summary">Приостанавливать VPN, если экран выключен и передано меньше 64 КБ данных за 60 сек. Когда включена функция \"Постоянный туннель\", приостановка VPN оставит ваше устройство без сетевого подключения. Без функции \"Постоянный туннель\" устройство не будет иметь VPN-соединения/защиты.</string>
   <string name="screenoff_title">Приостановить VPN-соединение при выключенном экране</string>
   <string name="screenoff_pause">Приостановка соединения при выключенном экране: меньше, чем %1$s за %2$sс</string>
   <string name="screen_nopersistenttun">Внимание: Постоянный туннель не включен для этого VPN. Трафик будет использовать обычное интернет соединение, когда экран выключен.</string>
@@ -314,7 +314,7 @@
   <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
   <string name="faq_system_dialog_xposed">Если на вашем устройстве есть root, можете установить &lt;a href=\"http://xposed.info/\"&gt;Xposed framework&lt;/a&gt; и &lt;a href=\"http://repo.xposed.info/module/de.blinkt.vpndialogxposed\"&gt;модуль автоматического подтверждения диалога подключения VPN&lt;/a&gt; на свой страх и риск</string>
   <string name="full_licenses">Полные тексты лицензий</string>
-  <string name="blocklocal_summary">Сети, доступные напрямую через локальный интерфейс, не будут маршрутизированы через VPN. Отключите эту опцию, чтобы направить трафик через VPN.</string>
+  <string name="blocklocal_summary">Сети, доступные напрямую через локальный интерфейс, не будут маршрутизированы через VPN. Отключите эту функцию, чтобы направить трафик через VPN.</string>
   <string name="blocklocal_title">Не использовать VPN для локальных адресов</string>
   <string name="userpw_file">Файл логина и пароля</string>
   <string name="imported_from_file">[Импортировано из: %s]</string>
@@ -355,7 +355,7 @@
   <string name="ignore_multicast_route">Игнорируется мультиадресный маршрут: %s</string>
   <string name="ab_only_cidr">Android поддерживает только CIDR маршруты к VPN. Поскольку не CIDR маршруты почти никогда не используются, OpenVPN для Android будет использовать /32 для не CIDR маршрутов и выдавать предупреждение.</string>
   <string name="ab_tethering_44">Тетеринг/раздача интернета работает, когда активен VPN. Модемное соединение (тетеринг) НЕ БУДЕТ использовать VPN.</string>
-  <string name="ab_kitkat_mss">Ранние версии KitKat устанавливают неверное значение MSS для TCP соединений (#61948). Попробуйте включить опцию mssfix, чтобы обойти этот баг.</string>
+  <string name="ab_kitkat_mss">Ранние версии KitKat устанавливают неверное значение MSS для TCP-соединений (#61948). Попробуйте включить функцию mssfix, чтобы обойти эту ошибку.</string>
   <string name="ab_proxy">Android будет продолжать использовать ваши настройки прокси, указанные для мобильного/Wi-Fi соединения, когда не установлен DNS сервер. OpenVPN for Android предупредит вас об этом в журнале.<p>Когда VPN устанавливает DNS сервер Android не использует прокси. Для установки прокси для VPN соединения нет API.</p></string>
   <string name="ab_lollipop_reinstall">Приложения VPN могут перестать работать после удаления и повторной установки. Подробности см. #80074</string>
   <string name="ab_not_route_to_vpn">Сконфигурированный IP-адрес клиента и IP-адреса в его подсети (согласно сетевой маске) не направляются через VPN. OpenVPN обходит этот баг, явно добавляя маршрут, который соответствует клиентскому IP и его сетевой маске</string>
@@ -424,7 +424,7 @@
   <string name="sort">Сортировать</string>
   <string name="sorted_lru">Профили отсортированы по порядку последнего использования</string>
   <string name="sorted_az">Профили отсортированы по названию</string>
-  <string name="deprecated_tls_remote">Файл настройки использует опцию tls-remote, которая была объявлена устаревшей в версии 2.3 и окончательно удалена в версии 2.4</string>
+  <string name="deprecated_tls_remote">Файл настройки использует функцию tls-remote, которая была объявлена устаревшей в версии 2.3 и окончательно удалена в версии 2.4</string>
   <string name="auth_failed_behaviour">Поведение при AUTH_FAILED</string>
   <string name="graph">График</string>
   <string name="use_logarithmic_scale">Использовать логарифмическую шкалу</string>
@@ -438,8 +438,7 @@
   <string name="kbits_per_second">%.1f Кбит/с</string>
   <string name="mbits_per_second">%.1f Мбит/с</string>
   <string name="gbits_per_second">%.1f Гбит/с</string>
-  <string name="weakmd">&lt;p&gt; Начиная с OpenSSL версии 1.1, OpenSSL отклоняет слабые подписи в таких сертификатах, как MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5, подписи полностью небезопасны и больше не должны использоваться.&lt;/b&gt; Столкновения MD5 могут быть созданы в &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt; через несколько часов с минимальными затратами.&lt;/a&gt;. Вы должны как можно скорее обновить сертификаты VPN. &lt;/p&gt;&lt;p&gt;К сожалению, старые дистрибутивы easy-rsa включали опцию конфигурации «default_md md5». Если вы используете старую версию easy-rsa, обновите ее до &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;latest версии&lt;/a&gt;) или измените md5 на sha256 и восстановите свои сертификаты.&lt;/p&gt;&lt;p&gt;Если вы действительно хотите использовать старые и поврежденные сертификаты, используйте настраиваемый параметр конфигурации tls-cipher «DEFAULT: @SECLEVEL = 0 \"в расширенной конфигурации или в качестве дополнительной строки в вашей импортированной конфигурации&lt;/p&gt;
+  <string name="weakmd">&lt;p&gt; Начиная с OpenSSL версии 1.1, OpenSSL отклоняет слабые подписи сертификатов, такие как MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Подписи MD5 полностью небезопасны и больше не должны использоваться.&lt;/b&gt; Коллизии MD5 могут быть созданы &lt;a href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt; за несколько часов с минимальными затратами.&lt;/a&gt;Вы должны как можно скорее обновить сертификаты VPN. &lt;/p&gt;&lt;p&gt;К сожалению, старые версии easy-rsa включали опцию конфигурации «default_md md5». Если вы используете старую версию easy-rsa, обновите её до &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;последней версии&lt;/a&gt; или измените md5 на sha256 и обновите свои сертификаты.&lt;/p&gt;&lt;p&gt;Если вы действительно хотите использовать старые и проблемные сертификаты, используйте пользовательский параметр tls-cipher \"DEFAULT:@SECLEVEL=0\" на вкладке «Расширенные» или в качестве дополнительной строки в вашей импортированной конфигурации&lt;/p&gt;
     </string>
   <string name="volume_byte">%.0f Б</string>
   <string name="volume_kbyte">%.1f КБ</string>
@@ -454,11 +453,11 @@
   <string name="openssl_cipher_name">Имена шифров OpenSSL</string>
   <string name="osslspeedtest">Тест скорости OpenSSL Crypto</string>
   <string name="openssl_error">OpenSSL возвратил ошибку</string>
-  <string name="running_test">Запуск теста&#8230;</string>
+  <string name="running_test">Тестирование&#8230;</string>
   <string name="test_algoirhtms">Тестирование выбранных алгоритмов</string>
   <string name="all_app_prompt">Внешнее приложение пытается контролировать %s. Приложение, запрашивающее доступ, не может быть определено. Разрешение этого приложения предоставляет доступ всем приложениям.</string>
-  <string name="openvpn3_nostatickeys">Реализация OpenVPN 3 C ++ не поддерживает статические ключи. Перейдите в OpenVPN 2.x под общие настройки.</string>
-  <string name="openvpn3_pkcs12">Использование файлов PKCS12 напрямую с помощью OpenVPN 3 C ++ не поддерживается. Импортируйте файлы pkcs12 в хранилище ключей Android или замените OpenVPN 2.x на общие настройки.</string>
+  <string name="openvpn3_nostatickeys">Реализация OpenVPN 3 C ++ не поддерживает статические ключи. Переключитесь на OpenVPN 2.x в общих настройках.</string>
+  <string name="openvpn3_pkcs12">Использование файлов PKCS12 напрямую с помощью OpenVPN 3 C ++ не поддерживается. Импортируйте файлы pkcs12 в хранилище ключей Android или переключитесь на OpenVPN 2.x в общих настройках.</string>
   <string name="proxy">Прокси</string>
   <string name="Use_no_proxy">Ничего</string>
   <string name="tor_orbot">Тор (Орбот)</string>

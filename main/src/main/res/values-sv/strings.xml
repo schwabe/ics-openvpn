@@ -201,6 +201,7 @@
   <string name="setting_loadtun">Ladda tun modul</string>
   <string name="importpkcs12fromconfig">Importera PKCS12 från konfigurationen till Android Keystore</string>
   <string name="getproxy_error">Fel vid hämtning av proxyinställningar: %s</string>
+  <string name="using_proxy">Använder proxy %1$s %2$s</string>
   <string name="use_system_proxy">Använd system proxy</string>
   <string name="use_system_proxy_summary">Använda systemkonfigurationen för HTTP/HTTPS proxy för att ansluta.</string>
   <string name="onbootrestartsummary">OpenVPN kommer att ansluta angiven VPN om den var aktivt vid systemets uppstart. Vänligen läs anslutningsvarnings FAQ innan du använder det här alternativet på Android &lt; 5.0.</string>
@@ -447,11 +448,14 @@
   <string name="weakmd_title">Svag (MD5) hashes i certifikat signatur (SSL_CTX_use_certificate md för svag)</string>
   <string name="title_activity_open_sslspeed">OpenSSL-hastighetstest</string>
   <string name="openssl_cipher_name">OpenSSL-ciffernamn</string>
+  <string name="osslspeedtest">OpenSSL Crypto-hastighetstest</string>
   <string name="openssl_error">OpenSSL returnerade ett fel</string>
   <string name="running_test">Kör test&#8230;</string>
   <string name="test_algoirhtms">Testa valda algoritmer</string>
   <string name="all_app_prompt">En extern app försöker kontrollera %s. Appen som begär åtkomst kan inte bestämmas. Tillåtelse av den här appen ger åtkomst till ALLA program.</string>
   <string name="openvpn3_nostatickeys">OpenVPN 3 C ++-implementeringen stöder inte statiska nycklar. Ändra till OpenVPN 2.x under allmänna inställningar.</string>
+  <string name="openvpn3_pkcs12">Användning av PKCS12-filer direkt med OpenVPN 3 C++-implementering stöds inte. Vänligen importera pkcs12-filerna till Android-nyckelbutiken eller ändra till OpenVPN 2.x under allmänna inställningar.</string>
   <string name="proxy">Proxy</string>
+  <string name="Use_no_proxy">Ingen</string>
   <string name="tor_orbot">Tor (Orbot)</string>
 </resources>

@@ -29,7 +29,27 @@ import org.robolectric.annotation.Config;
 @RunWith(RobolectricTestRunner.class)
 public class TestConfigParser {
 
-    String miniconfig = "client\nremote test.blinkt.de\n";
+    public static final String fakeCerts = "<ca>\n" +
+            "-----BEGIN CERTIFICATE-----\n" +
+            "\n" +
+            "-----END CERTIFICATE-----\n" +
+            "\n" +
+            "</ca>\n" +
+            "\n" +
+            "<cert>\n" +
+            "-----BEGIN CERTIFICATE-----\n" +
+            "\n" +
+            "-----END CERTIFICATE-----\n" +
+            "\n" +
+            "</cert>\n" +
+            "\n" +
+            "<key>\n" +
+            "-----BEGIN PRIVATE KEY-----\n" +
+            "\n" +
+            "-----END PRIVATE KEY-----\n" +
+            "\n" +
+            "</key>";
+    private final String miniconfig = "client\nremote test.blinkt.de\n";
 
     @Test
     public void testHttpProxyPass() throws IOException, ConfigParser.ConfigParseError {
@@ -44,6 +64,45 @@ public class TestConfigParser {
         Assert.assertFalse(p.mCustomConfigOptions.contains(httpproxypass));
 
 
+    }
+
+    @Test
+    public void cleanReImport() throws IOException, ConfigParser.ConfigParseError {
+        ConfigParser cp = new ConfigParser();
+        cp.parseConfig(new StringReader(miniconfig + fakeCerts));
+        VpnProfile vp = cp.convertProfile();
+
+        String outConfig = vp.getConfigFile(RuntimeEnvironment.application, false);
+
+        cp = new ConfigParser();
+        cp.parseConfig(new StringReader(outConfig));
+        VpnProfile vp2 = cp.convertProfile();
+
+        String outConfig2 = vp2.getConfigFile(RuntimeEnvironment.application, false);
+
+        Assert.assertEquals(outConfig, outConfig2);
+        Assert.assertFalse(vp.mUseCustomConfig);
+        Assert.assertFalse(vp2.mUseCustomConfig);
+
+    }
+
+    @Test
+    public void testCommonOptionsImport() throws IOException, ConfigParser.ConfigParseError
+    {
+        String config = "client\n"
+                + "tun-mtu 1234\n" +
+                "<connection>\n" +
+                "remote foo.bar\n" +
+                "tun-mtu 1222\n"+
+                "</connection>\n";
+
+        ConfigParser cp = new ConfigParser();
+        cp.parseConfig(new StringReader(config));
+        VpnProfile vp = cp.convertProfile();
+
+        Assert.assertEquals(1234, vp.mTunMtu);
+        Assert.assertTrue(vp.mConnections[0].mCustomConfiguration.contains("tun-mtu 1222"));
+        Assert.assertTrue(vp.mConnections[0].mUseCustomConfig);
     }
 
     @Test
@@ -166,26 +225,7 @@ public class TestConfigParser {
                 "http-proxy-option CUSTOM-HEADER \"DNT: 1\"\n" +
                 "http-proxy-option CUSTOM-HEADER \"Tk: N\"\n" +
                 "\n" +
-                "<ca>\n" +
-                "-----BEGIN CERTIFICATE-----\n" +
-                "\n" +
-                "-----END CERTIFICATE-----\n" +
-                "\n" +
-                "</ca>\n" +
-                "\n" +
-                "<cert>\n" +
-                "-----BEGIN CERTIFICATE-----\n" +
-                "\n" +
-                "-----END CERTIFICATE-----\n" +
-                "\n" +
-                "</cert>\n" +
-                "\n" +
-                "<key>\n" +
-                "-----BEGIN PRIVATE KEY-----\n" +
-                "\n" +
-                "-----END PRIVATE KEY-----\n" +
-                "\n" +
-                "</key>";
+                fakeCerts;
 
         ConfigParser cp = new ConfigParser();
         cp.parseConfig(new StringReader(proxyconf));

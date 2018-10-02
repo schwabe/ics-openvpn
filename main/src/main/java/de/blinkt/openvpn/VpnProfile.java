@@ -122,7 +122,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mCustomConfigOptions = "";
     public String mVerb = "1";  //ignored
     public String mCipher = "";
-    public boolean mNobind = false;
+    public boolean mNobind = true;
     public boolean mUseDefaultRoutev6 = true;
     public String mCustomRoutesv6 = "";
     public String mKeyPassword = "";
@@ -253,6 +253,7 @@ public class VpnProfile implements Serializable, Cloneable {
         mAllowLocalLAN = true;
         mPushPeerInfo = false;
         mMssFix = 0;
+        mNobind = false;
     }
 
     public UUID getUUID() {

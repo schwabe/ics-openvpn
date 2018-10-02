@@ -34,7 +34,7 @@ public class ConfigParser {
     // Ignore all scripts
     // in most cases these won't work and user who wish to execute scripts will
     // figure out themselves
-    final String[] ignoreOptions = {"tls-client",
+    private final String[] ignoreOptions = {"tls-client",
             "allow-recursive-routing",
             "askpass",
             "auth-nocache",
@@ -42,7 +42,6 @@ public class ConfigParser {
             "down",
             "route-up",
             "ipchange",
-            "route-up",
             "route-pre-down",
             "auth-user-pass-verify",
             "block-outside-dns",
@@ -88,15 +87,16 @@ public class ConfigParser {
             "user",
             "win-sys",
     };
-    final String[][] ignoreOptionsWithArg =
+    private final String[][] ignoreOptionsWithArg =
             {
                     {"setenv", "IV_GUI_VER"},
+                    {"setenv", "IV_PLAT_VER"},
                     {"setenv", "IV_OPENVPN_GUI_VERSION"},
                     {"engine", "dynamic"},
                     {"setenv", "CLIENT_CERT"},
-                    {"resolve-retry", "60"}
+                    {"resolv-retry", "60"}
             };
-    final String[] connectionOptions = {
+    private final String[] connectionOptions = {
             "local",
             "remote",
             "float",
@@ -469,7 +469,7 @@ public class ConfigParser {
         }
 
 
-        Vector<String> tunmtu = getOption("mtu", 1, 1);
+        Vector<String> tunmtu = getOption("tun-mtu", 1, 1);
 
         if (tunmtu != null) {
             try {
@@ -908,7 +908,16 @@ public class ConfigParser {
             options.remove(option);
 
 
-        if (options.size() > 0) {
+        boolean customOptions=false;
+        for (Vector<Vector<String>>  option: options.values())
+        {
+            for (Vector<String> optionsline : option) {
+                if (!ignoreThisOption(optionsline)) {
+                    customOptions = true;
+                }
+            }
+        }
+        if (customOptions) {
             np.mCustomConfigOptions = "# These options found in the config file do not map to config settings:\n"
                     + np.mCustomConfigOptions;
 

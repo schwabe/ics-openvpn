@@ -429,6 +429,11 @@ public class VpnProfile implements Serializable, Cloneable {
                 cfg.append("auth-user-pass\n");
             case VpnProfile.TYPE_PKCS12:
                 cfg.append(insertFileData("pkcs12", mPKCS12Filename));
+
+                if (!TextUtils.isEmpty(mCaFilename))
+                {
+                    cfg.append(insertFileData("ca", mCaFilename));
+                }
                 break;
 
             case VpnProfile.TYPE_USERPASS_KEYSTORE:
@@ -443,7 +448,7 @@ public class VpnProfile implements Serializable, Cloneable {
                         if (ks[1] != null)
                             cfg.append("<extra-certs>\n").append(ks[1]).append("\n</extra-certs>\n");
                         cfg.append("<cert>\n").append(ks[2]).append("\n</cert>\n");
-                        cfg.append("management-external-key\n");
+                        cfg.append("management-external-key nopadding\n");
                     } else {
                         cfg.append(context.getString(R.string.keychain_access)).append("\n");
                         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN)
@@ -1113,13 +1118,13 @@ public class VpnProfile implements Serializable, Cloneable {
     }
 
     @Nullable
-    public String getSignedData(Context c, String b64data) {
+    public String getSignedData(Context c, String b64data, boolean pkcs1padding) {
         byte[] data = Base64.decode(b64data, Base64.DEFAULT);
         byte[] signed_bytes;
         if (mAuthenticationType == TYPE_EXTERNAL_APP)
             signed_bytes = getExtAppSignedData(c, data);
         else
-            signed_bytes = getKeyChainSignedData(data);
+            signed_bytes = getKeyChainSignedData(data, pkcs1padding);
 
         if (signed_bytes != null)
             return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
@@ -1138,7 +1143,7 @@ public class VpnProfile implements Serializable, Cloneable {
         }
     }
 
-    private byte[] getKeyChainSignedData(byte[] data) {
+    private byte[] getKeyChainSignedData(byte[] data, boolean pkcs1padding) {
 
         PrivateKey privkey = getKeystoreKey();
         // The Jelly Bean *evil* Hack
@@ -1165,7 +1170,10 @@ public class VpnProfile implements Serializable, Cloneable {
                the public/private part in the TLS exchange
              */
                 Cipher signer;
-                signer = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+                if (pkcs1padding)
+                    signer = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+                else
+                    signer = Cipher.getInstance("RSA/ECB/NoPadding");
 
 
                 signer.init(Cipher.ENCRYPT_MODE, privkey);

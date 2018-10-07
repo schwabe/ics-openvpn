@@ -144,6 +144,8 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
                 mView.findViewById(R.id.userpassword).setVisibility(View.VISIBLE);
             case VpnProfile.TYPE_PKCS12:
                 mView.findViewById(R.id.pkcs12).setVisibility(View.VISIBLE);
+                mView.findViewById(R.id.cacert).setVisibility(View.VISIBLE);
+                ((FileSelectLayout) mView.findViewById(R.id.caselect)).setClearable(true);
                 break;
 
             case VpnProfile.TYPE_STATICKEYS:

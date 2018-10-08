@@ -13,6 +13,9 @@ OPTION(ENABLE_PROGRAMS "" OFF)
 OPTION(USE_SHARED_MBEDTLS_LIBRARY "" OFF)
 OPTION(ENABLE_TESTING ""  OFF)
 
+# Own options
+OPTION(OPENVPN2MBED "Use mbed TLS for OpenVPN2" OFF)
+
 #add_subdirectory(lzo)
 include(tools.cmake)
 include(lzo.cmake)
@@ -169,16 +172,18 @@ set(openvpn_srcs
 	src/openvpn/compstub.c 
     )
 
-PREPEND(openvpn_srcs_with_path "openvpn" ${openvpn_srcs})  
+PREPEND(openvpn_srcs_with_path "openvpn" ${openvpn_srcs})
+
 add_library(openvpn SHARED ${openvpn_srcs_with_path})
+
 target_include_directories(openvpn PRIVATE
   openvpn-config
   openvpn/src/compat
   openvpn/include
+  mbedtls/include
   lzo/include
   openvpn
   )
-
 target_compile_definitions(openvpn PRIVATE
   -DHAVE_CONFIG_H
   -DCONFIGURE_GIT_REVISION=\"${OPENVPN2_GIT}\"
@@ -186,10 +191,17 @@ target_compile_definitions(openvpn PRIVATE
   -DTARGET_ABI=\"${ANDROID_ABI}\"
   )
 
+if (${OPENVPN2MBED})
+target_compile_definitions(openvpn PRIVATE
+  -DENABLE_CRYPTO_MBEDTLS=1
+  )
+	target_link_libraries(openvpn mbedtls mbedx509 mbedcrypto lzo)
+else()
 target_compile_definitions(openvpn PRIVATE
   -DENABLE_CRYPTO_OPENSSL=1
   )
-target_link_libraries(openvpn crypto ssl lzo)
+	target_link_libraries(openvpn crypto ssl lzo)
+endif()
 
 add_executable(pie_openvpn.${ANDROID_ABI} minivpn/minivpn.c)
 target_compile_options(pie_openvpn.${ANDROID_ABI} PRIVATE -fPIE)

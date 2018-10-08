@@ -445,7 +445,7 @@ public class VpnProfile implements Serializable, Cloneable {
                     cfg.append("### From Keystore/ext auth app ####\n");
                     if (ks != null) {
                         cfg.append("<ca>\n").append(ks[0]).append("\n</ca>\n");
-                        if (ks[1] != null)
+                        if (!TextUtils.isEmpty(ks[1]))
                             cfg.append("<extra-certs>\n").append(ks[1]).append("\n</extra-certs>\n");
                         cfg.append("<cert>\n").append(ks[2]).append("\n</cert>\n");
                         cfg.append("management-external-key nopadding\n");

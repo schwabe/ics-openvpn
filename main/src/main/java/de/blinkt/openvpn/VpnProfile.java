@@ -156,6 +156,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mServerName = "openvpn.example.com";
     public String mServerPort = "1194";
     public boolean mUseUdp = true;
+    public boolean mTemporaryProfile = false;
     private transient PrivateKey mPrivateKey;
     // Public attributes, since I got mad with getter/setter
     // set members to default values

@@ -128,6 +128,7 @@ public class ProfileManager {
     }
 
     public static void setTemporaryProfile(Context c, VpnProfile tmp) {
+        tmp.mTemporaryProfile = true;
         ProfileManager.tmpprofile = tmp;
         saveProfile(c, tmp, true, true);
     }

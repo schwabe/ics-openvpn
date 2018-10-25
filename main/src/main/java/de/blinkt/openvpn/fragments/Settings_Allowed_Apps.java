@@ -46,6 +46,7 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
     private ListView mListView;
     private VpnProfile mProfile;
     private TextView mDefaultAllowTextView;
+    private TextView mAllowBypassTextView;
     private PackageAdapter mListAdapter;
 
     @Override
@@ -304,6 +305,7 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
         View v = inflater.inflate(R.layout.allowed_vpn_apps, container, false);
 
         mDefaultAllowTextView = (TextView) v.findViewById(R.id.default_allow_text);
+        mAllowBypassTextView = (TextView) v.findViewById(R.id.allow_bypass_text);
 
         Switch vpnOnDefaultSwitch = (Switch) v.findViewById(R.id.default_allow);
 
@@ -317,6 +319,17 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
         });
 
         vpnOnDefaultSwitch.setChecked(mProfile.mAllowedAppsVpnAreDisallowed);
+
+        Switch vpnAllowBypassSwitch = (Switch) v.findViewById(R.id.allow_bypass);
+
+        vpnAllowBypassSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mProfile.mAllowAppVpnBypass = isChecked;
+            }
+        });
+
+        vpnAllowBypassSwitch.setChecked(mProfile.mAllowAppVpnBypass);
 
         mListView = (ListView) v.findViewById(android.R.id.list);
 
@@ -341,5 +354,7 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
             mDefaultAllowTextView.setText(R.string.vpn_disallow_radio);
         else
             mDefaultAllowTextView.setText(R.string.vpn_allow_radio);
+
+        mAllowBypassTextView.setText(R.string.vpn_allow_bypass);
     }
 }

@@ -142,6 +142,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public boolean mRemoteRandom = false;
     public HashSet<String> mAllowedAppsVpn = new HashSet<>();
     public boolean mAllowedAppsVpnAreDisallowed = true;
+    public boolean mAllowAppVpnBypass = false;
     public String mCrlFilename;
     public String mProfileCreator;
     public String mExternalAuthenticator;

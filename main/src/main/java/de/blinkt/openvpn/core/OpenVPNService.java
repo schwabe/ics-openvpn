@@ -979,6 +979,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         } else {
             VpnStatus.logDebug(R.string.allowed_vpn_apps_info, TextUtils.join(", ", mProfile.mAllowedAppsVpn));
         }
+
+        if (mProfile.mAllowAppVpnBypass) {
+            builder.allowBypass();
+            VpnStatus.logDebug("Apps may bypass VPN");
+        }
     }
 
     public void addDNS(String dns) {

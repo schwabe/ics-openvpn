@@ -194,7 +194,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
             // Closing one of the two sockets also closes the other
             //mServerSocketLocal.close();
-            managmentCommand("version 2\n");
+            managmentCommand("version 3\n");
 
             while (true) {
 
@@ -289,7 +289,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             String[] parts = command.split(":", 2);
             String cmd = parts[0].substring(1);
             String argument = parts[1];
-
 
             switch (cmd) {
                 case "INFO":
@@ -749,9 +748,12 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         releaseHold();
     }
 
-    private void processSignCommand(String b64data) {
+    private void processSignCommand(String argument) {
 
-        String signed_string = mProfile.getSignedData(mOpenVPNService, b64data, false);
+        String[] arguments = argument.split(",");
+
+        boolean pkcs1padding = arguments[1].equals("PKCS1");
+        String signed_string = mProfile.getSignedData(mOpenVPNService, arguments[0], pkcs1padding);
 
         if (signed_string == null) {
             managmentCommand("pk-sig\n");

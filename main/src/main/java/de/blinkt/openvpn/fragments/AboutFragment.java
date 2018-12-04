@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.android.vending.billing.IInAppBillingService;
 
+import de.blinkt.openvpn.core.NativeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -269,10 +270,13 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
             version = "error fetching version";
         }
 
-
         ver.setText(getString(R.string.version_info, name, version));
 
+        TextView verO2 = v.findViewById(R.id.version_ovpn2);
+        TextView verO3 = v.findViewById(R.id.version_ovpn3);
 
+        verO2.setText(String.format(Locale.US, "OpenVPN version: %s", NativeUtils.getOpenVPN2GitVersion()));
+        verO3.setText(String.format(Locale.US, "OpenVPN3 core version: %s", NativeUtils.getOpenVPN3GitVersion()));
 
         gmsTextView = (TextView) v.findViewById(R.id.donategms);
         /* recreating view without onCreate/onDestroy cycle */

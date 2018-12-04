@@ -551,7 +551,10 @@ public class VpnProfile implements Serializable, Cloneable {
 
         if (mMssFix != 0) {
             if (mMssFix != 1450) {
-                cfg.append(String.format(Locale.US, "mssfix %d\n", mMssFix));
+                if (configForOvpn3)
+                    cfg.append(String.format(Locale.US, "mssfix %d mtu\n", mMssFix));
+                else
+                    cfg.append(String.format(Locale.US, "mssfix %d\n", mMssFix));
             } else
                 cfg.append("mssfix\n");
         }

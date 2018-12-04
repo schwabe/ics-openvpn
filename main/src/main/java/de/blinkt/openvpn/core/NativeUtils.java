@@ -26,6 +26,9 @@ public class NativeUtils {
 
     private static native String getJNIAPI();
 
+    public static native String getOpenVPN2GitVersion();
+
+    public static native String getOpenVPN3GitVersion();
 
     public final static int[] openSSLlengths = {
         16, 64, 256, 1024, 8 * 1024, 16 * 1024
@@ -44,4 +47,6 @@ public class NativeUtils {
     public static boolean isRoboUnitTest() {
         return "robolectric".equals(Build.FINGERPRINT);
     }
+
+
 }

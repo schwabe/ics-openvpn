@@ -15,6 +15,9 @@ OPTION(ENABLE_TESTING ""  OFF)
 
 # Own options
 OPTION(OPENVPN2MBED "Use mbed TLS for OpenVPN2" OFF)
+OPTION(OPENVPN3OSSL "Use OpenSSL for OpenVPN3" ON)
+SET(OPENVPN3OSSL ON)
+
 
 #add_subdirectory(lzo)
 include(tools.cmake)
@@ -61,26 +64,38 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*n
       ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls/include
       )
 
-    target_compile_options(ovpn3 PRIVATE  -std=c++1y)
+	if (${OPENVPN3OSSL})
+		target_compile_definitions(ovpn3 PRIVATE
+				-DUSE_OPENSSL
+				)
+		target_link_libraries(ovpn3 crypto ssl lzo lz4)
+	else()
+		target_compile_definitions(ovpn3 PRIVATE
+				-DUSE_MBEDTLS
+				)
+		target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo lz4)
+	endif()
+
+    target_compile_options(ovpn3 PRIVATE -std=c++1y)
     target_compile_definitions(ovpn3 PRIVATE
       -DHAVE_CONFIG_H
       -DHAVE_LZO
       -DHAVE_LZ4
       -DASIO_STANDALONE
       -DUSE_ASIO
-      -DUSE_MBEDTLS
       -DGIT_VERSION_STRING=\"${OPENVPN3_GIT}\"
       -DNO_ROUTE_EXCLUDE_EMULATION
       -DOPENVPN_SHOW_SESSION_TOKEN
-      -DASIO_HAS_STD_STRING_VIEW
       )
-    target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo lz4)
 else()
     message ("Not budiling OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 endif()
 
 add_library(opvpnutil SHARED opvpnutil/jniglue.c opvpnutil/scan_ifs.c opvpnutil/sslspeed.c)
-target_compile_definitions(opvpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\")
+target_compile_definitions(opvpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\"
+		-DOPENVPN2_GIT_REVISION=\"${OPENVPN2_GIT}\"
+		-DOPENVPN3_GIT_REVISION=\"${OPENVPN3_GIT}\"
+		)
 target_link_libraries(opvpnutil log crypto ssl)
 
 # The magic Jellybean keystore signing hack. Beware dragons and dlsyms magic ahead

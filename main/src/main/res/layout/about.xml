@@ -19,6 +19,7 @@
 
         <TextView
             android:id="@+id/version"
+            tools:text="OpenVPN for Anroid 1.2.3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -26,7 +27,8 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="12sp" />
+            android:layout_height="6sp" />
+
 
         <TextView
             android:layout_width="match_parent"
@@ -37,7 +39,20 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="12sp" />
+        <TextView
+                android:id="@+id/version_ovpn2"
 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="OpenVPN version 874981723" />
+        <TextView
+                android:id="@+id/version_ovpn3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="OpenVPN3 core version 8df8718283" />
+        <Space
+                android:layout_width="match_parent"
+                android:layout_height="12sp" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -482,11 +482,14 @@ public class VpnProfile implements Serializable, Cloneable {
 
         if (mUseTLSAuth) {
             boolean useTlsCrypt = mTLSAuthDirection.equals("tls-crypt");
+            boolean useTlsCrypt2 = mTLSAuthDirection.equals("tls-crypt-v2");
 
             if (mAuthenticationType == TYPE_STATICKEYS)
                 cfg.append(insertFileData("secret", mTLSAuthFilename));
             else if (useTlsCrypt)
                 cfg.append(insertFileData("tls-crypt", mTLSAuthFilename));
+            else if (useTlsCrypt2)
+                cfg.append(insertFileData("tls-crypt-v2", mTLSAuthFilename));
             else
                 cfg.append(insertFileData("tls-auth", mTLSAuthFilename));
 

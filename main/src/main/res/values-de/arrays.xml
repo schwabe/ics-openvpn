@@ -22,6 +22,7 @@
     <item translatable="false">1</item>
     <item>Unspezifiziert</item>
     <item>Verschlüsselung (--tls-crypt)</item>
+    <item>TLS Crypt v2</item>
   </string-array>
   <string-array name="crm_entries">
     <item>Keine erneuter Verbindungsversuch</item>

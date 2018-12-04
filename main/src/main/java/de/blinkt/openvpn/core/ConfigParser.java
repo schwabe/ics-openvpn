@@ -427,11 +427,13 @@ public class ConfigParser {
         if (direction != null)
             np.mTLSAuthDirection = direction.get(1);
 
-        Vector<String> tlscrypt = getOption("tls-crypt", 1, 1);
-        if (tlscrypt != null) {
-            np.mUseTLSAuth = true;
-            np.mTLSAuthFilename = tlscrypt.get(1);
-            np.mTLSAuthDirection = "tls-crypt";
+        for (String crypt: new String[]{"tls-crypt", "tls-crypt-v2"}) {
+            Vector<String> tlscrypt = getOption(crypt, 1, 1);
+            if (tlscrypt != null) {
+                np.mUseTLSAuth = true;
+                np.mTLSAuthFilename = tlscrypt.get(1);
+                np.mTLSAuthDirection = crypt;
+            }
         }
 
         Vector<Vector<String>> defgw = getAllOption("redirect-gateway", 0, 7);

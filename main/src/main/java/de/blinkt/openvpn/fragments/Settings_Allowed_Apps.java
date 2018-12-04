@@ -60,6 +60,126 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
 
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        String packageName = (String) buttonView.getTag();
+        if (isChecked) {
+            Log.d("openvpn", "adding to allowed apps" + packageName);
+            mProfile.mAllowedAppsVpn.add(packageName);
+        } else {
+            Log.d("openvpn", "removing from allowed apps" + packageName);
+            mProfile.mAllowedAppsVpn.remove(packageName);
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        changeDisallowText(mProfile.mAllowedAppsVpnAreDisallowed);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        String profileUuid = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
+        mProfile = ProfileManager.get(getActivity(), profileUuid);
+        getActivity().setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.allowed_apps, menu);
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.app_search_widget).getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mListView.setFilterText(query);
+                mListView.setTextFilterEnabled(true);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mListView.setFilterText(newText);
+                if (TextUtils.isEmpty(newText))
+                    mListView.setTextFilterEnabled(false);
+                else
+                    mListView.setTextFilterEnabled(true);
+
+                return true;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                mListView.clearTextFilter();
+                mListAdapter.getFilter().filter("");
+                return false;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.allowed_vpn_apps, container, false);
+
+        mDefaultAllowTextView = (TextView) v.findViewById(R.id.default_allow_text);
+
+        Switch vpnOnDefaultSwitch = (Switch) v.findViewById(R.id.default_allow);
+
+        vpnOnDefaultSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                changeDisallowText(isChecked);
+                mProfile.mAllowedAppsVpnAreDisallowed = isChecked;
+            }
+        });
+
+        vpnOnDefaultSwitch.setChecked(mProfile.mAllowedAppsVpnAreDisallowed);
+
+        Switch vpnAllowBypassSwitch = (Switch) v.findViewById(R.id.allow_bypass);
+
+        vpnAllowBypassSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mProfile.mAllowAppVpnBypass = isChecked;
+            }
+        });
+
+        vpnAllowBypassSwitch.setChecked(mProfile.mAllowAppVpnBypass);
+
+        mListView = (ListView) v.findViewById(android.R.id.list);
+
+        mListAdapter = new PackageAdapter(getActivity(), mProfile);
+        mListView.setAdapter(mListAdapter);
+        mListView.setOnItemClickListener(this);
+
+        mListView.setEmptyView(v.findViewById(R.id.loading_container));
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mListAdapter.populateList(getActivity());
+            }
+        }).start();
+
+        return v;
+    }
+
+    private void changeDisallowText(boolean selectedAreDisallowed) {
+        if (selectedAreDisallowed)
+            mDefaultAllowTextView.setText(R.string.vpn_disallow_radio);
+        else
+            mDefaultAllowTextView.setText(R.string.vpn_allow_radio);
+    }
+
     static class AppViewHolder {
         public ApplicationInfo mInfo;
         public View rootView;
@@ -95,68 +215,12 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
 
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        String packageName = (String) buttonView.getTag();
-        if (isChecked) {
-            Log.d("openvpn", "adding to allowed apps" + packageName);
-            mProfile.mAllowedAppsVpn.add(packageName);
-        } else {
-            Log.d("openvpn", "removing from allowed apps" + packageName);
-            mProfile.mAllowedAppsVpn.remove(packageName);
-        }
-
-    }
-
-
     class PackageAdapter extends BaseAdapter implements Filterable {
-        private Vector<ApplicationInfo> mPackages;
         private final LayoutInflater mInflater;
         private final PackageManager mPm;
+        private Vector<ApplicationInfo> mPackages;
         private ItemFilter mFilter = new ItemFilter();
         private Vector<ApplicationInfo> mFilteredData;
-
-
-        private class ItemFilter extends Filter {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-
-                String filterString = constraint.toString().toLowerCase(Locale.getDefault());
-
-                FilterResults results = new FilterResults();
-
-
-                int count = mPackages.size();
-                final Vector<ApplicationInfo> nlist = new Vector<>(count);
-
-                for (int i = 0; i < count; i++) {
-                    ApplicationInfo pInfo = mPackages.get(i);
-                    CharSequence appName = pInfo.loadLabel(mPm);
-
-                    if (TextUtils.isEmpty(appName))
-                        appName = pInfo.packageName;
-
-                    if (appName instanceof  String) {
-                        if (((String) appName).toLowerCase(Locale.getDefault()).contains(filterString))
-                                nlist.add(pInfo);
-                    } else {
-                        if (appName.toString().toLowerCase(Locale.getDefault()).contains(filterString))
-                            nlist.add(pInfo);
-                    }
-                }
-                results.values = nlist;
-                results.count = nlist.size();
-
-                return results;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                mFilteredData = (Vector<ApplicationInfo>) results.values;
-                notifyDataSetChanged();
-            }
-
-        }
 
 
         PackageAdapter(Context c, VpnProfile vp) {
@@ -246,115 +310,46 @@ public class Settings_Allowed_Apps extends Fragment implements AdapterView.OnIte
         public Filter getFilter() {
             return mFilter;
         }
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        changeDisallowText(mProfile.mAllowedAppsVpnAreDisallowed);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        String profileUuid = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-        mProfile = ProfileManager.get(getActivity(), profileUuid);
-        getActivity().setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.allowed_apps, menu);
-
-        SearchView searchView = (SearchView) menu.findItem( R.id.app_search_widget ).getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        private class ItemFilter extends Filter {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                mListView.setFilterText(query);
-                mListView.setTextFilterEnabled(true);
-                return true;
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                String filterString = constraint.toString().toLowerCase(Locale.getDefault());
+
+                FilterResults results = new FilterResults();
+
+
+                int count = mPackages.size();
+                final Vector<ApplicationInfo> nlist = new Vector<>(count);
+
+                for (int i = 0; i < count; i++) {
+                    ApplicationInfo pInfo = mPackages.get(i);
+                    CharSequence appName = pInfo.loadLabel(mPm);
+
+                    if (TextUtils.isEmpty(appName))
+                        appName = pInfo.packageName;
+
+                    if (appName instanceof String) {
+                        if (((String) appName).toLowerCase(Locale.getDefault()).contains(filterString))
+                            nlist.add(pInfo);
+                    } else {
+                        if (appName.toString().toLowerCase(Locale.getDefault()).contains(filterString))
+                            nlist.add(pInfo);
+                    }
+                }
+                results.values = nlist;
+                results.count = nlist.size();
+
+                return results;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                mListView.setFilterText(newText);
-                if (TextUtils.isEmpty(newText))
-                    mListView.setTextFilterEnabled(false);
-                else
-                    mListView.setTextFilterEnabled(true);
-
-                return true;
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mFilteredData = (Vector<ApplicationInfo>) results.values;
+                notifyDataSetChanged();
             }
-        });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                mListView.clearTextFilter();
-                mListAdapter.getFilter().filter("");
-                return false;
-            }
-        });
 
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.allowed_vpn_apps, container, false);
-
-        mDefaultAllowTextView = (TextView) v.findViewById(R.id.default_allow_text);
-        mAllowBypassTextView = (TextView) v.findViewById(R.id.allow_bypass_text);
-
-        Switch vpnOnDefaultSwitch = (Switch) v.findViewById(R.id.default_allow);
-
-        vpnOnDefaultSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                changeDisallowText(isChecked);
-                mProfile.mAllowedAppsVpnAreDisallowed = isChecked;
-            }
-        });
-
-        vpnOnDefaultSwitch.setChecked(mProfile.mAllowedAppsVpnAreDisallowed);
-
-        Switch vpnAllowBypassSwitch = (Switch) v.findViewById(R.id.allow_bypass);
-
-        vpnAllowBypassSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mProfile.mAllowAppVpnBypass = isChecked;
-            }
-        });
-
-        vpnAllowBypassSwitch.setChecked(mProfile.mAllowAppVpnBypass);
-
-        mListView = (ListView) v.findViewById(android.R.id.list);
-
-        mListAdapter = new PackageAdapter(getActivity(), mProfile);
-        mListView.setAdapter(mListAdapter);
-        mListView.setOnItemClickListener(this);
-
-        mListView.setEmptyView(v.findViewById(R.id.loading_container));
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mListAdapter.populateList(getActivity());
-            }
-        }).start();
-
-        return v;
-    }
-
-    private void changeDisallowText(boolean selectedAreDisallowed) {
-        if (selectedAreDisallowed)
-            mDefaultAllowTextView.setText(R.string.vpn_disallow_radio);
-        else
-            mDefaultAllowTextView.setText(R.string.vpn_allow_radio);
-
-        mAllowBypassTextView.setText(R.string.vpn_allow_bypass);
+        }
     }
 }

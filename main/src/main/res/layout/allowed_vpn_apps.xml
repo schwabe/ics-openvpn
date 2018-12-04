@@ -18,14 +18,14 @@
         android:paddingStart="@dimen/switchbar_pad"
         android:elevation="1dp"
         android:paddingEnd="@dimen/switchbar_pad"
-        tools:ignore="NewApi">
+        >
 
         <Switch
             android:id="@+id/default_allow"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
              />
         <TextView
             android:id="@+id/default_allow_text"
@@ -33,34 +33,33 @@
             tools:text="@string/vpn_disallow_radio"
             android:layout_toStartOf="@id/default_allow"
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content" />
-        </RelativeLayout>
+
+    </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?android:attr/actionBarSize"
-        android:background="@drawable/bg_switchbar"
-        android:paddingStart="@dimen/switchbar_pad"
-        android:elevation="1dp"
-        android:paddingEnd="@dimen/switchbar_pad"
-        tools:ignore="NewApi">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?android:attr/actionBarSize"
+            android:background="@drawable/bg_switchbar"
+            android:paddingStart="@dimen/switchbar_pad"
+            android:elevation="1dp"
+            android:paddingEnd="@dimen/switchbar_pad"
+    >
 
-        <Switch
+    <Switch
             android:id="@+id/allow_bypass"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
+
              />
         <TextView
-            android:id="@+id/allow_bypass_text"
             style="@android:style/TextAppearance.Medium.Inverse"
-            tools:text="@string/vpn_allow_bypass"
+            android:text="@string/vpn_allow_bypass"
             android:layout_toStartOf="@id/allow_bypass"
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content" />
         </RelativeLayout>
 

@@ -349,6 +349,7 @@ set(crypto_srcs
   crypto/evp/pmeth_gn.c 
   crypto/evp/pmeth_lib.c 
   crypto/ex_data.c
+  crypto/getenv.c
   crypto/hmac/hm_ameth.c 
   crypto/hmac/hm_pmeth.c 
   crypto/hmac/hmac.c 

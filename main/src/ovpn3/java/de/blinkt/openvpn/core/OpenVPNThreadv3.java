@@ -245,7 +245,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	}
 
 	@Override
-	public boolean socket_protect(int socket) {
+	public boolean socket_protect(int socket, String remote, boolean ipv6) {
 		boolean b= mService.protect(socket);
 		return b;
 

@@ -421,7 +421,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="connectretrymaxmessage">Inserire il tempo massimo tra i tentativi di connessione. OpenVPN aumenterà lentamente il tempo di attesa dopo un tentativo di connessione non riuscito fino a questo valore. Il valore predefinito è 300s.</string>
     <string name="connectretrymaxtitle">Tempo massimo tra i tentativi di connessione</string>
     <string name="state_waitconnectretry">Attendere %ss secondi tra i tentativi di connessione</string>
-    <string name="nought_alwayson_warning"><![CDATA[Se non hai ottenuto una finestra di conferma VPN, hai abilitato \"Sempre in VPN \" per un'altra applicazione. In questo caso solo l'applicazione può connettersi a una VPN. Controlla in Impostazioni-> Altre reti .. -> VPNS]]></string>
+    <string name="nought_alwayson_warning"><![CDATA[Se non hai ottenuto una finestra di conferma VPN, hai abilitato \"Sempre in VPN \" per un\'altra applicazione. In questo caso solo l\'applicazione può connettersi a una VPN. Controlla in Impostazioni-> Altre reti .. -> VPNS]]></string>
     <string name="management_socket_closed">Connessione a OpenVPN chiusa (%s)</string>
     <string name="change_sorting">Cambia ordinamento</string>
     <string name="sort">Ordina</string>

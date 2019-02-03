@@ -66,7 +66,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		if(status.getError()) {
             VpnStatus.logError(String.format("connect() error: %s: %s",status.getStatus(),status.getMessage()));
 		} else {
-            VpnStatus.logDebug("OpenVPN3 thread finished");
+			VpnStatus.updateStateString("NOPROCESS", "OpenVPN3 thread finished", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
 		}
 		statuspoller.stop();
 	}

@@ -85,6 +85,9 @@ public class AppRestrictions {
             if (Integer.parseInt(configVersion) != CONFIG_VERSION)
                 throw new NumberFormatException("Wrong version");
         } catch (NumberFormatException nex) {
+            if ("(not set)".equals(configVersion))
+                // Ignore error if no version present
+                return;
             VpnStatus.logError(String.format(Locale.US, "App restriction version %s does not match expected version %d", configVersion, CONFIG_VERSION));
             return;
         }

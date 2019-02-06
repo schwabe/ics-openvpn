@@ -42,11 +42,10 @@ import de.blinkt.openvpn.core.ProfileManager
  * Created by arne on 16.11.14.
  */
 class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
-    private var mListView: ListView? = null
-    private var mProfile: VpnProfile? = null
-    private var mDefaultAllowTextView: TextView? = null
-    private val mAllowBypassTextView: TextView? = null
-    private var mListAdapter: PackageAdapter? = null
+    private lateinit var mListView: ListView
+    private lateinit var mProfile: VpnProfile
+    private lateinit var mDefaultAllowTextView: TextView
+    private lateinit var mListAdapter: PackageAdapter
 
     override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         val avh = view.tag as AppViewHolder
@@ -60,15 +59,15 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
         val packageName = buttonView.tag as String
         if (isChecked) {
-            mProfile!!.mAllowedAppsVpn.add(packageName)
+            mProfile.mAllowedAppsVpn.add(packageName)
         } else {
-            mProfile!!.mAllowedAppsVpn.remove(packageName)
+            mProfile.mAllowedAppsVpn.remove(packageName)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        changeDisallowText(mProfile!!.mAllowedAppsVpnAreDisallowed)
+        changeDisallowText(mProfile.mAllowedAppsVpnAreDisallowed)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +75,7 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
 
         val profileUuid = arguments.getString(activity.packageName + ".profileUUID")
         mProfile = ProfileManager.get(activity, profileUuid)
-        activity.title = getString(R.string.edit_profile_title, mProfile!!.name)
+        activity.title = getString(R.string.edit_profile_title, mProfile.name)
         setHasOptionsMenu(true)
     }
 
@@ -86,31 +85,28 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
         val searchView = menu.findItem(R.id.app_search_widget).actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                mListView!!.setFilterText(query)
-                mListView!!.isTextFilterEnabled = true
+                mListView.setFilterText(query)
+                mListView.isTextFilterEnabled = true
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                mListView!!.setFilterText(newText)
-                if (TextUtils.isEmpty(newText))
-                    mListView!!.isTextFilterEnabled = false
-                else
-                    mListView!!.isTextFilterEnabled = true
+                mListView.setFilterText(newText)
+                mListView.isTextFilterEnabled = !TextUtils.isEmpty(newText)
 
                 return true
             }
         })
         searchView.setOnCloseListener {
-            mListView!!.clearTextFilter()
-            mListAdapter!!.filter.filter("")
+            mListView.clearTextFilter()
+            mListAdapter.filter.filter("")
             false
         }
 
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.allowed_vpn_apps, container, false)
 
         mDefaultAllowTextView = v.findViewById<View>(R.id.default_allow_text) as TextView
@@ -119,50 +115,50 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
 
         vpnOnDefaultSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             changeDisallowText(isChecked)
-            mProfile!!.mAllowedAppsVpnAreDisallowed = isChecked
+            mProfile.mAllowedAppsVpnAreDisallowed = isChecked
         }
 
-        vpnOnDefaultSwitch.isChecked = mProfile!!.mAllowedAppsVpnAreDisallowed
+        vpnOnDefaultSwitch.isChecked = mProfile.mAllowedAppsVpnAreDisallowed
 
         val vpnAllowBypassSwitch = v.findViewById<View>(R.id.allow_bypass) as Switch
 
-        vpnAllowBypassSwitch.setOnCheckedChangeListener { buttonView, isChecked -> mProfile!!.mAllowAppVpnBypass = isChecked }
+        vpnAllowBypassSwitch.setOnCheckedChangeListener { buttonView, isChecked -> mProfile.mAllowAppVpnBypass = isChecked }
 
-        vpnAllowBypassSwitch.isChecked = mProfile!!.mAllowAppVpnBypass
+        vpnAllowBypassSwitch.isChecked = mProfile.mAllowAppVpnBypass
 
         mListView = v.findViewById<View>(android.R.id.list) as ListView
 
         mListAdapter = PackageAdapter(activity, mProfile)
-        mListView!!.adapter = mListAdapter
-        mListView!!.onItemClickListener = this
+        mListView.adapter = mListAdapter
+        mListView.onItemClickListener = this
 
-        mListView!!.emptyView = v.findViewById(R.id.loading_container)
+        mListView.emptyView = v.findViewById(R.id.loading_container)
 
-        Thread(Runnable { mListAdapter!!.populateList(activity) }).start()
+        Thread(Runnable { mListAdapter.populateList(activity) }).start()
 
         return v
     }
 
     private fun changeDisallowText(selectedAreDisallowed: Boolean) {
         if (selectedAreDisallowed)
-            mDefaultAllowTextView!!.setText(R.string.vpn_disallow_radio)
+            mDefaultAllowTextView.setText(R.string.vpn_disallow_radio)
         else
-            mDefaultAllowTextView!!.setText(R.string.vpn_allow_radio)
+            mDefaultAllowTextView.setText(R.string.vpn_allow_radio)
     }
 
     internal class AppViewHolder {
         var mInfo: ApplicationInfo? = null
         var rootView: View? = null
-        var appName: TextView
-        var appIcon: ImageView
+        lateinit var appName: TextView
+        lateinit var appIcon: ImageView
         //public TextView appSize;
         //public TextView disabled;
-        var checkBox: CompoundButton
+        lateinit var checkBox: CompoundButton
 
         companion object {
 
-            fun createOrRecycle(inflater: LayoutInflater, convertView: View?, parent: ViewGroup): AppViewHolder {
-                var convertView = convertView
+            fun createOrRecycle(inflater: LayoutInflater, oldview: View?, parent: ViewGroup): AppViewHolder {
+                var convertView = oldview
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.allowed_application_layout, parent, false)
 
@@ -170,7 +166,7 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
                     // we want to bind data to.
                     val holder = AppViewHolder()
                     holder.rootView = convertView
-                    holder.appName = convertView!!.findViewById<View>(R.id.app_name) as TextView
+                    holder.appName = convertView.findViewById<View>(R.id.app_name) as TextView
                     holder.appIcon = convertView.findViewById<View>(R.id.app_icon) as ImageView
                     //holder.appSize = (TextView) convertView.findViewById(R.id.app_size);
                     //holder.disabled = (TextView) convertView.findViewById(R.id.app_disabled);
@@ -190,34 +186,25 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
     }
 
     internal inner class PackageAdapter(c: Context, vp: VpnProfile) : BaseAdapter(), Filterable {
-        private val mInflater: LayoutInflater
-        private val mPm: PackageManager
-        private var mPackages: Vector<ApplicationInfo>? = null
+        private val mInflater: LayoutInflater = LayoutInflater.from(c)
+        private val mPm: PackageManager = c.packageManager
+        private var mPackages: Vector<ApplicationInfo> = Vector()
         private val mFilter = ItemFilter()
-        private var mFilteredData: Vector<ApplicationInfo>? = null
+        private var mFilteredData: Vector<ApplicationInfo> = mPackages
+        private val mProfile = vp
 
 
-        init {
-            mPm = c.packageManager
-            mProfile = vp
-            mInflater = LayoutInflater.from(c)
-
-            mPackages = Vector()
-            mFilteredData = mPackages
-        }
-
-        private fun populateList(c: Activity) {
+        fun populateList(c: Activity) {
             val installedPackages = mPm.getInstalledApplications(PackageManager.GET_META_DATA)
 
             // Remove apps not using Internet
 
             var androidSystemUid = 0
-            var system: ApplicationInfo? = null
             val apps = Vector<ApplicationInfo>()
 
             try {
-                system = mPm.getApplicationInfo("android", PackageManager.GET_META_DATA)
-                androidSystemUid = system!!.uid
+                val system = mPm.getApplicationInfo("android", PackageManager.GET_META_DATA)
+                androidSystemUid = system.uid
                 apps.add(system)
             } catch (e: PackageManager.NameNotFoundException) {
             }
@@ -238,23 +225,21 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
         }
 
         override fun getCount(): Int {
-            return mFilteredData!!.size
+            return mFilteredData.size
         }
 
         override fun getItem(position: Int): Any {
-            return mFilteredData!![position]
+            return mFilteredData[position]
         }
 
         override fun getItemId(position: Int): Long {
-            return mFilteredData!![position].packageName.hashCode().toLong()
+            return mFilteredData[position].packageName.hashCode().toLong()
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-            var convertView = convertView
             val viewHolder = AppViewHolder.createOrRecycle(mInflater, convertView, parent)
-            convertView = viewHolder.rootView
-            viewHolder.mInfo = mFilteredData!![position]
-            val mInfo = mFilteredData!![position]
+            viewHolder.mInfo = mFilteredData[position]
+            val mInfo = mFilteredData[position]
 
 
             var appName = mInfo.loadLabel(mPm)
@@ -267,7 +252,7 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
             viewHolder.checkBox.setOnCheckedChangeListener(this@Settings_Allowed_Apps)
 
 
-            viewHolder.checkBox.isChecked = mProfile!!.mAllowedAppsVpn.contains(mInfo.packageName)
+            viewHolder.checkBox.isChecked = mProfile.mAllowedAppsVpn.contains(mInfo.packageName)
             return viewHolder.rootView
         }
 
@@ -283,11 +268,11 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
                 val results = Filter.FilterResults()
 
 
-                val count = mPackages!!.size
+                val count = mPackages.size
                 val nlist = Vector<ApplicationInfo>(count)
 
                 for (i in 0 until count) {
-                    val pInfo = mPackages!![i]
+                    val pInfo = mPackages[i]
                     var appName = pInfo.loadLabel(mPm)
 
                     if (TextUtils.isEmpty(appName))

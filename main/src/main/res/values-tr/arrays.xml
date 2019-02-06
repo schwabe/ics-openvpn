@@ -15,14 +15,14 @@
         <item>Kullanıcı/Parola + Sertifikalar</item>
         <item>Kullanıcı/Parola + PKCS12 </item>
         <item>Kullanıcı/Parola + Android</item>
-        <item>External Auth Provider</item>
+        <item>Dış Kimlik Doğrulama Sağlayıcısı</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">0</item>
         <item translatable="false">1</item>
         <item>Belirtilmemiş</item>
         <item>Şifreleme (--tls-crypt)</item>
-        <item>TLS Crypt V2</item>
+        <item>TLS Kripto V2</item>
     </string-array>
     <string-array name="crm_entries">
         <item>Yeniden bağlanma denemesi yok</item>

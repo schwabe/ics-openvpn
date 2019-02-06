@@ -9,19 +9,19 @@
     <string-array name="vpn_types">
         <item>Certyfikaty</item>
         <item>Plik PKCS12</item>
-        <item>Certyfikat z pęku kluczy Androida</item>
+        <item>Certyfikat Android</item>
         <item>Nazwa użytkownika/Hasło</item>
         <item>Klucze statyczne</item>
         <item>Użytkownik/Hasło + Certyfikaty</item>
         <item>Użytkownik/Hasło + PKCS12</item>
         <item>Użytkownik/Hasło + Android</item>
-        <item>External Auth Provider</item>
+        <item>Zewnętrzny dostawca autoryzacji</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">0</item>
         <item translatable="false">1</item>
         <item>Nieokreślone</item>
-        <item>Szyfrowanie (tls-crypt)</item>
+        <item>Szyfrowanie (--tls-crypt)</item>
         <item>TLS Crypt V2</item>
     </string-array>
     <string-array name="auth_retry_type">

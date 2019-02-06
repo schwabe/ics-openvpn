@@ -338,6 +338,7 @@ hacia/de Móvil)</string>
     <string name="app_no_longer_exists">El paquete %s ya no está instalado, sacándolo de la lista de apps permitidas/no permitidas</string>
     <string name="vpn_disallow_radio">La VPN es usada por todas las aplicaciones, excepto por las seleccionadas</string>
     <string name="vpn_allow_radio">La VPN es utilizada únicamente por las aplicaciones seleccionadas</string>
+    <string name="vpn_allow_bypass">Permitir que aplicaciones omitan la VPN</string>
     <string name="query_delete_remote">¿Eliminar entrada del servidor remoto?</string>
     <string name="keep">Mantener</string>
     <string name="delete">Eliminar</string>

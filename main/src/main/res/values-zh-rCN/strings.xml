@@ -184,6 +184,7 @@
     <string name="show_log_window">显示日志窗口</string>
     <string name="mobile_info">%10$s %9$s running on %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">与 Android 密钥库 %1$s 签名时出错： %2$s</string>
+    <string name="error_extapp_sign">Error signing with external authenticator app (%3$s): %1$s: %2$s</string>
     <string name="faq_system_dialogs">VPN 连接警告会告诉你有程序正要拦截所有的网络流量，这是为了确保 VPN 服务的 API 不被恶意应用滥用。\nVPN 连接通知（通知栏上的钥匙图标）是 Android 系统内建的，如果当前有 VPN 连接，Android 系统就会自动显示这个通知图标。一些系统上还会在 VPN 连接建立的时候发出提示音。Android 这么做的原因是为了保护你不受恶意应用的欺骗。</string>
     <string name="faq_system_dialogs_title">连接警告和通知声音</string>
     <string name="translationby">中文翻译：Christopher Meng
@@ -254,6 +255,7 @@
     <string name="state_tcp_connect">连接中(TCP)</string>
     <string name="state_auth_failed">验证失败</string>
     <string name="state_nonetwork">等待可用网络</string>
+    <string name="state_waitorbot">等待Orbot启动</string>
     <string name="statusline_bytecount">↓%2$s %1$s-↑%4$s %3$s</string>
     <string name="notifcation_title_notconnect">未连接</string>
     <string name="start_vpn_title">正在连接 VPN %s</string>
@@ -337,6 +339,7 @@
     <string name="app_no_longer_exists">程序 %s 已经从设备上卸载，正在将其从应用过滤规则中移除。</string>
     <string name="vpn_disallow_radio">将VPN 用于所有的应用程序，但排除选定</string>
     <string name="vpn_allow_radio">VPN 是只用于所选的应用程序</string>
+    <string name="vpn_allow_bypass">允许应用绕过VPN</string>
     <string name="query_delete_remote">删除远程服务器的条目吗？</string>
     <string name="keep">保存</string>
     <string name="delete">删除</string>
@@ -474,4 +477,16 @@
     <string name="proxy">代理</string>
     <string name="Use_no_proxy">无</string>
     <string name="tor_orbot">Tor (Orbot)</string>
+    <string name="openvpn3_socksproxy">OpenVPN 3 C ++实现不支持通过Socks代理进行连接</string>
+    <string name="no_orbotfound">无法找到Orbot应用程序。请安装Orbot或使用手动Socks v5集成。</string>
+    <string name="faq_remote_api_title">远程API</string>
+    <string name="enableproxyauth">启用代理验证</string>
+    <string name="info_from_server">来自服务器的信息：\'%s\'</string>
+    <string name="channel_name_userreq">需要用户交互</string>
+    <string name="channel_description_userreq">OpenVPN连接需要一个用户输入，例如：双因子验证    </string>
+    <string name="openurl_requested">打开URL以继续VPN身份验证</string>
+    <string name="state_auth_pending">认证等待中</string>
+    <string name="external_authenticator">外部认证器</string>
+    <string name="configure">配置</string>
+    <string name="extauth_not_configured">外部认证器未配置</string>
 </resources>

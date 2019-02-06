@@ -165,7 +165,7 @@
     <string name="private_key_password">Khóa mật khẩu riêng tư</string>
     <string name="password">Mật khẩu</string>
     <string name="file_icon">biểu tượng tập tin</string>
-    <string name="tls_authentication">Xác thực/mã hoá TLS</string>
+    <string name="tls_authentication">Xác thực / mã hóa TLS</string>
     <string name="generated_config">Tạo cấu hình</string>
     <string name="generalsettings">Cài đặt</string>
     <string name="owner_fix_summary">Cố gắng thiết lập chủ sở hữu của /dev/tun vào hệ thống. Một vài ROM CM9 cần việc này để thực hiện thiết lập VPN API. Yêu cầu root.</string>
@@ -202,7 +202,6 @@
     <string name="setting_loadtun">Tải tun module</string>
     <string name="importpkcs12fromconfig">Nhập PKCS12 từ cấu hình vào Khóa lưu trữ Android</string>
     <string name="getproxy_error">Lỗi nhận cấu hình proxy: %s</string>
-    <string name="using_proxy">ใช้พร็อกซี% 1 $ s% 2 $ s</string>
     <string name="use_system_proxy">Sử dụng proxy hệ thống</string>
     <string name="use_system_proxy_summary">Sử dụng các cấu hình hệ thống rộng cho HTTP/HTTPS proxy để kết nối.</string>
     <string name="onbootrestartsummary">OpenVPN sẽ kết nối VPN xác định nếu nó đã hoạt động trên hệ thống khởi động. Xin vui lòng đọc hướng dẫn cảnh báo kết nối trước khi sử dụng tùy chọn này trên Android &lt; 5.0.</string>
@@ -337,6 +336,7 @@
     <string name="app_no_longer_exists">Gói %s không còn được cài đặt nữa, gỡ bỏ nó từ danh sách ứng dụng cho phép/không cho phép</string>
     <string name="vpn_disallow_radio">VPN được sử dụng cho tất cả các ứng dụng nhưng loại trừ lựa chọn này</string>
     <string name="vpn_allow_radio">VPN được dùng chỉ cho các ứng dụng được lựa chọn</string>
+    <string name="vpn_allow_bypass">Cho phép ứng dụng bỏ qua VPN</string>
     <string name="query_delete_remote">Gỡ bỏ mục nhập máy chủ từ xa?</string>
     <string name="keep">Giữ</string>
     <string name="delete">Xóa</string>
@@ -382,7 +382,7 @@
     <string name="version_and_later">%s và sau</string>
     <string name="tls_cipher_alert_title">Kết nối thất bại với lỗi cảnh báo SSL23_GET_SERVER_HELLO:sslv3</string>
     <string name="tls_cipher_alert">Phiên bản OpenVPN cho Android mới hơn (0.6.29/tháng 3 năm 2015) sử dụng nhiều bảo mật mặc định trên những bộ mã hóa được cho phép (tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Thật không may, việc bỏ qua những mã hóa kém an toàn và xuất các mã hóa, đặc biệt là các thiếu sót của bộ mã hóa không hỗ trợ Perfect Forward Secrecy (Diffie-Hellman) nên gây ra một vài vấn đề. Điều này là ý định tốt nhưng nó thực hiện tăng cường bảo mật TLS kém hơn bằng cách thiết lập mật mã-tls trên máy chủ hoặc một số hệ điều hành với SSL hạ thấp (ví dụ MikroTik).\n Để khắc phục lỗi này, đặt cài đặt mật mã-tls mặc định trên máy chủ một cách hợp lý như mật mã-tls \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". Để làm việc xung quanh vấn đề trên máy trạm, hãy thêm tùy chọn tùy chỉnh mật mã-tls MẶC ĐỊNH trên máy trạm Android.</string>
-    <string name="message_no_user_edit">Hồ sơ này đã được thêm từ ứng dụng bên ngoài %s và đã được đánh dấu là người dùng không thể chỉnh sửa.</string>
+    <string name="message_no_user_edit">Hồ sơ này đã được thêm từ ứng dụng bên ngoài (%s) và đã được đánh dấu là không phải người dùng có thể chỉnh sửa.</string>
     <string name="crl_file">Danh sách thu hồi chứng nhận</string>
     <string name="service_restarted">Đang khởi động lại dịch vụ OpenVPN (Ứng dụng gặp lỗi hoặc bị dừng do tràn bộ nhớ)</string>
     <string name="import_config_error">Nhập cấu hình mạng bị lỗi, không thể lưu lại</string>

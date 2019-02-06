@@ -129,6 +129,7 @@
     <string name="encryption">Encriptação</string>
     <string name="cipher_dialog_title">Digite o método de encriptação</string>
     <string name="chipher_dialog_message">Introduzir o algoritmo de cifra utilizado pelo OpenVPN. Deixar vazio para usar o defeito.</string>
+    <string name="auth_dialog_message">Digite o resumo de autenticação usado para o OpenVPN. Deixe em branco para usar o resumo padrão.</string>
     <string name="settings_auth">Autenticação/encriptação</string>
     <string name="file_explorer_tab">Explorador de ficheiros</string>
     <string name="inline_file_tab">Ficheiro embutido</string>

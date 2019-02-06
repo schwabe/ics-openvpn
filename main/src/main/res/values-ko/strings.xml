@@ -183,9 +183,10 @@
     <string name="show_log_window">로그 창 보기</string>
     <string name="mobile_info">%3$s %1$s (%2$s)에서 %10$s %9$s 작동, 안드로이드 %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">안드로이드 키 저장소 키로 서명 오류 %1$s: %2$s</string>
+    <string name="error_extapp_sign">외부 인증 애플 리 케이 션 (%3$s) 서명 오류: %1$s: %2$s</string>
     <string name="faq_system_dialogs">시스템에서는 VPN 연결 경고를 통해 당신에게 본 앱이 모든 트래픽을 가로챌 수 있다는 점을 알리게 되어 있는데 이는 VPNService API가 남용되는 것을 막기 위함입니다.\nVPN 연결 알림 (열쇠 기호) 또한 안드로이드 시스템에서 부과하는 부분이며 이는 VPN 연결을 알리는 신호입니다. 어떤 이미지에서는 이 알림이 소리를 내기도 합니다.\n안드로이드는 당신의 안전을 위해서 이 대화창을 도입했으며 회피할 수 없게 하였습니다. (어떤 이미지에서는 유감스럽게도 알림 소리 또한 포함됩니다.)</string>
     <string name="faq_system_dialogs_title">연결 경고 및 알림 소리</string>
-    <string name="translationby">한국어 번역: 안규태&lt;ktdann@gmail.com&gt;, 강현진&lt;peaceb&gt;</string>
+    <string name="translationby">한국어 번역 (주)기가드 안규태&lt;ktdann@gmail.com></string>
     <string name="ipdns">IP와 DNS</string>
     <string name="basic">기본</string>
     <string name="routing">라우팅</string>
@@ -252,6 +253,7 @@
     <string name="state_tcp_connect">연결중 (TCP)</string>
     <string name="state_auth_failed">인증 실패</string>
     <string name="state_nonetwork">사용 가능한 네트워크 대기중</string>
+    <string name="state_waitorbot">Orbot이 시작되기를 기다리는 중</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
     <string name="notifcation_title_notconnect">연결되지 않음</string>
     <string name="start_vpn_title">VPN %s 연결중</string>
@@ -335,6 +337,7 @@
     <string name="app_no_longer_exists">%s 패키지가 더이상 설치되어 있지 않으며 앱 허용/거부 목록에서 제거함</string>
     <string name="vpn_disallow_radio">VPN은 모든 앱에 사용되지만 선택된 앱은 제외합니다.</string>
     <string name="vpn_allow_radio">VPN은 선택된 앱에만 사용됩니다.</string>
+    <string name="vpn_allow_bypass">앱이 VPN을 우회하도록 허용</string>
     <string name="query_delete_remote">원격 서버 항목을 제거하시겠습니까?</string>
     <string name="keep">유지</string>
     <string name="delete">삭제</string>
@@ -472,4 +475,6 @@
     <string name="proxy">대리</string>
     <string name="Use_no_proxy">없음</string>
     <string name="tor_orbot">Tor (Orbot)</string>
+    <string name="openvpn3_socksproxy">OpenVPN 3 C ++ 구현은 Socks 프록시를 통한 연결을 지원하지 않습니다.</string>
+    <string name="no_orbotfound">Orbot 앱을 찾을 수 없습니다. Orbot을 설치하거나 수동 Socks V5 통합을 사용하십시오.</string>
 </resources>

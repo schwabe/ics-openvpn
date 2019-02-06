@@ -337,6 +337,7 @@
     <string name="app_no_longer_exists">Pakken %s er ikke længere installeret, fjerner den fra app-listen Tilladte/Ikke-tilladte</string>
     <string name="vpn_disallow_radio">VPN benyttes til alle apps, bortset fra de valgte</string>
     <string name="vpn_allow_radio">VPN benyttes kun til valgte apps</string>
+    <string name="vpn_allow_bypass">Tillad apps at omgå VPN\'en</string>
     <string name="query_delete_remote">Fjern fjernserverangivelse?</string>
     <string name="keep">Behold</string>
     <string name="delete">Slet</string>
@@ -464,6 +465,20 @@
     <string name="proxy">Proxy</string>
     <string name="Use_no_proxy">Ingen</string>
     <string name="tor_orbot">Tor (Orbot)</string>
+    <string name="openvpn3_socksproxy">OpenVPN 3 C++ implementering understøtter ikke tilslutning via Socks proxy</string>
     <string name="no_orbotfound">Orbot-applikationen kan ikke findes. Venligst installer Orbot eller brug manuel Sock v5-integrering.</string>
+    <string name="faq_remote_api_title">Fjern-API</string>
+    <string name="faq_remote_api">OpenVPN til Android understøtter to eksterne API\'er, en sofistikeret API vha. AIDL (remoteEXample i git repository) og en enkel én vha. Intents.&lt;p&gt;Eksempler på brug af adb-shell og intents. Udskift profilnavn med dit profilnavn&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="enableproxyauth">Aktivér proxy-godkendelse</string>
     <string name="error_orbot_and_proxy_options">Kan ikke bruge ekstra http-proxy-muligheden sammen med Orbot-integration</string>
+    <string name="info_from_server">Info fra server: \'%s\'</string>
+    <string name="channel_name_userreq">Brugerinteraktion krævet</string>
+    <string name="channel_description_userreq">OpenVPN-forbindelse kræver et brugerinput, f.eks.
+        tofaktorgodkendelse
+    </string>
+    <string name="openurl_requested">Åbn URL for at fortsætte VPN-godkendelse</string>
+    <string name="state_auth_pending">Godkendelse afventer</string>
+    <string name="external_authenticator">Ekstern Godkendelse</string>
+    <string name="configure">Opsæt</string>
+    <string name="extauth_not_configured">Ekstern Godkendelse er ikke opsat</string>
 </resources>

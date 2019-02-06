@@ -183,6 +183,7 @@
     <string name="show_log_window">Pokaż okno loga</string>
     <string name="mobile_info">%10$s %9$s na %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">Błąd podpisania kluczem z pęku kluczy Androida %1$s: %2$s</string>
+    <string name="error_extapp_sign">Wystąpił błąd podczas logowanie za pomocą zewnętrznej aplikacji uwierzytelniającej (%3$s): %1$s: %2$s</string>
     <string name="faq_system_dialogs">Ostrzeżenie przy połączeniu VPN informuje Cię, że ta aplikacja przekierowuje cały ruch jest narzucona przez system w celu zapobieżenia nadużyciom API VPNService.\nPowiadomienie połączenia VPN (znak klucza) jest także narzucone przez Android, aby zasygnalizować połączenie z siecią VPN. Na niektórych obrazach Android to powiadomienie odtwarza dźwięk.\nAndroid wprowadził te dialogi systemowe dla Twojego bezpieczeństwa i aby upewnić się, że nie można ich obejść. (Niestety, na niektórych obrazach to także implikuje wydanie dźwięku)</string>
     <string name="faq_system_dialogs_title">Ostrzeżenie połączeń oraz dźwięki powiadomień</string>
     <string name="translationby">Angielskie tłumaczenie Arne Schwabe&lt;arne@rfc2549.org&gt;</string>
@@ -252,6 +253,7 @@
     <string name="state_tcp_connect">Łączenie (TCP)</string>
     <string name="state_auth_failed">Błąd autentykacji</string>
     <string name="state_nonetwork">Czekam na sieć</string>
+    <string name="state_waitorbot">Oczekiwanie na uruchomienie Orbot</string>
     <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
     <string name="notifcation_title_notconnect">Niepołączony</string>
     <string name="start_vpn_title">Łączę z VPN %s</string>
@@ -335,6 +337,7 @@
     <string name="app_no_longer_exists">Aplikacja %s nie jest już zainstalowana, usuwam ją z listy dozwolonych/zabronionych</string>
     <string name="vpn_disallow_radio">VPN jest używany dla wszystkich aplikacji, ale wyklucza wybrane</string>
     <string name="vpn_allow_radio">VPN jest używany tylko dla wybranych aplikacji</string>
+    <string name="vpn_allow_bypass">Zezwól aplikacjom na omijanie VPN</string>
     <string name="query_delete_remote">Usunąć wpis serwera?</string>
     <string name="keep">Zachowaj</string>
     <string name="delete">Usuń</string>
@@ -464,7 +467,20 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="proxy">Proxy</string>
     <string name="Use_no_proxy">Żaden</string>
     <string name="tor_orbot">Tor (Orbot)</string>
+    <string name="openvpn3_socksproxy">Implementacja OpenVPN 3 C ++ nie obsługuje łączenia przez proxy Socks</string>
+    <string name="no_orbotfound">Nie można odnaleźć aplikacji Orbot. Zainstaluj Orbot lub skorzystaj z ręcznej integracji Socks v5.</string>
+    <string name="faq_remote_api_title">Zdalny interfejs API</string>
+    <string name="faq_remote_api">OpenVPN dla systemu Android obsługuje dwa zdalne interfejsy API, zaawansowany interfejs API wykorzystujący AIDL (remoteEXample w repozytorium git) i prosty interfejs wykorzystujący Intents. &lt;p&gt;Przykłady użycia powłoki adb i jej Intents. Zastąp nazwę profilu twoją nazwą profilu&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn / .api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn / .api.ConnectVPN</string>
     <string name="enableproxyauth">Włącz uwierzytelnianie proxy</string>
+    <string name="error_orbot_and_proxy_options">Nie można użyć jednocześnie dodatkowego oświadczenia http-proxy-option oraz integracji Orbot w tym samym czasie</string>
     <string name="info_from_server">Informacja z serwera: \"%s\"</string>
+    <string name="channel_name_userreq">Wymagane działanie użytkownika</string>
+    <string name="channel_description_userreq">Połączenie OpenVPN wymaga działania użytkownika np. dwu-etapowej
+        weryfikacji
+    </string>
+    <string name="openurl_requested">Otwórz adres URL, aby kontynuować uwierzytelnianie VPN</string>
+    <string name="state_auth_pending">Oczekiwanie na uwierzytelnienie</string>
+    <string name="external_authenticator">Zewnętrzne uwierzytelnienie</string>
     <string name="configure">Konfiguruj</string>
+    <string name="extauth_not_configured">Nie skonfigurowano zewnętrznego uwierzytelnienia</string>
 </resources>

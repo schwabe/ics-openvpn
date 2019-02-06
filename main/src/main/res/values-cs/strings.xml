@@ -183,6 +183,7 @@
     <string name="show_log_window">Zobrazit okno s logem</string>
     <string name="mobile_info">%10$s %9$s spuštěno na %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">Chyba při podepisování klíčem %1$s: %2$s</string>
+    <string name="error_extapp_sign">Chyba ve vláknu s externí autentičnosti aplikace</string>
     <string name="faq_system_dialogs">VPN varování při připojování oznamující o možnosti přesměrování veškerého provozu je vynuceno systémem, aby se zabránilo zneužití VPNService API.\nNotifikace (symbol s klíčem) je také vynucena systémem, aby signalizovala odchozí VPN spojení. Na některých systémech přehrává notifikace i zvuk.\nAndroid zavedl tyto dialogy pro tvoji osobní bezpečnost a ujistil se, že nejdou obejít. (Někdu to bohužel zahrnuje i zvuk notifikace.)</string>
     <string name="faq_system_dialogs_title">Varování při připojení a zvuková notifikace</string>
     <string name="translationby">Českou lokalizaci zpracoval Jan Baier &lt;baier.jan@gmail.com&gt;</string>

@@ -15,7 +15,7 @@
         <item>Utilizador/PW + Certificados</item>
         <item>Utilizador/PW + PKCS12</item>
         <item>Utilizador/PW + Android</item>
-        <item>External Auth Provider</item>
+        <item>Provedor de Autenticação Externo</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">0</item>

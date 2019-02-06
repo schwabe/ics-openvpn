@@ -22,7 +22,7 @@
         <item translatable="false">1 (klient)</item>
         <item>Nespecifikováno</item>
         <item>Šifrování (--tls-crypt)</item>
-        <item>TLS Crypt V2</item>
+        <item>TLS krypta V2</item>
     </string-array>
     <string-array name="crm_entries">
         <item>Opětovně nepřipojovat</item>

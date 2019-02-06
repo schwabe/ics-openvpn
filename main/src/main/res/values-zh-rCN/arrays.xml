@@ -22,7 +22,7 @@
         <item translatable="false">1</item>
         <item>未指定</item>
         <item>加密方式（--tls-crypt）</item>
-        <item>TLS Crypt V2</item>
+        <item>TLS 加密 第二版</item>
     </string-array>
     <string-array name="auth_retry_type">
         <item>断开，忘记密码</item>

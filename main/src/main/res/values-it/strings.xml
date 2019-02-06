@@ -338,6 +338,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="app_no_longer_exists">Il package (applicazione) %s non è più installato, verrà rimosso dalla lista delle app consentite/non consentite</string>
     <string name="vpn_disallow_radio">La VPN è utilizzata per tutte le app eccetto quelle selezionate</string>
     <string name="vpn_allow_radio">La VPN è utilizzata solo per le app selezionate</string>
+    <string name="vpn_allow_bypass">Consenti alle app di bypassare la VPN</string>
     <string name="query_delete_remote">Rimuovere la voce di server remoto?</string>
     <string name="keep">Mantieni</string>
     <string name="delete">Elimina</string>

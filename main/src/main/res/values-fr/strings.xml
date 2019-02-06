@@ -51,7 +51,7 @@
     <string name="custom_route_format_error">Impossible d\'analyser les redirections personnalisées</string>
     <string name="pw_query_hint">(Laisser vide pour interroger sur demande)</string>
     <string name="vpn_shortcut">"Raccourci OpenVPN"</string>
-    <string name="vpn_launch_title">Connexion à VPN &#8230;</string>
+    <string name="vpn_launch_title">Connexion au VPN&#8230;</string>
     <string name="shortcut_profile_notfound">"Profil spécifié dans raccourci introuvable"</string>
     <string name="random_host_prefix">Préfixe de l\'hôte aléatoire</string>
     <string name="random_host_summary">"Ajoute 6 caractères aléatoires en face du nom d\'hôte"</string>
@@ -77,11 +77,11 @@
     <string name="use_pull">Paramètres \"Pull\"</string>
     <string name="dns">DNS</string>
     <string name="override_dns">"Remplacer les paramètres DNS par le serveur"</string>
-    <string name="dns_override_summary">Utilisez vos propres serveurs DNS</string>
+    <string name="dns_override_summary">Utiliser vos propres serveurs DNS</string>
     <string name="searchdomain">suffixe de recherche</string>
-    <string name="dns1_summary">Serveur DNS à utiliser.</string>
+    <string name="dns1_summary">Serveur DNS à utiliser</string>
     <string name="dns_server">Serveur DNS</string>
-    <string name="secondary_dns_message">Serveur DNS secondaire utilisé si le serveur DNS principal ne peut pas être joins.</string>
+    <string name="secondary_dns_message">Serveur DNS secondaire utilisé si le serveur DNS principal ne peut pas être joint</string>
     <string name="backup_dns">Serveur DNS secondaire</string>
     <string name="ignored_pushed_routes">Ignorer les routes envoyées</string>
     <string name="ignore_routes_summary">Ignorer les règles de routage envoyées par le serveur.</string>

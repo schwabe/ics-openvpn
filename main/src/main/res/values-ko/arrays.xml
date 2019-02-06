@@ -15,7 +15,7 @@
         <item>계정/암호 + 인증서</item>
         <item>계정/암호 + PKCS12 </item>
         <item>계정/암호 + 안드로이드</item>
-        <item>External Auth Provider</item>
+        <item>외부 인증 공급자</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">0</item>

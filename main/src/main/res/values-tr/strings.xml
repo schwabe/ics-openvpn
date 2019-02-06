@@ -183,6 +183,7 @@
     <string name="show_log_window">Günlük penceresini göster</string>
     <string name="mobile_info">%10$s %9$s %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s) üzerinde çalışıyor</string>
     <string name="error_rsa_sign">Android deposu anahtarını %1$s %2$s ile imzalama hatası</string>
+    <string name="error_extapp_sign">Harici kimlik doğrulama uygulamasıyla imzalama hatası (%3$s):%1$s:%2$s</string>
     <string name="faq_system_dialogs">VPN bağlantı uyarısı, VPNService API\'sinin kötüye kullanımını önlemek için bu uygulamanın sistem tarafından oluşturulan tüm trafiği izleyebileceğini söylüyor.\nVPN bağlantı bildirimi (anahtar simgesi) ayrıca giden bir VPN bağlantısı olduğunu belirtmek için Android sistemi tarafından gösteriliyor. Bazı kalıplarda bu bildirim bir ses çalar.\nAndroid bu sistem pencerelerini kendi güvenliğiniz için koydu ve aşılmasını engelledi.</string>
     <string name="faq_system_dialogs_title">Bağlantı uyarısı ve bildirim sesi</string>
     <string name="translationby">Türkçe Çeviri: Volkan Gezer &lt;volkangezer@gmail.com&gt;</string>
@@ -252,6 +253,7 @@
     <string name="state_tcp_connect">Bağlanıyor (TCP)</string>
     <string name="state_auth_failed">Kimlik doğrulaması başarısız</string>
     <string name="state_nonetwork">Kullanılabilir ağ için bekleniyor</string>
+    <string name="state_waitorbot">Orbot\'un başlaması bekleniyor</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
     <string name="notifcation_title_notconnect">Bağlı değil</string>
     <string name="start_vpn_title">VPN %s bağlanıyor</string>
@@ -335,6 +337,7 @@
     <string name="app_no_longer_exists">%s adlı paket artık yüklü değil, izin listesinden çıkarılıyor</string>
     <string name="vpn_disallow_radio">Seçilen uygulamar dışındaki tüm uygulamalar için VPN kullanılır</string>
     <string name="vpn_allow_radio">Sadece seçilen uygulamalar için VPN kullanılır</string>
+    <string name="vpn_allow_bypass">Uygulamaların VPN\'yi atlamasına izin ver</string>
     <string name="query_delete_remote">Uzak sunucu girişi kaldırılsın mı?</string>
     <string name="keep">Sakla</string>
     <string name="delete">Sil</string>
@@ -465,5 +468,19 @@
     <string name="proxy">Vekil Sunucu</string>
     <string name="Use_no_proxy">Hiçbiri</string>
     <string name="tor_orbot">Tor (Orbot)</string>
+    <string name="openvpn3_socksproxy">OpenVPN 3 C ++ uygulaması, Socks Vekil Sunucu üzerinden bağlanmayı desteklemiyor</string>
+    <string name="no_orbotfound">Orbot uygulaması bulunamadı. Lütfen Orbot\'u kurun veya manuel Socks v5 entegrasyonu kullanın.</string>
+    <string name="faq_remote_api_title">Uzak API</string>
+    <string name="enableproxyauth">Proxy Kimlik Doğrulamasını Etkinleştir</string>
+    <string name="error_orbot_and_proxy_options">Ekstra http-vekil sunucu-seçenek bildirimi ve Orbot entegrasyonu aynı anda kullanılamaz</string>
+    <string name="info_from_server">Sunucudan gelen bilgi: \'%s\'</string>
+    <string name="channel_name_userreq">Kullanıcı etkileşimi gerekli</string>
+    <string name="channel_description_userreq">OpenVPN bağlantısı bir kullanıcı girişi gerektirir, örneğin iki faktör
+        doğrulama
+    </string>
+    <string name="openurl_requested">VPN kimlik doğrulamasına devam etmek için URL\'yi açın</string>
+    <string name="state_auth_pending">Kimlik doğrulama beklemede</string>
+    <string name="external_authenticator">Harici Kimlik Doğrulayıcı</string>
     <string name="configure">Yapılandır</string>
+    <string name="extauth_not_configured">Harici kimlik doğrulayıcı yapılandırılmamış</string>
 </resources>

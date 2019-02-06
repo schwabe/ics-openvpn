@@ -374,6 +374,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="app_no_longer_exists">パッケージ %s はインストールされていないため、許可／不許可アプリリストから削除します</string>
     <string name="vpn_disallow_radio">VPNは選択したアプリ以外のすべてのアプリから使用されます</string>
     <string name="vpn_allow_radio">VPNは選択されたアプリのみで使用できます</string>
+    <string name="vpn_allow_bypass">アプリがVPNをバイパスできるようにする</string>
     <string name="query_delete_remote">接続先設定を削除しますか？</string>
     <string name="keep">保持</string>
     <string name="delete">削除</string>

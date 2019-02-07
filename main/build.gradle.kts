@@ -42,7 +42,6 @@ dependencies {
 
 val openvpn3SwigFiles = File(buildDir, "generated/source/ovpn3swig/ovpn3")
 
-//task ("generateOpenVPN3Swig" , Exec.class) {
 tasks.register<Exec>("generateOpenVPN3Swig")
 {
     var swigcmd = "swig"
@@ -90,10 +89,7 @@ android {
         }
 
         create("normal") {
-//           java.srcDir(listOf(File("src/ovpn3/java/"), openvpn3SwigFiles))
-        }
-
-        create("noovpn3") {
+           java.srcDirs("src/ovpn3/java/", openvpn3SwigFiles)
         }
 
         getByName("debug") {
@@ -124,10 +120,10 @@ android {
     flavorDimensions("implementation")
 
     productFlavors {
-        create("noovpn3") {
+        /*create("noovpn3") {
             setDimension("implementation")
             buildConfigField ("boolean", "openvpn3", "false")
-        }
+        }*/
         create("normal") {
             setDimension("implementation")
             buildConfigField ("boolean", "openvpn3", "true")
@@ -160,9 +156,13 @@ if (project.hasProperty("keystoreFile") &&
 /* Hack-o-rama but it works good enough and documentation is surprisingly sparse */
 
 val swigTask = tasks.named("generateOpenVPN3Swig")
+val preBuildTask = tasks.getByName("preBuild")
 val assembleTask = tasks.getByName("assemble")
 
+println(tasks.names)
+
 assembleTask.dependsOn(swigTask)
+preBuildTask.dependsOn(swigTask)
 
 // Ensure native build is run before assets, so assets are ready to be merged into the apk
 /*android.applicationVariants.all { variant ->

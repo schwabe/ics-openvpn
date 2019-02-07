@@ -5,6 +5,8 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import net.openvpn.ovpn3.*;
 
+import net.openvpn.ovpn3.ClientAPI_OpenVPNClient;
+
 import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.copyright;
 import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.init_process;
 import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.platform;
@@ -12,9 +14,6 @@ import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.platform;
 public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable, OpenVPNManagement {
 
 	static {
-		/*System.loadLibrary("crypto");
-		System.loadLibrary("ssl");*/
-        //System.loadLibrary("polarssl-dynamic");
 		System.loadLibrary("ovpn3");
 	}
 
@@ -223,14 +222,14 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public void external_pki_sign_request(ClientAPI_ExternalPKISignRequest signreq) {
-		VpnStatus.logDebug("Got external PKI signing request from OpenVPN core for algorithm " + signreq.getAlgorithm());
+		VpnStatus.logDebug("Got external PKI signing request from OpenVPN core for algorithm " + signreq.getPadding());
 		boolean pkcs1padding;
-		if (signreq.getAlgorithm().equals("RSA_PKCS1_PADDING"))
+		if (signreq.getPadding().equals("RSA_PKCS1_PADDING"))
 			pkcs1padding = true;
-		else if (signreq.getAlgorithm().equals("RSA_NO_PADDING"))
+		else if (signreq.getPadding().equals("RSA_NO_PADDING"))
 			pkcs1padding = false;
 		else
-			throw new IllegalArgumentException("Illegal padding in sign request" + signreq.getAlgorithm());
+			throw new IllegalArgumentException("Illegal padding in sign request" + signreq.getPadding());
 		signreq.setSig(mVp.getSignedData(mService, signreq.getData(), pkcs1padding));
 	}
 

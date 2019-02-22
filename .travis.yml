@@ -12,6 +12,7 @@ android:
   licenses:
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
+    - '.+'
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -36,11 +37,16 @@ before_script:
   - sudo ln -s /usr/bin/swig3.0 /usr/bin/swig
   - swig -version
   # Annoying workarounds #2
-  - yes | sdkmanager "platforms;android-27"
-  - curl -L https://dl.google.com/android/repository/android-ndk-r16b-linux-x86_64.zip -O
-  - unzip -q android-ndk-r16b-linux-x86_64.zip 
-  - rm android-ndk-r16b-linux-x86_64.zip
-  - export ANDROID_NDK_HOME=`pwd`/android-ndk-r16b
-  - export LOCAL_ANDROID_NDK_HOME="$ANDROID_NDK_HOME"
+  #- curl -L https://dl.google.com/android/repository/android-ndk-r19b-linux-x86_64.zip
+  #- unzip -q android-ndk-r19b-linux-x86_64.zip
+  #- rm android-ndk-r19b-linux-x86_64.zip
+  #- export ANDROID_NDK_HOME=`pwd`/android-ndk-r16b
+  #- export LOCAL_ANDROID_NDK_HOME="$ANDROID_NDK_HOME"
+  
+  #- yes | sdkmanager --update
+  #- yes | sdkmanager --licenses
+  - yes | sdkmanager 'ndk-bundle' 
+  - yes | sdkmanager 'platforms;android-28'
+
   - export PATH=$PATH:${ANDROID_NDK_HOME}
 

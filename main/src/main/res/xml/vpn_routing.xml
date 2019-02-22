@@ -17,6 +17,11 @@
         android:key="unblockLocal"
     />
 
+    <CheckBoxPreference
+        android:title="@string/title_block_address_families"
+        android:key="blockUnusedAF"
+        android:summary="@string/summary_block_address_families"
+        />
     <PreferenceCategory android:title="@string/ipv4" >
         <CheckBoxPreference
             android:disableDependentsState="true"

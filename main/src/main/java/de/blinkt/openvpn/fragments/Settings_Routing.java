@@ -4,6 +4,7 @@
  */
 
 package de.blinkt.openvpn.fragments;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -21,8 +22,9 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
     private CheckBoxPreference mLocalVPNAccess;
     private EditTextPreference mExcludedRoutes;
     private EditTextPreference mExcludedRoutesv6;
+	private CheckBoxPreference mBlockUnusedAF;
 
-    @Override
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -38,10 +40,16 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 		mRouteNoPull = (CheckBoxPreference) findPreference("routenopull");
         mLocalVPNAccess = (CheckBoxPreference) findPreference("unblockLocal");
 
+		mBlockUnusedAF = (CheckBoxPreference) findPreference("blockUnusedAF");
+
 		mCustomRoutes.setOnPreferenceChangeListener(this);
 		mCustomRoutesv6.setOnPreferenceChangeListener(this);
         mExcludedRoutes.setOnPreferenceChangeListener(this);
         mExcludedRoutesv6.setOnPreferenceChangeListener(this);
+		mBlockUnusedAF.setOnPreferenceChangeListener(this);
+
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+			getPreferenceScreen().removePreference(mBlockUnusedAF);
 
 		loadSettings();
 	}
@@ -60,6 +68,8 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 
 		mRouteNoPull.setChecked(mProfile.mRoutenopull);
         mLocalVPNAccess.setChecked(mProfile.mAllowLocalLAN);
+
+        mBlockUnusedAF.setChecked(mProfile.mBlockUnusedAddressFamilies);
 
 		// Sets Summary
 		onPreferenceChange(mCustomRoutes, mCustomRoutes.getText());
@@ -81,6 +91,7 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
         mProfile.mAllowLocalLAN =mLocalVPNAccess.isChecked();
         mProfile.mExcludedRoutes = mExcludedRoutes.getText();
         mProfile.mExcludedRoutesv6 = mExcludedRoutesv6.getText();
+        mProfile.mBlockUnusedAddressFamilies = mBlockUnusedAF.isChecked();
 	}
 
 	@Override

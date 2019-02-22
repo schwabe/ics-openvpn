@@ -183,6 +183,7 @@
     <string name="show_log_window">"Afficher la fenêtre de log"</string>
     <string name="mobile_info">%10$s %9$s courir sur %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">"Erreur de signature de la clé %1$s : %2$s par le gestionnaire d\'Android"</string>
+    <string name="error_extapp_sign">Erreur de signature avec l\'application d\'authentification externe (%3$s): %1$s: %2$s</string>
     <string name="faq_system_dialogs">\"L\'avertissement de connexion au VPN qui vous informe que cette application peut intercepter tout le trafic est imposé par le système pour éviter les abus de l\'API du service VPN.\nLa notification de connexion au VPN (Le symbole qui ressemble à une clé) est aussi imposé par le système Android pour signaler une connexion VPN en cours de fonctionnement.
 Sur certaines images, cette notification joue un son.\nAndroid à introduit ces dialogues système pour votre propre sécurité et à fait en sorte d\'être impossible à contourner. (Cela peut inclure en plus une notification sonore pour certaines images)\"</string>
     <string name="faq_system_dialogs_title">"Avertissement de connexion et son de notification"</string>
@@ -253,6 +254,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
     <string name="state_tcp_connect">Connexion (TCP)</string>
     <string name="state_auth_failed">Authentification échouée</string>
     <string name="state_nonetwork">En attente d\'un réseau utilisable</string>
+    <string name="state_waitorbot">En attente du démarrage d\'Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
     <string name="notifcation_title_notconnect">Non connecté</string>
     <string name="start_vpn_title">Connexion au VPN %s</string>
@@ -336,6 +338,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
     <string name="app_no_longer_exists">Application %s désinstallée, retirée de la liste des applications autorisées/refusées</string>
     <string name="vpn_disallow_radio">VPN est utilisé pour toutes les applications mais exclut les sélectionnées</string>
     <string name="vpn_allow_radio">VPN est utilisé uniquement pour les applications sélectionnées</string>
+    <string name="vpn_allow_bypass">Autoriser les applications à contourner le VPN</string>
     <string name="query_delete_remote">Supprimer l\'entrée du serveur distant ?</string>
     <string name="keep">Garder</string>
     <string name="delete">Supprimer</string>
@@ -406,6 +409,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
     <string name="missing_ca_certificate">Certificat CA manquant</string>
     <string name="crl_title">Liste des certificats révoqués (facultatif)</string>
     <string name="reread_log">Relire (%d) éléments du fichier de log</string>
+    <string name="samsung_broken">Bien que les téléphones Samsung sont parmi les téléphones Android les plus vendus, les micrologiciels Samsung sont également parmi les micrologiciels Android les plus bugués. Les bugs ne sont pas limités à la gestion des VPN sur ces appareils mais beaucoup d\'entre eux peuvent être contournés. Certains de ces bugs sont décrits ci-dessous.\n\nLe DNS ne fonctionne pas à moins que le serveur DNS soit dans la plage VPN.\n\nSur de nombreux appareils Samsung 5.x, la fonction d\'applications autorisées/non autorisées ne fonctionne pas.\nSur les Samsung 6.x, le VPN ne fonctionne pas à moins que la fonction d\'optimisation de la batterie n\'est pas activée pour l\'application VPN.</string>
     <string name="samsung_broken_title">Téléphones Samsung</string>
     <string name="novpn_selected">Aucun VPN sélectionné.</string>
     <string name="defaultvpn">VPN par défaut</string>
@@ -418,11 +422,14 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
     <string name="connectretrymaxmessage">Entrez le temps maximum entre les tentatives de connexion. OpenVPN va lentement augmenter son temps d\'attente après une tentative de connexion infructueuse jusqu\'à atteindre cette valeur. Par défaut, 300sec.</string>
     <string name="connectretrymaxtitle">Temps maximum entre les tentatives de connexion</string>
     <string name="state_waitconnectretry">%s secondes avant la prochaine tentative de connexion</string>
+    <string name="nought_alwayson_warning"><![CDATA[Si vous n'avez pas reçu de boîte de dialogue de confirmation VPN, \"Toujours sur le VPN\" est activé pour une autre application. Dans ce cas, seule cette application est autorisée à se connecter à un VPN. Vérifiez dans Paramètres-> Réseaux plus .. -> VPNS]]></string>
     <string name="management_socket_closed">Connexion à OpenVPN fermé (%s)</string>
     <string name="change_sorting">Changer de tri</string>
     <string name="sort">Trier</string>
     <string name="sorted_lru">Profils triés par dernier récemment utilisé</string>
     <string name="sorted_az">Profils triés par nom</string>
+    <string name="deprecated_tls_remote">Config utilise l\'option tls-remote qui était obsolète en 2.3 et finalement supprimé en 2.4</string>
+    <string name="auth_failed_behaviour">Comportement sur AUTH_FAILED</string>
     <string name="graph">Graphique</string>
     <string name="use_logarithmic_scale">Utiliser l\'échelle logarithmique</string>
     <string name="notenoughdata">Données insuffisantes</string>
@@ -435,15 +442,52 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
+    <string name="weakmd">&lt;p&gt;Depuis OpenSSL version 1.1, OpenSSL rejette les signatures faibles dans les certificats comme
+        MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;les signatures MD5 sont totalement non sécurisées et ne devraient plus être
+        utilisées.&lt;/b&gt; Les collisions MD5 peuvent être crées en &lt;a
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;quelques heures pour un coût
+        faible.&lt;/a&gt;. Vous devriez mettre à jour les certificats VPN dès que possible.&lt;/p&gt;&lt;p&gt;Malheureusement,
+        les anciennes distributions easy-rsa incluaient l\'option de configuration \"default_md md5\". Si vous utilisez une
+        ancienne version de easy-rsa, mettre à jour vers la &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;
+        dernière version&lt;/a&gt;) ou changer de MD5 pour sha256 et regénérer vos certificats.&lt;/p&gt;&lt;p&gt;Si vous
+	   souhaitez vraiment utiliser un vieux certificat compromis, utiliser l\'option de configuration personnalisée
+	   tls-cipher \"DEFAULT:@SECLEVEL=0\" dans configuration avancée ou en tant que ligne additionnelle dans votre
+	   configuration importée&lt;/p&gt;    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
     <string name="volume_gbyte">%.1f GB</string>
     <string name="channel_name_background">Statistiques de connexion</string>
+    <string name="channel_description_background">Statistiques en cours de la connexion OpenVPN établie</string>
+    <string name="channel_name_status">Changement du statut de connexion</string>
+    <string name="channel_description_status">Changement d\'état de la connexion OpenVPN (Connexion, authentification,&#8230;)</string>
+    <string name="weakmd_title">Hashage faible (MD5) dans la signature du certificat (SSL_CTX_use_certificate md trop faible)</string>
     <string name="title_activity_open_sslspeed">Test de vitesse OpenSSL</string>
+    <string name="openssl_cipher_name">Noms de chiffrement OpenSSL</string>
+    <string name="osslspeedtest">Test de vitesse de Crypto OpenSSL</string>
     <string name="openssl_error">OpenSSL a retourné une erreur</string>
+    <string name="running_test">Test en cours&#8230;</string>
     <string name="test_algoirhtms">Tester les algorithmes sélectionnés</string>
+    <string name="all_app_prompt">Une application externe essaie de contrôler %s. L\'application demandant l\'accès ne peut pas être déterminée. Autoriser cette application accorde l\'accès à TOUTES les applications.</string>
+    <string name="openvpn3_nostatickeys">L’implémentation OpenVPN 3 C ++ ne prend pas en charge les clés statiques. Veuillez modifier vers OpenVPN 2.x dans les paramètres généraux.</string>
+    <string name="openvpn3_pkcs12">L\'utilisation de fichiers PKCS12 directement avec l\'implémentation OpenVPN 3 C ++ n\'est pas prise en charge. Importez les fichiers pkcs12 dans le magasin de clés Android ou passez à OpenVPN 2.x dans les paramètres généraux.</string>
     <string name="proxy">Proxy</string>
     <string name="Use_no_proxy">Aucun</string>
     <string name="tor_orbot">Tor (Orbot)</string>
+    <string name="openvpn3_socksproxy">L\'implémentation OpenVPN 3 C ++ ne prend pas en charge la connexion via les proxy Socks</string>
+    <string name="no_orbotfound">L\'application Orbot est introuvable. Veuillez installer Orbot ou utiliser l\'intégration manuelle de Socks v5.</string>
+    <string name="faq_remote_api_title">API à distance</string>
+    <string name="faq_remote_api">OpenVPN pour Android prend en charge deux API distantes, une API sophistiquée utilisant AIDL (remoteEXample dans le référentiel git) et une simple utilisant Intents. &lt;p&gt;Exemples utilisant le shell adb et Intents. Remplacez nom_profil par votre nom de profil&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn / .api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn / .api.ConnectVPN</string>
+    <string name="enableproxyauth">Activer l\'authentification par proxy</string>
+    <string name="error_orbot_and_proxy_options">Impossible d\'utiliser l\'instruction supplémentaire http-proxy-option et l\'intégration Orbot en même tempsO</string>
+    <string name="info_from_server">Info du serveur: \'%s\'</string>
+    <string name="channel_name_userreq">Interaction de l\'utilisateur requise</string>
+    <string name="channel_description_userreq">La connexion OpenVPN nécessite une saisie utilisateur, par
+        exemple une authentification à deux facteurs
+    </string>
+    <string name="openurl_requested">Ouvrir l\'URL pour continuer l\'authentification VPN</string>
+    <string name="state_auth_pending">Authentification en attente</string>
+    <string name="external_authenticator">Authentificateur externe</string>
+    <string name="configure">Configurer</string>
+    <string name="extauth_not_configured">Authentificateur externe non configuré</string>
 </resources>

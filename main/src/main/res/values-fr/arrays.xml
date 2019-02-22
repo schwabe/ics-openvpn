@@ -15,14 +15,14 @@
         <item>Nom/MDP + Certificats</item>
         <item>Nom/MDP + PKCS12</item>
         <item>Nom/MDP + Android</item>
-        <item>External Auth Provider</item>
+        <item>Fournisseur d\'authentification externe</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">0</item>
         <item translatable="false">1</item>
         <item>Non spécifié</item>
         <item>Chiffrement (tls-crypt)</item>
-        <item>TLS Crypt V2</item>
+        <item>Chiffrement TLS V2</item>
     </string-array>
     <string-array name="auth_retry_type">
         <item>Déconnecter, oublier le mot de passe</item>

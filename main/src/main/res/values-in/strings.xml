@@ -283,7 +283,6 @@
     <string name="clearappsdialog">Hapus daftar aplikasi eksternal yang dibolehkan? \nDaftar apps yang dibolehkan terkini:\n\n%s </string>
     <string name="screenoff_summary">\"Pause VPN ketika layar off dan data yang ditransfer dalam 60 detik kurang dari 64kB. Ketika opsi \"Persistent Tun\" diaktifkan, memberhentikan VPN akan membuat perangkat Anda tidak memiliki koneksi jaringan. Jika tidak memakai \"Persistent Tun\" maka perangkat akan menampilkan Tidak ada koneksi VPN.</string>
     <string name="screenoff_title">Sambungan VPN jeda setelah layar mati</string>
-    <string name="screenoff_pause">Hentikan sambungan dalam kondisi layar mati: kurang dari %1$ s dalam %2$ ss</string>
     <string name="screen_nopersistenttun">Peringatan: Pemaksaan tun tidak diaktifkan untuk VPN ini. Lalu lintas akan menggunakan koneksi Internet normal ketika layar dimatikan.</string>
     <string name="save_password">Menyimpan sandi</string>
     <string name="pauseVPN">Jeda VPN</string>

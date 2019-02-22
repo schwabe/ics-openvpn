@@ -66,7 +66,7 @@
     <string name="remove_vpn">Удалить VPN</string>
     <string name="check_remote_tlscert">Проверяет, использует ли сервер сертификат с серверными расширениями TLS (--remote-cert-tls server)</string>
     <string name="check_remote_tlscert_title">Ожидать серверный сертификат TLS</string>
-    <string name="remote_tlscn_check_summary">Проверка DN объекта удаленного сертификата</string>
+    <string name="remote_tlscn_check_summary">Проверяет DN субъекта сертификата удаленного сервера</string>
     <string name="remote_tlscn_check_title">Проверка имени хоста сертификата</string>
     <string name="enter_tlscn_dialog">Введите значение для проверки DN удалённого сертификата (например, C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nВозможные значения: полный DN или RDN (в примере выше openvpn.blinkt.de) или только префикс RDN для проверки.\n\nПри использовании префикса RDN, «Server» подойдёт для «Server-1» и «Server-2»\n\nПри пустом текстовом поле будет проверяться, что RDN совпадает с именем узла.\n\nПодробности смотрите в руководстве OpenVPN 2.3.1+, раздел --verify-x509-name</string>
     <string name="enter_tlscn_title">Субъект удаленного сертификата</string>
@@ -88,7 +88,7 @@
     <string name="default_route_summary">Перенаправляет весь трафик через VPN</string>
     <string name="use_default_title">Использовать маршрут по умолчанию</string>
     <string name="custom_route_message">Введите пользовательские маршруты. Используйте только адрес назначения в формате CIDR. \"10.0.0.0/8 2002::/16\" направит сети 10.0.0.0/8 и 2002::/16 через VPN.</string>
-    <string name="custom_route_message_excluded">Маршруты, которые НЕ должны направляться через VPN. Используйте тот же синтаксис, что и для включенных маршрутов.</string>
+    <string name="custom_route_message_excluded">Маршруты, которые НЕ должны маршрутизироваться через VPN. Используйте тот же синтаксис, что и для включенных маршрутов.</string>
     <string name="custom_routes_title">Пользовательские маршруты</string>
     <string name="custom_routes_title_excluded">Исключенные сети</string>
     <string name="log_verbosity_level">Уровень детализации журнала</string>
@@ -107,9 +107,9 @@
     <string name="routes_info_incl">Маршруты: %1$s %2$s</string>
     <string name="routes_info_excl">Исключенные маршруты: %1$s %2$s</string>
     <string name="routes_debug">Установлены маршруты VpnService: %1$s %2$s</string>
-    <string name="ip_not_cidr">Получена информация интерфейса %1$s и %2$s, второй адрес является удалённым адресом канала. Используется сетевая маска /32 для локального IP адреса. Режим, установленный OpenVPN: \"%3$s\".</string>
-    <string name="route_not_cidr">Невозможно использовать выражения %1$s и %2$s как маршрут по стандарту CIDR. используется /32 как маска подсети.</string>
-    <string name="route_not_netip">Маршрут исправлен с %1$s/%2$s на %3$s/%2$s</string>
+    <string name="ip_not_cidr">Получена информация интерфейса %1$s и %2$s, при условии, что второй адрес является одноранговым адресом удаленного устройства. Используется сетевая маска /32 для локального IP-адреса. Режим, установленный OpenVPN - \"%3$s\".</string>
+    <string name="route_not_cidr">Невозможно определить %1$s и %2$s как IP маршрут с маской сети CIDR, используя /32 в качестве маски сети.</string>
+    <string name="route_not_netip">Маршрут %1$s/%2$s исправлен на %3$s/%2$s</string>
     <string name="keychain_access">Не удается получить доступ к хранилищу ключей и сертификатов Android. Это может быть вызвано обновлением прошивки или восстановления старой копии приложения или его настроек. Пожалуйста, отредактируйте профиль VPN и заново укажите ключи и сертификаты в разделе Основные параметры.</string>
     <string name="version_info">%1$s %2$s</string>
     <string name="send_logfile">Отправить файл журнала</string>
@@ -117,12 +117,12 @@
     <string name="ics_openvpn_log_file">ICS OpenVPN лог файл</string>
     <string name="copied_entry">Запись журнала скопирована в буфер обмена</string>
     <string name="tap_mode">Режим TAP</string>
-    <string name="faq_tap_mode">Режим TAP невозможен на устройствах без root-а. Поэтому это приложение не поддерживает TAP</string>
+    <string name="faq_tap_mode">Режим TAP невозможен на устройствах без root, поэтому данное приложение не может обеспечить поддержку TAP</string>
     <string name="tap_faq2">Снова? Вы издеваетесь? Не поддерживается режим TAP и просьбы к автору об этом не помогут ему реализоваться.</string>
     <string name="tap_faq3">Третий раз? На самом деле можно было бы писать эмулятор tap, основанные на tun, который бы добавлял информацию 2 уровня при отправке и извлекал бы ее при получении. Но этот эмулятор потребует также ARP и, возможно, клиента DHCP. Я не знаю никого, кто мог бы этим заняться. Свяжитесь со мной, если вы хотите заняться этим.</string>
     <string name="faq">FAQ</string>
     <string name="copying_log_entries">Копирование записей журнала</string>
-    <string name="faq_copying">Для копирования одной записи журнала необходимо нажать на неё и удерживать. Чтобы скопировать/отправить весь файл журнала, используйте опцию «Отправить файл журнала». Если она скрыта, используйте аппаратную кнопку меню.</string>
+    <string name="faq_copying">Чтобы скопировать одну запись журнала, нажмите и удерживайте нажатой запись журнала. Для копирования/отправки всего журнала используйте опцию Отправка журнала. Используйте аппаратную кнопку меню, если эта кнопка не отображается в графическом интерфейсе пользователя.</string>
     <string name="faq_shortcut">Ярлык для запуска</string>
     <string name="faq_howto_shortcut">Вы можете поместить ярлык для запуска OpenVPN на рабочий стол. В зависимости от используемого вами лаунчера, вам может потребоваться добавить либо ярлык, либо виджет.</string>
     <string name="no_vpn_support_image">Ваша прошивка не поддерживает VPNService API, извините :(</string>
@@ -143,16 +143,16 @@
     <string name="error_reading_config_file">Ошибка чтения файла конфигурации</string>
     <string name="add_profile">добавить конфигурацию</string>
     <string name="import_could_not_open">Не удалось найти файл %1$s, указанный в файле конфигурации</string>
-    <string name="importing_config">Импорт файла конфигурации из исходного %1$s</string>
+    <string name="importing_config">Импорт файла конфигурации из источника %1$s</string>
     <string name="import_warning_custom_options">Ваша конфигурация имела несколько параметров, которые не входят в параметры стандартной конфигурации. Эти параметры были вынесены в пользовательскую конфигурацию. Пользовательская конфигурация отображается ниже:</string>
     <string name="import_done">Файл конфигурации успешно прочитан.</string>
-    <string name="nobind_summary">Не привязываться к локальному адресу и порту</string>
-    <string name="no_bind">Не использовать привязки</string>
+    <string name="nobind_summary">Не привязывать к локальному адресу и порту</string>
+    <string name="no_bind">Нет локальной привязки</string>
     <string name="import_configuration_file">Импорт файла конфигурации</string>
     <string name="faq_security_title">Соображения безопасности</string>
-    <string name="faq_security">"Так как OpenVPN чувствителен к безопасности, то уместны будут несколько замечаний на её счёт. Все данные на SD-карте по сути не защищены. Каждое приложение может прочесть их (например, эта программа не требует специальных привилегий на SD-карту). Данные этого приложения могут быть прочитаны только им самим. При использовании опции импорта сертификатов и ключей в диалоговом окне данные сохраняются в профиле VPN. Профили VPN доступны только этому приложению. (Не забудьте потом удалить копии на SD-карте). Несмотря на то, что данные доступны только этому приложению, они всё ещё не зашифрованы. При наличии прав администратора (рута) на телефоне или через некую уязвимость эти данные можно извлечь. Также сохранённые пароли хранятся в обычном текстовом виде. Настоятельно рекомендуется файлы pkcs12 импортировать в android keystore."</string>
+    <string name="faq_security">"Так как OpenVPN чувствителен к безопасности, то будут разумными несколько замечаний относительно защиты. Все данные на SD-карте по сути не защищены. Каждое приложение может прочесть их (например, эта программа не требует специальных привилегий на SD-карту). Данные этого приложения могут быть прочитаны только им самим. При использовании опции импорта для cacert/cert/key в диалоговом окне файл, данные сохраняются в VPN профиле. VPN профили доступны только этому приложению. (Не забудьте потом удалить копии на SD-карте). Несмотря на то, что данные доступны только этому приложению, они все еще не зашифрованы. Путем получения прав администратора (рута) на телефоне или другими эксплоитами возможно извлечь данные. Также сохраненные пароли хранятся в обычном текстовом виде. Настоятельно рекомендуется pkcs12 файлы импортировать в android keystore."</string>
     <string name="import_vpn">Импорт</string>
-    <string name="broken_image_cert_title">Ошибка отображения выбора сертификата</string>
+    <string name="broken_image_cert_title">Ошибка при выборе сертификата</string>
     <string name="broken_image_cert">Произошла ошибка при попытке вызова системного диалога выбора сертификатов Android 4.0+. Этого не должно было случиться на стандартной прошивке. Может быть в вашей прошивке испорчено хранилище сертификатов</string>
     <string name="ipv4">IPv4</string>
     <string name="ipv6">IPv6</string>
@@ -160,21 +160,21 @@
     <string name="converted_profile">импортируемый профиль</string>
     <string name="converted_profile_i">импортируемый профиль %d</string>
     <string name="broken_images">Сломанные прошивки</string>
-    <string name="broken_images_faq">&lt;p&gt;Известно, что официальные прошивки HTC имеют странные проблемы с маршрутизацией, приводящей к тому, что трафик не идёт через туннель (см. &lt;a href=\"https://github.com/schwabe/ics-openvpn/issues/18\"&gt;Issue 18&lt;/a&gt; в баг-трекере).&lt;/p&gt;&lt;p&gt;Также сообщалось, что в старых официальных прошивках SONY от Xperia Arc S и Xperia Ray полностью отсутствует сервис VPNService (см. &lt;a href=\"https://github.com/schwabe/ics-openvpn/issues/29\"&gt;Issue 29&lt;/a&gt; в баг-трекере).&lt;/p&gt;&lt;p&gt;В некоторых неофициальных прошивках модуль tun может отсутствовать, или файл устройства /dev/tun может иметь неправильные права. Некоторые прошивки CM9 могут требовать исправления прав на /dev/tun в настройках «Хаки для данного устройства».&lt;/p&gt;&lt;p&gt;И самое главное: если у вас прошивка с указанными проблемами, сообщите об этом производителю устройства. Чем больше пользователей сообщит о проблеме, тем больше шансов, что производитель её исправит.&lt;/p&gt;</string>
-    <string name="pkcs12_file_encryption_key">Файл PKCS12-ключа</string>
+    <string name="broken_images_faq">&lt;p&gt;Известно, что официальные прошивки HTC имеют странные проблемы с маршрутизацией, из-за которых трафик не проходит через туннель (см. &lt;a href=\"https://github.com/schwabe/ics-openvpn/issues/18\"&gt;Issue 18&lt;/a&gt; в трекере ошибок.)&lt;/p&gt;&lt;p&gt;Ранее сообщалось, что в более старых официальных прошиках Sony для Xperia Arc S и Xperia Ray полностью отсутствует VPNService (см. &lt;a href=\"https://github.com/schwabe/ics-openvpn/issues/29\"&gt;Issue 29&lt;/a&gt;в трекере ошибок.)&lt;/p&gt;&lt;p&gt;В неофициальных сборках модуль tun может отсутствовать, либо иметь неправильные права на /dev/tun. Для некоторых прошивок CM9 должна быть включена опция \"Исправить права\" в разделе \"Хаки для данного устройства\".&lt;/p&gt;&lt;p&gt;И самое главное: если на вашем устройстве прошивка имеет указанные проблемы, сообщите об этом производителю устройства. Чем больше пользователей сообщит о проблеме, тем больше вероятность того, что он ее решит.&lt;/p&gt;</string>
+    <string name="pkcs12_file_encryption_key">Ключ шифрования файла PKCS12</string>
     <string name="private_key_password">Пароль закрытого ключа</string>
     <string name="password">Пароль</string>
-    <string name="file_icon">файл значка</string>
+    <string name="file_icon">значок файла</string>
     <string name="tls_authentication">Аутентификация/шифрование TLS</string>
     <string name="generated_config">Сгенерированая конфигурация</string>
     <string name="generalsettings">Настройки</string>
     <string name="owner_fix_summary">Попытаться изменить владельца для /dev/tun. Некоторые прошивки CM9 требуют этого для корректной работы API OpenVPN. Требуется root.</string>
     <string name="owner_fix">Исправить права для /dev/tun</string>
     <string name="generated_config_summary">Показать сгенерированный файл конфигурации OpenVPN</string>
-    <string name="edit_profile_title">Правка «%s»</string>
+    <string name="edit_profile_title">Редактирование \"%s\"</string>
     <string name="building_configration">Создание конфигурации&#8230;</string>
     <string name="netchange_summary">Переподключаться, если изменяется состояние сети (например, при переключении с Wi-Fi на мобильную и наоборот)</string>
-    <string name="netchange">Переподключение при изменении сети</string>
+    <string name="netchange">Повторное подключение при смене сети</string>
     <string name="netstatus">Статус сети: %s</string>
     <string name="extracahint">Сертификат ЦС обычно хранится в Android Keystore. Укажите отдельный сертификат, если у вас возникли ошибки при проверке сертификата.</string>
     <string name="select_file">Выбрать</string>

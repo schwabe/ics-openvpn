@@ -441,6 +441,22 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
+    <string name="weakmd">&lt;p&gt;OpenSSL versiyon 1.1 den başlayarak,OpenSSL sertifikalardaki  zayıf imzaları reddediyor.
+        MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5 imzaları tamamen güvensiz ve artık kullanılmamalı.&lt;/b&gt; MD5
+        kolizyonlar bu adreste &lt;a
+        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt; bir kaç saatlik basit bir çabayla yaratılabilir.&lt;/a&gt;.
+        VPN sertifikalarını en kısa zamanda güncellemelisin..&lt;/p&gt;&lt;p&gt;Ne yazıkki
+        eski easy-rsa dağıtımları \"default_md md5\" seçeneğini içeriyordu. Eğer  easy-rsa\'nın eski bir versiyonunu kullanıyorsanız, bu versiyona yükseltin
+        &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt; en son versiyon&lt;/a&gt;) yada md5\'i sha256 ile değiştirin ve
+        sertifikalarınızı yeniden yaratın.&lt;/p&gt;&lt;p&gt; eğer gerçekten eski ve bozuk sertifikaları kullanmak istiyorsanız.
+        Gelişmiş yapılandırma altındaki özel yapılandırma seçeneği ya da senin aktarılmış yapılandırmanda ekstra bir satır olarak 
+         tls-cipher \"DEFAULT:@SECLEVEL=0\" \'ı kullanın&lt;/p&gt;
+  
+    
+    
+        
+        
+    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
@@ -471,6 +487,7 @@
     <string name="openvpn3_socksproxy">OpenVPN 3 C ++ uygulaması, Socks Vekil Sunucu üzerinden bağlanmayı desteklemiyor</string>
     <string name="no_orbotfound">Orbot uygulaması bulunamadı. Lütfen Orbot\'u kurun veya manuel Socks v5 entegrasyonu kullanın.</string>
     <string name="faq_remote_api_title">Uzak API</string>
+    <string name="faq_remote_api">Android için OpenVPN iki uzak API yi destekliyor, AIDL kullanan gelişmiş bir API (git deposundaki remoteEXample) ve Intent leri kullanan basit API.&lt;p&gt; Örnekler adb kabuğunu ve intentleri kullanıyor. Profil ismini kendi profil isminizle değiştirin&lt;p&gt;&lt;p&gt;adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Proxy Kimlik Doğrulamasını Etkinleştir</string>
     <string name="error_orbot_and_proxy_options">Ekstra http-vekil sunucu-seçenek bildirimi ve Orbot entegrasyonu aynı anda kullanılamaz</string>
     <string name="info_from_server">Sunucudan gelen bilgi: \'%s\'</string>

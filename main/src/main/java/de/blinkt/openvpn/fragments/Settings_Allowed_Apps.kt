@@ -46,6 +46,8 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
     private lateinit var mProfile: VpnProfile
     private lateinit var mDefaultAllowTextView: TextView
     private lateinit var mListAdapter: PackageAdapter
+    private lateinit var mSettingsView: View
+
 
     override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         val avh = view.tag as AppViewHolder
@@ -109,9 +111,10 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.allowed_vpn_apps, container, false)
 
-        mDefaultAllowTextView = v.findViewById<View>(R.id.default_allow_text) as TextView
+        mSettingsView = inflater.inflate(R.layout.allowed_application_settings, container, false)
+        mDefaultAllowTextView = mSettingsView.findViewById<View>(R.id.default_allow_text) as TextView
 
-        val vpnOnDefaultSwitch = v.findViewById<View>(R.id.default_allow) as Switch
+        val vpnOnDefaultSwitch = mSettingsView.findViewById<View>(R.id.default_allow) as Switch
 
         vpnOnDefaultSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             changeDisallowText(isChecked)
@@ -120,7 +123,7 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
 
         vpnOnDefaultSwitch.isChecked = mProfile.mAllowedAppsVpnAreDisallowed
 
-        val vpnAllowBypassSwitch = v.findViewById<View>(R.id.allow_bypass) as Switch
+        val vpnAllowBypassSwitch = mSettingsView.findViewById<View>(R.id.allow_bypass) as Switch
 
         vpnAllowBypassSwitch.setOnCheckedChangeListener { buttonView, isChecked -> mProfile.mAllowAppVpnBypass = isChecked }
 
@@ -225,18 +228,28 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
         }
 
         override fun getCount(): Int {
-            return mFilteredData.size
+            return mFilteredData.size + 1
         }
 
         override fun getItem(position: Int): Any {
-            return mFilteredData[position]
+            return mFilteredData[position - 1]
         }
 
         override fun getItemId(position: Int): Long {
-            return mFilteredData[position].packageName.hashCode().toLong()
+            if (position == 0)
+                return "settings".hashCode().toLong()
+            return mFilteredData[position - 1].packageName.hashCode().toLong()
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+            if (position == 0) {
+                return mSettingsView
+            } else
+                return getViewApp(position - 1, convertView, parent)
+
+        }
+
+        fun getViewApp(position: Int, convertView: View?, parent: ViewGroup): View? {
             val viewHolder = AppViewHolder.createOrRecycle(mInflater, convertView, parent)
             viewHolder.mInfo = mFilteredData[position]
             val mInfo = mFilteredData[position]
@@ -258,6 +271,14 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
 
         override fun getFilter(): Filter {
             return mFilter
+        }
+
+        override fun getViewTypeCount(): Int {
+            return 2;
+        }
+
+        override fun getItemViewType(position: Int): Int {
+            return if (position == 0) 0 else 1
         }
 
         private inner class ItemFilter : Filter() {

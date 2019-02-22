@@ -5,82 +5,28 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    tools:ignore="RtlCompat"
-    android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?android:attr/actionBarSize"
-        android:background="@drawable/bg_switchbar"
-        android:paddingStart="@dimen/switchbar_pad"
-        android:elevation="1dp"
-        android:paddingEnd="@dimen/switchbar_pad"
-        >
-
-        <Switch
-            android:id="@+id/default_allow"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-             />
-        <TextView
-            android:id="@+id/default_allow_text"
-            style="@android:style/TextAppearance.Medium.Inverse"
-            tools:text="@string/vpn_disallow_radio"
-            android:layout_toStartOf="@id/default_allow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?android:attr/actionBarSize"
-            android:background="@drawable/bg_switchbar"
-            android:paddingStart="@dimen/switchbar_pad"
-            android:elevation="1dp"
-            android:paddingEnd="@dimen/switchbar_pad"
-    >
-
-    <Switch
-            android:id="@+id/allow_bypass"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-
-             />
-        <TextView
-            style="@android:style/TextAppearance.Medium.Inverse"
-            android:text="@string/vpn_allow_bypass"
-            android:layout_toStartOf="@id/allow_bypass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        </RelativeLayout>
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="RtlCompat">
 
     <ListView
-        android:visibility="gone"
         android:id="@android:id/list"
-        android:drawSelectorOnTop="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:scrollbarStyle="outsideOverlay" />
-
+        android:drawSelectorOnTop="false"
+        android:scrollbarStyle="outsideOverlay"
+        android:visibility="gone" />
 
 
     <LinearLayout
         android:id="@+id/loading_container"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
@@ -90,10 +36,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/loading"
             android:paddingTop="4dip"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:text="@string/loading"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </LinearLayout>
 

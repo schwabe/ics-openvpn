@@ -725,7 +725,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         VpnStatus.logInfo(R.string.last_openvpn_tun_config);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !mProfile.mBlockUnusedAddressFamilies) {
+        boolean allowUnsetAF = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !mProfile.mBlockUnusedAddressFamilies;
+        if (allowUnsetAF) {
             allowAllAFFamilies(builder);
         }
 
@@ -828,15 +829,29 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             builder.addSearchDomain(mDomain);
 
         String ipv4info;
+        String ipv6info;
+        if (allowUnsetAF) {
+            ipv4info = "(not set, allowed)";
+            ipv6info = "(not set, allowed)";
+        } else {
+            ipv4info = "(not set)";
+            ipv6info = "(not set)";
+        }
+
         int ipv4len;
         if (mLocalIP!=null) {
             ipv4len=mLocalIP.len;
             ipv4info=mLocalIP.mIp;
         } else {
             ipv4len = -1;
-            ipv4info="(not set)";
         }
-        VpnStatus.logInfo(R.string.local_ip_info, ipv4info, ipv4len, mLocalIPv6, mMtu);
+
+        if (mLocalIPv6!=null)
+        {
+            ipv6info = mLocalIPv6;
+        }
+
+        VpnStatus.logInfo(R.string.local_ip_info, ipv4info, ipv4len, ipv6info, mMtu);
         VpnStatus.logInfo(R.string.dns_server_info, TextUtils.join(", ", mDnslist), mDomain);
         VpnStatus.logInfo(R.string.routes_info_incl, TextUtils.join(", ", mRoutes.getNetworks(true)), TextUtils.join(", ", mRoutesv6.getNetworks(true)));
         VpnStatus.logInfo(R.string.routes_info_excl, TextUtils.join(", ", mRoutes.getNetworks(false)), TextUtils.join(", ", mRoutesv6.getNetworks(false)));

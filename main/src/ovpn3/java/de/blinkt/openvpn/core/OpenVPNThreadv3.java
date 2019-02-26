@@ -7,6 +7,7 @@ import net.openvpn.ovpn3.*;
 
 import net.openvpn.ovpn3.ClientAPI_OpenVPNClient;
 
+import static de.blinkt.openvpn.VpnProfile.AUTH_RETRY_NOINTERACT;
 import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.copyright;
 import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.init_process;
 import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.platform;
@@ -186,6 +187,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		config.setCompressionMode("asym");
 		config.setInfo(true);
 		config.setAllowLocalLanAccess(mVp.mAllowLocalLAN);
+		boolean retryOnAuthFailed= mVp.mAuthRetry == AUTH_RETRY_NOINTERACT;
+		config.setRetryOnAuthFailed(retryOnAuthFailed);
 
 		ClientAPI_EvalConfig ec = eval_config(config);
 		if(ec.getExternalPki()) {

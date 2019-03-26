@@ -25,6 +25,11 @@ FAQ
 -----
 You can find the FAQ here (same as in app): http://ics-openvpn.blinkt.de/FAQ.html
 
+Controlling from external apps
+------------------------------
+
+There is the AIDL API for real controlling (see developing section). Due to high demand also the Activities `de.blinkt.openvpn.api.DisconnectVPN` and `de.blinkt.openvpn.api.ConnectVPN` exist. It uses `de.blinkt.openvpn.api.profileName` as extra for the name of the VPN profile.
+
 Note to administrators
 ------------------------
 

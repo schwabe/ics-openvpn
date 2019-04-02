@@ -125,7 +125,7 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 			clearapi.setSummary(R.string.no_external_app_allowed);
 		} else { 
 			clearapi.setEnabled(true);
-			clearapi.setSummary(getString(R.string.allowed_apps,getExtAppList(", ")));
+			clearapi.setSummary(getString(R.string.allowed_apps, getExtAppList(", ")));
 		}
 	}
 

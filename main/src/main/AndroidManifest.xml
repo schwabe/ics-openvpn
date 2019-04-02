@@ -23,12 +23,12 @@
         android:required="false" />
 
 
-
     <application
         android:name=".core.ICSOpenVPNApplication"
         android:allowBackup="true"
         android:appCategory="productivity"
         android:banner="@mipmap/banner_tv"
+        android:extractNativeLibs="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app"
         android:supportsRtl="true"
@@ -36,8 +36,9 @@
         tools:ignore="UnusedAttribute">
 
 
-        <meta-data android:name="android.content.APP_RESTRICTIONS"
-                   android:resource="@xml/app_restrictions" />
+        <meta-data
+            android:name="android.content.APP_RESTRICTIONS"
+            android:resource="@xml/app_restrictions" />
 
         <activity
             android:name=".activities.VPNPreferences"
@@ -67,7 +68,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES"/>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
         </activity>
 
@@ -161,7 +162,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="*/*" />
-                <data android:scheme="file" />
                 <data android:scheme="content" />
                 <data android:host="*" />
                 <data android:pathPattern=".*..*..*..*..*.ovpn" />
@@ -171,6 +171,29 @@
                 <data android:pathPattern=".*.ovpn" />
             </intent-filter>
         </activity>
+        // https://commonsware.com/blog/2019/03/27/death-external-storage-stay-away-files.html
+        <activity-alias
+            android:enabled="@bool/supportFileScheme"
+            android:name=".activities.ConfigConverterFile"
+            android:targetActivity=".activities.ConfigConverter">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="*/*" />
+                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:pathPattern=".*..*..*..*..*.ovpn" />
+                <data android:pathPattern=".*..*..*..*.ovpn" />
+                <data android:pathPattern=".*..*..*.ovpn" />
+                <data android:pathPattern=".*..*.ovpn" />
+                <data android:pathPattern=".*.ovpn" />
+                />
+            </intent-filter>
+        </activity-alias>
+
         <activity
             android:name=".LaunchVPN"
             android:autoRemoveFromRecents="true"
@@ -234,17 +257,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.blinkt.openvpn.activities.MainActivity" />
         </activity>
-        <activity
-            android:name=".api.RemoteAction"
-            />
+        <activity android:name=".api.RemoteAction" />
+
         <activity-alias
-            android:exported="true"
             android:name=".api.DisconnectVPN"
+            android:exported="true"
             android:targetActivity=".api.RemoteAction" />
 
         <activity-alias
-            android:exported="true"
             android:name=".api.ConnectVPN"
+            android:exported="true"
             android:targetActivity=".api.RemoteAction" />
 
 

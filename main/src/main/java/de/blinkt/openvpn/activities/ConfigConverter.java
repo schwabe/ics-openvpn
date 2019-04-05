@@ -263,7 +263,7 @@ public class ConfigConverter extends BaseActivity implements FileSelectCallback,
 
 
                     },
-                    new String[]{"RSA"}, // List of acceptable key types. null for any
+                    new String[]{"RSA", "EC"}, // List of acceptable key types. null for any
                     null,                        // issuer, null for any
                     mResult.mServerName,      // host name of server requesting the cert, null if unavailable
                     -1,                         // port of server requesting the cert, -1 if unavailable

@@ -171,7 +171,7 @@
                 <data android:pathPattern=".*.ovpn" />
             </intent-filter>
         </activity>
-        // https://commonsware.com/blog/2019/03/27/death-external-storage-stay-away-files.html
+        <!-- https://commonsware.com/blog/2019/03/27/death-external-storage-stay-away-files.html -->
         <activity-alias
             android:enabled="@bool/supportFileScheme"
             android:name=".activities.ConfigConverterFile"
@@ -190,7 +190,6 @@
                 <data android:pathPattern=".*..*..*.ovpn" />
                 <data android:pathPattern=".*..*.ovpn" />
                 <data android:pathPattern=".*.ovpn" />
-                />
             </intent-filter>
         </activity-alias>
 

@@ -153,8 +153,11 @@ public class Utils {
 
     public static boolean alwaysUseOldFileChooser(Context c)
     {
-        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
+        /* Android P does not allow access to the file storage anymore */
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P)
+            return false;
 
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
         return prefs.getBoolean("useInternalFileSelector", false);
     }
 

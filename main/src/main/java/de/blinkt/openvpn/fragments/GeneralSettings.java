@@ -70,6 +70,13 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 			devHacks.removePreference(useInternalFS);
 		}
 
+		/* Android P does not allow access to the file storage anymore */
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P)
+		{
+			Preference useInternalFileSelector = findPreference("useInternalFileSelector");
+			devHacks.removePreference(useInternalFileSelector);
+		}
+
 		mExtapp = new ExternalAppDatabase(getActivity());
 		Preference clearapi = findPreference("clearapi");
 		clearapi.setOnPreferenceClickListener(this);
@@ -133,15 +140,13 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 		ApplicationInfo app;
 		PackageManager pm = getActivity().getPackageManager();
 
-		String applist=null;
+		StringBuilder applist = new StringBuilder();
 		for (String packagename : mExtapp.getExtAppList()) {
 			try {
 				app = pm.getApplicationInfo(packagename, 0);
-				if (applist==null)
-					applist = "";
-				else
-					applist += delim;
-				applist+=app.loadLabel(pm);
+				if (applist.length() != 0)
+					applist.append(delim);
+				applist.append(app.loadLabel(pm));
 
 			} catch (NameNotFoundException e) {
 				// App not found. Remove it from the list
@@ -149,7 +154,7 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
 			}
 		}
 
-		return applist;
+		return applist.toString();
 	}
 
 	private boolean isTunModuleAvailable() {

@@ -4,15 +4,41 @@
             <a href="#faq_howto_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Get工作的配置（從供應商/機構檢測您的電腦或下載）</p><p>If它沒有多餘的PEM / pks12文件，你可以自己通過電子郵件發送文件和打開附件的單個文件。如果您有多個文件，把它們放在你的SD card.</p><p>Click上的電子郵件附件/使用的文件夾圖標，在VPN列表導入配置file</p><p>If大約有丟失的文件將丟失的文件在你的SD card.</p><p>Click上保存錯誤標誌將導入的VPN添加到您的VPN list</p><p>Connect的VPN通過點擊VPN</p><p>If的名字有錯誤或警告日誌試著去了解警告/錯誤，並嘗試修復them</p> 
+            <p>取得正在使用的設定（在電腦測試過的，或從供應商/組織下載的）</p><p>如果單一檔案且沒有沒有額外 pem/pks12 檔案，你可以發送這個檔案給自，打開附件。如果你有多個檔案，把他們放在你的 SD 卡。</p><p>點選 email 附件/使用在 VPN 清單的資料夾圖示，來匯入設定檔</p><p>如果有關在 SD 卡內，檔案遺失的錯誤。</p><p>點選儲存符號，來加入已匯入的 VPN 到你的 VPN 清單內</p><p>點選 VPN 的名稱來連線到此 VPN</p><p>如果在日誌中發現錯誤或警告，試著去了解警告/錯誤，並嘗試修復它</p> 
+
+            <h2>
+            <a name="faq_killswitch_title"></a>
+            Block non VPN connection ("Killswitch")
+            <a href="#faq_killswitch_title" class="section_anchor"> </a>
+            </h2>
+            
+            It is often desired to block connections without VPN. Other apps often use markting terms like "Killswitch" or "Seamless tunnel" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.<p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.<p>The <b>only</b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the "block connections without VPN" setting that can be found under Settings > Network & Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN
+
+            <h2>
+            <a name="faq_remote_api_title"></a>
+            Remote API
+            <a href="#faq_remote_api_title" class="section_anchor"> </a>
+            </h2>
+            
+            OpenVPN for Android supports two remote APIs, a sophisticated API using AIDL (remoteEXample in the git repository) and a simple one using Intents. <p>Examples using adb shell and the intents. Replace profilname with your profile name<p><p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN<p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN
 
             <h2>
             <a name="weakmd_title"></a>
-            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            在憑證簽章中的弱（MD5）雜湊（SSL_CTX_use_certificate md too weak）
             <a href="#weakmd_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+            <p>從 OpenSSL 1.1 版本, OpenSSL 拒絕憑證中的弱簽章，如
+        MD5。</p><p><b>MD5 簽章完全不安全，且不該再使用。</b> MD5
+        碰撞 <a
+        href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">在幾小時內以對成本產生</a>。
+        你應該盡快更新 VPN 憑證。</p><p>不幸的是，舊的 easy-rsa
+        發行版包含了 ""default_md md5" 的設定選項。如果您正使用舊版的 easy-rsa，更新到
+        <a href="https://github.com/OpenVPN/easy-rsa/releases">最新版本</a>) 或將 md5 換至 sha256 及
+        重新產生您的憑證。</p><p>如果你真的想使用破舊的憑證，使用自訂的
+        設定選項 tls-cipher "DEFAULT:@SECLEVEL=0" 在進階設定中，或額外加一行在您的
+        已匯入的設定內</p>
+    
 
             <h2>
             <a name="samsung_broken_title"></a>
@@ -37,7 +63,7 @@
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
-            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and more targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
+            安卓系統的多個 OpenVPN 用戶端存在。最常見是 OpenVPN 為 Android （此用戶端），OpenVPN 連接和 OpenVPN 設置。 < p > 用戶端可以分為兩組： OpenVPN 為 Android 和 OpenVPN 連接使用官方的 VPNService API （安卓 4.0 +），需要無根、 無使用根 < p > 的 OpenVPN 設置 OpenVPN 的 Android 是開源用戶端和開發的 Arne 米爾克。 它針對更高級的使用者，並提供許多設置和能力，從檔導入設定檔，配置更改內部應用程式的設定檔。用戶端基於 OpenVPN 的社區版本。它基於 OpenVPN 2.x 原始程式碼。此用戶端可以被看作是半正式的社區用戶端。< p > OpenVPN 連接是由 OpenVPN 技術公司開發的非開源用戶端用戶端縮進是一般使用的用戶端和更多針對普通使用者，並允許的 OpenVPN 設定檔導入。此用戶端基於 OpenVPN c + + 重新實現的 OpenVPN 協定 （這要求允許 OpenVPN 技術，公司將發佈 iOS OpenVPN 應用程式）。此用戶端是最古老的用戶端和也的使用者介面對於開放源碼 OpenVPN OpenVPN 技術 < p > OpenVPN 設置的官方用戶端。與安卓系統的 OpenVPN 它需要根和不使用 VPNService API。它不依賴于安卓 4.0 +
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
@@ -75,7 +101,7 @@
             <a href="#battery_consumption_title" class="section_anchor"> </a>
             </h2>
             
-            In my personal tests the main reason for high battery consumption of OpenVPN are the keepalive packets. Most OpenVPN servers have a configuration directive like 'keepalive 10 60' which causes the client and server to exchange keepalive packets every ten seconds. <p> While these packets are small and do not use much traffic, they keep the mobile radio network busy and increase the energy consumption. (See also <a href="http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine">The Radio State Machine | Android Developers</a>) <p> This keepalive setting cannot be changed on the client. Only the system administrator of the OpenVPN can change the setting. <p> Unfortunately using a keepalive larger than 60 seconds with UDP can cause some NAT gateways to drop the connection due to an inactivity timeout. Using TCP with a long keep alive timeout works, but tunneling TCP over TCP performs extremely poorly on connections with high packet loss. (See <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">Why TCP Over TCP Is A Bad Idea</a>)
+            在我個人的測試中的 OpenVPN 高電池消耗的主要原因是保活資料包。大多數的 OpenVPN 伺服器有一個配置指令像 ' keepalive 10 60'，這會導致用戶端和伺服器交換保活資料包每十秒。< P > 雖然這些資料包是小和不使用太多的交通，它們保持移動無線電網路忙，增加了能源消耗。(請參見 < href ="HTTP://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine"> 無線電狀態機 |Android 開發者 < /a >） < p > 此 keepalive 設置不能更改用戶端上。只有 OpenVPN 的系統管理員可以更改的設置。< P > 不幸的 udp 使用保活大於 60 秒可以導致一些 NAT 閘道來斷開連接由於不活動超時。用不了多久使用 TCP 保持活著超時工作，但隧道 TCP 通過 TCP 表現極為不佳與高資料包丟失連接上。(請參閱 < href ="HTTP://sites.inka.de/bigred/devel/tcp-tcp.html"> 為什麼 TCP 在 TCP 是一個壞點子 < /a >)
 
             <h2>
             <a name="faq_system_dialogs_title"></a>
@@ -92,11 +118,11 @@
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            點擊模式是不可能的非根VPN API。因此，該應用程序不能提供自來水的支持
+            非 root 的 VPN API 無法使用 Tap 模式，因此，此應用程式無法提供 tap 支援。
 
             <h2>
             <a name="ab_secondary_users_title"></a>
-            Secondary tablet users
+            二级平板电脑用户
             <a href="#ab_secondary_users_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
@@ -115,7 +141,7 @@
 
             <h2>
             <a name="tls_cipher_alert_title"></a>
-            連接失敗，SSL23_GET_SERVER_HELLO:sslv3 握手失敗
+            連線失敗，SSL23_GET_SERVER_HELLO:sslv3 警告交握失敗
             <a href="#tls_cipher_alert_title" class="section_anchor"> </a>
             </h2>
             
@@ -123,7 +149,7 @@
 
             <h2>
             <a name="faq_security_title"></a>
-            保安上的考慮
+            安全考量
             <a href="#faq_security_title" class="section_anchor"> </a>
             </h2>
             
@@ -179,7 +205,7 @@
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
 
-            Opening a tun device while another tun device is active, which is used for persist-tun support, crashes the VPNServices on the device. A reboot is required to make VPN work again. OpenVPN for Android tries to avoid reopening the tun device and if really needed first closes the current TUN before opening the new TUN device to avoid to crash. This may lead to a short window where packets are sent over the non-VPN connection. Even with this workaround the VPNServices sometimes crashes and requires a reboot of the device.
+            Sdjddnnsmssjhfjdd
 
             <h2>
             <a name="faq_routing_title"></a>
@@ -193,14 +219,14 @@
 
             <h2>
             <a name="ab_kitkat_reconnect_title"></a>
-            Random disconnects from mobile network
+            從行動網路隨機斷線
             <a href="#ab_kitkat_reconnect_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
 <small><i>4.4 (Kit Kat) 及更高版本</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            "Multiple users report that the mobile connection/mobile data connection is frequently dropped while using the VPN app. The behaviour seems to affect only some mobile provider/device combination and so far no cause/workaround for the bug could be identified. "
+            「許多使用者回報，在使用 VPN 應用程式時，行動連線/行動數據連線經常被斷線。這個行為似乎只影響一些行動供應商/裝置結合，目前為止，沒有原因/解決可辨別該錯誤。」
 
             <h2>
             <a name="ab_vpn_reachability_44_title"></a>
@@ -212,7 +238,7 @@
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            Only destination can be reached over the VPN that are reachable without VPN. IPv6 VPNs does not work at all.
+            Vpn是幹嗎？
 
             <h2>
             <a name="ab_only_cidr_title"></a>
@@ -237,7 +263,7 @@
             </h2>
             <small><i>5.0 (Lollipop) 及更高版本</i></small> <br/>
 
-            The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask
+            已設定的客戶端 IP 及在此網路遮罩的 IP 不會路由到 VPN。OpenVPN 以明確加入一條對應到客戶端 IP 與此子網路遮罩的路由，來嘗試解決這個問題。
 
             <h2>
             <a name="tap_mode"></a>
@@ -245,6 +271,6 @@
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            A third time? Actually, one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would also have to implement ARP and possibly a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.
+            第三次嗎？實際上，一個可以寫基於屯，並添加 2 層資訊發送帶 2 層資訊上水龍頭模擬器接收。但這個水龍頭模擬器還必須實施 ARP 和可能 DHCP 用戶端。我不知道的任何人做任何工作在這個方向。與我聯繫，如果你想要開始對此編碼。
 
             

@@ -7,12 +7,30 @@
             <p> Використовуйте готову конфігурацію (протестовану на вашому комп'ютері або отриману від вашого провайдера) </p> <p> Якщо це простий файл без pem/pks12 ви можете відправити його по email на свій пристрій. Якщо ж це декілька файлів, ви можете використовувати їх зі своєї карти пам'яті. </p> <p> Просто натисніть на .сonf файл або виберіть його за допомогою меню в програмі для імпорту конфігурації </p> <p> Якщо програма видасть помилку про брак деяких файлів, просто помістіть ці файли на карту пам'яті </p> <p> Натисніть Збереження для додавання імпортованої конфігурації в програму </p> <p> Запустіть ваш VPN-тунель, натиснувши на його назву в списку </p> <p> Якщо при запуску виникли помилки спробуйте розібратися і усунути їх. </p>
 
             <h2>
+            <a name="faq_killswitch_title"></a>
+            Block non VPN connection ("Killswitch")
+            <a href="#faq_killswitch_title" class="section_anchor"> </a>
+            </h2>
+            
+            It is often desired to block connections without VPN. Other apps often use markting terms like "Killswitch" or "Seamless tunnel" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.<p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.<p>The <b>only</b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the "block connections without VPN" setting that can be found under Settings > Network & Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN
+
+            <h2>
+            <a name="faq_remote_api_title"></a>
+            Remote API
+            <a href="#faq_remote_api_title" class="section_anchor"> </a>
+            </h2>
+            
+            OpenVPN for Android supports two remote APIs, a sophisticated API using AIDL (remoteEXample in the git repository) and a simple one using Intents. <p>Examples using adb shell and the intents. Replace profilname with your profile name<p><p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN<p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN
+
+            <h2>
             <a name="weakmd_title"></a>
-            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            Слабкі (MD5) хеші в підписі сертифікату (SSL_CTX_use_certificate md надто слабкий)
             <a href="#weakmd_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+            <p> Починаючи з OpenSSL версії 1.1, OpenSSL відкидає слабкі підписи в таких сертифікатах, як MD5.</p><p><b>MD5, підписи повністю небезпечні і більше не повинні використовуватись.</b> Колізії MD5 можуть бути створені в <a
+        href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html"> через декілька годин з мінімальними затратами.</a>. Ви повинні якнайшвидше оновити сертифікати VPN. </p><p>Нажаль, старі дистрибутиви easy-rsa включали опцію конфігурації «default_md md5». Якщо ви використовуєте стару версію easy-rsa, оновітб її до <a href="https://github.com/OpenVPN/easy-rsa/releases">latest версії</a>) або змініть md5 на sha256 та відновіть свої сертификати.</p><p>Якщо ви дійсно хочете використовувати старі та пошкоджені сертификати, використовуйте налаштовуваний параметр конфігурації tls-cipher «DEFAULT: @SECLEVEL = 0 "в розширеній конфігурації або в якості додаткового рядку в вашій імпортованій конфігурації</p>
+    
 
             <h2>
             <a name="samsung_broken_title"></a>
@@ -119,7 +137,7 @@
             <a href="#tls_cipher_alert_title" class="section_anchor"> </a>
             </h2>
             
-            Newer OpenVPN for Android versions (0.6.29/March 2015) use a more secure default for the allowed cipher suites (tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA"). Unfortunately, omitting the less secure cipher suites and export cipher suites, especially the omission of cipher suites that do not support Perfect Forward Secrecy (Diffie-Hellman) causes some problems. This usually caused by an well-intentioned but poorly executed attempt to strengthen TLS security by setting tls-cipher on the server or some embedded OSes with stripped down SSL (e.g. MikroTik).<p>To solve this problem the problem, set the tls-cipher settings on the server to reasonable default like tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA". To work around the problem on the client add the custom option tls-cipher DEFAULT on the Android client.
+            Новіші версії OpenVPN для Android (0.6.29 / березень 2015 р.) використовують більш безпечниі налаштування за промовчанням для дозволених шифрованих наборів (tls-шифр "DEFAULT:! EXP:! PSK:! SRP:! KRSA"). На жаль, виключення менш безпечних та експортних наборів шифрів, особливо тих, які не підтримують Perfect Forward Secrecy (Diffie-Hellman), викликають певні проблеми. Це, як правило, зумовлене добромисною, але погано виконаною спробою посилити захист TLS встановленням tls-cipher на сервері або деяких вбудованих ОС із урізаним SSL (наприклад, MikroTik).<p>Щоб вирішити цю проблему, встановіть tls-cipher налаштування на сервері на розумні за промовчанням, як tls-cipher "DEFAULT:! EXP:! PSK:! SRP:! kRSA". Щоб вирішити проблему у клієнта, додайте користувацький параметр tls-cipher DEFAULT на клієнті Android.
 
             <h2>
             <a name="faq_security_title"></a>

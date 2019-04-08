@@ -7,19 +7,45 @@
             <p>Získej fungující nastavení (otestované na tvém počítači nebo stažené od poskytovatele/zaměstnavatele).</p><p>Pokud je to jeden soubor bez extra pem/pks12 souborů, můžeš ho poslat emailem jako přílohu. Pokud je souborů více, ulož je na SD kartu.</p><p>Klepni na přilohu mailu/Použij ikonu adresáře v seznamu VPN pro import nastavení.</p><p>Pokud se zobrazí chyby o chybějících souborech, ulož je na SD kartu.</p><p>Pro přidání importované VPN do seznamu, klepni na symbol pro uložení.</p><p>Pro připojení k VPN klepni na její jméno.</p><p>Pokud se v logu objeví varování nebo chyby, pokus se jim porozumět a opravit nastavení.</p> 
 
             <h2>
+            <a name="faq_killswitch_title"></a>
+            Block non VPN connection ("Killswitch")
+            <a href="#faq_killswitch_title" class="section_anchor"> </a>
+            </h2>
+            
+            It is often desired to block connections without VPN. Other apps often use markting terms like "Killswitch" or "Seamless tunnel" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.<p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.<p>The <b>only</b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the "block connections without VPN" setting that can be found under Settings > Network & Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN
+
+            <h2>
+            <a name="faq_remote_api_title"></a>
+            Remote API
+            <a href="#faq_remote_api_title" class="section_anchor"> </a>
+            </h2>
+            
+            OpenVPN for Android supports two remote APIs, a sophisticated API using AIDL (remoteEXample in the git repository) and a simple one using Intents. <p>Examples using adb shell and the intents. Replace profilname with your profile name<p><p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN<p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN
+
+            <h2>
             <a name="weakmd_title"></a>
             Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
             <a href="#weakmd_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like
+        MD5.</p><p><b>MD5 signatures are completely insecure and should not be used anymore.</b> MD5
+        collisions can be created in <a
+        href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>.
+        You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa
+        distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to
+        the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and
+        regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom
+        configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your
+        imported configuration</p>
+    
 
             <h2>
             <a name="samsung_broken_title"></a>
-            Samsung phones
+            Samsung telefony
             <a href="#samsung_broken_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) a později</i></small> <br/>
 
             Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
 
@@ -46,7 +72,7 @@
             </h2>
             <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
-            VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
+            Aplikace VPN mohou přestat fungovat po odinstalování a reinstalaci. Podrobnosti najdete v #80074
 
             <h2>
             <a name="vpn_tethering_title"></a>
@@ -109,13 +135,13 @@
             <a href="#faq_vpndialog43_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and later</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) a později</i></small> <br/>
 
             "Počínaje Androidem 4.3, VPN konfirmace je chráněná proti "překryvným aplikacím". Výsledkem je dialog nereagující na dotyk. Pokud máš aplikaci používající překryv, může to způsobit toto chování. Pokud nalezneš škodlivou aplikaci, kontaktuj jejího autora. Tento problém ovlivňuje všechny VPN aplikace na Androidu 4.3 a vyšší. Viz také <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=185">Problém 185<a> pro další detaily."
 
             <h2>
             <a name="tls_cipher_alert_title"></a>
-            Connections fails with SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure
+            Připojení selhalo SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure
             <a href="#tls_cipher_alert_title" class="section_anchor"> </a>
             </h2>
             
@@ -150,7 +176,7 @@
             VPN a tethering
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) a později</i></small> <br/>
 
             Sdílení připojení funguje během aktivního VPN spojení. Sdílené připojení NEpoužije VPN.
 
@@ -159,7 +185,7 @@
             Špatná hodnota MSS pro VPN spojení
             <a href="#ab_kitkat_mss_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) a později</i></small> <br/>
 <small><i>4.4 (Kit Kat) - 4.4.1 (Kit Kat)</i></small> <br/>
 
             Dřívější KitKat verze nastavovaly špatnou hodnotu MSS na TCP spojení (#61948). OpenVPN automaticky zapne mssfix možnost pro obejití chyby.
@@ -174,7 +200,7 @@
 
             <h2>
             <a name="ab_persist_tun_title"></a>
-            Persist tun mode
+            Setrvat v režimu tun
             <a href="#ab_persist_tun_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
@@ -187,32 +213,32 @@
             <a href="#faq_routing_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) a později</i></small> <br/>
 
             Směrování a konfigurace rozhraní není provedena pomocí tradičních příkazů ifconfig/route, ale pomocí VPNService API. To má za následek odlišnou konfiguraci směrování, než na jiných operačních systémech. Konfigurace VPN tunelu se skládá z IP adresy a sítě, která má být směrována skrze toto rozhraní. Zejména není potřeba adresa protistrany nebo brány. Speciální směrování pro dosažení VPN serveru (například v případě použití redirect-gataway direktivy) také není potřeba. Aplikace bude toto nastavení při importu konfigurace ignorovat. Aplikace pomocí VPNService API zajišťuje, že spojení k VPN serveru není směrováno skrze tunel. Povoleno je pouze specifikování sítí, které se mají směrovat skrze tunel. Aplikace se snaží detekovat sítě, které by neměli procházet tunelem (např. route x.x.x.x y.y.y.y net_gateway) a vypočítává nastavení směrování tak, aby emulovalo správné chováni jako na ostatních platformách. Logovací okno ukazuje konfiguraci VPNService při navázání spojení.
 
             <h2>
             <a name="ab_kitkat_reconnect_title"></a>
-            Random disconnects from mobile network
+            Náhodné odpojování od mobilní sítě
             <a href="#ab_kitkat_reconnect_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) a později</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            "Multiple users report that the mobile connection/mobile data connection is frequently dropped while using the VPN app. The behaviour seems to affect only some mobile provider/device combination and so far no cause/workaround for the bug could be identified. "
+            "Více uživatelů hlasí, že mobilní připojení / mobilní datové připojení má časté výpadky během používání této VPN aplikace, Vypadá, že chování ovlivňuje jen nějaké kombinace mobilních dodavatelů / zařizení a zatím jsme přes žádnou přičinu nemohli identifikovat chybu."
 
             <h2>
             <a name="ab_vpn_reachability_44_title"></a>
-            Remote networks not reachable
+            Vzdálená síť není dostupná
             <a href="#ab_vpn_reachability_44_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) a později</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            Only destination can be reached over the VPN that are reachable without VPN. IPv6 VPNs does not work at all.
+            Jediná destinace může být dosažena přes VPN které nejsou dosažitelné bez VPN. Sítě IPv6 nefungují vůbec.
 
             <h2>
             <a name="ab_only_cidr_title"></a>
@@ -235,7 +261,7 @@
             Trasa k nastavené IP adrese
             <a href="#ab_not_route_to_vpn_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) a později</i></small> <br/>
 
             The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask
 

@@ -7,12 +7,38 @@
             <p>Hämta en fungerande konfiguration (testad på din dator eller nerladdad från din leverantör/organisation)</p><p>Om det är en enda fil utan extra pem/pks12 filer kan du maila den till dig själv och öppna den bifogade filen. Om du har flera filer lägg dem på ditt sd-kort.</p><p>Klicka på den i mailet bifogade filen/Användning mappikonen i VPN-listan för att importera konfigurationsfilen</p><p>Om det ger fel ang. saknade filer lägg dessa på ditt sd-kort.</p><p>Klicka på spara symbolen för att lägga till den importerade konfigurationen i VPN-listan</p><p>Anslut din VPN genom att klicka på konfigurationsnamnet</p><p>Om det finns fel eller varningar i loggen försöka förstå dessa varningar/fel och försök att åtgärda dem</p> 
 
             <h2>
+            <a name="faq_killswitch_title"></a>
+            Block non VPN connection ("Killswitch")
+            <a href="#faq_killswitch_title" class="section_anchor"> </a>
+            </h2>
+            
+            It is often desired to block connections without VPN. Other apps often use markting terms like "Killswitch" or "Seamless tunnel" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.<p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.<p>The <b>only</b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the "block connections without VPN" setting that can be found under Settings > Network & Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN
+
+            <h2>
+            <a name="faq_remote_api_title"></a>
+            Fjärr-API
+            <a href="#faq_remote_api_title" class="section_anchor"> </a>
+            </h2>
+            
+            OpenVPN för Android stöder två fjärr API, ett sofistikerat API med hjälp av AIDL (remoteexample i git repository) och en enkel med Intents. <p>Exempel med adb shell och intentionerna. Ersätt profilnamn med ditt profilnamn<p><p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN<p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN
+
+            <h2>
             <a name="weakmd_title"></a>
-            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            Svag (MD5) hashes i certifikat signatur (SSL_CTX_use_certificate md för svag)
             <a href="#weakmd_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+            <p>Börjar med OpenSSL version 1.1, Avvisar OpenSSL svaga signaturer i certifikat som
+        MD5.</p><p><b>MD5-signaturer är helt osäkra och borde inte användas längre.</b> MD5
+        kollisioner kan skapas om <a
+        href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">få timmar till en minimal kostnad.</a>.
+        Du ska uppdatera VPN-certifikaten så snart som möjligt.</p><p>Tyvärr inkluderade äldre easy-rsa
+        distributioner config-alternativet "default_md md5". Om du använder en gammal easy-rsa-version, uppdatera till
+ <a href="https://github.com/OpenVPN/easy-rsa/releases">senaste versionen</a>) eller ändra md5 till sha256 och
+        regenerera dina certifikat.</p><p>Om du verkligen vill använda gamla och brutna certifikat använder du anpassade
+        konfigurationsalternativet tls-cipher "DEFAULT: @ SECLEVEL = 0" under avancerad konfiguration eller som extra rad i din
+        importerade konfiguration</p>
+    
 
             <h2>
             <a name="samsung_broken_title"></a>
@@ -29,7 +55,7 @@
             <a href="#faq_duplicate_notification_title" class="section_anchor"> </a>
             </h2>
             
-            Om Android tillfälligt har brist på systemminne (RAM), tas program och tjänster som inte behövs just nu bort från aktiva minnet. Detta avslutar en pågående VPN-anslutning. För att se till att pågående anslutning/OpenVPN överlever körs denna tjänst med högre prioritet. För att köra med högre prioritet måste applikationen visa en notifikation. Nyckelikonen visas av systemet, som beskrivs i FAQ tidigare, och räknas inte som ett meddelande som ger rättighet att köra med högre prioritet.
+            Om Android tillfälligt har brist på systemminne (RAM), tas program och tjänster som inte behövs just nu bort från aktiva minnet. Detta avslutar en pågående VPN-anslutning. För att se till att pågående anslutning/OpenVPN överlever körs denna tjänst med högre prioritet. För att köra med högre prioritet måste applikationen visa en notifikation. Nyckelikonen visas av systemet, som beskrivs i Vanliga frågor tidigare, och räknas inte som ett meddelande som ger rättighet att köra med högre prioritet.
 
             <h2>
             <a name="faq_androids_clients_title"></a>

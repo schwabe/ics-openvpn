@@ -7,21 +7,39 @@
             <p>Ottieni una configurazione funzionante (testata sul tuo computer o fornita dal tuo provider o dalla tua ditta).</p><p>Se si tratta di un singolo file senza ulteriori file tipo pem/pkcs12, puoi spedire il file a te stesso via email ed aprire l'allegato. Se hai più file, salvali sulla scheda SD.</p><p>Clicca sull'allegato dell'email oppure utilizza l'icona della cartella nell'elenco delle VPN per importare il file di configurazione.</p><p>Se compaiono degli errori relativi a file non trovati, copia i file mancanti sulla tua scheda SD.</p><p>Clicca sull'icona di salvataggio per aggiungere la VPN importata nell'elenco delle tue VPN.</p><p>Connettiti alla VPN cliccando sul nome della VPN.</p><p>Se compaiono degli errori o degli avvertimenti nei log, si consiglia di non ignorarli, ma di cercare delle soluzioni.</p> 
 
             <h2>
+            <a name="faq_killswitch_title"></a>
+            Block non VPN connection ("Killswitch")
+            <a href="#faq_killswitch_title" class="section_anchor"> </a>
+            </h2>
+            
+            It is often desired to block connections without VPN. Other apps often use markting terms like "Killswitch" or "Seamless tunnel" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.<p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.<p>The <b>only</b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the "block connections without VPN" setting that can be found under Settings > Network & Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN
+
+            <h2>
+            <a name="faq_remote_api_title"></a>
+            API remota
+            <a href="#faq_remote_api_title" class="section_anchor"> </a>
+            </h2>
+            
+            OpenVPN per Android supporta due API remote, un'API sofisticata che utilizza AIDL (remoteEXample nel repository git) e una semplice che usa gli Intent. <p>Esempi usando la shell adb e gli Intent. Sostituisci profilname con il nome del tuo profilo<p><p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN<p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN
+
+            <h2>
             <a name="weakmd_title"></a>
-            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            Hash (MD5) troppo deboli nella firma del certificato (SSL_CTX_use_certificate md too weak)
             <a href="#weakmd_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+            <p>A partire da OpenSSL versione 1.1, OpenSSL rifiuta le firme deboli in certificati come MD5.</p><p><b>firme MD5 sono completamente insicure e non dovrebbero essere più utilizzate.</b> collisioni MD5 possono essere create in <a
+        href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">ore a un costo minimo.</a>. È necessario aggiornare i certificati VPN il prima possibile.</p><p>Sfortunatamente, le vecchie distribuzioni easy-rsa includevano l'opzione di configurazione "default_md md5". Se si utilizza una vecchia versione easy-rsa, si aggiorna alla versione <a href="https://github.com/OpenVPN/easy-rsa/releases">più recente</a>) o si modifica md5 in sha256 e si rigenerano i certificati.</p><p>Se si desidera utilizzare effettivamente certificati vecchi e guasti, utilizzare l'opzione di configurazione personalizzata tls-cipher "DEFAULT: @ SECLEVEL = 0" in configurazione avanzata o come riga aggiuntiva nella configurazione importata</p>
+    
 
             <h2>
             <a name="samsung_broken_title"></a>
-            Samsung phones
+            Telefoni Samsung
             <a href="#samsung_broken_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) e successive</i></small> <br/>
 
-            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
+            Anche se i telefoni Samsung sono tra i più venduti telefoni Android, i firmware di Samsung sono anche tra i firmware Android con più problemi. I problemi non sono limitati all'operazione VPN su questi dispositivi, ma molti di essi possono essere sistemati. In seguito sono descritti alcuni di questi problemi. <p><p>Il DNS non funziona a meno che il server DNS sia nell'intervallo VPN. <p><p>In molti dispositivi Samsung 5.x la funzionalità delle applicazioni consentite/disattivate non funziona. <p>Nel Samsung 6.x viene segnalato il non funzionamento della VPN a meno che l'applicazione VPN non sia esclusa dalle funzioni di Risparmio energia.
 
             <h2>
             <a name="faq_duplicate_notification_title"></a>
@@ -33,20 +51,20 @@
 
             <h2>
             <a name="faq_androids_clients_title"></a>
-            Differences between the OpenVPN Android clients
+            Differenze tra i client OpenVPN di Android
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
-            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and more targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
+            Esistono diversi client OpenVPN per Android. I più comuni sono OpenVPN per Android (questo client), OpenVPN Connect e OpenVPN Settings.<p>I clienti possono essere raggruppati in due gruppi: OpenVPN per Android e OpenVPN Connect utilizzano l'API VPNService ufficiale (Android 4.0+) e non necessitano di root e OpenVPN Settings che utilizza root.<p>OpenVPN per Android è un client open source sviluppato da Arne Schwabe. È destinato a utenti più avanzati e offre molte impostazioni e la possibilità di importare profili da file e di configurare/modificare i profili all'interno dell'applicazione. Il client si basa sulla versione comunitaria di OpenVPN. Si basa sul codice sorgente OpenVPN 2.x. Questo client può essere visto come il client semi ufficiale della comunità. <p>OpenVPN Connect è un client non open source sviluppato da OpenVPN Technologies, Inc. Il client è destinato ad un uso generale e più mirato all'utente medio e consente l'importazione di profili OpenVPN. Questo client si basa sulla reimplementazione OpenVPN C ++ del protocollo OpenVPN (questo era necessario per consentire a OpenVPN Technologies, Inc di pubblicare un'applicazione iOS OpenVPN). Questo client è il client ufficiale delle tecnologie OpenVPN <p> OpenVPN Settings è il più vecchio dei client ed è anche un'interfaccia utente per OpenVPN Open Source. A differenza di OpenVPN per Android richiede root e non utilizza l'API VPNService. Non dipende da Android 4.0+
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
-            Reinstalling VPN apps
+            Reinstallazione applicazioni VPN
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
             <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
-            VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
+            Le applicazioni VPN potrebbero smettere di funzionare durante la disinstallazione e la reinstallazione. Per dettagli vedi # 80074
 
             <h2>
             <a name="vpn_tethering_title"></a>
@@ -96,12 +114,12 @@
 
             <h2>
             <a name="ab_secondary_users_title"></a>
-            Secondary tablet users
+            Utenti tablet secondari
             <a href="#ab_secondary_users_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
 
-            VPN does not work at all for secondary users.
+            VPN non funziona affatto per gli utenti secondari.
 
             <h2>
             <a name="faq_vpndialog43_title"></a>
@@ -109,17 +127,17 @@
             <a href="#faq_vpndialog43_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and later</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) e successive</i></small> <br/>
 
             "A partire da Android 4.3 la conferma della VPN viene salvaguardata da "applicazioni in overlay". Questo fa sì che il bottone di dialogo non reagisca allo sfioramento. Se avete un'applicazione che usa gli overlay, ciò potrebbe causare questo comportamento. Se vi capita di trovare questo tipo di situazione, contattate l'autore dell'applicazione. Questo problema affligge tutte le applicazioni VPN da Android 4.3 in poi. Consultare anche <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=185">Issue 185<a> per ulteriori dettagli"
 
             <h2>
             <a name="tls_cipher_alert_title"></a>
-            Connections fails with SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure
+            Le connessioni falliscono con l'avviso di autenticazione SSL23_GET_SERVER_HELLO: sslv3
             <a href="#tls_cipher_alert_title" class="section_anchor"> </a>
             </h2>
             
-            Newer OpenVPN for Android versions (0.6.29/March 2015) use a more secure default for the allowed cipher suites (tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA"). Unfortunately, omitting the less secure cipher suites and export cipher suites, especially the omission of cipher suites that do not support Perfect Forward Secrecy (Diffie-Hellman) causes some problems. This usually caused by an well-intentioned but poorly executed attempt to strengthen TLS security by setting tls-cipher on the server or some embedded OSes with stripped down SSL (e.g. MikroTik).<p>To solve this problem the problem, set the tls-cipher settings on the server to reasonable default like tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA". To work around the problem on the client add the custom option tls-cipher DEFAULT on the Android client.
+            Nuove OpenVPN per le versioni Android (0.6.29/Marzo 2015) utilizzano un valore predefinito più sicuro per le suite di cifrature consentite (tls-cipher "DEFAULT:! EXP:! PSK:! SRP:! KRSA"). Purtroppo, omettendo le suite di cifrature meno sicure e le suite di cifrature di esportazione, in particolare l'omissione di suite di cifratura che non supportano la perfetta segretezza avanzata (Diffie-Hellman), provoca alcuni problemi. Questo è solitamente causato da un tentativo ben intenzionato, ma malinteso, per rafforzare la sicurezza di TLS impostando tls-cipher sul server o alcuni OSes incorporati con SSL (ad esempio MikroTik). <p>Per risolvere questo problema, impostare l'opzione tls-cipher sul server a un default ragionevole come tls-cipher "DEFAULT:! EXP:! PSK:! SRP:! KRSA". Per aggirare il problema sul client, aggiungere l'opzione personalizzata tls-cipher DEFAULT sul client Android.
 
             <h2>
             <a name="faq_security_title"></a>
@@ -150,19 +168,19 @@
             VPN e Tethering
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) e successive</i></small> <br/>
 
-            Tethering works while the VPN is active. The tethered connection will NOT use the VPN.
+            Le operazioni di tethering funzionano mentre la VPN è attiva. La connessione di tether NON utilizzerà la VPN.
 
             <h2>
             <a name="ab_kitkat_mss_title"></a>
-            Wrong MSS value for VPN connection
+            Valore MSS errato per la connessione VPN
             <a href="#ab_kitkat_mss_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) e successive</i></small> <br/>
 <small><i>4.4 (Kit Kat) - 4.4.1 (Kit Kat)</i></small> <br/>
 
-            Early KitKat version set the wrong MSS value on TCP connections (#61948). Try to enable the mssfix option to workaround this bug.
+            La prima versione KitKat ha impostato il valore MSS errato sulle connessioni TCP (#61948). Prova ad abilitare l'opzione mssfix per risolvere questo problema.
 
             <h2>
             <a name="copying_log_entries"></a>
@@ -175,12 +193,12 @@ Usa il tasto hardware Menù se non è visibile nella GUI.
 
             <h2>
             <a name="ab_persist_tun_title"></a>
-            Persist tun mode
+            Modalità tun persistente
             <a href="#ab_persist_tun_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
 
-            Opening a tun device while another tun device is active, which is used for persist-tun support, crashes the VPNServices on the device. A reboot is required to make VPN work again. OpenVPN for Android tries to avoid reopening the tun device and if really needed first closes the current TUN before opening the new TUN device to avoid to crash. This may lead to a short window where packets are sent over the non-VPN connection. Even with this workaround the VPNServices sometimes crashes and requires a reboot of the device.
+            L'apertura di un dispositivo tun mentre è attivo un altro dispositivo tun, che viene utilizzato per il supporto persist-tun, blocca i VPNServices sul dispositivo. Un riavvio è necessario per rendere nuovamente funzionante la VPN. OpenVPN per Android tenta di evitare la riapertura del dispositivo tun e se necessario chiude l'attuale TUN prima di aprire il nuovo dispositivo TUN per evitare il blocco. Ciò può portare ad una breve finestra in cui i pacchetti vengono inviati tramite la connessione non VPN. Anche con questa soluzione il VPNServices a volte si blocca e richiede un riavvio del dispositivo.
 
             <h2>
             <a name="faq_routing_title"></a>
@@ -188,57 +206,57 @@ Usa il tasto hardware Menù se non è visibile nella GUI.
             <a href="#faq_routing_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) e successive</i></small> <br/>
 
             Il routing e la configurazione dell'interfaccia non vengono fatti tramite i comandi ifconfig/route tradizionali ma utilizzando l'API VPNService. Ciò si traduce in una configurazione di routing diversa rispetto ad altri sistemi operativi. La configurazione del tunnel VPN è composta dall'indirizzo IP e dalle reti che devono essere instradate su tale interfaccia. Soprattutto non è necessario alcun indirizzo peer o gateway. Percorsi speciali per raggiungere il server VPN (ad esempio aggiunti quando si utilizza redirect-gateway) non sono neanche necessari. L'applicazione pertanto ignorerà queste impostazioni durante l'importazione di una configurazione. L'applicazione garantisce con l'API VPNService che la connessione al server non venga instradata attraverso il tunnel VPN. E' supportato solo la specifica delle reti che devono essere instradate tramite il tunnel. L'applicazione cerca di rilevare le reti che non devono essere instradate sul tunnel (ad esempio, route x.x.x.x y.y.y.y net_gateway) e calcola una serie di itinerari che escludono questi percorsi per emulare il comportamento di altre piattaforme. Le schermate del registro mostrano la configurazione del VPNService finché si stabilisce una connessione.
 
             <h2>
             <a name="ab_kitkat_reconnect_title"></a>
-            Random disconnects from mobile network
+            Disconnessioni casuali dalla rete mobile
             <a href="#ab_kitkat_reconnect_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) e successive</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            "Multiple users report that the mobile connection/mobile data connection is frequently dropped while using the VPN app. The behaviour seems to affect only some mobile provider/device combination and so far no cause/workaround for the bug could be identified. "
+            "Gli utenti multipli riferiscono che la connessione dati mobile/connessione mobile spesso viene eliminata durante l'utilizzo dell'applicazione VPN. Il comportamento sembra influenzare solo alcune combinazioni di provider di servizi e dispositivi mobili e finora non è possibile individuare alcuna causa/soluzione."
 
             <h2>
             <a name="ab_vpn_reachability_44_title"></a>
-            Remote networks not reachable
+            Reti remote non raggiungibili
             <a href="#ab_vpn_reachability_44_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) e successive</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            Only destination can be reached over the VPN that are reachable without VPN. IPv6 VPNs does not work at all.
+            Solo la destinazione può essere raggiunta tramite VPN che sono raggiungibili senza VPN. La VPN IPv6 non funziona affatto.
 
             <h2>
             <a name="ab_only_cidr_title"></a>
-            Non CIDR Routes
+            Nessuna route CIDR
             <a href="#ab_only_cidr_title" class="section_anchor"> </a>
             </h2>
             
-            Android supports only CIDR routes to the VPN. Since non-CIDR routes are almost never used, OpenVPN for Android will use a /32 for routes that are not CIDR and issue a warning.
+            Android supporta solo le route CIDR alla VPN. Poiché i percorsi non CIDR sono quasi mai usati, OpenVPN per Android utilizzerà un /32 per percorsi che non sono CIDR ed invieranno un avviso.
 
             <h2>
             <a name="ab_proxy_title"></a>
-            Proxy behaviour for VPNs
+            Modalità proxy per VPN
             <a href="#ab_proxy_title" class="section_anchor"> </a>
             </h2>
             
-            Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.
+            Android continuerà a utilizzare le impostazioni proxy specificate per la connessione mobile/Wi-Fi quando non vengono impostati server DNS. OpenVPN per Android ti avviserà in questo registro.
 
             <h2>
             <a name="ab_not_route_to_vpn_title"></a>
-            Route to the configured IP address
+            Percorso per l'indirizzo IP configurato
             <a href="#ab_not_route_to_vpn_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) e successive</i></small> <br/>
 
-            The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask
+            L'IP client configurato e gli IP nella maschera di rete non vengono indirizzati alla VPN. OpenVPN funziona senza questo errore aggiungendo esplicitamente un percorso che corrisponda con il client IP e con la sua maschera di rete
 
             <h2>
             <a name="tap_mode"></a>

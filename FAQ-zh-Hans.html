@@ -1,18 +1,44 @@
 <h2>
             <a name="faq_howto_title"></a>
-            Quick Start
+            快速开始
             <a href="#faq_howto_title" class="section_anchor"> </a>
             </h2>
             
             <p>获取你的 VPN 配置文件，可以是在电脑上正在使用的 OpenVPN 客户端配置文件，也可以向你的 VPN 服务商索取配置文件。</p><p>如果配置文件只有一个，可以把配置文件发到你自己的邮箱然后从手机上下载。如果配置文件有很多个，可以将它们复制到存储卡内。</p><p>从邮件中下载附件，或者在 VPN 列表中点击文件夹图标来导入配置文件。</p><p>如果提示找不到文件，那就将缺失的文件复制到存储卡内。</p><p>点击保存，将配置文件保存到你的 VPN 列表中。</p><p>在 VPN 列表中点击 VPN 的连接的名字，就可以连接到 VPN 了。</p><p>如果发生错误，可以看日志窗口中的日志，然后设法解决问题。</p> 
 
             <h2>
+            <a name="faq_killswitch_title"></a>
+            Block non VPN connection ("Killswitch")
+            <a href="#faq_killswitch_title" class="section_anchor"> </a>
+            </h2>
+            
+            It is often desired to block connections without VPN. Other apps often use markting terms like "Killswitch" or "Seamless tunnel" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.<p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.<p>The <b>only</b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the "block connections without VPN" setting that can be found under Settings > Network & Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN
+
+            <h2>
+            <a name="faq_remote_api_title"></a>
+            远程API
+            <a href="#faq_remote_api_title" class="section_anchor"> </a>
+            </h2>
+            
+            OpenVPN for Android supports two remote APIs, a sophisticated API using AIDL (remoteEXample in the git repository) and a simple one using Intents. <p>Examples using adb shell and the intents. Replace profilname with your profile name<p><p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN<p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN
+
+            <h2>
             <a name="weakmd_title"></a>
-            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            证书签名中的弱 (MD5) 哈希 (SSL_CTX_use_certificate md 太弱)
             <a href="#weakmd_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like
+        MD5.</p><p><b>MD5 signatures are completely insecure and should not be used anymore.</b> MD5
+        collisions can be created in <a
+        href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>.
+        You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa
+        distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to
+        the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and
+        regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom
+        configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your
+        imported configuration</p>
+    
 
             <h2>
             <a name="samsung_broken_title"></a>
@@ -90,7 +116,7 @@
 
             <h2>
             <a name="tap_mode"></a>
-            Tap Mode
+            Tap模式
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
@@ -113,7 +139,7 @@
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) 及更高版本</i></small> <br/>
 
-            "入手 Android 4.3 VPN 确认被防范"覆盖应用程序"。这将导致在不发生反应，触摸输入的对话框中。如果您有一个应用程序，使用覆盖它可能会导致这种行为。如果你发现违规应用程序联系的应用程序的作者。这个问题影响到所有 VPN 应用程序的 Android 4.3 及更高版本。请参阅 < href ="http://code.google.com/p/ics-openvpn/issues/detail?id=185"> 问题 185 < > 有关其他详细信息"
+            "自 Android 4.3 开始，VPN 确认被防范"覆盖应用程序"。这将导致在不发生反应，触摸输入的对话框中。如果您有一个应用程序，使用覆盖它可能会导致这种行为。如果你发现违规应用程序联系的应用程序的作者。这个问题将影响到运行在 Android 4.3 及更高版本上的所有 VPN 应用程序。有关其他详细信息请参阅 < href ="http://code.google.com/p/ics-openvpn/issues/detail?id=185"> issue 185 < > "
 
             <h2>
             <a name="tls_cipher_alert_title"></a>
@@ -125,23 +151,23 @@
 
             <h2>
             <a name="faq_security_title"></a>
-            Security considerations
+            安全注意事项
             <a href="#faq_security_title" class="section_anchor"> </a>
             </h2>
             
-            “OpenVPN 是非常注重安全的，所以在此提供一些安全方面的建议。所有保存在存储卡上的数据都是不安全的，任何应用都可以读取存储卡上的文件，即使这个应用没有‘写入存储卡’的权限也是如此。应用自身的数据只能被应用自己读取。在选择 CA 证书、证书文件或者密钥文件的时候请使用导入功能，这样这些数据就会保存在 OpenVPN 自身的数据文件中，保证不会被其他的应用恶意读取。当然导入证书之后记得要把证书从存储卡上删除掉。不过，虽然这些数据不能被其他应用读取，但是这些数据是明文保存的，如果你的系统是 rooted 的，那么这些数据将能够被任何拥有 root 权限的应用轻松地读取。保存在 OpenVPN 中的密码也是以明文保存的，如果设备被 rooted 了，这些密码也有可能被其他应用恶意读取。强烈建议使用 pkcs12 证书并将证书导入到 Android 自己的证书管理系统里。”
+            "As OpenVPN is security sensitive a few notes about security are sensible. All data on the sdcard is incoherently insecure. Every app can read it (for example this program requires no special sd card rights). The data of this application can only be read by the application itself. By using the import option for cacert/cert/key in the file dialog the data is stored in the VPN profile. The VPN profiles are only accessible by this application. (Do not forget to delete the copies on the sd card afterwards). Even though accessible only by this application the data is still unencrypted. By rooting the telephone or other exploits it may be possible to retrieve the data. Saved passwords are stored in plain text as well. For pkcs12 files it is highly recommended that you import them into the android keystore."
 
             <h2>
             <a name="faq_shortcut"></a>
-            Shortcut to start
+            快捷方式启动
             <a href="#faq_shortcut" class="section_anchor"> </a>
             </h2>
             
-            你可以在桌面上放置一个启动 OpenVPN 的图标。如果你的桌面程序支持，你可以在桌面上放置 OpenVPN 的启动图标，或者是 OpenVPN 的桌面挂件
+            你可以在桌面上放置一个启动 OpenVPN 的图标。如果你的桌面程序支持，你可以在桌面上放置 OpenVPN 的启动图标，或者是 OpenVPN 的桌面挂小部件。
 
             <h2>
             <a name="tap_mode"></a>
-            Tap Mode
+            Tap模式
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
@@ -168,7 +194,7 @@
 
             <h2>
             <a name="copying_log_entries"></a>
-            Copying log entries
+            正在复制日志
             <a href="#copying_log_entries" class="section_anchor"> </a>
             </h2>
             
@@ -239,11 +265,11 @@
             </h2>
             <small><i>5.0 (Lollipop) 及更高版本</i></small> <br/>
 
-            The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask
+            配置的客户端IP及其网络掩码中的IP不会代理到VPN。 OpenVPN通过显式地添加一个可应对客户端IP及其网络掩码的路由来解决这个错误
 
             <h2>
             <a name="tap_mode"></a>
-            Tap Mode
+            Tap模式
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             

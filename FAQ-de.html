@@ -7,12 +7,33 @@
             <p>Verwenden Sie eine funktionierende Konfiguration (auf einem Computer getestet, oder von Ihrer Organisation/Ihrem Provider bereitgestellt).</p><p>Falls Sie nur eine einzelne Datei benötigen, können Sie sich diese als Email-Anhang zuschicken. Falls Ihre OpenVPN-Konfiguration aus mehreren Dateien besteht, müssen Sie alle Dateien auf die SD-Karte kopieren.</p><p>Klicken Sie auf den Email-Anhang im Android-Mail-Programm bzw. verwenden Sie das Ordnersymbol in der VPN-Liste und wählen Sie die .ovpn- bzw. .conf-Konfigurationsdatei aus.</p><p>Falls der Import fehlende Dateien anmerkt, kopieren Sie diese auf die SD-Karte und starten den Import erneut.</p><p>Verwenden Sie anschließend das "Speichern"-Symbol, um das VPN zur VPN-Liste hinzuzufügen.</p><p>Tippen Sie den Namen des VPNs an, um das VPN zu starten</p><p>Achten Sie auf Fehler und Warnungen im Verbindungsprotokoll.</p> 
 
             <h2>
+            <a name="faq_killswitch_title"></a>
+            Block non VPN connection ("Killswitch")
+            <a href="#faq_killswitch_title" class="section_anchor"> </a>
+            </h2>
+            
+            It is often desired to block connections without VPN. Other apps often use markting terms like "Killswitch" or "Seamless tunnel" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.<p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.<p>The <b>only</b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the "block connections without VPN" setting that can be found under Settings > Network & Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN
+
+            <h2>
+            <a name="faq_remote_api_title"></a>
+            Remote-API
+            <a href="#faq_remote_api_title" class="section_anchor"> </a>
+            </h2>
+            
+            OpenVPN für Android unterstützt zwei Remote-APIs, eine anspruchsvolle API, welche AIDL (remoteExample im Git-Repository) benutzt und eine einfache, welche Intents benutzt. <p>Beispiele für das benutzen von ADB Shell und Intents. Ersetze den Profilname durch Ihren Profilnamen<p><p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN<p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN
+
+            <h2>
             <a name="weakmd_title"></a>
-            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            Schwache (MD5) Hashes in Zertifikatssignatur (SSL_CTX_use_certificate md too weak)
             <a href="#weakmd_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+            <p>Seit der OpenSSL Version 1.1, verweigert OpenSSL schwache Signaturen - wie MD5 - in Zertifikaten.</p>
+<p><b>MD5-Signaturen sind komplett unsicher und sollten nicht mehr verwendet werden.
+</b>MD5-Kollisionen können in <a  href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">wenigen Stunden mit minimalen Kosten</a> erzeugt werden. Sie sollten die VPN-Zertifikate so schnell wie möglich aktualisieren.</p>
+<p>Leider enthielten ältere easy-rsa Distributionen die config-Option "default_md md5". Falls Sie eine alte Version von easy-rsa verwenden, aktualisieren Sie auf die <a href="https://github.com/OpenVPN/easy-rsa/releases">neueste Version</a> oder ändern Sie md5 auf sha256 und erzeugen Sie Ihre Zertifikate neu.</p>
+<p>Falls Sie wirklich alte und unsichere Zertifikate verwenden wollen, benutzen Sie die benutzerdefinierte Konfigurationsoption tls-cipher "DEFAULT:@SECLEVEL=0" in der erweiterten Profil-Konfiguration oder als zusätzliche Zeile in Ihrer importierten Konfiguration.</p>
+    
 
             <h2>
             <a name="samsung_broken_title"></a>

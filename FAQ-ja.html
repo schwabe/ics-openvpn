@@ -12,14 +12,32 @@
 <p>VPNを接続するには、VPNの名称をクリックします。</p>
 <p>もし警告やエラーがログエントリに表示されたら、それらを調べて解決してください。</p>
 
+            <h2>
+            <a name="faq_killswitch_title"></a>
+            Block non VPN connection ("Killswitch")
+            <a href="#faq_killswitch_title" class="section_anchor"> </a>
+            </h2>
+            
+            It is often desired to block connections without VPN. Other apps often use markting terms like "Killswitch" or "Seamless tunnel" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.<p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.<p>The <b>only</b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the "block connections without VPN" setting that can be found under Settings > Network & Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN
+
+            <h2>
+            <a name="faq_remote_api_title"></a>
+            リモートAPI
+            <a href="#faq_remote_api_title" class="section_anchor"> </a>
+            </h2>
+            
+            OpenVPN for Androidは2つのリモートAPIをサポートします。AIDLによる洗練されたAPI(gitリポジトリのremoteEXample)およびIntentを使用したシンプルなものです。<p>adbシェルとIntentを使用した例です。profilenameをあなたのプロファイル名に置き換えてください。<p><p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN<p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN
 
             <h2>
             <a name="weakmd_title"></a>
-            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            証明書の署名は弱いMD5です (SSL_CTX_use_certificate md は弱すぎます)
             <a href="#weakmd_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+            <p>OpenSSL version 1.1より、OpenSSLはMD5のような脆弱な署名による証明書を拒否するようになりました。</p><p><b>MD5による署名は完全に脆弱でいかなる場面でも使われるべきではありません。</b> 衝突するMD5の生成は<a
+        href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">最短で数時間</a>で可能です。できるだけ早くVPNの証明書を更新すべきです。</p><p>残念なことに、古いeasy-rsaディストリビューションの中には設定として"default_md md5"が入っています。 もし古いeasy-rsaを使用しているようなら、<a href="https://github.com/OpenVPN/easy-rsa/releases">最新版</a>)にアップデートするか、MD5からSHA256に変更して証明書を再生成してください。
+</p><p>もしどうしても古く劣化した証明書を使いたいのなら、高度な設定のカスタムオプションでtls-cipher "DEFAULT:@SECLEVEL=0"を追加してください。</p>
+  
 
             <h2>
             <a name="samsung_broken_title"></a>

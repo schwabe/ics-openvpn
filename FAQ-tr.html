@@ -7,12 +7,44 @@
             <p>Çalışan bir yapılandırma edinin (bilgisayarınızda test edilmiş veya kurumunuzdan alınmış)</p><p>Ek pem/pkcs12 dosyaları bulunmayan tek bir dosya ise, dosyayı kendinize e-posta olarak gönderebilir ve eki açabilirsiniz. Birden fazla dosya varsa, SD kartınıza koyun.</p><p>Yapılandırma dosyasını içe aktarmak için e-posta ekine tıklayın/VPN listesindeki klasör simgesini kullanın</p><p>Eksik dosyalar ile ilgili hata mesajı varsa, eksik dosyaları SD kartınıza koyun.</p><p>İçe aktarılan VPN'yi VPN listenize eklemek için kaydet simgesine tıklayın.</p><p>VPN'ye, adına tıklayarak bağlanın</p><p>Günlükte hata veya uyarı varsa, uyarı/hataları anlamaya ve düzeltmeye çalışın</p> 
 
             <h2>
+            <a name="faq_killswitch_title"></a>
+            Block non VPN connection ("Killswitch")
+            <a href="#faq_killswitch_title" class="section_anchor"> </a>
+            </h2>
+            
+            It is often desired to block connections without VPN. Other apps often use markting terms like "Killswitch" or "Seamless tunnel" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.<p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.<p>The <b>only</b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the "block connections without VPN" setting that can be found under Settings > Network & Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN
+
+            <h2>
+            <a name="faq_remote_api_title"></a>
+            Uzak API
+            <a href="#faq_remote_api_title" class="section_anchor"> </a>
+            </h2>
+            
+            Android için OpenVPN iki uzak API yi destekliyor, AIDL kullanan gelişmiş bir API (git deposundaki remoteEXample) ve Intent leri kullanan basit API.<p> Örnekler adb kabuğunu ve intentleri kullanıyor. Profil ismini kendi profil isminizle değiştirin<p><p>adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN<p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN
+
+            <h2>
             <a name="weakmd_title"></a>
-            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            Sertifika imzasında zayıf (MD5) karması (SSL_CTX_use_certificate md çok zayıf)
+    
             <a href="#weakmd_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+            <p>OpenSSL versiyon 1.1 den başlayarak,OpenSSL sertifikalardaki  zayıf imzaları reddediyor.
+        MD5.</p><p><b>MD5 imzaları tamamen güvensiz ve artık kullanılmamalı.</b> MD5
+        kolizyonlar bu adreste <a
+        href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html"> bir kaç saatlik basit bir çabayla yaratılabilir.</a>.
+        VPN sertifikalarını en kısa zamanda güncellemelisin..</p><p>Ne yazıkki
+        eski easy-rsa dağıtımları "default_md md5" seçeneğini içeriyordu. Eğer  easy-rsa'nın eski bir versiyonunu kullanıyorsanız, bu versiyona yükseltin
+        <a href="https://github.com/OpenVPN/easy-rsa/releases"> en son versiyon</a>) yada md5'i sha256 ile değiştirin ve
+        sertifikalarınızı yeniden yaratın.</p><p> eğer gerçekten eski ve bozuk sertifikaları kullanmak istiyorsanız.
+        Gelişmiş yapılandırma altındaki özel yapılandırma seçeneği ya da senin aktarılmış yapılandırmanda ekstra bir satır olarak 
+         tls-cipher "DEFAULT:@SECLEVEL=0" 'ı kullanın</p>
+  
+    
+    
+        
+        
+    
 
             <h2>
             <a name="samsung_broken_title"></a>

@@ -7,12 +7,29 @@
             <p>Используйте готовую конфигурацию (протестированную на вашем компьютере или полученную от вашего провайдера)</p><p>Если это простой файл без pem/pkcs12, вы можете отправить его как вложение по электронной почте на своё устройство. Если же файлов несколько, вы можете использовать их со своей карты памяти.</p><p>Просто откройте .conf файл или выберите его в диалоге импорта (значок папки в списке профилей)</p><p>Если программа выдаст ошибку о нехватке некоторых файлов, просто поместите эти файлы на карту памяти.</p><p>Нажмите кнопку сохранения для добавления импортируемой конфигурации в программу</p><p>Запустите ваш VPN-тоннель, нажав на его название в списке</p><p>Если при запуске возникли ошибки, попробуйте разобраться и устранить их.</p> 
 
             <h2>
+            <a name="faq_killswitch_title"></a>
+            Block non VPN connection ("Killswitch")
+            <a href="#faq_killswitch_title" class="section_anchor"> </a>
+            </h2>
+            
+            It is often desired to block connections without VPN. Other apps often use markting terms like "Killswitch" or "Seamless tunnel" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.<p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.<p>The <b>only</b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the "block connections without VPN" setting that can be found under Settings > Network & Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN
+
+            <h2>
+            <a name="faq_remote_api_title"></a>
+            Удалённый API
+            <a href="#faq_remote_api_title" class="section_anchor"> </a>
+            </h2>
+            
+            'OpenVPN для Android' поддерживает два удаленных API: сложный API с использованием AIDL (remoteEXample в репозитории git) и простой с использованием Intents.<p>Примеры использования оболочки adb и intents. Замените имя профиля на свое<p><p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN<p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN
+
+            <h2>
             <a name="weakmd_title"></a>
-            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            Слабые (MD5) хэши в сигнатуре сертификата (SSL_CTX_use_certificate md слишком слабый)
             <a href="#weakmd_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+            <p> Начиная с OpenSSL версии 1.1, OpenSSL отклоняет слабые подписи сертификатов, такие как MD5.</p><p><b>Подписи MD5 полностью небезопасны и больше не должны использоваться.</b> Коллизии MD5 могут быть созданы <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html"> за несколько часов с минимальными затратами.</a>Вы должны как можно скорее обновить сертификаты VPN. </p><p>К сожалению, старые версии easy-rsa включали опцию конфигурации «default_md md5». Если вы используете старую версию easy-rsa, обновите её до <a href="https://github.com/OpenVPN/easy-rsa/releases">последней версии</a> или измените md5 на sha256 и обновите свои сертификаты.</p><p>Если вы действительно хотите использовать старые и проблемные сертификаты, используйте пользовательский параметр tls-cipher "DEFAULT:@SECLEVEL=0" на вкладке «Расширенные» или в качестве дополнительной строки в вашей импортированной конфигурации</p>
+    
 
             <h2>
             <a name="samsung_broken_title"></a>
@@ -67,7 +84,7 @@
 <small><i>4.3 (Jelly Bean MR2) и ранее</i></small> <br/>
 <small><i>4.3 (Jelly Bean MR2) и ранее</i></small> <br/>
 
-            <p>Известно, что официальные прошивки HTC имеют странные проблемы с маршрутизацией, приводящей к тому, что трафик не идёт через туннель (см. <a href="https://github.com/schwabe/ics-openvpn/issues/18">Issue 18</a> в баг-трекере).</p><p>Также сообщалось, что в старых официальных прошивках SONY от Xperia Arc S и Xperia Ray полностью отсутствует сервис VPNService (см. <a href="https://github.com/schwabe/ics-openvpn/issues/29">Issue 29</a> в баг-трекере).</p><p>В некоторых неофициальных прошивках модуль tun может отсутствовать, или файл устройства /dev/tun может иметь неправильные права. Некоторые прошивки CM9 могут требовать исправления прав на /dev/tun в настройках «Хаки для данного устройства».</p><p>И самое главное: если у вас прошивка с указанными проблемами, сообщите об этом производителю устройства. Чем больше пользователей сообщит о проблеме, тем больше шансов, что производитель её исправит.</p>
+            <p>Известно, что официальные прошивки HTC имеют странные проблемы с маршрутизацией, из-за которых трафик не проходит через туннель (см. <a href="https://github.com/schwabe/ics-openvpn/issues/18">Issue 18</a> в трекере ошибок.)</p><p>Ранее сообщалось, что в более старых официальных прошиках Sony для Xperia Arc S и Xperia Ray полностью отсутствует VPNService (см. <a href="https://github.com/schwabe/ics-openvpn/issues/29">Issue 29</a>в трекере ошибок.)</p><p>В неофициальных сборках модуль tun может отсутствовать, либо иметь неправильные права на /dev/tun. Для некоторых прошивок CM9 должна быть включена опция "Исправить права" в разделе "Хаки для данного устройства".</p><p>И самое главное: если на вашем устройстве прошивка имеет указанные проблемы, сообщите об этом производителю устройства. Чем больше пользователей сообщит о проблеме, тем больше вероятность того, что он ее решит.</p>
 
             <h2>
             <a name="battery_consumption_title"></a>
@@ -92,7 +109,7 @@
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            Режим TAP невозможен на устройствах без root-а. Поэтому это приложение не поддерживает TAP
+            Режим TAP невозможен на устройствах без root, поэтому данное приложение не может обеспечить поддержку TAP
 
             <h2>
             <a name="ab_secondary_users_title"></a>
@@ -127,7 +144,7 @@
             <a href="#faq_security_title" class="section_anchor"> </a>
             </h2>
             
-            "Так как OpenVPN чувствителен к безопасности, то уместны будут несколько замечаний на её счёт. Все данные на SD-карте по сути не защищены. Каждое приложение может прочесть их (например, эта программа не требует специальных привилегий на SD-карту). Данные этого приложения могут быть прочитаны только им самим. При использовании опции импорта сертификатов и ключей в диалоговом окне данные сохраняются в профиле VPN. Профили VPN доступны только этому приложению. (Не забудьте потом удалить копии на SD-карте). Несмотря на то, что данные доступны только этому приложению, они всё ещё не зашифрованы. При наличии прав администратора (рута) на телефоне или через некую уязвимость эти данные можно извлечь. Также сохранённые пароли хранятся в обычном текстовом виде. Настоятельно рекомендуется файлы pkcs12 импортировать в android keystore."
+            "Так как OpenVPN чувствителен к безопасности, то будут разумными несколько замечаний относительно защиты. Все данные на SD-карте по сути не защищены. Каждое приложение может прочесть их (например, эта программа не требует специальных привилегий на SD-карту). Данные этого приложения могут быть прочитаны только им самим. При использовании опции импорта для cacert/cert/key в диалоговом окне файл, данные сохраняются в VPN профиле. VPN профили доступны только этому приложению. (Не забудьте потом удалить копии на SD-карте). Несмотря на то, что данные доступны только этому приложению, они все еще не зашифрованы. Путем получения прав администратора (рута) на телефоне или другими эксплоитами возможно извлечь данные. Также сохраненные пароли хранятся в обычном текстовом виде. Настоятельно рекомендуется pkcs12 файлы импортировать в android keystore."
 
             <h2>
             <a name="faq_shortcut"></a>
@@ -135,7 +152,7 @@
             <a href="#faq_shortcut" class="section_anchor"> </a>
             </h2>
             
-            Вы можете создать ярлык для запуска OpenVPN на рабочем столе. В зависимости от вашего окружения необходимо добавить ярлык или виджет.
+            Вы можете поместить ярлык для запуска OpenVPN на рабочий стол. В зависимости от используемого вами лаунчера, вам может потребоваться добавить либо ярлык, либо виджет.
 
             <h2>
             <a name="tap_mode"></a>
@@ -162,7 +179,7 @@
             <small><i>4.4 (Kit Kat) и выше</i></small> <br/>
 <small><i>4.4 (Kit Kat) - 4.4.1 (Kit Kat)</i></small> <br/>
 
-            Ранние версии KitKat устанавливают неверное значение MSS для TCP соединений (#61948). Попробуйте включить опцию mssfix, чтобы обойти этот баг.
+            Ранние версии KitKat устанавливают неверное значение MSS для TCP-соединений (#61948). Попробуйте включить функцию mssfix, чтобы обойти эту ошибку.
 
             <h2>
             <a name="copying_log_entries"></a>
@@ -170,7 +187,7 @@
             <a href="#copying_log_entries" class="section_anchor"> </a>
             </h2>
             
-            Для копирования одной записи журнала необходимо нажать на неё и удерживать. Чтобы скопировать/отправить весь файл журнала, используйте опцию «Отправить файл журнала». Если она скрыта, используйте аппаратную кнопку меню.
+            Чтобы скопировать одну запись журнала, нажмите и удерживайте нажатой запись журнала. Для копирования/отправки всего журнала используйте опцию Отправка журнала. Используйте аппаратную кнопку меню, если эта кнопка не отображается в графическом интерфейсе пользователя.
 
             <h2>
             <a name="ab_persist_tun_title"></a>

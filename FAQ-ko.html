@@ -4,24 +4,52 @@
             <a href="#faq_howto_title" class="section_anchor"> </a>
             </h2>
             
-            <p>문제없는 설정을 확보하세요 (당신의 컴퓨터에서 테스트 된것 또는 공급자/조직에서 다운받은)</p><p>이것이 단일 파일이며 추가 pem/pks12 파일이 없는 경우면 본인에게 이메일로 보내어 첨부파일을 열면 됩니다. 여러 파일인 경우 당신의 sd card에 넣으세요.</p><p>이메일 첨부파일을 클릭하세요/vpn목록에 있는 폴더 아이콘을 사용하여 설정 파일을 가져옵니다.</p><p>파일 누락 오류 발생시 누락된 파일을 sd card에 복사하세요.</p><p>저장 기호를 클릭하여 VPN 목록에 가져온 VPN을 추가 하세요.</p><p>VPN 이름을 클릭하여 VPN을 연결하세요.</p><p>오류 또는 경고가 로그에 있는 경우 오류/경고를 이해하여 이들을 해결하십시오.</p> 
+            <p>작동하는 구성을 얻기 (당신의 컴퓨터에서 검증된 것 또는 공급자/조직에서 내려받은 것)</p><p>이것이 추가 pem/pks12 파일이 없는 단일 파일인 경우 본인에게 이메일로 보내어 첨부 파일을 열면 됩니다. 여러 파일인 경우 SD 카드에 넣으세요.</p><p>이메일 첨부 파일을 클릭하거나 또는 VPN 목록에 있는, 구성 파일을 가져오는 폴더 모양 아이콘을 사용하세요.</p><p>파일 누락 오류 발생시 누락된 파일을 SD 카드에 복사하세요.</p><p>저장 기호를 클릭하여 가져온 VPN을 VPN 목록에 추가하세요.</p><p>VPN 이름을 클릭하여 VPN에 연결하세요.</p><p>오류 또는 경고가 로그에 있는 경우 오류/경고를 이해하여 이들을 해결하십시오.</p>
+
+            <h2>
+            <a name="faq_killswitch_title"></a>
+            Block non VPN connection ("Killswitch")
+            <a href="#faq_killswitch_title" class="section_anchor"> </a>
+            </h2>
+            
+            It is often desired to block connections without VPN. Other apps often use markting terms like "Killswitch" or "Seamless tunnel" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.<p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.<p>The <b>only</b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the "block connections without VPN" setting that can be found under Settings > Network & Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN
+
+            <h2>
+            <a name="faq_remote_api_title"></a>
+            Remote API
+            <a href="#faq_remote_api_title" class="section_anchor"> </a>
+            </h2>
+            
+            OpenVPN for Android supports two remote APIs, a sophisticated API using AIDL (remoteEXample in the git repository) and a simple one using Intents. <p>Examples using adb shell and the intents. Replace profilname with your profile name<p><p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN<p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN
 
             <h2>
             <a name="weakmd_title"></a>
-            Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)
+            인증서 서명에 약한 (MD5) 해시 사용 (SSL_CTX_use_certificate md too weak)
             <a href="#weakmd_title" class="section_anchor"> </a>
             </h2>
             
-            <p>Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like MD5.</p><p><b>MD5 signatures are insecure and should not be used anymore.</b> MD5 collisions can be created in <a href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">few hours at a minimal cost.</a>. You should update the VPN certificates as soon as possible.</p><p>Unfortunately, older easy-rsa distributions included the config option "default_md md5". If you are using an old easy-rsa version, update to the <a href="https://github.com/OpenVPN/easy-rsa/releases">latest version</a>) or change md5 to sha256 and regenerate your certificates.</p><p>If you really want to use old and broken certificates use the custom configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your imported configuration</p>
+            <p>OpenSSL 1.1 버전부터, OpenSSL은 MD5와 같은, 인증서의 약한 서명을
+        거부합니다.</p><p><b>MD5 서명은 완전히 불안전하고 더이상 사용하지 않아야 합니다.</b> MD5
+        충돌은 <a
+        href="https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html">매우 적은 비용으로
+        수 시간 안에</a> 만들 수 있습니다.
+        가능한 한 빨리 VPN 인증서를 업데이트해야 합니다.</p><p>불행하게도 오래된 easy-rsa 배포판은
+        구성 옵션 "default_md md5"가 포함되어 있습니다. 만약 오래된 easy-rsa 버전을
+        사용하신다면 <a href="https://github.com/OpenVPN/easy-rsa/releases">최신 버전</a>으로 업데이트하시거나
+        md5를 sha256으로 바꾸고 당신의 인증서를
+        재생성하세요.</p><p>정말 오래되고 깨진 인증서를 사용하고 싶으시다면
+        사용자 지정 구성 옵션 tls-cipher "DEFAULT:@SECLEVEL=0"를 고급 구성에서 설정하거나
+        불러오는 구성 파일에 추가해 넣으세요.</p>
+    
 
             <h2>
             <a name="samsung_broken_title"></a>
-            Samsung phones
+            삼성 휴대폰
             <a href="#samsung_broken_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) 및 이후 버전</i></small> <br/>
 
-            Even though Samsung phones are among the most selling Android phones, Samsung's firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.<p><p>DNS does not work unless the DNS server in the VPN range.<p><p>On many Samsung 5.x devices the allowed/disallowed apps feature does not work.<p>On Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.
+            삼성 휴대폰이 가장 많이 판매되는 안드로이드폰 중 하나이지만, 삼성의 펌웨어는 가장 버그가 많은 안드로이드 펌웨어 중 하나입니다. 버그는 이러한 기기에서의 VPN 작업에만 국한되지 않지만 그 중 많은 수를 우회할 수 있습니다. 다음은 일부 버그에 대한 설명입니다.<p><p>DNS는 VPN 범위의 DNS 서버가 아니면 작동하지 않습니다.<p><p>많은 삼성 5.x 기기에서 허용/허용되지 않는 앱 기능이 작동하지 않습니다.<p>삼성 6.x 기기에서는 VPN 앱이 절전 기능에서 제외되지 않으면 VPN이 작동하지 않는 것으로 보고됩니다.
 
             <h2>
             <a name="faq_duplicate_notification_title"></a>
@@ -29,7 +57,7 @@
             <a href="#faq_duplicate_notification_title" class="section_anchor"> </a>
             </h2>
             
-            안드로이드는 시스템의 메모리 (RAM) 가 부족한 경우, 현재 필요하지 않는 앱들과 서비스들을 활성화 메모리에서 삭제합니다. 이 과정에서 진행중인 VPN 연결이 끊어 집니다. 이렇게 되지 않기 위해서 OpenVPN 서비스는 우선순위가 높게 되어 실행됩니다. 높은 우선 순위로 실행되기 위해서는 응용프로그램에서 이를 알림으로 표시해야 합니다. 키 알림 아이콘은 이전 FAQ에서 설명된 대로 시스템에서 강요하기 때문입니다. 이것은 우선 순위가 높이 실행된다는 알림에 대한 알림이 아닙니다.
+            안드로이드는 시스템의 메모리(램)가 부족한 경우, 현재 필요하지 않는 앱들과 서비스들을 활성 메모리에서 삭제합니다. 이 과정에서 진행중인 VPN 연결이 끊어집니다. 이렇게 되지 않기 위해서 OpenVPN 서비스는 더 높은 우선 순위로 실행됩니다. 더 높은 우선 순위로 실행되기 위해서는 앱이 알림을 표시해야 합니다. 열쇠 알림 아이콘은 이전 FAQ에서 설명된 대로 시스템에서 강요하는 것입니다. 이것은 더 높은 우선 순위로 실행되기 위한 앱 알림이 아닙니다.
 
             <h2>
             <a name="faq_androids_clients_title"></a>
@@ -37,16 +65,16 @@
             <a href="#faq_androids_clients_title" class="section_anchor"> </a>
             </h2>
             
-            Multiple OpenVPN clients for Android exist. The most common ones are OpenVPN for Android (this client), OpenVPN Connect and OpenVPN Settings.<p>The clients can be grouped into two groups: OpenVPN for Android and OpenVPN Connect use the official VPNService API (Android 4.0+) and require no root and OpenVPN Settings which uses root.<p>OpenVPN for Android is an open source client and developed by Arne Schwabe.  It is targeted at more advanced users and offers many settings and the ability to import profiles from files and to configure/change profiles inside the app. The client is based on the community version of OpenVPN. It is based on the OpenVPN 2.x source code. This client can be seen as the semi officially client of the community. <p>OpenVPN Connect is non open source client that is developed by OpenVPN Technologies, Inc. The client is indented to be general use client and more targeted at the average user and allows the import of OpenVPN profiles. This client is based on the OpenVPN C++ reimplementation of the OpenVPN protocol (This was required to allow OpenVPN Technologies, Inc to publish an iOS OpenVPN app). This client is the official client of the OpenVPN technologies <p> OpenVPN Settings is the oldest of the clients and also a UI for the open source OpenVPN. In contrast to OpenVPN  for Android it requires root and does not use the VPNService API. It does not depend on Android 4.0+
+            Android용 OpenVPN 클라이언트가 여러 개 있습니다. 가장 일반적으로 사용되는 것은 OpenVPN for Android (이 클라이언트), OpenVPN Connect 및 OpenVPN Settings입니다. <p>클라이언트들을 두 그룹으로 나눌 수 있습니다. OpenVPN for Android와 OpenVPN Connect는 공식 VPNService API(Android 4.0 이상)를 사용하고 루트가 필요하지 않으며 OpenVPN Settings는 루트를 사용합니다.<p>OpenVPN for Android는 오픈 소스 클라이언트이며 Arne Schwabe에 의해 개발되었습니다. 고급 사용자를 대상으로 하며 많은 설정을 제공하고 파일에서 프로필을 가져오고 앱 내에서 프로필을 구성/변경하는 기능을 제공합니다. 이 클라이언트는 OpenVPN의 커뮤니티 버전을 기반으로 하는데 OpenVPN 2.x 소스 코드를 기반으로 합니다. 이 클라이언트는 커뮤니티의 반 공식 클라이언트로 볼 수 있습니다. <p>OpenVPN Connect는 OpenVPN Technologies, Inc.에서 개발한 비공개 소스 클라이언트입니다. 이 클라이언트는 일반 사용을 목적으로 하고 평균적인 사용자를 대상으로 하며 OpenVPN 프로파일을 가져올 수 있습니다. 이 클라이언트는 OpenVPN 프로토콜의 OpenVPN C++ 재구현을 기반으로 합니다(이는 OpenVPN Technologies, Inc.에서 iOS용 OpenVPN 앱을 내놓는 데 필요했습니다). 이 클라이언트는 OpenVPN 기술의 공식 클라이언트입니다. <p>OpenVPN Settings는 이 클라이언트들 중 가장 오래된 클라이언트이며 오픈 소스 OpenVPN의 UI입니다. OpenVPN for Android와 달리 루트가 필요하며 VPNService API를 사용하지 않습니다. Android 4.0 이상에 의존하지 않습니다.
 
             <h2>
             <a name="ab_lollipop_reinstall_title"></a>
-            Reinstalling VPN apps
+            VPN 앱들을 재설치
             <a href="#ab_lollipop_reinstall_title" class="section_anchor"> </a>
             </h2>
             <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
 
-            VPN apps may stop working when uninstalled and reinstalled again. For details see #80074
+            VPN 앱이 제거되고 다시 설치되면 작동을 멈출 수 있습니다. 자세한 내용은 #80074를 참조하십시오.
 
             <h2>
             <a name="vpn_tethering_title"></a>
@@ -54,9 +82,9 @@
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
             <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) 및 이전 버전</i></small> <br/>
 
-            안드로이드 테더링 기능 (WiFi, USB 또는 블루투스를 통한)과 VPNService API (이 프로그램에서 사용됨)는 함께 작동 하지 않습니다. 자세한 내용은 <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=34">issue #34</a> 를 참조 하십시오
+            안드로이드의 (WiFi, USB 또는 블루투스를 통한) 테더링 기능과 (이 프로그램에서 사용되는) VPNService API 는 함께 작동하지 않습니다. 자세한 내용은 <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=34">문제 #34</a>를 참조하십시오
 
             <h2>
             <a name="broken_images"></a>
@@ -64,10 +92,10 @@
             <a href="#broken_images" class="section_anchor"> </a>
             </h2>
             <small><i>5.0 (Lollipop) - 5.1 (Lollipop MR1)</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and earlier</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) 및 이전 버전</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) 및 이전 버전</i></small> <br/>
 
-            <p>공식 HTC 이미지에서는 이상한 라우팅 문제로 트래픽이 터널로 통과 하지 않는 경우가 있는것으로 알려져 있습니다 (참고 <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=18">Issue 18</a> 버그 추적기.)</p><p>Xperia arc S 와 Xperia Ray의 공식 SONY 이미지에서는 VPNService 자체가 완전히 없어진 것으로 보고 되었습니다. (참조 <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=29">Issue 29</a> 버그추적기.)</p><p>일부 사용자를 위해 만들어진 이미지에서는 tun 모듈자체가 없거나 /dev/tun의 권한이 틀려있기도 합니다. 일부 CM9 이미지는 "Device specific hacks" 아래에 있는 "Fix ownership" 옵션을 사용해야 합니다.</p><p>가장 중요한 부분: 만약 깨진 이미지를 사용하는 경우라면 해당 공급업체에 보고해야 합니다. 업체에 문제를 보고하는 사람들이 많아야 수정될 가능성도 높아집니다..</p>
+            <p>공식 HTC 이미지에서는 이상한 라우팅 문제로 트래픽이 터널로 통과하지 않는 경우가 있는 것으로 알려져 있습니다. (버그 추적기의 <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=18">문제 18</a> 참조.)</p><p>Xperia Arc S 와 Xperia Ray의 오래된 공식 SONY 이미지에서는 VPNService 자체가 전혀 없는 것으로 보고되었습니다. (버그 추적기의 <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=29">문제 29</a> 참조.)</p><p>커스텀 빌드 이미지에서는 tun 모듈 자체가 없거나 /dev/tun의 권한이 틀려 있기도 합니다. 일부 CM9 이미지는 "기기별 해킹" 아래에 있는 "소유권 고치기" 옵션을 사용해야 합니다.</p><p>가장 중요한 부분: 만약 깨진 이미지를 사용하는 경우라면 해당 공급 업체에 보고해야 합니다. 업체에 문제를 보고하는 사람들이 많아야 수정될 가능성도 높아집니다.</p>
 
             <h2>
             <a name="battery_consumption_title"></a>
@@ -75,16 +103,16 @@
             <a href="#battery_consumption_title" class="section_anchor"> </a>
             </h2>
             
-            제 개인적인 테스트에서 Openvpn의 높은 배터리 소비에 대한 주요 이유는 keepalive 패킷 때문이었습니다. 대부분의 OpenVPN 서버 설정에는 'keepalive 10 60' 와 같은 문구가 있는데 이는 클라이언트에서 서버로 서버에서 클라이언트로 keepalive 패킷을 10 초 마다 보냅니다. <p> 이러한 패킷은 작고 많은 트래픽을 사용 하지 않습니다만 이들은 모바일 라디오 네트워크를 계속 유지하게 만들게되고 따라서 에너지 소비를 증가 합니다. (참조 <a href="http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine">The Radio State Machine | Android Developers</a>) <p> 이 keepalive 설정을 클라이언트에서 변경할 수 없습니다. OpenVPN의 시스템 관리자만 설정을 변경할 수 있습니다. <p> 불행히도 udp를 사용할때 keepalive값을 60초 이상으로 하면 일부의 NAT 게이트웨이에서는 비활성 타임아웃 때문에 연결을 끊어버리게 됩니다. TCP와 긴 keepalive 만료기간을 함께 사용할 수는 있지만 패킷 손실이 높은 연결구간에서는 TCP over TCP의 성능이 매우 저조합니다. (참조 <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">왜 TCP를 통한 TCP는 안좋은 방법인지</a>)
+            제 개인적인 테스트에서 Openvpn의 높은 배터리 소비에 대한 주요 이유는 keepalive 패킷 때문이었습니다. 대부분의 OpenVPN 서버 설정에는 'keepalive 10 60' 와 같은 문구가 있는데 이는 클라이언트에서 서버로 서버에서 클라이언트로 keepalive 패킷을 10 초마다 보냅니다. <p>이러한 패킷은 작고 많은 트래픽을 사용하지 않습니다만 이들은 모바일 라디오 네트워크를 계속 유지하게 만들게 되고 따라서 에너지 소비가 증가합니다. (참조 <a href="http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine">The Radio State Machine | Android Developers</a>) <p>이 keepalive 설정을 클라이언트에서 변경할 수 없습니다. OpenVPN의 시스템 관리자만 설정을 변경할 수 있습니다. <p>불행히도 udp를 사용할 때 keepalive값을 60 초 이상으로 하면 일부의 NAT 게이트웨이에서는 비활성 타임아웃 때문에 연결을 끊어버리게 됩니다. TCP와 긴 keepalive 만료기간을 함께 사용할 수는 있지만 패킷 손실이 높은 연결 구간에서는 TCP over TCP의 성능이 매우 저조합니다. (참조 <a href="http://sites.inka.de/bigred/devel/tcp-tcp.html">왜 TCP를 통한 TCP는 안 좋은 방법인가</a>)
 
             <h2>
             <a name="faq_system_dialogs_title"></a>
             연결 경고 및 알림 소리
             <a href="#faq_system_dialogs_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and earlier</i></small> <br/>
+            <small><i>4.4 (Kit Kat) 및 이전 버전</i></small> <br/>
 
-            시스템에서는 VPN연결 경고를 통해 당신에게 본앱이 모든 트래픽을 가로챌수있다는 점을 알리게 되어 있는데 이는 VPNService API가 남용하는것을 막기 위함입니다.<p>VPN 연결 알림 (키 아이콘) 또한 안드로이드 시스템에서 부과하는 부분이며 이는 VPN연결을 알리는 신호입니다. 어떤 버전에서는 소리를 알림으로 사용하는 경우도 있습니다.<p>안드로이드는 이같은 방법을 당신의 안전을 위해 도입하였으며 사용은 필수적입니다. (어떤 버전에서는 유감스럽게도 소리 알림 또한 포함됩니다.)
+            시스템에서는 VPN 연결 경고를 통해 당신에게 본 앱이 모든 트래픽을 가로챌 수 있다는 점을 알리게 되어 있는데 이는 VPNService API가 남용되는 것을 막기 위함입니다.<p>VPN 연결 알림 (열쇠 기호) 또한 안드로이드 시스템에서 부과하는 부분이며 이는 VPN 연결을 알리는 신호입니다. 어떤 이미지에서는 이 알림이 소리를 내기도 합니다.<p>안드로이드는 당신의 안전을 위해서 이 대화창을 도입했으며 회피할 수 없게 하였습니다. (어떤 이미지에서는 유감스럽게도 알림 소리 또한 포함됩니다.)
 
             <h2>
             <a name="tap_mode"></a>
@@ -92,34 +120,34 @@
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            Tap 모드는 루트가 아닌 VPN API에서는 불가능합니다. 따라서 본앱은 tap지원을 제공할 수 없습니다
+            TAP 모드는 루트가 아닌 VPN API에서는 불가능합니다. 따라서 본 앱은 TAP 지원을 제공할 수 없습니다
 
             <h2>
             <a name="ab_secondary_users_title"></a>
-            Secondary tablet users
+            부차적인 태블릿 사용자들
             <a href="#ab_secondary_users_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
 
-            VPN does not work at all for secondary users.
+            VPN은 부차적인 사용자에게는 전혀 작동하지 않습니다.
 
             <h2>
             <a name="faq_vpndialog43_title"></a>
-            안드로이드 4.3과 이후 버전에서의 VPN 확인 창
+            VPN 확인 대화창
             <a href="#faq_vpndialog43_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.3 (Jelly Bean MR2)</i></small> <br/>
-<small><i>4.3 (Jelly Bean MR2) and later</i></small> <br/>
+<small><i>4.3 (Jelly Bean MR2) 및 이후 버전</i></small> <br/>
 
-            "안드로이드 4.3부터는 VPN 확인이 "overlaying apps"로 부터 보호 받게 됩니다. 따라서 입력창이 터치 입력에 반응하지 않을 수 있습니다. 사용하는 앱중에서 overlay를 사용하는 경우 이러한 문제가 발생될수있습니다. 문제의 앱을 제작한 프로그램어를 연락하십시오. 이 문제는 안드로이드 4.3과 이상의 버전에서 모든 VPN 응용 프로그램에 영향을 줍니다. <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=185">Issue 185<a> 참조"
+            "안드로이드 4.3부터는 VPN 확인이 "오버레이하는 앱"으로부터 보호받습니다. 이 경우 대화창이 터치 입력에 반응하지 않게 됩니다. 사용하는 앱 중에서 오버레이를 사용하는 경우 이러한 문제가 발생될 수 있습니다. 문제의 앱을 발견하면 그 앱의 제작자에게 연락하십시오. 이 문제는 안드로이드 4.3과 이상의 버전에서 모든 VPN 앱에 영향을 줍니다. 상세한 사항은 <a href="http://code.google.com/p/ics-openvpn/issues/detail?id=185">문제 185<a> 참조"
 
             <h2>
             <a name="tls_cipher_alert_title"></a>
-            Connections fails with SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure
+            SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure로 연결 실패
             <a href="#tls_cipher_alert_title" class="section_anchor"> </a>
             </h2>
             
-            Newer OpenVPN for Android versions (0.6.29/March 2015) use a more secure default for the allowed cipher suites (tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA"). Unfortunately, omitting the less secure cipher suites and export cipher suites, especially the omission of cipher suites that do not support Perfect Forward Secrecy (Diffie-Hellman) causes some problems. This usually caused by an well-intentioned but poorly executed attempt to strengthen TLS security by setting tls-cipher on the server or some embedded OSes with stripped down SSL (e.g. MikroTik).<p>To solve this problem the problem, set the tls-cipher settings on the server to reasonable default like tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA". To work around the problem on the client add the custom option tls-cipher DEFAULT on the Android client.
+            새로운 OpenVPN for Android 버전들(0.6.29/2015년 3월)은 허용된 암호화 스위트(tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA")에 더 안전한 기본값을 사용합니다. 안타깝게도 보안 수준이 낮은 암호화 스위트와 수출용 암호화 스위트를 생략하면, 특히 완벽 전달 보안(Diffie-Hellman)을 지원하지 않는 암호화 스위트를 생략하면 몇 가지 문제가 발생합니다. 이것은 보통 불필요한 요소를 제거한 SSL(예: MikroTik)을 쓰는 서버나 몇 임베디드 OS에서 tls-cipher을설정하여 TLS 보안을 강화하려는 좋은 의도를 가지고 했으나 불완전하게 실행됨으로써 발생합니다.<p>이 문제를 해결하려면 서버에서 tls-cipher 설정을 tls-cipher "DEFAULT:!EXP:!PSK:!SRP:!kRSA"와 같은 적절한 기본값으로 설정하십시오. 클라이언트에서 문제를 우회하려면 안드로이드 클라이언트의 tls-cipher DEFAULT 사용자 정의 옵션을 추가하십시오.
 
             <h2>
             <a name="faq_security_title"></a>
@@ -127,15 +155,15 @@
             <a href="#faq_security_title" class="section_anchor"> </a>
             </h2>
             
-            "OpenVPN은 보안에 민감하기 때문에 보안에 관련된 부분을 알고가는것이 현명합니다. SD 카드에 있는 데이터는 모든 앱이 읽을 수 있기 때문에 보안이 취약합니다. (이 OpenVPN 앱은 SD 카드 읽기 권한이 필요없습니다) 이 OpenVPN 앱의 데이터는 이 OpenVPN 앱만이 읽을 수 있습니다. cacert/cert/key를 파일 탐색기의 가져오기 옵션을 사용하면 데이터는 VPN 프로파일 내에 저장됩니다. 이 VPN 프로파일은 이 OpenVPN 앱만이 접근할 수 있습니다. (잊지 말고 SD 카드에 남아있는 파일들을 삭제하세요.) 접근은 이 OpenVPN 앱만 가능하더라도 데이터는 암호화가 되어 있지 않습니다. 루팅을 비롯한 다른 악의적인 방법으로 데이터를 빼낼 수 있습니다. 암호 또한 일반 텍스트로 저장되어 있습니다. pkcs12 파일은 안드로이드 keystore에 보관할 것을 강력하게 추천합니다."
+            "OpenVPN은 보안에 민감하기 때문에 보안에 관한 몇 가지 주의사항은 합리적입니다. SD 카드에 있는 데이터는 필연적으로 안전하지 않습니다. 모든 앱이 그것을 읽을 수 있습니다(예를 들어 이 프로그램은 특별한 SD 카드 권한을 가질 필요가 없습니다). 이 앱의 데이터는 이 앱만 읽을 수 있습니다. 파일 대화창에서 CA 인증서/인증서/키를 가져옴으로써 데이터는 VPN 프로파일 내에 저장됩니다. 이 VPN 프로파일은 이 앱만 접근할 수 있습니다. (잊지 말고 SD 카드에 남아있는 파일들을 삭제하세요.) 접근은 이 OpenVPN 앱만 가능하더라도 데이터는 암호화가 되어 있지 않습니다. 루팅이나 다른 취약점을 이용해서 데이터를 빼낼 수 있습니다. 저장된 암호 또한 일반 텍스트로 저장되어 있습니다. pkcs12 파일은 안드로이드 키 저장소에 보관할 것을 강력하게 추천합니다."
 
             <h2>
             <a name="faq_shortcut"></a>
-            시작으로 바로 가기
+            시작하는 바로 가기
             <a href="#faq_shortcut" class="section_anchor"> </a>
             </h2>
             
-            바탕 화면에 OpenVPN 시작 바로 가기를 배치할 수 있습니다. 당신의 homescreen 프로그램에 따라 바로 가기 또는 위젯 추가를 해야 합니다.
+            바탕 화면에 OpenVPN을 시작하는 바로 가기를 배치할 수 있습니다. 당신의 홈화면 프로그램에 따라 바로 가기 또는 위젯 추가해야 합니다.
 
             <h2>
             <a name="tap_mode"></a>
@@ -143,26 +171,26 @@
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            또? 농담인가요? 아니요 정말로 tap 모드는 지원이 불가능합니다. 계속해서 메일을 보내면서 요구하신다고 도움될 일이 아닙니다.
+            또? 농담인가요? 아니요. 정말로 TAP 모드는 지원이 불가능합니다. 계속해서 메일을 보내면서 요구하신다고 도움될 일이 아닙니다.
 
             <h2>
             <a name="vpn_tethering_title"></a>
             VPN과 테더링
             <a href="#vpn_tethering_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) 및 이후 버전</i></small> <br/>
 
-            Tethering works while the VPN is active. The tethered connection will NOT use the VPN.
+            테더링은 VPN이 활성화되어있는 동안 작동합니다. 테더링된 연결은 VPN을 사용하지 않을 것입니다.
 
             <h2>
             <a name="ab_kitkat_mss_title"></a>
-            Wrong MSS value for VPN connection
+            VPN 연결에 대한 잘못된 MSS 값
             <a href="#ab_kitkat_mss_title" class="section_anchor"> </a>
             </h2>
-            <small><i>4.4 (Kit Kat) and later</i></small> <br/>
+            <small><i>4.4 (Kit Kat) 및 이후 버전</i></small> <br/>
 <small><i>4.4 (Kit Kat) - 4.4.1 (Kit Kat)</i></small> <br/>
 
-            Early KitKat version set the wrong MSS value on TCP connections (#61948). Try to enable the mssfix option to workaround this bug.
+            초기 킷캣 버전은 TCP 연결에서 잘못된 MSS 값을 설정합니다(# 61948). 이 버그를 우회하려면 MSS 재정의 옵션을 활성화하십시오.
 
             <h2>
             <a name="copying_log_entries"></a>
@@ -170,74 +198,74 @@
             <a href="#copying_log_entries" class="section_anchor"> </a>
             </h2>
             
-            단일 로그 항목을 복사 하려면 로그 항목을 누르고 계세요. 전체 로그를 복사/전송 하려면  로그 보내기 옵션을 사용하십시오. GUI에 표시 되지 않는 경우 하드웨어 메뉴 버튼를 사용하세요.
+            단일 로그 항목을 복사하려면 로그 항목을 누르고 계세요. 전체 로그를 복사/전송하려면 로그 보내기 옵션을 사용하십시오. GUI에 버튼이 표시되지 않는 경우 하드웨어 메뉴 버튼을 사용하세요.
 
             <h2>
             <a name="ab_persist_tun_title"></a>
-            Persist tun mode
+            지속적인 TUN 모드
             <a href="#ab_persist_tun_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
 
-            Opening a tun device while another tun device is active, which is used for persist-tun support, crashes the VPNServices on the device. A reboot is required to make VPN work again. OpenVPN for Android tries to avoid reopening the tun device and if really needed first closes the current TUN before opening the new TUN device to avoid to crash. This may lead to a short window where packets are sent over the non-VPN connection. Even with this workaround the VPNServices sometimes crashes and requires a reboot of the device.
+            지속적인 TUN 지원에 사용되는 다른 TUN 장치가 활성화된 상태에서 한 TUN 장치를 열면 기기의 VPNServices가 죽습니다. VPN을 다시 작동 시키려면 재부팅해야 합니다. OpenVPN for Android는 TUN 장치를 다시 열지 않으려고 시도합니다. 정말 필요하면 충돌이 발생하지 않도록 새로운 TUN 장치를 열기 전에 먼저 현재 TUN을 닫습니다. 이 경우 짧은 순간 VPN이 아닌 연결을 통해 패킷이 전송될 수 있습니다. 이 우회 방법으로도 VPNServices가 죽고 기기를 재부팅해야 하는 경우가 있습니다.
 
             <h2>
             <a name="faq_routing_title"></a>
-            라우팅/인터페이스 설정
+            라우팅/인터페이스 구성
             <a href="#faq_routing_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) 및 이후 버전</i></small> <br/>
 
-            The Routing and interface configuration is not done via traditional ifconfig/route commands but by using the VPNService API. This results in a different routing configuration than on other OSes. <p>The configuration of the VPN tunnel consists of the IP address and the networks that should be routed over this interface. Especially, no peer partner address or gateway address is needed or required. Special routes to reach the VPN Server (for example added when using redirect-gateway) are not needed either. The application will consequently ignore these settings when importing a configuration. The app ensures with the VPNService API that the connection to the server is not routed through the VPN tunnel.<p>The VPNService API does not allow specifying networks that should not be routed via the VPN. As a workaround the app tries to detect networks that should not be routed over tunnel (e.g. route x.x.x.x y.y.y.y net_gateway) and calculates a set of routes that excludes this routes to emulate the behaviour of other platforms. The log windows shows the configuration of the VPNService upon establishing a connection.<p>Behind the scenes: Android 4.4+ does use policy routing. Using route/ifconfig will not show the installed routes. Instead use ip rule, iptables -t mangle -L
+            라우팅 및 인터페이스 구성은 기존 ifconfig/route 명령을 통하지 않고 VPNService API를 사용하여 수행됩니다. 그 결과 다른 OS와 다른 라우팅 구성이 생깁니다.<p>VPN 터널의 구성은 IP 주소와 이 인터페이스를 통해 라우팅되어야 하는 네트워크들로 이루어져 있습니다. 특히 피어 파트너 주소 또는 게이트웨이 주소가 필요하거나 요구되지 않습니다. VPN 서버에 이르는 특수 경로들(예컨대 redirect-gateway 사용시 추가되는 것)도 필요하지 않습니다. 따라서 앱은 구성을 가져올 때 이러한 설정을 무시합니다. 이 앱은 VPNService API를 사용하여 서버에 대한 연결이 VPN 터널을 통해 라우팅되지 않도록 합니다.<p>VPNService API는 VPN을 통해 라우트하지 않아야 할 네트워크들을 지정하는 걸 허용하지 않습니다. 우회 방법으로서 앱이 터널을 통해 라우팅해서는 안 되는 네트워크들(예: route x.x.x.x y.y.y.y net_gateway)을 감지하고 다른 플랫폼의 동작을 모방하기 위해 이 경로들을 제외한 일련의 경로들을 계산합니다. 로그 창은 연결을 수립할 때 VPNService의 설정을 보여줍니다.<p>무대 뒤에서: Android 4.4 이상은 정책 라우팅을 사용합니다. route/ifconfig를 사용해선 설치된 경로를 볼 수 없을 것입니다. 대신 ip rule, iptables -t mangle -L을 사용하십시오.
 
             <h2>
             <a name="ab_kitkat_reconnect_title"></a>
-            Random disconnects from mobile network
+            모바일 네트워크에서 임의 연결 해제
             <a href="#ab_kitkat_reconnect_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) 및 이후 버전</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            "Multiple users report that the mobile connection/mobile data connection is frequently dropped while using the VPN app. The behaviour seems to affect only some mobile provider/device combination and so far no cause/workaround for the bug could be identified. "
+            "여러 사용자가 VPN 앱을 사용하는 동안 모바일 연결/모바일 데이터 연결이 자주 끊어지는 것으로 보고합니다. 이 반응은 일부 모바일 공급자/기기 조합에만 영향을 미치는 것으로 보이며 지금까지 버그에 대한 원인/해결 방법을 알 수 없습니다."
 
             <h2>
             <a name="ab_vpn_reachability_44_title"></a>
-            Remote networks not reachable
+            원격 네트워크에 도달할 수 없음
             <a href="#ab_vpn_reachability_44_title" class="section_anchor"> </a>
             </h2>
             <small><i>4.4 (Kit Kat) - 4.4.2 (Kit Kat)</i></small> <br/>
-<small><i>4.4 (Kit Kat) and later</i></small> <br/>
+<small><i>4.4 (Kit Kat) 및 이후 버전</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 <small><i>4.4 (Kit Kat)</i></small> <br/>
 
-            Only destination can be reached over the VPN that are reachable without VPN. IPv6 VPNs does not work at all.
+            VPN 없이 도달할 수 있는 목적지만 VPN을 통해서 도달할 수 있습니다. IPv6 VPN은 전혀 작동하지 않습니다.
 
             <h2>
             <a name="ab_only_cidr_title"></a>
-            Non CIDR Routes
+            비 CIDR 경로
             <a href="#ab_only_cidr_title" class="section_anchor"> </a>
             </h2>
             
-            Android supports only CIDR routes to the VPN. Since non-CIDR routes are almost never used, OpenVPN for Android will use a /32 for routes that are not CIDR and issue a warning.
+            Android는 VPN에 대한 CIDR 경로만 지원합니다. 비 CIDR 경로는 거의 사용되지 않기 때문에 OpenVPN for Android는 CIDR이 아닌 경로에 /32를 사용하고 경고를 보냅니다.
 
             <h2>
             <a name="ab_proxy_title"></a>
-            Proxy behaviour for VPNs
+            VPN을 위한 프록시 동작
             <a href="#ab_proxy_title" class="section_anchor"> </a>
             </h2>
             
-            Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.
+            Android는 DNS 서버가 설정되지 않은 경우 모바일/Wi-Fi 연결에 지정된 프록시 설정을 계속 사용합니다. OpenVPN for Android는 로그에 이에 대해 경고할 것입니다. 
 
             <h2>
             <a name="ab_not_route_to_vpn_title"></a>
-            Route to the configured IP address
+            구성된 IP 주소로의 경로
             <a href="#ab_not_route_to_vpn_title" class="section_anchor"> </a>
             </h2>
-            <small><i>5.0 (Lollipop) and later</i></small> <br/>
+            <small><i>5.0 (Lollipop) 및 이후 버전</i></small> <br/>
 
-            The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask
+            구성된 클라이언트 IP와 해당 네트워크 마스크에 있는 IP들은 VPN으로 라우팅되지 않습니다. OpenVPN은 클라이언트 IP와 넷마스크에 해당하는 경로를 명시적으로 추가함으로써 이 버그를 우회합니다.
 
             <h2>
             <a name="tap_mode"></a>
@@ -245,6 +273,6 @@
             <a href="#tap_mode" class="section_anchor"> </a>
             </h2>
             
-            3번째로? 누군가가 송신때 레이어2 정보를 추가하고 수신때 레이어2정보를 때내는 tun을 이용한 tap 에뮬레이터를 제작할 수 있습니다. 하지만 이것만이 아닌 ARP 그리고 어쩌면 DHCP 클라이언트 까지도 구현해야합니다. 본인은 이 같은 작업을 하는 분을 알고있지 않습니다. 코딩을 시작하려고 하시는 분이 계시면 제게 연락주십시오.
+            세 번째로? 실제로는 송신 때 레이어2 정보를 추가하고 수신 때 레이어2 정보를 떼내는 TUN을 이용한 TAP 에뮬레이터를 제작하는 것이 가능합니다. 하지만 이것만이 아닌 ARP 그리고 어쩌면 DHCP 클라이언트까지도 구현해야 합니다. 본인은 이 같은 작업을 하는 분을 알고 있지 않습니다. 코딩을 시작하려고 하시는 분이 계시면 제게 연락해 주십시오.
 
             

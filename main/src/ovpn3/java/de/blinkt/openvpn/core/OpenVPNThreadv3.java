@@ -1,16 +1,18 @@
 package de.blinkt.openvpn.core;
 
 import android.content.Context;
+import android.util.Base64;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import net.openvpn.ovpn3.*;
 
 import net.openvpn.ovpn3.ClientAPI_OpenVPNClient;
+import net.openvpn.ovpn3.ClientAPI_DynamicChallenge;
+
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static de.blinkt.openvpn.VpnProfile.AUTH_RETRY_NOINTERACT;
-import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.copyright;
-import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.init_process;
-import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.platform;
 
 public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable, OpenVPNManagement {
 
@@ -182,6 +184,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		config.setContent(vpnconfig);
 		config.setTunPersist(mVp.mPersistTun);
         config.setGuiVersion(mVp.getVersionEnvString(mService));
+        config.setSsoMethods("openurl,crtext");
         //config.setPlatformVersion(mVp.getPlatformVersionEnvString());
 		config.setExternalPkiAlias("extpki");
 		config.setCompressionMode("asym");
@@ -225,14 +228,14 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public void external_pki_sign_request(ClientAPI_ExternalPKISignRequest signreq) {
-		VpnStatus.logDebug("Got external PKI signing request from OpenVPN core for algorithm " + signreq.getPadding());
+		VpnStatus.logDebug("Got external PKI signing request from OpenVPN core for algorithm " + signreq.getAlgorithm());
 		boolean pkcs1padding;
-		if (signreq.getPadding().equals("RSA_PKCS1_PADDING"))
+		if (signreq.getAlgorithm().equals("RSA_PKCS1_PADDING"))
 			pkcs1padding = true;
-		else if (signreq.getPadding().equals("RSA_NO_PADDING"))
+		else if (signreq.getAlgorithm().equals("RSA_NO_PADDING"))
 			pkcs1padding = false;
 		else
-			throw new IllegalArgumentException("Illegal padding in sign request" + signreq.getPadding());
+			throw new IllegalArgumentException("Illegal padding in sign request" + signreq.getAlgorithm());
 		signreq.setSig(mVp.getSignedData(mService, signreq.getData(), pkcs1padding));
 	}
 
@@ -248,8 +251,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public boolean socket_protect(int socket, String remote, boolean ipv6) {
-		boolean b= mService.protect(socket);
-		return b;
+		return mService.protect(socket);
 
 	}
 
@@ -276,6 +278,11 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	}
 
 	@Override
+	public void sendCRResponse(String response) {
+		post_cc_msg("CR_RESPONSE," +  response + "\n");
+	}
+
+	@Override
 	public void log(ClientAPI_LogInfo arg0) {
 		String logmsg =arg0.getText();
 		while (logmsg.endsWith("\n"))
@@ -290,13 +297,18 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		String info = event.getInfo();
 		if (name.equals("INFO")) {
 			VpnStatus.logInfo(R.string.info_from_server, info);
-			if (info.startsWith("OPEN_URL:"))
+			if (info.startsWith("OPEN_URL:") || info.startsWith("CR_TEXT:"))
 			{
-				mService.trigger_url_open(info);
+				mService.trigger_sso(info);
 			}
 		} else{
 			VpnStatus.updateStateString(name, info);
 		}
+		/* if (event.name.equals("DYNAMIC_CHALLENGE")) {
+			ClientAPI_DynamicChallenge challenge = new ClientAPI_DynamicChallenge();
+			final boolean status = ClientAPI_OpenVPNClient.parse_dynamic_challenge(event.info, challenge);
+
+		} else */
 		if(event.getError())
             VpnStatus.logError(String.format("EVENT(Error): %s: %s", name, info));
 	}

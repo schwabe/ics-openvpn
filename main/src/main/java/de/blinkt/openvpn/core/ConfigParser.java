@@ -90,6 +90,7 @@ public class ConfigParser {
     private final String[][] ignoreOptionsWithArg =
             {
                     {"setenv", "IV_GUI_VER"},
+                    {"setenv", "IV_SSO"},
                     {"setenv", "IV_PLAT_VER"},
                     {"setenv", "IV_OPENVPN_GUI_VERSION"},
                     {"engine", "dynamic"},

@@ -1,27 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2012-2016 Arne Schwabe
-  ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
--->
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="de.blinkt.openvpn">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
     <uses-feature
         android:name="android.software.leanback"
         android:required="false" />
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
-
 
     <application
         android:name=".core.ICSOpenVPNApplication"
@@ -34,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/blinkt"
         tools:ignore="UnusedAttribute">
-
+        <activity android:name=".core.CredentialsPopup"></activity>
 
         <meta-data
             android:name="android.content.APP_RESTRICTIONS"
@@ -105,7 +97,6 @@
             <meta-data
                 android:name="android.service.quicksettings.ACTIVE_TILE"
                 android:value="false" />
-
         </service>
 
         <activity android:name=".api.GrantPermissionsActivity">
@@ -170,11 +161,10 @@
                 <data android:pathPattern=".*..*.ovpn" />
                 <data android:pathPattern=".*.ovpn" />
             </intent-filter>
-        </activity>
-        <!-- https://commonsware.com/blog/2019/03/27/death-external-storage-stay-away-files.html -->
+        </activity> <!-- https://commonsware.com/blog/2019/03/27/death-external-storage-stay-away-files.html -->
         <activity-alias
-            android:enabled="@bool/supportFileScheme"
             android:name=".activities.ConfigConverterFile"
+            android:enabled="@bool/supportFileScheme"
             android:targetActivity=".activities.ConfigConverter">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -240,7 +230,6 @@
             android:exported="true"
             android:grantUriPermissions="true"
             tools:ignore="ExportedContentProvider" />
-
         <!--
         <receiver android:name="core.GetRestrictionReceiver">
             <intent-filter>
@@ -259,16 +248,13 @@
         <activity android:name=".api.RemoteAction" />
 
         <activity-alias
-            android:name=".api.DisconnectVPN"
-            android:exported="true"
-            android:targetActivity=".api.RemoteAction" />
-
-        <activity-alias
             android:name=".api.ConnectVPN"
             android:exported="true"
             android:targetActivity=".api.RemoteAction" />
-
-
+        <activity-alias
+            android:name=".api.DisconnectVPN"
+            android:exported="true"
+            android:targetActivity=".api.RemoteAction" />
     </application>
 
 </manifest>

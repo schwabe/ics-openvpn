@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.system.ErrnoException;
 import android.system.Os;
 import android.util.Log;
 import de.blinkt.openvpn.R;
@@ -342,9 +341,9 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     private void processInfoMessage(String info)
     {
-        if (info.startsWith("OPEN_URL:"))
+        if (info.startsWith("OPEN_URL:") || info.startsWith("CR_TEXT:"))
         {
-            mOpenVPNService.trigger_url_open(info);
+            mOpenVPNService.trigger_sso(info);
         }
     }
 
@@ -731,6 +730,11 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     @Override
     public void setPauseCallback(PausedStateCallback callback) {
         mPauseCallback = callback;
+    }
+
+    @Override
+    public void sendCRResponse(String response) {
+        managmentCommand("cr-response "  + response + "\n");
     }
 
     public void signalusr1() {

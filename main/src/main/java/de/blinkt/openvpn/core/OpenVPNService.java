@@ -34,6 +34,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.system.OsConstants;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ import java.lang.reflect.Method;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Vector;
@@ -122,6 +124,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         }
 
+        @Override
+        public void challengeResponse(String repsonse) throws RemoteException {
+            OpenVPNService.this.challengeResponse(repsonse);
+        }
+
 
     };
     private String mLastTunCfg;
@@ -187,6 +194,14 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     public boolean isAllowedExternalApp(String packagename) throws RemoteException {
         ExternalAppDatabase extapps = new ExternalAppDatabase(OpenVPNService.this);
         return extapps.checkRemoteActionPermission(this, packagename);
+    }
+
+    @Override
+    public void challengeResponse(String response) throws RemoteException {
+        if(mManagement != null) {
+            String b64response = Base64.encodeToString(response.getBytes(Charset.forName("UTF-8")), Base64.DEFAULT);
+            mManagement.sendCRResponse(b64response);
+        }
     }
 
 
@@ -1225,27 +1240,47 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         showNotification(getString(resid), getString(resid), NOTIFICATION_CHANNEL_NEWSTATUS_ID, 0, LEVEL_WAITING_FOR_USER_INPUT);
     }
 
-    public void trigger_url_open(String info) {
+
+    public void trigger_sso(String info) {
         String channel = NOTIFICATION_CHANNEL_USERREQ_ID;
-        String url = info.split(":",2)[1];
+        String method = info.split(":", 2)[0];
 
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         Notification.Builder nbuilder = new Notification.Builder(this);
-        nbuilder.setContentTitle(getString(R.string.openurl_requested));
-
-        nbuilder.setContentText(url);
         nbuilder.setAutoCancel(true);
-
         int icon = android.R.drawable.ic_dialog_info;
-
         nbuilder.setSmallIcon(icon);
 
-        Intent openUrlIntent = new Intent(Intent.ACTION_VIEW);
-        openUrlIntent.setData(Uri.parse(url));
-        openUrlIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent;
 
-        nbuilder.setContentIntent(PendingIntent.getActivity(this,0, openUrlIntent, 0));
+        if (method.equals("OPEN_URL")) {
+            String url = info.split(":", 2)[1];
+
+            nbuilder.setContentTitle(getString(R.string.openurl_requested));
+
+            nbuilder.setContentText(url);
+
+
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+
+        } else if (method.equals("CR_TEXT")) {
+            String challenge = info.split(":", 2)[1];
+            nbuilder.setContentTitle(getString(R.string.crtext_requested));
+            nbuilder.setContentText(challenge);
+
+            intent = new Intent(this, CredentialsPopup.class);
+            intent.putExtra(CredentialsPopup.EXTRA_CHALLENGE_TXT, challenge);
+
+        } else {
+            VpnStatus.logError("Unknown SSO method found: " + method);
+            return;
+        }
+
+        nbuilder.setContentIntent(PendingIntent.getActivity(this, 0, intent, 0));
 
 
         // Try to set the priority available since API 16 (Jellybean)
@@ -1262,6 +1297,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         @SuppressWarnings("deprecation")
         Notification notification = nbuilder.getNotification();
+
 
         int notificationId = channel.hashCode();
 

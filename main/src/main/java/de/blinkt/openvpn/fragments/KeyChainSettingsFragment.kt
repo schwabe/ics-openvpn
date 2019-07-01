@@ -16,6 +16,7 @@ import android.os.Handler
 import android.os.Message
 import android.security.KeyChain
 import android.security.KeyChainException
+import android.security.keystore.KeyInfo
 import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
@@ -27,6 +28,8 @@ import de.blinkt.openvpn.VpnProfile
 import de.blinkt.openvpn.api.ExternalCertificateProvider
 import de.blinkt.openvpn.core.ExtAuthHelper
 import de.blinkt.openvpn.core.X509Utils
+import java.security.KeyFactory
+import java.security.PrivateKey
 
 import java.security.cert.X509Certificate
 
@@ -43,8 +46,18 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
         @Throws(KeyChainException::class, InterruptedException::class)
         get() {
-            val algorithm = KeyChain.getPrivateKey(activity.applicationContext, mProfile.mAlias)!!.algorithm
-            return KeyChain.isBoundKeyAlgorithm(algorithm)
+            val key : PrivateKey = KeyChain.getPrivateKey(activity.applicationContext, mProfile.mAlias) ?: return false
+
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M)
+            {
+                val keyFactory = KeyFactory.getInstance(key.getAlgorithm(), "AndroidKeyStore")
+                val keyInfo = keyFactory.getKeySpec(key, KeyInfo::class.java)
+                return keyInfo.isInsideSecureHardware()
+
+            } else {
+                val algorithm = key.algorithm
+                return KeyChain.isBoundKeyAlgorithm(algorithm)
+            }
         }
 
 
@@ -136,7 +149,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
 
     protected fun initKeychainViews(v: View) {
         v.findViewById<View>(R.id.select_keystore_button).setOnClickListener(this)
-        v.findViewById<View>(R.id.configure_extauth_button).setOnClickListener(this)
+        v.findViewById<View>(R.id.configure_extauth_button)?.setOnClickListener(this)
         v.findViewById<View>(R.id.install_keystore_button).setOnClickListener(this)
         mAliasCertificate = v.findViewById(R.id.alias_certificate)
         mExtAuthSpinner = v.findViewById(R.id.extauth_spinner)
@@ -172,7 +185,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
     }
 
     private fun startExternalAuthConfig() {
-        val eAuth = mExtAuthSpinner!!.selectedItem as ExtAuthHelper.ExternalAuthProvider
+        val eAuth = mExtAuthSpinner.selectedItem as ExtAuthHelper.ExternalAuthProvider
         mProfile.mExternalAuthenticator = eAuth.packageName
         if (!eAuth.configurable) {
             fetchExtCertificateMetaData()

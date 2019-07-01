@@ -371,8 +371,8 @@
 /* Define to 1 if you have the <sys/mman.h> header file. */
 #define HAVE_SYS_MMAN_H 1
 
-/* Define to 1 if you have the <sys/poll.h> header file. */
-#define HAVE_SYS_POLL_H 1
+/* Define to 1 if you have the <poll.h> header file. */
+#define HAVE_POLL_H 1
 
 /* Define to 1 if you have the <sys/socket.h> header file. */
 #define HAVE_SYS_SOCKET_H 1
@@ -676,3 +676,8 @@ int res_init();
 #define HAVE_RSA_METH_SET_SIGN 1
 
 #define ENABLE_OFB_CFB_MODE 1
+
+#define HAVE_X509_GET0_NOTBEFORE 1
+#define HAVE_X509_GET0_NOTAFTER 1
+
+#define HAVE_OPENSSL_VERSION 1

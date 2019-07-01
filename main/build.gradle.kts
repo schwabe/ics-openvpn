@@ -60,11 +60,11 @@ tasks.register<Exec>("generateOpenVPN3Swig")
 }
 
 android {
-    compileSdkVersion(28)
+    compileSdkVersion(29)
 
     defaultConfig {
         minSdkVersion(14)
-        targetSdkVersion(28)
+        targetSdkVersion(29)  //'Q'.toInt()
         versionCode = 161
         versionName = "0.7.8"
 

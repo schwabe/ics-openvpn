@@ -82,7 +82,7 @@
     <string name="secondary_dns_message">Secondary DNS Server used if the normal DNS Server cannot be reached.</string>
     <string name="backup_dns">Backup DNS Server</string>
     <string name="ignored_pushed_routes">Ignore pushed routes</string>
-    <string name="ignore_routes_summary">Ignore routed pushed by the server.</string>
+    <string name="ignore_routes_summary">Ignore routes pushed by the server.</string>
     <string name="default_route_summary">Redirects all Traffic over the VPN</string>
     <string name="use_default_title">Use default Route</string>
     <string name="custom_route_message">Enter custom routes. Only enter destination in CIDR format. \"10.0.0.0/8 2002::/16\" would direct the networks 10.0.0.0/8 and 2002::/16 over the VPN.</string>

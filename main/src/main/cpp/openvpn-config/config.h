@@ -681,3 +681,4 @@ int res_init();
 #define HAVE_X509_GET0_NOTAFTER 1
 
 #define HAVE_OPENSSL_VERSION 1
+#define HAVE_EVP_CIPHER_CTX_RESET

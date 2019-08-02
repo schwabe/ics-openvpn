@@ -669,7 +669,7 @@ elseif(${ANDROID_ABI} STREQUAL "x86_64")
     crypto/sha/asm/sha256-x86_64.S 
     crypto/sha/asm/sha512-x86_64.S
     crypto/sha/asm/keccak1600-x86_64.S
-    crypto/sha/asm/keccak1600-avx2.S
+    #crypto/sha/asm/keccak1600-avx2.S
     #crypto/sha/asm/keccak1600-avx512.S
     #crypto/sha/asm/keccak1600-avx512vl.S
     crypto/ec/asm/x25519-x86_64.S
@@ -689,7 +689,7 @@ else()
 endif()
 
 PREPEND(crypto_srcs_with_path "openssl" ${crypto_srcs})
-add_library(crypto ${crypto_srcs_with_path})
+add_library(crypto ${SSLLIBTYPE} ${crypto_srcs_with_path} )
 
 target_include_directories(crypto PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/crypto/include
@@ -833,7 +833,7 @@ set (ssl_srcs
 )
 
 PREPEND(ssl_srcs_with_path "openssl" ${ssl_srcs})
-add_library(ssl ${ssl_srcs_with_path})
+add_library(ssl ${SSLLIBTYPE} ${ssl_srcs_with_path})
 
 
 target_link_libraries(ssl crypto)

@@ -6,6 +6,7 @@
 package de.blinkt.openvpn.core;
 
 import android.os.Build;
+import de.blinkt.openvpn.BuildConfig;
 
 import java.security.InvalidKeyException;
 
@@ -41,6 +42,9 @@ public class NativeUtils {
             System.loadLibrary("opvpnutil");
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN)
                 System.loadLibrary("jbcrypto");
+        }
+        if (!BuildConfig.FLAVOR.equals("skeleton")) {
+            System.loadLibrary("osslspeedtest");
         }
     }
 

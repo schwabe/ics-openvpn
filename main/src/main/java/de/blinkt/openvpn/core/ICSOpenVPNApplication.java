@@ -13,12 +13,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 
-/*
-import org.acra.ACRA;
-import org.acra.ReportingInteractionMode;
-import org.acra.annotation.ReportsCrashes;
-*/
-
 import android.os.StrictMode;
 import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;

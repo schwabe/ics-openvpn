@@ -18,6 +18,8 @@ OPTION(OPENVPN2MBED "Use mbed TLS for OpenVPN2" OFF)
 OPTION(OPENVPN3OSSL "Use OpenSSL for OpenVPN3" ON)
 SET(OPENVPN3OSSL ON)
 
+# STATIC or SHARED
+SET(SSLLIBTYPE STATIC)
 
 #add_subdirectory(lzo)
 include(tools.cmake)
@@ -25,12 +27,15 @@ include(lzo.cmake)
 include(lz4.cmake)
 include(openssl.cmake)
 
-# Super hacky way to determine flavour
+if(NOT ${OPENVPN3OSSL} OR ${OPENVPN2MBED})
+    add_subdirectory(mbedtls)
+endif()
+
+    # Super hacky way to determine flavour
 #-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/arne/software/icsopenvpn/main/build/intermediates/cmake/normal/debug/obj/arm64-v8a
-if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*noovpn3.*/")
+if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*skeleton.*/")
     FIND_PACKAGE(SWIG 3.0 REQUIRED)
 
-    add_subdirectory(mbedtls)
     add_custom_command(OUTPUT "ovpncli_wrap.cxx"
             COMMAND ${CMAKE_COMMAND} -E make_directory ovpn3
             COMMAND ${SWIG_EXECUTABLE} -outdir ovpn3
@@ -92,12 +97,20 @@ else ()
     message("Not budiling OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 endif ()
 
-add_library(opvpnutil SHARED opvpnutil/jniglue.c opvpnutil/scan_ifs.c opvpnutil/sslspeed.c)
+add_library(opvpnutil SHARED opvpnutil/jniglue.c opvpnutil/scan_ifs.c)
 target_compile_definitions(opvpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\"
         -DOPENVPN2_GIT_REVISION=\"${OPENVPN2_GIT}\"
         -DOPENVPN3_GIT_REVISION=\"${OPENVPN3_GIT}\"
         )
-target_link_libraries(opvpnutil log crypto ssl)
+target_link_libraries(opvpnutil log)
+
+
+if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*skeleton.*/")
+    add_library(osslspeedtest opvpnutil/sslspeed.c)
+    target_link_libraries(osslspeedtest log crypto ssl)
+else ()
+    message("Not budiling SSLSpeedTest for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+endif ()
 
 # The magic Jellybean keystore signing hack. Beware dragons and dlsyms magic ahead
 add_library(jbcrypto SHARED jbcrypto/jbcrypto.cpp)

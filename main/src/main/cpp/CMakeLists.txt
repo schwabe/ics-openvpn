@@ -106,7 +106,7 @@ target_link_libraries(opvpnutil log)
 
 
 if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*skeleton.*/")
-    add_library(osslspeedtest opvpnutil/sslspeed.c)
+    add_library(osslspeedtest SHARED opvpnutil/sslspeed.c)
     target_link_libraries(osslspeedtest log crypto ssl)
 else ()
     message("Not budiling SSLSpeedTest for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")

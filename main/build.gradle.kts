@@ -14,16 +14,6 @@ apply {
     plugin("kotlin-android-extensions")
 }
 
-var properties = Properties()
-
-var skeletonBuild: Boolean
-properties.load(project.rootProject.file("local.properties").inputStream())
-if (properties.containsKey("skeleton")) {
-    skeletonBuild = true
-} else {
-    skeletonBuild = false
-}
-
 repositories {
     jcenter()
     maven(url = "https://jitpack.io")

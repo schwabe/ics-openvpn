@@ -46,10 +46,9 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
         @Throws(KeyChainException::class, InterruptedException::class)
         get() {
-            val key : PrivateKey = KeyChain.getPrivateKey(activity.applicationContext, mProfile.mAlias) ?: return false
+            val key: PrivateKey = KeyChain.getPrivateKey(activity.applicationContext, mProfile.mAlias) ?: return false
 
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M)
-            {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
                 val keyFactory = KeyFactory.getInstance(key.getAlgorithm(), "AndroidKeyStore")
                 val keyInfo = keyFactory.getKeySpec(key, KeyInfo::class.java)
                 return keyInfo.isInsideSecureHardware()
@@ -105,7 +104,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
                 var certstr = ""
                 var metadata: Bundle? = null
                 try {
-                    val cert: X509Certificate?
+                    var cert: X509Certificate? = null
 
                     if (external) {
                         if (!TextUtils.isEmpty(mProfile.mExternalAuthenticator) && !TextUtils.isEmpty(mProfile.mAlias)) {
@@ -116,11 +115,14 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
                             certstr = getString(R.string.extauth_not_configured)
                         }
                     } else {
-                        cert = KeyChain.getCertificateChain(activity.applicationContext, mProfile.mAlias)!![0]
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                            run {
-                                if (isInHardwareKeystore)
-                                    certstr += getString(R.string.hwkeychain)
+                        val certChain = KeyChain.getCertificateChain(activity.applicationContext, mProfile.mAlias)
+                        if (certChain != null) {
+                            cert = certChain[0]
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                                run {
+                                    if (isInHardwareKeystore)
+                                        certstr += getString(R.string.hwkeychain)
+                                }
                             }
                         }
                     }
@@ -129,9 +131,8 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
                         certstr += X509Utils.getCertificateFriendlyName(cert)
                     }
 
-
                 } catch (e: Exception) {
-                    certstr = "Could not get certificate from Keystore: " + e.localizedMessage!!
+                    certstr = "Could not get certificate from Keystore: " + e.localizedMessage
                 }
 
                 val certStringCopy = certstr
@@ -173,7 +174,8 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
         ExtAuthHelper.setExternalAuthProviderSpinnerList(mExtAuthSpinner, mProfile.mExternalAuthenticator)
 
         v.findViewById<View>(R.id.install_keystore_button).setOnClickListener {
-            startActivity(KeyChain.createInstallIntent()) };
+            startActivity(KeyChain.createInstallIntent())
+        };
     }
 
     override fun onClick(v: View) {

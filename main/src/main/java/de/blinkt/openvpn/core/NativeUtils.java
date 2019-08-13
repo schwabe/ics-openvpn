@@ -42,15 +42,14 @@ public class NativeUtils {
             System.loadLibrary("opvpnutil");
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN)
                 System.loadLibrary("jbcrypto");
-        }
-        if (!BuildConfig.FLAVOR.equals("skeleton")) {
-            System.loadLibrary("osslspeedtest");
+
+            if (!BuildConfig.FLAVOR.equals("skeleton")) {
+                System.loadLibrary("osslspeedtest");
+            }
         }
     }
 
     public static boolean isRoboUnitTest() {
-        return "robolectric".equals(Build.FINGERPRINT);
-    }
-
+        return "robolectric".equals(Build.FINGERPRINT); }
 
 }

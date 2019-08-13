@@ -19,6 +19,8 @@ import java.util.Queue;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import android.util.Log;
+import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 
@@ -428,10 +430,6 @@ public class VpnStatus {
             if (mLogFileHandler != null)
                 mLogFileHandler.sendMessage(mLogFileHandler.obtainMessage(LogFileHandler.TRIM_LOG_FILE));
         }
-
-        //if (BuildConfig.DEBUG && !cachedLine && !BuildConfig.FLAVOR.equals("test"))
-        //    Log.d("OpenVPN", logItem.getString(null));
-
 
         for (LogListener ll : logListener) {
             ll.newLog(logItem);

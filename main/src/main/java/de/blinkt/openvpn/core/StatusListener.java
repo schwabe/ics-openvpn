@@ -12,6 +12,9 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.util.Log;
+import de.blinkt.openvpn.BuildConfig;
+import de.blinkt.openvpn.core.VpnStatus.LogLevel;
 
 import java.io.DataInputStream;
 import java.io.File;
@@ -21,8 +24,31 @@ import java.io.IOException;
  * Created by arne on 09.11.16.
  */
 
-public class StatusListener {
+public class StatusListener implements VpnStatus.LogListener {
     private File mCacheDir;
+    private Context mContext;
+    private IStatusCallbacks mCallback = new IStatusCallbacks.Stub() {
+        @Override
+        public void newLogItem(LogItem item) throws RemoteException {
+            VpnStatus.newLogItem(item);
+        }
+
+        @Override
+        public void updateStateString(String state, String msg, int resid, ConnectionStatus
+                level) throws RemoteException {
+            VpnStatus.updateStateString(state, msg, resid, level);
+        }
+
+        @Override
+        public void updateByteCount(long inBytes, long outBytes) throws RemoteException {
+            VpnStatus.updateByteCount(inBytes, outBytes);
+        }
+
+        @Override
+        public void connectedVPN(String uuid) throws RemoteException {
+            VpnStatus.setConnectedVPNProfile(uuid);
+        }
+    };
     private ServiceConnection mConnection = new ServiceConnection() {
 
 
@@ -51,9 +77,15 @@ public class StatusListener {
                     fd.close();
 
 
-
                 } else {
                     VpnStatus.initLogCache(mCacheDir);
+                    /* Set up logging to Logcat with a context) */
+
+                    if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equals("skeleton")) {
+                        VpnStatus.addLogListener(StatusListener.this);
+                    }
+
+
                 }
 
             } catch (RemoteException | IOException e) {
@@ -64,7 +96,7 @@ public class StatusListener {
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-
+            VpnStatus.removeLogListener(StatusListener.this);
         }
 
     };
@@ -76,34 +108,30 @@ public class StatusListener {
         mCacheDir = c.getCacheDir();
 
         c.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
+        this.mContext = c;
 
     }
 
-
-    private IStatusCallbacks mCallback = new IStatusCallbacks.Stub()
-
-    {
-        @Override
-        public void newLogItem(LogItem item) throws RemoteException {
-            VpnStatus.newLogItem(item);
+    @Override
+    public void newLog(LogItem logItem) {
+        switch (logItem.getLogLevel()) {
+            case INFO:
+                Log.i("OpenVPN", logItem.getString(mContext));
+                break;
+            case DEBUG:
+                Log.d("OpenVPN", logItem.getString(mContext));
+                break;
+            case ERROR:
+                Log.e("OpenVPN", logItem.getString(mContext));
+                break;
+            case VERBOSE:
+                Log.v("OpenVPN", logItem.getString(mContext));
+                break;
+            case WARNING:
+            default:
+                Log.w("OpenVPN", logItem.getString(mContext));
+                break;
         }
 
-        @Override
-        public void updateStateString(String state, String msg, int resid, ConnectionStatus
-                level) throws RemoteException {
-            VpnStatus.updateStateString(state, msg, resid, level);
-        }
-
-        @Override
-        public void updateByteCount(long inBytes, long outBytes) throws RemoteException {
-            VpnStatus.updateByteCount(inBytes, outBytes);
-        }
-
-        @Override
-        public void connectedVPN(String uuid) throws RemoteException {
-            VpnStatus.setConnectedVPNProfile(uuid);
-        }
-    };
-
+    }
 }

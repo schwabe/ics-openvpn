@@ -20,12 +20,13 @@ SET(OPENVPN3OSSL ON)
 
 # STATIC or SHARED
 SET(SSLLIBTYPE STATIC)
+SET(OPENSSL_PATH "openssl")
 
 #add_subdirectory(lzo)
 include(tools.cmake)
 include(lzo.cmake)
 include(lz4.cmake)
-include(openssl.cmake)
+include(openssl/openssl.cmake)
 
 if(NOT ${OPENVPN3OSSL} OR ${OPENVPN2MBED})
     add_subdirectory(mbedtls)

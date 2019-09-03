@@ -7,8 +7,8 @@ package de.blinkt.openvpn.fragments;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;

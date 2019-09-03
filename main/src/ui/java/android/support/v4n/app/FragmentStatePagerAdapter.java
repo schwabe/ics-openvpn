@@ -31,7 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Implementation of {@link android.support.v4.view.PagerAdapter} that
+ * Implementation of {@link androidx.viewpager.widget.PagerAdapter} that
  * uses a {@link Fragment} to manage each page. This class also handles
  * saving and restoring of fragment's state.
  *

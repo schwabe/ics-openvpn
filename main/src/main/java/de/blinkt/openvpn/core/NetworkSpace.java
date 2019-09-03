@@ -6,7 +6,7 @@
 package de.blinkt.openvpn.core;
 
 import android.os.Build;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.math.BigInteger;
 import java.net.Inet6Address;

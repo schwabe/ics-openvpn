@@ -10,8 +10,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +28,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
@@ -206,18 +208,18 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                     break;
             }
 
-            xAxis.setValueFormatter(new IAxisValueFormatter() {
+            xAxis.setValueFormatter(new ValueFormatter() {
 
 
                 @Override
-                public String getFormattedValue(float value, AxisBase axis) {
+                public String getFormattedValue(float value) {
                     switch (position) {
                         case TIME_PERIOD_HOURS:
-                            return String.format(Locale.getDefault(), "%.0f\u2009h ago", (axis.getAxisMaximum() - value) / 10 / 3600);
+                            return String.format(Locale.getDefault(), "%.0f\u2009h ago", (xAxis.getAxisMaximum() - value) / 10 / 3600);
                         case TIME_PERIOD_MINUTES:
-                            return String.format(Locale.getDefault(), "%.0f\u2009m ago", (axis.getAxisMaximum() - value) / 10 / 60);
+                            return String.format(Locale.getDefault(), "%.0f\u2009m ago", (xAxis.getAxisMaximum() - value) / 10 / 60);
                         default:
-                            return String.format(Locale.getDefault(), "%.0f\u2009s ago", (axis.getAxisMaximum() - value) / 10);
+                            return String.format(Locale.getDefault(), "%.0f\u2009s ago", (xAxis.getAxisMaximum() - value) / 10);
                     }
 
                 }
@@ -228,9 +230,9 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
             yAxis.setLabelCount(5, false);
 
             final Resources res = getActivity().getResources();
-            yAxis.setValueFormatter(new IAxisValueFormatter() {
+            yAxis.setValueFormatter(new ValueFormatter() {
                 @Override
-                public String getFormattedValue(float value, AxisBase axis) {
+                public String getFormattedValue(float value) {
                     if (mLogScale && value < 2.1f)
                         return "< 100\u2009bit/s";
                     if (mLogScale)

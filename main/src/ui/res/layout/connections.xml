@@ -42,7 +42,7 @@
 
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_margin="@dimen/vpn_setting_padding"
         android:id="@+id/connection_recycler_view"
         android:layout_below="@id/switchBar"

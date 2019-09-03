@@ -28,7 +28,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.ViewCompat;
 import android.support.v4n.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;

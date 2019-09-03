@@ -24,7 +24,7 @@ import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.format.DateFormat;
 import android.text.style.ImageSpan;

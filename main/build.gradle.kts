@@ -41,11 +41,11 @@ tasks.register<Exec>("generateOpenVPN3Swig")
 }
 
 android {
-    compileSdkVersion(28)
+    compileSdkVersion(29)
 
     defaultConfig {
         minSdkVersion(14)
-        targetSdkVersion(28)  //'Q'.toInt()
+        targetSdkVersion(29)  //'Q'.toInt()
         versionCode = 161
         versionName = "0.7.8"
 
@@ -155,17 +155,16 @@ preBuildTask.dependsOn(swigTask)
 
 /* Normally you would put these on top but then it errors out on unknown configurations */
 dependencies {
-    implementation("com.android.support:support-annotations:28.0.0")
-    implementation("com.android.support:support-core-utils:28.0.0")
+    implementation("androidx.annotation:annotation:1.1.0")
 
     // Is there a nicer way to do this?
-    dependencies.add("uiImplementation", "com.android.support.constraint:constraint-layout:1.1.3")
-    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.40")
-    dependencies.add("uiImplementation","com.android.support.constraint:constraint-layout:1.1.3")
-    dependencies.add("uiImplementation","com.android.support:cardview-v7:28.0.0")
-    dependencies.add("uiImplementation","com.android.support:recyclerview-v7:28.0.0")
-    dependencies.add("uiImplementation","com.github.PhilJay:MPAndroidChart:v3.0.2")
+    dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:1.1.3")
+    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
+    dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
+    dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.0.0")
+    dependencies.add("uiImplementation", "com.github.PhilJay:MPAndroidChart:v3.1.0")
 
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
 
     testImplementation("junit:junit:4.12")
     testImplementation("org.mockito:mockito-core:3.0.0")

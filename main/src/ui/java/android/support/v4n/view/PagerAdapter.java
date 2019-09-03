@@ -27,7 +27,7 @@ import android.view.ViewGroup;
  * a {@link ViewPager}.  You will most likely want to use a more
  * specific implementation of this, such as
  * {@link android.support.v4n.app.FragmentPagerAdapter} or
- * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+ * {@link androidx.core.app.FragmentStatePagerAdapter}.
  *
  * <p>When you implement a PagerAdapter, you must override the following methods
  * at minimum:</p>

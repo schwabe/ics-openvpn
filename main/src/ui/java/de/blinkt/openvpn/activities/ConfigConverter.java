@@ -23,7 +23,7 @@ import android.os.Environment;
 import android.provider.OpenableColumns;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Pair;
@@ -42,7 +42,6 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

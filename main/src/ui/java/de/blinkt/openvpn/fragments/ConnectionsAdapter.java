@@ -85,7 +85,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
                 cH.mProxyGroup.check(R.id.proxy_http);
                 break;
             case SOCKS5:
-                cH.mProxyGroup.check(R.id.proxy_http);
+                cH.mProxyGroup.check(R.id.proxy_socks);
                 break;
             case ORBOT:
                 cH.mProxyGroup.check(R.id.proxy_orbot);

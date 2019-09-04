@@ -7,11 +7,10 @@ package de.blinkt.openvpn.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +20,15 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
@@ -59,6 +58,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
     private int mColourIn;
     private int mColourOut;
     private int mColourPoint;
+    private int mTextColour;
 
     private long firstTs;
     private TextView mSpeedStatus;
@@ -69,13 +69,14 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
     private static final int TIME_PERIOD_HOURS = 2;
     private Handler mHandler;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.graph, container, false);
-        mListView = (ListView) v.findViewById(R.id.graph_listview);
-        mSpeedStatus = (TextView) v.findViewById(R.id.speedStatus);
-        CheckBox logScaleView = (CheckBox) v.findViewById(R.id.useLogScale);
+        mListView = v.findViewById(R.id.graph_listview);
+        mSpeedStatus = v.findViewById(R.id.speedStatus);
+        CheckBox logScaleView = v.findViewById(R.id.useLogScale);
         mLogScale = getActivity().getPreferences(MODE_PRIVATE).getBoolean(PREF_USE_LOG, false);
         logScaleView.setChecked(mLogScale);
 
@@ -90,6 +91,16 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
         mColourIn = getActivity().getResources().getColor(R.color.dataIn);
         mColourOut = getActivity().getResources().getColor(R.color.dataOut);
         mColourPoint = getActivity().getResources().getColor(android.R.color.black);
+
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                mTextColour = getActivity().getResources().getColor(android.R.color.primary_text_light);
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                mTextColour = getActivity().getResources().getColor(android.R.color.primary_text_dark);
+                break;
+        }
 
         logScaleView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -190,11 +201,13 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
             // holder.chart.setValueTypeface(mTf);
             holder.chart.getDescription().setEnabled(false);
             holder.chart.setDrawGridBackground(false);
+            holder.chart.getLegend().setTextColor(mTextColour);
 
             XAxis xAxis = holder.chart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setDrawGridLines(false);
             xAxis.setDrawAxisLine(true);
+            xAxis.setTextColor(mTextColour);
 
             switch (position) {
                 case TIME_PERIOD_HOURS:
@@ -241,6 +254,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                     return humanReadableByteCount((long) value, true, res);
                 }
             });
+            yAxis.setTextColor(mTextColour);
 
             holder.chart.getAxisRight().setEnabled(false);
 
@@ -392,6 +406,8 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
             dataSet.setMode(LineDataSet.Mode.LINEAR);
 
             dataSet.setDrawValues(false);
+            dataSet.setValueTextColor(mTextColour);
+
         }
     }
 

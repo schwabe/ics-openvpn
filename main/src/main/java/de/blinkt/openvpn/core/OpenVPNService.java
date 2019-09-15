@@ -136,6 +136,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private Handler guiHandler;
     private Toast mlastToast;
     private Runnable mOpenVPNThread;
+    private PendingIntent mSSOPendingIntent = null;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean speed, Resources res) {
@@ -268,8 +269,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         nbuilder.setOngoing(true);
 
         nbuilder.setSmallIcon(icon);
-        if (status == LEVEL_WAITING_FOR_USER_INPUT)
-            nbuilder.setContentIntent(getUserInputIntent(msg));
+        if (status == LEVEL_WAITING_FOR_USER_INPUT) {
+            if (mSSOPendingIntent != null) {
+                nbuilder.setContentIntent(mSSOPendingIntent);
+            } else {
+                nbuilder.setContentIntent(getUserInputIntent(msg));
+            }
+        }
         else
             nbuilder.setContentIntent(getGraphPendingIntent());
 
@@ -1254,10 +1260,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         Intent intent;
 
+        int reason;
         if (method.equals("OPEN_URL")) {
             String url = info.split(":", 2)[1];
-
-            nbuilder.setContentTitle(getString(R.string.openurl_requested));
+            reason = R.string.openurl_requested;
+            nbuilder.setContentTitle(getString(reason));
 
             nbuilder.setContentText(url);
 
@@ -1269,7 +1276,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         } else if (method.equals("CR_TEXT")) {
             String challenge = info.split(":", 2)[1];
-            nbuilder.setContentTitle(getString(R.string.crtext_requested));
+            reason = R.string.crtext_requested;
+            nbuilder.setContentTitle(getString(reason));
             nbuilder.setContentText(challenge);
 
             intent = new Intent(this, CredentialsPopup.class);
@@ -1280,7 +1288,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             return;
         }
 
-        nbuilder.setContentIntent(PendingIntent.getActivity(this, 0, intent, 0));
+        // updateStateString trigger the notification of the VPN to be refreshed, save this intent
+        // to have that notification also this intent to be set
+        mSSOPendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        VpnStatus.updateStateString("USER_INPUT", "waiting for user input", reason, LEVEL_WAITING_FOR_USER_INPUT);
+        nbuilder.setContentIntent(mSSOPendingIntent);
 
 
         // Try to set the priority available since API 16 (Jellybean)

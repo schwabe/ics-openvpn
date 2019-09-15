@@ -283,9 +283,10 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         String name = event.getName();
         String info = event.getInfo();
         if (name.equals("INFO")) {
-            VpnStatus.logInfo(R.string.info_from_server, info);
             if (info.startsWith("OPEN_URL:") || info.startsWith("CR_TEXT:")) {
                 mService.trigger_sso(info);
+            } else {
+                VpnStatus.logInfo(R.string.info_from_server, info);
             }
         } else {
             VpnStatus.updateStateString(name, info);

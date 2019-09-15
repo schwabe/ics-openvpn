@@ -345,6 +345,10 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         {
             mOpenVPNService.trigger_sso(info);
         }
+        else
+        {
+            VpnStatus.logDebug("Info message from server:" + info);
+        }
     }
 
     private void processLogMessage(String argument) {

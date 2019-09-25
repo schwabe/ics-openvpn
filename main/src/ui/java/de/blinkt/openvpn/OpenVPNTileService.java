@@ -11,6 +11,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import de.blinkt.openvpn.core.ConnectionStatus;
 import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
 import de.blinkt.openvpn.core.OpenVPNService;
+import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
 
@@ -40,7 +42,10 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
         if (bootProfile == null) {
             Toast.makeText(this, R.string.novpn_selected, Toast.LENGTH_SHORT).show();
         } else {
-            if (!isLocked())
+            SharedPreferences prefs = Preferences.getDefaultSharedPreferences(getBaseContext());
+            boolean requireUnlockForTile = prefs.getBoolean("requireunlockfortile", true);
+
+            if (!isLocked() || !requireUnlockForTile)
                 clickAction(bootProfile);
             else
                 unlockAndRun(new Runnable() {

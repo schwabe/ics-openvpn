@@ -39,6 +39,11 @@
                 android:key="clearapi"
                 android:persistent="false"
                 android:title="@string/clear_external_apps"/>
+
+        <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="requireunlockfortile"
+                android:title="@string/requireunlockfortile"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/vpnbehaviour">

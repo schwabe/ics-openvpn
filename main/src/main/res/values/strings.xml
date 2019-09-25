@@ -329,6 +329,7 @@
     <string name="mssfix_dialogtitle">Set MSS of TCP payload</string>
     <string name="client_behaviour">Client behaviour</string>
     <string name="clear_external_apps">Clear allowed external apps</string>
+    <string name="requireunlockfortile">Require unlock to toggle QS Tile</string>
     <string name="loading">Loading…</string>
     <string name="allowed_vpn_apps_info">Allowed VPN apps: %1$s</string>
     <string name="disallowed_vpn_apps_info">Disallowed VPN apps: %1$s</string>

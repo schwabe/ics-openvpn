@@ -422,7 +422,7 @@ Sur certaines images, cette notification joue un son.\nAndroid à introduit ces 
     <string name="connectretrymaxmessage">Entrez le temps maximum entre les tentatives de connexion. OpenVPN va lentement augmenter son temps d\'attente après une tentative de connexion infructueuse jusqu\'à atteindre cette valeur. Par défaut, 300sec.</string>
     <string name="connectretrymaxtitle">Temps maximum entre les tentatives de connexion</string>
     <string name="state_waitconnectretry">%s secondes avant la prochaine tentative de connexion</string>
-    <string name="nought_alwayson_warning"><![CDATA[Si vous n'avez pas reçu de boîte de dialogue de confirmation VPN, \"Toujours sur le VPN\" est activé pour une autre application. Dans ce cas, seule cette application est autorisée à se connecter à un VPN. Vérifiez dans Paramètres-> Réseaux plus .. -> VPNS]]></string>
+    <string name="nought_alwayson_warning"><![CDATA[Si vous n\'avez pas reçu de boîte de dialogue de confirmation VPN, \"Toujours sur le VPN\" est activé pour une autre application. Dans ce cas, seule cette application est autorisée à se connecter à un VPN. Vérifiez dans Paramètres-> Réseaux plus .. -> VPNS]]></string>
     <string name="management_socket_closed">Connexion à OpenVPN fermé (%s)</string>
     <string name="change_sorting">Changer de tri</string>
     <string name="sort">Trier</string>

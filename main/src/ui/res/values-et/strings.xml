@@ -183,6 +183,7 @@
     <string name="show_log_window">Näita logiakent</string>
     <string name="mobile_info">%10$s %9$s töötab seadmel %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">Viga allkirjastamisel Androidi võtmehoidla võtmega %1$s: %2$s</string>
+    <string name="error_extapp_sign">Viga välise autentimisrakendusega allkirjastamisel (%3$s): %1$s: %2$s</string>
     <string name="faq_system_dialogs">VPN ühendumisel ilmub ekraanile hoiatus et see programm võib pealt kuulata kogu võrguliiklust. Tegemist on VPNService API süsteemse hoiatusega et hoida ära väärkasutust.\nVPN ühenduse teatis (Võtme sümbol) on samuti VPNService API poolt kuvatav aktiivse VPN ühenduse indikaator. Mõne süsteemitarkvara puhul võib see indikaator anda märku ka heliga.\nNeed teatised on Androidi süsteemile lisatud teie turvalisuse tagamiseks ja samuti on välistatud nende kasutamisest mööda minemine. (Kahjuks tähendab see seda et mõne süsteemitarkvara puhul kaasneb ühendusega alati ka heliteade)</string>
     <string name="faq_system_dialogs_title">Hoiatused ja helimärguanded ühenduse loomisel</string>
     <string name="translationby">Eesti keelde tõlkis Robert Tiismus</string>
@@ -201,6 +202,7 @@
     <string name="setting_loadtun">Laadi tun moodul</string>
     <string name="importpkcs12fromconfig">Lae PKCS12 OpenVPN konfiguratsioonist Androidi võtmehoidlasse</string>
     <string name="getproxy_error">Viga proxy seadistuste vastuvõtul: %s</string>
+    <string name="using_proxy">Kasutusel proxy %1$s %2$s</string>
     <string name="use_system_proxy">Kasuta süsteemset proxy\'t</string>
     <string name="use_system_proxy_summary">Kasuta ühendumisel süsteemse HTTP/HTTPS proxy konfiguratsiooni.</string>
     <string name="onbootrestartsummary">OpenVPN ühendab määratud VPN kui see oli süsteemi käivitumisel aktiivne. Palun tutvuge, enne Android &lt; 5.0 peal selle võimaluse kasutamist, KKK hoiatusega ühendumise kohta.</string>
@@ -251,6 +253,7 @@
     <string name="state_tcp_connect">Ühendumine (TCP)</string>
     <string name="state_auth_failed">Autentimine ebaõnnestus</string>
     <string name="state_nonetwork">Oodatakse kasutatavat võrku</string>
+    <string name="state_waitorbot">Orboti alguse ootamine</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
     <string name="notifcation_title_notconnect">Pole ühendatud</string>
     <string name="start_vpn_title">Ühendumine VPN %s külge</string>
@@ -322,6 +325,7 @@
     <string name="import_log">Impordi logi:</string>
     <string name="ip_looks_like_subnet">Valitud on \"%3$s\" Vpn topoloogia, kuid ifconfig %1$s %2$s sarnaneb rohkem maskiga IP aadressile. Määratakse \"alamvõrgu\" topoloogia.</string>
     <string name="mssfix_invalid_value">mssfix väärtus peab olema täisarv vahemikus 0 kuni 9000</string>
+    <string name="mtu_invalid_value">MTU alistusväärtus peab olema täisarv vahemikus 64 kuni 9000</string>
     <string name="mssfix_value_dialog">Informeeri tunneldatud TCP sessioone et nad piiraksid saadetavate pakettide suuruse nii, et peale OpenVPN kapseldatud paketi partnerile saatmist ei oleks saadud UDP pakett suurem kui ette antud baitide arv. (vaikeväärtus on 1450)</string>
     <string name="mssfix_checkbox">Ignoreeri TCP lasti MSS väärtust</string>
     <string name="mssfix_dialogtitle">Sea TCP lasti MSS väärtus</string>
@@ -333,6 +337,7 @@
     <string name="app_no_longer_exists">Programm %s on seadmest eemaldatud, see kustutatakse ka lubatud/keelatud programmide nimistust</string>
     <string name="vpn_disallow_radio">VPN on kõigi, välja arvatud märgitud, programmide puhul kasutuses</string>
     <string name="vpn_allow_radio">VPN on kasutuses ainult märgitud programmide puhul</string>
+    <string name="vpn_allow_bypass">Luba rakendustel VPN-st mööda minna</string>
     <string name="query_delete_remote">Kas eemaldada kaugserveri kirje?</string>
     <string name="keep">Säilita</string>
     <string name="delete">Eemalda</string>
@@ -407,6 +412,8 @@
     <string name="samsung_broken_title">Samsungi telefonid</string>
     <string name="novpn_selected">VPN valimata.</string>
     <string name="defaultvpn">Vaikimisi VPN</string>
+    <string name="defaultvpnsummary">VPN-i kasutatakse kohtades, kus vaike VPN-i vajatakse. Need on praegu alglaadimisel, alati sisse lülitatud ja kiirseadete paani jaoks.</string>
+    <string name="vpnselected">Praegu valitud VPN: \'%s\'</string>
     <string name="reconnect">Taasühenda</string>
     <string name="qs_title">VPN lülitamine</string>
     <string name="qs_connect">Ühendu %s külge</string>
@@ -414,7 +421,58 @@
     <string name="connectretrymaxmessage">Sisestage suurim ühendumiskatsete vaheline aeg. OpenVPN tõstab ebaõnnestunud ühendumiskatsete puhul aegamööda ooteaega kuni jõuab selle väärtuseni. Vaikeväärtus on 300s.</string>
     <string name="connectretrymaxtitle">Suurim lubatud ühendumiskatsete vaheline aeg</string>
     <string name="state_waitconnectretry">Ühendumiskatsete vahel oodatakse %ss sekundit</string>
+    <string name="nought_alwayson_warning"><![CDATA[Kui te ei saanud VPN-i kinnitusdialoogi, on teil teise rakenduse jaoks lubatud funktsioon „Alati VPN-is”. Sel juhul lubatakse VPN-iga ühenduse luua ainult sellel rakendusel. Kontrollige jaotist Seaded-> Võrgud veel .. -> VPNS]]></string>
+    <string name="management_socket_closed">Ühendus OpenVPN-iga suletud (%s)</string>
     <string name="change_sorting">Muuda sorteerimist</string>
     <string name="sort">Sorteeri</string>
+    <string name="sorted_lru">Profiilid sorditud viimati kasutatud järgi</string>
+    <string name="sorted_az">Profiilid nime järgi sorteeritud</string>
+    <string name="auth_failed_behaviour">Käitumine AUTH_FAILED</string>
+    <string name="graph">Graafik</string>
+    <string name="use_logarithmic_scale">Kasutage logaritmilist skaalat</string>
+    <string name="notenoughdata">Pole piisavalt andmeid</string>
+    <string name="avghour">Keskmine tunnis</string>
+    <string name="avgmin">Keskmine minutis</string>
     <string name="last5minutes">Viimased 5 minutit</string>
+    <string name="data_in">Sisse</string>
+    <string name="data_out">Välja</string>
+    <string name="bits_per_second">%.0f bitti/s</string>
+    <string name="kbits_per_second">%.1f kbit/s</string>
+    <string name="mbits_per_second">%.1f Mbit/s</string>
+    <string name="gbits_per_second">%.1f Gbit/s</string>
+    <string name="volume_byte">%.0f B</string>
+    <string name="volume_kbyte">%.1f kB</string>
+    <string name="volume_mbyte">%.1f MB</string>
+    <string name="volume_gbyte">%.1f GB</string>
+    <string name="channel_name_background">Ühenduse statistika</string>
+    <string name="channel_description_background">Kehtiv statistika loodud OpenVPN-ühenduse kohta</string>
+    <string name="channel_name_status">Ühenduse oleku muutus</string>
+    <string name="channel_description_status">OpenVPN-ühenduse oleku muutused (ühendamine, autentimine,&#8230;)</string>
+    <string name="weakmd_title">Nõrgad (MD5) räsid sertifikaadi allkirjas (SSL_CTX_use_certificate md on liiga nõrk)</string>
+    <string name="title_activity_open_sslspeed">OpenSSL kiirus test</string>
+    <string name="openssl_cipher_name">OpenSSL šifri nimed</string>
+    <string name="osslspeedtest">OpenSSL krüptokiiruse test</string>
+    <string name="openssl_error">OpenSSL tagastati tõrge</string>
+    <string name="running_test">Jooksukatse&#8230;</string>
+    <string name="test_algoirhtms">Testige valitud algoritme</string>
+    <string name="all_app_prompt">Väline rakendus proovib juhtida %s. Juurdepääsu taotlevat rakendust ei saa kindlaks teha. Selle rakenduse lubamine annab kõigile rakendustele juurdepääsu.</string>
+    <string name="openvpn3_nostatickeys">OpenVPN 3 C ++ teostus ei toeta staatilisi võtmeid. Valige üldseadete alt OpenVPN 2.x.</string>
+    <string name="openvpn3_pkcs12">PKCS12-failide kasutamist otse OpenVPN 3 C ++ rakendusega ei toetata. Importige pkcs12-failid Androidi võtmehoidlasse või vahetage OpenVPN 2.x-i üldiseadete all.</string>
+    <string name="proxy">Puhverserver</string>
+    <string name="Use_no_proxy">Puudub</string>
+    <string name="tor_orbot">Tor (Orbot)</string>
+    <string name="openvpn3_socksproxy">OpenVPN 3 C ++ juurutamine ei toeta ühenduse loomist Socks puhverserveri kaudu</string>
+    <string name="no_orbotfound">Orboti rakendust ei leitud. Installige Orbot või kasutage Socks v5 käsitsi integreerimist.</string>
+    <string name="faq_remote_api_title">Eemalda API</string>
+    <string name="enableproxyauth">Luba puhverserveri autentimine</string>
+    <string name="info_from_server">Teave serverilt: \'%s\'</string>
+    <string name="channel_name_userreq">Vajalik kasutaja suhtlus</string>
+    <string name="channel_description_userreq">OpenVPN-ühendus nõuab kasutaja sisestamist, nt kahe teguri
+        autentimist
+    </string>
+    <string name="openurl_requested">VPN-i autentimise jätkamiseks avage URL</string>
+    <string name="state_auth_pending">Autentimine on ootel</string>
+    <string name="external_authenticator">Väline autentimine</string>
+    <string name="configure">Seadistamine</string>
+    <string name="extauth_not_configured">Väline automaatne generaator pole konfigureeritud</string>
 </resources>

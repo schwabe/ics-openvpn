@@ -202,6 +202,7 @@
     <string name="setting_loadtun">Nahrát tun modul</string>
     <string name="importpkcs12fromconfig">Importovat PKCS12 z konfigurace do Andoidího úložiště</string>
     <string name="getproxy_error">Chyba při zjišťování nastavení proxy: %s</string>
+    <string name="using_proxy">Používám proxy %1$s %2$s</string>
     <string name="use_system_proxy">Použít systémovou proxy</string>
     <string name="use_system_proxy_summary">K připojení použít systémové nastavení pro HTTP/HTTPS.</string>
     <string name="onbootrestartsummary">OpenVPN se automaticky připojí k vybrané VPN po startu systému. Prosím věnujte pozornost upozornění ve FAQ pro verzi Android &lt; 5.0.</string>
@@ -252,6 +253,7 @@
     <string name="state_tcp_connect">Připojuji (TCP)</string>
     <string name="state_auth_failed">Přihlášení nebylo úspěšné</string>
     <string name="state_nonetwork">Čekání na použitelnou síť</string>
+    <string name="state_waitorbot">Čekám, až se spustí Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
     <string name="notifcation_title_notconnect">Nepřipojeno</string>
     <string name="start_vpn_title">Připojování k VPN %s</string>
@@ -335,6 +337,7 @@
     <string name="app_no_longer_exists">Balíček %s již není nainstalován, odstraňuji ho ze seznamu povolených/zakázaných aplikací</string>
     <string name="vpn_disallow_radio">VPN je používaná pro všechny aplikace, kromě</string>
     <string name="vpn_allow_radio">VPN je používaná je pro vybrané aplikace</string>
+    <string name="vpn_allow_bypass">Dovol applikacím obejít VPN</string>
     <string name="query_delete_remote">Odstranit položku vzdáleného serveru?</string>
     <string name="keep">Zachovat</string>
     <string name="delete">Smazat</string>
@@ -430,5 +433,22 @@
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
     <string name="volume_gbyte">%.1f GB</string>
+    <string name="channel_name_background">Statistika o spojení</string>
+    <string name="channel_description_background">Průběžná statistika založeného spojení s OpenVPN</string>
+    <string name="channel_name_status">Změna stavu spojení</string>
+    <string name="channel_description_status">Stav spojení s OpenVPN se mění (Spojuji, ověřuji,&#8230;)</string>
+    <string name="weakmd_title">Slabé (MD5) kontrolní sumy v podpisu certifikátu (SSL_CTX_use_certificate md too weak)</string>
+    <string name="title_activity_open_sslspeed">Rychlostní test OpenSSL</string>
+    <string name="openssl_cipher_name">Jména OpenSSL šifer</string>
+    <string name="osslspeedtest">Rychlostní krypto test OpnSSL</string>
+    <string name="openssl_error">OpenSSL vrátilo chybu</string>
+    <string name="running_test">Test běží&#8230;</string>
+    <string name="test_algoirhtms">Testuj vybrané algoritmy</string>
+    <string name="proxy">Proxy</string>
+    <string name="Use_no_proxy">Bez</string>
     <string name="tor_orbot">Tor (Orbot)</string>
+    <string name="faq_remote_api_title">Vzdálené API</string>
+    <string name="enableproxyauth">Zapni ověření s proxy</string>
+    <string name="info_from_server">Informace ze serveru: \'%s\'</string>
+    <string name="channel_name_userreq">Vstup od uživatele je nutný</string>
 </resources>

@@ -21,7 +21,7 @@
     <string name="ca_title">CA Sertifikası</string>
     <string name="no_certificate">Bir sertifika seçmelisiniz</string>
     <string name="copyright_guicode">Kaynak kodu ve sorun takipçisine http://code.google.com/p/ics-openvpn/ adresinden ulaşabilirsiniz</string>
-    <string name="copyright_others">Bu program, aşağıdaki bileşenleri kullanır; tam bilgi için lisanslardaki kaynak koduna bakın</string>
+    <string name="copyright_others">Bu program aşağıdaki bileşenleri kullanır; lisanslarla ilgili tüm detaylar için kaynak koduna bakın</string>
     <string name="about">Hakkında</string>
     <string name="vpn_list_title">Profiller</string>
     <string name="vpn_type">Tür</string>

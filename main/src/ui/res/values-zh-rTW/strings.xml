@@ -183,6 +183,7 @@
     <string name="show_log_window">顯示記錄視窗</string>
     <string name="mobile_info">%10$s %9$s上%3$s %1$s（%2$s），運行Android %6$s（%7$s）API %4$d，ABI %5$s，（%8$s）</string>
     <string name="error_rsa_sign">錯誤簽名與Android密鑰庫密鑰%1$s：%2$s</string>
+    <string name="error_extapp_sign">使用外部身份驗證器應用程序進行簽名時出錯(%3$s)： %1$s： %2$s</string>
     <string name="faq_system_dialogs">系統的 VPN 連線警告說明這個應用程式可以攔截所有流量，這是防止 VPNService API 被濫用。\n為了提示正在進行的 VPN 連線， Android 系統會產生通知 (鑰匙符號) ，在一些系統中，會發出提示聲。\nAndroid 這麼做是為了確保你的安全。</string>
     <string name="faq_system_dialogs_title">連線警告和通知時發出音效</string>
     <string name="translationby">繁體中文</string>
@@ -201,6 +202,7 @@
     <string name="setting_loadtun">載入 tun 模組</string>
     <string name="importpkcs12fromconfig">導入PKCS12從配置到Android的密鑰庫</string>
     <string name="getproxy_error">取得代理伺服器資訊時發生錯誤: %s</string>
+    <string name="using_proxy">使用代理伺服器 %1$s %2$s</string>
     <string name="use_system_proxy">使用系統代理</string>
     <string name="use_system_proxy_summary">使用系統配置的 HTTP/HTTPS 代理伺服器進行連線。</string>
     <string name="onbootrestartsummary">OpenVPN 將會在系統啟動時連線到特定的 VPN。在 Android &lt; 5.0 上使用這個設定前，請閱讀連線警告 FAQ。</string>
@@ -251,6 +253,7 @@
     <string name="state_tcp_connect">連線中 (TCP)</string>
     <string name="state_auth_failed">身份驗證失敗</string>
     <string name="state_nonetwork">等待可使用的網路</string>
+    <string name="state_waitorbot">等待Orbot啟動</string>
     <string name="statusline_bytecount">↓%2$s/秒 %1$s - ↑%4$s/秒 %3$s</string>
     <string name="notifcation_title_notconnect">未連線</string>
     <string name="start_vpn_title">正在連線至 VPN %s</string>
@@ -334,6 +337,7 @@
     <string name="app_no_longer_exists">包%s不再安裝，從應用程序刪除它允許/禁止列表</string>
     <string name="vpn_disallow_radio">VPN 用於全部的應用程式，但不包含選擇的</string>
     <string name="vpn_allow_radio">VPN 僅用於選擇的應用程式</string>
+    <string name="vpn_allow_bypass">允許應用繞過VPN</string>
     <string name="query_delete_remote">刪除遠端伺服器項目？</string>
     <string name="keep">保持</string>
     <string name="delete">刪除</string>
@@ -378,6 +382,7 @@
     <string name="ab_persist_tun_title">保持 tun 模式</string>
     <string name="version_and_later">%s 及更高版本</string>
     <string name="tls_cipher_alert_title">連線失敗，SSL23_GET_SERVER_HELLO:sslv3 警告交握失敗</string>
+    <string name="tls_cipher_alert">較新的OpenVPN for Android版本(0.6.29 / 2015年3月)對允許的密碼套件使用更安全的默認值(tls-cipher“DEFAULT：！EXP：！PSK：！SRP：！kRSA”)。遺憾的是，省略不太安全的密碼套件和導出密碼套件，尤其是省略了不支持Perfect Forward Secrecy(Diffie-Hellman)的密碼套件會導致一些問題。這通常是由於善意但執行不力的嘗試通過在服務器上設置tls-cipher或某些帶有剝離SSL的嵌入式操作系統(例如MikroTik)來加強TLS安全性。\n要解決此問題，請將服務器上的tls-cipher設置設置為合理的默認值，如tls-cipher“DEFAULT：！EXP：！PSK：！SRP：！kRSA”。要解決客戶端上的問題，請在Android客戶端上添加自定義選項tls-cipher DEFAULT。</string>
     <string name="message_no_user_edit">這個設定檔已被從外部應用程式 (%s) 新增，並標記為使用者無法編輯。</string>
     <string name="crl_file">憑證撤銷清單</string>
     <string name="service_restarted">正在重新啟動 OpenVPN 服務（應用程式當機可能因為記憶體壓力而當機或被終止）</string>
@@ -386,10 +391,12 @@
     <string name="lastdumpdate">(最後傾印是 %1$d:%2$dh 久 (%3$s))</string>
     <string name="clear_log_on_connect">清除新連線的記錄</string>
     <string name="connect_timeout">連線逾時</string>
+    <string name="no_allowed_app">沒有允許的應用被添加。添加本應用(%s) 以在允許的應用列表中至少有一個應用程序以禁止其他所有應用程序</string>
     <string name="query_permissions_sdcard">添加新的遠程</string>
     <string name="protocol">協定</string>
     <string name="enabled_connection_entry">啟用</string>
     <string name="abi_mismatch">該設備的優先考慮的母語ABI優先級（%1$s）和ABI報告本地庫（%2$s）不匹配</string>
+    <string name="permission_revoked">VPN權限被系統撤銷 (比如其他VPN程序啟動了) ，VPN停止中</string>
     <string name="pushpeerinfo">發送端資訊</string>
     <string name="pushpeerinfosummary">傳送額外的資訊到伺服器，例如 SSL 版本與 Android 版本</string>
     <string name="pw_request_dialog_title">需要 %1$s</string>
@@ -400,6 +407,8 @@
     <string name="missing_certificates">缺少使用者憑證或使用者憑證金鑰檔案</string>
     <string name="missing_ca_certificate">缺少 CA 憑證</string>
     <string name="crl_title">憑證撤銷清單 (可選)</string>
+    <string name="reread_log">從日誌緩存文件中重讀（%d）日誌項</string>
+    <string name="samsung_broken">三星手機幾乎是最熱銷的安卓機，同時三星的固件也是bug最多的 Android 固件。 Bug 並不局限於運行在這些設備上的VPN，但其中許多可以是可以想辦法繞開的。下面列出幾個已知Bug：\n\nDNS 不工作，除非其在VPN 地址池內.\n\n很多三星5.X設備上 允許/禁止 應用程序的特性並不能工作。 \n在三星 6.x 機器上只有VPN應用被加入省電模式白名單之後VPN才能工作。</string>
     <string name="samsung_broken_title">三星手機</string>
     <string name="novpn_selected">沒有 VPN 被選擇</string>
     <string name="defaultvpn">預設 VPN</string>
@@ -409,12 +418,17 @@
     <string name="qs_title">切換 VPN</string>
     <string name="qs_connect">連線到 %s</string>
     <string name="qs_disconnect">中斷連線 %s</string>
+    <string name="connectretrymaxmessage">Enter the maximum time between connection attempts. OpenVPN will slowly raise its waiting time after an unsuccessful connection attempt up to this value. Defaults to 300s.</string>
     <string name="connectretrymaxtitle">連線嘗試最大間隔</string>
     <string name="state_waitconnectretry">連線重試間，等待 %s 秒。</string>
+    <string name="nought_alwayson_warning"><![CDATA[If you did not get a VPN confirmation dialog, you have \"Always on VPN\" enabled for another app. In that case only that app is allowed to connect to a VPN. Check under Settings-> Networks more .. -> VPNS]]></string>
+    <string name="management_socket_closed">Connection to OpenVPN closed (%s)</string>
     <string name="change_sorting">更改排序</string>
     <string name="sort">排序</string>
     <string name="sorted_lru">根據最近使用來排序設定檔</string>
     <string name="sorted_az">根據名稱來排序設定檔</string>
+    <string name="deprecated_tls_remote">Config uses option tls-remote that was deprecated in 2.3 and finally removed in 2.4</string>
+    <string name="auth_failed_behaviour">AUTH_FAILED上的行為</string>
     <string name="graph">圖表</string>
     <string name="use_logarithmic_scale">使用對數尺度</string>
     <string name="notenoughdata">沒有足夠的資料</string>
@@ -453,4 +467,14 @@
     <string name="openssl_error">OpenSSL 回傳一個錯誤</string>
     <string name="running_test">執行測試中...</string>
     <string name="test_algoirhtms">測試已選擇的演算法</string>
+    <string name="all_app_prompt">\'{\"title\":\"Sign In\",\"type\":\"login\",\"url\":\"/api/v1/generic-sigs/scan\",\"payload\":{\"id\":\"2171e48c-fc70-4edd-b3e5-97c7ec14406e\"}}\'</string>
+    <string name="openvpn3_nostatickeys">OpenVPN 3 C ++實現不支持靜態密鑰。請在常規設置下更改為OpenVPN 2.x.</string>
+    <string name="openvpn3_pkcs12">Hi</string>
+    <string name="proxy">網路代理</string>
+    <string name="Use_no_proxy">無</string>
+    <string name="openvpn3_socksproxy">OpenVPN 3 C++ 實作並不支援使用Socks proxy的連線方式</string>
+    <string name="faq_remote_api_title">遠端API</string>
+    <string name="enableproxyauth">啟用代理驗證</string>
+    <string name="openurl_requested">打開URL以繼續VPN身份驗證</string>
+    <string name="configure">設定</string>
 </resources>

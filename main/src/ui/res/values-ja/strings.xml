@@ -486,11 +486,11 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
     <string name="volume_gbyte">%.1f GB</string>
-    <string name="channel_name_background">Connection statistics</string>
+    <string name="channel_name_background">接続の統計</string>
     <string name="channel_description_background">確立されたOpenVPN接続の継続的な統計</string>
     <string name="channel_name_status">接続状態の変化</string>
     <string name="channel_description_status">OpenVPN接続の状態変化(接続、認証等)</string>
-    <string name="weakmd_title">証明書の署名は弱いMD5です (SSL_CTX_use_certificate md は弱すぎます)</string>
+    <string name="weakmd_title">証明書の署名は脆弱なMD5です (SSL_CTX_use_certificate md は弱すぎます)</string>
     <string name="title_activity_open_sslspeed">OpenSSLスピードテスト</string>
     <string name="openssl_cipher_name">OpenSSLの暗号名</string>
     <string name="osslspeedtest">OpenSSLの暗号化スピードテスト</string>
@@ -503,7 +503,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="proxy">プロキシ</string>
     <string name="Use_no_proxy">使用しない</string>
     <string name="tor_orbot">Tor (Orbot)</string>
-    <string name="openvpn3_socksproxy">OpenVPN 3 C ++実装は、Socksプロキシ経由の接続をサポートしません</string>
+    <string name="openvpn3_socksproxy">OpenVPN 3 C++実装は、Socksプロキシ経由の接続をサポートしません</string>
     <string name="no_orbotfound">Orbotアプリが見つかりません。Orbotをインストールするか手動Socks v5統合を使用してください</string>
     <string name="faq_remote_api_title">リモートAPI</string>
     <string name="faq_remote_api">OpenVPN for Androidは2つのリモートAPIをサポートします。AIDLによる洗練されたAPI(gitリポジトリのremoteEXample)およびIntentを使用したシンプルなものです。&lt;p&gt;adbシェルとIntentを使用した例です。profilenameをあなたのプロファイル名に置き換えてください。&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>

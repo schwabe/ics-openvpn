@@ -183,6 +183,7 @@
     <string name="show_log_window">Toon logboekvenster</string>
     <string name="mobile_info">%10$s %9$s draait op %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">Fout bij het ondertekenen met Android keystore sleutel %1$s: %2$s</string>
+    <string name="error_extapp_sign">Fout bij ondertekening met externe authenticator-app (%3$s): %1$s: %2$s</string>
     <string name="faq_system_dialogs">De VPN-verbindingswaarschuwing die aangeeft dat deze app al het verkeer kan onderscheppen, wordt door het systeem opgelegd om misbruik van de VPNService-API te voorkomen.\nDe VPN-verbindingsmelding (het sleutelsymbool) wordt ook door het Android-systeem opgelegd om een ​​actieve VPN-verbinding te signaleren. Op sommige ROM\'s speelt deze melding een geluid af.\nAndroid heeft deze systeemdialogen voor uw eigen veiligheid geïntroduceerd en ervoor gezorgd dat deze niet kunnen worden omzeild. (Bij sommige ROM\'s bevat dit helaas een meldingsgeluid)</string>
     <string name="faq_system_dialogs_title">Verbindingswaarschuwing en meldingsgeluid</string>
     <string name="translationby">Nederlandse vertaling door de gebruikers op crowdin.com</string>
@@ -252,6 +253,7 @@
     <string name="state_tcp_connect">Bezig met verbinden (TCP)</string>
     <string name="state_auth_failed">Authenticeren mislukt</string>
     <string name="state_nonetwork">Wachten op bruikbaar netwerk</string>
+    <string name="state_waitorbot">Wachten op Orbot om te starten</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
     <string name="notifcation_title_notconnect">Niet verbonden</string>
     <string name="start_vpn_title">Verbinden met VPN %s</string>
@@ -335,6 +337,7 @@
     <string name="app_no_longer_exists">Pakket %s is niet meer geïnstalleerd en wordt verwijderd uit de lijst met toegestane/niet toegestane apps</string>
     <string name="vpn_disallow_radio">VPN wordt gebruikt voor alle apps, maar exclusief geselecteerd</string>
     <string name="vpn_allow_radio">VPN wordt alleen voor geselecteerde apps gebruikt</string>
+    <string name="vpn_allow_bypass">Toestaan dat apps de VPN omzeilen</string>
     <string name="query_delete_remote">Externe server verwijderen?</string>
     <string name="keep">Houden</string>
     <string name="delete">Verwijderen</string>
@@ -467,4 +470,20 @@
     <string name="proxy">Proxy</string>
     <string name="Use_no_proxy">Geen</string>
     <string name="tor_orbot">Tor (Orbot)</string>
+    <string name="openvpn3_socksproxy">OpenVPN 3 C ++ -implementatie ondersteunt geen verbinding via Socks-proxy</string>
+    <string name="no_orbotfound">Orbot-applicatie kan niet worden gevonden. Installeer Orbot of gebruik handmatige Socks v5-integratie.</string>
+    <string name="faq_remote_api_title">Remote API</string>
+    <string name="faq_remote_api">OpenVPN voor Android ondersteunt twee externe API\'s, een geavanceerde API met AIDL (remote EXample in de git-repository) en een eenvoudige met Intents. &lt;p&gt;Voorbeelden met behulp van adb shell en de intenties. Vervang profilname door je profielnaam&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn /.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn /.api.ConnectVPN</string>
+    <string name="enableproxyauth">Schakel proxyverificatie in</string>
+    <string name="error_orbot_and_proxy_options">Kan niet tegelijkertijd extra http-proxy-option statement en Orbot-integratie gebruikenO</string>
+    <string name="info_from_server">Info van server: \'%s\'</string>
+    <string name="channel_name_userreq">Gebruikersinteractie vereist</string>
+    <string name="channel_description_userreq">OpenVPN-verbinding vereist een gebruikersinvoer, bijvoorbeeld twee factor
+        authenticatie
+    </string>
+    <string name="openurl_requested">Open URL om door te gaan met VPN-authenticatie</string>
+    <string name="state_auth_pending">Verificatie is in behandeling</string>
+    <string name="external_authenticator">Externe Authenticator</string>
+    <string name="configure">Configureren</string>
+    <string name="extauth_not_configured">Externe Authneticator niet geconfigureerd</string>
 </resources>

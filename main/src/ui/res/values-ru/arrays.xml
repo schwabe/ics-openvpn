@@ -9,7 +9,7 @@
     <string-array name="vpn_types">
         <item>Сертификаты</item>
         <item>Файл PKCS12</item>
-        <item>Сертификат Андроид-устройства</item>
+        <item>Сертификат Android</item>
         <item>Логин/Пароль</item>
         <item>Статичные ключи</item>
         <item>Логин/пароль + Сертификаты</item>

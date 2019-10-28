@@ -15,7 +15,7 @@
         <item>Bruger/adgangskode + certifikater</item>
         <item>Bruger/adgangskode + PKCS12 </item>
         <item>Bruger/adgangskode + Android</item>
-        <item>Ekstern autorisationsudbyder</item>
+        <item>Ekstern godkendelsesudbyder</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">0</item>

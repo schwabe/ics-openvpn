@@ -79,7 +79,7 @@
     <string name="override_dns">Menimpa pengaturan DNS oleh Server</string>
     <string name="dns_override_summary">Gunakan server DNS pribadi</string>
     <string name="searchdomain">cari domain</string>
-    <string name="dns1_summary">Server DNS yang akan digunakan</string>
+    <string name="dns1_summary">Server DNS yang akan digunakan.</string>
     <string name="dns_server">Server DNS</string>
     <string name="secondary_dns_message">Server DNS sekunder digunakan jika Server DNS yang normal tidak dapat dicapai.</string>
     <string name="backup_dns">Server DNS cadangan</string>
@@ -283,6 +283,7 @@
     <string name="clearappsdialog">Hapus daftar aplikasi eksternal yang dibolehkan? \nDaftar apps yang dibolehkan terkini:\n\n%s </string>
     <string name="screenoff_summary">\"Pause VPN ketika layar off dan data yang ditransfer dalam 60 detik kurang dari 64kB. Ketika opsi \"Persistent Tun\" diaktifkan, memberhentikan VPN akan membuat perangkat Anda tidak memiliki koneksi jaringan. Jika tidak memakai \"Persistent Tun\" maka perangkat akan menampilkan Tidak ada koneksi VPN.</string>
     <string name="screenoff_title">Sambungan VPN jeda setelah layar mati</string>
+    <string name="screenoff_pause">Pausing connection in screen off state: less than %1$s in %2$ss</string>
     <string name="screen_nopersistenttun">Peringatan: Pemaksaan tun tidak diaktifkan untuk VPN ini. Lalu lintas akan menggunakan koneksi Internet normal ketika layar dimatikan.</string>
     <string name="save_password">Menyimpan sandi</string>
     <string name="pauseVPN">Jeda VPN</string>
@@ -459,5 +460,10 @@
     <string name="channel_description_background">Statistik yang sedang berlangsung dari koneksi OpenVPN yang sudah ada</string>
     <string name="channel_name_status">Perubahan status koneksi</string>
     <string name="channel_description_status">Perubahan status koneksi OpenVPN (Menghubungkan, mengautentikasi,...)</string>
+    <string name="weakmd_title">Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)</string>
     <string name="title_activity_open_sslspeed">Tes Kecepatan OpenSSL</string>
+    <string name="openssl_cipher_name">OpenSSL cipher names</string>
+    <string name="osslspeedtest">OpenSSL Crypto Speed test</string>
+    <string name="test_algoirhtms">Uji algoritma yang dipilih</string>
+    <string name="openvpn3_socksproxy">Implementasi OpenVPN 3 C ++ tidak mendukung menghubungkan melalui proxy kaus kaki</string>
 </resources>

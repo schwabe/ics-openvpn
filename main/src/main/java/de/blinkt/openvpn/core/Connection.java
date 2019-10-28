@@ -54,11 +54,14 @@ public class Connection implements Serializable, Cloneable {
             cfg += String.format(Locale.US, " connect-timeout  %d\n", mConnectTimeout);
 
         // OpenVPN 2.x manages proxy connection via management interface
-        if (isOpenVPN3 && mProxyType == ProxyType.HTTP)
+        if ((isOpenVPN3 || usesExtraProxyOptions()) && mProxyType == ProxyType.HTTP)
         {
             cfg+=String.format(Locale.US,"http-proxy %s %s\n", mProxyName, mProxyPort);
             if (mUseProxyAuth)
                 cfg+=String.format(Locale.US, "<http-proxy-user-pass>\n%s\n%s\n</http-proxy-user-pass>\n", mProxyAuthUser, mProxyAuthPassword);
+        }
+        if (usesExtraProxyOptions() && mProxyType == ProxyType.SOCKS5) {
+            cfg+=String.format(Locale.US,"socks-proxy %s %s\n", mProxyName, mProxyPort);
         }
 
         if (!TextUtils.isEmpty(mCustomConfiguration) && mUseCustomConfig) {
@@ -69,6 +72,11 @@ public class Connection implements Serializable, Cloneable {
 
         return cfg;
     }
+
+    public boolean usesExtraProxyOptions() {
+        return (mUseCustomConfig && mCustomConfiguration.contains("http-proxy-option "));
+    }
+
 
     @Override
     public Connection clone() throws CloneNotSupportedException {

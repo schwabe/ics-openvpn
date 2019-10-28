@@ -13,6 +13,12 @@ OPTION(ENABLE_PROGRAMS "" OFF)
 OPTION(USE_SHARED_MBEDTLS_LIBRARY "" OFF)
 OPTION(ENABLE_TESTING ""  OFF)
 
+# Own options
+OPTION(OPENVPN2MBED "Use mbed TLS for OpenVPN2" OFF)
+OPTION(OPENVPN3OSSL "Use OpenSSL for OpenVPN3" ON)
+SET(OPENVPN3OSSL ON)
+
+
 #add_subdirectory(lzo)
 include(tools.cmake)
 include(lzo.cmake)
@@ -22,7 +28,7 @@ include(openssl.cmake)
 # Super hacky way to determine flavour
 #-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/arne/software/icsopenvpn/main/build/intermediates/cmake/normal/debug/obj/arm64-v8a
 if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*noovpn3.*/")
-    FIND_PACKAGE(SWIG 3.0)
+    FIND_PACKAGE(SWIG 3.0 REQUIRED)
 
     add_subdirectory(mbedtls)
     add_custom_command(OUTPUT "ovpncli_wrap.cxx"
@@ -58,24 +64,38 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*n
       ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls/include
       )
 
-    target_compile_options(ovpn3 PRIVATE  -std=c++1y)
+	if (${OPENVPN3OSSL})
+		target_compile_definitions(ovpn3 PRIVATE
+				-DUSE_OPENSSL
+				)
+		target_link_libraries(ovpn3 crypto ssl lzo lz4)
+	else()
+		target_compile_definitions(ovpn3 PRIVATE
+				-DUSE_MBEDTLS
+				)
+		target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo lz4)
+	endif()
+
+    target_compile_options(ovpn3 PRIVATE -std=c++1y)
     target_compile_definitions(ovpn3 PRIVATE
       -DHAVE_CONFIG_H
       -DHAVE_LZO
       -DHAVE_LZ4
       -DASIO_STANDALONE
       -DUSE_ASIO
-      -DUSE_MBEDTLS
       -DGIT_VERSION_STRING=\"${OPENVPN3_GIT}\"
       -DNO_ROUTE_EXCLUDE_EMULATION
+      -DOPENVPN_SHOW_SESSION_TOKEN
       )
-    target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo lz4)
 else()
     message ("Not budiling OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 endif()
 
 add_library(opvpnutil SHARED opvpnutil/jniglue.c opvpnutil/scan_ifs.c opvpnutil/sslspeed.c)
-target_compile_definitions(opvpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\")
+target_compile_definitions(opvpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\"
+		-DOPENVPN2_GIT_REVISION=\"${OPENVPN2_GIT}\"
+		-DOPENVPN3_GIT_REVISION=\"${OPENVPN3_GIT}\"
+		)
 target_link_libraries(opvpnutil log crypto ssl)
 
 # The magic Jellybean keystore signing hack. Beware dragons and dlsyms magic ahead
@@ -145,7 +165,8 @@ set(openvpn_srcs
 	src/openvpn/ps.c 
 	src/openvpn/push.c 
 	src/openvpn/reliable.c 
-	src/openvpn/route.c 
+	src/openvpn/route.c
+	src/openvpn/run_command.c
 	src/openvpn/schedule.c 
 	src/openvpn/session_id.c 
 	src/openvpn/shaper.c 
@@ -166,16 +187,18 @@ set(openvpn_srcs
 	src/openvpn/compstub.c 
     )
 
-PREPEND(openvpn_srcs_with_path "openvpn" ${openvpn_srcs})  
+PREPEND(openvpn_srcs_with_path "openvpn" ${openvpn_srcs})
+
 add_library(openvpn SHARED ${openvpn_srcs_with_path})
+
 target_include_directories(openvpn PRIVATE
   openvpn-config
   openvpn/src/compat
   openvpn/include
+  mbedtls/include
   lzo/include
   openvpn
   )
-
 target_compile_definitions(openvpn PRIVATE
   -DHAVE_CONFIG_H
   -DCONFIGURE_GIT_REVISION=\"${OPENVPN2_GIT}\"
@@ -183,10 +206,17 @@ target_compile_definitions(openvpn PRIVATE
   -DTARGET_ABI=\"${ANDROID_ABI}\"
   )
 
+if (${OPENVPN2MBED})
+target_compile_definitions(openvpn PRIVATE
+  -DENABLE_CRYPTO_MBEDTLS=1
+  )
+	target_link_libraries(openvpn mbedtls mbedx509 mbedcrypto lzo)
+else()
 target_compile_definitions(openvpn PRIVATE
   -DENABLE_CRYPTO_OPENSSL=1
   )
-target_link_libraries(openvpn crypto ssl lzo)
+	target_link_libraries(openvpn crypto ssl lzo)
+endif()
 
 add_executable(pie_openvpn.${ANDROID_ABI} minivpn/minivpn.c)
 target_compile_options(pie_openvpn.${ANDROID_ABI} PRIVATE -fPIE)

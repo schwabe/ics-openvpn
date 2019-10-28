@@ -31,3 +31,15 @@ jstring Java_de_blinkt_openvpn_core_NativeUtils_getJNIAPI(JNIEnv *env, jclass jo
 
     return (*env)->NewStringUTF(env, TARGET_ARCH_ABI);
 }
+
+jstring Java_de_blinkt_openvpn_core_NativeUtils_getOpenVPN2GitVersion(JNIEnv *env, jclass jo)
+{
+
+  return (*env)->NewStringUTF(env, OPENVPN2_GIT_REVISION);
+}
+
+jstring Java_de_blinkt_openvpn_core_NativeUtils_getOpenVPN3GitVersion(JNIEnv *env, jclass jo)
+{
+
+  return (*env)->NewStringUTF(env, OPENVPN3_GIT_REVISION);
+}

@@ -203,8 +203,11 @@ public class FileSelectionFragment extends ListFragment {
 
         // add default locations
         for (String dir: getExternalStorages()) {
-            dirsMap.put(dir, dir);
-            dirsPathMap.put(dir, dir);
+            // You got to love the P8 Lite to have null in this list ....
+            if (dir!=null) {
+                dirsMap.put(dir, dir);
+                dirsPathMap.put(dir, dir);
+            }
         }
 
         for (File file : files) {
@@ -288,6 +291,8 @@ public class FileSelectionFragment extends ListFragment {
             file = parentFile;
         }
     }
+
+
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {

@@ -173,7 +173,6 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
                 vp.mProfileCreator = callingApp;
 
-
                 /*int needpw = vp.needUserPWInput(false);
                 if(needpw !=0)
                     throw new RemoteException("The inline file would require user input: " + getString(needpw));

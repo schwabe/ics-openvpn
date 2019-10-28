@@ -18,6 +18,7 @@ import android.support.v4n.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.widget.Toast;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
@@ -83,6 +84,11 @@ public class VPNPreferences extends BaseActivity {
 			setResult(VPNProfileList.RESULT_VPN_DELETED);
 			finish();
 		}
+		if (mProfile.mTemporaryProfile)
+        {
+            Toast.makeText(this, "Temporary profiles cannot be edited", Toast.LENGTH_LONG);
+            finish();
+        }
 	}
 
     private void getProfile() {

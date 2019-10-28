@@ -1,0 +1,62 @@
+/*
+ * Copyright (c) 2012-2018 Arne Schwabe
+ * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+ */
+
+apply plugin: 'com.android.application'
+
+repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
+    maven { url 'https://maven.google.com' }
+}
+
+ext {
+    bouncycastleVersion = '1.49'
+}
+
+android {
+    compileSdkVersion 27
+
+
+    defaultConfig {
+        applicationId "de.blinkt.externalcertprovider"
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+    // This is just a demo package, don't care about it being perfect
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation (
+    //'org.bouncycastle:bcprov-jdk15on:'  + bouncycastleVersion,
+    //'org.bouncycastle:bcprov-ext-jdk15on:' + bouncycastleVersion,
+    //'org.bouncycastle:bcpkix-jdk15on:' + bouncycastleVersion,
+    'org.bouncycastle:bcmail-jdk15on:' + bouncycastleVersion,
+    //'org.bouncycastle:bcpg-jdk15on:' + bouncycastleVersion
+    )
+
+    testImplementation 'junit:junit:4.12'
+}

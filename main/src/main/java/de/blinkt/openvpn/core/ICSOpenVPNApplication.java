@@ -19,7 +19,10 @@ import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 */
 
+import android.os.StrictMode;
+import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.api.AppRestrictions;
 
 public class ICSOpenVPNApplication extends Application {
     private StatusListener mStatus;
@@ -36,6 +39,22 @@ public class ICSOpenVPNApplication extends Application {
             createNotificationChannels();
         mStatus = new StatusListener();
         mStatus.init(getApplicationContext());
+
+        if (BuildConfig.BUILD_TYPE.equals("debug"))
+            enableStrictModes();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AppRestrictions.getInstance(this).checkRestrictions(this);
+        }
+    }
+
+    private void enableStrictModes() {
+        StrictMode.VmPolicy policy = new StrictMode.VmPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .penaltyDeath()
+                .build();
+        StrictMode.setVmPolicy(policy);
 
     }
 
@@ -65,6 +84,16 @@ public class ICSOpenVPNApplication extends Application {
         mChannel.enableLights(true);
 
         mChannel.setLightColor(Color.BLUE);
+        mNotificationManager.createNotificationChannel(mChannel);
+
+
+        // Urgent requests, e.g. two factor auth
+        name = getString(R.string.channel_name_userreq);
+        mChannel = new NotificationChannel(OpenVPNService.NOTIFICATION_CHANNEL_USERREQ_ID,
+                name, NotificationManager.IMPORTANCE_HIGH);
+        mChannel.setDescription(getString(R.string.channel_description_userreq));
+        mChannel.enableVibration(true);
+        mChannel.setLightColor(Color.CYAN);
         mNotificationManager.createNotificationChannel(mChannel);
     }
 }

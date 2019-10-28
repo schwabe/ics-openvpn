@@ -169,10 +169,10 @@ public class FileSelectLayout extends LinearLayout implements OnClickListener {
                 startFilePicker = Utils.getFilePickerIntent(getContext(), fileType);
             }
 
-            if (startFilePicker != null) {
-                mFragment.startActivityForResult(startFilePicker, mTaskId);
-            } else {
+            if (startFilePicker == null || Utils.alwaysUseOldFileChooser(v.getContext())) {
                 getCertificateFileDialog();
+            } else {
+                mFragment.startActivityForResult(startFilePicker, mTaskId);
             }
         } else if (v == mShowClearButton) {
             setData(null, getContext());

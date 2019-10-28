@@ -14,6 +14,11 @@ class CIDRIP {
 
     public CIDRIP(String ip, String mask) {
         mIp = ip;
+        len = calculateLenFromMask(mask);
+
+    }
+
+    public static int calculateLenFromMask(String mask) {
         long netmask = getInt(mask);
 
         // Add 33. bit to ensure the loop terminates
@@ -24,6 +29,7 @@ class CIDRIP {
             lenZeros++;
             netmask = netmask >> 1;
         }
+        int len;
         // Check if rest of netmask is only 1s
         if (netmask != (0x1ffffffffl >> lenZeros)) {
             // Asume no CIDR, set /32
@@ -31,7 +37,7 @@ class CIDRIP {
         } else {
             len = 32 - lenZeros;
         }
-
+        return len;
     }
 
     public CIDRIP(String address, int prefix_length) {

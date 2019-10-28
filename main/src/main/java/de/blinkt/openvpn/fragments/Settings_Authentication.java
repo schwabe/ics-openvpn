@@ -186,7 +186,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 
     void startFileDialog() {
         Intent startFC = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && ! Utils.alwaysUseOldFileChooser(getActivity())) {
             startFC = Utils.getFilePickerIntent(getActivity(), Utils.FileType.TLS_AUTH_FILE);
             startActivityForResult(startFC, SELECT_TLS_FILE_KITKAT);
         }
@@ -209,7 +209,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode== SELECT_TLS_FILE_LEGACY_DIALOG && resultCode == Activity.RESULT_OK){
+		if(requestCode == SELECT_TLS_FILE_LEGACY_DIALOG && resultCode == Activity.RESULT_OK){
 			String result = data.getStringExtra(FileSelect.RESULT_DATA);
 			mTlsAuthFileData=result;
 			setTlsAuthSummary(result);

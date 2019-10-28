@@ -300,6 +300,8 @@ public class VpnStatus {
                 return R.string.state_resolve;
             case "TCP_CONNECT":
                 return R.string.state_tcp_connect;
+            case "AUTH_PENDING":
+                return R.string.state_auth_pending;
             default:
                 return R.string.unknown_state;
         }
@@ -323,7 +325,7 @@ public class VpnStatus {
 
     private static ConnectionStatus getLevel(String state) {
         String[] noreplyet = {"CONNECTING", "WAIT", "RECONNECTING", "RESOLVE", "TCP_CONNECT"};
-        String[] reply = {"AUTH", "GET_CONFIG", "ASSIGN_IP", "ADD_ROUTES"};
+        String[] reply = {"AUTH", "GET_CONFIG", "ASSIGN_IP", "ADD_ROUTES", "AUTH_PENDING"};
         String[] connected = {"CONNECTED"};
         String[] notconnected = {"DISCONNECTED", "EXITING"};
 
@@ -385,7 +387,7 @@ public class VpnStatus {
         for (StateListener sl : stateListener) {
             sl.updateState(state, msg, resid, level);
         }
-        newLogItem(new LogItem((LogLevel.DEBUG), String.format("New OpenVPN Status (%s->%s): %s",state,level.toString(),msg)));
+        //newLogItem(new LogItem((LogLevel.DEBUG), String.format("New OpenVPN Status (%s->%s): %s",state,level.toString(),msg)));
     }
 
     public static void logInfo(String message) {

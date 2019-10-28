@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2012-2018 Arne Schwabe
+  ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+          package="de.blinkt.externalcertprovider">
+
+
+    <application
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+    >
+
+        <!--
+             OpenVPN for android will search for all application that have a activity that fulfils this
+             intent. It will be called when the user presses the select button and should return the selected
+             alias in the android.security.extra.KEY_ALIAS extra on setResult.
+
+             the already selected alias will be provided in the extra android.security.extra.KEY_ALIAS
+             if applicable
+        -->
+        <activity android:name=".SelectCertificateActivity"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="de.blinkt.openvpn.api.ExternalCertificateConfiguration"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <service
+                android:name=".ExternalCertService"
+                tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="de.blinkt.openvpn.api.ExternalCertificateProvider"/>
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

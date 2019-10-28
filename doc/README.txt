@@ -15,10 +15,11 @@ See the file todo.txt for ideas/not-yet-implemented features (and the bug tracke
 
 Build instructions:
 
-- Install sdk, ndk, cmake (e.g. with Android studio), swig (3.0+)
+- Install sdk, ndk, cmake (e.g. with Android studio), swig (3.0+), on
+  Windows perl might be needed for mbedtls
 
-Fetch the git submodules (the default urls for the submodules use ssh,
-set up your own GitHub ssh key or change the url to http in .gitmodules):
+Fetch the git submodules (the default urls for the submodules work as
+long as the main repo url is on github):
 
   git submodule init
   git submodule update

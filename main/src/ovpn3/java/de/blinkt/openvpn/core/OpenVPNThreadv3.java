@@ -1,28 +1,19 @@
 package de.blinkt.openvpn.core;
 
-import net.openvpn.ovpn3.ClientAPI_Config;
-import net.openvpn.ovpn3.ClientAPI_EvalConfig;
-import net.openvpn.ovpn3.ClientAPI_Event;
-import net.openvpn.ovpn3.ClientAPI_ExternalPKICertRequest;
-import net.openvpn.ovpn3.ClientAPI_ExternalPKISignRequest;
-import net.openvpn.ovpn3.ClientAPI_LogInfo;
-import net.openvpn.ovpn3.ClientAPI_OpenVPNClient;
-import net.openvpn.ovpn3.ClientAPI_ProvideCreds;
-import net.openvpn.ovpn3.ClientAPI_Status;
-import net.openvpn.ovpn3.ClientAPI_TransportStats;
-
-import java.lang.Override;
-
-import de.blinkt.openvpn.VpnProfile;
-
 import android.content.Context;
+import de.blinkt.openvpn.R;
+import de.blinkt.openvpn.VpnProfile;
+import net.openvpn.ovpn3.*;
+
+import net.openvpn.ovpn3.ClientAPI_OpenVPNClient;
+
+import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.copyright;
+import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.init_process;
+import static net.openvpn.ovpn3.ClientAPI_OpenVPNClient.platform;
 
 public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable, OpenVPNManagement {
 
 	static {
-		/*System.loadLibrary("crypto");
-		System.loadLibrary("ssl");*/
-        //System.loadLibrary("polarssl-dynamic");
 		System.loadLibrary("ovpn3");
 	}
 
@@ -74,7 +65,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		if(status.getError()) {
             VpnStatus.logError(String.format("connect() error: %s: %s",status.getStatus(),status.getMessage()));
 		} else {
-            VpnStatus.logDebug("OpenVPN3 thread finished");
+			VpnStatus.updateStateString("NOPROCESS", "OpenVPN3 thread finished", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
 		}
 		statuspoller.stop();
 	}
@@ -164,8 +155,12 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
     }
 
 
-    @Override
+	final static long EmulateExcludeRoutes = (1 << 16);
+
+	@Override
     public boolean tun_builder_reroute_gw(boolean ipv4, boolean ipv6, long flags) {
+		if ((flags & EmulateExcludeRoutes) != 0)
+			return true;
 		if (ipv4)
 			mService.addRoute("0.0.0.0", "0.0.0.0", "127.0.0.1", OpenVPNService.VPNSERVICE_TUN);
 
@@ -188,7 +183,9 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         config.setGuiVersion(mVp.getVersionEnvString(mService));
         //config.setPlatformVersion(mVp.getPlatformVersionEnvString());
 		config.setExternalPkiAlias("extpki");
-		config.setCompressionMode("yes");
+		config.setCompressionMode("asym");
+		config.setInfo(true);
+		config.setAllowLocalLanAccess(mVp.mAllowLocalLAN);
 
 		ClientAPI_EvalConfig ec = eval_config(config);
 		if(ec.getExternalPki()) {
@@ -203,10 +200,11 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 		}
 	}
 
+
 	@Override
 	public void external_pki_cert_request(ClientAPI_ExternalPKICertRequest certreq) {
         VpnStatus.logDebug("Got external PKI certificate request from OpenVPN core");
-		String[] ks = mVp.getKeyStoreCertificates((Context) mService);
+		String[] ks = mVp.getExternalCertificates(mService);
 		if(ks==null) {
 			certreq.setError(true);
 			certreq.setErrorText("Error in pki cert request");
@@ -224,8 +222,15 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public void external_pki_sign_request(ClientAPI_ExternalPKISignRequest signreq) {
-		VpnStatus.logDebug("Got external PKI signing request from OpenVPN core");
-		signreq.setSig(mVp.getSignedData(signreq.getData()));
+		VpnStatus.logDebug("Got external PKI signing request from OpenVPN core for algorithm " + signreq.getPadding());
+		boolean pkcs1padding;
+		if (signreq.getPadding().equals("RSA_PKCS1_PADDING"))
+			pkcs1padding = true;
+		else if (signreq.getPadding().equals("RSA_NO_PADDING"))
+			pkcs1padding = false;
+		else
+			throw new IllegalArgumentException("Illegal padding in sign request" + signreq.getPadding());
+		signreq.setSig(mVp.getSignedData(mService, signreq.getData(), pkcs1padding));
 	}
 
 	void setUserPW() {
@@ -239,7 +244,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	}
 
 	@Override
-	public boolean socket_protect(int socket) {
+	public boolean socket_protect(int socket, String remote, boolean ipv6) {
 		boolean b= mService.protect(socket);
 		return b;
 
@@ -278,9 +283,29 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
 	@Override
 	public void event(ClientAPI_Event event) {
-		VpnStatus.updateStateString(event.getName(), event.getInfo());
+		String name = event.getName();
+		String info = event.getInfo();
+		if (name.equals("INFO")) {
+			VpnStatus.logInfo(R.string.info_from_server, info);
+			if (info.startsWith("OPEN_URL:"))
+			{
+				mService.trigger_url_open(info);
+			}
+		} else{
+			VpnStatus.updateStateString(name, info);
+		}
 		if(event.getError())
-            VpnStatus.logError(String.format("EVENT(Error): %s: %s",event.getName(),event.getInfo()));
+            VpnStatus.logError(String.format("EVENT(Error): %s: %s", name, info));
+	}
+
+	@Override
+	public net.openvpn.ovpn3.ClientAPI_StringVec tun_builder_get_local_networks(boolean ipv6)
+	{
+
+		net.openvpn.ovpn3.ClientAPI_StringVec nets = new net.openvpn.ovpn3.ClientAPI_StringVec();
+		for (String net: NetworkUtils.getLocalNetworks(mService, ipv6))
+			nets.add(net);
+		return nets;
 	}
 
 
@@ -311,5 +336,6 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 	public void pause(pauseReason reason) {
 		super.pause(reason.toString());
 	}
+
 
 }

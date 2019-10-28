@@ -5,11 +5,17 @@
 
 package de.blinkt.openvpn.activities;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.UiModeManager;
+import android.content.Context;
+import android.content.RestrictionsManager;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.view.Window;
+import de.blinkt.openvpn.api.AppRestrictions;
 
 public class BaseActivity extends Activity {
     private boolean isAndroidTV() {
@@ -23,5 +29,15 @@ public class BaseActivity extends Activity {
             requestWindowFeature(Window.FEATURE_OPTIONS_PANEL);
         }
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 }

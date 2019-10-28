@@ -6,8 +6,10 @@
 package de.blinkt.openvpn.fragments;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
@@ -25,6 +27,7 @@ import java.util.TreeSet;
 import java.util.Vector;
 
 import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.core.Preferences;
 
 public class Utils {
 
@@ -148,6 +151,12 @@ public class Utils {
         return i;
     }
 
+    public static boolean alwaysUseOldFileChooser(Context c)
+    {
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
+
+        return prefs.getBoolean("useInternalFileSelector", false);
+    }
 
     public static boolean isIntentAvailable(Context context, Intent i) {
         final PackageManager packageManager = context.getPackageManager();

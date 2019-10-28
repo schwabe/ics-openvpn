@@ -23,7 +23,7 @@
             android:title="OpenVPN 3 Core"/>
 
 
-        <ListPreference
+        <de.blinkt.openvpn.views.DefaultVPNListPreference
             android:key="alwaysOnVpn"
             android:title="@string/defaultvpn"
             tools:summary="@string/defaultvpnsummary"
@@ -79,6 +79,12 @@
                 android:key="loadTunModule"
                 android:summary="@string/setting_loadtun_summary"
                 android:title="@string/setting_loadtun"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:title="Use internal file browser"
+            android:summary="Always use the very basic file browser instead of the Android file browser. Use this option if you have problems selecting files."
+            android:key="useInternalFileSelector">
+        </CheckBoxPreference>
     </PreferenceCategory>
 
 </PreferenceScreen>

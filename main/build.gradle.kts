@@ -46,8 +46,8 @@ android {
     defaultConfig {
         minSdkVersion(14)
         targetSdkVersion(29)  //'Q'.toInt()
-        versionCode = 161
-        versionName = "0.7.8"
+        versionCode = 163
+        versionName = "0.7.10"
 
         externalNativeBuild {
             cmake {
@@ -167,7 +167,8 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
 
     testImplementation("junit:junit:4.12")
-    testImplementation("org.mockito:mockito-core:3.0.0")
-    testImplementation("org.robolectric:robolectric:4.3")
+    testImplementation("org.mockito:mockito-core:3.1.0")
+    testImplementation("org.robolectric:robolectric:4.3.1")
+    implementation("androidx.core:core:1.1.0")
 }
 

@@ -22,7 +22,7 @@
         <item translatable="false">1</item>
         <item>未指定</item>
         <item>暗号化(tls-crypt)</item>
-        <item>TLS Crypt V2</item>
+        <item>TLS 暗号化 V2</item>
     </string-array>
     <string-array name="crm_entries">
         <item>再接続を試行しない</item>

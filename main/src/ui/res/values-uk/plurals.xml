@@ -19,4 +19,10 @@
         <item quantity="many">Залишилося% d годин</item>
         <item quantity="other">Залишилося% d годин</item>
     </plurals>
+    <plurals name="minutes_left">
+        <item quantity="one">Залишилося одну хвилину</item>
+        <item quantity="few">Залишилося %d хвилин</item>
+        <item quantity="many">Залишилося %d хвилин</item>
+        <item quantity="other">Залишилось %d хвилин</item>
+    </plurals>
 </resources>

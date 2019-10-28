@@ -21,7 +21,7 @@
     <string name="ca_title">CA Sertifikası</string>
     <string name="no_certificate">Bir sertifika seçmelisiniz</string>
     <string name="copyright_guicode">Kaynak kodu ve sorun takipçisine http://code.google.com/p/ics-openvpn/ adresinden ulaşabilirsiniz</string>
-    <string name="copyright_others">Bu program, aşağıdaki bileşenleri kullanır; tam bilgi için lisanslardaki kaynak koduna bakın</string>
+    <string name="copyright_others">Bu program aşağıdaki bileşenleri kullanır; lisanslarla ilgili tüm detaylar için kaynak koduna bakın</string>
     <string name="about">Hakkında</string>
     <string name="vpn_list_title">Profiller</string>
     <string name="vpn_type">Tür</string>
@@ -449,13 +449,13 @@
         eski easy-rsa dağıtımları \"default_md md5\" seçeneğini içeriyordu. Eğer  easy-rsa\'nın eski bir versiyonunu kullanıyorsanız, bu versiyona yükseltin
         &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt; en son versiyon&lt;/a&gt;) yada md5\'i sha256 ile değiştirin ve
         sertifikalarınızı yeniden yaratın.&lt;/p&gt;&lt;p&gt; eğer gerçekten eski ve bozuk sertifikaları kullanmak istiyorsanız.
-        Gelişmiş yapılandırma altındaki özel yapılandırma seçeneği ya da senin aktarılmış yapılandırmanda ekstra bir satır olarak
+        Gelişmiş yapılandırma altındaki özel yapılandırma seçeneği ya da senin aktarılmış yapılandırmanda ekstra bir satır olarak 
          tls-cipher \"DEFAULT:@SECLEVEL=0\" \'ı kullanın&lt;/p&gt;
-
-
-
-
-
+  
+    
+    
+        
+        
     </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
@@ -475,7 +475,7 @@
     <string name="running_test">Test çalışıyor&#8230;</string>
     <string name="test_algoirhtms">Seçilen algoritmaları test edin</string>
     <string name="all_app_prompt">Harici bir uygulama, %s denetlemeyi deniyor. Erişim isteyen uygulama belirlenemedi. Uygulamaya TÜM uygulamalara erişim izni veriliyor.</string>
-    <string name="openvpn3_nostatickeys">OpenVPN 3 C++ uygulaması statik anahtarları desteklemez. Lütfen genel ayarlar altında
+    <string name="openvpn3_nostatickeys">OpenVPN 3 C++ uygulaması statik anahtarları desteklemez. Lütfen genel ayarlar altında 
         OpenVPN 2.x\'e geçin.
     </string>
     <string name="openvpn3_pkcs12">PKCS12 dosyalarını doğrudan OpenVPN 3 C++ uygulamasıyla kullanmak desteklenmiyor.

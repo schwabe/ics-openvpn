@@ -48,7 +48,7 @@
     <string name="no_error_found">Памылак не знойдзена</string>
     <string name="config_error_found">Памылка канфігурацыі</string>
     <string name="ipv4_format_error">Памылка аналізу адрасоў фармату IPv4</string>
-    <string name="custom_route_format_error">Памылка аналізу уласных маршрутаў</string>
+    <string name="custom_route_format_error">Памылка аналізу ўласных маршрутаў</string>
     <string name="pw_query_hint">(пакіньце пустым для запыту па патрабаванні)</string>
     <string name="vpn_shortcut">Ярлык OpenVPN</string>
     <string name="vpn_launch_title">Падлучэнне да VPN&#8230;</string>
@@ -441,7 +441,7 @@
     <string name="kbits_per_second">%.1f Кбіт/с</string>
     <string name="mbits_per_second">%.1f Мбіт/с</string>
     <string name="gbits_per_second">%.1f Гбіт/c</string>
-    <string name="weakmd">&lt;p&gt;Пачынаючы з OpenSSL версіі 1.1, OpenSSL адхіляе слабыя сертыфікаты, такія як сертыфікаты MD5.
+    <string name="weakmd">&lt;p&gt;Пачынаючы з OpenSSL версіі 1.1, OpenSSL адхіляе слабыя сертыфікаты, такія як сертыфікаты MD5.        
         &lt;/p&gt;&lt;p&gt;&lt;b&gt;Подпісы MD5 цалкам небяспечныя і іх нельга больш выкарыстоўваць.&lt;/b&gt; Калізіі MD5
         могуць быць створаныя ў &lt;a
         href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;за некалькі гадзін з мінімальнымі выдаткамі.&lt;/a&gt;.

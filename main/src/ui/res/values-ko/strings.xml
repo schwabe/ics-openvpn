@@ -7,7 +7,7 @@
 <resources>
     <string name="app">OpenVPN for Android</string>
     <string name="address">서버 주소:</string>
-    <string name="port">서버 포트:</string>
+    <string name="port">서버 목록:</string>
     <string name="location">위치</string>
     <string name="cant_read_folder">디렉토리를 읽을 수 없습니다</string>
     <string name="select">선택</string>
@@ -292,7 +292,7 @@
     <string name="state_screenoff">VPN 일시 정지됨 - 화면 끄기</string>
     <string name="device_specific">기기별 해킹</string>
     <string name="cannotparsecert">인증서 정보를 표시할 수 없습니다</string>
-    <string name="appbehaviour">앱 동작</string>
+    <string name="appbehaviour">응용 프로그램 동작</string>
     <string name="vpnbehaviour">VPN 동작</string>
     <string name="allow_vpn_changes">VPN 프로파일 변경을 허용</string>
     <string name="hwkeychain">하드웨어 키 저장소:</string>
@@ -477,4 +477,18 @@
     <string name="tor_orbot">Tor (Orbot)</string>
     <string name="openvpn3_socksproxy">OpenVPN 3 C ++ 구현은 Socks 프록시를 통한 연결을 지원하지 않습니다.</string>
     <string name="no_orbotfound">Orbot 앱을 찾을 수 없습니다. Orbot을 설치하거나 수동 Socks V5 통합을 사용하십시오.</string>
+    <string name="faq_remote_api_title">원격 API</string>
+    <string name="faq_remote_api">Ok</string>
+    <string name="enableproxyauth">프록시 인증 사용</string>
+    <string name="error_orbot_and_proxy_options">mon</string>
+    <string name="info_from_server">. lm</string>
+    <string name="channel_name_userreq">User interaction required</string>
+    <string name="channel_description_userreq">OpenVPN 연결에는 사용자 입력이 필요합니다 (예: 2 요소
+        인증
+    </string>
+    <string name="openurl_requested">Open URL to continue VPN authentication</string>
+    <string name="state_auth_pending">Authentication pending</string>
+    <string name="external_authenticator">External Authenticator</string>
+    <string name="configure">Configure</string>
+    <string name="extauth_not_configured">외부 Authneticator가 구성되지 않았습니다.</string>
 </resources>

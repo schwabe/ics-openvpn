@@ -111,6 +111,7 @@
     <string name="tap_faq3">En tredje gang? Egentlig så kan man skrive en taå-emulator basert på tun-grensesnittet som ville gitt layer2-informasjon ved sending og fjernet layer2-informasjon ved mottakelse. Men, denne tap-emulatoren ville også måtte ha implementert ARP og muligens en DHSP-klient. Som utvikler er jeg ikke kjent med at noen arbeider med noe i denne retningen. Ta kontakt med meg dersom du ønsker å programmere dette.</string>
     <string name="faq">FAQ</string>
     <string name="copying_log_entries">Kopier loggoppføringer</string>
+    <string name="faq_copying">For å kopiere en enkelt loggoppføring, trykk og hold på loggoppføringen. For å kopiere/sende hele loggen, bruk alternativet Send logg. Bruk maskinvaremeny-knappen hvis knappen ikke er synlig i GUI.</string>
     <string name="faq_shortcut">Snarvei til start</string>
     <string name="faq_howto_shortcut">Du kan legge inn en snarvei for å starte OpenVPN på skrivebordet. Avhengig av ditt startskjermprogram må du legge til enten en snarvei eller en widget.</string>
     <string name="no_vpn_support_image">Bildet ditt støtter ikke VPNService API, beklager :(</string>
@@ -122,6 +123,7 @@
     <string name="file_explorer_tab">Filutforsker</string>
     <string name="error_importing_file">Feil ved import av fil</string>
     <string name="import_error_message">Kunne ikke importere filen fra filsystemet</string>
+    <string name="opentun_no_ipaddr">Nekter å åpne tun-enheten uten IP-informasjon</string>
     <string name="menu_import">Importer profil fra ovpn-fil</string>
     <string name="menu_import_short">Importer</string>
     <string name="import_content_resolve_error">Kan ikke lese profil for importering</string>

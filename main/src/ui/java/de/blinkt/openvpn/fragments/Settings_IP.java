@@ -25,8 +25,9 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 		private CheckBoxPreference mNobind;
 
 		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
+		public void onResume()
+		{
+			super.onResume();
 
 
 			// Make sure default values are applied.  In a real app, you would
@@ -60,7 +61,10 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 		@Override
 		protected void loadSettings() {
 
-			mUsePull.setChecked(mProfile.mUsePull);
+			if (mProfile.mAuthenticationType == VpnProfile.TYPE_STATICKEYS)
+				mUsePull.setEnabled(false);
+			else
+				mUsePull.setChecked(mProfile.mUsePull);
 			mIPv4.setText(mProfile.mIPv4Address);
 			mIPv6.setText(mProfile.mIPv6Address);
 			mDNS1.setText(mProfile.mDNS1);
@@ -68,10 +72,13 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 			mOverrideDNS.setChecked(mProfile.mOverrideDNS);
 			mSearchdomain.setText(mProfile.mSearchDomain);
 			mNobind.setChecked(mProfile.mNobind);
-            if (mProfile.mAuthenticationType == VpnProfile.TYPE_STATICKEYS)
-                mUsePull.setChecked(false);
 
-			mUsePull.setEnabled(mProfile.mAuthenticationType != VpnProfile.TYPE_STATICKEYS);
+
+			//mUsePull.setEnabled(mProfile.mAuthenticationType != VpnProfile.TYPE_STATICKEYS);
+			mUsePull.setEnabled(true);
+
+			if (mProfile.mAuthenticationType == VpnProfile.TYPE_STATICKEYS)
+				mUsePull.setChecked(false);
 
 			// Sets Summary
 			onPreferenceChange(mIPv4, mIPv4.getText());

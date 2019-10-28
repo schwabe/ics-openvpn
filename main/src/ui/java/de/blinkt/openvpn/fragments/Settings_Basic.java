@@ -128,6 +128,9 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mView.findViewById(R.id.userpassword).setVisibility(View.GONE);
         mView.findViewById(R.id.key_password_layout).setVisibility(View.GONE);
         mView.findViewById(R.id.external_auth).setVisibility(View.GONE);
+        mView.findViewById(R.id.crlfile).setVisibility(View.VISIBLE);
+
+
 
         // Fall through are by design
         switch (type) {
@@ -150,6 +153,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
 
             case VpnProfile.TYPE_STATICKEYS:
                 mView.findViewById(R.id.statickeys).setVisibility(View.VISIBLE);
+                mView.findViewById(R.id.crlfile).setVisibility(View.GONE);
                 break;
 
             case VpnProfile.TYPE_USERPASS_KEYSTORE:

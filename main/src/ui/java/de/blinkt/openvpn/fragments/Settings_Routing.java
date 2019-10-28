@@ -77,7 +77,6 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
         onPreferenceChange(mExcludedRoutes, mExcludedRoutes.getText());
         onPreferenceChange(mExcludedRoutesv6, mExcludedRoutesv6.getText());
 
-        mRouteNoPull.setEnabled(mProfile.mUsePull);
 	}
 
 

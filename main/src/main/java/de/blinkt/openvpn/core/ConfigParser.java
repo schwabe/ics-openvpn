@@ -457,7 +457,7 @@ public class ConfigParser {
             throw new ConfigParseError("Sorry. Only tun mode is supported. See the FAQ for more detail");
         }
 
-        Vector<String> mssfix = getOption("mssfix", 0, 1);
+        Vector<String> mssfix = getOption("mssfix", 0, 2);
 
         if (mssfix != null) {
             if (mssfix.size() >= 2) {
@@ -468,6 +468,10 @@ public class ConfigParser {
                 }
             } else {
                 np.mMssFix = 1450; // OpenVPN default size
+            }
+            // Ignore mtu argument of OpenVPN3 and report error otherwise
+            if (mssfix.size() >= 3 && !(mssfix.get(2).equals("mtu"))) {
+                throw new ConfigParseError("Second argument to --mssfix unkonwn");
             }
         }
 

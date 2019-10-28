@@ -127,6 +127,7 @@ set(openvpn_srcs
         src/compat/compat-inet_pton.c
         src/compat/compat-lz4.c
         src/openvpn/argv.c
+        src/openvpn/auth_token.c
         src/openvpn/base64.c
         src/openvpn/buffer.c
         src/openvpn/clinat.c

@@ -27,9 +27,6 @@
 /* Enable client capability only */
 #define ENABLE_CLIENT_ONLY 1
 
-/* Enable client/server capability */
-#define ENABLE_CLIENT_SERVER 1
-
 /* Enable debugging support */
 #define ENABLE_DEBUG 1
 
@@ -682,3 +679,6 @@ int res_init();
 
 #define HAVE_OPENSSL_VERSION 1
 #define HAVE_EVP_CIPHER_CTX_RESET
+
+
+#define _SOCKLEN_T_DECLARED 1

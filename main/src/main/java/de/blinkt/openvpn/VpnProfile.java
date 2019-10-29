@@ -15,8 +15,8 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.security.KeyChain;
 import android.security.KeyChainException;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Base64;
 
@@ -344,6 +344,7 @@ public class VpnProfile implements Serializable, Cloneable {
             cfg.append("management-hold\n\n");
 
             cfg.append(String.format("setenv IV_GUI_VER %s \n", openVpnEscape(getVersionEnvString(context))));
+            cfg.append("setenv IV_SSO openurl,crtext\n");
             String versionString = getPlatformVersionEnvString();
             cfg.append(String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString)));
         } else {

@@ -82,7 +82,7 @@
     <string name="secondary_dns_message">Secondary DNS Server used if the normal DNS Server cannot be reached.</string>
     <string name="backup_dns">Backup DNS Server</string>
     <string name="ignored_pushed_routes">Ignore pushed routes</string>
-    <string name="ignore_routes_summary">Ignore routed pushed by the server.</string>
+    <string name="ignore_routes_summary">Ignore routes pushed by the server.</string>
     <string name="default_route_summary">Redirects all Traffic over the VPN</string>
     <string name="use_default_title">Use default Route</string>
     <string name="custom_route_message">Enter custom routes. Only enter destination in CIDR format. \"10.0.0.0/8 2002::/16\" would direct the networks 10.0.0.0/8 and 2002::/16 over the VPN.</string>
@@ -117,7 +117,7 @@
     <string name="tap_mode">Tap Mode</string>
     <string name="faq_tap_mode">Tap Mode is not possible with the non root VPN API. Therefore this application cannot provide tap support</string>
     <string name="tap_faq2">Again? Are you kidding? No, tap mode is really not supported and sending more mail asking if it will be supported will not help.</string>
-    <string name="tap_faq3">A third time? Actually, one could write a a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would also have to implement ARP and possibly a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.</string>
+    <string name="tap_faq3">A third time? Actually, one could write a tap emulator based on tun that would add layer2 information on send and strip layer2 information on receive. But this tap emulator would also have to implement ARP and possibly a DHCP client. I am not aware of anybody doing any work in this direction. Contact me if you want to start coding on this.</string>
     <string name="faq">FAQ</string>
     <string name="copying_log_entries">Copying log entries</string>
     <string name="faq_copying">To copy a single log entry press and hold on the log entry. To copy/send the whole log use the Send Log option. Use the hardware menu button, if the button is not visible in the GUI.</string>
@@ -475,14 +475,15 @@
     <string name="no_orbotfound">Orbot application cannot be found. Please install Orbot or use manual Socks v5 integration.</string>
     <string name="faq_remote_api_title">Remote API</string>
     <string name="faq_remote_api">OpenVPN for Android supports two remote APIs, a sophisticated API using AIDL (remoteEXample in the git repository) and a simple one using Intents. &lt;p>Examples using adb shell and the intents. Replace profilname with your profile name&lt;p>&lt;p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
-    <string name ="enableproxyauth">Enable Proxy Authentication</string>
-    <string name="error_orbot_and_proxy_options">Cannot use extra http-proxy-option statement and Orbot integration at the same timeO</string>
+    <string name="enableproxyauth">Enable Proxy Authentication</string>
+    <string name="error_orbot_and_proxy_options">Cannot use extra http-proxy-option statement and Orbot integration at the same time</string>
     <string name="info_from_server">Info from server: \'%s\'</string>
     <string name="channel_name_userreq">User interaction required</string>
     <string name="channel_description_userreq">OpenVPN connection requires a user input, e.g. two factor
         authentification
     </string>
     <string name="openurl_requested">Open URL to continue VPN authentication</string>
+    <string name="crtext_requested">Answer challenge to continue VPN authentication</string>
     <string name="state_auth_pending">Authentication pending</string>
     <string name="external_authenticator">External Authenticator</string>
     <string name="configure">Configure</string>
@@ -491,5 +492,6 @@
     <string name="faq_killswitch">It is often desired to block connections without VPN. Other apps often use markting terms like \"Killswitch\" or \"Seamless tunnel\" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.&lt;p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.&lt;p>The &lt;b>only&lt;/b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the \"block connections without VPN\" setting that can be found under Settings > Network &amp; Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN</string>
     <string name="summary_block_address_families">This option instructs Android to not allow protocols (IPv4/IPv6) if the VPN does not set any IPv4 or IPv6 addresses.</string>
     <string name="title_block_address_families">Block IPv6 (or IPv4) if not used by the VPN</string>
+    <string name="install_keychain">Install new certificate</string>
 
 </resources>

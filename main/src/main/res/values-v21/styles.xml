@@ -26,4 +26,6 @@
         <item name="android:colorAccent">@color/accent</item>
     </style>
 
+    <style name="Theme.CreateShortCut" parent="android:Theme.Material.DialogWhenLarge" />
+
 </resources>

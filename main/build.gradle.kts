@@ -2,6 +2,7 @@
  * Copyright (c) 2012-2016 Arne Schwabe
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
+import java.util.Properties
 
 plugins {
     id ("com.android.library")
@@ -13,31 +14,11 @@ apply {
     plugin("kotlin-android-extensions")
 }
 
-/*
-checkstyle {
-    showViolations(true)
-}
-*/
-
 repositories {
     jcenter()
-    maven (url ="https://jitpack.io")
+    maven(url = "https://jitpack.io")
     google()
 }
-
-dependencies {
-    implementation ("com.android.support.constraint:constraint-layout:1.1.3")
-    implementation ("com.android.support:support-annotations:28.0.0")
-    implementation ("com.android.support:cardview-v7:28.0.0")
-    implementation ("com.android.support:recyclerview-v7:28.0.0")
-    implementation ("com.github.PhilJay:MPAndroidChart:v3.0.2")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.11")
-
-    testImplementation ("junit:junit:4.12")
-    testImplementation ("org.mockito:mockito-core:2.16.0")
-    testImplementation ("org.robolectric:robolectric:4.1")
-}
-
 
 
 val openvpn3SwigFiles = File(buildDir, "generated/source/ovpn3swig/ovpn3")
@@ -60,19 +41,18 @@ tasks.register<Exec>("generateOpenVPN3Swig")
 }
 
 android {
-    compileSdkVersion(28)
+    compileSdkVersion(29)
 
     defaultConfig {
         minSdkVersion(14)
-        targetSdkVersion(28)
-        versionCode = 161
-        versionName = "0.7.8"
+        targetSdkVersion(29)  //'Q'.toInt()
+        versionCode = 163
+        versionName = "0.7.10"
 
         externalNativeBuild {
             cmake {
                 //arguments = listOf("-DANDROID_TOOLCHAIN=clang",
                 //        "-DANDROID_STL=c++_static")
-                //abiFilters "arm64-v8a"
             }
         }
     }
@@ -88,8 +68,10 @@ android {
             assets.srcDirs("src/main/assets", "build/ovpnassets")
         }
 
-        create("normal") {
-           java.srcDirs("src/ovpn3/java/", openvpn3SwigFiles)
+        create("ui") {
+            java.srcDirs("src/ovpn3/java/", openvpn3SwigFiles)
+        }
+        create("skeleton") {
         }
 
         getByName("debug") {
@@ -120,21 +102,30 @@ android {
     flavorDimensions("implementation")
 
     productFlavors {
-        create("noovpn3") {
+        create("ui") {
             setDimension("implementation")
-            buildConfigField ("boolean", "openvpn3", "false")
+            buildConfigField("boolean", "openvpn3", "true")
         }
-        create("normal") {
+        create("skeleton") {
             setDimension("implementation")
-            buildConfigField ("boolean", "openvpn3", "true")
+            buildConfigField("boolean", "openvpn3", "false")
         }
-
     }
 
 
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_1_8
         sourceCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    splits {
+        abi {
+            setEnable(true)
+            reset()
+            include("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
+            setUniversalApk(true)
+
+        }
     }
 }
 
@@ -160,33 +151,26 @@ val swigTask = tasks.named("generateOpenVPN3Swig")
 val preBuildTask = tasks.getByName("preBuild")
 val assembleTask = tasks.getByName("assemble")
 
-println(tasks.names)
-
 assembleTask.dependsOn(swigTask)
 preBuildTask.dependsOn(swigTask)
 **/
 
-// Ensure native build is run before assets, so assets are ready to be merged into the apk
-/*android.applicationVariants.all { variant ->
-    variant.mergeAssets.dependsOn(variant.externalNativeBuildTasks)
-}*/
+/* Normally you would put these on top but then it errors out on unknown configurations */
+dependencies {
+    implementation("androidx.annotation:annotation:1.1.0")
 
+    // Is there a nicer way to do this?
+    dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:1.1.3")
+    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
+    dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
+    dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.0.0")
+    dependencies.add("uiImplementation", "com.github.PhilJay:MPAndroidChart:v3.1.0")
 
-//for (t in android.variant(true))
-//    println(t)
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
 
+    testImplementation("junit:junit:4.12")
+    testImplementation("org.mockito:mockito-core:3.1.0")
+    testImplementation("org.robolectric:robolectric:4.3.1")
+    implementation("androidx.core:core:1.1.0")
+}
 
-//tasks.getByName("processResources").dependsOn(tasks.getByName("externalNativeBuildTasks"))
-
-
-//tasks.getByName("compileJava").dependsOn(tasks.getByName("generateOpenVPN3Swig"))
-
-/*
-android.applicationVariants.all { variant ->
-    variant.productFlavors.each {
-        if (it.dimension == "implementation" &&  it.name != "noovpn3")
-            variant.getJavaCompiler().dependsOn(generateOpenVPN3Swig)
-
-    }
-
-}*/

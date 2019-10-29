@@ -1,0 +1,33 @@
+<!--
+  ~ Copyright (c) 2012-2019 Arne Schwabe
+  ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="de.blinkt.openvpn">
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <application
+        android:banner="@mipmap/banner_tv"
+        >
+    <activity
+        android:name=".activities.MainActivity"
+        tools:ignore="ExportedActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        <intent-filter>
+            <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+        </intent-filter>
+    </activity>
+    </application>
+</manifest>

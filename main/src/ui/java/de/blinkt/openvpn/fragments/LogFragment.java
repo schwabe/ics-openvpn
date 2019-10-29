@@ -25,7 +25,6 @@ import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import androidx.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.format.DateFormat;
@@ -54,6 +53,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Vector;
 
+import androidx.core.app.NavUtils;
 import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;

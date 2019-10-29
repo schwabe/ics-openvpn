@@ -143,17 +143,14 @@ if (project.hasProperty("keystoreFile") &&
     android.buildTypes.getByName("release").signingConfig = null
 }
 
-
 /* Hack-o-rama but it works good enough and documentation is surprisingly sparse */
 
-/**
 val swigTask = tasks.named("generateOpenVPN3Swig")
 val preBuildTask = tasks.getByName("preBuild")
 val assembleTask = tasks.getByName("assemble")
 
 assembleTask.dependsOn(swigTask)
 preBuildTask.dependsOn(swigTask)
-**/
 
 /* Normally you would put these on top but then it errors out on unknown configurations */
 dependencies {

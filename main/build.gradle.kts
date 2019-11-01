@@ -118,14 +118,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
     }
 
-    splits {
-        abi {
-            setEnable(true)
-            reset()
-            include("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
-            setUniversalApk(true)
-
-        }
+    // Ensure native build is run before assets, so assets are ready to be merged into the apk
+    libraryVariants.configureEach {
+        mergeAssets!!.dependsOn(externalNativeBuildTasks)
     }
 }
 

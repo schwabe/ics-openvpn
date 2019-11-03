@@ -19,11 +19,11 @@ Also please note that before contributing to the project that I would like to re
 
 You can help
 ------------
-Even if you are no programmer you can help by translating the OpenVPN client into your native language. [Crowdin provides a free service for non commercial open source projects](http://crowdin.net/project/ics-openvpn/invite) (Fixing/completing existing translations is very welcome as well)
+Even if you are no programmer you can help by translating the OpenVPN client into your native language. [Crowdin provides a free service for non commercial open source projects](https://crowdin.net/project/ics-openvpn/invite) (Fixing/completing existing translations is very welcome as well)
 
 FAQ
 -----
-You can find the FAQ here (same as in app): http://ics-openvpn.blinkt.de/FAQ.html
+You can find the FAQ here (same as in app): https://ics-openvpn.blinkt.de/FAQ.html
 
 Controlling from external apps
 ------------------------------

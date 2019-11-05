@@ -24,6 +24,7 @@ import de.blinkt.openvpn.core.ProfileManager;
 public class RemoteAction extends Activity {
 
     public static final String EXTRA_NAME = "de.blinkt.openvpn.api.profileName";
+    public static final String EXTRA_HIDELOG = "de.blinkt.openvpn.api.showNoLogWindow";
     private ExternalAppDatabase mExtAppDb;
     private boolean mDoDisconnect;
     private IOpenVPNServiceInternal mService;
@@ -78,12 +79,14 @@ public class RemoteAction extends Activity {
             mService.stopVPN(false);
         } else if (component.getShortClassName().equals(".api.ConnectVPN")) {
             String vpnName = intent.getStringExtra(EXTRA_NAME);
+            boolean showLog = intent.getBooleanExtra(EXTRA_HIDELOG, false);
             VpnProfile profile = ProfileManager.getInstance(this).getProfileByName(vpnName);
             if (profile == null) {
                 Toast.makeText(this, String.format("Vpn profile %s from API call not found", vpnName), Toast.LENGTH_LONG).show();
             } else {
                 Intent startVPN = new Intent(this, LaunchVPN.class);
                 startVPN.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
+                startVPN.putExtra(LaunchVPN.EXTRA_HIDELOG, showLog);
                 startVPN.setAction(Intent.ACTION_MAIN);
                 startActivity(startVPN);
             }

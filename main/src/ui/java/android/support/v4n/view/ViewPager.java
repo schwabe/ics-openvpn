@@ -1788,8 +1788,8 @@ public class ViewPager extends ViewGroup {
         final int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             final int layerType = enable ?
-                    ViewCompat.LAYER_TYPE_HARDWARE : ViewCompat.LAYER_TYPE_NONE;
-            ViewCompat.setLayerType(getChildAt(i), layerType, null);
+                    View.LAYER_TYPE_HARDWARE : View.LAYER_TYPE_NONE;
+            getChildAt(i).setLayerType(layerType, null);
         }
     }
 

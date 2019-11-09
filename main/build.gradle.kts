@@ -2,7 +2,6 @@
  * Copyright (c) 2012-2016 Arne Schwabe
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
-import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -156,6 +155,7 @@ preBuildTask.dependsOn(swigTask)
 /* Normally you would put these on top but then it errors out on unknown configurations */
 dependencies {
     implementation("androidx.annotation:annotation:1.1.0")
+    implementation("androidx.core:core:1.1.0")
 
     // Is there a nicer way to do this?
     dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:1.1.3")

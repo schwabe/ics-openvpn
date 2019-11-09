@@ -139,7 +139,8 @@ if (project.hasProperty("keystoreFile") &&
         keyAlias = project.properties["keystoreAlias"] as String
     }
 } else {
-    android.buildTypes.getByName("release").signingConfig = null
+    logger.warn("Release signing config not found. Using debug signing instead.")
+    android.buildTypes.getByName("release").signingConfig = android.signingConfigs.getByName("debug")
 }
 
 

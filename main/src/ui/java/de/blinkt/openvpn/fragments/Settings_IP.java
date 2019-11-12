@@ -4,17 +4,19 @@
  */
 
 package de.blinkt.openvpn.fragments;
+
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceManager;
-import android.preference.SwitchPreference;
+
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceManager;
+import androidx.preference.SwitchPreference;
+
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 
-public class Settings_IP extends OpenVpnPreferencesFragment implements OnPreferenceChangeListener {
+public class Settings_IP extends OpenVpnPreferencesFragment implements Preference.OnPreferenceChangeListener {
 		private EditTextPreference mIPv4;
 		private EditTextPreference mIPv6;
 		private SwitchPreference mUsePull;
@@ -33,19 +35,19 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 			// Make sure default values are applied.  In a real app, you would
 			// want this in a shared function that is used to retrieve the
 			// SharedPreferences wherever they are needed.
-			PreferenceManager.setDefaultValues(getActivity(),
+			PreferenceManager.setDefaultValues(requireActivity(),
 					R.xml.vpn_ipsettings, false);
 
 			// Load the preferences from an XML resource
 			addPreferencesFromResource(R.xml.vpn_ipsettings);
-			mIPv4 = (EditTextPreference) findPreference("ipv4_address");
-			mIPv6 = (EditTextPreference) findPreference("ipv6_address");
-			mUsePull = (SwitchPreference) findPreference("usePull");
-			mOverrideDNS = (CheckBoxPreference) findPreference("overrideDNS");
-			mSearchdomain =(EditTextPreference) findPreference("searchdomain");
-			mDNS1 = (EditTextPreference) findPreference("dns1");
-			mDNS2 = (EditTextPreference) findPreference("dns2");
-			mNobind = (CheckBoxPreference) findPreference("nobind");
+			mIPv4 = findPreference("ipv4_address");
+			mIPv6 = findPreference("ipv6_address");
+			mUsePull = findPreference("usePull");
+			mOverrideDNS = findPreference("overrideDNS");
+			mSearchdomain = findPreference("searchdomain");
+			mDNS1 = findPreference("dns1");
+			mDNS2 = findPreference("dns2");
+			mNobind = findPreference("nobind");
 
 			mIPv4.setOnPreferenceChangeListener(this);
 			mIPv6.setOnPreferenceChangeListener(this);
@@ -141,4 +143,8 @@ public class Settings_IP extends OpenVpnPreferencesFragment implements OnPrefere
 		}
 
 
+	@Override
+	public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
 	}
+}

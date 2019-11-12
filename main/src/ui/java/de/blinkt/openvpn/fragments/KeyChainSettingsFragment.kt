@@ -46,7 +46,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
         @Throws(KeyChainException::class, InterruptedException::class)
         get() {
-            val key: PrivateKey = KeyChain.getPrivateKey(activity.applicationContext, mProfile.mAlias) ?: return false
+            val key: PrivateKey = KeyChain.getPrivateKey(activity!!.applicationContext, mProfile.mAlias) ?: return false
 
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
                 val keyFactory = KeyFactory.getInstance(key.getAlgorithm(), "AndroidKeyStore")
@@ -86,9 +86,9 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
         object : Thread() {
             override fun run() {
                 try {
-                    val b = ExtAuthHelper.getCertificateMetaData(activity, mProfile.mExternalAuthenticator, mProfile.mAlias)
+                    val b = ExtAuthHelper.getCertificateMetaData(context!!, mProfile.mExternalAuthenticator, mProfile.mAlias)
                     mProfile.mAlias = b.getString(ExtAuthHelper.EXTRA_ALIAS)
-                    activity.runOnUiThread { setAlias() }
+                    activity!!.runOnUiThread { setAlias() }
                 } catch (e: KeyChainException) {
                     e.printStackTrace()
                 }
@@ -108,14 +108,14 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
 
                     if (external) {
                         if (!TextUtils.isEmpty(mProfile.mExternalAuthenticator) && !TextUtils.isEmpty(mProfile.mAlias)) {
-                            cert = ExtAuthHelper.getCertificateChain(activity, mProfile.mExternalAuthenticator, mProfile.mAlias)!![0]
-                            metadata = ExtAuthHelper.getCertificateMetaData(activity, mProfile.mExternalAuthenticator, mProfile.mAlias)
+                            cert = ExtAuthHelper.getCertificateChain(context!!, mProfile.mExternalAuthenticator, mProfile.mAlias)!![0]
+                            metadata = ExtAuthHelper.getCertificateMetaData(context!!, mProfile.mExternalAuthenticator, mProfile.mAlias)
                         } else {
                             cert = null
                             certstr = getString(R.string.extauth_not_configured)
                         }
                     } else {
-                        val certChain = KeyChain.getCertificateChain(activity.applicationContext, mProfile.mAlias)
+                        val certChain = KeyChain.getCertificateChain(activity!!.applicationContext, mProfile.mAlias)
                         if (certChain != null) {
                             cert = certChain[0]
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -137,7 +137,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
 
                 val certStringCopy = certstr
                 val finalMetadata = metadata
-                activity.runOnUiThread {
+                activity!!.runOnUiThread {
                     mAliasCertificate.text = certStringCopy
                     if (finalMetadata != null)
                         mExtAliasName.text = finalMetadata.getString(ExtAuthHelper.EXTRA_DESCRIPTION)
@@ -210,7 +210,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
 
     fun showCertDialog() {
         try {
-            KeyChain.choosePrivateKeyAlias(activity,
+            KeyChain.choosePrivateKeyAlias(activity!!,
                     { alias ->
                         // Credential alias selected.  Remember the alias selection for future use.
                         mProfile.mAlias = alias
@@ -248,10 +248,10 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
         return true
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == UPDATEE_EXT_ALIAS && resultCode == Activity.RESULT_OK) {
+        if (data != null && requestCode == UPDATEE_EXT_ALIAS && resultCode == Activity.RESULT_OK) {
             mProfile.mAlias = data.getStringExtra(ExtAuthHelper.EXTRA_ALIAS)
             mExtAliasName.text = data.getStringExtra(ExtAuthHelper.EXTRA_DESCRIPTION)
         }

@@ -6,19 +6,18 @@
 package de.blinkt.openvpn.activities;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.support.v4n.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.viewpager.widget.ViewPager;
+
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
@@ -33,13 +32,12 @@ import de.blinkt.openvpn.fragments.Settings_UserEditable;
 import de.blinkt.openvpn.fragments.ShowConfigFragment;
 import de.blinkt.openvpn.fragments.VPNProfileList;
 import de.blinkt.openvpn.views.ScreenSlidePagerAdapter;
-import de.blinkt.openvpn.views.TabBarView;
 
 
 public class VPNPreferences extends BaseActivity {
 
-    static final Class validFragments[] = new Class[] {
-        Settings_Authentication.class, Settings_Basic.class, Settings_IP.class,
+    static final Class[] validFragments = new Class[]{
+            Settings_Authentication.class, Settings_Basic.class, Settings_IP.class,
             Settings_Obscure.class, Settings_Routing.class, ShowConfigFragment.class,
             Settings_Connections.class, Settings_Allowed_Apps.class
     };
@@ -86,7 +84,7 @@ public class VPNPreferences extends BaseActivity {
 		}
 		if (mProfile.mTemporaryProfile)
         {
-            Toast.makeText(this, "Temporary profiles cannot be edited", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Temporary profiles cannot be edited", Toast.LENGTH_LONG).show();
             finish();
         }
 	}
@@ -127,14 +125,11 @@ public class VPNPreferences extends BaseActivity {
 
         setContentView(R.layout.main_activity);
 
-        /* Toolbar and slider should have the same elevation */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            disableToolbarElevation();
-        }
+        disableToolbarElevation();
 
         // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager(), this);
+        mPager = findViewById(R.id.pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), this);
 
 
         Bundle fragmentArguments = new Bundle();
@@ -160,27 +155,11 @@ public class VPNPreferences extends BaseActivity {
 
         mPager.setAdapter(mPagerAdapter);
 
-        TabBarView tabs = (TabBarView) findViewById(R.id.sliding_tabs);
-        tabs.setViewPager(mPager);
+        //TabBarView tabs = (TabBarView) findViewById(R.id.sliding_tabs);
+        //tabs.setViewPager(mPager);
 
 	}
 
-
-/*
-	@Override
-	public void onBuildHeaders(List<Header> target) {
-		loadHeadersFromResource(R.xml.vpn_headers, target);
-        Header headerToRemove=null;
-        for (Header header : target) {
-			if(header.fragmentArguments==null)
-				header.fragmentArguments = new Bundle();
-			header.fragmentArguments.putString(getPackageName() + ".profileUUID",mProfileUUID);
-            if (header.id == R.id.allowed_apps_header && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-                headerToRemove = header;
-		}
-        if (headerToRemove != null)
-            target.remove(headerToRemove);
-	}*/
 
 	@Override
 	public void onBackPressed() {
@@ -217,13 +196,7 @@ public class VPNPreferences extends BaseActivity {
 		dialog.setMessage(getString(R.string.remove_vpn_query, mProfile.mName));
 
 		dialog.setPositiveButton(android.R.string.yes,
-				new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				removeProfile(mProfile);
-			}
-
-		});
+                (dialog1, which) -> removeProfile(mProfile));
 		dialog.setNegativeButton(android.R.string.no,null);
 		dialog.create().show();
 	}
@@ -235,9 +208,8 @@ public class VPNPreferences extends BaseActivity {
 
 	}
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void disableToolbarElevation() {
-        ActionBar toolbar = getActionBar();
+        ActionBar toolbar = getSupportActionBar();
         toolbar.setElevation(0);
     }
 

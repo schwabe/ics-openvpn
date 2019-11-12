@@ -6,8 +6,10 @@
 package de.blinkt.openvpn.views;
 
 import android.content.Context;
-import android.preference.ListPreference;
 import android.util.AttributeSet;
+
+import androidx.preference.ListPreference;
+
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
 

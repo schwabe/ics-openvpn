@@ -8,7 +8,6 @@ package de.blinkt.openvpn.fragments;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +20,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.ListFragment;
+
 import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.view.LayoutInflater;
@@ -76,12 +77,9 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
     @Override
     public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mLastStatusMessage = VpnStatus.getLastCleanLogMessage(getActivity());
-                mArrayadapter.notifyDataSetChanged();
-            }
+        getActivity().runOnUiThread(() -> {
+            mLastStatusMessage = VpnStatus.getLastCleanLogMessage(getActivity());
+            mArrayadapter.notifyDataSetChanged();
         });
     }
 

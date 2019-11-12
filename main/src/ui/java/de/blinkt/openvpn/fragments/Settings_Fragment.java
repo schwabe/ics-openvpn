@@ -5,8 +5,9 @@
 
 package de.blinkt.openvpn.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;

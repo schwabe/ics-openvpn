@@ -154,7 +154,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         outState.putParcelable("mSourceUri", mSourceUri)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, result: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, result: Intent?) {
         if (requestCode == RESULT_INSTALLPKCS12 && resultCode == Activity.RESULT_OK) {
             showCertDialog()
         }
@@ -593,8 +593,6 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         }
 
 
-        val intent = intent
-
         if (intent != null) {
             doImportIntent(intent)
 
@@ -607,6 +605,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
     private fun doImportIntent(intent: Intent) {
         val data = intent.data
+        if (intent.action.equals(IMPORT_PROFILE_DATA))
         if (data != null) {
             mSourceUri = data
             doImportUri(data)
@@ -698,7 +697,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
                     mResult!!.mName = getUniqueProfileName(possibleName)
                     mProfilename.visibility = View.VISIBLE
                     mProfilenameLabel.visibility = View.VISIBLE
-                    mProfilename!!.setText(mResult!!.name)
+                    mProfilename.setText(mResult!!.name)
 
                     log(R.string.import_done)
                 }
@@ -785,6 +784,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
     companion object {
 
+        @kotlin.jvm.JvmField
         val IMPORT_PROFILE = "de.blinkt.openvpn.IMPORT_PROFILE"
         val IMPORT_PROFILE_DATA = "de.blinkt.openvpn.IMPORT_PROFILE_DATA"
         private val RESULT_INSTALLPKCS12 = 7

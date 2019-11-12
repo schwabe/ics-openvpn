@@ -9,8 +9,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ListFragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -25,6 +23,9 @@ import android.os.Handler.Callback;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.ListFragment;
+
 import android.text.SpannableString;
 import android.text.format.DateFormat;
 import android.text.style.ImageSpan;
@@ -529,16 +530,11 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 
 
             dialog.setPositiveButton(R.string.restart,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(getActivity(), LaunchVPN.class);
-                            intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
-                            intent.setAction(Intent.ACTION_MAIN);
-                            startActivity(intent);
-                        }
-
-
+                    (dialog1, which) -> {
+                        Intent intent = new Intent(getActivity(), LaunchVPN.class);
+                        intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
+                        intent.setAction(Intent.ACTION_MAIN);
+                        startActivity(intent);
                     });
             dialog.setNegativeButton(R.string.ignore, null);
             dialog.create().show();
@@ -564,18 +560,13 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         super.onActivityCreated(savedInstanceState);
         ListView lv = getListView();
 
-        lv.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                           int position, long id) {
-                ClipboardManager clipboard = (ClipboardManager)
-                        getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("Log Entry", ((TextView) view).getText());
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText(getActivity(), R.string.copied_entry, Toast.LENGTH_SHORT).show();
-                return true;
-            }
+        lv.setOnItemLongClickListener((parent, view, position, id) -> {
+            ClipboardManager clipboard = (ClipboardManager)
+                    getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("Log Entry", ((TextView) view).getText());
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(getActivity(), R.string.copied_entry, Toast.LENGTH_SHORT).show();
+            return true;
         });
     }
 

@@ -23,7 +23,7 @@ public class LogWindow extends BaseActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new LogFragment())
                     .commit();
         }

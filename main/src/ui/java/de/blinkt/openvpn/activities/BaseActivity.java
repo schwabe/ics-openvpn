@@ -5,21 +5,18 @@
 
 package de.blinkt.openvpn.activities;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.UiModeManager;
-import android.content.Context;
-import android.content.RestrictionsManager;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.UserManager;
 import android.view.Window;
-import de.blinkt.openvpn.api.AppRestrictions;
 
-public class BaseActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public abstract class BaseActivity extends AppCompatActivity {
     private boolean isAndroidTV() {
-        final UiModeManager uiModeManager = (UiModeManager) getSystemService(Activity.UI_MODE_SERVICE);
+        final UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+        if (uiModeManager == null)
+            return false;
         return uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 

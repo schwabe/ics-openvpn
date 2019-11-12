@@ -5,7 +5,6 @@
 
 package de.blinkt.openvpn.fragments;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
@@ -30,17 +33,12 @@ public class ShowConfigFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View v=inflater.inflate(R.layout.viewconfig, container,false);
-		mConfigView = (TextView) v.findViewById(R.id.configview);
+		mConfigView = v.findViewById(R.id.configview);
 
 
-		mfabButton = (ImageButton) v.findViewById(R.id.share_config);
+		mfabButton = v.findViewById(R.id.share_config);
         if (mfabButton!=null) {
-			mfabButton.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					shareConfig();
-				}
-			});
+			mfabButton.setOnClickListener(v1 -> shareConfig());
 			mfabButton.setVisibility(View.INVISIBLE);
 		}
 		return v;
@@ -53,12 +51,12 @@ public class ShowConfigFragment extends Fragment {
 				/* Add a few newlines to make the textview scrollable past the FAB */
 				try {
 
-					configtext = vp.getConfigFile(getActivity(), VpnProfile.doUseOpenVPN3(getActivity())) + "\n\n\n";
+					configtext = vp.getConfigFile(requireContext(), VpnProfile.doUseOpenVPN3(getActivity())) + "\n\n\n";
 				} catch (Exception e) {
 					e.printStackTrace();
 					configtext = "Error generating config file: " + e.getLocalizedMessage();
 				}
-				getActivity().runOnUiThread(() -> {
+				requireActivity().runOnUiThread(() -> {
                     cv.setText(configtext);
 					if (mfabButton!=null)
                         mfabButton.setVisibility(View.VISIBLE);
@@ -76,7 +74,7 @@ public class ShowConfigFragment extends Fragment {
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
 		    inflater.inflate(R.menu.configmenu, menu);
 	}
@@ -108,7 +106,7 @@ public class ShowConfigFragment extends Fragment {
     }
 
 	private void populateConfigText() {
-		String profileUUID = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
+		String profileUUID = requireArguments().getString(requireActivity().getPackageName() + ".profileUUID");
 		final VpnProfile vp = ProfileManager.get(getActivity(),profileUUID);
 		int check=vp.checkProfile(getActivity());
 

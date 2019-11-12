@@ -5,7 +5,6 @@
 
 package de.blinkt.openvpn.fragments;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -22,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -102,13 +102,10 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                 break;
         }
 
-        logScaleView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mLogScale = isChecked;
-                mChartAdapter.notifyDataSetChanged();
-                getActivity().getPreferences(MODE_PRIVATE).edit().putBoolean(PREF_USE_LOG, isChecked).apply();
-            }
+        logScaleView.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            mLogScale = isChecked;
+            mChartAdapter.notifyDataSetChanged();
+            getActivity().getPreferences(MODE_PRIVATE).edit().putBoolean(PREF_USE_LOG, isChecked).apply();
         });
 
         mHandler = new Handler();

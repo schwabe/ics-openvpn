@@ -6,8 +6,6 @@
 package de.blinkt.openvpn.fragments
 
 import android.Manifest
-import android.app.Activity
-import android.app.Fragment
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -29,6 +27,7 @@ import android.widget.ListView
 import android.widget.SearchView
 import android.widget.Switch
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 
 import java.util.Collections
 import java.util.Locale
@@ -37,6 +36,7 @@ import java.util.Vector
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.VpnProfile
 import de.blinkt.openvpn.core.ProfileManager
+import org.jetbrains.anko.runOnUiThread
 
 /**
  * Created by arne on 16.11.14.
@@ -75,9 +75,9 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val profileUuid = arguments.getString(activity.packageName + ".profileUUID")
+        val profileUuid = requireArguments().getString(activity!!.packageName + ".profileUUID")
         mProfile = ProfileManager.get(activity, profileUuid)
-        activity.title = getString(R.string.edit_profile_title, mProfile.name)
+        activity!!.title = getString(R.string.edit_profile_title, mProfile.name)
         setHasOptionsMenu(true)
     }
 
@@ -116,7 +116,7 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
 
         val vpnOnDefaultSwitch = mSettingsView.findViewById<View>(R.id.default_allow) as Switch
 
-        vpnOnDefaultSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        vpnOnDefaultSwitch.setOnCheckedChangeListener { _, isChecked ->
             changeDisallowText(isChecked)
             mProfile.mAllowedAppsVpnAreDisallowed = isChecked
         }
@@ -125,19 +125,19 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
 
         val vpnAllowBypassSwitch = mSettingsView.findViewById<View>(R.id.allow_bypass) as Switch
 
-        vpnAllowBypassSwitch.setOnCheckedChangeListener { buttonView, isChecked -> mProfile.mAllowAppVpnBypass = isChecked }
+        vpnAllowBypassSwitch.setOnCheckedChangeListener { _, isChecked -> mProfile.mAllowAppVpnBypass = isChecked }
 
         vpnAllowBypassSwitch.isChecked = mProfile.mAllowAppVpnBypass
 
         mListView = v.findViewById<View>(android.R.id.list) as ListView
 
-        mListAdapter = PackageAdapter(activity, mProfile)
+        mListAdapter = PackageAdapter(requireContext(), mProfile)
         mListView.adapter = mListAdapter
         mListView.onItemClickListener = this
 
         mListView.emptyView = v.findViewById(R.id.loading_container)
 
-        Thread(Runnable { mListAdapter.populateList(activity) }).start()
+        Thread(Runnable { mListAdapter.populateList(requireContext()) }).start()
 
         return v
     }
@@ -197,7 +197,7 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
         private val mProfile = vp
 
 
-        fun populateList(c: Activity) {
+        fun populateList(c: Context) {
             val installedPackages = mPm.getInstalledApplications(PackageManager.GET_META_DATA)
 
             // Remove apps not using Internet
@@ -282,11 +282,11 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
         }
 
         private inner class ItemFilter : Filter() {
-            override fun performFiltering(constraint: CharSequence): Filter.FilterResults {
+            override fun performFiltering(constraint: CharSequence): FilterResults {
 
                 val filterString = constraint.toString().toLowerCase(Locale.getDefault())
 
-                val results = Filter.FilterResults()
+                val results = FilterResults()
 
 
                 val count = mPackages.size
@@ -313,7 +313,7 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
                 return results
             }
 
-            override fun publishResults(constraint: CharSequence, results: Filter.FilterResults) {
+            override fun publishResults(constraint: CharSequence, results: FilterResults) {
                 mFilteredData = results.values as Vector<ApplicationInfo>
                 notifyDataSetChanged()
             }

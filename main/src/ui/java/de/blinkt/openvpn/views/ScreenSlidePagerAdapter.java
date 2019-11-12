@@ -5,20 +5,22 @@
 
 package de.blinkt.openvpn.views;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
-import android.support.v4n.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.Vector;
 
 /**
 * Created by arne on 18.11.14.
 */
-public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+public class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
 
     private final Resources res;
     private Bundle mFragmentArguments;
@@ -46,6 +48,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         res = c.getResources();
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         try {

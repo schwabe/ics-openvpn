@@ -493,5 +493,7 @@
     <string name="summary_block_address_families">This option instructs Android to not allow protocols (IPv4/IPv6) if the VPN does not set any IPv4 or IPv6 addresses.</string>
     <string name="title_block_address_families">Block IPv6 (or IPv4) if not used by the VPN</string>
     <string name="install_keychain">Install new certificate</string>
+    <string name="as_servername">AS servername</string>
+    <string name="request_autologin">Request autologin profile</string>
 
 </resources>

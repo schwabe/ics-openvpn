@@ -1,0 +1,23 @@
+name: Android CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: init git submodules
+      run:  git submodule init && git submodule update && ls
+    - name: download tunnelblick patches
+      run: cd /home/runner/work/ics-openvpn/ics-openvpn/main/src/main/cpp/openvpn && wget https://raw.githubusercontent.com/Tunnelblick/Tunnelblick/master/third_party/sources/openvpn/openvpn-2.4.8/patches/02-tunnelblick-openvpn_xorpatch-a.diff && wget https://raw.githubusercontent.com/Tunnelblick/Tunnelblick/master/third_party/sources/openvpn/openvpn-2.4.8/patches/03-tunnelblick-openvpn_xorpatch-b.diff && wget https://raw.githubusercontent.com/Tunnelblick/Tunnelblick/master/third_party/sources/openvpn/openvpn-2.4.8/patches/04-tunnelblick-openvpn_xorpatch-c.diff && wget https://raw.githubusercontent.com/Tunnelblick/Tunnelblick/master/third_party/sources/openvpn/openvpn-2.4.8/patches/05-tunnelblick-openvpn_xorpatch-d.diff && wget https://raw.githubusercontent.com/Tunnelblick/Tunnelblick/master/third_party/sources/openvpn/openvpn-2.4.8/patches/06-tunnelblick-openvpn_xorpatch-e.diff
+    - name: apply patches
+      run: cd /home/runner/work/ics-openvpn/ics-openvpn/main/src/main/cpp/openvpn && git apply 02-tunnelblick-openvpn_xorpatch-a.diff && git apply 03-tunnelblick-openvpn_xorpatch-b.diff && git apply 04-tunnelblick-openvpn_xorpatch-c.diff && git apply 05-tunnelblick-openvpn_xorpatch-d.diff && git apply 06-tunnelblick-openvpn_xorpatch-e.diff
+    - name: delete patch files
+      run: find . -name "*.diff" -type f -delete
+    - name: Android build action
+      uses: lawtancool/actions-android-ci@v1.1
+      with:
+        args: '"apt-get update && apt-get -y install swig && cp -r /opt/licenses /opt/android-sdk-linux/licenses && ANDROID_SDK_HOME=/opt/android-sdk-linux ANDROID_SDK_ROOT=/opt/android-sdk-linux ANDROID_HOME=/opt/android-sdk-linux ANDROID_SDK=/opt/android-sdk-linux ./gradlew build"'

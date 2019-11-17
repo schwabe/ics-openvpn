@@ -21,3 +21,8 @@ jobs:
       uses: lawtancool/actions-android-ci@v1.1
       with:
         args: '"apt-get update && apt-get -y install swig && cp -r /opt/licenses /opt/android-sdk-linux/licenses && ANDROID_SDK_HOME=/opt/android-sdk-linux ANDROID_SDK_ROOT=/opt/android-sdk-linux ANDROID_HOME=/opt/android-sdk-linux ANDROID_SDK=/opt/android-sdk-linux ./gradlew build"'
+    - name: Upload artifact - gradle build folder
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: gradle build folder
+        path: /home/runner/work/ics-openvpn/ics-openvpn/build/

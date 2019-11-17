@@ -22,6 +22,8 @@ import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.preference.PreferenceManager;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.ListFragment;
@@ -549,7 +551,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         VpnStatus.removeStateListener(this);
         VpnStatus.removeByteCountListener(this);
 
-        getActivity().getPreferences(0).edit().putInt(LOGTIMEFORMAT, ladapter.mTimeFormat)
+        requireActivity().getPreferences(0).edit().putInt(LOGTIMEFORMAT, ladapter.mTimeFormat)
                 .putInt(VERBOSITYLEVEL, ladapter.mLogLevel).apply();
 
     }
@@ -562,7 +564,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 
         lv.setOnItemLongClickListener((parent, view, position, id) -> {
             ClipboardManager clipboard = (ClipboardManager)
-                    getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                    requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("Log Entry", ((TextView) view).getText());
             clipboard.setPrimaryClip(clip);
             Toast.makeText(getActivity(), R.string.copied_entry, Toast.LENGTH_SHORT).show();
@@ -632,7 +634,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     }
 
     @Override
-    public void onAttach(Context activity) {
+    public void onAttach(@NonNull Context activity) {
         super.onAttach(activity);
         if (getResources().getBoolean(R.bool.logSildersAlwaysVisible)) {
             mShowOptionsLayout = true;
@@ -644,9 +646,6 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
 
@@ -655,17 +654,13 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         if (isAdded()) {
             final String cleanLogMessage = VpnStatus.getLastCleanLogMessage(getActivity());
 
-            getActivity().runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    if (isAdded()) {
-                        if (mSpeedView != null) {
-                            mSpeedView.setText(cleanLogMessage);
-                        }
-                        if (mConnectStatus != null)
-                            mConnectStatus.setText(cleanLogMessage);
+            requireActivity().runOnUiThread(() -> {
+                if (isAdded()) {
+                    if (mSpeedView != null) {
+                        mSpeedView.setText(cleanLogMessage);
                     }
+                    if (mConnectStatus != null)
+                        mConnectStatus.setText(cleanLogMessage);
                 }
             });
         }

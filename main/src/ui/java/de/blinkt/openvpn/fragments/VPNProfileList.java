@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Arne Schwabe
+ * Copyright (c) 2012-2019 Arne Schwabe
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 
@@ -19,7 +19,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.ListFragment;
 
 import android.text.Html;
@@ -62,22 +64,24 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
     public final static int RESULT_VPN_DELETED = Activity.RESULT_FIRST_USER;
     public final static int RESULT_VPN_DUPLICATE = Activity.RESULT_FIRST_USER + 1;
-
+    // Shortcut version is increased to refresh all shortcuts
+    final static int SHORTCUT_VERSION = 1;
     private static final int MENU_ADD_PROFILE = Menu.FIRST;
-
     private static final int START_VPN_CONFIG = 92;
     private static final int SELECT_PROFILE = 43;
     private static final int IMPORT_PROFILE = 231;
     private static final int FILE_PICKER_RESULT_KITKAT = 392;
-
     private static final int MENU_IMPORT_PROFILE = Menu.FIRST + 1;
     private static final int MENU_CHANGE_SORTING = Menu.FIRST + 2;
+    private static final int MENU_IMPORT_AS = Menu.FIRST + 3;
     private static final String PREF_SORT_BY_LRU = "sortProfilesByLRU";
+    protected VpnProfile mEditProfile = null;
     private String mLastStatusMessage;
+    private ArrayAdapter<VpnProfile> mArrayadapter;
 
     @Override
     public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level) {
-        getActivity().runOnUiThread(() -> {
+        requireActivity().runOnUiThread(() -> {
             mLastStatusMessage = VpnStatus.getLastCleanLogMessage(getActivity());
             mArrayadapter.notifyDataSetChanged();
         });
@@ -85,51 +89,6 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
     @Override
     public void setConnectedVPN(String uuid) {
-    }
-
-    private class VPNArrayAdapter extends ArrayAdapter<VpnProfile> {
-
-        public VPNArrayAdapter(Context context, int resource,
-                               int textViewResourceId) {
-            super(context, resource, textViewResourceId);
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            View v = super.getView(position, convertView, parent);
-
-            final VpnProfile profile = (VpnProfile) getListAdapter().getItem(position);
-
-            View titleview = v.findViewById(R.id.vpn_list_item_left);
-            titleview.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startOrStopVPN(profile);
-                }
-            });
-
-            View settingsview = v.findViewById(R.id.quickedit_settings);
-            settingsview.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    editVPN(profile);
-
-                }
-            });
-
-            TextView subtitle = (TextView) v.findViewById(R.id.vpn_item_subtitle);
-            if (profile.getUUIDString().equals(VpnStatus.getLastConnectedVPNProfile())) {
-                subtitle.setText(mLastStatusMessage);
-                subtitle.setVisibility(View.VISIBLE);
-            } else {
-                subtitle.setText("");
-                subtitle.setVisibility(View.GONE);
-            }
-
-
-            return v;
-        }
     }
 
     private void startOrStopVPN(VpnProfile profile) {
@@ -141,21 +100,11 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         }
     }
 
-
-    private ArrayAdapter<VpnProfile> mArrayadapter;
-
-    protected VpnProfile mEditProfile = null;
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
-
-    // Shortcut version is increased to refresh all shortcuts
-    final static int SHORTCUT_VERSION = 1;
 
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     void updateDynamicShortcuts() {
@@ -267,28 +216,6 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                 .build();
     }
 
-    class MiniImageGetter implements ImageGetter {
-
-
-        @Override
-        public Drawable getDrawable(String source) {
-            Drawable d = null;
-            if ("ic_menu_add".equals(source))
-                d = getActivity().getResources().getDrawable(R.drawable.ic_menu_add_grey);
-            else if ("ic_menu_archive".equals(source))
-                d = getActivity().getResources().getDrawable(R.drawable.ic_menu_import_grey);
-
-
-            if (d != null) {
-                d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
-                return d;
-            } else {
-                return null;
-            }
-        }
-    }
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -334,55 +261,6 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         setListAdapter();
     }
 
-    static class VpnProfileNameComparator implements Comparator<VpnProfile> {
-
-        @Override
-        public int compare(VpnProfile lhs, VpnProfile rhs) {
-            if (lhs == rhs)
-                // Catches also both null
-                return 0;
-
-            if (lhs == null)
-                return -1;
-            if (rhs == null)
-                return 1;
-
-            if (lhs.mName == null)
-                return -1;
-            if (rhs.mName == null)
-                return 1;
-
-            return lhs.mName.compareTo(rhs.mName);
-        }
-
-    }
-
-    static class VpnProfileLRUComparator implements Comparator<VpnProfile> {
-
-        VpnProfileNameComparator nameComparator = new VpnProfileNameComparator();
-
-        @Override
-        public int compare(VpnProfile lhs, VpnProfile rhs) {
-            if (lhs == rhs)
-                // Catches also both null
-                return 0;
-
-            if (lhs == null)
-                return -1;
-            if (rhs == null)
-                return 1;
-
-            // Copied from Long.compare
-            if (lhs.mLastUsed > rhs.mLastUsed)
-                return -1;
-            if (lhs.mLastUsed < rhs.mLastUsed)
-                return 1;
-            else
-                return nameComparator.compare(lhs, rhs);
-        }
-    }
-
-
     private void setListAdapter() {
         if (mArrayadapter == null) {
             mArrayadapter = new VPNArrayAdapter(getActivity(), R.layout.vpn_list_item, R.id.vpn_item_title);
@@ -408,7 +286,6 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         mArrayadapter.notifyDataSetChanged();
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.add(0, MENU_ADD_PROFILE, 0, R.string.menu_add_profile)
@@ -429,8 +306,13 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                 .setTitleCondensed(getString(R.string.sort))
                 .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-    }
+        menu.add(0, MENU_IMPORT_AS, 0, R.string.import_from_as)
+                .setIcon(R.drawable.ic_menu_import)
+                .setAlphabeticShortcut('p')
+                .setTitleCondensed("Import AS")
+                .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -442,13 +324,21 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             return startImportConfigFilePicker();
         } else if (itemId == MENU_CHANGE_SORTING) {
             return changeSorting();
+        } else if (itemId == MENU_IMPORT_AS) {
+            return startASProfileImport();
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
 
+    private boolean startASProfileImport() {
+        ImportASConfig asImportFrag = ImportASConfig.newInstance();
+        asImportFrag.show(requireFragmentManager(), "dialog");
+        return true;
+    }
+
     private boolean changeSorting() {
-        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(getActivity());
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(requireActivity());
         boolean oldValue = prefs.getBoolean(PREF_SORT_BY_LRU, false);
         SharedPreferences.Editor prefsedit = prefs.edit();
         if (oldValue) {
@@ -477,7 +367,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
     private boolean startImportConfigFilePicker() {
         boolean startOldFileDialog = true;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !Utils.alwaysUseOldFileChooser(getActivity() ))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !Utils.alwaysUseOldFileChooser(getActivity()))
             startOldFileDialog = !startFilePicker();
 
         if (startOldFileDialog)
@@ -503,7 +393,6 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         intent.putExtra(FileSelect.WINDOW_TITLE, R.string.import_configuration_file);
         startActivityForResult(intent, SELECT_PROFILE);
     }
-
 
     private void onAddOrDuplicateProfile(final VpnProfile mCopyProfile) {
         Context context = getActivity();
@@ -560,7 +449,6 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         return ProfileManager.getInstance(getActivity());
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -612,7 +500,6 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         startActivityForResult(startImport, IMPORT_PROFILE);
     }
 
-
     private void editVPN(VpnProfile profile) {
         mEditProfile = profile;
         Intent vprefintent = new Intent(getActivity(), VPNPreferences.class)
@@ -629,5 +516,119 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
         intent.setAction(Intent.ACTION_MAIN);
         startActivity(intent);
+    }
+
+    static class VpnProfileNameComparator implements Comparator<VpnProfile> {
+
+        @Override
+        public int compare(VpnProfile lhs, VpnProfile rhs) {
+            if (lhs == rhs)
+                // Catches also both null
+                return 0;
+
+            if (lhs == null)
+                return -1;
+            if (rhs == null)
+                return 1;
+
+            if (lhs.mName == null)
+                return -1;
+            if (rhs.mName == null)
+                return 1;
+
+            return lhs.mName.compareTo(rhs.mName);
+        }
+
+    }
+
+    static class VpnProfileLRUComparator implements Comparator<VpnProfile> {
+
+        VpnProfileNameComparator nameComparator = new VpnProfileNameComparator();
+
+        @Override
+        public int compare(VpnProfile lhs, VpnProfile rhs) {
+            if (lhs == rhs)
+                // Catches also both null
+                return 0;
+
+            if (lhs == null)
+                return -1;
+            if (rhs == null)
+                return 1;
+
+            // Copied from Long.compare
+            if (lhs.mLastUsed > rhs.mLastUsed)
+                return -1;
+            if (lhs.mLastUsed < rhs.mLastUsed)
+                return 1;
+            else
+                return nameComparator.compare(lhs, rhs);
+        }
+    }
+
+    private class VPNArrayAdapter extends ArrayAdapter<VpnProfile> {
+
+        public VPNArrayAdapter(Context context, int resource,
+                               int textViewResourceId) {
+            super(context, resource, textViewResourceId);
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            View v = super.getView(position, convertView, parent);
+
+            final VpnProfile profile = (VpnProfile) getListAdapter().getItem(position);
+
+            View titleview = v.findViewById(R.id.vpn_list_item_left);
+            titleview.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startOrStopVPN(profile);
+                }
+            });
+
+            View settingsview = v.findViewById(R.id.quickedit_settings);
+            settingsview.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    editVPN(profile);
+
+                }
+            });
+
+            TextView subtitle = (TextView) v.findViewById(R.id.vpn_item_subtitle);
+            if (profile.getUUIDString().equals(VpnStatus.getLastConnectedVPNProfile())) {
+                subtitle.setText(mLastStatusMessage);
+                subtitle.setVisibility(View.VISIBLE);
+            } else {
+                subtitle.setText("");
+                subtitle.setVisibility(View.GONE);
+            }
+
+
+            return v;
+        }
+    }
+
+    class MiniImageGetter implements ImageGetter {
+
+
+        @Override
+        public Drawable getDrawable(String source) {
+            Drawable d = null;
+            if ("ic_menu_add".equals(source))
+                d = getActivity().getResources().getDrawable(R.drawable.ic_menu_add_grey);
+            else if ("ic_menu_archive".equals(source))
+                d = getActivity().getResources().getDrawable(R.drawable.ic_menu_import_grey);
+
+
+            if (d != null) {
+                d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+                return d;
+            } else {
+                return null;
+            }
+        }
     }
 }

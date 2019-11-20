@@ -37,6 +37,7 @@ import de.blinkt.openvpn.views.FileSelectLayout
 import de.blinkt.openvpn.views.FileSelectLayout.FileSelectCallback
 import java.io.*
 import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
 import java.util.*
 
 class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener {
@@ -511,7 +512,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
         // Read in the bytes
         var offset = 0
-        var bytesRead:Int
+        var bytesRead: Int
         do {
             bytesRead = input.read(bytes, offset, bytes.size - offset)
             offset += bytesRead
@@ -604,11 +605,13 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
     }
 
     private fun doImportIntent(intent: Intent) {
-        val data = intent.data
-        if (intent.action.equals(IMPORT_PROFILE_DATA))
-        if (data != null) {
-            mSourceUri = data
-            doImportUri(data)
+        if (intent.action.equals(IMPORT_PROFILE_DATA)) {
+            val data = intent.getStringExtra(Intent.EXTRA_TEXT)
+
+            if (data != null) {
+                startImportTask(Uri.fromParts("inline", "inlinetext", null),
+                        "imported profiles from AS", data);
+            }
         }
     }
 
@@ -650,12 +653,12 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
             possibleName = possibleName.replace(".conf", "")
         }
 
-        startImportTask(data, possibleName)
+        startImportTask(data, possibleName, "")
 
 
     }
 
-    private fun startImportTask(data: Uri, possibleName: String?) {
+    private fun startImportTask(data: Uri, possibleName: String?, inlineData:String) {
         mImportTask = object : AsyncTask<Void, Void, Int>() {
             private var mProgress: ProgressBar? = null
 
@@ -666,10 +669,16 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
             override fun doInBackground(vararg params: Void): Int? {
                 try {
-                    val `is` = contentResolver.openInputStream(data)
+                    var inputStream:InputStream?
+                    if (data.scheme.equals("inline")) {
+                        inputStream = inlineData.byteInputStream()
+                    } else {
+                        inputStream = contentResolver.openInputStream(data)
+                    }
 
-                    doImport(`is`)
-                    `is`!!.close()
+                    if (inputStream != null) {
+                        doImport(inputStream)
+                    }
                     if (mResult == null)
                         return -3
                 } catch (se: IOException) {
@@ -738,10 +747,10 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         mLogLayout.addView(view, mLogLayout.childCount - 1)
     }
 
-    private fun doImport(`is`: InputStream?) {
+    private fun doImport(inputStream: InputStream) {
         val cp = ConfigParser()
         try {
-            val isr = InputStreamReader(`is`!!)
+            val isr = InputStreamReader(inputStream)
 
             cp.parseConfig(isr)
             mResult = cp.convertProfile()
@@ -757,8 +766,9 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         }
 
         mResult = null
-
+        inputStream.close()
     }
+
 
     private fun displayWarnings() {
         if (mResult!!.mUseCustomConfig) {

@@ -280,7 +280,6 @@ class ImportASConfig : DialogFragment() {
                                         .setPositiveButton("Trust") { _, _ -> addPinnedCert(requireContext(), asProfileUri.host(), fp) }
                                         .setNegativeButton("Do not trust", null)
                                         .show()
-                                Toast.makeText(requireContext(), "Found cert with FP ${fp}: ${firstCert.subjectDN.toString()}", Toast.LENGTH_LONG).show()
                             }
                         }
                     }

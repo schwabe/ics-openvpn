@@ -24,9 +24,9 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.ListView
-import android.widget.SearchView
 import android.widget.Switch
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 
 import java.util.Collections
@@ -107,6 +107,8 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
 
         super.onCreateOptionsMenu(menu, inflater)
     }
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.allowed_vpn_apps, container, false)

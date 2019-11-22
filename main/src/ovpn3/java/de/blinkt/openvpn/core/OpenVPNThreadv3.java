@@ -13,6 +13,7 @@ import net.openvpn.ovpn3.ClientAPI_DynamicChallenge;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 import static de.blinkt.openvpn.VpnProfile.AUTH_RETRY_NOINTERACT;
 
@@ -228,6 +229,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
             pkcs1padding = true;
         else if (signreq.getAlgorithm().equals("RSA_NO_PADDING"))
             pkcs1padding = false;
+        else if (signreq.getAlgorithm().equals("ECDSA"))
+            pkcs1padding = false;
         else
             throw new IllegalArgumentException("Illegal padding in sign request" + signreq.getAlgorithm());
         signreq.setSig(mVp.getSignedData(mService, signreq.getData(), pkcs1padding));
@@ -288,6 +291,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
             } else {
                 VpnStatus.logInfo(R.string.info_from_server, info);
             }
+        } else if (name.equals("COMPRESSION_ENABLED")) {
+            VpnStatus.logInfo(String.format(Locale.US, "%s: %s", name, info));
         } else {
             VpnStatus.updateStateString(name, info);
         }

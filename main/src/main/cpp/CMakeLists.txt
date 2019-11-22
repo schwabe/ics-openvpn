@@ -192,6 +192,7 @@ set(openvpn_srcs
         src/openvpn/ssl.c
         src/openvpn/ssl_openssl.c
         src/openvpn/ssl_mbedtls.c
+        src/openvpn/ssl_ncp.c
         src/openvpn/ssl_verify.c
         src/openvpn/ssl_verify_openssl.c
         src/openvpn/ssl_verify_mbedtls.c

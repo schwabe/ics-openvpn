@@ -50,7 +50,7 @@ android {
 
         externalNativeBuild {
             cmake {
-                //arguments = listOf("-DANDROID_TOOLCHAIN=clang",
+                //arguments += listOf("-DANDROID_TOOLCHAIN=clang",
                 //        "-DANDROID_STL=c++_static")
             }
         }

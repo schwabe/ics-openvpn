@@ -6,11 +6,8 @@
 plugins {
     id("com.android.application")
     id("checkstyle")
-}
-
-apply {
-    plugin("kotlin-android")
-    plugin("kotlin-android-extensions")
+    kotlin("android")
+    kotlin("android.extensions")
 }
 
 repositories {

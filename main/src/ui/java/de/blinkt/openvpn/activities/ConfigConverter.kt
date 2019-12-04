@@ -612,6 +612,13 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
                 startImportTask(Uri.fromParts("inline", "inlinetext", null),
                         "imported profiles from AS", data);
             }
+        } else if (intent.action.equals(IMPORT_PROFILE)) {
+            val data = intent.data
+            if (data != null) {
+                mSourceUri = data
+                doImportUri(data)
+
+            }
         }
     }
 
@@ -658,7 +665,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
     }
 
-    private fun startImportTask(data: Uri, possibleName: String?, inlineData:String) {
+    private fun startImportTask(data: Uri, possibleName: String?, inlineData: String) {
         mImportTask = object : AsyncTask<Void, Void, Int>() {
             private var mProgress: ProgressBar? = null
 
@@ -669,7 +676,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
             override fun doInBackground(vararg params: Void): Int? {
                 try {
-                    var inputStream:InputStream?
+                    var inputStream: InputStream?
                     if (data.scheme.equals("inline")) {
                         inputStream = inlineData.byteInputStream()
                     } else {
@@ -763,10 +770,11 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         } catch (e: ConfigParseError) {
             log(R.string.error_reading_config_file)
             log(e.localizedMessage)
+        } finally {
+            inputStream.close()
         }
 
         mResult = null
-        inputStream.close()
     }
 
 

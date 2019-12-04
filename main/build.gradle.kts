@@ -10,6 +10,10 @@ plugins {
     kotlin("android.extensions")
 }
 
+configure<CheckstyleExtension> {
+    isShowViolations = true
+}
+
 repositories {
     jcenter()
     maven(url = "https://jitpack.io")

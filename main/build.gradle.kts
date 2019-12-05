@@ -13,13 +13,6 @@ apply {
     plugin("kotlin-android-extensions")
 }
 
-repositories {
-    jcenter()
-    maven(url = "https://jitpack.io")
-    google()
-}
-
-
 val openvpn3SwigFiles = File(buildDir, "generated/source/ovpn3swig/ovpn3")
 
 tasks.register<Exec>("generateOpenVPN3Swig")

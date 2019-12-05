@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="choose_file">Choose file</string>
+    <string name="config_file_missing">Config file is missing</string>
+    <string name="start_vpn">Start vpn</string>
+    <string name="config_file_loaded">Config file loaded</string>
+</resources>

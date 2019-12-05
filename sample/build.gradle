@@ -20,4 +20,5 @@ android {
 }
 
 dependencies {
+    implementation project(':client')
 }

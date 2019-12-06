@@ -6,11 +6,8 @@
 plugins {
     id("com.android.application")
     id("checkstyle")
-}
-
-apply {
-    plugin("kotlin-android")
-    plugin("kotlin-android-extensions")
+    kotlin("android")
+    kotlin("android.extensions")
 }
 
 android {
@@ -95,7 +92,6 @@ android {
         }
     }
 
-
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_1_8
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -103,11 +99,10 @@ android {
 
     splits {
         abi {
-            setEnable(true)
+            isEnable = true
             reset()
             include("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
-            setUniversalApk(true)
-
+            isUniversalApk = true
         }
     }
 }

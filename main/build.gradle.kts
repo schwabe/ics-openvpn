@@ -57,7 +57,17 @@ android {
     }
 
     signingConfigs {
-        create("release") {}
+        create("release") {
+            // ~/.gradle/gradle.properties
+            val keystoreFile: String? by project
+            storeFile = keystoreFile?.let { file(it) }
+            val keystorePassword: String? by project
+            storePassword = keystorePassword
+            val keystoreAliasPassword: String? by project
+            keyPassword = keystoreAliasPassword
+            val keystoreAlias: String? by project
+            keyAlias = keystoreAlias
+        }
     }
 
     lintOptions {
@@ -132,20 +142,7 @@ dependencies {
     testImplementation("org.mockito:mockito-core:3.1.0")
     testImplementation("org.robolectric:robolectric:4.3.1")
 }
-// ~/.gradle/gradle.properties
-if (project.hasProperty("keystoreFile") &&
-        project.hasProperty("keystorePassword") &&
-        project.hasProperty("keystoreAliasPassword")) {
-    android.signingConfigs.getByName("release") {
-        storeFile = file(project.properties["keystoreFile"] as String)
-        storePassword = project.properties["keystorePassword"] as String
-        keyPassword = project.properties["keystoreAliasPassword"] as String
-        keyAlias = project.properties["keystoreAlias"] as String
-    }
-} else {
-    logger.warn("Release signing config not found. Using debug signing instead.")
-    android.buildTypes.getByName("release").signingConfig = android.signingConfigs.getByName("debug")
-}
+
 
 /* swig magic for building openvpn3 */
 fun getOpenvpn3SwigFiles(): File {

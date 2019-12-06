@@ -13,25 +13,6 @@ apply {
     plugin("kotlin-android-extensions")
 }
 
-val openvpn3SwigFiles = File(buildDir, "generated/source/ovpn3swig/ovpn3")
-
-tasks.register<Exec>("generateOpenVPN3Swig")
-{
-    var swigcmd = "swig"
-    // Workaround for Mac OS X since it otherwise does not find swig and I cannot get
-    // the Exec task to respect the PATH environment :(
-    if (File("/usr/local/bin/swig").exists())
-        swigcmd = "/usr/local/bin/swig"
-
-    doFirst {
-        mkdir(openvpn3SwigFiles)
-    }
-    commandLine(listOf(swigcmd, "-outdir", openvpn3SwigFiles, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
-            "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
-            "-o", "${openvpn3SwigFiles}/ovpncli_wrap.cxx", "-oh", "${openvpn3SwigFiles}/ovpncli_wrap.h",
-            "src/main/cpp/openvpn3/javacli/ovpncli.i"))
-}
-
 android {
     compileSdkVersion(29)
 
@@ -61,7 +42,7 @@ android {
         }
 
         create("ui") {
-            java.srcDirs("src/ovpn3/java/", openvpn3SwigFiles)
+            java.srcDirs("src/ovpn3/java/", getOpenvpn3SwigFiles())
         }
         create("skeleton") {
         }
@@ -121,6 +102,36 @@ android {
     }
 }
 
+dependencies {
+    val preferenceVersion = "1.1.0"
+    val coreVersion = "1.1.0"
+    val materialVersion = "1.0.0"
+
+    implementation("androidx.annotation:annotation:1.1.0")
+    implementation("androidx.core:core:1.1.0")
+
+    // Is there a nicer way to do this?
+    dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:1.1.3")
+    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
+    dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
+    dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.0.0")
+    dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.1.0")
+    dependencies.add("uiImplementation", "com.github.PhilJay:MPAndroidChart:v3.1.0")
+    dependencies.add("uiImplementation", "com.squareup.okhttp3:okhttp:3.2.0")
+    dependencies.add("uiImplementation", "androidx.core:core:$coreVersion")
+    dependencies.add("uiImplementation", "androidx.core:core-ktx:$coreVersion")
+    dependencies.add("uiImplementation", "org.jetbrains.anko:anko-commons:0.10.4")
+    dependencies.add("uiImplementation", "androidx.fragment:fragment-ktx:1.1.0")
+    dependencies.add("uiImplementation", "androidx.preference:preference:$preferenceVersion")
+    dependencies.add("uiImplementation", "androidx.preference:preference-ktx:$preferenceVersion")
+    dependencies.add("uiImplementation", "com.google.android.material:material:$materialVersion")
+
+
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
+    testImplementation("junit:junit:4.12")
+    testImplementation("org.mockito:mockito-core:3.1.0")
+    testImplementation("org.robolectric:robolectric:4.3.1")
+}
 // ~/.gradle/gradle.properties
 if (project.hasProperty("keystoreFile") &&
         project.hasProperty("keystorePassword") &&
@@ -136,6 +147,27 @@ if (project.hasProperty("keystoreFile") &&
     android.buildTypes.getByName("release").signingConfig = android.signingConfigs.getByName("debug")
 }
 
+/* swig magic for building openvpn3 */
+fun getOpenvpn3SwigFiles(): File {
+    return File(buildDir, "generated/source/ovpn3swig/ovpn3")
+}
+
+tasks.register<Exec>("generateOpenVPN3Swig")
+{
+    var swigcmd = "swig"
+    // Workaround for Mac OS X since it otherwise does not find swig and I cannot get
+    // the Exec task to respect the PATH environment :(
+    if (File("/usr/local/bin/swig").exists())
+        swigcmd = "/usr/local/bin/swig"
+
+    doFirst {
+        mkdir(getOpenvpn3SwigFiles())
+    }
+    commandLine(listOf(swigcmd, "-outdir", getOpenvpn3SwigFiles(), "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
+            "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
+            "-o", "${getOpenvpn3SwigFiles()}/ovpncli_wrap.cxx", "-oh", "${getOpenvpn3SwigFiles()}/ovpncli_wrap.h",
+            "src/main/cpp/openvpn3/javacli/ovpncli.i"))
+}
 
 /* Hack-o-rama but it works good enough and documentation is surprisingly sparse */
 
@@ -146,41 +178,4 @@ val assembleTask = tasks.getByName("assemble")
 assembleTask.dependsOn(swigTask)
 preBuildTask.dependsOn(swigTask)
 
-/* Normally you would put these on top but then it errors out on unknown configurations */
-dependencies {
-    val preference_version = "1.1.0"
-    val core_version = "1.1.0"
-    val material_version = "1.0.0"
-
-    implementation("androidx.annotation:annotation:1.1.0")
-    implementation("androidx.core:core:1.1.0")
-
-    // Is there a nicer way to do this?
-    dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:1.1.3")
-    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
-    dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
-    dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.0.0")
-    dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.1.0")
-    dependencies.add("uiImplementation", "com.github.PhilJay:MPAndroidChart:v3.1.0")
-    dependencies.add("uiImplementation", "com.squareup.okhttp3:okhttp:3.2.0")
-    dependencies.add("uiImplementation", "androidx.core:core:$core_version")
-    dependencies.add("uiImplementation", "androidx.core:core-ktx:$core_version")
-
-    dependencies.add("uiImplementation", "org.jetbrains.anko:anko-commons:0.10.4")
-
-    dependencies.add("uiImplementation", "androidx.fragment:fragment-ktx:1.1.0")
-
-
-    dependencies.add("uiImplementation", "androidx.preference:preference:$preference_version")
-    dependencies.add("uiImplementation", "androidx.preference:preference-ktx:$preference_version")
-
-    dependencies.add("uiImplementation", "com.google.android.material:material:$material_version")
-
-
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
-
-    testImplementation("junit:junit:4.12")
-    testImplementation("org.mockito:mockito-core:3.1.0")
-    testImplementation("org.robolectric:robolectric:4.3.1")
-}
 

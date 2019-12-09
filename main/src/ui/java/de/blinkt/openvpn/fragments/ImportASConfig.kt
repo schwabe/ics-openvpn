@@ -12,6 +12,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.TrafficStats
 import android.os.Bundle
+import android.text.InputType
 import android.util.Base64
 import android.util.Base64.NO_WRAP
 import android.util.Log
@@ -27,11 +28,12 @@ import okhttp3.internal.tls.OkHostnameVerifier
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.runOnUiThread
 import java.io.IOException
-import java.lang.Exception
 import java.security.MessageDigest
 import java.security.cert.CertPathValidatorException
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
+import java.util.concurrent.TimeUnit
+import java.util.regex.Pattern
 import javax.net.ssl.*
 
 class BasicAuthInterceptor(user: String, password: String) : Interceptor {
@@ -123,6 +125,7 @@ class ImportASConfig : DialogFragment() {
 
         val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(BasicAuthInterceptor(user, password))
+                .connectTimeout(15, TimeUnit.SECONDS)
 
         /* Rely on system certificates if we do not have the host pinned */
         if (pinnedHosts.contains(hostname)) {
@@ -158,6 +161,20 @@ class ImportASConfig : DialogFragment() {
         pinnedHosts.add(host)
 
         pedit.putString("pin-${host}", "sha256/${fp}")
+
+        pedit.putStringSet("pinnedHosts", pinnedHosts)
+
+        pedit.apply()
+    }
+
+    internal fun removedPinnedCert(c: Context, host: String) {
+        val prefs = c.getSharedPreferences("pinnedCerts", Context.MODE_PRIVATE)
+        val pedit = prefs.edit()
+        val pinnedHosts: MutableSet<String> = prefs.getStringSet("pinnedHosts", mutableSetOf<String>())!!
+
+        pinnedHosts.remove(host)
+
+        pedit.remove("pin-${host}")
 
         pedit.putStringSet("pinnedHosts", pinnedHosts)
 
@@ -219,13 +236,15 @@ class ImportASConfig : DialogFragment() {
 
             d.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener()
             { _ ->
-                doAsImport()
+                doAsImport(asUsername.text.toString(), asPassword.text.toString())
             }
         }
         return dialog
     }
 
-    internal fun doAsImport() {
+    val crvMessage = Pattern.compile(".*<Message>CRV1:R,E:(.*):(.*):(.*)</Message>.*", Pattern.DOTALL)
+
+    internal fun doAsImport(user: String, password: String) {
         val ab = AlertDialog.Builder(requireContext())
         ab.setTitle("Downloading profile")
         ab.setMessage("Please wait")
@@ -236,14 +255,22 @@ class ImportASConfig : DialogFragment() {
         doAsync {
             var e: Exception? = null
             try {
-                val response = fetchProfile(requireContext(), asProfileUri,
-                        asUsername.text.toString(), asPassword.text.toString())
+                val response = fetchProfile(requireContext(), asProfileUri, user, password)
+
 
                 if (response == null) {
                     throw Exception("No Response from Server")
+                }
+
+                val profile = response.body().string()
+                if (response.code() == 401 && crvMessage.matcher(profile).matches()) {
+                    requireContext().runOnUiThread {
+                        pleaseWait?.dismiss()
+                        showCRDialog(profile, asProfileUri)
+                    }
                 } else if (response.isSuccessful) {
-                    val profile = response.body().string()
-                    activity?.runOnUiThread() {
+
+                    activity?.runOnUiThread {
                         pleaseWait?.dismiss()
                         val startImport = Intent(activity, ConfigConverter::class.java)
                         startImport.action = ConfigConverter.IMPORT_PROFILE_DATA
@@ -252,10 +279,11 @@ class ImportASConfig : DialogFragment() {
                         dismiss()
                     }
                 } else {
-                    throw Exception("Invalid Response from server: \n${response.code()} ${response.message()} \n\n ${response.body().string()}")
+                    throw Exception("Invalid Response from server: \n${response.code()} ${response.message()} \n\n ${profile}")
                 }
 
             } catch (ce: SSLHandshakeException) {
+                e = ce
                 // Find out if we are in the non trust path
                 if (ce.cause is CertificateException && ce.cause != null) {
                     val certExp: CertificateException = (ce.cause as CertificateException)
@@ -281,10 +309,22 @@ class ImportASConfig : DialogFragment() {
                                         .setNegativeButton("Do not trust", null)
                                         .show()
                             }
+                            e = null
                         }
+                    } else if (ce.message != null && ce.message!!.contains("Certificate pinning failure")) {
+                        requireContext().runOnUiThread {
+                            pleaseWait?.dismiss()
+
+                            AlertDialog.Builder(requireContext())
+                                    .setTitle("Different certificate than trusted certificate from server")
+                                    .setMessage(ce.message)
+                                    .setNegativeButton(android.R.string.ok, null)
+                                    .setPositiveButton("Forget pinned certificate", { _, _ -> removedPinnedCert(requireContext(), asProfileUri.host()) })
+                                    .show();
+                        }
+                        e = null
+
                     }
-                } else {
-                    e = ce
                 }
             } catch (ge: Exception) {
                 e = ge
@@ -300,6 +340,34 @@ class ImportASConfig : DialogFragment() {
                 }
             }
         }
+    }
+
+    private fun showCRDialog(response: String, asProfileUri: HttpUrl) {
+        // This is a dirty hack instead of properly parsing the response
+        val m = crvMessage.matcher(response)
+        // We already know that it matches
+        m.matches()
+        var challenge = m.group(1)
+        var username = m.group(2)
+        val message = m.group(3)
+
+        username = String(Base64.decode(username, Base64.DEFAULT))
+
+        val pwprefix = "CRV1::${challenge}::"
+
+        val entry = EditText(context)
+        entry.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+
+        AlertDialog.Builder(requireContext())
+                .setTitle("Server request challenge/response authentication")
+                .setMessage("Challenge: " + message)
+                .setView(entry)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.import_config) { _,_ ->
+                    doAsImport(username, pwprefix + entry.text.toString())
+                }
+                .show()
+
     }
 
 

@@ -79,20 +79,29 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="AppTabLayout" parent="Widget.Design.TabLayout">
+    <style name="blinkt.tabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">?attr/colorAccent</item>
         <item name="tabIndicatorHeight">4dp</item>
-        <item name="tabPaddingStart">2dp</item>
-        <item name="tabPaddingEnd">2dp</item>
+
 
         <item name="tabBackground">@color/primary</item>
         <item name="tabTextAppearance">@style/AppTabTextAppearance</item>
         <item name="tabSelectedTextColor">@android:color/white</item>
+
+        <!--        <item name="tabPaddingStart">10dp</item>-->
+        <!--        <item name="tabPaddingEnd">10dp</item>-->
+
+
+        <item name="tabGravity">fill</item>
+        <item name="tabMaxWidth">0dp</item>
+
     </style>
 
-    <!-- for text -->
     <style name="AppTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/tab_text</item>
     </style>
+
 
 </resources>

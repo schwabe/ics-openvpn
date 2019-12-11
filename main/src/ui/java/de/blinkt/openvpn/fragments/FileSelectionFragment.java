@@ -5,7 +5,6 @@
 
 package de.blinkt.openvpn.fragments;
 
-import android.app.ListFragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,6 +19,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.ListFragment;
 
 import java.io.File;
 import java.util.ArrayList;

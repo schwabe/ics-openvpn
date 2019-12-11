@@ -8,26 +8,26 @@ package de.blinkt.openvpn.activities;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Base64;
-import android.widget.Toast;
+
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.tabs.TabLayout;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
@@ -46,8 +46,8 @@ public class FileSelect extends BaseActivity {
     private FileSelectionFragment mFSFragment;
 	private InlineFileTab mInlineFragment;
 	private String mData;
-	private Tab inlineFileTab;
-	private Tab fileExplorerTab;
+	private ActionBar.Tab inlineFileTab;
+	private ActionBar.Tab fileExplorerTab;
 	private boolean mNoInline;
 	private boolean mShowClear;
 	private boolean mBase64Encode;
@@ -76,18 +76,18 @@ public class FileSelect extends BaseActivity {
 		mShowClear = getIntent().getBooleanExtra(SHOW_CLEAR_BUTTON, false);
 		mBase64Encode = getIntent().getBooleanExtra(DO_BASE64_ENCODE, false);
 
-		ActionBar bar = getActionBar();
+		ActionBar bar = getSupportActionBar();
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		fileExplorerTab = bar.newTab().setText(R.string.file_explorer_tab);
 		inlineFileTab = bar.newTab().setText(R.string.inline_file_tab);
 
 		mFSFragment = new FileSelectionFragment();
-		fileExplorerTab.setTabListener(new MyTabsListener<FileSelectionFragment>(this, mFSFragment));
+		fileExplorerTab.setTabListener(new MyTabsListener<FileSelectionFragment>(mFSFragment));
 		bar.addTab(fileExplorerTab);
 
 		if(!mNoInline) {
 			mInlineFragment = new InlineFileTab();
-			inlineFileTab.setTabListener(new MyTabsListener<InlineFileTab>(this, mInlineFragment));
+			inlineFileTab.setTabListener(new MyTabsListener<InlineFileTab>( mInlineFragment));
 			bar.addTab(inlineFileTab);
 		} else {
 			mFSFragment.setNoInLine();
@@ -114,7 +114,7 @@ public class FileSelect extends BaseActivity {
 				finish();
 			} else {
 				if (fileExplorerTab!=null)
-					getActionBar().removeTab(fileExplorerTab);
+					getSupportActionBar().removeTab(fileExplorerTab);
 			}
 		} else {
 			mFSFragment.refresh();
@@ -133,11 +133,11 @@ public class FileSelect extends BaseActivity {
 		private Fragment mFragment;
 		private boolean mAdded=false;
 
-		public MyTabsListener( Activity activity, Fragment fragment){
+		public MyTabsListener(Fragment fragment){
 			this.mFragment = fragment;
 		}
 
-		public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 			// Check if the fragment is already initialized
 			if (!mAdded) {
 				// If not, instantiate and add it to the activity
@@ -150,12 +150,12 @@ public class FileSelect extends BaseActivity {
 		}
 
 		@Override
-		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
 			ft.detach(mFragment);
 		}
 
 		@Override
-		public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
 		}
 	}
@@ -183,7 +183,7 @@ public class FileSelect extends BaseActivity {
 			fe =e;
 		}
 		if(fe!=null) {
-			Builder ab = new AlertDialog.Builder(this);
+			AlertDialog.Builder ab = new AlertDialog.Builder(this);
 			ab.setTitle(R.string.error_importing_file);
 			ab.setMessage(getString(R.string.import_error_message) + "\n" + fe.getLocalizedMessage());
 			ab.setPositiveButton(android.R.string.ok, null);

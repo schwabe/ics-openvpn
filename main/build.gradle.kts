@@ -65,6 +65,7 @@ android {
             val keystoreAlias: String? by project
             keyAlias = keystoreAlias
         }
+
     }
 
     lintOptions {
@@ -75,7 +76,12 @@ android {
 
     buildTypes {
         getByName("release") {
-            signingConfig = signingConfigs.getByName("release")
+            if (project.hasProperty("icsopenvpnDebugSign")) {
+                logger.warn("property icsopenvpnDebugSign set, using debug signing for release")
+                signingConfig = android.signingConfigs.getByName("debug")
+            } else {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 

@@ -9,8 +9,19 @@
 
     <application tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.NotImplemented"
             tools:ignore="ExportedActivity" />
+
+        <activity-alias
+                android:name=".activities.LogWindow"
+                android:targetActivity=".activities.NotImplemented"
+            />
+
+        <activity-alias
+                android:name=".activities.Req"
+                android:targetActivity=".activities.NotImplemented"
+                />
+
     </application>
 
 </manifest>

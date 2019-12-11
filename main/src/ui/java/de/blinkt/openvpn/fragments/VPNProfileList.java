@@ -53,10 +53,12 @@ import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.activities.FileSelect;
 import de.blinkt.openvpn.activities.VPNPreferences;
 import de.blinkt.openvpn.core.ConnectionStatus;
+import de.blinkt.openvpn.core.PasswordDialogFragment;
 import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
 
+import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
 import static de.blinkt.openvpn.core.OpenVPNService.DISCONNECT_VPN;
 
 
@@ -80,11 +82,21 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private ArrayAdapter<VpnProfile> mArrayadapter;
 
     @Override
-    public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level) {
+    public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level, Intent intent) {
         requireActivity().runOnUiThread(() -> {
             mLastStatusMessage = VpnStatus.getLastCleanLogMessage(getActivity());
             mArrayadapter.notifyDataSetChanged();
+            showUserRequestDialogIfNeeded(level, intent);
         });
+    }
+
+    private void showUserRequestDialogIfNeeded(ConnectionStatus level, Intent intent) {
+        if (level == LEVEL_WAITING_FOR_USER_INPUT) {
+            PasswordDialogFragment pwInputFrag = PasswordDialogFragment.Companion.newInstance(intent, false);
+
+            pwInputFrag.show(requireFragmentManager(), "dialog");
+
+        }
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -650,7 +651,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 
 
     @Override
-    public void updateState(final String status, final String logMessage, final int resId, final ConnectionStatus level) {
+    public void updateState(final String status, final String logMessage, final int resId, final ConnectionStatus level, Intent intent) {
         if (isAdded()) {
             final String cleanLogMessage = VpnStatus.getLastCleanLogMessage(getActivity());
 

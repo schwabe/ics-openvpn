@@ -5,7 +5,9 @@
 
 package de.blinkt.openvpn.core;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -15,14 +17,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.LinkedList;
 import java.util.Locale;
-import java.util.Queue;
 import java.util.Vector;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
-import android.util.Log;
-import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
-import de.blinkt.openvpn.VpnProfile;
 
 public class VpnStatus {
 
@@ -39,6 +36,8 @@ public class VpnStatus {
 
     private static int mLastStateresid = R.string.state_noprocess;
 
+    private static Intent mLastIntent = null;
+
     private static HandlerThread mHandlerThread;
 
     private static String mLastConnectedVPNUUID;
@@ -47,6 +46,7 @@ public class VpnStatus {
 
 
     public static TrafficHistory trafficHistory;
+
 
     public static void logException(LogLevel ll, String context, Exception e) {
         StringWriter sw = new StringWriter();
@@ -216,7 +216,7 @@ public class VpnStatus {
     }
 
     public interface StateListener {
-        void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level);
+        void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level, Intent Intent);
 
         void setConnectedVPN(String uuid);
     }
@@ -272,7 +272,7 @@ public class VpnStatus {
         if (!stateListener.contains(sl)) {
             stateListener.add(sl);
             if (mLaststate != null)
-                sl.updateState(mLaststate, mLaststatemsg, mLastStateresid, mLastLevel);
+                sl.updateState(mLaststate, mLaststatemsg, mLastStateresid, mLastLevel, mLastIntent);
         }
     }
 
@@ -366,12 +366,21 @@ public class VpnStatus {
     }
 
     static void updateStateString(String state, String msg) {
+        // We want to skip announcing that we are trying to get the configuration since
+        // this is just polling until the user input has finished.be
+        if (mLastLevel == ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT && state.equals("GET_CONFIG"))
+            return;
         int rid = getLocalizedState(state);
         ConnectionStatus level = getLevel(state);
         updateStateString(state, msg, rid, level);
     }
 
-    public synchronized static void updateStateString(String state, String msg, int resid, ConnectionStatus level) {
+    public synchronized static void updateStateString(String state, String msg, int resid, ConnectionStatus level)
+    {
+        updateStateString(state, msg, resid, level, null);
+    }
+
+    public synchronized static void updateStateString(String state, String msg, int resid, ConnectionStatus level, Intent intent) {
         // Workound for OpenVPN doing AUTH and wait and being connected
         // Simply ignore these state
         if (mLastLevel == ConnectionStatus.LEVEL_CONNECTED &&
@@ -384,10 +393,11 @@ public class VpnStatus {
         mLaststatemsg = msg;
         mLastStateresid = resid;
         mLastLevel = level;
+        mLastIntent = intent;
 
 
         for (StateListener sl : stateListener) {
-            sl.updateState(state, msg, resid, level);
+            sl.updateState(state, msg, resid, level, intent);
         }
         //newLogItem(new LogItem((LogLevel.DEBUG), String.format("New OpenVPN Status (%s->%s): %s",state,level.toString(),msg)));
     }

@@ -27,9 +27,11 @@ import de.blinkt.openvpn.views.ScreenSlidePagerAdapter;
 
 public class MainActivity extends BaseActivity {
 
+    private static final String FEATURE_TELEVISION = "android.hardware.type.television";
+    private static final String FEATURE_LEANBACK = "android.software.leanback";
+    //private TabLayout mTabs;
     private ViewPager mPager;
     private ScreenSlidePagerAdapter mPagerAdapter;
-    //private TabLayout mTabs;
 
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +44,7 @@ public class MainActivity extends BaseActivity {
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), this);
 
         /* Toolbar and slider should have the same elevation */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            disableToolbarElevation();
-        }
+        disableToolbarElevation();
 
 
         mPagerAdapter.addTab(R.string.vpn_list_title, VPNProfileList.class);
@@ -68,11 +68,8 @@ public class MainActivity extends BaseActivity {
         //mTabs.setViewPager(mPager);
     }
 
-    private static final String FEATURE_TELEVISION = "android.hardware.type.television";
-    private static final String FEATURE_LEANBACK = "android.software.leanback";
-
     private boolean isDirectToTV() {
-        return(getPackageManager().hasSystemFeature(FEATURE_TELEVISION)
+        return (getPackageManager().hasSystemFeature(FEATURE_TELEVISION)
                 || getPackageManager().hasSystemFeature(FEATURE_LEANBACK));
     }
 
@@ -85,7 +82,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (getIntent()!=null) {
+        if (getIntent() != null) {
             String page = getIntent().getStringExtra("PAGE");
             if ("graph".equals(page)) {
                 mPager.setCurrentItem(1);
@@ -96,13 +93,13 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu,menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.show_log){
+        if (item.getItemId() == R.id.show_log) {
             Intent showLog = new Intent(this, LogWindow.class);
             startActivity(showLog);
         }
@@ -110,14 +107,13 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-		System.out.println(data);
+        System.out.println(data);
 
 
-	}
-
+    }
 
 
 }

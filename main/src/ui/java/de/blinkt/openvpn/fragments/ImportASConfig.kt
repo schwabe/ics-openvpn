@@ -266,7 +266,7 @@ class ImportASConfig : DialogFragment() {
                 if (response.code() == 401 && crvMessage.matcher(profile).matches()) {
                     requireContext().runOnUiThread {
                         pleaseWait?.dismiss()
-                        showCRDialog(profile, asProfileUri)
+                        showCRDialog(profile)
                     }
                 } else if (response.isSuccessful) {
 
@@ -342,12 +342,12 @@ class ImportASConfig : DialogFragment() {
         }
     }
 
-    private fun showCRDialog(response: String, asProfileUri: HttpUrl) {
+    private fun showCRDialog(response: String) {
         // This is a dirty hack instead of properly parsing the response
         val m = crvMessage.matcher(response)
         // We already know that it matches
         m.matches()
-        var challenge = m.group(1)
+        val challenge = m.group(1)
         var username = m.group(2)
         val message = m.group(3)
 

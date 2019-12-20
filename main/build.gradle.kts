@@ -1,3 +1,5 @@
+import com.android.build.gradle.api.ApplicationVariant
+
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
@@ -36,20 +38,19 @@ android {
     sourceSets {
         getByName("main") {
             assets.srcDirs("src/main/assets", "build/ovpnassets")
+
         }
 
         create("ui") {
-            java.srcDirs("src/ovpn3/java/", getOpenvpn3SwigFiles())
         }
+
         create("skeleton") {
         }
 
         getByName("debug") {
-
         }
 
         getByName("release") {
-
         }
     }
 
@@ -111,7 +112,44 @@ android {
             isUniversalApk = true
         }
     }
+
+
 }
+
+var swigcmd = "swig"
+// Workaround for Mac OS X since it otherwise does not find swig and I cannot get
+// the Exec task to respect the PATH environment :(
+if (File("/usr/local/bin/swig").exists())
+    swigcmd = "/usr/local/bin/swig"
+
+
+fun registerGenTask(variantName: String, variantDirName: String): File {
+    val baseDir = File(buildDir, "generated/source/ovpn3swig/${variantDirName}")
+    val genDir = File(baseDir, "net/openvpn/ovpn3")
+
+    tasks.register<Exec>("generateOpenVPN3Swig${variantName}")
+    {
+
+        doFirst {
+            mkdir(genDir)
+        }
+        commandLine(listOf(swigcmd, "-outdir", genDir, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
+                "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
+                "-o", "${genDir}/ovpncli_wrap.cxx", "-oh", "${genDir}/ovpncli_wrap.h",
+                "src/main/cpp/openvpn3/javacli/ovpncli.i"))
+    }
+    return baseDir
+}
+
+android.applicationVariants.all(object : Action<ApplicationVariant> {
+    override fun execute(variant: ApplicationVariant) {
+        val sourceDir = registerGenTask(variant.name, variant.baseName.replace("-", "/"))
+        val task = tasks.named("generateOpenVPN3Swig${variant.name}").get()
+
+        variant.registerJavaGeneratingTask(task, sourceDir)
+    }
+})
+
 
 dependencies {
     val preferenceVersion = "1.1.0"
@@ -140,40 +178,6 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
     testImplementation("junit:junit:4.12")
-    testImplementation("org.mockito:mockito-core:3.2.0")
+    testImplementation("org.mockito:mockito-core:3.2.4")
     testImplementation("org.robolectric:robolectric:4.3.1")
 }
-
-
-/* swig magic for building openvpn3 */
-fun getOpenvpn3SwigFiles(): File {
-    return File(buildDir, "generated/source/ovpn3swig/ovpn3")
-}
-
-tasks.register<Exec>("generateOpenVPN3Swig")
-{
-    var swigcmd = "swig"
-    // Workaround for Mac OS X since it otherwise does not find swig and I cannot get
-    // the Exec task to respect the PATH environment :(
-    if (File("/usr/local/bin/swig").exists())
-        swigcmd = "/usr/local/bin/swig"
-
-    doFirst {
-        mkdir(getOpenvpn3SwigFiles())
-    }
-    commandLine(listOf(swigcmd, "-outdir", getOpenvpn3SwigFiles(), "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
-            "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
-            "-o", "${getOpenvpn3SwigFiles()}/ovpncli_wrap.cxx", "-oh", "${getOpenvpn3SwigFiles()}/ovpncli_wrap.h",
-            "src/main/cpp/openvpn3/javacli/ovpncli.i"))
-}
-
-/* Hack-o-rama but it works good enough and documentation is surprisingly sparse */
-
-val swigTask = tasks.named("generateOpenVPN3Swig")
-val preBuildTask = tasks.getByName("preBuild")
-val assembleTask = tasks.getByName("assemble")
-
-assembleTask.dependsOn(swigTask)
-preBuildTask.dependsOn(swigTask)
-
-

@@ -630,9 +630,9 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         public Drawable getDrawable(String source) {
             Drawable d = null;
             if ("ic_menu_add".equals(source))
-                d = getActivity().getResources().getDrawable(R.drawable.ic_menu_add_grey);
+                d = requireActivity().getResources().getDrawable(R.drawable.ic_menu_add_grey);
             else if ("ic_menu_archive".equals(source))
-                d = getActivity().getResources().getDrawable(R.drawable.ic_menu_import_grey);
+                d = requireActivity().getResources().getDrawable(R.drawable.ic_menu_import_grey);
 
 
             if (d != null) {

@@ -490,5 +490,5 @@
     <string name="state_auth_pending">Authentication pending</string>
     <string name="external_authenticator">External Authenticator</string>
     <string name="configure">Configure</string>
-    <string name="extauth_not_configured">외부 Authneticator가 구성되지 않았습니다.</string>
+    <string name="extauth_not_configured">외부 Authenticator가 구성되지 않았습니다.</string>
 </resources>

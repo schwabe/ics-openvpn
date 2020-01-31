@@ -209,7 +209,7 @@ public class ExtAuthHelper {
         intent.setPackage(packagename);
 
         if (!context.bindService(intent, extAuthServiceConnection, Context.BIND_AUTO_CREATE)) {
-            throw new KeyChainException("could not bind to external authticator app: " + packagename);
+            throw new KeyChainException("could not bind to external authenticator app: " + packagename);
         }
         return new ExternalAuthProviderConnection(context, extAuthServiceConnection, q.take());
     }

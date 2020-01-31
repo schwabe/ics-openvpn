@@ -485,5 +485,5 @@
     <string name="state_auth_pending">Verificatie is in behandeling</string>
     <string name="external_authenticator">Externe Authenticator</string>
     <string name="configure">Configureren</string>
-    <string name="extauth_not_configured">Externe Authneticator niet geconfigureerd</string>
+    <string name="extauth_not_configured">Externe Authenticator niet geconfigureerd</string>
 </resources>

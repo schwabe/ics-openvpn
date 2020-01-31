@@ -52,7 +52,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
     #INCLUDE(${SWIG_USE_FILE})
     #SET_SOURCE_FILES_PROPERTIES(openvpn3/javacli/ovpncli.i PROPERTIES SWIG_FLAGS "-package net.openvpn.ovpn3")
     #SET_SOURCE_FILES_PROPERTIES(openvpn3/javacli/ovpncli.i PROPERTIES CPLUSPLUS ON)
-    #SWIG_ADD_MODULE(ovpen3cli java openvpn3/javacli/ovpncli.i)
+    #SWIG_ADD_MODULE(ovpn3cli java openvpn3/javacli/ovpncli.i)
 
 
     set(ovpn3_SRCS

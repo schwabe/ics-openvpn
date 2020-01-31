@@ -157,7 +157,7 @@ public class LogItem implements Parcelable {
         }
         int numArgs = bb.getInt();
         if (numArgs > 30) {
-            throw new IndexOutOfBoundsException("Too many arguments for Logitem to unmarschal");
+            throw new IndexOutOfBoundsException("Too many arguments for Logitem to unmarshal");
         }
         if (numArgs == 0) {
             mArgs = null;

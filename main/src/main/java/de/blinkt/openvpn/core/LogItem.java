@@ -99,7 +99,7 @@ public class LogItem implements Parcelable {
         if (mMessage == null || mMessage.length() == 0) {
             bb.putInt(0);
         } else {
-            marschalString(mMessage, bb);
+            marshalString(mMessage, bb);
         }
         if (mArgs == null || mArgs.length == 0) {
             bb.putInt(0);
@@ -108,7 +108,7 @@ public class LogItem implements Parcelable {
             for (Object o : mArgs) {
                 if (o instanceof String) {
                     bb.putChar('s');
-                    marschalString((String) o, bb);
+                    marshalString((String) o, bb);
                 } else if (o instanceof Integer) {
                     bb.putChar('i');
                     bb.putInt((Integer) o);
@@ -126,7 +126,7 @@ public class LogItem implements Parcelable {
                 } else {
                     VpnStatus.logDebug("Unknown object for LogItem marshaling " + o);
                     bb.putChar('s');
-                    marschalString(o.toString(), bb);
+                    marshalString(o.toString(), bb);
                 }
 
             }
@@ -193,7 +193,7 @@ public class LogItem implements Parcelable {
             throw new UnsupportedEncodingException(bb.remaining() + " bytes left after unmarshaling everything");
     }
 
-    private void marschalString(String str, ByteBuffer bb) throws UnsupportedEncodingException {
+    private void marshalString(String str, ByteBuffer bb) throws UnsupportedEncodingException {
         byte[] utf8bytes = str.getBytes("UTF-8");
         bb.putInt(utf8bytes.length);
         bb.put(utf8bytes);

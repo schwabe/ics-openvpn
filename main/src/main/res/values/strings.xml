@@ -480,7 +480,7 @@
     <string name="info_from_server">Info from server: \'%s\'</string>
     <string name="channel_name_userreq">User interaction required</string>
     <string name="channel_description_userreq">OpenVPN connection requires a user input, e.g. two factor
-        authentification
+        authentication
     </string>
     <string name="openurl_requested">Open URL to continue VPN authentication</string>
     <string name="crtext_requested">Answer challenge to continue VPN authentication</string>

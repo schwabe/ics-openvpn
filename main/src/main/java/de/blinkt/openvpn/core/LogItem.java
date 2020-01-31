@@ -124,7 +124,7 @@ public class LogItem implements Parcelable {
                 } else if (o == null) {
                     bb.putChar('0');
                 } else {
-                    VpnStatus.logDebug("Unknown object for LogItem marschaling " + o);
+                    VpnStatus.logDebug("Unknown object for LogItem marshaling " + o);
                     bb.putChar('s');
                     marschalString(o.toString(), bb);
                 }

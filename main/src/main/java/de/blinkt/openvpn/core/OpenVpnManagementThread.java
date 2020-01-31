@@ -679,7 +679,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             int p2 = argument.indexOf('\'', p1 + 1);
             needed = argument.substring(p1 + 1, p2);
             if (argument.startsWith("Verification Failed")) {
-                proccessPWFailed(needed, argument.substring(p2 + 1));
+                processPWFailed(needed, argument.substring(p2 + 1));
                 return;
             }
         } catch (StringIndexOutOfBoundsException sioob) {
@@ -717,7 +717,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     }
 
-    private void proccessPWFailed(String needed, String args) {
+    private void processPWFailed(String needed, String args) {
         VpnStatus.updateStateString("AUTH_FAILED", needed + args, R.string.state_auth_failed, ConnectionStatus.LEVEL_AUTH_FAILED);
     }
 

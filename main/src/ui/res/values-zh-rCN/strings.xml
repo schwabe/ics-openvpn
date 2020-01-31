@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">很遗憾，您目前的系统不支持 VPN 服务接口 :(</string>
     <string name="encryption">加密</string>
     <string name="cipher_dialog_title">输入加密方式</string>
-    <string name="chipher_dialog_message">输入 OpenVPN 所使用的加密密码算法。留空以使用默认算法。</string>
+    <string name="cipher_dialog_message">输入 OpenVPN 所使用的加密密码算法。留空以使用默认算法。</string>
     <string name="auth_dialog_message">输入 OpenVPN 使用的认证摘要。留空则使用默认的摘要。</string>
     <string name="settings_auth">认证/加密</string>
     <string name="file_explorer_tab">文件浏览器</string>

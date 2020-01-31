@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Hình ảnh của bạn không hỗ trợ dịch vụ VPN API, xin lỗi :(</string>
     <string name="encryption">Mã hóa</string>
     <string name="cipher_dialog_title">Nhập phương thức mã hóa</string>
-    <string name="chipher_dialog_message">Nhập các thuật toán mã hóa được sử dụng bởi OpenVPN. Để trống để sử dụng thuật toán mã hóa mặc định.</string>
+    <string name="cipher_dialog_message">Nhập các thuật toán mã hóa được sử dụng bởi OpenVPN. Để trống để sử dụng thuật toán mã hóa mặc định.</string>
     <string name="auth_dialog_message">Nhập cấu hình xác thực dùng cho OpenVPN. Để trống nếu sử dụng cấu hình mặc định.</string>
     <string name="settings_auth">Xác thực/Mã hóa</string>
     <string name="file_explorer_tab">Duyệt tập tin</string>

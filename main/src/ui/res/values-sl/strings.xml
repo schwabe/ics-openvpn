@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Vaš odtis žal ne podpira API-ja storitve VPN :(</string>
     <string name="encryption">Šifriranje</string>
     <string name="cipher_dialog_title">Vnesite način šifriranja</string>
-    <string name="chipher_dialog_message">Vnesite šifrirni algoritem, ki naj ga uporabi OpenVPN. Za uporabo privzete šifre pustite prazno.</string>
+    <string name="cipher_dialog_message">Vnesite šifrirni algoritem, ki naj ga uporabi OpenVPN. Za uporabo privzete šifre pustite prazno.</string>
     <string name="auth_dialog_message">Vnesite izvleček overitve, ki naj se uporabi za OpenVPN. Za privzetega pustite prazno.</string>
     <string name="settings_auth">Overitev/Šifriranje</string>
     <string name="file_explorer_tab">Raziskovalec datotek</string>

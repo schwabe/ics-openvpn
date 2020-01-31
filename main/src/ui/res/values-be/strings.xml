@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Прабачце, але ваша прашыўка не падтрымлівае VPNService API :(</string>
     <string name="encryption">Шыфраванне</string>
     <string name="cipher_dialog_title">Увядзіце метад шыфравання</string>
-    <string name="chipher_dialog_message">Увядзіце алгарытм шыфравання, які выкарыстоўваецца OpenVPN. Пакіньце поле пустым для выкарыстання стандартнага шыфравання.</string>
+    <string name="cipher_dialog_message">Увядзіце алгарытм шыфравання, які выкарыстоўваецца OpenVPN. Пакіньце поле пустым для выкарыстання стандартнага шыфравання.</string>
     <string name="auth_dialog_message">Увядзіце дайджэст праверкі сапраўднасці, які выкарыстоўваецца для OpenVPN. Пакіньце поле пустым для выкарыстання дайджэста па змаўчанні.</string>
     <string name="settings_auth">Праверка сапраўднасці/шыфраванне</string>
     <string name="file_explorer_tab">Праваднік файлаў</string>

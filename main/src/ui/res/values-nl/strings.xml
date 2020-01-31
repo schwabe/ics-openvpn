@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Uw afbeelding ondersteunt geen VPNService API, sorry :(</string>
     <string name="encryption">Encryptie</string>
     <string name="cipher_dialog_title">Voer encryptiemethode in</string>
-    <string name="chipher_dialog_message">Voer het encryptie-cijfer algoritme in dat door OpenVPN wordt gebruikt. Laat leeg om het standaard cijfer te gebruiken.</string>
+    <string name="cipher_dialog_message">Voer het encryptie-cijfer algoritme in dat door OpenVPN wordt gebruikt. Laat leeg om het standaard cijfer te gebruiken.</string>
     <string name="auth_dialog_message">Voer de authenticatieverdeling in die gebruikt wordt voor OpenVPN. Laat leeg om de standaard verdeling te gebruiken.</string>
     <string name="settings_auth">Authenticatie/Encryptie</string>
     <string name="file_explorer_tab">Bestandsverkenner</string>

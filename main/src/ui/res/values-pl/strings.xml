@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Twój obraz nie wspiera API VPN, przepraszamy ;(</string>
     <string name="encryption">Szyfrowanie</string>
     <string name="cipher_dialog_title">Wprowadź metodę szyfrowania</string>
-    <string name="chipher_dialog_message">Wybierz algorytm szyfrowania wykorzystywany przez OpenVPN. Pozostaw puste, aby skorzystać z ustawień domyślnych.</string>
+    <string name="cipher_dialog_message">Wybierz algorytm szyfrowania wykorzystywany przez OpenVPN. Pozostaw puste, aby skorzystać z ustawień domyślnych.</string>
     <string name="auth_dialog_message">Wprowadź tryb autoryzacji używany z OpenVPN. Pozostaw puste, aby skorzystać z ustawień domyślnych.</string>
     <string name="settings_auth">Uwierzytelnianie/Szyfrowanie</string>
     <string name="file_explorer_tab">Przeglądanie plików</string>

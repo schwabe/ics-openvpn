@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Votre ROM ne prend pas en charge l\'API VPNService, désolé :(</string>
     <string name="encryption">Chiffrement</string>
     <string name="cipher_dialog_title">Entrez la méthode de chiffrement</string>
-    <string name="chipher_dialog_message">Entrez l\'algorithme de chiffrement utilisé par OpenVPN. Laissez vide pour utiliser l\'algorithme par défaut.</string>
+    <string name="cipher_dialog_message">Entrez l\'algorithme de chiffrement utilisé par OpenVPN. Laissez vide pour utiliser l\'algorithme par défaut.</string>
     <string name="auth_dialog_message">Entrez l\'authentication digest utilisé pour OpenVPN. Laisser vide pour utiliser le digest par défaut.</string>
     <string name="settings_auth">Authentification/Chiffrement</string>
     <string name="file_explorer_tab">Explorateur de fichiers</string>

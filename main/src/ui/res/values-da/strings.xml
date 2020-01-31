@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Dit billede understøtter ikke VPNService API\'en, beklager :(</string>
     <string name="encryption">Kryptering</string>
     <string name="cipher_dialog_title">Angiv krypterings metode</string>
-    <string name="chipher_dialog_message">Angiv krypteringsalgoritmen der skal bruges af OpenVPN. Efterlad tom for at anvende standard algoritmen.</string>
+    <string name="cipher_dialog_message">Angiv krypteringsalgoritmen der skal bruges af OpenVPN. Efterlad tom for at anvende standard algoritmen.</string>
     <string name="auth_dialog_message">Angiv autentificeringsdigest til brug af OpenVPN. Efterlad tom for at anvende standard digest.</string>
     <string name="settings_auth">Autentificering/kryptering</string>
     <string name="file_explorer_tab">Stifinder</string>

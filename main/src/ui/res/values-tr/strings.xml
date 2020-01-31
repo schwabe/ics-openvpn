@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Kalıbınız VPNService API\'sini desteklemiyor, üzgünüm :(</string>
     <string name="encryption">Şifreleme</string>
     <string name="cipher_dialog_title">Şifreleme yöntemini gir</string>
-    <string name="chipher_dialog_message">OpenVPN tarafından kullanılan şifreleme algoritmasını girin. Varsayılan şifrelemeyi kullanmak için boş bırakın.</string>
+    <string name="cipher_dialog_message">OpenVPN tarafından kullanılan şifreleme algoritmasını girin. Varsayılan şifrelemeyi kullanmak için boş bırakın.</string>
     <string name="auth_dialog_message">OpenVPN için kullanılan kimlik doğrulama özetini girin. Varsayılan özeti kullanmak için boş bırakın.</string>
     <string name="settings_auth">Kimlik Doğrulama/Şifreleme</string>
     <string name="file_explorer_tab">Dosya Gezgini</string>

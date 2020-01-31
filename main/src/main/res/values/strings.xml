@@ -126,7 +126,7 @@
     <string name="no_vpn_support_image">Your image does not support the VPNService API, sorry :(</string>
     <string name="encryption">Encryption</string>
     <string name="cipher_dialog_title">Enter encryption method</string>
-    <string name="chipher_dialog_message">Enter the encryption cipher algorithm used by OpenVPN. Leave empty to use default cipher.</string>
+    <string name="cipher_dialog_message">Enter the encryption cipher algorithm used by OpenVPN. Leave empty to use default cipher.</string>
     <string name="auth_dialog_message">Enter the authentication digest used for OpenVPN. Leave empty to use default digest.</string>
     <string name="settings_auth">Authentication/Encryption</string>
     <string name="file_explorer_tab">File Explorer</string>

@@ -41,7 +41,7 @@
                 android:text="@string/files_missing_hint"
                 android:visibility="gone"
                 android:id="@+id/files_missing_hint"
-                tools:visibilty="visible"/>
+                tools:visibility="visible"/>
 
         <TextView
             android:text="@string/query_permissions_sdcard"
@@ -58,7 +58,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                tools:visibilty="visible"
+                tools:visibility="visible"
                 android:text="@string/importpkcs12fromconfig"
                 android:visibility="gone"/>
 

@@ -255,7 +255,7 @@
     <string name="state_nonetwork">等待可使用的網路</string>
     <string name="state_waitorbot">等待Orbot啟動</string>
     <string name="statusline_bytecount">↓%2$s/秒 %1$s - ↑%4$s/秒 %3$s</string>
-    <string name="notifcation_title_notconnect">未連線</string>
+    <string name="notification_title_notconnect">未連線</string>
     <string name="start_vpn_title">正在連線至 VPN %s</string>
     <string name="start_vpn_ticker">正在連線至 VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">如果，密鑰憑證的名稱包含非字母數字字元 (如空白、底線、破折號)，在某些 Android 4.1 版本可能會出現問題。請嘗試重新匯入不含特殊字元的憑證。</string>

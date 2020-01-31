@@ -291,7 +291,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="state_nonetwork">使用可能なネットワークを待機中</string>
     <string name="state_waitorbot">Orbotの起動を待っています</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">未接続</string>
+    <string name="notification_title_notconnect">未接続</string>
     <string name="start_vpn_title">VPN %sに接続中</string>
     <string name="start_vpn_ticker">VPN %sに接続中</string>
     <string name="jelly_keystore_alphanumeric_bug">Android 4.1の一部のバージョンで、キーストアの証明書の名前にアルファベット以外の特殊な文字(スペース、アンダーバー、ダッシュ等)を含む場合に問題が発生します。証明書の名前から特殊な文字を外して再度インポートを試みてください。</string>

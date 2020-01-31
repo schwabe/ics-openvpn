@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Oodatakse kasutatavat võrku</string>
     <string name="state_waitorbot">Orboti alguse ootamine</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Pole ühendatud</string>
+    <string name="notification_title_notconnect">Pole ühendatud</string>
     <string name="start_vpn_title">Ühendumine VPN %s külge</string>
     <string name="start_vpn_ticker">Ühendumine VPN %s külge</string>
     <string name="jelly_keystore_alphanumeric_bug">Mõnede Android 4.1 versioonide puhul esineb probleeme kui võtmehoidla sertifikaadi nimi sisaldab mittetähestikulisi sümboleid (nagu tühikud, alakriipsud või sidekriipsud). Proovige selline sertifikaat erisümboliteid kasutamata uuesti importida</string>

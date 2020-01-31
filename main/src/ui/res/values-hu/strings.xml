@@ -253,7 +253,7 @@
     <string name="state_auth_failed">Hitelesítési hiba</string>
     <string name="state_nonetwork">Várakozás használható hálózatra</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Nincs kapcsolat</string>
+    <string name="notification_title_notconnect">Nincs kapcsolat</string>
     <string name="start_vpn_title">Csatlakozás a %s VPN-hez</string>
     <string name="start_vpn_ticker">Csatlakozás a %s VPN-hez</string>
     <string name="jelly_keystore_alphanumeric_bug">Néhány Android 4.1-es verzió alatt problémába ütközhet ha a hitelesítési tanúsítvány nevében nem csak alfanumerikus karakterek szerepelnek (mint pl szóköz, alulvonás vagy kötőjel). Speciális karakterek nélkül próbálja újra importálni</string>

@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Kullanılabilir ağ için bekleniyor</string>
     <string name="state_waitorbot">Orbot\'un başlaması bekleniyor</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Bağlı değil</string>
+    <string name="notification_title_notconnect">Bağlı değil</string>
     <string name="start_vpn_title">VPN %s bağlanıyor</string>
     <string name="start_vpn_ticker">VPN %s bağlanıyor</string>
     <string name="jelly_keystore_alphanumeric_bug">Android 4.1\'in bazı sürümleri anahtar deposu alfanümerik olmayan karakterler içeriyorsa (boşluk, alt çizgi veya eksi işareti) sorunlar yaşamaktadır. Sertifikayı özel karakterler olmadan yeniden içe aktarmayı deneyin</string>

@@ -255,7 +255,7 @@
     <string name="state_nonetwork">사용 가능한 네트워크 대기중</string>
     <string name="state_waitorbot">Orbot이 시작되기를 기다리는 중</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">연결되지 않음</string>
+    <string name="notification_title_notconnect">연결되지 않음</string>
     <string name="start_vpn_title">VPN %s 연결중</string>
     <string name="start_vpn_ticker">VPN %s 연결중</string>
     <string name="jelly_keystore_alphanumeric_bug">일부 버전의 안드로이드 4.1에서는 키 저장소 인증서의 이름에 비영숫자 문자(공백, 밑줄 또는 대시)가 포함된 경우 문제가 있습니다. 특수 문자 없는 인증서를 다시 가져와 보세요.</string>

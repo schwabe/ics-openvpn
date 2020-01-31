@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Väntar på användbart nätverk</string>
     <string name="state_waitorbot">Väntar på att Orbot startar</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Inte ansluten</string>
+    <string name="notification_title_notconnect">Inte ansluten</string>
     <string name="start_vpn_title">Ansluter till VPN %s</string>
     <string name="start_vpn_ticker">Ansluter till VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Vissa versioner av Android 4.1 har problem om namnet på keystore certifikatet innehåller icke alfanumeriska tecken (som mellanslag, understreck eller bindestreck). Försök att omimportera certifikatet utan specialtecken</string>

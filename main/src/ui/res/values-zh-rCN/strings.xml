@@ -257,7 +257,7 @@
     <string name="state_nonetwork">等待可用网络</string>
     <string name="state_waitorbot">等待Orbot启动</string>
     <string name="statusline_bytecount">↓%2$s %1$s-↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">未连接</string>
+    <string name="notification_title_notconnect">未连接</string>
     <string name="start_vpn_title">正在连接 VPN %s</string>
     <string name="start_vpn_ticker">正在连接 VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">某些版本的 Android 4.1 存在问题，如果密钥库证书的名称包含非字母和数字字符(如空格、 下划线或短划线)。请尝试重新导入不包含特殊字符的证书</string>

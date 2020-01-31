@@ -251,7 +251,7 @@
     <string name="state_tcp_connect">Povezovanje (TCP)</string>
     <string name="state_auth_failed">Overitev je spodletela</string>
     <string name="state_nonetwork">Čakanje na uporabno omrežje</string>
-    <string name="notifcation_title_notconnect">Ni povezan</string>
+    <string name="notification_title_notconnect">Ni povezan</string>
     <string name="start_vpn_title">Povezovanje v VPN %s</string>
     <string name="start_vpn_ticker">Povezovanje v VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Nekatere različice Androida 4.1 imajo težave, če ime potrdila shrambe ključev vsebuje posebne znake (presledke, podčrtaje ali pomišljaje). Poizkusite ponovno uvoziti potrdilo brez posebnih znakov.</string>

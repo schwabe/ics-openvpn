@@ -256,7 +256,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="state_nonetwork">In attesa di una rete utilizzabile</string>
     <string name="state_waitorbot">In attesa dell\'avvio di Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Non connesso</string>
+    <string name="notification_title_notconnect">Non connesso</string>
     <string name="start_vpn_title">Connessione alla VPN %s in corso</string>
     <string name="start_vpn_ticker">Connessione alla VPN %s in corso</string>
     <string name="jelly_keystore_alphanumeric_bug">Alcune versioni di Android 4.1 hanno problemi se il nome del certificato keystore contiene caratteri non alfanumerici (come spazi, caratteri di sottolineatura o trattini). Provare a reimportare il certificato senza caratteri speciali</string>

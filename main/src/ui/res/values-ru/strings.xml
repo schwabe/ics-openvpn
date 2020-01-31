@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Ожидание работы сети</string>
     <string name="state_waitorbot">Ожидание запуска Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Не подключено</string>
+    <string name="notification_title_notconnect">Не подключено</string>
     <string name="start_vpn_title">Подключение к VPN %s</string>
     <string name="start_vpn_ticker">Подключение к VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">В некоторых версиях Android 4.1 есть проблемы, если имя сертификата содержит не буквенно-цифровые символы (например, пробелы, подчеркивания или тире). Попробуйте переустановить сертификат без использования специальных символов.</string>

@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Чаканне выкарыстання сеткі</string>
     <string name="state_waitorbot">Чаканне запуску Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Не злучаны</string>
+    <string name="notification_title_notconnect">Не злучаны</string>
     <string name="start_vpn_title">Падлучэнне да VPN %s</string>
     <string name="start_vpn_ticker">Падлучэнне да VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Некаторыя версіі Android 4.1 маюць праблемы, калі сертыфікат са сховішча ключоў змяшчае сімвалы, якія не належаць да дыяпазону літар і лічбаў (напрыклад, прабелы, знак падкрэслівання або працяжнік). Паспрабуйце выдаліць спецыяльныя сімвалы з сертыфіката і імпартаваць яго яшчэ раз</string>

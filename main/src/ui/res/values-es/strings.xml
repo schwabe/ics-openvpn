@@ -256,7 +256,7 @@ hacia/de Móvil)</string>
     <string name="state_nonetwork">Esperando por una red que se pueda usar</string>
     <string name="state_waitorbot">Esperando a que Orbot inicie</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">No conectado</string>
+    <string name="notification_title_notconnect">No conectado</string>
     <string name="start_vpn_title">Conectando a VPN %s</string>
     <string name="start_vpn_ticker">Conectando a VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Algunas versiones de Android 4.1 experimentan problemas si el nombre del almacén de certificados contiene caracteres no alfanuméricos (como espacios, subrayados o barras). Intente volver a importar el certificado sin caracteres especiales</string>

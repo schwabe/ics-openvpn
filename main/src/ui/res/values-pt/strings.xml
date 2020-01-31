@@ -232,7 +232,7 @@
     <string name="state_tcp_connect">A ligar (TCP)</string>
     <string name="state_auth_failed">Falha na autenticação</string>
     <string name="state_nonetwork">A aguardar rede utilizável</string>
-    <string name="notifcation_title_notconnect">Não ligado</string>
+    <string name="notification_title_notconnect">Não ligado</string>
     <string name="start_vpn_title">A ligar a VPN %s</string>
     <string name="start_vpn_ticker">A ligar a VPN %s</string>
     <string name="encryption_cipher">Cifra de encriptação</string>

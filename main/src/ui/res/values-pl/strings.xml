@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Czekam na sieć</string>
     <string name="state_waitorbot">Oczekiwanie na uruchomienie Orbot</string>
     <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
-    <string name="notifcation_title_notconnect">Niepołączony</string>
+    <string name="notification_title_notconnect">Niepołączony</string>
     <string name="start_vpn_title">Łączę z VPN %s</string>
     <string name="start_vpn_ticker">Łączę z VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Niektóre wersje Androida 4.1 mają problemy, jeśli nazwa certyfikatu zawiera niealfanumeryczne znaki (spacje, podkreślenia, myślniki). Spróbuj zaimportować certyfikat bez znaków specjalnych</string>

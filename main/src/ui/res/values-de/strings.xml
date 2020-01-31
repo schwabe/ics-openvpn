@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Warte auf Internetverbindung</string>
     <string name="state_waitorbot">Warte auf den Start von Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Nicht verbunden</string>
+    <string name="notification_title_notconnect">Nicht verbunden</string>
     <string name="start_vpn_title">Verbinde mit VPN %s</string>
     <string name="start_vpn_ticker">Verbinde mit VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Einige Versionen von Android 4.1 haben Probleme, wenn der Name des im Zertifikatsspeicher gespeicherten Zertifikates nicht alphanumerische Zeichen (wie Leerzeichen, Unterstriche oder Bindestriche) enthält. Probieren Sie, das Zertifikat mit einem Namen ohne Sonderzeichen zu importieren</string>

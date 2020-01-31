@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Đang đợi mạng khả dụng</string>
     <string name="state_waitorbot">Đang chờ Orbot bắt đầu</string>
     <string name="statusline_bytecount">↓ %2$s %1$s - ↑ %4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Không kết nối</string>
+    <string name="notification_title_notconnect">Không kết nối</string>
     <string name="start_vpn_title">Đang kết nối VPN %s</string>
     <string name="start_vpn_ticker">Đang kết nối VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Một số phiên bản Android 4.1 có vấn đề nếu tên của khóa lưu trữ chứng chỉ chứa các ký tự không phải chữ và số (như dấu cách, gạch chân hoặc gạch ngang). Hãy thử nhập lại chứng chỉ không có ký tự đặc biệt</string>

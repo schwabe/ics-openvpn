@@ -209,7 +209,7 @@
     <string name="state_resolve">Løse vertsnavn</string>
     <string name="state_tcp_connect">Kobler til (TCP)</string>
     <string name="state_auth_failed">Autentisering mislyktes</string>
-    <string name="notifcation_title_notconnect">Ikke tilkoblet</string>
+    <string name="notification_title_notconnect">Ikke tilkoblet</string>
     <string name="start_vpn_title">Kobler til VPN %s</string>
     <string name="start_vpn_ticker">Kobler til VPN %s</string>
     <string name="encryption_cipher">Kryptering chiffer</string>

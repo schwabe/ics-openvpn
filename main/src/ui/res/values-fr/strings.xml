@@ -256,7 +256,7 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="state_nonetwork">En attente d\'un réseau utilisable</string>
     <string name="state_waitorbot">En attente du démarrage d\'Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Non connecté</string>
+    <string name="notification_title_notconnect">Non connecté</string>
     <string name="start_vpn_title">Connexion au VPN %s</string>
     <string name="start_vpn_ticker">Connexion au VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Certaines versions d\'Android 4.1 rencontrent des problèmes si le nom du certificat du trousseau de clé contient des caractères non alphanumériques (comme des espaces, des caractères de soulignement ou des tirets). Essayez de réimporter le certificat sans caractères spéciaux</string>

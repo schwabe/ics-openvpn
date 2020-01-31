@@ -265,7 +265,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (mProfile != null)
             nbuilder.setContentTitle(getString(R.string.notification_title, mProfile.mName));
         else
-            nbuilder.setContentTitle(getString(R.string.notifcation_title_notconnect));
+            nbuilder.setContentTitle(getString(R.string.notification_title_notconnect));
 
         nbuilder.setContentText(msg);
         nbuilder.setOnlyAlertOnce(true);

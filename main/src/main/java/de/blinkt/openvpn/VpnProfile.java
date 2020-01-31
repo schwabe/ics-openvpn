@@ -85,7 +85,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public static String DEFAULT_DNS1 = "8.8.8.8";
     public static String DEFAULT_DNS2 = "8.8.4.4";
     // variable named wrong and should haven been transient
-    // but needs to keep wrong name to guarante loading of old
+    // but needs to keep wrong name to guarantee loading of old
     // profiles
     public transient boolean profileDeleted = false;
     public int mAuthenticationType = TYPE_KEYSTORE;

@@ -203,7 +203,7 @@ public class TrafficHistory implements Parcelable {
                 lastMinuteUsedForHours = newTdp;
 
             for (TrafficDatapoint tph : tpList) {
-                // List is iterated from oldest to newest, remembert first one that we did not
+                // List is iterated from oldest to newest, remember the first one that we did not
                 if ((newTdp.timestamp - tph.timestamp) / timePeriod >= PERIODS_TO_KEEP)
                     toRemove.add(tph);
             }

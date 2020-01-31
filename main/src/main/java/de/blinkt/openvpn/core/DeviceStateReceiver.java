@@ -262,7 +262,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
         if (!netstatestring.equals(lastStateMsg))
             VpnStatus.logInfo(R.string.netstatus, netstatestring);
-        VpnStatus.logDebug(String.format("Debug state info: %s, pause: %s, shouldbeconnected: %s, network: %s ",
+        VpnStatus.logDebug(String.format("Debug state info: %s, pause: %s, shouldBeconnected: %s, network: %s ",
                 netstatestring, getPauseReason(), shouldBeConnected(), network));
         lastStateMsg = netstatestring;
 

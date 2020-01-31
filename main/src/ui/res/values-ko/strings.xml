@@ -468,7 +468,7 @@
     <string name="osslspeedtest">OpenSSL 암호화 속도 테스트</string>
     <string name="openssl_error">OpenSSL이 오류를 반환함</string>
     <string name="running_test">테스트 수행 중&#8230;</string>
-    <string name="test_algoirhtms">선택한 알고리즘 테스트</string>
+    <string name="test_algorithms">선택한 알고리즘 테스트</string>
     <string name="all_app_prompt">어떤 외부 앱이 %s를 제어하려고 합니다. 접근을 요청하는 앱을 정해 놓을 수 없습니다. 이 앱을 허용하면 모든 앱의 접근을 승인하게 됩니다.</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C++ 구현은 고정 키를 지원하지 않습니다. 일반 설정에서 OpenVPN 2.x로 변경해 주세요.</string>
     <string name="openvpn3_pkcs12">OpenVPN 3 C++ 구현과 함께 PKCS12 파일을 직접 사용하는 것은 지원되지 않습니다. PKCS12 파일을 안드로이드 키 저장소로 가져 오거나 일반 설정에서 OpenVPN 2.x으로 변경하세요.</string>

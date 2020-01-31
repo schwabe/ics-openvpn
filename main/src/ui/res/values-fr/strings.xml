@@ -467,7 +467,7 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="osslspeedtest">Test de vitesse de Crypto OpenSSL</string>
     <string name="openssl_error">OpenSSL a renvoyé une erreur</string>
     <string name="running_test">Test en cours&#8230;</string>
-    <string name="test_algoirhtms">Tester les algorithmes sélectionnés</string>
+    <string name="test_algorithms">Tester les algorithmes sélectionnés</string>
     <string name="all_app_prompt">Une application externe essaie de contrôler %s. L\'application demandant l\'accès ne peut pas être déterminée. Autoriser cette application accorde l\'accès à TOUTES les applications.</string>
     <string name="openvpn3_nostatickeys">L’implémentation OpenVPN 3 C ++ ne prend pas en charge les clés statiques. Veuillez modifier vers OpenVPN 2.x dans les paramètres généraux.</string>
     <string name="openvpn3_pkcs12">L\'utilisation de fichiers PKCS12 directement avec l\'implémentation OpenVPN 3 C ++ n\'est pas prise en charge. Importez les fichiers pkcs12 dans le magasin de clés Android ou passez à OpenVPN 2.x dans les paramètres généraux.</string>

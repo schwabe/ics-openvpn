@@ -465,7 +465,7 @@
     <string name="osslspeedtest">Тэст хуткасці OpenSSL Crypto</string>
     <string name="openssl_error">OpenSSL вярнуў памылку</string>
     <string name="running_test">Тэставанне&#8230;</string>
-    <string name="test_algoirhtms">Тэставанне выбраных алгарытмаў</string>
+    <string name="test_algorithms">Тэставанне выбраных алгарытмаў</string>
     <string name="all_app_prompt">Знешняя праграма спрабуе кантраляваць %s. Праграма, якая запытала доступ не вызначана. УСЕ астатнія праграмы атрымаюць доступ, калі вы ўхваліце доступ гэтай праграме.</string>
     <string name="openvpn3_nostatickeys">Рэалізацыя OpenVPN 3 на C++ не падтрымлівае статычныя ключы. Калі ласка, змяніце на OpenVPN 2.x у агульных наладах.</string>
     <string name="openvpn3_pkcs12">Выкарыстанне файлаў PKCS12 напрамую з дапамогай рэалізацыі OpenVPN 3 на С++ не падтрымліваецца. Імпартуйце файлы PKCS12 у сховішча ключоў Android або змяніце на OpenVPN 2.x у агульных наладах.</string>

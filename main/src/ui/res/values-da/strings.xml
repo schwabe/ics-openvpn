@@ -458,7 +458,7 @@
     <string name="osslspeedtest">OpenSSL Crypto Speed ​​test</string>
     <string name="openssl_error">OpenSSL returnerede en fejl</string>
     <string name="running_test">Tester ...</string>
-    <string name="test_algoirhtms">Test valgte algoritmer</string>
+    <string name="test_algorithms">Test valgte algoritmer</string>
     <string name="all_app_prompt">En ekstern app forsøger at styre %s. Appen, der anmoder om adgang, kan ikke bestemmes. Tillad, at denne app giver ALLE apps adgang.</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C ++ implementeringen understøtter ikke statiske nøgler. Venligst skift til OpenVPN 2.x under generelle indstillinger.</string>
     <string name="openvpn3_pkcs12">Brug af PKCS12 filer direkte med OpenVPN 3 C ++ implementering understøttes ikke. Indtast venligst pkcs12-filerne i Android-keystore eller skift til OpenVPN 2.x under generelle indstillinger.</string>

@@ -460,7 +460,7 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="osslspeedtest">OpenSSL Test Szybkości Crypto</string>
     <string name="openssl_error">OpenSSL zwrócił błąd</string>
     <string name="running_test">Testowanie&#8230;</string>
-    <string name="test_algoirhtms">Test wybranych algorytmów</string>
+    <string name="test_algorithms">Test wybranych algorytmów</string>
     <string name="all_app_prompt">Zewnętrzna aplikacja próbuje przejąć kontrolę %s. Prośba o dostęp nie może być zweryfikowana. Zezwolenie da jej dostęp do WSZYSTKICH aplikacji.</string>
     <string name="openvpn3_nostatickeys">Implementacja OpenVPN 3 C++ nie wspiera kluczy statycznych. Proszę zmienić na OpenVPN 2.x pod głównymi ustawieniami.</string>
     <string name="openvpn3_pkcs12">Używanie plików PKCS22 bezpośrednio z implementacją OpenVPN 3 C++ nie jest wspierane. Proszę zaimportować pliki PKCS12 do magazynu kluczy Androida lub przejść na OpenVPN 2.x pod głównymi ustawieniami.</string>

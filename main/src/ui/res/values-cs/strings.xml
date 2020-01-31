@@ -443,7 +443,7 @@
     <string name="osslspeedtest">Rychlostní krypto test OpnSSL</string>
     <string name="openssl_error">OpenSSL vrátilo chybu</string>
     <string name="running_test">Test běží&#8230;</string>
-    <string name="test_algoirhtms">Testuj vybrané algoritmy</string>
+    <string name="test_algorithms">Testuj vybrané algoritmy</string>
     <string name="proxy">Proxy</string>
     <string name="Use_no_proxy">Bez</string>
     <string name="tor_orbot">Tor (Orbot)</string>

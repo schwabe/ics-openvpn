@@ -464,7 +464,7 @@
     <string name="osslspeedtest">OpenSSL Titkosítás Sebesség teszt</string>
     <string name="openssl_error">Az OpenSSL hibával tért vissza</string>
     <string name="running_test">A teszt fut&#8230;</string>
-    <string name="test_algoirhtms">Kijelölt algoritmusok tesztelése</string>
+    <string name="test_algorithms">Kijelölt algoritmusok tesztelése</string>
     <string name="all_app_prompt">Egy külső alkalmazás megpróbálja vezérelni a(z) %s-t. Az alkalmazást nem lehet felismerni, a hozzáférés megadása
         MINDEN alkalmazás számára elérhetőséget biztosít.
     </string>

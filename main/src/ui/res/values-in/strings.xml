@@ -464,6 +464,6 @@
     <string name="title_activity_open_sslspeed">Tes Kecepatan OpenSSL</string>
     <string name="openssl_cipher_name">OpenSSL cipher names</string>
     <string name="osslspeedtest">OpenSSL Crypto Speed test</string>
-    <string name="test_algoirhtms">Uji algoritma yang dipilih</string>
+    <string name="test_algorithms">Uji algoritma yang dipilih</string>
     <string name="openvpn3_socksproxy">Implementasi OpenVPN 3 C ++ tidak mendukung menghubungkan melalui proxy kaus kaki</string>
 </resources>

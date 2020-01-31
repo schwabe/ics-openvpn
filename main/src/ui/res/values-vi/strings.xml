@@ -466,7 +466,7 @@
     <string name="osslspeedtest">Kiểm tra tốc độ OpenSSL Crypto</string>
     <string name="openssl_error">OpenSSL trả về lỗi</string>
     <string name="running_test">Đang chạy kiểm tra&#8230;</string>
-    <string name="test_algoirhtms">Kiểm tra các thuật toán đã chọn</string>
+    <string name="test_algorithms">Kiểm tra các thuật toán đã chọn</string>
     <string name="all_app_prompt">Một ứng dụng bên ngoài cố gắng kiểm soát %s. Không thể xác định ứng dụng yêu cầu quyền truy cập. Cho phép ứng dụng này cấp cho TẤT CẢ quyền truy cập ứng dụng.</string>
     <string name="openvpn3_nostatickeys">Việc triển khai OpenVPN 3 C ++ không hỗ trợ các khóa tĩnh. Vui lòng thay đổi thành OpenVPN 2.x trong cài đặt chung.</string>
     <string name="openvpn3_pkcs12">Việc sử dụng tệp PKCS12 trực tiếp với triển khai OpenVPN 3 C ++ không được hỗ trợ. Vui lòng nhập tệp pkcs12 vào kho khóa Android hoặc thay đổi thành OpenVPN 2.x trong cài đặt chung.</string>

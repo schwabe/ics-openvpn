@@ -65,7 +65,7 @@ public class TestLogFileHandler {
     }
 
     @Test
-    public void testMarschalArgs() throws UnsupportedEncodingException {
+    public void testMarshalArgs() throws UnsupportedEncodingException {
         LogItem li = new LogItem(VpnStatus.LogLevel.DEBUG, 72, 772, "sinnloser Text", 7723, 723.2f, 7.2);
         LogItem li2 = marshalAndBack(li);
         testEquals(li, li2);

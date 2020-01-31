@@ -103,7 +103,7 @@ class OpenSSLSpeed : BaseActivity() {
     private fun runAlgorithms(algorithms: String) {
         if (runTestAlgorithms != null)
             runTestAlgorithms!!.cancel(true)
-        runTestAlgorithms = SpeeedTest()
+        runTestAlgorithms = SpeedTest()
         runTestAlgorithms!!.execute(*algorithms.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
     }
 
@@ -118,7 +118,7 @@ class OpenSSLSpeed : BaseActivity() {
     }
 
 
-    private inner class SpeeedTest : AsyncTask<String, SpeedResult, Array<SpeedResult>>() {
+    private inner class SpeedTest : AsyncTask<String, SpeedResult, Array<SpeedResult>>() {
 
 
         private var mCancel = false
@@ -171,7 +171,7 @@ class OpenSSLSpeed : BaseActivity() {
 
     companion object {
 
-        private var runTestAlgorithms: SpeeedTest? = null
+        private var runTestAlgorithms: SpeedTest? = null
     }
 
 

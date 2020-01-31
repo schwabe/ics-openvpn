@@ -116,7 +116,7 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
         VpnProfile vpn;
         Tile t = getQsTile();
         if (level == ConnectionStatus.LEVEL_AUTH_FAILED || level == ConnectionStatus.LEVEL_NOTCONNECTED) {
-            // No VPN connected, use stadnard VPN
+            // No VPN connected, use standard VPN
             vpn = getQSVPN();
             if (vpn == null) {
                 t.setLabel(getString(R.string.novpn_selected));

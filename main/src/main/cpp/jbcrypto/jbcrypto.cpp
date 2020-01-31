@@ -1,5 +1,5 @@
 //
-//  JBCyrpto.cpp
+//  JBCrypto.cpp
 //  xcopenvpn
 //
 //  Created by Arne Schwabe on 12.07.12.

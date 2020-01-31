@@ -91,7 +91,7 @@
     <string name="file_icon">Icona del fitxer</string>
     <string name="generated_config">Configuració generada</string>
     <string name="owner_fix">Corregir els permisos de /dev/tun</string>
-    <string name="generated_config_summary">Mostra el fitxer de configuració d\'OpenVPN generat</string>
+    <string name="generated_config_summary">Mostra el fitxer de configuració d\'OpenVPN generate</string>
     <string name="edit_profile_title">Editant \"%s\"</string>
     <string name="building_configuration">Construint la configuració&#8230;</string>
     <string name="netchange">Reconecta al canviar de xarxa</string>

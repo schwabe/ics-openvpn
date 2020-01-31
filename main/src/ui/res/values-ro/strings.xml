@@ -166,11 +166,11 @@
     <string name="password">Parola</string>
     <string name="file_icon">icon fişier</string>
     <string name="tls_authentication">Autentificare / criptare TLS</string>
-    <string name="generated_config">Config generat</string>
+    <string name="generated_config">Config generate</string>
     <string name="generalsettings">Setări</string>
     <string name="owner_fix_summary">Încearcă să seteze owner-ul /dev/tun ca sistem. Unele imagini CM9 au nevoie de asta pentru a permite API-ului VPNService să funcţioneze. Are nevoie de root.</string>
     <string name="owner_fix">Repară drepturi /dev/tun</string>
-    <string name="generated_config_summary">Afişează fişierul de configurare OpenVPN generat</string>
+    <string name="generated_config_summary">Afişează fişierul de configurare OpenVPN generate</string>
     <string name="edit_profile_title">Editare \"%s\"</string>
     <string name="building_configuration">Se generează configurarea&#8230;</string>
     <string name="netchange_summary">Activând această opţiune forţaţi o reconectare dacă se schimbă starea de reţea (e.g. WiFi la/de la mobil)</string>

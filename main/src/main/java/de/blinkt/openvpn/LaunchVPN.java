@@ -321,10 +321,10 @@ public class LaunchVPN extends Activity {
         boolean loadTunModule = prefs.getBoolean("loadTunModule", false);
 
         if (loadTunModule)
-            execeuteSUcmd("insmod /system/lib/modules/tun.ko");
+            executeSUcmd("insmod /system/lib/modules/tun.ko");
 
         if (usecm9fix && !mCmfixed) {
-            execeuteSUcmd("chown system /dev/tun");
+            executeSUcmd("chown system /dev/tun");
         }
 
         if (intent != null) {
@@ -345,7 +345,7 @@ public class LaunchVPN extends Activity {
 
     }
 
-    private void execeuteSUcmd(String command) {
+    private void executeSUcmd(String command) {
         try {
             ProcessBuilder pb = new ProcessBuilder("su", "-c", command);
             Process p = pb.start();

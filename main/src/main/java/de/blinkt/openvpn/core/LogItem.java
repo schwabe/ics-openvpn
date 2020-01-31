@@ -325,7 +325,7 @@ public class LogItem implements Parcelable {
 
             if (Arrays.equals(digest, VpnStatus.officalkey))
                 apksign = c.getString(R.string.official_build);
-            else if (Arrays.equals(digest, VpnStatus.officaldebugkey))
+            else if (Arrays.equals(digest, VpnStatus.officialdebugkey))
                 apksign = c.getString(R.string.debug_build);
             else if (Arrays.equals(digest, VpnStatus.amazonkey))
                 apksign = "amazon version";

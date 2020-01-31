@@ -87,7 +87,7 @@ public class LogItem implements Parcelable {
 
     }
 
-    public byte[] getMarschaledBytes() throws UnsupportedEncodingException, BufferOverflowException {
+    public byte[] getMarshaledBytes() throws UnsupportedEncodingException, BufferOverflowException {
         ByteBuffer bb = ByteBuffer.allocate(16384);
 
 

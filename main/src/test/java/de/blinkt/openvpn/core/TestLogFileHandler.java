@@ -90,7 +90,7 @@ public class TestLogFileHandler {
     }
 
     private LogItem marschalAndBack(LogItem li) throws UnsupportedEncodingException {
-        byte[] bytes = li.getMarschaledBytes();
+        byte[] bytes = li.getMarshaledBytes();
 
         return new LogItem(bytes, bytes.length);
     }

@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             tools:visibility="visible"
             android:visibility="gone"
-            android:id="@+id/permssion_hint"
+            android:id="@+id/permission_hint"
             android:padding="5dp"
             android:textStyle="bold" />
 

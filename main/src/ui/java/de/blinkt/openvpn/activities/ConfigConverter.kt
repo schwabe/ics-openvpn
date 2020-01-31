@@ -62,7 +62,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
     override fun onClick(v: View) {
         if (v.id == R.id.fab_save)
             userActionSaveProfile()
-        if (v.id == R.id.permssion_hint && Build.VERSION.SDK_INT == Build.VERSION_CODES.M)
+        if (v.id == R.id.permission_hint && Build.VERSION.SDK_INT == Build.VERSION_CODES.M)
             doRequestSDCardPermission(PERMISSION_REQUEST_EMBED_FILES)
 
     }
@@ -79,7 +79,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
         // Reset file select dialogs
         findViewById<View>(R.id.files_missing_hint).visibility = View.GONE
-        findViewById<View>(R.id.permssion_hint).visibility = View.GONE
+        findViewById<View>(R.id.permission_hint).visibility = View.GONE
         val fileroot = findViewById<View>(R.id.config_convert_root) as LinearLayout
         var i = 0
         while (i < fileroot.childCount) {
@@ -406,8 +406,8 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
     @TargetApi(Build.VERSION_CODES.M)
     private fun checkPermission() {
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            findViewById<View>(R.id.permssion_hint).visibility = View.VISIBLE
-            findViewById<View>(R.id.permssion_hint).setOnClickListener(this)
+            findViewById<View>(R.id.permission_hint).visibility = View.VISIBLE
+            findViewById<View>(R.id.permission_hint).setOnClickListener(this)
         }
     }
 

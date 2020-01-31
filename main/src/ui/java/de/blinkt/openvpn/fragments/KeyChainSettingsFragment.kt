@@ -196,7 +196,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
         val extauth = Intent(ExtAuthHelper.ACTION_CERT_CONFIGURATION)
         extauth.setPackage(eAuth.packageName)
         extauth.putExtra(ExtAuthHelper.EXTRA_ALIAS, mProfile.mAlias)
-        startActivityForResult(extauth, UPDATEE_EXT_ALIAS)
+        startActivityForResult(extauth, UPDATE_EXT_ALIAS)
     }
 
     override fun savePreferences() {
@@ -251,7 +251,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (data != null && requestCode == UPDATEE_EXT_ALIAS && resultCode == Activity.RESULT_OK) {
+        if (data != null && requestCode == UPDATE_EXT_ALIAS && resultCode == Activity.RESULT_OK) {
             mProfile.mAlias = data.getStringExtra(ExtAuthHelper.EXTRA_ALIAS)
             mExtAliasName.text = data.getStringExtra(ExtAuthHelper.EXTRA_DESCRIPTION)
         }
@@ -259,6 +259,6 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
 
     companion object {
         private val UPDATE_ALIAS = 20
-        private val UPDATEE_EXT_ALIAS = 210
+        private val UPDATE_EXT_ALIAS = 210
     }
 }

@@ -469,7 +469,7 @@ hacia/de Móvil)</string>
     <string name="openvpn3_socksproxy">La implementación OpenVPN 3 C++ no admite la conexión mediante Socks</string>
     <string name="no_orbotfound">No se encuentra la aplicación Orbot. Instale Orbot o use la integración manual de Socks v5.</string>
     <string name="faq_remote_api_title">API remota</string>
-    <string name="faq_remote_api">OpenVPN para Android es compatible con dos API remotas, una API sofisticada que usa AIDL (remoteEXample en el repositorio de git), y una simple que usa Intents. &lt;p&gt;Ejemplos usando adb shell y los intents. Reemplace profilname con su nombre de perfil&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN para Android es compatible con dos API remotas, una API sofisticada que usa AIDL (remoteEXample en el repositorio de git), y una simple que usa Intents. &lt;p&gt;Ejemplos usando adb shell y los intents. Reemplace profilename con su nombre de perfil&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Habilitar autenticación de proxy</string>
     <string name="error_orbot_and_proxy_options">No se puede usar la declaración adicional http-proxy-option y la integración Orbot al mismo tiempo</string>
     <string name="info_from_server">Información del servidor: \'%s\'</string>

@@ -476,7 +476,7 @@
     <string name="openvpn3_socksproxy">Triển khai OpenVPN 3 C ++ không hỗ trợ kết nối qua proxy Socks</string>
     <string name="no_orbotfound">Không thể tìm thấy ứng dụng Orbot. Vui lòng cài đặt Orbot hoặc sử dụng tích hợp Socks v5 thủ công.</string>
     <string name="faq_remote_api_title">API từ xa</string>
-    <string name="faq_remote_api">OpenVPN cho Android hỗ trợ hai API từ xa, một API tinh vi sử dụng AIDL (remoteEXample trong kho git) và một API đơn giản sử dụng Intent.&lt;p&gt;Ví dụ sử dụng adb shell và intent. Thay thế profilname bằng hồ sơ của bạn&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn /.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN cho Android hỗ trợ hai API từ xa, một API tinh vi sử dụng AIDL (remoteEXample trong kho git) và một API đơn giản sử dụng Intent.&lt;p&gt;Ví dụ sử dụng adb shell và intent. Thay thế profilename bằng hồ sơ của bạn&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn /.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Bật xác thực proxy</string>
     <string name="error_orbot_and_proxy_options">Không thể sử dụng câu lệnh http-proxy-tùy chọn bổ sung và tích hợp Orbot cùng một lúc</string>
     <string name="info_from_server">Thông tin từ máy chủ: \'%s\'</string>

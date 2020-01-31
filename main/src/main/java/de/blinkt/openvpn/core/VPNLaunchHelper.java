@@ -99,7 +99,7 @@ public class VPNLaunchHelper {
             try {
                 mvpn = context.getAssets().open(getMiniVPNExecutableName() + "." + abi);
             } catch (IOException errabi) {
-                VpnStatus.logInfo("Failed getting assets for archicture " + abi);
+                VpnStatus.logInfo("Failed getting assets for architecture " + abi);
                 return false;
             }
 

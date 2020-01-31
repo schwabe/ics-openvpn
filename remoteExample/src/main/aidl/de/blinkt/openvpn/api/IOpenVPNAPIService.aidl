@@ -13,7 +13,7 @@ interface IOpenVPNAPIService {
 	void startProfile (String profileUUID);
 	
 	/** Use a profile with all certificates etc. embedded,
-	 * old version which does not return the UUID of the addded profile, see
+	 * old version which does not return the UUID of the added profile, see
 	 * below for a version that return the UUID on add */
 	boolean addVPNProfile (String name, String config);
 	

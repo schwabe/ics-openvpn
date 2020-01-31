@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN jooksis ootamatult kokku. Palun kaaluge \"saada Minitõmmis\" valiku lubamist peamenüüs</string>
     <string name="send_minidump">Saada arendajale minitõmmis</string>
     <string name="send_minidump_summary">Saada eelmise kokkujooksmise kohta käiv silumisinfo arendajale</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Ühendumine</string>

@@ -234,7 +234,7 @@
     <string name="minidump_generated">Az OpenVPN váratlanul összeomlott. Kérem, gondolja meg a főmenüben levő Minidump elküldése opció használatát</string>
     <string name="send_minidump">Minidump elküldése a fejlesztőnek</string>
     <string name="send_minidump_summary">Hibakeresési információkat küld a fejlesztőnek a legutóbbi összeomlásról</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Csatlakozás</string>

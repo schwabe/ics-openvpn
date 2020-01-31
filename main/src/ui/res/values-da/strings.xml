@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN gik uventet ned. Overvej venligst at benytte muligheden Send Minidump i hovedmenuen</string>
     <string name="send_minidump">Send Minidump til udvikler</string>
     <string name="send_minidump_summary">Sender fejlsøgningsinfo om seneste nedbrud til udvikler</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Tilslutning</string>

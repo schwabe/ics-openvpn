@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN이 예기치 않게 종료됐습니다. 메인 메뉴에 있는 미니 덤프 보내기 옵션의 사용을 고려하시기 바랍니다.</string>
     <string name="send_minidump">미니 덤프를 개발자에게 보내기</string>
     <string name="send_minidump_summary">개발자에게 마지막 비정상 종료에 대한 디버깅 정보를 보냅니다</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">연결중</string>

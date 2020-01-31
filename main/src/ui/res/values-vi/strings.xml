@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN bất ngờ bị lỗi. Vui lòng xem xét và gửi tùy chọn Báo cáo sự cố trong menu chính</string>
     <string name="send_minidump">Gửi Báo cáo lỗi đến nhà phát triển</string>
     <string name="send_minidump_summary">Gửi thông tin gỡ lỗi về sự cố lần cuối đến nhà phát triển</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Đang kết nối</string>

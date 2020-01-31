@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN впав несподівано. Будь ласка, розгляньте використання параметру \"Надіслати Мінідамп\" в головному меню</string>
     <string name="send_minidump">Надіслати мінідамп розробнику</string>
     <string name="send_minidump_summary">Відправляє налагоджувальну інформацію розробнику про останнє аварійне завершення</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Підключення</string>

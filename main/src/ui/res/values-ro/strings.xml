@@ -233,7 +233,7 @@
     <string name="minidump_generated">OpenVPN sa oprit în mod neaşteptat. Vă rugăm să consideraţi opţiunea de trimitere a unui Minidump din meniul principal</string>
     <string name="send_minidump">Trimite Minidump la dezvoltator</string>
     <string name="send_minidump_summary">Trimite informații de depanare despre ultimul crash la dezvoltator</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Se conectează</string>

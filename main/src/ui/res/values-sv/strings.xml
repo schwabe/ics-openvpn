@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN kraschade oväntat. Försök att använda skicka Minidump alternativet i huvudmenyn</string>
     <string name="send_minidump">Skicka Minidump till utvecklare</string>
     <string name="send_minidump_summary">Skickar felsökningsinformation om senaste krasch till utvecklare</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Ansluter</string>

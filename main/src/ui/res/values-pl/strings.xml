@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN niespodziewanie uległ awarii. Proszę rozważ użycie opcji wyślij Minidump w głównym menu</string>
     <string name="send_minidump">Wyślij minidump do autora</string>
     <string name="send_minidump_summary">Wysyłam informacje debuggera o ostatniej awarii aplikacji do twórcy</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s-%2$s</string>
     <string name="session_ipv6string">%1$s-%3$s,%2$s</string>
     <string name="state_connecting">Łączę</string>

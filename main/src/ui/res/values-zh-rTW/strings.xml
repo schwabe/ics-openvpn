@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN 發生非預期的異常，你可以使用在主選單中的發送異常傾印選項，將資訊提供給開發人員。</string>
     <string name="send_minidump">向開發人員傳送異常傾印</string>
     <string name="send_minidump_summary">傳送程式上一個異常停止的除錯資訊給開發人員</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">連線中</string>

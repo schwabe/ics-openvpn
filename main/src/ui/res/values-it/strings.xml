@@ -236,7 +236,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="minidump_generated">OpenVPN si è arrestato in modo imprevisto. Ti consigliamo di attivare l\'opzione Invia Minidump nel menu principale.</string>
     <string name="send_minidump">Invia Minidump allo sviluppatore</string>
     <string name="send_minidump_summary">Invia informazioni di debug riguardanti l\'ultimo crash allo sviluppatore</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Connessione in corso</string>

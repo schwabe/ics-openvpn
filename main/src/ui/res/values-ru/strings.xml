@@ -235,7 +235,7 @@
     <string name="minidump_generated">Неожиданно произошло падение OpenVPN. Пожалуйста, рассмотрите возможность использования опции отправки Minidump в главном меню</string>
     <string name="send_minidump">Отправить Minidump разработчику</string>
     <string name="send_minidump_summary">Отправка отладочной информации разработчику о последнем аварийном завершении</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Подключение</string>

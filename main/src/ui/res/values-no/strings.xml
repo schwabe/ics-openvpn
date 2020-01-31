@@ -192,7 +192,7 @@
     <string name="minidump_generated">OpenVPN krasjet uventet. Vennligst vurder bruk av Minidump-alternativet i hovedmenyen</string>
     <string name="send_minidump">Send Minidump til utvikler</string>
     <string name="send_minidump_summary">Sender feilsøkingsinformasjon om siste krasj til utvikler</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Kobler til</string>

@@ -233,7 +233,7 @@
     <string name="minidump_generated">OpenVPN crashed unexpectedly. Please consider using the send Minidump option in the main menu</string>
     <string name="send_minidump">Send Minidump to developer</string>
     <string name="send_minidump_summary">Sends debugging information about last crash to developer</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Connecting</string>

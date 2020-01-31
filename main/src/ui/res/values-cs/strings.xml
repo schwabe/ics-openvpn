@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN neočekávaně havarovalo. Zvaž možnost použití volby poslat Minidump z hlavního menu</string>
     <string name="send_minidump">Poslat Minidump vývojáři</string>
     <string name="send_minidump_summary">Poslat ladící informace o poslední havárii vývojáři</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Připojuji se</string>

@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN is onverwacht gecrasht. Overweeg de optie Minidump verzenden in het hoofdmenu</string>
     <string name="send_minidump">Verzend Minidump naar ontwikkelaar</string>
     <string name="send_minidump_summary">Stuurt foutopsporingsinformatie over de laatste crash naar de ontwikkelaar</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Bezig met verbinden</string>

@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN crash tak terduga. Silakan mempertimbangkan mengirim menggunakan pilihan Minidump di Menu Utama</string>
     <string name="send_minidump">Mengirim MiniDump untuk pengembang</string>
     <string name="send_minidump_summary">Mengirim informasi debug tentang kegagalan aplikasi yang terakhir ke pengembang</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Menghubungkan</string>

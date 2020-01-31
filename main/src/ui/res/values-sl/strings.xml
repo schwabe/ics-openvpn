@@ -233,7 +233,7 @@
     <string name="minidump_generated">OpenVPN se je nepričakovano sesul. Razmislite o uporabi možnosti pošiljanja mini izpisa v glavnem meniju.</string>
     <string name="send_minidump">Pošlji mini izpis razvijalcu</string>
     <string name="send_minidump_summary">Pošlje podatke razhroščevanja o zadnjem sesutju razvijalcu</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Povezovanje</string>

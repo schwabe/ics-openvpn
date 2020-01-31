@@ -237,7 +237,7 @@
     <string name="minidump_generated">OpenVPN 意外崩溃。建议您使用主菜单中的发送转储文件功能向开发者发送转储文件</string>
     <string name="send_minidump">向开发者发送转储信息</string>
     <string name="send_minidump_summary">向开发人员发送上次崩溃的调试信息</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">连接中</string>

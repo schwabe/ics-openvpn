@@ -236,7 +236,7 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="minidump_generated">OpenVPN a planté de façon inattendue. Veuillez envisager d\'utiliser l\'option Minidump dans le menu principal</string>
     <string name="send_minidump">Envoyer le Minidump au développeur</string>
     <string name="send_minidump_summary">Envoie les informations sur le dernier crash au développeur</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Connexion</string>

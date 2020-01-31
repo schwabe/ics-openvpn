@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN нечакана завяршыла сваю працу. Мы будзем вельмі ўдзячныя, калі вы скарыстаецеся параметрам \"Адправіць мінідамп распрацоўшчыку\" ў галоўным меню праграмы</string>
     <string name="send_minidump">Адправіць мінідамп распрацоўшчыку</string>
     <string name="send_minidump_summary">Адпраўляе адладачную інфармацыю распрацоўшчыку пра апошняе аварыйнае завяршэнне праграмы</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Падлучэнне</string>

@@ -517,7 +517,7 @@ public class ConfigParser {
                 CIDRIP cidr = new CIDRIP(ifconfig.get(1), ifconfig.get(2));
                 np.mIPv4Address = cidr.toString();
             } catch (NumberFormatException nfe) {
-                throw new ConfigParseError("Could not pase ifconfig IP address: " + nfe.getLocalizedMessage());
+                throw new ConfigParseError("Could not parse ifconfig IP address: " + nfe.getLocalizedMessage());
             }
 
         }

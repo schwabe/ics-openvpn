@@ -59,7 +59,7 @@ public class TestLogFileHandler {
     @Test
     public void testMarschal() throws UnsupportedEncodingException {
         LogItem li = new LogItem(VpnStatus.LogLevel.DEBUG, 72, "foobar");
-        LogItem li2 = marschalAndBack(li);
+        LogItem li2 = marshalAndBack(li);
         testEquals(li, li2);
         Assert.assertEquals(li, li2);
     }
@@ -67,7 +67,7 @@ public class TestLogFileHandler {
     @Test
     public void testMarschalArgs() throws UnsupportedEncodingException {
         LogItem li = new LogItem(VpnStatus.LogLevel.DEBUG, 72, 772, "sinnloser Text", 7723, 723.2f, 7.2);
-        LogItem li2 = marschalAndBack(li);
+        LogItem li2 = marshalAndBack(li);
         testEquals(li, li2);
         Assert.assertEquals(li, li2);
     }
@@ -75,7 +75,7 @@ public class TestLogFileHandler {
     @Test
     public void testMarschalString() throws UnsupportedEncodingException {
         LogItem li = new LogItem(VpnStatus.LogLevel.DEBUG, "Nutzlose Nachricht");
-        LogItem li2 = marschalAndBack(li);
+        LogItem li2 = marshalAndBack(li);
         testEquals(li, li2);
         Assert.assertEquals(li, li2);
     }
@@ -89,7 +89,7 @@ public class TestLogFileHandler {
 
     }
 
-    private LogItem marschalAndBack(LogItem li) throws UnsupportedEncodingException {
+    private LogItem marshalAndBack(LogItem li) throws UnsupportedEncodingException {
         byte[] bytes = li.getMarshaledBytes();
 
         return new LogItem(bytes, bytes.length);

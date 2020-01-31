@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Rute til den konfigurerede IP-adresse</string>
     <string name="ab_kitkat_mss_title">Forkert MSS-værdi for VPN-forbindelse</string>
     <string name="ab_secondary_users_title">Sekundære tabletbrugere</string>
-    <string name="custom_connection_options_warng">Angiv tilpassede tilslutningsspecifikke indstillinger. Brug med omtanke</string>
+    <string name="custom_connection_options_warning">Angiv tilpassede tilslutningsspecifikke indstillinger. Brug med omtanke</string>
     <string name="custom_connection_options">Tilpassede indstillinger</string>
     <string name="remove_connection_entry">Fjern forbindelsesindgang</string>
     <string name="ab_kitkat_reconnect_title">Tilfældige afbrydelser fra mobiltnetværk</string>

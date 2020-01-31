@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">路由到設定的 IP 位址</string>
     <string name="ab_kitkat_mss_title">VPN 連線錯誤的最大分段大小 (MSS) 值</string>
     <string name="ab_secondary_users_title">二级平板电脑用户</string>
-    <string name="custom_connection_options_warng">指定自訂連線的特定選項，請小心使用</string>
+    <string name="custom_connection_options_warning">指定自訂連線的特定選項，請小心使用</string>
     <string name="custom_connection_options">自訂的選項</string>
     <string name="remove_connection_entry">刪除連線項目</string>
     <string name="ab_kitkat_reconnect_title">從行動網路隨機斷線</string>

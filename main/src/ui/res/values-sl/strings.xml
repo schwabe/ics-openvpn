@@ -368,7 +368,7 @@
     <string name="ab_not_route_to_vpn_title">Pot do nastavljenega naslova IP</string>
     <string name="ab_kitkat_mss_title">Napačna vrednost MSS za povezavo VPN</string>
     <string name="ab_secondary_users_title">Sekundarni uporabniki tabilc</string>
-    <string name="custom_connection_options_warng">Določite možnosti za povezave po meri. Uporabljajte previdno.</string>
+    <string name="custom_connection_options_warning">Določite možnosti za povezave po meri. Uporabljajte previdno.</string>
     <string name="custom_connection_options">Možnosti po meri</string>
     <string name="remove_connection_entry">Odstrani vnos povezave</string>
     <string name="ab_kitkat_reconnect_title">Naključne prekinitve mobilnega omrežja</string>

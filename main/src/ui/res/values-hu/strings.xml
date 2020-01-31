@@ -371,7 +371,7 @@
     <string name="ab_not_route_to_vpn_title">Útvonal a konfigurált IP címhez</string>
     <string name="ab_kitkat_mss_title">Rossz MSS érték a VPN kapcsolathoz</string>
     <string name="ab_secondary_users_title">Másodlagos tablet felhasználók</string>
-    <string name="custom_connection_options_warng">Határozzon meg egyedi kapcsolat specifikus opciókat. Elővigyázatosan használja</string>
+    <string name="custom_connection_options_warning">Határozzon meg egyedi kapcsolat specifikus opciókat. Elővigyázatosan használja</string>
     <string name="custom_connection_options">Egyéni beállítások</string>
     <string name="remove_connection_entry">Kapcsolat bejegyzés eltávolítása</string>
     <string name="ab_kitkat_reconnect_title">Véletlenszerű lecsatlakozások a mobil hálózatról</string>

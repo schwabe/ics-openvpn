@@ -370,7 +370,7 @@
     <string name="ab_not_route_to_vpn_title">Trasa k nastavené IP adrese</string>
     <string name="ab_kitkat_mss_title">Špatná hodnota MSS pro VPN spojení</string>
     <string name="ab_secondary_users_title">Vedlejší uživaté tabletu</string>
-    <string name="custom_connection_options_warng">Zadejte vlastní specifické možnosti k připojení. Používejte opatrně</string>
+    <string name="custom_connection_options_warning">Zadejte vlastní specifické možnosti k připojení. Používejte opatrně</string>
     <string name="custom_connection_options">Vlastní možnosti</string>
     <string name="remove_connection_entry">Odstranit položku připojení</string>
     <string name="ab_kitkat_reconnect_title">Náhodné odpojování od mobilní sítě</string>

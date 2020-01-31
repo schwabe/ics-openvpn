@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Alihkan ke alamat IP yang telah ditentukan</string>
     <string name="ab_kitkat_mss_title">Nilai MSS yang salah untuk koneksi VPN</string>
     <string name="ab_secondary_users_title">Pengguna tablet sekunder</string>
-    <string name="custom_connection_options_warng">Tentukan pengaturan untuk koneksi khusus . Gunakan dengan hati-hati</string>
+    <string name="custom_connection_options_warning">Tentukan pengaturan untuk koneksi khusus . Gunakan dengan hati-hati</string>
     <string name="custom_connection_options">Pilihan buatan</string>
     <string name="remove_connection_entry">Hapus entri koneksi</string>
     <string name="ab_kitkat_reconnect_title">Terputus acak dari jaringan selular</string>

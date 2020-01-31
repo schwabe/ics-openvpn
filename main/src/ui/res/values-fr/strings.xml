@@ -375,7 +375,7 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="ab_not_route_to_vpn_title">Route vers l\'adresse IP configurée</string>
     <string name="ab_kitkat_mss_title">Valeur MSS erronée pour la connexion VPN</string>
     <string name="ab_secondary_users_title">Utilisateurs de tablettes secondaires</string>
-    <string name="custom_connection_options_warng">Pour entrer des options de connexion personnalisées. À utiliser avec précaution</string>
+    <string name="custom_connection_options_warning">Pour entrer des options de connexion personnalisées. À utiliser avec précaution</string>
     <string name="custom_connection_options">Options personnalisées</string>
     <string name="remove_connection_entry">Supprimer entrée de connexion</string>
     <string name="ab_kitkat_reconnect_title">Déconnexion aléatoire du réseau mobile</string>

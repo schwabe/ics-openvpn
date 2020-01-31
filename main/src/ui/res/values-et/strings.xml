@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Seadistatud IP aadressi marsruut</string>
     <string name="ab_kitkat_mss_title">VPN ühenduse vale MSS väärtus</string>
     <string name="ab_secondary_users_title">Teisesed tahvli kasutajad</string>
-    <string name="custom_connection_options_warng">Seadista kohandatavad ühendusespetsiifilised valikud. Kasuta ettevaatlikult</string>
+    <string name="custom_connection_options_warning">Seadista kohandatavad ühendusespetsiifilised valikud. Kasuta ettevaatlikult</string>
     <string name="custom_connection_options">Kohandatavad valikud</string>
     <string name="remove_connection_entry">Eemalda ühenduse kirje</string>
     <string name="ab_kitkat_reconnect_title">Pistelised mobiilivõrgu katkestused</string>

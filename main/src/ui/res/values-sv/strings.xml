@@ -373,7 +373,7 @@
     <string name="ab_not_route_to_vpn_title">Rutt till den konfigurerade IP-adressen</string>
     <string name="ab_kitkat_mss_title">Fel MSS-värde för VPN-anslutning</string>
     <string name="ab_secondary_users_title">Sekundära surfplattsanvändare</string>
-    <string name="custom_connection_options_warng">Ange anpassade anslutningsspecifika alternativ. Används med försiktighet</string>
+    <string name="custom_connection_options_warning">Ange anpassade anslutningsspecifika alternativ. Används med försiktighet</string>
     <string name="custom_connection_options">Anpassade alternativ</string>
     <string name="remove_connection_entry">Ta bort anslutningspost</string>
     <string name="ab_kitkat_reconnect_title">Intermittienta frånkopplingar från mobilnätverk</string>

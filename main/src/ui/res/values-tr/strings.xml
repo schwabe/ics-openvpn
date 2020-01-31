@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Yapılandırılmış IP adresine yönlendir</string>
     <string name="ab_kitkat_mss_title">VPN bağlantısı için yanlış MSS değeri</string>
     <string name="ab_secondary_users_title">İkincil tablet kullanıcıları</string>
-    <string name="custom_connection_options_warng">Özel bağlantı seçeneklerini belirtin. Dikkatli kullanın</string>
+    <string name="custom_connection_options_warning">Özel bağlantı seçeneklerini belirtin. Dikkatli kullanın</string>
     <string name="custom_connection_options">Özel Seçenekler</string>
     <string name="remove_connection_entry">Bağlantı girdisini kaldır</string>
     <string name="ab_kitkat_reconnect_title">Mobil ağda rastgele bağlantı kesilmeleri</string>

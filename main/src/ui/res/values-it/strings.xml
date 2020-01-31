@@ -375,7 +375,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="ab_not_route_to_vpn_title">Percorso per l\'indirizzo IP configurato</string>
     <string name="ab_kitkat_mss_title">Valore MSS errato per la connessione VPN</string>
     <string name="ab_secondary_users_title">Utenti tablet secondari</string>
-    <string name="custom_connection_options_warng">Imposta le opzioni specifiche di connessione personalizzate. Usare con attenzione</string>
+    <string name="custom_connection_options_warning">Imposta le opzioni specifiche di connessione personalizzate. Usare con attenzione</string>
     <string name="custom_connection_options">Opzioni personalizzate</string>
     <string name="remove_connection_entry">Rimuovi voce connessione</string>
     <string name="ab_kitkat_reconnect_title">Disconnessioni casuali dalla rete mobile</string>

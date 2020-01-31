@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">구성된 IP 주소로의 경로</string>
     <string name="ab_kitkat_mss_title">VPN 연결에 대한 잘못된 MSS 값</string>
     <string name="ab_secondary_users_title">부차적인 태블릿 사용자들</string>
-    <string name="custom_connection_options_warng">사용자 지정 연결별 옵션을 지정하십시오. 조심해서 사용하십시오.</string>
+    <string name="custom_connection_options_warning">사용자 지정 연결별 옵션을 지정하십시오. 조심해서 사용하십시오.</string>
     <string name="custom_connection_options">사용자 지정 옵션</string>
     <string name="remove_connection_entry">연결 항목 제거</string>
     <string name="ab_kitkat_reconnect_title">모바일 네트워크에서 임의 연결 해제</string>

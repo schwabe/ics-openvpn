@@ -375,7 +375,7 @@ hacia/de Móvil)</string>
     <string name="ab_not_route_to_vpn_title">Ruta a la dirección IP configurada</string>
     <string name="ab_kitkat_mss_title">Valor MSS incorrecto para la conexión VPN</string>
     <string name="ab_secondary_users_title">Los usuarios de tabletas secundarias</string>
-    <string name="custom_connection_options_warng">Especifique las opciones específicas de conexión personalizada. Úselo con cuidado</string>
+    <string name="custom_connection_options_warning">Especifique las opciones específicas de conexión personalizada. Úselo con cuidado</string>
     <string name="custom_connection_options">Opciones personalizadas</string>
     <string name="remove_connection_entry">Eliminar entrada de conexión</string>
     <string name="ab_kitkat_reconnect_title">Desconexiones aleatorias de la red móvil</string>

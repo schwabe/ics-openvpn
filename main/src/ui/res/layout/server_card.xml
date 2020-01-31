@@ -364,7 +364,7 @@
                         android:id="@+id/warnung_custom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/custom_connection_options_warng"/>
+                        android:text="@string/custom_connection_options_warning"/>
 
                 <EditText
                         android:id="@+id/customoptions"

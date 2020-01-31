@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Шлях до налаштованого VPN IP адреса</string>
     <string name="ab_kitkat_mss_title">Невірне значення MSS для VPN підключення</string>
     <string name="ab_secondary_users_title">Другі користувачі планшету</string>
-    <string name="custom_connection_options_warng">Визначені параметри користувача при з\'єднанні. Будьте обережні!</string>
+    <string name="custom_connection_options_warning">Визначені параметри користувача при з\'єднанні. Будьте обережні!</string>
     <string name="custom_connection_options">Власні налаштовування</string>
     <string name="remove_connection_entry">Видалити запис підключення</string>
     <string name="ab_kitkat_reconnect_title">Випадкове відключення від мережі мобільного зв\'язку</string>

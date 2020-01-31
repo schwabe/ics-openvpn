@@ -375,7 +375,7 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="ab_not_route_to_vpn_title">Trasa do skonfigurowanego adresu IP</string>
     <string name="ab_kitkat_mss_title">Błędna wartość MSS dla połączenia VPN</string>
     <string name="ab_secondary_users_title">Dodatkowi użytkownicy tabletu</string>
-    <string name="custom_connection_options_warng">Określ własne opcje dla połączenia. Używaj z rozwagą</string>
+    <string name="custom_connection_options_warning">Określ własne opcje dla połączenia. Używaj z rozwagą</string>
     <string name="custom_connection_options">Opcje niestandardowe</string>
     <string name="remove_connection_entry">Usuń wpis połączenia</string>
     <string name="ab_kitkat_reconnect_title">Losowe rozłączenia z sieci komórkowej</string>

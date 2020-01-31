@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Маршрут для ўсталяванага адраса IP</string>
     <string name="ab_kitkat_mss_title">Памылковае значэнне MSS для злучэння з VPN</string>
     <string name="ab_secondary_users_title">Іншыя карыстальнікі планшэта</string>
-    <string name="custom_connection_options_warng">Азначце ўласныя параметры злучэння. Карыстайцеся з асцярожнасцю</string>
+    <string name="custom_connection_options_warning">Азначце ўласныя параметры злучэння. Карыстайцеся з асцярожнасцю</string>
     <string name="custom_connection_options">Уласныя параметры</string>
     <string name="remove_connection_entry">Выдаліць запіс падлучэння</string>
     <string name="ab_kitkat_reconnect_title">Выпадковае адлучэнне ад мабільнай сеткі</string>

@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Định tuyến đến cấu hình địa chỉ IP</string>
     <string name="ab_kitkat_mss_title">Giá trị MSS sai cho kết nối VPN</string>
     <string name="ab_secondary_users_title">Người sử dụng máy tính bảng thứ cấp</string>
-    <string name="custom_connection_options_warng">Xác định kết nối tùy chỉnh cụ thể. Dùng cẩn thận</string>
+    <string name="custom_connection_options_warning">Xác định kết nối tùy chỉnh cụ thể. Dùng cẩn thận</string>
     <string name="custom_connection_options">Cấu hình tùy chỉnh</string>
     <string name="remove_connection_entry">Gỡ bỏ mục kết nối</string>
     <string name="ab_kitkat_reconnect_title">Ngẫu nhiên ngắt kết nối từ mạng di động</string>

@@ -411,7 +411,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="ab_not_route_to_vpn_title">設定されたIPアドレスへの経路</string>
     <string name="ab_kitkat_mss_title">VPN接続に不正なMSS値</string>
     <string name="ab_secondary_users_title">タブレットの複数ユーザー</string>
-    <string name="custom_connection_options_warng">カスタム指定の接続オプションを設定します。慎重に利用してください</string>
+    <string name="custom_connection_options_warning">カスタム指定の接続オプションを設定します。慎重に利用してください</string>
     <string name="custom_connection_options">カスタムオプション</string>
     <string name="remove_connection_entry">接続先設定を削除します</string>
     <string name="ab_kitkat_reconnect_title">モバイルネットワークが突発的に切断される</string>

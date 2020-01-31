@@ -370,7 +370,7 @@
     <string name="ab_not_route_to_vpn_title">Rutează prin adresa IP configurată</string>
     <string name="ab_kitkat_mss_title">Valoare MSS greșită pentru conexiunea VPN</string>
     <string name="ab_secondary_users_title">Utilizatori de tablete secundari</string>
-    <string name="custom_connection_options_warng">Specificați opțiunile specifice conexiunii personalizate. Folosiți cu grijă</string>
+    <string name="custom_connection_options_warning">Specificați opțiunile specifice conexiunii personalizate. Folosiți cu grijă</string>
     <string name="custom_connection_options">Opţiunile Particularizate</string>
     <string name="remove_connection_entry">Ștergeți conexiunea</string>
     <string name="ab_kitkat_reconnect_title">Se deconectează aleatoriu de la rețeaua mobilă</string>

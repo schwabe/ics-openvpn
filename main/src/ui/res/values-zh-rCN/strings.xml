@@ -377,7 +377,7 @@
     <string name="ab_not_route_to_vpn_title">路由到已配置的 IP 地址</string>
     <string name="ab_kitkat_mss_title">VPN 连接出现 MSS 值错误</string>
     <string name="ab_secondary_users_title">非Android平板的主用户</string>
-    <string name="custom_connection_options_warng">指定自定义连接的特定选项。请谨慎使用</string>
+    <string name="custom_connection_options_warning">指定自定义连接的特定选项。请谨慎使用</string>
     <string name="custom_connection_options">自定义选项</string>
     <string name="remove_connection_entry">删除连接条目</string>
     <string name="ab_kitkat_reconnect_title">随机从移动网络断开连接</string>

@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Route naar het geconfigureerde IP-adres</string>
     <string name="ab_kitkat_mss_title">Verkeerde MSS-waarde voor VPN-verbinding</string>
     <string name="ab_secondary_users_title">Secundaire tabletgebruikers</string>
-    <string name="custom_connection_options_warng">Specificeer aangepaste verbindingsopties. Gebruik voorzichtig</string>
+    <string name="custom_connection_options_warning">Specificeer aangepaste verbindingsopties. Gebruik voorzichtig</string>
     <string name="custom_connection_options">Aangepaste Opties</string>
     <string name="remove_connection_entry">Verwijder de verbinding</string>
     <string name="ab_kitkat_reconnect_title">Willekeurige verbroken verbinding met mobiel netwerk</string>

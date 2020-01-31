@@ -29,7 +29,7 @@ import de.blinkt.openvpn.core.VpnStatus;
 
 public class SendDumpFragment extends Fragment {
 
-    static public Pair<File, Long> getLastestDump(Context c) {
+    static public Pair<File, Long> getLatestDump(Context c) {
         long newestDumpTime = 0;
         File newestDumpFile = null;
 
@@ -60,7 +60,7 @@ public class SendDumpFragment extends Fragment {
         v.findViewById(R.id.senddump).setOnClickListener(v1 -> emailMiniDumps());
 
         new Thread(() -> {
-            final Pair<File, Long> ldump = getLastestDump(getActivity());
+            final Pair<File, Long> ldump = getLatestDump(getActivity());
             if (ldump == null)
                 return;
             // Do in background since it does I/O
@@ -101,7 +101,7 @@ public class SendDumpFragment extends Fragment {
 
         ArrayList<Uri> uris = new ArrayList<>();
 
-        Pair<File, Long> ldump = getLastestDump(getActivity());
+        Pair<File, Long> ldump = getLatestDump(getActivity());
         if (ldump == null) {
             VpnStatus.logError("No Minidump found!");
         }

@@ -298,7 +298,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                     break;
                 case TIME_PERIOD_MINUTES:
                     list = VpnStatus.trafficHistory.getMinutes();
-                    interval = TrafficHistory.TIME_PERIOD_MINTUES;
+                    interval = TrafficHistory.TIME_PERIOD_MINUTES;
                     totalInterval = TrafficHistory.TIME_PERIOD_HOURS * TrafficHistory.PERIODS_TO_KEEP;
                     ;
 
@@ -306,7 +306,7 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
                 default:
                     list = VpnStatus.trafficHistory.getSeconds();
                     interval = OpenVPNManagement.mBytecountInterval * 1000;
-                    totalInterval = TrafficHistory.TIME_PERIOD_MINTUES * TrafficHistory.PERIODS_TO_KEEP;
+                    totalInterval = TrafficHistory.TIME_PERIOD_MINUTES * TrafficHistory.PERIODS_TO_KEEP;
                     break;
             }
             if (list.size() == 0) {

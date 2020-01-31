@@ -297,7 +297,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         return true
     }
 
-    private fun embedFile(filename: String?, type: Utils.FileType, onlyFindFileAndNullonNotFound: Boolean): String? {
+    private fun embedFile(filename: String?, type: Utils.FileType, onlyFindFileAndNullOnNotFound: Boolean): String? {
         if (filename == null)
             return null
 
@@ -307,11 +307,11 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
         val possibleFile = findFile(filename, type)
         return if (possibleFile == null)
-            if (onlyFindFileAndNullonNotFound)
+            if (onlyFindFileAndNullOnNotFound)
                 null
             else
                 filename
-        else if (onlyFindFileAndNullonNotFound)
+        else if (onlyFindFileAndNullOnNotFound)
             possibleFile.absolutePath
         else
             readFileContent(possibleFile, type == Utils.FileType.PKCS12)

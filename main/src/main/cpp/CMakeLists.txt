@@ -95,7 +95,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
 
             )
 else ()
-    message("Not budiling OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+    message("Not building OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 endif ()
 
 add_library(opvpnutil SHARED opvpnutil/jniglue.c opvpnutil/scan_ifs.c)
@@ -110,7 +110,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
     add_library(osslspeedtest SHARED opvpnutil/sslspeed.c)
     target_link_libraries(osslspeedtest log crypto ssl)
 else ()
-    message("Not budiling SSLSpeedTest for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+    message("Not building SSLSpeedTest for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 endif ()
 
 # The magic Jellybean keystore signing hack. Beware dragons and dlsyms magic ahead

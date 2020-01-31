@@ -323,7 +323,7 @@ public class LogItem implements Parcelable {
             md.update(der);
             byte[] digest = md.digest();
 
-            if (Arrays.equals(digest, VpnStatus.officalkey))
+            if (Arrays.equals(digest, VpnStatus.officialkey))
                 apksign = c.getString(R.string.official_build);
             else if (Arrays.equals(digest, VpnStatus.officialdebugkey))
                 apksign = c.getString(R.string.debug_build);

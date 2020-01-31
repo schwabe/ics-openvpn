@@ -11,7 +11,7 @@
         &lt;helbeierling@t-online.de>
     </string>
 
-    <string name="opevpn_copyright" translatable="false">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net>\n
+    <string name="openvpn_copyright" translatable="false">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net>\n
 
         "OpenVPN" is a trademark of OpenVPN Technologies, Inc.\n
     </string>

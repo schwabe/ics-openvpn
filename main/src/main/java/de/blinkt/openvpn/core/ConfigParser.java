@@ -251,7 +251,7 @@ public class ConfigParser {
 
     private boolean space(char c) {
         // I really hope nobody is using zero bytes inside his/her config file
-        // to sperate parameter but here we go:
+        // to separate parameter but here we go:
         return Character.isWhitespace(c) || c == '\0';
 
     }

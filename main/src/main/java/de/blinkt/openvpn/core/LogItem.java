@@ -167,7 +167,7 @@ public class LogItem implements Parcelable {
                 char type = bb.getChar();
                 switch (type) {
                     case 's':
-                        mArgs[i] = unmarschalString(bb);
+                        mArgs[i] = unmarshalString(bb);
                         break;
                     case 'i':
                         mArgs[i] = bb.getInt();
@@ -199,7 +199,7 @@ public class LogItem implements Parcelable {
         bb.put(utf8bytes);
     }
 
-    private String unmarschalString(ByteBuffer bb) throws UnsupportedEncodingException {
+    private String unmarshalString(ByteBuffer bb) throws UnsupportedEncodingException {
         int len = bb.getInt();
         byte[] utf8bytes = new byte[len];
         bb.get(utf8bytes);

@@ -420,7 +420,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         if (filename == null || filename == "")
             return null
 
-        // Try diffent path relative to /mnt/sdcard
+        // Try different path relative to /mnt/sdcard
         val sdcard = Environment.getExternalStorageDirectory()
         val root = File("/")
 

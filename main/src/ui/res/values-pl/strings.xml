@@ -172,7 +172,7 @@
     <string name="owner_fix">Popraw uprawnienia do /dev/tun</string>
     <string name="generated_config_summary">Pokazuje wygenerowany plik konfiguracji OpenVPN</string>
     <string name="edit_profile_title">Edytujesz \"%s\"</string>
-    <string name="building_configration">Tworzenie konfiguracji&#8230;</string>
+    <string name="building_configuration">Tworzenie konfiguracji&#8230;</string>
     <string name="netchange_summary">Włączenie tej opcji spowoduje ponowne połączenie jeśli stan sieci się zmienił (np. z WiFi na GSM)</string>
     <string name="netchange">Połącz ponownie przy zmianie sieci</string>
     <string name="netstatus">Stan sieci: %s</string>

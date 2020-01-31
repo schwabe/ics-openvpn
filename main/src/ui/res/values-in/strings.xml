@@ -172,7 +172,7 @@
     <string name="owner_fix">Perbaiki kepemilikan /dev/tun</string>
     <string name="generated_config_summary">Tunjukkan berkas konfigurasi OpenVPN yang dibuat</string>
     <string name="edit_profile_title">Mengubah \"%s\"</string>
-    <string name="building_configration">Membuat konfigurasi&#8230;</string>
+    <string name="building_configuration">Membuat konfigurasi&#8230;</string>
     <string name="netchange_summary">Menyalakan pilihan ini akan memaksa menyambung kembali jika keadaan jaringan berubah (misalnya WiFi dari mobile)</string>
     <string name="netchange">Koneksi ulang saat ganti jaringan</string>
     <string name="netstatus">Status jaringan: %s</string>

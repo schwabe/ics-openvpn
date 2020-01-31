@@ -172,7 +172,7 @@
     <string name="owner_fix">Eigentümer von /dev/tun setzen</string>
     <string name="generated_config_summary">Generierte Konfigurationsdatei anzeigen</string>
     <string name="edit_profile_title">Bearbeiten von \"%s\"</string>
-    <string name="building_configration">Generiere OpenVPN-Konfiguration&#8230;</string>
+    <string name="building_configuration">Generiere OpenVPN-Konfiguration&#8230;</string>
     <string name="netchange_summary">VPN bei jedem Wechsel des verwendeten Netzwerktyps (WLAN zu Mobilfunk und umgekehrt) neu verbinden</string>
     <string name="netchange">Netzwerkänderungen beachten</string>
     <string name="netstatus">Netzwerkstatus: %s</string>

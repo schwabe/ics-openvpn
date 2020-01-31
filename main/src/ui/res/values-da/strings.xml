@@ -172,7 +172,7 @@
     <string name="owner_fix">Ret ejerskab af /dev/tun</string>
     <string name="generated_config_summary">Vis den generede OpenVPN konfigurationsfil</string>
     <string name="edit_profile_title">Redigerer \"%s\"</string>
-    <string name="building_configration">Bygger konfiguration&#8230;</string>
+    <string name="building_configuration">Bygger konfiguration&#8230;</string>
     <string name="netchange_summary">Hvis dette tilvalg slåes til vil det gennemtvinge en genopretning af forbindelsen hvis netværkstilstanden ændres (f.eks. WIFI til/fra mobildata)</string>
     <string name="netchange">Genopret forbindelse ved ændring i netværkstilstand</string>
     <string name="netstatus">Netværks status: %s</string>

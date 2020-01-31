@@ -155,7 +155,7 @@
     <string name="owner_fix">Fiks eierskap av /dev/tun</string>
     <string name="generated_config_summary">Viser den genererte OpenVPN konfigurasjonsfilen</string>
     <string name="edit_profile_title">Rediger \"%s\"</string>
-    <string name="building_configration">Lager konfigurasjon&#8230;</string>
+    <string name="building_configuration">Lager konfigurasjon&#8230;</string>
     <string name="netchange">Koble til på nytt ved nettverks endring</string>
     <string name="netstatus">Nettverksstatus: %s</string>
     <string name="select_file">Velg</string>

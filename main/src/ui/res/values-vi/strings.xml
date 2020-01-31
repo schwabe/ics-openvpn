@@ -172,7 +172,7 @@
     <string name="owner_fix">Sửa quyền sở hữu /dev/tun</string>
     <string name="generated_config_summary">Hiển thị tập tin cấu hình OpenVPN đã tạo</string>
     <string name="edit_profile_title">Đang chỉnh sửa \"%s\"</string>
-    <string name="building_configration">Đang dựng cấu hình...</string>
+    <string name="building_configuration">Đang dựng cấu hình...</string>
     <string name="netchange_summary">Bật tùy chọn này sẽ buộc kết nối lại nếu tình trạng mạng bị thay đổi (ví dụ Wifi đến/từ điện thoại)</string>
     <string name="netchange">Kết nối lại khi mạng thay đổi</string>
     <string name="netstatus">Tình trạng mạng: %s</string>

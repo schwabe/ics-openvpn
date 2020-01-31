@@ -172,7 +172,7 @@
     <string name="owner_fix">/dev/tun tulajdonos javítása</string>
     <string name="generated_config_summary">Generált OpenVPN konfigurációs fájl megmutatása</string>
     <string name="edit_profile_title">\"%s\" szerkesztése</string>
-    <string name="building_configration">Konfiguráció felépítése&#8230;</string>
+    <string name="building_configuration">Konfiguráció felépítése&#8230;</string>
     <string name="netchange_summary">Ennek az opciónak a bekapcsolása erőlteti az újracsatlakozást ha a hálózati állapot megváltozik (pl.: WiFi-re/ről mobil-ra/ról)</string>
     <string name="netchange">Újracsatlakozás hálózatváltáskor</string>
     <string name="netstatus">Hálózati állapot: %s</string>

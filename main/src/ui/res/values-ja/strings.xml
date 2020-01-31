@@ -178,7 +178,7 @@ SDカード上のデータは本質的に無防備です。すべてのアプリ
     <string name="owner_fix">/dev/tun の所有権を修正</string>
     <string name="generated_config_summary">生成された OpenVPN の設定ファイルを表示します</string>
     <string name="edit_profile_title">\"%s\"の編集</string>
-    <string name="building_configration">設定を構成中・・・</string>
+    <string name="building_configuration">設定を構成中・・・</string>
     <string name="netchange_summary">この設定を有効にすると、ネットワークの状態変化時(WiFi／モバイル)に再接続を行います。</string>
     <string name="netchange">ネットワーク変化時に再接続する</string>
     <string name="netstatus">ネットワーク状態： %s</string>

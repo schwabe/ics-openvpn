@@ -169,7 +169,7 @@
     <string name="owner_fix">Corrija a propriedade de /dev/tun</string>
     <string name="generated_config_summary">Mostra o arquivo de configuração OpenVPN criado</string>
     <string name="edit_profile_title">A editar \"%s\"</string>
-    <string name="building_configration">A preparar a configuração...</string>
+    <string name="building_configuration">A preparar a configuração...</string>
     <string name="netchange_summary">Ativando essa opção forçará a reconexão se o estado da rede mudar (ex: WiFi de/para celular)</string>
     <string name="netchange">Volte a ligar na mudança de rede</string>
     <string name="netstatus">Estado da rede: %s</string>

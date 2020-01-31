@@ -172,7 +172,7 @@
     <string name="owner_fix">Выправіць уласніка для /dev/tun</string>
     <string name="generated_config_summary">Паказаць згенераваны файл канфігурацыі OpenVPN</string>
     <string name="edit_profile_title">Змяненне \"%s\"</string>
-    <string name="building_configration">Пабудова канфігурацыі&#8230;</string>
+    <string name="building_configuration">Пабудова канфігурацыі&#8230;</string>
     <string name="netchange_summary">Уключэнне гэтага параметра прымусова перападлучаць сетку пры змяненні яе стану (напрыклад, прылада пераходзіць з WiFi у 3G і наадварот)</string>
     <string name="netchange">Перападлучыцца пры змяненні сеткі</string>
     <string name="netstatus">Статус сеткі: %s</string>

@@ -172,7 +172,7 @@
     <string name="owner_fix">/dev/tun sahipliğini düzeltmek</string>
     <string name="generated_config_summary">Oluşturulan OpenVPN Yapılandırma Dosyasını gösterir</string>
     <string name="edit_profile_title">\"%s\" düzenleme</string>
-    <string name="building_configration">Yapılandırma derleniyor&#8230;</string>
+    <string name="building_configuration">Yapılandırma derleniyor&#8230;</string>
     <string name="netchange_summary">Bu seçeneği açmak, bir ağ durumu değiştiğinde yeniden bağlanmaya zorlayacaktır (örn. Kablosuz / Mobil ağ geçişi)</string>
     <string name="netchange">Ağ değişikliği durumunda yeniden bağlan</string>
     <string name="netstatus">Ağ Durumu: %s</string>

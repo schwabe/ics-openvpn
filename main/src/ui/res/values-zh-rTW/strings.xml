@@ -172,7 +172,7 @@
     <string name="owner_fix">修正 /dev/tun 的擁有者</string>
     <string name="generated_config_summary">顯示本程序生成的設定檔</string>
     <string name="edit_profile_title">正在編輯\"%s\"</string>
-    <string name="building_configration">正在生成設定檔&#8230;</string>
+    <string name="building_configuration">正在生成設定檔&#8230;</string>
     <string name="netchange_summary">若切換此選項當網絡狀況變更時將強制重新連線(例如從WiFi變成手機網絡，反之亦然)</string>
     <string name="netchange">網絡異動時重新連線</string>
     <string name="netstatus">網絡狀態: %s</string>

@@ -172,7 +172,7 @@
     <string name="owner_fix">Opravit vlastnictví /dev/tun</string>
     <string name="generated_config_summary">Zobrazí vygenerované nastavení OpenVPN</string>
     <string name="edit_profile_title">Úprava \"%s\"</string>
-    <string name="building_configration">Vytvářím konfiguraci&#8230;</string>
+    <string name="building_configuration">Vytvářím konfiguraci&#8230;</string>
     <string name="netchange_summary">Zapnutím této volby bude vynuceno opětovné připojení, pokud se změní stav sítě (např. z WiFi na mobilní síť a zpět)</string>
     <string name="netchange">Opětovně připojit při změně sítě</string>
     <string name="netstatus">Stav sítě: %s</string>

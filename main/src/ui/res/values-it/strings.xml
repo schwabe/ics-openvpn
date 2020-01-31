@@ -173,7 +173,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="owner_fix">Correggi i diritti su /dev/tun</string>
     <string name="generated_config_summary">Mostra il file di configurazione di OpenVPN generato</string>
     <string name="edit_profile_title">Modifica \"%s\"</string>
-    <string name="building_configration">Configurazione in corso&#8230;</string>
+    <string name="building_configuration">Configurazione in corso&#8230;</string>
     <string name="netchange_summary">Selezionando questa opzione verrà forzata una riconnessione se lo stato della rete cambia (da WIFI a cellulare e viceversa)</string>
     <string name="netchange">Riconnetti in caso cambi la rete</string>
     <string name="netstatus">Stato della rete: %s</string>

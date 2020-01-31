@@ -172,7 +172,7 @@
     <string name="owner_fix">Виправити власника /dev/tun</string>
     <string name="generated_config_summary">Показує згенерований файл конфігурації OpenVPN</string>
     <string name="edit_profile_title">Редагується \"%s\"</string>
-    <string name="building_configration">Побудова конфігурації&#8230;</string>
+    <string name="building_configuration">Побудова конфігурації&#8230;</string>
     <string name="netchange_summary">Вмикання цього параметру примусить перепідключитися, якщо стан мережі змінився (напр. Wi-Fi/мобільний інтернет)</string>
     <string name="netchange">Перепідключатися при зміні мережі</string>
     <string name="netstatus">Статус мережі: %s</string>

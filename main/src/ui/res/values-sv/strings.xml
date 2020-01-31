@@ -172,7 +172,7 @@
     <string name="owner_fix">Fixa ägande av /dev/tun</string>
     <string name="generated_config_summary">Visar den genererade OpenVPN-konfigurationsfilen</string>
     <string name="edit_profile_title">Redigerar \"%s\"</string>
-    <string name="building_configration">Bygger konfiguration&#8230;</string>
+    <string name="building_configuration">Bygger konfiguration&#8230;</string>
     <string name="netchange_summary">Aktivering av detta alternativ kommer att tvinga en återanslutning om nätverksanslutningen ändras (t.ex. WiFi &lt;-> mobildata)</string>
     <string name="netchange">Återanslut vid förändring av nätverksanslutning</string>
     <string name="netstatus">Nätverksstatus: %s</string>

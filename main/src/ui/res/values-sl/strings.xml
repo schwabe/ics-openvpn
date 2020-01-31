@@ -172,7 +172,7 @@
     <string name="owner_fix">Popravi lastništvo mape /dev/tun</string>
     <string name="generated_config_summary">Prikaže ustvarjeno nastavitveno datoteko OpenVPN</string>
     <string name="edit_profile_title">Urejanje \"%s\"</string>
-    <string name="building_configration">Izgrajevanje nastavitev &#8230;</string>
+    <string name="building_configuration">Izgrajevanje nastavitev &#8230;</string>
     <string name="netchange_summary">Vklop te storitve bo vsilil ponovno povezavo, če se stanje omrežja spremeni (npr. Wi-Fi v/iz mobilnega omrežja)</string>
     <string name="netchange">Pon. povez. ob spr. omr.</string>
     <string name="netstatus">Stanje omrežja: %s</string>

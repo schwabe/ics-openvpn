@@ -172,7 +172,7 @@
     <string name="owner_fix">Korrasta /dev/tun omanikuõigused</string>
     <string name="generated_config_summary">Näitab genereeritud OpenVPN konfiguratsioonifaili</string>
     <string name="edit_profile_title">Redigeeritakse \"%s\"</string>
-    <string name="building_configration">Koostatakse konfiguratsiooni&#8230;</string>
+    <string name="building_configuration">Koostatakse konfiguratsiooni&#8230;</string>
     <string name="netchange_summary">Selle valiku aktiveerimine kutsub esile VPN uuestiühendumise kui võrgu olek muutub (nt. WIFI peale/pealt mobiilile)</string>
     <string name="netchange">Uuestiühendus võrgu oleku muutumisel</string>
     <string name="netstatus">Võrgu olek: %s</string>

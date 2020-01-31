@@ -173,7 +173,7 @@
     <string name="owner_fix">修复 /dev/tun 的权限</string>
     <string name="generated_config_summary">显示生成的OpenVPN配置文件</string>
     <string name="edit_profile_title">正在编辑“ %s ”</string>
-    <string name="building_configration">生成配置中...</string>
+    <string name="building_configuration">生成配置中...</string>
     <string name="netchange_summary">启用该选项以在网络变化（例如在蜂窝数据和 WiFi 之间切换）时强制重新连接</string>
     <string name="netchange">当网络更改时重新连接</string>
     <string name="netstatus">网络状态：%s</string>

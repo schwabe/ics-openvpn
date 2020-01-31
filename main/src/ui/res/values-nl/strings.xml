@@ -172,7 +172,7 @@
     <string name="owner_fix">Herstel eigenaar van /dev/tun</string>
     <string name="generated_config_summary">Toont het gegenereerde OpenVPN configuratiebestand</string>
     <string name="edit_profile_title">Bewerken van \"%s\"</string>
-    <string name="building_configration">Configuratie bouwen&#8230;</string>
+    <string name="building_configuration">Configuratie bouwen&#8230;</string>
     <string name="netchange_summary">Het inschakelen van deze optie zal opnieuw verbinden na het veranderen van de netwerk status (bijv. van WiFi naar mobiel) forceren</string>
     <string name="netchange">Opnieuw verbinden na netwerkverandering</string>
     <string name="netstatus">Netwerk status: %s</string>

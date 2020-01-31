@@ -172,7 +172,7 @@
     <string name="owner_fix">/dev/tun 소유권 고치기</string>
     <string name="generated_config_summary">생성된 OpenVPN의 구성 파일 보기</string>
     <string name="edit_profile_title">\"%s\" 편집</string>
-    <string name="building_configration">구성 만드는 중&#8230;</string>
+    <string name="building_configuration">구성 만드는 중&#8230;</string>
     <string name="netchange_summary">이 옵션을 켜면 네트워크 상태 변경시 강제로 재접속합니다 (예: WiFi와 모바일 상호 변경)</string>
     <string name="netchange">네트워크 변경시 재접속</string>
     <string name="netstatus">네트워크 상태: %s</string>

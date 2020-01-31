@@ -280,7 +280,7 @@ public class LogItem implements Parcelable {
     }
 
 
-    // TextUtils.join will cause not macked exception in tests ....
+    // TextUtils.join will cause not matched exception in tests ....
     public static String join(CharSequence delimiter, Object[] tokens) {
         StringBuilder sb = new StringBuilder();
         boolean firstTime = true;

@@ -126,9 +126,9 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         }
     }
 
-    public DeviceStateReceiver(OpenVPNManagement magnagement) {
+    public DeviceStateReceiver(OpenVPNManagement management) {
         super();
-        mManagement = magnagement;
+        mManagement = management;
         mManagement.setPauseCallback(this);
         mDisconnectHandler = new Handler();
     }

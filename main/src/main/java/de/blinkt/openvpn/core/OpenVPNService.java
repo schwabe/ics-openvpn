@@ -438,13 +438,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     }
 
-    synchronized void registerDeviceStateReceiver(OpenVPNManagement magnagement) {
+    synchronized void registerDeviceStateReceiver(OpenVPNManagement management) {
         // Registers BroadcastReceiver to track network connection changes.
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_SCREEN_ON);
-        mDeviceStateReceiver = new DeviceStateReceiver(magnagement);
+        mDeviceStateReceiver = new DeviceStateReceiver(management);
 
         // Fetch initial network state
         mDeviceStateReceiver.networkStateChange(this);
@@ -608,7 +608,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         // Open the Management Interface
         if (!useOpenVPN3) {
-            // start a Thread that handles incoming messages of the managment socket
+            // start a Thread that handles incoming messages of the management socket
             OpenVpnManagementThread ovpnManagementThread = new OpenVpnManagementThread(mProfile, this);
             if (ovpnManagementThread.openManagementInterface(this)) {
                 Thread mSocketManagerThread = new Thread(ovpnManagementThread, "OpenVPNManagementThread");

@@ -77,7 +77,7 @@ public class VPNLaunchHelper {
         Vector<String> args = new Vector<>();
 
         String binaryName = writeMiniVPN(c);
-        // Add fixed paramenters
+        // Add fixed parameters
         //args.add("/data/data/de.blinkt.openvpn/lib/openvpn");
         if (binaryName == null) {
             VpnStatus.logError("Error writing minivpn binary");

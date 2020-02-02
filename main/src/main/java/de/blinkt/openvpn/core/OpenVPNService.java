@@ -128,8 +128,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         @Override
-        public void challengeResponse(String repsonse) throws RemoteException {
-            OpenVPNService.this.challengeResponse(repsonse);
+        public void challengeResponse(String response) throws RemoteException {
+            OpenVPNService.this.challengeResponse(response);
         }
 
 

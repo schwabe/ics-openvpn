@@ -471,7 +471,7 @@ public class ConfigParser {
             }
             // Ignore mtu argument of OpenVPN3 and report error otherwise
             if (mssfix.size() >= 3 && !(mssfix.get(2).equals("mtu"))) {
-                throw new ConfigParseError("Second argument to --mssfix unkonwn");
+                throw new ConfigParseError("Second argument to --mssfix unknown");
             }
         }
 

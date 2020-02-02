@@ -35,14 +35,14 @@ import de.blinkt.openvpn.R;
 public class LogItem implements Parcelable {
     private Object[] mArgs = null;
     private String mMessage = null;
-    private int mRessourceId;
+    private int mResourceId;
     // Default log priority
     VpnStatus.LogLevel mLevel = VpnStatus.LogLevel.INFO;
     private long logtime = System.currentTimeMillis();
     private int mVerbosityLevel = -1;
 
-    private LogItem(int ressourceId, Object[] args) {
-        mRessourceId = ressourceId;
+    private LogItem(int resourceId, Object[] args) {
+        mResourceId = resourceId;
         mArgs = args;
     }
 
@@ -62,7 +62,7 @@ public class LogItem implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeArray(mArgs);
         dest.writeString(mMessage);
-        dest.writeInt(mRessourceId);
+        dest.writeInt(mResourceId);
         dest.writeInt(mLevel.getInt());
         dest.writeInt(mVerbosityLevel);
 
@@ -78,7 +78,7 @@ public class LogItem implements Parcelable {
         return Arrays.equals(mArgs, other.mArgs) &&
                 ((other.mMessage == null && mMessage == other.mMessage) ||
                         mMessage.equals(other.mMessage)) &&
-                mRessourceId == other.mRessourceId &&
+                mResourceId == other.mResourceId &&
                 ((mLevel == null && other.mLevel == mLevel) ||
                         other.mLevel.equals(mLevel)) &&
                 mVerbosityLevel == other.mVerbosityLevel &&
@@ -95,7 +95,7 @@ public class LogItem implements Parcelable {
         bb.putLong(logtime);              //8
         bb.putInt(mVerbosityLevel);      //4
         bb.putInt(mLevel.getInt());
-        bb.putInt(mRessourceId);
+        bb.putInt(mResourceId);
         if (mMessage == null || mMessage.length() == 0) {
             bb.putInt(0);
         } else {
@@ -144,7 +144,7 @@ public class LogItem implements Parcelable {
         logtime = bb.getLong();
         mVerbosityLevel = bb.getInt();
         mLevel = VpnStatus.LogLevel.getEnumByValue(bb.getInt());
-        mRessourceId = bb.getInt();
+        mResourceId = bb.getInt();
         int len = bb.getInt();
         if (len == 0) {
             mMessage = null;
@@ -210,7 +210,7 @@ public class LogItem implements Parcelable {
     public LogItem(Parcel in) {
         mArgs = in.readArray(Object.class.getClassLoader());
         mMessage = in.readString();
-        mRessourceId = in.readInt();
+        mResourceId = in.readInt();
         mLevel = VpnStatus.LogLevel.getEnumByValue(in.readInt());
         mVerbosityLevel = in.readInt();
         logtime = in.readLong();
@@ -227,8 +227,8 @@ public class LogItem implements Parcelable {
         }
     };
 
-    public LogItem(VpnStatus.LogLevel loglevel, int ressourceId, Object... args) {
-        mRessourceId = ressourceId;
+    public LogItem(VpnStatus.LogLevel loglevel, int resourceId, Object... args) {
+        mResourceId = resourceId;
         mArgs = args;
         mLevel = loglevel;
     }
@@ -240,8 +240,8 @@ public class LogItem implements Parcelable {
     }
 
 
-    public LogItem(VpnStatus.LogLevel loglevel, int ressourceId) {
-        mRessourceId = ressourceId;
+    public LogItem(VpnStatus.LogLevel loglevel, int resourceId) {
+        mResourceId = resourceId;
         mLevel = loglevel;
     }
 
@@ -251,14 +251,14 @@ public class LogItem implements Parcelable {
                 return mMessage;
             } else {
                 if (c != null) {
-                    if (mRessourceId == R.string.mobile_info)
+                    if (mResourceId == R.string.mobile_info)
                         return getMobileInfoString(c);
                     if (mArgs == null)
-                        return c.getString(mRessourceId);
+                        return c.getString(mResourceId);
                     else
-                        return c.getString(mRessourceId, mArgs);
+                        return c.getString(mResourceId, mArgs);
                 } else {
-                    String str = String.format(Locale.ENGLISH, "Log (no context) resid %d", mRessourceId);
+                    String str = String.format(Locale.ENGLISH, "Log (no context) resid %d", mResourceId);
                     if (mArgs != null)
                         str += join("|", mArgs);
 
@@ -367,7 +367,7 @@ public class LogItem implements Parcelable {
         if (mLevel == null)
             return false;
 
-        if (mMessage == null && mRessourceId == 0)
+        if (mMessage == null && mResourceId == 0)
             return false;
 
         return true;

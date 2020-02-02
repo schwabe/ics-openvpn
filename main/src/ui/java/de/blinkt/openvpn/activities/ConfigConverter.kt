@@ -796,8 +796,8 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
     }
 
-    private fun log(ressourceId: Int, vararg formatArgs: Any) {
-        log(getString(ressourceId, *formatArgs))
+    private fun log(resourceId: Int, vararg formatArgs: Any) {
+        log(getString(resourceId, *formatArgs))
     }
 
     companion object {

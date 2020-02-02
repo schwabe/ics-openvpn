@@ -66,7 +66,7 @@ if [ $? != 0 ] ; then
     echo "ERROR: Could not launch gdbserver on the device?"
     exit 1
 fi
-log "Launched gdbserver succesfully."
+log "Launched gdbserver successfully."
 
 # Setup network redirection
 log "Setup network redirection"

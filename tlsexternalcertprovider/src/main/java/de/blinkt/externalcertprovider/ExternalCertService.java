@@ -34,7 +34,7 @@ import static de.blinkt.externalcertprovider.SelectCertificateActivity.EXTRA_DES
 /**
  * This is a VERY basic implementation.
  * It does not even check if the service is even allowed to use the API
- * see ExternalOpenVPNService for an example of checking caller's creditionals
+ * see ExternalOpenVPNService for an example of checking caller's credentials
  */
 public class ExternalCertService extends Service {
 

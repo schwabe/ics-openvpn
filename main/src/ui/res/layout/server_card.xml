@@ -333,7 +333,7 @@
             <SeekBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/connect_silder"
+                    android:id="@+id/connect_slider"
                     android:max="300"
                     android:layout_alignBottom="@id/connect_timeout"
                     android:layout_toLeftOf="@id/connect_timeout"

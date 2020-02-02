@@ -22,7 +22,7 @@
             android:layout_width="400dp"
             android:layout_height="match_parent">
 
-        <include layout="@layout/log_silders"/>
+        <include layout="@layout/log_sliders"/>
 
         <include layout="@layout/vpnstatus"/>
     </LinearLayout>

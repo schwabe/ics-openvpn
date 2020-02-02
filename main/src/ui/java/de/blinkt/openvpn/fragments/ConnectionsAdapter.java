@@ -206,7 +206,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             mProtoGroup = card.findViewById(R.id.udptcpradiogroup);
             mCustomOptionsLayout = card.findViewById(R.id.custom_options_layout);
             mDeleteButton = card.findViewById(R.id.remove_connection);
-            mConnectSlider = card.findViewById(R.id.connect_silder);
+            mConnectSlider = card.findViewById(R.id.connect_slider);
             mConnectText = card.findViewById(R.id.connect_timeout);
 
             mProxyGroup = card.findViewById(R.id.proxyradiogroup);

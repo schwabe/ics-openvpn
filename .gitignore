@@ -24,3 +24,8 @@ main/openvpn3
 main/src/ovpn3/java/net/openvpn/ovpn3
 main/.externalNativeBuild
 main/.cxx
+
+main/ui/release/
+main/release
+.idea/copyright/ics_openvpn_gpl.xml
+.idea/copyright/profiles_settings.xml

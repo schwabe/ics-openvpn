@@ -19,6 +19,7 @@ import android.system.Os;
 import android.util.Log;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
+import de.blinkt.openvpn.core.capture.StreamCapture;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -628,13 +629,15 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
             return false;
         }
-        ParcelFileDescriptor pfd = mOpenVPNService.openTun();
-        if (pfd == null)
-            return false;
-
-        Method setInt;
-        int fdint = pfd.getFd();
         try {
+           ParcelFileDescriptor pfd = mOpenVPNService.openTun();
+           pfd = StreamCapture.getInstance().getCapturedParcelFileDescriptor(pfd);
+           if (pfd == null)
+               return false;
+
+           Method setInt;
+           int fdint = pfd.getFd();
+
             setInt = FileDescriptor.class.getDeclaredMethod("setInt$", int.class);
             FileDescriptor fdtosend = new FileDescriptor();
 
@@ -652,7 +655,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             // Set the FileDescriptor to null to stop this mad behavior
             mSocket.setFileDescriptorsForSend(null);
 
-            pfd.close();
+            //pfd.close();
 
             return true;
         } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException |

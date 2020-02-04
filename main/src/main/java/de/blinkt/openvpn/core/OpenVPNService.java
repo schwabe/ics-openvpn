@@ -57,6 +57,7 @@ import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.api.ExternalAppDatabase;
 import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 import de.blinkt.openvpn.core.VpnStatus.StateListener;
+import de.blinkt.openvpn.core.capture.StreamCapture;
 
 import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_CONNECTED;
 import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
@@ -481,8 +482,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     @Override
     public boolean stopVPN(boolean replaceConnection) throws RemoteException {
-        if (getManagement() != null)
+        if (getManagement() != null) {
+            if (!replaceConnection)
+                StreamCapture.getInstance().closeIgnoreException();
             return getManagement().stopVPN(replaceConnection);
+        }
         else
             return false;
     }
@@ -709,6 +713,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             if (mProcessThread != null) {
                 mManagement.stopVPN(true);
             }
+            StreamCapture.getInstance().closeIgnoreException();
         }
 
         if (mDeviceStateReceiver != null) {
@@ -762,6 +767,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 addLocalNetworksToRoutes();
             try {
                 builder.addAddress(mLocalIP.mIp, mLocalIP.len);
+                StreamCapture.setLocalIP(mLocalIP.mIp);
             } catch (IllegalArgumentException iae) {
                 VpnStatus.logError(R.string.dns_add_error, mLocalIP, iae.getLocalizedMessage());
                 return null;
@@ -794,8 +800,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 && mMtu < 1280) {
             VpnStatus.logInfo(String.format(Locale.US, "Forcing MTU to 1280 instead of %d to workaround Android Bug #70916", mMtu));
             builder.setMtu(1280);
+            StreamCapture.setMTU(1280);
         } else {
             builder.setMtu(mMtu);
+            StreamCapture.setMTU(mMtu);
         }
 
         Collection<IpAddress> positiveIPv4Routes = mRoutes.getPositiveIPList();
@@ -909,6 +917,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         mLocalIP = null;
         mLocalIPv6 = null;
         mDomain = null;
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            builder.setBlocking(true);
+        }
 
         builder.setConfigureIntent(getGraphPendingIntent());
 

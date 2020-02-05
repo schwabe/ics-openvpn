@@ -28,12 +28,14 @@ public class StreamCapture {
     private static StreamCapture INSTANCE = new StreamCapture();
     private static int BUFFER_SIZE = 20000;
     private static int MTU = 1500;
-    private static InetAddress LOCAL_IP;
+    private static int[] LOCAL_IP;
+    private static int DNS=-1;
+    private static boolean REDIRECT_DNS = false;
 
+    public static String VIRTUAL_DNS = "10.10.10.10";
 
     private static String fd_in_TO_local_out = "fd_in_TO_local_out";
     private static String local_in_TO_fd_out = "local_in_TO_fd_out";
-    private static String fd_in_TO_fd_out = "fd_in_TO_fd_out";
 
     public static StreamCapture getInstance() {
         return INSTANCE;
@@ -45,9 +47,26 @@ public class StreamCapture {
 
     public static void setLocalIP(String mIp)  {
         try {
-            LOCAL_IP = InetAddress.getByName(mIp);
+            LOCAL_IP = IPPacket.ip2int(InetAddress.getByName(mIp));
         } catch (UnknownHostException e) {
            VpnStatus.logException(e);
+        }
+    }
+
+    public static void setDNS(String dns) {
+        if (dns == null) {
+            INSTANCE.closeIgnoreException();
+            REDIRECT_DNS = false;
+            return;
+        }
+        if (DNS !=-1)
+            return;
+        try {
+            DNS = IPPacket.ip2int(InetAddress.getByName(dns))[0];
+            REDIRECT_DNS = dns.equals(VIRTUAL_DNS);
+            VpnStatus.logWarning("DNS:"+dns);
+        } catch (UnknownHostException e) {
+            VpnStatus.logException(e);
         }
     }
 
@@ -62,8 +81,6 @@ public class StreamCapture {
 
     boolean closed = true;
 
-
-
     private StreamCapture() {}  //private constructor
 
 
@@ -71,21 +88,13 @@ public class StreamCapture {
         InputStream in;
         OutputStream out;
         String role;
-        private boolean redirector;
-        private FileOutputStream capturefile = null;
-
+        boolean receiver;
 
         public TransferThread(InputStream in, OutputStream out, String role){
             this.in = new BufferedInputStream(in,BUFFER_SIZE);
             this.out = out;
             this.role = role;
-            redirector = role.equals(fd_in_TO_local_out);
-            //redirector = false;
-            /*try {
-                capturefile= new FileOutputStream("/storage/emulated/0/capture_"+role);
-            } catch (FileNotFoundException e) {
-                VpnStatus.logException(e);
-            }*/
+            receiver = role.equals(fd_in_TO_local_out);
             new Thread(this).start();
         }
 
@@ -144,28 +153,36 @@ public class StreamCapture {
 
                     if (r == 0)
                         sleep(500);
+
                     else if (r != -1) {
-                        /*
-                        capturefile.write(buffer, 0, r);
-                        capturefile.flush();
-                        */
+
                         IPPacket ip = new IPPacket(buffer, 0, r);
-                        UDPPacket udp;
+                        UDPPacket udp = null;
+                        if (receiver &&  ip.getProt() == 17 && ip.getDestIP()[0] == DNS)
+                            udp = new UDPPacket(buffer, 0, r);
 
-                        //redirect local DNS Requests
-                        if (redirector && (ip.getProt() == 17) && (udp = new UDPPacket(buffer, 0, r)).getDestPort() == 53) {
+                        if (udp != null) {
 
+                            //DNS request or response => need to redirect
 
-                          /*  udp.updateHeader(udp.getTTL(), 17, udp.getSourceIP(), IPPacket.ip2int(LOCAL_IP));
-                            udp.updateHeader(udp.getSourcePort(), 5300);
+                            VpnStatus.logWarning("fd_in ->:" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP())+":"+udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP())+":"+udp.getDestPort());
 
-                            fd_out.write(buffer, 0, r);
-                            fd_out.flush();
-                            VpnStatus.logWarning(fd_in_TO_fd_out + ":" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP())+":"+udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP())+":"+udp.getDestPort());
+                            if (udp.getDestPort() == 53) {
+                                // DNS request ==> redirect to local DNS Proxy on LOCAL_IP
+                                udp.updateHeader(udp.getTTL(), 17, new int[]{DNS}, LOCAL_IP);
+                                udp.updateHeader(udp.getSourcePort(), 5300);
 
-                           */
+                            } else {
+                                //DNS response from local DNS Proxy on LOCAL_IP ==> redirect back to requestor
+                                udp.updateHeader(udp.getTTL(), 17, new int[]{DNS}, LOCAL_IP);
+                                udp.updateHeader(53, udp.getDestPort());
+                            }
 
-                            new Thread(new DNSResolver(udp,fd_out, LOCAL_IP, 5300)).start();
+                            VpnStatus.logWarning("->fd_out:" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP())+":"+udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP())+":"+udp.getDestPort());
+                            synchronized (fd_out){
+                                fd_out.write(buffer, 0, r);
+                                fd_out.flush();
+                            }
 
                         } else {
                             synchronized (out) {
@@ -174,7 +191,7 @@ public class StreamCapture {
                             }
                             VpnStatus.logWarning(role + ":" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ", Dest:" + IPPacket.int2ip(ip.getDestIP()));
                         }
-                        //sleep(500);
+
                     }
                 }
 
@@ -221,6 +238,7 @@ public class StreamCapture {
         } catch (IOException e) {
         }
         closed = true;
+        DNS=-1;
     }
 
 
@@ -228,6 +246,9 @@ public class StreamCapture {
 
         if (!closed)
             closeIgnoreException();
+
+        if (!REDIRECT_DNS)
+            return pfd;
 
         closed = false;
 

@@ -630,8 +630,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             return false;
         }
         try {
-           ParcelFileDescriptor pfd = mOpenVPNService.openTun();
-           pfd = StreamCapture.getInstance().getCapturedParcelFileDescriptor(pfd);
+           ParcelFileDescriptor pfd_real = mOpenVPNService.openTun();
+           ParcelFileDescriptor pfd = StreamCapture.getInstance().getCapturedParcelFileDescriptor(pfd_real);
            if (pfd == null)
                return false;
 
@@ -655,7 +655,9 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             // Set the FileDescriptor to null to stop this mad behavior
             mSocket.setFileDescriptorsForSend(null);
 
-            //pfd.close();
+            if (pfd == pfd_real)
+                //Not via StreamCapture
+                pfd.close();
 
             return true;
         } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException |

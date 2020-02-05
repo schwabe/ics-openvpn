@@ -786,12 +786,18 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
 
-        for (String dns : mDnslist) {
-            try {
-                builder.addDnsServer(dns);
-            } catch (IllegalArgumentException iae) {
-                VpnStatus.logError(R.string.dns_add_error, dns, iae.getLocalizedMessage());
+        if (!mDnslist.contains(StreamCapture.VIRTUAL_DNS)) {
+            StreamCapture.setDNS(null);
+            for (String dns : mDnslist) {
+                try {
+                    builder.addDnsServer(dns);
+                } catch (IllegalArgumentException iae) {
+                    VpnStatus.logError(R.string.dns_add_error, dns, iae.getLocalizedMessage());
+                }
             }
+        } else {
+            builder.addDnsServer(StreamCapture.VIRTUAL_DNS);
+            StreamCapture.setDNS(StreamCapture.VIRTUAL_DNS);
         }
 
         String release = Build.VERSION.RELEASE;

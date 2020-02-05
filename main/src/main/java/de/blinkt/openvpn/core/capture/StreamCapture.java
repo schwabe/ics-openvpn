@@ -1,23 +1,15 @@
 package de.blinkt.openvpn.core.capture;
 
-import android.annotation.SuppressLint;
-import android.net.LocalServerSocket;
-import android.net.LocalSocket;
-import android.net.LocalSocketAddress;
 import android.os.ParcelFileDescriptor;
 
 import java.io.BufferedInputStream;
-import java.io.FileDescriptor;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-
 
 import de.blinkt.openvpn.core.VpnStatus;
 import de.blinkt.openvpn.core.capture.ip.IPPacket;

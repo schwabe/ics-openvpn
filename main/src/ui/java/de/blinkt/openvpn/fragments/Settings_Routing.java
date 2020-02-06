@@ -6,14 +6,15 @@
 package de.blinkt.openvpn.fragments;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
+
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
+
 import de.blinkt.openvpn.R;
 
 
-public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPreferenceChangeListener {
+public class Settings_Routing extends OpenVpnPreferencesFragment implements Preference.OnPreferenceChangeListener {
 	private EditTextPreference mCustomRoutes;
 	private CheckBoxPreference mUseDefaultRoute;
 	private EditTextPreference mCustomRoutesv6;
@@ -30,17 +31,17 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.vpn_routing);
-        mCustomRoutes = (EditTextPreference) findPreference("customRoutes");
-		mUseDefaultRoute = (CheckBoxPreference) findPreference("useDefaultRoute");
-		mCustomRoutesv6 = (EditTextPreference) findPreference("customRoutesv6");
-		mUseDefaultRoutev6 = (CheckBoxPreference) findPreference("useDefaultRoutev6");
-        mExcludedRoutes = (EditTextPreference) findPreference("excludedRoutes");
-        mExcludedRoutesv6 = (EditTextPreference) findPreference("excludedRoutesv6");
+        mCustomRoutes = findPreference("customRoutes");
+		mUseDefaultRoute = findPreference("useDefaultRoute");
+		mCustomRoutesv6 = findPreference("customRoutesv6");
+		mUseDefaultRoutev6 = findPreference("useDefaultRoutev6");
+        mExcludedRoutes = findPreference("excludedRoutes");
+        mExcludedRoutesv6 = findPreference("excludedRoutesv6");
 
-		mRouteNoPull = (CheckBoxPreference) findPreference("routenopull");
-        mLocalVPNAccess = (CheckBoxPreference) findPreference("unblockLocal");
+		mRouteNoPull = findPreference("routenopull");
+        mLocalVPNAccess = findPreference("unblockLocal");
 
-		mBlockUnusedAF = (CheckBoxPreference) findPreference("blockUnusedAF");
+		mBlockUnusedAF = findPreference("blockUnusedAF");
 
 		mCustomRoutes.setOnPreferenceChangeListener(this);
 		mCustomRoutesv6.setOnPreferenceChangeListener(this);
@@ -52,6 +53,11 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements OnPr
 			getPreferenceScreen().removePreference(mBlockUnusedAF);
 
 		loadSettings();
+	}
+
+	@Override
+	public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
 	}
 
 	@Override

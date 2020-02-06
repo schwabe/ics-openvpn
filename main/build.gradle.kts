@@ -1,17 +1,16 @@
+import com.android.build.gradle.api.LibraryVariant
+
+
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
-import java.util.Properties
 
 plugins {
-    id ("com.android.library")
-    id ("checkstyle")
-}
-
-apply {
-    plugin("kotlin-android")
-    plugin("kotlin-android-extensions")
+    id("com.android.library")
+    id("checkstyle")
+    kotlin("android")
+    kotlin("android.extensions")
 }
 
 repositories {
@@ -21,33 +20,14 @@ repositories {
 }
 
 
-val openvpn3SwigFiles = File(buildDir, "generated/source/ovpn3swig/ovpn3")
-
-tasks.register<Exec>("generateOpenVPN3Swig")
-{
-    var swigcmd = "swig"
-    // Workaround for Mac OS X since it otherwise does not find swig and I cannot get
-    // the Exec task to respect the PATH environment :(
-    if (File("/usr/local/bin/swig").exists())
-        swigcmd = "/usr/local/bin/swig"
-
-    doFirst {
-        mkdir(openvpn3SwigFiles)
-    }
-    commandLine(listOf(swigcmd, "-outdir", openvpn3SwigFiles, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
-            "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
-            "-o", "${openvpn3SwigFiles}/ovpncli_wrap.cxx", "-oh", "${openvpn3SwigFiles}/ovpncli_wrap.h",
-            "src/main/cpp/openvpn3/javacli/ovpncli.i"))
-}
-
 android {
     compileSdkVersion(29)
 
     defaultConfig {
         minSdkVersion(14)
         targetSdkVersion(29)  //'Q'.toInt()
-        versionCode = 163
-        versionName = "0.7.10"
+        versionCode = 166
+        versionName = "0.7.13"
 
         externalNativeBuild {
             cmake {
@@ -69,7 +49,6 @@ android {
         }
 
         create("ui") {
-            java.srcDirs("src/ovpn3/java/", openvpn3SwigFiles)
         }
         create("skeleton") {
         }
@@ -84,7 +63,18 @@ android {
     }
 
     signingConfigs {
-        create("release") {}
+        create("release") {
+            // ~/.gradle/gradle.properties
+            val keystoreFile: String? by project
+            storeFile = keystoreFile?.let { file(it) }
+            val keystorePassword: String? by project
+            storePassword = keystorePassword
+            val keystoreAliasPassword: String? by project
+            keyPassword = keystoreAliasPassword
+            val keystoreAlias: String? by project
+            keyAlias = keystoreAlias
+        }
+
     }
 
     lintOptions {
@@ -95,7 +85,12 @@ android {
 
     buildTypes {
         getByName("release") {
-            signingConfig = signingConfigs.getByName("release")
+            if (project.hasProperty("icsopenvpnDebugSign")) {
+                logger.warn("property icsopenvpnDebugSign set, using debug signing for release")
+                signingConfig = android.signingConfigs.getByName("debug")
+            } else {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 
@@ -112,7 +107,6 @@ android {
         }
     }
 
-
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_1_8
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -123,6 +117,41 @@ android {
         mergeAssets!!.dependsOn(externalNativeBuildTasks)
     }
 }
+
+
+var swigcmd = "swig"
+// Workaround for Mac OS X since it otherwise does not find swig and I cannot get
+// the Exec task to respect the PATH environment :(
+if (File("/usr/local/bin/swig").exists())
+    swigcmd = "/usr/local/bin/swig"
+
+
+fun registerGenTask(variantName: String, variantDirName: String): File {
+    val baseDir = File(buildDir, "generated/source/ovpn3swig/${variantDirName}")
+    val genDir = File(baseDir, "net/openvpn/ovpn3")
+
+    tasks.register<Exec>("generateOpenVPN3Swig${variantName}")
+    {
+
+        doFirst {
+            mkdir(genDir)
+        }
+        commandLine(listOf(swigcmd, "-outdir", genDir, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
+                "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
+                "-o", "${genDir}/ovpncli_wrap.cxx", "-oh", "${genDir}/ovpncli_wrap.h",
+                "src/main/cpp/openvpn3/javacli/ovpncli.i"))
+    }
+    return baseDir
+}
+
+android.libraryVariants.all(object : Action<LibraryVariant> {
+    override fun execute(variant: LibraryVariant) {
+        val sourceDir = registerGenTask(variant.name, variant.baseName.replace("-", "/"))
+        val task = tasks.named("generateOpenVPN3Swig${variant.name}").get()
+
+        variant.registerJavaGeneratingTask(task, sourceDir)
+    }
+})
 
 // ~/.gradle/gradle.properties
 if (project.hasProperty("keystoreFile") &&
@@ -138,31 +167,37 @@ if (project.hasProperty("keystoreFile") &&
     android.buildTypes.getByName("release").signingConfig = null
 }
 
-/* Hack-o-rama but it works good enough and documentation is surprisingly sparse */
 
-val swigTask = tasks.named("generateOpenVPN3Swig")
-val preBuildTask = tasks.getByName("preBuild")
-val assembleTask = tasks.getByName("assemble")
-
-assembleTask.dependsOn(swigTask)
-preBuildTask.dependsOn(swigTask)
-
-/* Normally you would put these on top but then it errors out on unknown configurations */
 dependencies {
+    val preferenceVersion = "1.1.0"
+    val coreVersion = "1.1.0"
+    val materialVersion = "1.0.0"
+
     implementation("androidx.annotation:annotation:1.1.0")
+    implementation("androidx.core:core:1.1.0")
 
     // Is there a nicer way to do this?
     dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:1.1.3")
     dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
     dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
     dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.0.0")
+    dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.1.0")
     dependencies.add("uiImplementation", "com.github.PhilJay:MPAndroidChart:v3.1.0")
+    dependencies.add("uiImplementation", "com.squareup.okhttp3:okhttp:3.2.0")
+    dependencies.add("uiImplementation", "androidx.core:core:$coreVersion")
+    dependencies.add("uiImplementation", "androidx.core:core-ktx:$coreVersion")
+    dependencies.add("uiImplementation", "org.jetbrains.anko:anko-commons:0.10.4")
+    dependencies.add("uiImplementation", "androidx.fragment:fragment-ktx:1.1.0")
+    dependencies.add("uiImplementation", "androidx.preference:preference:$preferenceVersion")
+    dependencies.add("uiImplementation", "androidx.preference:preference-ktx:$preferenceVersion")
+    dependencies.add("uiImplementation", "com.google.android.material:material:$materialVersion")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
 
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
     testImplementation("junit:junit:4.12")
-    testImplementation("org.mockito:mockito-core:3.1.0")
+    testImplementation("org.mockito:mockito-core:3.2.0")
     testImplementation("org.robolectric:robolectric:4.3.1")
-    implementation("androidx.core:core:1.1.0")
 }
+
+
 

@@ -5,10 +5,11 @@
 
 package de.blinkt.openvpn.fragments;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.util.DisplayMetrics;
@@ -184,7 +185,7 @@ public class FaqFragment extends Fragment {
         columns = Math.max(1, columns);
 
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.faq_recycler_view);
+        mRecyclerView = v.findViewById(R.id.faq_recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView

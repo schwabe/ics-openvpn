@@ -760,7 +760,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
         String[] arguments = argument.split(",");
 
-        boolean pkcs1padding = arguments[1].equals("PKCS1");
+        boolean pkcs1padding = arguments[1].equals("RSA_PKCS1_PADDING");
         String signed_string = mProfile.getSignedData(mOpenVPNService, arguments[0], pkcs1padding);
 
         if (signed_string == null) {

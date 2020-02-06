@@ -4,11 +4,12 @@
   -->
 <merge xmlns:blinkt="http://schemas.android.com/apk/res-auto">
 
-    <de.blinkt.openvpn.views.PagerSlidingTabStrip xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.viewpager.widget.PagerTabStrip xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@drawable/bg_tabs"
+        android:layout_gravity="top"
         blinkt:pstsIndicatorColor="@color/accent"
         blinkt:pstsIndicatorHeight="3dp"
         android:elevation="8dp" />

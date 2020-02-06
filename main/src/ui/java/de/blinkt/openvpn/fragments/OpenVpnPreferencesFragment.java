@@ -6,12 +6,14 @@
 package de.blinkt.openvpn.fragments;
 
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
+
+import androidx.preference.PreferenceFragmentCompat;
+
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
 
-public abstract class OpenVpnPreferencesFragment extends PreferenceFragment {
+public abstract class OpenVpnPreferencesFragment extends PreferenceFragmentCompat {
 
 	protected VpnProfile mProfile;
 

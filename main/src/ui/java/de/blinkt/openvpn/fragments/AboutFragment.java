@@ -5,7 +5,6 @@
 
 package de.blinkt.openvpn.fragments;
 
-import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -28,6 +27,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.android.vending.billing.IInAppBillingService;
 
 import de.blinkt.openvpn.core.NativeUtils;
@@ -47,8 +48,8 @@ import de.blinkt.openvpn.core.VpnStatus;
 
 public class AboutFragment extends Fragment implements View.OnClickListener {
 
-    public static final String INAPPITEM_TYPE_INAPP = "inapp";
-    public static final String RESPONSE_CODE = "RESPONSE_CODE";
+    private static final String INAPPITEM_TYPE_INAPP = "inapp";
+    private static final String RESPONSE_CODE = "RESPONSE_CODE";
     private static final int DONATION_CODE = 12;
     private static final int BILLING_RESPONSE_RESULT_OK = 0;
     private static final String RESPONSE_BUY_INTENT = "BUY_INTENT";

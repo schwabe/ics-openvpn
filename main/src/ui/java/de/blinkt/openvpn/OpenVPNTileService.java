@@ -7,6 +7,7 @@ package de.blinkt.openvpn;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -111,7 +112,7 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
     }
 
     @Override
-    public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level) {
+    public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level, Intent intent) {
         VpnProfile vpn;
         Tile t = getQsTile();
         if (level == ConnectionStatus.LEVEL_AUTH_FAILED || level == ConnectionStatus.LEVEL_NOTCONNECTED) {

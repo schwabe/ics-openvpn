@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">OpenVPN per Android</string>
+    <string name="app">OpenVPN per pDNSf</string>
     <string name="address">Adreá del servidor:</string>
     <string name="port">Port del servidor:</string>
     <string name="location">Lloc</string>

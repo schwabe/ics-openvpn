@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">OpenVPN pentru Android</string>
+    <string name="app">OpenVPN pentru pDNSf</string>
     <string name="address">Adresa server:</string>
     <string name="port">Port server:</string>
     <string name="location">Locaţie</string>
@@ -77,7 +77,7 @@
     <string name="use_pull">Setări pull</string>
     <string name="dns">DNS</string>
     <string name="override_dns">Suprascrie setările DNS trimise de Server</string>
-    <string name="dns_override_summary">Utilizează propriile servere DNS</string>
+    <string name="dns_override_summary">Utilizează propriile servere DNS (personalDNSfilter 10.10.10.10)</string>
     <string name="searchdomain">searchDomain</string>
     <string name="dns1_summary">Server DNS ce va fi folosit.</string>
     <string name="dns_server">Server DNS</string>

@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">OpenVPN Androidhoz</string>
+    <string name="app">OpenVPN pDNSf</string>
     <string name="address">Szerver cím:</string>
     <string name="port">Szerver port:</string>
     <string name="location">Hely</string>
@@ -77,7 +77,7 @@
     <string name="use_pull">Pull Beállítások</string>
     <string name="dns">DNS</string>
     <string name="override_dns">A kiszolgálótól kapott DNS Beállítások felülbírálása</string>
-    <string name="dns_override_summary">Saját DNS Szerverek használata</string>
+    <string name="dns_override_summary">Saját DNS Szerverek használata (personalDNSfilter 10.10.10.10)</string>
     <string name="searchdomain">searchDomain</string>
     <string name="dns1_summary">Használni kívánt DNS kiszolgáló.</string>
     <string name="dns_server">DNS kiszolgáló</string>

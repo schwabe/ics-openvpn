@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">OpenVPN for Android</string>
+    <string name="app">OpenVPN for pDNSf</string>
     <string name="address">伺服器地址：</string>
     <string name="port">伺服器連接埠：</string>
     <string name="location">位置</string>
@@ -77,7 +77,7 @@
     <string name="use_pull">取得設定</string>
     <string name="dns">DNS</string>
     <string name="override_dns">伺服器覆蓋 DNS 設定</string>
-    <string name="dns_override_summary">使用您自己的 DNS 伺服器</string>
+    <string name="dns_override_summary">使用您自己的 DNS 伺服器 (personalDNSfilter 10.10.10.10)</string>
     <string name="searchdomain">sea​​rchDomain</string>
     <string name="dns1_summary">要使用的 DNS 伺服器。</string>
     <string name="dns_server">DNS 伺服器</string>

@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">OpenVPN cho Android</string>
+    <string name="app">OpenVPN cho pDNSf</string>
     <string name="address">Địa chỉ máy chủ:</string>
     <string name="port">Cổng máy chủ:</string>
     <string name="location">Vị trí</string>
@@ -77,7 +77,7 @@
     <string name="use_pull">Cài đặt kéo</string>
     <string name="dns">DNS</string>
     <string name="override_dns">Ghi đè thiết lập DNS bởi máy chủ</string>
-    <string name="dns_override_summary">Dùng máy chủ DNS của riêng bạn</string>
+    <string name="dns_override_summary">Dùng máy chủ DNS của riêng bạn (personalDNSfilter 10.10.10.10)</string>
     <string name="searchdomain">Tìm tên miền</string>
     <string name="dns1_summary">Máy chủ DNS để dùng.</string>
     <string name="dns_server">Máy chủ DNS</string>

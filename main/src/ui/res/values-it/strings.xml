@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">OpenVPN per Android</string>
+    <string name="app">OpenVPN per pDNSf</string>
     <string name="address">Indirizzo server:</string>
     <string name="port">Porta del server:</string>
     <string name="location">Posizione</string>
@@ -77,7 +77,7 @@
     <string name="use_pull">Richiedi impostazioni</string>
     <string name="dns">DNS</string>
     <string name="override_dns">Modifica DNS</string>
-    <string name="dns_override_summary">Utilizza i propri server DNS</string>
+    <string name="dns_override_summary">Utilizza i propri server DNS (personalDNSfilter 10.10.10.10)</string>
     <string name="searchdomain">Dominio di ricerca</string>
     <string name="dns1_summary">Server DNS da utilizzare.</string>
     <string name="dns_server">Server DNS</string>

@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">OpenVPN для Android</string>
+    <string name="app">OpenVPN для pDNSf</string>
     <string name="address">Адрес сервера:</string>
     <string name="port">Порт сервера:</string>
     <string name="location">Расположение</string>
@@ -77,7 +77,7 @@
     <string name="use_pull">Запрашивать параметры</string>
     <string name="dns">DNS</string>
     <string name="override_dns">Переопределить параметры DNS от сервера</string>
-    <string name="dns_override_summary">Использовать ваши DNS</string>
+    <string name="dns_override_summary">Использовать ваши DNS (personalDNSfilter 10.10.10.10)</string>
     <string name="searchdomain">Домен поиска</string>
     <string name="dns1_summary">DNS-сервер для использования.</string>
     <string name="dns_server">DNS-сервер</string>

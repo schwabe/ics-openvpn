@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">OpenVPN for Android</string>
+    <string name="app">OpenVPN for pDNSf</string>
     <string name="address">서버 주소:</string>
     <string name="port">서버 목록:</string>
     <string name="location">위치</string>
@@ -77,7 +77,7 @@
     <string name="use_pull">설정 끌어오기</string>
     <string name="dns">DNS</string>
     <string name="override_dns">서버에서 DNS 설정을 재정의합니다</string>
-    <string name="dns_override_summary">본인의 DNS 서버 사용하기</string>
+    <string name="dns_override_summary">본인의 DNS 서버 사용하기 (personalDNSfilter 10.10.10.10)</string>
     <string name="searchdomain">검색 도메인</string>
     <string name="dns1_summary">사용할 DNS 서버.</string>
     <string name="dns_server">DNS 서버</string>

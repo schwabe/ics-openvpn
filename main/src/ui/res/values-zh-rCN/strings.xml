@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">安卓OpenVPN</string>
+    <string name="app">安卓OpenVPN pDNSf</string>
     <string name="address">服务器地址：</string>
     <string name="port">服务器端口：</string>
     <string name="location">位置</string>
@@ -77,7 +77,7 @@
     <string name="use_pull">Pull 设置</string>
     <string name="dns">DNS</string>
     <string name="override_dns">由服务器下发DNS设置</string>
-    <string name="dns_override_summary">使用您的DNS服务器</string>
+    <string name="dns_override_summary">使用您的DNS服务器 (personalDNSfilter 10.10.10.10)</string>
     <string name="searchdomain">搜索域名</string>
     <string name="dns1_summary">要使用的DNS服务器。</string>
     <string name="dns_server">主DNS服务器</string>

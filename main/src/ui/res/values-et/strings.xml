@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">OpenVPN Androidile</string>
+    <string name="app">OpenVPN pDNSf</string>
     <string name="address">Serveri aadress:</string>
     <string name="port">Serveri port:</string>
     <string name="location">Asukoht</string>
@@ -77,7 +77,7 @@
     <string name="use_pull">Sikuta seadistused</string>
     <string name="dns">DNS</string>
     <string name="override_dns">Eira serveri pakutavaid DNS seadeid</string>
-    <string name="dns_override_summary">Kasuta oma DNS servereid</string>
+    <string name="dns_override_summary">Kasuta oma DNS servereid (personalDNSfilter 10.10.10.10)</string>
     <string name="searchdomain">otsinguDomeen</string>
     <string name="dns1_summary">Kasutatav DNS server.</string>
     <string name="dns_server">DNS server</string>

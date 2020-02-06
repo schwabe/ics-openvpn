@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">Android için OpenVPN</string>
+    <string name="app">Android için pDNSf</string>
     <string name="address">Sunucu Adresi:</string>
     <string name="port">Sunucu Bağlantı Noktası:</string>
     <string name="location">Konum</string>
@@ -77,7 +77,7 @@
     <string name="use_pull">Ayarları Çek</string>
     <string name="dns">DNS</string>
     <string name="override_dns">Sunucusu DNS ayarlarını geçersiz kıl</string>
-    <string name="dns_override_summary">Kendi DNS Sunucularınızı kullanın</string>
+    <string name="dns_override_summary">Kendi DNS Sunucularınızı kullanın (personalDNSfilter 10.10.10.10)</string>
     <string name="searchdomain">aramaEtkiAlanı</string>
     <string name="dns1_summary">Kullanılacak DNS Sunucusu.</string>
     <string name="dns_server">DNS Sunucusu</string>

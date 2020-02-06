@@ -5,7 +5,7 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 <resources>
-    <string name="app">OpenVPN for Android</string>
+    <string name="app">OpenVPN for pDNSf</string>
     <string name="address">サーバーアドレス:</string>
     <string name="port">ポート番号：</string>
     <string name="location">場所</string>
@@ -77,7 +77,7 @@
     <string name="use_pull">設定情報を取得する</string>
     <string name="dns">DNS</string>
     <string name="override_dns">DNSを手動設定する</string>
-    <string name="dns_override_summary">DNSをユーザ側で指定します。</string>
+    <string name="dns_override_summary">DNSをユーザ側で指定します。 (personalDNSfilter 10.10.10.10)</string>
     <string name="searchdomain">検索ドメイン</string>
     <string name="dns1_summary">使用する DNS サーバー</string>
     <string name="dns_server">DNS サーバー</string>

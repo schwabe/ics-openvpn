@@ -9,8 +9,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ListFragment;
 import android.app.TaskStackBuilder;
 import android.app.PendingIntent;
 import android.content.ClipData;

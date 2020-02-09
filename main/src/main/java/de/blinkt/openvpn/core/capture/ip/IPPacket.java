@@ -184,7 +184,12 @@ public class IPPacket {
 	}
 
 	public int getLength() {
-		return ipHeader.get(0) & 0xFFFF;
+		if (version == 4)
+			return ipHeader.get(0) & 0xFFFF;
+		else if (version == 6)
+			return 40 + (ipHeader.get(1)>>>16);
+		else
+			throw new IllegalStateException("Illegal Version:" + version);
 	}
 
 	public byte[] getData() {

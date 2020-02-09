@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="all"
-            android:text="https://github.com/IngoZenz/ics-openvpn\n\nForked from OpenVPN for Android 0.7.13" />
+            android:text="This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\nhttps://github.com/IngoZenz/ics-openvpn\n\nForked from OpenVPN for Android 0.7.13" />
 
         <Space
             android:layout_width="match_parent"

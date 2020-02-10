@@ -4,7 +4,7 @@ OpenVPN for Android
 
 Description
 ------------
-This is the latest stable release of https://github.com/schwabe/ics-openvpn compiled with added support for the Tunnelblick obfuscation patch. 
+This is the latest stable release of https://github.com/schwabe/ics-openvpn compiled with added support for the Tunnelblick obfuscation patch.
 
 
 More info about the obfuscation patch can be found here: https://tunnelblick.net/cOpenvpn_xorpatch.html

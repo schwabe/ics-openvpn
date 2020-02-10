@@ -725,9 +725,11 @@ public class ConfigParser {
         }
 
         // Parse OpenVPN Access Server extra
-        Vector<String> friendlyname = meta.get("FRIENDLY_NAME");
-        if (friendlyname != null && friendlyname.size() > 1)
-            np.mName = friendlyname.get(1);
+        for (String as_name_directive: new String[]{"PROFILE", "FRIENDLY_NAME"}) {
+            Vector<String> friendlyname = meta.get(as_name_directive);
+            if (friendlyname != null && friendlyname.size() > 1)
+                np.mName = friendlyname.get(1);
+        }
 
 
         Vector<String> ocusername = meta.get("USERNAME");

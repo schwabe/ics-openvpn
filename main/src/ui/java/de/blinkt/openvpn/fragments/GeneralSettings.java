@@ -4,8 +4,8 @@
  */
 
 package de.blinkt.openvpn.fragments;
+
 import java.io.File;
-import java.util.Collection;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -18,13 +18,13 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
+
+
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
+import androidx.preference.PreferenceFragmentCompat;
 
 import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.R;
@@ -34,28 +34,28 @@ import de.blinkt.openvpn.api.ExternalAppDatabase;
 import de.blinkt.openvpn.core.ProfileManager;
 
 
-public class GeneralSettings extends PreferenceFragment implements OnPreferenceClickListener, OnClickListener, Preference.OnPreferenceChangeListener {
+public class GeneralSettings extends PreferenceFragmentCompat implements Preference.OnPreferenceClickListener, OnClickListener, Preference.OnPreferenceChangeListener {
 
-	private ExternalAppDatabase mExtapp;
-	private ListPreference mAlwaysOnVPN;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    private ExternalAppDatabase mExtapp;
+    private ListPreference mAlwaysOnVPN;
 
 
-		// Load the preferences from an XML resource
-		addPreferencesFromResource(R.xml.general_settings);
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 
 
-        PreferenceCategory devHacks = (PreferenceCategory) findPreference("device_hacks");
-		mAlwaysOnVPN = (ListPreference) findPreference("alwaysOnVpn");
+        // Load the preferences from an XML resource
+        addPreferencesFromResource(R.xml.general_settings);
+
+
+        PreferenceCategory devHacks = findPreference("device_hacks");
+        mAlwaysOnVPN = findPreference("alwaysOnVpn");
         mAlwaysOnVPN.setOnPreferenceChangeListener(this);
 
 
         Preference loadtun = findPreference("loadTunModule");
-		if(!isTunModuleAvailable()) {
-			loadtun.setEnabled(false);
+        if (!isTunModuleAvailable()) {
+            loadtun.setEnabled(false);
             devHacks.removePreference(loadtun);
         }
 
@@ -65,59 +65,56 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
         }
 
         CheckBoxPreference useInternalFS = (CheckBoxPreference) findPreference("useInternalFileSelector");
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
-		{
-			devHacks.removePreference(useInternalFS);
-		}
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+            devHacks.removePreference(useInternalFS);
+        }
 
-		/* Android P does not allow access to the file storage anymore */
-		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P)
-		{
-			Preference useInternalFileSelector = findPreference("useInternalFileSelector");
-			devHacks.removePreference(useInternalFileSelector);
-		}
+        /* Android P does not allow access to the file storage anymore */
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            Preference useInternalFileSelector = findPreference("useInternalFileSelector");
+            devHacks.removePreference(useInternalFileSelector);
+        }
 
-		mExtapp = new ExternalAppDatabase(getActivity());
-		Preference clearapi = findPreference("clearapi");
-		clearapi.setOnPreferenceClickListener(this);
+        mExtapp = new ExternalAppDatabase(getActivity());
+        Preference clearapi = findPreference("clearapi");
+        clearapi.setOnPreferenceClickListener(this);
 
-		findPreference("osslspeed").setOnPreferenceClickListener(this);
+        findPreference("osslspeed").setOnPreferenceClickListener(this);
 
-        if(devHacks.getPreferenceCount()==0)
+        if (devHacks.getPreferenceCount() == 0)
             getPreferenceScreen().removePreference(devHacks);
 
         if (!BuildConfig.openvpn3) {
             PreferenceCategory appBehaviour = (PreferenceCategory) findPreference("app_behaviour");
-			CheckBoxPreference ovpn3 = (CheckBoxPreference) findPreference("ovpn3");
-			ovpn3.setEnabled(false);
-			ovpn3.setChecked(false);
+            CheckBoxPreference ovpn3 = (CheckBoxPreference) findPreference("ovpn3");
+            ovpn3.setEnabled(false);
+            ovpn3.setChecked(false);
         }
 
 
-		setClearApiSummary();
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
+        setClearApiSummary();
+    }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
 
         VpnProfile vpn = ProfileManager.getAlwaysOnVPN(getActivity());
-		StringBuffer sb = new StringBuffer(getString(R.string.defaultvpnsummary));
-		sb.append('\n');
-        if (vpn== null)
+        StringBuffer sb = new StringBuffer(getString(R.string.defaultvpnsummary));
+        sb.append('\n');
+        if (vpn == null)
             sb.append(getString(R.string.novpn_selected));
         else
-           sb.append(getString(R.string.vpnselected, vpn.getName()));
-		mAlwaysOnVPN.setSummary(sb.toString());
+            sb.append(getString(R.string.vpnselected, vpn.getName()));
+        mAlwaysOnVPN.setSummary(sb.toString());
 
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference== mAlwaysOnVPN) {
+        if (preference == mAlwaysOnVPN) {
             VpnProfile vpn = ProfileManager.get(getActivity(), (String) newValue);
             mAlwaysOnVPN.setSummary(vpn.getName());
         }
@@ -125,66 +122,65 @@ public class GeneralSettings extends PreferenceFragment implements OnPreferenceC
     }
 
     private void setClearApiSummary() {
-		Preference clearapi = findPreference("clearapi");
+        Preference clearapi = findPreference("clearapi");
 
-		if(mExtapp.getExtAppList().isEmpty()) {
-			clearapi.setEnabled(false);
-			clearapi.setSummary(R.string.no_external_app_allowed);
-		} else {
-			clearapi.setEnabled(true);
-			clearapi.setSummary(getString(R.string.allowed_apps, getExtAppList(", ")));
-		}
-	}
+        if (mExtapp.getExtAppList().isEmpty()) {
+            clearapi.setEnabled(false);
+            clearapi.setSummary(R.string.no_external_app_allowed);
+        } else {
+            clearapi.setEnabled(true);
+            clearapi.setSummary(getString(R.string.allowed_apps, getExtAppList(", ")));
+        }
+    }
 
-	private String getExtAppList(String delim) {
-		ApplicationInfo app;
-		PackageManager pm = getActivity().getPackageManager();
+    private String getExtAppList(String delim) {
+        ApplicationInfo app;
+        PackageManager pm = getActivity().getPackageManager();
 
-		StringBuilder applist = new StringBuilder();
-		for (String packagename : mExtapp.getExtAppList()) {
-			try {
-				app = pm.getApplicationInfo(packagename, 0);
-				if (applist.length() != 0)
-					applist.append(delim);
-				applist.append(app.loadLabel(pm));
+        StringBuilder applist = new StringBuilder();
+        for (String packagename : mExtapp.getExtAppList()) {
+            try {
+                app = pm.getApplicationInfo(packagename, 0);
+                if (applist.length() != 0)
+                    applist.append(delim);
+                applist.append(app.loadLabel(pm));
 
-			} catch (NameNotFoundException e) {
-				// App not found. Remove it from the list
-				mExtapp.removeApp(packagename);
-			}
-		}
+            } catch (NameNotFoundException e) {
+                // App not found. Remove it from the list
+                mExtapp.removeApp(packagename);
+            }
+        }
 
-		return applist.toString();
-	}
+        return applist.toString();
+    }
 
-	private boolean isTunModuleAvailable() {
-		// Check if the tun module exists on the file system
+    private boolean isTunModuleAvailable() {
+        // Check if the tun module exists on the file system
         return new File("/system/lib/modules/tun.ko").length() > 10;
     }
 
-	@Override
-	public boolean onPreferenceClick(Preference preference) {
-		if(preference.getKey().equals("clearapi")){
-			Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setPositiveButton(R.string.clear, this);
-			builder.setNegativeButton(android.R.string.cancel, null);
-			builder.setMessage(getString(R.string.clearappsdialog,getExtAppList("\n")));
-			builder.show();
-		} else if (preference.getKey().equals("osslspeed")) {
-			startActivity(new Intent(getActivity(), OpenSSLSpeed.class));
-		}
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        if (preference.getKey().equals("clearapi")) {
+            Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setPositiveButton(R.string.clear, this);
+            builder.setNegativeButton(android.R.string.cancel, null);
+            builder.setMessage(getString(R.string.clearappsdialog, getExtAppList("\n")));
+            builder.show();
+        } else if (preference.getKey().equals("osslspeed")) {
+            startActivity(new Intent(getActivity(), OpenSSLSpeed.class));
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public void onClick(DialogInterface dialog, int which) {
-		if( which == Dialog.BUTTON_POSITIVE){
-			mExtapp.clearAllApiApps();
-			setClearApiSummary();
-		}
-	}
-
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        if (which == Dialog.BUTTON_POSITIVE) {
+            mExtapp.clearAllApiApps();
+            setClearApiSummary();
+        }
+    }
 
 
 }

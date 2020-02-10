@@ -96,7 +96,8 @@ class TestConfigParser {
                 "<connection>\n" +
                 "remote foo.bar\n" +
                 "tun-mtu 1222\n" +
-                "</connection>\n")
+                "</connection>\n" +
+                "route 8.8.8.8 255.255.255.255 net_gateway\n")
 
         val cp = ConfigParser()
         cp.parseConfig(StringReader(config))
@@ -105,6 +106,7 @@ class TestConfigParser {
         Assert.assertEquals(1234, vp.mTunMtu.toLong())
         Assert.assertTrue(vp.mConnections[0].mCustomConfiguration.contains("tun-mtu 1222"))
         Assert.assertTrue(vp.mConnections[0].mUseCustomConfig)
+        Assert.assertEquals(vp.mExcludedRoutes.trim(), "8.8.8.8/32");
     }
 
     @Test

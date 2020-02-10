@@ -6,6 +6,7 @@
 package de.blinkt.openvpn.api;
 
 import android.annotation.TargetApi;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -340,7 +341,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
     }
 
     @Override
-    public void updateState(String state, String logmessage, int resid, ConnectionStatus level) {
+    public void updateState(String state, String logmessage, int resid, ConnectionStatus level, Intent intent) {
         mMostRecentState = new UpdateMessage(state, logmessage, level);
         if (ProfileManager.getLastConnectedVpn() != null)
             mMostRecentState.vpnUUID = ProfileManager.getLastConnectedVpn().getUUIDString();

@@ -6,19 +6,20 @@
 package de.blinkt.openvpn.fragments;
 
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.widget.Toast;
+
+
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 
 import java.util.Locale;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 
-public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPreferenceChangeListener {
+public class Settings_Obscure extends OpenVpnPreferencesFragment implements Preference.OnPreferenceChangeListener {
 	private CheckBoxPreference mUseRandomHostName;
 	private CheckBoxPreference mUseFloat;
 	private CheckBoxPreference mUseCustomConfig;
@@ -125,6 +126,11 @@ public class Settings_Obscure extends OpenVpnPreferencesFragment implements OnPr
 		loadSettings();
 
 	}
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
+    }
 
     protected void loadSettings() {
         mUseRandomHostName.setChecked(mProfile.mUseRandomHostname);

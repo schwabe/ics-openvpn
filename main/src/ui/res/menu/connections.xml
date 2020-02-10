@@ -4,12 +4,13 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:icon="@drawable/ic_menu_add"
         android:title="@string/add_remote"
         android:id="@+id/add_new_remote"
         android:titleCondensed="@string/add"
-        android:showAsAction="always"
+        app:showAsAction="always"
     />
 </menu>

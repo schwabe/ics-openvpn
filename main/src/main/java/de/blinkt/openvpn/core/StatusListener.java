@@ -5,6 +5,7 @@
 
 package de.blinkt.openvpn.core;
 
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -35,8 +36,8 @@ public class StatusListener implements VpnStatus.LogListener {
 
         @Override
         public void updateStateString(String state, String msg, int resid, ConnectionStatus
-                level) throws RemoteException {
-            VpnStatus.updateStateString(state, msg, resid, level);
+                level, Intent intent) throws RemoteException {
+            VpnStatus.updateStateString(state, msg, resid, level, intent);
         }
 
         @Override

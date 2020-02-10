@@ -24,6 +24,8 @@ cache:
     - $HOME/.android/build-cache
     
 script:
+  # Force signing with the debug keys
+  - echo icsopenvpnDebugSign=true > ~/.gradle/gradle.properties
   # Building one variant is enough and already takes quite a long time...
   - ./gradlew assembleUiRelease
 

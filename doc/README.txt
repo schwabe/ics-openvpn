@@ -24,13 +24,17 @@ long as the main repo url is on github):
   git submodule init
   git submodule update
 
-Build the project using "gradle build" (Or use Android Studio). 
+Build the project using "gradle build" (Or use Android Studio). Ensure that
+the swig executable is the path, otherwise the build will fail.
 
 Android studio tends to the whole build of binaries in its sync gradle
 phase to 15 minutes for initial gradle sync are completely normal.
 
-The native build should with Windows and Linux but is rarely tested
-since my main development platform is Mac Os X
+To have a version with UI be sure to select the UI variant in Android studio under
+build variants.
+
+The native build should work with Windows and Linux but is rarely tested
+since my main development platform is macOS.
 
 
 FAQ

@@ -5,6 +5,7 @@
 
 package de.blinkt.openvpn.core;
 
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
@@ -147,21 +148,23 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
         public String state;
         public String logmessage;
         public ConnectionStatus level;
+        public Intent intent;
         int resId;
 
-        UpdateMessage(String state, String logmessage, int resId, ConnectionStatus level) {
+        UpdateMessage(String state, String logmessage, int resId, ConnectionStatus level, Intent intent) {
             this.state = state;
             this.resId = resId;
             this.logmessage = logmessage;
             this.level = level;
+            this.intent = intent;
         }
     }
 
 
     @Override
-    public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level) {
+    public void updateState(String state, String logmessage, int localizedResId, ConnectionStatus level, Intent intent) {
 
-        mLastUpdateMessage = new UpdateMessage(state, logmessage, localizedResId, level);
+        mLastUpdateMessage = new UpdateMessage(state, logmessage, localizedResId, level, intent);
         Message msg = mHandler.obtainMessage(SEND_NEW_STATE, mLastUpdateMessage);
         msg.sendToTarget();
     }
@@ -227,6 +230,6 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
 
     private static void sendUpdate(IStatusCallbacks broadcastItem,
                                    UpdateMessage um) throws RemoteException {
-        broadcastItem.updateStateString(um.state, um.logmessage, um.resId, um.level);
+        broadcastItem.updateStateString(um.state, um.logmessage, um.resId, um.level, um.intent);
     }
 }

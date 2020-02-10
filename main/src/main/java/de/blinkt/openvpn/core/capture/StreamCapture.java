@@ -51,11 +51,10 @@ public class StreamCapture {
     public static void setDNS(String dns) {
         if (dns == null) {
             INSTANCE.closeIgnoreException();
+            DNS = -1;
             REDIRECT_DNS = false;
             return;
         }
-        if (DNS !=-1)
-            return;
         try {
             DNS = IPPacket.ip2int(InetAddress.getByName(dns))[0];
             REDIRECT_DNS = dns.equals(VIRTUAL_DNS);
@@ -172,8 +171,18 @@ public class StreamCapture {
                     else if (r != -1 && !isClosed) {
 
                         IPPacket ip = new IPPacket(buffer, 0, r);
+
+                        /*
+                        String dest = IPPacket.int2ip(ip.getDestIP()).getHostAddress();
+
+                        if (dest.equals("8.8.8.8") || dest.equals("8.8.4.4")) {
+                            VpnStatus.logWarning(role + ":Dropping Google DNS:" + dest+"!");
+                            VpnStatus.logWarning("CURRENT DNS:"+DNS);
+                        }
+                        else */
                         if (ip.getVersion() == 6) {
                             VpnStatus.logWarning(role+":Dropping IPV6 Package!\n"+ r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ", Dest:" + IPPacket.int2ip(ip.getDestIP()));
+
                         } else {
                             UDPPacket udp = null;
                             if (receiver && ip.getProt() == 17 && ip.getDestIP()[0] == DNS)
@@ -271,7 +280,6 @@ public class StreamCapture {
         } catch (IOException e) {
         }
         closed = true;
-        DNS=-1;
     }
 
 

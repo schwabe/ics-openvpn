@@ -5,12 +5,6 @@
 
 apply plugin: 'com.android.application'
 
-repositories {
-    jcenter()
-    maven { url "https://jitpack.io" }
-    maven { url 'https://maven.google.com' }
-}
-
 
 android {
     compileSdkVersion 28

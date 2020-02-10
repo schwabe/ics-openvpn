@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/blinkt"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".core.CredentialsPopup"></activity>
+        <activity
+                android:name=".core.CredentialsPopup"
+                android:theme="@style/blinkt.dialog" />
 
         <meta-data
             android:name="android.content.APP_RESTRICTIONS"

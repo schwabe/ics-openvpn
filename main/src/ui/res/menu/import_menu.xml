@@ -4,18 +4,19 @@
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/cancel"
         android:icon="@drawable/ic_menu_close_clear_cancel"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@android:string/cancel"
         android:titleCondensed="@string/cancel"/>
 
     <item
         android:id="@+id/ok"
         android:icon="@drawable/ic_menu_save"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/add_profile"
         android:titleCondensed="@string/import_vpn"/>
 

@@ -9,13 +9,12 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.ViewConfiguration;
 import android.widget.SeekBar;
 
-public class SeekBarTicks extends SeekBar {
+import androidx.appcompat.widget.AppCompatSeekBar;
+
+public class SeekBarTicks extends AppCompatSeekBar {
     private Paint mTickPaint;
     private float mTickHeight;
 

@@ -17,6 +17,9 @@ import de.blinkt.openvpn.core.capture.ip.UDPPacket;
 
 public class StreamCapture {
 
+    private static String VERSION="0.0.1";
+
+    private static int FORWARD_DNS_PORT = 5300;
     private static StreamCapture INSTANCE = new StreamCapture();
     private static int BUFFER_SIZE = 20000;
     private static int MTU = 1500;
@@ -26,10 +29,10 @@ public class StreamCapture {
 
     public static String VIRTUAL_DNS = "10.10.10.10";
 
-    private static String fd_in_TO_local_out = "fd_in_TO_local_out";
-    private static String local_in_TO_fd_out = "local_in_TO_fd_out";
-    private static TransferThread from_fd_in;
-    private static TransferThread from_local_in;
+    private static String local_TO_remote = "local_TO_remote";
+    private static String remote_TO_local = "remote_TO_local";
+    private static TransferThread from_local;
+    private static TransferThread from_remote;
 
 
     public static StreamCapture getInstance() {
@@ -66,14 +69,15 @@ public class StreamCapture {
 
 
     private ParcelFileDescriptor remote = null;
-    private ParcelFileDescriptor local = null;
+    private ParcelFileDescriptor remote_stub = null;
     private ParcelFileDescriptor captured_fd = null;
+    private FileInputStream remote_in = null;
+    private FileOutputStream remote_out = null;
     private FileInputStream local_in = null;
     private FileOutputStream local_out = null;
-    private FileInputStream fd_in = null;
-    private FileOutputStream fd_out = null;
 
-    boolean closed = true;
+    private boolean closed = true;
+
 
     private StreamCapture() {}  //private constructor
 
@@ -89,7 +93,7 @@ public class StreamCapture {
             this.in = new BufferedInputStream(in,BUFFER_SIZE);
             this.out = out;
             this.role = role;
-            receiver = role.equals(fd_in_TO_local_out);
+            receiver = role.equals(local_TO_remote);
             new Thread(this).start();
         }
 
@@ -153,6 +157,30 @@ public class StreamCapture {
             //return in.read(buf);
         }
 
+        private int google_8_8_8_8 =  134744072;
+        private int google_8_8_4_4 =  134743044;
+
+        private boolean dropPacket(IPPacket ip) throws IOException {
+            if (ip.getVersion() == 6) {
+                VpnStatus.logWarning(role + ":Dropping IPV6 Package!\nIPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ", Dest:" + IPPacket.int2ip(ip.getDestIP()));
+                return true;
+            }
+
+            int dest = ip.getDestIP()[0];
+
+            if (dest == google_8_8_8_8 || dest == google_8_8_4_4) {
+
+                if (ip.getProt() == 17) {
+                    UDPPacket udp = new UDPPacket(ip.getData(), ip.getOffset(), ip.getLength());
+                    //drop google dns used silently by some ROMs
+                    VpnStatus.logWarning(role + ":Dropping Google Package!\nIPlen:" + ip.getLength() + ", Proto:" + udp.getProt() + ", Source:" + IPPacket.int2ip(udp.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(udp.getDestIP()) + ":" + udp.getDestPort());
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
         @Override
         public void run() {
 
@@ -172,18 +200,7 @@ public class StreamCapture {
 
                         IPPacket ip = new IPPacket(buffer, 0, r);
 
-                        /*
-                        String dest = IPPacket.int2ip(ip.getDestIP()).getHostAddress();
-
-                        if (dest.equals("8.8.8.8") || dest.equals("8.8.4.4")) {
-                            VpnStatus.logWarning(role + ":Dropping Google DNS:" + dest+"!");
-                            VpnStatus.logWarning("CURRENT DNS:"+DNS);
-                        }
-                        else */
-                        if (ip.getVersion() == 6) {
-                            VpnStatus.logWarning(role+":Dropping IPV6 Package!\n"+ r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ", Dest:" + IPPacket.int2ip(ip.getDestIP()));
-
-                        } else {
+                        if (!dropPacket(ip)){
                             UDPPacket udp = null;
                             if (receiver && ip.getProt() == 17 && ip.getDestIP()[0] == DNS)
                                 udp = new UDPPacket(buffer, 0, r);
@@ -192,12 +209,12 @@ public class StreamCapture {
 
                                 //DNS request or response => need to redirect
 
-                                VpnStatus.logWarning("fd_in ->:" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP()) + ":" + udp.getDestPort());
+                                VpnStatus.logInfo("local->:" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP()) + ":" + udp.getDestPort());
 
                                 if (udp.getDestPort() == 53) {
                                     // DNS request ==> redirect to local DNS Proxy on LOCAL_IP
                                     udp.updateHeader(udp.getTTL(), 17, new int[]{DNS}, LOCAL_IP);
-                                    udp.updateHeader(udp.getSourcePort(), 5300);
+                                    udp.updateHeader(udp.getSourcePort(), FORWARD_DNS_PORT);
 
                                 } else {
                                     //DNS response from local DNS Proxy on LOCAL_IP ==> redirect back to requestor
@@ -205,10 +222,10 @@ public class StreamCapture {
                                     udp.updateHeader(53, udp.getDestPort());
                                 }
 
-                                VpnStatus.logWarning("->fd_out:" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP()) + ":" + udp.getDestPort());
-                                synchronized (fd_out) {
-                                    fd_out.write(buffer, 0, r);
-                                    fd_out.flush();
+                                VpnStatus.logInfo("->local:" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP()) + ":" + udp.getDestPort());
+                                synchronized (local_out) {
+                                    local_out.write(buffer, 0, r);
+                                    local_out.flush();
                                 }
 
                             } else {
@@ -216,7 +233,7 @@ public class StreamCapture {
                                     out.write(buffer, 0, r);
                                     out.flush();
                                 }
-                                VpnStatus.logWarning(role + ":" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ", Dest:" + IPPacket.int2ip(ip.getDestIP()));
+                                VpnStatus.logInfo(role + ":" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ", Dest:" + IPPacket.int2ip(ip.getDestIP()));
                             }
                         }
                     }
@@ -235,7 +252,6 @@ public class StreamCapture {
                 }
             }
 
-
             if (!isClosed)
                 closeIgnoreException();
 
@@ -248,23 +264,11 @@ public class StreamCapture {
         if (closed)
             return;
 
-        from_fd_in.setClosed();
-        from_local_in.setClosed();
+        from_local.setClosed();
+        from_remote.setClosed();
 
         try {
             captured_fd.close();
-        } catch (IOException e) {
-        }
-        try {
-            fd_in.close();
-        } catch (IOException e) {
-        }
-        try {
-            fd_out.close();
-        } catch (IOException e) {
-        }
-        try {
-            remote.close();
         } catch (IOException e) {
         }
         try {
@@ -276,7 +280,19 @@ public class StreamCapture {
         } catch (IOException e) {
         }
         try {
-            local.close();
+            remote.close();
+        } catch (IOException e) {
+        }
+        try {
+            remote_in.close();
+        } catch (IOException e) {
+        }
+        try {
+            remote_out.close();
+        } catch (IOException e) {
+        }
+        try {
+            remote_stub.close();
         } catch (IOException e) {
         }
         closed = true;
@@ -291,19 +307,21 @@ public class StreamCapture {
         if (!REDIRECT_DNS)
             return pfd;
 
+        VpnStatus.logWarning("StreamCapture Version:"+VERSION);
+
         closed = false;
 
         captured_fd = pfd;
-        fd_in = new FileInputStream(pfd.getFileDescriptor());
-        fd_out = new FileOutputStream(pfd.getFileDescriptor());
+        local_in = new FileInputStream(pfd.getFileDescriptor());
+        local_out = new FileOutputStream(pfd.getFileDescriptor());
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
             ParcelFileDescriptor[] pair = ParcelFileDescriptor.createReliableSocketPair();
-            local = pair[0];
+            remote_stub = pair[0];
             remote = pair[1];
-            local_out=new FileOutputStream(local.getFileDescriptor());
-            local_in = new FileInputStream(local.getFileDescriptor());
-            from_fd_in = new TransferThread(fd_in, local_out, fd_in_TO_local_out);
-            from_local_in = new TransferThread(local_in, fd_out, local_in_TO_fd_out);
+            remote_out =new FileOutputStream(remote_stub.getFileDescriptor());
+            remote_in = new FileInputStream(remote_stub.getFileDescriptor());
+            from_local = new TransferThread(local_in, remote_out, local_TO_remote);
+            from_remote = new TransferThread(remote_in, local_out, remote_TO_local);
             return remote;
         } else return null;
 

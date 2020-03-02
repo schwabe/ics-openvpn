@@ -36,9 +36,13 @@ public class UDPPacket extends IPPacket {
 		this.udpHeader = ByteBuffer.wrap(packet, offs + ipHdrlen, 8).order(ByteOrder.BIG_ENDIAN).asIntBuffer();
 	}
 
+
 	public static UDPPacket createUDPPacket(byte[] packet, int offs, int len, int version) {
 		packet[offs] = ((byte) (version << 4 & 0xFF));
-		return new UDPPacket(packet, offs, len);
+
+		UDPPacket udp =  new UDPPacket(packet, offs, len);
+		udp.initInitialIPHeader();
+		return udp;
 	}
 
 	public void updateHeader(int sourcePort, int destPort) {

@@ -56,9 +56,66 @@ public class IPPacket {
 			throw new IllegalArgumentException("Invalid Version:" + version);
 	}
 
-	public static IPPacket createIPPacket(byte[] packet, int offs, int len, int version) {
+	protected void initIPHeader(int TTL, int prot, int[] sourceIP, int[] destIP) {
+		if (version == 4) {
+			int[] hdrPacket = new int[5];
+			hdrPacket[0] = 0x45000000 + len; // Version 4, IP header len (20 bytes /4 = 5), normal TOS (0) + complete pack length in bytes
+			hdrPacket[1] = generateId(); // packet ID, fragmentation flags "0" and no fragmentation offset (0)
+			hdrPacket[2] = (TTL << 24) + (prot << 16);
+			hdrPacket[3] = sourceIP[0];
+			hdrPacket[4] = destIP[0];
+			ipHeader.position(0);
+			ipHeader.put(hdrPacket);
+			// add checksum
+			hdrPacket[2] = hdrPacket[2] + calculateCheckSum();
+			ipHeader.put(2, hdrPacket[2]);
+		} else if (version == 6) {
+			int[] hdrPacket = new int[2];
+			hdrPacket[0] = version << 28; // Version = 6, Trafficclass = 0 (default), Flow Label = 0 (default);
+			hdrPacket[1] = ((len - 40) << 16) + (prot << 8) + TTL;
+			ipHeader.position(0);
+			ipHeader.put(hdrPacket);
+			ipHeader.put(sourceIP);
+			ipHeader.put(destIP);
+		} else
+			throw new IllegalStateException("Illegal Version:" + version);
+	}
+
+
+	protected void initInitialIPHeader() {
+		if (version == 4) {
+			int[] hdrPacket = new int[5];
+			hdrPacket[0] = 0x45000000 + len; // Version 4, IP header len (20 bytes /4 = 5), normal TOS (0) + complete pack length in bytes
+			hdrPacket[1] = generateId(); // packet ID, fragmentation flags "0" and no fragmentation offset (0)
+			hdrPacket[2] = 0;
+			hdrPacket[3] = 0;
+			hdrPacket[4] =  0;
+			ipHeader.position(0);
+			ipHeader.put(hdrPacket);
+		} else if (version == 6) {
+			int[] hdrPacket = new int[2];
+			hdrPacket[0] = version << 28; // Version = 6, Trafficclass = 0 (default), Flow Label = 0 (default);
+			hdrPacket[1] = ((len - 40) << 16);
+			ipHeader.position(0);
+			ipHeader.put(hdrPacket);
+		} else
+			throw new IllegalStateException("Illegal Version:" + version);
+	}
+
+
+
+	public static IPPacket createInitialIPPacket(byte[] packet, int offs, int len, int version) {
 		packet[offs] = ((byte) (version << 4 & 0xFF));
-		return new IPPacket(packet, offs, len);
+		IPPacket ip = new IPPacket(packet, offs, len);
+		ip.initInitialIPHeader();
+		return ip;
+	}
+
+	public static IPPacket createIPPacket(byte[] packet, int offs, int len, int version, int TTL, int prot, int[] sourceIP, int[] destIP) {
+		packet[offs] = ((byte) (version << 4 & 0xFF));
+		IPPacket ip = new IPPacket(packet, offs, len);
+		ip.initIPHeader(TTL, prot, sourceIP, destIP);
+		return ip;
 	}
 
 	public static int[] ip2int(InetAddress ip) {
@@ -113,23 +170,22 @@ public class IPPacket {
 
 	public void updateHeader(int TTL, int prot, int[] sourceIP, int[] destIP) {
 		if (version == 4) {
-			int[] hdrPacket = new int[5];
-			hdrPacket[0] = 0x45000000 + len; // Version 4, IP header len (20 bytes /4 = 5), normal TOS (0) + complete pack length in bytes
-			hdrPacket[1] = generateId(); // packet ID, fragmentation flags "0" and no fragmentation offset (0)
-			hdrPacket[2] = (TTL << 24) + (prot << 16);
-			hdrPacket[3] = sourceIP[0];
-			hdrPacket[4] = destIP[0];
-			ipHeader.position(0);
+			int[] hdrPacket = new int[3];
+			ipHeader.position(2);
+			ipHeader.get(hdrPacket);
+			hdrPacket[0] = (TTL << 24) + (prot << 16);
+			hdrPacket[1] = sourceIP[0];
+			hdrPacket[2] = destIP[0];
+			ipHeader.position(2);
 			ipHeader.put(hdrPacket);
 			// add checksum
-			hdrPacket[2] = hdrPacket[2] + calculateCheckSum();
-			ipHeader.put(2, hdrPacket[2]);
+			hdrPacket[0] = hdrPacket[0] + calculateCheckSum();
+			ipHeader.put(2, hdrPacket[0]);
 		} else if (version == 6) {
-			int[] hdrPacket = new int[2];
-			hdrPacket[0] = version << 28; // Version = 6, Trafficclass = 0 (default), Flow Label = 0 (default);
-			hdrPacket[1] = ((len - 40) << 16) + (prot << 8) + TTL;
-			ipHeader.position(0);
-			ipHeader.put(hdrPacket);
+			int hdr = ipHeader.get(1);
+			hdr = (hdr & 0xFFFF0000) + (prot << 8) + TTL;
+			ipHeader.position(1);
+			ipHeader.put(hdr);
 			ipHeader.put(sourceIP);
 			ipHeader.put(destIP);
 		} else

@@ -17,7 +17,7 @@ import de.blinkt.openvpn.core.capture.ip.UDPPacket;
 
 public class StreamCapture {
 
-    private static String VERSION="0.0.1";
+    private static String VERSION="0.0.2";
 
     private static int FORWARD_DNS_PORT = 5300;
     private static StreamCapture INSTANCE = new StreamCapture();

@@ -7,7 +7,7 @@ For integrating with personalDNSfilter (minimal Version 1.50.38), select the Opt
 
 Download
 --------
-Current Version is based on OpenVPN for Android 0.7.13 and includes StreamCapture 0.0.1 for redirecting the DNS traffic to personalDNSfilter.
+Current Version is based on OpenVPN for Android 0.7.14 and includes StreamCapture 0.0.2 for redirecting the DNS traffic to personalDNSfilter.
 Download: https://www.zenz-solutions.de/personaldnsfilter/getOpenVPNpDNSf.php.
 
 Footnotes

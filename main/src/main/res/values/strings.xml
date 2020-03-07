@@ -126,7 +126,7 @@
     <string name="no_vpn_support_image">Your image does not support the VPNService API, sorry :(</string>
     <string name="encryption">Encryption</string>
     <string name="cipher_dialog_title">Enter encryption method</string>
-    <string name="chipher_dialog_message">Enter the encryption cipher algorithm used by OpenVPN. Leave empty to use default cipher.</string>
+    <string name="cipher_dialog_message">Enter the encryption cipher algorithm used by OpenVPN. Leave empty to use default cipher.</string>
     <string name="auth_dialog_message">Enter the authentication digest used for OpenVPN. Leave empty to use default digest.</string>
     <string name="settings_auth">Authentication/Encryption</string>
     <string name="file_explorer_tab">File Explorer</string>
@@ -170,7 +170,7 @@
     <string name="owner_fix">Fix ownership of /dev/tun</string>
     <string name="generated_config_summary">Shows the generated OpenVPN Configuration File</string>
     <string name="edit_profile_title">Editing \"%s\"</string>
-    <string name="building_configration">Building configuration…</string>
+    <string name="building_configuration">Building configuration…</string>
     <string name="netchange_summary">Turning this option on will force a reconnect if the network state is changed (e.g. WiFi to/from mobile)</string>
     <string name="netchange">Reconnect on network change</string>
     <string name="netstatus">Network Status: %s</string>
@@ -233,7 +233,7 @@
     <string name="minidump_generated">OpenVPN crashed unexpectedly. Please consider using the send Minidump option in the main menu</string>
     <string name="send_minidump">Send Minidump to developer</string>
     <string name="send_minidump_summary">Sends debugging information about last crash to developer</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Connecting</string>
@@ -253,7 +253,7 @@
     <string name="state_nonetwork">Waiting for usable network</string>
     <string name="state_waitorbot">Waiting for Orbot to start</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Not connected</string>
+    <string name="notification_title_notconnect">Not connected</string>
     <string name="start_vpn_title">Connecting to VPN %s</string>
     <string name="start_vpn_ticker">Connecting to VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Some versions of Android 4.1 have problems if the name of the keystore certificate contains non alphanumeric characters (like spaces, underscores or dashes). Try to reimport the certificate without special characters</string>
@@ -359,7 +359,7 @@
     <string name="ab_kitkat_mss">Early KitKat version set the wrong MSS value on TCP connections (#61948). Try to enable the mssfix option to workaround this bug.</string>
     <string name="ab_proxy">Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.<p>When a VPN sets a DNS server Android will not use a proxy. There is no API to set a proxy for a VPN connection.</p></string>
     <string name="ab_lollipop_reinstall">VPN apps may stop working when uninstalled and reinstalled again. For details see #80074</string>
-    <string name="ab_not_route_to_vpn">The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corrosponds to the client IP and its netmask</string>
+    <string name="ab_not_route_to_vpn">The configured client IP and the IPs in its network mask are not routed to the VPN. OpenVPN works around this bug by explicitly adding a route that corresponds to the client IP and its netmask</string>
     <string name="ab_persist_tun">Opening a tun device while another tun device is active, which is used for persist-tun support, crashes the VPNServices on the device. A reboot is required to make VPN work again. OpenVPN for Android tries to avoid reopening the tun device and if really needed first closes the current TUN before opening the new TUN device to avoid to crash. This may lead to a short window where packets are sent over the non-VPN connection. Even with this workaround the VPNServices sometimes crashes and requires a reboot of the device.</string>
     <string name="ab_secondary_users">VPN does not work at all for secondary users.</string>
     <string name="ab_kitkat_reconnect">"Multiple users report that the mobile connection/mobile data connection is frequently dropped while using the VPN app. The behaviour seems to affect only some mobile provider/device combination and so far no cause/workaround for the bug could be identified. "</string>
@@ -372,7 +372,7 @@
     <string name="ab_not_route_to_vpn_title">Route to the configured IP address</string>
     <string name="ab_kitkat_mss_title">Wrong MSS value for VPN connection</string>
     <string name="ab_secondary_users_title">Secondary tablet users</string>
-    <string name="custom_connection_options_warng">Specify custom connection specific options. Use with care</string>
+    <string name="custom_connection_options_warning">Specify custom connection specific options. Use with care</string>
     <string name="custom_connection_options">Custom Options</string>
     <string name="remove_connection_entry">Remove connection entry</string>
     <string name="ab_kitkat_reconnect_title">Random disconnects from mobile network</string>
@@ -402,9 +402,9 @@
     <string name="menu_use_inline_data">Use inline data</string>
     <string name="export_config_chooser_title">Export configuration file</string>
     <string name="missing_tlsauth">tls-auth file is missing</string>
-    <string name="missing_certificates">Missing user certificate or user certifcate key file</string>
+    <string name="missing_certificates">Missing user certificate or user certificate key file</string>
     <string name="missing_ca_certificate">Missing CA certificate</string>
-    <string name="crl_title">Certifcate Revoke List (optional)</string>
+    <string name="crl_title">Certificate Revoke List (optional)</string>
     <string name="reread_log">Reread (%d) log items from log cache file</string>
     <string name="samsung_broken">Even though Samsung phones are among the most selling Android phones, Samsung\'s firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.\n\nDNS does not work unless the DNS server in the VPN range.\n\nOn many Samsung 5.x devices the allowed/disallowed apps feature does not work.\nOn Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.</string>
     <string name="samsung_broken_title">Samsung phones</string>
@@ -464,7 +464,7 @@
     <string name="osslspeedtest">OpenSSL Crypto Speed test</string>
     <string name="openssl_error">OpenSSL returned an error</string>
     <string name="running_test">Running test…</string>
-    <string name="test_algoirhtms">Test selected algorithms</string>
+    <string name="test_algorithms">Test selected algorithms</string>
     <string name="all_app_prompt">An external app tries to control %s. The app requesting access cannot be determined. Allowing this app grants ALL apps access.</string>
     <string name="openvpn3_nostatickeys">The OpenVPN 3 C++ implementation does not support static keys. Please change to OpenVPN 2.x under general settings.</string>
     <string name="openvpn3_pkcs12">Using PKCS12 files directly with OpenVPN 3 C++ implementation is not supported. Please import the pkcs12 files into the Android keystore or change to OpenVPN 2.x under general settings.</string>
@@ -474,22 +474,22 @@
     <string name="openvpn3_socksproxy">OpenVPN 3 C++ implementation does not support connecting via Socks proxy</string>
     <string name="no_orbotfound">Orbot application cannot be found. Please install Orbot or use manual Socks v5 integration.</string>
     <string name="faq_remote_api_title">Remote API</string>
-    <string name="faq_remote_api">OpenVPN for Android supports two remote APIs, a sophisticated API using AIDL (remoteEXample in the git repository) and a simple one using Intents. &lt;p>Examples using adb shell and the intents. Replace profilname with your profile name&lt;p>&lt;p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN for Android supports two remote APIs, a sophisticated API using AIDL (remoteEXample in the git repository) and a simple one using Intents. &lt;p>Examples using adb shell and the intents. Replace profilename with your profile name&lt;p>&lt;p> adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p> adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Enable Proxy Authentication</string>
     <string name="error_orbot_and_proxy_options">Cannot use extra http-proxy-option statement and Orbot integration at the same time</string>
     <string name="info_from_server">Info from server: \'%s\'</string>
     <string name="channel_name_userreq">User interaction required</string>
     <string name="channel_description_userreq">OpenVPN connection requires a user input, e.g. two factor
-        authentification
+        authentication
     </string>
     <string name="openurl_requested">Open URL to continue VPN authentication</string>
     <string name="crtext_requested">Answer challenge to continue VPN authentication</string>
     <string name="state_auth_pending">Authentication pending</string>
     <string name="external_authenticator">External Authenticator</string>
     <string name="configure">Configure</string>
-    <string name="extauth_not_configured">External Authneticator not configured</string>
+    <string name="extauth_not_configured">External Authenticator not configured</string>
     <string name="faq_killswitch_title">Block non VPN connection (\"Killswitch\")</string>
-    <string name="faq_killswitch">It is often desired to block connections without VPN. Other apps often use markting terms like \"Killswitch\" or \"Seamless tunnel\" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.&lt;p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.&lt;p>The &lt;b>only&lt;/b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the \"block connections without VPN\" setting that can be found under Settings > Network &amp; Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN</string>
+    <string name="faq_killswitch">It is often desired to block connections without VPN. Other apps often use marketing terms like \"Killswitch\" or \"Seamless tunnel\" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.&lt;p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.&lt;p>The &lt;b>only&lt;/b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the \"block connections without VPN\" setting that can be found under Settings > Network &amp; Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN</string>
     <string name="summary_block_address_families">This option instructs Android to not allow protocols (IPv4/IPv6) if the VPN does not set any IPv4 or IPv6 addresses.</string>
     <string name="title_block_address_families">Block IPv6 (or IPv4) if not used by the VPN</string>
     <string name="install_keychain">Install new certificate</string>

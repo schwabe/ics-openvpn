@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">申し訳ありませんが、お使いの環境ではVPNサービスがサポートされていません</string>
     <string name="encryption">暗号化</string>
     <string name="cipher_dialog_title">暗号化方式を入力</string>
-    <string name="chipher_dialog_message">OpenVPNが暗号化に使用する暗号方式を入力してください。空欄にするとデフォルトを使用します。</string>
+    <string name="cipher_dialog_message">OpenVPNが暗号化に使用する暗号方式を入力してください。空欄にするとデフォルトを使用します。</string>
     <string name="auth_dialog_message">OpenVPNが使用する認証ダイジェストを入力します。空欄にするとデフォルトのダイジェストを使用します。</string>
     <string name="settings_auth">認証/暗号化</string>
     <string name="file_explorer_tab">ファイルを選択</string>
@@ -178,7 +178,7 @@ SDカード上のデータは本質的に無防備です。すべてのアプリ
     <string name="owner_fix">/dev/tun の所有権を修正</string>
     <string name="generated_config_summary">生成された OpenVPN の設定ファイルを表示します</string>
     <string name="edit_profile_title">\"%s\"の編集</string>
-    <string name="building_configration">設定を構成中・・・</string>
+    <string name="building_configuration">設定を構成中・・・</string>
     <string name="netchange_summary">この設定を有効にすると、ネットワークの状態変化時(WiFi／モバイル)に再接続を行います。</string>
     <string name="netchange">ネットワーク変化時に再接続する</string>
     <string name="netstatus">ネットワーク状態： %s</string>
@@ -271,7 +271,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="minidump_generated">OpenVPN は予期せず終了しました。メイン メニューでミニダンプの送信オプションを検討してください。</string>
     <string name="send_minidump">ミニダンプを開発者に送信</string>
     <string name="send_minidump_summary">最後にクラッシュした時のデバッグ情報を作者に送信します。</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">接続しています</string>
@@ -291,7 +291,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="state_nonetwork">使用可能なネットワークを待機中</string>
     <string name="state_waitorbot">Orbotの起動を待っています</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">未接続</string>
+    <string name="notification_title_notconnect">未接続</string>
     <string name="start_vpn_title">VPN %sに接続中</string>
     <string name="start_vpn_ticker">VPN %sに接続中</string>
     <string name="jelly_keystore_alphanumeric_bug">Android 4.1の一部のバージョンで、キーストアの証明書の名前にアルファベット以外の特殊な文字(スペース、アンダーバー、ダッシュ等)を含む場合に問題が発生します。証明書の名前から特殊な文字を外して再度インポートを試みてください。</string>
@@ -411,7 +411,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="ab_not_route_to_vpn_title">設定されたIPアドレスへの経路</string>
     <string name="ab_kitkat_mss_title">VPN接続に不正なMSS値</string>
     <string name="ab_secondary_users_title">タブレットの複数ユーザー</string>
-    <string name="custom_connection_options_warng">カスタム指定の接続オプションを設定します。慎重に利用してください</string>
+    <string name="custom_connection_options_warning">カスタム指定の接続オプションを設定します。慎重に利用してください</string>
     <string name="custom_connection_options">カスタムオプション</string>
     <string name="remove_connection_entry">接続先設定を削除します</string>
     <string name="ab_kitkat_reconnect_title">モバイルネットワークが突発的に切断される</string>
@@ -496,7 +496,7 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="osslspeedtest">OpenSSLの暗号化スピードテスト</string>
     <string name="openssl_error">OpenSSLがエラーを返しました</string>
     <string name="running_test">テストを実行中...</string>
-    <string name="test_algoirhtms">選択したアルゴリズムをテストする</string>
+    <string name="test_algorithms">選択したアルゴリズムをテストする</string>
     <string name="all_app_prompt">外部アプリが%sを制御しようとしています。アクセスをリクエストしているアプリは特定できません。このアプリを許可すると、すべてのアプリがアクセス許可されます。</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C ++実装は静的キーをサポートしていません。設定でOpenVPN 2.xに変更してください。</string>
     <string name="openvpn3_pkcs12">OpenVPN 3 C++実装ではPKCS12ファイルを直接使用することはサポートされていません。 PKCS12ファイルをAndroidキーストアにインポートするか、設定でOpenVPN 2.xに変更してください。</string>

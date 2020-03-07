@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Az image-ed nem támogatja a VPNService API-t, elnézést :(</string>
     <string name="encryption">Titkosítás</string>
     <string name="cipher_dialog_title">Adja meg a titkosítási módszert</string>
-    <string name="chipher_dialog_message">Adja meg az OpenVPN által használt titkosítási algoritmust. Hagyja üresen az alapértelmezett kódoláshoz.</string>
+    <string name="cipher_dialog_message">Adja meg az OpenVPN által használt titkosítási algoritmust. Hagyja üresen az alapértelmezett kódoláshoz.</string>
     <string name="auth_dialog_message">Adja meg az OpenVPN által használt authentication digest-et. Hagyja üresen az alapértelmezett digest-hez.</string>
     <string name="settings_auth">Hitelesítés/Titkosítás</string>
     <string name="file_explorer_tab">Fájlkezelő</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">/dev/tun tulajdonos javítása</string>
     <string name="generated_config_summary">Generált OpenVPN konfigurációs fájl megmutatása</string>
     <string name="edit_profile_title">\"%s\" szerkesztése</string>
-    <string name="building_configration">Konfiguráció felépítése&#8230;</string>
+    <string name="building_configuration">Konfiguráció felépítése&#8230;</string>
     <string name="netchange_summary">Ennek az opciónak a bekapcsolása erőlteti az újracsatlakozást ha a hálózati állapot megváltozik (pl.: WiFi-re/ről mobil-ra/ról)</string>
     <string name="netchange">Újracsatlakozás hálózatváltáskor</string>
     <string name="netstatus">Hálózati állapot: %s</string>
@@ -234,7 +234,7 @@
     <string name="minidump_generated">Az OpenVPN váratlanul összeomlott. Kérem, gondolja meg a főmenüben levő Minidump elküldése opció használatát</string>
     <string name="send_minidump">Minidump elküldése a fejlesztőnek</string>
     <string name="send_minidump_summary">Hibakeresési információkat küld a fejlesztőnek a legutóbbi összeomlásról</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Csatlakozás</string>
@@ -253,7 +253,7 @@
     <string name="state_auth_failed">Hitelesítési hiba</string>
     <string name="state_nonetwork">Várakozás használható hálózatra</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Nincs kapcsolat</string>
+    <string name="notification_title_notconnect">Nincs kapcsolat</string>
     <string name="start_vpn_title">Csatlakozás a %s VPN-hez</string>
     <string name="start_vpn_ticker">Csatlakozás a %s VPN-hez</string>
     <string name="jelly_keystore_alphanumeric_bug">Néhány Android 4.1-es verzió alatt problémába ütközhet ha a hitelesítési tanúsítvány nevében nem csak alfanumerikus karakterek szerepelnek (mint pl szóköz, alulvonás vagy kötőjel). Speciális karakterek nélkül próbálja újra importálni</string>
@@ -371,7 +371,7 @@
     <string name="ab_not_route_to_vpn_title">Útvonal a konfigurált IP címhez</string>
     <string name="ab_kitkat_mss_title">Rossz MSS érték a VPN kapcsolathoz</string>
     <string name="ab_secondary_users_title">Másodlagos tablet felhasználók</string>
-    <string name="custom_connection_options_warng">Határozzon meg egyedi kapcsolat specifikus opciókat. Elővigyázatosan használja</string>
+    <string name="custom_connection_options_warning">Határozzon meg egyedi kapcsolat specifikus opciókat. Elővigyázatosan használja</string>
     <string name="custom_connection_options">Egyéni beállítások</string>
     <string name="remove_connection_entry">Kapcsolat bejegyzés eltávolítása</string>
     <string name="ab_kitkat_reconnect_title">Véletlenszerű lecsatlakozások a mobil hálózatról</string>
@@ -464,7 +464,7 @@
     <string name="osslspeedtest">OpenSSL Titkosítás Sebesség teszt</string>
     <string name="openssl_error">Az OpenSSL hibával tért vissza</string>
     <string name="running_test">A teszt fut&#8230;</string>
-    <string name="test_algoirhtms">Kijelölt algoritmusok tesztelése</string>
+    <string name="test_algorithms">Kijelölt algoritmusok tesztelése</string>
     <string name="all_app_prompt">Egy külső alkalmazás megpróbálja vezérelni a(z) %s-t. Az alkalmazást nem lehet felismerni, a hozzáférés megadása
         MINDEN alkalmazás számára elérhetőséget biztosít.
     </string>

@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Din ROM stöder inte VPNService API, ledsen :(</string>
     <string name="encryption">Kryptering</string>
     <string name="cipher_dialog_title">Ange krypteringsmetod</string>
-    <string name="chipher_dialog_message">Ange den krypteringsalogritm som skall användas av OpenVPN. Lämna tomt för att använda standardalgoritm.</string>
+    <string name="cipher_dialog_message">Ange den krypteringsalogritm som skall användas av OpenVPN. Lämna tomt för att använda standardalgoritm.</string>
     <string name="auth_dialog_message">Ange den autentiserings digest som används för OpenVPN. Lämna tom för att använda standard digest.</string>
     <string name="settings_auth">Autentisering/kryptering</string>
     <string name="file_explorer_tab">Filutforskare</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">Fixa ägande av /dev/tun</string>
     <string name="generated_config_summary">Visar den genererade OpenVPN-konfigurationsfilen</string>
     <string name="edit_profile_title">Redigerar \"%s\"</string>
-    <string name="building_configration">Bygger konfiguration&#8230;</string>
+    <string name="building_configuration">Bygger konfiguration&#8230;</string>
     <string name="netchange_summary">Aktivering av detta alternativ kommer att tvinga en återanslutning om nätverksanslutningen ändras (t.ex. WiFi &lt;-> mobildata)</string>
     <string name="netchange">Återanslut vid förändring av nätverksanslutning</string>
     <string name="netstatus">Nätverksstatus: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN kraschade oväntat. Försök att använda skicka Minidump alternativet i huvudmenyn</string>
     <string name="send_minidump">Skicka Minidump till utvecklare</string>
     <string name="send_minidump_summary">Skickar felsökningsinformation om senaste krasch till utvecklare</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Ansluter</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Väntar på användbart nätverk</string>
     <string name="state_waitorbot">Väntar på att Orbot startar</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Inte ansluten</string>
+    <string name="notification_title_notconnect">Inte ansluten</string>
     <string name="start_vpn_title">Ansluter till VPN %s</string>
     <string name="start_vpn_ticker">Ansluter till VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Vissa versioner av Android 4.1 har problem om namnet på keystore certifikatet innehåller icke alfanumeriska tecken (som mellanslag, understreck eller bindestreck). Försök att omimportera certifikatet utan specialtecken</string>
@@ -373,7 +373,7 @@
     <string name="ab_not_route_to_vpn_title">Rutt till den konfigurerade IP-adressen</string>
     <string name="ab_kitkat_mss_title">Fel MSS-värde för VPN-anslutning</string>
     <string name="ab_secondary_users_title">Sekundära surfplattsanvändare</string>
-    <string name="custom_connection_options_warng">Ange anpassade anslutningsspecifika alternativ. Används med försiktighet</string>
+    <string name="custom_connection_options_warning">Ange anpassade anslutningsspecifika alternativ. Används med försiktighet</string>
     <string name="custom_connection_options">Anpassade alternativ</string>
     <string name="remove_connection_entry">Ta bort anslutningspost</string>
     <string name="ab_kitkat_reconnect_title">Intermittienta frånkopplingar från mobilnätverk</string>
@@ -464,7 +464,7 @@
     <string name="osslspeedtest">OpenSSL Crypto-hastighetstest</string>
     <string name="openssl_error">OpenSSL returnerade ett fel</string>
     <string name="running_test">Kör test&#8230;</string>
-    <string name="test_algoirhtms">Testa valda algoritmer</string>
+    <string name="test_algorithms">Testa valda algoritmer</string>
     <string name="all_app_prompt">En extern app försöker kontrollera %s. Appen som begär åtkomst kan inte bestämmas. Tillåtelse av den här appen ger åtkomst till ALLA program.</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C ++-implementeringen stöder inte statiska nycklar. Ändra till OpenVPN 2.x under allmänna inställningar.</string>
     <string name="openvpn3_pkcs12">Användning av PKCS12-filer direkt med OpenVPN 3 C++-implementering stöds inte. Vänligen importera pkcs12-filerna till Android-nyckelbutiken eller ändra till OpenVPN 2.x under allmänna inställningar.</string>

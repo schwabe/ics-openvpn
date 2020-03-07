@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Vaš odtis žal ne podpira API-ja storitve VPN :(</string>
     <string name="encryption">Šifriranje</string>
     <string name="cipher_dialog_title">Vnesite način šifriranja</string>
-    <string name="chipher_dialog_message">Vnesite šifrirni algoritem, ki naj ga uporabi OpenVPN. Za uporabo privzete šifre pustite prazno.</string>
+    <string name="cipher_dialog_message">Vnesite šifrirni algoritem, ki naj ga uporabi OpenVPN. Za uporabo privzete šifre pustite prazno.</string>
     <string name="auth_dialog_message">Vnesite izvleček overitve, ki naj se uporabi za OpenVPN. Za privzetega pustite prazno.</string>
     <string name="settings_auth">Overitev/Šifriranje</string>
     <string name="file_explorer_tab">Raziskovalec datotek</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">Popravi lastništvo mape /dev/tun</string>
     <string name="generated_config_summary">Prikaže ustvarjeno nastavitveno datoteko OpenVPN</string>
     <string name="edit_profile_title">Urejanje \"%s\"</string>
-    <string name="building_configration">Izgrajevanje nastavitev &#8230;</string>
+    <string name="building_configuration">Izgrajevanje nastavitev &#8230;</string>
     <string name="netchange_summary">Vklop te storitve bo vsilil ponovno povezavo, če se stanje omrežja spremeni (npr. Wi-Fi v/iz mobilnega omrežja)</string>
     <string name="netchange">Pon. povez. ob spr. omr.</string>
     <string name="netstatus">Stanje omrežja: %s</string>
@@ -233,7 +233,7 @@
     <string name="minidump_generated">OpenVPN se je nepričakovano sesul. Razmislite o uporabi možnosti pošiljanja mini izpisa v glavnem meniju.</string>
     <string name="send_minidump">Pošlji mini izpis razvijalcu</string>
     <string name="send_minidump_summary">Pošlje podatke razhroščevanja o zadnjem sesutju razvijalcu</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Povezovanje</string>
@@ -251,7 +251,7 @@
     <string name="state_tcp_connect">Povezovanje (TCP)</string>
     <string name="state_auth_failed">Overitev je spodletela</string>
     <string name="state_nonetwork">Čakanje na uporabno omrežje</string>
-    <string name="notifcation_title_notconnect">Ni povezan</string>
+    <string name="notification_title_notconnect">Ni povezan</string>
     <string name="start_vpn_title">Povezovanje v VPN %s</string>
     <string name="start_vpn_ticker">Povezovanje v VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Nekatere različice Androida 4.1 imajo težave, če ime potrdila shrambe ključev vsebuje posebne znake (presledke, podčrtaje ali pomišljaje). Poizkusite ponovno uvoziti potrdilo brez posebnih znakov.</string>
@@ -368,7 +368,7 @@
     <string name="ab_not_route_to_vpn_title">Pot do nastavljenega naslova IP</string>
     <string name="ab_kitkat_mss_title">Napačna vrednost MSS za povezavo VPN</string>
     <string name="ab_secondary_users_title">Sekundarni uporabniki tabilc</string>
-    <string name="custom_connection_options_warng">Določite možnosti za povezave po meri. Uporabljajte previdno.</string>
+    <string name="custom_connection_options_warning">Določite možnosti za povezave po meri. Uporabljajte previdno.</string>
     <string name="custom_connection_options">Možnosti po meri</string>
     <string name="remove_connection_entry">Odstrani vnos povezave</string>
     <string name="ab_kitkat_reconnect_title">Naključne prekinitve mobilnega omrežja</string>

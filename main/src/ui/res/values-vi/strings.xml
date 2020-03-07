@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Hình ảnh của bạn không hỗ trợ dịch vụ VPN API, xin lỗi :(</string>
     <string name="encryption">Mã hóa</string>
     <string name="cipher_dialog_title">Nhập phương thức mã hóa</string>
-    <string name="chipher_dialog_message">Nhập các thuật toán mã hóa được sử dụng bởi OpenVPN. Để trống để sử dụng thuật toán mã hóa mặc định.</string>
+    <string name="cipher_dialog_message">Nhập các thuật toán mã hóa được sử dụng bởi OpenVPN. Để trống để sử dụng thuật toán mã hóa mặc định.</string>
     <string name="auth_dialog_message">Nhập cấu hình xác thực dùng cho OpenVPN. Để trống nếu sử dụng cấu hình mặc định.</string>
     <string name="settings_auth">Xác thực/Mã hóa</string>
     <string name="file_explorer_tab">Duyệt tập tin</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">Sửa quyền sở hữu /dev/tun</string>
     <string name="generated_config_summary">Hiển thị tập tin cấu hình OpenVPN đã tạo</string>
     <string name="edit_profile_title">Đang chỉnh sửa \"%s\"</string>
-    <string name="building_configration">Đang dựng cấu hình...</string>
+    <string name="building_configuration">Đang dựng cấu hình...</string>
     <string name="netchange_summary">Bật tùy chọn này sẽ buộc kết nối lại nếu tình trạng mạng bị thay đổi (ví dụ Wifi đến/từ điện thoại)</string>
     <string name="netchange">Kết nối lại khi mạng thay đổi</string>
     <string name="netstatus">Tình trạng mạng: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN bất ngờ bị lỗi. Vui lòng xem xét và gửi tùy chọn Báo cáo sự cố trong menu chính</string>
     <string name="send_minidump">Gửi Báo cáo lỗi đến nhà phát triển</string>
     <string name="send_minidump_summary">Gửi thông tin gỡ lỗi về sự cố lần cuối đến nhà phát triển</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Đang kết nối</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Đang đợi mạng khả dụng</string>
     <string name="state_waitorbot">Đang chờ Orbot bắt đầu</string>
     <string name="statusline_bytecount">↓ %2$s %1$s - ↑ %4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Không kết nối</string>
+    <string name="notification_title_notconnect">Không kết nối</string>
     <string name="start_vpn_title">Đang kết nối VPN %s</string>
     <string name="start_vpn_ticker">Đang kết nối VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Một số phiên bản Android 4.1 có vấn đề nếu tên của khóa lưu trữ chứng chỉ chứa các ký tự không phải chữ và số (như dấu cách, gạch chân hoặc gạch ngang). Hãy thử nhập lại chứng chỉ không có ký tự đặc biệt</string>
@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Định tuyến đến cấu hình địa chỉ IP</string>
     <string name="ab_kitkat_mss_title">Giá trị MSS sai cho kết nối VPN</string>
     <string name="ab_secondary_users_title">Người sử dụng máy tính bảng thứ cấp</string>
-    <string name="custom_connection_options_warng">Xác định kết nối tùy chỉnh cụ thể. Dùng cẩn thận</string>
+    <string name="custom_connection_options_warning">Xác định kết nối tùy chỉnh cụ thể. Dùng cẩn thận</string>
     <string name="custom_connection_options">Cấu hình tùy chỉnh</string>
     <string name="remove_connection_entry">Gỡ bỏ mục kết nối</string>
     <string name="ab_kitkat_reconnect_title">Ngẫu nhiên ngắt kết nối từ mạng di động</string>
@@ -466,7 +466,7 @@
     <string name="osslspeedtest">Kiểm tra tốc độ OpenSSL Crypto</string>
     <string name="openssl_error">OpenSSL trả về lỗi</string>
     <string name="running_test">Đang chạy kiểm tra&#8230;</string>
-    <string name="test_algoirhtms">Kiểm tra các thuật toán đã chọn</string>
+    <string name="test_algorithms">Kiểm tra các thuật toán đã chọn</string>
     <string name="all_app_prompt">Một ứng dụng bên ngoài cố gắng kiểm soát %s. Không thể xác định ứng dụng yêu cầu quyền truy cập. Cho phép ứng dụng này cấp cho TẤT CẢ quyền truy cập ứng dụng.</string>
     <string name="openvpn3_nostatickeys">Việc triển khai OpenVPN 3 C ++ không hỗ trợ các khóa tĩnh. Vui lòng thay đổi thành OpenVPN 2.x trong cài đặt chung.</string>
     <string name="openvpn3_pkcs12">Việc sử dụng tệp PKCS12 trực tiếp với triển khai OpenVPN 3 C ++ không được hỗ trợ. Vui lòng nhập tệp pkcs12 vào kho khóa Android hoặc thay đổi thành OpenVPN 2.x trong cài đặt chung.</string>
@@ -476,7 +476,7 @@
     <string name="openvpn3_socksproxy">Triển khai OpenVPN 3 C ++ không hỗ trợ kết nối qua proxy Socks</string>
     <string name="no_orbotfound">Không thể tìm thấy ứng dụng Orbot. Vui lòng cài đặt Orbot hoặc sử dụng tích hợp Socks v5 thủ công.</string>
     <string name="faq_remote_api_title">API từ xa</string>
-    <string name="faq_remote_api">OpenVPN cho Android hỗ trợ hai API từ xa, một API tinh vi sử dụng AIDL (remoteEXample trong kho git) và một API đơn giản sử dụng Intent.&lt;p&gt;Ví dụ sử dụng adb shell và intent. Thay thế profilname bằng hồ sơ của bạn&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn /.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN cho Android hỗ trợ hai API từ xa, một API tinh vi sử dụng AIDL (remoteEXample trong kho git) và một API đơn giản sử dụng Intent.&lt;p&gt;Ví dụ sử dụng adb shell và intent. Thay thế profilename bằng hồ sơ của bạn&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn /.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Bật xác thực proxy</string>
     <string name="error_orbot_and_proxy_options">Không thể sử dụng câu lệnh http-proxy-tùy chọn bổ sung và tích hợp Orbot cùng một lúc</string>
     <string name="info_from_server">Thông tin từ máy chủ: \'%s\'</string>

@@ -251,7 +251,7 @@ public class ConfigParser {
 
     private boolean space(char c) {
         // I really hope nobody is using zero bytes inside his/her config file
-        // to sperate parameter but here we go:
+        // to separate parameter but here we go:
         return Character.isWhitespace(c) || c == '\0';
 
     }
@@ -471,7 +471,7 @@ public class ConfigParser {
             }
             // Ignore mtu argument of OpenVPN3 and report error otherwise
             if (mssfix.size() >= 3 && !(mssfix.get(2).equals("mtu"))) {
-                throw new ConfigParseError("Second argument to --mssfix unkonwn");
+                throw new ConfigParseError("Second argument to --mssfix unknown");
             }
         }
 
@@ -517,7 +517,7 @@ public class ConfigParser {
                 CIDRIP cidr = new CIDRIP(ifconfig.get(1), ifconfig.get(2));
                 np.mIPv4Address = cidr.toString();
             } catch (NumberFormatException nfe) {
-                throw new ConfigParseError("Could not pase ifconfig IP address: " + nfe.getLocalizedMessage());
+                throw new ConfigParseError("Could not parse ifconfig IP address: " + nfe.getLocalizedMessage());
             }
 
         }

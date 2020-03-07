@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Ваша прошивка не поддерживает VPNService API, извините :(</string>
     <string name="encryption">Шифрование</string>
     <string name="cipher_dialog_title">Укажите метод шифрования</string>
-    <string name="chipher_dialog_message">Укажите алгоритм шифрования, используемый OpenVPN. Оставьте пустым, чтобы использовать шифрование по умолчанию.</string>
+    <string name="cipher_dialog_message">Укажите алгоритм шифрования, используемый OpenVPN. Оставьте пустым, чтобы использовать шифрование по умолчанию.</string>
     <string name="auth_dialog_message">Введите хеш-функцию для аутентификации в OpenVPN. Оставьте пустым для использования значения по умолчанию.</string>
     <string name="settings_auth">Аутентификация/шифрование</string>
     <string name="file_explorer_tab">Проводник</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">Исправить права для /dev/tun</string>
     <string name="generated_config_summary">Показать сгенерированный файл конфигурации OpenVPN</string>
     <string name="edit_profile_title">Правка «%s»</string>
-    <string name="building_configration">Создание конфигурации&#8230;</string>
+    <string name="building_configuration">Создание конфигурации&#8230;</string>
     <string name="netchange_summary">Переподключаться, если изменяется состояние сети (например, при переключении с Wi-Fi на мобильную и наоборот)</string>
     <string name="netchange">Повторное подключение при смене сети</string>
     <string name="netstatus">Статус сети: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">Неожиданно произошло падение OpenVPN. Пожалуйста, рассмотрите возможность использования опции отправки Minidump в главном меню</string>
     <string name="send_minidump">Отправить Minidump разработчику</string>
     <string name="send_minidump_summary">Отправка отладочной информации разработчику о последнем аварийном завершении</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Подключение</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Ожидание работы сети</string>
     <string name="state_waitorbot">Ожидание запуска Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Не подключено</string>
+    <string name="notification_title_notconnect">Не подключено</string>
     <string name="start_vpn_title">Подключение к VPN %s</string>
     <string name="start_vpn_ticker">Подключение к VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">В некоторых версиях Android 4.1 есть проблемы, если имя сертификата содержит не буквенно-цифровые символы (например, пробелы, подчеркивания или тире). Попробуйте переустановить сертификат без использования специальных символов.</string>
@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Маршрут к установленному IP-адресу</string>
     <string name="ab_kitkat_mss_title">Неверное значение MSS для VPN-подключения</string>
     <string name="ab_secondary_users_title">Дополнительные пользователи устройства</string>
-    <string name="custom_connection_options_warng">Укажите пользовательские параметры подключения. Используйте с осторожностью</string>
+    <string name="custom_connection_options_warning">Укажите пользовательские параметры подключения. Используйте с осторожностью</string>
     <string name="custom_connection_options">Пользовательские параметры</string>
     <string name="remove_connection_entry">Удалить запись подключения</string>
     <string name="ab_kitkat_reconnect_title">Случайные отключения от мобильной сети</string>
@@ -458,7 +458,7 @@
     <string name="osslspeedtest">Тест скорости OpenSSL Crypto</string>
     <string name="openssl_error">OpenSSL возвратил ошибку</string>
     <string name="running_test">Тестирование&#8230;</string>
-    <string name="test_algoirhtms">Тестирование выбранных алгоритмов</string>
+    <string name="test_algorithms">Тестирование выбранных алгоритмов</string>
     <string name="all_app_prompt">Внешнее приложение пытается управлять %s. Приложение, запросившее доступ, не может быть определено. Разрешение этого приложения предоставит доступ ВСЕМ приложениям.</string>
     <string name="openvpn3_nostatickeys">Реализация OpenVPN 3 на C ++ не поддерживает статические ключи. Переключитесь на OpenVPN 2.x в общих настройках.</string>
     <string name="openvpn3_pkcs12">Использование файлов PKCS12 напрямую с помощью OpenVPN 3 C ++ не поддерживается. Импортируйте файлы pkcs12 в хранилище ключей Android или переключитесь на OpenVPN 2.x в общих настройках.</string>

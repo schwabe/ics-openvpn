@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">你的Android ROM不支援VPN服務API，抱歉了。 :(</string>
     <string name="encryption">加密</string>
     <string name="cipher_dialog_title">輸入加密方法</string>
-    <string name="chipher_dialog_message">輸入由OpenVPN的加密密碼算法。留空使用默認密碼。</string>
+    <string name="cipher_dialog_message">輸入由OpenVPN的加密密碼算法。留空使用默認密碼。</string>
     <string name="auth_dialog_message">輸入驗證摘要多用於OpenVPN的。留空使用默認的摘要。</string>
     <string name="settings_auth">驗證/加密</string>
     <string name="file_explorer_tab">檔案瀏覽器</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">修正 /dev/tun 的擁有者</string>
     <string name="generated_config_summary">顯示本程序生成的設定檔</string>
     <string name="edit_profile_title">正在編輯\"%s\"</string>
-    <string name="building_configration">正在生成設定檔&#8230;</string>
+    <string name="building_configuration">正在生成設定檔&#8230;</string>
     <string name="netchange_summary">若切換此選項當網絡狀況變更時將強制重新連線(例如從WiFi變成手機網絡，反之亦然)</string>
     <string name="netchange">網絡異動時重新連線</string>
     <string name="netstatus">網絡狀態: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN 發生非預期的異常，你可以使用在主選單中的發送異常傾印選項，將資訊提供給開發人員。</string>
     <string name="send_minidump">向開發人員傳送異常傾印</string>
     <string name="send_minidump_summary">傳送程式上一個異常停止的除錯資訊給開發人員</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">連線中</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">等待可使用的網路</string>
     <string name="state_waitorbot">等待Orbot啟動</string>
     <string name="statusline_bytecount">↓%2$s/秒 %1$s - ↑%4$s/秒 %3$s</string>
-    <string name="notifcation_title_notconnect">未連線</string>
+    <string name="notification_title_notconnect">未連線</string>
     <string name="start_vpn_title">正在連線至 VPN %s</string>
     <string name="start_vpn_ticker">正在連線至 VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">如果，密鑰憑證的名稱包含非字母數字字元 (如空白、底線、破折號)，在某些 Android 4.1 版本可能會出現問題。請嘗試重新匯入不含特殊字元的憑證。</string>
@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">路由到設定的 IP 位址</string>
     <string name="ab_kitkat_mss_title">VPN 連線錯誤的最大分段大小 (MSS) 值</string>
     <string name="ab_secondary_users_title">二级平板电脑用户</string>
-    <string name="custom_connection_options_warng">指定自訂連線的特定選項，請小心使用</string>
+    <string name="custom_connection_options_warning">指定自訂連線的特定選項，請小心使用</string>
     <string name="custom_connection_options">自訂的選項</string>
     <string name="remove_connection_entry">刪除連線項目</string>
     <string name="ab_kitkat_reconnect_title">從行動網路隨機斷線</string>
@@ -466,7 +466,7 @@
     <string name="osslspeedtest">OpenSSL 加密速度測試</string>
     <string name="openssl_error">OpenSSL 回傳一個錯誤</string>
     <string name="running_test">執行測試中...</string>
-    <string name="test_algoirhtms">測試已選擇的演算法</string>
+    <string name="test_algorithms">測試已選擇的演算法</string>
     <string name="all_app_prompt">\'{\"title\":\"Sign In\",\"type\":\"login\",\"url\":\"/api/v1/generic-sigs/scan\",\"payload\":{\"id\":\"2171e48c-fc70-4edd-b3e5-97c7ec14406e\"}}\'</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C ++實現不支持靜態密鑰。請在常規設置下更改為OpenVPN 2.x.</string>
     <string name="openvpn3_pkcs12">Hi</string>

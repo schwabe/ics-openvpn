@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Dit billede understøtter ikke VPNService API\'en, beklager :(</string>
     <string name="encryption">Kryptering</string>
     <string name="cipher_dialog_title">Angiv krypterings metode</string>
-    <string name="chipher_dialog_message">Angiv krypteringsalgoritmen der skal bruges af OpenVPN. Efterlad tom for at anvende standard algoritmen.</string>
+    <string name="cipher_dialog_message">Angiv krypteringsalgoritmen der skal bruges af OpenVPN. Efterlad tom for at anvende standard algoritmen.</string>
     <string name="auth_dialog_message">Angiv autentificeringsdigest til brug af OpenVPN. Efterlad tom for at anvende standard digest.</string>
     <string name="settings_auth">Autentificering/kryptering</string>
     <string name="file_explorer_tab">Stifinder</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">Ret ejerskab af /dev/tun</string>
     <string name="generated_config_summary">Vis den generede OpenVPN konfigurationsfil</string>
     <string name="edit_profile_title">Redigerer \"%s\"</string>
-    <string name="building_configration">Bygger konfiguration&#8230;</string>
+    <string name="building_configuration">Bygger konfiguration&#8230;</string>
     <string name="netchange_summary">Hvis dette tilvalg slåes til vil det gennemtvinge en genopretning af forbindelsen hvis netværkstilstanden ændres (f.eks. WIFI til/fra mobildata)</string>
     <string name="netchange">Genopret forbindelse ved ændring i netværkstilstand</string>
     <string name="netstatus">Netværks status: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN gik uventet ned. Overvej venligst at benytte muligheden Send Minidump i hovedmenuen</string>
     <string name="send_minidump">Send Minidump til udvikler</string>
     <string name="send_minidump_summary">Sender fejlsøgningsinfo om seneste nedbrud til udvikler</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Tilslutning</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Afventer anvendeligt netværk</string>
     <string name="state_waitorbot">Venter på at Orbot skal starte</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Ikke tilsluttet</string>
+    <string name="notification_title_notconnect">Ikke tilsluttet</string>
     <string name="start_vpn_title">Forbinder til VPN %s</string>
     <string name="start_vpn_ticker">Forbinder til VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Nogle versioner af Android 4.1 har problemer, hvis navnet på keystore-certifikatet indeholder ikke-alfanumeriske tegn (som mellemrum, understregninger eller bindestreger). Prøv at genimportere certifikatet uden specialtegn</string>
@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Rute til den konfigurerede IP-adresse</string>
     <string name="ab_kitkat_mss_title">Forkert MSS-værdi for VPN-forbindelse</string>
     <string name="ab_secondary_users_title">Sekundære tabletbrugere</string>
-    <string name="custom_connection_options_warng">Angiv tilpassede tilslutningsspecifikke indstillinger. Brug med omtanke</string>
+    <string name="custom_connection_options_warning">Angiv tilpassede tilslutningsspecifikke indstillinger. Brug med omtanke</string>
     <string name="custom_connection_options">Tilpassede indstillinger</string>
     <string name="remove_connection_entry">Fjern forbindelsesindgang</string>
     <string name="ab_kitkat_reconnect_title">Tilfældige afbrydelser fra mobiltnetværk</string>
@@ -406,7 +406,7 @@
     <string name="missing_tlsauth">tls-auth-filen mangler</string>
     <string name="missing_certificates">Manglende brugercertifikat eller brugercertifikat nøglefil</string>
     <string name="missing_ca_certificate">Manglende CA-certifikat</string>
-    <string name="crl_title">Certifcate Revoke List (valgfrit)</string>
+    <string name="crl_title">Certificate Revoke List (valgfrit)</string>
     <string name="reread_log">Genlæse (%d) log-linier fra cache</string>
     <string name="samsung_broken">Selv om Samsung-telefoner er blandt de mest solgte Android-telefoner, er Samsungs firmware også blandt de mest fejlagtige Android-implementationer. Fejlene er ikke begrænset til VPN-operationer på disse enheder, men mange af dem kan løses. I det følgende beskrives nogle af disse fejl. \n\nDNS virker ikke, medmindre DNS-serveren er i samme VPN-område. \n\nMed mange Samsung 5.x-enheder virker funktionen for tilladte/afviste apps ikke. \nMed Samsung 6.x rapporteres at VPN ikke fungere, medmindre VPN-appen er undtaget fra Powersave-funktioner.</string>
     <string name="samsung_broken_title">Samsung telefoner</string>
@@ -458,7 +458,7 @@
     <string name="osslspeedtest">OpenSSL Crypto Speed ​​test</string>
     <string name="openssl_error">OpenSSL returnerede en fejl</string>
     <string name="running_test">Tester ...</string>
-    <string name="test_algoirhtms">Test valgte algoritmer</string>
+    <string name="test_algorithms">Test valgte algoritmer</string>
     <string name="all_app_prompt">En ekstern app forsøger at styre %s. Appen, der anmoder om adgang, kan ikke bestemmes. Tillad, at denne app giver ALLE apps adgang.</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C ++ implementeringen understøtter ikke statiske nøgler. Venligst skift til OpenVPN 2.x under generelle indstillinger.</string>
     <string name="openvpn3_pkcs12">Brug af PKCS12 filer direkte med OpenVPN 3 C ++ implementering understøttes ikke. Indtast venligst pkcs12-filerne i Android-keystore eller skift til OpenVPN 2.x under generelle indstillinger.</string>

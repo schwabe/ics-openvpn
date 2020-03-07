@@ -28,7 +28,7 @@
     <string name="pkcs12pwquery">"Mot de passe PKCS12"</string>
     <string name="file_select">"Sélectionner…"</string>
     <string name="file_nothing_selected">Vous devez sélectionner un fichier</string>
-    <string name="useTLSAuth">"Utiliser l\'authentification TLS"</string>
+    <string name="useTLSAuth">"Utiliser l\'authentication TLS"</string>
     <string name="tls_direction">Direction TLS</string>
     <string name="ipv6_dialog_tile">Entrez l\'adresse IPv6 / masque de réseau au format CIDR (ex : 2000:jj::23/64)</string>
     <string name="ipv4_dialog_title">Entrez l\'adresse IPv4 / masque de réseau au format CIDR (ex : 1.2.3.4/24)</string>
@@ -37,7 +37,7 @@
     <string name="custom_option_warning">Entrez les options d\'OpenVPN personnalisées. A utiliser avec précaution. A noter aussi que de nombreux paramètres Tun d\'OpenVPN ne sont pas pris en charge à cause de la conception de \"VPNSettings\". Si vous pensez qu\'une option importante manque, veuillez contacter l\'auteur</string>
     <string name="auth_username">"Nom d\'utilisateur"</string>
     <string name="auth_pwquery">"Mot de passe"</string>
-    <string name="static_keys_info">"Pour la configuration statique, des clés d\'authentification TLS seront utilisés comme des clés statiques."</string>
+    <string name="static_keys_info">"Pour la configuration statique, des clés d\'authentication TLS seront utilisés comme des clés statiques."</string>
     <string name="configure_the_vpn">"Configurer le VPN"</string>
     <string name="menu_add_profile">"Ajouter un profil"</string>
     <string name="add_profile_name_prompt">"Entrez un nom identifiant le nouveau profil"</string>
@@ -70,8 +70,8 @@
     <string name="remote_tlscn_check_title">"Vérification du certificat de l\'hôte"</string>
     <string name="enter_tlscn_dialog">Indiquez la manière de vérifier le DN du certificat distant (ex : C=DE, L=Paderborn, OU =Avian IP Carriers, CN=openvpn.blinkt.de)\n\nEntrez le DN complet, le RDN (openvpn.blinkt.de dans l\'exemple) ou un préfixe RDN.\n\nEn utilisant le préfixe RDN, \"Server\" correspond à \"Server-1\" et \"Server-2\"\n\nSi vous laissez le champ de texte vide, le RDN sera comparé au nom du serveur.\n\nPour plus de détails, voir la page du manuel OpenVPN 2.3.1+ : —verify-x509-name</string>
     <string name="enter_tlscn_title">Objet du certificat distant</string>
-    <string name="tls_key_auth">"Activer l\'authentification par clé TLS"</string>
-    <string name="tls_auth_file">"Fichier d\'authentification TLS"</string>
+    <string name="tls_key_auth">"Activer l\'authentication par clé TLS"</string>
+    <string name="tls_auth_file">"Fichier d\'authentication TLS"</string>
     <string name="pull_on_summary">"Demande les adresses IP, les règles de redirection et les options de synchronisation du serveur."</string>
     <string name="pull_off_summary">"Aucune information n\'est demandée par le serveur. Les paramètres doivent être spécifiés ci-dessous."</string>
     <string name="use_pull">Paramètres \"Pull\"</string>
@@ -128,8 +128,8 @@
     <string name="no_vpn_support_image">Votre ROM ne prend pas en charge l\'API VPNService, désolé :(</string>
     <string name="encryption">Chiffrement</string>
     <string name="cipher_dialog_title">Entrez la méthode de chiffrement</string>
-    <string name="chipher_dialog_message">Entrez l\'algorithme de chiffrement utilisé par OpenVPN. Laissez vide pour utiliser l\'algorithme par défaut.</string>
-    <string name="auth_dialog_message">Entrez l\'authentification digest utilisé pour OpenVPN. Laisser vide pour utiliser le digest par défaut.</string>
+    <string name="cipher_dialog_message">Entrez l\'algorithme de chiffrement utilisé par OpenVPN. Laissez vide pour utiliser l\'algorithme par défaut.</string>
+    <string name="auth_dialog_message">Entrez l\'authentication digest utilisé pour OpenVPN. Laisser vide pour utiliser le digest par défaut.</string>
     <string name="settings_auth">Authentification/Chiffrement</string>
     <string name="file_explorer_tab">Explorateur de fichiers</string>
     <string name="inline_file_tab">"Fichier personnalisé"</string>
@@ -172,18 +172,18 @@
     <string name="owner_fix">Corriger les permissions de /dev/tun</string>
     <string name="generated_config_summary">Affiche le fichier de configuration OpenVPN généré</string>
     <string name="edit_profile_title">Modification de \"%s\"</string>
-    <string name="building_configration">Création de la configuration&#8230;</string>
+    <string name="building_configuration">Création de la configuration&#8230;</string>
     <string name="netchange_summary">Activer cette option forcera une reconnexion si l\'état du réseau est modifié (par exemple WiFi/Mobile)</string>
     <string name="netchange">Se reconnecter au changement de réseau</string>
     <string name="netstatus">État du réseau : %s</string>
     <string name="extracahint">"Le certificat CA est généralement renvoyé par le gestionnaire de clés Android. Spécifiez un certificat distinct si vous obtenez des erreurs de vérification de certificat."</string>
     <string name="select_file">"Sélectionner"</string>
-    <string name="keychain_nocacert">Aucun certificat CA n\'a été trouvé depuis le gestionnaire de clés d\'Android. L\'authentification va probablement échouer.</string>
+    <string name="keychain_nocacert">Aucun certificat CA n\'a été trouvé depuis le gestionnaire de clés d\'Android. L\'authentication va probablement échouer.</string>
     <string name="show_log_summary">Affiche le journal à la connexion. Cette fenêtre peut toujours être consultée à partir de la notification d\'état.</string>
     <string name="show_log_window">Afficher le journal</string>
     <string name="mobile_info">%10$s %9$s fonctionnant sur %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">"Erreur de signature de la clé %1$s : %2$s par le gestionnaire d\'Android"</string>
-    <string name="error_extapp_sign">Erreur de signature avec l\'application d\'authentification externe (%3$s): %1$s: %2$s</string>
+    <string name="error_extapp_sign">Erreur de signature avec l\'application d\'authentication externe (%3$s): %1$s: %2$s</string>
     <string name="faq_system_dialogs">\"L\'avertissement de connexion au VPN, qui vous informe que cette application peut intercepter tout le trafic, est imposé par le système pour éviter les abus de l\'API du service VPN.\nLa notification de connexion au VPN (le symbole qui ressemble à une clé) est aussi imposée par le système Android pour signaler une connexion VPN en cours de fonctionnement.
 Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces notifications pour votre propre sécurité et a fait en sorte qu\'elles soient impossibles à contourner</string>
     <string name="faq_system_dialogs_title">"Avertissement de connexion et son de notification"</string>
@@ -236,7 +236,7 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="minidump_generated">OpenVPN a planté de façon inattendue. Veuillez envisager d\'utiliser l\'option Minidump dans le menu principal</string>
     <string name="send_minidump">Envoyer le Minidump au développeur</string>
     <string name="send_minidump_summary">Envoie les informations sur le dernier crash au développeur</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Connexion</string>
@@ -256,13 +256,13 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="state_nonetwork">En attente d\'un réseau utilisable</string>
     <string name="state_waitorbot">En attente du démarrage d\'Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Non connecté</string>
+    <string name="notification_title_notconnect">Non connecté</string>
     <string name="start_vpn_title">Connexion au VPN %s</string>
     <string name="start_vpn_ticker">Connexion au VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Certaines versions d\'Android 4.1 rencontrent des problèmes si le nom du certificat du trousseau de clé contient des caractères non alphanumériques (comme des espaces, des caractères de soulignement ou des tirets). Essayez de réimporter le certificat sans caractères spéciaux</string>
     <string name="encryption_cipher">Algorithme de chiffrement</string>
     <string name="packet_auth">Authentification des paquets</string>
-    <string name="auth_dialog_title">Méthode d\'authentification des paquets</string>
+    <string name="auth_dialog_title">Méthode d\'authentication des paquets</string>
     <string name="built_by">compilé par %s</string>
     <string name="debug_build">version de debug</string>
     <string name="official_build">version officielle</string>
@@ -375,7 +375,7 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="ab_not_route_to_vpn_title">Route vers l\'adresse IP configurée</string>
     <string name="ab_kitkat_mss_title">Valeur MSS erronée pour la connexion VPN</string>
     <string name="ab_secondary_users_title">Utilisateurs de tablettes secondaires</string>
-    <string name="custom_connection_options_warng">Pour entrer des options de connexion personnalisées. À utiliser avec précaution</string>
+    <string name="custom_connection_options_warning">Pour entrer des options de connexion personnalisées. À utiliser avec précaution</string>
     <string name="custom_connection_options">Options personnalisées</string>
     <string name="remove_connection_entry">Supprimer entrée de connexion</string>
     <string name="ab_kitkat_reconnect_title">Déconnexion aléatoire du réseau mobile</string>
@@ -460,14 +460,14 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="channel_name_background">Statistiques de connexion</string>
     <string name="channel_description_background">Statistiques de la connexion OpenVPN établie</string>
     <string name="channel_name_status">Changement du statut de connexion</string>
-    <string name="channel_description_status">Changement d\'état de la connexion OpenVPN (Connexion, authentification,&#8230;)</string>
+    <string name="channel_description_status">Changement d\'état de la connexion OpenVPN (Connexion, authentication,&#8230;)</string>
     <string name="weakmd_title">Hashage faible (MD5) dans la signature du certificat (SSL_CTX_use_certificate md trop faible)</string>
     <string name="title_activity_open_sslspeed">Test de vitesse OpenSSL</string>
     <string name="openssl_cipher_name">Noms de chiffrement OpenSSL</string>
     <string name="osslspeedtest">Test de vitesse de Crypto OpenSSL</string>
     <string name="openssl_error">OpenSSL a renvoyé une erreur</string>
     <string name="running_test">Test en cours&#8230;</string>
-    <string name="test_algoirhtms">Tester les algorithmes sélectionnés</string>
+    <string name="test_algorithms">Tester les algorithmes sélectionnés</string>
     <string name="all_app_prompt">Une application externe essaie de contrôler %s. L\'application demandant l\'accès ne peut pas être déterminée. Autoriser cette application accorde l\'accès à TOUTES les applications.</string>
     <string name="openvpn3_nostatickeys">L’implémentation OpenVPN 3 C ++ ne prend pas en charge les clés statiques. Veuillez modifier vers OpenVPN 2.x dans les paramètres généraux.</string>
     <string name="openvpn3_pkcs12">L\'utilisation de fichiers PKCS12 directement avec l\'implémentation OpenVPN 3 C ++ n\'est pas prise en charge. Importez les fichiers pkcs12 dans le magasin de clés Android ou passez à OpenVPN 2.x dans les paramètres généraux.</string>
@@ -478,14 +478,14 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="no_orbotfound">L\'application Orbot est introuvable. Veuillez installer Orbot ou utiliser l\'intégration manuelle de Socks v5.</string>
     <string name="faq_remote_api_title">API à distance</string>
     <string name="faq_remote_api">OpenVPN pour Android prend en charge deux API distantes, une API sophistiquée utilisant AIDL (remoteEXample dans le référentiel git) et une simple utilisant Intents. &lt;p&gt;Exemples utilisant le shell adb et Intents. Remplacez nom_profil par votre nom de profil&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn / .api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn / .api.ConnectVPN</string>
-    <string name="enableproxyauth">Activer l\'authentification par proxy</string>
+    <string name="enableproxyauth">Activer l\'authentication par proxy</string>
     <string name="error_orbot_and_proxy_options">Impossible d\'utiliser l\'instruction supplémentaire http-proxy-option et l\'intégration Orbot en même tempsO</string>
     <string name="info_from_server">Info du serveur: \'%s\'</string>
     <string name="channel_name_userreq">Interaction de l\'utilisateur requise</string>
     <string name="channel_description_userreq">La connexion OpenVPN nécessite une saisie utilisateur, par
-        exemple une authentification à deux facteurs
+        exemple une authentication à deux facteurs
     </string>
-    <string name="openurl_requested">Ouvrir l\'URL pour continuer l\'authentification VPN</string>
+    <string name="openurl_requested">Ouvrir l\'URL pour continuer l\'authentication VPN</string>
     <string name="state_auth_pending">Authentification en attente</string>
     <string name="external_authenticator">Authentificateur externe</string>
     <string name="configure">Configurer</string>

@@ -48,7 +48,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
         super.onCreate(savedInstanceState);
 
         // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.vpn_authentification);
+        addPreferencesFromResource(R.xml.vpn_authentication);
 
         mExpectTLSCert = findPreference("remoteServerTLS");
         mCheckRemoteCN = (CheckBoxPreference) findPreference("checkRemoteCN");

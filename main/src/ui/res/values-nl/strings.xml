@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Uw afbeelding ondersteunt geen VPNService API, sorry :(</string>
     <string name="encryption">Encryptie</string>
     <string name="cipher_dialog_title">Voer encryptiemethode in</string>
-    <string name="chipher_dialog_message">Voer het encryptie-cijfer algoritme in dat door OpenVPN wordt gebruikt. Laat leeg om het standaard cijfer te gebruiken.</string>
+    <string name="cipher_dialog_message">Voer het encryptie-cijfer algoritme in dat door OpenVPN wordt gebruikt. Laat leeg om het standaard cijfer te gebruiken.</string>
     <string name="auth_dialog_message">Voer de authenticatieverdeling in die gebruikt wordt voor OpenVPN. Laat leeg om de standaard verdeling te gebruiken.</string>
     <string name="settings_auth">Authenticatie/Encryptie</string>
     <string name="file_explorer_tab">Bestandsverkenner</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">Herstel eigenaar van /dev/tun</string>
     <string name="generated_config_summary">Toont het gegenereerde OpenVPN configuratiebestand</string>
     <string name="edit_profile_title">Bewerken van \"%s\"</string>
-    <string name="building_configration">Configuratie bouwen&#8230;</string>
+    <string name="building_configuration">Configuratie bouwen&#8230;</string>
     <string name="netchange_summary">Het inschakelen van deze optie zal opnieuw verbinden na het veranderen van de netwerk status (bijv. van WiFi naar mobiel) forceren</string>
     <string name="netchange">Opnieuw verbinden na netwerkverandering</string>
     <string name="netstatus">Netwerk status: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN is onverwacht gecrasht. Overweeg de optie Minidump verzenden in het hoofdmenu</string>
     <string name="send_minidump">Verzend Minidump naar ontwikkelaar</string>
     <string name="send_minidump_summary">Stuurt foutopsporingsinformatie over de laatste crash naar de ontwikkelaar</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Bezig met verbinden</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Wachten op bruikbaar netwerk</string>
     <string name="state_waitorbot">Wachten op Orbot om te starten</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Niet verbonden</string>
+    <string name="notification_title_notconnect">Niet verbonden</string>
     <string name="start_vpn_title">Verbinden met VPN %s</string>
     <string name="start_vpn_ticker">Verbinden met VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Sommige versies van Android 4.1 hebben problemen als de naam van het keystore-certificaat niet-alfanumerieke tekens bevat (zoals spaties, onderstrepingstekens of streepjes). Probeer het certificaat opnieuw te importeren zonder speciale tekens</string>
@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Route naar het geconfigureerde IP-adres</string>
     <string name="ab_kitkat_mss_title">Verkeerde MSS-waarde voor VPN-verbinding</string>
     <string name="ab_secondary_users_title">Secundaire tabletgebruikers</string>
-    <string name="custom_connection_options_warng">Specificeer aangepaste verbindingsopties. Gebruik voorzichtig</string>
+    <string name="custom_connection_options_warning">Specificeer aangepaste verbindingsopties. Gebruik voorzichtig</string>
     <string name="custom_connection_options">Aangepaste Opties</string>
     <string name="remove_connection_entry">Verwijder de verbinding</string>
     <string name="ab_kitkat_reconnect_title">Willekeurige verbroken verbinding met mobiel netwerk</string>
@@ -406,7 +406,7 @@
     <string name="missing_tlsauth">tls-auth-bestand ontbreekt</string>
     <string name="missing_certificates">Ontbrekend gebruikerscertificaat of gebruikerscertificaatsleutelbestand</string>
     <string name="missing_ca_certificate">Ontbrekend CA-certificaat</string>
-    <string name="crl_title">Certifcate Intrekkingslijst (optioneel)</string>
+    <string name="crl_title">Certificate Intrekkingslijst (optioneel)</string>
     <string name="reread_log">Herlas (%d) logboekitems uit logboekcachebestand</string>
     <string name="samsung_broken">Hoewel Samsung-telefoons tot de meest verkochte Android-telefoons behoren, behoort de firmware van Samsung ook tot de meest buggy-Android-firmware. De bugs zijn niet beperkt tot de VPN-werking op deze apparaten, maar veel van deze kunnen worden omzeild. Hieronder worden enkele van deze bugs beschreven.\n\nDNS werkt alleen als de DNS-server zich in het VPN-bereik bevindt.\n\nOp veel Samsung 5.x-apparaten werkt de functie toegestane/niet-toegestane apps niet.\nOp Samsung 6.x VPN meldt dat het niet werkt tenzij de VPN-app is vrijgesteld van Powersave-functies.</string>
     <string name="samsung_broken_title">Samsung telefoons</string>
@@ -463,7 +463,7 @@
     <string name="osslspeedtest">OpenSSL Crypto snelheidstest</string>
     <string name="openssl_error">OpenSSL heeft een fout geretourneerd</string>
     <string name="running_test">Testen&#8230;</string>
-    <string name="test_algoirhtms">Test geselecteerde algoritmes</string>
+    <string name="test_algorithms">Test geselecteerde algoritmes</string>
     <string name="all_app_prompt">Een externe app probeert %s te besturen. De app die om toegang vraagt, kan niet worden vastgesteld. Als u deze app toestaat, krijgen ALLE apps toegang.</string>
     <string name="openvpn3_nostatickeys">De OpenVPN 3 C++ -implementatie ondersteunt geen statische sleutels. Verander naar OpenVPN 2.x onder algemene instellingen.</string>
     <string name="openvpn3_pkcs12">PKCS12-bestanden rechtstreeks gebruiken met OpenVPN 3 C++ -implementatie wordt niet ondersteund. Importeer de pkcs12-bestanden in de Android keystore of verander naar OpenVPN 2.x onder algemene instellingen.</string>
@@ -473,7 +473,7 @@
     <string name="openvpn3_socksproxy">OpenVPN 3 C ++ -implementatie ondersteunt geen verbinding via Socks-proxy</string>
     <string name="no_orbotfound">Orbot-applicatie kan niet worden gevonden. Installeer Orbot of gebruik handmatige Socks v5-integratie.</string>
     <string name="faq_remote_api_title">Remote API</string>
-    <string name="faq_remote_api">OpenVPN voor Android ondersteunt twee externe API\'s, een geavanceerde API met AIDL (remote EXample in de git-repository) en een eenvoudige met Intents. &lt;p&gt;Voorbeelden met behulp van adb shell en de intenties. Vervang profilname door je profielnaam&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn /.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn /.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN voor Android ondersteunt twee externe API\'s, een geavanceerde API met AIDL (remote EXample in de git-repository) en een eenvoudige met Intents. &lt;p&gt;Voorbeelden met behulp van adb shell en de intenties. Vervang profilename door je profielnaam&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn /.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn /.api.ConnectVPN</string>
     <string name="enableproxyauth">Schakel proxyverificatie in</string>
     <string name="error_orbot_and_proxy_options">Kan niet tegelijkertijd extra http-proxy-option statement en Orbot-integratie gebruikenO</string>
     <string name="info_from_server">Info van server: \'%s\'</string>
@@ -485,5 +485,5 @@
     <string name="state_auth_pending">Verificatie is in behandeling</string>
     <string name="external_authenticator">Externe Authenticator</string>
     <string name="configure">Configureren</string>
-    <string name="extauth_not_configured">Externe Authneticator niet geconfigureerd</string>
+    <string name="extauth_not_configured">Externe Authenticator niet geconfigureerd</string>
 </resources>

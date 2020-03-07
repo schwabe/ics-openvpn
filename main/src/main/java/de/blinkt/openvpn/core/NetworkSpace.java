@@ -337,7 +337,7 @@ public class NetworkSpace {
         }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            // Include postive routes from the original set under < 4.4 since these might overrule the local
+            // Include positive routes from the original set under < 4.4 since these might overrule the local
             // network but only if no smaller negative route exists
             for (IpAddress origIp : mIpAddresses) {
                 if (!origIp.included)

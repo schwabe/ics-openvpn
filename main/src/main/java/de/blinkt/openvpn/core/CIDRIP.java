@@ -32,7 +32,7 @@ class CIDRIP {
         int len;
         // Check if rest of netmask is only 1s
         if (netmask != (0x1ffffffffl >> lenZeros)) {
-            // Asume no CIDR, set /32
+            // Assume no CIDR, set /32
             len = 32;
         } else {
             len = 32 - lenZeros;

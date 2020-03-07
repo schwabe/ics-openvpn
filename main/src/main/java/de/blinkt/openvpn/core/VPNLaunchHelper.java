@@ -51,7 +51,7 @@ public class VPNLaunchHelper {
             }
         }
 
-        throw new RuntimeException("Cannot find any execulte for this device's ABIs " + abis.toString());
+        throw new RuntimeException("Cannot find any executable for this device's ABIs " + abis.toString());
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -77,7 +77,7 @@ public class VPNLaunchHelper {
         Vector<String> args = new Vector<>();
 
         String binaryName = writeMiniVPN(c);
-        // Add fixed paramenters
+        // Add fixed parameters
         //args.add("/data/data/de.blinkt.openvpn/lib/openvpn");
         if (binaryName == null) {
             VpnStatus.logError("Error writing minivpn binary");
@@ -99,7 +99,7 @@ public class VPNLaunchHelper {
             try {
                 mvpn = context.getAssets().open(getMiniVPNExecutableName() + "." + abi);
             } catch (IOException errabi) {
-                VpnStatus.logInfo("Failed getting assets for archicture " + abi);
+                VpnStatus.logInfo("Failed getting assets for architecture " + abi);
                 return false;
             }
 

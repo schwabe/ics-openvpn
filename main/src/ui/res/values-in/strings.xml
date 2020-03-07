@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Gambar Anda tidak mendukung VPNService API, maaf:(</string>
     <string name="encryption">Enkripsi</string>
     <string name="cipher_dialog_title">Masukkan metode enkripsi</string>
-    <string name="chipher_dialog_message">Masukkan sandi enkripsi algoritma yang digunakan oleh OpenVPN. Biarkan kosong untuk menggunakan sandi default.</string>
+    <string name="cipher_dialog_message">Masukkan sandi enkripsi algoritma yang digunakan oleh OpenVPN. Biarkan kosong untuk menggunakan sandi default.</string>
     <string name="auth_dialog_message">Masukkan digest otentikasi yang digunakan OpenVPN. Biarkan kosong untuk menggunakan standar digest.</string>
     <string name="settings_auth">Otentikasi/Enkripsi</string>
     <string name="file_explorer_tab">Penjelajah berkas</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">Perbaiki kepemilikan /dev/tun</string>
     <string name="generated_config_summary">Tunjukkan berkas konfigurasi OpenVPN yang dibuat</string>
     <string name="edit_profile_title">Mengubah \"%s\"</string>
-    <string name="building_configration">Membuat konfigurasi&#8230;</string>
+    <string name="building_configuration">Membuat konfigurasi&#8230;</string>
     <string name="netchange_summary">Menyalakan pilihan ini akan memaksa menyambung kembali jika keadaan jaringan berubah (misalnya WiFi dari mobile)</string>
     <string name="netchange">Koneksi ulang saat ganti jaringan</string>
     <string name="netstatus">Status jaringan: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN crash tak terduga. Silakan mempertimbangkan mengirim menggunakan pilihan Minidump di Menu Utama</string>
     <string name="send_minidump">Mengirim MiniDump untuk pengembang</string>
     <string name="send_minidump_summary">Mengirim informasi debug tentang kegagalan aplikasi yang terakhir ke pengembang</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Menghubungkan</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Menunggu jaringan yang dapat dipakai</string>
     <string name="state_waitorbot">Menunggu Orbot dimulai</string>
     <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
-    <string name="notifcation_title_notconnect">Tidak terhubung</string>
+    <string name="notification_title_notconnect">Tidak terhubung</string>
     <string name="start_vpn_title">Menghubungkan ke VPN %s</string>
     <string name="start_vpn_ticker">Menghubungkan ke VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Beberapa versi Android 4.1 memiliki masalah jika nama sertifikat keystore berisi karakter non alfanumerik (seperti spasi, garis bawah atau tanda hubung). Cobalah import ulang sertifikat tanpa karakter khusus</string>
@@ -361,7 +361,7 @@
     <string name="ab_kitkat_mss">Versi KitKat awal menetapkan nilai MSS salah pada TCP koneksi (# 61948). OpenVPN untuk secara otomatis mengaktifkan mssfix pilihan untuk solusi bug ini.</string>
     <string name="ab_proxy">Android akan tetap menggunakan pengaturan proxy Anda ditentukan untuk mobile koneksi / Wi-Fi ketika tidak ada server DNS diatur. OpenVPN untuk Android akan memperingatkan Anda tentang hal ini dalam log. <p> Ketika VPN menetapkan server DNS Android tidak akan proxy. Tidak ada API untuk mengatur proxy untuk koneksi VPN. </p></string>
     <string name="ab_lollipop_reinstall">Aplikasi VPN dapat berhenti bekerja ketika dihapus dan diinstal ulang lagi. Untuk jelasnya lihat # 80074</string>
-    <string name="ab_not_route_to_vpn">IP klien dikonfigurasi dan IP di topeng jaringan tidak diteruskan ke VPN. OpenVPN bekerja di sekitar bug ini dengan secara eksplisit menambahkan rute yang corrosponds ke IP klien dan netmask nya</string>
+    <string name="ab_not_route_to_vpn">IP klien dikonfigurasi dan IP di topeng jaringan tidak diteruskan ke VPN. OpenVPN bekerja di sekitar bug ini dengan secara eksplisit menambahkan rute yang corresponds ke IP klien dan netmask nya</string>
     <string name="ab_persist_tun">Membuka perangkat tun saat perangkat tun lain sedang aktif, yang digunakan untuk dukungan bertahan-tun, crash VPNServices pada perangkat. A reboot diperlukan untuk membuat pekerjaan VPN lagi. OpenVPN untuk Android mencoba untuk menghindari membuka kembali perangkat tun dan jika benar-benar diperlukan pertama menutup TUN saat sebelum membuka perangkat TUN baru untuk menghindari crash. Hal ini dapat menyebabkan jendela pendek di mana paket dikirim melalui koneksi non-VPN. Bahkan dengan solusi ini VPNServices kadang-kadang crash dan memerlukan reboot perangkat.</string>
     <string name="ab_secondary_users">VPN tidak bekerja sama sekali bagi pengguna sekunder.</string>
     <string name="ab_kitkat_reconnect">"Beberapa pengguna melaporkan bahwa koneksi mobile / koneksi data mobile sering menjatuhkan saat menggunakan aplikasi VPN. Perilaku tampaknya hanya mempengaruhi beberapa kombinasi perangkat mobile provider / dan sejauh ini tidak ada penyebab / solusi untuk bug dapat diidentifikasi."</string>
@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Alihkan ke alamat IP yang telah ditentukan</string>
     <string name="ab_kitkat_mss_title">Nilai MSS yang salah untuk koneksi VPN</string>
     <string name="ab_secondary_users_title">Pengguna tablet sekunder</string>
-    <string name="custom_connection_options_warng">Tentukan pengaturan untuk koneksi khusus . Gunakan dengan hati-hati</string>
+    <string name="custom_connection_options_warning">Tentukan pengaturan untuk koneksi khusus . Gunakan dengan hati-hati</string>
     <string name="custom_connection_options">Pilihan buatan</string>
     <string name="remove_connection_entry">Hapus entri koneksi</string>
     <string name="ab_kitkat_reconnect_title">Terputus acak dari jaringan selular</string>
@@ -404,9 +404,9 @@
     <string name="menu_use_inline_data">Gunakan data inline</string>
     <string name="export_config_chooser_title">Ambil berkas konfigurasi</string>
     <string name="missing_tlsauth">File tls-auth hilang</string>
-    <string name="missing_certificates">Sertifikat pengguna atau file kunci pengguna certifcate hilang</string>
+    <string name="missing_certificates">Sertifikat pengguna atau file kunci pengguna certificate hilang</string>
     <string name="missing_ca_certificate">Sertifikat CA tidak ditemukan</string>
-    <string name="crl_title">Daftar Pencabutan Certifcate (opsional)</string>
+    <string name="crl_title">Daftar Pencabutan Certificate (opsional)</string>
     <string name="reread_log">Baca ulang (%d) item log dari file cache log</string>
     <string name="samsung_broken">Jjj</string>
     <string name="samsung_broken_title">Ponsel Samsung</string>
@@ -464,6 +464,6 @@
     <string name="title_activity_open_sslspeed">Tes Kecepatan OpenSSL</string>
     <string name="openssl_cipher_name">OpenSSL cipher names</string>
     <string name="osslspeedtest">OpenSSL Crypto Speed test</string>
-    <string name="test_algoirhtms">Uji algoritma yang dipilih</string>
+    <string name="test_algorithms">Uji algoritma yang dipilih</string>
     <string name="openvpn3_socksproxy">Implementasi OpenVPN 3 C ++ tidak mendukung menghubungkan melalui proxy kaus kaki</string>
 </resources>

@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Прабачце, але ваша прашыўка не падтрымлівае VPNService API :(</string>
     <string name="encryption">Шыфраванне</string>
     <string name="cipher_dialog_title">Увядзіце метад шыфравання</string>
-    <string name="chipher_dialog_message">Увядзіце алгарытм шыфравання, які выкарыстоўваецца OpenVPN. Пакіньце поле пустым для выкарыстання стандартнага шыфравання.</string>
+    <string name="cipher_dialog_message">Увядзіце алгарытм шыфравання, які выкарыстоўваецца OpenVPN. Пакіньце поле пустым для выкарыстання стандартнага шыфравання.</string>
     <string name="auth_dialog_message">Увядзіце дайджэст праверкі сапраўднасці, які выкарыстоўваецца для OpenVPN. Пакіньце поле пустым для выкарыстання дайджэста па змаўчанні.</string>
     <string name="settings_auth">Праверка сапраўднасці/шыфраванне</string>
     <string name="file_explorer_tab">Праваднік файлаў</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">Выправіць уласніка для /dev/tun</string>
     <string name="generated_config_summary">Паказаць згенераваны файл канфігурацыі OpenVPN</string>
     <string name="edit_profile_title">Змяненне \"%s\"</string>
-    <string name="building_configration">Пабудова канфігурацыі&#8230;</string>
+    <string name="building_configuration">Пабудова канфігурацыі&#8230;</string>
     <string name="netchange_summary">Уключэнне гэтага параметра прымусова перападлучаць сетку пры змяненні яе стану (напрыклад, прылада пераходзіць з WiFi у 3G і наадварот)</string>
     <string name="netchange">Перападлучыцца пры змяненні сеткі</string>
     <string name="netstatus">Статус сеткі: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN нечакана завяршыла сваю працу. Мы будзем вельмі ўдзячныя, калі вы скарыстаецеся параметрам \"Адправіць мінідамп распрацоўшчыку\" ў галоўным меню праграмы</string>
     <string name="send_minidump">Адправіць мінідамп распрацоўшчыку</string>
     <string name="send_minidump_summary">Адпраўляе адладачную інфармацыю распрацоўшчыку пра апошняе аварыйнае завяршэнне праграмы</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Падлучэнне</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Чаканне выкарыстання сеткі</string>
     <string name="state_waitorbot">Чаканне запуску Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Не злучаны</string>
+    <string name="notification_title_notconnect">Не злучаны</string>
     <string name="start_vpn_title">Падлучэнне да VPN %s</string>
     <string name="start_vpn_ticker">Падлучэнне да VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Некаторыя версіі Android 4.1 маюць праблемы, калі сертыфікат са сховішча ключоў змяшчае сімвалы, якія не належаць да дыяпазону літар і лічбаў (напрыклад, прабелы, знак падкрэслівання або працяжнік). Паспрабуйце выдаліць спецыяльныя сімвалы з сертыфіката і імпартаваць яго яшчэ раз</string>
@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Маршрут для ўсталяванага адраса IP</string>
     <string name="ab_kitkat_mss_title">Памылковае значэнне MSS для злучэння з VPN</string>
     <string name="ab_secondary_users_title">Іншыя карыстальнікі планшэта</string>
-    <string name="custom_connection_options_warng">Азначце ўласныя параметры злучэння. Карыстайцеся з асцярожнасцю</string>
+    <string name="custom_connection_options_warning">Азначце ўласныя параметры злучэння. Карыстайцеся з асцярожнасцю</string>
     <string name="custom_connection_options">Уласныя параметры</string>
     <string name="remove_connection_entry">Выдаліць запіс падлучэння</string>
     <string name="ab_kitkat_reconnect_title">Выпадковае адлучэнне ад мабільнай сеткі</string>
@@ -465,7 +465,7 @@
     <string name="osslspeedtest">Тэст хуткасці OpenSSL Crypto</string>
     <string name="openssl_error">OpenSSL вярнуў памылку</string>
     <string name="running_test">Тэставанне&#8230;</string>
-    <string name="test_algoirhtms">Тэставанне выбраных алгарытмаў</string>
+    <string name="test_algorithms">Тэставанне выбраных алгарытмаў</string>
     <string name="all_app_prompt">Знешняя праграма спрабуе кантраляваць %s. Праграма, якая запытала доступ не вызначана. УСЕ астатнія праграмы атрымаюць доступ, калі вы ўхваліце доступ гэтай праграме.</string>
     <string name="openvpn3_nostatickeys">Рэалізацыя OpenVPN 3 на C++ не падтрымлівае статычныя ключы. Калі ласка, змяніце на OpenVPN 2.x у агульных наладах.</string>
     <string name="openvpn3_pkcs12">Выкарыстанне файлаў PKCS12 напрамую з дапамогай рэалізацыі OpenVPN 3 на С++ не падтрымліваецца. Імпартуйце файлы PKCS12 у сховішча ключоў Android або змяніце на OpenVPN 2.x у агульных наладах.</string>

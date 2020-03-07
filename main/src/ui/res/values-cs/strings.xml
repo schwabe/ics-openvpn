@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Tvůj obrázek není podporovaný rozhraním VPNService, je mi líto :-(</string>
     <string name="encryption">Šifrování</string>
     <string name="cipher_dialog_title">Zadej šifrovací metodu</string>
-    <string name="chipher_dialog_message">Zadej šifrovací algoritmus. Ponech prázdné pro výchozí šifru.</string>
+    <string name="cipher_dialog_message">Zadej šifrovací algoritmus. Ponech prázdné pro výchozí šifru.</string>
     <string name="auth_dialog_message">Zadej algoritmus pro autentizaci. Nech prázdné pro výchozí algoritmus.</string>
     <string name="settings_auth">Autentizace/Šifrování</string>
     <string name="file_explorer_tab">Prohlížeč souború</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">Opravit vlastnictví /dev/tun</string>
     <string name="generated_config_summary">Zobrazí vygenerované nastavení OpenVPN</string>
     <string name="edit_profile_title">Úprava \"%s\"</string>
-    <string name="building_configration">Vytvářím konfiguraci&#8230;</string>
+    <string name="building_configuration">Vytvářím konfiguraci&#8230;</string>
     <string name="netchange_summary">Zapnutím této volby bude vynuceno opětovné připojení, pokud se změní stav sítě (např. z WiFi na mobilní síť a zpět)</string>
     <string name="netchange">Opětovně připojit při změně sítě</string>
     <string name="netstatus">Stav sítě: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN neočekávaně havarovalo. Zvaž možnost použití volby poslat Minidump z hlavního menu</string>
     <string name="send_minidump">Poslat Minidump vývojáři</string>
     <string name="send_minidump_summary">Poslat ladící informace o poslední havárii vývojáři</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Připojuji se</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Čekání na použitelnou síť</string>
     <string name="state_waitorbot">Čekám, až se spustí Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Nepřipojeno</string>
+    <string name="notification_title_notconnect">Nepřipojeno</string>
     <string name="start_vpn_title">Připojování k VPN %s</string>
     <string name="start_vpn_ticker">Připojování k VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Některé verze Androidu 4.1 mají problém, pokud je ve jméně certifikátu obsažen jiný než alfanumerický znak (mezera, podtržítko, mínus). Zkus reimportovat certifikát bez speciálních znaků</string>
@@ -370,7 +370,7 @@
     <string name="ab_not_route_to_vpn_title">Trasa k nastavené IP adrese</string>
     <string name="ab_kitkat_mss_title">Špatná hodnota MSS pro VPN spojení</string>
     <string name="ab_secondary_users_title">Vedlejší uživaté tabletu</string>
-    <string name="custom_connection_options_warng">Zadejte vlastní specifické možnosti k připojení. Používejte opatrně</string>
+    <string name="custom_connection_options_warning">Zadejte vlastní specifické možnosti k připojení. Používejte opatrně</string>
     <string name="custom_connection_options">Vlastní možnosti</string>
     <string name="remove_connection_entry">Odstranit položku připojení</string>
     <string name="ab_kitkat_reconnect_title">Náhodné odpojování od mobilní sítě</string>
@@ -443,7 +443,7 @@
     <string name="osslspeedtest">Rychlostní krypto test OpnSSL</string>
     <string name="openssl_error">OpenSSL vrátilo chybu</string>
     <string name="running_test">Test běží&#8230;</string>
-    <string name="test_algoirhtms">Testuj vybrané algoritmy</string>
+    <string name="test_algorithms">Testuj vybrané algoritmy</string>
     <string name="proxy">Proxy</string>
     <string name="Use_no_proxy">Bez</string>
     <string name="tor_orbot">Tor (Orbot)</string>

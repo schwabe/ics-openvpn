@@ -129,7 +129,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="no_vpn_support_image">La tua immagine non è supportata dal VPNService API, mi dispiace :(</string>
     <string name="encryption">Crittografia</string>
     <string name="cipher_dialog_title">Inserire il metodo di crittografia</string>
-    <string name="chipher_dialog_message">Inserisci l\'algoritmo di cifratura cipher usato da OpenVPN. Lasciare vuoto per usare quello di default.</string>
+    <string name="cipher_dialog_message">Inserisci l\'algoritmo di cifratura cipher usato da OpenVPN. Lasciare vuoto per usare quello di default.</string>
     <string name="auth_dialog_message">Inserisci l\'algoritmo di cifratura digest usato da OpenVPN. Lascia bianco per usare quello di default.</string>
     <string name="settings_auth">Autenticazione/crittografia</string>
     <string name="file_explorer_tab">Esplora risorse</string>
@@ -173,7 +173,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="owner_fix">Correggi i diritti su /dev/tun</string>
     <string name="generated_config_summary">Mostra il file di configurazione di OpenVPN generato</string>
     <string name="edit_profile_title">Modifica \"%s\"</string>
-    <string name="building_configration">Configurazione in corso&#8230;</string>
+    <string name="building_configuration">Configurazione in corso&#8230;</string>
     <string name="netchange_summary">Selezionando questa opzione verrà forzata una riconnessione se lo stato della rete cambia (da WIFI a cellulare e viceversa)</string>
     <string name="netchange">Riconnetti in caso cambi la rete</string>
     <string name="netstatus">Stato della rete: %s</string>
@@ -236,7 +236,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="minidump_generated">OpenVPN si è arrestato in modo imprevisto. Ti consigliamo di attivare l\'opzione Invia Minidump nel menu principale.</string>
     <string name="send_minidump">Invia Minidump allo sviluppatore</string>
     <string name="send_minidump_summary">Invia informazioni di debug riguardanti l\'ultimo crash allo sviluppatore</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Connessione in corso</string>
@@ -256,7 +256,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="state_nonetwork">In attesa di una rete utilizzabile</string>
     <string name="state_waitorbot">In attesa dell\'avvio di Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Non connesso</string>
+    <string name="notification_title_notconnect">Non connesso</string>
     <string name="start_vpn_title">Connessione alla VPN %s in corso</string>
     <string name="start_vpn_ticker">Connessione alla VPN %s in corso</string>
     <string name="jelly_keystore_alphanumeric_bug">Alcune versioni di Android 4.1 hanno problemi se il nome del certificato keystore contiene caratteri non alfanumerici (come spazi, caratteri di sottolineatura o trattini). Provare a reimportare il certificato senza caratteri speciali</string>
@@ -375,7 +375,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="ab_not_route_to_vpn_title">Percorso per l\'indirizzo IP configurato</string>
     <string name="ab_kitkat_mss_title">Valore MSS errato per la connessione VPN</string>
     <string name="ab_secondary_users_title">Utenti tablet secondari</string>
-    <string name="custom_connection_options_warng">Imposta le opzioni specifiche di connessione personalizzate. Usare con attenzione</string>
+    <string name="custom_connection_options_warning">Imposta le opzioni specifiche di connessione personalizzate. Usare con attenzione</string>
     <string name="custom_connection_options">Opzioni personalizzate</string>
     <string name="remove_connection_entry">Rimuovi voce connessione</string>
     <string name="ab_kitkat_reconnect_title">Disconnessioni casuali dalla rete mobile</string>
@@ -459,7 +459,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="osslspeedtest">OpenSSL Crypto Speed ​​test</string>
     <string name="openssl_error">OpenSSL ha restituito un errore</string>
     <string name="running_test">Esecuzione di test&#8230;</string>
-    <string name="test_algoirhtms">Testa gli algoritmi selezionati</string>
+    <string name="test_algorithms">Testa gli algoritmi selezionati</string>
     <string name="all_app_prompt">Un\'app esterna tenta di controllare %s. L\'app che richiede l\'accesso non può essere determinata. Consentendo questa app garantisce l\'accesso a TUTTE le app.</string>
     <string name="openvpn3_nostatickeys">L\'implementazione di OpenVPN 3 C ++ non supporta le chiavi statiche. Passare a OpenVPN 2.x nelle impostazioni generali.</string>
     <string name="openvpn3_pkcs12">L\'utilizzo di file PKCS12 direttamente con l\'implementazione di OpenVPN 3 C++ non è supportato. Importare i file pkcs12 nel keystore Android o passare a OpenVPN 2.x nelle impostazioni generali.</string>
@@ -469,7 +469,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="openvpn3_socksproxy">L\'implementazione C++ di OpenVPN 3 non supporta la connessione tramite proxy Socks</string>
     <string name="no_orbotfound">Impossibile trovare l\'app Orbot. Si prega di installare Orbot o usare l\'integrazione manuale di Socks v5.</string>
     <string name="faq_remote_api_title">API remota</string>
-    <string name="faq_remote_api">OpenVPN per Android supporta due API remote, un\'API sofisticata che utilizza AIDL (remoteEXample nel repository git) e una semplice che usa gli Intent. &lt;p&gt;Esempi usando la shell adb e gli Intent. Sostituisci profilname con il nome del tuo profilo&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN per Android supporta due API remote, un\'API sofisticata che utilizza AIDL (remoteEXample nel repository git) e una semplice che usa gli Intent. &lt;p&gt;Esempi usando la shell adb e gli Intent. Sostituisci profilename con il nome del tuo profilo&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Attiva autenticazione proxy</string>
     <string name="error_orbot_and_proxy_options">Impossibile usare contemporaneamente la dichiarazione extra http-proxy-option e l\'integrazione di Orbot</string>
     <string name="info_from_server">Informazioni dal server: \'%s\'</string>

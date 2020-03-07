@@ -1,5 +1,5 @@
 //
-//  JBCyrpto.cpp
+//  JBCrypto.cpp
 //  xcopenvpn
 //
 //  Created by Arne Schwabe on 12.07.12.
@@ -97,8 +97,8 @@ jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsasign (JNIEnv* env, jclass,
         sigret, &siglen, pkey->pkey.rsa) <= 0 ) */
 
     RSA_private_encrypt_dyn=(int (*)(int, const unsigned char *, unsigned char *, RSA *, int)) dlsym(RTLD_DEFAULT, "RSA_private_encrypt");
-    int paddding = pkcs1padding ? RSA_PKCS1_PADDING : RSA_NO_PADDING;
-    siglen = RSA_private_encrypt_dyn(datalen,(unsigned char*) data,sigret,pkey->pkey.rsa, paddding);
+    int padding = pkcs1padding ? RSA_PKCS1_PADDING : RSA_NO_PADDING;
+    siglen = RSA_private_encrypt_dyn(datalen,(unsigned char*) data,sigret,pkey->pkey.rsa, padding);
 
     if (siglen < 0)
 	{

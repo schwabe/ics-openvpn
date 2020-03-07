@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Twój obraz nie wspiera API VPN, przepraszamy ;(</string>
     <string name="encryption">Szyfrowanie</string>
     <string name="cipher_dialog_title">Wprowadź metodę szyfrowania</string>
-    <string name="chipher_dialog_message">Wybierz algorytm szyfrowania wykorzystywany przez OpenVPN. Pozostaw puste, aby skorzystać z ustawień domyślnych.</string>
+    <string name="cipher_dialog_message">Wybierz algorytm szyfrowania wykorzystywany przez OpenVPN. Pozostaw puste, aby skorzystać z ustawień domyślnych.</string>
     <string name="auth_dialog_message">Wprowadź tryb autoryzacji używany z OpenVPN. Pozostaw puste, aby skorzystać z ustawień domyślnych.</string>
     <string name="settings_auth">Uwierzytelnianie/Szyfrowanie</string>
     <string name="file_explorer_tab">Przeglądanie plików</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">Popraw uprawnienia do /dev/tun</string>
     <string name="generated_config_summary">Pokazuje wygenerowany plik konfiguracji OpenVPN</string>
     <string name="edit_profile_title">Edytujesz \"%s\"</string>
-    <string name="building_configration">Tworzenie konfiguracji&#8230;</string>
+    <string name="building_configuration">Tworzenie konfiguracji&#8230;</string>
     <string name="netchange_summary">Włączenie tej opcji spowoduje ponowne połączenie jeśli stan sieci się zmienił (np. z WiFi na GSM)</string>
     <string name="netchange">Połącz ponownie przy zmianie sieci</string>
     <string name="netstatus">Stan sieci: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN niespodziewanie uległ awarii. Proszę rozważ użycie opcji wyślij Minidump w głównym menu</string>
     <string name="send_minidump">Wyślij minidump do autora</string>
     <string name="send_minidump_summary">Wysyłam informacje debuggera o ostatniej awarii aplikacji do twórcy</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s-%2$s</string>
     <string name="session_ipv6string">%1$s-%3$s,%2$s</string>
     <string name="state_connecting">Łączę</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Czekam na sieć</string>
     <string name="state_waitorbot">Oczekiwanie na uruchomienie Orbot</string>
     <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
-    <string name="notifcation_title_notconnect">Niepołączony</string>
+    <string name="notification_title_notconnect">Niepołączony</string>
     <string name="start_vpn_title">Łączę z VPN %s</string>
     <string name="start_vpn_ticker">Łączę z VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Niektóre wersje Androida 4.1 mają problemy, jeśli nazwa certyfikatu zawiera niealfanumeryczne znaki (spacje, podkreślenia, myślniki). Spróbuj zaimportować certyfikat bez znaków specjalnych</string>
@@ -375,7 +375,7 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="ab_not_route_to_vpn_title">Trasa do skonfigurowanego adresu IP</string>
     <string name="ab_kitkat_mss_title">Błędna wartość MSS dla połączenia VPN</string>
     <string name="ab_secondary_users_title">Dodatkowi użytkownicy tabletu</string>
-    <string name="custom_connection_options_warng">Określ własne opcje dla połączenia. Używaj z rozwagą</string>
+    <string name="custom_connection_options_warning">Określ własne opcje dla połączenia. Używaj z rozwagą</string>
     <string name="custom_connection_options">Opcje niestandardowe</string>
     <string name="remove_connection_entry">Usuń wpis połączenia</string>
     <string name="ab_kitkat_reconnect_title">Losowe rozłączenia z sieci komórkowej</string>
@@ -460,7 +460,7 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="osslspeedtest">OpenSSL Test Szybkości Crypto</string>
     <string name="openssl_error">OpenSSL zwrócił błąd</string>
     <string name="running_test">Testowanie&#8230;</string>
-    <string name="test_algoirhtms">Test wybranych algorytmów</string>
+    <string name="test_algorithms">Test wybranych algorytmów</string>
     <string name="all_app_prompt">Zewnętrzna aplikacja próbuje przejąć kontrolę %s. Prośba o dostęp nie może być zweryfikowana. Zezwolenie da jej dostęp do WSZYSTKICH aplikacji.</string>
     <string name="openvpn3_nostatickeys">Implementacja OpenVPN 3 C++ nie wspiera kluczy statycznych. Proszę zmienić na OpenVPN 2.x pod głównymi ustawieniami.</string>
     <string name="openvpn3_pkcs12">Używanie plików PKCS22 bezpośrednio z implementacją OpenVPN 3 C++ nie jest wspierane. Proszę zaimportować pliki PKCS12 do magazynu kluczy Androida lub przejść na OpenVPN 2.x pod głównymi ustawieniami.</string>

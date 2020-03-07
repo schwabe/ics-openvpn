@@ -128,8 +128,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         @Override
-        public void challengeResponse(String repsonse) throws RemoteException {
-            OpenVPNService.this.challengeResponse(repsonse);
+        public void challengeResponse(String response) throws RemoteException {
+            OpenVPNService.this.challengeResponse(response);
         }
 
 
@@ -235,7 +235,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
         VpnStatus.removeByteCountListener(this);
         unregisterDeviceStateReceiver();
-        ProfileManager.setConntectedVpnProfileDisconnected(this);
+        ProfileManager.setConnectedVpnProfileDisconnected(this);
         mOpenVPNThread = null;
         if (!mStarting) {
             stopForeground(!mNotificationAlwaysVisible);
@@ -263,9 +263,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             priority = PRIORITY_DEFAULT;
 
         if (mProfile != null)
-            nbuilder.setContentTitle(getString(R.string.notifcation_title, mProfile.mName));
+            nbuilder.setContentTitle(getString(R.string.notification_title, mProfile.mName));
         else
-            nbuilder.setContentTitle(getString(R.string.notifcation_title_notconnect));
+            nbuilder.setContentTitle(getString(R.string.notification_title_notconnect));
 
         nbuilder.setContentText(msg);
         nbuilder.setOnlyAlertOnce(true);
@@ -438,13 +438,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     }
 
-    synchronized void registerDeviceStateReceiver(OpenVPNManagement magnagement) {
+    synchronized void registerDeviceStateReceiver(OpenVPNManagement management) {
         // Registers BroadcastReceiver to track network connection changes.
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_SCREEN_ON);
-        mDeviceStateReceiver = new DeviceStateReceiver(magnagement);
+        mDeviceStateReceiver = new DeviceStateReceiver(management);
 
         // Fetch initial network state
         mDeviceStateReceiver.networkStateChange(this);
@@ -519,8 +519,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         // Always show notification here to avoid problem with startForeground timeout
-        VpnStatus.logInfo(R.string.building_configration);
-        VpnStatus.updateStateString("VPN_GENERATE_CONFIG", "", R.string.building_configration, ConnectionStatus.LEVEL_START);
+        VpnStatus.logInfo(R.string.building_configuration);
+        VpnStatus.updateStateString("VPN_GENERATE_CONFIG", "", R.string.building_configuration, ConnectionStatus.LEVEL_START);
         showNotification(VpnStatus.getLastCleanLogMessage(this),
                 VpnStatus.getLastCleanLogMessage(this), NOTIFICATION_CHANNEL_NEWSTATUS_ID, 0, ConnectionStatus.LEVEL_START, null);
 
@@ -608,7 +608,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         // Open the Management Interface
         if (!useOpenVPN3) {
-            // start a Thread that handles incoming messages of the managment socket
+            // start a Thread that handles incoming messages of the management socket
             OpenVpnManagementThread ovpnManagementThread = new OpenVpnManagementThread(mProfile, this);
             if (ovpnManagementThread.openManagementInterface(this)) {
                 Thread mSocketManagerThread = new Thread(ovpnManagementThread, "OpenVPNManagementThread");

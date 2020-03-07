@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Kalıbınız VPNService API\'sini desteklemiyor, üzgünüm :(</string>
     <string name="encryption">Şifreleme</string>
     <string name="cipher_dialog_title">Şifreleme yöntemini gir</string>
-    <string name="chipher_dialog_message">OpenVPN tarafından kullanılan şifreleme algoritmasını girin. Varsayılan şifrelemeyi kullanmak için boş bırakın.</string>
+    <string name="cipher_dialog_message">OpenVPN tarafından kullanılan şifreleme algoritmasını girin. Varsayılan şifrelemeyi kullanmak için boş bırakın.</string>
     <string name="auth_dialog_message">OpenVPN için kullanılan kimlik doğrulama özetini girin. Varsayılan özeti kullanmak için boş bırakın.</string>
     <string name="settings_auth">Kimlik Doğrulama/Şifreleme</string>
     <string name="file_explorer_tab">Dosya Gezgini</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">/dev/tun sahipliğini düzeltmek</string>
     <string name="generated_config_summary">Oluşturulan OpenVPN Yapılandırma Dosyasını gösterir</string>
     <string name="edit_profile_title">\"%s\" düzenleme</string>
-    <string name="building_configration">Yapılandırma derleniyor&#8230;</string>
+    <string name="building_configuration">Yapılandırma derleniyor&#8230;</string>
     <string name="netchange_summary">Bu seçeneği açmak, bir ağ durumu değiştiğinde yeniden bağlanmaya zorlayacaktır (örn. Kablosuz / Mobil ağ geçişi)</string>
     <string name="netchange">Ağ değişikliği durumunda yeniden bağlan</string>
     <string name="netstatus">Ağ Durumu: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN beklenmedik biçimde çöktü. Lütfen ana menüdedeki mini döküm gönder seçeneğini kullanmayı düşünün</string>
     <string name="send_minidump">Geliştiriciye mini döküm gönder</string>
     <string name="send_minidump_summary">Son çökme hakkındaki hata ayıklama bilgisini geliştiriciye gönder</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Bağlanıyor</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Kullanılabilir ağ için bekleniyor</string>
     <string name="state_waitorbot">Orbot\'un başlaması bekleniyor</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Bağlı değil</string>
+    <string name="notification_title_notconnect">Bağlı değil</string>
     <string name="start_vpn_title">VPN %s bağlanıyor</string>
     <string name="start_vpn_ticker">VPN %s bağlanıyor</string>
     <string name="jelly_keystore_alphanumeric_bug">Android 4.1\'in bazı sürümleri anahtar deposu alfanümerik olmayan karakterler içeriyorsa (boşluk, alt çizgi veya eksi işareti) sorunlar yaşamaktadır. Sertifikayı özel karakterler olmadan yeniden içe aktarmayı deneyin</string>
@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Yapılandırılmış IP adresine yönlendir</string>
     <string name="ab_kitkat_mss_title">VPN bağlantısı için yanlış MSS değeri</string>
     <string name="ab_secondary_users_title">İkincil tablet kullanıcıları</string>
-    <string name="custom_connection_options_warng">Özel bağlantı seçeneklerini belirtin. Dikkatli kullanın</string>
+    <string name="custom_connection_options_warning">Özel bağlantı seçeneklerini belirtin. Dikkatli kullanın</string>
     <string name="custom_connection_options">Özel Seçenekler</string>
     <string name="remove_connection_entry">Bağlantı girdisini kaldır</string>
     <string name="ab_kitkat_reconnect_title">Mobil ağda rastgele bağlantı kesilmeleri</string>
@@ -473,7 +473,7 @@
     <string name="osslspeedtest">OpenSSL Kripto Hız testi</string>
     <string name="openssl_error">OpenSSL bir hata döndürdü</string>
     <string name="running_test">Test çalışıyor&#8230;</string>
-    <string name="test_algoirhtms">Seçilen algoritmaları test edin</string>
+    <string name="test_algorithms">Seçilen algoritmaları test edin</string>
     <string name="all_app_prompt">Harici bir uygulama, %s denetlemeyi deniyor. Erişim isteyen uygulama belirlenemedi. Uygulamaya TÜM uygulamalara erişim izni veriliyor.</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C++ uygulaması statik anahtarları desteklemez. Lütfen genel ayarlar altında 
         OpenVPN 2.x\'e geçin.

@@ -7,7 +7,7 @@
 <resources>
     <dimen name="paddingItemsSidebarLog">20dp</dimen>
     <dimen name="stdpadding">8dp</dimen>
-    <bool name="logSildersAlwaysVisible">false</bool>
+    <bool name="logSlidersAlwaysVisible">false</bool>
 
     <dimen name="diameter">48dp</dimen>
     <dimen name="elevation_low">1dp</dimen>

@@ -62,7 +62,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
     override fun onClick(v: View) {
         if (v.id == R.id.fab_save)
             userActionSaveProfile()
-        if (v.id == R.id.permssion_hint && Build.VERSION.SDK_INT == Build.VERSION_CODES.M)
+        if (v.id == R.id.permission_hint && Build.VERSION.SDK_INT == Build.VERSION_CODES.M)
             doRequestSDCardPermission(PERMISSION_REQUEST_EMBED_FILES)
 
     }
@@ -79,7 +79,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
         // Reset file select dialogs
         findViewById<View>(R.id.files_missing_hint).visibility = View.GONE
-        findViewById<View>(R.id.permssion_hint).visibility = View.GONE
+        findViewById<View>(R.id.permission_hint).visibility = View.GONE
         val fileroot = findViewById<View>(R.id.config_convert_root) as LinearLayout
         var i = 0
         while (i < fileroot.childCount) {
@@ -297,7 +297,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         return true
     }
 
-    private fun embedFile(filename: String?, type: Utils.FileType, onlyFindFileAndNullonNotFound: Boolean): String? {
+    private fun embedFile(filename: String?, type: Utils.FileType, onlyFindFileAndNullOnNotFound: Boolean): String? {
         if (filename == null)
             return null
 
@@ -307,11 +307,11 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
         val possibleFile = findFile(filename, type)
         return if (possibleFile == null)
-            if (onlyFindFileAndNullonNotFound)
+            if (onlyFindFileAndNullOnNotFound)
                 null
             else
                 filename
-        else if (onlyFindFileAndNullonNotFound)
+        else if (onlyFindFileAndNullOnNotFound)
             possibleFile.absolutePath
         else
             readFileContent(possibleFile, type == Utils.FileType.PKCS12)
@@ -406,8 +406,8 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
     @TargetApi(Build.VERSION_CODES.M)
     private fun checkPermission() {
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            findViewById<View>(R.id.permssion_hint).visibility = View.VISIBLE
-            findViewById<View>(R.id.permssion_hint).setOnClickListener(this)
+            findViewById<View>(R.id.permission_hint).visibility = View.VISIBLE
+            findViewById<View>(R.id.permission_hint).setOnClickListener(this)
         }
     }
 
@@ -420,7 +420,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         if (filename == null || filename == "")
             return null
 
-        // Try diffent path relative to /mnt/sdcard
+        // Try different path relative to /mnt/sdcard
         val sdcard = Environment.getExternalStorageDirectory()
         val root = File("/")
 
@@ -691,12 +691,12 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
                 } catch (se: IOException) {
                     log(R.string.import_content_resolve_error.toString() + ":" + se.localizedMessage)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        checkMarschmallowFileImportError(data)
+                        checkMarshmallowFileImportError(data)
                     return -2
                 } catch (se: SecurityException) {
                     log(R.string.import_content_resolve_error.toString() + ":" + se.localizedMessage)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        checkMarschmallowFileImportError(data)
+                        checkMarshmallowFileImportError(data)
                     return -2
                 }
 
@@ -723,7 +723,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
 
     @TargetApi(Build.VERSION_CODES.M)
-    private fun checkMarschmallowFileImportError(data: Uri?) {
+    private fun checkMarshmallowFileImportError(data: Uri?) {
         // Permission already granted, not the source of the error
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
             return
@@ -796,8 +796,8 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
     }
 
-    private fun log(ressourceId: Int, vararg formatArgs: Any) {
-        log(getString(ressourceId, *formatArgs))
+    private fun log(resourceId: Int, vararg formatArgs: Any) {
+        log(getString(resourceId, *formatArgs))
     }
 
     companion object {

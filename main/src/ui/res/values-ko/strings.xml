@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">당신의 이미지는 VPNService API를 지원하지 않습니다, 죄송합니다 :(</string>
     <string name="encryption">암호화</string>
     <string name="cipher_dialog_title">암호화 방법 입력</string>
-    <string name="chipher_dialog_message">OpenVPN이 사용할 암호화 암호 알고리즘을 입력하세요. 기본 암호를 사용하려면 비워 두십시오.</string>
+    <string name="cipher_dialog_message">OpenVPN이 사용할 암호화 암호 알고리즘을 입력하세요. 기본 암호를 사용하려면 비워 두십시오.</string>
     <string name="auth_dialog_message">OpenVPN이 사용할 인증 다이제스트를 입력하세요. 기본 다이제스트를 사용하려면 비워 두십시오.</string>
     <string name="settings_auth">인증/암호화</string>
     <string name="file_explorer_tab">파일 탐색기</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">/dev/tun 소유권 고치기</string>
     <string name="generated_config_summary">생성된 OpenVPN의 구성 파일 보기</string>
     <string name="edit_profile_title">\"%s\" 편집</string>
-    <string name="building_configration">구성 만드는 중&#8230;</string>
+    <string name="building_configuration">구성 만드는 중&#8230;</string>
     <string name="netchange_summary">이 옵션을 켜면 네트워크 상태 변경시 강제로 재접속합니다 (예: WiFi와 모바일 상호 변경)</string>
     <string name="netchange">네트워크 변경시 재접속</string>
     <string name="netstatus">네트워크 상태: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN이 예기치 않게 종료됐습니다. 메인 메뉴에 있는 미니 덤프 보내기 옵션의 사용을 고려하시기 바랍니다.</string>
     <string name="send_minidump">미니 덤프를 개발자에게 보내기</string>
     <string name="send_minidump_summary">개발자에게 마지막 비정상 종료에 대한 디버깅 정보를 보냅니다</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">연결중</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">사용 가능한 네트워크 대기중</string>
     <string name="state_waitorbot">Orbot이 시작되기를 기다리는 중</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">연결되지 않음</string>
+    <string name="notification_title_notconnect">연결되지 않음</string>
     <string name="start_vpn_title">VPN %s 연결중</string>
     <string name="start_vpn_ticker">VPN %s 연결중</string>
     <string name="jelly_keystore_alphanumeric_bug">일부 버전의 안드로이드 4.1에서는 키 저장소 인증서의 이름에 비영숫자 문자(공백, 밑줄 또는 대시)가 포함된 경우 문제가 있습니다. 특수 문자 없는 인증서를 다시 가져와 보세요.</string>
@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">구성된 IP 주소로의 경로</string>
     <string name="ab_kitkat_mss_title">VPN 연결에 대한 잘못된 MSS 값</string>
     <string name="ab_secondary_users_title">부차적인 태블릿 사용자들</string>
-    <string name="custom_connection_options_warng">사용자 지정 연결별 옵션을 지정하십시오. 조심해서 사용하십시오.</string>
+    <string name="custom_connection_options_warning">사용자 지정 연결별 옵션을 지정하십시오. 조심해서 사용하십시오.</string>
     <string name="custom_connection_options">사용자 지정 옵션</string>
     <string name="remove_connection_entry">연결 항목 제거</string>
     <string name="ab_kitkat_reconnect_title">모바일 네트워크에서 임의 연결 해제</string>
@@ -468,7 +468,7 @@
     <string name="osslspeedtest">OpenSSL 암호화 속도 테스트</string>
     <string name="openssl_error">OpenSSL이 오류를 반환함</string>
     <string name="running_test">테스트 수행 중&#8230;</string>
-    <string name="test_algoirhtms">선택한 알고리즘 테스트</string>
+    <string name="test_algorithms">선택한 알고리즘 테스트</string>
     <string name="all_app_prompt">어떤 외부 앱이 %s를 제어하려고 합니다. 접근을 요청하는 앱을 정해 놓을 수 없습니다. 이 앱을 허용하면 모든 앱의 접근을 승인하게 됩니다.</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C++ 구현은 고정 키를 지원하지 않습니다. 일반 설정에서 OpenVPN 2.x로 변경해 주세요.</string>
     <string name="openvpn3_pkcs12">OpenVPN 3 C++ 구현과 함께 PKCS12 파일을 직접 사용하는 것은 지원되지 않습니다. PKCS12 파일을 안드로이드 키 저장소로 가져 오거나 일반 설정에서 OpenVPN 2.x으로 변경하세요.</string>
@@ -490,5 +490,5 @@
     <string name="state_auth_pending">Authentication pending</string>
     <string name="external_authenticator">External Authenticator</string>
     <string name="configure">Configure</string>
-    <string name="extauth_not_configured">외부 Authneticator가 구성되지 않았습니다.</string>
+    <string name="extauth_not_configured">외부 Authenticator가 구성되지 않았습니다.</string>
 </resources>

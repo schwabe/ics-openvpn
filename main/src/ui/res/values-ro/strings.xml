@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Imaginea dvs. nu suportă API-ul VPNService, îmi pare rău :(</string>
     <string name="encryption">Criptare</string>
     <string name="cipher_dialog_title">Alegeţi metoda de criptare</string>
-    <string name="chipher_dialog_message">Introduceți cifrul algoritmului de criptare folosit de OpenVPN. Lăsați liber pentru a utiliza cifrul implicit.</string>
+    <string name="cipher_dialog_message">Introduceți cifrul algoritmului de criptare folosit de OpenVPN. Lăsați liber pentru a utiliza cifrul implicit.</string>
     <string name="auth_dialog_message">Introduceţi autentificarea digest ce este folosită de OpenVPN. Lăsaţi gol pentru digest predefinit.</string>
     <string name="settings_auth">Autentificare/criptare</string>
     <string name="file_explorer_tab">File Explorer</string>
@@ -166,13 +166,13 @@
     <string name="password">Parola</string>
     <string name="file_icon">icon fişier</string>
     <string name="tls_authentication">Autentificare / criptare TLS</string>
-    <string name="generated_config">Config generat</string>
+    <string name="generated_config">Config generate</string>
     <string name="generalsettings">Setări</string>
     <string name="owner_fix_summary">Încearcă să seteze owner-ul /dev/tun ca sistem. Unele imagini CM9 au nevoie de asta pentru a permite API-ului VPNService să funcţioneze. Are nevoie de root.</string>
     <string name="owner_fix">Repară drepturi /dev/tun</string>
-    <string name="generated_config_summary">Afişează fişierul de configurare OpenVPN generat</string>
+    <string name="generated_config_summary">Afişează fişierul de configurare OpenVPN generate</string>
     <string name="edit_profile_title">Editare \"%s\"</string>
-    <string name="building_configration">Se generează configurarea&#8230;</string>
+    <string name="building_configuration">Se generează configurarea&#8230;</string>
     <string name="netchange_summary">Activând această opţiune forţaţi o reconectare dacă se schimbă starea de reţea (e.g. WiFi la/de la mobil)</string>
     <string name="netchange">Reconectare la schimbare reţea</string>
     <string name="netstatus">Statutus reţea: %s</string>
@@ -233,7 +233,7 @@
     <string name="minidump_generated">OpenVPN sa oprit în mod neaşteptat. Vă rugăm să consideraţi opţiunea de trimitere a unui Minidump din meniul principal</string>
     <string name="send_minidump">Trimite Minidump la dezvoltator</string>
     <string name="send_minidump_summary">Trimite informații de depanare despre ultimul crash la dezvoltator</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Se conectează</string>
@@ -252,7 +252,7 @@
     <string name="state_auth_failed">Autentificare a eşuat</string>
     <string name="state_nonetwork">Se aşteaptă o reţea utilizabilă</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Nu este conectat</string>
+    <string name="notification_title_notconnect">Nu este conectat</string>
     <string name="start_vpn_title">Conectare la VPN %s</string>
     <string name="start_vpn_ticker">Conectare la VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Unele versiuni de Android 4.1 au probleme dacă numele certificatului keystore conţine caractere non-alfanumerice (cum ar fi spaţii, linii de subliniere sau cratime). Încercaţi să reimportaţi certificatul fără caractere speciale</string>
@@ -370,7 +370,7 @@
     <string name="ab_not_route_to_vpn_title">Rutează prin adresa IP configurată</string>
     <string name="ab_kitkat_mss_title">Valoare MSS greșită pentru conexiunea VPN</string>
     <string name="ab_secondary_users_title">Utilizatori de tablete secundari</string>
-    <string name="custom_connection_options_warng">Specificați opțiunile specifice conexiunii personalizate. Folosiți cu grijă</string>
+    <string name="custom_connection_options_warning">Specificați opțiunile specifice conexiunii personalizate. Folosiți cu grijă</string>
     <string name="custom_connection_options">Opţiunile Particularizate</string>
     <string name="remove_connection_entry">Ștergeți conexiunea</string>
     <string name="ab_kitkat_reconnect_title">Se deconectează aleatoriu de la rețeaua mobilă</string>
@@ -378,7 +378,7 @@
     <string name="ab_persist_tun_title">Păstrați modul tun</string>
     <string name="version_and_later">%s şi mai târziu</string>
     <string name="tls_cipher_alert_title">Conexiunile eșuează cu SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure</string>
-    <string name="tls_cipher_alert">Noile versiuni OpenVPN pentru Android (0.6.29 / martie 2015) utilizează o setare implicită mai sigură pentru suitele de cifruri permise (codul \"DEFAULT:!EXP:!PSK:!SRP:!KRSA\"). Din nefericire, omiterea suitelor de cifruri mai puțin sigure și a suitelor de cifruri de export, în special omiterea suitelor de cifru care nu acceptă Perfect Forward Secrecy (Diffie-Hellman) crează unele probleme. Acest lucru este cauzat, de obicei, de o încercare bine intenționată, dar prost executată, de a consolida securitatea TLS prin setarea tls-cipher pe server sau pe anumite sisteme embedded cu SSL (de ex. MikroTik).\nPentru a rezolva această problemă, setați tls-chipher settings de pe server la implicit ca TLS-cipher \"DEFAULT:!EXP:!PSK:!SRP:!KRSA\". Pentru a rezolva problema pe client, adăugați opțiunea personalizată tls-cipher DEFAULT pe clientul Android.</string>
+    <string name="tls_cipher_alert">Noile versiuni OpenVPN pentru Android (0.6.29 / martie 2015) utilizează o setare implicită mai sigură pentru suitele de cifruri permise (codul \"DEFAULT:!EXP:!PSK:!SRP:!KRSA\"). Din nefericire, omiterea suitelor de cifruri mai puțin sigure și a suitelor de cifruri de export, în special omiterea suitelor de cifru care nu acceptă Perfect Forward Secrecy (Diffie-Hellman) crează unele probleme. Acest lucru este cauzat, de obicei, de o încercare bine intenționată, dar prost executată, de a consolida securitatea TLS prin setarea tls-cipher pe server sau pe anumite sisteme embedded cu SSL (de ex. MikroTik).\nPentru a rezolva această problemă, setați tls-cipher settings de pe server la implicit ca TLS-cipher \"DEFAULT:!EXP:!PSK:!SRP:!KRSA\". Pentru a rezolva problema pe client, adăugați opțiunea personalizată tls-cipher DEFAULT pe clientul Android.</string>
     <string name="message_no_user_edit">Acest profil a fost adăugat dintr-o aplicație externă (%s) și a fost marcat ca nemodificabil de utilizator.</string>
     <string name="crl_file">Lista de revocare a certificatelor</string>
     <string name="service_restarted">Repornirea serviciului OpenVPN (aplicația s-a blocat probabil a blocat sau terminat pentru presiunea de memorie)</string>

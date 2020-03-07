@@ -90,7 +90,7 @@ class LogFileHandler extends Handler {
         // We do not really care if the log cache breaks between Android upgrades,
         // write binary format to disc
 
-        byte[] liBytes = li.getMarschaledBytes();
+        byte[] liBytes = li.getMarshaledBytes();
 
         writeEscapedBytes(liBytes);
     }

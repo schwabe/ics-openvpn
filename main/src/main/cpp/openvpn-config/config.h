@@ -3,7 +3,7 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 
-/* DISABLE PERSISTEN TUN */
+/* DISABLE PERSISTENT TUN */
 #undef TUNSETPERSIST
 
 /* Enable deferred authentication */

@@ -333,7 +333,7 @@
             <SeekBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/connect_silder"
+                    android:id="@+id/connect_slider"
                     android:max="300"
                     android:layout_alignBottom="@id/connect_timeout"
                     android:layout_toLeftOf="@id/connect_timeout"
@@ -361,10 +361,10 @@
                     android:paddingStart="10dp">
 
                 <TextView
-                        android:id="@+id/warnung_custom"
+                        android:id="@+id/warning_custom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/custom_connection_options_warng"/>
+                        android:text="@string/custom_connection_options_warning"/>
 
                 <EditText
                         android:id="@+id/customoptions"

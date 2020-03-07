@@ -499,7 +499,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.logmenu, menu);
-        if (getResources().getBoolean(R.bool.logSildersAlwaysVisible))
+        if (getResources().getBoolean(R.bool.logSlidersAlwaysVisible))
             menu.removeItem(R.id.toggle_time);
     }
 
@@ -616,7 +616,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
 
         mLogLevelSlider.setOnSeekBarChangeListener(this);
 
-        if (getResources().getBoolean(R.bool.logSildersAlwaysVisible))
+        if (getResources().getBoolean(R.bool.logSlidersAlwaysVisible))
             mOptionsLayout.setVisibility(View.VISIBLE);
 
         mUpStatus = (TextView) v.findViewById(R.id.speedUp);
@@ -637,7 +637,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     @Override
     public void onAttach(@NonNull Context activity) {
         super.onAttach(activity);
-        if (getResources().getBoolean(R.bool.logSildersAlwaysVisible)) {
+        if (getResources().getBoolean(R.bool.logSlidersAlwaysVisible)) {
             mShowOptionsLayout = true;
             if (mOptionsLayout != null)
                 mOptionsLayout.setVisibility(View.VISIBLE);

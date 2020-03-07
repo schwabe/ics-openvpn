@@ -84,8 +84,8 @@ public class VpnProfile implements Serializable, Cloneable {
     private static final int AUTH_RETRY_INTERACT = 3;
     public static String DEFAULT_DNS1 = "8.8.8.8";
     public static String DEFAULT_DNS2 = "8.8.4.4";
-    // variable named wrong and should haven beeen transient
-    // but needs to keep wrong name to guarante loading of old
+    // variable named wrong and should haven been transient
+    // but needs to keep wrong name to guarantee loading of old
     // profiles
     public transient boolean profileDeleted = false;
     public int mAuthenticationType = TYPE_KEYSTORE;
@@ -1007,7 +1007,7 @@ public class VpnProfile implements Serializable, Cloneable {
             if (c.mProxyType == Connection.ProxyType.ORBOT) {
                 if (usesExtraProxyOptions())
                     return R.string.error_orbot_and_proxy_options;
-                if (!OrbotHelper.checkTorReceier(context))
+                if (!OrbotHelper.checkTorReceiver(context))
                     return R.string.no_orbotfound;
             }
         }

@@ -9,14 +9,14 @@ package de.blinkt.openvpn.api;
 interface ExternalCertificateProvider {
     /**
      * Requests signing the data with RSA/ECB/PKCS1PADDING
-     * for RSA certficate and with NONEwithECDSA for EC certificates
+     * for RSA certificate and with NONEwithECDSA for EC certificates
      * @parm alias the parameter that
      */
     byte[] getSignedData(in String alias, in byte[] data);
 
     /**
      * Requests the certificate chain for the selected alias
-     * The first certifcate returned is assumed to be
+     * The first certificate returned is assumed to be
      * the user certificate
      */
     byte[] getCertificateChain(in String alias);

@@ -117,7 +117,7 @@
     <string name="no_vpn_support_image">Bildet ditt støtter ikke VPNService API, beklager :(</string>
     <string name="encryption">Kryptering</string>
     <string name="cipher_dialog_title">Angi krypteringsmetode</string>
-    <string name="chipher_dialog_message">Skriv inn krypteringskrypteringsalgoritmen som brukes av OpenVPN. La det stå tomt for å bruke standard kryptering.</string>
+    <string name="cipher_dialog_message">Skriv inn krypteringskrypteringsalgoritmen som brukes av OpenVPN. La det stå tomt for å bruke standard kryptering.</string>
     <string name="auth_dialog_message">Skriv inn godkjenningsfordeling som brukes til OpenVPN. La være tom for å bruke standard fordøyelse.</string>
     <string name="settings_auth">Autentisering/kryptering</string>
     <string name="file_explorer_tab">Filutforsker</string>
@@ -155,7 +155,7 @@
     <string name="owner_fix">Fiks eierskap av /dev/tun</string>
     <string name="generated_config_summary">Viser den genererte OpenVPN konfigurasjonsfilen</string>
     <string name="edit_profile_title">Rediger \"%s\"</string>
-    <string name="building_configration">Lager konfigurasjon&#8230;</string>
+    <string name="building_configuration">Lager konfigurasjon&#8230;</string>
     <string name="netchange">Koble til på nytt ved nettverks endring</string>
     <string name="netstatus">Nettverksstatus: %s</string>
     <string name="select_file">Velg</string>
@@ -192,7 +192,7 @@
     <string name="minidump_generated">OpenVPN krasjet uventet. Vennligst vurder bruk av Minidump-alternativet i hovedmenyen</string>
     <string name="send_minidump">Send Minidump til utvikler</string>
     <string name="send_minidump_summary">Sender feilsøkingsinformasjon om siste krasj til utvikler</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Kobler til</string>
@@ -209,7 +209,7 @@
     <string name="state_resolve">Løse vertsnavn</string>
     <string name="state_tcp_connect">Kobler til (TCP)</string>
     <string name="state_auth_failed">Autentisering mislyktes</string>
-    <string name="notifcation_title_notconnect">Ikke tilkoblet</string>
+    <string name="notification_title_notconnect">Ikke tilkoblet</string>
     <string name="start_vpn_title">Kobler til VPN %s</string>
     <string name="start_vpn_ticker">Kobler til VPN %s</string>
     <string name="encryption_cipher">Kryptering chiffer</string>

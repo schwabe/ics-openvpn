@@ -128,7 +128,7 @@
     <string name="no_vpn_support_image">Teie süsteemitarkvara ei toeta VPNService API\'t, vabandame :(</string>
     <string name="encryption">Krüpteerimine</string>
     <string name="cipher_dialog_title">Vali krüpteerimismeetod</string>
-    <string name="chipher_dialog_message">Sisestage OpenVPN poolt kasutatav krüptošifri algoritm. Tühi väli tähendab vaikešifrit.</string>
+    <string name="cipher_dialog_message">Sisestage OpenVPN poolt kasutatav krüptošifri algoritm. Tühi väli tähendab vaikešifrit.</string>
     <string name="auth_dialog_message">Sisestage OpenVPN poolt kasutatav autentimise räsifunktsioon. Tühi väli tähendab vaikeräsi.</string>
     <string name="settings_auth">Autentimine/Krüpteerimine</string>
     <string name="file_explorer_tab">Failihaldur</string>
@@ -172,7 +172,7 @@
     <string name="owner_fix">Korrasta /dev/tun omanikuõigused</string>
     <string name="generated_config_summary">Näitab genereeritud OpenVPN konfiguratsioonifaili</string>
     <string name="edit_profile_title">Redigeeritakse \"%s\"</string>
-    <string name="building_configration">Koostatakse konfiguratsiooni&#8230;</string>
+    <string name="building_configuration">Koostatakse konfiguratsiooni&#8230;</string>
     <string name="netchange_summary">Selle valiku aktiveerimine kutsub esile VPN uuestiühendumise kui võrgu olek muutub (nt. WIFI peale/pealt mobiilile)</string>
     <string name="netchange">Uuestiühendus võrgu oleku muutumisel</string>
     <string name="netstatus">Võrgu olek: %s</string>
@@ -235,7 +235,7 @@
     <string name="minidump_generated">OpenVPN jooksis ootamatult kokku. Palun kaaluge \"saada Minitõmmis\" valiku lubamist peamenüüs</string>
     <string name="send_minidump">Saada arendajale minitõmmis</string>
     <string name="send_minidump_summary">Saada eelmise kokkujooksmise kohta käiv silumisinfo arendajale</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Ühendumine</string>
@@ -255,7 +255,7 @@
     <string name="state_nonetwork">Oodatakse kasutatavat võrku</string>
     <string name="state_waitorbot">Orboti alguse ootamine</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Pole ühendatud</string>
+    <string name="notification_title_notconnect">Pole ühendatud</string>
     <string name="start_vpn_title">Ühendumine VPN %s külge</string>
     <string name="start_vpn_ticker">Ühendumine VPN %s külge</string>
     <string name="jelly_keystore_alphanumeric_bug">Mõnede Android 4.1 versioonide puhul esineb probleeme kui võtmehoidla sertifikaadi nimi sisaldab mittetähestikulisi sümboleid (nagu tühikud, alakriipsud või sidekriipsud). Proovige selline sertifikaat erisümboliteid kasutamata uuesti importida</string>
@@ -374,7 +374,7 @@
     <string name="ab_not_route_to_vpn_title">Seadistatud IP aadressi marsruut</string>
     <string name="ab_kitkat_mss_title">VPN ühenduse vale MSS väärtus</string>
     <string name="ab_secondary_users_title">Teisesed tahvli kasutajad</string>
-    <string name="custom_connection_options_warng">Seadista kohandatavad ühendusespetsiifilised valikud. Kasuta ettevaatlikult</string>
+    <string name="custom_connection_options_warning">Seadista kohandatavad ühendusespetsiifilised valikud. Kasuta ettevaatlikult</string>
     <string name="custom_connection_options">Kohandatavad valikud</string>
     <string name="remove_connection_entry">Eemalda ühenduse kirje</string>
     <string name="ab_kitkat_reconnect_title">Pistelised mobiilivõrgu katkestused</string>
@@ -454,7 +454,7 @@
     <string name="osslspeedtest">OpenSSL krüptokiiruse test</string>
     <string name="openssl_error">OpenSSL tagastati tõrge</string>
     <string name="running_test">Jooksukatse&#8230;</string>
-    <string name="test_algoirhtms">Testige valitud algoritme</string>
+    <string name="test_algorithms">Testige valitud algoritme</string>
     <string name="all_app_prompt">Väline rakendus proovib juhtida %s. Juurdepääsu taotlevat rakendust ei saa kindlaks teha. Selle rakenduse lubamine annab kõigile rakendustele juurdepääsu.</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C ++ teostus ei toeta staatilisi võtmeid. Valige üldseadete alt OpenVPN 2.x.</string>
     <string name="openvpn3_pkcs12">PKCS12-failide kasutamist otse OpenVPN 3 C ++ rakendusega ei toetata. Importige pkcs12-failid Androidi võtmehoidlasse või vahetage OpenVPN 2.x-i üldiseadete all.</string>

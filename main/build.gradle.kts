@@ -114,7 +114,7 @@ android {
 
     // Ensure native build is run before assets, so assets are ready to be merged into the apk
     libraryVariants.configureEach {
-        mergeAssets!!.dependsOn(externalNativeBuildTasks)
+        mergeAssetsProvider.get().dependsOn(externalNativeBuildProviders)
     }
 }
 

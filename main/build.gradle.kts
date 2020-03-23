@@ -155,16 +155,19 @@ android.applicationVariants.all(object : Action<ApplicationVariant> {
 
 
 dependencies {
+    // https://developer.android.com/jetpack/androidx/releases/core
     val preferenceVersion = "1.1.0"
-    val coreVersion = "1.1.0"
+    val coreVersion = "1.2.0"
     val materialVersion = "1.0.0"
+    val fragment_version = "1.2.2"
+
 
     implementation("androidx.annotation:annotation:1.1.0")
-    implementation("androidx.core:core:1.1.0")
+    implementation("androidx.core:core:$coreVersion")
 
     // Is there a nicer way to do this?
     dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:1.1.3")
-    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
+    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.70")
     dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
     dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.0.0")
     dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.1.0")
@@ -173,14 +176,14 @@ dependencies {
     dependencies.add("uiImplementation", "androidx.core:core:$coreVersion")
     dependencies.add("uiImplementation", "androidx.core:core-ktx:$coreVersion")
     dependencies.add("uiImplementation", "org.jetbrains.anko:anko-commons:0.10.4")
-    dependencies.add("uiImplementation", "androidx.fragment:fragment-ktx:1.1.0")
+    dependencies.add("uiImplementation", "androidx.fragment:fragment-ktx:$fragment_version")
     dependencies.add("uiImplementation", "androidx.preference:preference:$preferenceVersion")
     dependencies.add("uiImplementation", "androidx.preference:preference-ktx:$preferenceVersion")
     dependencies.add("uiImplementation", "com.google.android.material:material:$materialVersion")
 
 
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
-    testImplementation("junit:junit:4.12")
-    testImplementation("org.mockito:mockito-core:3.2.4")
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.70")
+    testImplementation("junit:junit:4.13")
+    testImplementation("org.mockito:mockito-core:3.3.0")
     testImplementation("org.robolectric:robolectric:4.3.1")
 }

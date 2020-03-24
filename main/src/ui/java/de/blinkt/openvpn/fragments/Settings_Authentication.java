@@ -30,7 +30,7 @@ import java.io.IOException;
 
 
 public class Settings_Authentication extends OpenVpnPreferencesFragment implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
-    private static final int SELECT_TLS_FILE_LEGACY_DIALOG = 23223232;
+    private static final int SELECT_TLS_FILE_LEGACY_DIALOG = 10;
     private static final int SELECT_TLS_FILE_KITKAT = SELECT_TLS_FILE_LEGACY_DIALOG + 1;
     private CheckBoxPreference mExpectTLSCert;
     private CheckBoxPreference mCheckRemoteCN;

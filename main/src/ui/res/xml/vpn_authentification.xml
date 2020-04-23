@@ -16,6 +16,8 @@
 
         <de.blinkt.openvpn.views.RemoteCNPreference
             android:dependency="checkRemoteCN"
+            android:positiveButtonText="@android:string/ok"
+            android:negativeButtonText="@string/cancel"
             android:key="remotecn"
             android:title="@string/enter_tlscn_title" />
 

@@ -24,15 +24,15 @@ public class RemoteCNPreference extends DialogPreference {
     }
 
     public RemoteCNPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, defStyleAttr);
+        super(context, attrs, defStyleAttr);
     }
 
     public RemoteCNPreference(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs, 0);
     }
 
     public RemoteCNPreference(Context context) {
-        this(context, null);
+        super(context);
     }
 
 

@@ -75,9 +75,9 @@ class Settings_Allowed_Apps : Fragment(), AdapterView.OnItemClickListener, Compo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val profileUuid = requireArguments().getString(activity!!.packageName + ".profileUUID")
+        val profileUuid = requireArguments().getString(requireActivity().packageName + ".profileUUID")
         mProfile = ProfileManager.get(activity, profileUuid)
-        activity!!.title = getString(R.string.edit_profile_title, mProfile.name)
+        requireActivity().title = getString(R.string.edit_profile_title, mProfile.name)
         setHasOptionsMenu(true)
     }
 

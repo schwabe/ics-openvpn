@@ -112,9 +112,11 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
 
         cH.mProxyNameView.setVisibility(visible);
         cH.mProxyPortNumberView.setVisibility(visible);
+        cH.mProxyPortNameView.setVisibility(visible);
         cH.mProxyNameLabel.setVisibility(visible);
 
         cH.mProxyAuthLayout.setVisibility(authVisible);
+
 
     }
 
@@ -187,6 +189,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         private final RadioGroup mProxyGroup;
         private final EditText mProxyNameView;
         private final EditText mProxyPortNumberView;
+        private final View mProxyPortNameView;
         private final View mProxyNameLabel;
         private final View mProxyAuthLayout;
         private final EditText mProxyAuthUser;
@@ -212,6 +215,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
             mProxyGroup = card.findViewById(R.id.proxyradiogroup);
             mProxyNameView = card.findViewById(R.id.proxyname);
             mProxyPortNumberView = card.findViewById(R.id.proxyport);
+            mProxyPortNameView = card.findViewById(R.id.proxyport_label);
             mProxyNameLabel = card.findViewById(R.id.proxyserver_label);
 
             mProxyAuthLayout = card.findViewById(R.id.proxyauthlayout);

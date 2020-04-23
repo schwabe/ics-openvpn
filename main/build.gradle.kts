@@ -155,11 +155,12 @@ android.applicationVariants.all(object : Action<ApplicationVariant> {
 
 
 dependencies {
+    // https://maven.google.com/web/index.html
     // https://developer.android.com/jetpack/androidx/releases/core
-    val preferenceVersion = "1.1.0"
+    val preferenceVersion = "1.1.1"
     val coreVersion = "1.2.0"
-    val materialVersion = "1.0.0"
-    val fragment_version = "1.2.2"
+    val materialVersion = "1.1.0"
+    val fragment_version = "1.2.4"
 
 
     implementation("androidx.annotation:annotation:1.1.0")

@@ -183,8 +183,8 @@ dependencies {
     dependencies.add("uiImplementation", "com.google.android.material:material:$materialVersion")
 
 
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.70")
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
     testImplementation("junit:junit:4.13")
-    testImplementation("org.mockito:mockito-core:3.3.0")
+    testImplementation("org.mockito:mockito-core:3.3.3")
     testImplementation("org.robolectric:robolectric:4.3.1")
 }

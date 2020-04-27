@@ -149,7 +149,22 @@ public class AppRestrictions {
 
     }
 
+    private String prepare(String config) {
+        String newLine = System.getProperty("line.separator");
+        if (!config.contains(newLine)&& !config.contains(" ")) {
+            try {
+                byte[] decoded = android.util.Base64.decode(config.getBytes(), android.util.Base64.DEFAULT);
+                config  = new String(decoded);
+                return config; 
+            } catch(IllegalArgumentException e) {
+               
+            }
+        }
+        return config;
+    };
+    
     private void addProfile(Context c, String config, String uuid, String name, VpnProfile vpnProfile) {
+        config  = prepare(config);
         ConfigParser cp = new ConfigParser();
         try {
             cp.parseConfig(new StringReader(config));

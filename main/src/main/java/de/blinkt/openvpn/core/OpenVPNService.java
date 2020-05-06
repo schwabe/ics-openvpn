@@ -872,6 +872,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             ipv6info = mLocalIPv6;
         }
 
+        if ((!mRoutes.getNetworks(false).isEmpty() || !mRoutesv6.getNetworks(false).isEmpty()) && isLockdownEnabledCompat())
+        {
+            VpnStatus.logInfo("VPN lockdown enabled (do not allow apps to bypass VPN) enabled. Route exclusion will not allow apps to bypass VPN (e.g. bypass VPN for local networks)");
+        }
+
         VpnStatus.logInfo(R.string.local_ip_info, ipv4info, ipv4len, ipv6info, mMtu);
         VpnStatus.logInfo(R.string.dns_server_info, TextUtils.join(", ", mDnslist), mDomain);
         VpnStatus.logInfo(R.string.routes_info_incl, TextUtils.join(", ", mRoutes.getNetworks(true)), TextUtils.join(", ", mRoutesv6.getNetworks(true)));
@@ -925,6 +930,16 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 VpnStatus.logError(R.string.tun_error_helpful);
             }
             return null;
+        }
+
+    }
+
+    private boolean isLockdownEnabledCompat() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return isLockdownEnabled();
+        } else {
+            /* We cannot determine this, return false */
+            return false;
         }
 
     }

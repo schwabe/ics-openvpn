@@ -408,7 +408,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
 
         // We cannot use anything else than tun
-        cfg.append("dev tun\n");
+        cfg.append("dev tap\n");
 
 
         boolean canUsePlainRemotes = true;

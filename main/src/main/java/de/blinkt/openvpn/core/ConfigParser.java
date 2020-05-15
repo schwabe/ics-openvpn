@@ -449,14 +449,6 @@ public class ConfigParser {
         Vector<String> dev = getOption("dev", 1, 1);
         Vector<String> devtype = getOption("dev-type", 1, 1);
 
-        if ((devtype != null && devtype.get(1).equals("tun")) ||
-                (dev != null && dev.get(1).startsWith("tun")) ||
-                (devtype == null && dev == null)) {
-            //everything okay
-        } else {
-            throw new ConfigParseError("Sorry. Only tun mode is supported. See the FAQ for more detail");
-        }
-
         Vector<String> mssfix = getOption("mssfix", 0, 2);
 
         if (mssfix != null) {

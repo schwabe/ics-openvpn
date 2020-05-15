@@ -624,9 +624,9 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     private boolean sendTunFD(String needed, String extra) {
         if (!extra.equals("tun")) {
             // We only support tun
-            VpnStatus.logError(String.format("Device type %s requested, but only tun is possible with the Android API, sorry!", extra));
+            //VpnStatus.logError(String.format("Device type %s requested, but only tun is possible with the Android API, sorry!", extra));
 
-            return false;
+            //return false;
         }
         ParcelFileDescriptor pfd = mOpenVPNService.openTun();
         if (pfd == null)

@@ -28,6 +28,7 @@ script:
   - echo icsopenvpnDebugSign=true > ~/.gradle/gradle.properties
   # Building one variant is enough and already takes quite a long time...
   - ./gradlew assembleUiRelease
+  - find . -name *.apk
 
 before_script:
   # Install packages
@@ -51,4 +52,14 @@ before_script:
   - yes | sdkmanager 'platforms;android-29'
 
   - export PATH=$PATH:${ANDROID_NDK_HOME}
+
+deploy:
+  provider: releases
+  api_key: ${api_key}
+  file_glob: true
+  file:
+    - "./main/build/outputs/apk/ui/release/main-ui-x86*.apk"
+  skip_cleanup: true
+  on:
+    tags: true
 

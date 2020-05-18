@@ -39,14 +39,16 @@ public class OpenVPNThread implements Runnable {
     private String[] mArgv;
     private Process mProcess;
     private String mNativeDir;
+    private String mTmpDir;
     private OpenVPNService mService;
     private String mDumpPath;
     private boolean mBrokenPie = false;
     private boolean mNoProcessExitStatus = false;
 
-    public OpenVPNThread(OpenVPNService service, String[] argv, String nativelibdir) {
+    public OpenVPNThread(OpenVPNService service, String[] argv, String nativelibdir, String tmpdir) {
         mArgv = argv;
         mNativeDir = nativelibdir;
+        mTmpDir = tmpdir;
         mService = service;
     }
 
@@ -130,6 +132,7 @@ public class OpenVPNThread implements Runnable {
         String lbpath = genLibraryPath(argv, pb);
 
         pb.environment().put("LD_LIBRARY_PATH", lbpath);
+        pb.environment().put("TMPDIR", mTmpDir);
 
         pb.redirectErrorStream(true);
         try {

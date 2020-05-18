@@ -29,7 +29,8 @@ android {
         }
     }
 
-    //testOptions.unitTests.isIncludeAndroidResources = true
+    testOptions.unitTests.isIncludeAndroidResources = true
+
 
 
     externalNativeBuild {
@@ -187,4 +188,5 @@ dependencies {
     testImplementation("junit:junit:4.13")
     testImplementation("org.mockito:mockito-core:3.3.3")
     testImplementation("org.robolectric:robolectric:4.3.1")
+    testImplementation("androidx.test:core:1.2.0")
 }

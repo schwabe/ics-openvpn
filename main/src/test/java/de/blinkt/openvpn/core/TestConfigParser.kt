@@ -6,6 +6,7 @@
 package de.blinkt.openvpn.core
 
 import android.content.Context
+import android.os.Build
 import androidx.test.core.app.ApplicationProvider
 import de.blinkt.openvpn.R
 import org.junit.Assert
@@ -44,8 +45,8 @@ const val fakeCerts = "<ca>\n" +
         "</key>"
 
 
-@Config(manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 class TestConfigParser {
     @Test
     @Throws(IOException::class, ConfigParser.ConfigParseError::class)

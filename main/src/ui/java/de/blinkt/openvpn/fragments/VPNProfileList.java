@@ -5,6 +5,7 @@
 
 package de.blinkt.openvpn.fragments;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,6 +23,7 @@ import android.os.Handler;
 import android.os.PersistableBundle;
 import android.text.Html;
 import android.text.Html.ImageGetter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,8 +43,13 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.ListFragment;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
@@ -71,7 +78,10 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     public final static int RESULT_VPN_DUPLICATE = Activity.RESULT_FIRST_USER + 1;
     // Shortcut version is increased to refresh all shortcuts
     final static int SHORTCUT_VERSION = 1;
-    final static String FILENAME = "filename";
+    final static String FILECONTENT = "filecontent";
+    @SuppressLint("SimpleDateFormat")
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    private final static String TEMP_FILENAME = "someIP-" + sdf.format(new Date(System.currentTimeMillis())) + ".ovpn";
     public final static String AUTOMATIC = "AUTOMATIC";
     private static final int MENU_ADD_PROFILE = Menu.FIRST;
     private static final int START_VPN_CONFIG = 92;
@@ -137,10 +147,28 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         System.out.println("Fragment onCreate " + getArguments());
-        if (getArguments() != null && getArguments().containsKey(FILENAME)) {
-            String filename = getArguments().getString(FILENAME);
-            Uri uri = Uri.fromFile(new File(filename));
+        if (getArguments() != null && getArguments().containsKey(FILECONTENT)) {
+
+            File file;
+            file = new File(requireContext().getCacheDir(), TEMP_FILENAME);
+            file.deleteOnExit();
+
+            String fileContent = getArguments().getString(FILECONTENT);
+            writeToFile(fileContent, file.getAbsolutePath());
+
+            Uri uri = Uri.fromFile(file);
             startConfigImport(uri, true);
+        }
+    }
+
+    private void writeToFile(String data, String filename) {
+        try {
+            OutputStream out = new FileOutputStream(filename);
+            out.write(data.getBytes());
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
         }
     }
 
@@ -536,7 +564,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
     private void startLatestIfNecessary() {
-        if (getArguments() != null && getArguments().containsKey(FILENAME)) {
+        if (getArguments() != null && getArguments().containsKey(FILECONTENT)) {
             // run latest profile in list
             int position = mArrayadapter.getCount() - 1;
             startOrStopVPN(mArrayadapter.getItem(position));
@@ -565,7 +593,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
         Intent intent = new Intent(getActivity(), LaunchVPN.class);
         intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
-        if (getArguments() != null && getArguments().containsKey(FILENAME)) {
+        if (getArguments() != null && getArguments().containsKey(FILECONTENT)) {
             intent.putExtra(VPNProfileList.AUTOMATIC, true);
         }
         intent.setAction(Intent.ACTION_MAIN);

@@ -18,12 +18,8 @@ import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PersistableBundle;
-
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.ListFragment;
-
 import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.view.LayoutInflater;
@@ -39,6 +35,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.ListFragment;
+
+import java.io.File;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -69,6 +71,8 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     public final static int RESULT_VPN_DUPLICATE = Activity.RESULT_FIRST_USER + 1;
     // Shortcut version is increased to refresh all shortcuts
     final static int SHORTCUT_VERSION = 1;
+    final static String FILENAME = "filename";
+    public final static String AUTOMATIC = "AUTOMATIC";
     private static final int MENU_ADD_PROFILE = Menu.FIRST;
     private static final int START_VPN_CONFIG = 92;
     private static final int SELECT_PROFILE = 43;
@@ -80,7 +84,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private static final String PREF_SORT_BY_LRU = "sortProfilesByLRU";
     protected VpnProfile mEditProfile = null;
     private String mLastStatusMessage;
-    private ArrayAdapter<VpnProfile> mArrayadapter;
+    private VPNArrayAdapter mArrayadapter;
     private Intent mLastIntent;
 
     @Override
@@ -90,6 +94,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             mLastIntent = intent;
             mArrayadapter.notifyDataSetChanged();
             showUserRequestDialogIfNeeded(level, intent);
+//            runCommandIfNeccesary()
         });
     }
 
@@ -126,6 +131,17 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        System.out.println("Fragment onCreate " + getArguments());
+        if (getArguments() != null && getArguments().containsKey(FILENAME)) {
+            String filename = getArguments().getString(FILENAME);
+            Uri uri = Uri.fromFile(new File(filename));
+            startConfigImport(uri, true);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
@@ -502,23 +518,36 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             String fileData = data.getStringExtra(FileSelect.RESULT_DATA);
             Uri uri = new Uri.Builder().path(fileData).scheme("file").build();
 
-            startConfigImport(uri);
+            startConfigImport(uri, false);
         } else if (requestCode == IMPORT_PROFILE) {
             String profileUUID = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
             mArrayadapter.add(ProfileManager.get(getActivity(), profileUUID));
+
+            // wait till list is refreshed
+            new Handler().postDelayed(this::startLatestIfNecessary, 1000);
+
         } else if (requestCode == FILE_PICKER_RESULT_KITKAT) {
             if (data != null) {
                 Uri uri = data.getData();
-                startConfigImport(uri);
+                startConfigImport(uri, false);
             }
         }
 
     }
 
-    private void startConfigImport(Uri uri) {
+    private void startLatestIfNecessary() {
+        if (getArguments() != null && getArguments().containsKey(FILENAME)) {
+            // run latest profile in list
+            int position = mArrayadapter.getCount() - 1;
+            startOrStopVPN(mArrayadapter.getItem(position));
+        }
+    }
+
+    private void startConfigImport(Uri uri, boolean automatic) {
         Intent startImport = new Intent(getActivity(), ConfigConverter.class);
         startImport.setAction(ConfigConverter.IMPORT_PROFILE);
         startImport.setData(uri);
+        startImport.putExtra(AUTOMATIC, automatic);
         startActivityForResult(startImport, IMPORT_PROFILE);
     }
 
@@ -536,6 +565,9 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
         Intent intent = new Intent(getActivity(), LaunchVPN.class);
         intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
+        if (getArguments() != null && getArguments().containsKey(FILENAME)) {
+            intent.putExtra(VPNProfileList.AUTOMATIC, true);
+        }
         intent.setAction(Intent.ACTION_MAIN);
         startActivity(intent);
     }

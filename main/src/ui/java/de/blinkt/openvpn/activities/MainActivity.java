@@ -5,14 +5,16 @@
 
 package de.blinkt.openvpn.activities;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.viewpager.widget.ViewPager;
+
+import java.util.Set;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.fragments.AboutFragment;
@@ -38,10 +40,12 @@ public class MainActivity extends BaseActivity {
 
         setContentView(R.layout.main_activity);
 
-
+        if (getIntent().getExtras() != null)
+            printBundle(getIntent().getExtras());
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager(), this);
+        mPagerAdapter.setFragmentArgs(getIntent().getExtras());
 
         /* Toolbar and slider should have the same elevation */
         disableToolbarElevation();
@@ -66,6 +70,14 @@ public class MainActivity extends BaseActivity {
 
         //mTabs =  findViewById(R.id.sliding_tabs);
         //mTabs.setViewPager(mPager);
+    }
+
+    private void printBundle(Bundle extras) {
+        Set<String> keys = extras.keySet();
+        for (String key : keys) {
+            Object o = extras.get(key);
+            Log.d("Activity started", key + "=" + o.toString());
+        }
     }
 
     private boolean isDirectToTV() {

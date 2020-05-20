@@ -6,6 +6,7 @@
 package de.blinkt.openvpn.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.AlertDialog
@@ -33,11 +34,13 @@ import de.blinkt.openvpn.core.ConfigParser
 import de.blinkt.openvpn.core.ConfigParser.ConfigParseError
 import de.blinkt.openvpn.core.ProfileManager
 import de.blinkt.openvpn.fragments.Utils
+import de.blinkt.openvpn.fragments.VPNProfileList
 import de.blinkt.openvpn.views.FileSelectLayout
 import de.blinkt.openvpn.views.FileSelectLayout.FileSelectCallback
 import java.io.*
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener {
@@ -93,7 +96,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
             embedFiles(null)
         else if (requestCode == PERMISSION_REQUEST_READ_URL) {
             if (mSourceUri != null)
-                doImportUri(mSourceUri!!)
+                doImportUri(mSourceUri!!, false)
         }
     }
 
@@ -267,9 +270,9 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         }
     }
 
-
+    @SuppressLint("SimpleDateFormat")
     private fun getUniqueProfileName(possibleName: String?): String {
-
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         var i = 0
 
         val vpl = ProfileManager.getInstance(this)
@@ -283,9 +286,9 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         while (newname == null || vpl.getProfileByName(newname) != null) {
             i++
             if (i == 1)
-                newname = getString(R.string.converted_profile)
+                newname = getString(R.string.converted_profile) + " " + sdf.format(Date(System.currentTimeMillis()))
             else
-                newname = getString(R.string.converted_profile_i, i)
+                newname = getString(R.string.converted_profile_i, i) + " " + sdf.format(Date(System.currentTimeMillis()))
         }
 
         return newname
@@ -610,19 +613,19 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
             if (data != null) {
                 startImportTask(Uri.fromParts("inline", "inlinetext", null),
-                        "imported profiles from AS", data);
+                        "imported profiles from AS", data, intent.getBooleanExtra(VPNProfileList.AUTOMATIC, false))
             }
         } else if (intent.action.equals(IMPORT_PROFILE) || intent.action.equals(Intent.ACTION_VIEW)) {
             val data = intent.data
             if (data != null) {
                 mSourceUri = data
-                doImportUri(data)
+                doImportUri(data, intent.getBooleanExtra(VPNProfileList.AUTOMATIC, false))
 
             }
         }
     }
 
-    private fun doImportUri(data: Uri) {
+    private fun doImportUri(data: Uri, automatic: Boolean) {
         //log(R.string.import_experimental);
         log(R.string.importing_config, data.toString())
         var possibleName: String? = null
@@ -660,12 +663,12 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
             possibleName = possibleName.replace(".conf", "")
         }
 
-        startImportTask(data, possibleName, "")
+        startImportTask(data, possibleName, "", automatic)
 
 
     }
 
-    private fun startImportTask(data: Uri, possibleName: String?, inlineData: String) {
+    private fun startImportTask(data: Uri, possibleName: String?, inlineData: String, automatic: Boolean) {
         mImportTask = object : AsyncTask<Void, Void, Int>() {
             private var mProgress: ProgressBar? = null
 
@@ -716,6 +719,9 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
                     mProfilename.setText(mResult!!.name)
 
                     log(R.string.import_done)
+
+                    if (automatic)
+                        userActionSaveProfile()
                 }
             }
         }.execute()

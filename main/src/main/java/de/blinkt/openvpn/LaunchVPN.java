@@ -90,7 +90,7 @@ public class LaunchVPN extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.launchvpn);
-        startVpnFromIntent(getIntent().getBooleanExtra(VPNProfileList.AUTOMATIC, false));
+        startVpnFromIntent();
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -119,7 +119,7 @@ public class LaunchVPN extends Activity {
         }
     };
 
-    protected void startVpnFromIntent(boolean automatic) {
+    protected void startVpnFromIntent() {
         // Resolve the intent
 
         final Intent intent = getIntent();
@@ -155,7 +155,7 @@ public class LaunchVPN extends Activity {
                 finish();
             } else {
                 mSelectedProfile = profileToConnect;
-                launchVPN(automatic);
+                launchVPN();
             }
         }
     }
@@ -307,7 +307,7 @@ public class LaunchVPN extends Activity {
         });
     }
 
-    void launchVPN(boolean automatic) {
+    void launchVPN() {
         int vpnok = mSelectedProfile.checkProfile(this);
         if (vpnok != R.string.no_error_found) {
             showConfigErrorDialog(vpnok);
@@ -327,7 +327,7 @@ public class LaunchVPN extends Activity {
             execeuteSUcmd("chown system /dev/tun");
         }
 
-        if (!automatic && intent != null) {
+        if (intent != null) {
             VpnStatus.updateStateString("USER_VPN_PERMISSION", "", R.string.state_user_vpn_permission,
                     ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
             // Start the query

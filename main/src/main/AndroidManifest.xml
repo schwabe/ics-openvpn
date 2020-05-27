@@ -228,6 +228,7 @@
                 android:value="de.blinkt.openvpn.activities.MainActivity" />
         </activity>
         <activity android:name=".api.RemoteAction" />
+        <activity android:name=".activities.MainActivity" />
 
         <activity-alias
             android:name=".api.ConnectVPN"

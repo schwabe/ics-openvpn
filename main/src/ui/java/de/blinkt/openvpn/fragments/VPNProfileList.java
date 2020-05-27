@@ -60,6 +60,7 @@ import de.blinkt.openvpn.core.VpnStatus;
 
 import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
 import static de.blinkt.openvpn.core.OpenVPNService.DISCONNECT_VPN;
+import static de.blinkt.openvpn.core.OpenVPNService.EXTRA_CHALLENGE_TXT;
 
 
 public class VPNProfileList extends ListFragment implements OnClickListener, VpnStatus.StateListener {
@@ -80,23 +81,28 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     protected VpnProfile mEditProfile = null;
     private String mLastStatusMessage;
     private ArrayAdapter<VpnProfile> mArrayadapter;
+    private Intent mLastIntent;
 
     @Override
     public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level, Intent intent) {
         requireActivity().runOnUiThread(() -> {
             mLastStatusMessage = VpnStatus.getLastCleanLogMessage(getActivity());
+            mLastIntent = intent;
             mArrayadapter.notifyDataSetChanged();
             showUserRequestDialogIfNeeded(level, intent);
         });
     }
 
-    private void showUserRequestDialogIfNeeded(ConnectionStatus level, Intent intent) {
+    private boolean showUserRequestDialogIfNeeded(ConnectionStatus level, Intent intent) {
         if (level == LEVEL_WAITING_FOR_USER_INPUT) {
-            PasswordDialogFragment pwInputFrag = PasswordDialogFragment.Companion.newInstance(intent, false);
+            if (intent.getStringExtra(EXTRA_CHALLENGE_TXT) != null) {
+                PasswordDialogFragment pwInputFrag = PasswordDialogFragment.Companion.newInstance(intent, false);
 
-            pwInputFrag.show(requireFragmentManager(), "dialog");
-
+                pwInputFrag.show(getParentFragmentManager(), "dialog");
+                return true;
+            }
         }
+        return false;
     }
 
     @Override
@@ -105,8 +111,12 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
     private void startOrStopVPN(VpnProfile profile) {
         if (VpnStatus.isVPNActive() && profile.getUUIDString().equals(VpnStatus.getLastConnectedVPNProfile())) {
-            Intent disconnectVPN = new Intent(getActivity(), DisconnectVPN.class);
-            startActivity(disconnectVPN);
+            if (mLastIntent != null) {
+                startActivity(mLastIntent);
+            } else {
+                Intent disconnectVPN = new Intent(getActivity(), DisconnectVPN.class);
+                startActivity(disconnectVPN);
+            }
         } else {
             startVPN(profile);
         }
@@ -600,14 +610,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             });
 
             View settingsview = v.findViewById(R.id.quickedit_settings);
-            settingsview.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    editVPN(profile);
-
-                }
-            });
+            settingsview.setOnClickListener(view -> editVPN(profile));
 
             TextView subtitle = (TextView) v.findViewById(R.id.vpn_item_subtitle);
             if (profile.getUUIDString().equals(VpnStatus.getLastConnectedVPNProfile())) {

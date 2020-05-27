@@ -31,13 +31,14 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -77,6 +78,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
 
     public static final String EXTRA_CHALLENGE_TXT = "de.blinkt.openvpn.core.CR_TEXT_CHALLENGE";
+    public static final String EXTRA_CHALLENGE_OPENURL = "de.blinkt.openvpn.core.OPENURL_CHALLENGE";
 
     private static final int PRIORITY_MIN = -2;
     private static final int PRIORITY_DEFAULT = 0;
@@ -174,8 +176,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     return res.getString(R.string.volume_gbyte, bytesUnit);
 
             }
-
-
     }
 
     /**
@@ -699,6 +699,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
         return null;
     }
+
+
 
     @Override
     public IBinder asBinder() {
@@ -1289,13 +1291,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             nbuilder.setContentTitle(getString(reason));
 
             nbuilder.setContentText(url);
-
-
-            intent = new Intent(Intent.ACTION_VIEW);
+            intent = VariantConfig.getOpenUrlIntent(this);
             intent.setData(Uri.parse(url));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
         } else if (method.equals("CR_TEXT")) {
             String challenge = info.split(":", 2)[1];
             reason = R.string.crtext_requested;

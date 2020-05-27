@@ -673,7 +673,7 @@ public class VpnProfile implements Serializable, Cloneable {
                 NativeUtils.getNativeAPI(), Build.BRAND, Build.BOARD, Build.MODEL);
     }
 
-    public String getVersionEnvString(Context c) {
+    static public String getVersionEnvString(Context c) {
         String version = "unknown";
         try {
             PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);

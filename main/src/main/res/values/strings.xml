@@ -497,5 +497,6 @@
     <string name="request_autologin">Request autologin profile</string>
     <string name="import_from_as">Import Profile from Access Server</string>
     <string name="no_default_vpn_set">Default VPN not set. Please set the Default VPN before enabling this option.</string>
+    <string name="internal_web_view">Internal WebView</string>
 
 </resources>

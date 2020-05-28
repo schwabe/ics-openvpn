@@ -18,8 +18,8 @@ android {
     defaultConfig {
         minSdkVersion(14)
         targetSdkVersion(29)  //'Q'.toInt()
-        versionCode = 168
-        versionName = "0.7.15"
+        versionCode = 169
+        versionName = "0.7.16"
 
         externalNativeBuild {
             cmake {
@@ -29,7 +29,8 @@ android {
         }
     }
 
-    //testOptions.unitTests.isIncludeAndroidResources = true
+    testOptions.unitTests.isIncludeAndroidResources = true
+
 
 
     externalNativeBuild {
@@ -181,10 +182,11 @@ dependencies {
     dependencies.add("uiImplementation", "androidx.preference:preference:$preferenceVersion")
     dependencies.add("uiImplementation", "androidx.preference:preference-ktx:$preferenceVersion")
     dependencies.add("uiImplementation", "com.google.android.material:material:$materialVersion")
+    dependencies.add("uiImplementation", "androidx.webkit:webkit:1.2.0")
 
-
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.70")
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
     testImplementation("junit:junit:4.13")
-    testImplementation("org.mockito:mockito-core:3.3.0")
+    testImplementation("org.mockito:mockito-core:3.3.3")
     testImplementation("org.robolectric:robolectric:4.3.1")
+    testImplementation("androidx.test:core:1.2.0")
 }

@@ -141,6 +141,7 @@ fun registerGenTask(variantName: String, variantDirName: String): File {
                 "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
                 "-o", "${genDir}/ovpncli_wrap.cxx", "-oh", "${genDir}/ovpncli_wrap.h",
                 "src/main/cpp/openvpn3/javacli/ovpncli.i"))
+
     }
     return baseDir
 }
@@ -149,7 +150,7 @@ android.applicationVariants.all(object : Action<ApplicationVariant> {
     override fun execute(variant: ApplicationVariant) {
         val sourceDir = registerGenTask(variant.name, variant.baseName.replace("-", "/"))
         val task = tasks.named("generateOpenVPN3Swig${variant.name}").get()
-
+        
         variant.registerJavaGeneratingTask(task, sourceDir)
     }
 })

@@ -524,17 +524,17 @@ public class VpnProfile implements Serializable, Cloneable {
         if (mUsePull && mRoutenopull)
             cfg.append("route-nopull\n");
 
-        String routes = "";
+        StringBuilder routes = new StringBuilder();
 
         if (mUseDefaultRoute)
-            routes += "route 0.0.0.0 0.0.0.0 vpn_gateway\n";
+            routes.append("route 0.0.0.0 0.0.0.0 vpn_gateway\n");
         else {
             for (String route : getCustomRoutes(mCustomRoutes)) {
-                routes += "route " + route + " vpn_gateway\n";
+                routes.append("route ").append(route).append(" vpn_gateway\n");
             }
 
             for (String route : getCustomRoutes(mExcludedRoutes)) {
-                routes += "route " + route + " net_gateway\n";
+                routes.append("route ").append(route).append(" net_gateway\n");
             }
         }
 
@@ -543,7 +543,7 @@ public class VpnProfile implements Serializable, Cloneable {
             cfg.append("route-ipv6 ::/0\n");
         else
             for (String route : getCustomRoutesv6(mCustomRoutesv6)) {
-                routes += "route-ipv6 " + route + "\n";
+                routes.append("route-ipv6 ").append(route).append("\n");
             }
 
         cfg.append(routes);

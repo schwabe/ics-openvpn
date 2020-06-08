@@ -612,7 +612,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
                 startImportTask(Uri.fromParts("inline", "inlinetext", null),
                         "imported profiles from AS", data);
             }
-        } else if (intent.action.equals(IMPORT_PROFILE)) {
+        } else if (intent.action.equals(IMPORT_PROFILE) || intent.action.equals(Intent.ACTION_VIEW)) {
             val data = intent.data
             if (data != null) {
                 mSourceUri = data

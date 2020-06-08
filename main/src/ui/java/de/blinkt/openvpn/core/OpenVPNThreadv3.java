@@ -3,17 +3,22 @@ package de.blinkt.openvpn.core;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.provider.Settings;
-import android.util.Base64;
+
+import net.openvpn.ovpn3.ClientAPI_Config;
+import net.openvpn.ovpn3.ClientAPI_EvalConfig;
+import net.openvpn.ovpn3.ClientAPI_Event;
+import net.openvpn.ovpn3.ClientAPI_ExternalPKICertRequest;
+import net.openvpn.ovpn3.ClientAPI_ExternalPKISignRequest;
+import net.openvpn.ovpn3.ClientAPI_LogInfo;
+import net.openvpn.ovpn3.ClientAPI_OpenVPNClient;
+import net.openvpn.ovpn3.ClientAPI_ProvideCreds;
+import net.openvpn.ovpn3.ClientAPI_Status;
+import net.openvpn.ovpn3.ClientAPI_TransportStats;
+
+import java.util.Locale;
+
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
-import net.openvpn.ovpn3.*;
-
-import net.openvpn.ovpn3.ClientAPI_OpenVPNClient;
-import net.openvpn.ovpn3.ClientAPI_DynamicChallenge;
-
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 
 import static de.blinkt.openvpn.VpnProfile.AUTH_RETRY_NOINTERACT;
 

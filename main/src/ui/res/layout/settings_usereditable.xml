@@ -27,4 +27,14 @@
             tools:visibility="gone">
         <include layout="@layout/keystore_selector"/>
     </LinearLayout>
+    <LinearLayout
+            android:id="@+id/external_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="gone">
+
+        <include layout="@layout/extauth_provider"/>
+    </LinearLayout>
 </LinearLayout>

@@ -13,21 +13,14 @@ plugins {
     kotlin("android.extensions")
 }
 
-repositories {
-    jcenter()
-    maven(url = "https://jitpack.io")
-    google()
-}
-
-
 android {
     compileSdkVersion(29)
 
     defaultConfig {
         minSdkVersion(14)
         targetSdkVersion(29)  //'Q'.toInt()
-        versionCode = 166
-        versionName = "0.7.13"
+        versionCode = 168
+        versionName = "0.7.15"
 
         externalNativeBuild {
             cmake {
@@ -153,20 +146,6 @@ android.libraryVariants.all(object : Action<LibraryVariant> {
     }
 })
 
-// ~/.gradle/gradle.properties
-if (project.hasProperty("keystoreFile") &&
-        project.hasProperty("keystorePassword") &&
-        project.hasProperty("keystoreAliasPassword")) {
-    android.signingConfigs.getByName("release") {
-        storeFile = file(project.properties["keystoreFile"] as String)
-        storePassword = project.properties["keystorePassword"] as String
-        keyPassword = project.properties["keystoreAliasPassword"] as String
-        keyAlias = project.properties["keystoreAlias"] as String
-    }
-} else {
-    android.buildTypes.getByName("release").signingConfig = null
-}
-
 
 dependencies {
     val preferenceVersion = "1.1.0"
@@ -195,9 +174,8 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
     testImplementation("junit:junit:4.12")
-    testImplementation("org.mockito:mockito-core:3.2.0")
+    testImplementation("org.mockito:mockito-core:3.2.4")
     testImplementation("org.robolectric:robolectric:4.3.1")
 }
-
 
 

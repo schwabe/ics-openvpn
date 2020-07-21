@@ -21,6 +21,7 @@ android {
         targetSdkVersion(29)  //'Q'.toInt()
         versionCode = 168
         versionName = "0.7.15"
+        ndkVersion = "20.0.5594570"
 
         externalNativeBuild {
             cmake {

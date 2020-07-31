@@ -40,6 +40,8 @@ class InternalWebView : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
             attachMessageHandler()
 
+        val startData = "Trying to open page at ${intent.data.toString()}"
+        webView.loadData(startData,"text/plain","UTF-8");
         webView.loadUrl(intent.data.toString())
 
         webView.settings.javaScriptEnabled = true

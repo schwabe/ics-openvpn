@@ -207,7 +207,7 @@ set(openvpn_srcs
 
 PREPEND(openvpn_srcs_with_path "openvpn" ${openvpn_srcs})
 
-add_library(openvpn SHARED ${openvpn_srcs_with_path})
+add_library(openvpn STATIC ${openvpn_srcs_with_path})
 
 target_include_directories(openvpn PRIVATE
         openvpn-config

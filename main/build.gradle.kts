@@ -13,11 +13,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(30)
 
     defaultConfig {
         minSdkVersion(14)
-        targetSdkVersion(29)  //'Q'.toInt()
+        targetSdkVersion(30)  //'Q'.toInt()
         versionCode = 169
         versionName = "0.7.16"
 
@@ -150,7 +150,7 @@ android.applicationVariants.all(object : Action<ApplicationVariant> {
     override fun execute(variant: ApplicationVariant) {
         val sourceDir = registerGenTask(variant.name, variant.baseName.replace("-", "/"))
         val task = tasks.named("generateOpenVPN3Swig${variant.name}").get()
-        
+
         variant.registerJavaGeneratingTask(task, sourceDir)
     }
 })
@@ -170,7 +170,7 @@ dependencies {
 
     // Is there a nicer way to do this?
     dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:1.1.3")
-    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.70")
+    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
     dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
     dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.0.0")
     dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.1.0")

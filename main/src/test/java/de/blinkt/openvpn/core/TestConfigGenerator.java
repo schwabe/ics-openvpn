@@ -48,11 +48,6 @@ public class TestConfigGenerator {
 
         VpnProfile vp = new VpnProfile ("test") {
             @Override
-            public String getVersionEnvString(Context c) {
-                return "no ver";
-            }
-
-            @Override
             public String getPlatformVersionEnvString() {
                 return "test";
             }

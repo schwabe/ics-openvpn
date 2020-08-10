@@ -1,0 +1,121 @@
+diff -u -r -x .DS_Store openvpn-2.4.7.old/src/openvpn/socket.h openvpn-2.4.7.new/src/openvpn/socket.h
+--- openvpn-2.4.7.old/src/openvpn/socket.h	2019-02-27 06:02:54.000000000 -0500
++++ openvpn-2.4.7.new/src/openvpn/socket.h	2019-02-27 06:02:54.000000000 -0500
+@@ -248,6 +248,10 @@
+ #endif
+ };
+ 
++int buffer_mask(struct buffer *buf, const char *xormask, int xormasklen);
++int buffer_xorptrpos(struct buffer *buf);
++int buffer_reverse(struct buffer *buf);
++
+ /*
+  * Some Posix/Win32 differences.
+  */
+@@ -1065,30 +1069,61 @@
+ static inline int
+ link_socket_read(struct link_socket *sock,
+                  struct buffer *buf,
+-                 struct link_socket_actual *from)
++                 struct link_socket_actual *from,
++                 int xormethod,
++                 const char *xormask,
++                 int xormasklen)
+ {
++    int res;
+     if (proto_is_udp(sock->info.proto)) /* unified UDPv4 and UDPv6 */
+     {
+-        int res;
+ 
+ #ifdef _WIN32
+         res = link_socket_read_udp_win32(sock, buf, from);
+ #else
+         res = link_socket_read_udp_posix(sock, buf, from);
+ #endif
+-        return res;
+     }
+     else if (proto_is_tcp(sock->info.proto)) /* unified TCPv4 and TCPv6 */
+     {
+         /* from address was returned by accept */
+         addr_copy_sa(&from->dest, &sock->info.lsa->actual.dest);
+-        return link_socket_read_tcp(sock, buf);
++        res = link_socket_read_tcp(sock, buf);
+     }
+     else
+     {
+         ASSERT(0);
+         return -1; /* NOTREACHED */
+     }
++    switch (xormethod)
++    {
++        case 0:
++            break;
++
++        case 1:
++            buffer_mask(buf,xormask,xormasklen);
++            break;
++
++        case 2:
++            buffer_xorptrpos(buf);
++            break;
++
++        case 3:
++            buffer_reverse(buf);
++            break;
++
++        case 4:
++            buffer_mask(buf,xormask,xormasklen);
++            buffer_xorptrpos(buf);
++            buffer_reverse(buf);
++            buffer_xorptrpos(buf);
++            break;
++
++        default:
++            ASSERT(0);
++            return -1; /* NOTREACHED */
++    }
++    return res;
+ }
+ 
+ /*
+@@ -1178,8 +1213,39 @@
+ static inline int
+ link_socket_write(struct link_socket *sock,
+                   struct buffer *buf,
+-                  struct link_socket_actual *to)
++                  struct link_socket_actual *to,
++                  int xormethod,
++                  const char *xormask,
++                  int xormasklen)
+ {
++    switch (xormethod)
++    {
++        case 0:
++            break;
++
++        case 1:
++            buffer_mask(buf,xormask,xormasklen);
++            break;
++
++        case 2:
++            buffer_xorptrpos(buf);
++            break;
++
++        case 3:
++            buffer_reverse(buf);
++            break;
++
++        case 4:
++            buffer_xorptrpos(buf);
++            buffer_reverse(buf);
++            buffer_xorptrpos(buf);
++            buffer_mask(buf,xormask,xormasklen);
++            break;
++
++        default:
++            ASSERT(0);
++            return -1; /* NOTREACHED */
++    }
+     if (proto_is_udp(sock->info.proto)) /* unified UDPv4 and UDPv6 */
+     {
+         return link_socket_write_udp(sock, buf, to);

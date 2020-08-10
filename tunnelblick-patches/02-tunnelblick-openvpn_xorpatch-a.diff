@@ -1,0 +1,27 @@
+diff -u -r -x .DS_Store openvpn-2.4.6.old/src/openvpn/forward.c openvpn-2.4.6.new/src/openvpn/forward.c
+--- openvpn-2.4.6.old/src/openvpn/forward.c	2018-07-28 06:02:24.000000000 -0400
++++ openvpn-2.4.6.new/src/openvpn/forward.c	2018-07-28 06:02:24.000000000 -0400
+@@ -729,7 +729,10 @@
+ 
+     status = link_socket_read(c->c2.link_socket,
+                               &c->c2.buf,
+-                              &c->c2.from);
++                              &c->c2.from,
++                              c->options.ce.xormethod,
++                              c->options.ce.xormask,
++                              c->options.ce.xormasklen);
+ 
+     if (socket_connection_reset(c->c2.link_socket, status))
+     {
+@@ -1374,7 +1377,10 @@
+                 /* Send packet */
+                 size = link_socket_write(c->c2.link_socket,
+                                          &c->c2.to_link,
+-                                         to_addr);
++                                         to_addr,
++                                         c->options.ce.xormethod,
++                                         c->options.ce.xormask,
++                                         c->options.ce.xormasklen);
+ 
+                 /* Undo effect of prepend */
+                 link_socket_write_post_size_adjust(&size, size_delta, &c->c2.to_link);

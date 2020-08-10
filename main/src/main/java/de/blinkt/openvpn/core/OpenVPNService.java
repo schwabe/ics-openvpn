@@ -31,13 +31,14 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -77,6 +78,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
 
     public static final String EXTRA_CHALLENGE_TXT = "de.blinkt.openvpn.core.CR_TEXT_CHALLENGE";
+    public static final String EXTRA_CHALLENGE_OPENURL = "de.blinkt.openvpn.core.OPENURL_CHALLENGE";
 
     private static final int PRIORITY_MIN = -2;
     private static final int PRIORITY_DEFAULT = 0;
@@ -174,8 +176,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     return res.getString(R.string.volume_gbyte, bytesUnit);
 
             }
-
-
     }
 
     /**
@@ -590,6 +590,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             return;
         }
         String nativeLibraryDirectory = getApplicationInfo().nativeLibraryDir;
+        String tmpDir;
+        try {
+            tmpDir = getApplication().getCacheDir().getCanonicalPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+            tmpDir = "/tmp";
+        }
 
         // Write OpenVPN binary
         String[] argv = VPNLaunchHelper.buildOpenvpnArgv(this);
@@ -627,7 +634,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             processThread = (Runnable) mOpenVPN3;
             mManagement = mOpenVPN3;
         } else {
-            processThread = new OpenVPNThread(this, argv, nativeLibraryDirectory);
+            processThread = new OpenVPNThread(this, argv, nativeLibraryDirectory, tmpDir);
             mOpenVPNThread = processThread;
         }
 
@@ -692,6 +699,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
         return null;
     }
+
+
 
     @Override
     public IBinder asBinder() {
@@ -872,6 +881,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             ipv6info = mLocalIPv6;
         }
 
+        if ((!mRoutes.getNetworks(false).isEmpty() || !mRoutesv6.getNetworks(false).isEmpty()) && isLockdownEnabledCompat())
+        {
+            VpnStatus.logInfo("VPN lockdown enabled (do not allow apps to bypass VPN) enabled. Route exclusion will not allow apps to bypass VPN (e.g. bypass VPN for local networks)");
+        }
+
         VpnStatus.logInfo(R.string.local_ip_info, ipv4info, ipv4len, ipv6info, mMtu);
         VpnStatus.logInfo(R.string.dns_server_info, TextUtils.join(", ", mDnslist), mDomain);
         VpnStatus.logInfo(R.string.routes_info_incl, TextUtils.join(", ", mRoutes.getNetworks(true)), TextUtils.join(", ", mRoutesv6.getNetworks(true)));
@@ -925,6 +939,16 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 VpnStatus.logError(R.string.tun_error_helpful);
             }
             return null;
+        }
+
+    }
+
+    private boolean isLockdownEnabledCompat() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return isLockdownEnabled();
+        } else {
+            /* We cannot determine this, return false */
+            return false;
         }
 
     }
@@ -1267,13 +1291,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             nbuilder.setContentTitle(getString(reason));
 
             nbuilder.setContentText(url);
-
-
-            intent = new Intent(Intent.ACTION_VIEW);
+            intent = VariantConfig.getOpenUrlIntent(this);
             intent.setData(Uri.parse(url));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
         } else if (method.equals("CR_TEXT")) {
             String challenge = info.split(":", 2)[1];
             reason = R.string.crtext_requested;

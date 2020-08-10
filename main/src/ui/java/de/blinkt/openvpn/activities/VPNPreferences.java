@@ -39,7 +39,7 @@ public class VPNPreferences extends BaseActivity {
     static final Class[] validFragments = new Class[]{
             Settings_Authentication.class, Settings_Basic.class, Settings_IP.class,
             Settings_Obscure.class, Settings_Routing.class, ShowConfigFragment.class,
-            Settings_Connections.class, Settings_Allowed_Apps.class
+            Settings_Connections.class, Settings_Allowed_Apps.class,
     };
 
     private String mProfileUUID;
@@ -147,9 +147,9 @@ public class VPNPreferences extends BaseActivity {
         } else {
             mPagerAdapter.addTab(R.string.basic, Settings_UserEditable.class);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mPagerAdapter.addTab(R.string.vpn_allowed_apps, Settings_Allowed_Apps.class);
-
+        }
         mPagerAdapter.addTab(R.string.generated_config, ShowConfigFragment.class);
 
 

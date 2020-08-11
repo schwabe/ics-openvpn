@@ -25,7 +25,7 @@ jobs:
     - name: Android build action
       uses: xdtianyu/actions-android-ci@master
       with:
-        args: '"apt-get update && apt-get -y install swig && ./setup-android-sdk.sh && ./setup-android-ndk.sh && ./gradlew assembleDebug"'
+        args: '"apt-get update && apt-get -y install swig && chmod +x setup-android-sdk.sh && ./setup-android-sdk.sh && chmod +x setup-android-ndk.sh && ./setup-android-ndk.sh && ./gradlew assembleDebug"'
     - name: Upload artifact - dump outputs folder
       uses: actions/upload-artifact@v1.0.0
       with:

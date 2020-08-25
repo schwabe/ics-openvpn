@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2012-2020 Arne Schwabe
+  ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+  -->
+
+<LinearLayout android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+            android:id="@+id/url_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="https://foo.bar.baz" />
+
+    <WebView
+            android:id="@+id/internal_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+</LinearLayout>

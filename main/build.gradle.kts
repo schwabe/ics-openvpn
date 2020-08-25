@@ -14,13 +14,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(30)
 
     defaultConfig {
         minSdkVersion(14)
-        targetSdkVersion(29)  //'Q'.toInt()
-        versionCode = 168
-        versionName = "0.7.15"
+        targetSdkVersion(30)  //'Q'.toInt()
+        versionCode = 169
+        versionName = "0.7.16"
         ndkVersion = "20.0.5594570"
 
         externalNativeBuild {
@@ -30,6 +30,9 @@ android {
             }
         }
     }
+
+    testOptions.unitTests.isIncludeAndroidResources = true
+
 
     externalNativeBuild {
         cmake {
@@ -134,6 +137,7 @@ fun registerGenTask(variantName: String, variantDirName: String): File {
                 "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
                 "-o", "${genDir}/ovpncli_wrap.cxx", "-oh", "${genDir}/ovpncli_wrap.h",
                 "src/main/cpp/openvpn3/javacli/ovpncli.i"))
+
     }
     return baseDir
 }
@@ -149,16 +153,20 @@ android.libraryVariants.all(object : Action<LibraryVariant> {
 
 
 dependencies {
-    val preferenceVersion = "1.1.0"
-    val coreVersion = "1.1.0"
-    val materialVersion = "1.0.0"
+    // https://maven.google.com/web/index.html
+    // https://developer.android.com/jetpack/androidx/releases/core
+    val preferenceVersion = "1.1.1"
+    val coreVersion = "1.2.0"
+    val materialVersion = "1.1.0"
+    val fragment_version = "1.2.4"
+
 
     implementation("androidx.annotation:annotation:1.1.0")
-    implementation("androidx.core:core:1.1.0")
+    implementation("androidx.core:core:$coreVersion")
 
     // Is there a nicer way to do this?
     dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:1.1.3")
-    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
+    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
     dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
     dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.0.0")
     dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.1.0")
@@ -167,16 +175,17 @@ dependencies {
     dependencies.add("uiImplementation", "androidx.core:core:$coreVersion")
     dependencies.add("uiImplementation", "androidx.core:core-ktx:$coreVersion")
     dependencies.add("uiImplementation", "org.jetbrains.anko:anko-commons:0.10.4")
-    dependencies.add("uiImplementation", "androidx.fragment:fragment-ktx:1.1.0")
+    dependencies.add("uiImplementation", "androidx.fragment:fragment-ktx:$fragment_version")
     dependencies.add("uiImplementation", "androidx.preference:preference:$preferenceVersion")
     dependencies.add("uiImplementation", "androidx.preference:preference-ktx:$preferenceVersion")
     dependencies.add("uiImplementation", "com.google.android.material:material:$materialVersion")
+    dependencies.add("uiImplementation", "androidx.webkit:webkit:1.2.0")
 
-
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
-    testImplementation("junit:junit:4.12")
-    testImplementation("org.mockito:mockito-core:3.2.4")
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
+    testImplementation("junit:junit:4.13")
+    testImplementation("org.mockito:mockito-core:3.3.3")
     testImplementation("org.robolectric:robolectric:4.3.1")
+    testImplementation("androidx.test:core:1.2.0")
 }
 
 

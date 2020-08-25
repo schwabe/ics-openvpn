@@ -5,8 +5,7 @@
 
 package de.blinkt.openvpn.core;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.net.Inet6Address;

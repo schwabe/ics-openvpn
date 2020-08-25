@@ -5,21 +5,18 @@
 
 package de.blinkt.openvpn.core
 
-import android.app.Application
 import android.content.Context
+import android.os.Build
+import androidx.test.core.app.ApplicationProvider
 import de.blinkt.openvpn.R
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
-
+import org.robolectric.annotation.Config
 import java.io.IOException
 import java.io.StringReader
-import java.util.Arrays
-
-import de.blinkt.openvpn.VpnProfile
-import org.robolectric.annotation.Config
+import java.util.*
 
 /**
  * Created by arne on 03.10.16.
@@ -48,8 +45,8 @@ const val fakeCerts = "<ca>\n" +
         "</key>"
 
 
-@Config(manifest = "src/main/AndroidManifest.xml")
 @RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 class TestConfigParser {
     @Test
     @Throws(IOException::class, ConfigParser.ConfigParseError::class)
@@ -74,13 +71,13 @@ class TestConfigParser {
         cp.parseConfig(StringReader(miniconfig + fakeCerts))
         val vp = cp.convertProfile()
 
-        val outConfig = vp.getConfigFile(RuntimeEnvironment.application, false)
+        val outConfig = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
 
         cp = ConfigParser()
         cp.parseConfig(StringReader(outConfig))
         val vp2 = cp.convertProfile()
 
-        val outConfig2 = vp2.getConfigFile(RuntimeEnvironment.application, false)
+        val outConfig2 = vp2.getConfigFile(ApplicationProvider.getApplicationContext(), false)
 
         Assert.assertEquals(outConfig, outConfig2)
         Assert.assertFalse(vp.mUseCustomConfig)
@@ -148,7 +145,7 @@ class TestConfigParser {
         Assert.assertEquals("8080", vp.mConnections[2].mProxyPort)
         Assert.assertEquals(Connection.ProxyType.HTTP, vp.mConnections[2].mProxyType)
 
-        val c = RuntimeEnvironment.application
+        val c:Context = ApplicationProvider.getApplicationContext()
         val err = vp.checkProfile(c, false)
         Assert.assertTrue("Failed with " + c.getString(err), err == R.string.no_error_found)
     }
@@ -190,11 +187,11 @@ class TestConfigParser {
         val cp = ConfigParser()
         cp.parseConfig(StringReader(proxy))
         val vp = cp.convertProfile()
-        var config = vp.getConfigFile(RuntimeEnvironment.application, true)
+        var config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), true)
         Assert.assertTrue(config.contains("username12"))
         Assert.assertTrue(config.contains("http-proxy 1.2.3.4"))
 
-        config = vp.getConfigFile(RuntimeEnvironment.application, false)
+        config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
 
         Assert.assertFalse(config.contains("username12"))
         Assert.assertFalse(config.contains("http-proxy 1.2.3.4"))
@@ -236,13 +233,13 @@ class TestConfigParser {
         val cp = ConfigParser()
         cp.parseConfig(StringReader(proxyconf))
         val vp = cp.convertProfile()
-        var config = vp.getConfigFile(RuntimeEnvironment.application, true)
+        var config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), true)
 
 
-        Assert.assertEquals(vp.checkProfile(RuntimeEnvironment.application, true).toLong(), R.string.no_error_found.toLong())
-        Assert.assertEquals(vp.checkProfile(RuntimeEnvironment.application, false).toLong(), R.string.no_error_found.toLong())
+        Assert.assertEquals(vp.checkProfile(ApplicationProvider.getApplicationContext(), true).toLong(), R.string.no_error_found.toLong())
+        Assert.assertEquals(vp.checkProfile(ApplicationProvider.getApplicationContext(), false).toLong(), R.string.no_error_found.toLong())
 
-        config = vp.getConfigFile(RuntimeEnvironment.application, false)
+        config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
 
         Assert.assertTrue(config.contains("http-proxy 1.2.3.4"))
         Assert.assertFalse(config.contains("management-query-proxy"))
@@ -255,8 +252,54 @@ class TestConfigParser {
 
         vp.mConnections[vp.mConnections.size - 1].mProxyType = Connection.ProxyType.ORBOT
 
-        Assert.assertEquals(vp.checkProfile(RuntimeEnvironment.application, false).toLong(), R.string.error_orbot_and_proxy_options.toLong())
+        Assert.assertEquals(vp.checkProfile(ApplicationProvider.getApplicationContext(), false).toLong(), R.string.error_orbot_and_proxy_options.toLong())
 
+    }
+
+
+    @Test
+    fun testTlscryptV2Import()
+    {
+        val conf = """<ca>
+Here
+</ca>
+
+<cert>
+no
+</cert>
+
+cipher AES-256-GCM
+client
+compress
+dev-type tun
+explicit-exit-notify
+<key>
+useful
+</key>
+nobind
+persist-key
+persist-tun
+remote home.evil.cloud 65443 udp
+remote home.evil.cloud 65443 tcp-client
+remote-cert-tls server
+<tls-crypt-v2>
+content
+</tls-crypt-v2>
+topology subnet
+verb 4
+verify-x509-name homevpn.evil.cloud name
+
+""";
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(conf))
+
+        val vp = cp.convertProfile()
+
+        val config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), true)
+
+        Assert.assertEquals("tls-crypt-v2", vp.mTLSAuthDirection)
+
+        Assert.assertFalse(config.contains("key-direction"))
     }
 
 }

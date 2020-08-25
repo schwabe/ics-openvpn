@@ -199,6 +199,7 @@ set(openvpn_srcs
         src/openvpn/status.c
         src/openvpn/tls_crypt.c
         src/openvpn/tun.c
+        src/openvpn/vlan.c
         src/openvpn/comp-lz4.c
         src/openvpn/comp.c
         src/openvpn/compstub.c
@@ -206,7 +207,7 @@ set(openvpn_srcs
 
 PREPEND(openvpn_srcs_with_path "openvpn" ${openvpn_srcs})
 
-add_library(openvpn SHARED ${openvpn_srcs_with_path})
+add_library(openvpn STATIC ${openvpn_srcs_with_path})
 
 target_include_directories(openvpn PRIVATE
         openvpn-config
@@ -221,7 +222,7 @@ target_compile_definitions(openvpn PRIVATE
         -DCONFIGURE_GIT_REVISION=\"${OPENVPN2_GIT}\"
         -DCONFIGURE_GIT_FLAGS=\"\"
         -DTARGET_ABI=\"${ANDROID_ABI}\"
-        -DOPENSSL_API_COMPAT=0x10200000L
+        -DOPENSSL_API_COMPAT=0x11000000L
         )
 
 if (${OPENVPN2MBED})

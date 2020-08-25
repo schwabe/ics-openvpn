@@ -71,6 +71,6 @@
     <string name="apprest_name">Name</string>
     <string name="apprest_vpnlist">List of VPN configurations</string>
     <string name="apprest_vpnconf">VPN configuration</string>
-    <string name="apprest_ver">Version of the managed configuration schema</string>
+    <string name="apprest_ver">Version of the managed configuration schema (Currently always 1)</string>
 
 </resources>

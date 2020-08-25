@@ -5,9 +5,11 @@
 package de.blinkt.openvpn.activities
 
 import android.content.Intent
+import android.net.VpnService
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import de.blinkt.openvpn.core.OpenVPNService
 import de.blinkt.openvpn.core.PasswordDialogFragment.Companion.newInstance
 
 class CredentialsPopup : AppCompatActivity() {

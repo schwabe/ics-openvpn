@@ -13,7 +13,7 @@ import android.view.Window;
 import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class BaseActivity extends AppCompatActivity {
-    private boolean isAndroidTV() {
+    boolean isAndroidTV() {
         final UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
         if (uiModeManager == null)
             return false;

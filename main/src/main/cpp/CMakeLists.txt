@@ -244,9 +244,12 @@ target_link_libraries(libovpnexec.so PRIVATE openvpn -fPIE -pie)
 add_executable(pie_openvpn.${ANDROID_ABI} minivpn/minivpn.c)
 target_compile_options(pie_openvpn.${ANDROID_ABI} PRIVATE -fPIE)
 target_link_libraries(pie_openvpn.${ANDROID_ABI} PRIVATE openvpn -fPIE -pie)
-
-add_executable(nopie_openvpn.${ANDROID_ABI} minivpn/minivpn.c)
-target_link_libraries(nopie_openvpn.${ANDROID_ABI} PRIVATE openvpn)
+# ----------------------
+# In the following section we comment out the 'nopie' lines, because it increases
+# the APK size, and we don't make use of it anyways. See: https://github.com/schwabe/ics-openvpn/issues/1225
+# ----------------------
+# add_executable(nopie_openvpn.${ANDROID_ABI} minivpn/minivpn.c)
+# target_link_libraries(nopie_openvpn.${ANDROID_ABI} PRIVATE openvpn)
 
 # Hack to copy OpenVPN binaries to assets directory
 SET(OVPN_ASSET_DIR ${CMAKE_SOURCE_DIR}/../../../build/ovpnassets)
@@ -254,12 +257,12 @@ SET(OVPN_ASSET_DIR ${CMAKE_SOURCE_DIR}/../../../build/ovpnassets)
 add_custom_target(makeassetdir ALL
         COMMAND ${CMAKE_COMMAND} -E make_directory ${OVPN_ASSET_DIR})
 
-add_custom_command(TARGET nopie_openvpn.${ANDROID_ABI} POST_BUILD
-        COMMAND
-        ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_BINARY_DIR}/nopie_openvpn.${ANDROID_ABI}
-        ${OVPN_ASSET_DIR}
-        )
+#add_custom_command(TARGET nopie_openvpn.${ANDROID_ABI} POST_BUILD
+#        COMMAND
+#        ${CMAKE_COMMAND} -E copy
+#        ${CMAKE_CURRENT_BINARY_DIR}/nopie_openvpn.${ANDROID_ABI}
+#        ${OVPN_ASSET_DIR}
+#        )
 
 add_custom_command(TARGET pie_openvpn.${ANDROID_ABI} POST_BUILD
         COMMAND
@@ -269,6 +272,7 @@ add_custom_command(TARGET pie_openvpn.${ANDROID_ABI} POST_BUILD
         )
 
 # Hack that these targets are really executed
-add_dependencies(opvpnutil pie_openvpn.${ANDROID_ABI} nopie_openvpn.${ANDROID_ABI})
+add_dependencies(opvpnutil pie_openvpn.${ANDROID_ABI})
+# line above replaced this line: add_dependencies(opvpnutil pie_openvpn.${ANDROID_ABI} nopie_openvpn.${ANDROID_ABI})
 add_dependencies(pie_openvpn.${ANDROID_ABI} makeassetdir)
-add_dependencies(nopie_openvpn.${ANDROID_ABI} makeassetdir)
+#add_dependencies(nopie_openvpn.${ANDROID_ABI} makeassetdir)

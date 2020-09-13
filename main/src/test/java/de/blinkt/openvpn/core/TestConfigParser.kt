@@ -106,6 +106,52 @@ class TestConfigParser {
         Assert.assertEquals(vp.mExcludedRoutes.trim(), "8.8.8.8/32");
     }
 
+
+    @Test
+    fun testCipherImport() {
+        val config = ("client\n"
+                + "tun-mtu 1234\n" +
+                "<connection>\n" +
+                "remote foo.bar\n" +
+                "tun-mtu 1222\n" +
+                "</connection>\n" +
+                "route 8.8.8.8 255.255.255.255 net_gateway\n")
+
+
+        val config1 = config + "cipher AES-128-GCM\n"
+
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(config1))
+        val vp = cp.convertProfile()
+
+        Assert.assertEquals("", vp.mDataCiphers)
+        Assert.assertEquals("AES-128-GCM", vp.mCipher)
+
+        val config2 = config + "cipher AES-128-GCM\ndata-ciphers AES-128-GCM:AES-256-GCM:BF-CBC\n"
+
+        cp.parseConfig(StringReader(config2))
+        val vp2 = cp.convertProfile()
+
+        Assert.assertEquals("AES-128-GCM:AES-256-GCM:BF-CBC", vp2.mDataCiphers)
+
+        val config3 = config + "cipher AES-128-GCM\n"
+
+        cp.parseConfig(StringReader(config3))
+        val vp3 = cp.convertProfile()
+
+        Assert.assertEquals(vp3.mDataCiphers, "")
+
+        val config4 = config + "cipher BF-CBC\nncp-ciphers AES-128-GCM:AES-256-GCM:CHACHA20-POLY1305\n"
+        cp.parseConfig(StringReader(config4))
+        val vp4 = cp.convertProfile()
+
+        Assert.assertEquals("AES-128-GCM:AES-256-GCM:CHACHA20-POLY1305:BF-CBC", vp4.mDataCiphers)
+
+
+
+    }
+
+
     @Test
     @Throws(IOException::class, ConfigParser.ConfigParseError::class)
     fun testSockProxyImport() {

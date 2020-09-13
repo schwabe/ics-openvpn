@@ -125,8 +125,8 @@
     <string name="faq_howto_shortcut">You can place a shortcut to start OpenVPN on your desktop. Depending on your homescreen program you will have to add either a shortcut or a widget.</string>
     <string name="no_vpn_support_image">Your image does not support the VPNService API, sorry :(</string>
     <string name="encryption">Encryption</string>
-    <string name="cipher_dialog_title">Enter encryption method</string>
-    <string name="chipher_dialog_message">Enter the encryption cipher algorithm used by OpenVPN. Leave empty to use default cipher.</string>
+    <string name="cipher_dialog_title">Enter data encryption methods</string>
+    <string name="chipher_dialog_message">Enter the data encryption cipher algorithms used by OpenVPN separated by : (--data-ciphers). Leave empty to use the default of AES-256-GCM:AES-128-GCM.</string>
     <string name="auth_dialog_message">Enter the authentication digest used for OpenVPN. Leave empty to use default digest.</string>
     <string name="settings_auth">Authentication/Encryption</string>
     <string name="file_explorer_tab">File Explorer</string>
@@ -257,7 +257,7 @@
     <string name="start_vpn_title">Connecting to VPN %s</string>
     <string name="start_vpn_ticker">Connecting to VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Some versions of Android 4.1 have problems if the name of the keystore certificate contains non alphanumeric characters (like spaces, underscores or dashes). Try to reimport the certificate without special characters</string>
-    <string name="encryption_cipher">Encryption cipher</string>
+    <string name="encryption_cipher">Encryption ciphers</string>
     <string name="packet_auth">Packet authentication</string>
     <string name="auth_dialog_title">Enter packet authentication method</string>
     <string name="built_by">built by %s</string>

@@ -60,7 +60,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public static final String INLINE_TAG = "[[INLINE]]";
     public static final String DISPLAYNAME_TAG = "[[NAME]]";
     public static final int MAXLOGLEVEL = 4;
-    public static final int CURRENT_PROFILE_VERSION = 8;
+    public static final int CURRENT_PROFILE_VERSION = 9;
     public static final int DEFAULT_MSSFIX_SIZE = 1280;
     public static final int TYPE_CERTIFICATES = 0;
     public static final int TYPE_PKCS12 = 1;
@@ -162,6 +162,7 @@ public class VpnProfile implements Serializable, Cloneable {
     // set members to default values
     private UUID mUuid;
     private int mProfileVersion;
+    public String mDataCiphers = "";
 
     public boolean mBlockUnusedAddressFamilies =true;
 
@@ -304,6 +305,11 @@ public class VpnProfile implements Serializable, Cloneable {
             case 7:
                 if (mAllowAppVpnBypass)
                     mBlockUnusedAddressFamilies = !mAllowAppVpnBypass;
+            case 8:
+                if (!TextUtils.isEmpty(mCipher) && !"BF-CBC".equals(mCipher))
+                {
+                    mDataCiphers = "AES-256-GCM:AES-128-GCM:" + mCipher;
+                }
             default:
         }
 
@@ -610,6 +616,11 @@ public class VpnProfile implements Serializable, Cloneable {
             }
             if (mExpectTLSCert)
                 cfg.append("remote-cert-tls server\n");
+        }
+
+        if (!TextUtils.isEmpty(mDataCiphers))
+        {
+            cfg.append("data-ciphers ").append(mDataCiphers).append("\n");
         }
 
         if (!TextUtils.isEmpty(mCipher)) {

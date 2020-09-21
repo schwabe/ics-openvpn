@@ -18,8 +18,8 @@ android {
     defaultConfig {
         minSdkVersion(14)
         targetSdkVersion(30)  //'Q'.toInt()
-        versionCode = 173
-        versionName = "0.7.19"
+        versionCode = 174
+        versionName = "0.7.20"
 
         externalNativeBuild {
             cmake {

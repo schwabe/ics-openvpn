@@ -37,7 +37,7 @@ public class Utils {
         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
         TreeSet<String> supportedMimeTypes = new TreeSet<String>();
-        Vector<String> extensions = new Vector<String>();
+        Vector<String> extensions = new Vector<>();
 
         switch (fileType) {
             case PKCS12:
@@ -125,6 +125,12 @@ public class Utils {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N)
             i.setPackage("com.android.documentsui");
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            /* For some reason checking if the intent is available does not work on Android 11,
+             * just assume the document storage is always available.
+             */
+            return i;
+        }
 
 
 

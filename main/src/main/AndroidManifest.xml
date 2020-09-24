@@ -4,10 +4,24 @@
     package="de.blinkt.openvpn">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- <uses-permission android:name="com.android.vending.BILLING" /> -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- Used to show all apps in the allowed Apps selection -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
+
+<!--    <queries>-->
+<!--        <intent>-->
+<!--            <action android:name="android.intent.action.GET_CONTENT" />-->
+<!--        </intent>-->
+<!--        <intent>-->
+<!--            <action android:name="android.intent.action.ACTION_OPEN_DOCUMENT" />-->
+<!--        </intent>-->
+<!--    </queries>-->
+
 
     <application
         android:name=".core.ICSOpenVPNApplication"
@@ -30,7 +44,6 @@
             android:noHistory="true"
             android:taskAffinity=".DisconnectVPN"
             android:theme="@style/blinkt.dialog" />
-
 
 
         <service

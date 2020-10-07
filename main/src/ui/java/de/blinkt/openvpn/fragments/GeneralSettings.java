@@ -18,6 +18,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
 
 
 import androidx.preference.CheckBoxPreference;
@@ -91,96 +92,107 @@ public class GeneralSettings extends PreferenceFragmentCompat implements Prefere
             ovpn3.setChecked(false);
         }
 
+        ((CheckBoxPreference)findPreference("restartvpnonboot")).setOnPreferenceChangeListener((pref, newValue) -> {
+            if (newValue.equals(true)) {
+                VpnProfile vpn = ProfileManager.getAlwaysOnVPN(requireActivity());
+                if (vpn == null) {
+                    Toast.makeText(requireContext(), R.string.no_default_vpn_set, Toast.LENGTH_LONG).show();
+                    return false;
+                }
 
-        setClearApiSummary();
-    }
+            }
+            return true;
+        });
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
-        VpnProfile vpn = ProfileManager.getAlwaysOnVPN(getActivity());
-        StringBuffer sb = new StringBuffer(getString(R.string.defaultvpnsummary));
-        sb.append('\n');
-        if (vpn == null)
-            sb.append(getString(R.string.novpn_selected));
-        else
-            sb.append(getString(R.string.vpnselected, vpn.getName()));
-        mAlwaysOnVPN.setSummary(sb.toString());
-
-    }
-
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mAlwaysOnVPN) {
-            VpnProfile vpn = ProfileManager.get(getActivity(), (String) newValue);
-            mAlwaysOnVPN.setSummary(vpn.getName());
+            setClearApiSummary();
         }
-        return true;
-    }
 
-    private void setClearApiSummary() {
-        Preference clearapi = findPreference("clearapi");
 
-        if (mExtapp.getExtAppList().isEmpty()) {
-            clearapi.setEnabled(false);
-            clearapi.setSummary(R.string.no_external_app_allowed);
-        } else {
-            clearapi.setEnabled(true);
-            clearapi.setSummary(getString(R.string.allowed_apps, getExtAppList(", ")));
+        @Override
+        public void onResume () {
+            super.onResume();
+
+
+            VpnProfile vpn = ProfileManager.getAlwaysOnVPN(getActivity());
+            StringBuffer sb = new StringBuffer(getString(R.string.defaultvpnsummary));
+            sb.append('\n');
+            if (vpn == null)
+                sb.append(getString(R.string.novpn_selected));
+            else
+                sb.append(getString(R.string.vpnselected, vpn.getName()));
+            mAlwaysOnVPN.setSummary(sb.toString());
+
         }
-    }
 
-    private String getExtAppList(String delim) {
-        ApplicationInfo app;
-        PackageManager pm = getActivity().getPackageManager();
+        @Override
+        public boolean onPreferenceChange (Preference preference, Object newValue){
+            if (preference == mAlwaysOnVPN) {
+                VpnProfile vpn = ProfileManager.get(getActivity(), (String) newValue);
+                mAlwaysOnVPN.setSummary(vpn.getName());
+            }
+            return true;
+        }
 
-        StringBuilder applist = new StringBuilder();
-        for (String packagename : mExtapp.getExtAppList()) {
-            try {
-                app = pm.getApplicationInfo(packagename, 0);
-                if (applist.length() != 0)
-                    applist.append(delim);
-                applist.append(app.loadLabel(pm));
+        private void setClearApiSummary () {
+            Preference clearapi = findPreference("clearapi");
 
-            } catch (NameNotFoundException e) {
-                // App not found. Remove it from the list
-                mExtapp.removeApp(packagename);
+            if (mExtapp.getExtAppList().isEmpty()) {
+                clearapi.setEnabled(false);
+                clearapi.setSummary(R.string.no_external_app_allowed);
+            } else {
+                clearapi.setEnabled(true);
+                clearapi.setSummary(getString(R.string.allowed_apps, getExtAppList(", ")));
             }
         }
 
-        return applist.toString();
-    }
+        private String getExtAppList (String delim){
+            ApplicationInfo app;
+            PackageManager pm = getActivity().getPackageManager();
 
-    private boolean isTunModuleAvailable() {
-        // Check if the tun module exists on the file system
-        return new File("/system/lib/modules/tun.ko").length() > 10;
-    }
+            StringBuilder applist = new StringBuilder();
+            for (String packagename : mExtapp.getExtAppList()) {
+                try {
+                    app = pm.getApplicationInfo(packagename, 0);
+                    if (applist.length() != 0)
+                        applist.append(delim);
+                    applist.append(app.loadLabel(pm));
 
-    @Override
-    public boolean onPreferenceClick(Preference preference) {
-        if (preference.getKey().equals("clearapi")) {
-            Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setPositiveButton(R.string.clear, this);
-            builder.setNegativeButton(android.R.string.cancel, null);
-            builder.setMessage(getString(R.string.clearappsdialog, getExtAppList("\n")));
-            builder.show();
-        } else if (preference.getKey().equals("osslspeed")) {
-            startActivity(new Intent(getActivity(), OpenSSLSpeed.class));
+                } catch (NameNotFoundException e) {
+                    // App not found. Remove it from the list
+                    mExtapp.removeApp(packagename);
+                }
+            }
+
+            return applist.toString();
         }
 
-        return true;
-    }
-
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        if (which == Dialog.BUTTON_POSITIVE) {
-            mExtapp.clearAllApiApps();
-            setClearApiSummary();
+        private boolean isTunModuleAvailable () {
+            // Check if the tun module exists on the file system
+            return new File("/system/lib/modules/tun.ko").length() > 10;
         }
+
+        @Override
+        public boolean onPreferenceClick (Preference preference){
+            if (preference.getKey().equals("clearapi")) {
+                Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setPositiveButton(R.string.clear, this);
+                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.setMessage(getString(R.string.clearappsdialog, getExtAppList("\n")));
+                builder.show();
+            } else if (preference.getKey().equals("osslspeed")) {
+                startActivity(new Intent(getActivity(), OpenSSLSpeed.class));
+            }
+
+            return true;
+        }
+
+        @Override
+        public void onClick (DialogInterface dialog,int which){
+            if (which == Dialog.BUTTON_POSITIVE) {
+                mExtapp.clearAllApiApps();
+                setClearApiSummary();
+            }
+        }
+
+
     }
-
-
-}

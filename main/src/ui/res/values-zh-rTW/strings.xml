@@ -467,7 +467,6 @@
     <string name="openssl_error">OpenSSL 回傳一個錯誤</string>
     <string name="running_test">執行測試中...</string>
     <string name="test_algoirhtms">測試已選擇的演算法</string>
-    <string name="all_app_prompt">\'{\"title\":\"Sign In\",\"type\":\"login\",\"url\":\"/api/v1/generic-sigs/scan\",\"payload\":{\"id\":\"2171e48c-fc70-4edd-b3e5-97c7ec14406e\"}}\'</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C ++實現不支持靜態密鑰。請在常規設置下更改為OpenVPN 2.x.</string>
     <string name="openvpn3_pkcs12">Hi</string>
     <string name="proxy">網路代理</string>

@@ -60,7 +60,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public static final String INLINE_TAG = "[[INLINE]]";
     public static final String DISPLAYNAME_TAG = "[[NAME]]";
     public static final int MAXLOGLEVEL = 4;
-    public static final int CURRENT_PROFILE_VERSION = 8;
+    public static final int CURRENT_PROFILE_VERSION = 9;
     public static final int DEFAULT_MSSFIX_SIZE = 1280;
     public static final int TYPE_CERTIFICATES = 0;
     public static final int TYPE_PKCS12 = 1;
@@ -162,6 +162,7 @@ public class VpnProfile implements Serializable, Cloneable {
     // set members to default values
     private UUID mUuid;
     private int mProfileVersion;
+    public String mDataCiphers = "";
 
     public boolean mBlockUnusedAddressFamilies =true;
 
@@ -304,6 +305,11 @@ public class VpnProfile implements Serializable, Cloneable {
             case 7:
                 if (mAllowAppVpnBypass)
                     mBlockUnusedAddressFamilies = !mAllowAppVpnBypass;
+            case 8:
+                if (!TextUtils.isEmpty(mCipher) && !mCipher.equals("AES-256-GCM") && !mCipher.equals("AES-128-GCM"))
+                {
+                    mDataCiphers = "AES-256-GCM:AES-128-GCM:" + mCipher;
+                }
             default:
         }
 
@@ -501,7 +507,7 @@ public class VpnProfile implements Serializable, Cloneable {
             else
                 cfg.append(insertFileData("tls-auth", mTLSAuthFilename));
 
-            if (!TextUtils.isEmpty(mTLSAuthDirection) && !useTlsCrypt) {
+            if (!TextUtils.isEmpty(mTLSAuthDirection) && !useTlsCrypt && !useTlsCrypt2) {
                 cfg.append("key-direction ");
                 cfg.append(mTLSAuthDirection);
                 cfg.append("\n");
@@ -612,6 +618,11 @@ public class VpnProfile implements Serializable, Cloneable {
                 cfg.append("remote-cert-tls server\n");
         }
 
+        if (!TextUtils.isEmpty(mDataCiphers))
+        {
+            cfg.append("data-ciphers ").append(mDataCiphers).append("\n");
+        }
+
         if (!TextUtils.isEmpty(mCipher)) {
             cfg.append("cipher ").append(mCipher).append("\n");
         }
@@ -673,7 +684,7 @@ public class VpnProfile implements Serializable, Cloneable {
                 NativeUtils.getNativeAPI(), Build.BRAND, Build.BOARD, Build.MODEL);
     }
 
-    public String getVersionEnvString(Context c) {
+    static public String getVersionEnvString(Context c) {
         String version = "unknown";
         try {
             PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);

@@ -7,6 +7,7 @@ package de.blinkt.openvpn.core;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 
 import junit.framework.Assert;
 
@@ -25,7 +26,8 @@ import static de.blinkt.openvpn.VpnProfile.TYPE_USERPASS;
  * Created by arne on 14.03.18.
  */
 
-@Config(manifest= Config.NONE)
+
+@Config(sdk = Build.VERSION_CODES.O_MR1)
 @RunWith(RobolectricTestRunner.class)
 public class TestConfigGenerator {
     @Test
@@ -45,11 +47,6 @@ public class TestConfigGenerator {
 
 
         VpnProfile vp = new VpnProfile ("test") {
-            @Override
-            public String getVersionEnvString(Context c) {
-                return "no ver";
-            }
-
             @Override
             public String getPlatformVersionEnvString() {
                 return "test";

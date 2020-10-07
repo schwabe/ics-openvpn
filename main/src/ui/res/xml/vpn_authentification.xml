@@ -16,6 +16,8 @@
 
         <de.blinkt.openvpn.views.RemoteCNPreference
             android:dependency="checkRemoteCN"
+            android:positiveButtonText="@android:string/ok"
+            android:negativeButtonText="@string/cancel"
             android:key="remotecn"
             android:title="@string/enter_tlscn_title" />
 
@@ -50,7 +52,7 @@
         <EditTextPreference
             android:dialogMessage="@string/chipher_dialog_message"
             android:dialogTitle="@string/cipher_dialog_title"
-            android:key="cipher"
+            android:key="dataciphers"
             android:persistent="false"
             android:title="@string/encryption_cipher" />
         <EditTextPreference

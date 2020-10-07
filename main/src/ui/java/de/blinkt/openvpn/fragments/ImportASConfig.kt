@@ -202,9 +202,9 @@ class ImportASConfig : DialogFragment() {
             asurl = "https://" + asurl
 
         if (autologin)
-            asurl += "/rest/GetAutologin"
+            asurl += "/rest/GetAutologin?tls-cryptv2=1"
         else
-            asurl += "/rest/GetUserlogin"
+            asurl += "/rest/GetUserlogin?tls-cryptv2=1"
 
         val asUri = HttpUrl.parse(asurl)
         return asUri

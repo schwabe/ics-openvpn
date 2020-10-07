@@ -46,7 +46,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
         @Throws(KeyChainException::class, InterruptedException::class)
         get() {
-            val key: PrivateKey = KeyChain.getPrivateKey(activity!!.applicationContext, mProfile.mAlias) ?: return false
+            val key: PrivateKey = KeyChain.getPrivateKey(requireActivity().applicationContext, mProfile.mAlias) ?: return false
 
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
                 val keyFactory = KeyFactory.getInstance(key.getAlgorithm(), "AndroidKeyStore")
@@ -88,7 +88,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
                 try {
                     val b = ExtAuthHelper.getCertificateMetaData(context!!, mProfile.mExternalAuthenticator, mProfile.mAlias)
                     mProfile.mAlias = b.getString(ExtAuthHelper.EXTRA_ALIAS)
-                    activity!!.runOnUiThread { setAlias() }
+                    requireActivity().runOnUiThread { setAlias() }
                 } catch (e: KeyChainException) {
                     e.printStackTrace()
                 }
@@ -115,7 +115,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
                             certstr = getString(R.string.extauth_not_configured)
                         }
                     } else {
-                        val certChain = KeyChain.getCertificateChain(activity!!.applicationContext, mProfile.mAlias)
+                        val certChain = KeyChain.getCertificateChain(requireActivity().applicationContext, mProfile.mAlias)
                         if (certChain != null) {
                             cert = certChain[0]
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -137,7 +137,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
 
                 val certStringCopy = certstr
                 val finalMetadata = metadata
-                activity!!.runOnUiThread {
+                requireActivity().runOnUiThread {
                     mAliasCertificate.text = certStringCopy
                     if (finalMetadata != null)
                         mExtAliasName.text = finalMetadata.getString(ExtAuthHelper.EXTRA_DESCRIPTION)
@@ -210,7 +210,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
 
     fun showCertDialog() {
         try {
-            KeyChain.choosePrivateKeyAlias(activity!!,
+            KeyChain.choosePrivateKeyAlias(requireActivity(),
                     { alias ->
                         // Credential alias selected.  Remember the alias selection for future use.
                         mProfile.mAlias = alias

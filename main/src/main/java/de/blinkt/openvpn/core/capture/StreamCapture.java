@@ -17,7 +17,7 @@ import de.blinkt.openvpn.core.capture.ip.UDPPacket;
 
 public class StreamCapture {
 
-    private static String VERSION="0.0.2";
+    private static String VERSION="0.0.3";
 
     private static int FORWARD_DNS_PORT = 5300;
     private static StreamCapture INSTANCE = new StreamCapture();
@@ -86,14 +86,14 @@ public class StreamCapture {
         InputStream in;
         OutputStream out;
         String role;
-        boolean receiver;
+        boolean fromLocal;
         boolean isClosed = false;
 
         public TransferThread(InputStream in, OutputStream out, String role){
             this.in = new BufferedInputStream(in,BUFFER_SIZE);
             this.out = out;
             this.role = role;
-            receiver = role.equals(local_TO_remote);
+            fromLocal = role.equals(local_TO_remote);
             new Thread(this).start();
         }
 
@@ -180,6 +180,13 @@ public class StreamCapture {
             return false;
         }
 
+        private void writeThrough(OutputStream out, byte[] buf, int offs, int len) throws IOException{
+            synchronized(out){
+                out.write(buf, offs, len);
+                out.flush();
+            }
+        }
+
 
         @Override
         public void run() {
@@ -196,46 +203,46 @@ public class StreamCapture {
                     if (r == 0)
                         sleep(500);
 
-                    else if (r != -1 && !isClosed) {
+                    else if (r != -1 && !isClosed && fromLocal) {
 
                         IPPacket ip = new IPPacket(buffer, 0, r);
+                        int protocol = ip.getProt();
+                        boolean drop = ip.getVersion()==6; //IP V6 not supported here
+                        if (drop)
+                            VpnStatus.logWarning(role + ":Dropping IPV6 Package!\nIPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ", Dest:" + IPPacket.int2ip(ip.getDestIP()));
 
-                        if (!dropPacket(ip)){
-                            UDPPacket udp = null;
-                            if (receiver && ip.getProt() == 17 && ip.getDestIP()[0] == DNS)
-                                udp = new UDPPacket(buffer, 0, r);
+                        if (fromLocal && protocol == 17 && ip.getDestIP()[0] == DNS && (drop = dropPacket(ip)) == false){
 
-                            if (udp != null) {
+                           UDPPacket udp = new UDPPacket(buffer, 0, r);
 
-                                //DNS request or response => need to redirect
+                           //DNS request or response => need to redirect
 
-                                VpnStatus.logInfo("local->:" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP()) + ":" + udp.getDestPort());
+                           VpnStatus.logInfo("local->:" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + protocol + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP()) + ":" + udp.getDestPort());
 
-                                if (udp.getDestPort() == 53) {
-                                    // DNS request ==> redirect to local DNS Proxy on LOCAL_IP
-                                    udp.updateHeader(udp.getTTL(), 17, new int[]{DNS}, LOCAL_IP);
-                                    udp.updateHeader(udp.getSourcePort(), FORWARD_DNS_PORT);
+                           if (udp.getDestPort() == 53) {
+                               // DNS request ==> redirect to local DNS Proxy on LOCAL_IP
+                               udp.updateHeader(udp.getTTL(), 17, new int[]{DNS}, LOCAL_IP);
+                               udp.updateHeader(udp.getSourcePort(), FORWARD_DNS_PORT);
 
-                                } else {
-                                    //DNS response from local DNS Proxy on LOCAL_IP ==> redirect back to requestor
-                                    udp.updateHeader(udp.getTTL(), 17, new int[]{DNS}, LOCAL_IP);
-                                    udp.updateHeader(53, udp.getDestPort());
-                                }
+                           } else {
+                               //DNS response from local DNS Proxy on LOCAL_IP ==> redirect back to requestor
+                               udp.updateHeader(udp.getTTL(), 17, new int[]{DNS}, LOCAL_IP);
+                               udp.updateHeader(53, udp.getDestPort());
+                           }
 
-                                VpnStatus.logInfo("->local:" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP()) + ":" + udp.getDestPort());
-                                synchronized (local_out) {
-                                    local_out.write(buffer, 0, r);
-                                    local_out.flush();
-                                }
+                           VpnStatus.logInfo("->local:" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + protocol + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP()) + ":" + udp.getDestPort());
 
-                            } else {
-                                synchronized (out) {
-                                    out.write(buffer, 0, r);
-                                    out.flush();
-                                }
-                                VpnStatus.logInfo(role + ":" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ", Dest:" + IPPacket.int2ip(ip.getDestIP()));
+                           writeThrough(local_out, buffer, 0, r);
+
+                        } else {
+                            if (!drop) {
+                                writeThrough(out, buffer, 0, r);
+                                //VpnStatus.logInfo(role + ":" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + protocol + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ", Dest:" + IPPacket.int2ip(ip.getDestIP()));
                             }
                         }
+                    }
+                    if (r != -1 && !isClosed && !fromLocal) {
+                        writeThrough(out, buffer, 0, r);
                     }
 
                 } catch (IOException e) {

@@ -183,8 +183,7 @@ public class StreamCapture {
         private void writeThrough(OutputStream out, byte[] buf, int offs, int len) throws IOException{
             synchronized(out){
                 out.write(buf, offs, len);
-                out.flush();
-            }
+           }
         }
 
 
@@ -200,54 +199,65 @@ public class StreamCapture {
 
                     r = readPacket(buffer);
 
+                    if (r == -1 || isClosed)
+                        break;
+
                     if (r == 0)
                         sleep(500);
 
-                    else if (r != -1 && !isClosed && fromLocal) {
+                    else if (!fromLocal)
+                        writeThrough(out, buffer, 0, r);
 
-                        IPPacket ip = new IPPacket(buffer, 0, r);
-                        int protocol = ip.getProt();
-                        boolean drop = ip.getVersion()==6; //IP V6 not supported here
+                    else {
+                        int version = buffer[0] >> 4;
+                        int protocol = buffer[9]&0XFF;
+                        boolean drop = (version == 6);
+
                         if (drop)
-                            VpnStatus.logWarning(role + ":Dropping IPV6 Package!\nIPlen:" + ip.getLength() + ", Proto:" + ip.getProt() + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ", Dest:" + IPPacket.int2ip(ip.getDestIP()));
+                            VpnStatus.logWarning(role + ":Dropping IPV6 Package!");
 
-                        if (fromLocal && protocol == 17 && ip.getDestIP()[0] == DNS && (drop = dropPacket(ip)) == false){
+                        if (protocol == 17 && !drop) {
 
-                           UDPPacket udp = new UDPPacket(buffer, 0, r);
+                            UDPPacket udp = new UDPPacket(buffer, 0, r);
 
-                           //DNS request or response => need to redirect
+                            if (udp.getDestIP()[0] == DNS && (drop = dropPacket(udp)) == false){
 
-                           VpnStatus.logInfo("local->:" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + protocol + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP()) + ":" + udp.getDestPort());
+                                //DNS request or response => need to redirect
 
-                           if (udp.getDestPort() == 53) {
-                               // DNS request ==> redirect to local DNS Proxy on LOCAL_IP
-                               udp.updateHeader(udp.getTTL(), 17, new int[]{DNS}, LOCAL_IP);
-                               udp.updateHeader(udp.getSourcePort(), FORWARD_DNS_PORT);
+                                VpnStatus.logInfo("local->:" + r + " Bytes, IPlen:" + udp.getIPPacketLength() + ", Proto:" + protocol + ", Source:" + IPPacket.int2ip(udp.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(udp.getDestIP()) + ":" + udp.getDestPort());
 
-                           } else {
-                               //DNS response from local DNS Proxy on LOCAL_IP ==> redirect back to requestor
-                               udp.updateHeader(udp.getTTL(), 17, new int[]{DNS}, LOCAL_IP);
-                               udp.updateHeader(53, udp.getDestPort());
-                           }
+                                if (udp.getDestPort() == 53) {
+                                    // DNS request ==> redirect to local DNS Proxy on LOCAL_IP
+                                    udp.updateHeader(udp.getTTL(), 17, new int[]{DNS}, LOCAL_IP);
+                                    udp.updateHeader(udp.getSourcePort(), FORWARD_DNS_PORT);
 
-                           VpnStatus.logInfo("->local:" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + protocol + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(ip.getDestIP()) + ":" + udp.getDestPort());
+                                } else {
+                                    //DNS response from local DNS Proxy on LOCAL_IP ==> redirect back to requestor
+                                    udp.updateHeader(udp.getTTL(), 17, new int[]{DNS}, LOCAL_IP);
+                                    udp.updateHeader(53, udp.getDestPort());
+                                }
 
-                           writeThrough(local_out, buffer, 0, r);
+                                VpnStatus.logInfo("->local:" + r + " Bytes, IPlen:" + udp.getIPPacketLength() + ", Proto:" + protocol + ", Source:" + IPPacket.int2ip(udp.getSourceIP()) + ":" + udp.getSourcePort() + ", Dest:" + IPPacket.int2ip(udp.getDestIP()) + ":" + udp.getDestPort());
 
-                        } else {
-                            if (!drop) {
-                                writeThrough(out, buffer, 0, r);
-                                //VpnStatus.logInfo(role + ":" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + protocol + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ", Dest:" + IPPacket.int2ip(ip.getDestIP()));
+                                writeThrough(local_out, buffer, 0, r);
+                                local_out.flush();
+
+                            } else {
+                                if (!drop) {
+                                    writeThrough(out, buffer, 0, r);
+                                    //VpnStatus.logInfo(role + ":" + r + " Bytes, IPlen:" + ip.getLength() + ", Proto:" + protocol + ", Source:" + IPPacket.int2ip(ip.getSourceIP()) + ", Dest:" + IPPacket.int2ip(ip.getDestIP()));
+                                }
                             }
                         }
-                    }
-                    if (r != -1 && !isClosed && !fromLocal) {
-                        writeThrough(out, buffer, 0, r);
+                        else if (!drop) {
+                            writeThrough(out, buffer, 0, r);
+                        }
                     }
 
                 } catch (IOException e) {
                     if (!isClosed) {
-                        VpnStatus.logWarning(e.toString());
+                        //VpnStatus.logWarning(e.toString());
+                        VpnStatus.logException(e);
                         sleep(100);
                     }
 
@@ -323,6 +333,7 @@ public class StreamCapture {
         local_out = new FileOutputStream(pfd.getFileDescriptor());
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
             ParcelFileDescriptor[] pair = ParcelFileDescriptor.createReliableSocketPair();
+
             remote_stub = pair[0];
             remote = pair[1];
             remote_out =new FileOutputStream(remote_stub.getFileDescriptor());

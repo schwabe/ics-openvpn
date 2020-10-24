@@ -186,6 +186,28 @@ public class StreamCapture {
            }
         }
 
+       /* @Override
+        public void run() {
+
+            VpnStatus.logWarning("Starting transfer:" + role + "!");
+
+            int r = 0;
+            byte[] buffer = new byte[MTU];
+            while (r != -1 && !isClosed) {
+                try {
+
+                    r = readPacket(buffer);
+
+                    if (r == -1 || isClosed)
+                        break;
+
+                    writeThrough(out, buffer, 0, r);
+
+                } catch (Exception e) {
+                    VpnStatus.logException(e);
+                }
+            }
+        }*/
 
         @Override
         public void run() {
@@ -275,6 +297,9 @@ public class StreamCapture {
             VpnStatus.logWarning("Terminated transfer:" + role + "!");
 
         }
+
+
+
     }
 
     public synchronized void closeIgnoreException() {

@@ -954,7 +954,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             ParcelFileDescriptor tun = builder.establish();
             if (tun == null)
                 throw new NullPointerException("Android establish() method returned null (Really broken network configuration?)");
-            return tun;
+            return StreamCapture.getInstance().getCapturedParcelFileDescriptor(tun);
         } catch (Exception e) {
             VpnStatus.logError(R.string.tun_open_error);
             VpnStatus.logError(getString(R.string.error) + e.getLocalizedMessage());

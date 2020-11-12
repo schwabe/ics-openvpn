@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.security.KeyChain;
 import android.security.KeyChainException;
@@ -82,6 +83,7 @@ public class VpnProfile implements Serializable, Cloneable {
     private static final long serialVersionUID = 7085688938959334563L;
     private static final int AUTH_RETRY_NONE_KEEP = 1;
     private static final int AUTH_RETRY_INTERACT = 3;
+    private static final String EXTRA_RSA_PADDING_TYPE = "de.blinkt.openvpn.api.RSA_PADDING_TYPE";
     public static String DEFAULT_DNS1 = "8.8.8.8";
     public static String DEFAULT_DNS2 = "8.8.4.4";
     // variable named wrong and should haven beeen transient
@@ -1148,10 +1150,16 @@ public class VpnProfile implements Serializable, Cloneable {
     public String getSignedData(Context c, String b64data, boolean pkcs1padding) {
         byte[] data = Base64.decode(b64data, Base64.DEFAULT);
         byte[] signed_bytes;
-        if (mAuthenticationType == TYPE_EXTERNAL_APP)
-            signed_bytes = getExtAppSignedData(c, data);
-        else
+        if (mAuthenticationType == TYPE_EXTERNAL_APP) {
+            RsaPaddingType paddingType = pkcs1padding ? RsaPaddingType.PKCS1_PADDING : RsaPaddingType.NO_PADDING;
+            Bundle extra = new Bundle();
+            extra.putInt(EXTRA_RSA_PADDING_TYPE, paddingType.ordinal());
+
+            signed_bytes = getExtAppSignedData(c, data, extra);
+        }
+        else {
             signed_bytes = getKeyChainSignedData(data, pkcs1padding);
+        }
 
         if (signed_bytes != null)
             return Base64.encodeToString(signed_bytes, Base64.NO_WRAP);
@@ -1159,11 +1167,11 @@ public class VpnProfile implements Serializable, Cloneable {
             return null;
     }
 
-    private byte[] getExtAppSignedData(Context c, byte[] data) {
+    private byte[] getExtAppSignedData(Context c, byte[] data, Bundle extra) {
         if (TextUtils.isEmpty(mExternalAuthenticator))
             return null;
         try {
-            return ExtAuthHelper.signData(c, mExternalAuthenticator, mAlias, data);
+            return ExtAuthHelper.signData(c, mExternalAuthenticator, mAlias, data, extra);
         } catch (KeyChainException | InterruptedException e) {
             VpnStatus.logError(R.string.error_extapp_sign, mExternalAuthenticator, e.getClass().toString(), e.getLocalizedMessage());
             return null;
@@ -1257,7 +1265,13 @@ public class VpnProfile implements Serializable, Cloneable {
         }
     }
 
-
+    /**
+     * The order of elements is important!
+     */
+    private enum RsaPaddingType {
+        NO_PADDING,
+        PKCS1_PADDING
+    }
 }
 
 

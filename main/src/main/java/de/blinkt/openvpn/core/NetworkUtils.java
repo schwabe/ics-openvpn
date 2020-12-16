@@ -26,8 +26,12 @@ public class NetworkUtils {
                 LinkProperties li = conn.getLinkProperties(network);
 
                 NetworkCapabilities nc = conn.getNetworkCapabilities(network);
+                
+                // Skip unknown networks
+                if (nc == null)
+                    continue;
 
-                // Skip VPN networks like ourselves
+                // Also skip VPN networks like ourselves
                 if (nc.hasTransport(NetworkCapabilities.TRANSPORT_VPN))
                     continue;
 

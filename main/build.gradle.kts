@@ -8,6 +8,7 @@ import com.android.build.gradle.api.ApplicationVariant
 plugins {
     id("com.android.application")
     id("checkstyle")
+
     kotlin("android")
     kotlin("android.extensions")
 }
@@ -35,7 +36,7 @@ android {
 
     externalNativeBuild {
         cmake {
-            setPath(File("${projectDir}/src/main/cpp/CMakeLists.txt"))
+            path =File("${projectDir}/src/main/cpp/CMakeLists.txt")
         }
     }
 

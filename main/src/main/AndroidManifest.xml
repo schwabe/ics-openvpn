@@ -9,8 +9,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-    <!-- Used to show all apps in the allowed Apps selection -->
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <!-- Used to show all apps in the allowed Apps selection,
+         this app needs the list the app in the allow/deny apps over the VPN -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+            tools:ignore="QueryAllPackagesPermission" />
 
 
 <!--    <queries>-->

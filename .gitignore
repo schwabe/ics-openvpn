@@ -24,3 +24,6 @@ main/openvpn3
 main/src/ovpn3/java/net/openvpn/ovpn3
 main/.externalNativeBuild
 main/.cxx
+.synopsys
+polaris.yml
+.polaris-coverity.zip

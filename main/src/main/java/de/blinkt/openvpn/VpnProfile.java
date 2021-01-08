@@ -382,6 +382,12 @@ public class VpnProfile implements Serializable, Cloneable {
         //cfg += "verb " + mVerb + "\n";
         cfg.append("verb " + MAXLOGLEVEL + "\n");
 
+        /* Fix issue with tmp-dir error
+        Options error: Temporary directory (--tmp-dir) fails with '/tmp': No such file or directory (errno=2)
+        This seems to be a bug introduced in https://github.com/schwabe/openvpn/blob/46ce6652c0c9e41482873dd10ca135186424fa10/src/openvpn/options.c
+        */
+        cfg.append("tmp-dir " + cacheDir + "\n");
+
         if (mConnectRetryMax == null) {
             mConnectRetryMax = "-1";
         }

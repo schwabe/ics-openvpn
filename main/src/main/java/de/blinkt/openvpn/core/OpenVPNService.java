@@ -899,6 +899,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             builder.setUnderlyingNetworks(null);
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            // Setting this false, will cause the VPN to inherit the underlying network metered
+            // value
+            builder.setMetered(false);
+        }
 
         String session = mProfile.mName;
         if (mLocalIP != null && mLocalIPv6 != null)

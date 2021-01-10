@@ -18,8 +18,8 @@ android {
     defaultConfig {
         minSdkVersion(14)
         targetSdkVersion(30)  //'Q'.toInt()
-        versionCode = 169
-        versionName = "0.7.16"
+        versionCode = 175
+        versionName = "0.7.21"
 
         externalNativeBuild {
             cmake {
@@ -69,6 +69,8 @@ android {
             keyPassword = keystoreAliasPassword
             val keystoreAlias: String? by project
             keyAlias = keystoreAlias
+            isV1SigningEnabled = true
+            isV2SigningEnabled = true
         }
 
     }

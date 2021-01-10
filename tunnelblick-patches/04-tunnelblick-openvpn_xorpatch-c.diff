@@ -1,7 +1,7 @@
-diff -u -r -x .DS_Store openvpn-2.5_git_57d6f10.old/src/openvpn/options.h openvpn-2.5_git_57d6f10.new/src/openvpn/options.h
---- openvpn-2.5_git_57d6f10.old/src/openvpn/options.h	2018-07-28 06:02:27.000000000 -0400
-+++ openvpn-2.5_git_57d6f10.new/src/openvpn/options.h	2018-07-28 06:02:27.000000000 -0400
-@@ -99,6 +99,9 @@
+diff -u -r -x .DS_Store openvpn-2.4.6.old/src/openvpn/options.h openvpn-2.4.6.new/src/openvpn/options.h
+--- openvpn-2.4.6.old/src/openvpn/options.h	2018-07-28 06:02:25.000000000 -0400
++++ openvpn-2.4.6.new/src/openvpn/options.h	2018-07-28 06:02:25.000000000 -0400
+@@ -101,6 +101,9 @@
      int connect_retry_seconds;
      int connect_retry_seconds_max;
      int connect_timeout;

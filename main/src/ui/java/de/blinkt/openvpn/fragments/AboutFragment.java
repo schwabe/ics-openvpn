@@ -45,6 +45,7 @@ import java.util.Vector;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.core.VpnStatus;
+import kotlin.text.Charsets;
 
 public class AboutFragment extends Fragment implements View.OnClickListener {
 
@@ -305,7 +306,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
 
         try {
             mvpn = getActivity().getAssets().open("full_licenses.html");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(mvpn));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(mvpn, Charsets.UTF_8));
             StringBuilder sb = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {

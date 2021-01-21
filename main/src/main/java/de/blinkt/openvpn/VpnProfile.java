@@ -98,7 +98,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mTLSAuthFilename;
     public String mClientKeyFilename;
     public String mCaFilename;
-    public boolean mUseLzo = true;
+    public boolean mUseLzo = false;
     public String mPKCS12Filename;
     public String mPKCS12Password;
     public boolean mUseTLSAuth = false;
@@ -167,6 +167,8 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mDataCiphers = "";
 
     public boolean mBlockUnusedAddressFamilies =true;
+    public boolean mCheckPeerFingerprint = false;
+    public String mPeerFingerPrints = "";
 
     public VpnProfile(String name) {
         mUuid = UUID.randomUUID();
@@ -436,7 +438,9 @@ public class VpnProfile implements Serializable, Cloneable {
                 cfg.append("auth-user-pass\n");
             case VpnProfile.TYPE_CERTIFICATES:
                 // Ca
-                cfg.append(insertFileData("ca", mCaFilename));
+                if (!TextUtils.isEmpty(mCaFilename)) {
+                    cfg.append(insertFileData("ca", mCaFilename));
+                }
 
                 // Client Cert + Key
                 cfg.append(insertFileData("key", mClientKeyFilename));
@@ -462,7 +466,12 @@ public class VpnProfile implements Serializable, Cloneable {
                     String[] ks = getExternalCertificates(context);
                     cfg.append("### From Keystore/ext auth app ####\n");
                     if (ks != null) {
-                        cfg.append("<ca>\n").append(ks[0]).append("\n</ca>\n");
+                        if (!TextUtils.isEmpty(mCaFilename)) {
+                            cfg.append(insertFileData("ca", mCaFilename));
+                        }
+                        else if (!TextUtils.isEmpty(ks[0])) {
+                            cfg.append("<ca>\n").append(ks[0]).append("\n</ca>\n");
+                        }
                         if (!TextUtils.isEmpty(ks[1]))
                             cfg.append("<extra-certs>\n").append(ks[1]).append("\n</extra-certs>\n");
                         cfg.append("<cert>\n").append(ks[2]).append("\n</cert>\n");
@@ -482,6 +491,11 @@ public class VpnProfile implements Serializable, Cloneable {
                     // OpenVPN 3 needs to be told that a client certificate is not required
                     cfg.append("client-cert-not-required\n");
                 }
+        }
+
+        if (mCheckPeerFingerprint)
+        {
+            cfg.append("<peer-fingerprint>\n").append(mPeerFingerPrints).append("\n</peer-fingerprint>\n");
         }
 
         if (isUserPWAuth()) {
@@ -963,7 +977,7 @@ public class VpnProfile implements Serializable, Cloneable {
             if (mAlias == null)
                 return R.string.no_keystore_cert_selected;
         } else if (mAuthenticationType == TYPE_CERTIFICATES || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) {
-            if (TextUtils.isEmpty(mCaFilename))
+            if (TextUtils.isEmpty(mCaFilename) && !mCheckPeerFingerprint)
                 return R.string.no_ca_cert_selected;
         }
 
@@ -1259,7 +1273,7 @@ public class VpnProfile implements Serializable, Cloneable {
         return false;
     }
 
-    class NoCertReturnedException extends Exception {
+    static class NoCertReturnedException extends Exception {
         public NoCertReturnedException(String msg) {
             super(msg);
         }

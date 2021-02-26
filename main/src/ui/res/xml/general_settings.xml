@@ -43,7 +43,7 @@
 
     <PreferenceCategory android:title="@string/vpnbehaviour">
         <CheckBoxPreference
-                android:defaultValue="true"
+                android:defaultValue="false"
                 android:key="usesystemproxy"
                 android:dependency="ovpn3"
                 android:summary="@string/use_system_proxy_summary"

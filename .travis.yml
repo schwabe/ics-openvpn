@@ -48,7 +48,7 @@ before_script:
   
   #- yes | sdkmanager --update
   #- yes | sdkmanager --licenses
-  - yes | sdkmanager 'ndk'
+  - yes | sdkmanager 'ndk-bundle'
   - yes | sdkmanager 'platforms;android-29'
 
   - export PATH=$PATH:${ANDROID_NDK_HOME}

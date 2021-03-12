@@ -70,14 +70,6 @@
             android:text="@string/copyright_guicode" />
 
 
-        <TextView
-                android:paddingTop="12sp"
-                android:id="@+id/donategms"
-                android:text="@string/donatePlayStore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:ignore="SelectableText"/>
 
 
         <TextView

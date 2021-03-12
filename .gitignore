@@ -26,4 +26,6 @@ main/.externalNativeBuild
 main/.cxx
 .synopsys
 polaris.yml
-.polaris-coverity.zip
+.coverity
+idir
+

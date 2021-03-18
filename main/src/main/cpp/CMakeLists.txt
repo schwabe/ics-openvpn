@@ -193,6 +193,7 @@ set(openvpn_srcs
         src/openvpn/ssl_openssl.c
         src/openvpn/ssl_mbedtls.c
         src/openvpn/ssl_ncp.c
+        src/openvpn/ssl_util.c
         src/openvpn/ssl_verify.c
         src/openvpn/ssl_verify_openssl.c
         src/openvpn/ssl_verify_mbedtls.c
@@ -207,7 +208,7 @@ set(openvpn_srcs
 
 PREPEND(openvpn_srcs_with_path "openvpn" ${openvpn_srcs})
 
-add_library(openvpn STATIC ${openvpn_srcs_with_path})
+add_library(openvpn SHARED ${openvpn_srcs_with_path})
 
 target_include_directories(openvpn PRIVATE
         openvpn-config

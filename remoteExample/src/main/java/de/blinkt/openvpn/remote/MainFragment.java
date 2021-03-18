@@ -78,22 +78,22 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
     {
         try {
             InputStream conf = getActivity().getAssets().open("test.conf");
-            InputStreamReader isr = new InputStreamReader(conf);
-            BufferedReader br = new BufferedReader(isr);
-            String config="";
+            BufferedReader br = new BufferedReader(new InputStreamReader(conf));
+            StringBuilder config= new StringBuilder();
             String line;
             while(true) {
                 line = br.readLine();
                 if(line == null)
                     break;
-                config += line + "\n";
+                config.append(line).append("\n");
             }
-            br.readLine();
+            br.close();
+            conf.close();
 
             if (addNew)
-                mService.addNewVPNProfile("nonEditable", false, config);
+                mService.addNewVPNProfile("nonEditable", false, config.toString());
             else
-                mService.startVPN(config);
+                mService.startVPN(config.toString());
         } catch (IOException | RemoteException e) {
             e.printStackTrace();
         }

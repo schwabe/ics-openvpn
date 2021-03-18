@@ -88,6 +88,20 @@
                 blinkt:showClear="true"
                 blinkt:fileTitle="@string/ca_title" />
 
+            <CheckBox
+                android:id="@+id/enable_peer_fingerprint"
+                style="@style/item"
+                android:text="@string/check_peer_fingerprint"
+                />
+
+            <EditText
+                    android:id="@+id/peer_fingerprint"
+                    style="@style/item"
+                    android:inputType="textMultiLine"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginRight="8dip"
+                    android:hint="@string/fingerprint"
+                    android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout

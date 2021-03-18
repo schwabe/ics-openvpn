@@ -20,7 +20,7 @@ import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.views.FileSelectLayout;
 
-public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSelectedListener, FileSelectLayout.FileSelectCallback {
+public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSelectedListener, FileSelectLayout.FileSelectCallback, CompoundButton.OnCheckedChangeListener {
     private static final int CHOOSE_FILE_OFFSET = 1000;
 
     private FileSelectLayout mClientCert;
@@ -36,6 +36,8 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
     private View mView;
     private EditText mProfileName;
     private EditText mKeyPassword;
+    private CheckBox mEnablePeerFingerprint;
+    private EditText mPeerFingerprints;
 
     private SparseArray<FileSelectLayout> fileselects = new SparseArray<>();
     private Spinner mAuthRetry;
@@ -68,6 +70,8 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mUseLzo = mView.findViewById(id.lzo);
         mType = mView.findViewById(id.type);
         mPKCS12Password = mView.findViewById(id.pkcs12password);
+        mEnablePeerFingerprint = mView.findViewById(id.enable_peer_fingerprint);
+        mPeerFingerprints = mView.findViewById(id.peer_fingerprint);
 
         mUserName = mView.findViewById(id.auth_username);
         mPassword = mView.findViewById(id.auth_password);
@@ -84,6 +88,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
 
         mType.setOnItemSelectedListener(this);
         mAuthRetry.setOnItemSelectedListener(this);
+        mEnablePeerFingerprint.setOnCheckedChangeListener(this);
 
         initKeychainViews(mView);
 
@@ -192,6 +197,8 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mPassword.setText(mProfile.mPassword);
         mKeyPassword.setText(mProfile.mKeyPassword);
         mAuthRetry.setSelection(mProfile.mAuthRetry);
+        mEnablePeerFingerprint.setChecked(mProfile.mCheckPeerFingerprint);
+        mPeerFingerprints.setText(mProfile.mPeerFingerPrints);
     }
 
     protected void savePreferences() {
@@ -211,6 +218,8 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mProfile.mUsername = mUserName.getText().toString();
         mProfile.mKeyPassword = mKeyPassword.getText().toString();
         mProfile.mAuthRetry = mAuthRetry.getSelectedItemPosition();
+        mProfile.mCheckPeerFingerprint = mEnablePeerFingerprint.isChecked();
+        mProfile.mPeerFingerPrints = mPeerFingerprints.getText().toString();
 
     }
 
@@ -228,4 +237,12 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
     }
 
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (buttonView == mEnablePeerFingerprint)
+        {
+            mPeerFingerprints.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+
+        }
+    }
 }

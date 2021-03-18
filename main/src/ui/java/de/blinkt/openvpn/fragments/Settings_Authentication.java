@@ -38,7 +38,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
     private ListPreference mTLSAuthDirection;
     private Preference mTLSAuthFile;
     private SwitchPreference mUseTLSAuth;
-    private EditTextPreference mCipher;
+    private EditTextPreference mDataCiphers;
     private String mTlsAuthFileData;
     private EditTextPreference mAuth;
     private EditTextPreference mRemoteX509Name;
@@ -65,8 +65,8 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
 
         mTLSAuthFile.setOnPreferenceClickListener(this);
 
-        mCipher = (EditTextPreference) findPreference("cipher");
-        mCipher.setOnPreferenceChangeListener(this);
+        mDataCiphers = (EditTextPreference) findPreference("dataciphers");
+        mDataCiphers.setOnPreferenceChangeListener(this);
 
         mAuth = (EditTextPreference) findPreference("auth");
         mAuth.setOnPreferenceChangeListener(this);
@@ -97,8 +97,8 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
         mTlsAuthFileData = mProfile.mTLSAuthFilename;
         setTlsAuthSummary(mTlsAuthFileData);
         mTLSAuthDirection.setValue(mProfile.mTLSAuthDirection);
-        mCipher.setText(mProfile.mCipher);
-        onPreferenceChange(mCipher, mProfile.mCipher);
+        mDataCiphers.setText(mProfile.mDataCiphers);
+        onPreferenceChange(mDataCiphers, mProfile.mDataCiphers);
         mAuth.setText(mProfile.mAuth);
         onPreferenceChange(mAuth, mProfile.mAuth);
 
@@ -129,10 +129,10 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
         else
             mProfile.mTLSAuthDirection = mTLSAuthDirection.getValue();
 
-        if (mCipher.getText() == null)
-            mProfile.mCipher = null;
+        if (mDataCiphers.getText() == null)
+            mProfile.mDataCiphers = null;
         else
-            mProfile.mCipher = mCipher.getText();
+            mProfile.mDataCiphers = mDataCiphers.getText();
 
         if (mAuth.getText() == null)
             mProfile.mAuth = null;
@@ -160,7 +160,7 @@ public class Settings_Authentication extends OpenVpnPreferencesFragment implemen
                 preference.setSummary(getX509String(authtype, dn));
             }
 
-        } else if (preference == mCipher || preference == mAuth) {
+        } else if (preference == mDataCiphers || preference == mAuth) {
             preference.setSummary((CharSequence) newValue);
         } else if (preference == mRemoteX509Name) {
             preference.setSummary(TextUtils.isEmpty((CharSequence) newValue) ? "CN (default)" : (CharSequence) newValue);

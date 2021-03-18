@@ -531,9 +531,32 @@ public class ConfigParser {
         if (getOption("comp-lzo", 0, 1) != null)
             np.mUseLzo = true;
 
+        Vector<String> ncp_ciphers = getOption("ncp-ciphers", 1, 1);
+        Vector<String> data_ciphers = getOption("data-ciphers", 1, 1);
         Vector<String> cipher = getOption("cipher", 1, 1);
+
         if (cipher != null)
             np.mCipher = cipher.get(1);
+
+        if (data_ciphers == null)
+        {
+            data_ciphers = ncp_ciphers;
+        }
+
+        /* The world is not yet ready to only use data-ciphers, add --cipher to data-ciphers
+         * for now on import */
+        if (data_ciphers != null)
+        {
+            np.mDataCiphers = data_ciphers.get(1);
+
+            if (!TextUtils.isEmpty(np.mCipher) && !np.mDataCiphers.contains(np.mCipher))
+            {
+                np.mDataCiphers += ":" + np.mCipher;
+            }
+        } else if (!TextUtils.isEmpty(np.mCipher) && !np.mCipher.equals("AES-128-GCM") && !np.mCipher.equals("AES-256"))
+        {
+            np.mDataCiphers += "AES-256-GCM:AES-128-GCM:" + np.mCipher;
+        }
 
         Vector<String> auth = getOption("auth", 1, 1);
         if (auth != null)
@@ -544,6 +567,20 @@ public class ConfigParser {
         if (ca != null) {
             np.mCaFilename = ca.get(1);
         }
+
+        Vector<Vector<String>> peerfp = getAllOption("peer-fingerprint", 1, 1);
+        if (peerfp != null)
+        {
+            np.mCheckPeerFingerprint = true;
+            for (Vector<String> fp: peerfp)
+            {
+                if (fp.get(1).startsWith(VpnProfile.INLINE_TAG))
+                    np.mPeerFingerPrints+=fp.get(1).substring(VpnProfile.INLINE_TAG.length()) + "\n";
+                else
+                    np.mPeerFingerPrints+=fp.get(1) + "\n";
+            }
+        }
+
 
         Vector<String> cert = getOption("cert", 1, 1);
         if (cert != null) {

@@ -9,6 +9,7 @@ import com.android.build.gradle.api.LibraryVariant
 plugins {
     id("com.android.library")
     id("checkstyle")
+
     kotlin("android")
     kotlin("android.extensions")
 }
@@ -19,9 +20,8 @@ android {
     defaultConfig {
         minSdkVersion(14)
         targetSdkVersion(30)  //'Q'.toInt()
-        versionCode = 169
-        versionName = "0.7.16"
-        ndkVersion = "20.0.5594570"
+        versionCode = 176
+        versionName = "0.7.22"
 
         externalNativeBuild {
             cmake {
@@ -36,7 +36,7 @@ android {
 
     externalNativeBuild {
         cmake {
-            setPath(File("${projectDir}/src/main/cpp/CMakeLists.txt"))
+            path =File("${projectDir}/src/main/cpp/CMakeLists.txt")
         }
     }
 
@@ -70,6 +70,8 @@ android {
             keyPassword = keystoreAliasPassword
             val keystoreAlias: String? by project
             keyAlias = keystoreAlias
+            isV1SigningEnabled = true
+            isV2SigningEnabled = true
         }
 
     }

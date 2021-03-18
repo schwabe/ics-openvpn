@@ -206,7 +206,7 @@ static void* stop_run(void* arg)
     return NULL;
 }
 
-    jdoubleArray Java_de_blinkt_openvpn_core_NativeUtils_getOpenSSLSpeed(JNIEnv* env, jclass thiz, jstring algorithm, jint testnumber)
+jdoubleArray Java_de_blinkt_openvpn_core_NativeUtils_getOpenSSLSpeed(JNIEnv* env, jclass thiz, jstring algorithm, jint testnumber)
 {
     static const unsigned char key16[16] = {
         0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0,
@@ -238,7 +238,7 @@ static void* stop_run(void* arg)
     jdoubleArray ret = (*env)->NewDoubleArray(env, 3);
 
     if (testnum < 0 || testnum >= SIZE_NUM)
-        return NULL;
+        goto error;
 
     testnum = testnumber;
 
@@ -276,7 +276,7 @@ static void* stop_run(void* arg)
         pthread_t timer_thread;
 
         if (pthread_create(&timer_thread, NULL, stop_run, NULL))
-            return NULL;
+            goto error;
 
         count = run_benchmark(async_jobs, EVP_Update_loop, loopargs);
         d = Time_F(STOP);
@@ -290,7 +290,7 @@ static void* stop_run(void* arg)
 
         pthread_t timer_thread;
         if (pthread_create(&timer_thread, NULL, stop_run, NULL))
-            return NULL;
+            goto error;
 
         Time_F(START);
         count = run_benchmark(async_jobs, EVP_Digest_loop, loopargs);
@@ -306,4 +306,10 @@ static void* stop_run(void* arg)
 
 
     return ret;
+error:
+  free(loopargs);
+  for (int k = 0; k < loopargs_len; k++) {
+      EVP_CIPHER_CTX_free(loopargs[k].ctx);
+    }
+  return NULL;
 }

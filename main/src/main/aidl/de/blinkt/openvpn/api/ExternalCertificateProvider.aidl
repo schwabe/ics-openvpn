@@ -1,16 +1,16 @@
 // ExternalCertificateProvider.aidl
 package de.blinkt.openvpn.api;
 
-
 /*
  * This is very simple interface that is specialised to have only the minimal set of crypto
  * operation that are needed for OpenVPN to authenticate with an external certificate
  */
 interface ExternalCertificateProvider {
     /**
+     * @deprecated use {@link #getSignedDataWithExtra} instead
      * Requests signing the data with RSA/ECB/PKCS1PADDING
      * for RSA certficate and with NONEwithECDSA for EC certificates
-     * @parm alias the parameter that
+     * @param alias user certificate identifier
      */
     byte[] getSignedData(in String alias, in byte[] data);
 
@@ -36,4 +36,21 @@ interface ExternalCertificateProvider {
      *
      */
     Bundle getCertificateMetaData(in String alias);
+
+    /**
+     * Requests signing the data with RSA/ECB/PKCS1PADDING or RSA/ECB/nopadding
+     * for RSA certficate and with NONEwithECDSA for EC certificates
+     * @param alias user certificate identifier
+     * @param data the data to be signed
+     * @param extra additional information.
+     * Should contain the following keys:
+     * <p><ul>
+       * <li>int key "de.blinkt.openvpn.api.RSA_PADDING_TYPE", may be set as:
+       * <p><ul>
+         * <li>0 - for RSA/ECB/nopadding
+         * <li>1 - for RSA/ECB/PKCS1PADDING
+         * </ul><p>
+       * </ul><p>
+     */
+    byte[] getSignedDataWithExtra(in String alias, in byte[] data, in Bundle extra);
 }

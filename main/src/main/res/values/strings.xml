@@ -42,7 +42,7 @@
     <string name="duplicate_profile_name">Please enter a unique Profile Name</string>
     <string name="profilename">Profile Name</string>
     <string name="no_keystore_cert_selected">You must select a User certificate</string>
-    <string name="no_ca_cert_selected">You must select a CA certificate</string>
+    <string name="no_ca_cert_selected">You must select a CA certificate or enable peer fingerprint check</string>
     <string name="no_error_found">No error found</string>
     <string name="config_error_found">Error in Configuration</string>
     <string name="ipv4_format_error">Error parsing the IPv4 address</string>
@@ -125,8 +125,8 @@
     <string name="faq_howto_shortcut">You can place a shortcut to start OpenVPN on your desktop. Depending on your homescreen program you will have to add either a shortcut or a widget.</string>
     <string name="no_vpn_support_image">Your image does not support the VPNService API, sorry :(</string>
     <string name="encryption">Encryption</string>
-    <string name="cipher_dialog_title">Enter encryption method</string>
-    <string name="chipher_dialog_message">Enter the encryption cipher algorithm used by OpenVPN. Leave empty to use default cipher.</string>
+    <string name="cipher_dialog_title">Enter data encryption methods</string>
+    <string name="chipher_dialog_message">Enter the data encryption cipher algorithms used by OpenVPN separated by : (--data-ciphers). Leave empty to use the default of AES-256-GCM:AES-128-GCM.</string>
     <string name="auth_dialog_message">Enter the authentication digest used for OpenVPN. Leave empty to use default digest.</string>
     <string name="settings_auth">Authentication/Encryption</string>
     <string name="file_explorer_tab">File Explorer</string>
@@ -257,7 +257,7 @@
     <string name="start_vpn_title">Connecting to VPN %s</string>
     <string name="start_vpn_ticker">Connecting to VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Some versions of Android 4.1 have problems if the name of the keystore certificate contains non alphanumeric characters (like spaces, underscores or dashes). Try to reimport the certificate without special characters</string>
-    <string name="encryption_cipher">Encryption cipher</string>
+    <string name="encryption_cipher">Encryption ciphers</string>
     <string name="packet_auth">Packet authentication</string>
     <string name="auth_dialog_title">Enter packet authentication method</string>
     <string name="built_by">built by %s</string>
@@ -487,7 +487,7 @@
     <string name="state_auth_pending">Authentication pending</string>
     <string name="external_authenticator">External Authenticator</string>
     <string name="configure">Configure</string>
-    <string name="extauth_not_configured">External Authneticator not configured</string>
+    <string name="extauth_not_configured">External Authenticator not configured</string>
     <string name="faq_killswitch_title">Block non VPN connection (\"Killswitch\")</string>
     <string name="faq_killswitch">It is often desired to block connections without VPN. Other apps often use markting terms like \"Killswitch\" or \"Seamless tunnel\" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.&lt;p>The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.&lt;p>The &lt;b>only&lt;/b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the \"block connections without VPN\" setting that can be found under Settings > Network &amp; Internet > Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN</string>
     <string name="summary_block_address_families">This option instructs Android to not allow protocols (IPv4/IPv6) if the VPN does not set any IPv4 or IPv6 addresses.</string>
@@ -498,5 +498,9 @@
     <string name="import_from_as">Import Profile from Access Server</string>
     <string name="no_default_vpn_set">Default VPN not set. Please set the Default VPN before enabling this option.</string>
     <string name="internal_web_view">Internal WebView</string>
+    <string name="faq_title_ncp">Failed to negotiate cipher with server</string>
+    <string name="faq_ncp">There are some variation of this message depending on the exact situation. They all have in common that server and client could not agree on a common cipher. The main reasons are: &lt;ul>&lt;li> You are still relying on the fact that OpenVPN 2.4 and older allowed BF-CBC in the default configuration (if no --cipher was set). OpenVPN 2.5 does not allow it per default anymore since it is a &lt;a href="https://community.openvpn.net/openvpn/wiki/SWEET32">broken/outdated cipher&lt;/a>.&lt;/li>&lt;li>The server runs OpenVPN 2.3 (or even older) with --enable-small (at least 4-5 year old OpenVPN)&lt;/li>&lt;li>Broken configuration (e.g., mismatching data-ciphers on client and server)&lt;/li> &lt;p> The &lt;a href=\"https://github.com/OpenVPN/openvpn/blob/master/doc/man-sections/cipher-negotiation.rst\">OpenVPN manual section on cipher negotiation&lt;/a> explains the different scenarios of cipher negotiation very well and what to do in these situation.&lt;p>TP-Link devices use a at least 5 year old OpenVPN 2.3.x version (possibly older) on their devices, even in the 2019/2020 models.&lt;p>Last but not least, there is a popular VPN provider that has a broken server that always says it is using \'BF-CBC\' because its developer thought it would be a good idea to create a proprietary cipher negotiation patch that is incompatible with standard OpenVPN.&lt;p>In summary: all sane configurations should not get these errors. But (apart from the broken VPN provider\'s server) the client can be persuaded to still connect (fixing the sympton and not the real problem).</string>
+    <string name="check_peer_fingerprint">Check peer certificate fingerprint</string>
+    <string name="fingerprint">(Enter the SHA256 fingerprint of the server certificate(s))</string>
 
 </resources>

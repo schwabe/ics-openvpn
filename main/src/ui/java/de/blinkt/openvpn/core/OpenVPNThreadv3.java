@@ -34,7 +34,6 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
     private OpenVPNService mService;
 
     public OpenVPNThreadv3(OpenVPNService openVpnService, VpnProfile vp) {
-        init_process();
         mVp = vp;
         mService = openVpnService;
     }

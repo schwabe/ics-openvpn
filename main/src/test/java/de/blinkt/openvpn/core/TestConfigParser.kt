@@ -348,4 +348,44 @@ verify-x509-name homevpn.evil.cloud name
         Assert.assertFalse(config.contains("key-direction"))
     }
 
+    @Test
+    @Throws(IOException::class, ConfigParser.ConfigParseError::class)
+    fun testPeerFingerprint() {
+        val conf = """
+<cert>
+dummy
+</cert>
+cipher AES-256-GCM
+client
+dev-type tun
+<key>
+dummykey
+</key>
+remote home.evil.cloud 65443 udp
+""";
+        val fps = """
+    28:45:c7:ad:6a:c4:83:c7:a0:0a:0a:91:4b:43:e3:09:79:05:a2:ce:c2:e2:5e:c9:70:5a:2b:a4:e1:0f:97:e3
+    F8:FA:6D:CF:58:65:98:5F:E0:E7:2A:B4:25:ED:2C:DD:45:7B:21:C1:B7:46:1D:46:C3:2B:1D:1D:F7:0E:43:51
+    ef:5c:fc:a4:d5:59:78:14:e0:87:66:0b:53:df:e5:1e:a1:39:e0:1f:7a:ca:ca:87:4e:78:8b:45:c7:3d:af:c7
+    """.trimIndent()
+        val fpBlock = "<peer-fingerprint>\n${fps}\n</peer-fingerprint>"
+
+        val fpSingle = "00:11:22:33:44:55:66:77:88:99:aa:bb:cc:dd:ee:ff:00:11:22:33:44:55:66:77:88:99:aa:bb:cc:dd:ee:ff"
+        val fpSingleCmd = "peer-fingerprint ${fpSingle}\n"
+
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(conf + fpBlock))
+        val vp = cp.convertProfile()
+
+        Assert.assertTrue(vp.mCheckPeerFingerprint)
+        Assert.assertEquals(fps.trim(), vp.mPeerFingerPrints.trim())
+
+        cp.parseConfig(StringReader(conf + fpBlock + "\n" + fpSingleCmd))
+        val vp2 = cp.convertProfile()
+        Assert.assertTrue(vp2.mCheckPeerFingerprint)
+        Assert.assertEquals((fps + "\n" + fpSingle).trim(), vp2.mPeerFingerPrints.trim())
+
+
+    }
+
 }

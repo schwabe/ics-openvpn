@@ -8,6 +8,7 @@ import com.android.build.gradle.api.ApplicationVariant
 plugins {
     id("com.android.application")
     id("checkstyle")
+
     kotlin("android")
     kotlin("android.extensions")
 }
@@ -18,8 +19,8 @@ android {
     defaultConfig {
         minSdkVersion(14)
         targetSdkVersion(30)  //'Q'.toInt()
-        versionCode = 175
-        versionName = "0.7.21"
+        versionCode = 176
+        versionName = "0.7.22"
 
         externalNativeBuild {
             cmake {
@@ -35,7 +36,7 @@ android {
 
     externalNativeBuild {
         cmake {
-            setPath(File("${projectDir}/src/main/cpp/CMakeLists.txt"))
+            path =File("${projectDir}/src/main/cpp/CMakeLists.txt")
         }
     }
 

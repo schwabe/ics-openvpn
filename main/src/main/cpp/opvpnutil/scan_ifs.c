@@ -16,8 +16,7 @@
 
 jobjectArray Java_de_blinkt_openvpn_core_NativeUtils_getIfconfig(JNIEnv* env)
 {
-
-	int sd;
+    int sd;
     if ((sd = socket (AF_INET, SOCK_DGRAM, 0)) < 0) {
         __android_log_print(ANDROID_LOG_DEBUG, "openvpn", "Opening socket for intface get failed");
         //jniThrowException(env, "java/lang/IllegalArgumentException", "Opening socket for intface get failed");
@@ -33,6 +32,7 @@ jobjectArray Java_de_blinkt_openvpn_core_NativeUtils_getIfconfig(JNIEnv* env)
     if (ioctl (sd, SIOCGIFCONF, &ifc) < 0) {
         __android_log_print(ANDROID_LOG_DEBUG, "openvpn", "IOCTL for intface get failed");
         //jniThrowException(env, "java/lang/IllegalArgumentException", "IOTCL socket for intface get failed");
+        close(sd);
         return NULL;
     }
     

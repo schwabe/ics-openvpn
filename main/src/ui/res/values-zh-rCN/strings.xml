@@ -76,7 +76,6 @@
     <string name="use_pull">拉取设置</string>
     <string name="dns">DNS</string>
     <string name="dns_override_summary">使用您的DNS服务器 (personalDNSfilter 10.10.10.10)</string>
-    <string name="dns_override_summary">使用您的DNS服务器</string>
     <string name="searchdomain">搜索域名</string>
     <string name="dns1_summary">要使用的DNS服务器。</string>
     <string name="dns_server">主DNS服务器</string>

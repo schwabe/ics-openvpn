@@ -21,6 +21,7 @@ import android.content.pm.ShortcutManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.net.ProxyInfo;
 import android.net.Uri;
 import android.net.VpnService;
 import android.os.Build;
@@ -141,6 +142,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private Handler guiHandler;
     private Toast mlastToast;
     private Runnable mOpenVPNThread;
+    private ProxyInfo mProxyInfo;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean speed, Resources res) {
@@ -744,6 +746,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         cfg += "dns: " + TextUtils.join("|", mDnslist);
         cfg += "domain: " + mDomain;
         cfg += "mtu: " + mMtu;
+        cfg += "proxyInfo: " + mProxyInfo;
         return cfg;
     }
 
@@ -869,20 +872,18 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         int ipv4len;
-        if (mLocalIP!=null) {
-            ipv4len=mLocalIP.len;
-            ipv4info=mLocalIP.mIp;
+        if (mLocalIP != null) {
+            ipv4len = mLocalIP.len;
+            ipv4info = mLocalIP.mIp;
         } else {
             ipv4len = -1;
         }
 
-        if (mLocalIPv6!=null)
-        {
+        if (mLocalIPv6 != null) {
             ipv6info = mLocalIPv6;
         }
 
-        if ((!mRoutes.getNetworks(false).isEmpty() || !mRoutesv6.getNetworks(false).isEmpty()) && isLockdownEnabledCompat())
-        {
+        if ((!mRoutes.getNetworks(false).isEmpty() || !mRoutesv6.getNetworks(false).isEmpty()) && isLockdownEnabledCompat()) {
             VpnStatus.logInfo("VPN lockdown enabled (do not allow apps to bypass VPN) enabled. Route exclusion will not allow apps to bypass VPN (e.g. bypass VPN for local networks)");
         }
 
@@ -890,6 +891,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         VpnStatus.logInfo(R.string.dns_server_info, TextUtils.join(", ", mDnslist), mDomain);
         VpnStatus.logInfo(R.string.routes_info_incl, TextUtils.join(", ", mRoutes.getNetworks(true)), TextUtils.join(", ", mRoutesv6.getNetworks(true)));
         VpnStatus.logInfo(R.string.routes_info_excl, TextUtils.join(", ", mRoutes.getNetworks(false)), TextUtils.join(", ", mRoutesv6.getNetworks(false)));
+        if (mProxyInfo != null) {
+            VpnStatus.logInfo(R.string.proxy_info, mProxyInfo.getHost(), mProxyInfo.getPort());
+        }
         VpnStatus.logDebug(R.string.routes_debug, TextUtils.join(", ", positiveIPv4Routes), TextUtils.join(", ", positiveIPv6Routes));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setAllowedVpnPackages(builder);
@@ -919,6 +923,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (mDnslist.size() == 0)
             VpnStatus.logInfo(R.string.warn_no_dns);
 
+        setHttpProxy(builder);
+
         mLastTunCfg = getTunConfigString();
 
         // Reset information
@@ -928,6 +934,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         mLocalIP = null;
         mLocalIPv6 = null;
         mDomain = null;
+        mProxyInfo = null;
 
         builder.setConfigureIntent(getGraphPendingIntent());
 
@@ -946,6 +953,17 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             return null;
         }
 
+    }
+
+    private void setHttpProxy(Builder builder) {
+        if (mProxyInfo != null && Build.VERSION.SDK_INT >= 29)
+        {
+            builder.setHttpProxy(mProxyInfo);
+        }
+        else if (mProxyInfo != null)
+        {
+            VpnStatus.logWarning("HTTP Proxy needs Android 10 or later.");
+        }
     }
 
     private boolean isLockdownEnabledCompat() {
@@ -1066,6 +1084,17 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
      */
     public void addRoute(CIDRIP route, boolean include) {
         mRoutes.addIP(route, include);
+    }
+
+    public boolean addHttpProxy(String proxy, int port) {
+        try {
+            mProxyInfo = ProxyInfo.buildDirectProxy(proxy, port);
+        } catch (Exception e)
+        {
+            VpnStatus.logError("Could not set proxy" + e.getLocalizedMessage());
+            return false;
+        }
+        return true;
     }
 
     public void addRoute(String dest, String mask, String gateway, String device) {
@@ -1342,4 +1371,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         mNotificationManager.notify(notificationId, notification);
     }
+
+
 }

@@ -108,6 +108,18 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
     }
 
     @Override
+    public boolean tun_builder_set_proxy_http(String host, int port)
+    {
+        return mService.addHttpProxy(host, port);
+    }
+
+    @Override
+    public boolean tun_builder_set_proxy_https(String host, int port)
+    {
+        return false;
+    }
+
+    @Override
     public int tun_builder_establish() {
         return mService.openTun().detachFd();
     }
@@ -270,6 +282,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
     @Override
     public void setPauseCallback(PausedStateCallback callback) {
     }
+
 
     @Override
     public void sendCRResponse(String response) {

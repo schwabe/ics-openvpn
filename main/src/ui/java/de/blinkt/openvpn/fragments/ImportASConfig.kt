@@ -16,17 +16,22 @@ import android.text.InputType
 import android.util.Base64
 import android.util.Base64.NO_WRAP
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.activities.ConfigConverter
 import de.blinkt.openvpn.core.Preferences
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.*
 import okhttp3.internal.tls.OkHostnameVerifier
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.runOnUiThread
 import java.io.IOException
 import java.security.MessageDigest
 import java.security.cert.CertPathValidatorException
@@ -86,6 +91,8 @@ class ImportASConfig : DialogFragment() {
     private lateinit var asServername: EditText
     private lateinit var asUsername: EditText
     private lateinit var asPassword: EditText
+    private lateinit var dialogView: View
+
 
 
     internal fun getHostNameVerifier(prefs: SharedPreferences): HostnameVerifier {
@@ -210,53 +217,71 @@ class ImportASConfig : DialogFragment() {
         return asUri
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return dialogView
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
-        val view = inflater.inflate(R.layout.import_as_config, null);
+        dialogView = inflater.inflate(R.layout.import_as_config, null);
 
         val builder = AlertDialog.Builder(requireContext())
 
-        builder.setView(view)
-
-
+        builder.setView(dialogView)
         builder.setTitle(R.string.import_from_as)
 
-        asServername = view.findViewById(R.id.as_servername)
-        asUsername = view.findViewById(R.id.username)
-        asPassword = view.findViewById(R.id.password)
-        asUseAutlogin = view.findViewById(R.id.request_autologin)
+        asServername = dialogView.findViewById(R.id.as_servername)
+        asUsername = dialogView.findViewById(R.id.username)
+        asPassword = dialogView.findViewById(R.id.password)
+        asUseAutlogin = dialogView.findViewById(R.id.request_autologin)
 
         builder.setPositiveButton(R.string.import_config, null)
         builder.setNegativeButton(android.R.string.cancel) { _, _ -> }
 
         val dialog = builder.create()
 
-        dialog.setOnShowListener() { d2 ->
+        return dialog
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        dialog!!.setOnShowListener() { d2 ->
             val d: AlertDialog = d2 as AlertDialog
 
             d.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener()
+
             { _ ->
-                doAsImport(asUsername.text.toString(), asPassword.text.toString())
+                viewLifecycleOwner.lifecycleScope.launch {
+                    doAsImport(asUsername.text.toString(), asPassword.text.toString())
+                }
             }
         }
-        return dialog
     }
 
     val crvMessage = Pattern.compile(".*<Message>CRV1:R,E:(.*):(.*):(.*)</Message>.*", Pattern.DOTALL)
 
-    internal fun doAsImport(user: String, password: String) {
-        val ab = AlertDialog.Builder(requireContext())
-        ab.setTitle("Downloading profile")
-        ab.setMessage("Please wait")
-        val pleaseWait = ab.show()
-        Toast.makeText(context, "Downloading profile", Toast.LENGTH_LONG).show()
-        val asProfileUri = getAsUrl(asServername.text.toString(), asUseAutlogin.isChecked)
+    suspend internal fun doAsImport(user: String, password: String) {
+        var pleaseWait:AlertDialog?
+        withContext(Dispatchers.IO)
+        {
 
-        doAsync {
+            withContext(Dispatchers.Main)
+            {
+                val ab = AlertDialog.Builder(requireContext())
+                ab.setTitle("Downloading profile")
+                ab.setMessage("Please wait")
+                pleaseWait = ab.show()
+
+                Toast.makeText(context, "Downloading profile", Toast.LENGTH_LONG).show()
+            }
+
+
+            val asProfileUri = getAsUrl(asServername.text.toString(), asUseAutlogin.isChecked)
+
             var e: Exception? = null
             try {
                 val response = fetchProfile(requireContext(), asProfileUri, user, password)
-
 
                 if (response == null) {
                     throw Exception("No Response from Server")
@@ -264,13 +289,13 @@ class ImportASConfig : DialogFragment() {
 
                 val profile = response.body().string()
                 if (response.code() == 401 && crvMessage.matcher(profile).matches()) {
-                    requireContext().runOnUiThread {
+                    withContext(Dispatchers.Main) {
                         pleaseWait?.dismiss()
                         showCRDialog(profile)
                     }
                 } else if (response.isSuccessful) {
 
-                    activity?.runOnUiThread {
+                    withContext(Dispatchers.Main) {
                         pleaseWait?.dismiss()
                         val startImport = Intent(activity, ConfigConverter::class.java)
                         startImport.action = ConfigConverter.IMPORT_PROFILE_DATA
@@ -298,7 +323,7 @@ class ImportASConfig : DialogFragment() {
 
 
                             Log.i("OpenVPN", "Found cert with FP ${fp}: ${firstCert.subjectDN}")
-                            requireContext().runOnUiThread {
+                            withContext(Dispatchers.Main) {
 
                                 pleaseWait?.dismiss()
 
@@ -312,7 +337,7 @@ class ImportASConfig : DialogFragment() {
                             e = null
                         }
                     } else if (ce.message != null && ce.message!!.contains("Certificate pinning failure")) {
-                        requireContext().runOnUiThread {
+                        withContext(Dispatchers.Main) {
                             pleaseWait?.dismiss()
 
                             AlertDialog.Builder(requireContext())
@@ -330,7 +355,7 @@ class ImportASConfig : DialogFragment() {
                 e = ge
             }
             if (e != null) {
-                activity?.runOnUiThread() {
+                withContext(Dispatchers.Main) {
                     pleaseWait?.dismiss()
                     AlertDialog.Builder(requireContext())
                             .setTitle("Import failed")
@@ -364,7 +389,9 @@ class ImportASConfig : DialogFragment() {
                 .setView(entry)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(R.string.import_config) { _,_ ->
-                    doAsImport(username, pwprefix + entry.text.toString())
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        doAsImport(username, pwprefix + entry.text.toString())
+                    }
                 }
                 .show()
 

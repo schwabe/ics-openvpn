@@ -6,6 +6,7 @@
 package de.blinkt.openvpn.fragments
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -17,7 +18,6 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.VpnProfile
-import org.jetbrains.anko.runOnUiThread
 import java.util.*
 
 internal class AppViewHolder(var rootView : View) : RecyclerView.ViewHolder(rootView) {
@@ -72,7 +72,7 @@ internal class PackageAdapter(c: Context, vp: VpnProfile) : RecyclerView.Adapter
     }
 
 
-    fun populateList(c: Context) {
+    fun populateList(a: Activity) {
         val installedPackages = mPm.getInstalledApplications(PackageManager.GET_META_DATA)
 
         // Remove apps not using Internet
@@ -99,7 +99,7 @@ internal class PackageAdapter(c: Context, vp: VpnProfile) : RecyclerView.Adapter
         Collections.sort(apps, ApplicationInfo.DisplayNameComparator(mPm))
         mPackages = apps
         mFilteredData = apps
-        c.runOnUiThread { notifyDataSetChanged() }
+        a.runOnUiThread { notifyDataSetChanged() }
     }
 
     override fun getItemId(position: Int): Long {

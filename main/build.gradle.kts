@@ -9,8 +9,7 @@ plugins {
     id("com.android.application")
     id("checkstyle")
 
-    kotlin("android")
-    kotlin("android.extensions")
+    id("kotlin-android")
 }
 
 android {
@@ -165,10 +164,10 @@ dependencies {
     val preferenceVersion = "1.1.1"
     val coreVersion = "1.2.0"
     val materialVersion = "1.1.0"
-    val fragment_version = "1.2.4"
+    val fragment_version = "1.3.2"
 
 
-    implementation("androidx.annotation:annotation:1.1.0")
+    implementation("androidx.annotation:annotation:1.2.0")
     implementation("androidx.core:core:$coreVersion")
 
     // Is there a nicer way to do this?
@@ -181,16 +180,19 @@ dependencies {
     dependencies.add("uiImplementation", "com.squareup.okhttp3:okhttp:3.2.0")
     dependencies.add("uiImplementation", "androidx.core:core:$coreVersion")
     dependencies.add("uiImplementation", "androidx.core:core-ktx:$coreVersion")
-    dependencies.add("uiImplementation", "org.jetbrains.anko:anko-commons:0.10.4")
     dependencies.add("uiImplementation", "androidx.fragment:fragment-ktx:$fragment_version")
     dependencies.add("uiImplementation", "androidx.preference:preference:$preferenceVersion")
     dependencies.add("uiImplementation", "androidx.preference:preference-ktx:$preferenceVersion")
     dependencies.add("uiImplementation", "com.google.android.material:material:$materialVersion")
     dependencies.add("uiImplementation", "androidx.webkit:webkit:1.2.0")
+    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
-    testImplementation("junit:junit:4.13")
-    testImplementation("org.mockito:mockito-core:3.3.3")
-    testImplementation("org.robolectric:robolectric:4.3.1")
-    testImplementation("androidx.test:core:1.2.0")
+
+
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.32")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:3.9.0")
+    testImplementation("org.robolectric:robolectric:4.5.1")
+    testImplementation("androidx.test:core:1.3.0")
 }

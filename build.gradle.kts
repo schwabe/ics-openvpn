@@ -5,20 +5,25 @@
 
 
 buildscript {
+    var kotlin_version: String by extra
+    var fragment_version: String by extra
+
+    kotlin_version = "1.4.32"
+    fragment_version = "1.3.2"
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.1.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72")
+        classpath("com.android.tools.build:gradle:4.1.3")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven(url = "https://jitpack.io")
     }
 }

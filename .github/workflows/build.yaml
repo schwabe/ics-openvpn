@@ -1,0 +1,16 @@
+# The name of our workflow
+name: Build
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use debug signing
+        run: mkdir -p ~/.gradle && echo -e "icsopenvpnDebugSign=true\norg.gradle.jvmargs=-Xmx2048M" > ~/.gradle/gradle.properties
+      - name: Checkout the code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Build the app
+        run: ./gradlew assembleUiRelease

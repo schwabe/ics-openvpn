@@ -123,9 +123,6 @@ set(openvpn_srcs
         src/compat/compat-daemon.c
         src/compat/compat-dirname.c
         src/compat/compat-gettimeofday.c
-        src/compat/compat-inet_ntop.c
-        src/compat/compat-inet_pton.c
-        src/compat/compat-lz4.c
         src/openvpn/argv.c
         src/openvpn/auth_token.c
         src/openvpn/base64.c
@@ -230,12 +227,12 @@ if (${OPENVPN2MBED})
     target_compile_definitions(openvpn PRIVATE
             -DENABLE_CRYPTO_MBEDTLS=1
             )
-    target_link_libraries(openvpn mbedtls mbedx509 mbedcrypto lzo)
+    target_link_libraries(openvpn mbedtls mbedx509 mbedcrypto lzo lz4)
 else ()
     target_compile_definitions(openvpn PRIVATE
             -DENABLE_CRYPTO_OPENSSL=1
             )
-    target_link_libraries(openvpn crypto ssl lzo)
+    target_link_libraries(openvpn crypto ssl lzo lz4)
 endif ()
 
 add_executable(libovpnexec.so minivpn/minivpn.c)
@@ -255,17 +252,18 @@ SET(OVPN_ASSET_DIR ${CMAKE_SOURCE_DIR}/../../../build/ovpnassets)
 add_custom_target(makeassetdir ALL
         COMMAND ${CMAKE_COMMAND} -E make_directory ${OVPN_ASSET_DIR})
 
+
 add_custom_command(TARGET nopie_openvpn.${ANDROID_ABI} POST_BUILD
         COMMAND
         ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_BINARY_DIR}/nopie_openvpn.${ANDROID_ABI}
+        $<TARGET_FILE:nopie_openvpn.${ANDROID_ABI}>
         ${OVPN_ASSET_DIR}
         )
 
 add_custom_command(TARGET pie_openvpn.${ANDROID_ABI} POST_BUILD
         COMMAND
         ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_BINARY_DIR}/pie_openvpn.${ANDROID_ABI}
+        $<TARGET_FILE:pie_openvpn.${ANDROID_ABI}>
         ${OVPN_ASSET_DIR}
         )
 

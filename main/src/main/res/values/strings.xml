@@ -503,5 +503,7 @@
     <string name="check_peer_fingerprint">Check peer certificate fingerprint</string>
     <string name="fingerprint">(Enter the SHA256 fingerprint of the server certificate(s))</string>
     <string name="proxy_info">HTTP Proxy: %1$s %2$d</string>
+    <string name="use_alwayson_vpn">Please you the Always-On Feature of Android to enable VPN at boot time.</string>
+    <string name="open_vpn_settings">Open VPN Settings</string>
 
 </resources>

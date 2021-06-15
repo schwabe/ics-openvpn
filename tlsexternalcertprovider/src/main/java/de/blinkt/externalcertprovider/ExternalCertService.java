@@ -12,21 +12,14 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.TextUtils;
 import de.blinkt.openvpn.api.ExternalCertificateProvider;
-import org.bouncycastle.openssl.PEMKeyPair;
-import org.bouncycastle.openssl.PEMParser;
 
 import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
-import java.io.StringReader;
 import java.security.InvalidKeyException;
-import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
 
 import static de.blinkt.externalcertprovider.SelectCertificateActivity.EXTRA_ALIAS;
 import static de.blinkt.externalcertprovider.SelectCertificateActivity.EXTRA_DESCRIPTION;
@@ -37,31 +30,37 @@ import static de.blinkt.externalcertprovider.SelectCertificateActivity.EXTRA_DES
  * see ExternalOpenVPNService for an example of checking caller's creditionals
  */
 public class ExternalCertService extends Service {
+    private byte[] doSign(byte[] data)
+    {
+        try {
+            return SimpleSigner.signData(data, false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        }
+        // Something failed, return null
+        return null;
+    }
 
     private final ExternalCertificateProvider.Stub mBinder = new ExternalCertificateProvider.Stub() {
 
+
+
         @Override
         public byte[] getSignedData(String alias, byte[] data) throws RemoteException {
-            try {
-                return SimpleSigner.signData(data);
 
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NoSuchPaddingException e) {
-                e.printStackTrace();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (IllegalBlockSizeException e) {
-                e.printStackTrace();
-            } catch (BadPaddingException e) {
-                e.printStackTrace();
-            } catch (InvalidKeySpecException e) {
-                e.printStackTrace();
-            } catch (InvalidKeyException e) {
-                e.printStackTrace();
-            }
-            // Something failed, return null
             return null;
 
         }
@@ -78,6 +77,11 @@ public class ExternalCertService extends Service {
             b.putString(EXTRA_ALIAS, "mynicecert");
             b.putString(EXTRA_DESCRIPTION, "Super secret example key!");
             return b;
+        }
+
+        @Override
+        public byte[] getSignedDataWithExtra(String alias, byte[] data, Bundle extra) throws RemoteException {
+            return new byte[0];
         }
     };
 

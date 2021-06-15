@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import androidx.appcompat.app.ActionBar;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
+
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.fragments.AboutFragment;
 import de.blinkt.openvpn.fragments.FaqFragment;
@@ -29,7 +31,7 @@ public class MainActivity extends BaseActivity {
 
     private static final String FEATURE_TELEVISION = "android.hardware.type.television";
     private static final String FEATURE_LEANBACK = "android.software.leanback";
-    //private TabLayout mTabs;
+    private TabLayout mTabs;
     private ViewPager mPager;
     private ScreenSlidePagerAdapter mPagerAdapter;
 
@@ -58,19 +60,11 @@ public class MainActivity extends BaseActivity {
         }
 
 
-        if (isDirectToTV())
+        if (isAndroidTV())
             mPagerAdapter.addTab(R.string.openvpn_log, LogFragment.class);
 
         mPagerAdapter.addTab(R.string.about, AboutFragment.class);
         mPager.setAdapter(mPagerAdapter);
-
-        //mTabs =  findViewById(R.id.sliding_tabs);
-        //mTabs.setViewPager(mPager);
-    }
-
-    private boolean isDirectToTV() {
-        return (getPackageManager().hasSystemFeature(FEATURE_TELEVISION)
-                || getPackageManager().hasSystemFeature(FEATURE_LEANBACK));
     }
 
 

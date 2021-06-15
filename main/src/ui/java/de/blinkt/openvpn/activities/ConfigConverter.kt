@@ -73,6 +73,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // Permission declined, do nothing
         if (grantResults.size == 0 || grantResults[0] == PackageManager.PERMISSION_DENIED)
             return

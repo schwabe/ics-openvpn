@@ -612,6 +612,14 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 // This not nice or anything but setFileDescriptors accepts only FilDescriptor class :(
 
                 break;
+            case "HTTPPROXY":
+                String[] httpproxy = extra.split(" ");
+                if (httpproxy.length == 2) {
+                    mOpenVPNService.addHttpProxy(httpproxy[0], Integer.parseInt(httpproxy[1]));
+                } else {
+                    VpnStatus.logError("Unrecognized HTTPPROXY cmd: " + Arrays.toString(httpproxy) + " | " + argument);
+                }
+                break;
             default:
                 Log.e(TAG, "Unknown needok command " + argument);
                 return;

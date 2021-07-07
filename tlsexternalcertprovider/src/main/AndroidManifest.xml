@@ -33,8 +33,7 @@
         </activity>
 
 
-        <service
-                android:name=".ExternalCertService"
+        <service android:name=".ExternalCertService"
                 tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="de.blinkt.openvpn.api.ExternalCertificateProvider"/>

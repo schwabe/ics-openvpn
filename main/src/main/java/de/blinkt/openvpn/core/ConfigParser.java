@@ -568,6 +568,20 @@ public class ConfigParser {
             np.mCaFilename = ca.get(1);
         }
 
+        Vector<Vector<String>> peerfp = getAllOption("peer-fingerprint", 1, 1);
+        if (peerfp != null)
+        {
+            np.mCheckPeerFingerprint = true;
+            for (Vector<String> fp: peerfp)
+            {
+                if (fp.get(1).startsWith(VpnProfile.INLINE_TAG))
+                    np.mPeerFingerPrints+=fp.get(1).substring(VpnProfile.INLINE_TAG.length()) + "\n";
+                else
+                    np.mPeerFingerPrints+=fp.get(1) + "\n";
+            }
+        }
+
+
         Vector<String> cert = getOption("cert", 1, 1);
         if (cert != null) {
             np.mClientCertFilename = cert.get(1);

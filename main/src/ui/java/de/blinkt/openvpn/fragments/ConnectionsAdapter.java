@@ -196,7 +196,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
         private final EditText mProxyAuthPassword;
         private final CheckBox mProxyAuthCb;
 
-        private Connection mConnection; // Set to null on update
+        protected Connection mConnection; // Set to null on update
 
 
         ConnectionsHolder(View card, ConnectionsAdapter connectionsAdapter, int viewType) {
@@ -283,6 +283,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
                 }
             });
 
+
             mCustomOptionCB.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (mConnection != null) {
                     mConnection.mUseCustomConfig = isChecked;
@@ -329,13 +330,7 @@ public class ConnectionsAdapter extends RecyclerView.Adapter<ConnectionsAdapter.
                 }
             });
 
-            mCustomOptionCB.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if (mConnection != null) {
-                    mConnection.mUseProxyAuth = isChecked;
-                }
-            });
-
-             mProxyAuthPassword.addTextChangedListener(new OnTextChangedWatcher() {
+            mProxyAuthPassword.addTextChangedListener(new OnTextChangedWatcher() {
                 @Override
                 public void afterTextChanged(Editable s) {
                     if (mConnection != null) {

@@ -98,16 +98,16 @@ else ()
     message("Not budiling OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 endif ()
 
-add_library(opvpnutil SHARED opvpnutil/jniglue.c opvpnutil/scan_ifs.c)
-target_compile_definitions(opvpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\"
+add_library(ovpnutil SHARED ovpnutil/jniglue.c ovpnutil/scan_ifs.c)
+target_compile_definitions(ovpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\"
         -DOPENVPN2_GIT_REVISION=\"${OPENVPN2_GIT}\"
         -DOPENVPN3_GIT_REVISION=\"${OPENVPN3_GIT}\"
         )
-target_link_libraries(opvpnutil log)
+target_link_libraries(ovpnutil log)
 
 
 if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*skeleton.*/")
-    add_library(osslspeedtest SHARED opvpnutil/sslspeed.c)
+    add_library(osslspeedtest SHARED ovpnutil/sslspeed.c)
     target_link_libraries(osslspeedtest log crypto ssl)
 else ()
     message("Not budiling SSLSpeedTest for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
@@ -268,6 +268,6 @@ add_custom_command(TARGET pie_openvpn.${ANDROID_ABI} POST_BUILD
         )
 
 # Hack that these targets are really executed
-add_dependencies(opvpnutil pie_openvpn.${ANDROID_ABI} nopie_openvpn.${ANDROID_ABI})
+add_dependencies(ovpnutil pie_openvpn.${ANDROID_ABI} nopie_openvpn.${ANDROID_ABI})
 add_dependencies(pie_openvpn.${ANDROID_ABI} makeassetdir)
 add_dependencies(nopie_openvpn.${ANDROID_ABI} makeassetdir)

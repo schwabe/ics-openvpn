@@ -601,8 +601,6 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
             // We parsed the intent, relay on saved instance for restoring
             setIntent(null)
         }
-
-
     }
 
     private fun doImportIntent(intent: Intent) {

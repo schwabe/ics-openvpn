@@ -25,6 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+    <TextView
+            android:id="@+id/trigger_pending_action"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:visibility="gone"
+            android:text="@string/trigger_pending_auth_dialog"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            />
 
     <ListView
             android:id="@android:id/list"

@@ -75,12 +75,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     public static final String VPNSERVICE_TUN = "vpnservice-tun";
     public final static String ORBOT_PACKAGE_NAME = "org.torproject.android";
-    private static final String PAUSE_VPN = "de.blinkt.openvpn.PAUSE_VPN";
-    private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
-
     public static final String EXTRA_CHALLENGE_TXT = "de.blinkt.openvpn.core.CR_TEXT_CHALLENGE";
     public static final String EXTRA_CHALLENGE_OPENURL = "de.blinkt.openvpn.core.OPENURL_CHALLENGE";
-
+    private static final String PAUSE_VPN = "de.blinkt.openvpn.PAUSE_VPN";
+    private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
     private static final int PRIORITY_MIN = -2;
     private static final int PRIORITY_DEFAULT = 0;
     private static final int PRIORITY_MAX = 2;
@@ -203,7 +201,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     @Override
     public void challengeResponse(String response) throws RemoteException {
-        if(mManagement != null) {
+        if (mManagement != null) {
             String b64response = Base64.encodeToString(response.getBytes(Charset.forName("UTF-8")), Base64.DEFAULT);
             mManagement.sendCRResponse(b64response);
         }
@@ -640,9 +638,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             mOpenVPNThread = processThread;
         }
 
-        synchronized (mProcessLock)
-
-        {
+        synchronized (mProcessLock) {
             mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
             mProcessThread.start();
         }
@@ -701,7 +697,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
         return null;
     }
-
 
 
     @Override
@@ -956,12 +951,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     private void setHttpProxy(Builder builder) {
-        if (mProxyInfo != null && Build.VERSION.SDK_INT >= 29)
-        {
+        if (mProxyInfo != null && Build.VERSION.SDK_INT >= 29) {
             builder.setHttpProxy(mProxyInfo);
-        }
-        else if (mProxyInfo != null)
-        {
+        } else if (mProxyInfo != null) {
             VpnStatus.logWarning("HTTP Proxy needs Android 10 or later.");
         }
     }
@@ -983,8 +975,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     private void addLocalNetworksToRoutes() {
-        for (String net: NetworkUtils.getLocalNetworks(this, false))
-        {
+        for (String net : NetworkUtils.getLocalNetworks(this, false)) {
             String[] netparts = net.split("/");
             String ipAddr = netparts[0];
             int netMask = Integer.parseInt(netparts[1]);
@@ -1001,7 +992,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         // IPv6 is Lollipop+ only so we can skip the lower than KITKAT case
         if (mProfile.mAllowLocalLAN) {
             for (String net : NetworkUtils.getLocalNetworks(this, true)) {
-                addRoutev6(net, false);;
+                addRoutev6(net, false);
+                ;
             }
         }
 
@@ -1092,8 +1084,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         try {
             mProxyInfo = ProxyInfo.buildDirectProxy(proxy, port);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             VpnStatus.logError("Could not set proxy" + e.getLocalizedMessage());
             return false;
         }
@@ -1308,6 +1299,18 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
 
+    private Intent getWebAuthIntent(String url, boolean external, Notification.Builder nbuilder)
+    {
+        int reason = R.string.openurl_requested;
+        nbuilder.setContentTitle(getString(reason));
+
+        nbuilder.setContentText(url);
+        Intent intent = VariantConfig.getOpenUrlIntent(this, external);
+        intent.setData(Uri.parse(url));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
+
     public void trigger_sso(String info) {
         String channel = NOTIFICATION_CHANNEL_USERREQ_ID;
         String method = info.split(":", 2)[0];
@@ -1320,31 +1323,51 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         nbuilder.setSmallIcon(icon);
 
         Intent intent;
-
         int reason;
-        if (method.equals("OPEN_URL")) {
-            String url = info.split(":", 2)[1];
-            reason = R.string.openurl_requested;
-            nbuilder.setContentTitle(getString(reason));
 
-            nbuilder.setContentText(url);
-            intent = VariantConfig.getOpenUrlIntent(this);
-            intent.setData(Uri.parse(url));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        } else if (method.equals("CR_TEXT")) {
-            String challenge = info.split(":", 2)[1];
-            reason = R.string.crtext_requested;
-            nbuilder.setContentTitle(getString(reason));
-            nbuilder.setContentText(challenge);
+        switch (method) {
+            case "OPEN_URL": {
+                reason = R.string.openurl_requested;
+                String url = info.split(":", 2)[1];
+                intent = getWebAuthIntent(url, false, nbuilder);
 
-            intent = new Intent();
-            intent.setComponent(new ComponentName(this, getPackageName() + ".activities.CredentialsPopup"));
+                break;
+            }
+            case "WEB_AUTH": {
+                reason = R.string.openurl_requested;
+                String[] parts = info.split(":", 3);
+                if (parts.length < 3) {
+                    VpnStatus.logError("WEB_AUTH method with invalid argument found");
+                    return;
+                }
+                String url = parts[2];
+                String[] flags = parts[1].split(",");
+                boolean external = false;
+                for (String flag : flags) {
+                    if (flag.equals("external")) {
+                        external = true;
+                        break;
+                    }
+                }
 
-            intent.putExtra(EXTRA_CHALLENGE_TXT, challenge);
+                intent = getWebAuthIntent(url, external, nbuilder);
+                break;
+            }
+            case "CR_TEXT":
+                String challenge = info.split(":", 2)[1];
+                reason = R.string.crtext_requested;
+                nbuilder.setContentTitle(getString(reason));
+                nbuilder.setContentText(challenge);
 
-        } else {
-            VpnStatus.logError("Unknown SSO method found: " + method);
-            return;
+                intent = new Intent();
+                intent.setComponent(new ComponentName(this, getPackageName() + ".activities.CredentialsPopup"));
+
+                intent.putExtra(EXTRA_CHALLENGE_TXT, challenge);
+
+                break;
+            default:
+                VpnStatus.logError("Unknown SSO method found: " + method);
+                return;
         }
 
         // updateStateString trigger the notification of the VPN to be refreshed, save this intent

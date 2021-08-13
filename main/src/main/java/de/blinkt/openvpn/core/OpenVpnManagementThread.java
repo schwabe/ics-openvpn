@@ -341,7 +341,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
     private void processInfoMessage(String info)
     {
-        if (info.startsWith("OPEN_URL:") || info.startsWith("CR_TEXT:"))
+        if (info.startsWith("OPEN_URL:") || info.startsWith("CR_TEXT:")
+            || info.startsWith("WEB_AUTH:"))
         {
             mOpenVPNService.trigger_sso(info);
         }

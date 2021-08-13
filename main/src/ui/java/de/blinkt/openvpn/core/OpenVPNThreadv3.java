@@ -172,7 +172,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         config.setContent(vpnconfig);
         config.setTunPersist(mVp.mPersistTun);
         config.setGuiVersion(mVp.getVersionEnvString(mService));
-        config.setSsoMethods("openurl,crtext");
+        config.setSsoMethods("openurl,webauth,`crtext");
         config.setPlatformVersion(mVp.getPlatformVersionEnvString());
         config.setExternalPkiAlias("extpki");
         config.setCompressionMode("asym");
@@ -303,7 +303,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         String name = event.getName();
         String info = event.getInfo();
         if (name.equals("INFO")) {
-            if (info.startsWith("OPEN_URL:") || info.startsWith("CR_TEXT:")) {
+            if (info.startsWith("OPEN_URL:") || info.startsWith("CR_TEXT:")
+                || info.startsWith("WEB_AUTH:")) {
                 mService.trigger_sso(info);
             } else {
                 VpnStatus.logInfo(R.string.info_from_server, info);

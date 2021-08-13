@@ -4,6 +4,9 @@ on: [push, pull_request]
 
 jobs:
   build:
+    strategy:
+      matrix:
+          target: [assembleUiRelease, assembleSkeletonRelease]
     runs-on: ubuntu-latest
     steps:
       - name: Use debug signing
@@ -13,4 +16,4 @@ jobs:
         with:
           submodules: true
       - name: Build the app
-        run: ./gradlew assembleUiRelease
+        run: ./gradlew ${{ matrix.target }}

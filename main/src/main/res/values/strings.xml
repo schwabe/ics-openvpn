@@ -33,7 +33,7 @@
     <string name="ipv4_address">IPv4 Address</string>
     <string name="ipv6_address">IPv6 Address</string>
     <string name="custom_option_warning">Enter custom OpenVPN options. Use with caution. Also note that many of the tun related OpenVPN settings cannot be supported by design of the VPNSettings. If you think an important option is missing contact the author</string>
-    <string name="auth_username">Username</string>
+    <string name="auth_username">Username (leave empty for no auth)</string>
     <string name="auth_pwquery">Password</string>
     <string name="static_keys_info">For the static configuration the TLS Auth Keys will be used as static keys</string>
     <string name="configure_the_vpn">Configure the VPN</string>
@@ -494,8 +494,9 @@
     <string name="title_block_address_families">Block IPv6 (or IPv4) if not used by the VPN</string>
     <string name="install_keychain">Install new certificate</string>
     <string name="as_servername">AS servername</string>
+    <string name="server_url">Server URL</string>
     <string name="request_autologin">Request autologin profile</string>
-    <string name="import_from_as">Import Profile from Access Server</string>
+    <string name="import_from_as">Import Profile from Remote Server</string>
     <string name="no_default_vpn_set">Default VPN not set. Please set the Default VPN before enabling this option.</string>
     <string name="internal_web_view">Internal WebView</string>
     <string name="faq_title_ncp">Failed to negotiate cipher with server</string>
@@ -506,5 +507,7 @@
     <string name="use_alwayson_vpn">Please you the Always-On Feature of Android to enable VPN at boot time.</string>
     <string name="open_vpn_settings">Open VPN Settings</string>
     <string name="trigger_pending_auth_dialog">Press here open a window to enter additional required authentication</string>
+    <string name="import_from_access_server">OpenVPN Access Server</string>
+    <string name="import_from_URL">URL</string>
 
 </resources>

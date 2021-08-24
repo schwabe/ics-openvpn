@@ -51,7 +51,7 @@ public class VPNLaunchHelper {
             }
         }
 
-        throw new RuntimeException("Cannot find any execulte for this device's ABIs " + Arrays.toString(abis));
+        throw new RuntimeException("Cannot find any executable for this device's ABIs " + Arrays.toString(abis));
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

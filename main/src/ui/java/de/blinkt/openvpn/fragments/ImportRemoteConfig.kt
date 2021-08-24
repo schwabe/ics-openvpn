@@ -19,9 +19,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import de.blinkt.openvpn.R
@@ -86,12 +84,15 @@ fun getCompositeSSLSocketFactory(certPin: CertificatePinner, hostname: String): 
 
 }
 
-class ImportASConfig : DialogFragment() {
-    private lateinit var asUseAutlogin: CheckBox
+class ImportRemoteConfig : DialogFragment() {
+    private lateinit var asUseAutologin: CheckBox
     private lateinit var asServername: EditText
     private lateinit var asUsername: EditText
     private lateinit var asPassword: EditText
     private lateinit var dialogView: View
+
+    private lateinit var importChoiceGroup: RadioGroup
+    private lateinit var importChoiceAS: RadioButton
 
 
 
@@ -131,8 +132,10 @@ class ImportASConfig : DialogFragment() {
         val pinnedHosts: Set<String> = prefs.getStringSet("pinnedHosts", emptySet())!!
 
         val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(BasicAuthInterceptor(user, password))
-                .connectTimeout(15, TimeUnit.SECONDS)
+        if (user.isNotBlank() && password.isNotBlank()) {
+            okHttpClient.addInterceptor(BasicAuthInterceptor(user, password))
+        }
+        okHttpClient.connectTimeout(15, TimeUnit.SECONDS)
 
         /* Rely on system certificates if we do not have the host pinned */
         if (pinnedHosts.contains(hostname)) {
@@ -164,6 +167,7 @@ class ImportASConfig : DialogFragment() {
         val prefs = c.getSharedPreferences("pinnedCerts", Context.MODE_PRIVATE)
         val pedit = prefs.edit()
         val pinnedHosts: MutableSet<String> = prefs.getStringSet("pinnedHosts", mutableSetOf<String>())!!
+            .toMutableSet()
 
         pinnedHosts.add(host)
 
@@ -177,7 +181,7 @@ class ImportASConfig : DialogFragment() {
     internal fun removedPinnedCert(c: Context, host: String) {
         val prefs = c.getSharedPreferences("pinnedCerts", Context.MODE_PRIVATE)
         val pedit = prefs.edit()
-        val pinnedHosts: MutableSet<String> = prefs.getStringSet("pinnedHosts", mutableSetOf<String>())!!
+        val pinnedHosts: MutableSet<String> = prefs.getStringSet("pinnedHosts", mutableSetOf<String>())!!.toMutableSet()
 
         pinnedHosts.remove(host)
 
@@ -223,7 +227,7 @@ class ImportASConfig : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
-        dialogView = inflater.inflate(R.layout.import_as_config, null);
+        dialogView = inflater.inflate(R.layout.import_remote_config, null);
 
         val builder = AlertDialog.Builder(requireContext())
 
@@ -233,10 +237,26 @@ class ImportASConfig : DialogFragment() {
         asServername = dialogView.findViewById(R.id.as_servername)
         asUsername = dialogView.findViewById(R.id.username)
         asPassword = dialogView.findViewById(R.id.password)
-        asUseAutlogin = dialogView.findViewById(R.id.request_autologin)
+        asUseAutologin = dialogView.findViewById(R.id.request_autologin)
+
+        importChoiceGroup = dialogView.findViewById(R.id.import_source_group)
+        importChoiceAS = dialogView.findViewById(R.id.import_choice_as)
+
+        importChoiceGroup.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId == R.id.import_choice_as)
+                asServername.setHint(R.string.as_servername)
+            else
+                asServername.setHint(R.string.server_url)
+        }
 
         builder.setPositiveButton(R.string.import_config, null)
         builder.setNegativeButton(android.R.string.cancel) { _, _ -> }
+
+        if (arguments?.getString("url") != null)
+        {
+            asServername.setText(arguments?.getString("url"))
+            importChoiceGroup.check(R.id.import_choice_url)
+        }
 
         val dialog = builder.create()
 
@@ -276,8 +296,11 @@ class ImportASConfig : DialogFragment() {
                 Toast.makeText(context, "Downloading profile", Toast.LENGTH_LONG).show()
             }
 
-
-            val asProfileUri = getAsUrl(asServername.text.toString(), asUseAutlogin.isChecked)
+            val asProfileUri:HttpUrl
+            if (importChoiceAS.isChecked)
+                asProfileUri = getAsUrl(asServername.text.toString(), asUseAutologin.isChecked)
+            else
+                asProfileUri = HttpUrl.parse(asServername.text.toString())
 
             var e: Exception? = null
             try {
@@ -400,22 +423,43 @@ class ImportASConfig : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        asServername.setText(Preferences.getDefaultSharedPreferences(activity).getString("as-hostname", ""))
-        asUsername.setText(Preferences.getDefaultSharedPreferences(activity).getString("as-username", ""))
+        if (arguments == null) {
+            asServername.setText(
+                Preferences.getDefaultSharedPreferences(activity).getString("as-hostname", "")
+            )
+            asUsername.setText(
+                Preferences.getDefaultSharedPreferences(activity).getString("as-username", "")
+            )
+            if (Preferences.getDefaultSharedPreferences(activity).getBoolean("as-selected", true)) {
+                importChoiceGroup.check(R.id.import_choice_as)
+            } else {
+                importChoiceGroup.check(R.id.import_choice_url)
+            }
+
+        }
     }
 
     override fun onPause() {
         super.onPause()
         val prefs = Preferences.getDefaultSharedPreferences(activity)
-        prefs.edit().putString("as-hostname", asServername.text.toString()).apply()
-        prefs.edit().putString("as-username", asUsername.text.toString()).apply()
+        val editor = prefs.edit()
+        editor.putString("as-hostname", asServername.text.toString())
+        editor.putString("as-username", asUsername.text.toString())
+        editor.putBoolean("as-selected", importChoiceAS.isChecked)
+        editor.apply()
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(): ImportASConfig {
-            return ImportASConfig();
+        fun newInstance(url:String? = null): ImportRemoteConfig {
+            val frag = ImportRemoteConfig()
+            if (url != null)
+            {
+                val extras = Bundle()
+                extras.putString("url", url)
+                frag.arguments = extras
+            }
+            return frag
         }
     }
-
 }

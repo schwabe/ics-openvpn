@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.ListFragment;
 
 import android.text.Html;
@@ -95,7 +94,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
     private boolean showUserRequestDialogIfNeeded(ConnectionStatus level, Intent intent) {
         if (level == LEVEL_WAITING_FOR_USER_INPUT) {
-            if (intent.getStringExtra(EXTRA_CHALLENGE_TXT) != null) {
+            if (intent != null && intent.getStringExtra(EXTRA_CHALLENGE_TXT) != null) {
                 PasswordDialogFragment pwInputFrag = PasswordDialogFragment.Companion.newInstance(intent, false);
 
                 pwInputFrag.show(getParentFragmentManager(), "dialog");
@@ -126,6 +125,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setListAdapter();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
@@ -277,12 +277,6 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setListAdapter();
-    }
-
     private void setListAdapter() {
         if (mArrayadapter == null) {
             mArrayadapter = new VPNArrayAdapter(getActivity(), R.layout.vpn_list_item, R.id.vpn_item_title);
@@ -354,8 +348,8 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
     private boolean startASProfileImport() {
-        ImportASConfig asImportFrag = ImportASConfig.newInstance();
-        asImportFrag.show(requireFragmentManager(), "dialog");
+        ImportRemoteConfig asImportFrag = ImportRemoteConfig.newInstance(null);
+        asImportFrag.show(getParentFragmentManager(), "dialog");
         return true;
     }
 

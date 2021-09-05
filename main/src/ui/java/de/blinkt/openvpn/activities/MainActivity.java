@@ -79,7 +79,8 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         Intent intent = getIntent();
         if (intent != null) {
-            if (intent.getAction().equals(Intent.ACTION_VIEW))
+            String action = intent.getAction();
+            if (action != null && Intent.ACTION_VIEW.equals(action))
             {
                 Uri uri = intent.getData();
                 checkUriForProfileImport(uri);

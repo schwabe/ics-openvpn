@@ -13,11 +13,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion(30)
+    compileSdkVersion(31)
+
+    ndkVersion = "23.0.7599858"
 
     defaultConfig {
         minSdkVersion(14)
-        targetSdkVersion(30)
+        targetSdkVersion(31)
         versionCode = 178
         versionName = "0.7.24"
 
@@ -94,11 +96,11 @@ android {
 
     productFlavors {
         create("ui") {
-            setDimension("implementation")
+            dimension = "implementation"
             buildConfigField("boolean", "openvpn3", "true")
         }
         create("skeleton") {
-            setDimension("implementation")
+            dimension = "implementation"
             buildConfigField("boolean", "openvpn3", "false")
         }
     }
@@ -160,7 +162,7 @@ dependencies {
     // https://maven.google.com/web/index.html
     // https://developer.android.com/jetpack/androidx/releases/core
     val preferenceVersion = "1.1.1"
-    val coreVersion = "1.2.0"
+    val coreVersion = "1.6.0"
     val materialVersion = "1.1.0"
     val fragment_version = "1.3.2"
 
@@ -192,5 +194,5 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:3.9.0")
     testImplementation("org.robolectric:robolectric:4.5.1")
-    testImplementation("androidx.test:core:1.3.0")
+    testImplementation("androidx.test:core:1.4.0")
 }

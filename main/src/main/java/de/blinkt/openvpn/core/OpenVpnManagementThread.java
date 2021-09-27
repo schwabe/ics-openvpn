@@ -769,8 +769,29 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
         String[] arguments = argument.split(",");
 
-        boolean pkcs1padding = arguments[1].equals("RSA_PKCS1_PADDING");
-        String signed_string = mProfile.getSignedData(mOpenVPNService, arguments[0], pkcs1padding);
+        // NC9t8IkYrjAQcCzc85zN0H5TvwfAUDwYkR4j2ga6fGw=,RSA_PKCS1_PSS_PADDING,hashalg=SHA256,saltlen=digest
+
+
+        SignaturePadding padding = SignaturePadding.NO_PADDING;
+        String saltlen="";
+        String hashalg="";
+        boolean needsDigest = false;
+
+        for (int i=1;i < arguments.length;i++) {
+            String arg = arguments[i];
+            if(arg.equals("RSA_PKCS1_PADDING"))
+                padding = SignaturePadding.RSA_PKCS1_PADDING;
+            else if (arg.equals("RSA_PKCS1_PSS_PADDING"))
+                padding = SignaturePadding.RSA_PKCS1_PSS_PADDING;
+            else if (arg.startsWith("saltlen="))
+                saltlen= arg.substring(8);
+            else if (arg.startsWith("hashalg="))
+                hashalg = arg.substring(8);
+            else if (arg.equals("data=message"))
+                needsDigest = true;
+        }
+
+        String signed_string = mProfile.getSignedData(mOpenVPNService, arguments[0], padding, saltlen, hashalg, needsDigest);
 
         if (signed_string == null) {
             managmentCommand("pk-sig\n");

@@ -16,12 +16,15 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.security.KeyChain;
 import android.security.KeyChainException;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.text.TextUtils;
 import android.util.Base64;
 
 import de.blinkt.openvpn.core.*;
+
 import org.spongycastle.util.io.pem.PemObject;
 import org.spongycastle.util.io.pem.PemWriter;
 
@@ -38,6 +41,8 @@ import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.security.spec.MGF1ParameterSpec;
+import java.security.spec.PSSParameterSpec;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
@@ -475,7 +480,8 @@ public class VpnProfile implements Serializable, Cloneable {
                         if (!TextUtils.isEmpty(ks[1]))
                             cfg.append("<extra-certs>\n").append(ks[1]).append("\n</extra-certs>\n");
                         cfg.append("<cert>\n").append(ks[2]).append("\n</cert>\n");
-                        cfg.append("management-external-key nopadding\n");
+                        cfg.append("management-external-key nopadding pkcs1\n");
+                        // for xkey branch:" management-external-key pss digest
                     } else {
                         cfg.append(context.getString(R.string.keychain_access)).append("\n");
                         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN)
@@ -1161,18 +1167,18 @@ public class VpnProfile implements Serializable, Cloneable {
     }
 
     @Nullable
-    public String getSignedData(Context c, String b64data, boolean pkcs1padding) {
+    public String getSignedData(Context c, String b64data, OpenVPNManagement.SignaturePadding padding, String saltlen, String hashalg, boolean needDigest) {
         byte[] data = Base64.decode(b64data, Base64.DEFAULT);
         byte[] signed_bytes;
         if (mAuthenticationType == TYPE_EXTERNAL_APP) {
-            RsaPaddingType paddingType = pkcs1padding ? RsaPaddingType.PKCS1_PADDING : RsaPaddingType.NO_PADDING;
+            /* TODO: FIXME */
+            RsaPaddingType paddingType = (padding == OpenVPNManagement.SignaturePadding.RSA_PKCS1_PADDING) ? RsaPaddingType.PKCS1_PADDING : RsaPaddingType.NO_PADDING;
             Bundle extra = new Bundle();
             extra.putInt(EXTRA_RSA_PADDING_TYPE, paddingType.ordinal());
 
             signed_bytes = getExtAppSignedData(c, data, extra);
-        }
-        else {
-            signed_bytes = getKeyChainSignedData(data, pkcs1padding);
+        } else {
+            signed_bytes = getKeyChainSignedData(data, padding, saltlen, hashalg, needDigest);
         }
 
         if (signed_bytes != null)
@@ -1192,13 +1198,13 @@ public class VpnProfile implements Serializable, Cloneable {
         }
     }
 
-    private byte[] getKeyChainSignedData(byte[] data, boolean pkcs1padding) {
-
+    private byte[] getKeyChainSignedData(byte[] data, OpenVPNManagement.SignaturePadding padding, String saltlen, String hashalg, boolean needDigest) {
         PrivateKey privkey = getKeystoreKey();
         // The Jelly Bean *evil* Hack
         // 4.2 implements the RSA/ECB/PKCS1PADDING in the OpenSSLprovider
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN) {
-            return processSignJellyBeans(privkey, data, pkcs1padding);
+            /* TODO: really fix this?! */
+            return processSignJellyBeans(privkey, data, padding);
         }
 
 
@@ -1207,86 +1213,130 @@ public class VpnProfile implements Serializable, Cloneable {
             String keyalgorithm = privkey.getAlgorithm();
 
             byte[] signed_bytes;
-            if (keyalgorithm.equals("EC")) {
-                Signature signer = Signature.getInstance("NONEwithECDSA");
-
-                signer.initSign(privkey);
-                signer.update(data);
-                signed_bytes = signer.sign();
-
+            if (needDigest || keyalgorithm.equals("EC")) {
+                return doDigestSign(privkey, data, padding, hashalg, saltlen);
             } else {
-            /* ECB is perfectly fine in this special case, since we are using it for
+                                /* ECB is perfectly fine in this special case, since we are using it for
                the public/private part in the TLS exchange
              */
                 Cipher signer;
-                if (pkcs1padding)
+                if (padding == OpenVPNManagement.SignaturePadding.RSA_PKCS1_PADDING)
                     signer = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
-                else
+                else if (padding == OpenVPNManagement.SignaturePadding.NO_PADDING)
                     signer = Cipher.getInstance("RSA/ECB/NoPadding");
 
+                else
+                    throw new NoSuchPaddingException("Unknown padding used for signature");
 
                 signer.init(Cipher.ENCRYPT_MODE, privkey);
 
                 signed_bytes = signer.doFinal(data);
+
+                return signed_bytes;
             }
-            return signed_bytes;
-        } catch (NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException
-                | BadPaddingException | NoSuchPaddingException | SignatureException e) {
-            VpnStatus.logError(R.string.error_rsa_sign, e.getClass().toString(), e.getLocalizedMessage());
-            return null;
+            } catch
+            (NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchPaddingException | SignatureException | InvalidAlgorithmParameterException
+            e){
+                VpnStatus.logError(R.string.error_rsa_sign, e.getClass().toString(), e.getLocalizedMessage());
+                return null;
+            }
         }
+
+    private byte[] doDigestSign(PrivateKey privkey, byte[] data, OpenVPNManagement.SignaturePadding padding, String hashalg, String saltlen) throws SignatureException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException {
+        /* RSA */
+        Signature sig = null;
+
+        if (privkey.getAlgorithm().equals("EC")) {
+            if (hashalg.equals(""))
+                hashalg = "NONE";
+            /* e.g. SHA512withECDSA */
+            hashalg = hashalg + "withECDSA";
+            sig = Signature.getInstance(hashalg.toUpperCase(Locale.ROOT));
+        } else if (padding == OpenVPNManagement.SignaturePadding.RSA_PKCS1_PSS_PADDING) {
+            /* https://developer.android.com/training/articles/keystore#SupportedSignatures */
+            if (!"digest".equals(saltlen))
+                throw new SignatureException("PSS signing requires saltlen=digest");
+
+            sig = Signature.getInstance(hashalg + "withRSA/PSS");
+
+            PSSParameterSpec pssspec = null;
+            switch (hashalg) {
+                case "SHA256":
+                    pssspec = new PSSParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, 32, 1);
+                    break;
+                case "SHA512":
+                    pssspec = new PSSParameterSpec("SHA-512", "MGF1", MGF1ParameterSpec.SHA512, 64, 1);
+                    break;
+                case "SHA384":
+                    pssspec = new PSSParameterSpec("SHA-384", "MGF1", MGF1ParameterSpec.SHA384, 48, 1);
+                    break;
+            }
+            sig.setParameter(pssspec);
+        } else if (padding == OpenVPNManagement.SignaturePadding.RSA_PKCS1_PADDING) {
+            sig = Signature.getInstance(hashalg + "withRSA");
+        }
+
+        sig.initSign(privkey);
+        sig.update(data);
+        return sig.sign();
     }
 
-    private byte[] processSignJellyBeans(PrivateKey privkey, byte[] data, boolean pkcs1padding) {
-        try {
-            Method getKey = privkey.getClass().getSuperclass().getDeclaredMethod("getOpenSSLKey");
-            getKey.setAccessible(true);
+    private byte[] processSignJellyBeans (PrivateKey privkey, byte[] data, OpenVPNManagement.SignaturePadding padding){
+            try {
+                boolean pkcs1padding=false;
+                if (padding == OpenVPNManagement.SignaturePadding.RSA_PKCS1_PADDING)
+                    pkcs1padding = true;
+                else if (padding != OpenVPNManagement.SignaturePadding.NO_PADDING)
+                    throw new IllegalAccessException("Unsuppoirted padding for jelly bean native signing");
 
-            // Real object type is OpenSSLKey
-            Object opensslkey = getKey.invoke(privkey);
+                Method getKey = privkey.getClass().getSuperclass().getDeclaredMethod("getOpenSSLKey");
+                getKey.setAccessible(true);
 
-            getKey.setAccessible(false);
+                // Real object type is OpenSSLKey
+                Object opensslkey = getKey.invoke(privkey);
 
-            Method getPkeyContext = opensslkey.getClass().getDeclaredMethod("getPkeyContext");
+                getKey.setAccessible(false);
 
-            // integer pointer to EVP_pkey
-            getPkeyContext.setAccessible(true);
-            int pkey = (Integer) getPkeyContext.invoke(opensslkey);
-            getPkeyContext.setAccessible(false);
+                Method getPkeyContext = opensslkey.getClass().getDeclaredMethod("getPkeyContext");
 
-            // 112 with TLS 1.2 (172 back with 4.3), 36 with TLS 1.0
-            return NativeUtils.rsasign(data, pkey, pkcs1padding);
+                // integer pointer to EVP_pkey
+                getPkeyContext.setAccessible(true);
+                int pkey = (Integer) getPkeyContext.invoke(opensslkey);
+                getPkeyContext.setAccessible(false);
 
-        } catch (NoSuchMethodException | InvalidKeyException | InvocationTargetException | IllegalAccessException | IllegalArgumentException e) {
-            VpnStatus.logError(R.string.error_rsa_sign, e.getClass().toString(), e.getLocalizedMessage());
-            return null;
+                // 112 with TLS 1.2 (172 back with 4.3), 36 with TLS 1.0
+                return NativeUtils.rsasign(data, pkey, pkcs1padding);
+
+            } catch (NoSuchMethodException | InvalidKeyException | InvocationTargetException | IllegalAccessException | IllegalArgumentException e) {
+                VpnStatus.logError(R.string.error_rsa_sign, e.getClass().toString(), e.getLocalizedMessage());
+                return null;
+            }
         }
-    }
 
-    private boolean usesExtraProxyOptions() {
-        if (mUseCustomConfig && mCustomConfigOptions != null && mCustomConfigOptions.contains("http-proxy-option "))
-            return true;
-        for (Connection c : mConnections)
-            if (c.usesExtraProxyOptions())
+        private boolean usesExtraProxyOptions () {
+            if (mUseCustomConfig && mCustomConfigOptions != null && mCustomConfigOptions.contains("http-proxy-option "))
                 return true;
+            for (Connection c : mConnections)
+                if (c.usesExtraProxyOptions())
+                    return true;
 
-        return false;
-    }
+            return false;
+        }
 
-    static class NoCertReturnedException extends Exception {
-        public NoCertReturnedException(String msg) {
-            super(msg);
+        /**
+         * The order of elements is important!
+         */
+        private enum RsaPaddingType {
+            NO_PADDING,
+            PKCS1_PADDING
+        }
+
+        static class NoCertReturnedException extends Exception {
+            public NoCertReturnedException(String msg) {
+                super(msg);
+            }
         }
     }
-
-    /**
-     * The order of elements is important!
-     */
-    private enum RsaPaddingType {
-        NO_PADDING,
-        PKCS1_PADDING
-    }
-}
 
 
 

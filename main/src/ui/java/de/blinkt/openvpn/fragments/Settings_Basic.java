@@ -17,7 +17,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.R.id;
 import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.views.FileSelectLayout;
 
 public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSelectedListener, FileSelectLayout.FileSelectCallback, CompoundButton.OnCheckedChangeListener {
@@ -28,6 +27,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
     private FileSelectLayout mClientKey;
     private CheckBox mUseLzo;
     private Spinner mType;
+    private Spinner mCompatMode;
     private FileSelectLayout mpkcs12;
     private FileSelectLayout mCrlFile;
     private TextView mPKCS12Password;
@@ -69,6 +69,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mCrlFile = mView.findViewById(id.crlfile);
         mUseLzo = mView.findViewById(id.lzo);
         mType = mView.findViewById(id.type);
+        mCompatMode = mView.findViewById(id.compatmode);
         mPKCS12Password = mView.findViewById(id.pkcs12password);
         mEnablePeerFingerprint = mView.findViewById(id.enable_peer_fingerprint);
         mPeerFingerprints = mView.findViewById(id.peer_fingerprint);
@@ -191,6 +192,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
 
         mUseLzo.setChecked(mProfile.mUseLzo);
         mType.setSelection(mProfile.mAuthenticationType);
+        mCompatMode.setSelection(Utils.mapCompatVer(mProfile.mCompatMode));
         mpkcs12.setData(mProfile.mPKCS12Filename, getActivity());
         mPKCS12Password.setText(mProfile.mPKCS12Password);
         mUserName.setText(mProfile.mUsername);
@@ -220,7 +222,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mProfile.mAuthRetry = mAuthRetry.getSelectedItemPosition();
         mProfile.mCheckPeerFingerprint = mEnablePeerFingerprint.isChecked();
         mProfile.mPeerFingerPrints = mPeerFingerprints.getText().toString();
-
+        mProfile.mCompatMode = Utils.mapCompatMode(mCompatMode.getSelectedItemPosition());
     }
 
     @Override

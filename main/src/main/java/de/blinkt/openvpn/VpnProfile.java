@@ -164,16 +164,17 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mServerPort = "1194";
     public boolean mUseUdp = true;
     public boolean mTemporaryProfile = false;
+    public String mDataCiphers = "";
+    public boolean mBlockUnusedAddressFamilies = true;
+    public boolean mCheckPeerFingerprint = false;
+    public String mPeerFingerPrints = "";
+    public int mCompatMode = 0;
+
     private transient PrivateKey mPrivateKey;
     // Public attributes, since I got mad with getter/setter
     // set members to default values
     private UUID mUuid;
     private int mProfileVersion;
-    public String mDataCiphers = "";
-
-    public boolean mBlockUnusedAddressFamilies =true;
-    public boolean mCheckPeerFingerprint = false;
-    public String mPeerFingerPrints = "";
 
     public VpnProfile(String name) {
         mUuid = UUID.randomUUID();
@@ -313,10 +314,9 @@ public class VpnProfile implements Serializable, Cloneable {
                         c.mProxyType = Connection.ProxyType.NONE;
             case 7:
                 if (mAllowAppVpnBypass)
-                    mBlockUnusedAddressFamilies = !mAllowAppVpnBypass;
+                    mBlockUnusedAddressFamilies = false;
             case 8:
-                if (!TextUtils.isEmpty(mCipher) && !mCipher.equals("AES-256-GCM") && !mCipher.equals("AES-128-GCM"))
-                {
+                if (!TextUtils.isEmpty(mCipher) && !mCipher.equals("AES-256-GCM") && !mCipher.equals("AES-128-GCM")) {
                     mDataCiphers = "AES-256-GCM:AES-128-GCM:" + mCipher;
                 }
             default:
@@ -457,8 +457,7 @@ public class VpnProfile implements Serializable, Cloneable {
             case VpnProfile.TYPE_PKCS12:
                 cfg.append(insertFileData("pkcs12", mPKCS12Filename));
 
-                if (!TextUtils.isEmpty(mCaFilename))
-                {
+                if (!TextUtils.isEmpty(mCaFilename)) {
                     cfg.append(insertFileData("ca", mCaFilename));
                 }
                 break;
@@ -640,9 +639,17 @@ public class VpnProfile implements Serializable, Cloneable {
                 cfg.append("remote-cert-tls server\n");
         }
 
-        if (!TextUtils.isEmpty(mDataCiphers))
-        {
+        if (!TextUtils.isEmpty(mDataCiphers)) {
             cfg.append("data-ciphers ").append(mDataCiphers).append("\n");
+        }
+
+        if (mCompatMode > 0)
+        {
+            int major = mCompatMode/10000;
+            int minor = mCompatMode % 10000/100;
+            int patch = mCompatMode % 100;
+            cfg.append(String.format(Locale.US, "compat-mode %d.%d.%d\n", major, minor, patch));
+
         }
 
         if (!TextUtils.isEmpty(mCipher)) {

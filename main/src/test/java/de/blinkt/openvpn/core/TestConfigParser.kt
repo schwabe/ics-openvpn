@@ -9,6 +9,7 @@ import android.content.Context
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider
 import de.blinkt.openvpn.R
+import de.blinkt.openvpn.fragments.Utils
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -145,12 +146,55 @@ class TestConfigParser {
         cp.parseConfig(StringReader(config4))
         val vp4 = cp.convertProfile()
 
-        Assert.assertEquals("AES-128-GCM:AES-256-GCM:CHACHA20-POLY1305:BF-CBC", vp4.mDataCiphers)
+        Assert.assertEquals("AES-128-GCM:AES-256-GCM:CHACHA20-POLY1305", vp4.mDataCiphers)
 
 
 
     }
 
+
+    @Test
+    fun testCompatmodeImport() {
+        val config = ("client\n"
+                + "tun-mtu 1234\n" +
+                "<connection>\n" +
+                "remote foo.bar\n" +
+                "tun-mtu 1222\n" +
+                "</connection>\n" +
+                "<cert>\nfakecert\n</cert>\n" +
+                "<key>\nfakekey\n</key>\n" +
+                "route 8.8.8.8 255.255.255.255 net_gateway\n")
+        val c:Context = ApplicationProvider.getApplicationContext()
+
+        val config1 = config + "compat-mode 2.7.7\n"
+
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(config1))
+        val vp = cp.convertProfile()
+
+        Assert.assertEquals(20707, vp.mCompatMode)
+        Assert.assertEquals(0,Utils.mapCompatVer(vp.mCompatMode))
+
+
+        val config2 = config + "compat-mode 2.4.0\n"
+
+
+        cp.parseConfig(StringReader(config2))
+        val vp2 = cp.convertProfile()
+        Assert.assertEquals(20400, vp2.mCompatMode)
+        Assert.assertEquals(2,Utils.mapCompatVer(vp2.mCompatMode))
+        val conf2 = vp2.getConfigFile(c, false)
+        Assert.assertTrue(conf2.contains("compat-mode 2.4.0"));
+
+        val config3 = config + "compat-mode 1.17.23\n";
+        cp.parseConfig(StringReader(config3))
+        val vp3 = cp.convertProfile()
+        Assert.assertEquals(11723, vp3.mCompatMode)
+        Assert.assertEquals(3,Utils.mapCompatVer(vp3.mCompatMode))
+
+        val conf = vp3.getConfigFile(c, false)
+        Assert.assertTrue(conf.contains("compat-mode 1.17.23"));
+    }
 
     @Test
     @Throws(IOException::class, ConfigParser.ConfigParseError::class)

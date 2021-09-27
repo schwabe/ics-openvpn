@@ -538,24 +538,26 @@ public class ConfigParser {
         if (cipher != null)
             np.mCipher = cipher.get(1);
 
-        if (data_ciphers == null)
-        {
-            data_ciphers = ncp_ciphers;
-        }
-
-        /* The world is not yet ready to only use data-ciphers, add --cipher to data-ciphers
-         * for now on import */
         if (data_ciphers != null)
         {
             np.mDataCiphers = data_ciphers.get(1);
-
-            if (!TextUtils.isEmpty(np.mCipher) && !np.mDataCiphers.contains(np.mCipher))
-            {
-                np.mDataCiphers += ":" + np.mCipher;
-            }
-        } else if (!TextUtils.isEmpty(np.mCipher) && !np.mCipher.equals("AES-128-GCM") && !np.mCipher.equals("AES-256"))
+        }
+        else if (ncp_ciphers != null)
         {
-            np.mDataCiphers += "AES-256-GCM:AES-128-GCM:" + np.mCipher;
+            np.mDataCiphers = ncp_ciphers.get(1);
+        }
+
+
+        Vector<String> compatmode = getOption("compat-mode", 1, 1);
+        if (compatmode != null)
+        {
+            Scanner versionScanner = new Scanner(compatmode.get(1));
+            versionScanner.useDelimiter("\\.");
+            int major = versionScanner.nextInt();
+            int minor = versionScanner.nextInt();
+            int patch = versionScanner.nextInt();
+
+            np.mCompatMode = major * 10000 + minor * 100 + patch;
         }
 
         Vector<String> auth = getOption("auth", 1, 1);

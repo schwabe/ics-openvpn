@@ -55,6 +55,8 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
     private val mLogEntries = Vector<String>()
     private var mSourceUri: Uri? = null
     private lateinit var mProfilename: EditText
+    private lateinit var mCompatmode: Spinner
+    private lateinit var mCompatmodeLabel: TextView
     private var mImportTask: AsyncTask<Void, Void, Int>? = null
     private lateinit var mLogLayout: LinearLayout
     private lateinit var mProfilenameLabel: TextView
@@ -123,6 +125,8 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
             mProfilename.error = getString(R.string.duplicate_profile_name)
             return true
         }
+
+        mResult!!.mCompatMode = Utils.mapCompatMode(mCompatmode.selectedItemPosition)
 
         val `in` = installPKCS12()
 
@@ -573,12 +577,17 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         mProfilename = findViewById<View>(R.id.profilename) as EditText
         mProfilenameLabel = findViewById<View>(R.id.profilename_label) as TextView
 
+        mCompatmode = findViewById(R.id.compatmode) as Spinner
+        mCompatmodeLabel = findViewById(R.id.compatmode_label) as TextView
+
+
         if (savedInstanceState != null && savedInstanceState.containsKey(VPNPROFILE)) {
             mResult = savedInstanceState.getSerializable(VPNPROFILE) as VpnProfile?
             mAliasName = savedInstanceState.getString("mAliasName")
             mEmbeddedPwFile = savedInstanceState.getString("pwfile")
             mSourceUri = savedInstanceState.getParcelable("mSourceUri")
             mProfilename.setText(mResult!!.mName)
+            mCompatmode.setSelection(Utils.mapCompatVer(mResult!!.mCompatMode))
 
             if (savedInstanceState.containsKey("logentries")) {
 
@@ -713,6 +722,10 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
                     mProfilename.visibility = View.VISIBLE
                     mProfilenameLabel.visibility = View.VISIBLE
                     mProfilename.setText(mResult!!.name)
+
+                    mCompatmode.visibility = View.VISIBLE
+                    mCompatmodeLabel.visibility = View.VISIBLE
+                    mCompatmode.setSelection(Utils.mapCompatVer(mResult!!.mCompatMode))
 
                     log(R.string.import_done)
                 }

@@ -7,7 +7,6 @@ git_describe(OPENVPN3_GIT "${CMAKE_CURRENT_SOURCE_DIR}/openvpn3" "--tags" "--alw
 message("OpenVPN 2.x version ${OPENVPN2_GIT}")
 message("OpenVPN 3.x version ${OPENVPN3_GIT}")
 
-
 # Set mbedtls options
 OPTION(ENABLE_PROGRAMS "" OFF)
 OPTION(USE_SHARED_MBEDTLS_LIBRARY "" OFF)
@@ -166,7 +165,6 @@ set(openvpn_srcs
         src/openvpn/otime.c
         src/openvpn/packet_id.c
         src/openvpn/perf.c
-        src/openvpn/pf.c
         src/openvpn/ping.c
         src/openvpn/pkcs11.c
         src/openvpn/pkcs11_openssl.c
@@ -198,6 +196,8 @@ set(openvpn_srcs
         src/openvpn/tls_crypt.c
         src/openvpn/tun.c
         src/openvpn/vlan.c
+        #src/openvpn/xkey_helper.c
+        #src/openvpn/xkey_provider.c
         src/openvpn/comp-lz4.c
         src/openvpn/comp.c
         src/openvpn/compstub.c

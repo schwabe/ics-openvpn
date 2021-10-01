@@ -682,3 +682,5 @@ int res_init();
 
 
 #define _SOCKLEN_T_DECLARED 1
+
+//#define HAVE_XKEY_PROVIDER 1

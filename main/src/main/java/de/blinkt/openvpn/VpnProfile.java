@@ -244,6 +244,18 @@ public class VpnProfile implements Serializable, Cloneable {
             return false;
     }
 
+    static public String getVersionEnvString(Context c) {
+        String version = "unknown";
+        try {
+            PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
+            version = packageinfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            VpnStatus.logException(e);
+        }
+        return String.format(Locale.US, "%s %s", c.getPackageName(), version);
+
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof VpnProfile) {
@@ -472,8 +484,10 @@ public class VpnProfile implements Serializable, Cloneable {
                     if (ks != null) {
                         if (!TextUtils.isEmpty(mCaFilename)) {
                             cfg.append(insertFileData("ca", mCaFilename));
-                        }
-                        else if (!TextUtils.isEmpty(ks[0])) {
+                        } else if (!TextUtils.isEmpty(ks[0]) && !mCheckPeerFingerprint) {
+                            /* if we have enabled peer-fingerprint verification the certificate from
+                             * the keystore is more likely to screw things up than to fix anything
+                             */
                             cfg.append("<ca>\n").append(ks[0]).append("\n</ca>\n");
                         }
                         if (!TextUtils.isEmpty(ks[1]))
@@ -711,18 +725,6 @@ public class VpnProfile implements Serializable, Cloneable {
     public String getPlatformVersionEnvString() {
         return String.format(Locale.US, "%d %s %s %s %s %s", Build.VERSION.SDK_INT, Build.VERSION.RELEASE,
                 NativeUtils.getNativeAPI(), Build.BRAND, Build.BOARD, Build.MODEL);
-    }
-
-    static public String getVersionEnvString(Context c) {
-        String version = "unknown";
-        try {
-            PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
-            version = packageinfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            VpnStatus.logException(e);
-        }
-        return String.format(Locale.US, "%s %s", c.getPackageName(), version);
-
     }
 
     @NonNull

@@ -13,13 +13,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdk = 31
 
-    ndkVersion = "23.0.7599858"
+    //ndkVersion = "23.0.7599858"
 
     defaultConfig {
-        minSdkVersion(14)
-        targetSdkVersion(31)
+        minSdk = 16
+        targetSdk = 31
         versionCode = 178
         versionName = "0.7.24"
 
@@ -143,6 +143,8 @@ fun registerGenTask(variantName: String, variantDirName: String): File {
                 "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
                 "-o", "${genDir}/ovpncli_wrap.cxx", "-oh", "${genDir}/ovpncli_wrap.h",
                 "src/main/cpp/openvpn3/javacli/ovpncli.i"))
+        inputs.files( "src/main/cpp/openvpn3/javacli/ovpncli.i")
+        outputs.dir( genDir)
 
     }
     return baseDir

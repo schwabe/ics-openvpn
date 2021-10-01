@@ -104,7 +104,6 @@ target_compile_definitions(ovpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\"
         )
 target_link_libraries(ovpnutil log)
 
-
 if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*skeleton.*/")
     add_library(osslspeedtest SHARED ovpnutil/sslspeed.c)
     target_link_libraries(osslspeedtest log crypto ssl)
@@ -243,22 +242,11 @@ add_executable(pie_openvpn.${ANDROID_ABI} minivpn/minivpn.c)
 target_compile_options(pie_openvpn.${ANDROID_ABI} PRIVATE -fPIE)
 target_link_libraries(pie_openvpn.${ANDROID_ABI} PRIVATE openvpn -fPIE -pie)
 
-add_executable(nopie_openvpn.${ANDROID_ABI} minivpn/minivpn.c)
-target_link_libraries(nopie_openvpn.${ANDROID_ABI} PRIVATE openvpn)
-
 # Hack to copy OpenVPN binaries to assets directory
 SET(OVPN_ASSET_DIR ${CMAKE_SOURCE_DIR}/../../../build/ovpnassets)
 
 add_custom_target(makeassetdir ALL
         COMMAND ${CMAKE_COMMAND} -E make_directory ${OVPN_ASSET_DIR})
-
-
-add_custom_command(TARGET nopie_openvpn.${ANDROID_ABI} POST_BUILD
-        COMMAND
-        ${CMAKE_COMMAND} -E copy
-        $<TARGET_FILE:nopie_openvpn.${ANDROID_ABI}>
-        ${OVPN_ASSET_DIR}
-        )
 
 add_custom_command(TARGET pie_openvpn.${ANDROID_ABI} POST_BUILD
         COMMAND
@@ -268,6 +256,6 @@ add_custom_command(TARGET pie_openvpn.${ANDROID_ABI} POST_BUILD
         )
 
 # Hack that these targets are really executed
-add_dependencies(ovpnutil pie_openvpn.${ANDROID_ABI} nopie_openvpn.${ANDROID_ABI})
+add_dependencies(ovpnutil pie_openvpn.${ANDROID_ABI})
 add_dependencies(pie_openvpn.${ANDROID_ABI} makeassetdir)
-add_dependencies(nopie_openvpn.${ANDROID_ABI} makeassetdir)
+

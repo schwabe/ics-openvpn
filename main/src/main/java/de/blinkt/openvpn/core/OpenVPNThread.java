@@ -27,8 +27,6 @@ import de.blinkt.openvpn.R;
 public class OpenVPNThread implements Runnable {
     private static final String DUMP_PATH_STRING = "Dump path: ";
     @SuppressLint("SdCardPath")
-    private static final String BROKEN_PIE_SUPPORT = "/data/data/de.blinkt.openvpn/cache/pievpn";
-    private final static String BROKEN_PIE_SUPPORT2 = "syntax error";
     private static final String TAG = "OpenVPN";
     // 1380308330.240114 18000002 Send to HTTP proxy: 'X-Online-Host: bla.blabla.com'
     private static final Pattern LOG_PATTERN = Pattern.compile("(\\d+).(\\d+) ([0-9a-f])+ (.*)");
@@ -42,7 +40,6 @@ public class OpenVPNThread implements Runnable {
     private String mTmpDir;
     private OpenVPNService mService;
     private String mDumpPath;
-    private boolean mBrokenPie = false;
     private boolean mNoProcessExitStatus = false;
 
     public OpenVPNThread(OpenVPNService service, String[] argv, String nativelibdir, String tmpdir) {
@@ -82,19 +79,6 @@ public class OpenVPNThread implements Runnable {
             }
             if (exitvalue != 0) {
                 VpnStatus.logError("Process exited with exit value " + exitvalue);
-                if (mBrokenPie) {
-                    /* This will probably fail since the NoPIE binary is probably not written */
-                    String[] noPieArgv = VPNLaunchHelper.replacePieWithNoPie(mArgv);
-
-                    // We are already noPIE, nothing to gain
-                    if (!noPieArgv.equals(mArgv)) {
-                        mArgv = noPieArgv;
-                        VpnStatus.logInfo("PIE Version could not be executed. Trying no PIE version");
-                        run();
-                    }
-
-                }
-
             }
 
             if (!mNoProcessExitStatus)
@@ -149,9 +133,6 @@ public class OpenVPNThread implements Runnable {
 
                 if (logline.startsWith(DUMP_PATH_STRING))
                     mDumpPath = logline.substring(DUMP_PATH_STRING.length());
-
-                if (logline.startsWith(BROKEN_PIE_SUPPORT) || logline.contains(BROKEN_PIE_SUPPORT2))
-                    mBrokenPie = true;
 
                 Matcher m = LOG_PATTERN.matcher(logline);
                 int logerror = 0;

@@ -21,10 +21,8 @@ import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
 
 public class VPNLaunchHelper {
-    private static final String MININONPIEVPN = "nopie_openvpn";
     private static final String MINIPIEVPN = "pie_openvpn";
     private static final String OVPNCONFIGFILE = "android.conf";
-
 
     private static String writeMiniVPN(Context context) {
         String nativeAPI = NativeUtils.getNativeAPI();
@@ -45,7 +43,7 @@ public class VPNLaunchHelper {
 
         for (String abi : abis) {
 
-            File vpnExecutable = new File(context.getCacheDir(), "c_" + getMiniVPNExecutableName() + "." + abi);
+            File vpnExecutable = new File(context.getCacheDir(), "c_" + MINIPIEVPN + "." + abi);
             if ((vpnExecutable.exists() && vpnExecutable.canExecute()) || writeMiniVPNBinary(context, abi, vpnExecutable)) {
                 return vpnExecutable.getPath();
             }
@@ -57,19 +55,6 @@ public class VPNLaunchHelper {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private static String[] getSupportedABIsLollipop() {
         return Build.SUPPORTED_ABIS;
-    }
-
-    private static String getMiniVPNExecutableName() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-            return MINIPIEVPN;
-        else
-            return MININONPIEVPN;
-    }
-
-
-    public static String[] replacePieWithNoPie(String[] mArgv) {
-        mArgv[0] = mArgv[0].replace(MINIPIEVPN, MININONPIEVPN);
-        return mArgv;
     }
 
 
@@ -93,9 +78,9 @@ public class VPNLaunchHelper {
             InputStream mvpn;
 
             try {
-                mvpn = context.getAssets().open(getMiniVPNExecutableName() + "." + abi);
+                mvpn = context.getAssets().open(MINIPIEVPN + "." + abi);
             } catch (IOException errabi) {
-                VpnStatus.logInfo("Failed getting assets for archicture " + abi);
+                VpnStatus.logInfo("Failed getting assets for architecture " + abi);
                 return false;
             }
 

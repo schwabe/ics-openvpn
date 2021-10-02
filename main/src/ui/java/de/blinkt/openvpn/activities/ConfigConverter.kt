@@ -363,7 +363,10 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
                 titleRes = R.string.crl_file
                 value = mResult!!.mCrlFilename
             }
-            Utils.FileType.OVPN_CONFIG -> TODO()
+            Utils.FileType.OVPN_CONFIG -> {
+                titleRes = 0
+                value = null
+            }
         }
 
         return Pair.create(titleRes, value)

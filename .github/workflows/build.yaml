@@ -6,7 +6,8 @@ jobs:
   build:
     strategy:
       matrix:
-          target: [assembleUiRelease, assembleSkeletonRelease]
+          target: [Ui, Skeleton]
+    name: "Release ${{ matrix.target }}"
     runs-on: ubuntu-latest
     steps:
       - name: Use debug signing
@@ -16,4 +17,6 @@ jobs:
         with:
           submodules: true
       - name: Build the app
-        run: ./gradlew ${{ matrix.target }}
+        run: ./gradlew assemble${{ matrix.target }}Release
+      - name: Run Unit tests
+        run: ./gradlew test${{ matrix.target }}ReleaseUnitTest

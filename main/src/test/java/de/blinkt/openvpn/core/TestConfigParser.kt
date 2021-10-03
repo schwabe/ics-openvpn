@@ -9,7 +9,6 @@ import android.content.Context
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider
 import de.blinkt.openvpn.R
-import de.blinkt.openvpn.fragments.Utils
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -173,7 +172,6 @@ class TestConfigParser {
         val vp = cp.convertProfile()
 
         Assert.assertEquals(20707, vp.mCompatMode)
-        Assert.assertEquals(0,Utils.mapCompatVer(vp.mCompatMode))
 
 
         val config2 = config + "compat-mode 2.4.0\n"
@@ -182,7 +180,6 @@ class TestConfigParser {
         cp.parseConfig(StringReader(config2))
         val vp2 = cp.convertProfile()
         Assert.assertEquals(20400, vp2.mCompatMode)
-        Assert.assertEquals(2,Utils.mapCompatVer(vp2.mCompatMode))
         val conf2 = vp2.getConfigFile(c, false)
         Assert.assertTrue(conf2.contains("compat-mode 2.4.0"));
 
@@ -190,10 +187,9 @@ class TestConfigParser {
         cp.parseConfig(StringReader(config3))
         val vp3 = cp.convertProfile()
         Assert.assertEquals(11723, vp3.mCompatMode)
-        Assert.assertEquals(3,Utils.mapCompatVer(vp3.mCompatMode))
 
         val conf = vp3.getConfigFile(c, false)
-        Assert.assertTrue(conf.contains("compat-mode 1.17.23"));
+        Assert.assertTrue(conf.contains("compat-mode 1.17.23"))
     }
 
     @Test
@@ -323,13 +319,11 @@ class TestConfigParser {
         val cp = ConfigParser()
         cp.parseConfig(StringReader(proxyconf))
         val vp = cp.convertProfile()
-        var config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), true)
-
 
         Assert.assertEquals(vp.checkProfile(ApplicationProvider.getApplicationContext(), true).toLong(), R.string.no_error_found.toLong())
         Assert.assertEquals(vp.checkProfile(ApplicationProvider.getApplicationContext(), false).toLong(), R.string.no_error_found.toLong())
 
-        config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
+        val config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
 
         Assert.assertTrue(config.contains("http-proxy 1.2.3.4"))
         Assert.assertFalse(config.contains("management-query-proxy"))

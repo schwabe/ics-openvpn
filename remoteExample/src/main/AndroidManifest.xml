@@ -25,5 +25,7 @@
             </intent-filter>
         </activity>
     </application>
-
+    <queries>
+        <package android:name="de.blinkt.openvpn"/>
+    </queries>
 </manifest>

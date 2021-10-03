@@ -21,14 +21,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.List;
 
@@ -50,6 +54,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
         v.findViewById(R.id.getMyIP).setOnClickListener(this);
         v.findViewById(R.id.startembedded).setOnClickListener(this);
         v.findViewById(R.id.addNewProfile).setOnClickListener(this);
+        v.findViewById(R.id.addNewProfileEdit).setOnClickListener(this);
         mHelloWorld = (TextView) v.findViewById(R.id.helloworld);
         mStartVpn = (Button) v.findViewById(R.id.startVPN);
         mStatus = (TextView) v.findViewById(R.id.status);
@@ -66,6 +71,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
     private static final int START_PROFILE_BYUUID = 3;
     private static final int ICS_OPENVPN_PERMISSION = 7;
     private static final int PROFILE_ADD_NEW = 8;
+    private static final int PROFILE_ADD_NEW_EDIT = 9;
 
 
     protected IOpenVPNAPIService mService=null;
@@ -74,12 +80,19 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
 
 
 
-    private void startEmbeddedProfile(boolean addNew)
+    private void startEmbeddedProfile(boolean addNew, boolean editable)
     {
         try {
-            InputStream conf = getActivity().getAssets().open("test.conf");
+            InputStream conf;
+            /* Try opening test.local.conf first */
+            try {
+                conf = getActivity().getAssets().open("test.local.conf");
+            }
+            catch (IOException e) {
+                conf = getActivity().getAssets().open("test.conf");
+            }
             BufferedReader br = new BufferedReader(new InputStreamReader(conf));
-            StringBuilder config= new StringBuilder();
+            StringBuilder config = new StringBuilder();
             String line;
             while(true) {
                 line = br.readLine();
@@ -90,13 +103,15 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
             br.close();
             conf.close();
 
-            if (addNew)
-                mService.addNewVPNProfile("nonEditable", false, config.toString());
-            else
+            if (addNew) {
+                String name = editable ? "Profile from remote App" : "Non editable profile";
+                mService.addNewVPNProfile(name, editable, config.toString());
+            } else
                 mService.startVPN(config.toString());
         } catch (IOException | RemoteException e) {
             e.printStackTrace();
         }
+        Toast.makeText(getActivity(), "Profile started/added", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -267,6 +282,15 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+
+            case R.id.addNewProfileEdit:
+                try {
+                    prepareStartProfile(PROFILE_ADD_NEW_EDIT);
+                } catch (RemoteException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
             default:
                 break;
         }
@@ -286,7 +310,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if(requestCode==START_PROFILE_EMBEDDED)
-                startEmbeddedProfile(false);
+                startEmbeddedProfile(false, false);
             if(requestCode==START_PROFILE_BYUUID)
                 try {
                     mService.startProfile(mStartUUID);
@@ -303,7 +327,10 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
 
             }
             if (requestCode == PROFILE_ADD_NEW) {
-                startEmbeddedProfile(true);
+                startEmbeddedProfile(true, false);
+            }
+            else if (requestCode == PROFILE_ADD_NEW_EDIT) {
+                startEmbeddedProfile(true, true);
             }
         }
     };
@@ -311,22 +338,21 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
     String getMyOwnIP() throws UnknownHostException, IOException, RemoteException,
             IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException
     {
-        String resp="";
-        Socket client = new Socket();
-        // Setting Keep Alive forces creation of the underlying socket, otherwise getFD returns -1
-        client.setKeepAlive(true);
+        StringBuilder resp = new StringBuilder();
 
-
-        client.connect(new InetSocketAddress("v4address.com", 23),20000);
-        client.shutdownOutput();
-        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-        while (true) {
-            String line = in.readLine();
-            if( line == null)
-                return resp;
-            resp+=line;
+        URL url = new URL("https://icanhazip.com");
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            while (true) {
+                String line = in.readLine();
+                if( line == null)
+                    return resp.toString();
+                resp.append(line);
+            }
+        } finally {
+            urlConnection.disconnect();
         }
-
     }
 
 

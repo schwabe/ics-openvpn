@@ -16,6 +16,7 @@
     <string name="disconnect">Disconnect</string>
     <string name="start_embedded">Start embedded profile</string>
     <string name="addNew">Add new Profile</string>
+    <string name="addNewEdit">Add editable profile</string>
 
 
 </resources>

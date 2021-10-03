@@ -505,7 +505,8 @@ public class VpnProfile implements Serializable, Cloneable {
                 break;
             case VpnProfile.TYPE_USERPASS:
                 cfg.append("auth-user-pass\n");
-                cfg.append(insertFileData("ca", mCaFilename));
+                if (!TextUtils.isEmpty(mCaFilename))
+                    cfg.append(insertFileData("ca", mCaFilename));
                 if (configForOvpn3) {
                     // OpenVPN 3 needs to be told that a client certificate is not required
                     cfg.append("client-cert-not-required\n");
@@ -1054,7 +1055,9 @@ public class VpnProfile implements Serializable, Cloneable {
             }
         }
 
-
+        if (mAuthenticationType != TYPE_STATICKEYS && !mCheckPeerFingerprint && TextUtils.isEmpty(mCaFilename)) {
+            return R.string.need_fingerprint_or_ca;
+        }
         // Everything okay
         return R.string.no_error_found;
 

@@ -511,5 +511,6 @@
     <string name="import_from_URL">URL</string>
     <string name="compatmode">Compatiblity Mode</string>
     <string name="compat_mode_label">Compatibility mode</string>
+    <string name="need_fingerprint_or_ca">An OpenVPN profile needs a CA certificate or peer fingerprint</string>
 
 </resources>

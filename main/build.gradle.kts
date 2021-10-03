@@ -31,8 +31,6 @@ android {
 
     testOptions.unitTests.isIncludeAndroidResources = true
 
-
-
     externalNativeBuild {
         cmake {
             path = File("${projectDir}/src/main/cpp/CMakeLists.txt")
@@ -69,13 +67,13 @@ android {
             keyPassword = keystoreAliasPassword
             val keystoreAlias: String? by project
             keyAlias = keystoreAlias
-            isV1SigningEnabled = true
-            isV2SigningEnabled = true
+            enableV1Signing = true
+            enableV2Signing = true
         }
 
     }
 
-    lintOptions {
+    lint {
         enable("BackButton", "EasterEgg", "StopShip", "IconExpectedSize", "GradleDynamicVersion", "NewerVersionAvailable")
         warning("ImpliedQuantity", "MissingQuantity")
         disable("MissingTranslation", "UnsafeNativeCodeLocation")
@@ -174,7 +172,7 @@ dependencies {
 
     // Is there a nicer way to do this?
     dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:1.1.3")
-    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
+    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.30")
     dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
     dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.0.0")
     dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.1.0")
@@ -189,10 +187,8 @@ dependencies {
     dependencies.add("uiImplementation", "androidx.webkit:webkit:1.2.0")
     dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-
-
-
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.32")
+    
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.30")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:3.9.0")
     testImplementation("org.robolectric:robolectric:4.5.1")

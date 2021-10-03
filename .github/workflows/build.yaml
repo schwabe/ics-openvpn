@@ -5,6 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
           target: [Ui, Skeleton]
     name: "Release ${{ matrix.target }}"

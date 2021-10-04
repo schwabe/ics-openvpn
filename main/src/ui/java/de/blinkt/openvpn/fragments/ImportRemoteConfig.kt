@@ -29,6 +29,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.*
+import okhttp3.Handshake.Companion.handshake
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.internal.tls.OkHostnameVerifier
 import java.io.IOException
 import java.security.MessageDigest
@@ -58,8 +61,8 @@ class BasicAuthInterceptor(user: String, password: String) : Interceptor {
 }
 
 
-fun getCompositeSSLSocketFactory(certPin: CertificatePinner, hostname: String): SSLSocketFactory {
-    val trustPinnedCerts = arrayOf<TrustManager>(object : X509TrustManager {
+fun getCompositeSSLSocketFactory(certPin: CertificatePinner, hostname: String): Pair<SSLSocketFactory, X509TrustManager> {
+    val trustManager = object : X509TrustManager {
         override fun getAcceptedIssuers(): Array<X509Certificate> {
             return emptyArray()
         }
@@ -73,14 +76,15 @@ fun getCompositeSSLSocketFactory(certPin: CertificatePinner, hostname: String): 
         override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
             certPin.check(hostname, chain.toList())
         }
-    })
+    }
+    val trustPinnedCerts = arrayOf<TrustManager>(trustManager)
 
     // Install the all-trusting trust manager
     val sslContext = SSLContext.getInstance("TLS")
     sslContext.init(null, trustPinnedCerts, java.security.SecureRandom())
     // Create an ssl socket factory with our all-trusting manager
 
-    return sslContext.socketFactory
+    return Pair(sslContext.socketFactory, trustManager)
 
 }
 
@@ -105,11 +109,11 @@ class ImportRemoteConfig : DialogFragment() {
             mapping[ph] = prefs.getString("pin-${ph}", "")
         }
 
-        val defaultVerifier = OkHostnameVerifier.INSTANCE;
+        val defaultVerifier = OkHostnameVerifier;
         val pinHostVerifier = object : HostnameVerifier {
-            override fun verify(hostname: String?, session: SSLSession?): Boolean {
-                val unverifiedHandshake = Handshake.get(session)
-                val cert = unverifiedHandshake.peerCertificates()[0] as X509Certificate
+            override fun verify(hostname: String, session: SSLSession): Boolean {
+                val unverifiedHandshake = session.handshake()
+                val cert = unverifiedHandshake.peerCertificates[0] as X509Certificate
                 val hostPin = CertificatePinner.pin(cert)
 
                 if (mapping.containsKey(hostname) && mapping[hostname] == hostPin)
@@ -142,13 +146,13 @@ class ImportRemoteConfig : DialogFragment() {
             val cpb = CertificatePinner.Builder()
 
             pinnedHosts.forEach { ph ->
-                cpb.add(ph, prefs.getString("pin-${ph}", ""))
+                cpb.add(ph, prefs.getString("pin-${ph}", "")!!)
             }
 
 
             val certPinner = cpb.build()
             getCompositeSSLSocketFactory(certPinner, hostname).let {
-                okHttpClient.sslSocketFactory(it)
+                okHttpClient.sslSocketFactory(it.first, it.second)
             }
             //okHttpClient.certificatePinner(certPinner)
         }
@@ -195,7 +199,7 @@ class ImportRemoteConfig : DialogFragment() {
     fun fetchProfile(c: Context, asUri: HttpUrl, user: String, password: String): Response? {
 
 
-        val httpClient = buildHttpClient(c, user, password, asUri.host() ?: "")
+        val httpClient = buildHttpClient(c, user, password, asUri.host ?: "")
 
         val request = Request.Builder()
                 .url(asUri)
@@ -207,7 +211,7 @@ class ImportRemoteConfig : DialogFragment() {
 
     }
 
-    private fun getAsUrl(url: String, autologin: Boolean): HttpUrl {
+    private fun getAsUrl(url: String, autologin: Boolean): HttpUrl{
         var asurl = url
         if (!asurl.startsWith("http"))
             asurl = "https://" + asurl
@@ -217,7 +221,7 @@ class ImportRemoteConfig : DialogFragment() {
         else
             asurl += "/rest/GetUserlogin?tls-cryptv2=1"
 
-        val asUri = HttpUrl.parse(asurl)
+        val asUri = asurl.toHttpUrl()
         return asUri
     }
 
@@ -300,7 +304,7 @@ class ImportRemoteConfig : DialogFragment() {
             if (importChoiceAS.isChecked)
                 asProfileUri = getAsUrl(asServername.text.toString(), asUseAutologin.isChecked)
             else
-                asProfileUri = HttpUrl.parse(asServername.text.toString())
+                asProfileUri = asServername.text.toString().toHttpUrl()
 
             var e: Exception? = null
             try {
@@ -310,11 +314,11 @@ class ImportRemoteConfig : DialogFragment() {
                     throw Exception("No Response from Server")
                 }
 
-                val profile = response.body().string()
-                if (response.code() == 401 && crvMessage.matcher(profile).matches()) {
+                val profile = response.body?.string()
+                if (response.code == 401 && crvMessage.matcher(profile).matches()) {
                     withContext(Dispatchers.Main) {
                         pleaseWait?.dismiss()
-                        showCRDialog(profile)
+                        showCRDialog(profile!!)
                     }
                 } else if (response.isSuccessful) {
 
@@ -327,7 +331,7 @@ class ImportRemoteConfig : DialogFragment() {
                         dismiss()
                     }
                 } else {
-                    throw Exception("Invalid Response from server: \n${response.code()} ${response.message()} \n\n ${profile}")
+                    throw Exception("Invalid Response from server: \n${response.code} ${response.message} \n\n ${profile}")
                 }
 
             } catch (ce: SSLHandshakeException) {
@@ -353,7 +357,8 @@ class ImportRemoteConfig : DialogFragment() {
                                 AlertDialog.Builder(requireContext())
                                         .setTitle("Untrusted certificate found")
                                         .setMessage(firstCert.toString())
-                                        .setPositiveButton("Trust") { _, _ -> addPinnedCert(requireContext(), asProfileUri.host(), fp) }
+                                        .setPositiveButton("Trust") { _, _ -> addPinnedCert(requireContext(),
+                                            asProfileUri.host, fp) }
                                         .setNegativeButton("Do not trust", null)
                                         .show()
                             }
@@ -367,7 +372,9 @@ class ImportRemoteConfig : DialogFragment() {
                                     .setTitle("Different certificate than trusted certificate from server")
                                     .setMessage(ce.message)
                                     .setNegativeButton(android.R.string.ok, null)
-                                    .setPositiveButton("Forget pinned certificate", { _, _ -> removedPinnedCert(requireContext(), asProfileUri.host()) })
+                                    .setPositiveButton("Forget pinned certificate", { _, _ -> removedPinnedCert(requireContext(),
+                                        asProfileUri.host
+                                    ) })
                                     .show();
                         }
                         e = null

@@ -47,7 +47,7 @@ public class VpnStatus {
     public static TrafficHistory trafficHistory;
 
 
-    public static void logException(LogLevel ll, String context, Exception e) {
+    public static void logException(LogLevel ll, String context, Throwable e) {
         StringWriter sw = new StringWriter();
         e.printStackTrace(new PrintWriter(sw));
         LogItem li;
@@ -59,11 +59,11 @@ public class VpnStatus {
         newLogItem(li);
     }
 
-    public static void logException(Exception e) {
+    public static void logException(Throwable e) {
         logException(LogLevel.ERROR, null, e);
     }
 
-    public static void logException(String context, Exception e) {
+    public static void logException(String context, Throwable e) {
         logException(LogLevel.ERROR, context, e);
     }
 

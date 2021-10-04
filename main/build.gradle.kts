@@ -164,18 +164,19 @@ dependencies {
     val preferenceVersion = "1.1.1"
     val coreVersion = "1.6.0"
     val materialVersion = "1.1.0"
-    val fragment_version = "1.3.2"
+    val fragment_version = "1.3.6"
 
 
     implementation("androidx.annotation:annotation:1.2.0")
     implementation("androidx.core:core:$coreVersion")
 
+
     // Is there a nicer way to do this?
-    dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:1.1.3")
+    dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:2.1.1")
     dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.30")
     dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
-    dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.0.0")
-    dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.1.0")
+    dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.2.1")
+    dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.3.1")
     dependencies.add("uiImplementation", "com.github.PhilJay:MPAndroidChart:v3.1.0")
     dependencies.add("uiImplementation", "com.squareup.okhttp3:okhttp:4.9.1")
     dependencies.add("uiImplementation", "androidx.core:core:$coreVersion")
@@ -184,7 +185,7 @@ dependencies {
     dependencies.add("uiImplementation", "androidx.preference:preference:$preferenceVersion")
     dependencies.add("uiImplementation", "androidx.preference:preference-ktx:$preferenceVersion")
     dependencies.add("uiImplementation", "com.google.android.material:material:$materialVersion")
-    dependencies.add("uiImplementation", "androidx.webkit:webkit:1.2.0")
+    dependencies.add("uiImplementation", "androidx.webkit:webkit:1.4.0")
     dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
     

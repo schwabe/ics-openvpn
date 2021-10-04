@@ -80,10 +80,11 @@ public class MainActivity extends BaseActivity {
         Intent intent = getIntent();
         if (intent != null) {
             String action = intent.getAction();
-            if (action != null && Intent.ACTION_VIEW.equals(action))
+            if (Intent.ACTION_VIEW.equals(action))
             {
                 Uri uri = intent.getData();
-                checkUriForProfileImport(uri);
+                if (uri != null)
+                    checkUriForProfileImport(uri);
             }
             String page = intent.getStringExtra("PAGE");
             if ("graph".equals(page)) {

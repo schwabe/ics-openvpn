@@ -524,6 +524,23 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         showNotification(VpnStatus.getLastCleanLogMessage(this),
                 VpnStatus.getLastCleanLogMessage(this), NOTIFICATION_CHANNEL_NEWSTATUS_ID, 0, ConnectionStatus.LEVEL_START, null);
 
+
+        /* start the OpenVPN process itself in a background thread */
+        new Thread(() -> startOpenVPN(intent, startId)).start();
+
+        return START_STICKY;
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N_MR1)
+    private void updateShortCutUsage(VpnProfile profile) {
+        if (profile == null)
+            return;
+        ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
+        shortcutManager.reportShortcutUsed(profile.getUUIDString());
+    }
+
+    private VpnProfile fetchVPNProfile(Intent intent)
+    {
         if (intent != null && intent.hasExtra(getPackageName() + ".profileUUID")) {
             String profileUUID = intent.getStringExtra(getPackageName() + ".profileUUID");
             int profileVersion = intent.getIntExtra(getPackageName() + ".profileVersion", 0);
@@ -543,45 +560,27 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 Log.d("OpenVPN", "Got no last connected profile on null intent. Assuming always on.");
                 mProfile = ProfileManager.getAlwaysOnVPN(this);
 
+
                 if (mProfile == null) {
-                    stopSelf(startId);
-                    return START_NOT_STICKY;
+                    return null;
                 }
             }
             /* Do the asynchronous keychain certificate stuff */
             mProfile.checkForRestart(this);
         }
+        return mProfile;
+    }
 
-        if (mProfile == null) {
+    private void startOpenVPN(Intent intent, int startId) {
+        VpnProfile vp = fetchVPNProfile(intent);
+        if (vp == null) {
             stopSelf(startId);
-            return START_NOT_STICKY;
+            return;
         }
-
-
-        /* start the OpenVPN process itself in a background thread */
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                startOpenVPN();
-            }
-        }).start();
-
 
         ProfileManager.setConnectedVpnProfile(this, mProfile);
         VpnStatus.setConnectedVPNProfile(mProfile.getUUIDString());
 
-        return START_STICKY;
-    }
-
-    @RequiresApi(Build.VERSION_CODES.N_MR1)
-    private void updateShortCutUsage(VpnProfile profile) {
-        if (profile == null)
-            return;
-        ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
-        shortcutManager.reportShortcutUsed(profile.getUUIDString());
-    }
-
-    private void startOpenVPN() {
         try {
             mProfile.writeConfigFile(this);
         } catch (IOException e) {

@@ -823,13 +823,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         if ((mAuthenticationType == VpnProfile.TYPE_KEYSTORE || mAuthenticationType == VpnProfile.TYPE_USERPASS_KEYSTORE)
                 && mPrivateKey == null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    getExternalCertificates(context);
-
-                }
-            }).start();
+            new Thread(() -> getExternalCertificates(context)).start();
         }
     }
 

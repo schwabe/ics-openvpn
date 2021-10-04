@@ -699,17 +699,21 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         String pw = null;
         String username = null;
 
-        if (needed.equals("Private Key")) {
-            pw = mProfile.getPasswordPrivateKey();
-        } else if (needed.equals("Auth")) {
-            pw = mProfile.getPasswordAuth();
-            username = mProfile.mUsername;
+        switch (needed) {
+            case "Private Key":
+                pw = mProfile.getPasswordPrivateKey();
+                break;
+            case "Auth":
+                pw = mProfile.getPasswordAuth();
+                username = mProfile.mUsername;
 
-        } else if (needed.equals("HTTP Proxy")) {
-            if( mCurrentProxyConnection != null) {
-                pw = mCurrentProxyConnection.mProxyAuthPassword;
-                username = mCurrentProxyConnection.mProxyAuthUser;
-            }
+                break;
+            case "HTTP Proxy":
+                if (mCurrentProxyConnection != null) {
+                    pw = mCurrentProxyConnection.mProxyAuthPassword;
+                    username = mCurrentProxyConnection.mProxyAuthUser;
+                }
+                break;
         }
         if (pw != null) {
             if (username !=null) {

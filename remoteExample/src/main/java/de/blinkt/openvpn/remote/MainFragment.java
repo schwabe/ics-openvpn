@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,7 +81,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
 
 
 
-    private void startEmbeddedProfile(boolean addNew, boolean editable)
+    private void startEmbeddedProfile(boolean addNew, boolean editable, boolean startAfterAdd)
     {
         try {
             InputStream conf;
@@ -105,7 +106,9 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
 
             if (addNew) {
                 String name = editable ? "Profile from remote App" : "Non editable profile";
-                mService.addNewVPNProfile(name, editable, config.toString());
+                APIVpnProfile profile = mService.addNewVPNProfile(name, editable, config.toString());
+                mService.startProfile(profile.mUUID);
+
             } else
                 mService.startVPN(config.toString());
         } catch (IOException | RemoteException e) {
@@ -276,21 +279,14 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
                 break;
 
             case R.id.addNewProfile:
-                try {
-                    prepareStartProfile(PROFILE_ADD_NEW);
-                } catch (RemoteException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
             case R.id.addNewProfileEdit:
+                int action = (v.getId() == R.id.addNewProfile) ? PROFILE_ADD_NEW : PROFILE_ADD_NEW_EDIT;
                 try {
-                    prepareStartProfile(PROFILE_ADD_NEW_EDIT);
+                    prepareStartProfile(action);
                 } catch (RemoteException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-
             default:
                 break;
         }
@@ -310,7 +306,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if(requestCode==START_PROFILE_EMBEDDED)
-                startEmbeddedProfile(false, false);
+                startEmbeddedProfile(false, false, false);
             if(requestCode==START_PROFILE_BYUUID)
                 try {
                     mService.startProfile(mStartUUID);
@@ -326,11 +322,12 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
                 }
 
             }
+            CheckBox startCB = getView().findViewById(R.id.startafterAdding);
             if (requestCode == PROFILE_ADD_NEW) {
-                startEmbeddedProfile(true, false);
+                startEmbeddedProfile(true, false, startCB.isSelected());
             }
             else if (requestCode == PROFILE_ADD_NEW_EDIT) {
-                startEmbeddedProfile(true, true);
+                startEmbeddedProfile(true, true, startCB.isSelected());
             }
         }
     };

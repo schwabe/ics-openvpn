@@ -47,12 +47,12 @@
             android:layout_alignParentLeft="true"
             tools:text="TextView" />
 
-        <Button
+    <Button
             android:id="@+id/getMyIP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_below="@+id/startVPN"
+            android:layout_alignParentLeft="true"
             android:text="@string/show_my_ip" />
 
         <Button
@@ -91,5 +91,13 @@
             android:layout_toEndOf="@+id/addNewProfile"
             android:layout_toRightOf="@+id/addNewProfile"
             android:text="@string/addNewEdit" />
+
+    <CheckBox
+            android:id="@+id/startafterAdding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/startembedded"
+            android:layout_marginTop="4dp"
+            android:text="@string/start_profile_after_adding" />
 
 </RelativeLayout>

@@ -509,7 +509,7 @@
     <string name="trigger_pending_auth_dialog">Press here open a window to enter additional required authentication</string>
     <string name="import_from_access_server">OpenVPN Access Server</string>
     <string name="import_from_URL">URL</string>
-    <string name="compatmode">Compatiblity Mode</string>
+    <string name="compatmode">Compatibility Mode</string>
     <string name="compat_mode_label">Compatibility mode</string>
     <string name="need_fingerprint_or_ca">An OpenVPN profile needs a CA certificate or peer fingerprint</string>
 

@@ -20,6 +20,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.isInvisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import de.blinkt.openvpn.R
@@ -247,10 +248,14 @@ class ImportRemoteConfig : DialogFragment() {
         importChoiceAS = dialogView.findViewById(R.id.import_choice_as)
 
         importChoiceGroup.setOnCheckedChangeListener { group, checkedId ->
-            if (checkedId == R.id.import_choice_as)
+            if (checkedId == R.id.import_choice_as) {
                 asServername.setHint(R.string.as_servername)
-            else
+                asUseAutologin.visibility = View.VISIBLE
+            }
+            else {
                 asServername.setHint(R.string.server_url)
+                asUseAutologin.visibility = View.GONE
+            }
         }
 
         builder.setPositiveButton(R.string.import_config, null)

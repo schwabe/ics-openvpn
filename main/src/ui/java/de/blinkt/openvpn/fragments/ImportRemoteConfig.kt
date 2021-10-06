@@ -212,6 +212,11 @@ class ImportRemoteConfig : DialogFragment() {
 
     }
 
+    /**
+     * Returns a new [HttpUrl] representing the URL that is is going to be imported.
+     *
+     * @throws IllegalArgumentException If this is not a well-formed HTTP or HTTPS URL.
+     */
     private fun getAsUrl(url: String, autologin: Boolean): HttpUrl{
         var asurl = url
         if (!asurl.startsWith("http"))
@@ -281,14 +286,30 @@ class ImportRemoteConfig : DialogFragment() {
             d.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener()
 
             { _ ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    doAsImport(asUsername.text.toString(), asPassword.text.toString())
+                try {
+                    // Check if the URL that being built can be actually be parsed
+                    getImportUrl();
+
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        doAsImport(asUsername.text.toString(), asPassword.text.toString())
+                    }
+                } catch (e: IllegalArgumentException) {
+                    Toast.makeText(context, "URL is invalid: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
     val crvMessage = Pattern.compile(".*<Message>CRV1:R,E:(.*):(.*):(.*)</Message>.*", Pattern.DOTALL)
+
+
+    private fun getImportUrl(): HttpUrl {
+        if (importChoiceAS.isChecked)
+            return getAsUrl(asServername.text.toString(), asUseAutologin.isChecked)
+        else
+            return asServername.text.toString().toHttpUrl()
+    }
+
 
     suspend internal fun doAsImport(user: String, password: String) {
         var pleaseWait:AlertDialog?
@@ -305,11 +326,8 @@ class ImportRemoteConfig : DialogFragment() {
                 Toast.makeText(context, "Downloading profile", Toast.LENGTH_LONG).show()
             }
 
-            val asProfileUri:HttpUrl
-            if (importChoiceAS.isChecked)
-                asProfileUri = getAsUrl(asServername.text.toString(), asUseAutologin.isChecked)
-            else
-                asProfileUri = asServername.text.toString().toHttpUrl()
+            val asProfileUri:HttpUrl = getImportUrl()
+
 
             var e: Exception? = null
             try {

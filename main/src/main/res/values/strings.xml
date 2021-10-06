@@ -510,7 +510,8 @@
     <string name="import_from_access_server">OpenVPN Access Server</string>
     <string name="import_from_URL">URL</string>
     <string name="compatmode">Compatibility Mode</string>
-    <string name="compat_mode_label">Compatibility mode</string>
     <string name="need_fingerprint_or_ca">An OpenVPN profile needs a CA certificate or peer fingerprint</string>
+    <string name="compat_mode_label">Compatibility mode</string>
+    <string name="loadossllegacy">Load OpenSSL legacy provider</string>
 
 </resources>

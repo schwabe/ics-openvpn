@@ -26,6 +26,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
     private FileSelectLayout mCaCert;
     private FileSelectLayout mClientKey;
     private CheckBox mUseLzo;
+    private CheckBox mUseLegacyProvider;
     private Spinner mType;
     private Spinner mCompatMode;
     private FileSelectLayout mpkcs12;
@@ -68,6 +69,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mpkcs12 = mView.findViewById(id.pkcs12select);
         mCrlFile = mView.findViewById(id.crlfile);
         mUseLzo = mView.findViewById(id.lzo);
+        mUseLegacyProvider = mView.findViewById(R.id.legacyprovider);
         mType = mView.findViewById(id.type);
         mCompatMode = mView.findViewById(id.compatmode);
         mPKCS12Password = mView.findViewById(id.pkcs12password);
@@ -191,6 +193,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mCrlFile.setData(mProfile.mCrlFilename, getActivity());
 
         mUseLzo.setChecked(mProfile.mUseLzo);
+        mUseLegacyProvider.setChecked(mProfile.mUseLegacyProvider);
         mType.setSelection(mProfile.mAuthenticationType);
         mCompatMode.setSelection(Utils.mapCompatVer(mProfile.mCompatMode));
         mpkcs12.setData(mProfile.mPKCS12Filename, getActivity());

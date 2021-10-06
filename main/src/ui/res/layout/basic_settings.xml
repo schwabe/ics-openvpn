@@ -40,6 +40,11 @@
             />
 
         <CheckBox
+                android:id="@+id/legacyprovider"
+                style="@style/item"
+                android:text="@string/loadossllegacy" />
+
+        <CheckBox
             android:id="@+id/lzo"
             style="@style/item"
             android:text="@string/useLZO" />

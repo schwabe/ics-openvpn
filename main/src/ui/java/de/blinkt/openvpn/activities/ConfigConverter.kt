@@ -37,7 +37,6 @@ import de.blinkt.openvpn.views.FileSelectLayout
 import de.blinkt.openvpn.views.FileSelectLayout.FileSelectCallback
 import java.io.*
 import java.net.URLDecoder
-import java.nio.charset.StandardCharsets
 import java.util.*
 
 class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener {
@@ -127,11 +126,16 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         }
 
         mResult!!.mCompatMode = Utils.mapCompatMode(mCompatmode.selectedItemPosition)
+        /* If you need compability with such an old version there is a high chance that
+           the legacy provider is needed as well
+         */
+        if (mResult!!.mCompatMode <= 20400)
+            mResult!!.mUseLegacyProvider = true;
 
-        val `in` = installPKCS12()
+        val intent = installPKCS12()
 
-        if (`in` != null)
-            startActivityForResult(`in`, RESULT_INSTALLPKCS12)
+        if (intent != null)
+            startActivityForResult(intent, RESULT_INSTALLPKCS12)
         else
             saveProfile()
 

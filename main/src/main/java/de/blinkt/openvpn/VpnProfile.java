@@ -66,7 +66,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public static final String INLINE_TAG = "[[INLINE]]";
     public static final String DISPLAYNAME_TAG = "[[NAME]]";
     public static final int MAXLOGLEVEL = 4;
-    public static final int CURRENT_PROFILE_VERSION = 9;
+    public static final int CURRENT_PROFILE_VERSION = 10;
     public static final int DEFAULT_MSSFIX_SIZE = 1280;
     public static final int TYPE_CERTIFICATES = 0;
     public static final int TYPE_PKCS12 = 1;
@@ -169,6 +169,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public boolean mCheckPeerFingerprint = false;
     public String mPeerFingerPrints = "";
     public int mCompatMode = 0;
+    public boolean mUseLegacyProvider = false;
 
     private transient PrivateKey mPrivateKey;
     // Public attributes, since I got mad with getter/setter
@@ -330,6 +331,12 @@ public class VpnProfile implements Serializable, Cloneable {
             case 8:
                 if (!TextUtils.isEmpty(mCipher) && !mCipher.equals("AES-256-GCM") && !mCipher.equals("AES-128-GCM")) {
                     mDataCiphers = "AES-256-GCM:AES-128-GCM:" + mCipher;
+                }
+            case 9:
+                if (!TextUtils.isEmpty(mDataCiphers) &&
+                        mDataCiphers.toUpperCase(Locale.ROOT).contains("BF-CBC"))
+                {
+                    mUseLegacyProvider = true;
                 }
             default:
         }
@@ -657,6 +664,8 @@ public class VpnProfile implements Serializable, Cloneable {
         if (!TextUtils.isEmpty(mDataCiphers)) {
             cfg.append("data-ciphers ").append(mDataCiphers).append("\n");
         }
+        if (mUseLegacyProvider)
+            cfg.append("provider legacy:default\n");
 
         if (mCompatMode > 0)
         {
@@ -1049,8 +1058,12 @@ public class VpnProfile implements Serializable, Cloneable {
             }
         }
 
-        if (mAuthenticationType != TYPE_STATICKEYS && !mCheckPeerFingerprint && TextUtils.isEmpty(mCaFilename)) {
-            return R.string.need_fingerprint_or_ca;
+
+        if (mAuthenticationType == TYPE_STATICKEYS || mAuthenticationType == TYPE_CERTIFICATES
+                || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) {
+            if (!mCheckPeerFingerprint && TextUtils.isEmpty(mCaFilename)) {
+                return R.string.need_fingerprint_or_ca;
+            }
         }
         // Everything okay
         return R.string.no_error_found;

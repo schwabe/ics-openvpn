@@ -74,6 +74,7 @@
     <string name="apprest_vpnlist">List of VPN configurations</string>
     <string name="apprest_vpnconf">VPN configuration</string>
     <string name="apprest_ver">Version of the managed configuration schema (Currently always 1)</string>
+    <string name="apprest_defprof">UUID of the profile that should be selected as default profile in the app</string>
     <string name="privacy_policy">The app OpenVPN for Android does not communicate to any server other than the OpenVPN servers provided in configuration files. The author himself does not collect any data and no therefore also no data is saved. For the privacy policy for the OpenVPN server/VPN service you are using (or other services related to the project like GitHub), please refer to their respective privacy policy.</string>
     <string name="eol_notice_header">End of service</string>
     <string name="eol_notice">The program and its components are under open-source licenses that allow you to use this app forever  according to terms of the open-source licenses for details.&lt;p&gt; However, the author reserves the right to suspend development or stop publishing the OpenVPN app or updates  to it at any time.</string>

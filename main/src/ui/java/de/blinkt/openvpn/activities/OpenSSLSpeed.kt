@@ -119,8 +119,6 @@ class OpenSSLSpeed : BaseActivity() {
 
 
     private inner class SpeeedTest : AsyncTask<String, SpeedResult, Array<SpeedResult>>() {
-
-
         private var mCancel = false
 
         override fun doInBackground(vararg strings: String): Array<SpeedResult> {

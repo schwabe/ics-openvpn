@@ -30,6 +30,7 @@
 #include <netdb.h>
 #include <netinet/in.h>
 #include <sys/ioctl.h>
+#include <sys/times.h>
 #include <linux/if.h>
 #include <android/log.h>
 #include <unistd.h>
@@ -46,6 +47,7 @@
 #include <openssl/evp.h>
 #include <openssl/objects.h>
 #include <openssl/async.h>
+#include <openssl/provider.h>
 
 
 /* This file just contains code thrown together until it works */
@@ -101,8 +103,6 @@ static volatile int run = 0;
 #define STOP    1
 #define TM_START        0
 #define TM_STOP         1
-
-# include <sys/times.h>
 
 static int usertime = 1;
 
@@ -208,6 +208,25 @@ static void* stop_run(void* arg)
 
 jdoubleArray Java_de_blinkt_openvpn_core_NativeUtils_getOpenSSLSpeed(JNIEnv* env, jclass thiz, jstring algorithm, jint testnumber)
 {
+
+    OSSL_PROVIDER *legacy;
+    OSSL_PROVIDER *deflt;
+
+    OSSL_LIB_CTX *lib_ctx = OSSL_LIB_CTX_new();
+
+    /* Load Multiple providers into the default (NULL) library context */
+    legacy = OSSL_PROVIDER_load(lib_ctx, "legacy");
+    if (legacy == NULL) {
+        __android_log_write(ANDROID_LOG_DEBUG,"openvpn", "Failed to load Legacy provider\n");
+        return NULL;
+    }
+    deflt = OSSL_PROVIDER_load(lib_ctx, "default");
+    if (deflt == NULL) {
+        __android_log_write(ANDROID_LOG_DEBUG,"openvpn", "Failed to load Default provider\n");
+        OSSL_PROVIDER_unload(legacy);
+        return NULL;
+    }
+
     static const unsigned char key16[16] = {
         0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0,
         0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0, 0x12
@@ -216,17 +235,15 @@ jdoubleArray Java_de_blinkt_openvpn_core_NativeUtils_getOpenSSLSpeed(JNIEnv* env
 
     const char* alg = (*env)->GetStringUTFChars( env, algorithm , NULL ) ;
 
-    evp_cipher = EVP_get_cipherbyname(alg);
+    evp_cipher = EVP_CIPHER_fetch(lib_ctx, alg, NULL);
     if (evp_cipher == NULL)
-        evp_md = EVP_get_digestbyname(alg);
+        evp_md = EVP_MD_fetch(lib_ctx, alg, NULL);
     if (evp_cipher == NULL && evp_md == NULL) {
         //        BIO_printf(bio_err, "%s: %s is an unknown cipher or digest\n", prog, opt_arg());
         //jniThrowException(env, "java/security/NoSuchAlgorithmException", "Algorithm not found");
+        __android_log_write(ANDROID_LOG_DEBUG,"openvpn", "Algorithm not found");
         return NULL;
     }
-
-
-    const char* name;
 
     loopargs_t *loopargs = NULL;
     int loopargs_len = 1;
@@ -254,9 +271,8 @@ jdoubleArray Java_de_blinkt_openvpn_core_NativeUtils_getOpenSSLSpeed(JNIEnv* env
 
 
     int count;
-    float d;
+    double d;
     if (evp_cipher) {
-        name = OBJ_nid2ln(EVP_CIPHER_nid(evp_cipher));
         /*
          * -O3 -fschedule-insns messes up an optimization here!
          * names[D_EVP] somehow becomes NULL
@@ -285,12 +301,12 @@ jdoubleArray Java_de_blinkt_openvpn_core_NativeUtils_getOpenSSLSpeed(JNIEnv* env
         }
     }
     if (evp_md) {
-        name = OBJ_nid2ln(EVP_MD_type(evp_md));
-        //            print_message(names[D_EVP], save_count, lengths[testnum]);
-
         pthread_t timer_thread;
         if (pthread_create(&timer_thread, NULL, stop_run, NULL))
+        {
+            __android_log_write(ANDROID_LOG_DEBUG,"openvpn", "creating thread failed");
             goto error;
+        }
 
         Time_F(START);
         count = run_benchmark(async_jobs, EVP_Digest_loop, loopargs);
@@ -304,12 +320,13 @@ jdoubleArray Java_de_blinkt_openvpn_core_NativeUtils_getOpenSSLSpeed(JNIEnv* env
     (*env)->SetDoubleArrayRegion(env, ret, 0, 3, results);
     //        print_result(D_EVP, testnum, count, d);
 
-
+    OSSL_LIB_CTX_free(lib_ctx);
     return ret;
 error:
   free(loopargs);
   for (int k = 0; k < loopargs_len; k++) {
       EVP_CIPHER_CTX_free(loopargs[k].ctx);
     }
+  OSSL_LIB_CTX_free(lib_ctx);
   return NULL;
 }

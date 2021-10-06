@@ -215,6 +215,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mProfile.mCrlFilename = mCrlFile.getData();
 
         mProfile.mUseLzo = mUseLzo.isChecked();
+        mProfile.mUseLegacyProvider = mUseLegacyProvider.isChecked();
         mProfile.mAuthenticationType = mType.getSelectedItemPosition();
         mProfile.mPKCS12Filename = mpkcs12.getData();
         mProfile.mPKCS12Password = mPKCS12Password.getText().toString();

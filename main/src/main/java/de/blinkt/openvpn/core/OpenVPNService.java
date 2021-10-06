@@ -320,17 +320,17 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         // Check if running on a TV
         if (runningOnAndroidTV() && !(priority < 0))
-            guiHandler.post(new Runnable() {
-
-                @Override
-                public void run() {
-
-                    if (mlastToast != null)
-                        mlastToast.cancel();
-                    String toastText = String.format(Locale.getDefault(), "%s - %s", mProfile.mName, msg);
-                    mlastToast = Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT);
-                    mlastToast.show();
-                }
+            guiHandler.post(() -> {
+                if (mlastToast != null)
+                    mlastToast.cancel();
+                String name;
+                if (mProfile != null)
+                    name = mProfile.mName;
+                else
+                    name = "OpenVPN";
+                String toastText = String.format(Locale.getDefault(), "%s - %s", name, msg);
+                mlastToast = Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT);
+                mlastToast.show();
             });
     }
 

@@ -172,7 +172,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         config.setContent(vpnconfig);
         config.setTunPersist(mVp.mPersistTun);
         config.setGuiVersion(mVp.getVersionEnvString(mService));
-        config.setSsoMethods("openurl,webauth,`crtext");
+        config.setSsoMethods("openurl,webauth,crtext");
         config.setPlatformVersion(mVp.getPlatformVersionEnvString());
         config.setExternalPkiAlias("extpki");
         config.setCompressionMode("asym");

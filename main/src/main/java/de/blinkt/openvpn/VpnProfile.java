@@ -329,8 +329,8 @@ public class VpnProfile implements Serializable, Cloneable {
                 if (mAllowAppVpnBypass)
                     mBlockUnusedAddressFamilies = false;
             case 8:
-                if (!TextUtils.isEmpty(mCipher) && !mCipher.equals("AES-256-GCM") && !mCipher.equals("AES-128-GCM")) {
-                    mDataCiphers = "AES-256-GCM:AES-128-GCM:" + mCipher;
+                if (!TextUtils.isEmpty(mCipher) && !mCipher.equals("AES-256-GCM") && !mCipher.equals("AES-128-GCM") && !mCipher.equals("CHACHA20-POLY1305")) {
+                    mDataCiphers = "AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305:" + mCipher;
                 }
             case 9:
                 if (!TextUtils.isEmpty(mDataCiphers) &&

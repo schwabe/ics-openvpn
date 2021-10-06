@@ -134,7 +134,7 @@ public class VpnStatus {
             mLogFileHandler.sendEmptyMessage(LogFileHandler.FLUSH_TO_DISK);
     }
 
-    public static void setConnectedVPNProfile(String uuid) {
+    public synchronized static void setConnectedVPNProfile(String uuid) {
         mLastConnectedVPNUUID = uuid;
         for (StateListener sl: stateListener)
             sl.setConnectedVPN(uuid);

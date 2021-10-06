@@ -717,7 +717,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         if (mDeviceStateReceiver != null) {
-            this.unregisterReceiver(mDeviceStateReceiver);
+            unregisterDeviceStateReceiver();
         }
         // Just in case unregister for state
         VpnStatus.removeStateListener(this);

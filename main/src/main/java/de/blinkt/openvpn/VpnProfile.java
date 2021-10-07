@@ -1058,13 +1058,6 @@ public class VpnProfile implements Serializable, Cloneable {
             }
         }
 
-
-        if (mAuthenticationType == TYPE_STATICKEYS || mAuthenticationType == TYPE_CERTIFICATES
-                || mAuthenticationType == TYPE_USERPASS_CERTIFICATES) {
-            if (!mCheckPeerFingerprint && TextUtils.isEmpty(mCaFilename)) {
-                return R.string.need_fingerprint_or_ca;
-            }
-        }
         // Everything okay
         return R.string.no_error_found;
 

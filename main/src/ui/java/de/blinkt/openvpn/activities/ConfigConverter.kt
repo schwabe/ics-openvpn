@@ -12,6 +12,7 @@ import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Build
@@ -650,9 +651,9 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
         mPathsegments = data.pathSegments
 
-        val cursor = contentResolver.query(data, null, null, null, null)
-
+        var cursor:Cursor? = null
         try {
+            cursor = contentResolver.query(data, null, null, null, null)
 
             if (cursor != null && cursor.moveToFirst()) {
                 var columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
@@ -667,6 +668,9 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
                     log("Mime type: " + cursor.getString(columnIndex))
                 }
             }
+        }
+        catch (se:SecurityException) {
+            log("Importing failed: ${se.localizedMessage}")
         } finally {
             cursor?.close()
         }

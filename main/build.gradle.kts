@@ -20,8 +20,8 @@ android {
     defaultConfig {
         minSdk = 16
         targetSdk = 31
-        versionCode = 180
-        versionName = "0.7.26"
+        versionCode = 181
+        versionName = "0.7.27"
 
         externalNativeBuild {
             cmake {

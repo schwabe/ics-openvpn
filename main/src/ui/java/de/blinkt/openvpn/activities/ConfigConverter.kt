@@ -130,7 +130,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         /* If you need compability with such an old version there is a high chance that
            the legacy provider is needed as well
          */
-        if (mResult!!.mCompatMode <= 20400)
+        if (mResult!!.mCompatMode in 1..20400)
             mResult!!.mUseLegacyProvider = true;
 
         val intent = installPKCS12()

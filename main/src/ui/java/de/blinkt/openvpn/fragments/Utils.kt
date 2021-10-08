@@ -120,7 +120,8 @@ object Utils {
         /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             return i;
-        }*/if (!isIntentAvailable(c, i)) {
+        }*/
+        if (!isIntentAvailable(c, i)) {
             i.action = Intent.ACTION_OPEN_DOCUMENT
             i.setPackage(null)
 
@@ -302,7 +303,7 @@ object Utils {
             warnings.add("compat mode enabled")
 
         var cipher= vp.mCipher.toUpperCase(Locale.ROOT)
-        if (TextUtils.isEmpty(cipher))
+        if (cipher.isNullOrEmpty())
             cipher = "BF-CBC";
 
         for (weakCipher in weakCiphers) {

@@ -8,10 +8,16 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Build
 import android.provider.OpenableColumns
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.TextUtils
+import android.text.style.ForegroundColorSpan
 import android.util.Base64
 import android.webkit.MimeTypeMap
+import de.blinkt.openvpn.R
 import kotlin.Throws
 import de.blinkt.openvpn.VpnProfile
 import de.blinkt.openvpn.core.Preferences
@@ -258,4 +264,54 @@ object Utils {
             else -> return 0
         }
     }
+
+    val seclevleregex = Regex("tls-cipher.*@SECLEVEL=0")
+
+    @JvmStatic
+    fun getWarningText(c:Context, vp:VpnProfile): SpannableStringBuilder {
+        val warnings = mutableListOf<String>()
+
+        val errorId = vp.checkProfile(c)
+        if (errorId != R.string.no_error_found)
+        {
+            warnings.add(c.resources.getString(errorId))
+        }
+
+        addSoftWarnings(warnings, vp)
+        val builder = SpannableStringBuilder()
+        if (warnings.size > 0) {
+            val warnSpan = SpannableString( warnings.joinToString(separator = ", "))
+            warnSpan.setSpan(ForegroundColorSpan(Color.RED), 0, warnSpan.length, 0)
+            builder.append(warnSpan)
+        }
+
+        return builder
+    }
+
+    val weakCiphers = listOf<String>("BF-CBC", "DES-CBC", "NONE")
+
+    @JvmStatic
+    fun addSoftWarnings(warnings:MutableList<String>, vp:VpnProfile) {
+        if (vp.mUseLegacyProvider)
+            warnings.add("legacy Provider enabled")
+        if (vp.mAuthenticationType == VpnProfile.TYPE_STATICKEYS)
+            warnings.add("deprecated static key (--secret) mode")
+        if (vp.mUseCustomConfig && vp.mCustomConfigOptions.contains(seclevleregex))
+            warnings.add("low security (@SECLEVEL=0)")
+        if (vp.mCompatMode > 0 )
+            warnings.add("compat mode enabled")
+
+        var cipher= vp.mCipher.toUpperCase(Locale.ROOT)
+        if (TextUtils.isEmpty(cipher))
+            cipher = "BF-CBC";
+
+        for (weakCipher in weakCiphers) {
+            if ((vp.mDataCiphers != null && vp.mDataCiphers.toUpperCase(Locale.ROOT)
+                    .contains(weakCipher))
+                || (vp.mCompatMode in 1..20399 && (cipher == weakCipher))
+            )
+                warnings.add("weak cipher (${weakCipher})")
+        }
+    }
+
 }

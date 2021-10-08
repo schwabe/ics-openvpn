@@ -20,11 +20,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.ListFragment;
 
 import android.text.Html;
 import android.text.Html.ImageGetter;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -81,6 +84,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private String mLastStatusMessage;
     private ArrayAdapter<VpnProfile> mArrayadapter;
     private Intent mLastIntent;
+    private VpnProfile defaultVPN;
 
     @Override
     public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level, Intent intent) {
@@ -246,6 +250,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             updateDynamicShortcuts();
         }
         VpnStatus.addStateListener(this);
+        defaultVPN = ProfileManager.getAlwaysOnVPN(requireContext());
     }
 
     @Override
@@ -286,7 +291,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
     private void populateVpnList() {
-        boolean sortByLRU = Preferences.getDefaultSharedPreferences(getActivity()).getBoolean(PREF_SORT_BY_LRU, false);
+        boolean sortByLRU = Preferences.getDefaultSharedPreferences(requireActivity()).getBoolean(PREF_SORT_BY_LRU, false);
         Collection<VpnProfile> allvpn = getPM().getProfiles();
         TreeSet<VpnProfile> sortedset;
         if (sortByLRU)
@@ -303,7 +308,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
         menu.add(0, MENU_ADD_PROFILE, 0, R.string.menu_add_profile)
                 .setIcon(R.drawable.ic_menu_add)
                 .setAlphabeticShortcut('a')
@@ -589,30 +594,37 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             super(context, resource, textViewResourceId);
         }
 
+        @NonNull
         @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
             View v = super.getView(position, convertView, parent);
 
             final VpnProfile profile = (VpnProfile) getListAdapter().getItem(position);
 
             View titleview = v.findViewById(R.id.vpn_list_item_left);
-            titleview.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startOrStopVPN(profile);
-                }
-            });
+            titleview.setOnClickListener(v1 -> startOrStopVPN(profile));
 
             View settingsview = v.findViewById(R.id.quickedit_settings);
             settingsview.setOnClickListener(view -> editVPN(profile));
 
-            TextView subtitle = (TextView) v.findViewById(R.id.vpn_item_subtitle);
+            TextView subtitle = v.findViewById(R.id.vpn_item_subtitle);
+            SpannableStringBuilder warningText = Utils.getWarningText(requireContext(), profile);
+
+            if (profile == defaultVPN) {
+                if (warningText.length() > 0)
+                    warningText.append(" ");
+                warningText.append(new SpannableString("Default VPN"));
+            }
+
             if (profile.getUUIDString().equals(VpnStatus.getLastConnectedVPNProfile())) {
                 subtitle.setText(mLastStatusMessage);
                 subtitle.setVisibility(View.VISIBLE);
             } else {
-                subtitle.setText("");
-                subtitle.setVisibility(View.GONE);
+                subtitle.setText(warningText);
+                if (warningText.length() > 0)
+                    subtitle.setVisibility(View.VISIBLE);
+                else
+                    subtitle.setVisibility(View.GONE);
             }
 
 

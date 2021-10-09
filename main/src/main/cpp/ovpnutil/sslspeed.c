@@ -80,9 +80,9 @@ typedef struct loopargs_st {
 #define MAX_BLOCK_SIZE 128
 static unsigned char iv[2 * MAX_BLOCK_SIZE / 8];
 
-#define SIZE_NUM        6
+#define SIZE_NUM        7
 static const int lengths[SIZE_NUM] = {
-    16, 64, 256, 1024, 8 * 1024, 16 * 1024
+    16, 64, 256, 1024, 1500, 8 * 1024, 16 * 1024
 };
 
 static int testnum;
@@ -247,7 +247,7 @@ jdoubleArray Java_de_blinkt_openvpn_core_NativeUtils_getOpenSSLSpeed(JNIEnv* env
 
     loopargs_t *loopargs = NULL;
     int loopargs_len = 1;
-    int async_jobs=0;
+    int async_jobs = 0;
     loopargs = malloc(loopargs_len * sizeof(loopargs_t));
     memset(loopargs, 0, loopargs_len * sizeof(loopargs_t));
 

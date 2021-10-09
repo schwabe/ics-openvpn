@@ -468,7 +468,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         }
 
         // atuo detection of proxy
-        if (proxyType == Connection.ProxyType.NONE) {
+        if (proxyType == Connection.ProxyType.NONE && mProfile != null) {
             SocketAddress proxyaddr = ProxyDetection.detectProxy(mProfile);
             if (proxyaddr instanceof InetSocketAddress) {
                 InetSocketAddress isa = (InetSocketAddress) proxyaddr;
@@ -476,10 +476,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 proxyname = isa.getHostName();
                 proxyport = String.valueOf(isa.getPort());
                 proxyUseAuth = false;
-
             }
         }
-
 
         if (args.length >= 2 && proxyType == Connection.ProxyType.HTTP) {
             String proto = args[1];
@@ -488,7 +486,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 VpnStatus.logInfo("Not using an HTTP proxy since the connection uses UDP");
             }
         }
-
 
         if (proxyType == Connection.ProxyType.ORBOT) {
             VpnStatus.updateStateString("WAIT_ORBOT", "Waiting for Orbot to start", R.string.state_waitorbot, ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
@@ -500,7 +497,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             orbotHelper.addStatusCallback(mOpenVPNService, statusCallback);
 
             orbotHelper.sendOrbotStartAndStatusBroadcast();
-
         } else {
             sendProxyCMD(proxyType, proxyname, proxyport, proxyUseAuth);
         }

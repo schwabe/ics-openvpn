@@ -1,6 +1,7 @@
 OpenVPN for Android
 =============
-[![Build Status](https://travis-ci.org/schwabe/ics-openvpn.svg?branch=master)](https://travis-ci.org/schwabe/ics-openvpn)
+![build status](https://github.com/schwabe/ics-openvpn/actions/workflows/build.yaml/badge.svg)
+
 
 Description
 ------------

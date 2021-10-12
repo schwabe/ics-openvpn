@@ -867,8 +867,7 @@ public class VpnProfile implements Serializable, Cloneable {
     }
 
     private X509Certificate[] getKeyStoreCertificates(Context context) throws KeyChainException, InterruptedException {
-        PrivateKey privateKey = KeyChain.getPrivateKey(context, mAlias);
-        mPrivateKey = privateKey;
+        mPrivateKey = KeyChain.getPrivateKey(context, mAlias);
 
 
         X509Certificate[] caChain = KeyChain.getCertificateChain(context, mAlias);
@@ -1057,6 +1056,22 @@ public class VpnProfile implements Serializable, Cloneable {
                 if (!OrbotHelper.checkTorReceier(context))
                     return R.string.no_orbotfound;
             }
+        }
+
+        String dataciphers = "";
+        if (!TextUtils.isEmpty(dataciphers))
+            dataciphers = mDataCiphers.toUpperCase(Locale.ROOT);
+
+        String cipher = "BF-CBC";
+        if (!TextUtils.isEmpty(mCipher))
+            cipher = mCipher.toUpperCase(Locale.ROOT);
+
+        if (!mUseLegacyProvider &&
+                (dataciphers.contains("BF-CBC")
+                || ((mCompatMode > 0 && mCompatMode < 20500) || useOpenVPN3)
+                && cipher.equals("BF-CBC")))
+        {
+            return R.string.bf_cbc_requires_legacy;
         }
 
         // Everything okay

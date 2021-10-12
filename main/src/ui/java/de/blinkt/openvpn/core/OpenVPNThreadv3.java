@@ -182,6 +182,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         config.setAllowLocalLanAccess(mVp.mAllowLocalLAN);
         boolean retryOnAuthFailed = mVp.mAuthRetry == AUTH_RETRY_NOINTERACT;
         config.setRetryOnAuthFailed(retryOnAuthFailed);
+        config.setEnableLegacyAlgorithms(mVp.mUseLegacyProvider);
 
         ClientAPI_EvalConfig ec = eval_config(config);
         if (ec.getExternalPki()) {

@@ -381,6 +381,9 @@ public class VpnProfile implements Serializable, Cloneable {
             cfg.append("setenv IV_SSO openurl,webauth,crtext\n");
             String versionString = getPlatformVersionEnvString();
             cfg.append(String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString)));
+
+            if (mUseLegacyProvider)
+                cfg.append("provider legacy:default\n");
         } else {
             cfg.append("# Config for OpenVPN 3 C++\n");
         }
@@ -664,8 +667,6 @@ public class VpnProfile implements Serializable, Cloneable {
         if (!TextUtils.isEmpty(mDataCiphers)) {
             cfg.append("data-ciphers ").append(mDataCiphers).append("\n");
         }
-        if (mUseLegacyProvider)
-            cfg.append("provider legacy:default\n");
 
         if (mCompatMode > 0)
         {

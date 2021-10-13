@@ -187,8 +187,8 @@ object Utils {
 
     @JvmStatic
     @Throws(IOException::class, SecurityException::class)
-    fun getFilePickerResult(ft: FileType?, result: Intent, c: Context): String? {
-        val uri = result.data ?: return null
+    fun getFilePickerResult(ft: FileType?, result: Intent?, c: Context): String? {
+        val uri = result?.data ?: return null
         val fileData = readBytesFromStream(c.contentResolver.openInputStream(uri))
         var newData: String? = null
         val cursor = c.contentResolver.query(uri, null, null, null, null)

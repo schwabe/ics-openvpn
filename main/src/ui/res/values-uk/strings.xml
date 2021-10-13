@@ -34,7 +34,6 @@
     <string name="ipv4_address">IPv4-адреси</string>
     <string name="ipv6_address">IPv6-адреса</string>
     <string name="custom_option_warning">Введіть додаткові параметри OpenVPN. Використовуйте цю можливість з великою обережністю. Якщо ви вважаєте, що відсутній важливий параметр, то зв\'яжіться з автором</string>
-    <string name="auth_username">Ім\'я користувача</string>
     <string name="auth_pwquery">Пароль</string>
     <string name="static_keys_info">Для статичної конфігурації ключі авторизації TLS будуть використовуватися як статичні ключі</string>
     <string name="configure_the_vpn">Налаштувати VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Введіть унікальне ім\'я профілю</string>
     <string name="profilename">Ім\'я профілю</string>
     <string name="no_keystore_cert_selected">Потрібно вибрати сертифікат користувача</string>
-    <string name="no_ca_cert_selected">Ви повинні обрати кореневий (СА) сертифікат</string>
     <string name="no_error_found">Помилок не знайдено</string>
     <string name="config_error_found">Помилка конфігурації</string>
     <string name="ipv4_format_error">Помилка при розборі адреси IPv4</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Ваша прошивка не підтримує VPNService API, вибачте :(</string>
     <string name="encryption">Шифрування</string>
     <string name="cipher_dialog_title">Введіть метод шифрування</string>
-    <string name="chipher_dialog_message">Вкажіть алгоритм шифрування,  для використання OpenVPN. Залиште пустим, якщо треба шифрування за замовчуванням.</string>
     <string name="auth_dialog_message">Введіть the authentication digest для OpenVPN. Залиште порожнім для використання стандартних значень.</string>
     <string name="settings_auth">Автентифікація/Шифрування</string>
     <string name="file_explorer_tab">Провідник файлів</string>
@@ -394,7 +391,6 @@
     <string name="query_permissions_sdcard">OpenVPN для Android може спробувати знайти відсутні файли на Sd карті автоматично. Натисніть на це повідомлення, щоб отримати права на дозвіл.</string>
     <string name="protocol">Протокол</string>
     <string name="enabled_connection_entry">Ввімкнено</string>
-    <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
     <string name="permission_revoked">Дозвіл VPN відкликано ОС (наприклад, інша програма VPN запущена), зупинка VPN</string>
     <string name="pushpeerinfo">Отримати інформацію про піра</string>
     <string name="pushpeerinfosummary">Надіслати додаткову інформацію на сервер, наприклад версію SSL та Android</string>
@@ -440,9 +436,6 @@
     <string name="kbits_per_second">%.1f Кбіт/с</string>
     <string name="mbits_per_second">%.1f Мбіт/с</string>
     <string name="gbits_per_second">%.1f Гбіт/с</string>
-    <string name="weakmd">&lt;p&gt; Починаючи з OpenSSL версії 1.1, OpenSSL відкидає слабкі підписи в таких сертифікатах, як MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5, підписи повністю небезпечні і більше не повинні використовуватись.&lt;/b&gt; Колізії MD5 можуть бути створені в &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt; через декілька годин з мінімальними затратами.&lt;/a&gt;. Ви повинні якнайшвидше оновити сертифікати VPN. &lt;/p&gt;&lt;p&gt;Нажаль, старі дистрибутиви easy-rsa включали опцію конфігурації «default_md md5». Якщо ви використовуєте стару версію easy-rsa, оновітб її до &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;latest версії&lt;/a&gt;) або змініть md5 на sha256 та відновіть свої сертификати.&lt;/p&gt;&lt;p&gt;Якщо ви дійсно хочете використовувати старі та пошкоджені сертификати, використовуйте налаштовуваний параметр конфігурації tls-cipher «DEFAULT: @SECLEVEL = 0 \"в розширеній конфігурації або в якості додаткового рядку в вашій імпортованій конфігурації&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f Б</string>
     <string name="volume_kbyte">%.1f КБ</string>
     <string name="volume_mbyte">%.1f МБ</string>

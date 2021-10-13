@@ -34,7 +34,6 @@
     <string name="ipv4_address">Dirección IPv4</string>
     <string name="ipv6_address">Dirección IPv6</string>
     <string name="custom_option_warning">Introduzca las opciones personalizadas de OpenVPN. Úselas con mucho cuidado. Además, tenga en cuenta que muchas de las configuraciones de OpenVPN relacionadas con tun no pueden ser soportadas por el diseño de VPNSettings. Si cree que falta una función importante, contacte al autor</string>
-    <string name="auth_username">Nombre de usuario</string>
     <string name="auth_pwquery">Contraseña</string>
     <string name="static_keys_info">Para la configuración estática las claves de autenticación TLS se utilizaran como claves estáticas</string>
     <string name="configure_the_vpn">Configurar la VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Por favor, introduzca un nombre de perfil único</string>
     <string name="profilename">Nombre del Perfil</string>
     <string name="no_keystore_cert_selected">Debe seleccionar un certificado de usuario</string>
-    <string name="no_ca_cert_selected">Debe seleccionar un certificado</string>
     <string name="no_error_found">No se encontraron errores</string>
     <string name="config_error_found">Error en la configuración</string>
     <string name="ipv4_format_error">Error al analizar la dirección IPv4</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Su imagen no es compatible con la API de VPNService, lo siento :(</string>
     <string name="encryption">Cifrado</string>
     <string name="cipher_dialog_title">Especifique el método de cifrado</string>
-    <string name="chipher_dialog_message">Proporcione el algoritmo de cifrado usado por OpenVPN. Deje en blanco para usar el cifrado de fábrica.</string>
     <string name="auth_dialog_message">Introduce la autenticacion digest usada por OpenVPN. Deja en blanco para usar el digest predeterminado.</string>
     <string name="settings_auth">Autenticación/Cifrado</string>
     <string name="file_explorer_tab">Administrador de archivos</string>
@@ -395,7 +392,6 @@ hacia/de Móvil)</string>
     <string name="query_permissions_sdcard">OpenVPN para Android puede tratar de encontrar el/los archivo/s faltante/s en la tarjeta de memoria automáticamente. Toque este mensaje de iniciar la solicitud de permiso.</string>
     <string name="protocol">Protocolo</string>
     <string name="enabled_connection_entry">Activo</string>
-    <string name="abi_mismatch">La precedencia de ABI nativa preferida de este dispositivo (%1$s) y la ABI informada por bibliotecas nativas (%2$s) no coinciden</string>
     <string name="permission_revoked">Permiso de VPN revocado por el sistema operativo (por ejemplo, otro programa de VPN iniciado), deteniendo VPN</string>
     <string name="pushpeerinfo">Presión información por igual</string>
     <string name="pushpeerinfosummary">Enviar información adicional al servidor, por ejemplo, la versión SSL y la versión de Android</string>
@@ -441,9 +437,6 @@ hacia/de Móvil)</string>
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;a partir de la versión 1.1 de OpenSSL, OpenSSL rechaza débiles firmas en certificados como el MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5 firmas son totalmente inseguras y no deberían utilizarse nunca más.&lt;/b&gt; las colisiones MD5 pueden crearse en &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;pocas horas a un costo mínimo.&lt;/a&gt;.         Debe actualizar los certificados VPN tan pronto como sea posible.&lt;p&gt;de&lt;/p&gt;Desafortunadamente, distribuciones antiguas de easy-rsa incluyeron la opción de configuración \"default_md md5\". Si está utilizando una versión antigua de easy-rsa, actualizar a la &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;última versión&lt;/a&gt;) o cambiar de md5 a sha256 y regenerar sus certificados.&lt;/p&gt;&lt;p&gt;si desea utilizar certificados viejos y rotos use el configuración personalizada opción tls-cipher \"DEFAULT:@SECLEVEL=0\" debajo de configuración avanzada o como línea adicional en su configuración importada&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

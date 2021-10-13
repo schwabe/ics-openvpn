@@ -34,7 +34,6 @@
     <string name="ipv4_address">IPv4 adresa</string>
     <string name="ipv6_address">IPv6 adresa</string>
     <string name="custom_option_warning">Zadat vlastní nastavení. Používat opatrně. Poznámka, mnoho voleb okolo tun adaptéru nemůže být podporováno. Pokud si myslíte, že chybí podstatná volba, kontaktujte autora</string>
-    <string name="auth_username">Jméno</string>
     <string name="auth_pwquery">Heslo</string>
     <string name="static_keys_info">Pro statickou konfiguraci bude jako klíč použit autentizační klíč TLS</string>
     <string name="configure_the_vpn">Konfigurace VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Zadej prosím unikátní jméno profilu</string>
     <string name="profilename">Jméno profilu</string>
     <string name="no_keystore_cert_selected">Je třeba vybrat uživatelský certifikát</string>
-    <string name="no_ca_cert_selected">Je třeba vybrat certifikát</string>
     <string name="no_error_found">Bez chyb</string>
     <string name="config_error_found">Chyba v konfiguraci</string>
     <string name="ipv4_format_error">Chyba při zpracování IPv4 adresy</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Tvůj obrázek není podporovaný rozhraním VPNService, je mi líto :-(</string>
     <string name="encryption">Šifrování</string>
     <string name="cipher_dialog_title">Zadej šifrovací metodu</string>
-    <string name="chipher_dialog_message">Zadej šifrovací algoritmus. Ponech prázdné pro výchozí šifru.</string>
     <string name="auth_dialog_message">Zadej algoritmus pro autentizaci. Nech prázdné pro výchozí algoritmus.</string>
     <string name="settings_auth">Autentizace/Šifrování</string>
     <string name="file_explorer_tab">Prohlížeč souború</string>
@@ -182,7 +179,7 @@
     <string name="show_log_window">Zobrazit okno s logem</string>
     <string name="mobile_info">%10$s %9$s spuštěno na %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">Chyba při podepisování klíčem %1$s: %2$s</string>
-    <string name="error_extapp_sign">Chyba ve vláknu s externí autentičnosti aplikace</string>
+    <string name="error_extapp_sign">Chyba při podepisování externí aplikací pro ověřování (%3$s): %1$s: %2$s</string>
     <string name="faq_system_dialogs">VPN varování při připojování oznamující o možnosti přesměrování veškerého provozu je vynuceno systémem, aby se zabránilo zneužití VPNService API.\nNotifikace (symbol s klíčem) je také vynucena systémem, aby signalizovala odchozí VPN spojení. Na některých systémech přehrává notifikace i zvuk.\nAndroid zavedl tyto dialogy pro tvoji osobní bezpečnost a ujistil se, že nejdou obejít. (Někdu to bohužel zahrnuje i zvuk notifikace.)</string>
     <string name="faq_system_dialogs_title">Varování při připojení a zvuková notifikace</string>
     <string name="translationby">Českou lokalizaci zpracoval Jan Baier &lt;baier.jan@gmail.com&gt;</string>
@@ -322,7 +319,7 @@
     <string name="files_missing_hint">Některé soubory nemohly být nalezeny. Prosím vyber profil, který chceš importovat:</string>
     <string name="openvpn_is_no_free_vpn">Pro používání této aplikace je potřeba VPN poskytovatel/brána, která podporuje OpenVPN (často je to zaměstnavatel). Pro více informací a návod na nastavení OpenVPN serveru navštiv http://community.openvpn.net/</string>
     <string name="import_log">Import logu:</string>
-    <string name="ip_looks_like_subnet">Vpn topologie \"%3$s\" soecifikována, ale ifconfig %1$s %2$s vypadá spíše jako IP adresa se síťovou maskou. Předpokládám \"podsíťovou\" topologii.</string>
+    <string name="ip_looks_like_subnet">Vpn topologie \"%3$s\" specifikována, ale ifconfig %1$s %2$s vypadá spíše jako IP adresa se síťovou maskou. Předpokládám \"podsíťovou\" topologii.</string>
     <string name="mssfix_invalid_value">mssfix hodnota musí být celé číslo mezi 0 a 9000</string>
     <string name="mtu_invalid_value">MTU hodnota musí být celé číslo mezi 64 a 9000</string>
     <string name="mssfix_value_dialog">Oznámit TCP sezením běžícím skrze tunel, že mají limitovat velikost odesílaných paketů tak, aby poté, co je OpenVPN zabalí, byla výsledná velikost UDP paketu, které OpenVPN posílá menší než tento počet bytů. (výchozí je 1450)</string>
@@ -335,8 +332,8 @@
     <string name="disallowed_vpn_apps_info">Zakázané VPN aplikace: %1$s</string>
     <string name="app_no_longer_exists">Balíček %s již není nainstalován, odstraňuji ho ze seznamu povolených/zakázaných aplikací</string>
     <string name="vpn_disallow_radio">VPN je používaná pro všechny aplikace, kromě</string>
-    <string name="vpn_allow_radio">VPN je používaná je pro vybrané aplikace</string>
-    <string name="vpn_allow_bypass">Dovol applikacím obejít VPN</string>
+    <string name="vpn_allow_radio">VPN je používaná jen pro vybrané aplikace</string>
+    <string name="vpn_allow_bypass">Dovol aplikacím obejít VPN</string>
     <string name="query_delete_remote">Odstranit položku vzdáleného serveru?</string>
     <string name="keep">Zachovat</string>
     <string name="delete">Smazat</string>
@@ -359,7 +356,7 @@
     <string name="ab_kitkat_mss">Dřívější KitKat verze nastavovaly špatnou hodnotu MSS na TCP spojení (#61948). OpenVPN automaticky zapne mssfix možnost pro obejití chyby.</string>
     <string name="ab_lollipop_reinstall">Aplikace VPN mohou přestat fungovat po odinstalování a reinstalaci. Podrobnosti najdete v #80074</string>
     <string name="ab_secondary_users">VPN vůbec nefunguje pro vedlejší uživatele.</string>
-    <string name="ab_kitkat_reconnect">"Více uživatelů hlasí, že mobilní připojení / mobilní datové připojení má časté výpadky během používání této VPN aplikace, Vypadá, že chování ovlivňuje jen nějaké kombinace mobilních dodavatelů / zařizení a zatím jsme přes žádnou přičinu nemohli identifikovat chybu."</string>
+    <string name="ab_kitkat_reconnect">"Více uživatelů hlásí, že mobilní připojení / mobilní datové připojení má časté výpadky během používání této VPN aplikace. Vypadá to, že chování ovlivňuje jen nějaké kombinace mobilních poskytovatelů / zařízení a zatím nebyla identifikována žádná příčina / řešení chyby."</string>
     <string name="ab_vpn_reachability_44">Jediná destinace může být dosažena přes VPN které nejsou dosažitelné bez VPN. Sítě IPv6 nefungují vůbec.</string>
     <string name="ab_only_cidr_title">Ne-CIDR trasy</string>
     <string name="ab_proxy_title">Proxy chování pro VPN</string>
@@ -368,7 +365,7 @@
     <string name="copy_of_profile">Kopie %s</string>
     <string name="ab_not_route_to_vpn_title">Trasa k nastavené IP adrese</string>
     <string name="ab_kitkat_mss_title">Špatná hodnota MSS pro VPN spojení</string>
-    <string name="ab_secondary_users_title">Vedlejší uživaté tabletu</string>
+    <string name="ab_secondary_users_title">Vedlejší uživatelé tabletu</string>
     <string name="custom_connection_options_warng">Zadejte vlastní specifické možnosti k připojení. Používejte opatrně</string>
     <string name="custom_connection_options">Vlastní možnosti</string>
     <string name="remove_connection_entry">Odstranit položku připojení</string>
@@ -450,4 +447,5 @@
     <string name="enableproxyauth">Zapni ověření s proxy</string>
     <string name="info_from_server">Informace ze serveru: \'%s\'</string>
     <string name="channel_name_userreq">Vstup od uživatele je nutný</string>
+    <string name="configure">Nastavit</string>
 </resources>

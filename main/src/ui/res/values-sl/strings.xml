@@ -34,7 +34,6 @@
     <string name="ipv4_address">Naslov IPv4</string>
     <string name="ipv6_address">Naslov IPv6</string>
     <string name="custom_option_warning">Vnesite možnosti OpenVPN po meri. Uporabljajte previdno. Upoštevajte tudi, da veliko nastavitev OpenVPN povezanih z napravami TUN ni mogoče podpreti z zasnovo nastavitev VPN. Če mislite, da manjka pomembna možnost, navežite stik z avtorjem.</string>
-    <string name="auth_username">Uporabniško ime</string>
     <string name="auth_pwquery">Geslo</string>
     <string name="static_keys_info">Za statično nastavitev bodo ključi overitve TLS uporabljeni kot statični ključi</string>
     <string name="configure_the_vpn">Nastavi VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Vnesite edinstveno ime profila</string>
     <string name="profilename">Ime profila</string>
     <string name="no_keystore_cert_selected">Izbrati morate uporabniško potrdilo</string>
-    <string name="no_ca_cert_selected">Izbrati morate potrdilo overitelja potrdil</string>
     <string name="no_error_found">Ni najdenih napak</string>
     <string name="config_error_found">Napaka v nastavitvah</string>
     <string name="ipv4_format_error">Napaka pri razčlenjevanju naslova IPv4</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Vaš odtis žal ne podpira API-ja storitve VPN :(</string>
     <string name="encryption">Šifriranje</string>
     <string name="cipher_dialog_title">Vnesite način šifriranja</string>
-    <string name="chipher_dialog_message">Vnesite šifrirni algoritem, ki naj ga uporabi OpenVPN. Za uporabo privzete šifre pustite prazno.</string>
     <string name="auth_dialog_message">Vnesite izvleček overitve, ki naj se uporabi za OpenVPN. Za privzetega pustite prazno.</string>
     <string name="settings_auth">Overitev/Šifriranje</string>
     <string name="file_explorer_tab">Raziskovalec datotek</string>
@@ -392,7 +389,6 @@
     <string name="query_permissions_sdcard">OpenVPN za Android lahko samodejno poizkusi odkriti manjkajoče datoteke na kartici SD. Tapnite na to sporočilo, da zahtevate dovoljenje.</string>
     <string name="protocol">Protokol</string>
     <string name="enabled_connection_entry">Omogočeno</string>
-    <string name="abi_mismatch">Prednostna izvirna predhodnost ABI (%1$s) in ABI, ki ga sporočajo izvirne knjižnice (%2$s), se ne ujemata.</string>
     <string name="permission_revoked">OS je preklical dovoljenje VPN (npr. zagnan je bil drug program VPN), ustavljanje VPN-a</string>
     <string name="pushpeerinfo">Potisni podatke o soležniku</string>
     <string name="pushpeerinfosummary">Pošlji dodatne podatke na strežnik, npr. različico SSL in Android</string>

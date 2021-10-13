@@ -34,7 +34,6 @@
     <string name="ipv4_address">IPv4 位址</string>
     <string name="ipv6_address">IPv6 位址</string>
     <string name="custom_option_warning">輸入自訂 OpenVPN 選項。請謹慎使用。另外請注意，VPNSettings 設計上無法支援許多 TUN 通道相關的 OpenVPN 設定 。如果您認為有遺漏重要的設定選項，請聯絡作者。</string>
-    <string name="auth_username">使用者名稱</string>
     <string name="auth_pwquery">密碼</string>
     <string name="static_keys_info">對於靜態設定，TLS 認證金鑰將會用作靜態金鑰。</string>
     <string name="configure_the_vpn">設定 VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">請輸入一個不重複的設定檔名稱</string>
     <string name="profilename">設定檔名稱</string>
     <string name="no_keystore_cert_selected">您必須選擇一個使用者憑證</string>
-    <string name="no_ca_cert_selected">您必須選擇一個 CA 憑證</string>
     <string name="no_error_found">沒有發現錯誤</string>
     <string name="config_error_found">設定值錯誤</string>
     <string name="ipv4_format_error">解析 IPv4 位址時發生錯誤</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">你的系統不支援 VPNService API，抱歉 :(</string>
     <string name="encryption">加密</string>
     <string name="cipher_dialog_title">輸入加密方法</string>
-    <string name="chipher_dialog_message">輸入 OpenVPN 使用的的加密演算法。留空以使用預設值。</string>
     <string name="auth_dialog_message">輸入 OpenVPN 使用的驗證摘要演算法。留空以使用預設值。</string>
     <string name="settings_auth">驗證/加密</string>
     <string name="file_explorer_tab">檔案瀏覽器</string>
@@ -394,7 +391,6 @@
     <string name="query_permissions_sdcard">OpenVPN for Android 可以嘗試自動在 SD 卡搜尋缺少的檔案。點擊此訊息以啟動權限請求。</string>
     <string name="protocol">協定</string>
     <string name="enabled_connection_entry">啟用</string>
-    <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
     <string name="permission_revoked">VPN 權限被系統撤銷（例如其他 VPN 程式程序啟動了），正在停止 VPN</string>
     <string name="pushpeerinfo">發送端資訊</string>
     <string name="pushpeerinfosummary">傳送額外的資訊到伺服器，例如 SSL 版本與 Android 版本</string>
@@ -440,9 +436,6 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;從 OpenSSL 1.1 版本開始，OpenSSL 拒絕憑證中脆弱的簽章，例如 MD5。&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5 簽章完全不安全，不應該再被使用。&lt;/b&gt;MD5 可以在幾個小時內&lt;a href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;以極低的成本得到碰撞&lt;/a&gt;。
-您應該盡快更新 VPN 憑證。&lt;/p&gt;&lt;p&gt;不幸的是，舊的 easy-rsa 版本中使用了「default_md md5」的設定選項。如果您正使用舊版的 easy-rsa，請更新到&lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;最新版本&lt;/a&gt;) 或將 md5 換成 sha256 並重新產生您的憑證。&lt;/p&gt;&lt;p&gt;如果你真的想使用又舊又差的憑證，可以使用進階設定中的自訂設定選項 tls-cipher \"DEFAULT:@SECLEVEL=0\" ，或在把它加到您的匯入設定值中的一行。&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

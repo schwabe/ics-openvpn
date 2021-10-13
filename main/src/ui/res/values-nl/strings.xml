@@ -34,7 +34,6 @@
     <string name="ipv4_address">IPv4 Adres</string>
     <string name="ipv6_address">IPv6 Adres</string>
     <string name="custom_option_warning">Geavanceerde OpenVPN opties. Wees voorzichtig. Veel van de tun gerelateerde OpenVPN instellingen worden niet ondersteund. Als u denkt dat een belangrijke optie ontbreekt, neem dan contact op met de auteur</string>
-    <string name="auth_username">Gebruikersnaam</string>
     <string name="auth_pwquery">Wachtwoord</string>
     <string name="static_keys_info">Voor de statische configuratie worden de TLS Auth keys als statische sleutels gebruikt</string>
     <string name="configure_the_vpn">Configureer de VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Voer een unieke profielnaam in</string>
     <string name="profilename">Profielnaam</string>
     <string name="no_keystore_cert_selected">U moet een gebruikerscertificaat selecteren</string>
-    <string name="no_ca_cert_selected">U moet een CA-certificaat selecteren</string>
     <string name="no_error_found">Geen fout.</string>
     <string name="config_error_found">Fout in de configuratie</string>
     <string name="ipv4_format_error">Fout bij inlezen van IPv4-adres</string>
@@ -93,8 +91,8 @@
     <string name="log_verbosity_level">Logboek registratie niveau</string>
     <string name="float_summary">Laat geauthenticeerde pakketten toe vanaf elk IP-adres</string>
     <string name="float_title">Zwevende server toestaan</string>
-    <string name="custom_options_title">Aangepaste Opties</string>
-    <string name="edit_vpn">VPN Instellingen Bewerken</string>
+    <string name="custom_options_title">Aangepaste opties</string>
+    <string name="edit_vpn">Bewerk VPN-instellingen</string>
     <string name="remove_vpn_query">Verwijder het VPN-profiel \'%s\'?</string>
     <string name="tun_error_helpful">Op sommige aangepaste ICS-ROM\'s kunnen de rechten op /dev/tun verkeerd zijn, of de tun module kan volledig ontbreken. Voor CM9-ROM\'s, probeer de optie herstel eigenaar onder algemene instellingen</string>
     <string name="tun_open_error">Kon de tun interface niet openen</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Uw afbeelding ondersteunt geen VPNService API, sorry :(</string>
     <string name="encryption">Encryptie</string>
     <string name="cipher_dialog_title">Voer encryptiemethode in</string>
-    <string name="chipher_dialog_message">Voer het encryptie-cijfer algoritme in dat door OpenVPN wordt gebruikt. Laat leeg om het standaard cijfer te gebruiken.</string>
     <string name="auth_dialog_message">Voer de authenticatieverdeling in die gebruikt wordt voor OpenVPN. Laat leeg om de standaard verdeling te gebruiken.</string>
     <string name="settings_auth">Authenticatie/Encryptie</string>
     <string name="file_explorer_tab">Bestandsverkenner</string>
@@ -284,7 +281,7 @@
     <string name="screenoff_title">Pauzeer de VPN-verbinding na het uitschakelen van het scherm</string>
     <string name="screenoff_pause">Verbinding pauzeren als het scherm uit staat: minder dan %1$s in %2$ss</string>
     <string name="screen_nopersistenttun">Waarschuwing: Persistent tun is niet ingeschakeld voor deze VPN. Verkeer gebruikt de normale internetverbinding wanneer het scherm is uitgeschakeld.</string>
-    <string name="save_password">Wachtwoord opslaan</string>
+    <string name="save_password">Wijzig wachtwoord</string>
     <string name="pauseVPN">Pauzeer VPN</string>
     <string name="resumevpn">Hervat VPN</string>
     <string name="state_userpause">VPN-onderbreking aangevraagd door gebruiker</string>
@@ -394,7 +391,6 @@
     <string name="query_permissions_sdcard">OpenVPN voor Android kan proberen om ontbrekende bestand(en) op de sdcard automatisch te vinden. Tik op dit bericht om het toestemmingsverzoek te starten.</string>
     <string name="protocol">Protocol</string>
     <string name="enabled_connection_entry">Ingeschakeld</string>
-    <string name="abi_mismatch">Voorkeurs native ABI-prioriteit van dit apparaat (%1$s) en ABI gerapporteerd door native bibliotheken (%2$s) komen niet overeen</string>
     <string name="permission_revoked">VPN-machtiging ingetrokken door OS (bijv. andere VPN-app gestart), VPN wordt gestopt</string>
     <string name="pushpeerinfo">Push Peer-info</string>
     <string name="pushpeerinfosummary">Verzend extra informatie naar de server, bijvoorbeeld SSL-versie en Android-versie</string>
@@ -440,14 +436,6 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;Beginnend met OpenSSL version 1.1, OpenSSL verwerpt zwakke handtekeningen in certificaten zoals
-        MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5 handtekeningen zijn volledig onveilig en zouden niet meer mogen worden gebruikt.&lt;/b&gt; MD5
-        botsingen kunnen worden gemaakt in &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;enkele uren tegen minimale kosten.&lt;/a&gt;.
-        Je moet de VPN-certificaten zo snel mogelijk bijwerken.&lt;/p&gt;&lt;p&gt;Helaas bevatten oudere easy-rsa-distributies de configuratieoptie \"default_md md5\". Als je een oude easy-rsa-versie gebruikt, update dan naar
-        &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;laatste versie&lt;/a&gt;) of verander md5 naar sha256 en
-        regenereer je certificaten.&lt;/p&gt;&lt;p&gt;Als je echt oude en gebroken certificaten wilt gebruiken, gebruik dan de aangepaste configuratie-optie tls-cipher \"DEFAULT:@SECLEVEL=0\" onder geavanceerde configuratie of als een extra regel in uw geïmporteerd configuratiebestand&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

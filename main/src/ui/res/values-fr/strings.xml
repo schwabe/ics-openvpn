@@ -34,7 +34,6 @@
     <string name="ipv4_address">"Adresse IPv4"</string>
     <string name="ipv6_address">"Adresse IPv6"</string>
     <string name="custom_option_warning">Entrez les options d\'OpenVPN personnalisées. A utiliser avec précaution. A noter aussi que de nombreux paramètres Tun d\'OpenVPN ne sont pas pris en charge à cause de la conception de \"VPNSettings\". Si vous pensez qu\'une option importante manque, veuillez contacter l\'auteur</string>
-    <string name="auth_username">"Nom d\'utilisateur"</string>
     <string name="auth_pwquery">"Mot de passe"</string>
     <string name="static_keys_info">"Pour la configuration statique, des clés d\'authentification TLS seront utilisés comme des clés statiques."</string>
     <string name="configure_the_vpn">"Configurer le VPN"</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Veuillez entrer un nom de profil unique</string>
     <string name="profilename">"Nom de profil"</string>
     <string name="no_keystore_cert_selected">"Aucun certificat utilisateur sélectionné."</string>
-    <string name="no_ca_cert_selected">Vous devez sélectionner un certificat CA</string>
     <string name="no_error_found">"Aucune erreur"</string>
     <string name="config_error_found">"Erreur dans la configuration"</string>
     <string name="ipv4_format_error">"Impossible d\'analyser l\'adresse IPv4"</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Votre ROM ne prend pas en charge l\'API VPNService, désolé :(</string>
     <string name="encryption">Chiffrement</string>
     <string name="cipher_dialog_title">Entrez la méthode de chiffrement</string>
-    <string name="chipher_dialog_message">Entrez l\'algorithme de chiffrement utilisé par OpenVPN. Laissez vide pour utiliser l\'algorithme par défaut.</string>
     <string name="auth_dialog_message">Entrez l\'authentification digest utilisé pour OpenVPN. Laisser vide pour utiliser le digest par défaut.</string>
     <string name="settings_auth">Authentification/Chiffrement</string>
     <string name="file_explorer_tab">Explorateur de fichiers</string>
@@ -395,7 +392,6 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="query_permissions_sdcard">OpenVPN pour Android va essayer de chercher le(s) fichier(s) manquant(s) sur une carte SD. Tapoter ce message va démarrer une demande d\'autorisation.</string>
     <string name="protocol">Protocole</string>
     <string name="enabled_connection_entry">Activé</string>
-    <string name="abi_mismatch">A precedencia da ABI nativa preferida deste dispositivo (%1$s) e a ABI referenciada por bibliotecas intrínsecas (%2$s) não combinam</string>
     <string name="permission_revoked">Autorisation de VPN révoquée par le système d\'exploitation (ex : un autre programme VPN est lancé), arrêt du VPN</string>
     <string name="pushpeerinfo">Envoyer plus d\'infos</string>
     <string name="pushpeerinfosummary">Envoyer des informations supplémentaires sur le serveur, par exemple la version SSL et la version Android</string>
@@ -441,17 +437,6 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;Depuis OpenSSL version 1.1, OpenSSL rejette les signatures faibles dans les certificats comme
-        MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;les signatures MD5 sont totalement non sécurisées et ne devraient plus être
-        utilisées.&lt;/b&gt; Les collisions MD5 peuvent être crées en &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;quelques heures pour un coût
-        faible.&lt;/a&gt;. Vous devriez mettre à jour les certificats VPN dès que possible.&lt;/p&gt;&lt;p&gt;Malheureusement,
-        les anciennes distributions easy-rsa incluaient l\'option de configuration \"default_md md5\". Si vous utilisez une
-        ancienne version de easy-rsa, mettre à jour vers la &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;
-        dernière version&lt;/a&gt;) ou changer de MD5 pour sha256 et regénérer vos certificats.&lt;/p&gt;&lt;p&gt;Si vous
-	   souhaitez vraiment utiliser un vieux certificat compromis, utiliser l\'option de configuration personnalisée
-	   tls-cipher \"DEFAULT:@SECLEVEL=0\" dans configuration avancée ou en tant que ligne additionnelle dans votre
-	   configuration importée&lt;/p&gt;    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

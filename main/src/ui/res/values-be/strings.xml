@@ -34,7 +34,6 @@
     <string name="ipv4_address">Адрасы IPv4</string>
     <string name="ipv6_address">Адрасы IPv6</string>
     <string name="custom_option_warning">Увядзіце ўласныя параметры OpenVPN. Карыстайцеся гэтай магчымасцю з асцярожнасцю. Таксама памятайце, што некаторыя налады звязаныя з OpenVPN не падтрымліваюцца праектам VPNSettings. Калі вы лічыце, што нейкі важны параметр адсутнічае, калі ласка, паведаміце пра гэта аўтару</string>
-    <string name="auth_username">Імя карыстальніка</string>
     <string name="auth_pwquery">Пароль</string>
     <string name="static_keys_info">Для статычнай канфігурацыі ключы праверкі сапраўднасці TLS будуць выкарыстоўвацца як статычныя ключы</string>
     <string name="configure_the_vpn">Канфігурацыя VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Увядзіце ўнікальную назву профілю</string>
     <string name="profilename">Назва профілю</string>
     <string name="no_keystore_cert_selected">Вы павінны выбраць сертыфікат карыстальніка</string>
-    <string name="no_ca_cert_selected">Вам неабходна выбраць сертыфікат CA</string>
     <string name="no_error_found">Памылак не знойдзена</string>
     <string name="config_error_found">Памылка канфігурацыі</string>
     <string name="ipv4_format_error">Памылка аналізу адрасоў фармату IPv4</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Прабачце, але ваша прашыўка не падтрымлівае VPNService API :(</string>
     <string name="encryption">Шыфраванне</string>
     <string name="cipher_dialog_title">Увядзіце метад шыфравання</string>
-    <string name="chipher_dialog_message">Увядзіце алгарытм шыфравання, які выкарыстоўваецца OpenVPN. Пакіньце поле пустым для выкарыстання стандартнага шыфравання.</string>
     <string name="auth_dialog_message">Увядзіце дайджэст праверкі сапраўднасці, які выкарыстоўваецца для OpenVPN. Пакіньце поле пустым для выкарыстання дайджэста па змаўчанні.</string>
     <string name="settings_auth">Праверка сапраўднасці/шыфраванне</string>
     <string name="file_explorer_tab">Праваднік файлаў</string>
@@ -394,7 +391,6 @@
     <string name="query_permissions_sdcard"> можа паспрабаваць аўтаматычна выявіць файлы, якія адсутнічаюць на картцы памяці. Націсніце на гэта паведамленне, каб атрымаць запыт на дазвол.</string>
     <string name="protocol">Пратакол</string>
     <string name="enabled_connection_entry">Уключана</string>
-    <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
     <string name="permission_revoked">Дазвол VPN адкліканы аперацыйнай сістэмай (напрыклад, запушчаная іншая праграма VPN), спыненне VPN</string>
     <string name="pushpeerinfo">Адправіць інфармацыю пра аднарангавы вузел</string>
     <string name="pushpeerinfosummary">Адправіць дадатковую інфармацыю на сервер. Напрыклад, версію SSL або Android</string>
@@ -440,16 +436,6 @@
     <string name="kbits_per_second">%.1f Кбіт/с</string>
     <string name="mbits_per_second">%.1f Мбіт/с</string>
     <string name="gbits_per_second">%.1f Гбіт/c</string>
-    <string name="weakmd">&lt;p&gt;Пачынаючы з OpenSSL версіі 1.1, OpenSSL адхіляе слабыя сертыфікаты, такія як сертыфікаты MD5.        
-        &lt;/p&gt;&lt;p&gt;&lt;b&gt;Подпісы MD5 цалкам небяспечныя і іх нельга больш выкарыстоўваць.&lt;/b&gt; Калізіі MD5
-        могуць быць створаныя ў &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;за некалькі гадзін з мінімальнымі выдаткамі.&lt;/a&gt;.
-        Вы павінны абнавіць сертыфікаты VPN, як мага хутчэй.&lt;/p&gt;&lt;p&gt;На жаль, старыя версіі easy-rsa
-        уключалі параметр канфігурацыі \"default_md md5\". Калі вы выкарыстоўваеце старую версію easy-rsa version, абнавіце яе да
-        &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;апошняй версіі&lt;/a&gt;) або змяніце md5 на sha256 і
-        яшчэ раз згенеруйце свае сертыфікаты.&lt;/p&gt;&lt;p&gt;Калі вы жадаеце і далей карыстацца старымі і пашкоджанымі сертыфікатамі, скарыстайцеся параметрам уласнай канфігурацыі
-        tls-cipher \"DEFAULT:@SECLEVEL=0\" у пашыраная канфігурацыі або ў якасці дадатковага радка ў вашай імпартаванай канфігурацыі&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f Б</string>
     <string name="volume_kbyte">%.1f КБ</string>
     <string name="volume_mbyte">%.1f МБ</string>

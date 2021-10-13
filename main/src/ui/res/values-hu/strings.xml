@@ -34,7 +34,6 @@
     <string name="ipv4_address">IPv4 Cím</string>
     <string name="ipv6_address">IPv6 Cím</string>
     <string name="custom_option_warning">Egyéni OpenVPN opciók megadása. Körültekintéssel használja! Vegye figyelembe, hogy a tun-nal kapcsolatos OpenVPN beállítások nem támogatottak a VPNSettings felépítéséből adódóan. Ha úgy gondolja, hogy egy fontos opció hiányzik, lépjen kapcsolatba a fejlesztőkkel</string>
-    <string name="auth_username">Felhasználónév</string>
     <string name="auth_pwquery">Jelszó</string>
     <string name="static_keys_info">A statikus konfigurációhoz a TLS Auth Key-ek statikus kulcsokként lesznek használva</string>
     <string name="configure_the_vpn">A VPN beállítása</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Kérem, egyedi profilnevet válasszon</string>
     <string name="profilename">Profil név</string>
     <string name="no_keystore_cert_selected">Válasszon egy felhasználói tanúsítványt</string>
-    <string name="no_ca_cert_selected">Ki kell választania egy CA tanúsítványt</string>
     <string name="no_error_found">Hiba nem található</string>
     <string name="config_error_found">Hiba a beállításokban</string>
     <string name="ipv4_format_error">Hiba az IPv4 cím elemzésekor</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Az image-ed nem támogatja a VPNService API-t, elnézést :(</string>
     <string name="encryption">Titkosítás</string>
     <string name="cipher_dialog_title">Adja meg a titkosítási módszert</string>
-    <string name="chipher_dialog_message">Adja meg az OpenVPN által használt titkosítási algoritmust. Hagyja üresen az alapértelmezett kódoláshoz.</string>
     <string name="auth_dialog_message">Adja meg az OpenVPN által használt authentication digest-et. Hagyja üresen az alapértelmezett digest-hez.</string>
     <string name="settings_auth">Hitelesítés/Titkosítás</string>
     <string name="file_explorer_tab">Fájlkezelő</string>
@@ -182,6 +179,7 @@
     <string name="show_log_window">Naplózási ablak mutatása</string>
     <string name="mobile_info">%10$s %9$s futtatva %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">Hiba az Android keystore %1$s: %2$s kulccsal való belépéskor</string>
+    <string name="error_extapp_sign">Hiba a külső hitelesítő alkalmazással történő aláíráskor (%3$s): %1$s: %2$s</string>
     <string name="faq_system_dialogs">A VPN csatlakozás figyelmeztetés azt jelzi, hogy ez az alkalmazás a rendszer általi teljes forgalmat lehallgathatja a VPNService API visszaélések elkerülése érdekében.\nA VPN csatlakozás értesítés (A kulcs szimbólum) is az Android rendszer jelzése egy kimenő VPN kapcsolatról. Néhány lemezképen ez az értesítés hangot is lejátszik.\nAz android az ön biztonsága érdekében vezette be ezeket a rendszer értesítéseket, és gondoskodott arról, hogy ne lehessen megkerülni. (Néhány lemezképen ez sajnos értesítési hangot is tartalmaz.)</string>
     <string name="faq_system_dialogs_title">Kapcsolat figyelmeztetés és értesítés hang</string>
     <string name="translationby">A magyar fordítást készítették: kisjuhos, hd_adam, tomygee, Floo19, PettyBlue, ha1dfo, mmisi74, benewfy</string>
@@ -251,6 +249,7 @@
     <string name="state_tcp_connect">Csatlakozás (TCP)</string>
     <string name="state_auth_failed">Hitelesítési hiba</string>
     <string name="state_nonetwork">Várakozás használható hálózatra</string>
+    <string name="state_waitorbot">Várakozás az Orbot indítására</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
     <string name="notifcation_title_notconnect">Nincs kapcsolat</string>
     <string name="start_vpn_title">Csatlakozás a %s VPN-hez</string>
@@ -334,6 +333,7 @@
     <string name="app_no_longer_exists">%s csomag már nincs telepítve, eltávolítás az alkalmazások engedélyező/letiltó listájáról</string>
     <string name="vpn_disallow_radio">VPN használata minden alkalmazáshoz kivéve a kiválasztottakat</string>
     <string name="vpn_allow_radio">VPN használata kizárólag a kiválasztott alkalmazásokhoz</string>
+    <string name="vpn_allow_bypass">A VPN megkerülésének engedélyezése alkalmazások számára</string>
     <string name="query_delete_remote">Távoli kiszolgáló bejegyzés eltávolítása?</string>
     <string name="keep">Megtartás</string>
     <string name="delete">Törlés</string>
@@ -376,7 +376,7 @@
     <string name="ab_kitkat_reconnect_title">Véletlenszerű lecsatlakozások a mobil hálózatról</string>
     <string name="ab_vpn_reachability_44_title">A távoli hálózat nem elérhető</string>
     <string name="ab_persist_tun_title">Megmaradó tun mód</string>
-    <string name="version_and_later">%s és későbbi</string>
+    <string name="version_and_later">%s vagy újabb</string>
     <string name="tls_cipher_alert_title">Kapcsolódás sikertelen SSL23_GET_SERVER_HELLO:sslv3 alert handshake hibával</string>
     <string name="tls_cipher_alert">Újabb OpenVPN for Android verziók (0.6.29/2015 március) biztonságosabb alapértelmezést használnak az engedélyezett rejtjelező kísérletekhez (tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Sajnos a kevésbé biztonságos és export rejtjelező kísérletek kihagyása, különösen azoknak a rejtjelező kísérleteknek a kihagyása amik nem támogatják a Perfect Forward Security-t (Diffie-Hellman), néhány problémát okoz. Ezt általában egy jószándékú de gyengén végrehajtott TLS biztonság fokozás okozza a szerveren vagy néhány beágyazott OS-nél lecsupaszított SSL-el (pl.: MikroTik).\nA probléma megoldásához állítsa a tls-rejtjelezés alapértelmezését ésszerűbbre a szerveren, mint például tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". A probléma kliensen történő kiküszöböléséhez adja hozzá az Android kliensben az egyedi opciókhoz hogy tls-cipher DEFAULT.</string>
     <string name="message_no_user_edit">Ez a profil egy külső alkalmazásból (%s) lett hozzáadva és a felhasználó által nem szerkeszthetőnek lett jelölve.</string>
@@ -391,7 +391,6 @@
     <string name="query_permissions_sdcard">Az OpenVPN for Android képes automatikusan felderíteni a hiányzó fájlokat az SD kártyán. Az üzenetre koppintva elindul az engedély kérés.</string>
     <string name="protocol">Protokoll</string>
     <string name="enabled_connection_entry">Engedélyezett</string>
-    <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
     <string name="permission_revoked">A VPN engedélyt visszavonta az OS (pl.: másik VPN program indult), VPN leállítása</string>
     <string name="pushpeerinfo">Peer információ küldése</string>
     <string name="pushpeerinfosummary">Extra információ küldése a kiszolgálónak, pl.: SSL verzió és Android verzió</string>
@@ -437,16 +436,6 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;Az OpenSSL az 1.1-es verziótól kezdve elutasítja a gyenge aláírásokat, mint például
-        az MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Az MD5 aláírások egyáltalán nem biztonságosak, a továbbiakban nem kellene használni.&lt;/b&gt; MD5
-        ütközést lehet létrehozni&lt;
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;néhány óra alatt minimális erőfeszítéssel.&lt;/a&gt;.
-        Frissítenie kellene a VPN tanúsítványokat amint lehetséges.&lt;/p&gt;&lt;p&gt;Sajnos, a régebbi easy-rsa disztribúciók a \"default_md md5\" beállítás opciót tartalmazták. Ha régi easy-rsa verziót használ, frissítsen
-        a &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;legutóbbi verzióra&lt;/a&gt;) vagy módosítsa az md5-ot sha256-ra és
-        generálja újra a tanúsítványokat.&lt;/p&gt;&lt;p&gt;Ha mégis a régi megtört tanúsítványokat szeretné használni, akkor használja
-        tls-cipher \"DEFAULT:@SECLEVEL=0\" konfiguráció opciót a haladó beállításoknál, vagy adja hozzá mint új sort
-        az importált konfigurációhoz.&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
@@ -476,4 +465,20 @@
     <string name="proxy">Proxy</string>
     <string name="Use_no_proxy">Egyik sem</string>
     <string name="tor_orbot">Tor (Orbot)</string>
+    <string name="openvpn3_socksproxy">Az OpenVPN 3 C ++ implementációja nem támogatja a Socks proxyn keresztül történő csatlakozást</string>
+    <string name="no_orbotfound">Az Orbot alkalmazás nem található. Kérjük, telepítse az Orbot-ot, vagy használja a kézi Socks v5 integrációt.</string>
+    <string name="faq_remote_api_title">Távoli API</string>
+    <string name="faq_remote_api">Az OpenVPN Androidhoz két távoli API-t támogat, egy kifinomult AIDL-t használó API-t (remoteEXample a git repository-ban), és egy egyszerűt az Intents használatával. &lt;p&gt;A példák az adb shell-t és az Intents-t használják. Cserélje le a profilnevet a saját profilnevével&lt;p&gt;&lt;p&gt; adb shell am start -activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start -activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="enableproxyauth">Proxy Hitelesítés Engedélyezése</string>
+    <string name="error_orbot_and_proxy_options">Nem használható egyidejűleg egy extra http-proxy-option utasítás és az Orbot integráció</string>
+    <string name="info_from_server">Információ a szervertől: \'%s\'</string>
+    <string name="channel_name_userreq">Felhasználói beavatkozás szükséges</string>
+    <string name="channel_description_userreq">Az OpenVPN kapcsolódás felhasználói bevitelt igényel, például kétfaktoros
+        hitelesítést
+    </string>
+    <string name="openurl_requested">Nyissa meg az URL-t a VPN-hitelesítés folytatásához</string>
+    <string name="state_auth_pending">Hitelesítés függőben</string>
+    <string name="external_authenticator">Külső Hitelesítő</string>
+    <string name="configure">Beállítás</string>
+    <string name="extauth_not_configured">A külső hitelesítő nincs konfigurálva</string>
 </resources>

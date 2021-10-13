@@ -34,7 +34,6 @@
     <string name="ipv4_address">IPv4 Adresi</string>
     <string name="ipv6_address">IPv6 Adresi</string>
     <string name="custom_option_warning">Özel OpenVPN seçeneklerini girin. Dikkatli kullanın. Ayrıca tun ile ilgili OpenVPN ayarları VPNSettings tasarımı nedeniyle program tarafından desteklenmiyor. Önemli bir seçeneğin eksik olduğunu düşünüyorsanız geliştirici ile iletişime geçin</string>
-    <string name="auth_username">Kullanıcı Adı</string>
     <string name="auth_pwquery">Parola</string>
     <string name="static_keys_info">Statik yapılandırma için TLS Kimlik Doğrulama Anahtarları statik anahtar olarak kullanılacak</string>
     <string name="configure_the_vpn">VPN\'i Yapılandır</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Benzersiz bir profil adı girin</string>
     <string name="profilename">Profil Adı</string>
     <string name="no_keystore_cert_selected">Bir kullanıcı sertifikası seçmelisiniz</string>
-    <string name="no_ca_cert_selected">Bir CA sertifikası seçmelisiniz</string>
     <string name="no_error_found">Hiçbir hata bulunamadı</string>
     <string name="config_error_found">Yapılandırmada Hata</string>
     <string name="ipv4_format_error">IPv4 adresi ayrıştırma hatası</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Kalıbınız VPNService API\'sini desteklemiyor, üzgünüm :(</string>
     <string name="encryption">Şifreleme</string>
     <string name="cipher_dialog_title">Şifreleme yöntemini gir</string>
-    <string name="chipher_dialog_message">OpenVPN tarafından kullanılan şifreleme algoritmasını girin. Varsayılan şifrelemeyi kullanmak için boş bırakın.</string>
     <string name="auth_dialog_message">OpenVPN için kullanılan kimlik doğrulama özetini girin. Varsayılan özeti kullanmak için boş bırakın.</string>
     <string name="settings_auth">Kimlik Doğrulama/Şifreleme</string>
     <string name="file_explorer_tab">Dosya Gezgini</string>
@@ -394,7 +391,6 @@
     <string name="query_permissions_sdcard">Android için OpenVPN SD kart üzerinde eksik dosyaları bulmayı deneyebilir. İzin talebini başlatmak için bu iletiye dokunun.</string>
     <string name="protocol">Protokol</string>
     <string name="enabled_connection_entry">Etkin</string>
-    <string name="abi_mismatch">Tercih edilen bu cihazın yerli ABI önceliği (%1$s) ile yerli kütüphanelerden bildirilen ABI (%2$s) uyuşmuyor</string>
     <string name="permission_revoked">VPN izni işletim sistemi tarafından (örn. başlatılan diğer VPN programı) reddedildi, VPN durduruluyor</string>
     <string name="pushpeerinfo">Eş bilgisini it</string>
     <string name="pushpeerinfosummary">Sunucuya ek bilgi gönder, örn. SSL sürümü ve Android sürümü</string>
@@ -440,17 +436,6 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;OpenSSL sürüm 1.1\'den itibaren, OpenSSL, sertifikalardaki MD5 benzeri güvensiz imzaları reddediyor.
-        &lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5 imzaları tamamen güvensizdir ve artık kullanılmamalıdır.&lt;/b&gt; MD5
-        çatışmaları birkaç saat içinde &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;çok kolay yinelenebilir.&lt;/a&gt;.
-        VPN sertifikalarınızı derhal güncellemelisiniz.&lt;/p&gt;&lt;p&gt;Ne yazık ki, daha eski easy-rsa dağıtımları \"default_md md5\"
-	    yapılandırma seçeneğini içeriyor. Daha eski bir easy-rsa sürümü kullanıyorsanız, &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;son sürüme&lt;/a&gt;)
-		güncelleyin veya md5\'i to sha256\'ya çevirip sertifikalarınızı yeniden oluşturun.&lt;/p&gt;&lt;p&gt;Gerçekten eski
-		ve bozuk sertifikaları kullanmak isterseniz, içeri aktarılmış yapılandırmanıza ek satır olarak veya gelişmiş yapılandırma içerisinden
-		tls-cipher \"DEFAULT:@SECLEVEL=0\" seçeneğini ekleyin&lt;/p&gt;
-    
-	    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

@@ -34,7 +34,6 @@
     <string name="ipv4_address">Alamat IPv4</string>
     <string name="ipv6_address">Alamat IPv6</string>
     <string name="custom_option_warning">Masukan pengaturan kustom OpenVPN. Harap gunakan dengan hati-hati. Perlu dicatat bahwa pengaturan yang terkait dengan TUN OpenVPN tidak didukung oleh disain VPNSettings. Jika anda fikir ada hal penting yang belum tersedia segera hubungi pembuatnya</string>
-    <string name="auth_username">Nama Penguna</string>
     <string name="auth_pwquery">Kata Sandi</string>
     <string name="static_keys_info">Untuk pengaturan tetap, kunci otentifikasi TLS akan digunakan sebagai kunci statis</string>
     <string name="configure_the_vpn">Konfigurasi VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Silakan masukan nama profil yang berbeda</string>
     <string name="profilename">Nama profil</string>
     <string name="no_keystore_cert_selected">Anda harus memilih sertifikat pengguna</string>
-    <string name="no_ca_cert_selected">Opoeo</string>
     <string name="no_error_found">Tidak ada kesalahan</string>
     <string name="config_error_found">Konfigurasi Salah</string>
     <string name="ipv4_format_error">Kesalahan penulisan alamat IPV4</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Gambar Anda tidak mendukung VPNService API, maaf:(</string>
     <string name="encryption">Enkripsi</string>
     <string name="cipher_dialog_title">Masukkan metode enkripsi</string>
-    <string name="chipher_dialog_message">Masukkan sandi enkripsi algoritma yang digunakan oleh OpenVPN. Biarkan kosong untuk menggunakan sandi default.</string>
     <string name="auth_dialog_message">Masukkan digest otentikasi yang digunakan OpenVPN. Biarkan kosong untuk menggunakan standar digest.</string>
     <string name="settings_auth">Otentikasi/Enkripsi</string>
     <string name="file_explorer_tab">Penjelajah berkas</string>
@@ -394,7 +391,6 @@
     <string name="query_permissions_sdcard">OpenVPN untuk Android dapat mencoba untuk menemukan file yang hilang pada sdcard secara otomatis. Ketuk pesan ini untuk memulai.</string>
     <string name="protocol">Protokol</string>
     <string name="enabled_connection_entry">Diaktifkan</string>
-    <string name="abi_mismatch">Preferred native ABI yang diutamakan dari perangkat ini (%1$s) dan ABI dilaporkan oleh perpustakaan asli (%2$s) ketidakcocokan</string>
     <string name="permission_revoked">[01.55] Routes excluded: 10.0.0.0/8, *********/32, 172.16.0.0/12, 192.168.0.0/16 </string>
     <string name="pushpeerinfo">Info Push Peer</string>
     <string name="pushpeerinfosummary">Send extra information to the server, e.g. SSL version and Android version</string>
@@ -440,17 +436,6 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like
-        MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5 signatures are completely insecure and should not be used anymore.&lt;/b&gt; MD5
-        collisions can be created in &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;few hours at a minimal cost.&lt;/a&gt;.
-        You should update the VPN certificates as soon as possible.&lt;/p&gt;&lt;p&gt;Unfortunately, older easy-rsa
-        distributions included the config option \"default_md md5\". If you are using an old easy-rsa version, update to
-        the &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;latest version&lt;/a&gt;) or change md5 to sha256 and
-        regenerate your certificates.&lt;/p&gt;&lt;p&gt;If you really want to use old and broken certificates use the custom
-        configuration option tls-cipher \"DEFAULT:@SECLEVEL=0\" under advanced configuration or as additional line in your
-        imported configuration&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

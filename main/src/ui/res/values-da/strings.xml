@@ -34,7 +34,6 @@
     <string name="ipv4_address">IPv4 adresse</string>
     <string name="ipv6_address">IPv6 adresse</string>
     <string name="custom_option_warning">Angiv brugerdefinerede OpenVPN indstillinger. Benyt med forsigtighed. Bemærk også, at mange af tun relateret OpenVPN indstillinger ikke kan understøttes af VPNSettings. Hvis du syntes en vigtig indstilling mangler, så kontakt os</string>
-    <string name="auth_username">Brugernavn</string>
     <string name="auth_pwquery">Kodeord</string>
     <string name="static_keys_info">For statisk konfiguration vil TLS autentifikations nøglerne blive brugt som statiske nøgler</string>
     <string name="configure_the_vpn">Konfigurer VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Indtast venligst et unikt profilnavn</string>
     <string name="profilename">Profilnavn</string>
     <string name="no_keystore_cert_selected">Du skal vælge et bruger certifikat</string>
-    <string name="no_ca_cert_selected">Du skal vælge et CA-certifikat</string>
     <string name="no_error_found">Ingen fejl fundet</string>
     <string name="config_error_found">Fejl ved konfiguration</string>
     <string name="ipv4_format_error">Fejl ved tolkning af IPv4-adresse</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Dit billede understøtter ikke VPNService API\'en, beklager :(</string>
     <string name="encryption">Kryptering</string>
     <string name="cipher_dialog_title">Angiv krypterings metode</string>
-    <string name="chipher_dialog_message">Angiv krypteringsalgoritmen der skal bruges af OpenVPN. Efterlad tom for at anvende standard algoritmen.</string>
     <string name="auth_dialog_message">Angiv autentificeringsdigest til brug af OpenVPN. Efterlad tom for at anvende standard digest.</string>
     <string name="settings_auth">Autentificering/kryptering</string>
     <string name="file_explorer_tab">Stifinder</string>
@@ -394,7 +391,6 @@
     <string name="query_permissions_sdcard">OpenVPN til Android kan forsøge at finde de(n) manglende fil(er) automatisk på SD-kortet. Klik på denne besked for at starte rettighedsanmodningen.</string>
     <string name="protocol">Protokol</string>
     <string name="enabled_connection_entry">Aktiveret</string>
-    <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
     <string name="permission_revoked">VPN tilladelse tilbagekaldt af styresystemet (f.eks. kan et andet VPN program være startet), stopper VPN</string>
     <string name="pushpeerinfo">Modtagne Peer info</string>
     <string name="pushpeerinfosummary">Send ekstra information til serveren, f.eks. SSL-version og Android-version</string>
@@ -440,9 +436,6 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit / s</string>
     <string name="gbits_per_second">%.1f Gbit / s</string>
-    <string name="weakmd">&lt;p&gt;Startende med OpenSSL version 1.1 vil OpenSSL afvise svage signaturer i certifikater som f.eks MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5 signaturer er usikre og bør ikke længere anvendes.&lt;/b&gt; MD5 sammenfald (collisions) kan fremstilles &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt; på kort tid uden de store ressourcer.&lt;/a&gt;. Du skal opdatere dine VPN-certifikaterne så hurtigt som muligt.&lt;/p&gt;&lt;p&gt;Desværre inkluderede ældre easy-rsa-distributioner config-opsætningen \"default_md md5\". Hvis du bruger en gammel easy-rsa-version, skal du opdatere til den &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;seneste version&lt;/a&gt;) eller skifte md5 til sha256 og regenerere dine certifikater.&lt;/p&gt;&lt;p&gt;Hvis du virkelig vil bruge gamle og usikre certifikater, skal du bruge den tilpassede konfigurationsindstilling tls-cipher \"DEFAULT: @ SECLEVEL = 0\" under avanceret konfiguration eller som ekstra linje i din importerede konfiguration&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

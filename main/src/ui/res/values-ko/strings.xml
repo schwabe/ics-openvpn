@@ -34,7 +34,6 @@
     <string name="ipv4_address">IPv4 주소</string>
     <string name="ipv6_address">IPv6 주소</string>
     <string name="custom_option_warning">사용자 정의 OpenVPN 옵션을 입력하십시오. 사용시 유의하십시오. 또한 TUN과 연관된 많은 OpenVPN 설정은 안드로이드에서 지원하는 VPN 설정의 한계로 지원되지 않습니다. 중요한 옵션이 누락됐다고 생각되면 개발자에게 연락주십시오.</string>
-    <string name="auth_username">사용자 이름</string>
     <string name="auth_pwquery">암호</string>
     <string name="static_keys_info">고정 설정에는 TLS 인증 키가 고정 키로 사용됩니다</string>
     <string name="configure_the_vpn">VPN 구성</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">고유한 프로파일 이름을 입력하십시오</string>
     <string name="profilename">프로파일 이름</string>
     <string name="no_keystore_cert_selected">사용자 인증서를 선택해야 합니다</string>
-    <string name="no_ca_cert_selected">CA 인증서를 선택해야 합니다</string>
     <string name="no_error_found">오류 없음</string>
     <string name="config_error_found">구성 오류</string>
     <string name="ipv4_format_error">IPv4 주소 구문 분석 오류</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">당신의 이미지는 VPNService API를 지원하지 않습니다, 죄송합니다 :(</string>
     <string name="encryption">암호화</string>
     <string name="cipher_dialog_title">암호화 방법 입력</string>
-    <string name="chipher_dialog_message">OpenVPN이 사용할 암호화 암호 알고리즘을 입력하세요. 기본 암호를 사용하려면 비워 두십시오.</string>
     <string name="auth_dialog_message">OpenVPN이 사용할 인증 다이제스트를 입력하세요. 기본 다이제스트를 사용하려면 비워 두십시오.</string>
     <string name="settings_auth">인증/암호화</string>
     <string name="file_explorer_tab">파일 탐색기</string>
@@ -394,7 +391,6 @@
     <string name="query_permissions_sdcard">OpenVPN for Android는 자동으로 SD 카드에서 누락된 파일을 검색할 수 있습니다. 이 메시지를 탭하여 권한 요청을 시작하십시오.</string>
     <string name="protocol">프로토콜</string>
     <string name="enabled_connection_entry">사용</string>
-    <string name="abi_mismatch">이 장치의 고유 ABI 우선 순위(%1$s)와 고유 라이브러리가 보고한 ABI(%2$s)가 불일치</string>
     <string name="permission_revoked">운영체제에 의해 취소된 VPN 권한(예: 다른 VPN 프로그램 시작됨), VPN 중지</string>
     <string name="pushpeerinfo">피어 정보 푸시</string>
     <string name="pushpeerinfosummary">서버에 추가 정보 전송 (예: SSL 버전 및 안드로이드 버전)</string>
@@ -440,19 +436,6 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;OpenSSL 1.1 버전부터, OpenSSL은 MD5와 같은, 인증서의 약한 서명을
-        거부합니다.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5 서명은 완전히 불안전하고 더이상 사용하지 않아야 합니다.&lt;/b&gt; MD5
-        충돌은 &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;매우 적은 비용으로
-        수 시간 안에&lt;/a&gt; 만들 수 있습니다.
-        가능한 한 빨리 VPN 인증서를 업데이트해야 합니다.&lt;/p&gt;&lt;p&gt;불행하게도 오래된 easy-rsa 배포판은
-        구성 옵션 \"default_md md5\"가 포함되어 있습니다. 만약 오래된 easy-rsa 버전을
-        사용하신다면 &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;최신 버전&lt;/a&gt;으로 업데이트하시거나
-        md5를 sha256으로 바꾸고 당신의 인증서를
-        재생성하세요.&lt;/p&gt;&lt;p&gt;정말 오래되고 깨진 인증서를 사용하고 싶으시다면
-        사용자 지정 구성 옵션 tls-cipher \"DEFAULT:@SECLEVEL=0\"를 고급 구성에서 설정하거나
-        불러오는 구성 파일에 추가해 넣으세요.&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

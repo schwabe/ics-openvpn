@@ -34,7 +34,7 @@
     <string name="ipv4_address">IPv4-Adresse</string>
     <string name="ipv6_address">IPv6-Adresse</string>
     <string name="custom_option_warning">Tragen Sie eigene OpenVPN-Optionen ein. Beachten Sie, dass einige (vor allem tun-spezifische) Optionen von der Android-API nicht unterstützt werden. Wenn Sie denken, dass eine wichtige Option fehlt, kontaktieren Sie den Autor</string>
-    <string name="auth_username">Benutzername</string>
+    <string name="auth_username">Benutzername (leer lassen für keine Authentifizierung)</string>
     <string name="auth_pwquery">Passwort</string>
     <string name="static_keys_info">Für die statische Konfiguration werden die TLS-Authentifizierungsschlüssel als statische Schlüssel benutzt</string>
     <string name="configure_the_vpn">VPN konfigurieren</string>
@@ -43,7 +43,7 @@
     <string name="duplicate_profile_name">Profilname bereits vorhanden. Bitte vergeben Sie einen eindeutigen Profilnamen.</string>
     <string name="profilename">Profilname</string>
     <string name="no_keystore_cert_selected">Kein Benutzerzertifikat ausgewählt</string>
-    <string name="no_ca_cert_selected">Sie müssen ein CA-Zertifikat auswählen</string>
+    <string name="no_ca_cert_selected">Sie müssen ein CA-Zertifikat auswählen oder peer-fingerprint aktivieren</string>
     <string name="no_error_found">Kein Fehler.</string>
     <string name="config_error_found">Fehler in der Konfiguration</string>
     <string name="ipv4_format_error">Kann die konfigurierte IPv4 Adresse nicht parsen</string>
@@ -127,7 +127,7 @@
     <string name="no_vpn_support_image">Ihre Gerätefirmwäre unterstützt die VPNService-API nicht. Tut uns leid :(</string>
     <string name="encryption">Verschlüsselung</string>
     <string name="cipher_dialog_title">Geben Sie die Verschlüsselungsmethode an</string>
-    <string name="chipher_dialog_message">Geben sie den Verschlüsslungsalgorithmus an, der von OpenVPN genutzt werden soll. Lassen sie das Feld frei, um den Standardalgorithmus zu verwenden.</string>
+    <string name="chipher_dialog_message">Von OpenVPN verwendete Verschlüsselungsalgorithmen für die Datenverschlüsselung, getrennt durch: (--data-cipher). Feld leer lassen, um den Standardwert AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305 zu verwenden.</string>
     <string name="auth_dialog_message">Geben Sie den Hashalgorithmus, der zur Nachrichtenauthentifizierung benutzt wird, an. Lassen Sie das Feld frei, um den Standard-Algorithmus zu nutzen.</string>
     <string name="settings_auth">Authentifizierung/Verschlüsselung</string>
     <string name="file_explorer_tab">Datei auswählen…</string>
@@ -336,6 +336,7 @@
     <string name="app_no_longer_exists">Die App \'%s\' ist nicht mehr installiert und wird daher von der Liste der erlaubten/nicht erlaubten VPN-Anwendungen entfernt</string>
     <string name="vpn_disallow_radio">VPN wird für alle Apps mit Ausnahme der ausgewählten verwendet</string>
     <string name="vpn_allow_radio">VPN wird nur für die ausgewählten Apps verwendet</string>
+    <string name="vpn_allow_bypass">Allow apps to bypass the VPN</string>
     <string name="query_delete_remote">Servereintrag entfernen?</string>
     <string name="keep">Behalten</string>
     <string name="delete">Entfernen</string>
@@ -393,7 +394,6 @@
     <string name="query_permissions_sdcard">OpenVPN für Android kann versuchen, die fehlende(n) Datei(en) auf der SD-Karte automatisch zu finden. Tippen Sie auf diese Meldung, um die Berechtigungsanfrage zu starten.</string>
     <string name="protocol">Protokoll</string>
     <string name="enabled_connection_entry">Aktiviert</string>
-    <string name="abi_mismatch">Bevorzugte native ABI-Reihenfolge dieses Gerätes (%1$s) und die installierten nativen Bibliotheken (%2$s) unterscheiden sich</string>
     <string name="permission_revoked">VPN-Berechtigung wurde vom Betriebssytem widerrufen (z.B. weil ein anderes VPN gestartet wurde); VPN wird gestoppt</string>
     <string name="pushpeerinfo">Peer-Informationen senden</string>
     <string name="pushpeerinfosummary">Weitere Informationen, wie z.B. SSL- und Android-Version, an den Server senden</string>
@@ -439,11 +439,13 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;Seit der OpenSSL Version 1.1, verweigert OpenSSL schwache Signaturen - wie MD5 - in Zertifikaten.&lt;/p&gt;
-&lt;p&gt;&lt;b&gt;MD5-Signaturen sind komplett unsicher und sollten nicht mehr verwendet werden.
-&lt;/b&gt;MD5-Kollisionen können in &lt;a  href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;wenigen Stunden mit minimalen Kosten&lt;/a&gt; erzeugt werden. Sie sollten die VPN-Zertifikate so schnell wie möglich aktualisieren.&lt;/p&gt;
-&lt;p&gt;Leider enthielten ältere easy-rsa Distributionen die config-Option \"default_md md5\". Falls Sie eine alte Version von easy-rsa verwenden, aktualisieren Sie auf die &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;neueste Version&lt;/a&gt; oder ändern Sie md5 auf sha256 und erzeugen Sie Ihre Zertifikate neu.&lt;/p&gt;
-&lt;p&gt;Falls Sie wirklich alte und unsichere Zertifikate verwenden wollen, benutzen Sie die benutzerdefinierte Konfigurationsoption tls-cipher \"DEFAULT:@SECLEVEL=0\" in der erweiterten Profil-Konfiguration oder als zusätzliche Zeile in Ihrer importierten Konfiguration.&lt;/p&gt;
+    <string name="weakmd">&lt;p&gt;Ab OpenSSL-Version 1.1 lehnt OpenSSL schwache Signaturen in Zertifikaten wie
+        MD5 ab. Zusätzlich werden bei OpenSSL 3.0 auch Signaturen mit SHA1 abgelehnt.&lt;/p&gt;&lt;p&gt;
+        Es wird empfohlen die VPN-Zertifikate so schnell wie möglich aktualisieren.
+&lt;/p&gt;
+        &lt;p&gt;Wenn Sie wirklich alte und defekte Zertifikate verwenden möchten, verwenden Sie die benutzerdefinierte
+        Konfigurationsoption tls-cipher \"DEFAULT:@SECLEVEL=0\" unter der erweiterten Konfiguration oder als zusätzliche Zeile in Ihrer
+        importierten Konfiguration&lt;/p&gt;
     </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
@@ -480,4 +482,22 @@
     <string name="external_authenticator">Externer Authentifikator</string>
     <string name="configure">Konfigurieren</string>
     <string name="extauth_not_configured">Externer Authentifikator nicht konfiguriert</string>
+    <string name="faq_killswitch_title">Nicht-VPN-Verbindungen blockieren (\"Killswitch\")</string>
+    <string name="summary_block_address_families">Weist Android an, IP Protokolle (IPv4/IPv6) zu blockieren, wenn das VPN, keine IPv4 bzw. IPv6 Adresse setzt.</string>
+    <string name="title_block_address_families">Blockiere IPv6 (bzw. IPv4) wenn nicht vom VPN genutzt</string>
+    <string name="install_keychain">Neues Zertifikat installieren</string>
+    <string name="as_servername">AS Servername</string>
+    <string name="server_url">Server-URL</string>
+    <string name="request_autologin">Autologin-Profil anfordern</string>
+    <string name="import_from_as">Importiere Profil vom Server</string>
+    <string name="no_default_vpn_set">Standard-VPN nicht festgelegt. Bitte legen Sie das Standard-VPN fest, bevor Sie diese Option aktivieren.</string>
+    <string name="internal_web_view">Internes Webview</string>
+    <string name="check_peer_fingerprint">Fingerabdruck des Peer-Zertifikats prüfen</string>
+    <string name="fingerprint">(Geben Sie den SHA256-Fingeabdruck des Serverzertifikates an)</string>
+    <string name="open_vpn_settings">VPN Einstellungen öffnen</string>
+    <string name="compatmode">Kompatibilitätsmodus</string>
+    <string name="compat_mode_label">Kompatibilitätsmodus</string>
+    <string name="loadossllegacy">OpenSSL Legacy-Provider laden</string>
+    <string name="bf_cbc_requires_legacy">Profile verwendet BF-CBC, das den OpenSSL-Legacy-Provider benötigit (nicht aktiviert).</string>
+    <string name="allow_translations_title">Community-Übersetzungen zulassen</string>
 </resources>

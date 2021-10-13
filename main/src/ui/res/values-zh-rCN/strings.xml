@@ -34,7 +34,6 @@
     <string name="ipv4_address">IPv4 地址</string>
     <string name="ipv6_address">IPv6 地址</string>
     <string name="custom_option_warning">输入 OpenVPN 的自定义选项。请谨慎使用此功能。此外请注意许多与 tun 模块有关的 OpenVPN 设置由于系统 VPN 功能的设计而不能得到支持。如果您觉得缺少一个很重要的选项，请与作者联系。</string>
-    <string name="auth_username">用户名</string>
     <string name="auth_pwquery">密码</string>
     <string name="static_keys_info">在静态配置中 TLS 身份验证密钥将被用作静态密钥</string>
     <string name="configure_the_vpn">配置 VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">请输入一个独一无二的配置文件名称</string>
     <string name="profilename">配置文件名称</string>
     <string name="no_keystore_cert_selected">您必须选择一个用户证书</string>
-    <string name="no_ca_cert_selected">你必须选择一个CA证书</string>
     <string name="no_error_found">没有找到错误</string>
     <string name="config_error_found">配置错误</string>
     <string name="ipv4_format_error">解析 IPv4 地址时出错</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">很遗憾，您目前的系统不支持 VPNService API， 抱歉:(</string>
     <string name="encryption">加密</string>
     <string name="cipher_dialog_title">输入加密方式</string>
-    <string name="chipher_dialog_message">输入 OpenVPN 所使用的加密密码算法。留空以使用默认算法。</string>
     <string name="auth_dialog_message">输入 OpenVPN 使用的认证摘要。留空则使用默认的摘要。</string>
     <string name="settings_auth">认证/加密</string>
     <string name="file_explorer_tab">文件浏览器</string>
@@ -396,7 +393,6 @@
     <string name="query_permissions_sdcard">OpenVPN for Android 可以尝试自动在 SD 卡上寻找缺失的文件。点击此消息开始请求权限许可。</string>
     <string name="protocol">协议</string>
     <string name="enabled_connection_entry">启用</string>
-    <string name="abi_mismatch">设备所偏好的原生应用程序二进制接口  (%1$s) 不匹配原生库报告的应用程序二进制接口 (%2$s)</string>
     <string name="permission_revoked">VPN权限被操作系统撤销 (比如其他VPN程序启动了) ，VPN停止中</string>
     <string name="pushpeerinfo">推送客户端信息</string>
     <string name="pushpeerinfosummary">将额外的信息发送到服务器，例如 SSL 版本和 Android 版本</string>
@@ -442,21 +438,6 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;从OpenSSL 1.1版本起，OpenSSL拒绝证书中
-类似
-        MD5这样的弱签名。&lt;/p&gt;&lt;/p&gt;&lt;b&gt;MD5签名完全不安全，不应该再被使用。&lt;/b&gt;MD5
-        碰撞可在&lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;数小时内以极低的成本创建&lt;/a&gt;
-        您应当尽快更新VPN证书&lt;/p&gt;&lt;p&gt;&lt;p&gt;不幸的是，较旧的easy-rsa
-        发行版中含有\"default_md md5\"配置选项。如果你正使用一个旧的easy-
-rsa 版本，更新到
-        这个&lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;最新
-版本&lt;/a&gt;)，或更改md5 到 sha256并
-        重新生成你的证书&lt;/p&gt;&lt;/p&gt;&lt;p&gt;&lt;p&gt;如你真的想使用
-破旧的证书，使用
-        高级配置下的自定义tls-cipher配置选项 \"DEFAULT:@SECLEVEL=0\"或
-        将其用作导入的配置文件中的额外行&lt;/p&gt;&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

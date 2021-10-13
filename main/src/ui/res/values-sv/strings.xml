@@ -34,7 +34,6 @@
     <string name="ipv4_address">IPv4-adress</string>
     <string name="ipv6_address">IPv6-adress</string>
     <string name="custom_option_warning">Ange anpassade OpenVPN alternativ. Använd med försiktighet! Tänk också på att många av de tun relaterade OpenVPN inställningarna inte kan stödjas genom utformningen av VPNSettings. Om du anser att ett viktigt alternativ saknas kontakta författaren</string>
-    <string name="auth_username">Användarnamn</string>
     <string name="auth_pwquery">Lösenord</string>
     <string name="static_keys_info">Vid statisk konfiguration används TLS Auth nycklarna som statiska nycklar</string>
     <string name="configure_the_vpn">Konfigurera VPN-anslutningen</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Vänligen ange ett unikt Profilnamn</string>
     <string name="profilename">Profilnamn</string>
     <string name="no_keystore_cert_selected">Du måste välja ett användarcertifikat</string>
-    <string name="no_ca_cert_selected">Du måste välja ett CA-certifikat</string>
     <string name="no_error_found">Inga fel hittades</string>
     <string name="config_error_found">Fel i konfigurationen</string>
     <string name="ipv4_format_error">Det går inte att tolka IPv4-adressen</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Din ROM stöder inte VPNService API, ledsen :(</string>
     <string name="encryption">Kryptering</string>
     <string name="cipher_dialog_title">Ange krypteringsmetod</string>
-    <string name="chipher_dialog_message">Ange den krypteringsalogritm som skall användas av OpenVPN. Lämna tomt för att använda standardalgoritm.</string>
     <string name="auth_dialog_message">Ange den autentiserings digest som används för OpenVPN. Lämna tom för att använda standard digest.</string>
     <string name="settings_auth">Autentisering/kryptering</string>
     <string name="file_explorer_tab">Filutforskare</string>
@@ -394,7 +391,6 @@
     <string name="query_permissions_sdcard">OpenVPN för Android kan försöka upptäcka de saknade fil(erna) på SD-kortet automatiskt. Tryck på det här meddelandet för att ge tillstånd för att starta.</string>
     <string name="protocol">Protokoll</string>
     <string name="enabled_connection_entry">Aktiverad</string>
-    <string name="abi_mismatch">Önskemålet av ABI för denna enhet (%1$s) och det ABI som rapporteras av de inlästa biblioteken (%2$s) stämmer inte överens</string>
     <string name="permission_revoked">VPN-tillstånd återkallas av operativsystemet (t.ex. andra VPN-program har startats), stoppar VPN</string>
     <string name="pushpeerinfo">Skicka klientinformation till servern</string>
     <string name="pushpeerinfosummary">Skicka extra information till servern, t.ex. SSL-versionen och Android-version</string>
@@ -440,17 +436,6 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;Börjar med OpenSSL version 1.1, Avvisar OpenSSL svaga signaturer i certifikat som
-        MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5-signaturer är helt osäkra och borde inte användas längre.&lt;/b&gt; MD5
-        kollisioner kan skapas om &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;få timmar till en minimal kostnad.&lt;/a&gt;.
-        Du ska uppdatera VPN-certifikaten så snart som möjligt.&lt;/p&gt;&lt;p&gt;Tyvärr inkluderade äldre easy-rsa
-        distributioner config-alternativet \"default_md md5\". Om du använder en gammal easy-rsa-version, uppdatera till
- &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;senaste versionen&lt;/a&gt;) eller ändra md5 till sha256 och
-        regenerera dina certifikat.&lt;/p&gt;&lt;p&gt;Om du verkligen vill använda gamla och brutna certifikat använder du anpassade
-        konfigurationsalternativet tls-cipher \"DEFAULT: @ SECLEVEL = 0\" under avancerad konfiguration eller som extra rad i din
-        importerade konfiguration&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

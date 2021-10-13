@@ -34,7 +34,6 @@
     <string name="ipv4_address">Adres IPv4</string>
     <string name="ipv6_address">Adres IPv6</string>
     <string name="custom_option_warning">Wprowadź ustawienia niestandardowe OpenVPN. Używać z rozwagą. Należy również pamiętać, że wiele ustawień związanych z tun OpenVPN nie jest obsługiwana przez projekt VPNSettings. Jeśli uważasz, że brakuje ważnych opcji skontaktuj się z autorem</string>
-    <string name="auth_username">Nazwa użytkownika</string>
     <string name="auth_pwquery">Hasło</string>
     <string name="static_keys_info">W konfiguracji statycznej klucze uwierzytelniania TLS zostaną wykorzystane jako statyczne klucze</string>
     <string name="configure_the_vpn">Konfiguracja VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Wybierz unikalną nazwę profilu</string>
     <string name="profilename">Nazwa profilu</string>
     <string name="no_keystore_cert_selected">Musisz wybrać certyfikat użytkownika</string>
-    <string name="no_ca_cert_selected">Musisz wybrać certyfikat CA</string>
     <string name="no_error_found">Brak błędów</string>
     <string name="config_error_found">Błąd w konfiguracji</string>
     <string name="ipv4_format_error">Błąd analizowania adresu IPv4</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Twój obraz nie wspiera API VPN, przepraszamy ;(</string>
     <string name="encryption">Szyfrowanie</string>
     <string name="cipher_dialog_title">Wprowadź metodę szyfrowania</string>
-    <string name="chipher_dialog_message">Wybierz algorytm szyfrowania wykorzystywany przez OpenVPN. Pozostaw puste, aby skorzystać z ustawień domyślnych.</string>
     <string name="auth_dialog_message">Wprowadź tryb autoryzacji używany z OpenVPN. Pozostaw puste, aby skorzystać z ustawień domyślnych.</string>
     <string name="settings_auth">Uwierzytelnianie/Szyfrowanie</string>
     <string name="file_explorer_tab">Przeglądanie plików</string>
@@ -395,7 +392,6 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="query_permissions_sdcard">OpenVPN dla Android spróbuje automatycznie wykryć brakujące pliki na karcie SD. Dotknij tego komunikatu, aby żądać uprawnień.</string>
     <string name="protocol">Protokół</string>
     <string name="enabled_connection_entry">Włączony</string>
-    <string name="abi_mismatch">Preferowane natywne pierwszeństwo ABI tego urządzenia (%1$s) i ABI zgłoszone przez niezgodność bibliotek (%2$s) natywnych</string>
     <string name="permission_revoked">Pozwolenie VPN odwołane przez system (na przykład inny program VPN jest uruchomiony), zatrzymuję VPN</string>
     <string name="pushpeerinfo">Naciśnij \"Peer info\"</string>
     <string name="pushpeerinfosummary">Wyślij dodatkowe informację do serwera, na przykład wersję SSL oraz Androida</string>
@@ -441,9 +437,6 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit / s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;Począwszy od wersji OpenSSL 1.1, OpenSSL odrzuca słabe sygnatury w certyfikatach takich jak MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Podpisy MD5 są całkowicie niezabezpieczone i nie powinny być już używane.&lt;/b&gt; Zderzenia MD5 można utworzyć w ciągu &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;godzin przy minimalnych kosztach.&lt;/a&gt;. Należy zaktualizować certyfikaty VPN tak szybko, jak to możliwe.&lt;/p&gt;&lt;p&gt;Niestety, starsze dystrybucje easy-rsa zawierały opcję konfiguracji \"default_md md5\". Jeśli używasz starej wersji easy-rsa, zaktualizuj do &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;najnowszej wersji&lt;/a&gt;) lub zmień md5 na sha256 i zrestartuj swoje certyfikaty.&lt;/p&gt;&lt;p&gt;Jeśli naprawdę chcesz używać starych i uszkodzonych certyfikatów, użyj niestandardowej opcji konfiguracji tls-cipher \"DEFAULT: @ SECLEVEL = 0\" w konfiguracji zaawansowanej lub jako dodatkowej linii w zaimportowanej konfiguracji&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

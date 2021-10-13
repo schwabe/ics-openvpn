@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <plurals name="months_left">
-        <item quantity="other">%d 분 남음</item>
+        <item quantity="other">%d 개월 남음</item>
     </plurals>
     <plurals name="days_left">
-        <item quantity="other">%d days left</item>
+        <item quantity="other">%d 일 남음</item>
     </plurals>
     <plurals name="hours_left">
         <item quantity="other">%d 시간 남음</item>

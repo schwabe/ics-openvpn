@@ -34,7 +34,6 @@
     <string name="ipv4_address">IPv4アドレス</string>
     <string name="ipv6_address">IPv6アドレス</string>
     <string name="custom_option_warning">OpenVPNのカスタムオプションを入力します。利用には細心の注意が必要です。設定画面ではTUNモジュールの多くの設定がサポートされていません。もしほかに重要と思う設定があれば作者に連絡してください。</string>
-    <string name="auth_username">ユーザー名</string>
     <string name="auth_pwquery">パスワード</string>
     <string name="static_keys_info">TLS認証鍵の設定は、静的キーとして使用されます。</string>
     <string name="configure_the_vpn">VPNの設定</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">プロファイル名が重複しています。</string>
     <string name="profilename">プロファイル名</string>
     <string name="no_keystore_cert_selected">ユーザー証明書を選択する必要があります</string>
-    <string name="no_ca_cert_selected">証明書を選択する必要があります</string>
     <string name="no_error_found">エラーは見つかりませんでした</string>
     <string name="config_error_found">設定に誤りがあります</string>
     <string name="ipv4_format_error">IPv4 アドレスの解析エラー</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">申し訳ありませんが、お使いの環境ではVPNサービスがサポートされていません</string>
     <string name="encryption">暗号化</string>
     <string name="cipher_dialog_title">暗号化方式を入力</string>
-    <string name="chipher_dialog_message">OpenVPNが暗号化に使用する暗号方式を入力してください。空欄にするとデフォルトを使用します。</string>
     <string name="auth_dialog_message">OpenVPNが使用する認証ダイジェストを入力します。空欄にするとデフォルトのダイジェストを使用します。</string>
     <string name="settings_auth">認証/暗号化</string>
     <string name="file_explorer_tab">ファイルを選択</string>
@@ -431,7 +428,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="query_permissions_sdcard">OpenVPN for Androidは見失ったファイルを自動でSDカードから再探索することができます。このメッセージをタップして権限のリクエストを行ってください。</string>
     <string name="protocol">プロトコル</string>
     <string name="enabled_connection_entry">有効</string>
-    <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
     <string name="permission_revoked">OSによりVPNの権限が取り消されました (ほかのVPNプログラムが動作した場合など)。VPNを停止します</string>
     <string name="pushpeerinfo">ピア情報を送信する</string>
     <string name="pushpeerinfosummary">追加の情報をサーバに送信します。 (SSLやAndroidのバージョン等)</string>
@@ -477,10 +473,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;OpenSSL version 1.1より、OpenSSLはMD5のような脆弱な署名による証明書を拒否するようになりました。&lt;/p&gt;&lt;p&gt;&lt;b&gt;MD5による署名は完全に脆弱でいかなる場面でも使われるべきではありません。&lt;/b&gt; 衝突するMD5の生成は&lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;最短で数時間&lt;/a&gt;で可能です。できるだけ早くVPNの証明書を更新すべきです。&lt;/p&gt;&lt;p&gt;残念なことに、古いeasy-rsaディストリビューションの中には設定として\"default_md md5\"が入っています。 もし古いeasy-rsaを使用しているようなら、&lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;最新版&lt;/a&gt;)にアップデートするか、MD5からSHA256に変更して証明書を再生成してください。
-&lt;/p&gt;&lt;p&gt;もしどうしても古く劣化した証明書を使いたいのなら、高度な設定のカスタムオプションでtls-cipher \"DEFAULT:@SECLEVEL=0\"を追加してください。&lt;/p&gt;
-  </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

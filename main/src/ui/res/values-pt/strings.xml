@@ -34,7 +34,6 @@
     <string name="ipv4_address">Endereço IPv4</string>
     <string name="ipv6_address">Endereço IPv6</string>
     <string name="custom_option_warning">Insira opções personalizadas para a ligação OpenVPN. Este opções devem ser usadas com precaução. Note-se também que muitas das opções para OpenVPN relacionados com tun não não suportadas propositadamente. Se achar que uma opção importante está falta entre em contato com o autor</string>
-    <string name="auth_username">Utilizador</string>
     <string name="auth_pwquery">Password</string>
     <string name="static_keys_info">Para a configuração estática as chaves de autenticação TLS serão usadas como chaves estáticas</string>
     <string name="configure_the_vpn">Configurar a VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Por favor, digite um nome de perfil que não esteja já em uso</string>
     <string name="profilename">Nome do perfil</string>
     <string name="no_keystore_cert_selected">Tem de selecionar um certificado de utilizador</string>
-    <string name="no_ca_cert_selected">Deve selecionar um certificado</string>
     <string name="no_error_found">Nenhum erro encontrado</string>
     <string name="config_error_found">Erro na configuração</string>
     <string name="ipv4_format_error">Erro ao analisar o endereço IPv4</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">A imagem não suporta a API VPNService, lamentamos :(</string>
     <string name="encryption">Encriptação</string>
     <string name="cipher_dialog_title">Digite o método de encriptação</string>
-    <string name="chipher_dialog_message">Introduzir o algoritmo de cifra utilizado pelo OpenVPN. Deixar vazio para usar o defeito.</string>
     <string name="auth_dialog_message">Digite o resumo de autenticação usado para o OpenVPN. Deixe em branco para usar o resumo padrão.</string>
     <string name="settings_auth">Autenticação/encriptação</string>
     <string name="file_explorer_tab">Explorador de ficheiros</string>

@@ -178,8 +178,11 @@
     <string name="extracahint">CA-sertifikatet returneres vanligvis fra Android-tasten. Spesifiser et eget sertifikat hvis du får feilbevis for sertifikat.</string>
     <string name="select_file">Velg</string>
     <string name="keychain_nocacert">Ingen CA-sertifikater ble returnert mens du leste fra Android keystore. Autentisering vil sannsynligvis mislykkes.</string>
+    <string name="show_log_summary">Viser loggvinduet ved tilkobling. Loggvinduet er alltid tilgjengelig fra varslingsstatusen.c</string>
     <string name="show_log_window">Vis logg-vindu</string>
     <string name="mobile_info">%10$s %9$s kjører på %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
+    <string name="error_rsa_sign">Error signing with Android keystore key %1$s: %2$s</string>
+    <string name="error_extapp_sign">Feil ved signering med ekstern autentiseringsapp (%3$s): %1$s: %2$s</string>
     <string name="faq_system_dialogs_title">Tilkoblingsvarsel og varslingslyd</string>
     <string name="translationby">Norsk oversettelse av Jonny</string>
     <string name="ipdns">IP og DNS</string>

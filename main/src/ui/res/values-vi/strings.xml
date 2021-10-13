@@ -34,7 +34,6 @@
     <string name="ipv4_address">Địa chỉ IPv4</string>
     <string name="ipv6_address">Địa chỉ IPv6</string>
     <string name="custom_option_warning">Nhập tùy chọn cá nhân Open VPN. Sử dụng thận trọng. Lưu ý các thiết lập OpenVPN không thể hỗ trợ bởi thiết kế cấu hình của VPN. Nếu bạn thấy tùy chọn quan trọng hoặc mất mát, bạn có thể liên hệ với tác giả</string>
-    <string name="auth_username">Tên người dùng</string>
     <string name="auth_pwquery">Mật khẩu</string>
     <string name="static_keys_info">Đối với cấu hình tĩnh thì khóa TLS sẽ được dùng như khóa tĩnh</string>
     <string name="configure_the_vpn">Cấu hình VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Vui lòng nhập một tên hồ sơ duy nhất</string>
     <string name="profilename">Tên hồ sơ</string>
     <string name="no_keystore_cert_selected">Bạn phải chọn một chứng chỉ người dùng</string>
-    <string name="no_ca_cert_selected">Bạn phải chọn một chứng chỉ CA</string>
     <string name="no_error_found">Không tìm thấy lỗi</string>
     <string name="config_error_found">Lỗi trong cấu hình</string>
     <string name="ipv4_format_error">Lỗi phân tích cú pháp địa chỉ IPv4</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Hình ảnh của bạn không hỗ trợ dịch vụ VPN API, xin lỗi :(</string>
     <string name="encryption">Mã hóa</string>
     <string name="cipher_dialog_title">Nhập phương thức mã hóa</string>
-    <string name="chipher_dialog_message">Nhập các thuật toán mã hóa được sử dụng bởi OpenVPN. Để trống để sử dụng thuật toán mã hóa mặc định.</string>
     <string name="auth_dialog_message">Nhập cấu hình xác thực dùng cho OpenVPN. Để trống nếu sử dụng cấu hình mặc định.</string>
     <string name="settings_auth">Xác thực/Mã hóa</string>
     <string name="file_explorer_tab">Duyệt tập tin</string>
@@ -394,7 +391,6 @@
     <string name="query_permissions_sdcard">OpenVPN cho Android có thể tìm những tập tin bị mất trên thẻ nhớ một cách tự động. Nhấn vào tin nhắn này để bắt đầu yêu cầu quyền.</string>
     <string name="protocol">Giao thức</string>
     <string name="enabled_connection_entry">Bật</string>
-    <string name="abi_mismatch">Ưu tiên ABI gốc của thiết bị này (%1$s) và ABI được báo cáo bởi thư viện gốc (%2$s) bất đối xứng</string>
     <string name="permission_revoked">cho phép VPN bị thu hồi bởi hệ điều hành (ví dụ như chương trình VPN khác bắt đầu), dừng VPN</string>
     <string name="pushpeerinfo">Đẩy thông tin ngang nhau</string>
     <string name="pushpeerinfosummary">Gửi thông tin đến máy chủ, ví dụ như phiên bản SSL và phiên bản Android</string>
@@ -440,17 +436,6 @@
     <string name="kbits_per_second">%.1f kbit/giây</string>
     <string name="mbits_per_second">%.1f Mbit/giây</string>
     <string name="gbits_per_second">%.1f Gbit/giây</string>
-    <string name="weakmd">&lt;p&gt;Bắt đầu với OpenSSL phiên bản 1.1, OpenSSL từ chối chữ ký yếu trong các chứng chỉ như
-        MD5.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Chữ ký MD5 hoàn toàn không an toàn và không nên sử dụng nữa.&lt;/b&gt; vụ va chạm MD5
-        có thể được tạo trong &lt;a
-        href=\"https://natmchugh.blogspot.de/2015/02/create-your-own-md5-collisions.html\"&gt;giờ với chi phí tối thiểu.&lt;/a&gt;.
-        Bạn nên cập nhật chứng chỉ VPN càng sớm càng tốt.&lt;/p&gt;&lt;p&gt;Thật không may, các bản phân phối
-        easy-rsa cũ hơn bao gồm tùy chọn cấu hình \"default_md md5\". Nếu bạn đang sử dụng phiên bản easy-rsa cũ, hãy cập nhật lên
-        phiên bản &lt;a href=\"https://github.com/OpenVPN/easy-rsa/releases\"&gt;mới nhất&lt;/a&gt;) hoặc thay đổi md5 thành sha256 và
-        tạo lại chứng chỉ của bạn.&lt;/p&gt;&lt;p&gt;Nếu bạn thực sự muốn sử dụng chứng chỉ cũ và bị hỏng, hãy sử dụng tùy chọn cấu hình tls-mật mã tùy chỉnh
-        \"DEFAULT: @ SECLEVEL = 0\" trong cấu hình nâng cao hoặc làm dòng bổ sung trong
-        cấu hình đã nhập của bạn&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>

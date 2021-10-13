@@ -39,11 +39,13 @@ public class RemoteCNPreference extends DialogPreference {
 
     public void setDN(String dn) {
         mDn = dn;
+        notifyChanged();
     }
 
 
     public void setAuthType(int x509authtype) {
         mDNType = x509authtype;
+        notifyChanged();
     }
 
     public String getCNText() {

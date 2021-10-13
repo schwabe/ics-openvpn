@@ -508,5 +508,6 @@
     <string name="bf_cbc_requires_legacy">Profiles uses BF-CBC which depends on OpenSSL legacy provider (not enabled).</string>
     <string name="allow_translations_title">Allow community contributed translations</string>
     <string name="allow_translations_summary">Allows the app to be translated with translations contributed by the community. Requires a restart of the app to activate.</string>
+    <string name="tls_profile">TLS Security Profile</string>
 
 </resources>

@@ -170,6 +170,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mPeerFingerPrints = "";
     public int mCompatMode = 0;
     public boolean mUseLegacyProvider = false;
+    public String mTlSCertProfile = "";
 
     private transient PrivateKey mPrivateKey;
     // Public attributes, since I got mad with getter/setter

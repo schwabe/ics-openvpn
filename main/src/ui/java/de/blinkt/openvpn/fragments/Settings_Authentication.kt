@@ -24,8 +24,7 @@ import de.blinkt.openvpn.views.RemoteCNPreference
 import de.blinkt.openvpn.views.RemoteCNPreferenceDialog
 import java.io.IOException
 
-class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPreferenceChangeListener,
-    Preference.OnPreferenceClickListener {
+class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPreferenceClickListener {
     private lateinit var mExpectTLSCert: CheckBoxPreference
     private lateinit var mCheckRemoteCN: CheckBoxPreference
     private lateinit var mRemoteCN: RemoteCNPreference
@@ -36,6 +35,7 @@ class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPrefe
     private var mTlsAuthFileData: String? = null
     private lateinit var mAuth: EditTextPreference
     private lateinit var mRemoteX509Name: EditTextPreference
+    private lateinit var mTLSProfile: ListPreference
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
     }
@@ -48,17 +48,17 @@ class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPrefe
         mExpectTLSCert = findPreference("remoteServerTLS")!!
         mCheckRemoteCN = findPreference("checkRemoteCN")!!
         mRemoteCN = findPreference("remotecn")!!
-        mRemoteCN.onPreferenceChangeListener = this
+        setRemoteCNSummaryProvider()
         mRemoteX509Name = findPreference("remotex509name")!!
-        mRemoteX509Name.onPreferenceChangeListener = this
+        mRemoteX509Name.setSummaryProvider { pref ->
+            if ((pref as EditTextPreference).text.isEmpty()) "CN (default)" else pref.text
+        }
         mUseTLSAuth = findPreference("useTLSAuth")!!
         mTLSAuthFile = findPreference("tlsAuthFile")!!
         mTLSAuthDirection = findPreference("tls_direction")!!
-        mTLSAuthFile.onPreferenceClickListener = this
         mDataCiphers = findPreference("dataciphers")!!
-        mDataCiphers.onPreferenceChangeListener = this
         mAuth = findPreference("auth")!!
-        mAuth.onPreferenceChangeListener = this
+        mTLSProfile = findPreference("tls_profile")!!
         loadSettings()
     }
 
@@ -67,20 +67,17 @@ class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPrefe
         mCheckRemoteCN.isChecked = mProfile.mCheckRemoteCN
         mRemoteCN.setDN(mProfile.mRemoteCN)
         mRemoteCN.setAuthType(mProfile.mX509AuthType)
-        onPreferenceChange(
-            mRemoteCN,
-            Pair(mProfile.mX509AuthType, mProfile.mRemoteCN)
-        )
         mRemoteX509Name.text = mProfile.mx509UsernameField ?: ""
-        onPreferenceChange(mRemoteX509Name, mProfile.mx509UsernameField ?: "")
         mUseTLSAuth.isChecked = mProfile.mUseTLSAuth
+
         mTlsAuthFileData = mProfile.mTLSAuthFilename
         setTlsAuthSummary(mTlsAuthFileData)
+
         mTLSAuthDirection.value = mProfile.mTLSAuthDirection
+
         mDataCiphers.text = mProfile.mDataCiphers
-        onPreferenceChange(mDataCiphers, mProfile.mDataCiphers)
         mAuth.text = mProfile.mAuth
-        onPreferenceChange(mAuth, mProfile.mAuth)
+
         if (mProfile.mAuthenticationType == VpnProfile.TYPE_STATICKEYS) {
             mExpectTLSCert.isEnabled = false
             mCheckRemoteCN.isEnabled = false
@@ -89,6 +86,10 @@ class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPrefe
             mExpectTLSCert.isEnabled = true
             mCheckRemoteCN.isEnabled = true
         }
+        if (mProfile.mTlSCertProfile.isNullOrBlank())
+            mTLSProfile.value = "legacy"
+        else
+            mTLSProfile.value = mProfile.mTlSCertProfile
     }
 
     override fun saveSettings() {
@@ -99,36 +100,30 @@ class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPrefe
         mProfile.mUseTLSAuth = mUseTLSAuth.isChecked
         mProfile.mTLSAuthFilename = mTlsAuthFileData
         mProfile.mx509UsernameField = mRemoteX509Name.text
-        if (mTLSAuthDirection.value == null) mProfile.mTLSAuthDirection =
-            null else mProfile.mTLSAuthDirection = mTLSAuthDirection.value
-        if (mDataCiphers.text == null) mProfile.mDataCiphers = null else mProfile.mDataCiphers =
-            mDataCiphers.text
-        if (mAuth.text == null) mProfile.mAuth = null else mProfile.mAuth = mAuth.text
+        mProfile.mTLSAuthDirection = mTLSAuthDirection.value
+        mProfile.mDataCiphers = mDataCiphers.text
+        mProfile.mAuth = mAuth.text
+        mProfile.mTlSCertProfile = mTLSProfile.value
     }
 
-    override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
-        if (preference === mRemoteCN && newValue is Pair<*, *>) {
-            val authtype = newValue.first as Int
-            val dn = newValue.second
-            if ("" == dn) {
+    private fun setRemoteCNSummaryProvider()
+    {
+        mRemoteCN.setSummaryProvider {
+            pref ->
+            pref as RemoteCNPreference;
+
+            if ("" == pref.cnText) {
                 if (mProfile.mConnections.size > 0) {
-                    preference.summary = getX509String(
-                        VpnProfile.X509_VERIFY_TLSREMOTE_RDN,
+                    return@setSummaryProvider getX509String(VpnProfile.X509_VERIFY_TLSREMOTE_RDN,
                         mProfile.mConnections[0].mServerName
                     )
                 } else {
-                    preference.setSummary(R.string.no_remote_defined)
+                    return@setSummaryProvider getString(R.string.no_remote_defined)
                 }
             } else {
-                preference.summary = getX509String(authtype, dn as String)
+                return@setSummaryProvider getX509String(pref.authtype, pref.cnText)
             }
-        } else if (preference === mDataCiphers || preference === mAuth) {
-            preference.summary = (newValue as CharSequence)
-        } else if (preference === mRemoteX509Name) {
-            preference.summary =
-                (if (newValue.toString().isEmpty()) "CN (default)" else newValue as CharSequence)
         }
-        return true
     }
 
     private fun getX509String(authtype: Int, dn: String): CharSequence {

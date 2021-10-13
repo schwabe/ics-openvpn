@@ -83,4 +83,10 @@
     <string name="faq_title_ncp">Failed to negotiate cipher with server</string>
     <string name="import_from_URL">URL</string>
 
+    <string-array name="tls_profile_values" translatable="false">
+        <item>insecure</item>
+        <item>legacy</item>
+        <item>preferred</item>
+        <item>suiteb</item>
+    </string-array>
 </resources>

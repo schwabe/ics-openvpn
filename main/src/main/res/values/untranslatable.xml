@@ -78,5 +78,9 @@
     <string name="privacy_policy">The app OpenVPN for Android does not communicate to any server other than the OpenVPN servers provided in configuration files. The author himself does not collect any data and no therefore also no data is saved. For the privacy policy for the OpenVPN server/VPN service you are using (or other services related to the project like GitHub), please refer to their respective privacy policy.</string>
     <string name="eol_notice_header">End of service</string>
     <string name="eol_notice">The program and its components are under open-source licenses that allow you to use this app forever  according to terms of the open-source licenses for details.&lt;p&gt; However, the author reserves the right to suspend development or stop publishing the OpenVPN app or updates  to it at any time.</string>
+    <string translatable="false" name="import_from_access_server">OpenVPN Access Server</string>
+    <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
+    <string name="faq_title_ncp">Failed to negotiate cipher with server</string>
+    <string name="import_from_URL">URL</string>
 
 </resources>

@@ -17,7 +17,7 @@
             android:defaultValue="@bool/allowTranslationDefault"
             android:key="allow_translation"
             android:title="@string/allow_translations_title"
-            android:summary="@string/allow_translatiosn_summary"
+            android:summary="@string/allow_translations_summary"
         />
 
 

@@ -10,12 +10,14 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 
 import android.os.StrictMode;
 import android.os.strictmode.Violation;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import java.util.concurrent.Executors;
@@ -35,7 +37,9 @@ public class ICSOpenVPNApplication extends Application {
         if("robolectric".equals(Build.FINGERPRINT))
             return;
 
+        LocaleHelper.setDesiredLocale(this);
         super.onCreate();
+
         PRNGFixes.apply();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -48,6 +52,13 @@ public class ICSOpenVPNApplication extends Application {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             AppRestrictions.getInstance(this).checkRestrictions(this);
         }
+
+
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.updateResources(base));
     }
 
     private void enableStrictModes() {
@@ -72,6 +83,12 @@ public class ICSOpenVPNApplication extends Application {
         StrictMode.VmPolicy policy = vpbuilder.build();
         StrictMode.setVmPolicy(policy);
 
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleHelper.onConfigurationChange(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)

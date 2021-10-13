@@ -510,5 +510,7 @@
     <string name="compat_mode_label">Compatibility mode</string>
     <string name="loadossllegacy">Load OpenSSL legacy provider</string>
     <string name="bf_cbc_requires_legacy">Profiles uses BF-CBC which depends on OpenSSL legacy provider (not enabled).</string>
+    <string name="allow_translations_title">Allow community contributed translations</string>
+    <string name="allow_translatiosn_summary">Allows the English to be translated with translations contributed by the community. Requires a restart of the app to activate.</string>
 
 </resources>

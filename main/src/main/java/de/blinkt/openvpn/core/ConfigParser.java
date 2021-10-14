@@ -562,6 +562,14 @@ public class ConfigParser {
             }
         }
 
+        Vector<String> provider = getOption("provider", 1, 1);
+        if (provider != null)
+        {
+            String providers = provider.get(1).toLowerCase(Locale.ROOT);
+            if (providers.equals("legacy:default") || providers.equals("default:legacy"))
+                np.mUseLegacyProvider = true;
+        }
+
 
         Vector<String> compatmode = getOption("compat-mode", 1, 1);
         if (compatmode != null)

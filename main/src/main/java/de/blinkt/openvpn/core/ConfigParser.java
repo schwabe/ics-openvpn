@@ -546,6 +546,21 @@ public class ConfigParser {
         {
             np.mDataCiphers = ncp_ciphers.get(1);
         }
+        Vector<String> tls_cert_profile = getOption("tls-cert-profile", 1, 1);
+        if (tls_cert_profile != null)
+        {
+            String profile = tls_cert_profile.get(1);
+            for (String choice : new String[]{"insecure", "preferred", "legacy", "suiteb"}) {
+                if (choice.equals(profile)) {
+                    np.mTlSCertProfile = profile;
+                    break;
+                }
+            }
+            if (!profile.equals(np.mTlSCertProfile))
+            {
+                throw new ConfigParseError("Invalid tls-cert-profile '" + profile + "'");
+            }
+        }
 
 
         Vector<String> compatmode = getOption("compat-mode", 1, 1);

@@ -3,6 +3,7 @@ package de.blinkt.openvpn.core;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.provider.Settings;
+import android.text.TextUtils;
 
 import net.openvpn.ovpn3.ClientAPI_Config;
 import net.openvpn.ovpn3.ClientAPI_EvalConfig;
@@ -183,6 +184,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         boolean retryOnAuthFailed = mVp.mAuthRetry == AUTH_RETRY_NOINTERACT;
         config.setRetryOnAuthFailed(retryOnAuthFailed);
         config.setEnableLegacyAlgorithms(mVp.mUseLegacyProvider);
+        if (!TextUtils.isEmpty(mVp.mTlSCertProfile))
+            config.setTlsCertProfileOverride(mVp.mTlSCertProfile);
 
         ClientAPI_EvalConfig ec = eval_config(config);
         if (ec.getExternalPki()) {

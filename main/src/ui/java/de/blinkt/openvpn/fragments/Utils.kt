@@ -302,6 +302,9 @@ object Utils {
         if (vp.mCompatMode > 0 )
             warnings.add("compat mode enabled")
 
+        if ("insecure".equals(vp.mTlSCertProfile))
+            warnings.add("low security (TLS security profile 'insecure' selected)");
+
         var cipher= vp.mCipher.toUpperCase(Locale.ROOT)
         if (cipher.isNullOrEmpty())
             cipher = "BF-CBC";

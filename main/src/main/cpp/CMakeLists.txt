@@ -91,7 +91,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
             -DNO_ROUTE_EXCLUDE_EMULATION
             -DOPENVPN_SHOW_SESSION_TOKEN
             -DOPENSSL_API_COMPAT=0x10200000L
-
+            -DOPENVPN_ALLOW_INSECURE_CERTPROFILE
             )
 else ()
     message("Not budiling OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")

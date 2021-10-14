@@ -442,9 +442,7 @@
         MD5. Additionally with the OpenSSL 3.0 signatures with SHA1 are also rejected.&lt;/p>&lt;p>
         You should update the VPN certificates as soon as possible as SHA1 will also no longer work on other platforms in the
         near future.&lt;/p>
-        &lt;p>If you really want to use old and broken certificates use the custom
-        configuration option tls-cipher "DEFAULT:@SECLEVEL=0" under advanced configuration or as additional line in your
-        imported configuration&lt;/p>
+        &lt;p>If you really want to use old and broken certificates select "insecure" for the TLS security profile under Authentication/Encryption of the profile&lt;/p>
     </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
@@ -499,7 +497,7 @@
     <string name="check_peer_fingerprint">Check peer certificate fingerprint</string>
     <string name="fingerprint">(Enter the SHA256 fingerprint of the server certificate(s))</string>
     <string name="proxy_info">HTTP Proxy: %1$s %2$d</string>
-    <string name="use_alwayson_vpn">Please you the Always-On Feature of Android to enable VPN at boot time.</string>
+    <string name="use_alwayson_vpn">Please use the Always-On Feature of Android to enable VPN at boot time.</string>
     <string name="open_vpn_settings">Open VPN Settings</string>
     <string name="trigger_pending_auth_dialog">Press here open a window to enter additional required authentication</string>
     <string name="compatmode">Compatibility Mode</string>

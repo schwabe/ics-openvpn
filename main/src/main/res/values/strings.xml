@@ -402,7 +402,6 @@
     <string name="export_config_chooser_title">Export configuration file</string>
     <string name="missing_tlsauth">tls-auth file is missing</string>
     <string name="missing_certificates">Missing user certificate or user certifcate key file</string>
-    <string name="missing_ca_certificate">Missing CA certificate</string>
     <string name="crl_title">Certifcate Revoke List (optional)</string>
     <string name="reread_log">Reread (%d) log items from log cache file</string>
     <string name="samsung_broken">Even though Samsung phones are among the most selling Android phones, Samsung\'s firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.\n\nDNS does not work unless the DNS server in the VPN range.\n\nOn many Samsung 5.x devices the allowed/disallowed apps feature does not work.\nOn Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.</string>

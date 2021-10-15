@@ -155,7 +155,7 @@ public class OpenVPNThread implements Runnable {
                         logLevel = Math.max(4, logLevel);
 
                     VpnStatus.logMessageOpenVPN(logStatus, logLevel, msg);
-                    VpnStatus.checkWeakMD(msg);
+                    VpnStatus.addExtraHints(msg);
                 } else {
                     VpnStatus.logInfo("P:" + logline);
                 }

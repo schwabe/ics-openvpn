@@ -474,10 +474,13 @@ public class VpnStatus {
     }
 
 
-    public static void checkWeakMD(String msg) {
+    public static void addExtraHints(String msg) {
         if ((msg.endsWith("md too weak") && msg.startsWith("OpenSSL: error")) || msg.contains("error:140AB18E")
                 || msg.contains("SSL_CA_MD_TOO_WEAK") || (msg.contains("ca md too weak")))
             logError("OpenSSL reported a certificate with a weak hash, please see the in app FAQ about weak hashes.");
+        if ((msg.contains("digital envelope routines::unsupported")))
+            logError("The encryption method of your private keys/pkcs12 might be outdated and you probably need to enable " +
+                    "the OpenSSL legacy provider to be able to use this profile.");
     }
 
     public static synchronized void updateByteCount(long in, long out) {

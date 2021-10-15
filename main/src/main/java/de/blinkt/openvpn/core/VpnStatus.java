@@ -469,10 +469,16 @@ public class VpnStatus {
     }
 
     public static void logMessageOpenVPN(LogLevel level, int ovpnlevel, String message) {
+        /* Check for the weak md whe we have a message from OpenVPN */
         newLogItem(new LogItem(level, ovpnlevel, message));
-
     }
 
+
+    public static void checkWeakMD(String msg) {
+        if ((msg.endsWith("md too weak") && msg.startsWith("OpenSSL: error")) || msg.contains("error:140AB18E")
+                || msg.contains("SSL_CA_MD_TOO_WEAK") || (msg.contains("ca md too weak")))
+            logError("OpenSSL reported a certificate with a weak hash, please see the in app FAQ about weak hashes.");
+    }
 
     public static synchronized void updateByteCount(long in, long out) {
         TrafficHistory.LastDiff diff = trafficHistory.add(in, out);

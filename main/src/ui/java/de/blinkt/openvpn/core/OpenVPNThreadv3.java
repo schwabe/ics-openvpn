@@ -55,6 +55,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         ClientAPI_Status status = connect();
         if (status.getError()) {
             VpnStatus.logError(String.format("connect() error: %s: %s", status.getStatus(), status.getMessage()));
+            VpnStatus.checkWeakMD(status.getMessage());
         } else {
             VpnStatus.updateStateString("NOPROCESS", "OpenVPN3 thread finished", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
         }
@@ -172,7 +173,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
         config.setContent(vpnconfig);
         config.setTunPersist(mVp.mPersistTun);
-        config.setGuiVersion(mVp.getVersionEnvString(mService));
+        config.setGuiVersion(VpnProfile.getVersionEnvString(mService));
         config.setSsoMethods("openurl,webauth,crtext");
         config.setPlatformVersion(mVp.getPlatformVersionEnvString());
         config.setExternalPkiAlias("extpki");
@@ -305,6 +306,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
             logmsg = logmsg.substring(0, logmsg.length() - 1);
 
         VpnStatus.logInfo(logmsg);
+        VpnStatus.checkWeakMD(logmsg);
     }
 
     @Override
@@ -318,7 +320,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
             } else {
                 VpnStatus.logInfo(R.string.info_from_server, info);
             }
-        } else if (name.equals("COMPRESSION_ENABLED")) {
+        } else if (name.equals("COMPRESSION_ENABLED") || name.equals(("WARN"))) {
             VpnStatus.logInfo(String.format(Locale.US, "%s: %s", name, info));
         } else {
             VpnStatus.updateStateString(name, info);

@@ -10,7 +10,7 @@
     <string name="location">Ścieżka</string>
     <string name="cant_read_folder">Nie można odczytać katalogu</string>
     <string name="select">Wybierz</string>
-    <string name="cancel">Anuluj</string>
+    <string name="cancel">Cancel</string>
     <string name="no_data">Brak danych</string>
     <string name="useLZO">Kompresja LZO</string>
     <string name="client_no_certificate">Brak certyfikatu</string>
@@ -401,7 +401,6 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="export_config_chooser_title">Eksportuj plik konfiguracyjny</string>
     <string name="missing_tlsauth">Plik tls-auth nie odnaleziony</string>
     <string name="missing_certificates">Brakujący certyfikat użytkownika lub plik klucza certyfikatu użytkownika</string>
-    <string name="missing_ca_certificate">Brak certyfikatu CA</string>
     <string name="crl_title">Lista unieważnionych certyfikatów (opcjonalnie)</string>
     <string name="reread_log">Odśwież %d wpis(ów) dziennika z pliku pamięci podręcznej</string>
     <string name="samsung_broken">Pomimo, że telefony marki Samsung są jednymi z najliczniej sprzedawanych urządzeń z Androidem, oprogramowanie układowe Samsunga jest jednocześnie jednym z posiadających najwięcej błędów. Błędy nie ograniczają się wyłącznie do operacji związanych z VPN a wiele z nich zostało rozwiązanych technikami tymczasowymi. Poniższa lista przedstawia kilka ze wspomnianych błędów.\n\nDNS nie działa poza zakresem VPN.\n\nNa wielu urządzeniach marki Samsung z Androidem 5.x aplikacje dozwolone/niedozwolone nie działają.\n\nNa urządzeniach marki Samsung z Androidem 6.x VPN może nie działać podczas aktywnego oszczędzania energii.</string>

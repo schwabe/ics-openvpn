@@ -400,7 +400,6 @@
     <string name="export_config_chooser_title">Eksporter konfigurationsfil</string>
     <string name="missing_tlsauth">tls-auth-filen mangler</string>
     <string name="missing_certificates">Manglende brugercertifikat eller brugercertifikat nøglefil</string>
-    <string name="missing_ca_certificate">Manglende CA-certifikat</string>
     <string name="crl_title">Certifcate Revoke List (valgfrit)</string>
     <string name="reread_log">Genlæse (%d) log-linier fra cache</string>
     <string name="samsung_broken">Selv om Samsung-telefoner er blandt de mest solgte Android-telefoner, er Samsungs firmware også blandt de mest fejlagtige Android-implementationer. Fejlene er ikke begrænset til VPN-operationer på disse enheder, men mange af dem kan løses. I det følgende beskrives nogle af disse fejl. \n\nDNS virker ikke, medmindre DNS-serveren er i samme VPN-område. \n\nMed mange Samsung 5.x-enheder virker funktionen for tilladte/afviste apps ikke. \nMed Samsung 6.x rapporteres at VPN ikke fungere, medmindre VPN-appen er undtaget fra Powersave-funktioner.</string>

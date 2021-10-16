@@ -403,7 +403,6 @@
     <string name="export_config_chooser_title">Konfigurationsdatei exportieren</string>
     <string name="missing_tlsauth">TLS-Auth-Datei fehlt</string>
     <string name="missing_certificates">Fehlendes Benutzerzertifikat oder privater Schlüssel</string>
-    <string name="missing_ca_certificate">Fehlendes CA-Zertifikat</string>
     <string name="crl_title">Zertifikatswiderrufsliste (optional)</string>
     <string name="reread_log">%d Einträge aus Protokoll-Cache gelesen</string>
     <string name="samsung_broken">Wenngleich Samsung-Telefone unter den meistverkauften Android-Geräten sind, gehört deren Firmware auch zu den fehlerbehaftetsten aller Android-Geräte. Diese Fehler betreffen nicht nur den Aufbau von VPN-Verbindungen; viele von ihnen können allerdings umgangen werden. Im Folgenden sind einige dieser Fehler beschrieben.\n\nDNS funktioniert nicht, wenn sich der DNS-Server nicht im VPN befindet.\n\nBei vielen Samsung-Geräten mit Android 5.x funktioniert das Sperren/Zulassen von einzelnen Apps nicht.\n\nBei Samsung-Geräten mit Android 6.x wurde berichtet, dass VPN nicht funktioniert, wenn die VPN-App nicht als Ausnahme in den Energiespareinstellungen eingetragen wird.</string>
@@ -439,14 +438,6 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
-    <string name="weakmd">&lt;p&gt;Ab OpenSSL-Version 1.1 lehnt OpenSSL schwache Signaturen in Zertifikaten wie
-        MD5 ab. Zusätzlich werden bei OpenSSL 3.0 auch Signaturen mit SHA1 abgelehnt.&lt;/p&gt;&lt;p&gt;
-        Es wird empfohlen die VPN-Zertifikate so schnell wie möglich aktualisieren.
-&lt;/p&gt;
-        &lt;p&gt;Wenn Sie wirklich alte und defekte Zertifikate verwenden möchten, verwenden Sie die benutzerdefinierte
-        Konfigurationsoption tls-cipher \"DEFAULT:@SECLEVEL=0\" unter der erweiterten Konfiguration oder als zusätzliche Zeile in Ihrer
-        importierten Konfiguration&lt;/p&gt;
-    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
@@ -478,6 +469,7 @@
     <string name="channel_name_userreq">Benutzerinteraktion erforderlich</string>
     <string name="channel_description_userreq">OpenVPN Verbindung erfordert eine Benutzereingabe, beispielsweise zwei-Faktor Authentifikations    </string>
     <string name="openurl_requested">Öffne die URL, um die VPN-Authentifizierung fortzusetzen</string>
+    <string name="crtext_requested">Can</string>
     <string name="state_auth_pending">Authentifizierung ausstehend</string>
     <string name="external_authenticator">Externer Authentifikator</string>
     <string name="configure">Konfigurieren</string>
@@ -494,10 +486,12 @@
     <string name="internal_web_view">Internes Webview</string>
     <string name="check_peer_fingerprint">Fingerabdruck des Peer-Zertifikats prüfen</string>
     <string name="fingerprint">(Geben Sie den SHA256-Fingeabdruck des Serverzertifikates an)</string>
+    <string name="use_alwayson_vpn">Bitte verwenden sie die \"Durchgehend aktives VPN\" Funktion von Android, um das VPN beim Booten zu aktivieren.</string>
     <string name="open_vpn_settings">VPN Einstellungen öffnen</string>
     <string name="compatmode">Kompatibilitätsmodus</string>
     <string name="compat_mode_label">Kompatibilitätsmodus</string>
     <string name="loadossllegacy">OpenSSL Legacy-Provider laden</string>
     <string name="bf_cbc_requires_legacy">Profile verwendet BF-CBC, das den OpenSSL-Legacy-Provider benötigit (nicht aktiviert).</string>
     <string name="allow_translations_title">Community-Übersetzungen zulassen</string>
+    <string name="tls_profile">TLS-Sicherheitsprofil</string>
 </resources>

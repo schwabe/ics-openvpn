@@ -34,6 +34,7 @@
     <string name="ipv4_address">Indirizzo IPv4</string>
     <string name="ipv6_address">Indirizzo IPv6</string>
     <string name="custom_option_warning">Inserire le opzioni personalizzate di OpenVPN. Usare con cautela. Si ricorda che molte delle impostazioni relative a OpenVPN non sono attualmente supportate da questo progetto. Se ritiene che manchi un\'opzione indispensabile, contatta l\'autore</string>
+    <string name="auth_username">Nome utente (lascia vuoto per nessuna autenticazione)</string>
     <string name="auth_pwquery">Password</string>
     <string name="static_keys_info">Per la configurazione statica le chiavi di autorizzazione TLS saranno usate come chiavi statiche</string>
     <string name="configure_the_vpn">Configura la VPN</string>
@@ -42,6 +43,7 @@
     <string name="duplicate_profile_name">Si prega di inserire un nome univoco del profilo</string>
     <string name="profilename">Nome del profilo</string>
     <string name="no_keystore_cert_selected">Devi selezionare un certificato utente</string>
+    <string name="no_ca_cert_selected">Devi selezionare un certificato CA o attivare il controllo delle impronte digitali tra peer</string>
     <string name="no_error_found">Nessun errore trovato</string>
     <string name="config_error_found">Errore nella configurazione</string>
     <string name="ipv4_format_error">Impossibile analizzare l\'indirizzo IPv4</string>
@@ -126,6 +128,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="no_vpn_support_image">La tua immagine non è supportata dal VPNService API, mi dispiace :(</string>
     <string name="encryption">Crittografia</string>
     <string name="cipher_dialog_title">Inserire il metodo di crittografia</string>
+    <string name="chipher_dialog_message">Inserisci gli algoritmi di crittografia dei dati utilizzati da OpenVPN separati da: (--data-ciphers). Lascia vuoto per usare l\'impostazione predefinita AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
     <string name="auth_dialog_message">Inserisci l\'algoritmo di cifratura digest usato da OpenVPN. Lascia bianco per usare quello di default.</string>
     <string name="settings_auth">Autenticazione/crittografia</string>
     <string name="file_explorer_tab">Esplora risorse</string>
@@ -401,7 +404,6 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="export_config_chooser_title">Esporta file di configurazione</string>
     <string name="missing_tlsauth">File tls-auth mancante</string>
     <string name="missing_certificates">Certificato utente o file chiave certificato utente mancante</string>
-    <string name="missing_ca_certificate">Certificato CA mancante</string>
     <string name="crl_title">Elenco certificato di revoca (facoltativo)</string>
     <string name="reread_log">Rileggi (%d) gli elementi del registro dal file di cache di log</string>
     <string name="samsung_broken">Anche se i telefoni Samsung sono tra i più venduti telefoni Android, i firmware di Samsung sono anche tra i firmware Android con più problemi. I problemi non sono limitati all\'operazione VPN su questi dispositivi, ma molti di essi possono essere sistemati. In seguito sono descritti alcuni di questi problemi. \n\nIl DNS non funziona a meno che il server DNS sia nell\'intervallo VPN. \n\nIn molti dispositivi Samsung 5.x la funzionalità delle applicazioni consentite/disattivate non funziona. \nNel Samsung 6.x viene segnalato il non funzionamento della VPN a meno che l\'applicazione VPN non sia esclusa dalle funzioni di Risparmio energia.</string>
@@ -470,8 +472,29 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
         a due fattori
     </string>
     <string name="openurl_requested">Apri l\'URL per continuare l\'autenticazione VPN</string>
+    <string name="crtext_requested">Effettua la verifica per continuare l\'autenticazione VPN</string>
     <string name="state_auth_pending">Autenticazione in attesa</string>
     <string name="external_authenticator">Autenticatore esterno</string>
     <string name="configure">Configura</string>
     <string name="extauth_not_configured">Autenticatore esterno non configurato</string>
+    <string name="faq_killswitch_title">Blocca connessioni non VPN (\"Killswitch\")</string>
+    <string name="summary_block_address_families">Questa opzione indica ad Android di non consentire i protocolli (IPv4/IPv6) se la VPN non imposta alcun indirizzo IPv4 o IPv6.</string>
+    <string name="title_block_address_families">Blocca IPv6 (o IPv4) se non usato dalla VPN</string>
+    <string name="install_keychain">Installa nuovo certificato</string>
+    <string name="server_url">URL del server</string>
+    <string name="request_autologin">Richiedi profilo di accesso automatico</string>
+    <string name="import_from_as">Importa profilo da server remoto</string>
+    <string name="no_default_vpn_set">VPN predefinita non impostata. Imposta la VPN predefinita prima di attivare questa opzione.</string>
+    <string name="internal_web_view">WebView interno</string>
+    <string name="check_peer_fingerprint">Controlla l\'impronta digitale del certificato peer</string>
+    <string name="fingerprint">(Inserisci l\'impronta digitale SHA256 dei certificati del server)</string>
+    <string name="proxy_info">Proxy HTTP: %1$s %2$d</string>
+    <string name="open_vpn_settings">Apri impostazioni VPN</string>
+    <string name="trigger_pending_auth_dialog">Premi qui per aprire una finestra per inserire l\'autenticazione aggiuntiva necessaria</string>
+    <string name="compatmode">Modalità di compatibilità</string>
+    <string name="compat_mode_label">Modalità di compatibilità</string>
+    <string name="loadossllegacy">Carica fornitore obsoleto OpenSSL</string>
+    <string name="bf_cbc_requires_legacy">Profili utilizza BF-CBC che dipende dal fornitore obsoleto OpenSSL (non attivato).</string>
+    <string name="allow_translations_title">Consenti le traduzioni fornite dalla community</string>
+    <string name="allow_translations_summary">Consente la traduzione dell\'app con le traduzioni fornite dalla community. Richiede il riavvio dell\'app per l\'attivazione.</string>
 </resources>

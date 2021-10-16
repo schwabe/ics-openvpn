@@ -34,7 +34,6 @@
     <string name="ipv4_address">IPv4-adresse</string>
     <string name="ipv6_address">IPv6-adresse</string>
     <string name="custom_option_warning">Angi egendefinerte OpenVPN-alternativer. Bør brukes med forsiktighet. Vær også oppmerksom på at mange av de tun-relaterte OpenVPN-innstillingene ikke støttes i henhold til utformingen av VPNSettings. Hvis du tror at et viktig alternativ mangler kan du kontakte forfatteren</string>
-    <string name="auth_username">Brukernavn</string>
     <string name="auth_pwquery">Passord</string>
     <string name="static_keys_info">For den statiske konfigurasjonen vil TLS Auth Keys-ene bli brukt som statiske nøkler</string>
     <string name="configure_the_vpn">Konfigurer VPN</string>
@@ -43,7 +42,6 @@
     <string name="duplicate_profile_name">Skriv inn et unikt profilnavn</string>
     <string name="profilename">Profilnavn</string>
     <string name="no_keystore_cert_selected">Du må velge et brukersertifikat</string>
-    <string name="no_ca_cert_selected">Du må velge et CA-sertifikat</string>
     <string name="no_error_found">Ingen feil funnet</string>
     <string name="config_error_found">Feil i konfigurasjonen</string>
     <string name="ipv4_format_error">Feil ved analyse av IPv4-adressen</string>
@@ -127,7 +125,6 @@
     <string name="no_vpn_support_image">Bildet ditt støtter ikke VPNService API, beklager :(</string>
     <string name="encryption">Kryptering</string>
     <string name="cipher_dialog_title">Angi krypteringsmetode</string>
-    <string name="chipher_dialog_message">Skriv inn krypteringskrypteringsalgoritmen som brukes av OpenVPN. La det stå tomt for å bruke standard kryptering.</string>
     <string name="auth_dialog_message">Skriv inn godkjenningsfordeling som brukes til OpenVPN. La være tom for å bruke standard fordøyelse.</string>
     <string name="settings_auth">Autentisering/kryptering</string>
     <string name="file_explorer_tab">Filutforsker</string>
@@ -297,7 +294,6 @@
     <string name="enabled_connection_entry">Aktivert</string>
     <string name="pw_request_dialog_title">Trenger %1$s</string>
     <string name="export_config_chooser_title">Eksporter konfigurasjonsfilen</string>
-    <string name="missing_ca_certificate">Manglende CA-sertifikat</string>
     <string name="samsung_broken_title">Samsung telefoner</string>
     <string name="novpn_selected">Ingen VPN valgt.</string>
     <string name="defaultvpn">Standard VPN</string>

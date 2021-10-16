@@ -397,7 +397,6 @@
     <string name="export_config_chooser_title">Exportați fișierul de configurare</string>
     <string name="missing_tlsauth">Fișierul tls-auth lipsește</string>
     <string name="missing_certificates">Lipsește certificatul de utilizator sau fișierul certificat cheie</string>
-    <string name="missing_ca_certificate">Certificatul CA lipsește</string>
     <string name="crl_title">Lista de certificate revocate (opțional)</string>
     <string name="reread_log">Recitesc (%d) elemente de log din fișierul de cache log</string>
     <string name="samsung_broken">Chiar dacă telefoanele Samsung sunt printre cele mai vândute telefoane Android, firmware-ul Samsung este, de asemenea, printre cele mai pline de bug-uri firmware-uri Android. Bugurile nu se limitează la operațiunile VPN pe aceste dispozitive, dar multe dintre ele pot fi rezolvate. În continuare sunt descrise unele dintre aceste erori. \n\nDNS-ul nu funcționează decât dacă serverul DNS din gama VPN. \n\nPe multe dispozitive Samsung 5.x, funcția permis/nepermis a aplicațiilor nu funcționează. \nPe Samsung 6.x VPN-ul este raportat că nu funcționează decât dacă aplicația VPN este exceptată de la caracteristicile Powersave.</string>

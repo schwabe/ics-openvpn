@@ -400,7 +400,6 @@
     <string name="export_config_chooser_title">Xuất tập tin cấu hình</string>
     <string name="missing_tlsauth">tập tin tls-auth bị mất tích</string>
     <string name="missing_certificates">Thiếu chứng chỉ người dùng hoặc chứng chỉ tập tin</string>
-    <string name="missing_ca_certificate">Thiếu chứng chỉ CA</string>
     <string name="crl_title">Danh sách chứng chỉ thu hồi (tùy chọn)</string>
     <string name="reread_log">Đọc lại (%d) mục đăng nhập từ tập tin bộ nhớ cache đăng nhập</string>
     <string name="samsung_broken">Even though Samsung phones are among the most selling Android phones, Samsung\'s firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.\n\nDNS does not work unless the DNS server in the VPN range.\n\nOn many Samsung 5.x devices the allowed/disallowed apps feature does not work.\nOn Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.</string>

@@ -20,7 +20,7 @@
     <string name="ca_title">CA sertifikaat</string>
     <string name="no_certificate">Peate valima sertifikaadi</string>
     <string name="copyright_guicode">Lähtetekst ja probleemihaldur asuvad veebilehel http://code.google.com/p/ics-openvpn/</string>
-    <string name="copyright_others">Programmis kasutatakse järgnevaid komponente. Detailse litsenseerimisinfo leiate lähtekoodist</string>
+    <string name="copyright_others">Programmis kasutatakse järgnevaid komponente. Detailse litsentsiteabe leiate lähtekoodist</string>
     <string name="about">Lähemalt</string>
     <string name="vpn_list_title">Profiilid</string>
     <string name="vpn_type">Tüüp</string>
@@ -34,6 +34,7 @@
     <string name="ipv4_address">IPv4 aadress</string>
     <string name="ipv6_address">IPv6 aadress</string>
     <string name="custom_option_warning">Sisestage OpenVPN kohandatud valikud. Ettevaatlikkus ei tee paha. Palun samuti tähele panna et VPNSettings API ei toeta paljusid tun liidesega seotud OpenVPN seadistusi. Siiski, kui te leiate et mõni oluline seadistusvalik on puudu, siis kontakteeruge programmi autoriga</string>
+    <string name="auth_username">Kasutajanimi (kui autentimist ei kasuta, siis jäta tühjaks)</string>
     <string name="auth_pwquery">Salasõna</string>
     <string name="static_keys_info">Staatilise konfiguratsiooni puhul kasutatakse TLS Auth võtmeid staatiliste võtmetena</string>
     <string name="configure_the_vpn">Konfigureeri VPN</string>
@@ -158,7 +159,7 @@
     <string name="broken_images">Probleemsed Androidi püsivara versioonid</string>
     <string name="broken_images_faq">&lt;p&gt;Ametlikel HTC versioonidel teatakse olevat kummaline marsruutimisprobleem, mille tulemusel ei liigu andmevoog läbi tunneli (Vaata ka &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=18\"&gt;Issue 18&lt;/a&gt; veahalduses.)&lt;/p&gt;&lt;p&gt;Ametlike vanemate SONY Xperia arc S ja Xperia Ray versioonide puhul on raporteeritud ka täielikku VPNService API puudumist. (Vaata ka &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=29\"&gt;Issue 29&lt;/a&gt; veahalduses.)&lt;/p&gt;&lt;p&gt;Kohandatud tarkvaraversioonides võib puududa tun moodul või /dev/tun õigused võivad olla valed. Mõned CM9 versioonid nõuavad \"seadmespetsiifiliste häkkide\" alt \"õiguste parandamise\" valiku kasutamist.&lt;/p&gt;&lt;p&gt;Aga mis kõige olulisem: kui teil juhtub olema vigane tarkvaraversioon, siis teatage sellest oma tarnijale. Mida rohkem kliente tarnijat seadme probleemidest teavitab, seda suurema tõenäosusega tehakse seadme tarkvara ka korda.&lt;/p&gt;</string>
     <string name="pkcs12_file_encryption_key">PKCS12 faili krüpteerimisvõti</string>
-    <string name="private_key_password">Privaatse võtme salasõna</string>
+    <string name="private_key_password">Privaatvõtme salasõna</string>
     <string name="password">Salasõna</string>
     <string name="file_icon">faili ikoon</string>
     <string name="tls_authentication">TLS Autentimine/Krüpteerimine</string>
@@ -400,7 +401,6 @@
     <string name="export_config_chooser_title">Konfiguratsioonifaili eksportimine</string>
     <string name="missing_tlsauth">puudub tls-auth fail</string>
     <string name="missing_certificates">Puudub kasutajasertifikaat või kasutajasertifikaadi võtmefail</string>
-    <string name="missing_ca_certificate">Puudub CA sertifikaat</string>
     <string name="crl_title">Sertifikaatide tühistusnimekiri (valikuline)</string>
     <string name="reread_log">Taasloe logi puhverfailist (%d) logikirjet</string>
     <string name="samsung_broken">Vaatamata sellele et Samsungi telefonid on ühed populaarsemad Android telefonid, on Samsungi tarkvara üks auklikumatest Android tarkvarade seas. Probleemid ei piirdu vaid nende seadmete VPN toimingutega kuid on enamasti lahendatavad. Edasine kirjeldab mõnda probleemi.\n\nDNS ei toimi kui DNS server pole VPN vahemikus.\n\nPaljudel Samsungi 5.x seadmetel ei toimi programmide lubamise/keelamise võimalus.\nSamsung 6.x telefonide kohta on teateid et VPN ei tööta kui VPN programmil pole välistatud toitesääst.</string>
@@ -470,4 +470,7 @@
     <string name="external_authenticator">Väline autentimine</string>
     <string name="configure">Seadistamine</string>
     <string name="extauth_not_configured">Väline automaatne generaator pole konfigureeritud</string>
+    <string name="import_from_as">Impordi profiil serverist</string>
+    <string name="no_default_vpn_set">Enne selle valiku tegemist palun seadista vaikimisi VPN.</string>
+    <string name="open_vpn_settings">Ava VPN\'i seadistused</string>
 </resources>

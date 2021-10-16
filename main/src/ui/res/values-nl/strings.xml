@@ -400,7 +400,6 @@
     <string name="export_config_chooser_title">Exporteer configuratiebestand</string>
     <string name="missing_tlsauth">tls-auth-bestand ontbreekt</string>
     <string name="missing_certificates">Ontbrekend gebruikerscertificaat of gebruikerscertificaatsleutelbestand</string>
-    <string name="missing_ca_certificate">Ontbrekend CA-certificaat</string>
     <string name="crl_title">Certifcate Intrekkingslijst (optioneel)</string>
     <string name="reread_log">Herlas (%d) logboekitems uit logboekcachebestand</string>
     <string name="samsung_broken">Hoewel Samsung-telefoons tot de meest verkochte Android-telefoons behoren, behoort de firmware van Samsung ook tot de meest buggy-Android-firmware. De bugs zijn niet beperkt tot de VPN-werking op deze apparaten, maar veel van deze kunnen worden omzeild. Hieronder worden enkele van deze bugs beschreven.\n\nDNS werkt alleen als de DNS-server zich in het VPN-bereik bevindt.\n\nOp veel Samsung 5.x-apparaten werkt de functie toegestane/niet-toegestane apps niet.\nOp Samsung 6.x VPN meldt dat het niet werkt tenzij de VPN-app is vrijgesteld van Powersave-functies.</string>

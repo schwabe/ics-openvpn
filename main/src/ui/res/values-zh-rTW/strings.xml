@@ -400,7 +400,6 @@
     <string name="export_config_chooser_title">匯出設定檔</string>
     <string name="missing_tlsauth">缺少 tls-auth 檔案</string>
     <string name="missing_certificates">缺少使用者憑證或使用者憑證金鑰檔案</string>
-    <string name="missing_ca_certificate">缺少 CA 憑證</string>
     <string name="crl_title">憑證撤銷清單（CRL）（可選）</string>
     <string name="reread_log">從記錄快取檔案中重新讀取（%d）紀錄項目</string>
     <string name="samsung_broken">儘管 Samsung 手機是最暢銷的 Android 手機，Samsung 的韌體也是 bug 最多的 Android 韌體。這些 bug 並不僅限於 VPN 的操作，但其大多數都是有方法可以避開的。以下列出其中的幾個 bug：\n\n除非 DNS 伺服器在 VPN 範圍內，否則 DNS 無法運作。\n\n在許多 Samsung 5.x 裝置中，允許/排除應用程式的功能無法運作。\n有回報表示，在 Samsung 6.x 上，除非 VPN 應用程式被加入到 Powersave 功能的排除清單，否則 VPN 無法運作。</string>

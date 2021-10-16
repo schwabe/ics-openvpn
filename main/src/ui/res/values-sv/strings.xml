@@ -400,7 +400,6 @@
     <string name="export_config_chooser_title">Exportera konfigurationsfil</string>
     <string name="missing_tlsauth">Filen för TLS-autensitering saknas</string>
     <string name="missing_certificates">Filen för användarcertifikatet, eller filen för dess privata nyckel, saknas</string>
-    <string name="missing_ca_certificate">CA-certifikat saknas</string>
     <string name="crl_title">Lista över återkallade certifikat (valfri)</string>
     <string name="reread_log">Läs in (%d) loggrader från loggens cachefil på nytt</string>
     <string name="samsung_broken">Även om Samsung telefoner är bland de mest säljande Android-telefoner, Samsungs mjukvara är också bland de mest buggiga Android mjukvarorna. Buggarna är inte begränsade till VPN driften på dessa enheter, men många av dem kan gås runt. Till följd beskrivs några av dessa buggar.\n\nDNS fungerar inte om inte DNS-servern finns VPN intervallet.\n\nPå många Samsung 5.x enheter fungerar inte de tillåtna/otillåtna programmen.\nSamsung 6.x VPN har rapporteras att inte fungera om VPN-appen är undantagen från energisparfunktioner.</string>

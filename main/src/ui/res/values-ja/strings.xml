@@ -34,6 +34,7 @@
     <string name="ipv4_address">IPv4アドレス</string>
     <string name="ipv6_address">IPv6アドレス</string>
     <string name="custom_option_warning">OpenVPNのカスタムオプションを入力します。利用には細心の注意が必要です。設定画面ではTUNモジュールの多くの設定がサポートされていません。もしほかに重要と思う設定があれば作者に連絡してください。</string>
+    <string name="auth_username">ユーザ名(認証なしの場合は空欄)</string>
     <string name="auth_pwquery">パスワード</string>
     <string name="static_keys_info">TLS認証鍵の設定は、静的キーとして使用されます。</string>
     <string name="configure_the_vpn">VPNの設定</string>
@@ -42,6 +43,7 @@
     <string name="duplicate_profile_name">プロファイル名が重複しています。</string>
     <string name="profilename">プロファイル名</string>
     <string name="no_keystore_cert_selected">ユーザー証明書を選択する必要があります</string>
+    <string name="no_ca_cert_selected">CA証明書を選択するか、ピアフィンガープリントの確認を有効にする必要があります</string>
     <string name="no_error_found">エラーは見つかりませんでした</string>
     <string name="config_error_found">設定に誤りがあります</string>
     <string name="ipv4_format_error">IPv4 アドレスの解析エラー</string>
@@ -125,6 +127,7 @@
     <string name="no_vpn_support_image">申し訳ありませんが、お使いの環境ではVPNサービスがサポートされていません</string>
     <string name="encryption">暗号化</string>
     <string name="cipher_dialog_title">暗号化方式を入力</string>
+    <string name="chipher_dialog_message">OpenVPNで使用されるデータ暗号化アルゴリズム(-data-ciphers)を「:」で区切って入力します。デフォルトのAES-256-GCM:AES-128-GCM:CHACHA20-POLY1305を使用するには、空のままにします。</string>
     <string name="auth_dialog_message">OpenVPNが使用する認証ダイジェストを入力します。空欄にするとデフォルトのダイジェストを使用します。</string>
     <string name="settings_auth">認証/暗号化</string>
     <string name="file_explorer_tab">ファイルを選択</string>
@@ -437,7 +440,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="export_config_chooser_title">設定ファイルのエクスポート</string>
     <string name="missing_tlsauth">tls-authファイルが不足しています</string>
     <string name="missing_certificates">ユーザ証明書またはユーザ証明書キーのファイルが不足しています</string>
-    <string name="missing_ca_certificate">CA証明書が不足しています</string>
     <string name="crl_title">証明書の失効リスト(オプション)</string>
     <string name="reread_log">ログキャッシュからログ(%d個)を再読み込みしました</string>
     <string name="samsung_broken">サムスン製の携帯電話は最も販売されているAndroid機ですが、サムスン製のファームウェアは最もバグを引き起こすAndroidファームウェアです。これらのデバイスのバグはVPN操作に限ったことではありませんが、それらの多くは回避可能です。以下にいくつかのバグを記載します。\n\nDNSサーバがVPNの範囲内にないとDNSが動作しません。\n\nサムスン製Android 5.0の多くの機種では、アプリの許可／不許可機能が動作しません。\nサムスン製Android 6.0機種のVPNは、VPNアプリを省電力機能から除外しない限り動作しないことが報告されています。</string>
@@ -504,8 +506,38 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="channel_name_userreq">ユーザー操作が必要</string>
     <string name="channel_description_userreq">OpenVPN接続にはユーザー入力が必要です (例：2要素認証)</string>
     <string name="openurl_requested">URLを開いてVPN認証を続行する</string>
+    <string name="crtext_requested">VPN認証を継続するための課題に答える</string>
     <string name="state_auth_pending">認証は保留中です</string>
     <string name="external_authenticator">外部認証</string>
     <string name="configure">設定</string>
     <string name="extauth_not_configured">外部認証が設定されていません</string>
+    <string name="faq_killswitch_title">VPN以外の接続をブロックする(\"Killswitch\")</string>
+    <string name="faq_killswitch">VPNなしでの接続をブロックすることがしばしば望まれます。ほかのアプリではこの機能に「killswitch」または「Seamless tunnel」などのマーケティング用語をよく使います。OpenVPNとこのアプリではこの機能の実装としてpersist-tun(永続的なTUN)を提供します。&lt;p&gt;アプリが提供するこれらすべての方法の問題は、ベストエフォートでしか提供できず完全な解決策はないことです。起動時やアプリのクラッシュ、厄介な問題の発生時ではアプリはVPNなし通信のブロックは保証できません。そうして利用者に誤った安心感を与えています。&lt;p&gt;VPNなしの接続をブロックするために&lt;b&gt;唯一&lt;/b&gt;確実で信頼できる方法は、Android 8.0以降で「VPNのない接続をブロックする」設定を使うことです。設定 &gt; ネットワーク &gt; インターネット &gt; 高度/VPN &gt; OpenVPN for Android &gt; 「VPN常時接続」を有効、かつ「VPNのない接続をブロックする」を有効にします。</string>
+    <string name="summary_block_address_families">このオプションは、VPNがIPv4またはIPv6アドレスを設定しない場合、プロトコル（IPv4 / IPv6）を許可しないようにAndroidに指示します。</string>
+    <string name="title_block_address_families">VPNで使用されていない場合は、IPv6（またはIPv4）をブロックします</string>
+    <string name="install_keychain">新しい証明書をインストール</string>
+    <string name="as_servername">ASサーバー名</string>
+    <string name="server_url">サーバURL</string>
+    <string name="request_autologin">自動ログインプロファイルをリクエストする</string>
+    <string name="import_from_as">リモートサーバーからプロファイルをインポートする</string>
+    <string name="no_default_vpn_set">デフォルトのVPNが設定されていません。このオプションを有効にする前に、デフォルトVPNを設定してください。</string>
+    <string name="internal_web_view">内蔵WebView</string>
+    <string name="faq_ncp">このメッセージには、状況によっていくつかのバリエーションがあります。それらに共通するのはサーバとクライアントで共通の暗号の合意が取れなかったということです。主だった理由としては&lt;ul&gt;&lt;li&gt;あなたがデフォルト設定(--cipherを使っていない場合)でBF-CBCを許容するOpenVPN 2.4かそれ以前に頼っているという事実です。OpenVPN 2.5はもはや&lt;a href=\"https://community.openvpn.net/openvpn/wiki/SWEET32\"&gt;壊れた/廃止された暗号&lt;/a&gt;としてデフォルトでそれを許容しなくなっています。&lt;/li&gt;
+&lt;li&gt;サーバがOpenVPN 2.3(あるいはそれ以前)を--enable-smallオプションで稼働している。(4～5年前のOpenVPN)&lt;/li&gt;&lt;li&gt;間違った設定(例: data-ciphersがサーバとクライアントで一致していない)&lt;/li&gt;&lt;p&gt;OpenVPNのマニュアルの&lt;a href=\"https://github.com/OpenVPN/openvpn/blob/master/doc/man-sections/cipher-negotiation.rst\"&gt;暗号ネゴシエーションについてのセクション&lt;/a&gt;は、暗号ネゴシエーションの様々な状況と何をすべきかについてよく説明されています。
+&lt;p&gt;TP-Link製のデバイスは2019/2020年のモデルであっても、少なくとも5年は経っているOpenVPN 2.3.x(あるいはもっと古いかも)を使用しています。&lt;p&gt;最後になりますが、サーバが壊れていて常に\'BF-CBC\'を使用するという人気VPNプロバイダがあります。これは開発者が一般的なOpenVPNと互換性のないパッチで独自の暗号ネゴシエーションをすることを推奨するためです。&lt;p&gt;要約すると、通常の構成でこれらのエラーが出ることはありません。しかし(VPNプロバイダの壊れたサーバは別として)クライアントは接続し続けるように説得することができます。(症状の修正は真の問題ではない)
+
+ 
+ </string>
+    <string name="check_peer_fingerprint">ピア証明書のフィンガープリントを確認する</string>
+    <string name="fingerprint">（サーバー証明書のSHA256フィンガープリントを入力してください）</string>
+    <string name="proxy_info">HTTPプロキシ: %1$s %2$d</string>
+    <string name="use_alwayson_vpn">起動時にVPNを有効にするには、Androidの常時接続機能を使用してください。</string>
+    <string name="open_vpn_settings">VPN設定の編集</string>
+    <string name="trigger_pending_auth_dialog">ここを押してウィンドウを開き、追加の必要な認証を入力します</string>
+    <string name="compatmode">互換モード</string>
+    <string name="compat_mode_label">互換モード</string>
+    <string name="loadossllegacy">OpenSSLレガシープロバイダーを読み込む</string>
+    <string name="bf_cbc_requires_legacy">プロファイルは、OpenSSLレガシープロバイダー(有効化されていません)に依存するBF-CBCを使用します。</string>
+    <string name="allow_translations_title">コミュニティが投稿した翻訳を許可する</string>
+    <string name="allow_translations_summary">コミュニティから提供された翻訳を使用してアプリを翻訳できるようにします。有効にするには、アプリを再起動する必要があります。</string>
 </resources>

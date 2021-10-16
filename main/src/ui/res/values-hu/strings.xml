@@ -400,7 +400,6 @@
     <string name="export_config_chooser_title">Konfigurációs fájl exportálása</string>
     <string name="missing_tlsauth">Hiányzó tls-auth fájl</string>
     <string name="missing_certificates">Hiányzó felhasználói tanúsítvány vagy privát kulcs fájl</string>
-    <string name="missing_ca_certificate">Hiányzó CA tanúsítvány</string>
     <string name="crl_title">Tanúsítvány Visszavonási Lista (opcionális)</string>
     <string name="reread_log">%d napló bejegyzés újraolvasása a log cache fájlból</string>
     <string name="samsung_broken">Annak ellenére, hogy a Samsung telefonok a legtöbbet eladott Android telefonok közé tartoznak, a Samsung firmware-ek a leg bug-osabb Android firmware-ek. Ezeken az eszközökön a hibák nem csak a VPN működésre korlátozódnak, de nagy részük kiküszöbölhető. A következő néhány ilyen hiba leírása.\n\nA DNS nem működik hacsak nem a DNS kiszolgáló a VPN tartományban van.\n\nSok Samsung 5.x eszközön nem működik az engedélyezett/tiltott alkalmazások funkció.\nSamsung 6.0-n a VPN nem működik hacsak nem adjuk hozzá kivételként az alkalmazást a Powersave funkcióknál.</string>

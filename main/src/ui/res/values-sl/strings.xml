@@ -398,7 +398,6 @@
     <string name="export_config_chooser_title">Izvozi nastavitveno datoteko</string>
     <string name="missing_tlsauth">Datoteka tls-auth manjka</string>
     <string name="missing_certificates">Manjka uporabniško potrdilo ali datoteka ključa uporabniškega potrdila</string>
-    <string name="missing_ca_certificate">Manjka potrdilo CA</string>
     <string name="crl_title">Seznam preklicanih potrdil (izbirno)</string>
     <string name="reread_log">Ponovno preberite predmete dnevnika (%d) iz njegove predpomnjene datoteke</string>
     <string name="samsung_broken">Čeprav so Samsungovi telefoni eni najbolj prodajanih telefonov z Androidom, je strojna programska oprema njihovih telefonov ena najbolj hroščastih. Hrošči niso omejeni na delovanje VPN-a in se veliko od njih da zaobiti. Tukaj je opisanih nekaj hroščev.\n\nDNS ne deluje, če strežnik DNS ni v dosegu VPN-a.\n\nNa veliko napravah Samsung 5.x značilnost dovoljeni/nedovoljeni programi ne deluje.\nZa Samsungu 6.x je bilo sporočeno, da VPN ne deluje razen če je program za VPN dodan na seznam izjem značilnosti varčevanja z energijo.</string>

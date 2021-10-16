@@ -393,7 +393,6 @@
     <string name="export_config_chooser_title">Exportovat konfigurační soubor</string>
     <string name="missing_tlsauth">soubor tls-auth chybí</string>
     <string name="missing_certificates">Chybí uživatelský certifikát nebo soubor uživatelského klíče certifikátu</string>
-    <string name="missing_ca_certificate">Chybí certifikát CA</string>
     <string name="crl_title">Seznam revokovaných certifikátů (volitelné)</string>
     <string name="reread_log">Znovu načíst (%d) logy z mezipaměti</string>
     <string name="samsung_broken_title">Samsung telefony</string>

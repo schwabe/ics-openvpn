@@ -400,7 +400,6 @@
     <string name="export_config_chooser_title">Ambil berkas konfigurasi</string>
     <string name="missing_tlsauth">File tls-auth hilang</string>
     <string name="missing_certificates">Sertifikat pengguna atau file kunci pengguna certifcate hilang</string>
-    <string name="missing_ca_certificate">Sertifikat CA tidak ditemukan</string>
     <string name="crl_title">Daftar Pencabutan Certifcate (opsional)</string>
     <string name="reread_log">Baca ulang (%d) item log dari file cache log</string>
     <string name="samsung_broken">Jjj</string>

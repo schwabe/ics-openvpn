@@ -401,7 +401,6 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="export_config_chooser_title">Exporter le fichier de configuration</string>
     <string name="missing_tlsauth">Fichier tls-auth manquant</string>
     <string name="missing_certificates">Le certificat ou le fichier de clé de l\'utilisateur est manquant</string>
-    <string name="missing_ca_certificate">Certificat CA manquant</string>
     <string name="crl_title">Liste des certificats révoqués (facultatif)</string>
     <string name="reread_log">Relire (%d) éléments du cache du journal</string>
     <string name="samsung_broken">Bien que les téléphones Samsung sont parmi les téléphones Android les plus vendus, les micrologiciels Samsung sont également parmi les micrologiciels Android les plus bugués. Les bugs ne sont pas limités à la gestion des VPN sur ces appareils mais beaucoup d\'entre eux peuvent être contournés. Certains de ces bugs sont décrits ci-dessous.\n\nLe DNS ne fonctionne pas à moins que le serveur DNS soit dans la plage VPN.\n\nSur de nombreux appareils Samsung 5.x, la fonction d\'applications autorisées/non autorisées ne fonctionne pas.\nSur les Samsung 6.x, le VPN ne fonctionne pas à moins que la fonction d\'optimisation de la batterie n\'est pas activée pour l\'application VPN.</string>

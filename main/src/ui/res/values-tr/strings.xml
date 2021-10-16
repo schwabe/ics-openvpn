@@ -400,7 +400,6 @@
     <string name="export_config_chooser_title">Yapılandırma dosyasını dışa aktar</string>
     <string name="missing_tlsauth">tls-auth dosyası kayıp</string>
     <string name="missing_certificates">Kullanıcı sertifikası ve ya kullanıcı sertifika anahtar dosyası kayıp</string>
-    <string name="missing_ca_certificate">CA sertifikası kayıp</string>
     <string name="crl_title">Sertifika İptal Listesi (isteğe bağlı)</string>
     <string name="reread_log">Günlük önbellek dosyasından (%d) günlük ögesini tekrar oku</string>
     <string name="samsung_broken">Samsung telefonlar en çok satan Android telefonlar arasında yer alıyor olsa da, Samsung\'un yazılım yazılımı en hatalı Android yazılımları arasında yer alıyor. Hatalar, bu aygıtlardaki VPN işlemi ile sınırlı değildir, ancak bunların birçoğuna geçici çözüm bulunabilir. Bu hataların bazıları aşağıda açıklanıyor.\n\n DNS, DNS sunucusu VPN aralığında olmadığı takdirde çalışmaz.\n\nÇoğu Samsung 5.x cihazında izin verilen/izin verilmeyen uygulamalar özelliği çalışmıyor.\nSamsung 6.x üzerinde, VPN uygulamasının Güç tasarrufu özelliklerinden muaf tutulmadıkça çalışmadığı bildirildi.</string>

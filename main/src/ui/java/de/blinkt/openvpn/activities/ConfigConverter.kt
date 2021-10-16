@@ -14,7 +14,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -28,6 +27,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.lifecycle.lifecycleScope
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.VpnProfile
 import de.blinkt.openvpn.core.ConfigParser
@@ -36,6 +36,9 @@ import de.blinkt.openvpn.core.ProfileManager
 import de.blinkt.openvpn.fragments.Utils
 import de.blinkt.openvpn.views.FileSelectLayout
 import de.blinkt.openvpn.views.FileSelectLayout.FileSelectCallback
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.*
 import java.net.URLDecoder
 import java.util.*
@@ -57,7 +60,8 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
     private lateinit var mProfilename: EditText
     private lateinit var mCompatmode: Spinner
     private lateinit var mCompatmodeLabel: TextView
-    private var mImportTask: AsyncTask<Void, Void, Int>? = null
+    private lateinit var mTLSProfile: Spinner
+    private lateinit var mTLSProfileLabel: TextView
     private lateinit var mLogLayout: LinearLayout
     private lateinit var mProfilenameLabel: TextView
 
@@ -74,7 +78,11 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), requestCode)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // Permission declined, do nothing
         if (grantResults.size == 0 || grantResults[0] == PackageManager.PERMISSION_DENIED)
@@ -127,10 +135,15 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         }
 
         mResult!!.mCompatMode = Utils.mapCompatMode(mCompatmode.selectedItemPosition)
-        /* If you need compability with such an old version there is a high chance that
-           the legacy provider is needed as well
-         */
-        if (mResult!!.mCompatMode in 1..20400)
+
+        val selectedTLSProfile = translSelectionToProfileName(mTLSProfile.selectedItemPosition)
+        if (selectedTLSProfile != "legacy" || !mResult!!.mTlSCertProfile.isNullOrEmpty()) {
+            mResult!!.mTlSCertProfile = selectedTLSProfile
+        }
+
+        /* If you need compability with such an old version or such a low security profile
+         * there is a high chance that the legacy provider is needed as well */
+        if (mResult!!.mCompatMode in 1..20400 || selectedTLSProfile == "insecure")
             mResult!!.mUseLegacyProvider = true;
 
         val intent = installPKCS12()
@@ -212,16 +225,18 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
     fun showCertDialog() {
         try {
 
-            KeyChain.choosePrivateKeyAlias(this,
-                    { alias ->
-                        // Credential alias selected.  Remember the alias selection for future use.
-                        mResult!!.mAlias = alias
-                        saveProfile()
-                    },
-                    arrayOf("RSA", "EC"), null, // issuer, null for any
-                    mResult!!.mServerName, // host name of server requesting the cert, null if unavailable
-                    -1, // port of server requesting the cert, -1 if unavailable
-                    mAliasName)// List of acceptable key types. null for any
+            KeyChain.choosePrivateKeyAlias(
+                this,
+                { alias ->
+                    // Credential alias selected.  Remember the alias selection for future use.
+                    mResult!!.mAlias = alias
+                    saveProfile()
+                },
+                arrayOf("RSA", "EC"), null, // issuer, null for any
+                mResult!!.mServerName, // host name of server requesting the cert, null if unavailable
+                -1, // port of server requesting the cert, -1 if unavailable
+                mAliasName
+            )// List of acceptable key types. null for any
             // alias to preselect, null if unavailable
         } catch (anf: ActivityNotFoundException) {
             val ab = AlertDialog.Builder(this)
@@ -307,7 +322,11 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         return true
     }
 
-    private fun embedFile(filename: String?, type: Utils.FileType, onlyFindFileAndNullonNotFound: Boolean): String? {
+    private fun embedFile(
+        filename: String?,
+        type: Utils.FileType,
+        onlyFindFileAndNullonNotFound: Boolean
+    ): String? {
         if (filename == null)
             return null
 
@@ -400,10 +419,14 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
         val fileDialogInfo = getFileDialogInfo(type!!)
 
-        val isCert = type == Utils.FileType.CA_CERTIFICATE || type == Utils.FileType.CLIENT_CERTIFICATE
+        val isCert =
+            type == Utils.FileType.CA_CERTIFICATE || type == Utils.FileType.CLIENT_CERTIFICATE
         val fl = FileSelectLayout(this, getString(fileDialogInfo.first), isCert, false)
         fileSelectMap[type] = fl
-        fl.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        fl.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
 
         (findViewById<View>(R.id.config_convert_root) as LinearLayout).addView(fl, 2)
         findViewById<View>(R.id.files_missing_hint).visibility = View.VISIBLE
@@ -549,11 +572,16 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         }
 
 
-        mResult!!.mCaFilename = embedFile(mResult!!.mCaFilename, Utils.FileType.CA_CERTIFICATE, false)
-        mResult!!.mClientCertFilename = embedFile(mResult!!.mClientCertFilename, Utils.FileType.CLIENT_CERTIFICATE, false)
-        mResult!!.mClientKeyFilename = embedFile(mResult!!.mClientKeyFilename, Utils.FileType.KEYFILE, false)
-        mResult!!.mTLSAuthFilename = embedFile(mResult!!.mTLSAuthFilename, Utils.FileType.TLS_AUTH_FILE, false)
-        mResult!!.mPKCS12Filename = embedFile(mResult!!.mPKCS12Filename, Utils.FileType.PKCS12, false)
+        mResult!!.mCaFilename =
+            embedFile(mResult!!.mCaFilename, Utils.FileType.CA_CERTIFICATE, false)
+        mResult!!.mClientCertFilename =
+            embedFile(mResult!!.mClientCertFilename, Utils.FileType.CLIENT_CERTIFICATE, false)
+        mResult!!.mClientKeyFilename =
+            embedFile(mResult!!.mClientKeyFilename, Utils.FileType.KEYFILE, false)
+        mResult!!.mTLSAuthFilename =
+            embedFile(mResult!!.mTLSAuthFilename, Utils.FileType.TLS_AUTH_FILE, false)
+        mResult!!.mPKCS12Filename =
+            embedFile(mResult!!.mPKCS12Filename, Utils.FileType.PKCS12, false)
         mResult!!.mCrlFilename = embedFile(mResult!!.mCrlFilename, Utils.FileType.CRL_FILE, true)
         if (cp != null) {
             mEmbeddedPwFile = cp.authUserPassFile
@@ -568,6 +596,25 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         }
     }
 
+    private fun translateTLSProfileToSelection(tlsprofile: String?): Int {
+        return when (tlsprofile) {
+            "insecure" -> 0
+            "legacy" -> 1
+            "preferred" -> 2
+            "suiteb" -> 3
+            else -> 1
+        }
+    }
+
+    private fun translSelectionToProfileName(selection: Int): String {
+        return when (selection) {
+            0 -> "insecure"
+            1 -> "legacy"
+            2 -> "preferred"
+            3 -> "suiteb"
+            else -> "legacy"
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -588,6 +635,8 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         mCompatmode = findViewById(R.id.compatmode) as Spinner
         mCompatmodeLabel = findViewById(R.id.compatmode_label) as TextView
 
+        mTLSProfile = findViewById(R.id.tls_profile) as Spinner
+        mTLSProfileLabel = findViewById(R.id.tls_profile_label) as TextView
 
         if (savedInstanceState != null && savedInstanceState.containsKey(VPNPROFILE)) {
             mResult = savedInstanceState.getSerializable(VPNPROFILE) as VpnProfile?
@@ -596,6 +645,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
             mSourceUri = savedInstanceState.getParcelable("mSourceUri")
             mProfilename.setText(mResult!!.mName)
             mCompatmode.setSelection(Utils.mapCompatVer(mResult!!.mCompatMode))
+            mTLSProfile.setSelection(translateTLSProfileToSelection(mResult?.mTlSCertProfile))
 
             if (savedInstanceState.containsKey("logentries")) {
 
@@ -625,8 +675,11 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
             val data = intent.getStringExtra(Intent.EXTRA_TEXT)
 
             if (data != null) {
-                startImportTask(Uri.fromParts("inline", "inlinetext", null),
-                        "imported profiles from AS", data);
+                lifecycleScope.launch {
+                    startImportTask(
+                        Uri.fromParts("inline", "inlinetext", null),
+                        "imported profiles from AS", data)
+                }
             }
         } else if (intent.action.equals(IMPORT_PROFILE) || intent.action.equals(Intent.ACTION_VIEW)) {
             val data = intent.data
@@ -642,7 +695,10 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         //log(R.string.import_experimental);
         log(R.string.importing_config, data.toString())
         var possibleName: String? = null
-        if (data.scheme != null && data.scheme == "file" || data.lastPathSegment != null && (data.lastPathSegment!!.endsWith(".ovpn") || data.lastPathSegment!!.endsWith(".conf"))) {
+        if (data.scheme != null && data.scheme == "file" || data.lastPathSegment != null && (data.lastPathSegment!!.endsWith(
+                ".ovpn"
+            ) || data.lastPathSegment!!.endsWith(".conf"))
+        ) {
             possibleName = data.lastPathSegment
             if (possibleName!!.lastIndexOf('/') != -1)
                 possibleName = possibleName.substring(possibleName.lastIndexOf('/') + 1)
@@ -651,7 +707,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
         mPathsegments = data.pathSegments
 
-        var cursor:Cursor? = null
+        var cursor: Cursor? = null
         try {
             cursor = contentResolver.query(data, null, null, null, null)
 
@@ -668,8 +724,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
                     log("Mime type: " + cursor.getString(columnIndex))
                 }
             }
-        }
-        catch (se:SecurityException) {
+        } catch (se: SecurityException) {
             log("Importing failed: ${se.localizedMessage}")
         } finally {
             cursor?.close()
@@ -679,69 +734,72 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
             possibleName = possibleName.replace(".conf", "")
         }
 
-        startImportTask(data, possibleName, "")
-
-
+        lifecycleScope.launch {
+            startImportTask(data, possibleName, "")
+        }
     }
 
-    private fun startImportTask(data: Uri, possibleName: String?, inlineData: String) {
-        mImportTask = object : AsyncTask<Void, Void, Int>() {
-            private var mProgress: ProgressBar? = null
+    private suspend fun startImportTask(data: Uri, possibleName: String?, inlineData: String) {
+        val mProgress: ProgressBar
+        withContext(Dispatchers.Main)
+        {
+            mProgress = ProgressBar(this@ConfigConverter)
+            addViewToLog(mProgress)
+        }
+        var errorCode = 0
+        withContext(Dispatchers.IO)
+        {
 
-            override fun onPreExecute() {
-                mProgress = ProgressBar(this@ConfigConverter)
-                addViewToLog(mProgress)
-            }
-
-            override fun doInBackground(vararg params: Void): Int? {
-                try {
-                    var inputStream: InputStream?
-                    if (data.scheme.equals("inline")) {
-                        inputStream = inlineData.byteInputStream()
-                    } else {
-                        inputStream = contentResolver.openInputStream(data)
-                    }
-
-                    if (inputStream != null) {
-                        doImport(inputStream)
-                    }
-                    if (mResult == null)
-                        return -3
-                } catch (se: IOException) {
-                    log(R.string.import_content_resolve_error.toString() + ":" + se.localizedMessage)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        checkMarschmallowFileImportError(data)
-                    return -2
-                } catch (se: SecurityException) {
-                    log(R.string.import_content_resolve_error.toString() + ":" + se.localizedMessage)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                        checkMarschmallowFileImportError(data)
-                    return -2
+            try {
+                val inputStream: InputStream?
+                if (data.scheme.equals("inline")) {
+                    inputStream = inlineData.byteInputStream()
+                } else {
+                    inputStream = contentResolver.openInputStream(data)
                 }
 
-                return 0
-            }
-
-            override fun onPostExecute(errorCode: Int?) {
-                mLogLayout.removeView(mProgress)
-                addMissingFileDialogs()
-                updateFileSelectDialogs()
-
-                if (errorCode == 0) {
-                    displayWarnings()
-                    mResult!!.mName = getUniqueProfileName(possibleName)
-                    mProfilename.visibility = View.VISIBLE
-                    mProfilenameLabel.visibility = View.VISIBLE
-                    mProfilename.setText(mResult!!.name)
-
-                    mCompatmode.visibility = View.VISIBLE
-                    mCompatmodeLabel.visibility = View.VISIBLE
-                    mCompatmode.setSelection(Utils.mapCompatVer(mResult!!.mCompatMode))
-
-                    log(R.string.import_done)
+                if (inputStream != null) {
+                    doImport(inputStream)
                 }
+                if (mResult == null)
+                    errorCode = -3
+            } catch (se: IOException) {
+                log(R.string.import_content_resolve_error.toString() + ":" + se.localizedMessage)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    checkMarschmallowFileImportError(data)
+                errorCode = -2
+            } catch (se: SecurityException) {
+                log(R.string.import_content_resolve_error.toString() + ":" + se.localizedMessage)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    checkMarschmallowFileImportError(data)
+                errorCode = -2
             }
-        }.execute()
+        }
+        withContext(Dispatchers.Main)
+        {
+            mLogLayout.removeView(mProgress)
+            addMissingFileDialogs()
+            updateFileSelectDialogs()
+
+            if (errorCode == 0) {
+                displayWarnings()
+                val result = mResult!!
+                result.mName = getUniqueProfileName(possibleName)
+                mProfilename.visibility = View.VISIBLE
+                mProfilenameLabel.visibility = View.VISIBLE
+                mProfilename.setText(result.name)
+
+                mCompatmode.visibility = View.VISIBLE
+                mCompatmodeLabel.visibility = View.VISIBLE
+                mCompatmode.setSelection(Utils.mapCompatVer(result.mCompatMode))
+
+                mTLSProfile.visibility = View.VISIBLE
+                mTLSProfileLabel.visibility = View.VISIBLE
+                mTLSProfile.setSelection(translateTLSProfileToSelection(result.mTlSCertProfile))
+
+                log(R.string.import_done)
+            }
+        }
     }
 
 

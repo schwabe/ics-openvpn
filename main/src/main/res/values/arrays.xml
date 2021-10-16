@@ -46,6 +46,6 @@
         <item>insecure (not recommend, allows insecure crypto)</item>
         <item>legacy (default)</item>
         <item>preferred (recommended but limited compabbility)</item>
-        <item>Suite B</item>
+        <item>Suite B (only NIST approved elliptic curves)</item>
     </string-array>
 </resources>

@@ -6,7 +6,10 @@
 package de.blinkt.openvpn.fragments;
 
 import android.os.Bundle;
+import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceFragmentCompat;
 
 import de.blinkt.openvpn.R;
@@ -37,12 +40,13 @@ public abstract class OpenVpnPreferencesFragment extends PreferenceFragmentCompa
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		if(savedInstanceState!=null) {
-			String profileUUID=savedInstanceState.getString(VpnProfile.EXTRA_PROFILEUUID);
-			mProfile = ProfileManager.get(getActivity(),profileUUID);
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		if (savedInstanceState != null) {
+			String profileUUID = savedInstanceState.getString(VpnProfile.EXTRA_PROFILEUUID);
+			mProfile = ProfileManager.get(getActivity(), profileUUID);
 			loadSettings();
+
 		}
 	}
 

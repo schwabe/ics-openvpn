@@ -289,7 +289,7 @@ object Utils {
         return builder
     }
 
-    val weakCiphers = listOf<String>("BF-CBC", "DES-CBC", "NONE")
+    val weakCiphers = listOf("BF-CBC", "DES-CBC", "NONE")
 
     @JvmStatic
     fun addSoftWarnings(warnings:MutableList<String>, vp:VpnProfile) {
@@ -305,7 +305,7 @@ object Utils {
         if ("insecure".equals(vp.mTlSCertProfile))
             warnings.add("low security (TLS security profile 'insecure' selected)");
 
-        var cipher= vp.mCipher.toUpperCase(Locale.ROOT)
+        var cipher= vp.mCipher?.toUpperCase(Locale.ROOT)
         if (cipher.isNullOrEmpty())
             cipher = "BF-CBC";
 

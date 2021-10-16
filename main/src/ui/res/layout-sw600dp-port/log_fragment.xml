@@ -12,7 +12,6 @@
               tools:context=".LogWindow">
 
     <LinearLayout
-        android:background="@drawable/white_rect"
         android:elevation="1dp"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">

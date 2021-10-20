@@ -5,6 +5,7 @@
 package de.blinkt.openvpn.fragments
 
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.ApplicationInfo
@@ -93,7 +94,15 @@ class GeneralSettings : PreferenceFragmentCompat(), Preference.OnPreferenceClick
                     )
                     builder.setMessage(R.string.use_alwayson_vpn)
                     builder.setNeutralButton(R.string.open_vpn_settings, { dialog, which ->
-                        startActivity(Intent(Settings.ACTION_VPN_SETTINGS))
+                        try {
+                            startActivity(Intent(Settings.ACTION_VPN_SETTINGS))
+                        } catch (ane: ActivityNotFoundException) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Cannot launch VPN settings directly, please manually open the settings instead.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     })
                     builder.setPositiveButton(android.R.string.ok, null)
                     builder.show()

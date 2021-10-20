@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Pair
 import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.preference.*
@@ -25,6 +26,8 @@ import de.blinkt.openvpn.views.RemoteCNPreferenceDialog
 import java.io.IOException
 
 class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPreferenceClickListener {
+    private lateinit var handleFileSelectResult: ActivityResultLauncher<Intent>
+    private lateinit var handleSystemChooserResult: ActivityResultLauncher<Intent>
     private lateinit var mExpectTLSCert: CheckBoxPreference
     private lateinit var mCheckRemoteCN: CheckBoxPreference
     private lateinit var mRemoteCN: RemoteCNPreference
@@ -55,10 +58,13 @@ class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPrefe
         }
         mUseTLSAuth = findPreference("useTLSAuth")!!
         mTLSAuthFile = findPreference("tlsAuthFile")!!
+        mTLSAuthFile.onPreferenceClickListener = this
         mTLSAuthDirection = findPreference("tls_direction")!!
         mDataCiphers = findPreference("dataciphers")!!
         mAuth = findPreference("auth")!!
         mTLSProfile = findPreference("tls_profile")!!
+
+        createActivityResultHandlers()
         loadSettings()
     }
 
@@ -137,38 +143,43 @@ class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPrefe
         return ret + dn
     }
 
+    fun createActivityResultHandlers()
+    {
+        handleSystemChooserResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK)
+                try {
+                    mTlsAuthFileData =
+                        getFilePickerResult(
+                            Utils.FileType.TLS_AUTH_FILE,
+                            result.data,
+                            requireContext()
+                        )
+                    setTlsAuthSummary(mTlsAuthFileData)
+                } catch (e: IOException) {
+                    VpnStatus.logException(e)
+                } catch (se: SecurityException) {
+                    VpnStatus.logException(se)
+                }
+        }
+        handleFileSelectResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            val resData = result.data?.getStringExtra(FileSelect.RESULT_DATA)
+            mTlsAuthFileData = resData
+            setTlsAuthSummary(resData)
+        }
+    }
+
     fun startFileDialog() {
         var startFC: Intent? = null
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !alwaysUseOldFileChooser(activity)) {
             startFC = getFilePickerIntent(requireContext(), Utils.FileType.TLS_AUTH_FILE)
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                if (result.resultCode == Activity.RESULT_OK)
-                    try {
-                        mTlsAuthFileData =
-                            getFilePickerResult(
-                                Utils.FileType.TLS_AUTH_FILE,
-                                result.data,
-                                requireContext()
-                            )
-                        setTlsAuthSummary(mTlsAuthFileData)
-                    } catch (e: IOException) {
-                        VpnStatus.logException(e)
-                    } catch (se: SecurityException) {
-                        VpnStatus.logException(se)
-                    }
-            }
+            if (startFC != null)
+                handleSystemChooserResult.launch(startFC)
         }
         if (startFC == null) {
             startFC = Intent(activity, FileSelect::class.java)
             startFC.putExtra(FileSelect.START_DATA, mTlsAuthFileData)
             startFC.putExtra(FileSelect.WINDOW_TITLE, R.string.tls_auth_file)
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-
-                val resData = result.data?.getStringExtra(FileSelect.RESULT_DATA)
-                mTlsAuthFileData = resData
-                setTlsAuthSummary(resData)
-
-            }
+            handleFileSelectResult.launch(startFC)
         }
     }
 

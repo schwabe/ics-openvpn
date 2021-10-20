@@ -131,6 +131,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             } catch (IOException e) {
                 // wait 300 ms before retrying
                 try {
+                    //noinspection BusyWait
                     Thread.sleep(300);
                 } catch (InterruptedException ignored) {
                 }
@@ -216,8 +217,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 pendingInput += input;
 
                 pendingInput = processInput(pendingInput);
-
-
             }
         } catch (IOException e) {
             if (!e.getMessage().equals("socket closed") && !e.getMessage().equals("Connection reset by peer"))

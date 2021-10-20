@@ -614,7 +614,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         // Open the Management Interface
         if (!useOpenVPN3) {
-            // start a Thread that handles incoming messages of the managment socket
+            // start a Thread that handles incoming messages of the management socket
             OpenVpnManagementThread ovpnManagementThread = new OpenVpnManagementThread(mProfile, this);
             if (ovpnManagementThread.openManagementInterface(this)) {
                 Thread mSocketManagerThread = new Thread(ovpnManagementThread, "OpenVPNManagementThread");

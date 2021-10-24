@@ -40,11 +40,14 @@ class Settings_IP : OpenVpnPreferencesFragment(), Preference.OnPreferenceChangeL
         mSearchdomain = findPreference("searchdomain")!!
         mDNS1 = findPreference("dns1")!!
         mDNS2 = findPreference("dns2")!!
+        mDNS1.summaryProvider = DNSSummaryProvider()
+        mDNS2.summaryProvider = DNSSummaryProvider()
         mNobind = findPreference("nobind")!!
         mUsePull.onPreferenceChangeListener = this
         mOverrideDNS.onPreferenceChangeListener = this
         loadSettings()
     }
+
 
     override fun loadSettings() {
         if (mProfile.mAuthenticationType == VpnProfile.TYPE_STATICKEYS) mUsePull.isEnabled =
@@ -102,5 +105,26 @@ class Settings_IP : OpenVpnPreferencesFragment(), Preference.OnPreferenceChangeL
         mSearchdomain.isEnabled = enabled
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {}
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+
+    }
+}
+
+class DNSSummaryProvider : Preference.SummaryProvider<Preference> {
+    override fun provideSummary(preference: Preference?): CharSequence {
+        val ep = preference as EditTextPreference
+        var summary = ep.text ?: ""
+        if (summary == "8.8.4.4" || summary == "8.8.8.8" || summary == "2001:4860:4860::8888" || summary == "2001:4860:4860::8844" )
+            summary += " (dns.google.com)"
+        else if (summary.startsWith("2606:4700:4700::") || summary.startsWith("1.1.1.") || summary.startsWith("1.0.0."))
+            summary += " (Cloudflare)"
+
+        else if (summary.startsWith("9.9.9.") || summary.startsWith("2620:fe::"))
+            summary += " (Quad9)"
+        else if (summary.isEmpty())
+            summary = "(not set)"
+
+        return summary
+    }
+
 }

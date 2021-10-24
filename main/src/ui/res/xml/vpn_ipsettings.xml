@@ -47,12 +47,12 @@
                 android:dialogMessage="@string/dns1_summary"
                 android:key="dns1"
                 android:title="@string/dns_server"
-                app:useSimpleSummaryProvider="true" />
+                />
         <EditTextPreference
                 android:dialogMessage="@string/secondary_dns_message"
                 android:key="dns2"
                 android:title="@string/backup_dns"
-                app:useSimpleSummaryProvider="true" />
+                />
     </PreferenceCategory>
 
 </PreferenceScreen>

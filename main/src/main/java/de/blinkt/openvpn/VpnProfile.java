@@ -89,8 +89,8 @@ public class VpnProfile implements Serializable, Cloneable {
     private static final int AUTH_RETRY_NONE_KEEP = 1;
     private static final int AUTH_RETRY_INTERACT = 3;
     private static final String EXTRA_RSA_PADDING_TYPE = "de.blinkt.openvpn.api.RSA_PADDING_TYPE";
-    public static String DEFAULT_DNS1 = "8.8.8.8";
-    public static String DEFAULT_DNS2 = "8.8.4.4";
+    public static String DEFAULT_DNS1 = "9.9.9.9";
+    public static String DEFAULT_DNS2 = "2620:fe::fe";
     // variable named wrong and should haven beeen transient
     // but needs to keep wrong name to guarante loading of old
     // profiles

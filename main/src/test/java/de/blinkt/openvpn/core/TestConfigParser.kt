@@ -106,6 +106,25 @@ class TestConfigParser {
         Assert.assertEquals(vp.mExcludedRoutes.trim(), "8.8.8.8/32");
     }
 
+    @Test
+    fun testOneDNSImport()
+    {
+        val config = "client\n" +
+                "tun-mtu 1234\n" +
+                "<connection>\n" +
+                "remote foo.bar\n" +
+                "tun-mtu 1222\n" +
+                "</connection>\n" +
+                "route 8.8.8.8 255.255.255.255 net_gateway\n" +
+                "dhcp-option DNS 1.2.3.4\n"
+
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(config))
+        val vp = cp.convertProfile()
+
+        Assert.assertEquals("1.2.3.4", vp.mDNS1)
+        Assert.assertEquals("" , vp.mDNS2)
+    }
 
     @Test
     fun testCipherImport() {

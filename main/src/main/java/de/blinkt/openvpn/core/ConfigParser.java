@@ -503,8 +503,10 @@ public class ConfigParser {
                     np.mSearchDomain = dhcpoption.get(2);
                 } else if (type.equals("DNS")) {
                     np.mOverrideDNS = true;
-                    if (np.mDNS1.equals(VpnProfile.DEFAULT_DNS1))
+                    if (np.mDNS1.equals(VpnProfile.DEFAULT_DNS1)) {
                         np.mDNS1 = arg;
+                        np.mDNS2 = "";
+                    }
                     else
                         np.mDNS2 = arg;
                 }

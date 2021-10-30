@@ -321,12 +321,14 @@ jdoubleArray Java_de_blinkt_openvpn_core_NativeUtils_getOpenSSLSpeed(JNIEnv* env
     //        print_result(D_EVP, testnum, count, d);
 
     OSSL_LIB_CTX_free(lib_ctx);
+    free(loopargs);
     return ret;
 error:
-  free(loopargs);
-  for (int k = 0; k < loopargs_len; k++) {
+    for (int k = 0; k < loopargs_len; k++) {
       EVP_CIPHER_CTX_free(loopargs[k].ctx);
     }
-  OSSL_LIB_CTX_free(lib_ctx);
+    free(loopargs);
+
+    OSSL_LIB_CTX_free(lib_ctx);
   return NULL;
 }

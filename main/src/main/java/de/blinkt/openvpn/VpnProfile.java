@@ -384,7 +384,7 @@ public class VpnProfile implements Serializable, Cloneable {
             cfg.append(String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString)));
 
             if (mUseLegacyProvider)
-                cfg.append("provider legacy:default\n");
+                cfg.append("provider legacy default\n");
 
             if (!TextUtils.isEmpty(mTlSCertProfile) && mAuthenticationType != TYPE_STATICKEYS)
                 cfg.append(String.format("tls-cert-profile %s\n", mTlSCertProfile));
@@ -1067,7 +1067,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         if (!mUseLegacyProvider &&
                 (dataciphers.contains("BF-CBC")
-                || ((mCompatMode > 0 && mCompatMode < 20500) || useOpenVPN3)
+                || (mCompatMode > 0 && mCompatMode < 20500)
                 && cipher.equals("BF-CBC")))
         {
             return R.string.bf_cbc_requires_legacy;

@@ -564,12 +564,20 @@ public class ConfigParser {
             }
         }
 
-        Vector<String> provider = getOption("provider", 1, 1);
+        Vector<String> provider = getOption("provider", 1, 9);
         if (provider != null)
         {
             String providers = provider.get(1).toLowerCase(Locale.ROOT);
             if (providers.equals("legacy:default") || providers.equals("default:legacy"))
                 np.mUseLegacyProvider = true;
+
+            for (String prov:provider)
+            {
+                if ("legacy".equals(prov.toLowerCase(Locale.ROOT)))
+                {
+                    np.mUseLegacyProvider = true;
+                }
+            }
         }
 
 

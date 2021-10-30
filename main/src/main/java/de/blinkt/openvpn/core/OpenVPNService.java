@@ -536,7 +536,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (profile == null)
             return;
         ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
-        shortcutManager.reportShortcutUsed(profile.getUUIDString());
+        if (shortcutManager!=null) {
+            /* This should never been null but I do not trust Android ROMs to do the right thing
+             * anymore and neither seems Coverity */
+            shortcutManager.reportShortcutUsed(profile.getUUIDString());
+        }
     }
 
     private VpnProfile fetchVPNProfile(Intent intent)
@@ -751,6 +755,12 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         Builder builder = new Builder();
 
         VpnStatus.logInfo(R.string.last_openvpn_tun_config);
+
+        if (mProfile == null)
+        {
+            VpnStatus.logError("OpenVPN tries to open a VPN descriptor with mProfile==null, please report this bug with log!");
+            return null;
+        }
 
         boolean allowUnsetAF = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !mProfile.mBlockUnusedAddressFamilies;
         if (allowUnsetAF) {

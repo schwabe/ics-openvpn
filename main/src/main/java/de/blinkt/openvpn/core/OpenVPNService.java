@@ -134,6 +134,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             OpenVPNService.this.challengeResponse(repsonse);
         }
 
+        @Override
+        public void startForeground(int id, Notification notification) throws RemoteException {
+            OpenVPNService.this.startForeground(id, notification);
+        }
+
 
     };
     private String mLastTunCfg;
@@ -251,89 +256,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     private void showNotification(final String msg, String tickerText, @NonNull String channel,
                                   long when, ConnectionStatus status, Intent intent) {
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        int icon = getIconByConnectionStatus(status);
-
-        android.app.Notification.Builder nbuilder = new Notification.Builder(this);
-
-        int priority;
-        if (channel.equals(NOTIFICATION_CHANNEL_BG_ID))
-            priority = PRIORITY_MIN;
-        else if (channel.equals(NOTIFICATION_CHANNEL_USERREQ_ID))
-            priority = PRIORITY_MAX;
-        else
-            priority = PRIORITY_DEFAULT;
-
-        if (mProfile != null)
-            nbuilder.setContentTitle(getString(R.string.notifcation_title, mProfile.mName));
-        else
-            nbuilder.setContentTitle(getString(R.string.notifcation_title_notconnect));
-
-        nbuilder.setContentText(msg);
-        nbuilder.setOnlyAlertOnce(true);
-        nbuilder.setOngoing(true);
-
-        nbuilder.setSmallIcon(icon);
-        if (status == LEVEL_WAITING_FOR_USER_INPUT) {
-            PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-            nbuilder.setContentIntent(pIntent);
-        } else {
-            nbuilder.setContentIntent(getGraphPendingIntent());
-        }
-
-        if (when != 0)
-            nbuilder.setWhen(when);
-
-
-        // Try to set the priority available since API 16 (Jellybean)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            jbNotificationExtras(priority, nbuilder);
-            addVpnActionsToNotification(nbuilder);
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            lpNotificationExtras(nbuilder, Notification.CATEGORY_SERVICE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //noinspection NewApi
-            nbuilder.setChannelId(channel);
-            if (mProfile != null)
-                //noinspection NewApi
-                nbuilder.setShortcutId(mProfile.getUUIDString());
-
-        }
-
-        if (tickerText != null && !tickerText.equals(""))
-            nbuilder.setTicker(tickerText);
-
-        @SuppressWarnings("deprecation")
-        Notification notification = nbuilder.getNotification();
-
-        int notificationId = channel.hashCode();
-
-        mNotificationManager.notify(notificationId, notification);
-
-        startForeground(notificationId, notification);
-
-        if (lastChannel != null && !channel.equals(lastChannel)) {
-            // Cancel old notification
-            mNotificationManager.cancel(lastChannel.hashCode());
-        }
-
-        // Check if running on a TV
-        if (runningOnAndroidTV() && !(priority < 0))
-            guiHandler.post(() -> {
-                if (mlastToast != null)
-                    mlastToast.cancel();
-                String name;
-                if (mProfile != null)
-                    name = mProfile.mName;
-                else
-                    name = "OpenVPN";
-                String toastText = String.format(Locale.getDefault(), "%s - %s", name, msg);
-                mlastToast = Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT);
-                mlastToast.show();
-            });
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

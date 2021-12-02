@@ -26,4 +26,14 @@ interface IOpenVPNServiceInternal {
     boolean isAllowedExternalApp(String packagename);
 
     void challengeResponse(String repsonse);
+
+    /**
+    * User of this library is responsible for showing a notification and calling startForeground
+    *
+    * @param id The identifier for this notification as per
+    * {@link NotificationManager#notify(int, Notification)
+    * NotificationManager.notify(int, Notification)};
+    * @param notification The Notification to be displayed.
+    */
+    void startForeground(int id, in Notification notification);
 }

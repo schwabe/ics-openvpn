@@ -6,13 +6,11 @@ OpenVPN for Android -EduVPN fork
 The EduVPN changes are:
 
 * [Explicitly import support-v4 library](https://github.com/eduvpn/ics-openvpn/commit/b5eb68ea8749314342cd454cdda7766dbb36977c): Support-v4 was removed as a transitional dependency, so we have to import it explicitly now for the parent activity fix.
-* [Librarify module](https://github.com/eduvpn/ics-openvpn/commit/a7529a8093db723b2dd1809adcde84700d9dd7c4): This converts the submodule to a library with as less changes as possible.
-* [Change activity which opens when tapping notification](https://github.com/eduvpn/ics-openvpn/commit/5d1778af0b5e43faaa24e2356c5383f5fd457dfe): Opens a different activity when tapping on the notification
-* [Ability to get IPv4 and IPv6 addresses from the service](https://github.com/eduvpn/ics-openvpn/commit/ec9097df75af7be93beaea0e82ab544420d0569e): Allows us to get the IPv4 and IPv6 addresses.
-* [Fix parent activity problem](https://github.com/eduvpn/ics-openvpn/commit/6ba82fdccb86ccd61b11c92d527ac7014f9ff06f): Opens the correct parent activity from the log window.
-* [Replace switch with if for library project](https://github.com/eduvpn/ics-openvpn/commit/336c0ba020b1b771851ef971fe0345ace5714c13)
-
-The last tracked upstream version is v0.7.4
+* [Librarify module](https://github.com/eduvpn/ics-openvpn/commit/c5af0126f61a893e3e30d69bc5b7e209781e497c): This converts the submodule to a library with as less changes as possible.
+* [Change activity which opens when tapping notification](https://github.com/eduvpn/ics-openvpn/commit/5987a435b6e61548330e6fc0827989e92f44ec41): Opens a different activity when tapping on the notification
+* [Fix parent activity problem](https://github.com/eduvpn/ics-openvpn/commit/8b69a964fe9b30f4430a04df03b1fa444efb0ee7): Opens the correct parent activity from the log window.
+* [Replace switch with if for library project](https://github.com/eduvpn/ics-openvpn/commit/ce38d0b12ff5327b82a8a4aa3993395fddad5eeb)
+* [Support gradle 6.9.1](https://github.com/eduvpn/ics-openvpn/commit/68e511a4feea818cc6e401cba3772adca5b02df8)
 
 Description
 ------------

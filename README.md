@@ -11,6 +11,7 @@ The EduVPN changes are:
 * [Fix parent activity problem](https://github.com/eduvpn/ics-openvpn/commit/8b69a964fe9b30f4430a04df03b1fa444efb0ee7): Opens the correct parent activity from the log window.
 * [Replace switch with if for library project](https://github.com/eduvpn/ics-openvpn/commit/ce38d0b12ff5327b82a8a4aa3993395fddad5eeb)
 * [Support gradle 6.9.1](https://github.com/eduvpn/ics-openvpn/commit/68e511a4feea818cc6e401cba3772adca5b02df8)
+* [Move notification creation to library user](https://github.com/eduvpn/ics-openvpn/commit/ec3b0d5a5b4eee0cc077e4fae91145689676f3d0)
 
 Description
 ------------

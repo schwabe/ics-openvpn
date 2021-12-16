@@ -50,8 +50,8 @@ class Settings_Connections : Settings_Fragment(), View.OnClickListener {
         mRecyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         mRecyclerView.adapter = mConnectionsAdapter
-        val fab_button = v.findViewById<View>(R.id.add_new_remote) as ImageButton
-        fab_button.setOnClickListener(this)
+        val fab_button = v.findViewById<View>(R.id.add_new_remote) as ImageButton?
+        fab_button?.setOnClickListener(this)
         mUseRandomRemote = v.findViewById<View>(R.id.remote_random) as Checkable
         mUseRandomRemote.isChecked = mProfile.mRemoteRandom
         mConnectionsAdapter.displayWarningIfNoneEnabled()

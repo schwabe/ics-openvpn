@@ -104,6 +104,9 @@ target_compile_definitions(ovpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\"
         )
 target_link_libraries(ovpnutil log)
 
+add_library(rsapss SHARED ovpnutil/rsapss.cpp)
+target_link_libraries(rsapss log crypto ssl)
+
 if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*skeleton.*/")
     add_library(osslspeedtest SHARED ovpnutil/sslspeed.c)
     target_link_libraries(osslspeedtest log crypto ssl)
@@ -195,8 +198,8 @@ set(openvpn_srcs
         src/openvpn/tls_crypt.c
         src/openvpn/tun.c
         src/openvpn/vlan.c
-        #src/openvpn/xkey_helper.c
-        #src/openvpn/xkey_provider.c
+        src/openvpn/xkey_helper.c
+        src/openvpn/xkey_provider.c
         src/openvpn/comp-lz4.c
         src/openvpn/comp.c
         src/openvpn/compstub.c

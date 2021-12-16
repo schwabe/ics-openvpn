@@ -17,8 +17,7 @@ public class NativeUtils {
 
     static native void jniclose(int fdint);
 
-    public static String getNativeAPI()
-    {
+    public static String getNativeAPI() {
         if (isRoboUnitTest())
             return "ROBO";
         else
@@ -31,6 +30,20 @@ public class NativeUtils {
 
     public static native String getOpenVPN3GitVersion();
 
+    static boolean rsspssloaded = false;
+
+    public static byte[] addRssPssPadding(int hashtype, int MSBits, int rsa_size, byte[] from)
+    {
+        if (!rsspssloaded) {
+            rsspssloaded = true;
+            System.loadLibrary("rsapss");
+        }
+
+        return rsapss(hashtype, MSBits, rsa_size, from);
+    }
+
+    private static native byte[] rsapss(int hashtype, int MSBits, int rsa_size, byte[] from);
+
     public final static int[] openSSLlengths = {
         16, 64, 256, 1024, 1500, 8 * 1024, 16 * 1024
     };
@@ -42,6 +55,7 @@ public class NativeUtils {
             System.loadLibrary("ovpnutil");
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN)
                 System.loadLibrary("jbcrypto");
+
 
             if (!BuildConfig.FLAVOR.equals("skeleton")) {
                 System.loadLibrary("osslspeedtest");

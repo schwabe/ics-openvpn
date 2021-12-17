@@ -20,8 +20,8 @@ android {
     defaultConfig {
         minSdk = 16
         targetSdk = 31
-        versionCode = 183
-        versionName = "0.7.29"
+        versionCode = 184
+        versionName = "0.7.30"
 
         externalNativeBuild {
             cmake {
@@ -167,7 +167,7 @@ dependencies {
     val fragment_version = "1.3.6"
 
 
-    implementation("androidx.annotation:annotation:1.2.0")
+    implementation("androidx.annotation:annotation:1.3.0")
     implementation("androidx.core:core:$coreVersion")
 
 

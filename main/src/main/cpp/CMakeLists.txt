@@ -44,7 +44,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
             -outcurrentdir
             -I${CMAKE_SOURCE_DIR}/openvpn3/client
             -I${CMAKE_SOURCE_DIR}/openvpn3
-            ${CMAKE_SOURCE_DIR}/openvpn3/javacli/ovpncli.i)
+            ${CMAKE_SOURCE_DIR}/openvpn3/client/ovpncli.i)
 
 
     # proper way bunt unfinished

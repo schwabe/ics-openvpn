@@ -12,6 +12,7 @@ import net.openvpn.ovpn3.ClientAPI_ExternalPKICertRequest;
 import net.openvpn.ovpn3.ClientAPI_ExternalPKISignRequest;
 import net.openvpn.ovpn3.ClientAPI_LogInfo;
 import net.openvpn.ovpn3.ClientAPI_OpenVPNClient;
+import net.openvpn.ovpn3.ClientAPI_OpenVPNClientHelper;
 import net.openvpn.ovpn3.ClientAPI_ProvideCreds;
 import net.openvpn.ovpn3.ClientAPI_Status;
 import net.openvpn.ovpn3.ClientAPI_TransportStats;
@@ -33,6 +34,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
     private VpnProfile mVp;
     private OpenVPNService mService;
+    private ClientAPI_OpenVPNClientHelper clientHelper = new ClientAPI_OpenVPNClientHelper();
 
     public OpenVPNThreadv3(OpenVPNService openVpnService, VpnProfile vp) {
         mVp = vp;
@@ -45,8 +47,11 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         if (!setConfig(configstr))
             return;
         setUserPW();
-        VpnStatus.logInfo(platform());
-        VpnStatus.logInfo(copyright());
+
+
+
+        VpnStatus.logInfo(ClientAPI_OpenVPNClientHelper.platform());
+        VpnStatus.logInfo(ClientAPI_OpenVPNClientHelper.copyright());
 
 
         StatusPoller statuspoller = new StatusPoller(OpenVPNManagement.mBytecountInterval * 1000);

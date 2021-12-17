@@ -388,7 +388,7 @@ public class VpnProfile implements Serializable, Cloneable {
             cfg.append(String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString)));
 
             if (mUseLegacyProvider)
-                cfg.append("provider legacy default\n");
+                cfg.append("providers legacy default\n");
 
             if (!TextUtils.isEmpty(mTlSCertProfile) && mAuthenticationType != TYPE_STATICKEYS)
                 cfg.append(String.format("tls-cert-profile %s\n", mTlSCertProfile));

@@ -32,9 +32,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         System.loadLibrary("ovpn3");
     }
 
-    private VpnProfile mVp;
-    private OpenVPNService mService;
-    private ClientAPI_OpenVPNClientHelper clientHelper = new ClientAPI_OpenVPNClientHelper();
+    private final VpnProfile mVp;
+    private final OpenVPNService mService;
 
     public OpenVPNThreadv3(OpenVPNService openVpnService, VpnProfile vp) {
         mVp = vp;

@@ -47,11 +47,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
             return;
         setUserPW();
 
-
-
         VpnStatus.logInfo(ClientAPI_OpenVPNClientHelper.platform());
         VpnStatus.logInfo(ClientAPI_OpenVPNClientHelper.copyright());
-
 
         StatusPoller statuspoller = new StatusPoller(OpenVPNManagement.mBytecountInterval * 1000);
         new Thread(statuspoller, "Status Poller").start();
@@ -60,9 +57,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         if (status.getError()) {
             VpnStatus.logError(String.format("connect() error: %s: %s", status.getStatus(), status.getMessage()));
             VpnStatus.addExtraHints(status.getMessage());
-        } else {
-            VpnStatus.updateStateString("NOPROCESS", "OpenVPN3 thread finished", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
         }
+        VpnStatus.updateStateString("NOPROCESS", "OpenVPN3 thread finished", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
         statuspoller.stop();
     }
 
@@ -190,7 +186,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         config.setRetryOnAuthFailed(retryOnAuthFailed);
         config.setEnableLegacyAlgorithms(mVp.mUseLegacyProvider);
         if (mVp.mCompatMode > 0 && mVp.mCompatMode < 20500)
-            config.setEnableNonPreferredDCOAlgorithms(true);
+            config.setEnableNonPreferredDCAlgorithms(true);
         if (!TextUtils.isEmpty(mVp.mTlSCertProfile))
             config.setTlsCertProfileOverride(mVp.mTlSCertProfile);
 

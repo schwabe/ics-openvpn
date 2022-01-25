@@ -8,12 +8,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:columnCount="5"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     android:paddingTop="8dip"
+    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     android:paddingBottom="8dip"
-    android:columnCount="4"
     tools:ignore="RtlCompat">
 
     <ImageView
@@ -22,35 +22,51 @@
         android:layout_height="@android:dimen/app_icon_size"
         android:layout_rowSpan="1"
         android:layout_marginEnd="8dip"
+        android:contentDescription="@null"
         android:scaleType="centerInside"
-        tools:background="@drawable/icon"
-        android:contentDescription="@null" />
+        tools:background="@drawable/icon" />
 
     <TextView
-        tools:text="@string/app"
         android:id="@+id/app_name"
-        android:layout_width="0dip"
-        android:layout_columnSpan="2"
+        android:layout_width="101dp"
         android:layout_rowSpan="1"
+        android:layout_columnSpan="2"
         android:layout_gravity="fill_horizontal|center_vertical"
         android:layout_marginTop="2dip"
-        android:singleLine="true"
         android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textAlignment="viewStart"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textAlignment="viewStart" />
+        tools:text="@string/app" />
 
-    <CheckBox android:id="@+id/app_selected"
-        android:layout_marginStart="8dip"
-        android:layout_gravity="center_vertical"
+    <CheckBox
+        android:id="@+id/app_selected"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_rowSpan="1"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dip"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         android:visibility="visible" />
 
-<!--    <TextView
-        android:id="@+id/app_size"
-        android:layout_width="0dip"
-        android:layout_gravity="fill_horizontal|top"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textAlignment="viewStart" /> -->
+    <CheckBox
+        android:id="@+id/app_selected_mobile"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_rowSpan="1"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dip"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:visibility="visible" />
+
+    <!--    <TextView
+            android:id="@+id/app_size"
+            android:layout_width="0dip"
+            android:layout_gravity="fill_horizontal|top"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textAlignment="viewStart" /> -->
 
     <!-- <TextView
         android:id="@+id/app_disabled"

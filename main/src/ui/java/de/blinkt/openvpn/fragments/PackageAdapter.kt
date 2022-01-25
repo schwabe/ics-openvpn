@@ -27,6 +27,7 @@ internal class AppViewHolder(var rootView : View) : RecyclerView.ViewHolder(root
     //public TextView appSize;
     //public TextView disabled;
     lateinit var checkBox: CompoundButton
+    lateinit var checkBoxMobile: CompoundButton
 
     companion object {
 
@@ -41,6 +42,7 @@ internal class AppViewHolder(var rootView : View) : RecyclerView.ViewHolder(root
             //holder.appSize = (TextView) convertView.findViewById(R.id.app_size);
             //holder.disabled = (TextView) convertView.findViewById(R.id.app_disabled);
             holder.checkBox = view.findViewById<View>(R.id.app_selected) as CompoundButton
+            holder.checkBoxMobile = view.findViewById<View>(R.id.app_selected_mobile) as CompoundButton
             view.tag = holder
 
 
@@ -157,18 +159,29 @@ internal class PackageAdapter(c: Context, vp: VpnProfile) : RecyclerView.Adapter
         viewHolder.appIcon.setImageDrawable(mInfo.loadIcon(mPm))
         viewHolder.checkBox.tag = mInfo.packageName
         viewHolder.checkBox.setOnCheckedChangeListener(this)
-
+        viewHolder.checkBoxMobile.tag = mInfo.packageName
+        viewHolder.checkBoxMobile.setOnCheckedChangeListener(this)
 
         viewHolder.checkBox.isChecked = mProfile.mAllowedAppsVpn.contains(mInfo.packageName)
+        viewHolder.checkBoxMobile.isChecked = mProfile.mAllowedAppsVpnMobile.contains(mInfo.packageName)
     }
 
 
     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
         val packageName = buttonView.tag as String
-        if (isChecked) {
-            mProfile.mAllowedAppsVpn.add(packageName)
-        } else {
-            mProfile.mAllowedAppsVpn.remove(packageName)
+        if ( buttonView.id == R.id.app_selected ) {
+            if (isChecked) {
+                mProfile.mAllowedAppsVpn.add(packageName)
+            } else {
+                mProfile.mAllowedAppsVpn.remove(packageName)
+            }
+        }
+        if ( buttonView.id == R.id.app_selected_mobile ) {
+            if (isChecked) {
+                mProfile.mAllowedAppsVpnMobile.add(packageName)
+            } else {
+                mProfile.mAllowedAppsVpnMobile.remove(packageName)
+            }
         }
     }
 

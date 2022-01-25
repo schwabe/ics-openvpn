@@ -152,6 +152,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public Connection[] mConnections = new Connection[0];
     public boolean mRemoteRandom = false;
     public HashSet<String> mAllowedAppsVpn = new HashSet<>();
+    public HashSet<String> mAllowedAppsVpnMobile = new HashSet<>();
     public boolean mAllowedAppsVpnAreDisallowed = true;
     public boolean mAllowAppVpnBypass = false;
     public String mCrlFilename;
@@ -319,6 +320,9 @@ public class VpnProfile implements Serializable, Cloneable {
 
                 if (mAllowedAppsVpn == null)
                     mAllowedAppsVpn = new HashSet<>();
+
+                if (mAllowedAppsVpnMobile == null)
+                    mAllowedAppsVpnMobile = new HashSet<>();
 
                 if (mConnections == null)
                     mConnections = new Connection[0];
@@ -852,6 +856,7 @@ public class VpnProfile implements Serializable, Cloneable {
             copy.mConnections[i++] = conn.clone();
         }
         copy.mAllowedAppsVpn = (HashSet<String>) mAllowedAppsVpn.clone();
+        copy.mAllowedAppsVpnMobile = (HashSet<String>) mAllowedAppsVpnMobile.clone();
         return copy;
     }
 

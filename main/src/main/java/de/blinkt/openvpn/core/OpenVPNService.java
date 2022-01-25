@@ -47,8 +47,11 @@ import java.lang.reflect.Method;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import java.nio.charset.Charset;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Vector;
 
@@ -1010,6 +1013,24 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
 
+    private boolean getConnectivityByMobile(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                // "Wifi enabled";
+                return false;
+            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                // "Mobile data enabled";
+                return true;
+            }
+        } else {
+            // "No internet is available";
+            return false;
+        }
+        return false;
+    }
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setAllowedVpnPackages(Builder builder) {
         boolean profileUsesOrBot = false;
@@ -1033,7 +1054,16 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
-        for (String pkg : mProfile.mAllowedAppsVpn) {
+        HashSet<String> mAllowedAppsVpn;
+
+        if ( getConnectivityByMobile(this) ) {
+            mAllowedAppsVpn = mProfile.mAllowedAppsVpnMobile;
+            VpnStatus.logInfo("Mobile data is active.");
+        } else {
+            mAllowedAppsVpn = mProfile.mAllowedAppsVpn;
+        }
+
+        for (String pkg : mAllowedAppsVpn) {
             try {
                 if (mProfile.mAllowedAppsVpnAreDisallowed) {
                     builder.addDisallowedApplication(pkg);
@@ -1044,7 +1074,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     }
                 }
             } catch (PackageManager.NameNotFoundException e) {
-                mProfile.mAllowedAppsVpn.remove(pkg);
+                mAllowedAppsVpn.remove(pkg);
                 VpnStatus.logInfo(R.string.app_no_longer_exists, pkg);
             }
         }
@@ -1059,9 +1089,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         if (mProfile.mAllowedAppsVpnAreDisallowed) {
-            VpnStatus.logDebug(R.string.disallowed_vpn_apps_info, TextUtils.join(", ", mProfile.mAllowedAppsVpn));
+            VpnStatus.logDebug(R.string.disallowed_vpn_apps_info, TextUtils.join(", ", mAllowedAppsVpn));
         } else {
-            VpnStatus.logDebug(R.string.allowed_vpn_apps_info, TextUtils.join(", ", mProfile.mAllowedAppsVpn));
+            VpnStatus.logDebug(R.string.allowed_vpn_apps_info, TextUtils.join(", ", mAllowedAppsVpn));
         }
 
         if (mProfile.mAllowAppVpnBypass) {

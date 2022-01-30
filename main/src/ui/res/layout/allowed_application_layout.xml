@@ -59,7 +59,7 @@
         android:layout_marginStart="8dip"
         android:minWidth="48dp"
         android:minHeight="48dp"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <!--    <TextView
             android:id="@+id/app_size"

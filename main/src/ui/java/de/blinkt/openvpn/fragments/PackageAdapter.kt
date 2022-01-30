@@ -144,6 +144,26 @@ internal class PackageAdapter(c: Context, vp: VpnProfile) : RecyclerView.Adapter
         vpnAllowBypassSwitch.setOnCheckedChangeListener { _, isChecked -> mProfile.mAllowAppVpnBypass = isChecked }
 
         vpnAllowBypassSwitch.isChecked = mProfile.mAllowAppVpnBypass
+
+
+
+
+        val vpnAllowMobile = settingsView.findViewById<View>(R.id.enable_allow_mobile) as Switch
+
+        vpnAllowMobile.setOnCheckedChangeListener { _, isChecked ->
+            mProfile.mAllowAppMobile = isChecked
+            filter.filter("")
+        }
+
+        vpnAllowMobile.isChecked = mProfile.mAllowAppMobile
+
+        val iconView = settingsView.findViewById<View>(R.id.icons) as GridLayout
+        if ( mProfile.mAllowAppMobile )
+            iconView.visibility = GridLayout.VISIBLE
+
+        else
+            iconView.visibility = GridLayout.GONE
+
     }
 
     fun bindViewApp(position: Int, viewHolder: AppViewHolder){
@@ -164,6 +184,12 @@ internal class PackageAdapter(c: Context, vp: VpnProfile) : RecyclerView.Adapter
 
         viewHolder.checkBox.isChecked = mProfile.mAllowedAppsVpn.contains(mInfo.packageName)
         viewHolder.checkBoxMobile.isChecked = mProfile.mAllowedAppsVpnMobile.contains(mInfo.packageName)
+
+        if ( mProfile.mAllowAppMobile )
+            viewHolder.checkBoxMobile.visibility = CompoundButton.VISIBLE
+
+        else
+            viewHolder.checkBoxMobile.visibility = CompoundButton.GONE
     }
 
 

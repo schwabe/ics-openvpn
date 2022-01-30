@@ -337,6 +337,7 @@
     <string name="vpn_disallow_radio">VPN wird für alle Apps mit Ausnahme der ausgewählten verwendet</string>
     <string name="vpn_allow_radio">VPN wird nur für die ausgewählten Apps verwendet</string>
     <string name="vpn_allow_bypass">Allow apps to bypass the VPN</string>
+    <string name="enable_allow_mobile">Extra Einstellung für Mobile Daten</string>
     <string name="query_delete_remote">Servereintrag entfernen?</string>
     <string name="keep">Behalten</string>
     <string name="delete">Entfernen</string>

@@ -1056,7 +1056,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         HashSet<String> mAllowedAppsVpn;
 
-        if ( getConnectivityByMobile(this) ) {
+        if ( getConnectivityByMobile(this) && mProfile.mAllowAppMobile) {
             mAllowedAppsVpn = mProfile.mAllowedAppsVpnMobile;
             VpnStatus.logInfo("Mobile data is active.");
         } else {

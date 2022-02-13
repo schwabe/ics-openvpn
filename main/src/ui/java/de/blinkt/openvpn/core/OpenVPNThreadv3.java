@@ -2,6 +2,10 @@ package de.blinkt.openvpn.core;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.Settings;
 import android.text.TextUtils;
 
@@ -24,8 +28,9 @@ import de.blinkt.openvpn.VpnProfile;
 
 import static de.blinkt.openvpn.VpnProfile.AUTH_RETRY_NOINTERACT;
 
-public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable, OpenVPNManagement {
+import androidx.annotation.NonNull;
 
+public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable, OpenVPNManagement {
     final static long EmulateExcludeRoutes = (1 << 16);
 
     static {
@@ -34,10 +39,16 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
     private final VpnProfile mVp;
     private final OpenVPNService mService;
+    /* The methods in OpenVPN3 can take a long time, so we do async messages to handle them
+     * to avoid ANR on the service main thread */
+    private final Handler mHandler;
 
     public OpenVPNThreadv3(OpenVPNService openVpnService, VpnProfile vp) {
         mVp = vp;
         mService = openVpnService;
+        HandlerThread mHandlerThread = new HandlerThread("OpenVPN3Thread");
+        mHandlerThread.start();
+        mHandler = new Handler(mHandlerThread.getLooper());
     }
 
     @Override
@@ -50,8 +61,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         VpnStatus.logInfo(ClientAPI_OpenVPNClientHelper.platform());
         VpnStatus.logInfo(ClientAPI_OpenVPNClientHelper.copyright());
 
-        StatusPoller statuspoller = new StatusPoller(OpenVPNManagement.mBytecountInterval * 1000);
-        new Thread(statuspoller, "Status Poller").start();
+        mHandler.postDelayed(this::pollStatus, OpenVPNManagement.mBytecountInterval * 1000);
 
         ClientAPI_Status status = connect();
         if (status.getError()) {
@@ -59,7 +69,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
             VpnStatus.addExtraHints(status.getMessage());
         }
         VpnStatus.updateStateString("NOPROCESS", "OpenVPN3 thread finished", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
-        statuspoller.stop();
+        mHandler.removeCallbacks(this::pollStatus);
     }
 
     @Override
@@ -282,13 +292,13 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
     @Override
     public boolean stopVPN(boolean replaceConnection) {
-        stop();
+        mHandler.post(this::stop);
         return false;
     }
 
     @Override
     public void networkChange(boolean sameNetwork) {
-        reconnect(1);
+        mHandler.post(() -> { reconnect(1);});
     }
 
     @Override
@@ -298,7 +308,9 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
     @Override
     public void sendCRResponse(String response) {
-        post_cc_msg("CR_RESPONSE," + response + "\n");
+        mHandler.post(() -> {
+            post_cc_msg("CR_RESPONSE," + response + "\n");
+        });
     }
 
     @Override
@@ -365,39 +377,22 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
     @Override
     public void reconnect() {
-        reconnect(1);
+        mHandler.post(() -> {
+            reconnect(1);
+        });
     }
 
     @Override
     public void pause(pauseReason reason) {
-        super.pause(reason.toString());
+        mHandler.post(() -> {
+            super.pause(reason.toString());
+        });
     }
 
-    class StatusPoller implements Runnable {
-        boolean mStopped = false;
-        private long mSleeptime;
-
-        public StatusPoller(long sleeptime) {
-            mSleeptime = sleeptime;
-        }
-
-        public void run() {
-            while (!mStopped) {
-                try {
-                    Thread.sleep(mSleeptime);
-                } catch (InterruptedException e) {
-                }
-                ClientAPI_TransportStats t = transport_stats();
-                long in = t.getBytesIn();
-                long out = t.getBytesOut();
-                VpnStatus.updateByteCount(in, out);
-            }
-        }
-
-        public void stop() {
-            mStopped = true;
-        }
+    private void pollStatus() {
+        ClientAPI_TransportStats t = transport_stats();
+        long in = t.getBytesIn();
+        long out = t.getBytesOut();
+        VpnStatus.updateByteCount(in, out);
     }
-
-
 }

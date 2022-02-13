@@ -692,7 +692,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     private OpenVPNManagement instantiateOpenVPN3Core() {
         try {
-            Class cl = Class.forName("de.blinkt.openvpn.core.OpenVPNThreadv3");
+            Class<?> cl = Class.forName("de.blinkt.openvpn.core.OpenVPNThreadv3");
             return (OpenVPNManagement) cl.getConstructor(OpenVPNService.class, VpnProfile.class).newInstance(this, mProfile);
         } catch (IllegalArgumentException | InstantiationException | InvocationTargetException |
                 NoSuchMethodException | ClassNotFoundException | IllegalAccessException e) {

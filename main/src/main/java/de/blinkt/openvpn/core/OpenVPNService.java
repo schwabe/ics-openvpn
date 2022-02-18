@@ -51,6 +51,7 @@ import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Vector;
+import java.util.concurrent.ExecutionException;
 
 import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
@@ -585,13 +586,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         ProfileManager.setConnectedVpnProfile(this, mProfile);
         VpnStatus.setConnectedVPNProfile(mProfile.getUUIDString());
 
-        try {
-            mProfile.writeConfigFile(this);
-        } catch (IOException e) {
-            VpnStatus.logException("Error writing config file", e);
-            endVpnService();
-            return;
-        }
         String nativeLibraryDirectory = getApplicationInfo().nativeLibraryDir;
         String tmpDir;
         try {
@@ -646,17 +640,21 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             mProcessThread.start();
         }
 
-        new Handler(getMainLooper()).post(new Runnable() {
-                                              @Override
-                                              public void run() {
-                                                  if (mDeviceStateReceiver != null)
-                                                      unregisterDeviceStateReceiver();
 
-                                                  registerDeviceStateReceiver(mManagement);
-                                              }
-                                          }
+        try {
+            mProfile.writeConfigFileOutput(this, ((OpenVPNThread)processThread).getOpenVPNStdin());
+        } catch (IOException | ExecutionException | InterruptedException e) {
+            VpnStatus.logException("Error generating config file", e);
+            endVpnService();
+            return;
+        }
 
-        );
+        boolean post = new Handler(getMainLooper()).post(() -> {
+            if (mDeviceStateReceiver != null)
+                unregisterDeviceStateReceiver();
+
+            registerDeviceStateReceiver(mManagement);
+        });
     }
 
 

@@ -22,7 +22,6 @@ import de.blinkt.openvpn.VpnProfile;
 
 public class VPNLaunchHelper {
     private static final String MINIPIEVPN = "pie_openvpn";
-    private static final String OVPNCONFIGFILE = "android.conf";
 
     private static String writeMiniVPN(Context context) {
         String nativeAPI = NativeUtils.getNativeAPI();
@@ -68,7 +67,7 @@ public class VPNLaunchHelper {
         args.add(binaryName);
 
         args.add("--config");
-        args.add(getConfigFilePath(c));
+        args.add("stdin");
 
         return args.toArray(new String[0]);
     }
@@ -122,10 +121,4 @@ public class VPNLaunchHelper {
 
         }
     }
-
-
-    public static String getConfigFilePath(Context context) {
-        return context.getCacheDir().getAbsolutePath() + "/" + OVPNCONFIGFILE;
-    }
-
 }

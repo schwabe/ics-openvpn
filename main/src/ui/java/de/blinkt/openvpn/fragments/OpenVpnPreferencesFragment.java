@@ -28,7 +28,7 @@ public abstract class OpenVpnPreferencesFragment extends PreferenceFragmentCompa
 		super.onCreate(savedInstanceState);
 
 		String profileUUID = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-		mProfile = ProfileManager.get(getActivity(),profileUUID);
+		mProfile = ProfileManager.get(getActivity(), profileUUID);
 		getActivity().setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
 
 	}

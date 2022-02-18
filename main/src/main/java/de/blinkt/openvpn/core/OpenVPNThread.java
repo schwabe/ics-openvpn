@@ -14,11 +14,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +37,7 @@ public class OpenVPNThread implements Runnable {
     public static final int M_NONFATAL = (1 << 5);
     public static final int M_WARN = (1 << 6);
     public static final int M_DEBUG = (1 << 7);
+    private final CompletableFuture<OutputStream> mStreamFuture = new CompletableFuture<>();
     private String[] mArgv;
     private Process mProcess;
     private String mNativeDir;
@@ -122,9 +126,12 @@ public class OpenVPNThread implements Runnable {
         try {
             mProcess = pb.start();
             // Close the output, since we don't need it
-            mProcess.getOutputStream().close();
+
             InputStream in = mProcess.getInputStream();
+            OutputStream out = mProcess.getOutputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+            mStreamFuture.complete(out);
 
             while (true) {
                 String logline = br.readLine();
@@ -166,6 +173,7 @@ public class OpenVPNThread implements Runnable {
             }
         } catch (InterruptedException | IOException e) {
             VpnStatus.logException("Error reading from output of OpenVPN process", e);
+            mStreamFuture.cancel(true);
             stopProcess();
         }
 
@@ -186,5 +194,9 @@ public class OpenVPNThread implements Runnable {
             lbpath = mNativeDir + ":" + lbpath;
         }
         return lbpath;
+    }
+
+    public OutputStream getOpenVPNStdin() throws ExecutionException, InterruptedException {
+        return mStreamFuture.get();
     }
 }

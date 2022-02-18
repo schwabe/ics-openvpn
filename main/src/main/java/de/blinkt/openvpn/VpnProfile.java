@@ -33,6 +33,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -816,12 +818,11 @@ public class VpnProfile implements Serializable, Cloneable {
         return intent;
     }
 
-    public void writeConfigFile(Context context) throws IOException {
-        FileWriter cfg = new FileWriter(VPNLaunchHelper.getConfigFilePath(context));
+    public void writeConfigFileOutput(Context context, OutputStream out) throws IOException {
+        OutputStreamWriter cfg = new OutputStreamWriter(out);
         cfg.write(getConfigFile(context, false));
         cfg.flush();
         cfg.close();
-
     }
 
     public Intent getStartServiceIntent(Context context) {

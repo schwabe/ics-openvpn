@@ -504,5 +504,6 @@
     <string name="allow_translations_title">Allow community contributed translations</string>
     <string name="allow_translations_summary">Allows the app to be translated with translations contributed by the community. Requires a restart of the app to activate.</string>
     <string name="tls_profile">TLS Security Profile</string>
+    <string name="encrypt_profiles">Try to encrypt profiles on storage (if supported by Android OS)</string>
 
 </resources>

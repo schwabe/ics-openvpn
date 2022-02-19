@@ -42,6 +42,11 @@
                 android:summary="@string/onbootrestartsummary"
                 android:title="@string/onbootrestart"/>
 
+        <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="preferencryption"
+                android:title="@string/encrypt_profiles"/>
+
         <Preference
                 android:key="clearapi"
                 android:persistent="false"

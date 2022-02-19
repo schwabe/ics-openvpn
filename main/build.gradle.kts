@@ -28,6 +28,7 @@ android {
         }
     }
 
+
     testOptions.unitTests.isIncludeAndroidResources = true
 
     externalNativeBuild {
@@ -188,6 +189,8 @@ dependencies {
     dependencies.add("uiImplementation", "androidx.webkit:webkit:1.4.0")
     dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
+    dependencies.add("uiImplementation","androidx.security:security-crypto:1.0.0")
+
 
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
     testImplementation("junit:junit:4.13.2")

@@ -235,7 +235,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             mProcessThread = null;
         }
         VpnStatus.removeByteCountListener(this);
-        unregisterDeviceStateReceiver();
+        unregisterDeviceStateReceiver(mDeviceStateReceiver);
+        mDeviceStateReceiver = null;
         ProfileManager.setConntectedVpnProfileDisconnected(this);
         mOpenVPNThread = null;
         if (!mStarting) {
@@ -439,13 +440,12 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     }
 
-    synchronized void registerDeviceStateReceiver(OpenVPNManagement magnagement) {
+    synchronized void registerDeviceStateReceiver() {
         // Registers BroadcastReceiver to track network connection changes.
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_SCREEN_ON);
-        mDeviceStateReceiver = new DeviceStateReceiver(magnagement);
 
         // Fetch initial network state
         mDeviceStateReceiver.networkStateChange(this);
@@ -457,19 +457,17 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             addLollipopCMListener(); */
     }
 
-    synchronized void unregisterDeviceStateReceiver() {
+    synchronized void unregisterDeviceStateReceiver(DeviceStateReceiver deviceStateReceiver) {
         if (mDeviceStateReceiver != null)
             try {
-                VpnStatus.removeByteCountListener(mDeviceStateReceiver);
-                this.unregisterReceiver(mDeviceStateReceiver);
+                VpnStatus.removeByteCountListener(deviceStateReceiver);
+                this.unregisterReceiver(deviceStateReceiver);
             } catch (IllegalArgumentException iae) {
                 // I don't know why  this happens:
                 // java.lang.IllegalArgumentException: Receiver not registered: de.blinkt.openvpn.NetworkSateReceiver@41a61a10
                 // Ignore for now ...
                 iae.printStackTrace();
             }
-        mDeviceStateReceiver = null;
-
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             removeLollipopCMListener();*/
 
@@ -632,28 +630,33 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             mManagement = mOpenVPN3;
         } else {
             processThread = new OpenVPNThread(this, argv, nativeLibraryDirectory, tmpDir);
-            mOpenVPNThread = processThread;
         }
 
+        mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
+
         synchronized (mProcessLock) {
-            mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
             mProcessThread.start();
         }
 
-
-        try {
-            mProfile.writeConfigFileOutput(this, ((OpenVPNThread)processThread).getOpenVPNStdin());
-        } catch (IOException | ExecutionException | InterruptedException e) {
-            VpnStatus.logException("Error generating config file", e);
-            endVpnService();
-            return;
+        if (!useOpenVPN3) {
+            try {
+                mProfile.writeConfigFileOutput(this, ((OpenVPNThread) processThread).getOpenVPNStdin());
+            } catch (IOException | ExecutionException | InterruptedException e) {
+                VpnStatus.logException("Error generating config file", e);
+                endVpnService();
+                return;
+            }
         }
 
-        boolean post = new Handler(getMainLooper()).post(() -> {
-            if (mDeviceStateReceiver != null)
-                unregisterDeviceStateReceiver();
+        DeviceStateReceiver oldDeviceStateReceiver = mDeviceStateReceiver;
+        mDeviceStateReceiver = new DeviceStateReceiver(mManagement);
 
-            registerDeviceStateReceiver(mManagement);
+
+        new Handler(getMainLooper()).post(() -> {
+            if (oldDeviceStateReceiver != null)
+                unregisterDeviceStateReceiver(oldDeviceStateReceiver);
+
+            registerDeviceStateReceiver();
         });
     }
 
@@ -719,7 +722,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         if (mDeviceStateReceiver != null) {
-            unregisterDeviceStateReceiver();
+            unregisterDeviceStateReceiver(mDeviceStateReceiver);
+            mDeviceStateReceiver = null;
         }
         // Just in case unregister for state
         VpnStatus.removeStateListener(this);

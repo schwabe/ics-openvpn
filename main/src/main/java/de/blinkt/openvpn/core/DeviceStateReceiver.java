@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 
 import de.blinkt.openvpn.R;
@@ -126,11 +127,11 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         }
     }
 
-    public DeviceStateReceiver(OpenVPNManagement magnagement) {
+    public DeviceStateReceiver(OpenVPNManagement management) {
         super();
-        mManagement = magnagement;
+        mManagement = management;
         mManagement.setPauseCallback(this);
-        mDisconnectHandler = new Handler();
+        mDisconnectHandler = new Handler(Looper.getMainLooper());
     }
 
 

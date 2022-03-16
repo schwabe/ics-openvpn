@@ -81,6 +81,9 @@ public class NetworkUtils {
         String saaid = Settings.Secure.getString(c.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
 
+        if (saaid == null)
+            return null;
+
         StringBuilder ret = new StringBuilder();
         if (saaid.length() >= 6) {
             byte[] sb = saaid.getBytes();

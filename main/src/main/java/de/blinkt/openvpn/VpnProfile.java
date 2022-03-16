@@ -204,7 +204,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         if (escapedString.equals(unescaped) && !escapedString.contains(" ") &&
                 !escapedString.contains("#") && !escapedString.contains(";")
-                && !escapedString.equals(""))
+                && !escapedString.equals("")  && !escapedString.contains("'"))
             return unescaped;
         else
             return '"' + escapedString + '"';

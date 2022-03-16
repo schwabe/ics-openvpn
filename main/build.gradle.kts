@@ -120,9 +120,11 @@ android {
 }
 
 var swigcmd = "swig"
-// Workaround for Mac OS X since it otherwise does not find swig and I cannot get
-// the Exec task to respect the PATH environment :(
-if (File("/usr/local/bin/swig").exists())
+// Workaround for macOS(arm64) and macOS(intel) since it otherwise does not find swig and
+// I cannot get the Exec task to respect the PATH environment :(
+if (file("/opt/homebrew/bin/swig").exists())
+    swigcmd = "/opt/homebrew/bin/swig"
+else if (file("/usr/local/bin/swig").exists())
     swigcmd = "/usr/local/bin/swig"
 
 

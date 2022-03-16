@@ -388,6 +388,7 @@ public class VpnProfile implements Serializable, Cloneable {
             cfg.append("setenv IV_SSO openurl,webauth,crtext\n");
             String versionString = getPlatformVersionEnvString();
             cfg.append(String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString)));
+            cfg.append(String.format("setenv IV_HWADDR %s\n", NetworkUtils.getFakeMacAddrFromSAAID(context)));
 
             if (mUseLegacyProvider)
                 cfg.append("providers legacy default\n");

@@ -5,9 +5,11 @@
 
 package de.blinkt.openvpn.core;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.*;
 import android.os.Build;
+import android.provider.Settings;
 import android.text.TextUtils;
 
 import java.net.Inet4Address;
@@ -71,5 +73,27 @@ public class NetworkUtils {
         }
         return nets;
     }
+
+    @SuppressLint("HardwareIds")
+    public static String getFakeMacAddrFromSAAID(Context c) {
+        char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+
+        String saaid = Settings.Secure.getString(c.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+
+        StringBuilder ret = new StringBuilder();
+        if (saaid.length() >= 6) {
+            byte[] sb = saaid.getBytes();
+            for (int b = 0; b <= 6; b++) {
+                if (b != 0)
+                    ret.append(":");
+                int v = sb[b] & 0xFF;
+                ret.append(HEX_ARRAY[v >>> 4]);
+                ret.append(HEX_ARRAY[v & 0x0F]);
+            }
+        }
+        return ret.toString();
+    }
+
 
 }

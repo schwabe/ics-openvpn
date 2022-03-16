@@ -189,7 +189,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         config.setExternalPkiAlias("extpki");
         config.setCompressionMode("asym");
 
-        config.setHwAddrOverride(getFakeMacAddrFromSAAID(mService));
+        config.setHwAddrOverride(NetworkUtils.getFakeMacAddrFromSAAID(mService));
         config.setInfo(true);
         config.setAllowLocalLanAccess(mVp.mAllowLocalLAN);
         boolean retryOnAuthFailed = mVp.mAuthRetry == AUTH_RETRY_NOINTERACT;
@@ -212,28 +212,6 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
             return true;
         }
     }
-
-    @SuppressLint("HardwareIds")
-    private String getFakeMacAddrFromSAAID(Context c) {
-        char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
-
-        String saaid = Settings.Secure.getString(c.getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-
-        StringBuilder ret = new StringBuilder();
-        if (saaid.length() >= 6) {
-            byte[] sb = saaid.getBytes();
-            for (int b = 0; b <= 6; b++) {
-                if (b != 0)
-                    ret.append(":");
-                int v = sb[b] & 0xFF;
-                ret.append(HEX_ARRAY[v >>> 4]);
-                ret.append(HEX_ARRAY[v & 0x0F]);
-            }
-        }
-        return ret.toString();
-    }
-
 
     @Override
     public void external_pki_cert_request(ClientAPI_ExternalPKICertRequest certreq) {

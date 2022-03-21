@@ -20,8 +20,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,7 +40,9 @@ public class OpenVPNThread implements Runnable {
     public static final int M_NONFATAL = (1 << 5);
     public static final int M_WARN = (1 << 6);
     public static final int M_DEBUG = (1 << 7);
-    private final CompletableFuture<OutputStream> mStreamFuture = new CompletableFuture<>();
+    private final FutureTask<OutputStream> mStreamFuture;
+    private OutputStream mOutputStream;
+
     private String[] mArgv;
     private Process mProcess;
     private String mNativeDir;
@@ -51,6 +56,7 @@ public class OpenVPNThread implements Runnable {
         mNativeDir = nativelibdir;
         mTmpDir = tmpdir;
         mService = service;
+        mStreamFuture = new FutureTask<>(() -> mOutputStream);
     }
 
     public void stopProcess() {
@@ -131,7 +137,8 @@ public class OpenVPNThread implements Runnable {
             OutputStream out = mProcess.getOutputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
-            mStreamFuture.complete(out);
+            mOutputStream = out;
+            mStreamFuture.run();
 
             while (true) {
                 String logline = br.readLine();

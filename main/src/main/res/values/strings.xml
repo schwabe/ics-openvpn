@@ -93,7 +93,7 @@
     <string name="float_summary">Allows authenticated packets from any IP</string>
     <string name="float_title">Allow floating server</string>
     <string name="custom_options_title">Custom Options</string>
-    <string name="edit_vpn">Edit VPN Settings</string>
+    <string name="edit_vpn">Edit VPN settings</string>
     <string name="remove_vpn_query">Remove the \"%s\" VPN profile?</string>
     <string name="tun_error_helpful">On some custom ICS images the permission on /dev/tun might be wrong, or the TUN module might be missing completely. For CM9 images, try fixing ownership in the general settings</string>
     <string name="tun_open_error">Could not open the TUN interface</string>
@@ -178,7 +178,7 @@
     <string name="select_file">Select</string>
     <string name="keychain_nocacert">No CA Certificate returned while reading from Android keystore. Authentication will probably fail.</string>
     <string name="show_log_summary">Shows the log window when connecting. It can always be accessed from the notification status.</string>
-    <string name="show_log_window">Show log window</string>
+    <string name="show_log_window">Show log</string>
     <string name="mobile_info">%10$s %9$s running on %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">Could not sign with Android keystore key %1$s: %2$s</string>
     <string name="error_extapp_sign">Could not sign with external authenticator app (%3$s): %1$s: %2$s</string>
@@ -214,9 +214,9 @@
     <string name="faq_duplicate_notification_title">Duplicate notifications</string>
     <string name="faq_duplicate_notification">If Android is under system memory (RAM) pressure, apps and service not needed at the moment are removed from active memory. This terminates an ongoing VPN connection. To ensure that the connection/OpenVPN survives the service runs with higher priority. To run with higher priority the program must display a notification. The key notification icon is imposed by the system as described in the previous FAQ entry. It does not count as an app notification for the purpose of running with higher priority.</string>
     <string name="no_vpn_profiles_defined">No VPN profiles defined.</string>
-    <string name="add_new_vpn_hint">Use the &lt;img src=\"ic_menu_add\"/&gt; icon to add a new VPN</string>
+    <string name="add_new_vpn_hint">Use the &lt;img src=\"ic_menu_add\"/&gt; icon to add a new VPN.</string>
     <string name="vpn_import_hint">Use the &lt;img src=\"ic_menu_archive\"/&gt; icon to import an existing (.ovpn or .conf) profile from your SD card.</string>
-    <string name="faq_hint">Do check out the FAQ and its quick start guide.</string>
+    <string name="faq_hint">Do check out the FAQ and its quick-start guide.</string>
     <string name="faq_routing_title">Routing/interface Configuration</string>
     <string name="faq_routing">This is not done via traditional ifconfig/route commands, but by using the VPNService API. This results in a different routing configuration than on other OSs. \nThe configuration of the VPN tunnel consists of the IP address and the networks to route over this interface. Especially, no peer partner address or gateway address is needed or required. Special routes to reach the VPN Server (for example added when using redirect-gateway) are not needed either. The program will consequently ignore these settings when importing a configuration. The program uses the VPNService API to ensure the connection to the server is not routed through the VPN tunnel.\nThe VPNService API does not allow specifying networks to not route via the VPN. As a workaround the app tries to detect networks to not route over the VPN tunnel (e.g. route x.x.x.x y.y.y.y net_gateway) and calculates a set of routes that excludes this routes to emulate the behaviour of other platforms. The log windows shows the configuration of the VPNService upon establishing a connection.\nBehind the scenes: Android 4.4+ does use policy routing. Using route/ifconfig will not show the installed routes. Instead use this IP rule: \"iptables -t mangle -L\"</string>
     <string name="persisttun_summary">Do not fall back to no VPN connection when OpenVPN is reconnecting.</string>
@@ -281,7 +281,7 @@
     <string name="allowed_apps">Allowed apps: %s</string>
     <string name="clearappsdialog">Clear list of allowed external apps?\nCurrently allowed:\n\n%s</string>
     <string name="screenoff_summary">Pause VPN when the screen is off and less than 64 kB transferred data in 60 s. When \"Persistent TUN\" is on pausing the VPN leaves your device with NO network connectivity. Without the \"Persistent TUN\" option the device will have no VPN connection/protection.</string>
-    <string name="screenoff_title">Pause VPN connection after screen is turned off</string>
+    <string name="screenoff_title">Pause VPN when screen is off</string>
     <string name="screenoff_pause">Pausing connection in screen off state: less than %1$s in %2$ss</string>
     <string name="screen_nopersistenttun">Warning: Persistent tUN is off for this VPN. Traffic will use the normal Internet connection when the screen is off.</string>
     <string name="save_password">Save Password</string>
@@ -320,7 +320,7 @@
     <string name="userpw_file">Username/Password file</string>
     <string name="imported_from_file">[Imported from: %s]</string>
     <string name="files_missing_hint">Some files could not be found. Please select the files to import the profile from:</string>
-    <string name="openvpn_is_no_free_vpn">To use this app you need a VPN provider/VPN gateway supporting OpenVPN (often provided by your employer). Check out https://community.openvpn.net/ for more info on OpenVPN and how to set up your own OpenVPN server.</string>
+    <string name="openvpn_is_no_free_vpn">To use this app you need a VPN provider/VPN gateway supporting OpenVPN (often provided by your employer).\nCheck out https://community.openvpn.net/ for more info on OpenVPN and how to set up your own OpenVPN server.</string>
     <string name="import_log">Import log:</string>
     <string name="ip_looks_like_subnet">VPN topology \"%3$s\" specified, but \"ifconfig %1$s %2$s\" looks more like an IP address with a network mask. Assuming \"subnet\" topology.</string>
     <string name="mssfix_invalid_value">The MSS override value has to be a whole number between 0 and 9000</string>
@@ -455,7 +455,7 @@
     <string name="weakmd_title">Weak (MD5) hashes in certificate signature (SSL_CTX_use_certificate md too weak)</string>
     <string name="title_activity_open_sslspeed">OpenSSL Speed Test</string>
     <string name="openssl_cipher_name">OpenSSL cipher names</string>
-    <string name="osslspeedtest">OpenSSL Crypto Speed test</string>
+    <string name="osslspeedtest">OpenSSL crypto-speed test</string>
     <string name="openssl_error">OpenSSL returned an error</string>
     <string name="running_test">Running test…</string>
     <string name="test_algoirhtms">Test selected algorithms</string>
@@ -504,8 +504,8 @@
     <string name="compat_mode_label">Compatibility mode</string>
     <string name="loadossllegacy">Load OpenSSL legacy provider</string>
     <string name="bf_cbc_requires_legacy">Profiles uses BF-CBC which depends on OpenSSL legacy provider (off).</string>
-    <string name="allow_translations_title">Allow contributed translations</string>
-    <string name="allow_translations_summary">Allows using contributed translations after restarting the app.</string>
+    <string name="allow_translations_title">Contributed translations</string>
+    <string name="allow_translations_summary">Employs contributed translations after restarting the app.</string>
     <string name="tls_profile">TLS Security Profile</string>
 
 </resources>

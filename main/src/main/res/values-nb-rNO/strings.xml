@@ -192,8 +192,8 @@
     <string name="advanced">Avansert</string>
     <string name="export_config_title">ICS OpenVPN-oppsett</string>
     <string name="warn_no_dns"/>
-    <string name="dns_add_error"/>
-    <string name="ip_add_error"/>
+    <string name="dns_add_error">Kunne ikke legge til DNS-tjeneren «%1$s». Avslått av systemet: %2$s</string>
+    <string name="ip_add_error">Kunne ikke legge til IP-adressen «%1$s». Avslått av systemet: %2$s</string>
     <string name="faq_howto"/>
     <string name="faq_howto_title">Hurtigstart</string>
     <string name="setting_loadtun_summary"/>

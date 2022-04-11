@@ -360,7 +360,7 @@
     <string name="ab_kitkat_mss">Early KitKat version set the wrong MSS value on TCP connections (#61948). Try to enable the mssfix option to workaround this bug.</string>
     <string name="ab_proxy">Android will keep using your proxy settings specified for the mobile/Wi-Fi connection when no DNS servers are set. OpenVPN for Android will warn you about this in the log.<p>When a VPN sets a DNS server Android will not use a proxy. There is no API to set a proxy for a VPN connection.</p></string>
     <string name="ab_lollipop_reinstall">VPN apps may stop working when uninstalled and reinstalled again. More info in #80074</string>
-    <string name="ab_not_route_to_vpn">The configured client IP and the IPs in its network mask are not routed to the VPN tunnel. OpenVPN works around this bug by explicitly adding a route corrosponding to the client IP and its netmask</string>
+    <string name="ab_not_route_to_vpn">The configured client IP and the IPs in its network mask are not routed to the VPN tunnel. OpenVPN works around this bug by explicitly adding a route corresponding to the client IP and its netmask</string>
     <string name="ab_persist_tun">Opening a TUN device while another is active, which is used for persistent TUN support, crashes the VPNServices on the device. Reboot to make VPN work again. OpenVPN for Android tries to avoid reopening the TUN device and if really needed first closes the current TUN before opening the new TUN device to avoid a crash. This may lead to a short window where packets are sent over the non-VPN connection. Even with this workaround the VPNServices sometimes crashes and requires a device reboot.</string>
     <string name="ab_secondary_users">VPN does not work at all for secondary users.</string>
     <string name="ab_kitkat_reconnect">"Multiple users report the mobile connection/mobile data connection dropping frequently while using the VPN app. It seems to affect only some mobile provider/device combination and so far no cause/workaround has been found."</string>
@@ -403,7 +403,7 @@
     <string name="export_config_chooser_title">Export configuration file</string>
     <string name="missing_tlsauth">tls-auth file missing</string>
     <string name="missing_certificates">Missing user certificate or user certifcate keyfile</string>
-    <string name="crl_title">Certifcate Revocation List (optional)</string>
+    <string name="crl_title">Certificate revocation list (optional)</string>
     <string name="reread_log">Reread (%d) log items from log cache file</string>
     <string name="samsung_broken">Even though Samsung is a top Android phone distributor, Samsung\'s firmware are also among the most buggy. The bugs are not limited to the VPN operation on these devices but many of them can be circumvented. In the following some of these bugs are described.\n\nDNS does not work unless the DNS server in the VPN range.\n\nOn many Samsung 5.x devices the allowed/disallowed apps feature does not work.\nOn Samsung 6.x VPN is reported not to work unless the VPN app is exempted from battery optimization features.</string>
     <string name="samsung_broken_title">Samsung devices</string>
@@ -474,7 +474,7 @@
     <string name="info_from_server">Info from server: \"%s\"</string>
     <string name="channel_name_userreq">User interaction required</string>
     <string name="channel_description_userreq">OpenVPN connection requires a user input, e.g. two-factor
-        authentification
+        authentication
     </string>
     <string name="openurl_requested">Open URL to continue VPN authentication</string>
     <string name="crtext_requested">Answer challenge to continue VPN authentication</string>
@@ -483,7 +483,7 @@
     <string name="configure">Configure</string>
     <string name="extauth_not_configured">External two-factor app not configured</string>
     <string name="faq_killswitch_title">Block non-VPN connections (\"Killswitch\")</string>
-    <string name="faq_killswitch">It is often desired to block connections without VPN. Other apps often use markting terms like \"Killswitch\" or \"Seamless tunnel\" for this feature. OpenVPN and this app similarly offers persistent TUN.&lt;p>The problem with all these methods offered by apps is that they can only provide best effort and are not complete solutions. Upon starting the device, app crashing and other corner cases happen because the app cannot ensure this block of non-VPN connection works. Thus the user is given a false sense of security.&lt;p>The &lt;b>only&lt;/b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the \"Block connections without VPN\" setting that can be found in Settings → Network and Internet → Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN</string>
+    <string name="faq_killswitch">It is often desired to block connections without VPN. Other apps often use marketing terms like \"Killswitch\" or \"Seamless tunnel\" for this feature. OpenVPN and this app similarly offers persistent TUN.&lt;p>The problem with all these methods offered by apps is that they can only provide best effort and are not complete solutions. Upon starting the device, app crashing and other corner cases happen because the app cannot ensure this block of non-VPN connection works. Thus the user is given a false sense of security.&lt;p>The &lt;b>only&lt;/b> reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the \"Block connections without VPN\" setting that can be found in Settings → Network and Internet → Advanced/VPN > OpenVPN for Android > Enable Always ON VPN, Enable Block Connections without VPN</string>
     <string name="summary_block_address_families">This option instructs Android to not allow protocols (IPv4/IPv6) if the VPN does not set any IPv4 or IPv6 addresses.</string>
     <string name="title_block_address_families">Block IPv6 (or IPv4) if not used by the VPN</string>
     <string name="install_keychain">Install new certificate</string>

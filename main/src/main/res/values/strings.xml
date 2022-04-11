@@ -17,9 +17,9 @@
     <string name="client_key_title">Client Certificate Key</string>
     <string name="client_pkcs12_title">PKCS 12 File</string>
     <string name="ca_title">CA Certificate</string>
-    <string name="no_certificate">Select a certificate</string>
-    <string name="copyright_guicode">Source code and issue tracker at https://github.com/schwabe/ics-openvpn/</string>
-    <string name="copyright_others">This program uses the following components; the source code has full details on licenses</string>
+    <string name="no_certificate">You must select a certificate</string>
+    <string name="copyright_guicode">Source code and issue tracker available at https://github.com/schwabe/ics-openvpn/</string>
+    <string name="copyright_others">This program uses the following components; the source code has full details on licenses used</string>
     <string name="about">About</string>
     <string name="vpn_list_title">Profiles</string>
     <string name="vpn_type">Type</string>
@@ -95,7 +95,7 @@
     <string name="custom_options_title">Custom Options</string>
     <string name="edit_vpn">Edit VPN settings</string>
     <string name="remove_vpn_query">Remove the \"%s\" VPN profile?</string>
-    <string name="tun_error_helpful">On some custom ICS images the permission on /dev/tun might be wrong, or the TUN module might be missing completely. For CM9 images, try fixing ownership in the general settings</string>
+    <string name="tun_error_helpful">On some custom ICS images the /dev/tun permissions might be wrong, or the TUN module might be missing completely. For CM9 images, try fixing ownership in the general settings.</string>
     <string name="tun_open_error">Could not open the TUN interface</string>
     <string name="error">"Error: "</string>
     <string name="clear">Clear</string>
@@ -148,7 +148,7 @@
     <string name="no_bind">No local binding</string>
     <string name="import_configuration_file">Import configuration file</string>
     <string name="faq_security_title">Security considerations</string>
-    <string name="faq_security">"As OpenVPN is security sensitive a few notes about security are sensible. All data on the SD card is inherently insecure. Every program can read it (for example this program requires no special SD card rights). The data of this program can only be read by the program itself. By using the import option for CA cert/cert/key in the file dialog the data is stored in the VPN profile. The VPN profiles are only accessible by this program. (Do not forget to delete the copies on the sd card afterwards). Even though accessible only by this program the data is still unencrypted. By rooting the device or other exploits it may be possible to retrieve the data. Saved passwords are stored in plaintext too. For PKCS 12 files it is highly recommended that you import them into the Android keystore."</string>
+    <string name="faq_security">"As OpenVPN is security sensitive a few notes about security are sensible. All data on the SD card is inherently insecure. Every program can read it (for example this program requires no special SD card rights). The data of this program can only be read by the program itself. By using the import option for CA cert/cert/key in the file dialog the data is stored in the VPN profile. The VPN profiles are only accessible by this program. (Do not forget to delete the copies on the SD card afterwards). Even though accessible only by this program the data is still unencrypted. By rooting the device or other exploits it may be possible to retrieve the data. Saved passwords are stored in plaintext too. For PKCS 12 files it is highly recommended that you import them into the Android keystore."</string>
     <string name="import_vpn">Import</string>
     <string name="broken_image_cert_title">Could not show certificate selection</string>
     <string name="broken_image_cert">Got an exception trying to show the Android 4.0+ certificate selection dialog. This should never happen as it is a standard feature of Android 4.0+. Maybe your Android ROM support for certificate storage is broken?</string>
@@ -487,7 +487,7 @@
     <string name="summary_block_address_families">This option instructs Android to not allow protocols (IPv4/IPv6) if the VPN does not set any IPv4 or IPv6 addresses.</string>
     <string name="title_block_address_families">Block IPv6 (or IPv4) if not used by the VPN</string>
     <string name="install_keychain">Install new certificate</string>
-    <string name="as_servername">As servername</string>
+    <string name="as_servername">AS servername</string>
     <string name="server_url">Server URL</string>
     <string name="request_autologin">Request auto-login profile</string>
     <string name="import_from_as">Import profile from remote server</string>

@@ -486,7 +486,7 @@
     <string name="summary_block_address_families"/>
     <string name="title_block_address_families">Blokker IPv6 (eller IPv4) hvis det ikke brukes av VPN-tunnelen</string>
     <string name="install_keychain">Installer nytt sertifikat</string>
-    <string name="as_servername">Som tjenernavn</string>
+    <string name="as_servername">AS-tjenernavn</string>
     <string name="server_url">Tjener-nettadresse</string>
     <string name="request_autologin"/>
     <string name="import_from_as">Importer profilfra fjerntjener</string>

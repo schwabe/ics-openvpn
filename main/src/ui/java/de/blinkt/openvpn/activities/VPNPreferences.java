@@ -115,12 +115,16 @@ public class VPNPreferences extends BaseActivity {
 			if(savedUUID!=null)
 				mProfileUUID=savedUUID;
 		}
+        super.onCreate(savedInstanceState);
 
 		mProfile = ProfileManager.get(this,mProfileUUID);
-		if(mProfile!=null) {
-			setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
+		if(mProfile==null) {
+		    Toast.makeText(this, "Profile to edit cannot be found.", Toast.LENGTH_LONG).show();
+		    finish();
+		    return;
 		}
-		super.onCreate(savedInstanceState);
+
+        setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
 
 
         setContentView(R.layout.main_activity);

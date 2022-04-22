@@ -21,10 +21,9 @@ public abstract class Settings_Fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String profileUuid = getArguments().getString(getActivity().getPackageName() + ".profileUUID");
-        mProfile= ProfileManager.get(getActivity(), profileUuid);
+        mProfile = ProfileManager.get(getActivity(), profileUuid);
         getActivity().setTitle(getString(R.string.edit_profile_title, mProfile.getName()));
     }
-
 
     @Override
     public void onPause() {

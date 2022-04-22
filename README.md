@@ -1,6 +1,7 @@
 OpenVPN for Android -EduVPN fork
 =============
-[![Build Status](https://travis-ci.org/schwabe/ics-openvpn.svg?branch=master)](https://travis-ci.org/schwabe/ics-openvpn)
+![build status](https://github.com/schwabe/ics-openvpn/actions/workflows/build.yaml/badge.svg)
+
 
 The EduVPN changes are:
 
@@ -39,7 +40,15 @@ You can find the FAQ here (same as in app): https://ics-openvpn.blinkt.de/FAQ.ht
 Controlling from external apps
 ------------------------------
 
-There is the AIDL API for real controlling (see developing section). Due to high demand also the Activities `de.blinkt.openvpn.api.DisconnectVPN` and `de.blinkt.openvpn.api.ConnectVPN` exist. It uses `de.blinkt.openvpn.api.profileName` as extra for the name of the VPN profile.
+There is the AIDL API for real controlling (see developing section). Due to high demand also 
+acitvies to start/stop, pause/resume (like a user would with the notification)  exists
+  
+ - `de.blinkt.openvpn.api.DisconnectVPN`
+ - `de.blinkt.openvpn.api.ConnectVPN`
+ - `de.blinkt.openvpn.api.PauseVPN`
+ - `de.blinkt.openvpn.api.ResumeVPN`
+
+They use `de.blinkt.openvpn.api.profileName` as extra for the name of the VPN profile..
 
 Note to administrators
 ------------------------

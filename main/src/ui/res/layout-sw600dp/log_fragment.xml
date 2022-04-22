@@ -14,7 +14,6 @@
 
 
     <LinearLayout
-        android:background="@drawable/white_rect"
         android:elevation="1dp"
             android:minWidth="300dp"
 

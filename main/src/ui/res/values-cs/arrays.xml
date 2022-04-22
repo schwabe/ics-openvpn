@@ -14,14 +14,14 @@
         <item>Jméno/Heslo + Certifikát</item>
         <item>Jméno/Heslo + PKCS12 </item>
         <item>Jméno/Heslo + Android</item>
-        <item>Externí zprostředkovatel autorizace</item>
+        <item>Externí zprostředkovatel autentizace</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">0 (server)</item>
         <item translatable="false">1 (klient)</item>
         <item>Nespecifikováno</item>
         <item>Šifrování (--tls-crypt)</item>
-        <item>TLS krypta V2</item>
+        <item>TLS Crypt V2</item>
     </string-array>
     <string-array name="crm_entries">
         <item>Opětovně nepřipojovat</item>

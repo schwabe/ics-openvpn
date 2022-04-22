@@ -35,11 +35,11 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
-
-    // This is just a demo package, don't care about it being perfect
-    lintOptions {
+    lint {
         abortOnError false
     }
+
+    // This is just a demo package, don't care about it being perfect
 }
 
 dependencies {

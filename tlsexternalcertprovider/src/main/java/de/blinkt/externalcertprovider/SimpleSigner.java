@@ -120,7 +120,7 @@ public class SimpleSigner {
                     "hEi44aHbPXt9opdssz/hdGfd8Wo7vEJrbg7c6zR6C/Akav1Rzy9oohIdgOw=\n" +
                     "-----END CERTIFICATE-----\n"};
 
-    public static byte[] signData(byte[] data) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    public static byte[] signData(byte[] data, boolean pkcs1padding) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         // This is more or less code that has been just modified long enough that it works
         // Don't take it as good example how to get a Privatekey
         StringReader keyreader = new StringReader(SimpleSigner.certchain[0] + SimpleSigner.pemkey);
@@ -136,7 +136,10 @@ public class SimpleSigner {
         // The actual signing
 
         Cipher signer;
-        signer = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+        if (pkcs1padding)
+            signer = Cipher.getInstance("RSA/ECB/PKCS1PADDING");
+        else
+            signer = Cipher.getInstance("RSA/ECB/nopadding");
 
 
         signer.init(Cipher.ENCRYPT_MODE, key);

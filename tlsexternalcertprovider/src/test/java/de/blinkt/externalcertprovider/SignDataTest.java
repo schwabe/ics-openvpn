@@ -20,6 +20,6 @@ public class SignDataTest {
     @Test
     public void testSignData() throws Exception
     {
-        SimpleSigner.signData(new byte[]{1,2,3,4,5,6,7,8});
+        SimpleSigner.signData(new byte[]{1,2,3,4,5,6,7,8}, false);
     }
 }

@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
-
 import android.os.StrictMode;
 import android.os.strictmode.Violation;
 
@@ -42,8 +41,6 @@ public class ICSOpenVPNApplication extends Application {
 
         PRNGFixes.apply();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            createNotificationChannels();
         mStatus = new StatusListener();
         mStatus.init(getApplicationContext());
 

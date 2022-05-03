@@ -84,7 +84,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private static final int PRIORITY_DEFAULT = 0;
     private static final int PRIORITY_MAX = 2;
     private static boolean mNotificationAlwaysVisible = false;
-    private static Class mNotificationActivityClass;
     private final Vector<String> mDnslist = new Vector<>();
     private final NetworkSpace mRoutes = new NetworkSpace();
     private final NetworkSpace mRoutesv6 = new NetworkSpace();
@@ -177,15 +176,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                     return res.getString(R.string.volume_gbyte, bytesUnit);
 
             }
-    }
-
-    /**
-     * Sets the activity which should be opened when tapped on the permanent notification tile.
-     *
-     * @param activityClass The activity class to open
-     */
-    public static void setNotificationActivityClass(Class<? extends Activity> activityClass) {
-        mNotificationActivityClass = activityClass;
     }
 
     @Override

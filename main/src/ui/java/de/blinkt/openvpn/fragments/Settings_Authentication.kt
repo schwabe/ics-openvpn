@@ -54,7 +54,7 @@ class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPrefe
         setRemoteCNSummaryProvider()
         mRemoteX509Name = findPreference("remotex509name")!!
         mRemoteX509Name.setSummaryProvider { pref ->
-            if ((pref as EditTextPreference).text.isEmpty()) "CN (default)" else pref.text
+            if ((pref as EditTextPreference).text?.isEmpty() == true) "CN (default)" else pref.text
         }
         mUseTLSAuth = findPreference("useTLSAuth")!!
         mTLSAuthFile = findPreference("tlsAuthFile")!!

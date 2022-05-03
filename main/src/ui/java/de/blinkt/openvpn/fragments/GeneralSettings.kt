@@ -50,9 +50,11 @@ class GeneralSettings : PreferenceFragmentCompat(), Preference.OnPreferenceClick
             devHacks.removePreference(useInternalFS)
         }
 
-        /* Android P does not allow access to the file storage anymore */if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+        /* Android P does not allow access to the file storage anymore */
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
             val useInternalFileSelector = findPreference<Preference>("useInternalFileSelector")
-            devHacks.removePreference(useInternalFileSelector)
+            if (useInternalFileSelector != null)
+                devHacks.removePreference(useInternalFileSelector)
         }
         mExtapp = ExternalAppDatabase(activity)
         val clearapi = findPreference<Preference>("clearapi") as Preference

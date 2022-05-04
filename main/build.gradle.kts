@@ -18,7 +18,7 @@ android {
     ndkVersion = "24.0.8215888"
 
     defaultConfig {
-        minSdk = 19
+        minSdk = 21
         targetSdk = 32
         versionCode = 189
         versionName = "0.7.34"
@@ -188,8 +188,7 @@ dependencies {
     dependencies.add("uiImplementation", "androidx.webkit:webkit:1.4.0")
     dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
-    dependencies.add("uiImplementation", "androidx.multidex:multidex:2.0.1")
-    
+
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:3.9.0")

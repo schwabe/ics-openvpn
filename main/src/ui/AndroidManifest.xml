@@ -14,9 +14,7 @@
             android:name="android.hardware.touchscreen"
             android:required="false" />
 
-    <application
-            android:banner="@mipmap/banner_tv"
-            tools:targetApi="lollipop">
+    <application android:banner="@mipmap/banner_tv">
         <activity
                 android:exported="true"
                 android:name=".activities.MainActivity"

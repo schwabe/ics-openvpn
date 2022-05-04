@@ -5,7 +5,6 @@
 
 package de.blinkt.openvpn.core;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -28,12 +27,8 @@ public class VPNLaunchHelper {
         /* Q does not allow executing binaries written in temp directory anymore */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
             return new File(context.getApplicationInfo().nativeLibraryDir, "libovpnexec.so").getPath();
-        String[] abis;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            abis = getSupportedABIsLollipop();
-        else
-            //noinspection deprecation
-            abis = new String[]{Build.CPU_ABI, Build.CPU_ABI2};
+
+        String[] abis = Build.SUPPORTED_ABIS;
 
         if (!nativeAPI.equals(abis[0])) {
             VpnStatus.logWarning(R.string.abi_mismatch, Arrays.toString(abis), nativeAPI);
@@ -49,11 +44,6 @@ public class VPNLaunchHelper {
         }
 
         throw new RuntimeException("Cannot find any executable for this device's ABIs " + Arrays.toString(abis));
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static String[] getSupportedABIsLollipop() {
-        return Build.SUPPORTED_ABIS;
     }
 
 

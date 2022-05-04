@@ -97,7 +97,7 @@ else ()
     message("Not budiling OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 endif ()
 
-add_library(ovpnutil SHARED ovpnutil/jniglue.c ovpnutil/scan_ifs.c)
+add_library(ovpnutil SHARED ovpnutil/jniglue.c)
 target_compile_definitions(ovpnutil PRIVATE -DTARGET_ARCH_ABI=\"${ANDROID_ABI}\"
         -DOPENVPN2_GIT_REVISION=\"${OPENVPN2_GIT}\"
         -DOPENVPN3_GIT_REVISION=\"${OPENVPN3_GIT}\"

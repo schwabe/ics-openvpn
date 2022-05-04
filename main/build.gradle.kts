@@ -15,10 +15,10 @@ plugins {
 android {
     compileSdk = 32
 
-    //ndkVersion = "23.0.7599858"
+    ndkVersion = "24.0.8215888"
 
     defaultConfig {
-        minSdk = 16
+        minSdk = 19
         targetSdk = 32
         versionCode = 189
         versionName = "0.7.34"

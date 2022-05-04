@@ -114,11 +114,6 @@ else ()
     message("Not budiling SSLSpeedTest for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 endif ()
 
-# The magic Jellybean keystore signing hack. Beware dragons and dlsyms magic ahead
-add_library(jbcrypto SHARED jbcrypto/jbcrypto.cpp)
-target_link_libraries(jbcrypto log dl)
-target_compile_options(jbcrypto PRIVATE)
-
 set(openvpn_srcs
         src/compat/compat-basename.c
         src/compat/compat-daemon.c

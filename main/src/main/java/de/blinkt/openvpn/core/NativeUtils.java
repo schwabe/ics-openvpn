@@ -53,10 +53,6 @@ public class NativeUtils {
     static {
         if (!isRoboUnitTest()) {
             System.loadLibrary("ovpnutil");
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN)
-                System.loadLibrary("jbcrypto");
-
-
             if (!BuildConfig.FLAVOR.equals("skeleton")) {
                 System.loadLibrary("osslspeedtest");
             }

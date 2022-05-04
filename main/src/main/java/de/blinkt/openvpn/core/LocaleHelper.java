@@ -62,10 +62,7 @@ public class LocaleHelper {
 
         Configuration config = new Configuration(res.getConfiguration());
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-            config.setLocale(desiredLocale);
-        else
-            config.locale = desiredLocale;
+        config.setLocale(desiredLocale);
 
         res.updateConfiguration(config, res.getDisplayMetrics());
     }

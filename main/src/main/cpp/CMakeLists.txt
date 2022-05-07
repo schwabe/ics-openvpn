@@ -131,6 +131,8 @@ set(openvpn_srcs
         src/openvpn/crypto_mbedtls.c
         src/openvpn/cryptoapi.c
         src/openvpn/dhcp.c
+        src/openvpn/dns.c
+        src/openvpn/dns.h
         src/openvpn/error.c
         src/openvpn/event.c
         src/openvpn/env_set.c
@@ -185,6 +187,8 @@ set(openvpn_srcs
         src/openvpn/ssl_openssl.c
         src/openvpn/ssl_mbedtls.c
         src/openvpn/ssl_ncp.c
+        src/openvpn/ssl_pkt.c
+        src/openvpn/ssl_pkt.h
         src/openvpn/ssl_util.c
         src/openvpn/ssl_verify.c
         src/openvpn/ssl_verify_openssl.c

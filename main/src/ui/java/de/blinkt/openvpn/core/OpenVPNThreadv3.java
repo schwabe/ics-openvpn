@@ -2,7 +2,12 @@ package de.blinkt.openvpn.core;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.Settings;
+import android.text.TextUtils;
 
 import net.openvpn.ovpn3.ClientAPI_Config;
 import net.openvpn.ovpn3.ClientAPI_EvalConfig;
@@ -11,6 +16,7 @@ import net.openvpn.ovpn3.ClientAPI_ExternalPKICertRequest;
 import net.openvpn.ovpn3.ClientAPI_ExternalPKISignRequest;
 import net.openvpn.ovpn3.ClientAPI_LogInfo;
 import net.openvpn.ovpn3.ClientAPI_OpenVPNClient;
+import net.openvpn.ovpn3.ClientAPI_OpenVPNClientHelper;
 import net.openvpn.ovpn3.ClientAPI_ProvideCreds;
 import net.openvpn.ovpn3.ClientAPI_Status;
 import net.openvpn.ovpn3.ClientAPI_TransportStats;
@@ -22,20 +28,27 @@ import de.blinkt.openvpn.VpnProfile;
 
 import static de.blinkt.openvpn.VpnProfile.AUTH_RETRY_NOINTERACT;
 
-public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable, OpenVPNManagement {
+import androidx.annotation.NonNull;
 
+public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable, OpenVPNManagement {
     final static long EmulateExcludeRoutes = (1 << 16);
 
     static {
         System.loadLibrary("ovpn3");
     }
 
-    private VpnProfile mVp;
-    private OpenVPNService mService;
+    private final VpnProfile mVp;
+    private final OpenVPNService mService;
+    /* The methods in OpenVPN3 can take a long time, so we do async messages to handle them
+     * to avoid ANR on the service main thread */
+    private final Handler mHandler;
 
     public OpenVPNThreadv3(OpenVPNService openVpnService, VpnProfile vp) {
         mVp = vp;
         mService = openVpnService;
+        HandlerThread mHandlerThread = new HandlerThread("OpenVPN3Thread");
+        mHandlerThread.start();
+        mHandler = new Handler(mHandlerThread.getLooper());
     }
 
     @Override
@@ -44,20 +57,19 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         if (!setConfig(configstr))
             return;
         setUserPW();
-        VpnStatus.logInfo(platform());
-        VpnStatus.logInfo(copyright());
 
+        VpnStatus.logInfo(ClientAPI_OpenVPNClientHelper.platform());
+        VpnStatus.logInfo(ClientAPI_OpenVPNClientHelper.copyright());
 
-        StatusPoller statuspoller = new StatusPoller(OpenVPNManagement.mBytecountInterval * 1000);
-        new Thread(statuspoller, "Status Poller").start();
+        mHandler.postDelayed(this::pollStatus, OpenVPNManagement.mBytecountInterval * 1000);
 
         ClientAPI_Status status = connect();
         if (status.getError()) {
             VpnStatus.logError(String.format("connect() error: %s: %s", status.getStatus(), status.getMessage()));
-        } else {
-            VpnStatus.updateStateString("NOPROCESS", "OpenVPN3 thread finished", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
+            VpnStatus.addExtraHints(status.getMessage());
         }
-        statuspoller.stop();
+        VpnStatus.updateStateString("NOPROCESS", "OpenVPN3 thread finished", R.string.state_noprocess, ConnectionStatus.LEVEL_NOTCONNECTED);
+        mHandler.removeCallbacks(this::pollStatus);
     }
 
     @Override
@@ -171,17 +183,22 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
         config.setContent(vpnconfig);
         config.setTunPersist(mVp.mPersistTun);
-        config.setGuiVersion(mVp.getVersionEnvString(mService));
-        config.setSsoMethods("openurl,crtext");
+        config.setGuiVersion(VpnProfile.getVersionEnvString(mService));
+        config.setSsoMethods("openurl,webauth,crtext");
         config.setPlatformVersion(mVp.getPlatformVersionEnvString());
         config.setExternalPkiAlias("extpki");
         config.setCompressionMode("asym");
 
-        config.setHwAddrOverride(getFakeMacAddrFromSAAID(mService));
+        config.setHwAddrOverride(NetworkUtils.getFakeMacAddrFromSAAID(mService));
         config.setInfo(true);
         config.setAllowLocalLanAccess(mVp.mAllowLocalLAN);
         boolean retryOnAuthFailed = mVp.mAuthRetry == AUTH_RETRY_NOINTERACT;
         config.setRetryOnAuthFailed(retryOnAuthFailed);
+        config.setEnableLegacyAlgorithms(mVp.mUseLegacyProvider);
+        if (mVp.mCompatMode > 0 && mVp.mCompatMode < 20500)
+            config.setEnableNonPreferredDCAlgorithms(true);
+        if (!TextUtils.isEmpty(mVp.mTlSCertProfile))
+            config.setTlsCertProfileOverride(mVp.mTlSCertProfile);
 
         ClientAPI_EvalConfig ec = eval_config(config);
         if (ec.getExternalPki()) {
@@ -195,28 +212,6 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
             return true;
         }
     }
-
-    @SuppressLint("HardwareIds")
-    private String getFakeMacAddrFromSAAID(Context c) {
-        char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
-
-        String saaid = Settings.Secure.getString(c.getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-
-        StringBuilder ret = new StringBuilder();
-        if (saaid.length() >= 6) {
-            byte[] sb = saaid.getBytes();
-            for (int b = 0; b <= 6; b++) {
-                if (b != 0)
-                    ret.append(":");
-                int v = sb[b] & 0xFF;
-                ret.append(HEX_ARRAY[v >>> 4]);
-                ret.append(HEX_ARRAY[v & 0x0F]);
-            }
-        }
-        return ret.toString();
-    }
-
 
     @Override
     public void external_pki_cert_request(ClientAPI_ExternalPKICertRequest certreq) {
@@ -240,16 +235,21 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
     @Override
     public void external_pki_sign_request(ClientAPI_ExternalPKISignRequest signreq) {
         VpnStatus.logDebug("Got external PKI signing request from OpenVPN core for algorithm " + signreq.getAlgorithm());
-        boolean pkcs1padding;
-        if (signreq.getAlgorithm().equals("RSA_PKCS1_PADDING"))
-            pkcs1padding = true;
-        else if (signreq.getAlgorithm().equals("RSA_NO_PADDING"))
-            pkcs1padding = false;
-        else if (signreq.getAlgorithm().equals("ECDSA"))
-            pkcs1padding = false;
-        else
-            throw new IllegalArgumentException("Illegal padding in sign request" + signreq.getAlgorithm());
-        signreq.setSig(mVp.getSignedData(mService, signreq.getData(), pkcs1padding));
+        SignaturePadding padding;
+        switch (signreq.getAlgorithm()) {
+            case "RSA_PKCS1_PADDING":
+                padding = SignaturePadding.RSA_PKCS1_PADDING;
+                break;
+            case "RSA_NO_PADDING":
+                padding = SignaturePadding.NO_PADDING;
+                break;
+            case "ECDSA":
+                padding = SignaturePadding.NO_PADDING;
+                break;
+            default:
+                throw new IllegalArgumentException("Illegal padding in sign request" + signreq.getAlgorithm());
+        }
+        signreq.setSig(mVp.getSignedData(mService, signreq.getData(), padding, "", "", false));
     }
 
     void setUserPW() {
@@ -270,13 +270,13 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
     @Override
     public boolean stopVPN(boolean replaceConnection) {
-        stop();
+        mHandler.post(this::stop);
         return false;
     }
 
     @Override
     public void networkChange(boolean sameNetwork) {
-        reconnect(1);
+        mHandler.post(() -> { reconnect(1);});
     }
 
     @Override
@@ -286,7 +286,9 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
     @Override
     public void sendCRResponse(String response) {
-        post_cc_msg("CR_RESPONSE," + response + "\n");
+        mHandler.post(() -> {
+            post_cc_msg("CR_RESPONSE," + response + "\n");
+        });
     }
 
     @Override
@@ -296,6 +298,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
             logmsg = logmsg.substring(0, logmsg.length() - 1);
 
         VpnStatus.logInfo(logmsg);
+        VpnStatus.addExtraHints(logmsg);
     }
 
     @Override
@@ -303,12 +306,13 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         String name = event.getName();
         String info = event.getInfo();
         if (name.equals("INFO")) {
-            if (info.startsWith("OPEN_URL:") || info.startsWith("CR_TEXT:")) {
+            if (info.startsWith("OPEN_URL:") || info.startsWith("CR_TEXT:")
+                || info.startsWith("WEB_AUTH:")) {
                 mService.trigger_sso(info);
             } else {
                 VpnStatus.logInfo(R.string.info_from_server, info);
             }
-        } else if (name.equals("COMPRESSION_ENABLED")) {
+        } else if (name.equals("COMPRESSION_ENABLED") || name.equals(("WARN"))) {
             VpnStatus.logInfo(String.format(Locale.US, "%s: %s", name, info));
         } else {
             VpnStatus.updateStateString(name, info);
@@ -351,39 +355,22 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
     @Override
     public void reconnect() {
-        reconnect(1);
+        mHandler.post(() -> {
+            reconnect(1);
+        });
     }
 
     @Override
     public void pause(pauseReason reason) {
-        super.pause(reason.toString());
+        mHandler.post(() -> {
+            super.pause(reason.toString());
+        });
     }
 
-    class StatusPoller implements Runnable {
-        boolean mStopped = false;
-        private long mSleeptime;
-
-        public StatusPoller(long sleeptime) {
-            mSleeptime = sleeptime;
-        }
-
-        public void run() {
-            while (!mStopped) {
-                try {
-                    Thread.sleep(mSleeptime);
-                } catch (InterruptedException e) {
-                }
-                ClientAPI_TransportStats t = transport_stats();
-                long in = t.getBytesIn();
-                long out = t.getBytesOut();
-                VpnStatus.updateByteCount(in, out);
-            }
-        }
-
-        public void stop() {
-            mStopped = true;
-        }
+    private void pollStatus() {
+        ClientAPI_TransportStats t = transport_stats();
+        long in = t.getBytesIn();
+        long out = t.getBytesOut();
+        VpnStatus.updateByteCount(in, out);
     }
-
-
 }

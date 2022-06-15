@@ -8,6 +8,7 @@ package de.blinkt.openvpn.views;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import androidx.core.content.res.TypedArrayUtils;
 import androidx.preference.DialogPreference;
 
 import de.blinkt.openvpn.R;
@@ -28,7 +29,7 @@ public class RemoteCNPreference extends DialogPreference {
     }
 
     public RemoteCNPreference(Context context, AttributeSet attrs) {
-        super(context, attrs, 0);
+        super(context, attrs);
     }
 
     public RemoteCNPreference(Context context) {
@@ -38,11 +39,13 @@ public class RemoteCNPreference extends DialogPreference {
 
     public void setDN(String dn) {
         mDn = dn;
+        notifyChanged();
     }
 
 
     public void setAuthType(int x509authtype) {
         mDNType = x509authtype;
+        notifyChanged();
     }
 
     public String getCNText() {

@@ -8,7 +8,6 @@ package de.blinkt.openvpn.activities
 import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,21 +15,23 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
-
-import java.util.Locale
-import java.util.Vector
-
+import androidx.lifecycle.lifecycleScope
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.core.NativeUtils
 import de.blinkt.openvpn.core.OpenVPNService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.*
 
 class OpenSSLSpeed : BaseActivity() {
-    private lateinit var  mCipher: EditText
+    private lateinit var mCipher: EditText
     private lateinit var mAdapter: SpeedArrayAdapter
     private lateinit var mListView: ListView
 
 
-    internal class SpeedArrayAdapter(private val mContext: Context) : ArrayAdapter<SpeedResult>(mContext, 0) {
+    internal class SpeedArrayAdapter(private val mContext: Context) :
+        ArrayAdapter<SpeedResult>(mContext, 0) {
         private val mInflater: LayoutInflater
 
         init {
@@ -39,10 +40,10 @@ class OpenSSLSpeed : BaseActivity() {
         }
 
         internal data class ViewHolder(
-                var ciphername: TextView,
-                var speed: TextView,
-                var blocksize: TextView,
-                var blocksInTime: TextView
+            var ciphername: TextView,
+            var speed: TextView,
+            var blocksize: TextView,
+            var blocksInTime: TextView
         )
 
         override fun getView(position: Int, v: View?, parent: ViewGroup): View {
@@ -51,17 +52,22 @@ class OpenSSLSpeed : BaseActivity() {
             if (view == null) {
                 view = mInflater.inflate(R.layout.speedviewitem, parent, false)!!
                 val holder = ViewHolder(
-                        view.findViewById(R.id.ciphername),
-                        view.findViewById(R.id.speed),
-                        view.findViewById(R.id.blocksize),
-                        view.findViewById(R.id.blocksintime))
+                    view.findViewById(R.id.ciphername),
+                    view.findViewById(R.id.speed),
+                    view.findViewById(R.id.blocksize),
+                    view.findViewById(R.id.blocksintime)
+                )
                 view.tag = holder
             }
 
             val holder = view.tag as ViewHolder
 
             val total = res!!.count * res.length
-            val size = OpenVPNService.humanReadableByteCount(res.length.toLong(), false, mContext.resources)
+            val size = OpenVPNService.humanReadableByteCount(
+                res.length.toLong(),
+                false,
+                mContext.resources
+            )
 
             holder.blocksize.text = size
             holder.ciphername.text = res.algorithm
@@ -73,11 +79,22 @@ class OpenSSLSpeed : BaseActivity() {
                 holder.blocksInTime.setText(R.string.running_test)
                 holder.speed.text = "-"
             } else {
-                val totalBytes = OpenVPNService.humanReadableByteCount(total.toLong(), false, mContext.resources)
+                val totalBytes =
+                    OpenVPNService.humanReadableByteCount(total.toLong(), false, mContext.resources)
                 // TODO: Fix localisation here
-                val blockPerSec = OpenVPNService.humanReadableByteCount((total / res.time).toLong(), false, mContext.resources) + "/s"
+                val blockPerSec = OpenVPNService.humanReadableByteCount(
+                    (total / res.time).toLong(),
+                    false,
+                    mContext.resources
+                ) + "/s"
                 holder.speed.text = blockPerSec
-                holder.blocksInTime.text = String.format(Locale.ENGLISH, "%d blocks (%s) in %2.1fs", res.count.toLong(), totalBytes, res.time)
+                holder.blocksInTime.text = String.format(
+                    Locale.ENGLISH,
+                    "%d blocks (%s) in %2.1fs",
+                    res.count.toLong(),
+                    totalBytes,
+                    res.time
+                )
             }
 
             return view
@@ -101,10 +118,9 @@ class OpenSSLSpeed : BaseActivity() {
     }
 
     private fun runAlgorithms(algorithms: String) {
-        if (runTestAlgorithms != null)
-            runTestAlgorithms!!.cancel(true)
-        runTestAlgorithms = SpeeedTest()
-        runTestAlgorithms!!.execute(*algorithms.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+        lifecycleScope.launch {
+            runSpeedTest(algorithms)
+        }
     }
 
 
@@ -117,24 +133,29 @@ class OpenSSLSpeed : BaseActivity() {
         var running = true
     }
 
+    internal suspend fun showResults(vararg values: SpeedResult) {
+        withContext(Dispatchers.Main) {
+            for (r in values) {
+                if (r.running)
+                    mAdapter.add(r)
+                mAdapter.notifyDataSetChanged()
+            }
+        }
+    }
 
-    private inner class SpeeedTest : AsyncTask<String, SpeedResult, Array<SpeedResult>>() {
-
-
-        private var mCancel = false
-
-        override fun doInBackground(vararg strings: String): Array<SpeedResult> {
+    suspend fun runSpeedTest(algorithms: String) {
+        withContext(Dispatchers.IO)
+        {
             val mResult = Vector<SpeedResult>()
 
-            for (algorithm in strings) {
-
+            for (algorithm in algorithms.split(" ")) {
                 // Skip 16b and 16k as they are not relevevant for VPN
                 var i = 1
-                while (i < NativeUtils.openSSLlengths.size - 1 && !mCancel) {
+                while (i < NativeUtils.openSSLlengths.size - 1) {
                     val result = SpeedResult(algorithm)
                     result.length = NativeUtils.openSSLlengths[i]
                     mResult.add(result)
-                    publishProgress(result)
+                    showResults(result)
                     val resi = NativeUtils.getOpenSSLSpeed(algorithm, i)
                     if (resi == null) {
                         result.failed = true
@@ -143,36 +164,11 @@ class OpenSSLSpeed : BaseActivity() {
                         result.time = resi[2]
                     }
                     result.running = false
-                    publishProgress(result)
+                    showResults(result)
                     i++
                 }
             }
-
-            return mResult.toTypedArray()
-
-        }
-
-        override fun onProgressUpdate(vararg values: SpeedResult) {
-            for (r in values) {
-                if (r.running)
-                    mAdapter.add(r)
-                mAdapter.notifyDataSetChanged()
-            }
-        }
-
-        override fun onPostExecute(speedResult: Array<SpeedResult>) {
-
-        }
-
-        override fun onCancelled(speedResults: Array<SpeedResult>) {
-            mCancel = true
         }
     }
-
-    companion object {
-
-        private var runTestAlgorithms: SpeeedTest? = null
-    }
-
 
 }

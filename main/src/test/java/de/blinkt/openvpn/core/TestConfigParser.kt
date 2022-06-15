@@ -106,6 +106,25 @@ class TestConfigParser {
         Assert.assertEquals(vp.mExcludedRoutes.trim(), "8.8.8.8/32");
     }
 
+    @Test
+    fun testOneDNSImport()
+    {
+        val config = "client\n" +
+                "tun-mtu 1234\n" +
+                "<connection>\n" +
+                "remote foo.bar\n" +
+                "tun-mtu 1222\n" +
+                "</connection>\n" +
+                "route 8.8.8.8 255.255.255.255 net_gateway\n" +
+                "dhcp-option DNS 1.2.3.4\n"
+
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(config))
+        val vp = cp.convertProfile()
+
+        Assert.assertEquals("1.2.3.4", vp.mDNS1)
+        Assert.assertEquals("" , vp.mDNS2)
+    }
 
     @Test
     fun testCipherImport() {
@@ -145,12 +164,52 @@ class TestConfigParser {
         cp.parseConfig(StringReader(config4))
         val vp4 = cp.convertProfile()
 
-        Assert.assertEquals("AES-128-GCM:AES-256-GCM:CHACHA20-POLY1305:BF-CBC", vp4.mDataCiphers)
+        Assert.assertEquals("AES-128-GCM:AES-256-GCM:CHACHA20-POLY1305", vp4.mDataCiphers)
 
 
 
     }
 
+
+    @Test
+    fun testCompatmodeImport() {
+        val config = ("client\n"
+                + "tun-mtu 1234\n" +
+                "<connection>\n" +
+                "remote foo.bar\n" +
+                "tun-mtu 1222\n" +
+                "</connection>\n" +
+                "<cert>\nfakecert\n</cert>\n" +
+                "<key>\nfakekey\n</key>\n" +
+                "route 8.8.8.8 255.255.255.255 net_gateway\n")
+        val c:Context = ApplicationProvider.getApplicationContext()
+
+        val config1 = config + "compat-mode 2.7.7\n"
+
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(config1))
+        val vp = cp.convertProfile()
+
+        Assert.assertEquals(20707, vp.mCompatMode)
+
+
+        val config2 = config + "compat-mode 2.4.0\n"
+
+
+        cp.parseConfig(StringReader(config2))
+        val vp2 = cp.convertProfile()
+        Assert.assertEquals(20400, vp2.mCompatMode)
+        val conf2 = vp2.getConfigFile(c, false)
+        Assert.assertTrue(conf2.contains("compat-mode 2.4.0"));
+
+        val config3 = config + "compat-mode 1.17.23\n";
+        cp.parseConfig(StringReader(config3))
+        val vp3 = cp.convertProfile()
+        Assert.assertEquals(11723, vp3.mCompatMode)
+
+        val conf = vp3.getConfigFile(c, false)
+        Assert.assertTrue(conf.contains("compat-mode 1.17.23"))
+    }
 
     @Test
     @Throws(IOException::class, ConfigParser.ConfigParseError::class)
@@ -279,13 +338,11 @@ class TestConfigParser {
         val cp = ConfigParser()
         cp.parseConfig(StringReader(proxyconf))
         val vp = cp.convertProfile()
-        var config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), true)
-
 
         Assert.assertEquals(vp.checkProfile(ApplicationProvider.getApplicationContext(), true).toLong(), R.string.no_error_found.toLong())
         Assert.assertEquals(vp.checkProfile(ApplicationProvider.getApplicationContext(), false).toLong(), R.string.no_error_found.toLong())
 
-        config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
+        val config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
 
         Assert.assertTrue(config.contains("http-proxy 1.2.3.4"))
         Assert.assertFalse(config.contains("management-query-proxy"))

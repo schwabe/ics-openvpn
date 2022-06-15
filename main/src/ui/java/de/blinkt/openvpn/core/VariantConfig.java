@@ -12,7 +12,10 @@ import de.blinkt.openvpn.activities.InternalWebView;
 
 public class VariantConfig {
     /** Return the normal webview or internal webview depending what is available */
-    static Intent getOpenUrlIntent(Context c) {
-        return new Intent(c, InternalWebView.class);
+    static Intent getOpenUrlIntent(Context c, boolean external) {
+        if (external)
+            return new Intent(Intent.ACTION_VIEW);
+        else
+            return new Intent(c, InternalWebView.class);
     }
 }

@@ -14,9 +14,11 @@
             android:name="android.hardware.touchscreen"
             android:required="false" />
 
-    <application
-            android:banner="@mipmap/banner_tv"
-            tools:targetApi="lollipop">
+    <!-- This library wants SDK version 23 but we do runtime checks to not use it before
+        API 23 -->
+    <uses-sdk tools:overrideLibrary="androidx.security"/>
+
+    <application android:banner="@mipmap/banner_tv">
         <activity
                 android:exported="true"
                 android:name=".activities.MainActivity"
@@ -30,6 +32,13 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="openvpn" />
+                <data android:host="import-profile" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.InternalWebView" />
@@ -160,7 +169,7 @@
 
         <provider
                 android:name=".FileProvider"
-                android:authorities="de.blinkt.openvpn.FileProvider"
+                android:authorities="${applicationId}.FileProvider"
                 android:exported="true"
                 android:grantUriPermissions="true"
                 tools:ignore="ExportedContentProvider" />

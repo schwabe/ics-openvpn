@@ -1,10 +1,15 @@
 #!/bin/bash -xe
-export PATH=$PATH:/Applications/cov-analysis-macosx-2020.09/bin
+export PATH=$PATH:/Applications/cov-analysis-macosx-2021.03/bin
 
-if [ -n ${COVERITY_CONNECT_HOST} ]; then
+if [ -z "${COVERITY_CONNECT_HOST}" ]; then
     echo  COVERITY_CONNECT_HOST not set
     exit 1
 fi
+
+cov-configure --config .coverity/cfg.xml --clang
+cov-configure --config .coverity/cfg.xml --android
+cov-configure --config .coverity/cfg.xml --kotlin
+cov-configure --config .coverity/cfg.xml --java
 
 ./gradlew -b build.gradle.kts --no-daemon clean
 cov-build --dir .coverity/idir --config .coverity/cfg.xml  ./gradlew -b build.gradle.kts --no-daemon assembleUiRelease

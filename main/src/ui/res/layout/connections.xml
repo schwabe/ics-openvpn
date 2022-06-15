@@ -58,7 +58,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/white_rect"
         android:drawableLeft="@drawable/ic_dialog_alert"
         android:drawableStart="@drawable/ic_dialog_alert"
         android:drawablePadding="10dp"

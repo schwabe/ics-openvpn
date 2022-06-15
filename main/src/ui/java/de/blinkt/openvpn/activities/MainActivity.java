@@ -5,20 +5,23 @@
 
 package de.blinkt.openvpn.activities;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
+import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.fragments.AboutFragment;
 import de.blinkt.openvpn.fragments.FaqFragment;
 import de.blinkt.openvpn.fragments.GeneralSettings;
 import de.blinkt.openvpn.fragments.GraphFragment;
+import de.blinkt.openvpn.fragments.ImportRemoteConfig;
 import de.blinkt.openvpn.fragments.LogFragment;
 import de.blinkt.openvpn.fragments.SendDumpFragment;
 import de.blinkt.openvpn.fragments.VPNProfileList;
@@ -29,7 +32,7 @@ public class MainActivity extends BaseActivity {
 
     private static final String FEATURE_TELEVISION = "android.hardware.type.television";
     private static final String FEATURE_LEANBACK = "android.software.leanback";
-    //private TabLayout mTabs;
+    private TabLayout mTabs;
     private ViewPager mPager;
     private ScreenSlidePagerAdapter mPagerAdapter;
 
@@ -58,19 +61,11 @@ public class MainActivity extends BaseActivity {
         }
 
 
-        if (isDirectToTV())
+        if (isAndroidTV())
             mPagerAdapter.addTab(R.string.openvpn_log, LogFragment.class);
 
         mPagerAdapter.addTab(R.string.about, AboutFragment.class);
         mPager.setAdapter(mPagerAdapter);
-
-        //mTabs =  findViewById(R.id.sliding_tabs);
-        //mTabs.setViewPager(mPager);
-    }
-
-    private boolean isDirectToTV() {
-        return (getPackageManager().hasSystemFeature(FEATURE_TELEVISION)
-                || getPackageManager().hasSystemFeature(FEATURE_LEANBACK));
     }
 
 
@@ -82,13 +77,40 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (getIntent() != null) {
-            String page = getIntent().getStringExtra("PAGE");
+        Intent intent = getIntent();
+        if (intent != null) {
+            String action = intent.getAction();
+            if (Intent.ACTION_VIEW.equals(action))
+            {
+                Uri uri = intent.getData();
+                if (uri != null)
+                    checkUriForProfileImport(uri);
+            }
+            String page = intent.getStringExtra("PAGE");
             if ("graph".equals(page)) {
                 mPager.setCurrentItem(1);
             }
             setIntent(null);
         }
+    }
+
+    private void checkUriForProfileImport(Uri uri) {
+        if ("openvpn".equals(uri.getScheme()) && "import-profile".equals(uri.getHost()))
+        {
+            String realUrl = uri.getEncodedPath() + "?" + uri.getEncodedQuery();
+            if (!realUrl.startsWith("/https://"))
+            {
+                Toast.makeText(this, "Cannot use openvpn://import-profile/ URL that does not use https://", Toast.LENGTH_LONG).show();
+                return;
+            }
+            realUrl = realUrl.substring(1);
+            startOpenVPNUrlImport(realUrl);
+        }
+    }
+
+    private void startOpenVPNUrlImport(String url) {
+        ImportRemoteConfig asImportFrag = ImportRemoteConfig.newInstance(url);
+        asImportFrag.show(getSupportFragmentManager(), "dialog");
     }
 
     @Override

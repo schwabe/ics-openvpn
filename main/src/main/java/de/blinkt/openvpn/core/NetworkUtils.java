@@ -5,9 +5,11 @@
 
 package de.blinkt.openvpn.core;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.*;
 import android.os.Build;
+import android.provider.Settings;
 import android.text.TextUtils;
 
 import java.net.Inet4Address;
@@ -19,57 +21,56 @@ public class NetworkUtils {
     public static Vector<String> getLocalNetworks(Context c, boolean ipv6) {
         Vector<String> nets = new Vector<>();
         ConnectivityManager conn = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Network[] networks = conn.getAllNetworks();
-            for (Network network : networks) {
-                NetworkInfo ni = conn.getNetworkInfo(network);
-                LinkProperties li = conn.getLinkProperties(network);
 
-                NetworkCapabilities nc = conn.getNetworkCapabilities(network);
+        Network[] networks = conn.getAllNetworks();
+        for (Network network : networks) {
+            NetworkInfo ni = conn.getNetworkInfo(network);
+            LinkProperties li = conn.getLinkProperties(network);
 
-                // Skip VPN networks like ourselves
-                if (nc.hasTransport(NetworkCapabilities.TRANSPORT_VPN))
-                    continue;
+            NetworkCapabilities nc = conn.getNetworkCapabilities(network);
 
-                // Also skip mobile networks
-                if (nc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
-                    continue;
+            // Skip VPN networks like ourselves
+            if (nc.hasTransport(NetworkCapabilities.TRANSPORT_VPN))
+                continue;
+
+            // Also skip mobile networks
+            if (nc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
+                continue;
 
 
-                for (LinkAddress la : li.getLinkAddresses()) {
-                    if ((la.getAddress() instanceof Inet4Address && !ipv6) ||
-                            (la.getAddress() instanceof Inet6Address && ipv6))
-                        nets.add(la.toString());
-                }
+            for (LinkAddress la : li.getLinkAddresses()) {
+                if ((la.getAddress() instanceof Inet4Address && !ipv6) ||
+                        (la.getAddress() instanceof Inet6Address && ipv6))
+                    nets.add(la.toString());
             }
-        } else {
-            // Old Android Version, use native utils via ifconfig instead
-            // Add local network interfaces
-            if (ipv6)
-                return nets;
-
-            String[] localRoutes = NativeUtils.getIfconfig();
-
-            // The format of mLocalRoutes is kind of broken because I don't really like JNI
-            for (int i = 0; i < localRoutes.length; i += 3) {
-                String intf = localRoutes[i];
-                String ipAddr = localRoutes[i + 1];
-                String netMask = localRoutes[i + 2];
-
-                if (intf == null || intf.equals("lo") ||
-                        intf.startsWith("tun") || intf.startsWith("rmnet"))
-                    continue;
-
-                if (ipAddr == null || netMask == null) {
-                    VpnStatus.logError("Local routes are broken?! (Report to author) " + TextUtils.join("|", localRoutes));
-                    continue;
-                }
-                nets.add(ipAddr + "/" + CIDRIP.calculateLenFromMask(netMask));
-
-            }
-
         }
+
         return nets;
     }
+
+    @SuppressLint("HardwareIds")
+    public static String getFakeMacAddrFromSAAID(Context c) {
+        char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+
+        String saaid = Settings.Secure.getString(c.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+
+        if (saaid == null)
+            return null;
+
+        StringBuilder ret = new StringBuilder();
+        if (saaid.length() >= 6) {
+            byte[] sb = saaid.getBytes();
+            for (int b = 0; b <= 6; b++) {
+                if (b != 0)
+                    ret.append(":");
+                int v = sb[b] & 0xFF;
+                ret.append(HEX_ARRAY[v >>> 4]);
+                ret.append(HEX_ARRAY[v & 0x0F]);
+            }
+        }
+        return ret.toString();
+    }
+
 
 }

@@ -19,9 +19,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
+import androidx.core.view.isInvisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import de.blinkt.openvpn.R
@@ -31,6 +30,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.*
+import okhttp3.Handshake.Companion.handshake
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.internal.tls.OkHostnameVerifier
 import java.io.IOException
 import java.security.MessageDigest
@@ -60,8 +62,8 @@ class BasicAuthInterceptor(user: String, password: String) : Interceptor {
 }
 
 
-fun getCompositeSSLSocketFactory(certPin: CertificatePinner, hostname: String): SSLSocketFactory {
-    val trustPinnedCerts = arrayOf<TrustManager>(object : X509TrustManager {
+fun getCompositeSSLSocketFactory(certPin: CertificatePinner, hostname: String): Pair<SSLSocketFactory, X509TrustManager> {
+    val trustManager = object : X509TrustManager {
         override fun getAcceptedIssuers(): Array<X509Certificate> {
             return emptyArray()
         }
@@ -75,23 +77,27 @@ fun getCompositeSSLSocketFactory(certPin: CertificatePinner, hostname: String): 
         override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
             certPin.check(hostname, chain.toList())
         }
-    })
+    }
+    val trustPinnedCerts = arrayOf<TrustManager>(trustManager)
 
     // Install the all-trusting trust manager
     val sslContext = SSLContext.getInstance("TLS")
     sslContext.init(null, trustPinnedCerts, java.security.SecureRandom())
     // Create an ssl socket factory with our all-trusting manager
 
-    return sslContext.socketFactory
+    return Pair(sslContext.socketFactory, trustManager)
 
 }
 
-class ImportASConfig : DialogFragment() {
-    private lateinit var asUseAutlogin: CheckBox
+class ImportRemoteConfig : DialogFragment() {
+    private lateinit var asUseAutologin: CheckBox
     private lateinit var asServername: EditText
     private lateinit var asUsername: EditText
     private lateinit var asPassword: EditText
     private lateinit var dialogView: View
+
+    private lateinit var importChoiceGroup: RadioGroup
+    private lateinit var importChoiceAS: RadioButton
 
 
 
@@ -104,11 +110,11 @@ class ImportASConfig : DialogFragment() {
             mapping[ph] = prefs.getString("pin-${ph}", "")
         }
 
-        val defaultVerifier = OkHostnameVerifier.INSTANCE;
+        val defaultVerifier = OkHostnameVerifier;
         val pinHostVerifier = object : HostnameVerifier {
-            override fun verify(hostname: String?, session: SSLSession?): Boolean {
-                val unverifiedHandshake = Handshake.get(session)
-                val cert = unverifiedHandshake.peerCertificates()[0] as X509Certificate
+            override fun verify(hostname: String, session: SSLSession): Boolean {
+                val unverifiedHandshake = session.handshake()
+                val cert = unverifiedHandshake.peerCertificates[0] as X509Certificate
                 val hostPin = CertificatePinner.pin(cert)
 
                 if (mapping.containsKey(hostname) && mapping[hostname] == hostPin)
@@ -131,21 +137,23 @@ class ImportASConfig : DialogFragment() {
         val pinnedHosts: Set<String> = prefs.getStringSet("pinnedHosts", emptySet())!!
 
         val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(BasicAuthInterceptor(user, password))
-                .connectTimeout(15, TimeUnit.SECONDS)
+        if (user.isNotBlank() && password.isNotBlank()) {
+            okHttpClient.addInterceptor(BasicAuthInterceptor(user, password))
+        }
+        okHttpClient.connectTimeout(15, TimeUnit.SECONDS)
 
         /* Rely on system certificates if we do not have the host pinned */
         if (pinnedHosts.contains(hostname)) {
             val cpb = CertificatePinner.Builder()
 
             pinnedHosts.forEach { ph ->
-                cpb.add(ph, prefs.getString("pin-${ph}", ""))
+                cpb.add(ph, prefs.getString("pin-${ph}", "")!!)
             }
 
 
             val certPinner = cpb.build()
             getCompositeSSLSocketFactory(certPinner, hostname).let {
-                okHttpClient.sslSocketFactory(it)
+                okHttpClient.sslSocketFactory(it.first, it.second)
             }
             //okHttpClient.certificatePinner(certPinner)
         }
@@ -164,6 +172,7 @@ class ImportASConfig : DialogFragment() {
         val prefs = c.getSharedPreferences("pinnedCerts", Context.MODE_PRIVATE)
         val pedit = prefs.edit()
         val pinnedHosts: MutableSet<String> = prefs.getStringSet("pinnedHosts", mutableSetOf<String>())!!
+            .toMutableSet()
 
         pinnedHosts.add(host)
 
@@ -177,7 +186,7 @@ class ImportASConfig : DialogFragment() {
     internal fun removedPinnedCert(c: Context, host: String) {
         val prefs = c.getSharedPreferences("pinnedCerts", Context.MODE_PRIVATE)
         val pedit = prefs.edit()
-        val pinnedHosts: MutableSet<String> = prefs.getStringSet("pinnedHosts", mutableSetOf<String>())!!
+        val pinnedHosts: MutableSet<String> = prefs.getStringSet("pinnedHosts", mutableSetOf<String>())!!.toMutableSet()
 
         pinnedHosts.remove(host)
 
@@ -191,7 +200,7 @@ class ImportASConfig : DialogFragment() {
     fun fetchProfile(c: Context, asUri: HttpUrl, user: String, password: String): Response? {
 
 
-        val httpClient = buildHttpClient(c, user, password, asUri.host() ?: "")
+        val httpClient = buildHttpClient(c, user, password, asUri.host ?: "")
 
         val request = Request.Builder()
                 .url(asUri)
@@ -203,7 +212,12 @@ class ImportASConfig : DialogFragment() {
 
     }
 
-    private fun getAsUrl(url: String, autologin: Boolean): HttpUrl {
+    /**
+     * Returns a new [HttpUrl] representing the URL that is is going to be imported.
+     *
+     * @throws IllegalArgumentException If this is not a well-formed HTTP or HTTPS URL.
+     */
+    private fun getAsUrl(url: String, autologin: Boolean): HttpUrl{
         var asurl = url
         if (!asurl.startsWith("http"))
             asurl = "https://" + asurl
@@ -213,7 +227,7 @@ class ImportASConfig : DialogFragment() {
         else
             asurl += "/rest/GetUserlogin?tls-cryptv2=1"
 
-        val asUri = HttpUrl.parse(asurl)
+        val asUri = asurl.toHttpUrl()
         return asUri
     }
 
@@ -223,7 +237,7 @@ class ImportASConfig : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
-        dialogView = inflater.inflate(R.layout.import_as_config, null);
+        dialogView = inflater.inflate(R.layout.import_remote_config, null);
 
         val builder = AlertDialog.Builder(requireContext())
 
@@ -233,10 +247,30 @@ class ImportASConfig : DialogFragment() {
         asServername = dialogView.findViewById(R.id.as_servername)
         asUsername = dialogView.findViewById(R.id.username)
         asPassword = dialogView.findViewById(R.id.password)
-        asUseAutlogin = dialogView.findViewById(R.id.request_autologin)
+        asUseAutologin = dialogView.findViewById(R.id.request_autologin)
+
+        importChoiceGroup = dialogView.findViewById(R.id.import_source_group)
+        importChoiceAS = dialogView.findViewById(R.id.import_choice_as)
+
+        importChoiceGroup.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId == R.id.import_choice_as) {
+                asServername.setHint(R.string.as_servername)
+                asUseAutologin.visibility = View.VISIBLE
+            }
+            else {
+                asServername.setHint(R.string.server_url)
+                asUseAutologin.visibility = View.GONE
+            }
+        }
 
         builder.setPositiveButton(R.string.import_config, null)
         builder.setNegativeButton(android.R.string.cancel) { _, _ -> }
+
+        if (arguments?.getString("url") != null)
+        {
+            asServername.setText(arguments?.getString("url"))
+            importChoiceGroup.check(R.id.import_choice_url)
+        }
 
         val dialog = builder.create()
 
@@ -252,14 +286,30 @@ class ImportASConfig : DialogFragment() {
             d.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener()
 
             { _ ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    doAsImport(asUsername.text.toString(), asPassword.text.toString())
+                try {
+                    // Check if the URL that being built can be actually be parsed
+                    getImportUrl();
+
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        doAsImport(asUsername.text.toString(), asPassword.text.toString())
+                    }
+                } catch (e: IllegalArgumentException) {
+                    Toast.makeText(context, "URL is invalid: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
     val crvMessage = Pattern.compile(".*<Message>CRV1:R,E:(.*):(.*):(.*)</Message>.*", Pattern.DOTALL)
+
+
+    private fun getImportUrl(): HttpUrl {
+        if (importChoiceAS.isChecked)
+            return getAsUrl(asServername.text.toString(), asUseAutologin.isChecked)
+        else
+            return asServername.text.toString().toHttpUrl()
+    }
+
 
     suspend internal fun doAsImport(user: String, password: String) {
         var pleaseWait:AlertDialog?
@@ -276,8 +326,8 @@ class ImportASConfig : DialogFragment() {
                 Toast.makeText(context, "Downloading profile", Toast.LENGTH_LONG).show()
             }
 
+            val asProfileUri:HttpUrl = getImportUrl()
 
-            val asProfileUri = getAsUrl(asServername.text.toString(), asUseAutlogin.isChecked)
 
             var e: Exception? = null
             try {
@@ -287,11 +337,11 @@ class ImportASConfig : DialogFragment() {
                     throw Exception("No Response from Server")
                 }
 
-                val profile = response.body().string()
-                if (response.code() == 401 && crvMessage.matcher(profile).matches()) {
+                val profile = response.body?.string()
+                if (response.code == 401 && crvMessage.matcher(profile).matches()) {
                     withContext(Dispatchers.Main) {
                         pleaseWait?.dismiss()
-                        showCRDialog(profile)
+                        showCRDialog(profile!!)
                     }
                 } else if (response.isSuccessful) {
 
@@ -304,7 +354,7 @@ class ImportASConfig : DialogFragment() {
                         dismiss()
                     }
                 } else {
-                    throw Exception("Invalid Response from server: \n${response.code()} ${response.message()} \n\n ${profile}")
+                    throw Exception("Invalid Response from server: \n${response.code} ${response.message} \n\n ${profile}")
                 }
 
             } catch (ce: SSLHandshakeException) {
@@ -330,7 +380,8 @@ class ImportASConfig : DialogFragment() {
                                 AlertDialog.Builder(requireContext())
                                         .setTitle("Untrusted certificate found")
                                         .setMessage(firstCert.toString())
-                                        .setPositiveButton("Trust") { _, _ -> addPinnedCert(requireContext(), asProfileUri.host(), fp) }
+                                        .setPositiveButton("Trust") { _, _ -> addPinnedCert(requireContext(),
+                                            asProfileUri.host, fp) }
                                         .setNegativeButton("Do not trust", null)
                                         .show()
                             }
@@ -344,7 +395,9 @@ class ImportASConfig : DialogFragment() {
                                     .setTitle("Different certificate than trusted certificate from server")
                                     .setMessage(ce.message)
                                     .setNegativeButton(android.R.string.ok, null)
-                                    .setPositiveButton("Forget pinned certificate", { _, _ -> removedPinnedCert(requireContext(), asProfileUri.host()) })
+                                    .setPositiveButton("Forget pinned certificate", { _, _ -> removedPinnedCert(requireContext(),
+                                        asProfileUri.host
+                                    ) })
                                     .show();
                         }
                         e = null
@@ -400,22 +453,43 @@ class ImportASConfig : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        asServername.setText(Preferences.getDefaultSharedPreferences(activity).getString("as-hostname", ""))
-        asUsername.setText(Preferences.getDefaultSharedPreferences(activity).getString("as-username", ""))
+        if (arguments == null) {
+            asServername.setText(
+                Preferences.getDefaultSharedPreferences(activity).getString("as-hostname", "")
+            )
+            asUsername.setText(
+                Preferences.getDefaultSharedPreferences(activity).getString("as-username", "")
+            )
+            if (Preferences.getDefaultSharedPreferences(activity).getBoolean("as-selected", true)) {
+                importChoiceGroup.check(R.id.import_choice_as)
+            } else {
+                importChoiceGroup.check(R.id.import_choice_url)
+            }
+
+        }
     }
 
     override fun onPause() {
         super.onPause()
         val prefs = Preferences.getDefaultSharedPreferences(activity)
-        prefs.edit().putString("as-hostname", asServername.text.toString()).apply()
-        prefs.edit().putString("as-username", asUsername.text.toString()).apply()
+        val editor = prefs.edit()
+        editor.putString("as-hostname", asServername.text.toString())
+        editor.putString("as-username", asUsername.text.toString())
+        editor.putBoolean("as-selected", importChoiceAS.isChecked)
+        editor.apply()
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(): ImportASConfig {
-            return ImportASConfig();
+        fun newInstance(url:String? = null): ImportRemoteConfig {
+            val frag = ImportRemoteConfig()
+            if (url != null)
+            {
+                val extras = Bundle()
+                extras.putString("url", url)
+                frag.arguments = extras
+            }
+            return frag
         }
     }
-
 }

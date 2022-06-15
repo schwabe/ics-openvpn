@@ -28,7 +28,21 @@
             style="@style/item"
             android:inputType="text" />
 
+        <TextView
+                style="@style/item"
+                android:text="@string/compat_mode_label"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        <Spinner
+                android:id="@+id/compatmode"
+                style="@style/item"
+                android:prompt="@string/compatmode"
+                android:entries="@array/compat_mode"
+            />
 
+        <CheckBox
+                android:id="@+id/legacyprovider"
+                style="@style/item"
+                android:text="@string/loadossllegacy" />
 
         <CheckBox
             android:id="@+id/lzo"

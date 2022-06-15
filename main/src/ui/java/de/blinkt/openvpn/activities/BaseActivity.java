@@ -6,11 +6,15 @@
 package de.blinkt.openvpn.activities;
 
 import android.app.UiModeManager;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Window;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import de.blinkt.openvpn.core.LocaleHelper;
 
 public abstract class BaseActivity extends AppCompatActivity {
     boolean isAndroidTV() {
@@ -29,12 +33,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.updateResources(base));
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleHelper.onConfigurationChange(this);
     }
 }

@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -251,12 +252,16 @@ public class LogItem implements Parcelable {
                 return mMessage;
             } else {
                 if (c != null) {
-                    if (mRessourceId == R.string.mobile_info)
-                        return getMobileInfoString(c);
-                    if (mArgs == null)
-                        return c.getString(mRessourceId);
-                    else
-                        return c.getString(mRessourceId, mArgs);
+                    try {
+                        if (mRessourceId == R.string.mobile_info)
+                            return getMobileInfoString(c);
+                        if (mArgs == null)
+                            return c.getString(mRessourceId);
+                        else
+                            return c.getString(mRessourceId, mArgs);
+                    } catch (Resources.NotFoundException re) {
+                        return getString(null);
+                    }
                 } else {
                     String str = String.format(Locale.ENGLISH, "Log (no context) resid %d", mRessourceId);
                     if (mArgs != null)

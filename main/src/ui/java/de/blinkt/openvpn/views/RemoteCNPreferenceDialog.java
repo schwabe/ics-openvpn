@@ -107,17 +107,14 @@ public class RemoteCNPreferenceDialog extends PreferenceDialogFragmentCompat {
 
     @Override
     public void onDialogClosed(boolean positiveResult) {
-
         if (positiveResult) {
             RemoteCNPreference pref = ((RemoteCNPreference) getPreference());
 
             String dn = mEditText.getText().toString();
             int authtype = getAuthTypeFromSpinner();
-            if (pref.callChangeListener(new Pair<>(authtype, dn))) {
-                pref.setDN(dn);
-                pref.setAuthType(authtype);
-            }
-        }
+            pref.setDN(dn);
+            pref.setAuthType(authtype);
+          }
     }
 
 

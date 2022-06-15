@@ -13,29 +13,27 @@ plugins {
 }
 
 android {
-    compileSdkVersion(30)
+    compileSdk = 32
+
+    ndkVersion = "24.0.8215888"
 
     defaultConfig {
-        minSdkVersion(14)
-        targetSdkVersion(30)  //'Q'.toInt()
-        versionCode = 176
-        versionName = "0.7.22"
-
+        minSdk = 21
+        targetSdk = 32
+        versionCode = 192
+        versionName = "0.7.37"
         externalNativeBuild {
             cmake {
-                //arguments = listOf("-DANDROID_TOOLCHAIN=clang",
-                //        "-DANDROID_STL=c++_static")
             }
         }
     }
 
+
     testOptions.unitTests.isIncludeAndroidResources = true
-
-
 
     externalNativeBuild {
         cmake {
-            path =File("${projectDir}/src/main/cpp/CMakeLists.txt")
+            path = File("${projectDir}/src/main/cpp/CMakeLists.txt")
         }
     }
 
@@ -69,16 +67,16 @@ android {
             keyPassword = keystoreAliasPassword
             val keystoreAlias: String? by project
             keyAlias = keystoreAlias
-            isV1SigningEnabled = true
-            isV2SigningEnabled = true
+            enableV1Signing = true
+            enableV2Signing = true
         }
 
     }
 
-    lintOptions {
-        enable("BackButton", "EasterEgg", "StopShip", "IconExpectedSize", "GradleDynamicVersion", "NewerVersionAvailable")
-        warning("ImpliedQuantity", "MissingQuantity")
-        disable("MissingTranslation", "UnsafeNativeCodeLocation")
+    lint {
+        enable += setOf("BackButton", "EasterEgg", "StopShip", "IconExpectedSize", "GradleDynamicVersion", "NewerVersionAvailable")
+        checkOnly += setOf("ImpliedQuantity", "MissingQuantity")
+        disable += setOf("MissingTranslation", "UnsafeNativeCodeLocation")
     }
 
     buildTypes {
@@ -91,16 +89,15 @@ android {
             }
         }
     }
-
-    flavorDimensions("implementation")
+    flavorDimensions += listOf("implementation")
 
     productFlavors {
         create("ui") {
-            setDimension("implementation")
+            dimension = "implementation"
             buildConfigField("boolean", "openvpn3", "true")
         }
         create("skeleton") {
-            setDimension("implementation")
+            dimension = "implementation"
             buildConfigField("boolean", "openvpn3", "false")
         }
     }
@@ -123,9 +120,11 @@ android {
 }
 
 var swigcmd = "swig"
-// Workaround for Mac OS X since it otherwise does not find swig and I cannot get
-// the Exec task to respect the PATH environment :(
-if (File("/usr/local/bin/swig").exists())
+// Workaround for macOS(arm64) and macOS(intel) since it otherwise does not find swig and
+// I cannot get the Exec task to respect the PATH environment :(
+if (file("/opt/homebrew/bin/swig").exists())
+    swigcmd = "/opt/homebrew/bin/swig"
+else if (file("/usr/local/bin/swig").exists())
     swigcmd = "/usr/local/bin/swig"
 
 
@@ -142,7 +141,9 @@ fun registerGenTask(variantName: String, variantDirName: String): File {
         commandLine(listOf(swigcmd, "-outdir", genDir, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
                 "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
                 "-o", "${genDir}/ovpncli_wrap.cxx", "-oh", "${genDir}/ovpncli_wrap.h",
-                "src/main/cpp/openvpn3/javacli/ovpncli.i"))
+                "src/main/cpp/openvpn3/client/ovpncli.i"))
+        inputs.files( "src/main/cpp/openvpn3/client/ovpncli.i")
+        outputs.dir( genDir)
 
     }
     return baseDir
@@ -161,38 +162,39 @@ android.applicationVariants.all(object : Action<ApplicationVariant> {
 dependencies {
     // https://maven.google.com/web/index.html
     // https://developer.android.com/jetpack/androidx/releases/core
-    val preferenceVersion = "1.1.1"
-    val coreVersion = "1.2.0"
-    val materialVersion = "1.1.0"
-    val fragment_version = "1.3.2"
+    val preferenceVersion = "1.2.0"
+    val coreVersion = "1.7.0"
+    val materialVersion = "1.5.0"
+    val fragment_version = "1.4.1"
 
 
-    implementation("androidx.annotation:annotation:1.2.0")
+    implementation("androidx.annotation:annotation:1.3.0")
     implementation("androidx.core:core:$coreVersion")
 
+
     // Is there a nicer way to do this?
-    dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:1.1.3")
-    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
+    dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:2.1.3")
+    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
     dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
-    dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.0.0")
-    dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.1.0")
+    dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.2.1")
+    dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.4.1")
     dependencies.add("uiImplementation", "com.github.PhilJay:MPAndroidChart:v3.1.0")
-    dependencies.add("uiImplementation", "com.squareup.okhttp3:okhttp:3.2.0")
+    dependencies.add("uiImplementation", "com.squareup.okhttp3:okhttp:4.9.3")
     dependencies.add("uiImplementation", "androidx.core:core:$coreVersion")
     dependencies.add("uiImplementation", "androidx.core:core-ktx:$coreVersion")
     dependencies.add("uiImplementation", "androidx.fragment:fragment-ktx:$fragment_version")
     dependencies.add("uiImplementation", "androidx.preference:preference:$preferenceVersion")
     dependencies.add("uiImplementation", "androidx.preference:preference-ktx:$preferenceVersion")
     dependencies.add("uiImplementation", "com.google.android.material:material:$materialVersion")
-    dependencies.add("uiImplementation", "androidx.webkit:webkit:1.2.0")
-    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    dependencies.add("uiImplementation", "androidx.webkit:webkit:1.4.0")
+    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
+    dependencies.add("uiImplementation","androidx.security:security-crypto:1.0.0")
 
 
-
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.32")
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:3.9.0")
     testImplementation("org.robolectric:robolectric:4.5.1")
-    testImplementation("androidx.test:core:1.3.0")
+    testImplementation("androidx.test:core:1.4.0")
 }

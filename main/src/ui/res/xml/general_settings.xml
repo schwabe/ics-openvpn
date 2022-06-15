@@ -13,6 +13,13 @@
                 android:summary="@string/show_log_summary"
                 android:title="@string/show_log_window"/>
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/allowTranslationDefault"
+            android:key="allow_translation"
+            android:title="@string/allow_translations_title"
+            android:summary="@string/allow_translations_summary"
+        />
+
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -34,6 +41,11 @@
                 android:key="restartvpnonboot"
                 android:summary="@string/onbootrestartsummary"
                 android:title="@string/onbootrestart"/>
+
+        <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="preferencryption"
+                android:title="@string/encrypt_profiles"/>
 
         <Preference
                 android:key="clearapi"

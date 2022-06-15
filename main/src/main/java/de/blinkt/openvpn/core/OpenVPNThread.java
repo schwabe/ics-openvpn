@@ -14,11 +14,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,8 +33,6 @@ import de.blinkt.openvpn.R;
 public class OpenVPNThread implements Runnable {
     private static final String DUMP_PATH_STRING = "Dump path: ";
     @SuppressLint("SdCardPath")
-    private static final String BROKEN_PIE_SUPPORT = "/data/data/de.blinkt.openvpn/cache/pievpn";
-    private final static String BROKEN_PIE_SUPPORT2 = "syntax error";
     private static final String TAG = "OpenVPN";
     // 1380308330.240114 18000002 Send to HTTP proxy: 'X-Online-Host: bla.blabla.com'
     private static final Pattern LOG_PATTERN = Pattern.compile("(\\d+).(\\d+) ([0-9a-f])+ (.*)");
@@ -36,13 +40,15 @@ public class OpenVPNThread implements Runnable {
     public static final int M_NONFATAL = (1 << 5);
     public static final int M_WARN = (1 << 6);
     public static final int M_DEBUG = (1 << 7);
+    private final FutureTask<OutputStream> mStreamFuture;
+    private OutputStream mOutputStream;
+
     private String[] mArgv;
     private Process mProcess;
     private String mNativeDir;
     private String mTmpDir;
     private OpenVPNService mService;
     private String mDumpPath;
-    private boolean mBrokenPie = false;
     private boolean mNoProcessExitStatus = false;
 
     public OpenVPNThread(OpenVPNService service, String[] argv, String nativelibdir, String tmpdir) {
@@ -50,6 +56,7 @@ public class OpenVPNThread implements Runnable {
         mNativeDir = nativelibdir;
         mTmpDir = tmpdir;
         mService = service;
+        mStreamFuture = new FutureTask<>(() -> mOutputStream);
     }
 
     public void stopProcess() {
@@ -82,19 +89,6 @@ public class OpenVPNThread implements Runnable {
             }
             if (exitvalue != 0) {
                 VpnStatus.logError("Process exited with exit value " + exitvalue);
-                if (mBrokenPie) {
-                    /* This will probably fail since the NoPIE binary is probably not written */
-                    String[] noPieArgv = VPNLaunchHelper.replacePieWithNoPie(mArgv);
-
-                    // We are already noPIE, nothing to gain
-                    if (!noPieArgv.equals(mArgv)) {
-                        mArgv = noPieArgv;
-                        VpnStatus.logInfo("PIE Version could not be executed. Trying no PIE version");
-                        run();
-                    }
-
-                }
-
             }
 
             if (!mNoProcessExitStatus)
@@ -138,9 +132,13 @@ public class OpenVPNThread implements Runnable {
         try {
             mProcess = pb.start();
             // Close the output, since we don't need it
-            mProcess.getOutputStream().close();
+
             InputStream in = mProcess.getInputStream();
+            OutputStream out = mProcess.getOutputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+            mOutputStream = out;
+            mStreamFuture.run();
 
             while (true) {
                 String logline = br.readLine();
@@ -150,11 +148,7 @@ public class OpenVPNThread implements Runnable {
                 if (logline.startsWith(DUMP_PATH_STRING))
                     mDumpPath = logline.substring(DUMP_PATH_STRING.length());
 
-                if (logline.startsWith(BROKEN_PIE_SUPPORT) || logline.contains(BROKEN_PIE_SUPPORT2))
-                    mBrokenPie = true;
-
                 Matcher m = LOG_PATTERN.matcher(logline);
-                int logerror = 0;
                 if (m.matches()) {
                     int flags = Integer.parseInt(m.group(3), 16);
                     String msg = m.group(4);
@@ -174,13 +168,8 @@ public class OpenVPNThread implements Runnable {
                     if (msg.startsWith("MANAGEMENT: CMD"))
                         logLevel = Math.max(4, logLevel);
 
-                    if ((msg.endsWith("md too weak") && msg.startsWith("OpenSSL: error")) || msg.contains("error:140AB18E"))
-                        logerror = 1;
-
                     VpnStatus.logMessageOpenVPN(logStatus, logLevel, msg);
-                    if (logerror==1)
-                        VpnStatus.logError("OpenSSL reported a certificate with a weak hash, please the in app FAQ about weak hashes");
-
+                    VpnStatus.addExtraHints(msg);
                 } else {
                     VpnStatus.logInfo("P:" + logline);
                 }
@@ -191,6 +180,7 @@ public class OpenVPNThread implements Runnable {
             }
         } catch (InterruptedException | IOException e) {
             VpnStatus.logException("Error reading from output of OpenVPN process", e);
+            mStreamFuture.cancel(true);
             stopProcess();
         }
 
@@ -211,5 +201,9 @@ public class OpenVPNThread implements Runnable {
             lbpath = mNativeDir + ":" + lbpath;
         }
         return lbpath;
+    }
+
+    public OutputStream getOpenVPNStdin() throws ExecutionException, InterruptedException {
+        return mStreamFuture.get();
     }
 }

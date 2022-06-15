@@ -51,6 +51,7 @@ import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Vector;
+import java.util.concurrent.ExecutionException;
 
 import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
@@ -75,17 +76,14 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     public static final String VPNSERVICE_TUN = "vpnservice-tun";
     public final static String ORBOT_PACKAGE_NAME = "org.torproject.android";
-    private static final String PAUSE_VPN = "de.blinkt.openvpn.PAUSE_VPN";
-    private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
-
     public static final String EXTRA_CHALLENGE_TXT = "de.blinkt.openvpn.core.CR_TEXT_CHALLENGE";
     public static final String EXTRA_CHALLENGE_OPENURL = "de.blinkt.openvpn.core.OPENURL_CHALLENGE";
-
+    private static final String PAUSE_VPN = "de.blinkt.openvpn.PAUSE_VPN";
+    private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
     private static final int PRIORITY_MIN = -2;
     private static final int PRIORITY_DEFAULT = 0;
     private static final int PRIORITY_MAX = 2;
     private static boolean mNotificationAlwaysVisible = false;
-    private static Class mNotificationActivityClass;
     private final Vector<String> mDnslist = new Vector<>();
     private final NetworkSpace mRoutes = new NetworkSpace();
     private final NetworkSpace mRoutesv6 = new NetworkSpace();
@@ -180,15 +178,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
     }
 
-    /**
-     * Sets the activity which should be opened when tapped on the permanent notification tile.
-     *
-     * @param activityClass The activity class to open
-     */
-    public static void setNotificationActivityClass(Class<? extends Activity> activityClass) {
-        mNotificationActivityClass = activityClass;
-    }
-
     @Override
     public void addAllowedExternalApp(String packagename) throws RemoteException {
         ExternalAppDatabase extapps = new ExternalAppDatabase(OpenVPNService.this);
@@ -203,7 +192,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     @Override
     public void challengeResponse(String response) throws RemoteException {
-        if(mManagement != null) {
+        if (mManagement != null) {
             String b64response = Base64.encodeToString(response.getBytes(Charset.forName("UTF-8")), Base64.DEFAULT);
             mManagement.sendCRResponse(b64response);
         }
@@ -236,7 +225,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             mProcessThread = null;
         }
         VpnStatus.removeByteCountListener(this);
-        unregisterDeviceStateReceiver();
+        unregisterDeviceStateReceiver(mDeviceStateReceiver);
+        mDeviceStateReceiver = null;
         ProfileManager.setConntectedVpnProfileDisconnected(this);
         mOpenVPNThread = null;
         if (!mStarting) {
@@ -286,13 +276,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
 
         // Try to set the priority available since API 16 (Jellybean)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            jbNotificationExtras(priority, nbuilder);
-            addVpnActionsToNotification(nbuilder);
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            lpNotificationExtras(nbuilder, Notification.CATEGORY_SERVICE);
+        jbNotificationExtras(priority, nbuilder);
+        addVpnActionsToNotification(nbuilder);
+        lpNotificationExtras(nbuilder, Notification.CATEGORY_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //noinspection NewApi
@@ -322,21 +308,20 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         // Check if running on a TV
         if (runningOnAndroidTV() && !(priority < 0))
-            guiHandler.post(new Runnable() {
-
-                @Override
-                public void run() {
-
-                    if (mlastToast != null)
-                        mlastToast.cancel();
-                    String toastText = String.format(Locale.getDefault(), "%s - %s", mProfile.mName, msg);
-                    mlastToast = Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT);
-                    mlastToast.show();
-                }
+            guiHandler.post(() -> {
+                if (mlastToast != null)
+                    mlastToast.cancel();
+                String name;
+                if (mProfile != null)
+                    name = mProfile.mName;
+                else
+                    name = "OpenVPN";
+                String toastText = String.format(Locale.getDefault(), "%s - %s", name, msg);
+                mlastToast = Toast.makeText(getBaseContext(), toastText, Toast.LENGTH_SHORT);
+                mlastToast.show();
             });
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void lpNotificationExtras(Notification.Builder nbuilder, String category) {
         nbuilder.setCategory(category);
         nbuilder.setLocalOnly(true);
@@ -370,7 +355,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void jbNotificationExtras(int priority,
                                       android.app.Notification.Builder nbuilder) {
         try {
@@ -391,7 +375,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void addVpnActionsToNotification(Notification.Builder nbuilder) {
         Intent disconnectVPN = new Intent(this, DisconnectVPN.class);
         disconnectVPN.setAction(DISCONNECT_VPN);
@@ -440,40 +423,31 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     }
 
-    synchronized void registerDeviceStateReceiver(OpenVPNManagement magnagement) {
+    synchronized void registerDeviceStateReceiver() {
         // Registers BroadcastReceiver to track network connection changes.
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_SCREEN_ON);
-        mDeviceStateReceiver = new DeviceStateReceiver(magnagement);
 
         // Fetch initial network state
         mDeviceStateReceiver.networkStateChange(this);
 
         registerReceiver(mDeviceStateReceiver, filter);
         VpnStatus.addByteCountListener(mDeviceStateReceiver);
-
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            addLollipopCMListener(); */
     }
 
-    synchronized void unregisterDeviceStateReceiver() {
+    synchronized void unregisterDeviceStateReceiver(DeviceStateReceiver deviceStateReceiver) {
         if (mDeviceStateReceiver != null)
             try {
-                VpnStatus.removeByteCountListener(mDeviceStateReceiver);
-                this.unregisterReceiver(mDeviceStateReceiver);
+                VpnStatus.removeByteCountListener(deviceStateReceiver);
+                this.unregisterReceiver(deviceStateReceiver);
             } catch (IllegalArgumentException iae) {
                 // I don't know why  this happens:
                 // java.lang.IllegalArgumentException: Receiver not registered: de.blinkt.openvpn.NetworkSateReceiver@41a61a10
                 // Ignore for now ...
                 iae.printStackTrace();
             }
-        mDeviceStateReceiver = null;
-
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            removeLollipopCMListener();*/
-
     }
 
     public void userPause(boolean shouldBePaused) {
@@ -526,6 +500,27 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         showNotification(VpnStatus.getLastCleanLogMessage(this),
                 VpnStatus.getLastCleanLogMessage(this), NOTIFICATION_CHANNEL_NEWSTATUS_ID, 0, ConnectionStatus.LEVEL_START, null);
 
+
+        /* start the OpenVPN process itself in a background thread */
+        new Thread(() -> startOpenVPN(intent, startId)).start();
+
+        return START_STICKY;
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N_MR1)
+    private void updateShortCutUsage(VpnProfile profile) {
+        if (profile == null)
+            return;
+        ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
+        if (shortcutManager!=null) {
+            /* This should never been null but I do not trust Android ROMs to do the right thing
+             * anymore and neither seems Coverity */
+            shortcutManager.reportShortcutUsed(profile.getUUIDString());
+        }
+    }
+
+    private VpnProfile fetchVPNProfile(Intent intent)
+    {
         if (intent != null && intent.hasExtra(getPackageName() + ".profileUUID")) {
             String profileUUID = intent.getStringExtra(getPackageName() + ".profileUUID");
             int profileVersion = intent.getIntExtra(getPackageName() + ".profileVersion", 0);
@@ -545,52 +540,27 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 Log.d("OpenVPN", "Got no last connected profile on null intent. Assuming always on.");
                 mProfile = ProfileManager.getAlwaysOnVPN(this);
 
+
                 if (mProfile == null) {
-                    stopSelf(startId);
-                    return START_NOT_STICKY;
+                    return null;
                 }
             }
             /* Do the asynchronous keychain certificate stuff */
             mProfile.checkForRestart(this);
         }
+        return mProfile;
+    }
 
-        if (mProfile == null) {
+    private void startOpenVPN(Intent intent, int startId) {
+        VpnProfile vp = fetchVPNProfile(intent);
+        if (vp == null) {
             stopSelf(startId);
-            return START_NOT_STICKY;
+            return;
         }
-
-
-        /* start the OpenVPN process itself in a background thread */
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                startOpenVPN();
-            }
-        }).start();
-
 
         ProfileManager.setConnectedVpnProfile(this, mProfile);
         VpnStatus.setConnectedVPNProfile(mProfile.getUUIDString());
 
-        return START_STICKY;
-    }
-
-    @RequiresApi(Build.VERSION_CODES.N_MR1)
-    private void updateShortCutUsage(VpnProfile profile) {
-        if (profile == null)
-            return;
-        ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
-        shortcutManager.reportShortcutUsed(profile.getUUIDString());
-    }
-
-    private void startOpenVPN() {
-        try {
-            mProfile.writeConfigFile(this);
-        } catch (IOException e) {
-            VpnStatus.logException("Error writing config file", e);
-            endVpnService();
-            return;
-        }
         String nativeLibraryDirectory = getApplicationInfo().nativeLibraryDir;
         String tmpDir;
         try {
@@ -617,7 +587,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         // Open the Management Interface
         if (!useOpenVPN3) {
-            // start a Thread that handles incoming messages of the managment socket
+            // start a Thread that handles incoming messages of the management socket
             OpenVpnManagementThread ovpnManagementThread = new OpenVpnManagementThread(mProfile, this);
             if (ovpnManagementThread.openManagementInterface(this)) {
                 Thread mSocketManagerThread = new Thread(ovpnManagementThread, "OpenVPNManagementThread");
@@ -637,27 +607,34 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             mManagement = mOpenVPN3;
         } else {
             processThread = new OpenVPNThread(this, argv, nativeLibraryDirectory, tmpDir);
-            mOpenVPNThread = processThread;
         }
 
-        synchronized (mProcessLock)
+        mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
 
-        {
-            mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
+        synchronized (mProcessLock) {
             mProcessThread.start();
         }
 
-        new Handler(getMainLooper()).post(new Runnable() {
-                                              @Override
-                                              public void run() {
-                                                  if (mDeviceStateReceiver != null)
-                                                      unregisterDeviceStateReceiver();
+        if (!useOpenVPN3) {
+            try {
+                mProfile.writeConfigFileOutput(this, ((OpenVPNThread) processThread).getOpenVPNStdin());
+            } catch (IOException | ExecutionException | InterruptedException e) {
+                VpnStatus.logException("Error generating config file", e);
+                endVpnService();
+                return;
+            }
+        }
 
-                                                  registerDeviceStateReceiver(mManagement);
-                                              }
-                                          }
+        DeviceStateReceiver oldDeviceStateReceiver = mDeviceStateReceiver;
+        mDeviceStateReceiver = new DeviceStateReceiver(mManagement);
 
-        );
+
+        new Handler(getMainLooper()).post(() -> {
+            if (oldDeviceStateReceiver != null)
+                unregisterDeviceStateReceiver(oldDeviceStateReceiver);
+
+            registerDeviceStateReceiver();
+        });
     }
 
 
@@ -693,7 +670,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     private OpenVPNManagement instantiateOpenVPN3Core() {
         try {
-            Class cl = Class.forName("de.blinkt.openvpn.core.OpenVPNThreadv3");
+            Class<?> cl = Class.forName("de.blinkt.openvpn.core.OpenVPNThreadv3");
             return (OpenVPNManagement) cl.getConstructor(OpenVPNService.class, VpnProfile.class).newInstance(this, mProfile);
         } catch (IllegalArgumentException | InstantiationException | InvocationTargetException |
                 NoSuchMethodException | ClassNotFoundException | IllegalAccessException e) {
@@ -701,7 +678,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
         return null;
     }
-
 
 
     @Override
@@ -723,7 +699,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         if (mDeviceStateReceiver != null) {
-            this.unregisterReceiver(mDeviceStateReceiver);
+            unregisterDeviceStateReceiver(mDeviceStateReceiver);
+            mDeviceStateReceiver = null;
         }
         // Just in case unregister for state
         VpnStatus.removeStateListener(this);
@@ -758,7 +735,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         VpnStatus.logInfo(R.string.last_openvpn_tun_config);
 
-        boolean allowUnsetAF = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !mProfile.mBlockUnusedAddressFamilies;
+        if (mProfile == null)
+        {
+            VpnStatus.logError("OpenVPN tries to open a VPN descriptor with mProfile==null, please report this bug with log!");
+            return null;
+        }
+
+        boolean allowUnsetAF = !mProfile.mBlockUnusedAddressFamilies;
         if (allowUnsetAF) {
             allowAllAFFamilies(builder);
         }
@@ -801,19 +784,12 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         String release = Build.VERSION.RELEASE;
-        if ((Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !release.startsWith("4.4.3")
-                && !release.startsWith("4.4.4") && !release.startsWith("4.4.5") && !release.startsWith("4.4.6"))
-                && mMtu < 1280) {
-            VpnStatus.logInfo(String.format(Locale.US, "Forcing MTU to 1280 instead of %d to workaround Android Bug #70916", mMtu));
-            builder.setMtu(1280);
-        } else {
-            builder.setMtu(mMtu);
-        }
+        builder.setMtu(mMtu);
 
         Collection<IpAddress> positiveIPv4Routes = mRoutes.getPositiveIPList();
         Collection<IpAddress> positiveIPv6Routes = mRoutesv6.getPositiveIPList();
 
-        if ("samsung".equals(Build.BRAND) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mDnslist.size() >= 1) {
+        if ("samsung".equals(Build.BRAND) && mDnslist.size() >= 1) {
             // Check if the first DNS Server is in the VPN range
             try {
                 IpAddress dnsServer = new IpAddress(new CIDRIP(mDnslist.get(0), 32), true);
@@ -895,9 +871,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             VpnStatus.logInfo(R.string.proxy_info, mProxyInfo.getHost(), mProxyInfo.getPort());
         }
         VpnStatus.logDebug(R.string.routes_debug, TextUtils.join(", ", positiveIPv4Routes), TextUtils.join(", ", positiveIPv6Routes));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setAllowedVpnPackages(builder);
-        }
+        setAllowedVpnPackages(builder);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             // VPN always uses the default network
             builder.setUnderlyingNetworks(null);
@@ -947,21 +921,15 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         } catch (Exception e) {
             VpnStatus.logError(R.string.tun_open_error);
             VpnStatus.logError(getString(R.string.error) + e.getLocalizedMessage());
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                VpnStatus.logError(R.string.tun_error_helpful);
-            }
             return null;
         }
 
     }
 
     private void setHttpProxy(Builder builder) {
-        if (mProxyInfo != null && Build.VERSION.SDK_INT >= 29)
-        {
+        if (mProxyInfo != null && Build.VERSION.SDK_INT >= 29) {
             builder.setHttpProxy(mProxyInfo);
-        }
-        else if (mProxyInfo != null)
-        {
+        } else if (mProxyInfo != null) {
             VpnStatus.logWarning("HTTP Proxy needs Android 10 or later.");
         }
     }
@@ -976,40 +944,34 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void allowAllAFFamilies(Builder builder) {
         builder.allowFamily(OsConstants.AF_INET);
         builder.allowFamily(OsConstants.AF_INET6);
     }
 
     private void addLocalNetworksToRoutes() {
-        for (String net: NetworkUtils.getLocalNetworks(this, false))
-        {
+        for (String net : NetworkUtils.getLocalNetworks(this, false)) {
             String[] netparts = net.split("/");
             String ipAddr = netparts[0];
             int netMask = Integer.parseInt(netparts[1]);
             if (ipAddr.equals(mLocalIP.mIp))
                 continue;
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT && !mProfile.mAllowLocalLAN) {
-                mRoutes.addIPSplit(new CIDRIP(ipAddr, netMask), true);
-
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && mProfile.mAllowLocalLAN)
+            if(mProfile.mAllowLocalLAN)
                 mRoutes.addIP(new CIDRIP(ipAddr, netMask), false);
         }
 
         // IPv6 is Lollipop+ only so we can skip the lower than KITKAT case
         if (mProfile.mAllowLocalLAN) {
             for (String net : NetworkUtils.getLocalNetworks(this, true)) {
-                addRoutev6(net, false);;
+                addRoutev6(net, false);
+                ;
             }
         }
 
 
     }
 
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setAllowedVpnPackages(Builder builder) {
         boolean profileUsesOrBot = false;
 
@@ -1089,8 +1051,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     public boolean addHttpProxy(String proxy, int port) {
         try {
             mProxyInfo = ProxyInfo.buildDirectProxy(proxy, port);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             VpnStatus.logError("Could not set proxy" + e.getLocalizedMessage());
             return false;
         }
@@ -1194,8 +1155,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
 
-        /* Workaround for Lollipop, it  does not route traffic to the VPNs own network mask */
-        if (mLocalIP.len <= 31 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        /* Workaround for Lollipop and higher, it does not route traffic to the VPNs own network mask */
+        if (mLocalIP.len <= 31) {
             CIDRIP interfaceRoute = new CIDRIP(mLocalIP.mIp, mLocalIP.len);
             interfaceRoute.normalise();
             addRoute(interfaceRoute, true);
@@ -1289,13 +1250,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (currentConfiguration.equals(mLastTunCfg)) {
             return "NOACTION";
         } else {
-            String release = Build.VERSION.RELEASE;
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && !release.startsWith("4.4.3")
-                    && !release.startsWith("4.4.4") && !release.startsWith("4.4.5") && !release.startsWith("4.4.6"))
-                // There will be probably no 4.4.4 or 4.4.5 version, so don't waste effort to do parsing here
-                return "OPEN_AFTER_CLOSE";
-            else
-                return "OPEN_BEFORE_CLOSE";
+            return "OPEN_BEFORE_CLOSE";
         }
     }
 
@@ -1304,6 +1259,18 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         showNotification(getString(resid), getString(resid), NOTIFICATION_CHANNEL_NEWSTATUS_ID, 0, LEVEL_WAITING_FOR_USER_INPUT, null);
     }
 
+
+    private Intent getWebAuthIntent(String url, boolean external, Notification.Builder nbuilder)
+    {
+        int reason = R.string.openurl_requested;
+        nbuilder.setContentTitle(getString(reason));
+
+        nbuilder.setContentText(url);
+        Intent intent = VariantConfig.getOpenUrlIntent(this, external);
+        intent.setData(Uri.parse(url));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
 
     public void trigger_sso(String info) {
         String channel = NOTIFICATION_CHANNEL_USERREQ_ID;
@@ -1317,31 +1284,51 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         nbuilder.setSmallIcon(icon);
 
         Intent intent;
-
         int reason;
-        if (method.equals("OPEN_URL")) {
-            String url = info.split(":", 2)[1];
-            reason = R.string.openurl_requested;
-            nbuilder.setContentTitle(getString(reason));
 
-            nbuilder.setContentText(url);
-            intent = VariantConfig.getOpenUrlIntent(this);
-            intent.setData(Uri.parse(url));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        } else if (method.equals("CR_TEXT")) {
-            String challenge = info.split(":", 2)[1];
-            reason = R.string.crtext_requested;
-            nbuilder.setContentTitle(getString(reason));
-            nbuilder.setContentText(challenge);
+        switch (method) {
+            case "OPEN_URL": {
+                reason = R.string.openurl_requested;
+                String url = info.split(":", 2)[1];
+                intent = getWebAuthIntent(url, false, nbuilder);
 
-            intent = new Intent();
-            intent.setComponent(new ComponentName(this, getPackageName() + ".activities.CredentialsPopup"));
+                break;
+            }
+            case "WEB_AUTH": {
+                reason = R.string.openurl_requested;
+                String[] parts = info.split(":", 3);
+                if (parts.length < 3) {
+                    VpnStatus.logError("WEB_AUTH method with invalid argument found");
+                    return;
+                }
+                String url = parts[2];
+                String[] flags = parts[1].split(",");
+                boolean external = false;
+                for (String flag : flags) {
+                    if (flag.equals("external")) {
+                        external = true;
+                        break;
+                    }
+                }
 
-            intent.putExtra(EXTRA_CHALLENGE_TXT, challenge);
+                intent = getWebAuthIntent(url, external, nbuilder);
+                break;
+            }
+            case "CR_TEXT":
+                String challenge = info.split(":", 2)[1];
+                reason = R.string.crtext_requested;
+                nbuilder.setContentTitle(getString(reason));
+                nbuilder.setContentText(challenge);
 
-        } else {
-            VpnStatus.logError("Unknown SSO method found: " + method);
-            return;
+                intent = new Intent();
+                intent.setComponent(new ComponentName(this, getPackageName() + ".activities.CredentialsPopup"));
+
+                intent.putExtra(EXTRA_CHALLENGE_TXT, challenge);
+
+                break;
+            default:
+                VpnStatus.logError("Unknown SSO method found: " + method);
+                return;
         }
 
         // updateStateString trigger the notification of the VPN to be refreshed, save this intent
@@ -1350,13 +1337,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         VpnStatus.updateStateString("USER_INPUT", "waiting for user input", reason, LEVEL_WAITING_FOR_USER_INPUT, intent);
         nbuilder.setContentIntent(pIntent);
 
-
-        // Try to set the priority available since API 16 (Jellybean)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-            jbNotificationExtras(PRIORITY_MAX, nbuilder);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            lpNotificationExtras(nbuilder, Notification.CATEGORY_STATUS);
+        jbNotificationExtras(PRIORITY_MAX, nbuilder);
+        lpNotificationExtras(nbuilder, Notification.CATEGORY_STATUS);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //noinspection NewApi

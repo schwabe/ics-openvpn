@@ -82,7 +82,7 @@
     <style name="blinkt.tabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">?attr/colorAccent</item>
         <item name="tabIndicatorHeight">4dp</item>
-        <item name="android:background">@color/design_default_color_primary</item>
+        <item name="android:background">@color/primary</item>
 
 
         <item name="tabBackground">@color/primary</item>

@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
             tools:ignore="QueryAllPackagesPermission" />
 
-
 <!--    <queries>-->
 <!--        <intent>-->
 <!--            <action android:name="android.intent.action.GET_CONTENT" />-->
@@ -126,6 +125,15 @@
             android:name=".api.DisconnectVPN"
             android:exported="true"
             android:targetActivity=".api.RemoteAction" />
+        <activity-alias
+                android:name=".api.PauseVPN"
+                android:exported="true"
+                android:targetActivity=".api.RemoteAction" />
+        <activity-alias
+                android:name=".api.ResumeVPN"
+                android:exported="true"
+                android:targetActivity=".api.RemoteAction" />
+
     </application>
 
 </manifest>

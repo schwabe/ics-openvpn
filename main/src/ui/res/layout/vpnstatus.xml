@@ -48,5 +48,12 @@
             tools:text="Connected to a very long ipv4 and 3483489348238824829482384928"
             style="@style/logWindowStatusText"/>
 
+    <TextView
+        android:id="@+id/trigger_pending_action"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:visibility="gone"
+        android:text="@string/trigger_pending_auth_dialog"/>
 
 </merge>

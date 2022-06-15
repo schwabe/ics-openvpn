@@ -17,7 +17,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.R.id;
 import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.views.FileSelectLayout;
 
 public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSelectedListener, FileSelectLayout.FileSelectCallback, CompoundButton.OnCheckedChangeListener {
@@ -27,7 +26,9 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
     private FileSelectLayout mCaCert;
     private FileSelectLayout mClientKey;
     private CheckBox mUseLzo;
+    private CheckBox mUseLegacyProvider;
     private Spinner mType;
+    private Spinner mCompatMode;
     private FileSelectLayout mpkcs12;
     private FileSelectLayout mCrlFile;
     private TextView mPKCS12Password;
@@ -68,7 +69,9 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mpkcs12 = mView.findViewById(id.pkcs12select);
         mCrlFile = mView.findViewById(id.crlfile);
         mUseLzo = mView.findViewById(id.lzo);
+        mUseLegacyProvider = mView.findViewById(R.id.legacyprovider);
         mType = mView.findViewById(id.type);
+        mCompatMode = mView.findViewById(id.compatmode);
         mPKCS12Password = mView.findViewById(id.pkcs12password);
         mEnablePeerFingerprint = mView.findViewById(id.enable_peer_fingerprint);
         mPeerFingerprints = mView.findViewById(id.peer_fingerprint);
@@ -190,7 +193,9 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mCrlFile.setData(mProfile.mCrlFilename, getActivity());
 
         mUseLzo.setChecked(mProfile.mUseLzo);
+        mUseLegacyProvider.setChecked(mProfile.mUseLegacyProvider);
         mType.setSelection(mProfile.mAuthenticationType);
+        mCompatMode.setSelection(Utils.mapCompatVer(mProfile.mCompatMode));
         mpkcs12.setData(mProfile.mPKCS12Filename, getActivity());
         mPKCS12Password.setText(mProfile.mPKCS12Password);
         mUserName.setText(mProfile.mUsername);
@@ -210,6 +215,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mProfile.mCrlFilename = mCrlFile.getData();
 
         mProfile.mUseLzo = mUseLzo.isChecked();
+        mProfile.mUseLegacyProvider = mUseLegacyProvider.isChecked();
         mProfile.mAuthenticationType = mType.getSelectedItemPosition();
         mProfile.mPKCS12Filename = mpkcs12.getData();
         mProfile.mPKCS12Password = mPKCS12Password.getText().toString();
@@ -220,7 +226,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mProfile.mAuthRetry = mAuthRetry.getSelectedItemPosition();
         mProfile.mCheckPeerFingerprint = mEnablePeerFingerprint.isChecked();
         mProfile.mPeerFingerPrints = mPeerFingerprints.getText().toString();
-
+        mProfile.mCompatMode = Utils.mapCompatMode(mCompatMode.getSelectedItemPosition());
     }
 
     @Override

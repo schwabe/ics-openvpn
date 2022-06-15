@@ -87,8 +87,10 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
     private TextView mUpStatus;
     private TextView mDownStatus;
     private TextView mConnectStatus;
+    private TextView mStartPendingIntent;
     private boolean mShowOptionsLayout;
     private CheckBox mClearLogCheckBox;
+    private Intent mPendingIntent;
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -622,6 +624,10 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         mUpStatus = (TextView) v.findViewById(R.id.speedUp);
         mDownStatus = (TextView) v.findViewById(R.id.speedDown);
         mConnectStatus = (TextView) v.findViewById(R.id.speedStatus);
+        mStartPendingIntent = (TextView) v.findViewById(R.id.trigger_pending_action);
+        mStartPendingIntent.setOnClickListener((view) -> {if (mPendingIntent != null)
+            startActivity(mPendingIntent);
+        });
         if (mShowOptionsLayout)
             mOptionsLayout.setVisibility(View.VISIBLE);
         return v;
@@ -663,6 +669,8 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
                     if (mConnectStatus != null)
                         mConnectStatus.setText(cleanLogMessage);
                 }
+                mStartPendingIntent.setVisibility(intent == null ? View.GONE : View.VISIBLE);
+                mPendingIntent = intent;
             });
         }
     }

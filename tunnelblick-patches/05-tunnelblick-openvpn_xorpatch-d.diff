@@ -1,8 +1,6 @@
 --- openvpn-2.5_git_974513e/src/openvpn/socket.c	2017-08-17 11:27:23.000000000 -0400
 +++ openvpn-2.5_git_974513e_patched/src/openvpn/socket.c	2017-08-18 18:37:11.000000000 -0400
-@@ -54,6 +54,56 @@
-     IPv6_TCP_HEADER_SIZE,
- };
+@@ -46,4 +46,54 @@
 
 +int buffer_mask(struct buffer *buf, const char *mask, int xormasklen)
 +{

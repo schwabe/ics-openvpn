@@ -1354,5 +1354,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         mNotificationManager.notify(notificationId, notification);
     }
 
-
+    public boolean isTorOverVpnEnabled() {
+        if (mProfile == null) {
+            return false;
+        }
+        return mProfile.mTorOverVpn;
+    }
 }

@@ -129,6 +129,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mPassword = "";
     public String mUsername = "";
     public boolean mRoutenopull = false;
+    public boolean mTorOverVpn = false;
     public boolean mUseRandomHostname = false;
     public boolean mUseFloat = false;
     public boolean mUseCustomConfig = false;

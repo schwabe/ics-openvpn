@@ -24,6 +24,7 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements Pref
     private EditTextPreference mExcludedRoutes;
     private EditTextPreference mExcludedRoutesv6;
 	private CheckBoxPreference mBlockUnusedAF;
+	private CheckBoxPreference mTorOverVpn;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements Pref
 
 		mRouteNoPull = findPreference("routenopull");
         mLocalVPNAccess = findPreference("unblockLocal");
+		mTorOverVpn = findPreference("torOverVpn");
 
 		mBlockUnusedAF = findPreference("blockUnusedAF");
 
@@ -73,6 +75,7 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements Pref
         mExcludedRoutesv6.setText(mProfile.mExcludedRoutesv6);
 
 		mRouteNoPull.setChecked(mProfile.mRoutenopull);
+		mTorOverVpn.setChecked(mProfile.mTorOverVpn);
         mLocalVPNAccess.setChecked(mProfile.mAllowLocalLAN);
 
         mBlockUnusedAF.setChecked(mProfile.mBlockUnusedAddressFamilies);
@@ -93,6 +96,7 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements Pref
 		mProfile.mCustomRoutes = mCustomRoutes.getText();
 		mProfile.mCustomRoutesv6 = mCustomRoutesv6.getText();
 		mProfile.mRoutenopull = mRouteNoPull.isChecked();
+		mProfile.mTorOverVpn = mTorOverVpn.isChecked();
         mProfile.mAllowLocalLAN =mLocalVPNAccess.isChecked();
         mProfile.mExcludedRoutes = mExcludedRoutes.getText();
         mProfile.mExcludedRoutesv6 = mExcludedRoutesv6.getText();

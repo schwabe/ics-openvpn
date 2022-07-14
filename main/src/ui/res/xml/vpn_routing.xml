@@ -63,4 +63,12 @@
             android:title="@string/custom_routes_title_excluded" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/tor" >
+        <CheckBoxPreference
+            android:disableDependentsState="true"
+            android:key="torOverVpn"
+            android:summary="@string/tor_over_vpn_summary"
+            android:title="@string/tor_over_vpn_title" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

@@ -37,7 +37,12 @@ acitvies to start/stop, pause/resume (like a user would with the notification)  
  - `de.blinkt.openvpn.api.PauseVPN`
  - `de.blinkt.openvpn.api.ResumeVPN`
 
-They use `de.blinkt.openvpn.api.profileName` as extra for the name of the VPN profile..
+They use `de.blinkt.openvpn.api.profileName` as extra for the name of the VPN profile.
+
+You can use `adb` to to test these intents:
+
+    adb -d shell am start -a android.intent.action.MAIN -n de.blinkt.openvpn/.api.ConnectVPN --es de.blinkt.openvpn.api.profileName myvpnprofile
+
 
 Note to administrators
 ------------------------

@@ -241,6 +241,29 @@ public class ProfileManager {
         profiles.put(profile.getUUID().toString(), profile);
     }
 
+    /**
+     * Checks if a profile has been added deleted since last loading and will update its
+     * profiles
+     * @param context
+     */
+    public void refreshVPNList(Context context)
+    {
+        SharedPreferences listpref = Preferences.getSharedPreferencesMulti(PREFS_NAME, context);
+        Set<String> vlist = listpref.getStringSet("vpnlist", null);
+        if (vlist == null)
+            return;
+
+        for (String vpnentry : vlist) {
+            if (!profiles.containsKey(vpnentry))
+                loadVpnEntry(context, vpnentry);
+        }
+        for (String profileuuid:profiles.keySet())
+        {
+            if (!vlist.contains(profileuuid))
+                profiles.remove(profileuuid);
+        }
+    }
+
     private void loadVPNList(Context context) {
         profiles = new HashMap<>();
         SharedPreferences listpref = Preferences.getSharedPreferencesMulti(PREFS_NAME, context);
@@ -252,44 +275,46 @@ public class ProfileManager {
         vlist.add(TEMPORARY_PROFILE_FILENAME);
 
         for (String vpnentry : vlist) {
-            ObjectInputStream vpnfile = null;
-            try {
-                FileInputStream vpInput;
-                File encryptedPath = context.getFileStreamPath(vpnentry + ".cp");
-                File encryptedPathOld = context.getFileStreamPath(vpnentry + ".cpold");
+            loadVpnEntry(context, vpnentry);
+        }
+    }
 
-                if (encryptedPath.exists()) {
-                    vpInput = ProfileEncryption.getEncryptedVpInput(context, encryptedPath);
-                } else if (encryptedPathOld.exists()) {
-                    vpInput = ProfileEncryption.getEncryptedVpInput(context, encryptedPathOld);
-                } else {
-                    vpInput = context.openFileInput(vpnentry + ".vp");
-                }
-                vpnfile = new ObjectInputStream(vpInput);
-                VpnProfile vp = ((VpnProfile) vpnfile.readObject());
+    private void loadVpnEntry(Context context, String vpnentry) {
+        ObjectInputStream vpnfile = null;
+        try {
+            FileInputStream vpInput;
+            File encryptedPath = context.getFileStreamPath(vpnentry + ".cp");
+            File encryptedPathOld = context.getFileStreamPath(vpnentry + ".cpold");
 
-                // Sanity check
-                if (vp == null || vp.mName == null || vp.getUUID() == null)
-                    continue;
+            if (encryptedPath.exists()) {
+                vpInput = ProfileEncryption.getEncryptedVpInput(context, encryptedPath);
+            } else if (encryptedPathOld.exists()) {
+                vpInput = ProfileEncryption.getEncryptedVpInput(context, encryptedPathOld);
+            } else {
+                vpInput = context.openFileInput(vpnentry + ".vp");
+            }
+            vpnfile = new ObjectInputStream(vpInput);
+            VpnProfile vp = ((VpnProfile) vpnfile.readObject());
 
-                vp.upgradeProfile();
-                if (vpnentry.equals(TEMPORARY_PROFILE_FILENAME)) {
-                    tmpprofile = vp;
-                } else {
-                    profiles.put(vp.getUUID().toString(), vp);
-                }
+            // Sanity check
+            if (vp == null || vp.mName == null || vp.getUUID() == null)
+                return;
 
-
-            } catch (IOException | ClassNotFoundException | GeneralSecurityException e) {
-                if (!vpnentry.equals(TEMPORARY_PROFILE_FILENAME))
-                    VpnStatus.logException("Loading VPN List", e);
-            } finally {
-                if (vpnfile != null) {
-                    try {
-                        vpnfile.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+            vp.upgradeProfile();
+            if (vpnentry.equals(TEMPORARY_PROFILE_FILENAME)) {
+                tmpprofile = vp;
+            } else {
+                profiles.put(vp.getUUID().toString(), vp);
+            }
+        } catch (IOException | ClassNotFoundException | GeneralSecurityException e) {
+            if (!vpnentry.equals(TEMPORARY_PROFILE_FILENAME))
+                VpnStatus.logException("Loading VPN List", e);
+        } finally {
+            if (vpnfile != null) {
+                try {
+                    vpnfile.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }

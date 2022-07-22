@@ -292,6 +292,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
     private void populateVpnList() {
         boolean sortByLRU = Preferences.getDefaultSharedPreferences(requireActivity()).getBoolean(PREF_SORT_BY_LRU, false);
+        getPM().refreshVPNList(requireContext());
         Collection<VpnProfile> allvpn = getPM().getProfiles();
         TreeSet<VpnProfile> sortedset;
         if (sortByLRU)

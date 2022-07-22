@@ -16,15 +16,15 @@
 
 #include <array>
 
-static const unsigned char zeroes[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+static const unsigned char zeroes[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 static char opensslerr[1024];
 extern "C" jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsapss(JNIEnv *env,
-																	 jclass,
-																	 jint hashtype,
-																	 jint MSBits,
-																	 jint rsa_size,
-																	 jbyteArray from) {
+								     jclass,
+								     jint hashtype,
+								     jint MSBits,
+								     jint rsa_size,
+								     jbyteArray from) {
 
   /*
   unsigned char *EM,
@@ -33,7 +33,7 @@ extern "C" jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsapss(JNIEnv *env
 				     int sLen)
 */
 
-  jbyte *data = env->GetByteArrayElements(from, NULL);
+  jbyte *data = env->GetByteArrayElements(from, nullptr);
   int datalen = env->GetArrayLength(from);
 
   const auto *mHash = reinterpret_cast<const unsigned char *>(data);
@@ -41,17 +41,17 @@ extern "C" jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsapss(JNIEnv *env
   const EVP_MD *Hash;
 
   if (hashtype == 0) {
-	Hash = EVP_md5();
+    Hash = EVP_md5();
   } else if (hashtype == 1) {
-	Hash = EVP_sha1();
+    Hash = EVP_sha1();
   } else if (hashtype == 2) {
-	Hash = EVP_sha224();
+    Hash = EVP_sha224();
   } else if (hashtype == 3) {
-	Hash = EVP_sha256();
+    Hash = EVP_sha256();
   } else if (hashtype == 4) {
-	Hash = EVP_sha384();
+    Hash = EVP_sha384();
   } else if (hashtype == 5) {
-	Hash = EVP_sha512();
+    Hash = EVP_sha512();
   }
 
   const EVP_MD *mgf1Hash = Hash;
@@ -68,47 +68,47 @@ extern "C" jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsapss(JNIEnv *env
   unsigned char *EM = buf.data();
 
   if (hLen < 0)
-	goto err;
+    goto err;
 
   emLen = rsa_size;
   if (MSBits == 0) {
-	*EM++ = 0;
-	emLen--;
+    *EM++ = 0;
+    emLen--;
   }
   if (emLen < hLen + 2) {
-	goto err;
+    goto err;
   }
   if (sLen == RSA_PSS_SALTLEN_MAX) {
-	sLen = emLen - hLen - 2;
+    sLen = emLen - hLen - 2;
   } else if (sLen > emLen - hLen - 2) {
-	goto err;
+    goto err;
   }
 
   if (sLen > 0) {
-	salt = (unsigned char *) OPENSSL_malloc(sLen);
-	if (salt == nullptr) {
-	  goto err;
-	}
-	if (RAND_bytes_ex(nullptr, salt, sLen, 0) <= 0)
-	  goto err;
+    salt = (unsigned char *) OPENSSL_malloc(sLen);
+    if (salt == nullptr) {
+      goto err;
+    }
+    if (RAND_bytes_ex(nullptr, salt, sLen, 0) <= 0)
+      goto err;
   }
   maskedDBLen = emLen - hLen - 1;
   H = EM + maskedDBLen;
   ctx = EVP_MD_CTX_new();
   if (ctx == nullptr)
-	goto err;
+    goto err;
   if (!EVP_DigestInit_ex(ctx, Hash, nullptr)
-	  || !EVP_DigestUpdate(ctx, zeroes, sizeof(zeroes))
-	  || !EVP_DigestUpdate(ctx, mHash, hLen))
-	goto err;
+      || !EVP_DigestUpdate(ctx, zeroes, sizeof(zeroes))
+      || !EVP_DigestUpdate(ctx, mHash, hLen))
+    goto err;
   if (sLen && !EVP_DigestUpdate(ctx, salt, sLen))
-	goto err;
+    goto err;
   if (!EVP_DigestFinal_ex(ctx, H, nullptr))
-	goto err;
+    goto err;
 
   /* Generate dbMask in place then perform XOR on it */
   if (PKCS1_MGF1(EM, maskedDBLen, H, hLen, mgf1Hash))
-	goto err;
+    goto err;
 
   p = EM;
 
@@ -119,11 +119,11 @@ extern "C" jbyteArray Java_de_blinkt_openvpn_core_NativeUtils_rsapss(JNIEnv *env
   p += emLen - sLen - hLen - 2;
   *p++ ^= 0x1;
   if (sLen > 0) {
-	for (int i = 0; i < sLen; i++)
-	  *p++ ^= salt[i];
+    for (int i = 0; i < sLen; i++)
+      *p++ ^= salt[i];
   }
   if (MSBits)
-	EM[0] &= 0xFF >> (8 - MSBits);
+    EM[0] &= 0xFF >> (8 - MSBits);
 
   /* H is already in place so just set final 0xbc */
 

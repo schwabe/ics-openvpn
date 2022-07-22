@@ -21,6 +21,9 @@ SET(OPENVPN3OSSL ON)
 SET(SSLLIBTYPE STATIC)
 SET(OPENSSL_PATH "openssl")
 
+set(CMAKE_CXX_STANDARD 17)
+
+
 #add_subdirectory(lzo)
 include(tools.cmake)
 include(lzo.cmake)
@@ -56,6 +59,8 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
 
     set(ovpn3_SRCS
             openvpn3/client/ovpncli.cpp
+            openvpn3/openvpn/openssl/xkey/xkey_provider.c
+            openvpn3/openvpn/openssl/xkey/xkey_helper.c
             ovpncli_wrap.cxx)
 
     add_library(ovpn3 SHARED ${ovpn3_SRCS})
@@ -80,7 +85,6 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
         target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo lz4)
     endif ()
 
-    target_compile_options(ovpn3 PRIVATE -std=c++1y)
     target_compile_definitions(ovpn3 PRIVATE
             -DHAVE_CONFIG_H
             -DHAVE_LZO
@@ -92,6 +96,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
             -DOPENVPN_SHOW_SESSION_TOKEN
             -DOPENSSL_API_COMPAT=0x10200000L
             -DOPENVPN_ALLOW_INSECURE_CERTPROFILE
+             -DENABLE_EXTERNAL_PKI
             )
 else ()
     message("Not budiling OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")

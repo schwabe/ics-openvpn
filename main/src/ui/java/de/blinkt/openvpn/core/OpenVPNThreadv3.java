@@ -237,6 +237,9 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         VpnStatus.logDebug("Got external PKI signing request from OpenVPN core for algorithm " + signreq.getAlgorithm());
         SignaturePadding padding;
         switch (signreq.getAlgorithm()) {
+            case "RSA_PKCS1_PSS_PADDING":
+                padding = SignaturePadding.RSA_PKCS1_PSS_PADDING;
+                break;
             case "RSA_PKCS1_PADDING":
                 padding = SignaturePadding.RSA_PKCS1_PADDING;
                 break;
@@ -249,7 +252,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
             default:
                 throw new IllegalArgumentException("Illegal padding in sign request" + signreq.getAlgorithm());
         }
-        signreq.setSig(mVp.getSignedData(mService, signreq.getData(), padding, "", "", false));
+        boolean needDigest = !signreq.getHashalg().isEmpty();
+        signreq.setSig(mVp.getSignedData(mService, signreq.getData(), padding, signreq.getSaltlen(), signreq.getHashalg(), needDigest));
     }
 
     void setUserPW() {

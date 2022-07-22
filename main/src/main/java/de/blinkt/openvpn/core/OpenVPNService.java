@@ -28,6 +28,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
@@ -141,6 +142,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private Toast mlastToast;
     private Runnable mOpenVPNThread;
     private ProxyInfo mProxyInfo;
+    private HandlerThread mCommandHandlerThread;
+    private Handler mCommandHandler;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean speed, Resources res) {
@@ -423,7 +426,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     }
 
-    synchronized void registerDeviceStateReceiver() {
+    synchronized void registerDeviceStateReceiver(DeviceStateReceiver newDeviceStateReceiver) {
         // Registers BroadcastReceiver to track network connection changes.
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -431,10 +434,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         filter.addAction(Intent.ACTION_SCREEN_ON);
 
         // Fetch initial network state
-        mDeviceStateReceiver.networkStateChange(this);
+        newDeviceStateReceiver.networkStateChange(this);
 
-        registerReceiver(mDeviceStateReceiver, filter);
-        VpnStatus.addByteCountListener(mDeviceStateReceiver);
+        registerReceiver(newDeviceStateReceiver, filter);
+        VpnStatus.addByteCountListener(newDeviceStateReceiver);
     }
 
     synchronized void unregisterDeviceStateReceiver(DeviceStateReceiver deviceStateReceiver) {
@@ -465,15 +468,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         if (intent != null && intent.getBooleanExtra(ALWAYS_SHOW_NOTIFICATION, false))
             mNotificationAlwaysVisible = true;
 
         VpnStatus.addStateListener(this);
         VpnStatus.addByteCountListener(this);
-
-        guiHandler = new Handler(getMainLooper());
-
 
         if (intent != null && PAUSE_VPN.equals(intent.getAction())) {
             if (mDeviceStateReceiver != null)
@@ -502,7 +501,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
 
         /* start the OpenVPN process itself in a background thread */
-        new Thread(() -> startOpenVPN(intent, startId)).start();
+        mCommandHandler.post(() -> startOpenVPN(intent, startId));
 
         return START_STICKY;
     }
@@ -609,9 +608,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             processThread = new OpenVPNThread(this, argv, nativeLibraryDirectory, tmpDir);
         }
 
-        mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
-
         synchronized (mProcessLock) {
+            mProcessThread = new Thread(processThread, "OpenVPNProcessThread");
             mProcessThread.start();
         }
 
@@ -625,15 +623,15 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
-        DeviceStateReceiver oldDeviceStateReceiver = mDeviceStateReceiver;
-        mDeviceStateReceiver = new DeviceStateReceiver(mManagement);
+        final DeviceStateReceiver oldDeviceStateReceiver = mDeviceStateReceiver;
+        final DeviceStateReceiver newDeviceStateReceiver = new DeviceStateReceiver(mManagement);
 
-
-        new Handler(getMainLooper()).post(() -> {
+        guiHandler.post(() -> {
             if (oldDeviceStateReceiver != null)
                 unregisterDeviceStateReceiver(oldDeviceStateReceiver);
 
-            registerDeviceStateReceiver();
+            registerDeviceStateReceiver(newDeviceStateReceiver);
+            mDeviceStateReceiver = newDeviceStateReceiver;
         });
     }
 
@@ -688,6 +686,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     @Override
     public void onCreate() {
         super.onCreate();
+        guiHandler = new Handler(getMainLooper());
+        mCommandHandlerThread = new HandlerThread("OpenVPNServiceCommandThread");
+        mCommandHandlerThread.start();
+        mCommandHandler = new Handler(mCommandHandlerThread.getLooper());
     }
 
     @Override

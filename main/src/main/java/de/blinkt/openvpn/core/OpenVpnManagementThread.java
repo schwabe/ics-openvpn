@@ -111,7 +111,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 }
             }
             try {
-                TorProxy.close();
+                TorProxy.closeResources();
             } catch (Exception ignored) {
 
             }
@@ -637,10 +637,11 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         boolean torOverVpnEnabled = mOpenVPNService.isTorOverVpnEnabled();
         int fdint;
         try {
+            ParcelFileDescriptor proxy = null;
             if (!torOverVpnEnabled) {
                 fdint = pfd.getFd();
             } else {
-                ParcelFileDescriptor proxy = TorProxy.createProxy(pfd, mOpenVPNService);
+                proxy = TorProxy.createProxy(pfd, mOpenVPNService);
                 FileDescriptor fileDescriptor = proxy.getFileDescriptor();
                 Method getInt = FileDescriptor.class.getDeclaredMethod("getInt$");
                 fdint = (int) getInt.invoke(fileDescriptor);
@@ -664,7 +665,10 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             // Set the FileDescriptor to null to stop this mad behavior
             mSocket.setFileDescriptorsForSend(null);
 
-            if (!torOverVpnEnabled) {
+            if (proxy != null) {
+                //We don't need to close pfd because we detached it in TorProxy.createProxy
+                proxy.close();
+            } else {
                 pfd.close();
             }
 

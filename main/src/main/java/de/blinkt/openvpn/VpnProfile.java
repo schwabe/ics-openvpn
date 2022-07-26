@@ -129,7 +129,6 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mPassword = "";
     public String mUsername = "";
     public boolean mRoutenopull = false;
-    public boolean mTorOverVpn = false;
     public boolean mUseRandomHostname = false;
     public boolean mUseFloat = false;
     public boolean mUseCustomConfig = false;
@@ -179,6 +178,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public int mCompatMode = 0;
     public boolean mUseLegacyProvider = false;
     public String mTlSCertProfile = "";
+    public boolean mTorOverVpn = false;
 
     private transient PrivateKey mPrivateKey;
     // Public attributes, since I got mad with getter/setter

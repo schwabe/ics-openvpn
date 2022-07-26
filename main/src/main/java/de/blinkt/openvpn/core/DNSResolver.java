@@ -22,8 +22,10 @@ public class DNSResolver {
     }
 
     public byte[] processDNS(byte[] payload) throws IOException {
-        // TODO: HACK
-        int THREAD_ID = 10000;
+        // HACK
+        // https://stackoverflow.com/questions/47723973/strictmode-java-lang-throwable-untagged-socket-detected
+        // see also de/blinkt/openvpn/fragments/ImportRemoteConfig.kt:buildHttpClient
+        int THREAD_ID = 10001;
         TrafficStats.setThreadStatsTag(THREAD_ID);
         if (mLocalhost == null) {
             mLocalhost = InetAddress.getByAddress(new byte[]{127, 0, 0, 1});

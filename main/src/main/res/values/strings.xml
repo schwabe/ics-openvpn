@@ -84,7 +84,7 @@
     <string name="ignored_pushed_routes">Ignore pushed routes</string>
     <string name="ignore_routes_summary">Ignore routes pushed by the server.</string>
     <string name="default_route_summary">Redirects all Traffic over the VPN</string>
-    <string name="tor_over_vpn_summary">Redirects all VPN Traffic over Tor</string>
+    <string name="tor_over_vpn_summary">Redirects all apps' traffic through Orbot. Orbot traffic is redirected through OpenVPN</string>
     <string name="use_default_title">Use default Route</string>
     <string name="tor_over_vpn_title">Tor over VPN</string>
     <string name="custom_route_message">Enter custom routes. Only enter destination in CIDR format. \"10.0.0.0/8 2002::/16\" would direct the networks 10.0.0.0/8 and 2002::/16 over the VPN.</string>

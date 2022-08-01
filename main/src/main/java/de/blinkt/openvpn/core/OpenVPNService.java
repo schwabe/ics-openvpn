@@ -5,9 +5,11 @@
 
 package de.blinkt.openvpn.core;
 
+import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_CONNECTED;
+import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
+import static de.blinkt.openvpn.core.NetworkSpace.IpAddress;
+
 import android.Manifest.permission;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -21,6 +23,7 @@ import android.content.pm.ShortcutManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.net.IpPrefix;
 import android.net.ProxyInfo;
 import android.net.Uri;
 import android.net.VpnService;
@@ -61,10 +64,6 @@ import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.api.ExternalAppDatabase;
 import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 import de.blinkt.openvpn.core.VpnStatus.StateListener;
-
-import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_CONNECTED;
-import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
-import static de.blinkt.openvpn.core.NetworkSpace.IpAddress;
 
 public class OpenVPNService extends VpnService implements StateListener, Callback, ByteCountListener, IOpenVPNServiceInternal {
     public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";
@@ -813,26 +812,12 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
-        IpAddress multicastRange = new IpAddress(new CIDRIP("224.0.0.0", 3), true);
 
-        for (IpAddress route : positiveIPv4Routes) {
-            try {
-
-                if (multicastRange.containsNet(route))
-                    VpnStatus.logDebug(R.string.ignore_multicast_route, route.toString());
-                else
-                    builder.addRoute(route.getIPv4Address(), route.networkMask);
-            } catch (IllegalArgumentException ia) {
-                VpnStatus.logError(getString(R.string.route_rejected) + route + " " + ia.getLocalizedMessage());
-            }
-        }
-
-        for (IpAddress route6 : positiveIPv6Routes) {
-            try {
-                builder.addRoute(route6.getIPv6Address(), route6.networkMask);
-            } catch (IllegalArgumentException ia) {
-                VpnStatus.logError(getString(R.string.route_rejected) + route6 + " " + ia.getLocalizedMessage());
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            installRoutesExcluded(builder, mRoutes);
+            installRoutesExcluded(builder, mRoutesv6);
+        } else {
+            installRoutesPostiveOnly(builder, positiveIPv4Routes, positiveIPv6Routes);
         }
 
 
@@ -872,7 +857,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (mProxyInfo != null) {
             VpnStatus.logInfo(R.string.proxy_info, mProxyInfo.getHost(), mProxyInfo.getPort());
         }
-        VpnStatus.logDebug(R.string.routes_debug, TextUtils.join(", ", positiveIPv4Routes), TextUtils.join(", ", positiveIPv6Routes));
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            /* On Tiramisu we install the routes exactly like promised */
+            VpnStatus.logDebug(R.string.routes_debug, TextUtils.join(", ", positiveIPv4Routes), TextUtils.join(", ", positiveIPv6Routes));
+        }
         setAllowedVpnPackages(builder);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             // VPN always uses the default network
@@ -926,6 +914,49 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             return null;
         }
 
+    }
+
+    private void installRoutesExcluded(Builder builder, NetworkSpace routes)
+    {
+        for(IpAddress ipIncl: routes.getNetworks(true))
+        {
+            try {
+                builder.addRoute(ipIncl.getPrefix());
+            } catch (UnknownHostException|IllegalArgumentException ia) {
+                VpnStatus.logError(getString(R.string.route_rejected) + ipIncl + " " + ia.getLocalizedMessage());
+            }
+        }
+        for(IpAddress ipExcl: routes.getNetworks(false))
+        {
+            try {
+                builder.excludeRoute(ipExcl.getPrefix());
+            } catch (UnknownHostException|IllegalArgumentException ia) {
+                VpnStatus.logError(getString(R.string.route_rejected) + ipExcl + " " + ia.getLocalizedMessage());
+            }
+        }
+    }
+
+    private void installRoutesPostiveOnly(Builder builder, Collection<IpAddress> positiveIPv4Routes, Collection<IpAddress> positiveIPv6Routes) {
+        IpAddress multicastRange = new IpAddress(new CIDRIP("224.0.0.0", 3), true);
+
+        for (IpAddress route : positiveIPv4Routes) {
+            try {
+                if (multicastRange.containsNet(route))
+                    VpnStatus.logDebug(R.string.ignore_multicast_route, route.toString());
+                else
+                    builder.addRoute(route.getIPv4Address(), route.networkMask);
+            } catch (IllegalArgumentException ia) {
+                VpnStatus.logError(getString(R.string.route_rejected) + route + " " + ia.getLocalizedMessage());
+            }
+        }
+
+        for (IpAddress route6 : positiveIPv6Routes) {
+            try {
+                builder.addRoute(route6.getIPv6Address(), route6.networkMask);
+            } catch (IllegalArgumentException ia) {
+                VpnStatus.logError(getString(R.string.route_rejected) + route6 + " " + ia.getLocalizedMessage());
+            }
+        }
     }
 
     private void setHttpProxy(Builder builder) {

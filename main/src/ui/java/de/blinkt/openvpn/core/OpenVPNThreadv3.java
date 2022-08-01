@@ -195,6 +195,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         boolean retryOnAuthFailed = mVp.mAuthRetry == AUTH_RETRY_NOINTERACT;
         config.setRetryOnAuthFailed(retryOnAuthFailed);
         config.setEnableLegacyAlgorithms(mVp.mUseLegacyProvider);
+        config.setEnableRouteEmulation(false);
         if (mVp.mCompatMode > 0 && mVp.mCompatMode < 20500)
             config.setEnableNonPreferredDCAlgorithms(true);
         if (!TextUtils.isEmpty(mVp.mTlSCertProfile))

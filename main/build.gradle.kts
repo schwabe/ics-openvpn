@@ -13,13 +13,13 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
 
     ndkVersion = "24.0.8215888"
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 193
         versionName = "0.7.38"
         externalNativeBuild {
@@ -140,6 +140,7 @@ fun registerGenTask(variantName: String, variantDirName: String): File {
         }
         commandLine(listOf(swigcmd, "-outdir", genDir, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
                 "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
+                "-DOPENVPN_PLATFORM_ANDROID",
                 "-o", "${genDir}/ovpncli_wrap.cxx", "-oh", "${genDir}/ovpncli_wrap.h",
                 "src/main/cpp/openvpn3/client/ovpncli.i"))
         inputs.files( "src/main/cpp/openvpn3/client/ovpncli.i")

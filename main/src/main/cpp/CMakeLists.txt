@@ -45,6 +45,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
             -c++
             -java -package net.openvpn.ovpn3
             -outcurrentdir
+            -DOPENVPN_PLATFORM_ANDROID
             -I${CMAKE_SOURCE_DIR}/openvpn3/client
             -I${CMAKE_SOURCE_DIR}/openvpn3
             ${CMAKE_SOURCE_DIR}/openvpn3/client/ovpncli.i)
@@ -92,7 +93,6 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
             -DASIO_STANDALONE
             -DUSE_ASIO
             -DGIT_VERSION_STRING=\"${OPENVPN3_GIT}\"
-            -DNO_ROUTE_EXCLUDE_EMULATION
             -DOPENVPN_SHOW_SESSION_TOKEN
             -DOPENSSL_API_COMPAT=0x10200000L
             -DOPENVPN_ALLOW_INSECURE_CERTPROFILE

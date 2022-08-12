@@ -166,6 +166,7 @@ set(openvpn_srcs
         src/openvpn/occ.c
         src/openvpn/openvpn.c
         src/openvpn/options.c
+        src/openvpn/options_util.c
         src/openvpn/otime.c
         src/openvpn/packet_id.c
         src/openvpn/perf.c

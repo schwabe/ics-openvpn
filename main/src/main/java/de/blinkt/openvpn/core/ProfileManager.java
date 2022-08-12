@@ -250,7 +250,7 @@ public class ProfileManager {
         editor.apply();
     }
 
-    public void addProfile(VpnProfile profile) {
+    public synchronized void addProfile(VpnProfile profile) {
         profiles.put(profile.getUUID().toString(), profile);
     }
 
@@ -259,7 +259,7 @@ public class ProfileManager {
      * profiles
      * @param context
      */
-    public void refreshVPNList(Context context)
+    public synchronized void refreshVPNList(Context context)
     {
         SharedPreferences listpref = Preferences.getSharedPreferencesMulti(PREFS_NAME, context);
         Set<String> vlist = listpref.getStringSet("vpnlist", null);
@@ -283,7 +283,7 @@ public class ProfileManager {
         }
     }
 
-    private void loadVPNList(Context context) {
+    private synchronized void loadVPNList(Context context) {
         profiles = new HashMap<>();
         SharedPreferences listpref = Preferences.getSharedPreferencesMulti(PREFS_NAME, context);
         Set<String> vlist = listpref.getStringSet("vpnlist", null);
@@ -298,7 +298,7 @@ public class ProfileManager {
         }
     }
 
-    private void loadVpnEntry(Context context, String vpnentry) {
+    private synchronized void loadVpnEntry(Context context, String vpnentry) {
         ObjectInputStream vpnfile = null;
         try {
             FileInputStream vpInput;
@@ -339,7 +339,7 @@ public class ProfileManager {
         }
     }
 
-    public void removeProfile(Context context, VpnProfile profile) {
+    public synchronized void removeProfile(Context context, VpnProfile profile) {
         String vpnentry = profile.getUUID().toString();
         profiles.remove(vpnentry);
         saveProfileList(context);

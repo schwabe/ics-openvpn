@@ -29,6 +29,10 @@ public class NetworkUtils {
 
             NetworkCapabilities nc = conn.getNetworkCapabilities(network);
 
+            // Ignore network if it has no capabilities
+            if (nc == null)
+                continue;
+
             // Skip VPN networks like ourselves
             if (nc.hasTransport(NetworkCapabilities.TRANSPORT_VPN))
                 continue;

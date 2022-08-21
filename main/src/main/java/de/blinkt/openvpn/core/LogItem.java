@@ -48,6 +48,14 @@ public class LogItem implements Parcelable {
         mArgs = args;
     }
 
+    public LogItem(VpnStatus.LogLevel level, int verblevel, String message, long eventLogTime) {
+        mMessage = message;
+        mLevel = level;
+        mVerbosityLevel = verblevel;
+        logtime = eventLogTime;
+    }
+
+
     public LogItem(VpnStatus.LogLevel level, int verblevel, String message) {
         mMessage = message;
         mLevel = level;
@@ -85,8 +93,6 @@ public class LogItem implements Parcelable {
                         other.mLevel.equals(mLevel)) &&
                 mVerbosityLevel == other.mVerbosityLevel &&
                 logtime == other.logtime;
-
-
     }
 
     public byte[] getMarschaledBytes() throws UnsupportedEncodingException, BufferOverflowException {
@@ -241,6 +247,11 @@ public class LogItem implements Parcelable {
         mMessage = msg;
     }
 
+    public LogItem(VpnStatus.LogLevel loglevel, String msg, long logEventTime) {
+        mLevel = loglevel;
+        mMessage = msg;
+        logtime = logEventTime;
+    }
 
     public LogItem(VpnStatus.LogLevel loglevel, int ressourceId) {
         mRessourceId = ressourceId;

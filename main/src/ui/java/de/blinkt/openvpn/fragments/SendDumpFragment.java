@@ -104,6 +104,7 @@ public class SendDumpFragment extends Fragment {
         Pair<File, Long> ldump = getLastestDump(getActivity());
         if (ldump == null) {
             VpnStatus.logError("No Minidump found!");
+            return;
         }
 
         uris.add(Uri.parse("content://de.blinkt.openvpn.FileProvider/" + ldump.first.getName()));

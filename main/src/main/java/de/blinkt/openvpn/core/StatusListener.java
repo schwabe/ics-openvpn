@@ -5,29 +5,36 @@
 
 package de.blinkt.openvpn.core;
 
+import static android.app.ApplicationExitInfo.REASON_CRASH_NATIVE;
+
+import android.app.ActivityManager;
+import android.app.ApplicationExitInfo;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
+
 import de.blinkt.openvpn.BuildConfig;
 import de.blinkt.openvpn.core.VpnStatus.LogLevel;
 
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by arne on 09.11.16.
  */
 
 public class StatusListener implements VpnStatus.LogListener {
-    private File mCacheDir;
-    private Context mContext;
     private final IStatusCallbacks mCallback = new IStatusCallbacks.Stub() {
         @Override
         public void newLogItem(LogItem item) throws RemoteException {
@@ -50,6 +57,7 @@ public class StatusListener implements VpnStatus.LogListener {
             VpnStatus.setConnectedVPNProfile(uuid);
         }
     };
+    private File mCacheDir;
     private final ServiceConnection mConnection = new ServiceConnection() {
 
 
@@ -102,6 +110,7 @@ public class StatusListener implements VpnStatus.LogListener {
         }
 
     };
+    private Context mContext;
 
     void init(Context c) {
 
@@ -112,6 +121,35 @@ public class StatusListener implements VpnStatus.LogListener {
         c.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         this.mContext = c;
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+            logLatestExitReasons(c);
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private void logLatestExitReasons(Context c) {
+        ActivityManager activityManager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ApplicationExitInfo> exitReasons = activityManager.getHistoricalProcessExitReasons(null, 0, 5);
+        ApplicationExitInfo lastguiexit = null;
+        ApplicationExitInfo lastserviceexit = null;
+        for (ApplicationExitInfo aei : exitReasons) {
+            if (aei.getProcessName().endsWith(":openvpn")) {
+                if (lastserviceexit == null || aei.getTimestamp() > lastserviceexit.getTimestamp())
+                    lastserviceexit = aei;
+            } else {
+                if (lastguiexit == null || aei.getTimestamp() > lastguiexit.getTimestamp())
+                    lastguiexit = aei;
+            }
+        }
+        logExitNotification(lastserviceexit, "Last exit reason reported by Android for Service Process: ");
+        logExitNotification(lastguiexit, "Last exit reason reported by Android for UI Process: ");
+
+    }
+
+    private void logExitNotification(ApplicationExitInfo aei, String s) {
+        if (aei != null) {
+            LogItem li = new LogItem(LogLevel.DEBUG, s + aei, aei.getTimestamp());
+            VpnStatus.newLogItemIfUnique(li);
+        }
     }
 
     @Override

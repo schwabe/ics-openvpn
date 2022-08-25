@@ -22,6 +22,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -79,7 +81,6 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private static final int SELECT_PROFILE = 43;
     private static final int IMPORT_PROFILE = 231;
     private static final int FILE_PICKER_RESULT_KITKAT = 392;
-    private static final int RESULT_PERMISSION = 395;
     private static final int MENU_IMPORT_PROFILE = Menu.FIRST + 1;
     private static final int MENU_CHANGE_SORTING = Menu.FIRST + 2;
     private static final int MENU_IMPORT_AS = Menu.FIRST + 3;
@@ -90,6 +91,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private Intent mLastIntent;
     private VpnProfile defaultVPN;
     private View mPermissionView;
+    private ActivityResultLauncher<String> mPermReceiver;
 
     @Override
     public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level, Intent intent) {
@@ -135,6 +137,13 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setListAdapter();
+
+        registerPermissionReceiver();
+    }
+
+    private void registerPermissionReceiver() {
+        mPermReceiver = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
+                result -> checkForNotificationPermission(requireView()));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
@@ -297,7 +306,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         mPermissionView.setVisibility(permissionGranted ? View.GONE : View.VISIBLE);
 
         mPermissionView.setOnClickListener((view) -> {
-            requireActivity().requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, RESULT_PERMISSION);
+            mPermReceiver.launch(Manifest.permission.POST_NOTIFICATIONS);
         });
     }
 
@@ -502,15 +511,10 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
             VpnProfile profile = ProfileManager.get(getActivity(), profileUUID);
             if (profile != null)
                 onAddOrDuplicateProfile(profile);
-        } else if (resultCode == RESULT_PERMISSION) {
-            checkForNotificationPermission(requireView());
         }
-
-
 
         if (resultCode != Activity.RESULT_OK)
             return;
-
 
         if (requestCode == START_VPN_CONFIG) {
             String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);

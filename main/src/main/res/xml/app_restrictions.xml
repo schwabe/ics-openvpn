@@ -66,4 +66,9 @@
             android:restrictionType="string"
             android:defaultValue=""
             />
+    <restriction
+        android:key="screenoffpausevpn"
+        android:title="@string/restriction_pausevpn"
+        android:restrictionType="bool"
+                />
 </restrictions>

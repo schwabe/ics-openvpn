@@ -15,6 +15,7 @@ plugins {
 android {
     compileSdk = 33
 
+    // Also update runcoverity.sh
     ndkVersion = "25.1.8937393"
 
     defaultConfig {

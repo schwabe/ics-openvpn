@@ -28,4 +28,16 @@
         <item>Адлучыцца і захаваць пароль</item>
         <item>Ігнараваць і паўтарыць</item>
     </string-array>
+    <string-array name="compat_mode">
+        <item>Сучасныя стандарты</item>
+        <item>Версія OpenVPN 2.5.x</item>
+        <item>Версія OpenVPN 2.4.x</item>
+        <item>Версіі OpenVPN 2.3.x і больш старыя</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>небяспечны (не рэкамендуецца, дазваляе небяспечная шыфраванне)</item>
+        <item>традыцыйны (прадвызначана)</item>
+        <item>пажадана (рэкамендавана, але абмяжоўвае сумяшчальнасць)</item>
+        <item>Suite B (толькі эліптычныя крывыя, якія ўхваленыя NIST)</item>
+    </string-array>
 </resources>

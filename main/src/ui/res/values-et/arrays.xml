@@ -28,4 +28,16 @@
         <item>Katkesta ühendus, säilita parool</item>
         <item>Ignoreeri, proovi uuesti</item>
     </string-array>
+    <string-array name="compat_mode">
+        <item>Kaasaegsed vaikesätted</item>
+        <item>OpenVPN 2.5.x partnerid</item>
+        <item>OpenVPN 2.4.x partnerid</item>
+        <item>OpenVPN 2.3.x ja vanemad partnerid</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>ebaturvaline (ei soovita, lubab ebaturvalist krüptot)</item>
+        <item>legacy (default)</item>
+        <item>preferred (recommended but limited compabbility)</item>
+        <item>Suite B (only NIST approved elliptic curves)</item>
+    </string-array>
 </resources>

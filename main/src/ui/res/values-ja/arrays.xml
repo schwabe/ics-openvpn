@@ -35,4 +35,16 @@
         <item>パスワードを維持して切断</item>
         <item>無視して再試行</item>
     </string-array>
+    <string-array name="compat_mode">
+        <item>最新のデフォルト</item>
+        <item>OpenVPN 2.5.x peers</item>
+        <item>OpenVPN 2.4.xピア</item>
+        <item>OpenVPN 2.3.x以前のピア</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>安全でない(非推奨、安全でない暗号を許可します)</item>
+        <item>レガシー(デフォルト)</item>
+        <item>おすすめ(推奨、ただし互換性が制限されます）</item>
+        <item>Suite B (only NIST approved elliptic curves)</item>
+    </string-array>
 </resources>

@@ -34,6 +34,7 @@
     <string name="ipv4_address">IPv4-адреси</string>
     <string name="ipv6_address">IPv6-адреса</string>
     <string name="custom_option_warning">Введіть додаткові параметри OpenVPN. Використовуйте цю можливість з великою обережністю. Якщо ви вважаєте, що відсутній важливий параметр, то зв\'яжіться з автором</string>
+    <string name="auth_username">Ім\'я користувача (залиште порожнім щоб минути авторизацію)</string>
     <string name="auth_pwquery">Пароль</string>
     <string name="static_keys_info">Для статичної конфігурації ключі авторизації TLS будуть використовуватися як статичні ключі</string>
     <string name="configure_the_vpn">Налаштувати VPN</string>
@@ -42,6 +43,7 @@
     <string name="duplicate_profile_name">Введіть унікальне ім\'я профілю</string>
     <string name="profilename">Ім\'я профілю</string>
     <string name="no_keystore_cert_selected">Потрібно вибрати сертифікат користувача</string>
+    <string name="no_ca_cert_selected">Необхідно вибрати сертифікат ЦС або ввімкнути перевірку відбитків</string>
     <string name="no_error_found">Помилок не знайдено</string>
     <string name="config_error_found">Помилка конфігурації</string>
     <string name="ipv4_format_error">Помилка при розборі адреси IPv4</string>
@@ -125,6 +127,7 @@
     <string name="no_vpn_support_image">Ваша прошивка не підтримує VPNService API, вибачте :(</string>
     <string name="encryption">Шифрування</string>
     <string name="cipher_dialog_title">Введіть метод шифрування</string>
+    <string name="chipher_dialog_message">Введіть алгоритми шифрування, що використовуються OpenVPN, розділяючи їх двокрапкою (--data-ciphers). Залиште порожнім, щоб використовувати шифри за замовчуванням (AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305).</string>
     <string name="auth_dialog_message">Введіть the authentication digest для OpenVPN. Залиште порожнім для використання стандартних значень.</string>
     <string name="settings_auth">Автентифікація/Шифрування</string>
     <string name="file_explorer_tab">Провідник файлів</string>
@@ -182,7 +185,7 @@
     <string name="error_extapp_sign">Помилка підпису із зовнішнім програмою автентифікації (%3$s): %1$s: %2$s</string>
     <string name="faq_system_dialogs">Попередження VPN з\'єднання повідомляє вам, що цей додаток може перехоплювати весь мережевий трафік, і повідомляється системою попереджень VPNService API. \nСповіщення про VPN з\'єднання (символ \"Ключа\") також формується системою Android для сигналізації про вихідне VPN з\'єднання. У деяких прошивках це сповіщення супроводжується сигналом. \nAndroid використовує ці cповіщення для вашої власної безпеки і їх не можна обійти. (На жаль, на деяких прошивках також  сповіщення супроводжується звуком)</string>
     <string name="faq_system_dialogs_title">Повідомлення про підключення та звук сповіщеня</string>
-    <string name="translationby">Переклад українською виконан спільнотою code.google.com</string>
+    <string name="translationby">Переклад українською виконано спільнотою</string>
     <string name="ipdns">IP-адреса та DNS</string>
     <string name="basic">Основне</string>
     <string name="routing">Маршрутизація</string>
@@ -285,27 +288,27 @@
     <string name="pauseVPN">Призупинити VPN</string>
     <string name="resumevpn">Відновити VPN</string>
     <string name="state_userpause">VPN пауза на вимогу користувача</string>
-    <string name="state_screenoff">VPN призупинено - screen off</string>
-    <string name="device_specific">Хак для цього пристрою</string>
+    <string name="state_screenoff">VPN призупинено – вимкнено екран</string>
+    <string name="device_specific">Обхідні методи для цього пристрою</string>
     <string name="cannotparsecert">Неможливо відобразити інформацію про сертифікат</string>
     <string name="appbehaviour">Поведінка програми</string>
     <string name="vpnbehaviour">Поведінка VPN</string>
     <string name="allow_vpn_changes">Дозволити зміни в профілі VPN</string>
     <string name="hwkeychain">Апаратне сховище ключів:</string>
-    <string name="permission_icon_app">Іконка додатка намагається використовувати OpenVPN для Android</string>
+    <string name="permission_icon_app">Іконка програми, яка намагається використовувати \"OpenVPN for Android\"</string>
     <string name="faq_vpndialog43">"Починаючи з Android 4.3, запит підтвердження VPN-з\'єднання захищено від програм, які \"накладаються поверх екрану\". Це призводить до того, що діалогове вікно підтвердження не реагує на сенсорні натискання. Якщо у вас є програма, що використовує накладення, то це може викликати таке поведінку. Якщо ви виявите де-небудь таку програмe, зв\'яжіться з автором програми Ця проблема зачіпає всі VPN програми на Android 4.3 та пізніших версіях Дивіться також &lt;a href=\"http://code.google.com/p/ics-openvpn/issues/detail?id=185\"&gt;Issue 185&lt;a&gt; для отримання додаткової інформації"</string>
     <string name="faq_vpndialog43_title">Вікно підтвердження VPN</string>
-    <string name="donatePlayStore">Також Ви можете висловити подяку у вигляді пожертвувань на Play Store:</string>
+    <string name="donatePlayStore">Крім того, ви можете надіслати мені пожертвування через Play Store:</string>
     <string name="thanks_for_donation">Дякуємо за пожертвування %s!</string>
     <string name="logCleared">Журнал очищено.</string>
     <string name="show_password">Показати пароль</string>
-    <string name="keyChainAccessError">Помилка при доступі до сховища ключів:%s</string>
+    <string name="keyChainAccessError">Помилка доступу до ланцюжка ключів: %s</string>
     <string name="timestamp_short">Стисло</string>
     <string name="timestamp_iso">ISO</string>
     <string name="timestamps">Часові позначки</string>
     <string name="timestamps_none">Нема</string>
     <string name="uploaded_data">Вивантажено</string>
-    <string name="downloaded_data">Завантажити</string>
+    <string name="downloaded_data">Завантажено</string>
     <string name="vpn_status">Vpn Статус</string>
     <string name="logview_options">Подивитися налаштування</string>
     <string name="unhandled_exception">Невідома помилка: %1$s\n\n%2$s</string>
@@ -314,7 +317,7 @@
     <string name="full_licenses">Повні ліцензії</string>
     <string name="blocklocal_summary">Мережі, безпосередньо доступні через локальний інтерфейс  не направлятимуться на VPN. Відключіть цю опцію щоб направити увесь трафік через VPN.</string>
     <string name="blocklocal_title">Не використовувати VPN для локальних мереж</string>
-    <string name="userpw_file">Файл з Ім\'ям користувача та Паролєм</string>
+    <string name="userpw_file">Файл з ім\'ям/паролем</string>
     <string name="imported_from_file">[Імпортовано з: %s]</string>
     <string name="files_missing_hint">Деякі файли не були знайдені. Будь ласка, виберіть файли для імпорту профілю:</string>
     <string name="openvpn_is_no_free_vpn">Щоб користуватися цією програмою, Вам знадобиться VPN провайдер/шлюз з підтримкою OpenVPN (часто наданий роботодавцем). Для отримання інформації з налаштування власного OpenVPN сервера: http://community.openvpn.net/</string>
@@ -356,7 +359,6 @@
     <string name="ab_tethering_44">Загальний доступ до підключення (WiFi точки/модему) працює як VPN активний, але НЕ використовує VPN.</string>
     <string name="ab_kitkat_mss">Рання версія KitKat встановлюе невірне значення MSS з\'єднань TCP (#61948). OpenVPN активує опцію mssfix щоб обійти цю проблему.</string>
     <string name="ab_proxy">Android буде продовжувати використовувати налаштування проксі-сервера для мобільного зв\'язку/Wi-Fi, коли немає встановленого DNS-сервера. OpenVPN for Android попередить вас про це в журналі.<p>Коли VPN встановить DNS-сервер Android не буде використовувати проксі-сервер. Зараз немає API для використання проксі-серверу для VPN-підключення.</p></string>
-    <string name="ab_lollipop_reinstall">VPN програма може перестати працювати, як вона була видалена і перевстановлена знову. Більш детальну інформацію дивіться #80074</string>
     <string name="ab_not_route_to_vpn">Налаштований клієнтом IP і IP-адреси в цій мережевій масці не направляються до VPN. OpenVPN обробляє цю помилку явно додаючи маршрут, який відповідає IP клієнта і його маскою мережі</string>
     <string name="ab_persist_tun">Відкриття tun пристрію поки інший tun пристрій активний, який використовує persist-tun, приводе до аварії VPNServices на пристрої. Потрібне перезавантаження, щоб VPN запрацював знову. OpenVPN for Android намагається уникнути повторне відкриття tun пристрію, а якщо дійсно необхідно в першу чергу закриває поточний TUN перед відкриттям нового TUN пристрої, щоб уникнути помилки. Це може призвести до виникнення короткого вікна, в якому пакети пересилаються по мережі без VPN. Навіть це тимчасове рішення іноді призводить до краху VPNServices і вимагає перезавантаження пристрою.</string>
     <string name="ab_secondary_users">VPN не працює для других користувачів.</string>
@@ -364,7 +366,6 @@
     <string name="ab_vpn_reachability_44">Тільки призначення, які досяжні без VPN, також доступні по VPN. IPv6 VPN не працює взагалі.</string>
     <string name="ab_only_cidr_title">Несумісні CIDR маршрути</string>
     <string name="ab_proxy_title">Поведінка проксі для VPN</string>
-    <string name="ab_lollipop_reinstall_title">Перевстановлення VPN-програми</string>
     <string name="version_upto">%s і раніше</string>
     <string name="copy_of_profile">Копія %s</string>
     <string name="ab_not_route_to_vpn_title">Шлях до налаштованого VPN IP адреса</string>
@@ -435,6 +436,12 @@
     <string name="kbits_per_second">%.1f Кбіт/с</string>
     <string name="mbits_per_second">%.1f Мбіт/с</string>
     <string name="gbits_per_second">%.1f Гбіт/с</string>
+    <string name="weakmd">&lt;p&gt;Починаючи з OpenSSL версії 1.1, відхиляються слабкі підписи в сертифікатах, такі як
+        MD5. Крім того, з OpenSSL 3.0 підписи з SHA1 також відхиляються.&lt;/p&gt;&lt;p&gt;
+        Вам слід якнайшвидше оновити сертифікати VPN, оскільки SHA1 також більше не буде працювати на інших платформах у
+        найближчому майбутньому.&lt;/p&gt;
+        &lt;p&gt;Якщо ви дійсно хочете використовувати старі та пошкоджені сертифікати, виберіть \"небезпечний\" для профілю безпеки TLS в розділі \"Аутентифікація/Шифрування\" профілю&lt;/p&gt;
+    </string>
     <string name="volume_byte">%.0f Б</string>
     <string name="volume_kbyte">%.1f КБ</string>
     <string name="volume_mbyte">%.1f МБ</string>
@@ -468,8 +475,34 @@
         аутентифікація
     </string>
     <string name="openurl_requested">Відкрийте URL-адресу, щоб продовжити аутентифікацію VPN</string>
+    <string name="crtext_requested">Відповісти на запит, щоб продовжити аутентифікацію VPN</string>
     <string name="state_auth_pending">Очікується аутентифікація</string>
     <string name="external_authenticator">Зовнішній аутентифікатор</string>
     <string name="configure">Налаштувати</string>
     <string name="extauth_not_configured">Зовнішній аутентифікатор не налаштований</string>
+    <string name="faq_killswitch_title">Блокувати з\'єднання без VPN (\"Killswitch\")</string>
+    <string name="faq_killswitch">Часто бажано блокувати з\'єднання без VPN. Інші програми часто використовують маркетингові терміни, такі як \"Killswitch\" або \"Безшовний тунель\". OpenVPN і ця програма пропонують використовувати persist-tun для реалізації цієї функції.&lt;p&gt;Проблема з усіма цими методами, реалізованими на стороні програм, полягає в тому, що вони не можуть забезпечити надійність. При завантаженні, збої програми та інших складних випадках програма не може гарантувати, що таке блокування підключень без VPN спрацює. Таким чином, даючи користувачеві помилкове почуття безпеки.&lt;b&gt;Єдиний&lt;/b&gt; надійний спосіб забезпечити блокування з’єднань, які не не проходять через VPN, — це використовувати Android 8.0 або новішої версії та налаштування \"Блокувати підключення не через VPN\", яке можна знайти в Налаштування &gt; Мережа й Інтернет &gt; Розширені/VPN &gt; OpenVPN for Android &gt; Увімкнути \"Постійна мережа VPN\" і \"Блокувати підключення не через VPN\"</string>
+    <string name="summary_block_address_families">Цей параметр дає вказівку Android не дозволяти протоколи (IPv4/IPv6), якщо VPN не встановлює адрес IPv4 або IPv6.</string>
+    <string name="title_block_address_families">Блокувати IPv6 (або IPv4), якщо не використовується VPN</string>
+    <string name="install_keychain">Установить новий сертифікат</string>
+    <string name="as_servername">Ім\'я сервера AS</string>
+    <string name="server_url">URL сервера</string>
+    <string name="request_autologin">Запит профіля автоматичного входу</string>
+    <string name="import_from_as">Імпорт профілю з сервера</string>
+    <string name="no_default_vpn_set">Не заданий VPN за замовчуванням. Перед включенням цієї функції встановіть VPN за замовчуванням.</string>
+    <string name="internal_web_view">Системний WebView</string>
+    <string name="faq_ncp">Існують декілька варіантів цього повідомлення в залежності від конкретної ситуації. Всіх їх об\'єднує те, що сервер і клієнт не змогли домовитися про спільний шифр. Основними причинами є: &lt;ul&gt;&lt;li&gt; Ви все ще розраховуєте на той факт, що OpenVPN версії 2.4 і нижче дозволяє BF-CBC в конфігурації за замовчуванням (якщо не був заданий --chipher). Але починаючи з OpenVPN 2.5 це не так, оскільки даний шифр &lt;a href=\"https://community.openvpn.net/openvpn/wiki/SWEET32\"&gt;зламаний/застарілий&lt;/a&gt;.&lt;/li&gt;&lt;li&gt; Сервер використовує OpenVPN 2.3 (або навіть старше) з --enable-small (OpenVPN серверу не менше 4-5 років)&lt;/li&gt;&lt;li&gt;&lt;/ul&gt;Некоректна конфігурація (наприклад, невідповідність шифрів на клієнті і сервері)&lt;/li&gt; &lt;p&gt; &lt;a href=\"https://github.com/OpenVPN/openvpn/blob/master/doc/man-sections/cipher-negotiation.rst\"&gt;Розділ керівництва OpenVPN про узгодження шифрів&lt;/a&gt; дуже добре пояснює різноманітні сценарії узгодження шифрів і що робити в цій ситуації.&lt;p&gt; Пристрої TP-Link використовують на своїх пристроях версію OpenVPN 2.3.x, 5-річної давності (можливо, старіші), навіть у моделях 2019/2020 року.&lt;p&gt; І останнє, але не менш важливе, у популярного провайдера VPN невірно налаштований сервер, який завжди говорить, що він використовує \"BF-CBC\", тому що його розробник подумав, що було б непогано створити патч для узгодження шифрування, несумісний зі стандартним OpenVPN.&lt;p&gt;Підсумовуючи: всі адекватні конфігурації не повинні видавати такі помилки. Але (крім невірно налаштованого сервера VPN-провайдера) клієнт можна примусити підключитися (Усунувши наслідок, а не реальну проблему). При підключенні до старих серверів опція \"Режиму сумісності\", в основних налаштуваннях VPN, повинна допомогти при вирішенні більшості поширених проблем сумісності.</string>
+    <string name="check_peer_fingerprint">Перевіряти відбиток сертифіката учасника (peer)</string>
+    <string name="fingerprint">(Введіть SHA256-відбиток сертифікату(ів) сервера)</string>
+    <string name="proxy_info">HTTP-проксі: %1$s %2$d</string>
+    <string name="use_alwayson_vpn">Використовуйте параметр \"Постійна мережа VPN\" в налаштуваннях Android, для автоматичного ввімкнення VPN після перезавантаження пристрою.</string>
+    <string name="open_vpn_settings">Налаштування Open VPN</string>
+    <string name="trigger_pending_auth_dialog">Натисніть тут, щоб відкрити вікно введення додаткових даних, необхідних для аутентифікації</string>
+    <string name="compatmode">Режим сумісності</string>
+    <string name="compat_mode_label">Режим сумісності</string>
+    <string name="loadossllegacy">Завантаження традиційного провайдера OpenSSL</string>
+    <string name="bf_cbc_requires_legacy">Профілі використовують BF-CBC, який залежить від застарілого OpenSSL (не включено).</string>
+    <string name="allow_translations_title">Використовувати переклад (запропонований спільнотою)</string>
+    <string name="allow_translations_summary">Використовувати переклад програми наданий спільнотою. Необхідний перезапуск програми.</string>
+    <string name="tls_profile">Профіль безпеки TLS</string>
 </resources>

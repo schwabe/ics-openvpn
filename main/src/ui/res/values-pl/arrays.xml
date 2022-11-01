@@ -28,4 +28,16 @@
         <item>Odłącz, zachowaj hasło</item>
         <item>Ignore, retry</item>
     </string-array>
+    <string-array name="compat_mode">
+        <item>Modern defaults</item>
+        <item>rówieśnicy OpenVPN 2.5.x</item>
+        <item>rówieśnicy OpenVPN 2.4.x</item>
+        <item>OpenVPN 2.3.x i starsi rówieśnicy</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>insecure (not recommend, allows insecure crypto)</item>
+        <item>legacy (default)</item>
+        <item>preferowany (zalecana, ale ograniczona kompatybilność)</item>
+        <item>Suite B (tylko krzywe eliptyczne zatwierdzone przez NIST)</item>
+    </string-array>
 </resources>

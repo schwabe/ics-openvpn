@@ -28,4 +28,16 @@
         <item>Disconnetti, mantieni la password</item>
         <item>Ignora, riprova</item>
     </string-array>
+    <string-array name="compat_mode">
+        <item>Impostazioni predefinite moderne</item>
+        <item>Peer di OpenVPN 2.5.x</item>
+        <item>Peer di OpenVPN 2.4.x</item>
+        <item>Peer di OpenVPN 2.3.x e precedenti</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>insicuro (non consigliato, consente crittografia non sicura)</item>
+        <item>legacy (predefinito)</item>
+        <item>preferito (consigliato ma compatibilità limitata)</item>
+        <item>Suite B (solo curve ellittiche approvate dal NIST)</item>
+    </string-array>
 </resources>

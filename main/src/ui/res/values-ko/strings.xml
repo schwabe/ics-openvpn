@@ -356,7 +356,6 @@
     <string name="ab_tethering_44">테더링은 VPN이 활성화되어있는 동안 작동합니다. 테더링된 연결은 VPN을 사용하지 않을 것입니다.</string>
     <string name="ab_kitkat_mss">초기 킷캣 버전은 TCP 연결에서 잘못된 MSS 값을 설정합니다(# 61948). 이 버그를 우회하려면 MSS 재정의 옵션을 활성화하십시오.</string>
     <string name="ab_proxy">Android는 DNS 서버가 설정되지 않은 경우 모바일/Wi-Fi 연결에 지정된 프록시 설정을 계속 사용합니다. OpenVPN for Android는 로그에 이에 대해 경고할 것입니다. <p>VPN이 DNS 서버를 설정할 때 안드로이드는 프록시를 사용하지 않을 것입니다. VPN 연결을 위한 프록시를 설정하는 API는 없습니다.</p></string>
-    <string name="ab_lollipop_reinstall">VPN 앱이 제거되고 다시 설치되면 작동을 멈출 수 있습니다. 자세한 내용은 #80074를 참조하십시오.</string>
     <string name="ab_not_route_to_vpn">구성된 클라이언트 IP와 해당 네트워크 마스크에 있는 IP들은 VPN으로 라우팅되지 않습니다. OpenVPN은 클라이언트 IP와 넷마스크에 해당하는 경로를 명시적으로 추가함으로써 이 버그를 우회합니다.</string>
     <string name="ab_persist_tun">지속적인 TUN 지원에 사용되는 다른 TUN 장치가 활성화된 상태에서 한 TUN 장치를 열면 기기의 VPNServices가 죽습니다. VPN을 다시 작동 시키려면 재부팅해야 합니다. OpenVPN for Android는 TUN 장치를 다시 열지 않으려고 시도합니다. 정말 필요하면 충돌이 발생하지 않도록 새로운 TUN 장치를 열기 전에 먼저 현재 TUN을 닫습니다. 이 경우 짧은 순간 VPN이 아닌 연결을 통해 패킷이 전송될 수 있습니다. 이 우회 방법으로도 VPNServices가 죽고 기기를 재부팅해야 하는 경우가 있습니다.</string>
     <string name="ab_secondary_users">VPN은 부차적인 사용자에게는 전혀 작동하지 않습니다.</string>
@@ -364,7 +363,6 @@
     <string name="ab_vpn_reachability_44">VPN 없이 도달할 수 있는 목적지만 VPN을 통해서 도달할 수 있습니다. IPv6 VPN은 전혀 작동하지 않습니다.</string>
     <string name="ab_only_cidr_title">비 CIDR 경로</string>
     <string name="ab_proxy_title">VPN을 위한 프록시 동작</string>
-    <string name="ab_lollipop_reinstall_title">VPN 앱들을 재설치</string>
     <string name="version_upto">%s 및 이전 버전</string>
     <string name="copy_of_profile">%s의 사본</string>
     <string name="ab_not_route_to_vpn_title">구성된 IP 주소로의 경로</string>
@@ -472,4 +470,7 @@
     <string name="external_authenticator">External Authenticator</string>
     <string name="configure">Configure</string>
     <string name="extauth_not_configured">외부 Authneticator가 구성되지 않았습니다.</string>
+    <string name="install_keychain">새 인증서 설치</string>
+    <string name="server_url">서버 URL</string>
+    <string name="import_from_as">원격 서버에서 프로필 가져오기</string>
 </resources>

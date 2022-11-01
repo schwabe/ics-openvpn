@@ -361,7 +361,6 @@
     <string name="ab_tethering_44">VPN处于活跃状态时，网络共享可以正常工作。共享连接将不使用VPN。</string>
     <string name="ab_kitkat_mss">早期的KitKat版本在TCP连接上设置了错误的MSS值 (#61948)。尝试启用mssfix选项来临时解决这个bug。</string>
     <string name="ab_proxy">在没有设置DNS服务器时，Android会继续使用您为移动/Wi-Fi连接指定的代理设置。安卓 OpenVPN会在日志中警告你。<p>当VPN设置了DNS服务器时，Android不会使用代理。没有为VPN连接设置代理的API。</p></string>
-    <string name="ab_lollipop_reinstall">在被卸载或重新安装时，VPN程序会停止工作；详细信息请参看 #80074</string>
     <string name="ab_not_route_to_vpn">配置的客户端IP及其网络掩码中的IP地址的流量不会路由到VPN。 OpenVPN通过显式地添加一个与客户端IP及其网络掩码相对应的路由来提供这个bug的一个临时应变方法。</string>
     <string name="ab_persist_tun">当另一个tun设备处于活动状态时打开一个tun设备(用于持久tun支持)，将导致设备上的VPNServices崩溃。需要重新启动才能使VPN重新工作。安卓 OpenVPN 试图避免重新打开tun设备，如果真的需要，首先关闭当前的tun再打开新的tun设备，以避免崩溃。这可能导致短暂窗口期，期间数据包通过非vpn连接发送。即使采用这种方法，VPNServices有时也会崩溃，需要重新启动设备。</string>
     <string name="ab_secondary_users">对于二级用户，VPN是不会起作用的。</string>
@@ -369,7 +368,6 @@
     <string name="ab_vpn_reachability_44">只有目标可以通过VPN，可以到达VPN没有达到。 IPv6的VPN不能在所有工作。</string>
     <string name="ab_only_cidr_title">非CIDR路由</string>
     <string name="ab_proxy_title">VPNs的代理行为</string>
-    <string name="ab_lollipop_reinstall_title">正在重新安装VPN应用</string>
     <string name="version_upto">%s及更早版本</string>
     <string name="copy_of_profile">%s 的副本</string>
     <string name="ab_not_route_to_vpn_title">到已配置IP地址的路由</string>
@@ -440,6 +438,13 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
+    <string name="weakmd">&lt;p&gt; 从 OpenSSL 1.1 版开始，OpenSSL 拒绝证书中的弱签名算法，例如
+        MD5。此外，OpenSSL 3.0 拒绝 SHA1 算法的签名 。&lt;/p&gt;&lt;p&gt;
+        您应该尽快更新 VPN 证书，因为 SHA1 在
+        不久的将来也将不再适用于其他平台。&lt;/p&gt;
+        &lt;p&gt; 如果您真想使用旧证书，请在配置文件的 “身份验证/加密” 部分为 TLS 安全配置选择“不安全”&lt;/p&gt;
+    
+    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
@@ -489,6 +494,7 @@
     <string name="import_from_as">从远程服务器导入配置文件</string>
     <string name="no_default_vpn_set">未设置默认 VPN。请在启用此选项之前设置默认 VPN。</string>
     <string name="internal_web_view">内部 WebView</string>
+    <string name="faq_ncp">There are some variation of this message depending on the exact situation. They all have in common that server and client could not agree on a common cipher. The main reasons are: &lt;ul&gt;&lt;li&gt; You are still relying on the fact that OpenVPN 2.4 and older allowed BF-CBC in the default configuration (if no --cipher was set). OpenVPN 2.5 does not allow it per default anymore since it is a &lt;a href=\"https://community.openvpn.net/openvpn/wiki/SWEET32\"&gt;broken/outdated cipher&lt;/a&gt;.&lt;/li&gt;&lt;li&gt;The server runs OpenVPN 2.3 (or even older) with --enable-small (at least 4-5 year old OpenVPN)&lt;/li&gt;&lt;li&gt;&lt;/ul&gt;Broken configuration (e.g., mismatching data-ciphers on client and server)&lt;/li&gt; &lt;p&gt; The &lt;a href=\"https://github.com/OpenVPN/openvpn/blob/master/doc/man-sections/cipher-negotiation.rst\"&gt;OpenVPN manual section on cipher negotiation&lt;/a&gt; explains the different scenarios of cipher negotiation very well and what to do in these situation.&lt;p&gt;TP-Link devices use a at least 5 year old OpenVPN 2.3.x version (possibly older) on their devices, even in the 2019/2020 models.&lt;p&gt;Last but not least, there is a popular VPN provider that has a broken server that always says it is using \'BF-CBC\' because its developer thought it would be a good idea to create a proprietary cipher negotiation patch that is incompatible with standard OpenVPN.&lt;p&gt;In summary: all sane configurations should not get these errors. But (apart from the broken VPN provider\'s server) the client can be persuaded to still connect (fixing the sympton and not the real problem). When connecting to older servers the comaptiblity mode option in the basic settings of a VPN should be able to address most of the common compatiblity problems.</string>
     <string name="check_peer_fingerprint">检查对端证书指纹</string>
     <string name="fingerprint">（输入服务器证书的 SHA256 指纹）</string>
     <string name="proxy_info">HTTP 代理： %1$s %2$d</string>
@@ -501,4 +507,5 @@
     <string name="bf_cbc_requires_legacy">配置文件使用 BF-CBC，它依赖于 OpenSSL legacy provider（未启用）。</string>
     <string name="allow_translations_title">允许社区贡献的翻译</string>
     <string name="allow_translations_summary">允许应用程序使用翻译社区贡献的翻译。需要重新启动应用程序才能激活。</string>
+    <string name="tls_profile">TLS 安全配置</string>
 </resources>

@@ -357,7 +357,6 @@
     <string name="ab_tethering_44">Lõastamine (tethering) töötab ka aktiivse VPN puhul. Lõastatud ühendus EI kasuta VPN kanalit.</string>
     <string name="ab_kitkat_mss">Varased KitKat versioonid kasutavad TCP ühendustel vale MSS väärtust (#61948). OpenVPN määrab vastuabinõuna automaatselt mssfix valiku.</string>
     <string name="ab_proxy">Kui ühtegi DNS serverit pole määratud, siis jätkab Android mobiilsele/Wi-Fi ühendusele määratud puhverserveri kasutamist. OpenVPN for Android hoiatab sellest logis.<p>Kui VPN seadistab DNS serveri siis Android ei puhverda. VPN puhverserveri määramiseks puudub API.</p></string>
-    <string name="ab_lollipop_reinstall">VPN apid ei pruugi enam töötada pärast eemaldamist ja uuestipaigaldamist. Täpsem info #80074</string>
     <string name="ab_not_route_to_vpn">Seadistatud kliendi IP ja selle võrgumaskis sisalduvaid IP-sid ei marsruudita VPN kaudu. OpenVPN lahendab selle probleemi lisades marsruudi kliendi IP ja võrgumaski jaoks</string>
     <string name="ab_persist_tun">Tun seadme avamine samal ajal kui mõni teine tun seade on aktiivne, mida kasutatakse püsiva-tun tagamiseks, jooksutab seadme VPN teenused kokku. VPN kasutamiseks tuleb seade uuesti käivitada. OpenVPN üritab vältida tun seadme uuestiavamist ja tõsise vajaduse korral sulgeb uue TUN avamisel eelnevalt aktiivse TUN seadme et vältida hangumist. See võib põhjustada lühiajalise akna mille jooksul saadetakse pakette VPN ühendusest mööda. Kuid isegi vaatamata kirjeldatud protsessile võib VPN teenus vahest kokku joosta ja seade vajada uuestikäivitamist.</string>
     <string name="ab_secondary_users">VPN töötab ainult põhikasutaja jaoks.</string>
@@ -365,7 +364,6 @@
     <string name="ab_vpn_reachability_44">Üle VPN on ligipääsetav ainult aadress, mis on kättesaadav ka ilma VPN ühenduseta. IPv6 VPNid ei tööta üldse.</string>
     <string name="ab_only_cidr_title">Mitte-CIDR marsruudid</string>
     <string name="ab_proxy_title">Puhverserveri käitumine VPN puhul</string>
-    <string name="ab_lollipop_reinstall_title">VPN appide uuestipaigaldamine</string>
     <string name="version_upto">%s ja eelnevad</string>
     <string name="copy_of_profile">%s koopia</string>
     <string name="ab_not_route_to_vpn_title">Seadistatud IP aadressi marsruut</string>

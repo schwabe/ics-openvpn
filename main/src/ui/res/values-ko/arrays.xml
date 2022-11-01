@@ -28,4 +28,16 @@
         <item>연결 해제, 암호 유지</item>
         <item>무시하기, 재시도</item>
     </string-array>
+    <string-array name="compat_mode">
+        <item>최신 기본값</item>
+        <item>OpenVPN 2.5.x 피어</item>
+        <item>OpenVPN 2.4.x 피어</item>
+        <item>OpenVPN 2.3.x and older peers</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>insecure (not recommend, allows insecure crypto)</item>
+        <item>레거시 (기본값)</item>
+        <item>preferred (recommended but limited compabbility)</item>
+        <item>Suite B (only NIST approved elliptic curves)</item>
+    </string-array>
 </resources>

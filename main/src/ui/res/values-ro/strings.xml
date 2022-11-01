@@ -34,6 +34,7 @@
     <string name="ipv4_address">Adresă IPv4</string>
     <string name="ipv6_address">Adresă IPv6</string>
     <string name="custom_option_warning">Introduceţi opţiuni particularizate OpenVPN. Folosiţi cu atenţie. De asemenea, reţineţi că multe dintre opţiunile legate de OpenVPN tun nu sunt suportate de VPNSettings. Dacă lipseşte o opţiune importantă contactaţi autorul</string>
+    <string name="auth_username">Nume de utilizator</string>
     <string name="auth_pwquery">Parola</string>
     <string name="static_keys_info">Pentru configurarea statică Cheile TLS Auth vor fi utilizate ca şi chei statice</string>
     <string name="configure_the_vpn">Configurați VPN-ul</string>
@@ -42,6 +43,7 @@
     <string name="duplicate_profile_name">Vă rugăm să introduceţi un nume de profil unic</string>
     <string name="profilename">Nume profil</string>
     <string name="no_keystore_cert_selected">Trebuie să selectați un certificat de utilizator</string>
+    <string name="no_ca_cert_selected">Trebuie să selectați un certificat CA sau să activați verificarea amprentei </string>
     <string name="no_error_found">Nu s-a găsit nici o eroare</string>
     <string name="config_error_found">Eroare în configurare</string>
     <string name="ipv4_format_error">Eroare parsare adresă IPv4</string>
@@ -125,6 +127,7 @@
     <string name="no_vpn_support_image">Imaginea dvs. nu suportă API-ul VPNService, îmi pare rău :(</string>
     <string name="encryption">Criptare</string>
     <string name="cipher_dialog_title">Alegeţi metoda de criptare</string>
+    <string name="chipher_dialog_message">Introduceți algoritmii de criptare a datelor utilizați de OpenVPN, separați prin : (--data-ciphers). Lăsați gol pentru a utiliza valoarea implicită de</string>
     <string name="auth_dialog_message">Introduceţi autentificarea digest ce este folosită de OpenVPN. Lăsaţi gol pentru digest predefinit.</string>
     <string name="settings_auth">Autentificare/criptare</string>
     <string name="file_explorer_tab">File Explorer</string>
@@ -179,6 +182,7 @@
     <string name="show_log_window">Arată fereastra Jurnal</string>
     <string name="mobile_info">%10$s %9$s rulează pe %3$s %1$s (%2$s), Android %6$s (%7$s) API %4$d, ABI %5$s, (%8$s)</string>
     <string name="error_rsa_sign">Eroare semnare cu Android keystore key %1$s: %2$s</string>
+    <string name="error_extapp_sign">Eroare de semnare cu aplicația de autentificare externă  (%3$s): %1$s: %2$s</string>
     <string name="faq_system_dialogs">Avertizarea la conexiunea VPN ce vă spune că această aplicaţie poate intercepta întreg traficul este impusă de sistem pentru a preveni abuzul funcţiei API VPNService.\nNotificarea de conexiune VPN(simbolul cheie)este de asemenea impusă de sistemul Android pentru a semnala o conexiune VPN în derulare. În cadrul unor imagini această notificare face şi un sunet.\nAndroid a introdus aceste notificări pentru siguranţa dvs. şi este asigurat că nu pot fi evitate. (Din păcate în anumite imagini acestea includ şi un sunet de notificare)</string>
     <string name="faq_system_dialogs_title">Alertă conexiune şi sunet notificare</string>
     <string name="translationby">Traducere în limba română de Silviu Vulcan&lt;silviuvulcan.ro&gt;</string>
@@ -197,6 +201,7 @@
     <string name="setting_loadtun">Încarcă modulul tun</string>
     <string name="importpkcs12fromconfig">Import PKCS12 configurare în Android Keystore</string>
     <string name="getproxy_error">Eroare la obţinerea setărilor proxy: %s</string>
+    <string name="using_proxy">Utilizarea proxy-ului %1$s %2$s</string>
     <string name="use_system_proxy">Foloseşte proxy sistem</string>
     <string name="use_system_proxy_summary">Foloseşte configurarea sistem pentru proxy HTTP/HTTPS folosit la conectare.</string>
     <string name="onbootrestartsummary">OpenVPN va conecta VPN-ul specificat dacă vs fi activ la pornirea sistemului. Citiți întrebările frecvente privind avertizare de conexiune înainte de a utiliza această opțiune pe Android &lt; 5.0.</string>
@@ -353,7 +358,6 @@
     <string name="ab_tethering_44">Funcția tethering funcționează în timp ce VPN-ul este activ. Conexiunea legată NU va utiliza VPN-ul.</string>
     <string name="ab_kitkat_mss">Primele versiuni KitKat setao o valoare MSS greșită pe conexiunile TCP (#61948). Încercați să activați opțiunea mssfix pentru a rezolva această eroare.</string>
     <string name="ab_proxy">Android va continua să utilizeze setările proxy specificate pentru conexiunea mobilă/Wi-Fi atunci când nu sunt setate servere DNS. OpenVPN pentru Android vă va avertiza despre acest lucru în fișierul log.<p>Când VPN stabilește un server DNS, Android nu va utiliza un proxy. Nu există niciun API pentru a seta un proxy pentru o conexiune VPN.</p></string>
-    <string name="ab_lollipop_reinstall">Aplicațiile VPN pot să nu mai funcționeze când sunt dezinstalate și reinstalate din nou. Pentru detalii, a se vedea #80074</string>
     <string name="ab_not_route_to_vpn">IP-ul client configurat și IP-urile din masca sa de rețea nu sunt direcționate către VPN. OpenVPN funcționează în jurul acestui bug prin adăugarea explicită a unui traseu care corespunde IP-ului client și netmask-ului său</string>
     <string name="ab_persist_tun">Deschiderea unui dispozitiv tun în timp ce un alt dispozitiv tun este activ, care este utilizat pentru suportul tun persistent, blochează serviciile VPN de pe dispozitiv. Este necesară o repornire pentru ca VPN să funcționeze din nou. OpenVPN pentru Android încearcă să evite redeschiderea dispozitivului tun și, dacă este necesar, mai întâi închide TUN-ul curent înainte de a deschide noul dispozitiv TUN pentru a evita accidentarea. Acest lucru poate duce la o fereastră scurtă în care pachetele sunt trimise prin conexiunea non-VPN. Chiar și cu această soluție, VPNServices se blochează uneori și necesită repornirea dispozitivului.</string>
     <string name="ab_secondary_users">VPN nu funcționează deloc pentru utilizatorii secundari.</string>
@@ -361,7 +365,6 @@
     <string name="ab_vpn_reachability_44">Numai destinația poate fi atinsă prin VPN care poate fi accesată fără VPN. Porturile IPv6 VPN nu funcționează deloc.</string>
     <string name="ab_only_cidr_title">Rute non-CIDR</string>
     <string name="ab_proxy_title">Comportamentul proxy pentru VPN-uri</string>
-    <string name="ab_lollipop_reinstall_title">Reinstalarea aplicațiilor VPN</string>
     <string name="version_upto">%s sau mai puțin</string>
     <string name="copy_of_profile">Copie a %s</string>
     <string name="ab_not_route_to_vpn_title">Rutează prin adresa IP configurată</string>

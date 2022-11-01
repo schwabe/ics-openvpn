@@ -354,13 +354,11 @@
     <string name="ab_only_cidr">Android podporuje ve VPN síti podporuje pouze CIDR trasy. Protože ne-CIDR trasy nejsou téměř nikdy používány, OpenVPN pro Android použije /32 pro trasy, které nejsou CIDR a zobrazí varování.</string>
     <string name="ab_tethering_44">Sdílení připojení funguje během aktivního VPN spojení. Sdílené připojení NEpoužije VPN.</string>
     <string name="ab_kitkat_mss">Dřívější KitKat verze nastavovaly špatnou hodnotu MSS na TCP spojení (#61948). OpenVPN automaticky zapne mssfix možnost pro obejití chyby.</string>
-    <string name="ab_lollipop_reinstall">Aplikace VPN mohou přestat fungovat po odinstalování a reinstalaci. Podrobnosti najdete v #80074</string>
     <string name="ab_secondary_users">VPN vůbec nefunguje pro vedlejší uživatele.</string>
     <string name="ab_kitkat_reconnect">"Více uživatelů hlásí, že mobilní připojení / mobilní datové připojení má časté výpadky během používání této VPN aplikace. Vypadá to, že chování ovlivňuje jen nějaké kombinace mobilních poskytovatelů / zařízení a zatím nebyla identifikována žádná příčina / řešení chyby."</string>
     <string name="ab_vpn_reachability_44">Jediná destinace může být dosažena přes VPN které nejsou dosažitelné bez VPN. Sítě IPv6 nefungují vůbec.</string>
     <string name="ab_only_cidr_title">Ne-CIDR trasy</string>
     <string name="ab_proxy_title">Proxy chování pro VPN</string>
-    <string name="ab_lollipop_reinstall_title">Přeinstalování VPN aplikací</string>
     <string name="version_upto">%s a starší</string>
     <string name="copy_of_profile">Kopie %s</string>
     <string name="ab_not_route_to_vpn_title">Trasa k nastavené IP adrese</string>

@@ -34,6 +34,7 @@
     <string name="ipv4_address">Alamat IPv4</string>
     <string name="ipv6_address">Alamat IPv6</string>
     <string name="custom_option_warning">Masukan pengaturan kustom OpenVPN. Harap gunakan dengan hati-hati. Perlu dicatat bahwa pengaturan yang terkait dengan TUN OpenVPN tidak didukung oleh disain VPNSettings. Jika anda fikir ada hal penting yang belum tersedia segera hubungi pembuatnya</string>
+    <string name="auth_username">Nama pengguna (biarkan kosong tanpa autentikasi)</string>
     <string name="auth_pwquery">Kata Sandi</string>
     <string name="static_keys_info">Untuk pengaturan tetap, kunci otentifikasi TLS akan digunakan sebagai kunci statis</string>
     <string name="configure_the_vpn">Konfigurasi VPN</string>
@@ -42,6 +43,7 @@
     <string name="duplicate_profile_name">Silakan masukan nama profil yang berbeda</string>
     <string name="profilename">Nama profil</string>
     <string name="no_keystore_cert_selected">Anda harus memilih sertifikat pengguna</string>
+    <string name="no_ca_cert_selected">Anda harus memilih sertifikat CA atau mengaktifkan pemeriksaan sidik jari rekan</string>
     <string name="no_error_found">Tidak ada kesalahan</string>
     <string name="config_error_found">Konfigurasi Salah</string>
     <string name="ipv4_format_error">Kesalahan penulisan alamat IPV4</string>
@@ -125,6 +127,7 @@
     <string name="no_vpn_support_image">Gambar Anda tidak mendukung VPNService API, maaf:(</string>
     <string name="encryption">Enkripsi</string>
     <string name="cipher_dialog_title">Masukkan metode enkripsi</string>
+    <string name="chipher_dialog_message">Masukkan algoritma enkripsi data cipher yang digunakan oleh OpenVPN dipisahkan dengan : (--data-ciphers). Biarkan kosong untuk menggunakan default AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
     <string name="auth_dialog_message">Masukkan digest otentikasi yang digunakan OpenVPN. Biarkan kosong untuk menggunakan standar digest.</string>
     <string name="settings_auth">Otentikasi/Enkripsi</string>
     <string name="file_explorer_tab">Penjelajah berkas</string>
@@ -356,7 +359,6 @@
     <string name="ab_tethering_44">Penarikan bekerja sementara VPN aktif. Ditambatkan sambungan tidak akan menggunakan VPN.</string>
     <string name="ab_kitkat_mss">Versi KitKat awal menetapkan nilai MSS salah pada TCP koneksi (# 61948). OpenVPN untuk secara otomatis mengaktifkan mssfix pilihan untuk solusi bug ini.</string>
     <string name="ab_proxy">Android akan tetap menggunakan pengaturan proxy Anda ditentukan untuk mobile koneksi / Wi-Fi ketika tidak ada server DNS diatur. OpenVPN untuk Android akan memperingatkan Anda tentang hal ini dalam log. <p> Ketika VPN menetapkan server DNS Android tidak akan proxy. Tidak ada API untuk mengatur proxy untuk koneksi VPN. </p></string>
-    <string name="ab_lollipop_reinstall">Aplikasi VPN dapat berhenti bekerja ketika dihapus dan diinstal ulang lagi. Untuk jelasnya lihat # 80074</string>
     <string name="ab_not_route_to_vpn">IP klien dikonfigurasi dan IP di topeng jaringan tidak diteruskan ke VPN. OpenVPN bekerja di sekitar bug ini dengan secara eksplisit menambahkan rute yang corrosponds ke IP klien dan netmask nya</string>
     <string name="ab_persist_tun">Membuka perangkat tun saat perangkat tun lain sedang aktif, yang digunakan untuk dukungan bertahan-tun, crash VPNServices pada perangkat. A reboot diperlukan untuk membuat pekerjaan VPN lagi. OpenVPN untuk Android mencoba untuk menghindari membuka kembali perangkat tun dan jika benar-benar diperlukan pertama menutup TUN saat sebelum membuka perangkat TUN baru untuk menghindari crash. Hal ini dapat menyebabkan jendela pendek di mana paket dikirim melalui koneksi non-VPN. Bahkan dengan solusi ini VPNServices kadang-kadang crash dan memerlukan reboot perangkat.</string>
     <string name="ab_secondary_users">VPN tidak bekerja sama sekali bagi pengguna sekunder.</string>
@@ -364,7 +366,6 @@
     <string name="ab_vpn_reachability_44">Hanya tujuan yang bisa dicapai melalui VPN yang bisa dijangkau tanpa VPN. VPN IPv6 tidak bekerja sama sekali.</string>
     <string name="ab_only_cidr_title">Rute non CIDR</string>
     <string name="ab_proxy_title">Tindakan Proxy untuk VPN</string>
-    <string name="ab_lollipop_reinstall_title">Menginstal ulang aplikasi VPN</string>
     <string name="version_upto">%s dan sebelumnya</string>
     <string name="copy_of_profile">Salinan dari %s</string>
     <string name="ab_not_route_to_vpn_title">Alihkan ke alamat IP yang telah ditentukan</string>
@@ -435,6 +436,12 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
+    <string name="weakmd">&lt;p&gt;Starting with OpenSSL version 1.1, OpenSSL rejects weak signatures in certificates like
+        MD5. Additionally with the OpenSSL 3.0 signatures with SHA1 are also rejected.&lt;/p&gt;&lt;p&gt;
+        You should update the VPN certificates as soon as possible as SHA1 will also no longer work on other platforms in the
+        near future.&lt;/p&gt;
+        &lt;p&gt;If you really want to use old and broken certificates select \"insecure\" for the TLS security profile under Authentication/Encryption of the profile&lt;/p&gt;
+    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
@@ -468,6 +475,7 @@
 
     </string>
     <string name="openurl_requested">Buka URL untuk melanjutkan otentikasi VPN</string>
+    <string name="crtext_requested">Answer challenge to continue VPN authentication</string>
     <string name="state_auth_pending">Otentikasi tertunda</string>
     <string name="external_authenticator">Pemeriksa Eksternal</string>
     <string name="configure">Konfigurasikan</string>

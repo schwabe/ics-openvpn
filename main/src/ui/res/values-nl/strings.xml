@@ -356,7 +356,6 @@
     <string name="ab_tethering_44">Tethering werkt terwijl de VPN actief is. De tethered-verbinding maakt GEEN gebruik van de VPN.</string>
     <string name="ab_kitkat_mss">Vroege KitKat-versie heeft de verkeerde MSS-waarde ingesteld voor TCP-verbindingen (#61948). Probeer de mssfix-optie in te schakelen om deze bug te omzeilen.</string>
     <string name="ab_proxy">Android blijft uw proxy-instellingen gebruiken die zijn opgegeven voor de mobiel/wifi-verbinding wanneer er geen DNS-servers zijn ingesteld. OpenVPN voor Android waarschuwt u hierover in het logboek. <p>Wanneer een VPN een DNS-server instelt, gebruikt Android geen proxy. Er is geen API om een ​​proxy in te stellen voor een VPN-verbinding.</p></string>
-    <string name="ab_lollipop_reinstall">VPN-apps werken mogelijk niet meer wanneer ze worden verwijderd en opnieuw worden geïnstalleerd. Voor details zie #80074</string>
     <string name="ab_not_route_to_vpn">Het geconfigureerde client-IP en de IP\'s in het netwerkmask worden niet naar de VPN gerouteerd. OpenVPN werkt om deze bug heen door expliciet een route toe te voegen die overeenkomt met het IP-adres van de client en zijn netmask</string>
     <string name="ab_persist_tun">Als een tun-apparaat wordt geopend terwijl een ander tun-apparaat actief is, deze wordt gebruikt voor ondersteuning voor persist-tun, crasht het de VPNServices op het apparaat. Opnieuw opstarten is vereist om VPN opnieuw te laten werken. OpenVPN voor Android probeert te voorkomen dat het tun-apparaat opnieuw wordt geopend en als het echt nodig is, sluit het eerst de huidige TUN voordat het nieuwe TUN-apparaat wordt geopend om te voorkomen dat het crasht. Dit kan leiden tot een kort venster waarin pakketten via de niet-VPN-verbinding worden verzonden. Zelfs met deze tijdelijke oplossing crasht de VPNServices soms en is het opnieuw opstarten van het apparaat vereist.</string>
     <string name="ab_secondary_users">VPN werkt niet helemaal voor secundaire gebruikers.</string>
@@ -364,7 +363,6 @@
     <string name="ab_vpn_reachability_44">Alleen de bestemming kan worden bereikt via de VPN die bereikbaar is zonder VPN. IPv6 VPN\'s werken helemaal niet.</string>
     <string name="ab_only_cidr_title">Niet CIDR-routes</string>
     <string name="ab_proxy_title">Proxy-gedrag voor VPN\'s</string>
-    <string name="ab_lollipop_reinstall_title">Herinstalleren van VPN-apps</string>
     <string name="version_upto">%s en eerder</string>
     <string name="copy_of_profile">Kopie van %s</string>
     <string name="ab_not_route_to_vpn_title">Route naar het geconfigureerde IP-adres</string>

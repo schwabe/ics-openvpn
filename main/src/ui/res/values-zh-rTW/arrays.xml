@@ -28,4 +28,16 @@
         <item>中斷連接，記住密碼</item>
         <item>忽略，然後重試</item>
     </string-array>
+    <string-array name="compat_mode">
+        <item>現代默認值</item>
+        <item>OpenVPN 2.5.x peers</item>
+        <item>OpenVPN 2.4.x 對等體</item>
+        <item>OpenVPN 2.3.x and older peers</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>不安全（不推薦，允許不安全的加密）</item>
+        <item>legacy (default)</item>
+        <item>preferred (recommended but limited compabbility)</item>
+        <item>Suite B (only NIST approved elliptic curves)</item>
+    </string-array>
 </resources>

@@ -239,9 +239,10 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     @RequiresApi(Build.VERSION_CODES.N_MR1)
     ShortcutInfo createShortcut(VpnProfile profile) {
         Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
-        shortcutIntent.setClass(getActivity(), LaunchVPN.class);
+        shortcutIntent.setClass(requireContext(), LaunchVPN.class);
         shortcutIntent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
         shortcutIntent.setAction(Intent.ACTION_MAIN);
+        shortcutIntent.putExtra(LaunchVPN.EXTRA_START_REASON, "shortcut");
         shortcutIntent.putExtra("EXTRA_HIDELOG", true);
 
         PersistableBundle versionExtras = new PersistableBundle();
@@ -562,6 +563,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
         Intent intent = new Intent(getActivity(), LaunchVPN.class);
         intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
+        intent.putExtra(LaunchVPN.EXTRA_START_REASON, "main profile list");
         intent.setAction(Intent.ACTION_MAIN);
         startActivity(intent);
     }

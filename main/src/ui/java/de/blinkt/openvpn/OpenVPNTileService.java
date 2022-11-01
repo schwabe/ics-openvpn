@@ -88,6 +88,7 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
         Intent startVpnIntent = new Intent(Intent.ACTION_MAIN);
         startVpnIntent.setClass(context, LaunchVPN.class);
         startVpnIntent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
+        startVpnIntent.putExtra(LaunchVPN.EXTRA_START_REASON, "QuickTile");
         startVpnIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startVpnIntent.putExtra(LaunchVPN.EXTRA_HIDELOG, true);
 

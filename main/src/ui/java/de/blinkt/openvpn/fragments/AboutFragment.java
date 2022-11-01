@@ -83,9 +83,13 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
 
         TextView verO2 = v.findViewById(R.id.version_ovpn2);
         TextView verO3 = v.findViewById(R.id.version_ovpn3);
+        TextView osslVer = v.findViewById(R.id.openssl_version);
 
         verO2.setText(String.format(Locale.US, "OpenVPN version: %s", NativeUtils.getOpenVPN2GitVersion()));
         verO3.setText(String.format(Locale.US, "OpenVPN3 core version: %s", NativeUtils.getOpenVPN3GitVersion()));
+        osslVer.setText(String.format(Locale.US, "OpenSSL version: %s", NativeUtils.getOpenSSLVersion()));
+
+
 
         /* recreating view without onCreate/onDestroy cycle */
         TextView translation = (TextView) v.findViewById(R.id.translation);

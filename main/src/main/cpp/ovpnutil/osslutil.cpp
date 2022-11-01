@@ -13,8 +13,15 @@
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 #include <openssl/rsa.h>
+#include <openssl/opensslv.h>
 
 #include <array>
+
+
+extern "C" jstring Java_de_blinkt_openvpn_core_NativeUtils_getOpenSSLVersionString(JNIEnv *env, jclass jo)
+{
+  return env->NewStringUTF(OPENSSL_VERSION_TEXT);
+}
 
 static const unsigned char zeroes[] = {0, 0, 0, 0, 0, 0, 0, 0};
 

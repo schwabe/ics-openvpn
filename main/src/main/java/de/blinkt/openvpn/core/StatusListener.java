@@ -5,11 +5,8 @@
 
 package de.blinkt.openvpn.core;
 
-import static android.app.ApplicationExitInfo.REASON_CRASH_NATIVE;
-
 import android.app.ActivityManager;
 import android.app.ApplicationExitInfo;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -44,7 +41,19 @@ public class StatusListener implements VpnStatus.LogListener {
         @Override
         public void updateStateString(String state, String msg, int resid, ConnectionStatus
                 level, Intent intent) throws RemoteException {
-            VpnStatus.updateStateString(state, msg, resid, level, intent);
+            Intent newIntent = reCreateIntent(intent);
+            VpnStatus.updateStateString(state, msg, resid, level, newIntent);
+        }
+
+        private Intent reCreateIntent(Intent intent) {
+            /* To avoid UnsafeIntentLaunchViolation we recreate the intent that we passed
+             * to ourselves via the AIDL interface */
+            if (intent == null)
+                return null;
+            Intent newIntent = new Intent(intent.getAction(), intent.getData());
+            if (intent.getExtras() != null)
+                newIntent.putExtras(intent.getExtras());
+            return newIntent;
         }
 
         @Override

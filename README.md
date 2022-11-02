@@ -10,9 +10,9 @@ The EduVPN changes are:
 * [Change activity which opens when tapping notification](https://github.com/eduvpn/ics-openvpn/commit/5987a435b6e61548330e6fc0827989e92f44ec41): Opens a different activity when tapping on the notification
 * [Fix parent activity problem](https://github.com/eduvpn/ics-openvpn/commit/8b69a964fe9b30f4430a04df03b1fa444efb0ee7): Opens the correct parent activity from the log window.
 * [Replace switch with if for library project](https://github.com/eduvpn/ics-openvpn/commit/ce38d0b12ff5327b82a8a4aa3993395fddad5eeb)
-* [Support gradle 6.9.1](https://github.com/eduvpn/ics-openvpn/commit/68e511a4feea818cc6e401cba3772adca5b02df8)
-* [Move notification creation to library user](https://github.com/eduvpn/ics-openvpn/commit/ec3b0d5a5b4eee0cc077e4fae91145689676f3d0)
-* [Do not create unused notification channels](https://github.com/eduvpn/ics-openvpn/commit/8870764adef8c04b1248d54502fbecd9ab68d607): Removes notification channels from notification settings.
+* [Move notification creation to library user](https://github.com/eduvpn/ics-openvpn/commit/2d59ce3a81edb0e24b54680544758df4cb658f66)
+* [Do not create unused notification channels](https://github.com/eduvpn/ics-openvpn/commit/9516e5cc6f3816aff61e381f977d95c1e7cc7242): Removes notification channels from notification settings.
+* [Fix build.gradle](https://github.com/eduvpn/ics-openvpn/commit/2a4cf656bf012dd247670808df30e3127e4eecb5)
 
 Description
 ------------

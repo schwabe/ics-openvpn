@@ -155,19 +155,29 @@ public class AppRestrictions {
             pm.removeProfile(c, vp);
         }
 
+        SharedPreferences defaultPrefs = Preferences.getDefaultSharedPreferences(c);
+
         if (!TextUtils.isEmpty(defaultprofile)) {
             if (!defaultprofileProvisioned) {
                 VpnStatus.logError("App restrictions: Setting a default profile UUID without providing a profile with that UUID");
             } else {
-                SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
-                String uuid = prefs.getString("alwaysOnVpn", null);
+                String uuid = defaultPrefs.getString("alwaysOnVpn", null);
                 if (!defaultprofile.equals(uuid))
                 {
-                    SharedPreferences.Editor editor = prefs.edit();
+                    SharedPreferences.Editor editor = defaultPrefs.edit();
                     editor.putString("alwaysOnVpn", defaultprofile);
                     editor.apply();
+
                 }
             }
+        }
+
+        if(restrictions.containsKey("screenoffpausevpn"))
+        {
+            boolean pauseVPN = restrictions.getBoolean("screenoffpausevpn");
+            SharedPreferences.Editor editor = defaultPrefs.edit();
+            editor.putBoolean("screenoff", pauseVPN);
+            editor.apply();
         }
     }
 

@@ -44,7 +44,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
     connectState userpause = connectState.SHOULDBECONNECTED;
 
     private String lastStateMsg = null;
-    private java.lang.Runnable mDelayDisconnectRunnable = new Runnable() {
+    private final java.lang.Runnable mDelayDisconnectRunnable = new Runnable() {
         @Override
         public void run() {
             if (!(network == connectState.PENDINGDISCONNECT))
@@ -82,7 +82,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         long data;
     }
 
-    private LinkedList<Datapoint> trafficdata = new LinkedList<>();
+    private final LinkedList<Datapoint> trafficdata = new LinkedList<>();
 
 
     @Override
@@ -170,7 +170,6 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
         }
     }
-
 
     private void fillTrafficData() {
         trafficdata.add(new Datapoint(System.currentTimeMillis(), TRAFFIC_LIMIT));

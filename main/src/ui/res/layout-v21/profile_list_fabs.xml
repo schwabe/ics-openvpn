@@ -18,7 +18,7 @@
         android:elevation="@dimen/elevation_low"
         android:layout_marginBottom="@dimen/add_button_margin_topfab"
         android:layout_marginEnd="@dimen/add_button_margin"
-        android:src="@drawable/ic_archive_grey600_24dp"
+        android:src="@drawable/ic_baseline_archive_24"
         android:contentDescription="@string/import_config" />
 
     <ImageButton

@@ -34,6 +34,7 @@
     <string name="ipv4_address">IPv4 位址</string>
     <string name="ipv6_address">IPv6 位址</string>
     <string name="custom_option_warning">輸入自訂 OpenVPN 選項。請謹慎使用。另外請注意，VPNSettings 設計上無法支援許多 TUN 通道相關的 OpenVPN 設定 。如果您認為有遺漏重要的設定選項，請聯絡作者。</string>
+    <string name="auth_username">Username (leave empty for no auth)</string>
     <string name="auth_pwquery">密碼</string>
     <string name="static_keys_info">對於靜態設定，TLS 認證金鑰將會用作靜態金鑰。</string>
     <string name="configure_the_vpn">設定 VPN</string>
@@ -356,7 +357,6 @@
     <string name="ab_tethering_44">VPN 啟用時，網路共用仍可運作。網路共用的連線不會使用 VPN。</string>
     <string name="ab_kitkat_mss">早期的 Android 4.4（KitKat）版本，對於 TCP 連線設定了錯誤的最大分段大小值（MSS）（#61948）。可嘗試開啟 mssfix 選項來迴避這個問題。</string>
     <string name="ab_proxy">Android 在沒有設定 DNS 伺服器時，會繼續使用行動網路/Wi-Fi 連線中的 Proxy 設定。OpenVPN for Android 會對此在紀錄中做出警告。<p>Android 在有設定 DNS 伺服器時不會使用 Proxy。沒有 API 可以為 VPN 連線設定 Proxy。</p></string>
-    <string name="ab_lollipop_reinstall">當解除安裝或重新安裝，VPN 應用程式也會停止運作。詳細資訊參見 #80074</string>
     <string name="ab_not_route_to_vpn">設定好的客戶端 IP，以及在其子網路遮罩底下的 IP 不會被路由到 VPN。OpenVPN 明確地新增一個對應到客戶端 IP 和其子網路遮罩的路由，以迴避這個問題。</string>
     <string name="ab_persist_tun">在其它「保持 TUN 通道」的 TUN 裝置啟用時，開啟另一個 TUN 裝置會讓裝置上的 VPNServices 當掉，需要重開機才能讓 VPN 重新運作。OpenVPN for Android 會避免重新開啟 TUN 裝置，若真的需要則會在開啟新 TUN 裝置前先把當前的 TUN 裝置關閉，以避免當掉。這可能會導致封包有一小段時間透過非 VPN 連線傳送。即使用了這個方法迴避問題，VPNServices 有時候仍然會當掉，而需要將裝置重開機。</string>
     <string name="ab_secondary_users">VPN 對於二級使用者不起任何作用。</string>
@@ -364,7 +364,6 @@
     <string name="ab_vpn_reachability_44">透過 VPN 只能連線到沒有 VPN 才能連線到的目標位址。IPv6 VPN 完全無法運作。</string>
     <string name="ab_only_cidr_title">非 CIDR 路由</string>
     <string name="ab_proxy_title">VPN 的 Proxy 行為</string>
-    <string name="ab_lollipop_reinstall_title">正在重新安裝 VPN 應用程式</string>
     <string name="version_upto">%s 及更早版本</string>
     <string name="copy_of_profile">%s 的副本</string>
     <string name="ab_not_route_to_vpn_title">路由到設定的 IP 位址</string>
@@ -472,4 +471,5 @@
     <string name="external_authenticator">外部身份驗證器</string>
     <string name="configure">設定</string>
     <string name="extauth_not_configured">未設定外部身份驗證器</string>
+    <string name="faq_killswitch">通常希望在沒有 VPN 的情況下阻止連接。其他應用程序通常為此功能使用“Killswitch”或“無縫隧道”等標記術語。 OpenVPN 和這個應用程序提供了persist-tun，一個實現這個功能的特性。&lt;p&gt;應用程序提供的所有這些方法的問題在於它們只能提供最大的努力，而不是完整的解決方案。在啟動、應用程序崩潰和其他極端情況下，應用程序無法確保此非 VPN 連接塊正常工作。從而給用戶一種虛假的安全感。&lt;p&gt;確保非 VPN 連接被阻止的唯一 &lt;b&gt;&lt;/b&gt; 可靠方法是使用 Android 8.0 或更高版本，並使用可在設置下找到的“阻止沒有 VPN 的連接”設置 &gt; 網絡 &amp; 互聯網 &gt; 高級/VPN &gt; 適用於 Android &gt; 的 OpenVPN啟用始終開啟 VPN，啟用沒有 VPN 的阻止連接Translate all</string>
 </resources>

@@ -14,7 +14,7 @@
         <item>Felhasználó/Jelszó + Tanúsítványok</item>
         <item>Felhasználó/Jelszó + PKCS12 </item>
         <item>Felhasználó/Jelszó + Android</item>
-        <item>External Auth Provider</item>
+        <item>Külső Hitelesítési Szolgáltató</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">0</item>

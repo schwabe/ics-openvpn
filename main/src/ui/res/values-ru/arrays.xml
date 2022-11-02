@@ -14,7 +14,7 @@
         <item>Логин/пароль + Сертификаты</item>
         <item>Логин/пароль + PKCS12 </item>
         <item>Логин/пароль + сертификат Android</item>
-        <item>External Auth Provider</item>
+        <item>Внешний провайдер аутентификации</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">0</item>
@@ -27,5 +27,17 @@
         <item>Отключиться, забыть пароль</item>
         <item>Отключиться, сохранить пароль</item>
         <item>Игнорировать, повторить</item>
+    </string-array>
+    <string-array name="compat_mode">
+        <item>Современные значения</item>
+        <item>OpenVPN 2.5.x</item>
+        <item>OpenVPN 2.4.x</item>
+        <item>OpenVPN 2.3.x и старее</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>небезопасный (не рекомендуется, допускает небезопасное шифрование)</item>
+        <item>традиционный (по умолчанию)</item>
+        <item>предпочтительный (рекомендуется, но ограничивает совместимость)</item>
+        <item>набор B (только эллиптические кривые, одобренные NIST)</item>
     </string-array>
 </resources>

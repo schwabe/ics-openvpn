@@ -5,12 +5,14 @@
 
 package de.blinkt.openvpn.fragments;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.graphics.drawable.Drawable;
@@ -20,6 +22,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.ListFragment;
@@ -85,6 +90,8 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private ArrayAdapter<VpnProfile> mArrayadapter;
     private Intent mLastIntent;
     private VpnProfile defaultVPN;
+    private View mPermissionView;
+    private ActivityResultLauncher<String> mPermReceiver;
 
     @Override
     public void updateState(String state, String logmessage, final int localizedResId, ConnectionStatus level, Intent intent) {
@@ -130,6 +137,13 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setListAdapter();
+
+        registerPermissionReceiver();
+    }
+
+    private void registerPermissionReceiver() {
+        mPermReceiver = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
+                result -> checkForNotificationPermission(requireView()));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
@@ -225,9 +239,10 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     @RequiresApi(Build.VERSION_CODES.N_MR1)
     ShortcutInfo createShortcut(VpnProfile profile) {
         Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
-        shortcutIntent.setClass(getActivity(), LaunchVPN.class);
+        shortcutIntent.setClass(requireContext(), LaunchVPN.class);
         shortcutIntent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
         shortcutIntent.setAction(Intent.ACTION_MAIN);
+        shortcutIntent.putExtra(LaunchVPN.EXTRA_START_REASON, "shortcut");
         shortcutIntent.putExtra("EXTRA_HIDELOG", true);
 
         PersistableBundle versionExtras = new PersistableBundle();
@@ -278,8 +293,22 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         if (fab_import != null)
             fab_import.setOnClickListener(this);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            checkForNotificationPermission(v);
+
+
         return v;
 
+    }
+
+    private void checkForNotificationPermission(View v) {
+        mPermissionView = v.findViewById(R.id.notification_permission);
+        boolean permissionGranted =  (requireActivity().checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED);
+        mPermissionView.setVisibility(permissionGranted ? View.GONE : View.VISIBLE);
+
+        mPermissionView.setOnClickListener((view) -> {
+            mPermReceiver.launch(Manifest.permission.POST_NOTIFICATIONS);
+        });
     }
 
     private void setListAdapter() {
@@ -292,6 +321,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
     private void populateVpnList() {
         boolean sortByLRU = Preferences.getDefaultSharedPreferences(requireActivity()).getBoolean(PREF_SORT_BY_LRU, false);
+        getPM().refreshVPNList(requireContext());
         Collection<VpnProfile> allvpn = getPM().getProfiles();
         TreeSet<VpnProfile> sortedset;
         if (sortByLRU)
@@ -481,10 +511,8 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
                 onAddOrDuplicateProfile(profile);
         }
 
-
         if (resultCode != Activity.RESULT_OK)
             return;
-
 
         if (requestCode == START_VPN_CONFIG) {
             String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
@@ -532,6 +560,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
         Intent intent = new Intent(getActivity(), LaunchVPN.class);
         intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
+        intent.putExtra(LaunchVPN.EXTRA_START_REASON, "main profile list");
         intent.setAction(Intent.ACTION_MAIN);
         startActivity(intent);
     }

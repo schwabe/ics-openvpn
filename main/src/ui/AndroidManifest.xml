@@ -14,9 +14,11 @@
             android:name="android.hardware.touchscreen"
             android:required="false" />
 
-    <application
-            android:banner="@mipmap/banner_tv"
-            tools:targetApi="lollipop">
+    <!-- This library wants SDK version 23 but we do runtime checks to not use it before
+        API 23 -->
+    <uses-sdk tools:overrideLibrary="androidx.security"/>
+
+    <application android:banner="@mipmap/banner_tv">
         <activity
                 android:exported="true"
                 android:name=".activities.MainActivity"

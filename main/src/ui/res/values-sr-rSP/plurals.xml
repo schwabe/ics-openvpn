@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="months_left">
+        <item quantity="one">Преостао је један минут</item>
+        <item quantity="few">Преостало је %d месеци</item>
+        <item quantity="other">Преостало %d месеци</item>
+    </plurals>
+    <plurals name="days_left">
+        <item quantity="one">Преостао је један дан</item>
+        <item quantity="few">Преостало је %d дана</item>
+        <item quantity="other">Преостало је %d дана</item>
+    </plurals>
+    <plurals name="hours_left">
+        <item quantity="one">Преостао је један сат</item>
+        <item quantity="few">Преостало је %d сати</item>
+        <item quantity="other">Преостало је %d сати</item>
+    </plurals>
+    <plurals name="minutes_left">
+        <item quantity="one">Преостао је један минут</item>
+        <item quantity="few">Преостало је %d минута</item>
+        <item quantity="other">Преостало је %d минута</item>
+    </plurals>
+</resources>

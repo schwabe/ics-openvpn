@@ -39,18 +39,10 @@ public class ICSOpenVPNApplication extends Application {
         LocaleHelper.setDesiredLocale(this);
         super.onCreate();
 
-        PRNGFixes.apply();
-
         mStatus = new StatusListener();
         mStatus.init(getApplicationContext());
 
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AppRestrictions.getInstance(this).checkRestrictions(this);
-        }
-
-
+        AppRestrictions.getInstance(this).checkRestrictions(this);
     }
 
     @Override
@@ -133,5 +125,4 @@ public class ICSOpenVPNApplication extends Application {
         mChannel.setLightColor(Color.CYAN);
         mNotificationManager.createNotificationChannel(mChannel);
     }
-
 }

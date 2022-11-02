@@ -35,4 +35,16 @@
         <item>Bağlantıyı kes, parolayı sakla</item>
         <item>Yoksay, yeniden dene</item>
     </string-array>
+    <string-array name="compat_mode">
+        <item>Modern varsayılanlar</item>
+        <item>OpenVPN 2.5.x eşleri</item>
+        <item>OpenVPN 2.4.x eşleri</item>
+        <item>OpenVPN 2.3.x ve daha eski eşleri</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>güvensiz (önerilmez, güvensiz kriptoya izin verir)</item>
+        <item>eski (varsayılan)</item>
+        <item>tercih edilen (önerilen ancak sınırlı uyumluluk)</item>
+        <item>Suite B (yalnızca NIST onaylı eliptik eğriler)</item>
+    </string-array>
 </resources>

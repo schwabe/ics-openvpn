@@ -28,4 +28,16 @@
         <item>Déconnecter, garder le mot de passe</item>
         <item>Ignorer, réessayer</item>
     </string-array>
+    <string-array name="compat_mode">
+        <item>Paramètres par défaut modernes</item>
+        <item>Pairs OpenVPN 2.5.x</item>
+        <item>Pairs OpenVPN 2.4.x</item>
+        <item>OpenVPN 2.3.x et anciens pairs</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>non sécurisé (déconseillé, autorise une cryptographie non sécurisée)</item>
+        <item>legacy (default)</item>
+        <item>préféré (recommandé mais compatibilité limitée)</item>
+        <item>Suite B (uniquement les courbes elliptiques approuvées par le NIST)</item>
+    </string-array>
 </resources>

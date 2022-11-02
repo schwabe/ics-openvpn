@@ -146,17 +146,11 @@ public class X509Utils {
 
             friendlyName= (String) toString.invoke(subjectName,true,defaultSymbols);
                     
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException | NoSuchMethodException e) {
             exp =e ;
-        } catch (NoSuchMethodException e) {
-            exp =e;
         } catch (InvocationTargetException e) {
             /* Ignore this. Modern Android versions do not expose this */
             exp = null;
-        } catch (IllegalAccessException e) {
-            exp =e;
-        } catch (NoSuchFieldException e) {
-            exp =e;
         }
         if (exp!=null) {
             VpnStatus.logException("Getting X509 Name from certificate", exp);

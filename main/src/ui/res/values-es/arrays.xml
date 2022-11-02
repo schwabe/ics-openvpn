@@ -28,4 +28,16 @@
         <item>Desconectar, guardar la contraseña</item>
         <item>Ignorar, volver a intentar</item>
     </string-array>
+    <string-array name="compat_mode">
+        <item>Estándares modernos</item>
+        <item>Versión OpenVPN 2.5.x</item>
+        <item>Versión OpenVPN 2.4.x</item>
+        <item>OpenVPN 2.3.x y antiguas versiones </item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>Inseguro (No es recomendado, debido a que se usara un cifrado poco seguro)</item>
+        <item>legacy (estándar)</item>
+        <item>Sugerido (Es recomendado pero la compatibilidad es limitada)</item>
+        <item>Perfil de cifrado \"Suite B\" (Solo el método de cifrado por curvas elípticas es aprobado por NIST (National Institute of Standards and Technology) )</item>
+    </string-array>
 </resources>

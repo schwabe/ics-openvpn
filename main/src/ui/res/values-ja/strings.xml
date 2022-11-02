@@ -396,7 +396,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="ab_tethering_44">テザリングはVPNが接続中でも有効です。ただしテザリングした通信はVPNを使用できません。</string>
     <string name="ab_kitkat_mss">初期のKitKatはTCP接続において間違ったMSS値を使用します。(#61948). このバグを回避するにはmssfixオプションの有効化を試してください。</string>
     <string name="ab_proxy">AndroidはDNSサーバの設定がされていない場合、モバイル/WiFiのプロキシ設定を使用し続けます。OpenVPN for Androidはこれについてログにて警告します。<p>VPNがDNSサーバを設定した場合、Androidはプロキシを使用しなくなります。VPNでプロキシを使用するよう設定するAPIは存在しません。</p></string>
-    <string name="ab_lollipop_reinstall">VPNアプリはアンインストール／再インストール時に正常に動作しなくなることがあります。詳細は#80074を参照してください。</string>
     <string name="ab_not_route_to_vpn">設定されたクライアントIPとネットマスクに含まれるIPアドレスはVPNを経由しません。OpenVPNは明示的に経路を追加することでこのバグを回避します。</string>
     <string name="ab_persist_tun">ほかのTUNデバイスが使用されている間に、永続的なTUNデバイス機能のためにTUNデバイスを開こうとするとデバイス上のVPNServiceがクラッシュします。VPNが再び動作するためにはデバイスの再起動が必要です。OpenVPN for Androidはクラッシュを避けるため、新しいTUNデバイスを開く前に現在のTUNデバイスを閉じます。これは短期間、パケットが非VPN接続に送信される原因になります。この回避策があっても、VPNServiceは時々クラッシュし、デバイスの再起動が必要になります。</string>
     <string name="ab_secondary_users">VPNはほかのユーザーに対しては動作しません。</string>
@@ -404,7 +403,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="ab_vpn_reachability_44">VPNなしでも到達可能なネットワークにのみVPN経由で到達できる場合。IPv6 VPN は動作しません。</string>
     <string name="ab_only_cidr_title">CIDR形式ではない経路</string>
     <string name="ab_proxy_title">VPNとプロキシの挙動</string>
-    <string name="ab_lollipop_reinstall_title">VPNアプリを再インストールする場合</string>
     <string name="version_upto">%sおよびそれ以前</string>
     <string name="copy_of_profile">%sのコピー</string>
     <string name="ab_not_route_to_vpn_title">設定されたIPアドレスへの経路</string>
@@ -540,4 +538,5 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="bf_cbc_requires_legacy">プロファイルは、OpenSSLレガシープロバイダー(有効化されていません)に依存するBF-CBCを使用します。</string>
     <string name="allow_translations_title">コミュニティが投稿した翻訳を許可する</string>
     <string name="allow_translations_summary">コミュニティから提供された翻訳を使用してアプリを翻訳できるようにします。有効にするには、アプリを再起動する必要があります。</string>
+    <string name="tls_profile">TLSセキュリティプロファイル</string>
 </resources>

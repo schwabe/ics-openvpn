@@ -34,6 +34,7 @@
     <string name="ipv4_address">IPv4 Adresi</string>
     <string name="ipv6_address">IPv6 Adresi</string>
     <string name="custom_option_warning">Özel OpenVPN seçeneklerini girin. Dikkatli kullanın. Ayrıca tun ile ilgili OpenVPN ayarları VPNSettings tasarımı nedeniyle program tarafından desteklenmiyor. Önemli bir seçeneğin eksik olduğunu düşünüyorsanız geliştirici ile iletişime geçin</string>
+    <string name="auth_username">Kullanıcı adı (no auth için boş bırakın)</string>
     <string name="auth_pwquery">Parola</string>
     <string name="static_keys_info">Statik yapılandırma için TLS Kimlik Doğrulama Anahtarları statik anahtar olarak kullanılacak</string>
     <string name="configure_the_vpn">VPN\'i Yapılandır</string>
@@ -42,6 +43,7 @@
     <string name="duplicate_profile_name">Benzersiz bir profil adı girin</string>
     <string name="profilename">Profil Adı</string>
     <string name="no_keystore_cert_selected">Bir kullanıcı sertifikası seçmelisiniz</string>
+    <string name="no_ca_cert_selected">Bir CA sertifikası seçmeli veya eş parmak izi kontrolünü etkinleştirmelisiniz</string>
     <string name="no_error_found">Hiçbir hata bulunamadı</string>
     <string name="config_error_found">Yapılandırmada Hata</string>
     <string name="ipv4_format_error">IPv4 adresi ayrıştırma hatası</string>
@@ -125,6 +127,7 @@
     <string name="no_vpn_support_image">Kalıbınız VPNService API\'sini desteklemiyor, üzgünüm :(</string>
     <string name="encryption">Şifreleme</string>
     <string name="cipher_dialog_title">Şifreleme yöntemini gir</string>
+    <string name="chipher_dialog_message">OpenVPN tarafından kullanılan veri şifreleme şifreleme algoritmalarını : (--data-ciphers) ile ayırarak girin. AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305 varsayılanını kullanmak için boş bırakın.</string>
     <string name="auth_dialog_message">OpenVPN için kullanılan kimlik doğrulama özetini girin. Varsayılan özeti kullanmak için boş bırakın.</string>
     <string name="settings_auth">Kimlik Doğrulama/Şifreleme</string>
     <string name="file_explorer_tab">Dosya Gezgini</string>
@@ -356,7 +359,6 @@
     <string name="ab_tethering_44">Paylaşım sadece VPN etkinken çalışır. Paylaşılan bağlantı VPN\'i KULLANMAYACAKTIR.</string>
     <string name="ab_kitkat_mss">Önceki KitKat sürümü TCP bağlantılarında MSS değerini yanlış ayarladı (#61948). Bu sorunu geçici olarak çözebilmek için mssfix seçeneğini etkinleştirmeyi deneyin.</string>
     <string name="ab_proxy">Hiçbir DNS sunucusu ayarlanmadığında Android mobil/kablosuz bağlantı için belirtilmiş vekil sunucu ayarlarını kullanmaya devam edecek. Android için OpenVPN, günlüğünde bunu size gösterecek.<p>VPN bir DNS sunucusu ayarladığında, Android vekil sunucuyu kullanmayacak. Bir VPN bağlantısı için vekil sunucu ayarlamak üzere bir API bulunmamaktadır.</p></string>
-    <string name="ab_lollipop_reinstall">VPN uygulamaları kaldırılıp tekrar yüklendiklerinde çalışmayabilirler. Ayrıntılar için bkz. #80074</string>
     <string name="ab_not_route_to_vpn">Yapılandırılan istemci IP ve ağ maskesindeki IP adresleri VPN\'e yönlendirilmemektedir. OpenVPN bu sorunu istemci IP ve ağ maskesine çözümlenen bir rote ekleyerek çözmektedir</string>
     <string name="ab_persist_tun">Persist-tun desteği için kullanılmak üzere bir tun aygıtı etkin iken başka bir tun aygını açmak cihazdaki VPN hizmetlerinin çökmesine neden olur. VPN\'in tekrar çalışması için yeniden başlatma gereklidir. Android için OpenVPN, tun aygıtını yeniden açmayı önlemeye çalışır, ancak gerçekten gerekli olduğunda çökmeyi önlemek için yeni TUN aygıtı açmadan önce geçerli TUN aygıtını kapatır. Bu VPN olmayan bağlantılar üzerinde paketlerin gönderildiği kısa bir aralığa sebep olabilir. Bu çözüme rağmen VPN hizmetleri hala çökmekte ve aygıtınızın yeniden başlatılmasını gerektirir.</string>
     <string name="ab_secondary_users">VPN ikincil kullanıcılar için hiç çalışmamaktadır.</string>
@@ -364,7 +366,6 @@
     <string name="ab_vpn_reachability_44">VPN\'siz ulaşılabilen hedefe sadece VPN üzerinde ulaşılabilir. IPv6 VPN\'leri hiç çalışmıyor.</string>
     <string name="ab_only_cidr_title">CIDR Olmayan Rotalar</string>
     <string name="ab_proxy_title">VPN\'ler için Vekil Sunucu davranışı</string>
-    <string name="ab_lollipop_reinstall_title">VPN uygulamalarını yeniden yükleme</string>
     <string name="version_upto">%s ve önceki</string>
     <string name="copy_of_profile">%s kopyası</string>
     <string name="ab_not_route_to_vpn_title">Yapılandırılmış IP adresine yönlendir</string>
@@ -435,6 +436,12 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
+    <string name="weakmd">&lt;p&gt;OpenSSL sürüm 1.1 ile başlayarak, OpenSSL,
+        MD5 gibi sertifikalardaki zayıf imzaları reddeder. Ek olarak OpenSSL 3.0 ile SHA1 imzaları da reddedilir.&lt;/p&gt;&lt;p&gt;
+        SHA1 yakın gelecekte diğer platformlarda da çalışmayacağı için VPN sertifikalarını mümkün olan en kısa sürede 
+        güncellemelisiniz.&lt;/p&gt;
+        &lt;p&gt;Gerçekten eski ve bozuk sertifikaları kullanmak istiyorsanız, Profilin Doğrulaması/Şifrelemesi altında TLS güvenlik profili için \"güvensiz\" seçeneğini seçin&lt;/p&gt;
+    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
@@ -474,8 +481,34 @@
         doğrulama
     </string>
     <string name="openurl_requested">VPN kimlik doğrulamasına devam etmek için URL\'yi açın</string>
+    <string name="crtext_requested">VPN kimlik doğrulamasına devam etmek için sorgulamayı yanıtlayın</string>
     <string name="state_auth_pending">Kimlik doğrulama beklemede</string>
     <string name="external_authenticator">Harici Kimlik Doğrulayıcı</string>
     <string name="configure">Yapılandır</string>
     <string name="extauth_not_configured">Harici kimlik doğrulayıcı yapılandırılmamış</string>
+    <string name="faq_killswitch_title">VPN olmayan bağlantıyı engelle (\"Killswitch\")</string>
+    <string name="faq_killswitch">Genellikle VPN olmadan bağlantıların engellenmesi istenir. Diğer uygulamalar genellikle bu özellik için \"Killswitch\" veya \"Seamless tünel\" gibi işaretleme terimleri kullanır. OpenVPN ve bu uygulama, bu işlevi uygulamak için bir özellik olan persist-tun sunar.&lt;p&gt;Uygulamalar tarafından sunulan tüm bu yöntemlerle ilgili sorun, yalnızca en iyi çabayı gösterebilmeleri ve eksiksiz çözümler olmamasıdır. Açılışta, uygulama kilitlenir ve diğer uç durumları oluşabilir, uygulama bu VPN olmayan bağlantı bloğunun çalışmasını sağlayamayabilir. Böylece kullanıcıya yanlış bir güvenlik hissi verir.&lt;p&gt;VPN olmayan bağlantılarını engelleyebilmek için &lt;b&gt;tek&lt;/b&gt; güvenilir yol Android 8.0 veya sonrasını kullanmak ve Ayarlar &gt; Ağ &amp; İnternet &gt; Gelişmiş/>VPN &gt; Android için OpenVPN içinde bulunan &gt; Her Zaman Açık VPN\'i Etkinleştir, VPN Olmayan Bağlantıları Engelle\'yi Etkinleştir ile \"VPN olmayan bağlantıları engelle\" kullanmaktır.</string>
+    <string name="summary_block_address_families">Bu seçenek, VPN herhangi bir IPv4 veya IPv6 adresi ayarlamazsa Android\'e protokollere (IPv4/IPv6) izin vermemesi talimatını verir.</string>
+    <string name="title_block_address_families">VPN tarafından kullanılmıyorsa IPv6\'yı (veya IPv4) engelle</string>
+    <string name="install_keychain">Yeni sertifika yükle</string>
+    <string name="as_servername">AS sunucu adı</string>
+    <string name="server_url">Sunucu URL\'si</string>
+    <string name="request_autologin">Otomatik oturum açma profili iste</string>
+    <string name="import_from_as">Uzak Sunucudan Profili İçe Aktar</string>
+    <string name="no_default_vpn_set">Varsayılan VPN ayarlanmadı. Bu seçeneği etkinleştirmeden önce lütfen Varsayılan VPN\'i ayarlayın.</string>
+    <string name="internal_web_view">Dahili Web Görünümü</string>
+    <string name="faq_ncp">Kesin duruma bağlı olarak bu mesajın bazı varyasyonları vardır. Hepsinin ortak noktası, sunucu ve istemcinin ortak bir şifre üzerinde anlaşamamasıdır. Ana nedenler şunlardır: &gt;ul&lt;&gt;li&lt; Hala OpenVPN 2.4 ve daha eski sürümlerin varsayılan yapılandırmada BF-CBC\'ye izin verdiği gerçeğine güveniyorsunuz (eğer --cipher ayarlanmamışsa). &gt;a href=\"https://community.openvpn.net/openvpn/wiki/SWEET32\"&lt;bozuk/eskimiş bir cipher olduğundan&gt;/a&lt; varsayılan olarak buna artık izin vermiyor.&gt;/li&lt;&gt;li&lt;Sunucu, --enable-small (en az 4-5 yıllık OpenVPN) ile OpenVPN 2.3 (veya daha eski) çalıştırıyor&gt;/li&lt;&gt;li&lt;&gt;/ul&lt;Bozuk yapılandırma (örneğin, istemci ve sunucudaki yanlış data-cipher\'ları)&gt;/li&lt; &gt;p&lt; &gt;a href=\"https://github.com/OpenVPN/openvpn/blob/master/doc/man-sections/cipher-negotiation.rst\"&lt;OpenVPN kılavuzu cipher anlaşması&gt;/a&lt; bölümü, şifre anlaşmasının farklı senaryolarını ve bu durumda ne yapılması gerektiğini çok iyi açıklamaktadır.&gt;p&lt;TP-Link cihazı, 2019/2020 modellerinde bile cihazlarında en az 5 yıllık OpenVPN 2.3.x sürümünü (muhtemelen daha eski) kullanır.&gt;p&lt;Son olarak, geliştiricisi OpenVPN standardı ile uyumlu olmayan özel bir cipher anlaşma yaması oluşturmanın iyi bir fikir olacağını düşündüğü için her zaman \'BF-CBC\' kullandığını söyleyen bozuk bir sunucusu olan popüler bir VPN sağlayıcısı var.&gt;p&lt;Özetle: tüm mantıklı konfigürasyonlar bu hataları almamalıdır. Ancak (bozuk VPN sağlayıcısının sunucusu dışında) istemci hala bağlanmaya ikna edilebilir (asıl sorunu değil, semptomu düzelterek). Eski sunuculara bağlanırken, bir VPN\'nin temel ayarlarındaki uyumluluk modu seçeneği, yaygın uyumluluk sorunlarının çoğunu çözebilmelidir.</string>
+    <string name="check_peer_fingerprint">Eş sertifika parmak izini kontrol edin</string>
+    <string name="fingerprint">(Sunucu sertifikalarının SHA256 parmak izini girin)</string>
+    <string name="proxy_info">HTTP Vekil: %1$s %2$d</string>
+    <string name="use_alwayson_vpn">Önyükleme sırasında VPN\'yi etkinleştirmek için lütfen Android\'in Her Zaman Açık Özelliğini kullanın.</string>
+    <string name="open_vpn_settings">VPN Ayarlarını Aç</string>
+    <string name="trigger_pending_auth_dialog">Ek gerekli kimlik doğrulamasını girmek için buraya basarak bir pencere açın</string>
+    <string name="compatmode">Uyumluluk Modu</string>
+    <string name="compat_mode_label">Uyumluluk modu</string>
+    <string name="loadossllegacy">OpenSSL eski sağlayıcısını yükle</string>
+    <string name="bf_cbc_requires_legacy">Profiller, OpenSSL eski sağlayıcısına (etkinleştirilmemiş) bağlı olan BF-CBC\'yi kullanır.</string>
+    <string name="allow_translations_title">Topluluğun katkıda bulunduğu çevirilere izin ver</string>
+    <string name="allow_translations_summary">Uygulamanın, topluluk tarafından sağlanan çevirilerle çevrilmesine izin verir. Etkinleştirmek için uygulamanın yeniden başlatılmasını gerektirir.</string>
+    <string name="tls_profile">TLS Güvenlik Profili</string>
 </resources>

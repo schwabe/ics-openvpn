@@ -28,4 +28,16 @@
         <item>Afbryd, behold adgangskoden</item>
         <item>Ignorér, forsøg igen</item>
     </string-array>
+    <string-array name="compat_mode">
+        <item>Moderne stander</item>
+        <item>OpenVPN 2.5.x peers</item>
+        <item>OpenVPN 2.4.x peers</item>
+        <item>OpenVPN 2.3.x og ældre peers</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>usikker (anbefales ikke, tillader usikker krypto)</item>
+        <item>legacy (standard)</item>
+        <item>foretrukket (anbefalet, kompatibilitet dog begrænset)</item>
+        <item>Suite B (kun NIST-godkendte elliptiske kurver)</item>
+    </string-array>
 </resources>

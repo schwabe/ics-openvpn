@@ -111,7 +111,7 @@ class Settings_IP : OpenVpnPreferencesFragment(), Preference.OnPreferenceChangeL
 }
 
 class DNSSummaryProvider : Preference.SummaryProvider<Preference> {
-    override fun provideSummary(preference: Preference?): CharSequence {
+    override fun provideSummary(preference: Preference): CharSequence {
         val ep = preference as EditTextPreference
         var summary = ep.text ?: ""
         if (summary == "8.8.4.4" || summary == "8.8.8.8" || summary == "2001:4860:4860::8888" || summary == "2001:4860:4860::8844" )

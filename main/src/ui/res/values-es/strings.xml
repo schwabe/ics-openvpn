@@ -34,6 +34,7 @@
     <string name="ipv4_address">Dirección IPv4</string>
     <string name="ipv6_address">Dirección IPv6</string>
     <string name="custom_option_warning">Introduzca las opciones personalizadas de OpenVPN. Úselas con mucho cuidado. Además, tenga en cuenta que muchas de las configuraciones de OpenVPN relacionadas con tun no pueden ser soportadas por el diseño de VPNSettings. Si cree que falta una función importante, contacte al autor</string>
+    <string name="auth_username">Nombre de usuario (Dejar vació para no identificarse)</string>
     <string name="auth_pwquery">Contraseña</string>
     <string name="static_keys_info">Para la configuración estática las claves de autenticación TLS se utilizaran como claves estáticas</string>
     <string name="configure_the_vpn">Configurar la VPN</string>
@@ -42,6 +43,7 @@
     <string name="duplicate_profile_name">Por favor, introduzca un nombre de perfil único</string>
     <string name="profilename">Nombre del Perfil</string>
     <string name="no_keystore_cert_selected">Debe seleccionar un certificado de usuario</string>
+    <string name="no_ca_cert_selected">Debe de seleccionar un certificado CA (Certificate Authority) o bien activar la verificación de huellas digitales (Peer Fingerprint)</string>
     <string name="no_error_found">No se encontraron errores</string>
     <string name="config_error_found">Error en la configuración</string>
     <string name="ipv4_format_error">Error al analizar la dirección IPv4</string>
@@ -125,6 +127,7 @@
     <string name="no_vpn_support_image">Su imagen no es compatible con la API de VPNService, lo siento :(</string>
     <string name="encryption">Cifrado</string>
     <string name="cipher_dialog_title">Especifique el método de cifrado</string>
+    <string name="chipher_dialog_message">Introduce los datos de cifrado implementados por el algoritmo criptográfico que usa OpenVPN separados de esta manera: (DATOS-DE-CIFRADO). Dejar vació para usar de manera predeterminada el valor: AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
     <string name="auth_dialog_message">Introduce la autenticacion digest usada por OpenVPN. Deja en blanco para usar el digest predeterminado.</string>
     <string name="settings_auth">Autenticación/Cifrado</string>
     <string name="file_explorer_tab">Administrador de archivos</string>
@@ -357,7 +360,6 @@ hacia/de Móvil)</string>
     <string name="ab_tethering_44">Tethering funciona mientras que el VPN está activa. La conexión atada no utilizará el VPN.</string>
     <string name="ab_kitkat_mss">Primera versión KitKat establece el valor incorrecto MSS sobre conexiones TCP (# 61948). OpenVPN para automáticamente permitirá mssfix opción para solucionar este error.</string>
     <string name="ab_proxy">Android seguirá utilizando la configuración del proxy especificados para la conexión / Wi-Fi móvil cuando no están definidos los servidores DNS. OpenVPN para Android le advertirá sobre esto en el registro.<p>Cuando una VPN establece un servidor DNS Android no lo hará un proxy. No hay ninguna API para configurar un proxy para una conexión VPN.</p></string>
-    <string name="ab_lollipop_reinstall">Aplicaciones VPN pueden dejar de funcionar cuando desinstalado y reinstalado de nuevo. Para más detalles ver # 80074</string>
     <string name="ab_not_route_to_vpn">La IP del cliente configurado y las IPs en su máscara de red no se enrutan a la VPN. OpenVPN soluciona este error al agregar explícitamente una ruta que corrosponds a la IP del cliente y su máscara de red</string>
     <string name="ab_persist_tun">La apertura de un dispositivo tun mientras que otro dispositivo tun está activo, que se utiliza para el apoyo tun-persistir, bloquea los VPNServices en el dispositivo. Es necesario reiniciar para que el trabajo VPN de nuevo. OpenVPN para Android intenta evitar reabrir el dispositivo tun y si realmente se necesita primero cierra el TUN actual antes de abrir el nuevo dispositivo TUN para evitar estrellarse. Esto puede conducir a una corta ventana donde los paquetes se envían a través de la conexión no VPN. Incluso con esta solución los VPNServices a veces se bloquea y requiere un reinicio del dispositivo.</string>
     <string name="ab_secondary_users">VPN no funciona en absoluto para los usuarios secundarios.</string>
@@ -365,7 +367,6 @@ hacia/de Móvil)</string>
     <string name="ab_vpn_reachability_44">Sólo destino puede llegar a través de la VPN que se puede llegar sin VPN. IPv6 VPNs no funciona en absoluto.</string>
     <string name="ab_only_cidr_title">Rutas no CIDR</string>
     <string name="ab_proxy_title">Comportamiento Proxy para VPN</string>
-    <string name="ab_lollipop_reinstall_title">Reinstalación de aplicaciones VPN</string>
     <string name="version_upto">%s y anteriores</string>
     <string name="copy_of_profile">copia de %s</string>
     <string name="ab_not_route_to_vpn_title">Ruta a la dirección IP configurada</string>
@@ -436,6 +437,11 @@ hacia/de Móvil)</string>
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
+    <string name="weakmd">&lt;p&gt;A partir de OpenSSL versión 1.1, OpenSSL rechaza firmas de certificados CA no seguros como
+        MD5. Adicionalmente, con OpenSSL 3.0 también se rechazan las firmas con SHA1.&lt;/p&gt;&lt;p&gt;
+        Usted debería actualizar los certificados VPN tan pronto como sea posible ya que también SHA1 dejara de funcionar en otras plataformas en un futuro próximo.&lt;/p&gt;
+        &lt;p&gt;Si realmente desea utilizar certificados antiguos y vulnerables, seleccione \"inseguro\" en el perfil de seguridad TLS > Autenticación/Cifrado del perfil&lt;/p&gt;
+    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
@@ -469,8 +475,34 @@ hacia/de Móvil)</string>
         de dos factores
     </string>
     <string name="openurl_requested">Abrir URL para continuar con la autenticación de VPN</string>
+    <string name="crtext_requested">Complete la verificación para continuar con la autenticación VPN</string>
     <string name="state_auth_pending">Autenticación pendiente</string>
     <string name="external_authenticator">Autenticador externo</string>
     <string name="configure">Configurar</string>
     <string name="extauth_not_configured">Autenticador externo no configurado</string>
+    <string name="faq_killswitch_title">Bloquear la conexión que no es VPN (\"Killswitch\")</string>
+    <string name="faq_killswitch">A menudo se desea bloquear las conexiones sin VPN. Otras apps suelen utilizar términos de marketing como \"Killswitch\" o \"Seamless tunnel\" para esta función. OpenVPN y esta app ofrecen \"persist-tun\", una característica para implementar esta funcionalidad.&lt;p&gt;El problema con todos estos métodos ofrecidos por las apps es que sólo pueden proporcionar un bloqueo parcial y no son soluciones completas. En el arranque, cuando la app no responde y otros casos, la aplicación no puede asegurar que este bloqueo de la conexión no VPN funcione. Por lo tanto, le da al usuario una falsa sensación de seguridad.&lt;p&gt;La &lt;b&gt;única&lt;/b&gt; forma fiable de asegurar que las conexiones no VPN se bloquean es utilizar Android 8.0 o posterior y utilizar el ajuste \"bloquear conexiones sin VPN\" que se puede encontrar en Ajustes &gt; Red &amp; Internet &gt; Avanzado/VPN &gt; OpenVPN para Android &gt; Habilitar \"VPN siempre activa\" y \"bloquear conexiones sin VPN\"</string>
+    <string name="summary_block_address_families">Esta opción le indica a Android que bloquee los protocolos (IPv4/IPv6) si la VPN no configura ninguna dirección IPv4 o IPv6.</string>
+    <string name="title_block_address_families">Bloquear IPv6 o IPv4 si no es usado por la VPN</string>
+    <string name="install_keychain">Instalar nuevo certificado</string>
+    <string name="as_servername">Como el nombre del servidor</string>
+    <string name="server_url">Link del Servidor</string>
+    <string name="request_autologin">Solicitar el perfil de usuario para el inicio de sesión automático</string>
+    <string name="import_from_as">Importar perfil de usuario desde un servidor remoto</string>
+    <string name="no_default_vpn_set">La VPN predeterminada no esta configurada. Por favor establece OpenVPN por defecto para activar esta opción.</string>
+    <string name="internal_web_view">WebView interno</string>
+    <string name="faq_ncp">Hay algunas variaciones de este mensaje dependiendo de la situación exacta. Todas tienen en común que el servidor y el cliente no han podido ponerse de acuerdo sobre un cifrado común. Las razones principales son: &lt;ul&gt;&lt;li&gt; Todavía estás confiando en el hecho de que OpenVPN 2.4 y anteriores permitían BF-CBC en la configuración por defecto (si no se establecía --cipher). OpenVPN 2.5 ya no lo permite por defecto ya que es un &lt;a href=\"https://community.openvpn.net/openvpn/wiki/SWEET32\"&gt;cifrado roto/desactualizado&lt;/a&gt;.&lt;/li&gt;&lt;li&gt;El servidor ejecuta OpenVPN 2.3 (o incluso más antiguo) con --enable-small (al menos 4-5 años de antigüedad de OpenVPN)&lt;/li&gt;&lt;li&gt;&lt;/ul&gt;Configuración inadecuada (por ejemplo, desajuste de cifrado de datos en el cliente y el servidor)&lt;/li&gt; &lt;p&gt; La sección del manual de &lt;a href=\"https://github.com/OpenVPN/openvpn/blob/master/doc/man-sections/cipher-negotiation.rst\"&gt;OpenVPN sobre negociación de cifrado&lt;a&gt; explica muy bien los diferentes escenarios de negociación de cifrado y qué hacer en estas situaciones.&lt;p&gt;Los dispositivos de TP-Link utilizan una versión de OpenVPN 2.3. x (posiblemente más antigua) en sus dispositivos, incluso en los modelos 2019/2020.&lt;p&gt;Por último, pero no menos importante, hay un popular proveedor de VPN que mantiene un servidor mal configurado que siempre menciona que está usando \'BF-CBC\' porque su desarrollador pensó que sería una buena idea crear un parche de negociación de cifrado propietario que es incompatible con el estándar OpenVPN.&lt;p&gt;En resumen: todas las configuraciones sanas no deberían obtener estos errores. Pero (aparte del servidor que provee un VPN defectuoso) se puede forzar al cliente VPN para que se siga conectando (arreglando el error pero no el verdadero problema). Cuando se conecta a servidores más antiguos, la opción de modo de compatibilidad en la configuración básica de una VPN debería poder resolver la mayoría de los problemas de compatibilidad más comunes.</string>
+    <string name="check_peer_fingerprint">Verificar la huella digital del certificado de pares (peer)</string>
+    <string name="fingerprint">(Introducir la huella digital (fingerprint) SHA256 de el servidor de certificados)</string>
+    <string name="proxy_info"> Proxy HTTP: %1$s %2$d</string>
+    <string name="use_alwayson_vpn">Por favor use la función siempre activa (Always-On) de Android para activar a OpenVPN en el incio.</string>
+    <string name="open_vpn_settings">Configuraciones de OpenVPN</string>
+    <string name="trigger_pending_auth_dialog">Presione aquí para abrir una nueva ventana e introducir la información adicional requerida para completar la autenticación.</string>
+    <string name="compatmode">Modo de Compatibilidad</string>
+    <string name="compat_mode_label">Modo de Compatibilidad</string>
+    <string name="loadossllegacy">Cargar la fuente OpenSSL heredada (legacy)</string>
+    <string name="bf_cbc_requires_legacy">Los perfiles usan BF-CBC el cual depende de una fuente heredada (legacy) de OpenSSL (No habilitado).</string>
+    <string name="allow_translations_title">Permitir traducciones aportadas por la comunidad</string>
+    <string name="allow_translations_summary">Permitir que la interfaz de OpenVPN sea colocada en Español con traducciones de parte de la comunidad. Para activar esta opción requieres reiniciar OpenVPN.</string>
+    <string name="tls_profile">Perfil de seguridad TLS</string>
 </resources>

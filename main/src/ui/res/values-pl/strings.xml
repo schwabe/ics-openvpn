@@ -34,6 +34,7 @@
     <string name="ipv4_address">Adres IPv4</string>
     <string name="ipv6_address">Adres IPv6</string>
     <string name="custom_option_warning">Wprowadź ustawienia niestandardowe OpenVPN. Używać z rozwagą. Należy również pamiętać, że wiele ustawień związanych z tun OpenVPN nie jest obsługiwana przez projekt VPNSettings. Jeśli uważasz, że brakuje ważnych opcji skontaktuj się z autorem</string>
+    <string name="auth_username">Nazwa użytkownika (pozostaw puste dla braku autoryzacji)</string>
     <string name="auth_pwquery">Hasło</string>
     <string name="static_keys_info">W konfiguracji statycznej klucze uwierzytelniania TLS zostaną wykorzystane jako statyczne klucze</string>
     <string name="configure_the_vpn">Konfiguracja VPN</string>
@@ -42,6 +43,7 @@
     <string name="duplicate_profile_name">Wybierz unikalną nazwę profilu</string>
     <string name="profilename">Nazwa profilu</string>
     <string name="no_keystore_cert_selected">Musisz wybrać certyfikat użytkownika</string>
+    <string name="no_ca_cert_selected">Musisz wybrać certyfikat CA lub włączyć sprawdzanie linii papilarnych równorzędnych</string>
     <string name="no_error_found">Brak błędów</string>
     <string name="config_error_found">Błąd w konfiguracji</string>
     <string name="ipv4_format_error">Błąd analizowania adresu IPv4</string>
@@ -125,6 +127,7 @@
     <string name="no_vpn_support_image">Twój obraz nie wspiera API VPN, przepraszamy ;(</string>
     <string name="encryption">Szyfrowanie</string>
     <string name="cipher_dialog_title">Wprowadź metodę szyfrowania</string>
+    <string name="chipher_dialog_message">Enter the data encryption cipher algorithms used by OpenVPN separated by : (--data-ciphers). Leave empty to use the default of AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
     <string name="auth_dialog_message">Wprowadź tryb autoryzacji używany z OpenVPN. Pozostaw puste, aby skorzystać z ustawień domyślnych.</string>
     <string name="settings_auth">Uwierzytelnianie/Szyfrowanie</string>
     <string name="file_explorer_tab">Przeglądanie plików</string>
@@ -168,7 +171,7 @@
     <string name="owner_fix">Popraw uprawnienia do /dev/tun</string>
     <string name="generated_config_summary">Pokazuje wygenerowany plik konfiguracji OpenVPN</string>
     <string name="edit_profile_title">Edytujesz \"%s\"</string>
-    <string name="building_configration">Tworzenie konfiguracji&#8230;</string>
+    <string name="building_configration">Tworzenie konfiguracji...</string>
     <string name="netchange_summary">Włączenie tej opcji spowoduje ponowne połączenie jeśli stan sieci się zmienił (np. z WiFi na GSM)</string>
     <string name="netchange">Połącz ponownie przy zmianie sieci</string>
     <string name="netstatus">Stan sieci: %s</string>
@@ -357,7 +360,6 @@
     <string name="ab_kitkat_mss">Wczesne wersje KitKat ustawiają złą wartość MSS połączeń TCP (#61948). Spróbuj ustawić opcję mssfix w celu obejścia tego problemu.</string>
     <string name="ab_proxy">Android będzie używał Twoich ustawień proxy dla połączenia mobilnego/Wi-Fi kiedy nie jest sprecyzowany serwer DNS.
 OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS Android nie będzie używał więcej proxy. Nie ma żadnego API do ustawienia proxy dla połączenia VPN.</p></string>
-    <string name="ab_lollipop_reinstall">Aplikacje VPN mogą przestać działać po odinstalowaniu i ponownej instalacji. W celu uzyskania szczegółów zobacz #80074</string>
     <string name="ab_not_route_to_vpn">Brakuje konfiguracji tras dla adresu IP klienta oraz masek podsieci. OpenVPN rozwiązuje ten problem przez dodanie trasy odpowiedniej dla adresu IP klienta i maski jego podsieci</string>
     <string name="ab_persist_tun">Otwieranie urządzenia tun, gdy inne urządzenie używane do obsługi persist-tun, jest otwarte, powoduje awarię VPNServices na urządzeniu. Ponowne uruchomienie urządzenia jest konieczne dla przywrócenia VPN. OpenVPN dla systemu Android próbuje uniknąć ponownego otwarcia urządzenia tun. Aby uniknąć awarii zamknij bieżący TUN przed otwarciem nowego TUN. Może to prowadzić do krótkiego momentu, gdzie pakiety są wysyłane poza siecią VPN. Nawet mimo zastosowania tego obejścia VPNServices czasami ulega awarii i wymaga ponownego uruchomienia urządzenia.</string>
     <string name="ab_secondary_users">VPN absolutnie nie działa dla dodatkowych użytkowników.</string>
@@ -365,7 +367,6 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="ab_vpn_reachability_44">Przy użyciu VPN można dotrzeć tylko do miejsc, które są osiągalne bez sieci VPN. VPN protokołu IPv6 nie działa w ogóle.</string>
     <string name="ab_only_cidr_title">Trasy nie-CIDR</string>
     <string name="ab_proxy_title">Zachowanie Proxy w sieci VPN</string>
-    <string name="ab_lollipop_reinstall_title">Ponowna instalacja aplikacji VPN</string>
     <string name="version_upto">%s i wcześniejsze</string>
     <string name="copy_of_profile">Kopia %s</string>
     <string name="ab_not_route_to_vpn_title">Trasa do skonfigurowanego adresu IP</string>
@@ -436,6 +437,7 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit / s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
+    <string name="weakmd">&lt;p&gt;</string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
@@ -470,8 +472,28 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
         weryfikacji
     </string>
     <string name="openurl_requested">Otwórz adres URL, aby kontynuować uwierzytelnianie VPN</string>
+    <string name="crtext_requested">Otwórz adres URL, aby kontynuować uwierzytelnianie VPN</string>
     <string name="state_auth_pending">Oczekiwanie na uwierzytelnienie</string>
     <string name="external_authenticator">Zewnętrzne uwierzytelnienie</string>
     <string name="configure">Konfiguruj</string>
     <string name="extauth_not_configured">Nie skonfigurowano zewnętrznego uwierzytelnienia</string>
+    <string name="faq_killswitch_title">阻止非 VPN 连接（“Killswitch”）</string>
+    <string name="faq_killswitch">&amp;</string>
+    <string name="summary_block_address_families">Ta opcja instruuje system Android, aby nie zezwalał na protokoły (IPv4/IPv6), jeśli sieć VPN nie ustawia żadnych adresów IPv4 ani IPv6.</string>
+    <string name="title_block_address_families">Blokuj IPv6 (lub IPv4), jeśli nie są używane przez VPN</string>
+    <string name="install_keychain">Zainstaluj nowy certyfikat</string>
+    <string name="as_servername">JAKO nazwa_serwera</string>
+    <string name="server_url">Serwer URL</string>
+    <string name="import_from_as">Importuj profil ze zdalnego serwera</string>
+    <string name="no_default_vpn_set">Domyślna sieć VPN nie jest ustawiona. Przed włączeniem tej opcji ustaw domyślną sieć VPN.</string>
+    <string name="use_alwayson_vpn">Użyj funkcji Always-On Androida, aby umożliwić włączenie VPN wraz ze startem systemu.</string>
+    <string name="open_vpn_settings">Otwórz ustawienia VPN</string>
+    <string name="trigger_pending_auth_dialog">Kliknij tutaj, aby otworzyć okno, aby wprowadzić dodatkowe wymagane uwierzytelnienie</string>
+    <string name="compatmode">Tryb zgodności</string>
+    <string name="compat_mode_label">Tryb zgodności</string>
+    <string name="loadossllegacy">Załaduj starszego dostawcę OpenSSL</string>
+    <string name="bf_cbc_requires_legacy">Profile używają BF-CBC, który zależy od starszego dostawcy OpenSSL (nie jest włączony).</string>
+    <string name="allow_translations_title">Zezwalaj na tłumaczenia współtworzone przez społeczność</string>
+    <string name="allow_translations_summary">Zezwól na tłumaczenie aplikacji, wykorzystując propozycje użytkowników. Do aktywacji wymaga ponownego uruchomienie aplikacji.</string>
+    <string name="tls_profile">Profil bezpieczeństwa TLS</string>
 </resources>

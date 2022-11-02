@@ -356,7 +356,6 @@
     <string name="ab_tethering_44">Internetdelning fungerar medans VPNet är aktivt. Den delade anslutningen kommer INTE gå via VPNet.</string>
     <string name="ab_kitkat_mss">Tidigt KitKat version anger fel MSS värdet på TCP-anslutningar (# 61.948). Försök att göra det möjligt för mssfix möjlighet att kringgå denna bugg.</string>
     <string name="ab_proxy">Android kommer att använda de proxyinställningar som har ställts in för anslutningen över mobilnät/trådlöst när inga DNS-servrar är inställda. OpenVPN kommer att varna för detta i loggen.<p>När en VPN-anslutning anger en DNS-server, kommer Android att hoppa över proxyn. Det finns inget API för att ange en proxy för en VPN-anslutning.</p></string>
-    <string name="ab_lollipop_reinstall">VPN appar kan sluta fungera när avinstalleras och installeras igen. För mer information se # 80074</string>
     <string name="ab_not_route_to_vpn">Det konfigurerade klient-IPt och de IP-nummer som omfattas av dess nätmask är inte ruttade via VPNet. OpenVPN kommer att motarbeta denna bugg genom att explicit lägga till en rutt som omfattar klient-IPt och dess nätmask</string>
     <string name="ab_persist_tun">Att öppna en tun-enhet medans en annan tun-enhet är aktiv, och denna används för ihållande tun, kommer att krascha VPN-funktionen på enheten. Detta innebär att enheten måste startas om för att VPN skall fungera igen. OpenVPN för Android försöker undvika att öppna tun-enheten på nytt, och om det verkligen behövs, då stänga befintliga tun-anslutningar innan den öppnar den nya tun-enheten för att undvika denna krasch. Detta kan leda till ett litet tidsfönster där paket kan läcka ut utanför VPN-anslutningen. Även med denna fix, så kraschar ibland VPN-funktionen, och kräver då att enheten startas om.</string>
     <string name="ab_secondary_users">VPN fungerar inte över huvud taget för extra användarkonton.</string>
@@ -364,7 +363,6 @@
     <string name="ab_vpn_reachability_44">Bara destination kan nås över VPN som kan nås utan VPN. IPv6-VPN fungerar inte alls.</string>
     <string name="ab_only_cidr_title">Icke CIDR rutter</string>
     <string name="ab_proxy_title">Proxy beteende för VPN</string>
-    <string name="ab_lollipop_reinstall_title">Installera om VPN appar</string>
     <string name="version_upto">%s och tidigare</string>
     <string name="copy_of_profile">Kopia av %s</string>
     <string name="ab_not_route_to_vpn_title">Rutt till den konfigurerade IP-adressen</string>

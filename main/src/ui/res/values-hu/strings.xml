@@ -356,7 +356,6 @@
     <string name="ab_tethering_44">Internetmegosztás működik mialatt a VPN aktív. A megosztott kapcsolat NEM fogja használni a VPN-t.</string>
     <string name="ab_kitkat_mss">A korai KitKat verzió rosszul állítja be az MSS értéket a TCP kapcsolaton (#61948). Próbálja meg engedélyezni az mssfix opciót a hiba kiküszöbölésére.</string>
     <string name="ab_proxy">Az Android továbbra is használni fogja a proxy beállításokat, amik a mobil/WiFi kapcsolathoz vannak megadva ameddig nincs beállítva DNS kiszolgáló. Az OpenVPN for Android erről figyelmeztetni fog a log-ban.<p>Amikor a VPN beállít egy DNS kiszolgálót, az Android nem fogja tovább használni a proxy-t. Nincs API proxy beállításra VPN kapcsolathoz.</p></string>
-    <string name="ab_lollipop_reinstall">A VPN alkalmazások nem biztos hogy működnek ha uninstallálják majd újra installálják. A részleteket lásd #80074</string>
     <string name="ab_not_route_to_vpn">A konfigurált kliens IP és a hálózati maszkjában levő IP-k útvonala nem a VPN-en keresztül vezet. Az OpenVPN úgy küszöböli ki ezt a hibát, hogy explicit hozzáad egy útvonalat ami a kliens IP és hálózati maszkjának megfelel</string>
     <string name="ab_persist_tun">Egy tun eszköz megnyitása, mialatt egy másik tun eszköz aktív, ami megmaradó-tun esetén használt, a VPNService összeomlását okozza az eszközön. A VPN újbóli működéséhez újraindítás szükséges. Az OpenVPN for Android megpróbálja elkerülni a tun eszköz újra megnyitását és ha valóban szükséges akkor először lezárja az aktuális TUN-t az új TUN megnyitása előtt az összeomlás elkerülése érdekében. Ez egy rövid ablakoz vezethet ami alatt csomagok továbbítódhatnak nem-VPN kapcsolaton keresztül. A VPNService ennek ellenére néha mégis összeomlik, ami az eszköz újraindítását igényli.</string>
     <string name="ab_secondary_users">A VPN egyáltalán nem működik másodlagos felhasználóknak.</string>
@@ -364,7 +363,6 @@
     <string name="ab_vpn_reachability_44">Csak azok a célállomások érhetőek el VPN-en, amik VPN nélkül is elérhetőek. Az IPv6 VPN egyáltalán nem működik.</string>
     <string name="ab_only_cidr_title">Nem CIDR Útvonalak</string>
     <string name="ab_proxy_title">Proxy viselkedés a VPN-ekhez</string>
-    <string name="ab_lollipop_reinstall_title">VPN alkalmazások újratelepítése</string>
     <string name="version_upto">%s és korábbi</string>
     <string name="copy_of_profile">%s másolata</string>
     <string name="ab_not_route_to_vpn_title">Útvonal a konfigurált IP címhez</string>

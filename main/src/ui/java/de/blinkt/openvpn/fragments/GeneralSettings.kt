@@ -20,6 +20,7 @@ import androidx.preference.*
 import de.blinkt.openvpn.BuildConfig
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.activities.OpenSSLSpeed
+import de.blinkt.openvpn.api.ConfirmDialog.ANONYMOUS_PACKAGE
 import de.blinkt.openvpn.api.ExternalAppDatabase
 import de.blinkt.openvpn.core.ProfileManager
 import java.io.File
@@ -50,9 +51,11 @@ class GeneralSettings : PreferenceFragmentCompat(), Preference.OnPreferenceClick
             devHacks.removePreference(useInternalFS)
         }
 
-        /* Android P does not allow access to the file storage anymore */if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+        /* Android P does not allow access to the file storage anymore */
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
             val useInternalFileSelector = findPreference<Preference>("useInternalFileSelector")
-            devHacks.removePreference(useInternalFileSelector)
+            if (useInternalFileSelector != null)
+                devHacks.removePreference(useInternalFileSelector)
         }
         mExtapp = ExternalAppDatabase(activity)
         val clearapi = findPreference<Preference>("clearapi") as Preference
@@ -151,13 +154,17 @@ class GeneralSettings : PreferenceFragmentCompat(), Preference.OnPreferenceClick
         val pm = requireActivity().packageManager
         val applist = StringBuilder()
         for (packagename in mExtapp.extAppList) {
-            try {
-                app = pm.getApplicationInfo(packagename, 0)
-                if (applist.length != 0) applist.append(delim)
-                applist.append(app.loadLabel(pm))
-            } catch (e: PackageManager.NameNotFoundException) {
-                // App not found. Remove it from the list
-                mExtapp.removeApp(packagename)
+            if (packagename == ANONYMOUS_PACKAGE) {
+                applist.append("(Any app)")
+            } else {
+                try {
+                    app = pm.getApplicationInfo(packagename, 0)
+                    if (applist.length != 0) applist.append(delim)
+                    applist.append(app.loadLabel(pm))
+                } catch (e: PackageManager.NameNotFoundException) {
+                    // App not found. Remove it from the list
+                    mExtapp.removeApp(packagename)
+                }
             }
         }
         return applist.toString()

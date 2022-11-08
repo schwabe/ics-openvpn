@@ -10,11 +10,10 @@ import android.content.Intent;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
-import android.os.Build;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
+
 import android.system.Os;
 import android.util.Log;
 import de.blinkt.openvpn.R;
@@ -56,7 +55,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         @Override
         public void run() {
             sendProxyCMD(Connection.ProxyType.SOCKS5, "127.0.0.1", Integer.toString(OrbotHelper.SOCKS_PROXY_PORT_DEFAULT), false);
-            OrbotHelper.get(mOpenVPNService).removeStatusCallback(statusCallback);
+            OrbotHelper.get().removeStatusCallback(statusCallback);
 
         }
     };
@@ -82,7 +81,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         public void onOrbotReady(Intent intent, String socksHost, int socksPort) {
             mResumeHandler.removeCallbacks(orbotStatusTimeOutRunnable);
             sendProxyCMD(Connection.ProxyType.SOCKS5, socksHost, Integer.toString(socksPort), false);
-            OrbotHelper.get(mOpenVPNService).removeStatusCallback(this);
+            OrbotHelper.get().removeStatusCallback(this);
         }
 
         @Override
@@ -110,6 +109,11 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 } catch (IOException e) {
                     // Ignore close error on already closed socket
                 }
+            }
+            try {
+                TorProxy.closeResources();
+            } catch (Exception ignored) {
+
             }
             return sendCMD;
         }
@@ -481,7 +485,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
 
         if (proxyType == Connection.ProxyType.ORBOT) {
             VpnStatus.updateStateString("WAIT_ORBOT", "Waiting for Orbot to start", R.string.state_waitorbot, ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
-            OrbotHelper orbotHelper = OrbotHelper.get(mOpenVPNService);
+            OrbotHelper orbotHelper = OrbotHelper.get();
             if (!OrbotHelper.checkTorReceier(mOpenVPNService))
                 VpnStatus.logError("Orbot does not seem to be installed!");
 
@@ -630,8 +634,20 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             return false;
 
         Method setInt;
-        int fdint = pfd.getFd();
+        boolean torOverVpnEnabled = mOpenVPNService.isTorOverVpnEnabled();
+        int fdint;
         try {
+            ParcelFileDescriptor proxy = null;
+            if (!torOverVpnEnabled) {
+                fdint = pfd.getFd();
+            } else {
+                proxy = TorProxy.createProxy(pfd, mOpenVPNService);
+                FileDescriptor fileDescriptor = proxy.getFileDescriptor();
+                Method getInt = FileDescriptor.class.getDeclaredMethod("getInt$");
+                fdint = (int) getInt.invoke(fileDescriptor);
+            }
+
+
             setInt = FileDescriptor.class.getDeclaredMethod("setInt$", int.class);
             FileDescriptor fdtosend = new FileDescriptor();
 
@@ -649,7 +665,12 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             // Set the FileDescriptor to null to stop this mad behavior
             mSocket.setFileDescriptorsForSend(null);
 
-            pfd.close();
+            if (proxy != null) {
+                //We don't need to close pfd because we detached it in TorProxy.createProxy
+                proxy.close();
+            } else {
+                pfd.close();
+            }
 
             return true;
         } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException |

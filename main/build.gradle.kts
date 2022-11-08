@@ -168,10 +168,16 @@ dependencies {
     val coreVersion = "1.7.0"
     val materialVersion = "1.5.0"
     val fragment_version = "1.4.1"
+    val ipt_proxy = "1.7.1"
+    val pcap_core = "1.8.2"
+    val pcap_factory = "1.8.2"
 
 
     implementation("androidx.annotation:annotation:1.3.0")
     implementation("androidx.core:core:$coreVersion")
+    implementation("com.github.bitmold:OrbotIPtProxy:$ipt_proxy")
+    implementation("org.pcap4j:pcap4j-core:$pcap_core")
+    implementation("org.pcap4j:pcap4j-packetfactory-static:$pcap_factory")
 
 
     // Is there a nicer way to do this?

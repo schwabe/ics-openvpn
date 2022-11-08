@@ -112,6 +112,9 @@ target_link_libraries(ovpnutil log)
 add_library(osslutil SHARED ovpnutil/osslutil.cpp)
 target_link_libraries(osslutil log crypto ssl)
 
+add_library(torproxy SHARED torproxy/torproxy.cpp)
+target_link_libraries(torproxy log)
+
 if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*skeleton.*/")
     add_library(osslspeedtest SHARED ovpnutil/sslspeed.c)
     target_link_libraries(osslspeedtest log crypto ssl)

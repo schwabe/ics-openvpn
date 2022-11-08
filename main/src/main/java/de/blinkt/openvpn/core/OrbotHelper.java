@@ -99,7 +99,7 @@ public class OrbotHelper {
 
     }
 
-    public static OrbotHelper get(OpenVPNService mOpenVPNService) {
+    public static OrbotHelper get() {
         if (mInstance == null)
             mInstance = new OrbotHelper();
         return mInstance;

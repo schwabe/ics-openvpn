@@ -8,14 +8,14 @@ buildscript {
     var kotlin_version: String by extra
     var fragment_version: String by extra
 
-    kotlin_version = "1.5.30"
-    fragment_version = "1.3.3"
+    kotlin_version = "1.7.22"
+    fragment_version = "1.5.5"
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.3.0")
+        classpath("com.android.tools.build:gradle:7.3.1")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }

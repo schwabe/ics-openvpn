@@ -811,8 +811,10 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
         // We got a file:/// URL and have no permission to read it. Technically an error of the calling app since
         // it makes an assumption about other apps being able to read the url but well ...
-        if (data != null && "file" == data.scheme)
+        if (data != null && "file" == data.scheme) {
+            log("An external app instructed OpenVPN for Android to open a file:// URI. This kind of URI have been deprecated since Android 7 and no longer work on modern Android versions at all.")
             doRequestSDCardPermission(PERMISSION_REQUEST_READ_URL)
+        }
 
     }
 

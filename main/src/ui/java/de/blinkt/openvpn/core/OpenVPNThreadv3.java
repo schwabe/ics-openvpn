@@ -189,12 +189,14 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         config.setExternalPkiAlias("extpki");
         config.setCompressionMode("asym");
 
+
         config.setHwAddrOverride(NetworkUtils.getFakeMacAddrFromSAAID(mService));
         config.setInfo(true);
         config.setAllowLocalLanAccess(mVp.mAllowLocalLAN);
         boolean retryOnAuthFailed = mVp.mAuthRetry == AUTH_RETRY_NOINTERACT;
         config.setRetryOnAuthFailed(retryOnAuthFailed);
         config.setEnableLegacyAlgorithms(mVp.mUseLegacyProvider);
+        /* We want the same app internal route emulation for OpenVPN 2 and OpenVPN 3 */
         config.setEnableRouteEmulation(false);
         if (mVp.mCompatMode > 0 && mVp.mCompatMode < 20500)
             config.setEnableNonPreferredDCAlgorithms(true);

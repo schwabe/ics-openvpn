@@ -5,11 +5,13 @@
 
 package de.blinkt.openvpn.core;
 
+import android.annotation.TargetApi;
 import android.net.IpPrefix;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 
-import java.lang.reflect.Array;
+import java.lang.annotation.Target;
 import java.math.BigInteger;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -132,6 +134,7 @@ public class NetworkSpace {
         }
 
 
+        @NonNull
         @Override
         public String toString() {
             //String in = included ? "+" : "-";
@@ -210,6 +213,7 @@ public class NetworkSpace {
 
         }
 
+        @TargetApi(Build.VERSION_CODES.TIRAMISU)
         public IpPrefix getPrefix() throws UnknownHostException {
             if (isV4){
                 /* add 0x01 00 00 00 00, so that all representations are 5 byte otherwise

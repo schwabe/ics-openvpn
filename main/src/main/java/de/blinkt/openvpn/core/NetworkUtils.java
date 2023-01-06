@@ -56,11 +56,7 @@ public class NetworkUtils {
                     else
                         ipaddress = new NetworkSpace.IpAddress(new CIDRIP(la.getAddress().getHostAddress(), la.getPrefixLength()), true);
 
-                    try {
-                        nets.add(ipaddress.getPrefix().toString());
-                    } catch (UnknownHostException ia) {
-                        VpnStatus.logError("getLocalNetworks error: " + ipaddress + " " + ia.getLocalizedMessage());
-                    }
+                    nets.add(ipaddress.toString());
                 }
             }
         }

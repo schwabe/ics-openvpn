@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.4.1)
+project("ics-openvpn")
 # Git version string
 
 include(GetGitRevisionDescription.cmake)
@@ -180,6 +181,7 @@ set(openvpn_srcs
         src/openvpn/proxy.c
         src/openvpn/ps.c
         src/openvpn/push.c
+        src/openvpn/reflect_filter.c
         src/openvpn/reliable.c
         src/openvpn/route.c
         src/openvpn/run_command.c

@@ -38,6 +38,10 @@ android {
     lint {
         abortOnError false
     }
+    namespace 'de.blinkt.externalcertprovider'
+    buildFeatures {
+        aidl true
+    }
 
     // This is just a demo package, don't care about it being perfect
 }

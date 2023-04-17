@@ -11,6 +11,11 @@ jobs:
     name: "Release ${{ matrix.target }}"
     runs-on: ubuntu-latest
     steps:
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 17
       - name: Use debug signing
         run: mkdir -p ~/.gradle && echo -e "icsopenvpnDebugSign=true\norg.gradle.jvmargs=-Xmx2048M" > ~/.gradle/gradle.properties
       - name: Checkout the code

@@ -505,5 +505,6 @@
     <string name="allow_translations_summary">Allows the app to be translated with translations contributed by the community. Requires a restart of the app to activate.</string>
     <string name="tls_profile">TLS Security Profile</string>
     <string name="encrypt_profiles">Try to encrypt profiles on storage (if supported by Android OS)</string>
+    <string name="missing_notification_permission">Notification permission missing. This is used to display the status of the VPN and to notify about required user interaction like multi factor authorisation.\n\nClick this message to give the app notification permissions</string>
 
 </resources>

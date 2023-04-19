@@ -128,6 +128,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
                     }
                     if (cert != null) {
                         certstr += X509Utils.getCertificateValidityString(cert, resources)
+                        certstr += ", "
                         certstr += X509Utils.getCertificateFriendlyName(cert)
                     }
 

@@ -27,6 +27,8 @@ android {
         targetSdk = 33
         versionCode = 198
         versionName = "0.7.43"
+        versionCode = 199
+        versionName = "0.7.44"
         externalNativeBuild {
             cmake {
             }

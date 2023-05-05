@@ -14,7 +14,6 @@ import android.text.TextUtils;
 
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
-import de.blinkt.openvpn.core.Connection;
 import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
@@ -135,14 +134,14 @@ public class AppRestrictions {
             if (vpnProfile != null) {
                 // Profile exists, check if need to update it
                 if (ovpnHash.equals(vpnProfile.importedProfileHash)) {
-                    addCertificateAlias(vpnProfile, certAlias);
+                    addCertificateAlias(vpnProfile, certAlias, c);
 
                     // not modified skip to next profile
                     continue;
                 }
             }
-            addProfile(c, ovpn, uuid, name, vpnProfile);
-            addCertificateAlias(vpnProfile, certAlias);
+            vpnProfile = addProfile(c, ovpn, uuid, name, vpnProfile);
+            addCertificateAlias(vpnProfile, certAlias, c);
         }
 
         Vector<VpnProfile> profilesToRemove = new Vector<>();
@@ -188,9 +187,12 @@ public class AppRestrictions {
      * If certAlias is non-null will modify the profile type to use the keystore variant of
      * the authentication method and will also set the keystore alias
      */
-    private void addCertificateAlias(VpnProfile vpnProfile, String certAlias) {
-        if (certAlias == null)
+    private void addCertificateAlias(VpnProfile vpnProfile, String certAlias, Context c) {
+        if (certAlias == null || vpnProfile == null)
             return;
+
+        int oldType = vpnProfile.mAuthenticationType;
+        String oldAlias = vpnProfile.mAlias;
 
         switch (vpnProfile.mAuthenticationType)
         {
@@ -204,6 +206,12 @@ public class AppRestrictions {
                 break;
         }
         vpnProfile.mAlias = certAlias;
+
+        if (!certAlias.equals(oldAlias) || oldType != vpnProfile.mAuthenticationType)
+        {
+            ProfileManager pm = ProfileManager.getInstance(c);
+            pm.saveProfile(c, vpnProfile);
+        }
     }
 
     private String prepare(String config) {
@@ -222,7 +230,7 @@ public class AppRestrictions {
 
     ;
 
-    private void addProfile(Context c, String config, String uuid, String name, VpnProfile vpnProfile) {
+    VpnProfile addProfile(Context c, String config, String uuid, String name, VpnProfile vpnProfile) {
         config = prepare(config);
         ConfigParser cp = new ConfigParser();
         try {
@@ -248,9 +256,11 @@ public class AppRestrictions {
             pm.addProfile(vp);
             pm.saveProfile(c, vp);
             pm.saveProfileList(c);
+            return vp;
 
         } catch (ConfigParser.ConfigParseError | IOException | IllegalArgumentException e) {
             VpnStatus.logException("Error during import of managed profile", e);
+            return null;
         }
     }
 

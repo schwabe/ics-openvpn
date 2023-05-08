@@ -176,6 +176,10 @@ class GeneralSettings : PreferenceFragmentCompat(), Preference.OnPreferenceClick
             File("/system/lib/modules/tun.ko").length() > 10
 
     override fun onPreferenceClick(preference: Preference): Boolean {
+        if (!mExtapp.checkAllowingModifyingRemoteControl(requireContext()))
+        {
+            return false;
+        }
         if (preference.key == "clearapi") {
             val builder = AlertDialog.Builder(
                 requireContext()

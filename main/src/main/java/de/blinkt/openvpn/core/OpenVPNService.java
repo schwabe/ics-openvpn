@@ -180,10 +180,14 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
     }
 
+
+
     @Override
     public void addAllowedExternalApp(String packagename) throws RemoteException {
         ExternalAppDatabase extapps = new ExternalAppDatabase(OpenVPNService.this);
-        extapps.addApp(packagename);
+        if(extapps.checkAllowingModifyingRemoteControl(this)) {
+            extapps.addApp(packagename);
+        }
     }
 
     @Override

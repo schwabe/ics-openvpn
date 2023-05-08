@@ -14,6 +14,7 @@ import android.text.TextUtils;
 
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
+import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
@@ -93,12 +94,61 @@ public class AppRestrictions {
             VpnStatus.logError(String.format(Locale.US, "App restriction version %s does not match expected version %d", configVersion, CONFIG_VERSION));
             return;
         }
-        Parcelable[] profileList = restrictions.getParcelableArray(("vpn_configuration_list"));
+        Parcelable[] profileList = restrictions.getParcelableArray("vpn_configuration_list");
         if (profileList == null) {
             VpnStatus.logError("App restriction does not contain a profile list (vpn_configuration_list)");
             return;
         }
 
+        importVPNProfiles(c, restrictions, profileList);
+        setAllowedRemoteControl(c, restrictions);
+
+        setMiscSettings(c, restrictions);
+    }
+
+    private void setAllowedRemoteControl(Context c, Bundle restrictions) {
+        Parcelable[] allowedApps = restrictions.getParcelableArray("allowed_remote_access");
+        ExternalAppDatabase extapps = new ExternalAppDatabase(c);
+
+        if (allowedApps == null)
+        {
+            extapps.setFlagManagedConfiguration(false);
+            return;
+        }
+
+        HashSet<String> restrictionApps = new HashSet<>();
+
+        for (Parcelable allowedApp: allowedApps) {
+            if (!(allowedApp instanceof Bundle)) {
+                VpnStatus.logError("App restriction allowed app has wrong type");
+                continue;
+            }
+            String package_name = ((Bundle) allowedApp).getString("package_name");
+            restrictionApps.add(package_name);
+        }
+
+        extapps.setFlagManagedConfiguration(true);
+        extapps.clearAllApiApps();
+
+        if(!extapps.getExtAppList().equals(restrictionApps))
+        {
+            extapps.setAllowedApps(restrictionApps);
+        }
+    }
+
+    private static void setMiscSettings(Context c, Bundle restrictions) {
+        SharedPreferences defaultPrefs = Preferences.getDefaultSharedPreferences(c);
+
+        if(restrictions.containsKey("screenoffpausevpn"))
+        {
+            boolean pauseVPN = restrictions.getBoolean("screenoffpausevpn");
+            SharedPreferences.Editor editor = defaultPrefs.edit();
+            editor.putBoolean("screenoff", pauseVPN);
+            editor.apply();
+        }
+    }
+
+    private void importVPNProfiles(Context c, Bundle restrictions, Parcelable[] profileList) {
         Set<String> provisionedUuids = new HashSet<>();
 
         String defaultprofile = restrictions.getString("defaultprofile", null);
@@ -117,7 +167,7 @@ public class AppRestrictions {
             String name = p.getString("name");
             String certAlias = p.getString("certificate_alias");
 
-            if (uuid == null || ovpn == null || name == null) {
+            if (TextUtils.isEmpty(uuid) || TextUtils.isEmpty(ovpn) || TextUtils.isEmpty(name)) {
                 VpnStatus.logError("App restriction profile misses uuid, ovpn or name key");
                 continue;
             }
@@ -125,6 +175,8 @@ public class AppRestrictions {
             /* we always use lower case uuid since Android UUID class will use present
              * them that way */
             uuid = uuid.toLowerCase(Locale.US);
+            if (defaultprofile != null)
+                defaultprofile = defaultprofile.toLowerCase(Locale.US);
 
             if (uuid.equals(defaultprofile))
                 defaultprofileProvisioned = true;
@@ -178,14 +230,6 @@ public class AppRestrictions {
                 }
             }
         }
-
-        if(restrictions.containsKey("screenoffpausevpn"))
-        {
-            boolean pauseVPN = restrictions.getBoolean("screenoffpausevpn");
-            SharedPreferences.Editor editor = defaultPrefs.edit();
-            editor.putBoolean("screenoff", pauseVPN);
-            editor.apply();
-        }
     }
 
     /**
@@ -195,6 +239,9 @@ public class AppRestrictions {
     private void addCertificateAlias(VpnProfile vpnProfile, String certAlias, Context c) {
         if (vpnProfile == null)
             return;
+
+        if (certAlias == null)
+            certAlias = "";
 
         int oldType = vpnProfile.mAuthenticationType;
         String oldAlias = vpnProfile.mAlias;

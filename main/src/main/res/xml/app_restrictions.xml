@@ -75,18 +75,6 @@
     <restriction
             android:description="@string/apprest_aidl_list"
             android:key="allowed_remote_access"
-            android:restrictionType="bundle_array"
-            android:title="@string/apprest_remoteaidl">
-        <restriction
-                android:key="allowed_app"
-                android:restrictionType="bundle"
-                android:title="@string/apprest_allowed_aidl_app">
-            <restriction
-                    android:description="@string/apprest_remoteapi_package"
-                    android:key="package_name"
-                    android:restrictionType="string"
-                    android:title="@string/apprest_remoteapi_package_title" />
-        </restriction>
-
-    </restriction>
+            android:restrictionType="string"
+            android:title="@string/apprest_remoteaidl" />
 </restrictions>

@@ -107,7 +107,7 @@ public class AppRestrictions {
     }
 
     private void setAllowedRemoteControl(Context c, Bundle restrictions) {
-        Parcelable[] allowedApps = restrictions.getParcelableArray("allowed_remote_access");
+        String allowedApps = restrictions.getString("allowed_remote_access", null);
         ExternalAppDatabase extapps = new ExternalAppDatabase(c);
 
         if (allowedApps == null)
@@ -118,15 +118,11 @@ public class AppRestrictions {
 
         HashSet<String> restrictionApps = new HashSet<>();
 
-        for (Parcelable allowedApp: allowedApps) {
-            if (!(allowedApp instanceof Bundle)) {
-                VpnStatus.logError("App restriction allowed app has wrong type");
-                continue;
+        for (String package_name:allowedApps.split("[, \n\r]")) {
+            if (!TextUtils.isEmpty(package_name)) {
+                restrictionApps.add(package_name);
             }
-            String package_name = ((Bundle) allowedApp).getString("package_name");
-            restrictionApps.add(package_name);
         }
-
         extapps.setFlagManagedConfiguration(true);
         extapps.clearAllApiApps();
 

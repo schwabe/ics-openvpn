@@ -17,16 +17,16 @@ android {
         aidl = true
     }
     namespace = "de.blinkt.openvpn"
-    //compileSdk = 33
-    compileSdkPreview = "UpsideDownCake"
+    compileSdk = 33
+    //compileSdkPreview = "UpsideDownCake"
 
     // Also update runcoverity.sh
-    ndkVersion = "25.1.8937393"
+    ndkVersion = "25.2.9519653"
 
     defaultConfig {
         minSdk = 21
-        //targetSdk = 33
-        targetSdkPreview = "UpsideDownCake"
+        targetSdk = 33
+        //targetSdkPreview = "UpsideDownCake"
         versionCode = 198
         versionName = "0.7.43"
         versionCode = 199
@@ -217,6 +217,6 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:3.9.0")
-    testImplementation("org.robolectric:robolectric:4.10")
+    testImplementation("org.robolectric:robolectric:4.10.2")
     testImplementation("androidx.test:core:1.4.0")
 }

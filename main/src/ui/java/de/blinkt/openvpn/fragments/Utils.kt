@@ -306,12 +306,12 @@ object Utils {
         if ("insecure".equals(vp.mTlSCertProfile))
             warnings.add("low security (TLS security profile 'insecure' selected)");
 
-        var cipher= vp.mCipher?.toUpperCase(Locale.ROOT)
-        if (cipher.isNullOrEmpty())
+        var cipher= vp.mCipher.uppercase(Locale.ROOT)
+        if (cipher.isEmpty())
             cipher = "BF-CBC";
 
         for (weakCipher in weakCiphers) {
-            if ((vp.mDataCiphers != null && vp.mDataCiphers.toUpperCase(Locale.ROOT)
+            if ((vp.mDataCiphers != null && vp.mDataCiphers.uppercase(Locale.ROOT)
                     .contains(weakCipher))
                 || (vp.mCompatMode in 1..20399 && (cipher == weakCipher))
             )

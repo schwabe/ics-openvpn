@@ -22,6 +22,7 @@ import de.blinkt.openvpn.core.VpnStatus;
 import java.io.IOException;
 import java.io.StringReader;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -66,7 +67,7 @@ public class AppRestrictions {
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("SHA1");
-            byte[] utf8_bytes = config.getBytes();
+            byte[] utf8_bytes = config.getBytes(StandardCharsets.UTF_8);
             digest.update(utf8_bytes, 0, utf8_bytes.length);
             return new BigInteger(1, digest.digest()).toString(16);
         } catch (NoSuchAlgorithmException e) {

@@ -204,8 +204,6 @@
     <string name="using_proxy">در حال استفاده از پراکسی %1$s %2$s</string>
     <string name="use_system_proxy">استفاده از پروکسی سیستم</string>
     <string name="use_system_proxy_summary">از پیکربندی گسترده سیستم برای پروکسی های HTTP / HTTPS برای اتصال استفاده کنید.</string>
-    <string name="onbootrestartsummary">OpenVPN VPN مشخص شده را در صورت فعال بودن در بوت سیستم، متصل می کند. لطفا قبل از استفاده از این گزینه در Android &lt; 5.0، FAQ را بخوانید.</string>
-    <string name="onbootrestart">اتصال در بوت</string>
     <string name="ignore">چشم پوشی</string>
     <string name="restart">راه اندازی مجدد</string>
     <string name="restart_vpn_after_change">تغییرات پیکربندی بعد از راه اندازی مجدد VPN اعمال می شود. (دوباره) VPN را شروع کنید?</string>
@@ -505,4 +503,5 @@
     <string name="allow_translations_title">Allow community contributed translations</string>
     <string name="allow_translations_summary">Allows the app to be translated with translations contributed by the community. Requires a restart of the app to activate.</string>
     <string name="tls_profile">TLS Security Profile</string>
+    <string name="encrypt_profiles">Try to encrypt profiles on storage (if supported by Android OS)</string>
 </resources>

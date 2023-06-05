@@ -204,8 +204,6 @@
     <string name="using_proxy">Đang sử dụng proxy %1$s %2$s</string>
     <string name="use_system_proxy">Sử dụng proxy hệ thống</string>
     <string name="use_system_proxy_summary">Sử dụng các cấu hình hệ thống rộng cho HTTP/HTTPS proxy để kết nối.</string>
-    <string name="onbootrestartsummary">OpenVPN sẽ kết nối VPN xác định nếu nó đã hoạt động trên hệ thống khởi động. Xin vui lòng đọc hướng dẫn cảnh báo kết nối trước khi sử dụng tùy chọn này trên Android &lt; 5.0.</string>
-    <string name="onbootrestart">Kết nối khi khởi động</string>
     <string name="ignore">Bỏ qua</string>
     <string name="restart">Khởi động lại</string>
     <string name="restart_vpn_after_change">Cấu hình sẽ được áp dụng sau khi khởi động lại VPN. (Khởi động) bắt đầu VPN lại ngay bây giờ?</string>

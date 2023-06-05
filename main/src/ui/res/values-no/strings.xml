@@ -196,7 +196,6 @@
     <string name="using_proxy">Benytter proxyen %1$s %2$s</string>
     <string name="use_system_proxy">Bruk systemet proxy</string>
     <string name="use_system_proxy_summary">Bruk global systemkonfigurasjon for HTTP/HTTPS proxy for å koble til.</string>
-    <string name="onbootrestart">Koble til ved oppstart</string>
     <string name="ignore">Ignorer</string>
     <string name="restart">Start på nytt</string>
     <string name="restart_vpn_after_change">Konfigurasjonsendringene vil brukes etter at VPN\'en er startet på nytt. Restarte VPN nå?</string>

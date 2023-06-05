@@ -204,8 +204,6 @@
     <string name="using_proxy">Menggunakan proxy %1$s %2$s</string>
     <string name="use_system_proxy">Gunakan sistem proxy</string>
     <string name="use_system_proxy_summary">Gunakan konfigurasi lebih luas untuk menyambung system melalui proxy HTTP/HTTPS</string>
-    <string name="onbootrestartsummary">OpenVPN akan menghubungkan VPN ditentukan apakah itu aktif di sistem boot. Silakan baca koneksi peringatan FAQ sebelum menggunakan opsi ini pada Android &lt; 5.0.</string>
-    <string name="onbootrestart">Minatosuki</string>
     <string name="ignore">Abaikan</string>
     <string name="restart">Restart</string>
     <string name="restart_vpn_after_change">Perubahan konfigurasi baru diterapkan setelah restart VPN. Restart VPN sekarang?</string>

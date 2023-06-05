@@ -34,6 +34,7 @@
     <string name="ipv4_address">IPv4 Cím</string>
     <string name="ipv6_address">IPv6 Cím</string>
     <string name="custom_option_warning">Egyéni OpenVPN opciók megadása. Körültekintéssel használja! Vegye figyelembe, hogy a tun-nal kapcsolatos OpenVPN beállítások nem támogatottak a VPNSettings felépítéséből adódóan. Ha úgy gondolja, hogy egy fontos opció hiányzik, lépjen kapcsolatba a fejlesztőkkel</string>
+    <string name="auth_username">Felhasználónév (hagyja üresen hitelesítés nélkül)</string>
     <string name="auth_pwquery">Jelszó</string>
     <string name="static_keys_info">A statikus konfigurációhoz a TLS Auth Key-ek statikus kulcsokként lesznek használva</string>
     <string name="configure_the_vpn">A VPN beállítása</string>
@@ -42,6 +43,7 @@
     <string name="duplicate_profile_name">Kérem, egyedi profilnevet válasszon</string>
     <string name="profilename">Profil név</string>
     <string name="no_keystore_cert_selected">Válasszon egy felhasználói tanúsítványt</string>
+    <string name="no_ca_cert_selected">You must select a CA certificate or enable peer fingerprint check</string>
     <string name="no_error_found">Hiba nem található</string>
     <string name="config_error_found">Hiba a beállításokban</string>
     <string name="ipv4_format_error">Hiba az IPv4 cím elemzésekor</string>
@@ -125,6 +127,7 @@
     <string name="no_vpn_support_image">Az image-ed nem támogatja a VPNService API-t, elnézést :(</string>
     <string name="encryption">Titkosítás</string>
     <string name="cipher_dialog_title">Adja meg a titkosítási módszert</string>
+    <string name="chipher_dialog_message">Adja meg az OpenVPN által használt adattitkosítási titkosítási algoritmusokat, a következővel elválasztva: (--data-ciphers). Hagyja üresen az alapértelmezett AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305 használatához.</string>
     <string name="auth_dialog_message">Adja meg az OpenVPN által használt authentication digest-et. Hagyja üresen az alapértelmezett digest-hez.</string>
     <string name="settings_auth">Hitelesítés/Titkosítás</string>
     <string name="file_explorer_tab">Fájlkezelő</string>
@@ -201,8 +204,6 @@
     <string name="using_proxy">%1$s %2$s proxy használata</string>
     <string name="use_system_proxy">Rendszerproxy használata</string>
     <string name="use_system_proxy_summary">Rendszerszintű konfiguráció használata a HTTP/HTTPS proxy csatlakozáshoz.</string>
-    <string name="onbootrestartsummary">Az OpenVPN csatlakozni fog a VPN-hez, ha az a rendszer indulásakor aktív. Kérem, olvassa el a csatlakozás figyelmeztető GYIK-et mielőtt ezt az opciót Android &lt; 5.0-n használná.</string>
-    <string name="onbootrestart">Csatlakozás rendszerindításkor</string>
     <string name="ignore">Figyelmen kívül hagy</string>
     <string name="restart">Újraindítás</string>
     <string name="restart_vpn_after_change">A konfiguráció változások a VPN újraindítása után lépnek életbe. (Újra)indítja most a VPN-t?</string>
@@ -372,14 +373,14 @@
     <string name="custom_connection_options">Egyéni beállítások</string>
     <string name="remove_connection_entry">Kapcsolat bejegyzés eltávolítása</string>
     <string name="ab_kitkat_reconnect_title">Véletlenszerű lecsatlakozások a mobil hálózatról</string>
-    <string name="ab_vpn_reachability_44_title">A távoli hálózat nem elérhető</string>
+    <string name="ab_vpn_reachability_44_title">Copy of %s</string>
     <string name="ab_persist_tun_title">Megmaradó tun mód</string>
-    <string name="version_and_later">%s vagy újabb</string>
+    <string name="version_and_later">%s і больш познія</string>
     <string name="tls_cipher_alert_title">Kapcsolódás sikertelen SSL23_GET_SERVER_HELLO:sslv3 alert handshake hibával</string>
     <string name="tls_cipher_alert">Újabb OpenVPN for Android verziók (0.6.29/2015 március) biztonságosabb alapértelmezést használnak az engedélyezett rejtjelező kísérletekhez (tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Sajnos a kevésbé biztonságos és export rejtjelező kísérletek kihagyása, különösen azoknak a rejtjelező kísérleteknek a kihagyása amik nem támogatják a Perfect Forward Security-t (Diffie-Hellman), néhány problémát okoz. Ezt általában egy jószándékú de gyengén végrehajtott TLS biztonság fokozás okozza a szerveren vagy néhány beágyazott OS-nél lecsupaszított SSL-el (pl.: MikroTik).\nA probléma megoldásához állítsa a tls-rejtjelezés alapértelmezését ésszerűbbre a szerveren, mint például tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". A probléma kliensen történő kiküszöböléséhez adja hozzá az Android kliensben az egyedi opciókhoz hogy tls-cipher DEFAULT.</string>
     <string name="message_no_user_edit">Ez a profil egy külső alkalmazásból (%s) lett hozzáadva és a felhasználó által nem szerkeszthetőnek lett jelölve.</string>
     <string name="crl_file">Tanúsítvány Visszavonási Lista</string>
-    <string name="service_restarted">OpenVPN Service újraindítása (az alkalmazás valószínűleg összeomlott vagy memória nyomásra bezárták)</string>
+    <string name="service_restarted">Restarting OpenVPN Service (App crashed probably crashed or killed for memory pressure)</string>
     <string name="import_config_error">A konfiguráció importálása akadályba ütközött, nem lehet menteni</string>
     <string name="Search">Keresés</string>
     <string name="lastdumpdate">(Utolsó dump %3$s (%1$d:%2$d))</string>
@@ -433,6 +434,12 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
+    <string name="weakmd">&lt;p&gt;Az OpenSSL 1.1-es verziójától kezdve az OpenSSL elutasítja a gyenge aláírásokat az olyan tanúsítványokban, mint
+        MD5. Ezenkívül az OpenSSL 3.0 esetén az SHA1-es aláírások is elutasításra kerülnek.&lt;/p&gt;&lt;p&gt;
+        A lehető leghamarabb frissítse a VPN-tanúsítványokat, mivel az SHA1 a
+        már nem fog működni más platformokon.&lt;/p&gt;
+        &lt;p&gt;Ha valóban régi és hibás tanúsítványokat szeretne használni, válassza a \"nem biztonságos\" lehetőséget a TLS biztonsági profilhoz a profil hitelesítése/titkosítása alatt.&lt;/p&gt;
+    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
@@ -474,8 +481,31 @@
         hitelesítést
     </string>
     <string name="openurl_requested">Nyissa meg az URL-t a VPN-hitelesítés folytatásához</string>
+    <string name="crtext_requested">Answer challenge to continue VPN authentication</string>
     <string name="state_auth_pending">Hitelesítés függőben</string>
     <string name="external_authenticator">Külső Hitelesítő</string>
     <string name="configure">Beállítás</string>
     <string name="extauth_not_configured">A külső hitelesítő nincs konfigurálva</string>
+    <string name="faq_killswitch_title">Nem VPN kapcsolat blokkolása (\"Killswitch\")</string>
+    <string name="faq_killswitch">It is often desired to block connections without VPN. Other apps often use markting terms like \"Killswitch\" or \"Seamless tunnel\" for this feature. OpenVPN and this app offer persist-tun, a feature to implement this functionality.&lt;p&gt;The problem with all these methods offered by apps is that they can only provide best effort and are no complete solutions. On boot, app crashing and other corner cases the app cannot ensure that this block of non VPN connection works. Thus giving the user a false sense of security.&lt;p&gt;The &lt;b&gt;only&lt;/b&gt; reliable way to ensure non VPN connections are blocked is to use Android 8.0 or later and use the \"block connections without VPN\" setting that can be found under Settings &gt; Network &amp; Internet &gt; Advanced/VPN &gt; OpenVPN for Android &gt; Enable Always ON VPN, Enable Block Connections without VPN</string>
+    <string name="summary_block_address_families">Ez a beállítás arra utasítja az Androidot, hogy ne engedélyezze a protokollokat (IPv4/IPv6), ha a VPN nem állít be IPv4- vagy IPv6-címeket.</string>
+    <string name="title_block_address_families">IPv6 (vagy IPv4) blokkolása, ha a VPN nem használja</string>
+    <string name="install_keychain">Új tanúsítvány telepítése</string>
+    <string name="as_servername">AS szervernév</string>
+    <string name="server_url">Szerver URL</string>
+    <string name="request_autologin">automatikus bejelentkezési profil kérése</string>
+    <string name="import_from_as">Profil importálása a távoli szerverről</string>
+    <string name="no_default_vpn_set">Az alapértelmezett VPN nincs beállítva. Kérjük, állítsa be az alapértelmezett VPN-t mielőtt engedélyezné ezt az opciót.</string>
+    <string name="internal_web_view">Belső WebView</string>
+    <string name="faq_ncp">There are some variation of this message depending on the exact situation. They all have in common that server and client could not agree on a common cipher. The main reasons are: &lt;ul&gt;&lt;li&gt; You are still relying on the fact that OpenVPN 2.4 and older allowed BF-CBC in the default configuration (if no --cipher was set). OpenVPN 2.5 does not allow it per default anymore since it is a &lt;a href=\"https://community.openvpn.net/openvpn/wiki/SWEET32\"&gt;broken/outdated cipher&lt;/a&gt;.&lt;/li&gt;&lt;li&gt;The server runs OpenVPN 2.3 (or even older) with --enable-small (at least 4-5 year old OpenVPN)&lt;/li&gt;&lt;li&gt;&lt;/ul&gt;Broken configuration (e.g., mismatching data-ciphers on client and server)&lt;/li&gt; &lt;p&gt; The &lt;a href=\"https://github.com/OpenVPN/openvpn/blob/master/doc/man-sections/cipher-negotiation.rst\"&gt;OpenVPN manual section on cipher negotiation&lt;/a&gt; explains the different scenarios of cipher negotiation very well and what to do in these situation.&lt;p&gt;TP-Link devices use a at least 5 year old OpenVPN 2.3.x version (possibly older) on their devices, even in the 2019/2020 models.&lt;p&gt;Last but not least, there is a popular VPN provider that has a broken server that always says it is using \'BF-CBC\' because its developer thought it would be a good idea to create a proprietary cipher negotiation patch that is incompatible with standard OpenVPN.&lt;p&gt;In summary: all sane configurations should not get these errors. But (apart from the broken VPN provider\'s server) the client can be persuaded to still connect (fixing the sympton and not the real problem). When connecting to older servers the comaptiblity mode option in the basic settings of a VPN should be able to address most of the common compatiblity problems.</string>
+    <string name="proxy_info">HTTP Proxy: %1$s %2$d</string>
+    <string name="open_vpn_settings">Open VPN Beállítások</string>
+    <string name="compatmode">Kompatibilitási Mód</string>
+    <string name="compat_mode_label">Kompatibilitási mód</string>
+    <string name="loadossllegacy">OpenSSL legacy szolgáltató betöltése</string>
+    <string name="bf_cbc_requires_legacy">A profilok BF-CBC-t használnak ami függ az Open SSL legacy szolgáltatótol (nincs engedélyezve).</string>
+    <string name="allow_translations_title">Közösségi fordítások engedélyezése</string>
+    <string name="allow_translations_summary">Engedélyezze az app számára, hogy közösség általi fordításokat használjon. Az aktiváláshoz az alkalmazást újra kell indítani.</string>
+    <string name="tls_profile">TSL Biztonsági Profil</string>
+    <string name="encrypt_profiles">Próbálja meg titkosítani a tárhelyen lévő profilokat (ha az Android OS által támogatva van)</string>
 </resources>

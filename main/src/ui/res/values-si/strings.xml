@@ -202,8 +202,6 @@
     <string name="using_proxy">ප්‍රොක්සි %1$s %2$sභාවිතා කිරීම</string>
     <string name="use_system_proxy">පද්ධති ප්‍රොක්සි භාවිතා කරන්න</string>
     <string name="use_system_proxy_summary">සම්බන්ධ වීමට HTTP/HTTPS ප්‍රොක්සි සඳහා පද්ධති පුළුල් වින්‍යාසය භාවිතා කරන්න.</string>
-    <string name="onbootrestartsummary">OpenVPN එය පද්ධති ආරම්භයේදී සක්‍රිය නම් නිශ්චිත VPN සම්බන්ධ කරයි. Android &lt; 5.0 මත මෙම විකල්පය භාවිතා කිරීමට පෙර කරුණාකර සම්බන්ධතා අනතුරු ඇඟවීමේ නිතර අසන පැන කියවන්න.</string>
-    <string name="onbootrestart">ආරම්භයේදී සම්බන්ධ කරන්න</string>
     <string name="ignore">නොසලකන්න</string>
     <string name="restart">නැවත ආරම්භ කරන්න</string>
     <string name="restart_vpn_after_change">VPN නැවත ආරම්භ කිරීමෙන් පසු වින්‍යාස කිරීමේ වෙනස්කම් යොදනු ලැබේ. (නැවත) VPN දැන් ආරම්භ කරන්නද?</string>

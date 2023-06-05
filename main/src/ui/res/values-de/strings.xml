@@ -204,8 +204,8 @@
     <string name="using_proxy">Verwende Proxy %1$s %2$s</string>
     <string name="use_system_proxy">System-Proxys verwenden</string>
     <string name="use_system_proxy_summary">Systemweite Einstellungen für HTTP- und HTTPS-Proxys beim Verbinden verwenden.</string>
-    <string name="onbootrestartsummary">Beim Systemstart das angegebene VPN verbinden. Auf Geräten mit Android 5.0 und höher bitte vor der Verwendung dieser Option die FAQ zum Bestätigungsdialog lesen.</string>
-    <string name="onbootrestart">Beim Gerätestart verbinden</string>
+    <string name="keep_vpn_connected_summary">OpenVPN stellt beim Systemstart eine Verbindung zum angegebenen VPN her und versucht, die VPN-Verbindung aufrechtzuerhalten.</string>
+    <string name="keep_vpn_connected">VPN-Verbindung immer aktiv</string>
     <string name="ignore">Ignorieren</string>
     <string name="restart">Neu verbinden</string>
     <string name="restart_vpn_after_change">Konfigurationsänderungen werden erst nach einem Neustart des VPNs aktiv. Jetzt neu verbinden?</string>
@@ -417,7 +417,7 @@
     <string name="connectretrymaxtitle">Maximale Zeit zwischen Verbindungsversuchen</string>
     <string name="state_waitconnectretry">Warte %ss Sekunden zwischen zwei Verbindungsversuchen</string>
     <string name="nought_alwayson_warning"><![CDATA[Wenn der VPN-Bestätigungs-Dialog nicht geöffnet wurde, ist \"Always on VPN\" für eine andere Anwendung aktiviert. In diesem Fall darf sich nur diese APP zu einem VPN verbinden. Überprüfen Sie unter Einstellungen -> Netzwerke oder Verbindungen -> mehr... oder weitere ...-> VPN]]></string>
-    <string name="management_socket_closed">Verbindung zu OpenVPN getrennt (%s)</string>
+    <string name="management_socket_closed">Verbindung zu OpenVPN Prozess verloren (%s)</string>
     <string name="change_sorting">Sortierung ändern</string>
     <string name="sort">Sortieren</string>
     <string name="sorted_lru">Profile nach letzter Verwendung sortiert</string>
@@ -441,7 +441,7 @@
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
     <string name="volume_gbyte">%.1f GB</string>
-    <string name="channel_name_background">Verbindungsstatistiken</string>
+    <string name="channel_name_background">Verbindungsstatistik</string>
     <string name="channel_description_background">Laufende Statistik der OpenVPN-Verbindung</string>
     <string name="channel_name_status">Verbindungsstatus Änderungen</string>
     <string name="channel_description_status">Statusänderungen der OpenVPN-Verbindung (Verbindung, Authentifizierung,...)</string>
@@ -498,4 +498,6 @@
     <string name="allow_translations_title">Community-Übersetzungen zulassen</string>
     <string name="allow_translations_summary">Erlaubt die Übersetzung der App mit Übersetzungen, die von der Community beigetragen wurden. Zur Aktivierung ist ein Neustart der App erforderlich.</string>
     <string name="tls_profile">TLS-Sicherheitsprofil</string>
+    <string name="encrypt_profiles">Try to encrypt profiles on storage (if supported by Android OS)</string>
+    <string name="missing_notification_permission">Berechtigung für Benachrichtigungen fehlt. Diese wird verwendet, um den Status des VPN anzuzeigen und über erforderliche Benutzerinteraktionen wie eine Multi-Faktor-Autorisierung zu informieren.\n\nKlicken Sie auf diese Nachricht, um der App die Berechtigung zu erteilen</string>
 </resources>

@@ -205,8 +205,6 @@
     <string name="using_proxy">代理使用时长 %1$s %2$s</string>
     <string name="use_system_proxy">使用系统代理</string>
     <string name="use_system_proxy_summary">使用系统级HTTP/HTTPS 代理配置来连接</string>
-    <string name="onbootrestartsummary">如果在系统启动时OpenVPN处于活动状态，那么它会连接指定的VPN。在Android &lt;5.0上使用这个选项前，请阅读连接警告的常见问题。</string>
-    <string name="onbootrestart">在系统启动时自动连接</string>
     <string name="ignore">忽略</string>
     <string name="restart">重新启动</string>
     <string name="restart_vpn_after_change">配置文件的变更将在重新连接 VPN 后生效，是否立即(重新)连接？</string>
@@ -508,4 +506,5 @@
     <string name="allow_translations_title">允许社区贡献的翻译</string>
     <string name="allow_translations_summary">允许应用程序使用翻译社区贡献的翻译。需要重新启动应用程序才能激活。</string>
     <string name="tls_profile">TLS 安全配置</string>
+    <string name="encrypt_profiles">d</string>
 </resources>

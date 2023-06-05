@@ -204,8 +204,6 @@
     <string name="using_proxy">Використовується проксі-сервер %1$s %2$s</string>
     <string name="use_system_proxy">Використовувати системний проксі</string>
     <string name="use_system_proxy_summary">Використовувати системну конфігурацію HTTP/HTTPS проксі для з\'єднання.</string>
-    <string name="onbootrestartsummary">OpenVPN підключатиметься до вказаного VPN, якщо він був активний при завантаженні системи. Будь ласка, прочитайте FAQ про попередження при підключенні перед використанням цієї опції на Android &lt; 5.0.</string>
-    <string name="onbootrestart">Підключення при завантаженні</string>
     <string name="ignore">Ігнорувати</string>
     <string name="restart">Перезапустити</string>
     <string name="restart_vpn_after_change">Після перезапуску VPN застосувати зміни конфігурації. (Пере)запустити VPN тепер?</string>
@@ -505,4 +503,5 @@
     <string name="allow_translations_title">Використовувати переклад (запропонований спільнотою)</string>
     <string name="allow_translations_summary">Використовувати переклад програми наданий спільнотою. Необхідний перезапуск програми.</string>
     <string name="tls_profile">Профіль безпеки TLS</string>
+    <string name="encrypt_profiles">Спробуйте зашифрувати профілі на сховищі (якщо підтримується Android)</string>
 </resources>

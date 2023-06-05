@@ -190,7 +190,6 @@
     <string name="setting_loadtun">Carregar o módulo tun</string>
     <string name="getproxy_error">Erro ao obter definições proxy %s</string>
     <string name="use_system_proxy">Usar a proxy do sistema</string>
-    <string name="onbootrestart">Ligar no arranque</string>
     <string name="ignore">Ignorar</string>
     <string name="restart">Reiniciar</string>
     <string name="restart_vpn_after_change">As alterações de configuração são aplicadas depois de reiniciar a VPN. Reiniciar a VPN agora?</string>

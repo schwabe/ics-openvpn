@@ -29,13 +29,13 @@
         <item>Игнорировать, повторить</item>
     </string-array>
     <string-array name="compat_mode">
-        <item>Современные значения</item>
+        <item>Современные значения по умолчанию</item>
         <item>OpenVPN 2.5.x</item>
         <item>OpenVPN 2.4.x</item>
         <item>OpenVPN 2.3.x и старее</item>
     </string-array>
     <string-array name="tls_profile_entries">
-        <item>небезопасный (не рекомендуется, допускает небезопасное шифрование)</item>
+        <item>незащищённый (не рекомендуется, допускает небезопасное шифрование)</item>
         <item>традиционный (по умолчанию)</item>
         <item>предпочтительный (рекомендуется, но ограничивает совместимость)</item>
         <item>набор B (только эллиптические кривые, одобренные NIST)</item>

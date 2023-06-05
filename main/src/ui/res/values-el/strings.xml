@@ -201,8 +201,6 @@
     <string name="using_proxy">Χρησιμοποιείται διακομιστής μεσολάβησης %1$s %2$s</string>
     <string name="use_system_proxy">Χρήστη διαμεσολαβητή του συστήματος</string>
     <string name="use_system_proxy_summary">Χρήση των καθολικών ρυθμίσεων για διαμεσολαβητές HTTP/HTTPS για σύνδεση.</string>
-    <string name="onbootrestartsummary">To OpenVPN θα συνδεθεί με το συγκεκριμένο VPN αν ήταν ενεργό κατά την εκκίνηση του συστήματος. Παρακαλώ διαβάστε το FAQ με τις προειδοποιήσεις σύνδεσης πριν χρησιμοποιήσετε αυτή την επιλογή σε συσκευή με Android &lt; 5.0.</string>
-    <string name="onbootrestart">Σύνδεση κατά την εκκίνηση</string>
     <string name="ignore">Αγνόηση</string>
     <string name="restart">Επανεκκίνηση</string>
     <string name="restart_vpn_after_change">Οι αλλαγές στις ρυθμίσεις εφαρμόζονται μετά την επανεκκίνηση του VPN. (Επαν)εκκίνηση τώρα;</string>

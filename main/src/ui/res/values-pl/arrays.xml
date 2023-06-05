@@ -8,13 +8,13 @@
     <string-array name="vpn_types">
         <item>Certyfikaty</item>
         <item>Plik PKCS12</item>
-        <item>Certyfikat Android</item>
+        <item>Certyfikat Androida</item>
         <item>Nazwa użytkownika/Hasło</item>
         <item>Klucze statyczne</item>
         <item>Użytkownik/Hasło + Certyfikaty</item>
         <item>Użytkownik/Hasło + PKCS12</item>
         <item>Użytkownik/Hasło + Android</item>
-        <item>External Auth Provider</item>
+        <item>Zewnętrzny dostawca uwierzytelniania</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">0</item>

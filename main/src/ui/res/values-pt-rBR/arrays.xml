@@ -37,7 +37,7 @@
     <string-array name="tls_profile_entries">
         <item>inseguro (não recomendado, permite criptografia insegura)</item>
         <item>legacy (default)</item>
-        <item>preferred (recommended but limited compabbility)</item>
-        <item>Suite B (only NIST approved elliptic curves)</item>
+        <item>preferencial (compatibilidade recomendada, mas limitada)</item>
+        <item>Suite B (somente curvas elípticas aprovadas pelo NIST)</item>
     </string-array>
 </resources>

@@ -218,8 +218,6 @@ Androidはあなた自身の安全性のために、これらを迂回できな�
     <string name="using_proxy">プロキシを使用します %1$s %2$s</string>
     <string name="use_system_proxy">システムのプロキシ設定を使用する</string>
     <string name="use_system_proxy_summary">接続にシステム全体の構成の HTTP/HTTPS プロキシを使用します。</string>
-    <string name="onbootrestartsummary">有効にすると、OpenVPNはシステムの起動時に指定されたVPNに接続します。Android 5.0より前のバージョンでこのオプションを使用する場合は、接続時の警告に関する「よくある質問」を読んでください。</string>
-    <string name="onbootrestart">システム起動時に接続</string>
     <string name="ignore">無視</string>
     <string name="restart">再起動</string>
     <string name="restart_vpn_after_change">設定の変更はVPNの再起動後に反映されます。VPNを(再)起動しますか？</string>

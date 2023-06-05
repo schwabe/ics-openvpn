@@ -201,8 +201,6 @@
     <string name="using_proxy">%1$s</string>
     <string name="use_system_proxy">시스템 프록시를 사용</string>
     <string name="use_system_proxy_summary">연결할 HTTP/HTTPS 프록시로 시스템 범위의 설정을 사용합니다.</string>
-    <string name="onbootrestartsummary">OpenVPN이 시스템 부팅시에 활성화되면 지정된 VPN에 연결합니다. 안드로이드 5.0 이전 버전에 이 옵션을 사용하기 전에 연결 경고 FAQ를 읽어 보시기 바랍니다.</string>
-    <string name="onbootrestart">부팅시 연결</string>
     <string name="ignore">무시</string>
     <string name="restart">다시 시작</string>
     <string name="restart_vpn_after_change">VPN을 다시 시작한 후 구성 변경 내용이 적용됩니다. VPN을 지금 (재)시작?</string>

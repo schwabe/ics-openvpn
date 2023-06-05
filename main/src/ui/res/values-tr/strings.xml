@@ -204,8 +204,6 @@
     <string name="using_proxy">%1$s %2$s vekil sunucusu kullanılıyor</string>
     <string name="use_system_proxy">Sistem vekil sunucusunu kullan</string>
     <string name="use_system_proxy_summary">Bağlanmak için sistem çapındaki HTTP/HTTPS vekil sunucularını kullan.</string>
-    <string name="onbootrestartsummary">Sistem önyüklemesi üzerinde etkinse, OpenVPN belirtilen VPN bağlantısına bağlanır. Lütfen bu seçeneği Android &lt; 5.0 üzerinde kullanmadan önce bağlantı uyarısı için SSS bölümünü okuyun.</string>
-    <string name="onbootrestart">Önyükleme sırasında bağlan</string>
     <string name="ignore">Yoksay</string>
     <string name="restart">Yeniden Başlat</string>
     <string name="restart_vpn_after_change">Yapılandırma değişiklikleri, VPN yeniden başlattıktan sonra geçerli olur. VPN (yeniden) başlatılsın mı?</string>
@@ -511,4 +509,5 @@
     <string name="allow_translations_title">Topluluğun katkıda bulunduğu çevirilere izin ver</string>
     <string name="allow_translations_summary">Uygulamanın, topluluk tarafından sağlanan çevirilerle çevrilmesine izin verir. Etkinleştirmek için uygulamanın yeniden başlatılmasını gerektirir.</string>
     <string name="tls_profile">TLS Güvenlik Profili</string>
+    <string name="encrypt_profiles">Depolama alanındaki profilleri şifrelemeyi deneyin (Android işletim sistemi tarafından destekleniyorsa)</string>
 </resources>

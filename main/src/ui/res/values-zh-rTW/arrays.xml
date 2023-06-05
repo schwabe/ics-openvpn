@@ -38,6 +38,6 @@
         <item>不安全（不推薦，允許不安全的加密）</item>
         <item>legacy (default)</item>
         <item>preferred (recommended but limited compabbility)</item>
-        <item>Suite B (only NIST approved elliptic curves)</item>
+        <item>Suite B（僅 NIST 批准的橢圓曲線）</item>
     </string-array>
 </resources>

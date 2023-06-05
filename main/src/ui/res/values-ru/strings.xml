@@ -8,7 +8,7 @@
     <string name="address">Адрес сервера:</string>
     <string name="port">Порт сервера:</string>
     <string name="location">Расположение</string>
-    <string name="cant_read_folder">Невозможно прочитать папку</string>
+    <string name="cant_read_folder">Невозможно прочитать каталог</string>
     <string name="select">Выбрать</string>
     <string name="cancel">Отмена</string>
     <string name="no_data">Нет данных</string>
@@ -204,8 +204,6 @@
     <string name="using_proxy">Используется прокси %1$s %2$s</string>
     <string name="use_system_proxy">Использовать системный прокси</string>
     <string name="use_system_proxy_summary">Использовать системные настройки для подключения HTTP/HTTPS прокси.</string>
-    <string name="onbootrestartsummary">OpenVPN будет подключаться к указанному VPN, если она активна при загрузке системы. Прочитайте Вопросы и Ответы о предупреждении при подключении перед тем как использовать эту функцию на Android &lt; 5.0.</string>
-    <string name="onbootrestart">Подключаться при загрузке системы</string>
     <string name="ignore">Игнорировать</string>
     <string name="restart">Перезагрузка</string>
     <string name="restart_vpn_after_change">Изменения конфигурации действительны после перезапуска VPN. (Пере)запустить VPN сейчас?</string>
@@ -272,7 +270,7 @@ API VPNService не позволяет указывать сети, которы
     <string name="add">Добавить</string>
     <string name="send_config">Отправить файл конфигурации</string>
     <string name="complete_dn">Полный DN</string>
-    <string name="remotetlsnote">Ваши импортированные параметры использовали старую УСТАРЕВШУЮ опцию tls-remote, которая использует другой формат DN.</string>
+    <string name="remotetlsnote">Импортированная конфигурация использует УСТАРЕВШУЮ функцию tls-remote, которая имеет другой формат DN.</string>
     <string name="rdn">RDN (обычное имя)</string>
     <string name="rdn_prefix">Префикс RDN</string>
     <string name="tls_remote_deprecated">tls-remote (УСТАРЕЛО)</string>
@@ -359,7 +357,7 @@ API VPNService не позволяет указывать сети, которы
     <string name="show_log">Показать журнал</string>
     <string name="faq_android_clients">Существуют различные клиенты OpenVPN для Android. Самые распространённые — OpenVPN для Android (этот клиент), OpenVPN Connect и OpenVPN Settings.&lt;p&gt;Клиенты можно разделить на две группы: OpenVPN для Android и OpenVPN Connect используют официальный VPNService API (Android 4.0+) и не требуют root-доступ, и OpenVPN Settings, который требует root.&lt;p&gt;OpenVPN для Android — клиент с открытым исходным кодом, который разработал Arne Schwabe. Он предназначен для более опытных пользователей и предоставляет много настроек, возможность импорта конфигураций из файлов и настраивать/изменять конфигурации внутри приложения. Этот клиент основан на общественной версии OpenVPN. А именно на исходном коде OpenVPN 2.x. Этот клиент можно представить как полуофициальный клиент сообщества. &lt;p&gt;OpenVPN Connect — клиент с закрытым исходным кодом, который разрабатывается OpenVPN Technologies, Inc. Он призван для обычного использования и предназначен для простых пользователей, и позволяет импортировать конфигурации OpenVPN. Этот клиент основан на OpenVPN C++, другой реализации протокола OpenVPN (Это потребовалось OpenVPN Technologies, Inc, чтобы опубликовать приложение OpenVPN на iOS). Этот клиент — официальный клиент OpenVPN technologies &lt;p&gt; OpenVPN Settings — старейший из клиентов, он также UI для OpenVPN с открытым исходным кодом. В отличие от OpenVPN для Android, он требует root-прав и не использует VPNService API. Он не зависит от Android 4.0+</string>
     <string name="faq_androids_clients_title">Различия между клиентами OpenVPN для Android</string>
-    <string name="ignore_multicast_route">Игнорирование многоадресного маршрута: %s</string>
+    <string name="ignore_multicast_route">Игнорирование многоадресной маршрутизации: %s</string>
     <string name="ab_only_cidr">Android поддерживает только CIDR-маршруты к VPN. Поскольку маршруты без CIDR почти никогда не используются, «OpenVPN для Android» будет использовать /32 для маршрутов без CIDR и выдавать предупреждение.</string>
     <string name="ab_tethering_44">Вы можете раздавать интернет при активном VPN, но это соединение НЕ будет использовать VPN.</string>
     <string name="ab_kitkat_mss">Ранние версии KitKat устанавливают неправильное значение MSS для TCP-соединений (#61948). Попробуйте включить функцию mssfix, чтобы обойти эту ошибку.</string>
@@ -376,7 +374,7 @@ API VPNService не позволяет указывать сети, которы
     <string name="ab_not_route_to_vpn_title">Маршрутизация на настроенный IP-адрес</string>
     <string name="ab_kitkat_mss_title">Неправильное значение MSS для VPN-подключения</string>
     <string name="ab_secondary_users_title">Дополнительные пользователи планшетов</string>
-    <string name="custom_connection_options_warng">Укажите пользовательские параметры подключения. Используйте с осторожностью</string>
+    <string name="custom_connection_options_warng">Укажите индивидуальные параметры подключения. Используйте с осторожностью</string>
     <string name="custom_connection_options">Пользовательские параметры</string>
     <string name="remove_connection_entry">Удалить запись о подключении</string>
     <string name="ab_kitkat_reconnect_title">Случайные отключения от мобильной сети</string>
@@ -400,7 +398,7 @@ API VPNService не позволяет указывать сети, которы
     <string name="enabled_connection_entry">Включено</string>
     <string name="permission_revoked">Разрешение VPN отозвано ОС (например, запущена другая программа VPN), остановка VPN</string>
     <string name="pushpeerinfo">Получить информацию об участнике</string>
-    <string name="pushpeerinfosummary">Отправьте на сервер дополнительную информацию, например dерсия SSL и версия Android</string>
+    <string name="pushpeerinfosummary">Отправлять дополнительную информацию на сервер, например, версию SSL и версию Android</string>
     <string name="pw_request_dialog_title">Требуется: %1$s</string>
     <string name="pw_request_dialog_prompt">Введите пароль для конфигурации %1$s</string>
     <string name="menu_use_inline_data">Использовать встроенные данные</string>
@@ -445,8 +443,8 @@ DNS не работает, если сервер DNS не в диапазоне 
     <string name="data_out">Исходящие</string>
     <string name="bits_per_second">%.0f бит/с</string>
     <string name="kbits_per_second">%.1f кбит/с</string>
-    <string name="mbits_per_second">%.1f мбит/с</string>
-    <string name="gbits_per_second">%.1f гбит/с</string>
+    <string name="mbits_per_second">%.1f Мбит/с</string>
+    <string name="gbits_per_second">%.1f Гбит/с</string>
     <string name="weakmd">&lt;p&gt;Начиная с OpenSSL версии 1.1, отклоняются слабые подписи сертификатов, такие как MD5. Кроме того, с OpenSSL версии 3.0, подписи с SHA1 также отклоняются.&lt;/p&gt;&lt;p&gt;Вам следует как можно скорее обновить сертификаты VPN, поскольку в ближайшем будущем SHA1 перестанет работать на и других платформах.&lt;/p&gt;&lt;p&gt;Если вы действительно хотите использовать устаревшие и повреждённые сертификаты, выберите «Небезопасный» для профиля безопасности TLS в разделе «Аутентификация/Шифрование».&lt;/p&gt;</string>
     <string name="volume_byte">%.0f Б</string>
     <string name="volume_kbyte">%.1f кБ</string>
@@ -509,4 +507,5 @@ DNS не работает, если сервер DNS не в диапазоне 
     <string name="allow_translations_title">Использовать локализацию</string>
     <string name="allow_translations_summary">Использовать локализацию приложения с помощью перевода, выполненного сообществом. Потребуется перезапуск приложения.</string>
     <string name="tls_profile">Профиль безопасности TLS</string>
+    <string name="encrypt_profiles">Пробовать шифровать профили в хранилище (если поддерживается ОС Android)</string>
 </resources>

@@ -204,8 +204,6 @@
     <string name="using_proxy">Korzystanie z serwera proxy %1$s %2$s</string>
     <string name="use_system_proxy">Użyj proxy systemowego</string>
     <string name="use_system_proxy_summary">Połącz używając systemowej konfiguracji proxy HTTP/HTTPS.</string>
-    <string name="onbootrestartsummary">OpenVPN połączy się z wybranym VPN jeżeli będzie aktywny podczas startu systemu. Przeczytaj FAQ dotyczący połączeń przed zastosowaniem tej opcji na Androidzie &lt; 5.0.</string>
-    <string name="onbootrestart">Połącz przy starcie</string>
     <string name="ignore">Ignoruj</string>
     <string name="restart">Uruchom ponownie</string>
     <string name="restart_vpn_after_change">Zmiany konfiguracji będą zatwierdzone po restarcie VPN. Uruchomić ponowie teraz?</string>
@@ -484,8 +482,13 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="install_keychain">Zainstaluj nowy certyfikat</string>
     <string name="as_servername">JAKO nazwa_serwera</string>
     <string name="server_url">Serwer URL</string>
+    <string name="request_autologin">Poproś o automatyczne logowanie do profilu</string>
     <string name="import_from_as">Importuj profil ze zdalnego serwera</string>
     <string name="no_default_vpn_set">Domyślna sieć VPN nie jest ustawiona. Przed włączeniem tej opcji ustaw domyślną sieć VPN.</string>
+    <string name="internal_web_view">Wewnętrzny WebView</string>
+    <string name="check_peer_fingerprint">Sprawdź odcisk palca certyfikatu peera</string>
+    <string name="fingerprint">(Wprowadź odcisk palca SHA256 certyfikatu serwera)</string>
+    <string name="proxy_info">Proxy HTTP: %1$s %2$d</string>
     <string name="use_alwayson_vpn">Użyj funkcji Always-On Androida, aby umożliwić włączenie VPN wraz ze startem systemu.</string>
     <string name="open_vpn_settings">Otwórz ustawienia VPN</string>
     <string name="trigger_pending_auth_dialog">Kliknij tutaj, aby otworzyć okno, aby wprowadzić dodatkowe wymagane uwierzytelnienie</string>
@@ -496,4 +499,5 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="allow_translations_title">Zezwalaj na tłumaczenia współtworzone przez społeczność</string>
     <string name="allow_translations_summary">Zezwól na tłumaczenie aplikacji, wykorzystując propozycje użytkowników. Do aktywacji wymaga ponownego uruchomienie aplikacji.</string>
     <string name="tls_profile">Profil bezpieczeństwa TLS</string>
+    <string name="encrypt_profiles">Spróbuj zaszyfrować profile w pamięci masowej (jeśli jest to obsługiwane przez system operacyjny Android)</string>
 </resources>

@@ -21,7 +21,7 @@
         <item translatable="false">1</item>
         <item>No especificado</item>
         <item>Cifrado (--tls-crypt)</item>
-        <item>TLS Crypt V2</item>
+        <item>TLS Cripta V2</item>
     </string-array>
     <string-array name="auth_retry_type">
         <item>Desconectar, olvidar contraseña</item>
@@ -29,15 +29,15 @@
         <item>Ignorar, volver a intentar</item>
     </string-array>
     <string-array name="compat_mode">
-        <item>Estándares modernos</item>
-        <item>Versión OpenVPN 2.5.x</item>
-        <item>Versión OpenVPN 2.4.x</item>
-        <item>OpenVPN 2.3.x y antiguas versiones </item>
+        <item>Moderna detalles</item>
+        <item>Versión OpenVPN 2.5. X</item>
+        <item>Versión OpenVPN 2.4. X</item>
+        <item>OpenVPN 2.3. X y antiguas versiones </item>
     </string-array>
     <string-array name="tls_profile_entries">
-        <item>Inseguro (No es recomendado, debido a que se usara un cifrado poco seguro)</item>
-        <item>legacy (estándar)</item>
-        <item>Sugerido (Es recomendado pero la compatibilidad es limitada)</item>
-        <item>Perfil de cifrado \"Suite B\" (Solo el método de cifrado por curvas elípticas es aprobado por NIST (National Institute of Standards and Technology) )</item>
+        <item>insecure (not recommend, allows insecure crypto)</item>
+        <item>Legal (estándar)</item>
+        <item>Preferiré (recomienden bus límites compatible)</item>
+        <item>Suite B (onda NIST aprobé eclíptico curves)</item>
     </string-array>
 </resources>

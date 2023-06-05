@@ -35,9 +35,9 @@
         <item>OpenVPN 2.3.x et anciens pairs</item>
     </string-array>
     <string-array name="tls_profile_entries">
-        <item>non sécurisé (déconseillé, autorise une cryptographie non sécurisée)</item>
-        <item>legacy (default)</item>
-        <item>préféré (recommandé mais compatibilité limitée)</item>
+        <item>insecure (not recommend, allows insecure crypto)</item>
+        <item>Légats (défaut)</item>
+        <item>Préfère (recommandé but l\' imiter commuabilités)</item>
         <item>Suite B (uniquement les courbes elliptiques approuvées par le NIST)</item>
     </string-array>
 </resources>

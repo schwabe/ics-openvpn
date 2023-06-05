@@ -204,8 +204,6 @@
     <string name="using_proxy">استخدام الخادم الوكيل البروكسي %1$s %2$s</string>
     <string name="use_system_proxy">استخدام بروكسي النظام</string>
     <string name="use_system_proxy_summary">استخدام تكوين النظام على نطاق واسع لوكلاء HTTP/HTTPS للاتصال.</string>
-    <string name="onbootrestartsummary">سيقوم OpenVPN بتوصيل VPN المحدد إذا كان نشطًا في تمهيد النظام. يرجى قراءة الأسئلة الشائعة الخاصة بتحذير الاتصال قبل استخدام هذا الخيار على Android &lt; 5.0.</string>
-    <string name="onbootrestart">الاتصال عند تشغيل الجهاز</string>
     <string name="ignore">تجاهل</string>
     <string name="restart">إعادة التشغيل</string>
     <string name="restart_vpn_after_change">يتم تطبيق تغييرات التكوين بعد إعادة تشغيل VPN. (إعادة) بدء VPN الآن؟</string>
@@ -508,4 +506,5 @@
     <string name="allow_translations_title">السماح بالترجمات التي يساهم بها المجتمع</string>
     <string name="allow_translations_summary">للسماح للتطبيق بالترجمة مع الترجمات التي يساهم بها المجتمع. يتطلب إعادة تشغيل التطبيق للتفعيل.</string>
     <string name="tls_profile">ملف تعريف أمان TLS</string>
+    <string name="encrypt_profiles">Try to encrypt profiles on storage (if supported by Android OS)</string>
 </resources>

@@ -132,8 +132,6 @@
     <string name="advanced">Avançat</string>
     <string name="faq_howto_title">Inici rapid</string>
     <string name="use_system_proxy">Utiliza el proxy del sistema</string>
-    <string name="onbootrestartsummary">OpenVPN es conectarà a la VPN especificada si està actiu durant l\'inici del sistema. Si us plau, llegiu el FAQ de l\'advertència de conexió abans de fer servir aquesta opció en Android &lt; 5.0.</string>
-    <string name="onbootrestart">Conecta al reiniciar</string>
     <string name="ignore">Ignorar</string>
     <string name="restart">Reinicia</string>
     <string name="restart_vpn_after_change">Els canvis de configuració s\'apliquen desprès de reinicar la VPN. (Re)inicar la VPN ara?</string>

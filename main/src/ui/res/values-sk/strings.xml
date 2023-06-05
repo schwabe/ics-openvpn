@@ -201,8 +201,6 @@
     <string name="using_proxy">Používam proxy %1$s %2$s</string>
     <string name="use_system_proxy">Použiť systémovú proxy</string>
     <string name="use_system_proxy_summary">Na pripojenie použiť systémové nastavenie pre HTTP/HTTPS.</string>
-    <string name="onbootrestartsummary">OpenVPN sa automaticky pripojí k vybranej VPN po štarte systému. Prosím venujte pozornosť upozornenie vo FAQ pre verziu Android &lt; 5.0.</string>
-    <string name="onbootrestart">Pripojiť po spustení systému</string>
     <string name="ignore">Ignorovať</string>
     <string name="restart">Reštartovať</string>
     <string name="restart_vpn_after_change">Zmena nastavení začne platiť až po reštarte VPN. Reštartovať teraz?</string>

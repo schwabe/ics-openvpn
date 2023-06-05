@@ -204,8 +204,6 @@
     <string name="using_proxy">Usando o proxy %1$s %2$s</string>
     <string name="use_system_proxy">Utilizar proxy do sistema</string>
     <string name="use_system_proxy_summary">Utiliza a configuração proxy HTTP/HTTPS do sistema para a conexão.</string>
-    <string name="onbootrestartsummary">O OpenVPN irá se conectar ao VPN especificado no boot do sistema caso esteje ativo. Por favor leia o aviso de conexão no FAQ antes de utilizar esta opção no Android &lt; 5.0.</string>
-    <string name="onbootrestart">Conectar na inicialização</string>
     <string name="ignore">Ignorar</string>
     <string name="restart">Reiniciar</string>
     <string name="restart_vpn_after_change">As alterações de configuração são aplicadas depois de reiniciar o VPN. (Re) iniciar o VPN agora?</string>
@@ -489,5 +487,7 @@
     <string name="server_url">URL do servidor</string>
     <string name="request_autologin">Solicitar perfil de login automático</string>
     <string name="import_from_as">Importar perfil do servidor remoto</string>
+    <string name="no_default_vpn_set">Francisco </string>
+    <string name="internal_web_view">Brasil </string>
     <string name="use_alwayson_vpn">Por favor, use o recurso Always-On do Android para habilitar a VPN no momento da inicialização.</string>
 </resources>

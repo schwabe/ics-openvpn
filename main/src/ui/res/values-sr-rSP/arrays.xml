@@ -28,4 +28,10 @@
         <item>Перкини везу, задржи лозинку</item>
         <item>Занемарите, покушајте</item>
     </string-array>
+    <string-array name="compat_mode">
+        <item>Модерне подразумеване вредности</item>
+        <item>OpenVPN 2.5.x peers</item>
+        <item>OpenVPN 2.4.x peers</item>
+        <item>OpenVPN 2.3.x and older peers</item>
+    </string-array>
 </resources>

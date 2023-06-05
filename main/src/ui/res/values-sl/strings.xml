@@ -200,8 +200,6 @@
     <string name="getproxy_error">Napaka pri dobivanju nastavitev posredniškega strežnika: %s</string>
     <string name="use_system_proxy">Uporabi sis. pos. str.</string>
     <string name="use_system_proxy_summary">Za povezavo uporabi nastavitve celega sistema za posredniške strežnike HTTP/HTTPS.</string>
-    <string name="onbootrestartsummary">OpenVPN bo povezal navedeni VPN, če je bil dejaven ob zagonu sistema. Preberite pogosta vprašanja o opozorilih glede povezav pred uporabo te možnosti na Androidu &lt; 5.0.</string>
-    <string name="onbootrestart">Poveži ob zagonu</string>
     <string name="ignore">Prezri</string>
     <string name="restart">Ponovno zaženi</string>
     <string name="restart_vpn_after_change">Spremembe nastavitev se bodo uporabile po ponovnem zagonu VPN-a. (Ponovno) zaženi VPN zdaj?</string>

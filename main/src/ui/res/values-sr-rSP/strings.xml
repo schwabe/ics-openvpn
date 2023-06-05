@@ -202,8 +202,6 @@
     <string name="using_proxy">Коришћење проксија %1$s %2$s</string>
     <string name="use_system_proxy">Користи системки прокси</string>
     <string name="use_system_proxy_summary">Користите конфигурацију широм система за повезивање ХТТП / ХТТПС проксија.</string>
-    <string name="onbootrestartsummary">ОпенВПН ће повезати специфицирани ВПН ако је био активан при покретању система. Молимо вас да прочитате питања упозорења веза пре употребе ове опције на Андроид &lt; 5.0.</string>
-    <string name="onbootrestart">Повежите се при покретању</string>
     <string name="ignore">Игнориши</string>
     <string name="restart">Рестарт</string>
     <string name="restart_vpn_after_change">Промјене конфигурације примјењују се након поновног покретања ВПН-а. (Поново) покренути ВПН сада?</string>

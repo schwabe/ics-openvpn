@@ -204,8 +204,6 @@
     <string name="using_proxy">Utilizarea proxy-ului %1$s %2$s</string>
     <string name="use_system_proxy">Foloseşte proxy sistem</string>
     <string name="use_system_proxy_summary">Foloseşte configurarea sistem pentru proxy HTTP/HTTPS folosit la conectare.</string>
-    <string name="onbootrestartsummary">OpenVPN va conecta VPN-ul specificat dacă vs fi activ la pornirea sistemului. Citiți întrebările frecvente privind avertizare de conexiune înainte de a utiliza această opțiune pe Android &lt; 5.0.</string>
-    <string name="onbootrestart">Conectare la pornire</string>
     <string name="ignore">Ignora</string>
     <string name="restart">Restart</string>
     <string name="restart_vpn_after_change">Schimbările de configurare vor fi aplicate după restartarea VPN-ului. (Re)startaţi VPN-ul acum?</string>

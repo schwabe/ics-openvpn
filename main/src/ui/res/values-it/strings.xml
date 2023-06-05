@@ -205,8 +205,6 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="using_proxy">Utilizzo del proxy %1$s %2$s</string>
     <string name="use_system_proxy">Utilizza il proxy di sistema</string>
     <string name="use_system_proxy_summary">Utilizza la configurazione generale del sistema relativa ai proxy HTTP/HTTPS per connettersi.</string>
-    <string name="onbootrestartsummary">OpenVPN connetterà la VPN specificata se è attiva durante l\'avvio del sistema. Leggi le domande di avviso di connessione prima di utilizzare questa opzione in Android &lt; 5.0.</string>
-    <string name="onbootrestart">Connessione all\'avvio</string>
     <string name="ignore">Ignora</string>
     <string name="restart">Riavvia</string>
     <string name="restart_vpn_after_change">Le modifiche sarannoi applicate dopo aver riavviato la connessione VPN. Riavviare ora la connessione?</string>
@@ -504,4 +502,5 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="allow_translations_title">Consenti le traduzioni fornite dalla community</string>
     <string name="allow_translations_summary">Consente la traduzione dell\'app con le traduzioni fornite dalla community. Richiede il riavvio dell\'app per l\'attivazione.</string>
     <string name="tls_profile">Profilo di sicurezza TLS</string>
+    <string name="encrypt_profiles">Prova a criptare i profili sullo spazio di archiviazione (se supportato dal sistema operativo Android)</string>
 </resources>

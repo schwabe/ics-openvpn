@@ -201,8 +201,6 @@
     <string name="using_proxy">Выкарыстоўваецца проксі-сервер %1$s %2$s</string>
     <string name="use_system_proxy">Выкарыстоўваць сістэмны проксі</string>
     <string name="use_system_proxy_summary">Скарыстайцеся сістэмнай канфігурацыяй проксі HTTP/HTTPS для злучэння.</string>
-    <string name="onbootrestartsummary">OpenVPN падлучыць азначаны VPN, калі ён быў актыўны падчас загрузкі сістэмы. Калі ласка, прачытайце ў радзеле \"Частыя пытанні\" пра папярэджанні пры злучэнні перад тым, як выкарыстоўваць гэты параметр на Android &lt; 5.0.</string>
-    <string name="onbootrestart">Злучаць пры загрузцы</string>
     <string name="ignore">Ігнараваць</string>
     <string name="restart">Перазапуск</string>
     <string name="restart_vpn_after_change">Змены ў канфігурацыі адбудуцца толькі пасля перазапуску VPN. (Пера)запусціць VPN?</string>

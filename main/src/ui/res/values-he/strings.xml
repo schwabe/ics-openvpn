@@ -9,7 +9,7 @@
     <string name="port">יציאת שרת:</string>
     <string name="location">מיקום</string>
     <string name="cant_read_folder">לא ניתן לקרוא את התיקייה</string>
-    <string name="select">בחר</string>
+    <string name="select">בחירה</string>
     <string name="cancel">ביטול</string>
     <string name="no_data">אין נתונים</string>
     <string name="useLZO">דחיסת LZO</string>
@@ -205,8 +205,6 @@
     <string name="using_proxy">שימוש בפרוקסי %1$s %2$s</string>
     <string name="use_system_proxy">להשתמש במתווך המערכת</string>
     <string name="use_system_proxy_summary">השתמש בתצורה הרחבה של המערכת עבור פרוקסי HTTP/HTTPS כדי להתחבר.</string>
-    <string name="onbootrestartsummary">OpenVPN יחבר את ה-VPN שצוין אם הוא היה פעיל באתחול המערכת. אנא קרא את השאלות הנפוצות בנושא אזהרת חיבור לפני השימוש באפשרות זו ב-אנדרואיד &lt; 5.0.</string>
-    <string name="onbootrestart">התחברות עם ההפעלה</string>
     <string name="ignore">התעלם</string>
     <string name="restart">הפעלה מחדש</string>
     <string name="restart_vpn_after_change">שינויי תצורה מוחלים לאחר הפעלה מחדש של ה-VPN. (מחדש) להפעיל את ה-VPN עכשיו?</string>
@@ -505,4 +503,5 @@
     <string name="allow_translations_title">אפשר תרגומים שתרמו מהקהילה</string>
     <string name="allow_translations_summary">מאפשר לתרגם את האפליקציה עם תרגומים שנתרמו על ידי הקהילה. דורש הפעלה מחדש של האפליקציה כדי להפעיל אותה.</string>
     <string name="tls_profile">פרופיל אבטחה של TLS</string>
+    <string name="encrypt_profiles">לנסות להצפין פרופילים באחסון (אם נתמך על ידי מערכת ה־Android)</string>
 </resources>

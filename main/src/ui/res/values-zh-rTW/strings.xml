@@ -34,7 +34,7 @@
     <string name="ipv4_address">IPv4 位址</string>
     <string name="ipv6_address">IPv6 位址</string>
     <string name="custom_option_warning">輸入自訂 OpenVPN 選項。請謹慎使用。另外請注意，VPNSettings 設計上無法支援許多 TUN 通道相關的 OpenVPN 設定 。如果您認為有遺漏重要的設定選項，請聯絡作者。</string>
-    <string name="auth_username">Username (leave empty for no auth)</string>
+    <string name="auth_username">使用者名稱（留空表示不登入）</string>
     <string name="auth_pwquery">密碼</string>
     <string name="static_keys_info">對於靜態設定，TLS 認證金鑰將會用作靜態金鑰。</string>
     <string name="configure_the_vpn">設定 VPN</string>
@@ -202,8 +202,6 @@
     <string name="using_proxy">使用 Proxy %1$s %2$s</string>
     <string name="use_system_proxy">使用系統 Proxy</string>
     <string name="use_system_proxy_summary">使用系統設定值的 HTTP/HTTPS Proxy 進行連線。</string>
-    <string name="onbootrestartsummary">OpenVPN 將會在開機被啟動時連線到指定的 VPN。在 Android &lt; 5.0 上使用這個設定前，請閱讀連線警告的 FAQ。</string>
-    <string name="onbootrestart">開機時連線</string>
     <string name="ignore">忽略</string>
     <string name="restart">重新啟動</string>
     <string name="restart_vpn_after_change">設定值變更只會在重新啟動 VPN 後生效，現在要（重新）啟動 VPN 嗎？</string>
@@ -472,4 +470,9 @@
     <string name="configure">設定</string>
     <string name="extauth_not_configured">未設定外部身份驗證器</string>
     <string name="faq_killswitch">通常希望在沒有 VPN 的情況下阻止連接。其他應用程序通常為此功能使用“Killswitch”或“無縫隧道”等標記術語。 OpenVPN 和這個應用程序提供了persist-tun，一個實現這個功能的特性。&lt;p&gt;應用程序提供的所有這些方法的問題在於它們只能提供最大的努力，而不是完整的解決方案。在啟動、應用程序崩潰和其他極端情況下，應用程序無法確保此非 VPN 連接塊正常工作。從而給用戶一種虛假的安全感。&lt;p&gt;確保非 VPN 連接被阻止的唯一 &lt;b&gt;&lt;/b&gt; 可靠方法是使用 Android 8.0 或更高版本，並使用可在設置下找到的“阻止沒有 VPN 的連接”設置 &gt; 網絡 &amp; 互聯網 &gt; 高級/VPN &gt; 適用於 Android &gt; 的 OpenVPN啟用始終開啟 VPN，啟用沒有 VPN 的阻止連接Translate all</string>
+    <string name="compatmode">相容性模式</string>
+    <string name="compat_mode_label">相容性模式</string>
+    <string name="allow_translations_title">允許社群貢獻的翻譯</string>
+    <string name="allow_translations_summary">允許使用社群貢獻的翻譯。需要重新啟動應用程式。</string>
+    <string name="encrypt_profiles">嘗試加密儲存空間中的設定檔（如果 Android 作業系統支持）</string>
 </resources>

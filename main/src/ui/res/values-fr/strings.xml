@@ -205,8 +205,6 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="using_proxy">Utilisation du proxy %1$s %2$s</string>
     <string name="use_system_proxy">Utiliser le proxy système</string>
     <string name="use_system_proxy_summary">Utiliser la configuration générale du système pour que les proxy HTTP / HTTPS se connectent.</string>
-    <string name="onbootrestartsummary">OpenVPN connectera le VPN spécifié si l\'application est active au démarrage du système. Veuillez lire la FAQ d\'avertissement de connexion avant d\'utiliser cette option sur Android &lt; 5.0.</string>
-    <string name="onbootrestart">Se connecter au redémarrage</string>
     <string name="ignore">Ignorer</string>
     <string name="restart">Redémarrer</string>
     <string name="restart_vpn_after_change">Les changements de configuration sont appliqués après redémarrage du VPN. (Re)démarrer le VPN maintenant ?</string>
@@ -477,6 +475,7 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="configure">Configurer</string>
     <string name="extauth_not_configured">Authentificateur externe non configuré</string>
     <string name="faq_killswitch_title">Bloquer les connexions non VPN (\"Killswitch\")</string>
+    <string name="faq_killswitch">Il est souvent souhaité de bloquer les connexions sans VPN. D\'autres applications utilisent souvent des termes de marketing tels que \"Killswitch\" ou \"Seamless tunnel\" pour cette fonctionnalité. OpenVPN et cette application offrent persist-tun, une fonctionnalité pour implémenter cette fonctionnalité.&lt;p&gt;Le problème avec toutes ces méthodes proposées par les applications est qu\'elles ne peuvent fournir que le meilleur effort et ne constituent pas des solutions complètes. Au démarrage, en cas de plantage de l\'application et d\'autres cas particuliers, l\'application ne peut pas garantir que ce bloc de connexion non VPN fonctionne. Donnant ainsi à l\'utilisateur un faux sentiment de sécurité.&lt;p&gt;Le &lt;b&gt;seul&lt;/b&gt; fiable de s\'assurer que les connexions non VPN sont bloquées est d\'utiliser Android 8.0 ou version ultérieure et d\'utiliser le paramètre \"bloquer les connexions sans VPN\" qui se trouve sous Paramètres &gt; Réseau &amp; Internet &gt; Avancé/VPN &gt; OpenVPN pour Android &gt; Activer le VPN toujours activé, activer les connexions bloquées sans VPN</string>
     <string name="summary_block_address_families">Cette option indique à Android de ne pas autoriser les protocoles (IPv4/IPv6) si le VPN ne définit aucune adresse IPv4 ou IPv6.</string>
     <string name="title_block_address_families">Bloquer IPv6 (ou IPv4) s\'il n\'est pas utilisé par le VPN</string>
     <string name="install_keychain">Installer un nouveau certificat</string>
@@ -486,6 +485,7 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="import_from_as">Importer le profil depuis le serveur distant</string>
     <string name="no_default_vpn_set">VPN par défaut non défini. Veuillez définir le VPN par défaut avant d\'activer cette option.</string>
     <string name="internal_web_view">WebView interne</string>
+    <string name="faq_ncp">Il existe des variations de ce message en fonction de la situation exacte. Ils ont tous en commun que le serveur et le client ne peuvent pas s\'entendre sur un chiffrement commun. Les principales raisons sont : &lt;ul&gt;&lt;li&gt; Vous comptez toujours sur le fait qu\'OpenVPN 2.4 et les versions antérieures autorisent BF-CBC dans la configuration par défaut (si aucun --cipher n\'a été défini). OpenVPN 2.5 ne l\'autorise plus par défaut car il s\'agit d\'un chiffrement &lt;a href=\"https://community.openvpn.net/openvpn/wiki/SWEET32\"&gt;cassé/obsolète&lt;/a&gt;.&lt;/li&gt;&lt;li&gt;Le serveur&lt;/ul&gt;&lt;li&gt;2.3 (ou même plus ancien) avec&lt;/li&gt; - &lt;p&gt; (au moins 4-5 &lt;a href=\"https://github.com/OpenVPN/openvpn/blob/master/doc/man-sections/cipher-negotiation.rst\"&gt;d\'&lt;/li&gt;) La section du manuel sur la négociation de chiffrement&lt;/a&gt; explique très bien les différents scénarios de négociation de chiffrement et ce qu\'il faut faire dans ces situations.&lt;p&gt;appareils TP-Link utilisent une version OpenVPN 2.3.x d\'au moins 5 ans (éventuellement plus ancienne) sur leurs appareils, même dans les modèles 2019/2020.&lt;p&gt;Enfin et surtout, il y a un fournisseur de VPN populaire qui a un serveur en panne qui dit toujours qu\'il utilise \'BF-CBC\' parce que son développeur a pensé que ce serait une bonne idée de créer un correctif de négociation de chiffrement propriétaire qui est incompatible avec la norme OpenVPN.&lt;p&gt;En résumé : toutes les configurations saines ne devraient pas avoir ces erreurs. Mais (mis à part le serveur du fournisseur VPN en panne), le client peut être persuadé de continuer à se connecter (corriger le symptôme et non le vrai problème). Lors de la connexion à des serveurs plus anciens, l\'option de mode de compatibilité dans les paramètres de base d\'un VPN devrait pouvoir résoudre la plupart des problèmes de compatibilité courants.</string>
     <string name="check_peer_fingerprint">Vérifier l\'empreinte digitale du certificat homologue</string>
     <string name="fingerprint">(Entrez l\'empreinte SHA256 du ou des certificats de serveur)</string>
     <string name="proxy_info">Proxy HTTP : %1$s %2$d</string>
@@ -499,4 +499,5 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="allow_translations_title">Autoriser les traductions fournies par la communauté</string>
     <string name="allow_translations_summary">Autoriser l\'application à être traduite avec les traductions apportées par la communauté. Nécessite un redémarrage de l\'application pour s\'activer.</string>
     <string name="tls_profile">Profil de sécurité TLS</string>
+    <string name="encrypt_profiles">Essayez de chiffrer les profils sur le stockage (si pris en charge par Android OS)</string>
 </resources>

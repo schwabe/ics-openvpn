@@ -73,8 +73,10 @@ class GeneralSettings : PreferenceFragmentCompat(), Preference.OnPreferenceClick
             findPreference<Preference>("restartvpnonboot") as CheckBoxPreference
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val vpn:VpnService = VpnService()
-            startOnBoot.isChecked = vpn.isAlwaysOn
+            val vpn = VpnService()
+            if (vpn.isAlwaysOn)
+                /* This is not reliable when the VPN is not active */
+                startOnBoot.isChecked
         }
 
         startOnBoot.onPreferenceChangeListener =

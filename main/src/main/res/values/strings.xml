@@ -203,8 +203,8 @@
     <string name="using_proxy">Using proxy %1$s %2$s</string>
     <string name="use_system_proxy">Use system proxy</string>
     <string name="use_system_proxy_summary">Use the system wide configuration for HTTP/HTTPS proxies to connect.</string>
-    <string name="onbootrestartsummary">OpenVPN will connect the specified VPN if it was active on system boot. Please read the connection warning FAQ before using this option on Android &lt; 5.0.</string>
-    <string name="onbootrestart">Connect on boot</string>
+    <string name="keep_vpn_connected_summary">OpenVPN will connect the specified VPN on system boot and will try to keep the VPN connected.</string>
+    <string name="keep_vpn_connected">Keep VPN connected</string>
     <string name="ignore">Ignore</string>
     <string name="restart">Restart</string>
     <string name="restart_vpn_after_change">Configuration changes are applied after restarting the VPN. (Re)start the VPN now?</string>

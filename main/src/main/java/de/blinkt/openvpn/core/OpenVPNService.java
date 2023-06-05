@@ -20,6 +20,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutManager;
 import android.content.res.Configuration;
@@ -228,8 +229,22 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         endVpnService();
     }
 
+    private boolean isAlwaysActiveEnabled()
+    {
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
+        return prefs.getBoolean("restartvpnonboot", false);
+    }
+
+    boolean isVpnAlwaysOnEnabled() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return isAlwaysOn();
+        }
+        return false;
+    }
+
+
     private void endVpnService() {
-        if (!isAlwaysOn()) {
+        if (!isVpnAlwaysOnEnabled() && !isAlwaysActiveEnabled()) {
             /* if we should be an always on VPN, keep the timer running */
             keepVPNAlive.unscheduleKeepVPNAliveJobService(this);
         }
@@ -883,6 +898,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             /* On Tiramisu we install the routes exactly like promised */
             VpnStatus.logDebug(R.string.routes_debug, TextUtils.join(", ", positiveIPv4Routes), TextUtils.join(", ", positiveIPv6Routes));
         }
+        //VpnStatus.logInfo(String.format("Always active %s", isAlwaysOn() ? "on" : "off"));
+
         setAllowedVpnPackages(builder);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             // VPN always uses the default network

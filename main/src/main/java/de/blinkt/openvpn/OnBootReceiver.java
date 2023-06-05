@@ -23,8 +23,8 @@ public class OnBootReceiver extends BroadcastReceiver {
 		final String action = intent.getAction();
 		SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
 
-		boolean useStartOnBoot = prefs.getBoolean("restartvpnonboot", false);
-		if (!useStartOnBoot)
+		boolean alwaysActive = prefs.getBoolean("restartvpnonboot", false);
+		if (!alwaysActive)
 			return;
 
 		if(Intent.ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {

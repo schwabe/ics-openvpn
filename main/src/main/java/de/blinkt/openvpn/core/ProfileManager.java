@@ -51,7 +51,7 @@ public class ProfileManager {
         return instance.profiles.get(key);
     }
 
-    private static void checkInstance(Context context) {
+    private synchronized static void checkInstance(Context context) {
         if (instance == null) {
             instance = new ProfileManager();
             ProfileEncryption.initMasterCryptAlias();

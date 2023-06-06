@@ -27,8 +27,8 @@ android {
         minSdk = 21
         targetSdk = 33
         //targetSdkPreview = "UpsideDownCake"
-        versionCode = 200
-        versionName = "0.7.45"
+        versionCode = 201
+        versionName = "0.7.46"
         externalNativeBuild {
             cmake {
             }

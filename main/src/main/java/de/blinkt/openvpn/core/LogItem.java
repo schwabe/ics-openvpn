@@ -29,6 +29,7 @@ import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.FormatFlagsConversionMismatchException;
 import java.util.Locale;
+import java.util.MissingFormatArgumentException;
 import java.util.UnknownFormatConversionException;
 import java.util.Vector;
 
@@ -273,7 +274,11 @@ public class LogItem implements Parcelable {
                         if (mArgs == null)
                             return c.getString(mRessourceId);
                         else
-                            return c.getString(mRessourceId, mArgs);
+                            try {
+                                return c.getString(mRessourceId, mArgs);
+                            } catch (MissingFormatArgumentException ie) {
+                                return  "ERROR MISSING ARGUMENT(" + ie.getMessage() + "): " + getString(null);
+                            }
                     } catch (Resources.NotFoundException re) {
                         return getString(null);
                     }

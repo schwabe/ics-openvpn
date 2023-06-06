@@ -54,7 +54,7 @@ public class ProfileManager {
     private synchronized static void checkInstance(Context context) {
         if (instance == null) {
             instance = new ProfileManager();
-            ProfileEncryption.initMasterCryptAlias();
+            ProfileEncryption.initMasterCryptAlias(context);
             instance.loadVPNList(context);
         }
     }
@@ -146,7 +146,7 @@ public class ProfileManager {
                     if (encryptedFileOld.exists()) {
                         encryptedFileOld.delete();
                     }
-                } catch (IOException ioe)
+                } catch (IOException | GeneralSecurityException ioe)
                 {
                     VpnStatus.logException(VpnStatus.LogLevel.INFO, "Error trying to write an encrypted VPN profile, disabling " +
                             "encryption", ioe);
@@ -174,7 +174,7 @@ public class ProfileManager {
             }
 
 
-        } catch (IOException | GeneralSecurityException e) {
+        } catch (IOException e) {
             VpnStatus.logException("saving VPN profile", e);
             throw new RuntimeException(e);
         }

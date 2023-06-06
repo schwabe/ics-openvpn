@@ -260,7 +260,6 @@
     <string name="encryption_cipher">加密算法(cipher)</string>
     <string name="packet_auth">数据包验证</string>
     <string name="auth_dialog_title">输入数据包验证方式</string>
-    <string name="built_by">由 %s 构建</string>
     <string name="debug_build">调试版本</string>
     <string name="official_build">正式版本</string>
     <string name="make_selection_inline">复制进配置文件</string>

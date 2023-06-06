@@ -260,7 +260,6 @@
     <string name="encryption_cipher">צופן הצפנה</string>
     <string name="packet_auth">אימות מנות</string>
     <string name="auth_dialog_title">נא למלא את שיטת אימות המנות</string>
-    <string name="built_by">נבנה על ידי %s</string>
     <string name="debug_build">מהדורה לפיתוח</string>
     <string name="official_build">מהדורה רשמית</string>
     <string name="make_selection_inline">העתקה לפרופיל</string>

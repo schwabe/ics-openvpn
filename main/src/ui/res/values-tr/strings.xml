@@ -259,7 +259,6 @@
     <string name="encryption_cipher">Şifre şifresi</string>
     <string name="packet_auth">Paket kimlik doğrulaması</string>
     <string name="auth_dialog_title">Paket kimlik doğrulama yöntemini girin</string>
-    <string name="built_by">%s tarafından derlendi</string>
     <string name="debug_build">hata ayıklama yapısı</string>
     <string name="official_build">resmi yapı</string>
     <string name="make_selection_inline">Profile kopyala</string>

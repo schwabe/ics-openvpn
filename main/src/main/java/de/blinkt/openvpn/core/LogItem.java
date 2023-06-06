@@ -13,9 +13,11 @@ import android.content.pm.Signature;
 import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -28,6 +30,7 @@ import java.util.Arrays;
 import java.util.FormatFlagsConversionMismatchException;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
+import java.util.Vector;
 
 import de.blinkt.openvpn.R;
 
@@ -336,9 +339,14 @@ public class LogItem implements Parcelable {
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
             X509Certificate cert = (X509Certificate) cf.generateCertificate(new ByteArrayInputStream(raw.toByteArray()));
             MessageDigest md = MessageDigest.getInstance("SHA-1");
+            MessageDigest mdsha256 = MessageDigest.getInstance("SHA-256");
+
             byte[] der = cert.getEncoded();
             md.update(der);
             byte[] digest = md.digest();
+
+            mdsha256.update(der);
+            byte[] digestSha256 = mdsha256.digest();
 
             if (Arrays.equals(digest, VpnStatus.officalkey))
                 apksign = c.getString(R.string.official_build);
@@ -348,8 +356,15 @@ public class LogItem implements Parcelable {
                 apksign = "amazon version";
             else if (Arrays.equals(digest, VpnStatus.fdroidkey))
                 apksign = "F-Droid built and signed version";
-            else
-                apksign = c.getString(R.string.built_by, cert.getSubjectX500Principal().getName());
+            else if (Arrays.equals(digestSha256, VpnStatus.officialO2Key))
+                apksign = c.getString(R.string.official_o2build);
+            else {
+                Vector<String> hexnums = new Vector<>();
+                for (byte b: digestSha256) {
+                    hexnums.add(String.format(Locale.US, "%02x", b));
+                }
+                apksign = c.getString(R.string.built_by, cert.getSubjectX500Principal().getName(), TextUtils.join(":", hexnums));
+            }
 
             PackageInfo packageinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
             version = packageinfo.versionName;

@@ -237,7 +237,6 @@
     <string name="encryption_cipher">Kryptering chiffer</string>
     <string name="packet_auth">Pakkegodkjenning</string>
     <string name="auth_dialog_title">Angi pakkeautentiseringsmetode</string>
-    <string name="built_by">bygget av %s</string>
     <string name="debug_build">avlusings-delversjon</string>
     <string name="official_build">offisiell delversjon</string>
     <string name="make_selection_inline">Kopier til profil</string>

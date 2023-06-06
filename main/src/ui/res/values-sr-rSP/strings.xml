@@ -257,7 +257,6 @@
     <string name="encryption_cipher">Шифровање шифре</string>
     <string name="packet_auth">Аутентификација пакета</string>
     <string name="auth_dialog_title">Унесите начин провјере аутентичности пакета</string>
-    <string name="built_by">саградио %s</string>
     <string name="debug_build">дебуг буилд</string>
     <string name="official_build">званична градња</string>
     <string name="make_selection_inline">Копирајте у профил</string>

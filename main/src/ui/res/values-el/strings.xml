@@ -256,7 +256,6 @@
     <string name="encryption_cipher">Κρυπτογράφηση cipher</string>
     <string name="packet_auth">Πιστοποίηση πακέτων</string>
     <string name="auth_dialog_title">Εισάγετε τη μέθοδο πιστοποίησης πακέτων</string>
-    <string name="built_by">αναπτύχθηκε από %s</string>
     <string name="debug_build">build εντοπισμού σφαλμάτων</string>
     <string name="official_build">Επίσημη έκδοση</string>
     <string name="make_selection_inline">Αντιγραφή στο προφίλ</string>

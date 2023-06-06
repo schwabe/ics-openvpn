@@ -260,7 +260,6 @@ hacia/de Móvil)</string>
     <string name="encryption_cipher">Algoritmo de encriptación</string>
     <string name="packet_auth">Autenticación de paquetes</string>
     <string name="auth_dialog_title">Introduzca método de autenticación de paquetes</string>
-    <string name="built_by">compilado por %s</string>
     <string name="debug_build">versión de depuración</string>
     <string name="official_build">versión oficial</string>
     <string name="make_selection_inline">Copiar en perfil</string>

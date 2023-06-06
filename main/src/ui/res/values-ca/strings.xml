@@ -157,7 +157,6 @@
     <string name="encryption_cipher">Tipus de xifratge</string>
     <string name="packet_auth">Autentificació de paquet</string>
     <string name="auth_dialog_title">Introdueix el mètode de autentificació de paquet</string>
-    <string name="built_by">fet per %s</string>
     <string name="make_selection_inline">Copia al perfil</string>
     <string name="crashdump">Volcat de fallada</string>
     <string name="add">Afegeix</string>

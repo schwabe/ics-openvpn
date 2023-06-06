@@ -257,7 +257,6 @@
     <string name="encryption_cipher">සංකේතාංකන කේතාංක</string>
     <string name="packet_auth">පැකට් සත්‍යාපනය</string>
     <string name="auth_dialog_title">පැකට් සත්‍යාපන ක්‍රමය ඇතුලත් කරන්න</string>
-    <string name="built_by">%sවිසින් ගොඩනගා ඇත</string>
     <string name="debug_build">නිදොස් ගොඩනැගීම</string>
     <string name="official_build">නිල ගොඩනැගීම</string>
     <string name="make_selection_inline">පැතිකඩට පිටපත් කරන්න</string>

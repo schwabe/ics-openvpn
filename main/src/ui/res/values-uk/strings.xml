@@ -259,7 +259,6 @@
     <string name="encryption_cipher">Алгоритм шифрування</string>
     <string name="packet_auth">Пакети автентифікації</string>
     <string name="auth_dialog_title">Введіть метод автентифікації пакетів</string>
-    <string name="built_by">побудована по %s</string>
     <string name="debug_build">відлагоджувальна збірка</string>
     <string name="official_build">Офіційна збірка</string>
     <string name="make_selection_inline">Скопіювати в профіль</string>

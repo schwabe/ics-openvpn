@@ -260,9 +260,10 @@
     <string name="encryption_cipher">Encryption ciphers</string>
     <string name="packet_auth">Packet authentication</string>
     <string name="auth_dialog_title">Enter packet authentication method</string>
-    <string name="built_by">built by %s</string>
+    <string name="built_by">built by %1$s (FP: %2$s)</string>
     <string name="debug_build">debug build</string>
     <string name="official_build">official build</string>
+    <string name="official_o2build">official OpenVPN2 only build</string>
     <string name="make_selection_inline">Copy into profile</string>
     <string name="crashdump">Crashdump</string>
     <string name="add">Add</string>

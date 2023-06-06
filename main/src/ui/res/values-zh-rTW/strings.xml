@@ -257,7 +257,6 @@
     <string name="encryption_cipher">加密法</string>
     <string name="packet_auth">封包驗證</string>
     <string name="auth_dialog_title">輸入封包驗證方法</string>
-    <string name="built_by">由 %s 建立</string>
     <string name="debug_build">除錯用版本</string>
     <string name="official_build">正式版本</string>
     <string name="make_selection_inline">複製到設定檔</string>

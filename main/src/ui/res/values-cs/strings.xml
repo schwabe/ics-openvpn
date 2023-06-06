@@ -256,7 +256,6 @@
     <string name="encryption_cipher">Šifrovací algoritmus</string>
     <string name="packet_auth">Ověřování paketů</string>
     <string name="auth_dialog_title">Zadej způsob ověřování paketů</string>
-    <string name="built_by">sestaveno od %s</string>
     <string name="debug_build">ladící verze</string>
     <string name="official_build">oficiální verze</string>
     <string name="make_selection_inline">Zkopírovat do profilu</string>

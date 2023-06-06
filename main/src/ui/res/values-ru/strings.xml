@@ -262,7 +262,6 @@ API VPNService не позволяет указывать сети, которы
     <string name="encryption_cipher">Коды шифрования</string>
     <string name="packet_auth">Аутентификация пакетов</string>
     <string name="auth_dialog_title">Укажите метод аутентификации пакетов</string>
-    <string name="built_by">собрано с помощью %s</string>
     <string name="debug_build">Отладочная сборка</string>
     <string name="official_build">официальная сборка</string>
     <string name="make_selection_inline">Скопировать в конфигурацию</string>

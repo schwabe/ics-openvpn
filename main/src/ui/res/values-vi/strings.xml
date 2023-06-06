@@ -259,7 +259,6 @@
     <string name="encryption_cipher">Mã hóa mật mã</string>
     <string name="packet_auth">Gói xác thực</string>
     <string name="auth_dialog_title">Nhập phương thức xác thực gói</string>
-    <string name="built_by">được xây dựng bởi %s</string>
     <string name="debug_build">bản dựng gỡ lỗi</string>
     <string name="official_build">bản dựng chính thức</string>
     <string name="make_selection_inline">Sao chép vào hồ sơ</string>

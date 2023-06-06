@@ -258,7 +258,6 @@
     <string name="encryption_cipher">Cifru criptare</string>
     <string name="packet_auth">Autentificare pachete</string>
     <string name="auth_dialog_title">Introduceţi metoda de autentificare de pachete</string>
-    <string name="built_by">compilat de %s</string>
     <string name="debug_build">versiune debug</string>
     <string name="official_build">versiune oficială</string>
     <string name="make_selection_inline">Copiaţi în profil</string>

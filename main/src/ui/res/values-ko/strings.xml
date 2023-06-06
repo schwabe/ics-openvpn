@@ -256,7 +256,6 @@
     <string name="encryption_cipher">암호화 알고리즘</string>
     <string name="packet_auth">패킷 인증</string>
     <string name="auth_dialog_title">패킷 인증 방법 입력</string>
-    <string name="built_by">%s가 빌드</string>
     <string name="debug_build">디버그 빌드</string>
     <string name="official_build">공식 빌드</string>
     <string name="make_selection_inline">프로파일에 복사</string>

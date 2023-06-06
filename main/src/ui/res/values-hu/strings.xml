@@ -259,7 +259,6 @@
     <string name="encryption_cipher">Titkosítás rejtjelezés</string>
     <string name="packet_auth">Csomag hitelesítés</string>
     <string name="auth_dialog_title">Adja meg a csomaghitelesítési metódust</string>
-    <string name="built_by">%s fordítóval</string>
     <string name="debug_build">hibakeresési fordítás</string>
     <string name="official_build">hivatalos build</string>
     <string name="make_selection_inline">Másolás profilba</string>

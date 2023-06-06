@@ -259,7 +259,6 @@
     <string name="encryption_cipher">رمزنگاری سری</string>
     <string name="packet_auth">بسته تأیید هویت</string>
     <string name="auth_dialog_title">روش اعتبار سنجی بسته را وارد کنید</string>
-    <string name="built_by">ساخته شده توسط %s</string>
     <string name="debug_build">اشکال زدایی ساخت</string>
     <string name="official_build">ساخت رسمی</string>
     <string name="make_selection_inline">کپی به نمایه</string>

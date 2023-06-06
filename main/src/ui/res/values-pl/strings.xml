@@ -259,7 +259,6 @@
     <string name="encryption_cipher">Szyfr kodujący</string>
     <string name="packet_auth">Pakiety uwierzytelniania</string>
     <string name="auth_dialog_title">Wpisz metodę uwierzytelniania pakietów</string>
-    <string name="built_by">zbudowany przez %s</string>
     <string name="debug_build">Kompilacja z debugiem</string>
     <string name="official_build">Oficjalna kompilacja</string>
     <string name="make_selection_inline">Skopiuj do profilu</string>

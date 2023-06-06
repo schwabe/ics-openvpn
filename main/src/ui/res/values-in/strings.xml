@@ -259,7 +259,6 @@
     <string name="encryption_cipher">Enkripsi sandi</string>
     <string name="packet_auth">Otentikasi paket</string>
     <string name="auth_dialog_title">Masukkan metode otentikasi paket</string>
-    <string name="built_by">dibangun oleh %s</string>
     <string name="debug_build">Pengembangan debug</string>
     <string name="official_build">Build Resmi</string>
     <string name="make_selection_inline">Salin ke profil</string>

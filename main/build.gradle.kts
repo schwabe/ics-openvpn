@@ -78,6 +78,20 @@ android {
             enableV2Signing = true
         }
 
+        create("releaseOvpn2") {
+            // ~/.gradle/gradle.properties
+            val keystoreO2File: String? by project
+            storeFile = keystoreO2File?.let { file(it) }
+            val keystoreO2Password: String? by project
+            storePassword = keystoreO2Password
+            val keystoreO2AliasPassword: String? by project
+            keyPassword = keystoreO2AliasPassword
+            val keystoreO2Alias: String? by project
+            keyAlias = keystoreO2Alias
+            enableV1Signing = true
+            enableV2Signing = true
+        }
+
     }
 
     lint {
@@ -86,16 +100,7 @@ android {
         disable += setOf("MissingTranslation", "UnsafeNativeCodeLocation")
     }
 
-    buildTypes {
-        getByName("release") {
-            if (project.hasProperty("icsopenvpnDebugSign")) {
-                logger.warn("property icsopenvpnDebugSign set, using debug signing for release")
-                signingConfig = android.signingConfigs.getByName("debug")
-            } else {
-                signingConfig = signingConfigs.getByName("release")
-            }
-        }
-    }
+
     flavorDimensions += listOf("implementation", "ovpnimpl")
 
     productFlavors {
@@ -118,6 +123,18 @@ android {
             dimension = "ovpnimpl"
             versionNameSuffix = "-o2"
             buildConfigField("boolean", "openvpn3", "false")
+        }
+    }
+
+    buildTypes {
+        getByName("release") {
+            if (project.hasProperty("icsopenvpnDebugSign")) {
+                logger.warn("property icsopenvpnDebugSign set, using debug signing for release")
+                signingConfig = android.signingConfigs.getByName("debug")
+            } else {
+                productFlavors["ovpn23"].signingConfig = signingConfigs.getByName("release")
+                productFlavors["ovpn2"].signingConfig = signingConfigs.getByName("releaseOvpn2")
+            }
         }
     }
 

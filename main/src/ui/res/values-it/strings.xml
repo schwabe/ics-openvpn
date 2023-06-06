@@ -260,7 +260,6 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="encryption_cipher">Algoritmo di crittografia</string>
     <string name="packet_auth">Autenticazione pacchetti</string>
     <string name="auth_dialog_title">Seleziona il metodo di autenticazione dei pacchetti</string>
-    <string name="built_by">compilato da %s</string>
     <string name="debug_build">versione di debug</string>
     <string name="official_build">versione ufficiale</string>
     <string name="make_selection_inline">Copia nel profilo</string>

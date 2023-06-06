@@ -256,7 +256,6 @@
     <string name="encryption_cipher">Алгарытм шыфравання</string>
     <string name="packet_auth">Пакет праверкі сапраўднасці</string>
     <string name="auth_dialog_title">Увядзіце метад праверкі сапраўднасці пакетаў</string>
-    <string name="built_by">стварыў(-ла) %s</string>
     <string name="debug_build">зборка для адладкі</string>
     <string name="official_build">афіцыйная зборка</string>
     <string name="make_selection_inline">Скапіяваць у профіль</string>

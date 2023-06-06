@@ -259,7 +259,6 @@
     <string name="encryption_cipher">خوارزمية التشفير</string>
     <string name="packet_auth">حزمة المصادقة</string>
     <string name="auth_dialog_title">أدخل طريقة مصادقة الحزمة</string>
-    <string name="built_by">طوره %s</string>
     <string name="debug_build">بناء التصحيح</string>
     <string name="official_build">البنية الرسمية</string>
     <string name="make_selection_inline">نسخ إلى الملف الشخصي</string>

@@ -234,7 +234,6 @@
     <string name="encryption_cipher">Cifra de encriptação</string>
     <string name="packet_auth">Autenticação de pacotes</string>
     <string name="auth_dialog_title">Selecione o método de autenticação de pacotes</string>
-    <string name="built_by">Feito por %s</string>
     <string name="debug_build">compilação de debug</string>
     <string name="official_build">compilação oficial</string>
     <string name="make_selection_inline">Copiar para o perfil</string>

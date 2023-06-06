@@ -256,7 +256,6 @@
     <string name="encryption_cipher">Encryptiecijfer</string>
     <string name="packet_auth">Packet-authenticatie</string>
     <string name="auth_dialog_title">Voer de methode voor pakketauthenticatie in</string>
-    <string name="built_by">gebouwd door %s</string>
     <string name="debug_build">debug build</string>
     <string name="official_build">officiële build</string>
     <string name="make_selection_inline">Kopieer naar profiel</string>

@@ -260,7 +260,6 @@ Sur certaines ROM, cette notification joue un son.\nAndroid a introduit ces noti
     <string name="encryption_cipher">Algorithme de chiffrement</string>
     <string name="packet_auth">Authentification des paquets</string>
     <string name="auth_dialog_title">Méthode d\'authentification des paquets</string>
-    <string name="built_by">compilé par %s</string>
     <string name="debug_build">version de debug</string>
     <string name="official_build">version officielle</string>
     <string name="make_selection_inline">Copier dans le profil</string>

@@ -257,7 +257,6 @@
     <string name="encryption_cipher">Krüptošiffer</string>
     <string name="packet_auth">Pakettide autentimine</string>
     <string name="auth_dialog_title">Sisestage pakettide autentimismeetod</string>
-    <string name="built_by">Kompileerija: %s</string>
     <string name="debug_build">Silumisversioon</string>
     <string name="official_build">Ametlik versioon</string>
     <string name="make_selection_inline">Kopeeri profiili</string>

@@ -254,7 +254,6 @@
     <string name="encryption_cipher">Šifra</string>
     <string name="packet_auth">Overitev paketov</string>
     <string name="auth_dialog_title">Vnesite način overitve paketov</string>
-    <string name="built_by">izgradil %s</string>
     <string name="debug_build">razhroščevalna izgradnja</string>
     <string name="official_build">uradna izgradnja</string>
     <string name="make_selection_inline">Kopiraj v profil</string>

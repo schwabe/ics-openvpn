@@ -259,7 +259,6 @@
     <string name="encryption_cipher">Krypteringsstreng</string>
     <string name="packet_auth">Pakkegodkendelse</string>
     <string name="auth_dialog_title">Angiv pakkegodkendelsesmetode</string>
-    <string name="built_by">bygget af %s</string>
     <string name="debug_build">fejlfindingskompilering</string>
     <string name="official_build">officiel kompilering</string>
     <string name="make_selection_inline">Kopiér til profil</string>

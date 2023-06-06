@@ -257,7 +257,6 @@
     <string name="encryption_cipher">Šifrovacia šifra</string>
     <string name="packet_auth">autentifikácia paketov</string>
     <string name="auth_dialog_title">Zadajte metódu autentifikácie paketov</string>
-    <string name="built_by">zostavené od %s</string>
     <string name="debug_build">ladiaca verzia</string>
     <string name="official_build">oficiálna verzia</string>
     <string name="make_selection_inline">Skopírovať do profilu</string>

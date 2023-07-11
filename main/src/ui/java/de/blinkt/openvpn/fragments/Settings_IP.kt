@@ -5,6 +5,7 @@
 package de.blinkt.openvpn.fragments
 
 import android.os.Bundle
+import android.view.View
 import androidx.preference.*
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.fragments.OpenVpnPreferencesFragment
@@ -33,6 +34,19 @@ class Settings_IP : OpenVpnPreferencesFragment(), Preference.OnPreferenceChangeL
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.vpn_ipsettings)
+        bindPreferences()
+        loadSettings()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        /* Bind the preferences early to avoid loadingSetting which is called
+         * from the superclass to access an uninitialised earlyinit property
+         */
+        bindPreferences()
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun bindPreferences() {
         mIPv4 = findPreference("ipv4_address")!!
         mIPv6 = findPreference("ipv6_address")!!
         mUsePull = findPreference("usePull")!!
@@ -45,7 +59,6 @@ class Settings_IP : OpenVpnPreferencesFragment(), Preference.OnPreferenceChangeL
         mNobind = findPreference("nobind")!!
         mUsePull.onPreferenceChangeListener = this
         mOverrideDNS.onPreferenceChangeListener = this
-        loadSettings()
     }
 
 

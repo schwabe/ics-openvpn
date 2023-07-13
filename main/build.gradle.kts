@@ -17,7 +17,7 @@ android {
         aidl = true
     }
     namespace = "de.blinkt.openvpn"
-    compileSdk = 33
+    compileSdk = 34
     //compileSdkPreview = "UpsideDownCake"
 
     // Also update runcoverity.sh
@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         //targetSdkPreview = "UpsideDownCake"
         versionCode = 201
         versionName = "0.7.46"

@@ -53,7 +53,7 @@
             android:name=".core.OpenVPNService"
             android:exported="true"
             android:permission="android.permission.BIND_VPN_SERVICE"
-            android:foregroundServiceType="dataSync"
+            android:foregroundServiceType="specialUse"
             android:process=":openvpn">
             <intent-filter>
                 <action android:name="android.net.VpnService" />

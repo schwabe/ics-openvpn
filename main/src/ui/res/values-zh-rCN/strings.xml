@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 密码</string>
     <string name="file_select">请选择&#8230;</string>
     <string name="file_nothing_selected">你必须选择一个文件</string>
-    <string name="useTLSAuth">使用 TLS 认证</string>
-    <string name="tls_direction">TLS 位置</string>
     <string name="ipv6_dialog_tile">输入 CIDR 格式的 IPv6 地址/网络掩码（例如 2000:dd::23/64）</string>
     <string name="ipv4_dialog_title">输入 CIDR 格式的 IPv4 地址/网络掩码（例如 1.2.3.4/24）</string>
     <string name="ipv4_address">IPv4 地址</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">证书主机名检查</string>
     <string name="enter_tlscn_dialog">勾选此项将验证远程证书的 DN 属性（例：C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de）\n\n输入完整的 DN 或者 RDN 以便进行验证。\n\nRDN前缀 \"Server\" 可以匹配 \"Server-1\" 以及 \"SERVER-2\"\n\n若留空则将仅验证 RDN 而不验证主机名。\n\n有关更多信息请查看 OpenVPN 2.3.1+ 参考手册的 --verify-x509-name 小节</string>
     <string name="enter_tlscn_title">远程证书所有人名称</string>
-    <string name="tls_key_auth">启用TLS密钥验证</string>
-    <string name="tls_auth_file">TLS认证文件</string>
     <string name="pull_on_summary">从服务器请求 IP 地址、 路由规则和计时选项。</string>
     <string name="pull_off_summary">将不会从服务器请求信息。需要手动在下方配置设置。</string>
     <string name="use_pull">拉取设置</string>
@@ -205,6 +201,8 @@
     <string name="using_proxy">代理使用时长 %1$s %2$s</string>
     <string name="use_system_proxy">使用系统代理</string>
     <string name="use_system_proxy_summary">使用系统级HTTP/HTTPS 代理配置来连接</string>
+    <string name="keep_vpn_connected_summary">OpenVPN 将在系统启动时连接指定的 VPN，并尝试保持 VPN 连接。</string>
+    <string name="keep_vpn_connected">保持 VPN 连接</string>
     <string name="ignore">忽略</string>
     <string name="restart">重新启动</string>
     <string name="restart_vpn_after_change">配置文件的变更将在重新连接 VPN 后生效，是否立即(重新)连接？</string>
@@ -506,4 +504,5 @@
     <string name="allow_translations_summary">允许应用程序使用翻译社区贡献的翻译。需要重新启动应用程序才能激活。</string>
     <string name="tls_profile">TLS 安全配置</string>
     <string name="encrypt_profiles">d</string>
+    <string name="missing_notification_permission">缺少通知权限。这用于显示 VPN 的状态并通知所需的用户交互，例如多因素授权。\n\n单击此消息授予应用程序通知权限</string>
 </resources>

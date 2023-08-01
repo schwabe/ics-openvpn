@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 salasõna</string>
     <string name="file_select">Vali&#8230;</string>
     <string name="file_nothing_selected">Valige fail</string>
-    <string name="useTLSAuth">Kasuta TLS autentimist</string>
-    <string name="tls_direction">TLS suund</string>
     <string name="ipv6_dialog_tile">Sisesta IPv6 Aadress/Võrgumask CIDR formaadis (nt. 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Sisesta IPv4 Aadress/Võrgumask CIDR formaadis (nt. 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4 aadress</string>
@@ -68,8 +66,6 @@
     <string name="remote_tlscn_check_title">Sertifikaadi domeeninime kontroll</string>
     <string name="enter_tlscn_dialog">Määrake meetod millega kontrollida eemalasuva sertifikaadi DN (n.: C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nMäärata saab kas täieliku DN, RDN (openvpn.blinkt.de eelmises näites) või eesliitega RDN kontrolli.\n\nRDN eesliite kasutamisel vastab sellele nii \"Server\", \"Server-1\" kui ka \"Server-2\"\n\nTekstivälja tühjaks jätmisel kontrollitakse kas RDN  on vastavuses serveri nimega.\n\nDetailsema info leiate OpenVPN 2.3.1+ käsiraamatust —kinnita-x509-nimi all</string>
     <string name="enter_tlscn_title">Eemalasuva sertifikaadi subjekt</string>
-    <string name="tls_key_auth">Lubab TLS võtmega autentimise</string>
-    <string name="tls_auth_file">TLS Auth fail</string>
     <string name="pull_on_summary">Küsib serverist IP aadresse, marsruute ja ajastusvalikuid.</string>
     <string name="pull_off_summary">Andmeid ei küsita serverist. Seadistused tuleb määrata allpool.</string>
     <string name="use_pull">Sikuta seadistused</string>

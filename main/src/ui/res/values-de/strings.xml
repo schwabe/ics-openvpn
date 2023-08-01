@@ -27,8 +27,8 @@
     <string name="pkcs12pwquery">PKCS12-Passwort</string>
     <string name="file_select">Auswählen&#8230;</string>
     <string name="file_nothing_selected">Nichts ausgewählt</string>
-    <string name="useTLSAuth">TLS-Authentifizierung verwenden</string>
-    <string name="tls_direction">TLS-Richtung</string>
+    <string name="useTLSAuth">Control channel Authentifizierung/Verschlüsselung benutzen</string>
+    <string name="tls_direction">Authentifizierung/Verschlüsselung Verfahren</string>
     <string name="ipv6_dialog_tile">Tragen Sie die IPv6-Adresse und Netzmaske im CIDR-Format ein (z.B. 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Tragen Sie die IPv4-Adresse und Netzmaske im CIDR-Format ein (z.B. 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4-Adresse</string>
@@ -69,8 +69,8 @@
     <string name="remote_tlscn_check_title">Hostnamen überprüfen</string>
     <string name="enter_tlscn_dialog">Geben Sie hier die Methode an, mit welcher der DN des Serverzertifikates (z. B. C=DE, L=Paderborn, OU=Avian IP-Carrier, CN=openvpn.blinkt.de) überprüft wird.\n\nSie können den vollständigen DN, den RDN (openvpn.blinkt.de im Beispiel) oder ein RDN-Präfix angeben.\n\nDer RDN-Präfix \"Server\" erlaubt z.B. \"Server-1\" und \"Server-2\".\n\nWenn Sie das Eingabefeld leer lassen, wird der RDN gegen den Servernamen geprüft.\n\n Weitere Details finden Sie in der Manpage von OpenVPN 2.3.1+ unter —verify-x509-name</string>
     <string name="enter_tlscn_title">Subject des Serverzertifikats</string>
-    <string name="tls_key_auth">TLS-Schlüssel-Authentifizierung verwenden</string>
-    <string name="tls_auth_file">Schlüssel-Datei</string>
+    <string name="tls_key_auth">Aktiviert zusätzliche Authentifizierung/Verschlüsselung für den OpenVPN control channel</string>
+    <string name="tls_auth_file">TLS-Auth/TLS-Crypt Datei</string>
     <string name="pull_on_summary">IP-Adressen, Routen und andere Optionen vom Server anfordern.</string>
     <string name="pull_off_summary">Keine Informationen werden vom Server bezogen. Alle Einstellungen müssen unten manuell getätigt werden.</string>
     <string name="use_pull">Informationen abrufen</string>
@@ -261,8 +261,10 @@
     <string name="encryption_cipher">Verschlüsselungsalgorithmus</string>
     <string name="packet_auth">Paket-Authentifizierung</string>
     <string name="auth_dialog_title">Geben Sie den Authentifizierungsalgorithmus an</string>
+    <string name="built_by">gebaut von %1$s (FP: %2$s)</string>
     <string name="debug_build">Testversion</string>
     <string name="official_build">offizielle Version</string>
+    <string name="official_o2build">offizielle App nur mit OpenVPN2 Unterstützung</string>
     <string name="make_selection_inline">In das Profil einbetten</string>
     <string name="crashdump">Absturzinformationen</string>
     <string name="add">Hinzufügen</string>

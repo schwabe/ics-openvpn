@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Geslo PKCS12</string>
     <string name="file_select">Izberi &#8230;</string>
     <string name="file_nothing_selected">Izbrati morate datoteko</string>
-    <string name="useTLSAuth">Uporabi overitev TLS</string>
-    <string name="tls_direction">Smer TLS</string>
     <string name="ipv6_dialog_tile">Vnesite naslov IPv6/masko omrežja v obliki CIDR (npr. 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Vnesite naslov IPv4/masko omrežja v obliki CIDR (npr. 1.2.3.4/24)</string>
     <string name="ipv4_address">Naslov IPv4</string>
@@ -67,8 +65,6 @@
     <string name="remote_tlscn_check_title">Preveri ime gost. potrdila</string>
     <string name="enter_tlscn_dialog">Določite preverjanje, ki naj se uporabi za preverjanje DN-a oddaljenega potrdila (npr. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de).\n\nDoločite celoten DN ali RDN (npr. openvpn.blinkt.de) ali predpono RDN-a za preverjanje.\n\nKadar uporabljate predpono RDN, se \"Strežnik\" primerja s \"Strežnik-1\" in \"Strežnik-2\".\n\nČe pustite besedilno polje prazno, bo RDN preverjen z imenom gostitelja.\n\nZa več podatkov glejte OpenVPN 2.3.1 + stran man v —verify-x509-name.</string>
     <string name="enter_tlscn_title">Zadeva oddaljenega potrdila</string>
-    <string name="tls_key_auth">Omogoči overitev ključa TLS</string>
-    <string name="tls_auth_file">Datoteka overitve TLS</string>
     <string name="pull_on_summary">Zahteva naslove IP, poti in časovne možnosti od strežnika.</string>
     <string name="pull_off_summary">Nobeni podatki niso zahtevani od strežnika. Nastavitve morate določiti spodaj.</string>
     <string name="use_pull">Dobi nast.</string>

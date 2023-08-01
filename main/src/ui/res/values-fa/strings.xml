@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 رمز عبور12233445</string>
     <string name="file_select">انتخاب کنید&#8230;</string>
     <string name="file_nothing_selected">شما باید یک فایل را انتخاب کنید</string>
-    <string name="useTLSAuth">استفاده از تایید اعتبار رمزگذاری TLS</string>
-    <string name="tls_direction">مسیر  TLS</string>
     <string name="ipv6_dialog_tile">آدرس IPv6/نقاب شبکه را در قالب CIDR وارد کنید (مانند 2000:dd::23 / 64)</string>
     <string name="ipv4_dialog_title">آدرس IPv4/نقاب شبکه را در قالب CIDR وارد کنید (مانند 1.2:dd::3.4 / 24)</string>
     <string name="ipv4_address">آدرس IPv4</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">بررسی مجوز نام میزبان</string>
     <string name="enter_tlscn_dialog">مشخص کنید چک مورد استفاده برای تأیید گواهی از راه دور DN (به عنوان مثال C = DE، L = Paderborn، OU = حامل آی پی پرندگان، CN = openvpn.blinkt.de) \n\n مشخص DN کامل یا RDN (openvpn.blinkt.de در مثال مثال) یا یک پیشوند RDN برای تأیید. \n\n در هنگام استفاده از پیشوند RDN \"سرور\" مطابقت با \"سرور-1\" و \"سرور-2\" \n\n درحال خواندن فیلد خالی RDN در برابر نام میزبان سرور است.\n\n برای جزئیات بیشتر، صفحه اصلی OpenVPN 2.3.1+ تحت نام -verify-x509-name را ببینید</string>
     <string name="enter_tlscn_title">موضوع گواهی ریموت</string>
-    <string name="tls_key_auth">TLS Key Authentication را فعال می کند</string>
-    <string name="tls_auth_file">پرونده TLS Auth</string>
     <string name="pull_on_summary">درخواست آدرس های IP، مسیرها و گزینه های زمان بندی از سرور.</string>
     <string name="pull_off_summary">اطلاعاتی از سرور درخواست نشده است. تنظیمات باید در زیر مشخص شوند.</string>
     <string name="use_pull">تنظیمات را بکشید</string>
@@ -204,6 +200,8 @@
     <string name="using_proxy">در حال استفاده از پراکسی %1$s %2$s</string>
     <string name="use_system_proxy">استفاده از پروکسی سیستم</string>
     <string name="use_system_proxy_summary">از پیکربندی گسترده سیستم برای پروکسی های HTTP / HTTPS برای اتصال استفاده کنید.</string>
+    <string name="keep_vpn_connected_summary">OpenVPN VPN مشخص شده را در هنگام بوت شدن سیستم متصل می کند و سعی می کند VPN را متصل نگه دارد.</string>
+    <string name="keep_vpn_connected">VPN را متصل نگه دارید</string>
     <string name="ignore">چشم پوشی</string>
     <string name="restart">راه اندازی مجدد</string>
     <string name="restart_vpn_after_change">تغییرات پیکربندی بعد از راه اندازی مجدد VPN اعمال می شود. (دوباره) VPN را شروع کنید?</string>

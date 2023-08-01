@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Пароль для PKCS12</string>
     <string name="file_select">Выбрать&#8230;</string>
     <string name="file_nothing_selected">Вы должны выбрать файл</string>
-    <string name="useTLSAuth">Использовать аутентификацию TLS</string>
-    <string name="tls_direction">Направление проверки TLS</string>
     <string name="ipv6_dialog_tile">Введите адрес/маску подсети IPv6 в формате CIDR (например, 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Введите адрес/маску подсети IPv4 в формате CIDR (например, 1.2.3.4/24)</string>
     <string name="ipv4_address">Адрес IPv4</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">Проверка имени хоста сертификата</string>
     <string name="enter_tlscn_dialog">Введите значение для проверки DN удалённого сертификата (например, C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nВозможные значения: полный DN или RDN (в примере выше openvpn.blinkt.de) или только префикс RDN для проверки.\n\nПри использовании префикса RDN, «Server» подойдёт для «Server-1» и «Server-2»\n\nПри пустом текстовом поле будет проверяться, что RDN совпадает с именем узла.\n\nПодробности смотрите в руководстве OpenVPN 2.3.1+, раздел --verify-x509-name</string>
     <string name="enter_tlscn_title">Субъект удалённого сертификата</string>
-    <string name="tls_key_auth">Включить аутентификацию по TLS ключу</string>
-    <string name="tls_auth_file">Файл аутентификации TLS</string>
     <string name="pull_on_summary">Запрашивает IP адреса, маршрутизацию и параметры времени с сервера.</string>
     <string name="pull_off_summary">Информация с сервера не поступила. Ниже необходимо указать настройки.</string>
     <string name="use_pull">Запросить настройки</string>
@@ -204,6 +200,8 @@
     <string name="using_proxy">Используется прокси %1$s %2$s</string>
     <string name="use_system_proxy">Использовать системный прокси</string>
     <string name="use_system_proxy_summary">Использовать системные настройки для подключения HTTP/HTTPS прокси.</string>
+    <string name="keep_vpn_connected_summary">OpenVPN подключится к указанному VPN при старте системы и будет стараться держать VPN подключённым.</string>
+    <string name="keep_vpn_connected">Держать VPN подключённым</string>
     <string name="ignore">Игнорировать</string>
     <string name="restart">Перезагрузка</string>
     <string name="restart_vpn_after_change">Изменения конфигурации действительны после перезапуска VPN. (Пере)запустить VPN сейчас?</string>
@@ -507,4 +505,5 @@ DNS не работает, если сервер DNS не в диапазоне 
     <string name="allow_translations_summary">Использовать локализацию приложения с помощью перевода, выполненного сообществом. Потребуется перезапуск приложения.</string>
     <string name="tls_profile">Профиль безопасности TLS</string>
     <string name="encrypt_profiles">Пробовать шифровать профили в хранилище (если поддерживается ОС Android)</string>
+    <string name="missing_notification_permission">Отсутствует разрешение на уведомления. Оно используется для отображения состояния VPN и уведомления о необходимом взаимодействии с пользователем, например, о многофакторной авторизации.\n\nЩелкните по этому сообщению, чтобы предоставить приложению разрешение на уведомления</string>
 </resources>

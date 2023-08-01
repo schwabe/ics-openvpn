@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Password PKCS12</string>
     <string name="file_select">Pilih&#8230;</string>
     <string name="file_nothing_selected">Anda harus memilih setidaknya satu berkas</string>
-    <string name="useTLSAuth">Gunakan Autentikasi TLS</string>
-    <string name="tls_direction">Pengarah TLS</string>
     <string name="ipv6_dialog_tile">Masukkan Alamat IPv6/Netmask dalam Format CIDR (contoh: 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Masukkan IPv4 Address/Netmask dalam format CIDR (contoh: 1.2.3.4/24)</string>
     <string name="ipv4_address">Alamat IPv4</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">Cek nama sertifikat Host</string>
     <string name="enter_tlscn_dialog">Tentukan nilai yang digunakan untuk memverifikasi sertifikat remote DN (misal C=nama perusahaan, L=Kota lokasi, OU=nama departemen perusahaan, CN=openvpn.blinkt.de. Tentukan DN atau RDN yang lengkap (dalam contoh: openvpn.blinkt.de) atau sebuah awalan RDN untuk verifikasi. Saat memakai RDN awalan \"server\" cocok dengan \"server-1\" dan \"server-2\". Mengosongkan field akan membuat RDN diperiksa dengan nama host server. Lebih jelasnya lihat OpenVPN 2.3.1 manpage di bagian -verify-x509-name</string>
     <string name="enter_tlscn_title">Subyek sertifikat remote</string>
-    <string name="tls_key_auth">Aktifkan otentifikasi kunci TLS</string>
-    <string name="tls_auth_file">Berkas otintikasi TLS</string>
     <string name="pull_on_summary">Meminta pilihan alamat IP, rute dan waktu dari server.</string>
     <string name="pull_off_summary">Tidak ada informasi diminta dari server. Seting harus ditentukan di bawah ini</string>
     <string name="use_pull">Tarik pengaturan</string>

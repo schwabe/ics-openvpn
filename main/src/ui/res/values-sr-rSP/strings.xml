@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 Лозинка</string>
     <string name="file_select">Изабери&#8230;</string>
     <string name="file_nothing_selected">Морате изабрати датотеку</string>
-    <string name="useTLSAuth">Користи TLS аутентификацију</string>
-    <string name="tls_direction">TLS смер</string>
     <string name="ipv6_dialog_tile">Унесите ИПв6 адресу / мрежну маску у ЦИДР формату (нпр. 2000: дд :: 23/64)</string>
     <string name="ipv4_dialog_title">Унесите ИПв4 адресу / мрежну маску у ЦИДР формату (нпр. 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4 адреса</string>
@@ -68,8 +66,6 @@
     <string name="remote_tlscn_check_title">Провера сертификата хоста </string>
     <string name="enter_tlscn_dialog">Наведите проверу која се користи за верификацију удаљеног ДН цертификата (нпр. Ц = ДЕ, Л = Падерборн, ОУ = авијски ИП носачи, ЦН = опенвпн.блинкт.де)\n\nНаведите комплетну ДН или РДН (опенвпн.блинкт.де у пример) или РДН префикс за верификацију.\n\nКада користите РДН префикс „Сервер“ се подудара са „Сервер-1“ и „Сервер-2“\n\nАко текстуално поље остави празно, РДН ће проверити у односу на име главног сервера.\n\nЗа више детаља погледајте ОпенВПН 2.3.1+ манпаге под —верифи-к509-наме</string>
     <string name="enter_tlscn_title">Удаљени предмет цертификата</string>
-    <string name="tls_key_auth">Омогућава провјеру аутентичности ТЛС кључа</string>
-    <string name="tls_auth_file">Ауторска датотека ТЛС</string>
     <string name="pull_on_summary">Захтијева ИП адресе, руте и опције времена од сервера.</string>
     <string name="pull_off_summary">Информације се не захтевају од сервера. Подешавања морају бити наведена у наставку.</string>
     <string name="use_pull">Повуците Подешавања</string>

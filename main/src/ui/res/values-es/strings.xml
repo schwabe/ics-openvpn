@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Contraseña PKCS12</string>
     <string name="file_select">Seleccionar&#8230;</string>
     <string name="file_nothing_selected">Debe seleccionar un archivo</string>
-    <string name="useTLSAuth">Utilizar la autenticación TLS</string>
-    <string name="tls_direction">Dirección TLS</string>
     <string name="ipv6_dialog_tile">Introduzca la dirección/máscara de red IPv6 en formato CIDR (por ejemplo, 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Introduzca la dirección/máscara de red IPv4 en formato CIDR (por ejemplo, 1.2.3.4/24)</string>
     <string name="ipv4_address">Dirección IPv4</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">Comprobación del certificado de nombre de host</string>
     <string name="enter_tlscn_dialog">Especifica el chequeo usado para verificar el certificado remoto DN (ej. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nEspecifica el DN completo o el RDN (openvpn.blinkt.de en el ejemplo) o un prefijo RDN para la verificación.\n\nCuando se usa un prefijo RDN como \"Server\" este coincide también con \"Server-1\" y \"Server-2\"\n\nDejando el campo de texto vacío verificara el RDN contra el nombre host del servidor.\n\nPara más detalles ve la página de manual (manpage) de OpenVPN 2.3.1+ en --verify-x509-name</string>
     <string name="enter_tlscn_title">Sujeto del Certificado Remoto</string>
-    <string name="tls_key_auth">habilita la autenticación de clave TLS</string>
-    <string name="tls_auth_file">Archivo de autenticación TLS</string>
     <string name="pull_on_summary">Obtener Direcciones IP, rutas y opciones de sincronizacion del servidor.</string>
     <string name="pull_off_summary">No se pedira informacion del servidor. Necesita especifiar la configuracion abajo.</string>
     <string name="use_pull">Obtener Configuracion</string>

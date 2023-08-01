@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Hasło PKCS12</string>
     <string name="file_select">Wybierz&#8230;</string>
     <string name="file_nothing_selected">Wybierz plik</string>
-    <string name="useTLSAuth">Użyj uwierzytelniania TLS</string>
-    <string name="tls_direction">Kierunek TLS</string>
     <string name="ipv6_dialog_tile">Wprowadź adres IPv6 w formacie CIDR (np. 2000:dd::23 / 64)</string>
     <string name="ipv4_dialog_title">Wprowadź adres IPv4 w formacie CIDR (np. 1.2.3.4/24)</string>
     <string name="ipv4_address">Adres IPv4</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">Weryfikuj nazwę domenową zawartą w certyfikacie</string>
     <string name="enter_tlscn_dialog">Określ czynność weryfikującą DN zdalnego certyfikatu (np. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nUżyj pełnego DN lub RDN (przykładowo penvpn.blinkt.de), lub prefiks RDN w celu weryfikacji\n\nUżywając prefiksu \"Serwer\", RDN będzie prawidłowy dla \"Serwer-1\" lub \"Serwer-Agaty\"\n\nPozostawiając pole puste RDN będzie sprawdzany pod kątem nazwy serwera.\n\nAby uzyskać więcej informacji, spójrz do podręcznika OpenVPN 2.3.1 w dziale —verify-x509-name</string>
     <string name="enter_tlscn_title">Podmiot zdalnego certyfikatu</string>
-    <string name="tls_key_auth">Włącza uwierzytelnianie kluczem TLS</string>
-    <string name="tls_auth_file">Plik TLS</string>
     <string name="pull_on_summary">Pobierz z serwera adresy IP, trasy oraz inne opcje.</string>
     <string name="pull_off_summary">Żadne opcje nie będą pobierane z serwera, należy je ustawić poniżej.</string>
     <string name="use_pull">Pobierz ustawienia</string>

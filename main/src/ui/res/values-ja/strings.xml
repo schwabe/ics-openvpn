@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12のパスワード</string>
     <string name="file_select">選択&#8230;</string>
     <string name="file_nothing_selected">ファイルを選択する必要があります</string>
-    <string name="useTLSAuth">TLS認証を使用する</string>
-    <string name="tls_direction">TLS Direction</string>
     <string name="ipv6_dialog_tile">IPv6アドレスをCIDR形式で入力(例:2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">IPv4アドレスをCIDR形式で入力(例:1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4アドレス</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">証明書のホスト名を確認する</string>
     <string name="enter_tlscn_dialog">リモート証明書の照合に使用する識別名(DN)を指定します。(例: C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\n完全な識別名(DN)または相対識別名(RDN)、あるいは相対識別名のプリフィクスを指定します。\n\nたとえば相対識別名のプリフィクスとして\"Server\"を指定すると、\"Server-1\"と\"Server-2\"にマッチします。\n\n空欄にした場合は相対識別名とサーバのホスト名をチェックします。\n\n詳細についてはOpenVPN 2.3.1以降のマニュアルの「--verify-x509-name」の項を参照してください。</string>
     <string name="enter_tlscn_title">リモート証明書サブジェクト</string>
-    <string name="tls_key_auth">TLS鍵認証を有効にします。</string>
-    <string name="tls_auth_file">TLS 認証ファイル</string>
     <string name="pull_on_summary">IPアドレス、経路情報、DNSなどの情報をサーバから取得します。</string>
     <string name="pull_off_summary">サーバからは何も情報が取得できません。指定が必要な設定は以下の通りです。</string>
     <string name="use_pull">設定情報を取得する</string>

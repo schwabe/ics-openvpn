@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Contrasenya PKCS12</string>
     <string name="file_select">Selecciona&#8230;</string>
     <string name="file_nothing_selected">Has de seleccionar un fitxer</string>
-    <string name="useTLSAuth">Utiltiza autenticació TLS</string>
-    <string name="tls_direction">Direcció TLS</string>
     <string name="ipv6_dialog_tile">Introduïu l\'adreça/mascara de xarxa IPv6 en format CIDR Format (e.g. 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Introduïu l\'adreça/mascara de xarxa IPv4 en format CIDR  (e.g. 1.2.3.4/24)</string>
     <string name="ipv4_address">Adreça IPv4</string>

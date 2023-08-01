@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Parola PKCS12</string>
     <string name="file_select">Selectaţi&#8230;</string>
     <string name="file_nothing_selected">Trebuie să selectaţi un fişier</string>
-    <string name="useTLSAuth">Folosiţi autentificare TLS</string>
-    <string name="tls_direction">Direcţie TLS</string>
     <string name="ipv6_dialog_tile">Introduceţi adresa IPv6/Netmask în Format CIDR (ex. 2000:dd::23 / 64)</string>
     <string name="ipv4_dialog_title">Introduceţi adresa IPv4/Netmask în format CIDR (de exemplu, 1.2.3.4/24)</string>
     <string name="ipv4_address">Adresă IPv4</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">Verficare hostname certificat</string>
     <string name="enter_tlscn_dialog">Specifică verificarea ce va fi utilizată pentru certificatul DN (e.g. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nSpecifică DN complet sau RDN (openvpn.blinkt.de in exemplu) sau un prefix RDN pentru verificare.\n\nCând folosiți prefix RDN \"Server\" face match si cu \"Server-1\" și \"Server-2\"\n\nDacă lăsați câmpul gol se va verifica RDN contra hostaname-ul serverului.\n\nPentru mai multe detalii verificați manualul OpenVPN 2.3.1+ la —verify-x509-name</string>
     <string name="enter_tlscn_title">Subiect certificat remote</string>
-    <string name="tls_key_auth">Activează autentificarea cu cheie TLS</string>
-    <string name="tls_auth_file">Fişier TLS Auth</string>
     <string name="pull_on_summary">Cere adrese IP, rute şi opţiuni timing de la server.</string>
     <string name="pull_off_summary">Nu se cere nici o informaţie de la server. Setările trebuie specificate mai jos.</string>
     <string name="use_pull">Setări pull</string>

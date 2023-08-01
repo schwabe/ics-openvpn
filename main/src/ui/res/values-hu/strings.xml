@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 Jelszó</string>
     <string name="file_select">Válasszon&#8230;</string>
     <string name="file_nothing_selected">Válasszon egy fájlt</string>
-    <string name="useTLSAuth">TLS-hitelesítés használata</string>
-    <string name="tls_direction">TLS irány</string>
     <string name="ipv6_dialog_tile">Adja meg az IPv6 címet CIDR formában (pl.: 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Adja meg az IPv4 címet CIDR formában (pl.: 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4 Cím</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">Tanúsítvány Kiszolgálónév Ellenőrzés</string>
     <string name="enter_tlscn_dialog">Adja meg a távoli tanúsítvány DN ellenőrzését (pl.: C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nAdja meg a teljes DN-t vagy az RDN-t (openvpn.blinkt.de a példában) vagy egy RDN prefix-et az ellenőrzéshez.\n\nRDN prefix használatakor a \"Server\" egyezik a \"Server-1\"-gyel és a \"Server-2\"-vel\n\nA mező üresen hagyásakor az RDN a kiszolgáló nevével kerül ellenőrzésre.\n\nTovábbi részleteket az OpenVPN 2.3.1+ manuál oldalon talál —verify-x509-name</string>
     <string name="enter_tlscn_title">Távoli tanúsítvány tárgy</string>
-    <string name="tls_key_auth">TLS Key Hitelesítés engedélyetése</string>
-    <string name="tls_auth_file">TLS Auth Fájl</string>
     <string name="pull_on_summary">IP címek, útvonalak és időzítések lekérése a kiszolgálótól.</string>
     <string name="pull_off_summary">Nem történt információkérés a kiszolgálótól. Alul meg kell adni a beállításokat.</string>
     <string name="use_pull">Pull Beállítások</string>

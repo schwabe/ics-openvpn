@@ -17,9 +17,9 @@
         <item>مزود المصادقة الخارجية</item>
     </string-array>
     <string-array name="tls_directions_entries">
-        <item translatable="false">0</item>
-        <item translatable="false">1</item>
-        <item>غير محدد</item>
+        <item translatable="false">tls-auth - --direction 0</item>
+        <item translatable="false">tls-auth - --direction 1</item>
+        <item>tls-auth --direction not specified</item>
         <item>التشفير (tls-سرداب)https://crowdin.com/translate/ics-openvpn/1395/en-ar#2618757</item>
         <item>TLS تشفير V2.0</item>
     </string-array>

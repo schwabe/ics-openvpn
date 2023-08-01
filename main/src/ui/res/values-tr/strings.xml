@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 Parolası</string>
     <string name="file_select">Seç&#8230;</string>
     <string name="file_nothing_selected">Bir dosya seçmelisiniz</string>
-    <string name="useTLSAuth">TLS Kimlik Doğrulamasını Kullan</string>
-    <string name="tls_direction">TLS Yönü</string>
     <string name="ipv6_dialog_tile">CIDR biçiminde IPv6 adresi/ağ maskesi girin (örneğin 2000:dd::23 / 64)</string>
     <string name="ipv4_dialog_title">CIDR biçiminde IPv4 Adresi/Ağ Maskesi girin (örneğin 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4 Adresi</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">Sertifika Makine Adı Denetimi</string>
     <string name="enter_tlscn_dialog">Uzak sertifika DN\'sini doğrulamak için kullanılan denetimi belirtin (örn. C=TR, L=Ankara, OU=IP Sağlayıcı, CN=openvpn.blinkt.de)\n\nTam DN veya RDN\'yi belirtin (örnekte openvpn.blinkt.de) veya doğrulama için bir RDP ön eki.\n\nRDN ön eki kullanıldığında \"Sunucu\" \"Sunucu-1\" ve \"Sunucu-2\" ile eşleşir\n\nMetin alanını boş bırakmak, RDN\'i sunucu makine adına karşı denetleyecektir.\n\nDaha fazla bilgi için bkz. OpenVPN 2.3.1+ man sayfası konusu —verify-x509-name</string>
     <string name="enter_tlscn_title">Uzak sertifika konusu</string>
-    <string name="tls_key_auth">TLS Anahtar Kimlik Doğrulamasını etkinleştirir</string>
-    <string name="tls_auth_file">TLS Kimlik Doğrulama Dosyası</string>
     <string name="pull_on_summary">Sunucudan IP adresleri, rotalar ve zamanlama seçeneklerini talep eder.</string>
     <string name="pull_off_summary">Sunucudan hiçbir bilgi talep edilmez. Ayarlar aşağıda belirtilmelidir.</string>
     <string name="use_pull">Ayarları Çek</string>
@@ -204,6 +200,7 @@
     <string name="using_proxy">%1$s %2$s vekil sunucusu kullanılıyor</string>
     <string name="use_system_proxy">Sistem vekil sunucusunu kullan</string>
     <string name="use_system_proxy_summary">Bağlanmak için sistem çapındaki HTTP/HTTPS vekil sunucularını kullan.</string>
+    <string name="keep_vpn_connected_summary">OpenVPN, sistem önyüklemesinde belirtilen VPN\'ye bağlanacak ve VPN\'yi bağlı tutmaya çalışacaktır.</string>
     <string name="ignore">Yoksay</string>
     <string name="restart">Yeniden Başlat</string>
     <string name="restart_vpn_after_change">Yapılandırma değişiklikleri, VPN yeniden başlattıktan sonra geçerli olur. VPN (yeniden) başlatılsın mı?</string>

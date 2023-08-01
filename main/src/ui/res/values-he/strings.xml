@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">סיסמת PKCS12</string>
     <string name="file_select">בחירה&#8230;</string>
     <string name="file_nothing_selected">עליך לבחור קובץ</string>
-    <string name="useTLSAuth">להשתמש באימות TLS</string>
-    <string name="tls_direction">כיוון TLS</string>
     <string name="ipv6_dialog_tile">הזן כתובת IPv6 / מסיכת רשת בפורמט CIDR (למשל 2000: dd :: 23/64)</string>
     <string name="ipv4_dialog_title">הזן כתובת IPv4 / מסיכת רשת בפורמט CIDR (למשל 1.2.3.4/24)</string>
     <string name="ipv4_address">כתובת IPv4</string>
@@ -70,8 +68,6 @@
     <string name="remote_tlscn_check_title">בדיקת תעודת מארח</string>
     <string name="enter_tlscn_dialog">ציין את הצ\'ק המשמש לאימות ה- DN האישור המרוחק (למשל C = DE, L = Paderborn, OU = Avi IP IP, CN = openvpn.blinkt.de)\n\nציין את ה- DN המלא או ה- RDN (openvpn.blinkt.de ב הדוגמה) או קידומת RDN לאימות.\n\nבעת שימוש בקידומת RDN \"Server\" תואם את \"Server-1\" ו- \"Server-2\"\n\nהשארת שדה הטקסט ריק תבדוק את ה- RDN כנגד שם המארח של השרת.\n\nלפרטים נוספים עיין בדף האדם של OpenVPN 2.3.1+ תחת — verify-x509-name</string>
     <string name="enter_tlscn_title">נושא אישור מרחוק</string>
-    <string name="tls_key_auth">מפעיל את אימות מפתח TLS</string>
-    <string name="tls_auth_file">קובץ TLS Auth</string>
     <string name="pull_on_summary">מבקש מהשרת כתובות IP, ניתובים (routes) ואפשרויות תזמון.</string>
     <string name="pull_off_summary">לא ביקשת מידע מהשרת. יש לציין את ההגדרות להלן.</string>
     <string name="use_pull">משיכת הגדרות</string>

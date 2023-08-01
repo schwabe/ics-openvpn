@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 lösenord</string>
     <string name="file_select">Välj&#8230;</string>
     <string name="file_nothing_selected">Du måste välja en fil</string>
-    <string name="useTLSAuth">Använd TLS-autentisering</string>
-    <string name="tls_direction">TLS riktning</string>
     <string name="ipv6_dialog_tile">Ange IPv6-adress/Netmask i CIDR Format (t.ex. 2000:dd::23 / 64)</string>
     <string name="ipv4_dialog_title">Ange IPv4-adressen/Netmask i CIDR Format (t.ex. 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4-adress</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">Certifikat Hostname kontroll</string>
     <string name="enter_tlscn_dialog">Ange den kontroll som används för att verifiera Fjärrcertifikat DN (e.g. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nSpecificera en komplett DN eller RDN (openvpn.blinkt.de i exemplet) eller ett RDN prefix för verifiering.\n\nOm RDN prefix används matchar \"Server\" både \"Server-1\" och \"Server-2\" \n\nLämnas textfältet tomt matchas RDN mot server hostname.\n\nFor mer information se OpenVPN 2.3.1+ manpage under —verify-x509-name</string>
     <string name="enter_tlscn_title">Fjärrcertifikats ämne</string>
-    <string name="tls_key_auth">Aktiverar TLS Key Authetication</string>
-    <string name="tls_auth_file">TLS Auth fil</string>
     <string name="pull_on_summary">Begär IP-adresser, rutter och tidsalternativ från servern.</string>
     <string name="pull_off_summary">Ingen information begärs från servern. Inställningar behöver specificeras nedan.</string>
     <string name="use_pull">Hämta inställningar</string>

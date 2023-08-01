@@ -162,13 +162,7 @@ android {
             useLegacyPackaging = true
         }
     }
-
-    packaging {
-        jniLibs {
-            useLegacyPackaging = true
-        }
-    }
-
+    
     bundle {
         codeTransparency {
             signing {

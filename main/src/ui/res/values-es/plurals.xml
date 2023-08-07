@@ -13,7 +13,7 @@
         <item quantity="other">%d horas restantes</item>
     </plurals>
     <plurals name="minutes_left">
-        <item quantity="one">%d minuto restante</item>
-        <item quantity="other">%d minutos restantes</item>
+        <item quantity="one">%d Minuto restante</item>
+        <item quantity="other">%d Minutos restantes</item>
     </plurals>
 </resources>

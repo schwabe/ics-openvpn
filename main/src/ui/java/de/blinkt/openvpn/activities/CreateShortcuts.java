@@ -51,9 +51,6 @@ import java.util.Vector;
 public class CreateShortcuts extends ListActivity implements OnItemClickListener {
 
 
-    private static final int START_VPN_PROFILE= 70;
-
-
     private ProfileManager mPM;
     private VpnProfile mSelectedProfile;
 
@@ -128,7 +125,8 @@ public class CreateShortcuts extends ListActivity implements OnItemClickListener
 
         Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
         shortcutIntent.setClass(this, LaunchVPN.class);
-        shortcutIntent.putExtra(LaunchVPN.EXTRA_KEY,profile.getUUID().toString());
+        shortcutIntent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
+        shortcutIntent.putExtra(LaunchVPN.EXTRA_START_REASON, "shortcut");
 
         // Then, set up the container intent (the response to the caller)
 

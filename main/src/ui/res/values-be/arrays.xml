@@ -17,9 +17,9 @@
         <item>Знешняя праверка сапраўднасці правайдара</item>
     </string-array>
     <string-array name="tls_directions_entries">
-        <item translatable="false">0</item>
-        <item translatable="false">1</item>
-        <item>Не вызначана</item>
+        <item translatable="false">tls-auth - --direction 0</item>
+        <item translatable="false">tls-auth - --direction 1</item>
+        <item>tls-auth --direction not specified</item>
         <item>Шыфраванне (--tls-crypt)</item>
         <item>TLS Crypt V2</item>
     </string-array>
@@ -27,5 +27,17 @@
         <item>Адлучыцца і выдаліць пароль</item>
         <item>Адлучыцца і захаваць пароль</item>
         <item>Ігнараваць і паўтарыць</item>
+    </string-array>
+    <string-array name="compat_mode">
+        <item>Сучасныя стандарты</item>
+        <item>Версія OpenVPN 2.5.x</item>
+        <item>Версія OpenVPN 2.4.x</item>
+        <item>Версіі OpenVPN 2.3.x і больш старыя</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>небяспечны (не рэкамендуецца, дазваляе небяспечная шыфраванне)</item>
+        <item>традыцыйны (прадвызначана)</item>
+        <item>пажадана (рэкамендавана, але абмяжоўвае сумяшчальнасць)</item>
+        <item>Suite B (толькі эліптычныя крывыя, якія ўхваленыя NIST)</item>
     </string-array>
 </resources>

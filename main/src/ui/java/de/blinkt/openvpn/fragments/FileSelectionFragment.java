@@ -186,11 +186,11 @@ public class FileSelectionFragment extends ListFragment {
         if (!currentPath.equals(ROOT)) {
 
             item.add(ROOT);
-            addItem(ROOT, R.drawable.ic_root_folder_am);
+            addItem(ROOT, R.drawable.ic_baseline_folder_24);
             path.add(ROOT);
 
             item.add("../");
-            addItem("../", R.drawable.ic_root_folder_am);
+            addItem("../", R.drawable.ic_baseline_folder_24);
             path.add(f.getParent());
             parentPath = f.getParent();
 
@@ -248,11 +248,11 @@ public class FileSelectionFragment extends ListFragment {
                 ITEM_KEY, ITEM_IMAGE}, new int[]{R.id.fdrowtext, R.id.fdrowimage});
 
         for (String dir : dirsMap.tailMap("").values()) {
-            addItem(dir, R.drawable.ic_root_folder_am);
+            addItem(dir, R.drawable.ic_baseline_folder_24);
         }
 
         for (String file : filesMap.tailMap("").values()) {
-            addItem(file, R.drawable.ic_doc_generic_am);
+            addItem(file, R.drawable.ic_baseline_file_present_24);
         }
 
         fileList.notifyDataSetChanged();

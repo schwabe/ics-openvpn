@@ -41,11 +41,26 @@
     </RelativeLayout>
 
 
+    <TextView
+            android:id="@+id/noserver_active_warning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:drawableLeft="@drawable/ic_dialog_alert"
+            android:drawableStart="@drawable/ic_dialog_alert"
+            android:drawablePadding="10dp"
+            android:elevation="2dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/stdpadding"
+            android:layout_below="@id/switchBar"
+            android:text="@string/remote_no_server_selected"
+            android:visibility="visible"
+            tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_margin="@dimen/vpn_setting_padding"
         android:id="@+id/connection_recycler_view"
-        android:layout_below="@id/switchBar"
+        android:layout_below="@id/noserver_active_warning"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:verticalSpacing="@dimen/stdpadding"
@@ -53,20 +68,7 @@
         />
 
 
-    <TextView
-        android:id="@+id/noserver_active_warning"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:drawableLeft="@drawable/ic_dialog_alert"
-        android:drawableStart="@drawable/ic_dialog_alert"
-        android:drawablePadding="10dp"
-        android:elevation="2dp"
-        android:gravity="center_vertical"
-        android:padding="@dimen/stdpadding"
-        android:text="@string/remote_no_server_selected"
-        android:visibility="visible"
-        tools:visibility="visible" />
+
 
     <include layout="@layout/connection_fab" />
 

@@ -8,18 +8,18 @@
     <string-array name="vpn_types">
         <item>Certyfikaty</item>
         <item>Plik PKCS12</item>
-        <item>Certyfikat Android</item>
+        <item>Certyfikat Androida</item>
         <item>Nazwa użytkownika/Hasło</item>
         <item>Klucze statyczne</item>
         <item>Użytkownik/Hasło + Certyfikaty</item>
         <item>Użytkownik/Hasło + PKCS12</item>
         <item>Użytkownik/Hasło + Android</item>
-        <item>External Auth Provider</item>
+        <item>Zewnętrzny dostawca uwierzytelniania</item>
     </string-array>
     <string-array name="tls_directions_entries">
-        <item translatable="false">0</item>
-        <item translatable="false">1</item>
-        <item>Nieokreślone</item>
+        <item translatable="false">tls-auth - --direction 0</item>
+        <item translatable="false">tls-auth - --direction 1</item>
+        <item>tls-auth --direction not specified</item>
         <item>Szyfrowanie (--tls-crypt)</item>
         <item>TLS Crypt V2</item>
     </string-array>
@@ -27,5 +27,17 @@
         <item>Odłącz, zapomnij hasło</item>
         <item>Odłącz, zachowaj hasło</item>
         <item>Ignore, retry</item>
+    </string-array>
+    <string-array name="compat_mode">
+        <item>Modern defaults</item>
+        <item>rówieśnicy OpenVPN 2.5.x</item>
+        <item>rówieśnicy OpenVPN 2.4.x</item>
+        <item>OpenVPN 2.3.x i starsi rówieśnicy</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>insecure (not recommend, allows insecure crypto)</item>
+        <item>legacy (default)</item>
+        <item>preferowany (zalecana, ale ograniczona kompatybilność)</item>
+        <item>Suite B (tylko krzywe eliptyczne zatwierdzone przez NIST)</item>
     </string-array>
 </resources>

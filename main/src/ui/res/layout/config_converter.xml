@@ -35,6 +35,7 @@
                     android:visibility="gone" />
 
             <TextView
+                    android:layout_marginTop="@dimen/stdpadding"
                     android:id="@+id/compatmode_label"
                     style="@style/item"
                     android:text="@string/compat_mode_label"
@@ -51,6 +52,7 @@
                     tools:visibility="visible" />
 
             <TextView
+                    android:layout_marginTop="@dimen/stdpadding"
                     android:id="@+id/tls_profile_label"
                     style="@style/item"
                     android:text="@string/tls_profile"
@@ -83,6 +85,7 @@
                     tools:visibility="visible" />
 
             <CheckBox
+                    android:layout_marginTop="@dimen/stdpadding"
                     android:id="@+id/importpkcs12"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

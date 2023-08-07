@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 Wachtwoord</string>
     <string name="file_select">Selecteer&#8230;</string>
     <string name="file_nothing_selected">U moet een bestand selecteren</string>
-    <string name="useTLSAuth">Gebruik TLS autentificatie</string>
-    <string name="tls_direction">TLS Richting</string>
     <string name="ipv6_dialog_tile">Voer IPv6-adres/Netmask in CIDR-indeling in (bijv. 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Voer IPv4-adres/Netmask in CIDR-indeling in (bijv. 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4 Adres</string>
@@ -67,8 +65,6 @@
     <string name="remote_tlscn_check_title">Controleer Certificaat Hostname</string>
     <string name="enter_tlscn_dialog">Specificeer de controle die gebruikt wordt om het externe certificaat DN te verifiëren (bijv. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nSpecificeer de volledige DN of de RDN (openvpn.blinkt.de in het voorbeeld) of een RDN-voorvoegsel voor verificatie.\n\nWanneer het gebruikte RDN-voorvoegsel \"Server\" overeenkomt met \"Server-1\" en \"Server-2\"\n\nEen leeg tekstveld zorgt dat de RDN wordt gecontroleerd tegen de hostnaam van de server.\n\nVoor meer details zie de OpenVPN 2.3.1+ manpage onder --verify-x509-name</string>
     <string name="enter_tlscn_title">Externe certificaathouder</string>
-    <string name="tls_key_auth">Activeert TLS Key Authenticatie</string>
-    <string name="tls_auth_file">TLS Auth Bestand</string>
     <string name="pull_on_summary">Verzoek IP adres, routes en timing opties van de server.</string>
     <string name="pull_off_summary">Er wordt geen informatie gevraagd van de server. Instellingen moeten hieronder worden gespecificeerd.</string>
     <string name="use_pull">Verkrijg Instellingen</string>
@@ -201,8 +197,6 @@
     <string name="using_proxy">Proxy %1$s %2$s is in gebruik</string>
     <string name="use_system_proxy">Gebruik systeemproxy</string>
     <string name="use_system_proxy_summary">Gebruik de systeemconfiguratie voor HTTP/HTTPS proxies om te verbinden.</string>
-    <string name="onbootrestartsummary">OpenVPN verbindt met de opgegeven VPN als deze actief was bij het opstarten van het systeem. Lees de FAQ over verbindingswaarschuwingen voordat u deze optie gebruikt op Android &lt; 5.0.</string>
-    <string name="onbootrestart">Verbinden bij opstarten</string>
     <string name="ignore">Negeren</string>
     <string name="restart">Opnieuw starten</string>
     <string name="restart_vpn_after_change">Configuratiewijzigingen worden toegepast na het herstarten van de VPN. (Her)start het VPN nu?</string>
@@ -258,7 +252,6 @@
     <string name="encryption_cipher">Encryptiecijfer</string>
     <string name="packet_auth">Packet-authenticatie</string>
     <string name="auth_dialog_title">Voer de methode voor pakketauthenticatie in</string>
-    <string name="built_by">gebouwd door %s</string>
     <string name="debug_build">debug build</string>
     <string name="official_build">officiële build</string>
     <string name="make_selection_inline">Kopieer naar profiel</string>
@@ -356,7 +349,6 @@
     <string name="ab_tethering_44">Tethering werkt terwijl de VPN actief is. De tethered-verbinding maakt GEEN gebruik van de VPN.</string>
     <string name="ab_kitkat_mss">Vroege KitKat-versie heeft de verkeerde MSS-waarde ingesteld voor TCP-verbindingen (#61948). Probeer de mssfix-optie in te schakelen om deze bug te omzeilen.</string>
     <string name="ab_proxy">Android blijft uw proxy-instellingen gebruiken die zijn opgegeven voor de mobiel/wifi-verbinding wanneer er geen DNS-servers zijn ingesteld. OpenVPN voor Android waarschuwt u hierover in het logboek. <p>Wanneer een VPN een DNS-server instelt, gebruikt Android geen proxy. Er is geen API om een ​​proxy in te stellen voor een VPN-verbinding.</p></string>
-    <string name="ab_lollipop_reinstall">VPN-apps werken mogelijk niet meer wanneer ze worden verwijderd en opnieuw worden geïnstalleerd. Voor details zie #80074</string>
     <string name="ab_not_route_to_vpn">Het geconfigureerde client-IP en de IP\'s in het netwerkmask worden niet naar de VPN gerouteerd. OpenVPN werkt om deze bug heen door expliciet een route toe te voegen die overeenkomt met het IP-adres van de client en zijn netmask</string>
     <string name="ab_persist_tun">Als een tun-apparaat wordt geopend terwijl een ander tun-apparaat actief is, deze wordt gebruikt voor ondersteuning voor persist-tun, crasht het de VPNServices op het apparaat. Opnieuw opstarten is vereist om VPN opnieuw te laten werken. OpenVPN voor Android probeert te voorkomen dat het tun-apparaat opnieuw wordt geopend en als het echt nodig is, sluit het eerst de huidige TUN voordat het nieuwe TUN-apparaat wordt geopend om te voorkomen dat het crasht. Dit kan leiden tot een kort venster waarin pakketten via de niet-VPN-verbinding worden verzonden. Zelfs met deze tijdelijke oplossing crasht de VPNServices soms en is het opnieuw opstarten van het apparaat vereist.</string>
     <string name="ab_secondary_users">VPN werkt niet helemaal voor secundaire gebruikers.</string>
@@ -364,7 +356,6 @@
     <string name="ab_vpn_reachability_44">Alleen de bestemming kan worden bereikt via de VPN die bereikbaar is zonder VPN. IPv6 VPN\'s werken helemaal niet.</string>
     <string name="ab_only_cidr_title">Niet CIDR-routes</string>
     <string name="ab_proxy_title">Proxy-gedrag voor VPN\'s</string>
-    <string name="ab_lollipop_reinstall_title">Herinstalleren van VPN-apps</string>
     <string name="version_upto">%s en eerder</string>
     <string name="copy_of_profile">Kopie van %s</string>
     <string name="ab_not_route_to_vpn_title">Route naar het geconfigureerde IP-adres</string>

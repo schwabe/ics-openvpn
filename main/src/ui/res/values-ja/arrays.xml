@@ -17,9 +17,9 @@
         <item>外部認証プロバイダ</item>
     </string-array>
     <string-array name="tls_directions_entries">
-        <item translatable="false">0</item>
-        <item translatable="false">1</item>
-        <item>未指定</item>
+        <item translatable="false">tls-auth - --direction 0</item>
+        <item translatable="false">tls-auth - --direction 1</item>
+        <item>tls-auth --direction not specified</item>
         <item>暗号化(tls-crypt)</item>
         <item>TLS 暗号化 V2</item>
     </string-array>
@@ -34,5 +34,17 @@
         <item>パスワードを破棄して切断</item>
         <item>パスワードを維持して切断</item>
         <item>無視して再試行</item>
+    </string-array>
+    <string-array name="compat_mode">
+        <item>最新のデフォルト</item>
+        <item>OpenVPN 2.5.x peers</item>
+        <item>OpenVPN 2.4.xピア</item>
+        <item>OpenVPN 2.3.x以前のピア</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>安全でない(非推奨、安全でない暗号を許可します)</item>
+        <item>レガシー(デフォルト)</item>
+        <item>おすすめ(推奨、ただし互換性が制限されます）</item>
+        <item>Suite B (only NIST approved elliptic curves)</item>
     </string-array>
 </resources>

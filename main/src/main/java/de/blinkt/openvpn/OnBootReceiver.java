@@ -12,12 +12,10 @@ import android.content.SharedPreferences;
 
 import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
+import de.blinkt.openvpn.core.VPNLaunchHelper;
 
 
 public class OnBootReceiver extends BroadcastReceiver {
-
-
-
 	// Debug: am broadcast -a android.intent.action.BOOT_COMPLETED
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -25,8 +23,8 @@ public class OnBootReceiver extends BroadcastReceiver {
 		final String action = intent.getAction();
 		SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
 
-		boolean useStartOnBoot = prefs.getBoolean("restartvpnonboot", false);
-		if (!useStartOnBoot)
+		boolean alwaysActive = prefs.getBoolean("restartvpnonboot", false);
+		if (!alwaysActive)
 			return;
 
 		if(Intent.ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_MY_PACKAGE_REPLACED.equals(action)) {
@@ -38,12 +36,6 @@ public class OnBootReceiver extends BroadcastReceiver {
 	}
 
 	void launchVPN(VpnProfile profile, Context context) {
-		Intent startVpnIntent = new Intent(Intent.ACTION_MAIN);
-		startVpnIntent.setClass(context, LaunchVPN.class);
-		startVpnIntent.putExtra(LaunchVPN.EXTRA_KEY,profile.getUUIDString());
-		startVpnIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		startVpnIntent.putExtra(LaunchVPN.EXTRA_HIDELOG, true);
-
-		context.startActivity(startVpnIntent);
+		VPNLaunchHelper.startOpenVpn(profile, context.getApplicationContext(), "on Boot receiver");
 	}
 }

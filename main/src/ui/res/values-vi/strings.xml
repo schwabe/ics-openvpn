@@ -27,13 +27,12 @@
     <string name="pkcs12pwquery">Mật khẩu PKCS12</string>
     <string name="file_select">Chọn&#8230;</string>
     <string name="file_nothing_selected">Bạn phải chọn một tập tin</string>
-    <string name="useTLSAuth">Sử dụng xác thực TLS</string>
-    <string name="tls_direction">Hướng TLS</string>
     <string name="ipv6_dialog_tile">Nhập địa chỉ IPv6/Netmask trong định dạng CIDR (ví dụ 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Nhập địa chỉ IPv4/Netmask trong định dạng CIDR (ví dụ 1.2.3.4/24)</string>
     <string name="ipv4_address">Địa chỉ IPv4</string>
     <string name="ipv6_address">Địa chỉ IPv6</string>
     <string name="custom_option_warning">Nhập tùy chọn cá nhân Open VPN. Sử dụng thận trọng. Lưu ý các thiết lập OpenVPN không thể hỗ trợ bởi thiết kế cấu hình của VPN. Nếu bạn thấy tùy chọn quan trọng hoặc mất mát, bạn có thể liên hệ với tác giả</string>
+    <string name="auth_username">Username (để không lại cho không xác thực)</string>
     <string name="auth_pwquery">Mật khẩu</string>
     <string name="static_keys_info">Đối với cấu hình tĩnh thì khóa TLS sẽ được dùng như khóa tĩnh</string>
     <string name="configure_the_vpn">Cấu hình VPN</string>
@@ -42,6 +41,7 @@
     <string name="duplicate_profile_name">Vui lòng nhập một tên hồ sơ duy nhất</string>
     <string name="profilename">Tên hồ sơ</string>
     <string name="no_keystore_cert_selected">Bạn phải chọn một chứng chỉ người dùng</string>
+    <string name="no_ca_cert_selected">Bạn phải chọn cái CA Chứng nhận hoặc bật kiểm tra vân tay ngang hàng</string>
     <string name="no_error_found">Không tìm thấy lỗi</string>
     <string name="config_error_found">Lỗi trong cấu hình</string>
     <string name="ipv4_format_error">Lỗi phân tích cú pháp địa chỉ IPv4</string>
@@ -67,8 +67,6 @@
     <string name="remote_tlscn_check_title">Kiểm tra chứng chỉ tên miền</string>
     <string name="enter_tlscn_dialog">Xác định để kiểm tra sử dụng chứng nhận từ xa DN (e.g. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nHoàn chỉnh các DN hoặc RDN (openvpn.blinkt.de làm ví dụ) hoặc một tiền tố RDN để xác minh.\n\nKhi dùng tiền tố RDN phù hợp \"Server-1\" và \"Server-2\"\n\nĐể trường văn bản trống sẽ kiểm tra tiền tố RDN phản biện tên miền máy chủ. \n\nĐể biết thêm chi tiết xem tại phần quản lý OpenVPN 2.3.1+ bên dưới —xác minh-x509-tên</string>
     <string name="enter_tlscn_title">Chủ đề chứng chỉ từ xa</string>
-    <string name="tls_key_auth">Cho phép xác thực khóa TLS</string>
-    <string name="tls_auth_file">Tập tin chứng thực TLS</string>
     <string name="pull_on_summary">Yêu cầu các địa chỉ IP, định tuyến và tùy chọn thời gian từ máy chủ.</string>
     <string name="pull_off_summary">Không có thông tin được yêu cầu từ máy chủ. Thiết lập cần phải được xác định bên dưới.</string>
     <string name="use_pull">Cài đặt kéo</string>
@@ -125,6 +123,7 @@
     <string name="no_vpn_support_image">Hình ảnh của bạn không hỗ trợ dịch vụ VPN API, xin lỗi :(</string>
     <string name="encryption">Mã hóa</string>
     <string name="cipher_dialog_title">Nhập phương thức mã hóa</string>
+    <string name="chipher_dialog_message">Nhập các thuật toán mật mã mã hóa dữ liệu được OpenVPN sử dụng, phân tách bằng: (--data-ciphers). Để trống để sử dụng mặc định của AES-256-GCM: AES-128-GCM: CHACHA20-POLY1305.</string>
     <string name="auth_dialog_message">Nhập cấu hình xác thực dùng cho OpenVPN. Để trống nếu sử dụng cấu hình mặc định.</string>
     <string name="settings_auth">Xác thực/Mã hóa</string>
     <string name="file_explorer_tab">Duyệt tập tin</string>
@@ -201,8 +200,6 @@
     <string name="using_proxy">Đang sử dụng proxy %1$s %2$s</string>
     <string name="use_system_proxy">Sử dụng proxy hệ thống</string>
     <string name="use_system_proxy_summary">Sử dụng các cấu hình hệ thống rộng cho HTTP/HTTPS proxy để kết nối.</string>
-    <string name="onbootrestartsummary">OpenVPN sẽ kết nối VPN xác định nếu nó đã hoạt động trên hệ thống khởi động. Xin vui lòng đọc hướng dẫn cảnh báo kết nối trước khi sử dụng tùy chọn này trên Android &lt; 5.0.</string>
-    <string name="onbootrestart">Kết nối khi khởi động</string>
     <string name="ignore">Bỏ qua</string>
     <string name="restart">Khởi động lại</string>
     <string name="restart_vpn_after_change">Cấu hình sẽ được áp dụng sau khi khởi động lại VPN. (Khởi động) bắt đầu VPN lại ngay bây giờ?</string>
@@ -258,7 +255,6 @@
     <string name="encryption_cipher">Mã hóa mật mã</string>
     <string name="packet_auth">Gói xác thực</string>
     <string name="auth_dialog_title">Nhập phương thức xác thực gói</string>
-    <string name="built_by">được xây dựng bởi %s</string>
     <string name="debug_build">bản dựng gỡ lỗi</string>
     <string name="official_build">bản dựng chính thức</string>
     <string name="make_selection_inline">Sao chép vào hồ sơ</string>
@@ -356,7 +352,6 @@
     <string name="ab_tethering_44">Tethering hoạt động trong khi VPN đang kích hoạt. Các kết nối Tetherd sẽ KHÔNG sử dụng VPN.</string>
     <string name="ab_kitkat_mss">Các phiên bản trước KitKat thiết lập giá trị MSS trên kết nối TCP (#61948). OpenVPN sẽ tự động kích hoạt tùy chỉnh mssfix để xử lý lỗi này.</string>
     <string name="ab_proxy">Android sẽ sử dụng cấu hình proxy của bạn để kết nối điện thoại/Wifi khi không có máy chủ DNS được đặt. OpenVPN cho Android sẽ cảnh báo bạn về điều này trong bản ghi.<p>Khi VPN thiết đặt máy chủ DNS Android sẽ không kèm proxy. Không có API nào thiết đặt cho proxy trong kết nối VPN.</p></string>
-    <string name="ab_lollipop_reinstall">Ứng dụng VPN có thể dừng hoạt động khi gỡ cài đặt và cài đặt lại lần nữa. Chi tiết xem tại #80074</string>
     <string name="ab_not_route_to_vpn">Cấu hình IP của máy trạm và IP trong mặt nạ mạng thì không định tuyến đến VPN. OpenVPN hoạt động bởi sự cố này bằng cách thêm định tuyến mà chuyển đến địa chỉ IP máy trạm và mặt nạ mạng của nó</string>
     <string name="ab_persist_tun">Mở một thiết bị tun khi một thiết bị tun khác đang hoạt động, có thể dùng để hỗ trợ tun, sự cố trên dịch vụ VPN. Cần khởi động lại để VPN hoạt động. OpenVPN cho Android cố gắng mở lại thiết bị tun và thực sự cần thiết để đóng TUN hiện tại trước khi mở TUN mới để tránh sự cố. Điều này có thể dẫn đến một cửa sổ nơi các gói tin được gửi qua kết nối không dây VPN. Ngay cả việc giải quyết dịch vụ VPN này thỉnh thoảng vẫn gặp sự cố và cần phải khởi động lại thiết bị.</string>
     <string name="ab_secondary_users">VPN không làm việc cho tất cả người dùng phổ thông.</string>
@@ -364,7 +359,6 @@
     <string name="ab_vpn_reachability_44">Chỉ có nguồn đích mới có thể truy cập vượt qua VPN mà không cần VPN. IPv6 không hoạt động cho tất cả.</string>
     <string name="ab_only_cidr_title">Không định tuyến CIDR</string>
     <string name="ab_proxy_title">Proxy chuyển tiếp cho VPN</string>
-    <string name="ab_lollipop_reinstall_title">Đang cài đặt lại ứng dụng VPN</string>
     <string name="version_upto">%s và trước đó</string>
     <string name="copy_of_profile">Bản sao của %s</string>
     <string name="ab_not_route_to_vpn_title">Định tuyến đến cấu hình địa chỉ IP</string>
@@ -435,6 +429,12 @@
     <string name="kbits_per_second">%.1f kbit/giây</string>
     <string name="mbits_per_second">%.1f Mbit/giây</string>
     <string name="gbits_per_second">%.1f Gbit/giây</string>
+    <string name="weakmd">&lt;p&gt;Bắt đầu với OpenSSL phiên bản 1.1, OpenSSL từ chối chữ ký yếu trong các chứng chỉ như
+        MD5. Ngoài ra, chữ ký OpenSSL 3.0 với SHA1 cũng bị từ chối.&lt;/p&gt;&lt;p&gt;
+        Bạn nên cập nhật chứng chỉ VPN càng sớm càng tốt vì SHA1 cũng sẽ không còn hoạt động trên các nền tảng khác trong
+        tương lai gần.&lt;/p&gt;
+        &lt;p&gt;Nếu bạn thực sự muốn sử dụng các chứng chỉ cũ và hỏng, hãy chọn \"không an toàn\" cho cấu hình bảo mật TLS trong Xác thực / Mã hóa của cấu hình&lt;/p&gt;
+    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
@@ -468,8 +468,34 @@
         xác thực
     </string>
     <string name="openurl_requested">Mở URL để tiếp tục xác thực VPN</string>
+    <string name="crtext_requested">Trả lời thách thức để tiếp tục xác thực VPN</string>
     <string name="state_auth_pending">Đang chờ xác thực</string>
     <string name="external_authenticator">Trình xác thực bên ngoài</string>
     <string name="configure">Cấu hình</string>
     <string name="extauth_not_configured">Bộ điều khiển từ bên ngoài không được cấu hình</string>
+    <string name="faq_killswitch_title">Chặn kết nối không phải VPN trong (\"Killswitch\") cho tự động ngắt kết nối của bạn từ kết nối internet của bạn để đảm bảo sự riêng tư của bạn vẫn còn nguyên vẹn cho đến khi VPN kết nối của bạn được phục hồi</string>
+    <string name="faq_killswitch">Người ta thường muốn chặn các kết nối mà không có VPN. Các ứng dụng khác thường sử dụng các thuật ngữ đánh dấu như \"Killswitch\" hoặc \"Đường hầm liền mạch\" cho tính năng này. OpenVPN và ứng dụng này cung cấp kiên trì, một tính năng để triển khai chức năng này.&lt;p&gt;Vấn đề với tất cả các phương pháp này được cung cấp bởi các ứng dụng là chúng chỉ có thể cung cấp nỗ lực tốt nhất và không có giải pháp hoàn chỉnh. Khi khởi động, ứng dụng bị treo và các trường hợp góc khác, ứng dụng không thể đảm bảo rằng khối kết nối không phải VPN này hoạt động. Do đó tạo cho người dùng một cảm giác an toàn giả tạo.&lt;p&gt;Cách đáng tin cậy duy nhất &lt;b&gt;&lt;/b&gt; để đảm bảo các kết nối không phải VPN bị chặn là sử dụng Android 8.0 trở lên và sử dụng cài đặt \"chặn kết nối không có VPN\" có thể tìm thấy trong Cài đặt &gt; Mạng &amp; Internet &gt; Nâng cao / VPN &gt; OpenVPN cho Android &gt; Bật Luôn BẬT VPN, Bật Kết nối Chặn mà không cần VPN</string>
+    <string name="summary_block_address_families">Tùy chọn này hướng dẫn Android không cho phép giao thức (IPv4 / IPv6) nếu VPN không đặt bất kỳ địa chỉ IPv4 hoặc IPv6 nào.</string>
+    <string name="title_block_address_families">Chặn IPv6 (hoặc IPv4) nếu không được VPN sử dụng</string>
+    <string name="install_keychain">Cài đặt chứng chỉ mới</string>
+    <string name="as_servername">AS tên máy chủ</string>
+    <string name="server_url">URL máy chủ</string>
+    <string name="request_autologin">Yêu cầu đăng nhập đăng nhập</string>
+    <string name="import_from_as">Nhập hồ sơ từ máy chủ từ xa</string>
+    <string name="no_default_vpn_set">VPN mặc định chưa được đặt. Vui lòng đặt VPN mặc định trước khi bật tùy chọn này.</string>
+    <string name="internal_web_view">WebView nội bộ</string>
+    <string name="faq_ncp">Có một số biến thể của thông báo này tùy thuộc vào tình huống chính xác. Tất cả chúng đều có điểm chung là máy chủ và máy khách không thể thống nhất về một mật mã chung. Các lý do chính là: &lt;ul&gt;&lt;li&gt; Bạn vẫn đang dựa vào thực tế là OpenVPN 2.4 trở lên cho phép BF-CBC trong cấu hình mặc định (nếu không có --cipher được đặt). OpenVPN 2.5 không cho phép nó theo mặc định nữa vì nó là &lt;a href=\"https://community.openvpn.net/openvpn/wiki/SWEET32\"&gt;bị hỏng / lỗi thời&lt;/a&gt;.&lt;/li&gt;&lt;li&gt;Máy chủ chạy OpenVPN 2.3 (hoặc thậm chí cũ hơn) với --enable-small (OpenVPN ít nhất 4-5 năm tuổi)&lt;/li&gt;&lt;li&gt;&lt;/ul&gt;Cấu hình bị hỏng (ví dụ: không khớp dữ liệu-mật mã trên máy khách và máy chủ)&lt;/li&gt; &lt;p&gt; &lt;a href=\"https://github.com/OpenVPN/openvpn/blob/master/doc/man-sections/cipher-negotiation.rst\"&gt;OpenVPN phần thủ công về thương lượng mật mã&lt;/a&gt; giải thích rất rõ các tình huống khác nhau của thương lượng mật mã và những việc cần làm trong tình huống này.&lt;p&gt;thiết bị TP-Link sử dụng phiên bản OpenVPN 2.3.x ít nhất 5 năm tuổi (có thể cũ hơn) trên thiết bị của họ, ngay cả trong các mẫu 2019/2020.&lt;p&gt;Cuối cùng nhưng không kém phần quan trọng, có một nhà cung cấp VPN phổ biến có một máy chủ bị hỏng luôn nói rằng họ đang sử dụng \'BF-CBC\' vì nhà phát triển của họ nghĩ rằng đó là một ý tưởng hay nếu tạo một bản vá thương lượng mật mã độc quyền không tương thích với tiêu chuẩn. OpenVPN.&lt;p&gt;Tóm lại: tất cả các cấu hình lành mạnh sẽ không mắc phải những lỗi này. Nhưng (ngoại trừ máy chủ của nhà cung cấp VPN bị hỏng), khách hàng có thể được thuyết phục vẫn kết nối (sửa lỗi chứ không phải sự cố thực sự). Khi kết nối với các máy chủ cũ hơn, tùy chọn chế độ comaptiblity trong cài đặt cơ bản của VPN sẽ có thể giải quyết hầu hết các vấn đề phổ biến về tính tương thích.</string>
+    <string name="check_peer_fingerprint">Kiểm tra tệp tham chiếu chứng chỉ ngang hàng</string>
+    <string name="fingerprint">(Nhập tệp tham chiếu SHA256 của (các) chứng chỉ máy chủ)</string>
+    <string name="proxy_info">HTTP Proxy: %1$s %2$d</string>
+    <string name="use_alwayson_vpn">Vui lòng sử dụng Tính năng luôn bật của Android để bật VPN tại thời điểm khởi động.</string>
+    <string name="open_vpn_settings">Cài đặt Open VPN</string>
+    <string name="trigger_pending_auth_dialog">Nhấn vào đây để mở một cửa sổ để nhập xác thực bắt buộc bổ sung</string>
+    <string name="compatmode">Chế độ tương thích</string>
+    <string name="compat_mode_label">Chế độ tương thích</string>
+    <string name="loadossllegacy">Tải nhà cung cấp kế thừa OpenSSL</string>
+    <string name="bf_cbc_requires_legacy">Hồ sơ sử dụng BF-CBC phụ thuộc vào nhà cung cấp kế thừa OpenSSL (không được bật).</string>
+    <string name="allow_translations_title">Cho phép các bản dịch do cộng đồng đóng góp</string>
+    <string name="allow_translations_summary">Cho phép cái app dụng được dịch với các bản dịch do cộng đồng đóng góp. Yêu cầu khởi động lại ứng dụng để kích hoạt.</string>
+    <string name="tls_profile">Hồ sơ bảo mật TLS</string>
 </resources>

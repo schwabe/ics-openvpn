@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.Vector;
 
 import de.blinkt.openvpn.VpnProfile;
 
@@ -35,7 +36,8 @@ public class ProfileManager {
     private static VpnProfile mLastConnectedVpn = null;
     private static VpnProfile tmpprofile = null;
     private HashMap<String, VpnProfile> profiles = new HashMap<>();
-
+    /* We got an error trying to save profiles, do not try encryption anymore */
+    private static boolean encryptionBroken = false;
 
     private ProfileManager() {
     }
@@ -49,10 +51,10 @@ public class ProfileManager {
         return instance.profiles.get(key);
     }
 
-    private static void checkInstance(Context context) {
+    private synchronized static void checkInstance(Context context) {
         if (instance == null) {
             instance = new ProfileManager();
-            ProfileEncryption.initMasterCryptAlias();
+            ProfileEncryption.initMasterCryptAlias(context);
             instance.loadVPNList(context);
         }
     }
@@ -107,6 +109,8 @@ public class ProfileManager {
     public static void saveProfile(Context context, VpnProfile profile) {
         SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
         boolean preferEncryption = prefs.getBoolean("preferencryption", true);
+        if (encryptionBroken)
+            preferEncryption = false;
 
         profile.mVersion += 1;
         ObjectOutputStream vpnFile;
@@ -136,10 +140,19 @@ public class ProfileManager {
                         VpnStatus.logInfo("Cannot rename " + encryptedFile);
                     }
                 }
-                vpnFileOut = ProfileEncryption.getEncryptedVpOutput(context, encryptedFile);
-                deleteIfExists = filename + ".vp";
-                if (encryptedFileOld.exists()) {
-                    encryptedFileOld.delete();
+                try {
+                    vpnFileOut = ProfileEncryption.getEncryptedVpOutput(context, encryptedFile);
+                    deleteIfExists = filename + ".vp";
+                    if (encryptedFileOld.exists()) {
+                        encryptedFileOld.delete();
+                    }
+                } catch (IOException | GeneralSecurityException ioe)
+                {
+                    VpnStatus.logException(VpnStatus.LogLevel.INFO, "Error trying to write an encrypted VPN profile, disabling " +
+                            "encryption", ioe);
+                    encryptionBroken = true;
+                    saveProfile(context, profile);
+                    return;
                 }
             }
             else {
@@ -161,7 +174,7 @@ public class ProfileManager {
             }
 
 
-        } catch (IOException | GeneralSecurityException e) {
+        } catch (IOException e) {
             VpnStatus.logException("saving VPN profile", e);
             throw new RuntimeException(e);
         }
@@ -237,11 +250,40 @@ public class ProfileManager {
         editor.apply();
     }
 
-    public void addProfile(VpnProfile profile) {
+    public synchronized void addProfile(VpnProfile profile) {
         profiles.put(profile.getUUID().toString(), profile);
     }
 
-    private void loadVPNList(Context context) {
+    /**
+     * Checks if a profile has been added deleted since last loading and will update its
+     * profiles
+     * @param context
+     */
+    public synchronized void refreshVPNList(Context context)
+    {
+        SharedPreferences listpref = Preferences.getSharedPreferencesMulti(PREFS_NAME, context);
+        Set<String> vlist = listpref.getStringSet("vpnlist", null);
+        if (vlist == null)
+            return;
+
+        for (String vpnentry : vlist) {
+            if (!profiles.containsKey(vpnentry))
+                loadVpnEntry(context, vpnentry);
+        }
+
+        Vector<String> removeUuids = new Vector<>();
+        for (String profileuuid:profiles.keySet())
+        {
+            if (!vlist.contains(profileuuid))
+                removeUuids.add(profileuuid);
+        }
+        for (String uuid: removeUuids)
+        {
+            profiles.remove(uuid);
+        }
+    }
+
+    private synchronized void loadVPNList(Context context) {
         profiles = new HashMap<>();
         SharedPreferences listpref = Preferences.getSharedPreferencesMulti(PREFS_NAME, context);
         Set<String> vlist = listpref.getStringSet("vpnlist", null);
@@ -252,50 +294,52 @@ public class ProfileManager {
         vlist.add(TEMPORARY_PROFILE_FILENAME);
 
         for (String vpnentry : vlist) {
-            ObjectInputStream vpnfile = null;
-            try {
-                FileInputStream vpInput;
-                File encryptedPath = context.getFileStreamPath(vpnentry + ".cp");
-                File encryptedPathOld = context.getFileStreamPath(vpnentry + ".cpold");
+            loadVpnEntry(context, vpnentry);
+        }
+    }
 
-                if (encryptedPath.exists()) {
-                    vpInput = ProfileEncryption.getEncryptedVpInput(context, encryptedPath);
-                } else if (encryptedPathOld.exists()) {
-                    vpInput = ProfileEncryption.getEncryptedVpInput(context, encryptedPathOld);
-                } else {
-                    vpInput = context.openFileInput(vpnentry + ".vp");
-                }
-                vpnfile = new ObjectInputStream(vpInput);
-                VpnProfile vp = ((VpnProfile) vpnfile.readObject());
+    private synchronized void loadVpnEntry(Context context, String vpnentry) {
+        ObjectInputStream vpnfile = null;
+        try {
+            FileInputStream vpInput;
+            File encryptedPath = context.getFileStreamPath(vpnentry + ".cp");
+            File encryptedPathOld = context.getFileStreamPath(vpnentry + ".cpold");
 
-                // Sanity check
-                if (vp == null || vp.mName == null || vp.getUUID() == null)
-                    continue;
+            if (encryptedPath.exists()) {
+                vpInput = ProfileEncryption.getEncryptedVpInput(context, encryptedPath);
+            } else if (encryptedPathOld.exists()) {
+                vpInput = ProfileEncryption.getEncryptedVpInput(context, encryptedPathOld);
+            } else {
+                vpInput = context.openFileInput(vpnentry + ".vp");
+            }
+            vpnfile = new ObjectInputStream(vpInput);
+            VpnProfile vp = ((VpnProfile) vpnfile.readObject());
 
-                vp.upgradeProfile();
-                if (vpnentry.equals(TEMPORARY_PROFILE_FILENAME)) {
-                    tmpprofile = vp;
-                } else {
-                    profiles.put(vp.getUUID().toString(), vp);
-                }
+            // Sanity check
+            if (vp == null || vp.mName == null || vp.getUUID() == null)
+                return;
 
-
-            } catch (IOException | ClassNotFoundException | GeneralSecurityException e) {
-                if (!vpnentry.equals(TEMPORARY_PROFILE_FILENAME))
-                    VpnStatus.logException("Loading VPN List", e);
-            } finally {
-                if (vpnfile != null) {
-                    try {
-                        vpnfile.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+            vp.upgradeProfile();
+            if (vpnentry.equals(TEMPORARY_PROFILE_FILENAME)) {
+                tmpprofile = vp;
+            } else {
+                profiles.put(vp.getUUID().toString(), vp);
+            }
+        } catch (IOException | ClassNotFoundException | GeneralSecurityException e) {
+            if (!vpnentry.equals(TEMPORARY_PROFILE_FILENAME))
+                VpnStatus.logException("Loading VPN List", e);
+        } finally {
+            if (vpnfile != null) {
+                try {
+                    vpnfile.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
     }
 
-    public void removeProfile(Context context, VpnProfile profile) {
+    public synchronized void removeProfile(Context context, VpnProfile profile) {
         String vpnentry = profile.getUUID().toString();
         profiles.remove(vpnentry);
         saveProfileList(context);

@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Password PKCS12</string>
     <string name="file_select">Seleziona&#8230;</string>
     <string name="file_nothing_selected">Devi selezionare un file</string>
-    <string name="useTLSAuth">Usa autenticazione TLS</string>
-    <string name="tls_direction">Direzione TLS</string>
     <string name="ipv6_dialog_tile">Inserire l\'indirizzo IPv6 e la maschera di rete in formato CIDR (ad esempio 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Inserire l\'indirizzo IPv4 e la maschera di rete in formato CIDR (ad esempio 1.2.3.4/24)</string>
     <string name="ipv4_address">Indirizzo IPv4</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">Verifica il certificato dell\'Host</string>
     <string name="enter_tlscn_dialog">Specifica il controllo da effettuare per verificare il certificato DN remoto  (e.g. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nPer verifica specifica il DN o RDN completo (nell\'esempio openvpn.blinkt.de) oppure un prefisso RDN.\n\nQuando usi un prefisso RDN \"Server\" è valido per \"Server-1\" e \"Server-2\"\n\nLasciando la casella vuota verrà controllato l\'RDN con l\'hostname del server.\n\nPer maggiori informazioni consulta la manpage di OpenVPN 2.3.1+ sotto la voce  —verify-x509-name</string>
     <string name="enter_tlscn_title">Soggetto del certificato remoto</string>
-    <string name="tls_key_auth">Abilita l\'autenticazione tramite TLS</string>
-    <string name="tls_auth_file">File di autenticazione TLS</string>
     <string name="pull_on_summary">Richiede indirizzi IP, instradamenti ed opzioni di sincronizzazione al server.</string>
     <string name="pull_off_summary">Nessuna informazione è richiesta al server. Le impostazioni devono essere specificate qui di seguito.</string>
     <string name="use_pull">Richiedi impostazioni</string>
@@ -205,8 +201,6 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="using_proxy">Utilizzo del proxy %1$s %2$s</string>
     <string name="use_system_proxy">Utilizza il proxy di sistema</string>
     <string name="use_system_proxy_summary">Utilizza la configurazione generale del sistema relativa ai proxy HTTP/HTTPS per connettersi.</string>
-    <string name="onbootrestartsummary">OpenVPN connetterà la VPN specificata se è attiva durante l\'avvio del sistema. Leggi le domande di avviso di connessione prima di utilizzare questa opzione in Android &lt; 5.0.</string>
-    <string name="onbootrestart">Connessione all\'avvio</string>
     <string name="ignore">Ignora</string>
     <string name="restart">Riavvia</string>
     <string name="restart_vpn_after_change">Le modifiche sarannoi applicate dopo aver riavviato la connessione VPN. Riavviare ora la connessione?</string>
@@ -262,7 +256,6 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="encryption_cipher">Algoritmo di crittografia</string>
     <string name="packet_auth">Autenticazione pacchetti</string>
     <string name="auth_dialog_title">Seleziona il metodo di autenticazione dei pacchetti</string>
-    <string name="built_by">compilato da %s</string>
     <string name="debug_build">versione di debug</string>
     <string name="official_build">versione ufficiale</string>
     <string name="make_selection_inline">Copia nel profilo</string>
@@ -360,7 +353,6 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="ab_tethering_44">Le operazioni di tethering funzionano mentre la VPN è attiva. La connessione di tether NON utilizzerà la VPN.</string>
     <string name="ab_kitkat_mss">La prima versione KitKat ha impostato il valore MSS errato sulle connessioni TCP (#61948). Prova ad abilitare l\'opzione mssfix per risolvere questo problema.</string>
     <string name="ab_proxy">Android continuerà a utilizzare le impostazioni proxy specificate per la connessione mobile/Wi-Fi quando non vengono impostati server DNS. OpenVPN per Android ti avviserà in questo registro.<p>Quando una VPN imposta un server DNS, Android non utilizzerà un proxy. Non esistono API per impostare un proxy per una connessione VPN</p></string>
-    <string name="ab_lollipop_reinstall">Le applicazioni VPN potrebbero smettere di funzionare durante la disinstallazione e la reinstallazione. Per dettagli vedi # 80074</string>
     <string name="ab_not_route_to_vpn">L\'IP client configurato e gli IP nella maschera di rete non vengono indirizzati alla VPN. OpenVPN funziona senza questo errore aggiungendo esplicitamente un percorso che corrisponda con il client IP e con la sua maschera di rete</string>
     <string name="ab_persist_tun">L\'apertura di un dispositivo tun mentre è attivo un altro dispositivo tun, che viene utilizzato per il supporto persist-tun, blocca i VPNServices sul dispositivo. Un riavvio è necessario per rendere nuovamente funzionante la VPN. OpenVPN per Android tenta di evitare la riapertura del dispositivo tun e se necessario chiude l\'attuale TUN prima di aprire il nuovo dispositivo TUN per evitare il blocco. Ciò può portare ad una breve finestra in cui i pacchetti vengono inviati tramite la connessione non VPN. Anche con questa soluzione il VPNServices a volte si blocca e richiede un riavvio del dispositivo.</string>
     <string name="ab_secondary_users">VPN non funziona affatto per gli utenti secondari.</string>
@@ -368,7 +360,6 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="ab_vpn_reachability_44">Solo la destinazione può essere raggiunta tramite VPN che sono raggiungibili senza VPN. La VPN IPv6 non funziona affatto.</string>
     <string name="ab_only_cidr_title">Nessuna route CIDR</string>
     <string name="ab_proxy_title">Modalità proxy per VPN</string>
-    <string name="ab_lollipop_reinstall_title">Reinstallazione applicazioni VPN</string>
     <string name="version_upto">%s e precedenti</string>
     <string name="copy_of_profile">Copia di %s</string>
     <string name="ab_not_route_to_vpn_title">Percorso per l\'indirizzo IP configurato</string>
@@ -439,6 +430,12 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
+    <string name="weakmd">&lt;p&gt;A partire dalla versione 1.1 di OpenSSL, OpenSSL rifiuta le firme deboli nei certificati come
+        MD5. Inoltre con OpenSSL 3.0 vengono rifiutate anche le firme con SHA1.&lt;/p&gt;&lt;p&gt;
+        È necessario aggiornare i certificati VPN il prima possibile in quanto SHA1 non funzionerà più anche su altre piattaforme nel
+        prossimo futuro.&lt;/p&gt;
+        &lt;p&gt;Se vuoi veramente utilizzare certificati vecchi e vulnerabili, selezionare \"non sicuro\" per il profilo di sicurezza TLS in Autenticazione/Crittografia del profilo&lt;/p&gt;
+    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
@@ -481,6 +478,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="summary_block_address_families">Questa opzione indica ad Android di non consentire i protocolli (IPv4/IPv6) se la VPN non imposta alcun indirizzo IPv4 o IPv6.</string>
     <string name="title_block_address_families">Blocca IPv6 (o IPv4) se non usato dalla VPN</string>
     <string name="install_keychain">Installa nuovo certificato</string>
+    <string name="as_servername">Come nome server</string>
     <string name="server_url">URL del server</string>
     <string name="request_autologin">Richiedi profilo di accesso automatico</string>
     <string name="import_from_as">Importa profilo da server remoto</string>
@@ -489,6 +487,7 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="check_peer_fingerprint">Controlla l\'impronta digitale del certificato peer</string>
     <string name="fingerprint">(Inserisci l\'impronta digitale SHA256 dei certificati del server)</string>
     <string name="proxy_info">Proxy HTTP: %1$s %2$d</string>
+    <string name="use_alwayson_vpn">Utilizza la funzione Always-On di Android per abilitare la VPN all\'avvio.</string>
     <string name="open_vpn_settings">Apri impostazioni VPN</string>
     <string name="trigger_pending_auth_dialog">Premi qui per aprire una finestra per inserire l\'autenticazione aggiuntiva necessaria</string>
     <string name="compatmode">Modalità di compatibilità</string>
@@ -497,4 +496,6 @@ Usa il tasto hardware Menù se non è visibile nella GUI.</string>
     <string name="bf_cbc_requires_legacy">Profili utilizza BF-CBC che dipende dal fornitore obsoleto OpenSSL (non attivato).</string>
     <string name="allow_translations_title">Consenti le traduzioni fornite dalla community</string>
     <string name="allow_translations_summary">Consente la traduzione dell\'app con le traduzioni fornite dalla community. Richiede il riavvio dell\'app per l\'attivazione.</string>
+    <string name="tls_profile">Profilo di sicurezza TLS</string>
+    <string name="encrypt_profiles">Prova a criptare i profili sullo spazio di archiviazione (se supportato dal sistema operativo Android)</string>
 </resources>

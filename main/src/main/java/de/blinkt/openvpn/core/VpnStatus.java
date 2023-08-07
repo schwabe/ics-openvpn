@@ -15,14 +15,13 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Vector;
 
 import de.blinkt.openvpn.R;
 
 public class VpnStatus {
-
-
     private static final LinkedList<LogItem> logbuffer;
 
     private static Vector<LogListener> logListener;
@@ -150,7 +149,6 @@ public class VpnStatus {
         VpnStatus.trafficHistory = trafficHistory;
     }
 
-
     public enum LogLevel {
         INFO(2),
         ERROR(-2),
@@ -192,6 +190,7 @@ public class VpnStatus {
     static final byte[] officaldebugkey = {-99, -69, 45, 71, 114, -116, 82, 66, -99, -122, 50, -70, -56, -111, 98, -35, -65, 105, 82, 43};
     static final byte[] amazonkey = {-116, -115, -118, -89, -116, -112, 120, 55, 79, -8, -119, -23, 106, -114, -85, -56, -4, 105, 26, -57};
     static final byte[] fdroidkey = {-92, 111, -42, -46, 123, -96, -60, 79, -27, -31, 49, 103, 11, -54, -68, -27, 17, 2, 121, 104};
+    static final byte[] officialO2Key = {-50, -119, -11, 121, 121, 122, -115, 84, 90, -122, 27, -117, -14, 60, 54, 127, 41, -45, 27, 55, -14, 90, 31, 72, -26, -85, -85, 67, 35, 54, 100, 42};
 
 
     private static ConnectionStatus mLastLevel = ConnectionStatus.LEVEL_NOTCONNECTED;
@@ -240,7 +239,7 @@ public class VpnStatus {
         String nativeAPI;
         try {
             nativeAPI = NativeUtils.getNativeAPI();
-        } catch (UnsatisfiedLinkError ignore) {
+        } catch (UnsatisfiedLinkError|NoClassDefFoundError ignore) {
             nativeAPI = "error";
         }
 
@@ -418,15 +417,23 @@ public class VpnStatus {
     }
 
     static void newLogItem(LogItem logItem) {
-        newLogItem(logItem, false);
+        newLogItem(logItem, false, false);
     }
 
+    public static void newLogItemIfUnique(LogItem li) {
+        newLogItem(li, false, true);
+    }
 
-    synchronized static void newLogItem(LogItem logItem, boolean cachedLine) {
+    public static void newLogItem(LogItem logItem, boolean cachedLine)
+    {
+        newLogItem(logItem, cachedLine, false);
+    }
+
+    synchronized static void newLogItem(LogItem logItem, boolean cachedLine, boolean enforceUnique) {
         if (cachedLine) {
             logbuffer.addFirst(logItem);
         } else {
-            logbuffer.addLast(logItem);
+            insertLogItemByLogTime(logItem, enforceUnique);
             if (mLogFileHandler != null) {
                 Message m = mLogFileHandler.obtainMessage(LogFileHandler.LOG_MESSAGE, logItem);
                 mLogFileHandler.sendMessage(m);
@@ -443,6 +450,34 @@ public class VpnStatus {
         for (LogListener ll : logListener) {
             ll.newLog(logItem);
         }
+    }
+
+    private static void insertLogItemByLogTime(LogItem logItem, boolean enforceUnique) {
+        /* Shortcut for the shortcut that it should be added at the
+         * end to avoid traversing the list
+         */
+        if (!logbuffer.isEmpty() && logbuffer.getLast().getLogtime() <= logItem.getLogtime())
+        {
+            logbuffer.addLast(logItem);
+            return;
+        }
+
+        ListIterator<LogItem> itr = logbuffer.listIterator();
+        long newItemLogTime = logItem.getLogtime();
+        while(itr.hasNext()) {
+            LogItem laterLogItem = itr.next();
+            if (enforceUnique && laterLogItem.equals(logItem))
+                /* Identical object found, ignore new item */
+                return;
+
+            if (laterLogItem.getLogtime() > newItemLogTime) {
+                itr.previous();
+                itr.add(logItem);
+                return;
+            }
+        }
+        /* no hasNext, add at the end */
+        itr.add(logItem);
     }
 
 

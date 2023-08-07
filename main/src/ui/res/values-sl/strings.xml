@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Geslo PKCS12</string>
     <string name="file_select">Izberi &#8230;</string>
     <string name="file_nothing_selected">Izbrati morate datoteko</string>
-    <string name="useTLSAuth">Uporabi overitev TLS</string>
-    <string name="tls_direction">Smer TLS</string>
     <string name="ipv6_dialog_tile">Vnesite naslov IPv6/masko omrežja v obliki CIDR (npr. 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Vnesite naslov IPv4/masko omrežja v obliki CIDR (npr. 1.2.3.4/24)</string>
     <string name="ipv4_address">Naslov IPv4</string>
@@ -67,8 +65,6 @@
     <string name="remote_tlscn_check_title">Preveri ime gost. potrdila</string>
     <string name="enter_tlscn_dialog">Določite preverjanje, ki naj se uporabi za preverjanje DN-a oddaljenega potrdila (npr. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de).\n\nDoločite celoten DN ali RDN (npr. openvpn.blinkt.de) ali predpono RDN-a za preverjanje.\n\nKadar uporabljate predpono RDN, se \"Strežnik\" primerja s \"Strežnik-1\" in \"Strežnik-2\".\n\nČe pustite besedilno polje prazno, bo RDN preverjen z imenom gostitelja.\n\nZa več podatkov glejte OpenVPN 2.3.1 + stran man v —verify-x509-name.</string>
     <string name="enter_tlscn_title">Zadeva oddaljenega potrdila</string>
-    <string name="tls_key_auth">Omogoči overitev ključa TLS</string>
-    <string name="tls_auth_file">Datoteka overitve TLS</string>
     <string name="pull_on_summary">Zahteva naslove IP, poti in časovne možnosti od strežnika.</string>
     <string name="pull_off_summary">Nobeni podatki niso zahtevani od strežnika. Nastavitve morate določiti spodaj.</string>
     <string name="use_pull">Dobi nast.</string>
@@ -200,8 +196,6 @@
     <string name="getproxy_error">Napaka pri dobivanju nastavitev posredniškega strežnika: %s</string>
     <string name="use_system_proxy">Uporabi sis. pos. str.</string>
     <string name="use_system_proxy_summary">Za povezavo uporabi nastavitve celega sistema za posredniške strežnike HTTP/HTTPS.</string>
-    <string name="onbootrestartsummary">OpenVPN bo povezal navedeni VPN, če je bil dejaven ob zagonu sistema. Preberite pogosta vprašanja o opozorilih glede povezav pred uporabo te možnosti na Androidu &lt; 5.0.</string>
-    <string name="onbootrestart">Poveži ob zagonu</string>
     <string name="ignore">Prezri</string>
     <string name="restart">Ponovno zaženi</string>
     <string name="restart_vpn_after_change">Spremembe nastavitev se bodo uporabile po ponovnem zagonu VPN-a. (Ponovno) zaženi VPN zdaj?</string>
@@ -256,7 +250,6 @@
     <string name="encryption_cipher">Šifra</string>
     <string name="packet_auth">Overitev paketov</string>
     <string name="auth_dialog_title">Vnesite način overitve paketov</string>
-    <string name="built_by">izgradil %s</string>
     <string name="debug_build">razhroščevalna izgradnja</string>
     <string name="official_build">uradna izgradnja</string>
     <string name="make_selection_inline">Kopiraj v profil</string>
@@ -354,7 +347,6 @@
     <string name="ab_tethering_44">Deljenje mobilnega interneta deluje, ko je VPN dejaven. Deljena povezava NE bo uporabila VPN-a.</string>
     <string name="ab_kitkat_mss">Zgodnja različica KitKata je nastavila napačno vrednost MSS ob povezavah TCP (#61948). OpenVPN bo samodejno omogočil možnost mssfix, da zaobide ta hrošč.</string>
     <string name="ab_proxy">Android bo še naprej uporabljal nastavitve posredniškega strežnika, ki so določene za mobilno povezavo/Wi-Fi, ko ni nastavljenih strežnikov DNS. OpenVPN za Android vas bo o tem opozoril v dnevniku.<p>Ko VPN nastavi strežnik DNS, Android ne bo uporabil posredniškega strežnika. API, ki nastavi posredniški strežnik za povezavo VPN, ne obstaja.</p></string>
-    <string name="ab_lollipop_reinstall">Programi VPN lahko prenehajo delovati, ko se jih odstrani in ponovno namesti. Za podrobnosti glejte #80074.</string>
     <string name="ab_not_route_to_vpn">IP nastavljenega odjemalca in IP-ji v njegovi maski omrežja se ne usmerijo v VPN. OpenVPN zaobide tega hrošča z izrecnim dodajanjem poti, ki ustreza IP-ju odjemalca in njegovi maski omrežja.</string>
     <string name="ab_persist_tun">Odpiranje naprave TUN, ko je dejavna druga naprava, kar se uporablja za podporo vztrajnega TUN-a, sesuje storitve VPN na napravi. Za ponovno delovanje VPN-a je zahtevan ponovni zagon. OpenVPN za Android bo poizkusil ponovno odpreti napravo TUN in če je zelo potrebno, pred tem zaprl trenutni TUN, da se izogne sesutju. To lahko privede do kratkega postanka, kjer se paketi pošljejo preko običajne povezave. Tudi pri tem zaobidenju se storitve VPN včasih sesujejo in je zahtevan ponovni zagon naprave.</string>
     <string name="ab_secondary_users">VPN sploh ne deluje za sekundarne uporabnike.</string>
@@ -362,7 +354,6 @@
     <string name="ab_vpn_reachability_44">Preko VPN-a so dosegljivi samo cilji, ki so dosegljivi tudi brez njega. VPN-i IPv6 sploh ne delujejo.</string>
     <string name="ab_only_cidr_title">Poti brez načina CIDR</string>
     <string name="ab_proxy_title">Vedenje posredniškega strežnika za VPN-e</string>
-    <string name="ab_lollipop_reinstall_title">Ponovno nameščenje programov VPN</string>
     <string name="version_upto">%s in prejšnji</string>
     <string name="copy_of_profile">Kopija %s</string>
     <string name="ab_not_route_to_vpn_title">Pot do nastavljenega naslova IP</string>

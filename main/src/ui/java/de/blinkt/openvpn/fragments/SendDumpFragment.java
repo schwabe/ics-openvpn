@@ -36,7 +36,12 @@ public class SendDumpFragment extends Fragment {
         if (c.getCacheDir() == null)
             return null;
 
-        for (File f : c.getCacheDir().listFiles()) {
+        File[] filesList = c.getCacheDir().listFiles();
+
+        if (filesList == null)
+            return null;
+
+        for (File f : filesList) {
             if (!f.getName().endsWith(".dmp"))
                 continue;
 
@@ -104,6 +109,7 @@ public class SendDumpFragment extends Fragment {
         Pair<File, Long> ldump = getLastestDump(getActivity());
         if (ldump == null) {
             VpnStatus.logError("No Minidump found!");
+            return;
         }
 
         uris.add(Uri.parse("content://de.blinkt.openvpn.FileProvider/" + ldump.first.getName()));

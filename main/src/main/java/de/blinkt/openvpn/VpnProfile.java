@@ -809,18 +809,6 @@ public class VpnProfile implements Serializable, Cloneable {
         return parts[0] + "  " + netmask;
     }
 
-    public Intent prepareStartService(Context context) {
-        Intent intent = getStartServiceIntent(context);
-
-        // TODO: Handle this?!
-//        if (mAuthenticationType == VpnProfile.TYPE_KEYSTORE || mAuthenticationType == VpnProfile.TYPE_USERPASS_KEYSTORE) {
-//            if (getKeyStoreCertificates(context) == null)
-//                return null;
-//        }
-
-        return intent;
-    }
-
     public void writeConfigFileOutput(Context context, OutputStream out) throws IOException {
         OutputStreamWriter cfg = new OutputStreamWriter(out);
         cfg.write(getConfigFile(context, false));
@@ -828,12 +816,14 @@ public class VpnProfile implements Serializable, Cloneable {
         cfg.close();
     }
 
-    public Intent getStartServiceIntent(Context context) {
+    public Intent getStartServiceIntent(Context context, String startReason) {
         String prefix = context.getPackageName();
 
         Intent intent = new Intent(context, OpenVPNService.class);
         intent.putExtra(prefix + ".profileUUID", mUuid.toString());
         intent.putExtra(prefix + ".profileVersion", mVersion);
+        if (startReason != null)
+            intent.putExtra(prefix + ".startReason", startReason);
         return intent;
     }
 

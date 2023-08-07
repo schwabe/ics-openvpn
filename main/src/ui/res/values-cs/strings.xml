@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 heslo</string>
     <string name="file_select">Vyber&#8230;</string>
     <string name="file_nothing_selected">Je třeba vybrat soubor</string>
-    <string name="useTLSAuth">Použij TLS autentikaci</string>
-    <string name="tls_direction">TLS řízení</string>
     <string name="ipv6_dialog_tile">Zadej IPv6 adresu/masku v CIDR formátu (tj. 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Zadej IPv4 adresu/masku v CIDR formátu (tj. 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4 adresa</string>
@@ -67,8 +65,6 @@
     <string name="remote_tlscn_check_title">Ověření jména certifikátu</string>
     <string name="enter_tlscn_dialog">Specifikuj způsob kontroly DN v certifikátu vzdáleného serveru (př. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nSpecifikuj kompletní DN nebo RDN (openvpn.blinkt.de v příkladu) nebo RDN prefix pro verifikaci.\n\nPři použití RDN prefixu, \"Server\" sedí na \"Server-1\" i \"Server-2\"\n\nJe-li RDN pole prázdné, kontroluje se proti jménu serveru.\n\nPro více detailů, viz manuálová stránka OpenVPN 2.3.1+, přepínač —verify-x509-name</string>
     <string name="enter_tlscn_title">Předmět vzdáleného certifikátu</string>
-    <string name="tls_key_auth">Zapnout autentikaci pomocí TLS klíče</string>
-    <string name="tls_auth_file">TLS autentikační soubor</string>
     <string name="pull_on_summary">Použít IP adresu, směrování a časování přijaté od serveru.</string>
     <string name="pull_off_summary">Žádné informace od serveru nevyžadovat. Nastavení je potřeba zadat níže.</string>
     <string name="use_pull">Automaticky</string>
@@ -201,8 +197,6 @@
     <string name="using_proxy">Používám proxy %1$s %2$s</string>
     <string name="use_system_proxy">Použít systémovou proxy</string>
     <string name="use_system_proxy_summary">K připojení použít systémové nastavení pro HTTP/HTTPS.</string>
-    <string name="onbootrestartsummary">OpenVPN se automaticky připojí k vybrané VPN po startu systému. Prosím věnujte pozornost upozornění ve FAQ pro verzi Android &lt; 5.0.</string>
-    <string name="onbootrestart">Připojit po spuštění systému</string>
     <string name="ignore">Ignorovat</string>
     <string name="restart">Restartovat</string>
     <string name="restart_vpn_after_change">Změna nastavení začne platit až po restartu VPN. Restartovat teď?</string>
@@ -258,7 +252,6 @@
     <string name="encryption_cipher">Šifrovací algoritmus</string>
     <string name="packet_auth">Ověřování paketů</string>
     <string name="auth_dialog_title">Zadej způsob ověřování paketů</string>
-    <string name="built_by">sestaveno od %s</string>
     <string name="debug_build">ladící verze</string>
     <string name="official_build">oficiální verze</string>
     <string name="make_selection_inline">Zkopírovat do profilu</string>
@@ -354,13 +347,11 @@
     <string name="ab_only_cidr">Android podporuje ve VPN síti podporuje pouze CIDR trasy. Protože ne-CIDR trasy nejsou téměř nikdy používány, OpenVPN pro Android použije /32 pro trasy, které nejsou CIDR a zobrazí varování.</string>
     <string name="ab_tethering_44">Sdílení připojení funguje během aktivního VPN spojení. Sdílené připojení NEpoužije VPN.</string>
     <string name="ab_kitkat_mss">Dřívější KitKat verze nastavovaly špatnou hodnotu MSS na TCP spojení (#61948). OpenVPN automaticky zapne mssfix možnost pro obejití chyby.</string>
-    <string name="ab_lollipop_reinstall">Aplikace VPN mohou přestat fungovat po odinstalování a reinstalaci. Podrobnosti najdete v #80074</string>
     <string name="ab_secondary_users">VPN vůbec nefunguje pro vedlejší uživatele.</string>
     <string name="ab_kitkat_reconnect">"Více uživatelů hlásí, že mobilní připojení / mobilní datové připojení má časté výpadky během používání této VPN aplikace. Vypadá to, že chování ovlivňuje jen nějaké kombinace mobilních poskytovatelů / zařízení a zatím nebyla identifikována žádná příčina / řešení chyby."</string>
     <string name="ab_vpn_reachability_44">Jediná destinace může být dosažena přes VPN které nejsou dosažitelné bez VPN. Sítě IPv6 nefungují vůbec.</string>
     <string name="ab_only_cidr_title">Ne-CIDR trasy</string>
     <string name="ab_proxy_title">Proxy chování pro VPN</string>
-    <string name="ab_lollipop_reinstall_title">Přeinstalování VPN aplikací</string>
     <string name="version_upto">%s a starší</string>
     <string name="copy_of_profile">Kopie %s</string>
     <string name="ab_not_route_to_vpn_title">Trasa k nastavené IP adrese</string>

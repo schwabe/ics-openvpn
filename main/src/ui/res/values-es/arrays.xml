@@ -17,15 +17,27 @@
         <item>Proveedor externo de autenticación</item>
     </string-array>
     <string-array name="tls_directions_entries">
-        <item translatable="false">0</item>
-        <item translatable="false">1</item>
-        <item>No especificado</item>
+        <item translatable="false">tls-auth - --direction 0</item>
+        <item translatable="false">tls-auth - --direction 1</item>
+        <item>tls-auth --direction not specified</item>
         <item>Cifrado (--tls-crypt)</item>
-        <item>TLS Crypt V2</item>
+        <item>TLS Cripta V2</item>
     </string-array>
     <string-array name="auth_retry_type">
         <item>Desconectar, olvidar contraseña</item>
         <item>Desconectar, guardar la contraseña</item>
         <item>Ignorar, volver a intentar</item>
+    </string-array>
+    <string-array name="compat_mode">
+        <item>Moderna detalles</item>
+        <item>Versión OpenVPN 2.5. X</item>
+        <item>Versión OpenVPN 2.4. X</item>
+        <item>OpenVPN 2.3. X y antiguas versiones </item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>insecure (not recommend, allows insecure crypto)</item>
+        <item>Legal (estándar)</item>
+        <item>Preferiré (recomienden bus límites compatible)</item>
+        <item>Suite B (onda NIST aprobé eclíptico curves)</item>
     </string-array>
 </resources>

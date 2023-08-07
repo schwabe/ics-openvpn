@@ -189,12 +189,15 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         config.setExternalPkiAlias("extpki");
         config.setCompressionMode("asym");
 
+
         config.setHwAddrOverride(NetworkUtils.getFakeMacAddrFromSAAID(mService));
         config.setInfo(true);
         config.setAllowLocalLanAccess(mVp.mAllowLocalLAN);
         boolean retryOnAuthFailed = mVp.mAuthRetry == AUTH_RETRY_NOINTERACT;
         config.setRetryOnAuthFailed(retryOnAuthFailed);
         config.setEnableLegacyAlgorithms(mVp.mUseLegacyProvider);
+        /* We want the same app internal route emulation for OpenVPN 2 and OpenVPN 3 */
+        config.setEnableRouteEmulation(false);
         if (mVp.mCompatMode > 0 && mVp.mCompatMode < 20500)
             config.setEnableNonPreferredDCAlgorithms(true);
         if (!TextUtils.isEmpty(mVp.mTlSCertProfile))
@@ -237,6 +240,9 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         VpnStatus.logDebug("Got external PKI signing request from OpenVPN core for algorithm " + signreq.getAlgorithm());
         SignaturePadding padding;
         switch (signreq.getAlgorithm()) {
+            case "RSA_PKCS1_PSS_PADDING":
+                padding = SignaturePadding.RSA_PKCS1_PSS_PADDING;
+                break;
             case "RSA_PKCS1_PADDING":
                 padding = SignaturePadding.RSA_PKCS1_PADDING;
                 break;
@@ -249,7 +255,8 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
             default:
                 throw new IllegalArgumentException("Illegal padding in sign request" + signreq.getAlgorithm());
         }
-        signreq.setSig(mVp.getSignedData(mService, signreq.getData(), padding, "", "", false));
+        boolean needDigest = !signreq.getHashalg().isEmpty();
+        signreq.setSig(mVp.getSignedData(mService, signreq.getData(), padding, signreq.getSaltlen(), signreq.getHashalg(), needDigest));
     }
 
     void setUserPW() {

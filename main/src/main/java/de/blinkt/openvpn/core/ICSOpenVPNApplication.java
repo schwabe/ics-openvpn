@@ -128,5 +128,4 @@ public class ICSOpenVPNApplication extends Application {
         mChannel.setLightColor(Color.CYAN);
         mNotificationManager.createNotificationChannel(mChannel);
     }
-
 }

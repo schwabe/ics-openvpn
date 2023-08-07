@@ -17,9 +17,9 @@
         <item>Provider di autenticazione esterno</item>
     </string-array>
     <string-array name="tls_directions_entries">
-        <item translatable="false">0</item>
-        <item translatable="false">1</item>
-        <item>Non specificato</item>
+        <item translatable="false">tls-auth - --direction 0</item>
+        <item translatable="false">tls-auth - --direction 1</item>
+        <item>tls-auth --direction not specified</item>
         <item>Crittografia (--tls-crypt)</item>
         <item>TLS Crypt V2</item>
     </string-array>
@@ -27,5 +27,17 @@
         <item>Disconnetti, elimina la password</item>
         <item>Disconnetti, mantieni la password</item>
         <item>Ignora, riprova</item>
+    </string-array>
+    <string-array name="compat_mode">
+        <item>Impostazioni predefinite moderne</item>
+        <item>Peer di OpenVPN 2.5.x</item>
+        <item>Peer di OpenVPN 2.4.x</item>
+        <item>Peer di OpenVPN 2.3.x e precedenti</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>insicuro (non consigliato, consente crittografia non sicura)</item>
+        <item>legacy (predefinito)</item>
+        <item>preferito (consigliato ma compatibilità limitata)</item>
+        <item>Suite B (solo curve ellittiche approvate dal NIST)</item>
     </string-array>
 </resources>

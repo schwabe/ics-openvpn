@@ -13,15 +13,23 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    buildToolsVersion = "33.0.1"
+    buildFeatures {
+        aidl = true
+    }
+    namespace = "de.blinkt.openvpn"
+    compileSdk = 34
+    //compileSdkPreview = "UpsideDownCake"
 
-    ndkVersion = "24.0.8215888"
+    // Also update runcoverity.sh
+    ndkVersion = "25.2.9519653"
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 32
-        versionCode = 192
-        versionName = "0.7.37"
+        targetSdk = 34
+        //targetSdkPreview = "UpsideDownCake"
+        versionCode = 203
+        versionName = "0.7.48"
         externalNativeBuild {
             cmake {
             }
@@ -71,6 +79,20 @@ android {
             enableV2Signing = true
         }
 
+        create("releaseOvpn2") {
+            // ~/.gradle/gradle.properties
+            val keystoreO2File: String? by project
+            storeFile = keystoreO2File?.let { file(it) }
+            val keystoreO2Password: String? by project
+            storePassword = keystoreO2Password
+            val keystoreO2AliasPassword: String? by project
+            keyPassword = keystoreO2AliasPassword
+            val keystoreO2Alias: String? by project
+            keyAlias = keystoreO2Alias
+            enableV1Signing = true
+            enableV2Signing = true
+        }
+
     }
 
     lint {
@@ -79,32 +101,51 @@ android {
         disable += setOf("MissingTranslation", "UnsafeNativeCodeLocation")
     }
 
+
+    flavorDimensions += listOf("implementation", "ovpnimpl")
+
+    productFlavors {
+        create("ui") {
+            dimension = "implementation"
+        }
+
+        create("skeleton") {
+            dimension = "implementation"
+        }
+
+        create("ovpn23")
+        {
+            dimension = "ovpnimpl"
+            buildConfigField("boolean", "openvpn3", "true")
+        }
+
+        create("ovpn2")
+        {
+            dimension = "ovpnimpl"
+            versionNameSuffix = "-o2"
+            buildConfigField("boolean", "openvpn3", "false")
+        }
+    }
+
     buildTypes {
         getByName("release") {
             if (project.hasProperty("icsopenvpnDebugSign")) {
                 logger.warn("property icsopenvpnDebugSign set, using debug signing for release")
                 signingConfig = android.signingConfigs.getByName("debug")
             } else {
-                signingConfig = signingConfigs.getByName("release")
+                productFlavors["ovpn23"].signingConfig = signingConfigs.getByName("release")
+                productFlavors["ovpn2"].signingConfig = signingConfigs.getByName("releaseOvpn2")
             }
-        }
-    }
-    flavorDimensions += listOf("implementation")
-
-    productFlavors {
-        create("ui") {
-            dimension = "implementation"
-            buildConfigField("boolean", "openvpn3", "true")
-        }
-        create("skeleton") {
-            dimension = "implementation"
-            buildConfigField("boolean", "openvpn3", "false")
         }
     }
 
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_1_8
-        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
     splits {
@@ -116,7 +157,42 @@ android {
         }
     }
 
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
 
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+
+    bundle {
+        codeTransparency {
+            signing {
+                val keystoreTPFile: String? by project
+                storeFile = keystoreTPFile?.let { file(it) }
+                val keystoreTPPassword: String? by project
+                storePassword = keystoreTPPassword
+                val keystoreTPAliasPassword: String? by project
+                keyPassword = keystoreTPAliasPassword
+                val keystoreTPAlias: String? by project
+                keyAlias = keystoreTPAlias
+
+                if (keystoreTPFile?.isEmpty() ?: true)
+                    print("keystoreTPFile not set, disabling transparency signing")
+                if (keystoreTPPassword?.isEmpty() ?: true)
+                    print("keystoreTPPassword not set, disabling transparency signing")
+                if (keystoreTPAliasPassword?.isEmpty() ?: true)
+                    print("keystoreTPAliasPassword not set, disabling transparency signing")
+                if (keystoreTPAlias?.isEmpty() ?: true)
+                    print("keyAlias not set, disabling transparency signing")
+
+            }
+        }
+    }
 }
 
 var swigcmd = "swig"
@@ -140,6 +216,7 @@ fun registerGenTask(variantName: String, variantDirName: String): File {
         }
         commandLine(listOf(swigcmd, "-outdir", genDir, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
                 "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
+                "-DOPENVPN_PLATFORM_ANDROID",
                 "-o", "${genDir}/ovpncli_wrap.cxx", "-oh", "${genDir}/ovpncli_wrap.h",
                 "src/main/cpp/openvpn3/client/ovpncli.i"))
         inputs.files( "src/main/cpp/openvpn3/client/ovpncli.i")
@@ -163,38 +240,38 @@ dependencies {
     // https://maven.google.com/web/index.html
     // https://developer.android.com/jetpack/androidx/releases/core
     val preferenceVersion = "1.2.0"
-    val coreVersion = "1.7.0"
-    val materialVersion = "1.5.0"
-    val fragment_version = "1.4.1"
+    val coreVersion = "1.10.1"
+    val materialVersion = "1.7.0"
+    val fragment_version = "1.6.0"
 
 
-    implementation("androidx.annotation:annotation:1.3.0")
+    implementation("androidx.annotation:annotation:1.6.0")
     implementation("androidx.core:core:$coreVersion")
 
 
     // Is there a nicer way to do this?
-    dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:2.1.3")
-    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
+    dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:2.1.4")
+    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.22")
     dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
-    dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.2.1")
-    dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.4.1")
+    dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.3.0")
+    dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.6.1")
     dependencies.add("uiImplementation", "com.github.PhilJay:MPAndroidChart:v3.1.0")
-    dependencies.add("uiImplementation", "com.squareup.okhttp3:okhttp:4.9.3")
+    dependencies.add("uiImplementation", "com.squareup.okhttp3:okhttp:4.10.0")
     dependencies.add("uiImplementation", "androidx.core:core:$coreVersion")
     dependencies.add("uiImplementation", "androidx.core:core-ktx:$coreVersion")
     dependencies.add("uiImplementation", "androidx.fragment:fragment-ktx:$fragment_version")
     dependencies.add("uiImplementation", "androidx.preference:preference:$preferenceVersion")
     dependencies.add("uiImplementation", "androidx.preference:preference-ktx:$preferenceVersion")
     dependencies.add("uiImplementation", "com.google.android.material:material:$materialVersion")
-    dependencies.add("uiImplementation", "androidx.webkit:webkit:1.4.0")
-    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
-    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
-    dependencies.add("uiImplementation","androidx.security:security-crypto:1.0.0")
+    dependencies.add("uiImplementation", "androidx.webkit:webkit:1.7.0")
+    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    dependencies.add("uiImplementation","androidx.security:security-crypto:1.1.0-alpha06")
 
 
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:3.9.0")
-    testImplementation("org.robolectric:robolectric:4.5.1")
+    testImplementation("org.robolectric:robolectric:4.10.2")
     testImplementation("androidx.test:core:1.4.0")
 }

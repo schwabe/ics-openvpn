@@ -17,9 +17,9 @@
         <item>Externí zprostředkovatel autentizace</item>
     </string-array>
     <string-array name="tls_directions_entries">
-        <item translatable="false">0 (server)</item>
-        <item translatable="false">1 (klient)</item>
-        <item>Nespecifikováno</item>
+        <item translatable="false">tls-auth - --direction 0</item>
+        <item translatable="false">tls-auth - --direction 1</item>
+        <item>tls-auth --direction not specified</item>
         <item>Šifrování (--tls-crypt)</item>
         <item>TLS Crypt V2</item>
     </string-array>

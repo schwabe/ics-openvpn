@@ -7,13 +7,17 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
+    }
+    namespace 'de.blinkt.openvpn.remote'
+    buildFeatures {
+        aidl true
     }
 }
 

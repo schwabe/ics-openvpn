@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12のパスワード</string>
     <string name="file_select">選択&#8230;</string>
     <string name="file_nothing_selected">ファイルを選択する必要があります</string>
-    <string name="useTLSAuth">TLS認証を使用する</string>
-    <string name="tls_direction">TLS Direction</string>
     <string name="ipv6_dialog_tile">IPv6アドレスをCIDR形式で入力(例:2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">IPv4アドレスをCIDR形式で入力(例:1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4アドレス</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">証明書のホスト名を確認する</string>
     <string name="enter_tlscn_dialog">リモート証明書の照合に使用する識別名(DN)を指定します。(例: C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\n完全な識別名(DN)または相対識別名(RDN)、あるいは相対識別名のプリフィクスを指定します。\n\nたとえば相対識別名のプリフィクスとして\"Server\"を指定すると、\"Server-1\"と\"Server-2\"にマッチします。\n\n空欄にした場合は相対識別名とサーバのホスト名をチェックします。\n\n詳細についてはOpenVPN 2.3.1以降のマニュアルの「--verify-x509-name」の項を参照してください。</string>
     <string name="enter_tlscn_title">リモート証明書サブジェクト</string>
-    <string name="tls_key_auth">TLS鍵認証を有効にします。</string>
-    <string name="tls_auth_file">TLS 認証ファイル</string>
     <string name="pull_on_summary">IPアドレス、経路情報、DNSなどの情報をサーバから取得します。</string>
     <string name="pull_off_summary">サーバからは何も情報が取得できません。指定が必要な設定は以下の通りです。</string>
     <string name="use_pull">設定情報を取得する</string>
@@ -218,8 +214,6 @@ Androidはあなた自身の安全性のために、これらを迂回できな�
     <string name="using_proxy">プロキシを使用します %1$s %2$s</string>
     <string name="use_system_proxy">システムのプロキシ設定を使用する</string>
     <string name="use_system_proxy_summary">接続にシステム全体の構成の HTTP/HTTPS プロキシを使用します。</string>
-    <string name="onbootrestartsummary">有効にすると、OpenVPNはシステムの起動時に指定されたVPNに接続します。Android 5.0より前のバージョンでこのオプションを使用する場合は、接続時の警告に関する「よくある質問」を読んでください。</string>
-    <string name="onbootrestart">システム起動時に接続</string>
     <string name="ignore">無視</string>
     <string name="restart">再起動</string>
     <string name="restart_vpn_after_change">設定の変更はVPNの再起動後に反映されます。VPNを(再)起動しますか？</string>
@@ -297,7 +291,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="encryption_cipher">暗号化方式</string>
     <string name="packet_auth">パケット認証</string>
     <string name="auth_dialog_title">パケット認証方式を入力してください。</string>
-    <string name="built_by">%s によりビルドされました</string>
     <string name="debug_build">デバッグ ビルド</string>
     <string name="official_build">正式ビルド</string>
     <string name="make_selection_inline">プロファイルにコピー</string>
@@ -396,7 +389,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="ab_tethering_44">テザリングはVPNが接続中でも有効です。ただしテザリングした通信はVPNを使用できません。</string>
     <string name="ab_kitkat_mss">初期のKitKatはTCP接続において間違ったMSS値を使用します。(#61948). このバグを回避するにはmssfixオプションの有効化を試してください。</string>
     <string name="ab_proxy">AndroidはDNSサーバの設定がされていない場合、モバイル/WiFiのプロキシ設定を使用し続けます。OpenVPN for Androidはこれについてログにて警告します。<p>VPNがDNSサーバを設定した場合、Androidはプロキシを使用しなくなります。VPNでプロキシを使用するよう設定するAPIは存在しません。</p></string>
-    <string name="ab_lollipop_reinstall">VPNアプリはアンインストール／再インストール時に正常に動作しなくなることがあります。詳細は#80074を参照してください。</string>
     <string name="ab_not_route_to_vpn">設定されたクライアントIPとネットマスクに含まれるIPアドレスはVPNを経由しません。OpenVPNは明示的に経路を追加することでこのバグを回避します。</string>
     <string name="ab_persist_tun">ほかのTUNデバイスが使用されている間に、永続的なTUNデバイス機能のためにTUNデバイスを開こうとするとデバイス上のVPNServiceがクラッシュします。VPNが再び動作するためにはデバイスの再起動が必要です。OpenVPN for Androidはクラッシュを避けるため、新しいTUNデバイスを開く前に現在のTUNデバイスを閉じます。これは短期間、パケットが非VPN接続に送信される原因になります。この回避策があっても、VPNServiceは時々クラッシュし、デバイスの再起動が必要になります。</string>
     <string name="ab_secondary_users">VPNはほかのユーザーに対しては動作しません。</string>
@@ -404,7 +396,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="ab_vpn_reachability_44">VPNなしでも到達可能なネットワークにのみVPN経由で到達できる場合。IPv6 VPN は動作しません。</string>
     <string name="ab_only_cidr_title">CIDR形式ではない経路</string>
     <string name="ab_proxy_title">VPNとプロキシの挙動</string>
-    <string name="ab_lollipop_reinstall_title">VPNアプリを再インストールする場合</string>
     <string name="version_upto">%sおよびそれ以前</string>
     <string name="copy_of_profile">%sのコピー</string>
     <string name="ab_not_route_to_vpn_title">設定されたIPアドレスへの経路</string>
@@ -540,4 +531,5 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="bf_cbc_requires_legacy">プロファイルは、OpenSSLレガシープロバイダー(有効化されていません)に依存するBF-CBCを使用します。</string>
     <string name="allow_translations_title">コミュニティが投稿した翻訳を許可する</string>
     <string name="allow_translations_summary">コミュニティから提供された翻訳を使用してアプリを翻訳できるようにします。有効にするには、アプリを再起動する必要があります。</string>
+    <string name="tls_profile">TLSセキュリティプロファイル</string>
 </resources>

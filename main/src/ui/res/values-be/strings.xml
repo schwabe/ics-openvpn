@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Пароль PKCS12</string>
     <string name="file_select">Выбраць&#8230;</string>
     <string name="file_nothing_selected">Вы павінны выбраць файл</string>
-    <string name="useTLSAuth">Выкарыстоўваць праверку сапраўднасці TLS</string>
-    <string name="tls_direction">Кірунак TLS</string>
     <string name="ipv6_dialog_tile">Увядзіце адрас/маску падсеткі IPv6 у фармаце CIDR (узор, 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Увядзіце адрас/маску падсеткі IPv4 у фармаце CIDR (узор, 1.2.3.4/24)</string>
     <string name="ipv4_address">Адрасы IPv4</string>
@@ -67,8 +65,6 @@
     <string name="remote_tlscn_check_title">Праверка назвы вузла</string>
     <string name="enter_tlscn_dialog">Азначце спосаб, які будзе выкарыстоўвацца для праверкі сертыфікату DN (напрыклад, C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nІснуюць наступныя варыянты, як гэта можна зрабіць: поўны DN або RDN (напрыклад, openvpn.blinkt.de) або толькі варыянт з прэфіксам RDN для праверкі.\n\nКалі выкарыстоўваецца прэфікс RDN \"Сервер\", то значэнні будуць \"Server-1\", \"Server 2\" і г.д.\n\nКалі пакінуць тэкставае поле пустым адбывацца праверка супадзення RDN з серверам.\n\nБольш падрабязную інфармацыю па гэтым пытанні вы можаце атрымаць у кіраўніцтве OpenVPN 2.3.1+, у раздзеле verify-x509-name</string>
     <string name="enter_tlscn_title">Суб\'ект аддаленага сертыфіката</string>
-    <string name="tls_key_auth">Уключыць праверку сапраўднасці па ключу TLS</string>
-    <string name="tls_auth_file">Файл праверкі сапраўднасці TLS</string>
     <string name="pull_on_summary">Запытаць з сервера адрасы IP, маршруты і параметры таймінгу.</string>
     <string name="pull_off_summary">Не запытваць інфармацыю з сервера. Неабходныя налады будуць азначаныя ніжэй.</string>
     <string name="use_pull">Запытваць налады</string>
@@ -201,8 +197,6 @@
     <string name="using_proxy">Выкарыстоўваецца проксі-сервер %1$s %2$s</string>
     <string name="use_system_proxy">Выкарыстоўваць сістэмны проксі</string>
     <string name="use_system_proxy_summary">Скарыстайцеся сістэмнай канфігурацыяй проксі HTTP/HTTPS для злучэння.</string>
-    <string name="onbootrestartsummary">OpenVPN падлучыць азначаны VPN, калі ён быў актыўны падчас загрузкі сістэмы. Калі ласка, прачытайце ў радзеле \"Частыя пытанні\" пра папярэджанні пры злучэнні перад тым, як выкарыстоўваць гэты параметр на Android &lt; 5.0.</string>
-    <string name="onbootrestart">Злучаць пры загрузцы</string>
     <string name="ignore">Ігнараваць</string>
     <string name="restart">Перазапуск</string>
     <string name="restart_vpn_after_change">Змены ў канфігурацыі адбудуцца толькі пасля перазапуску VPN. (Пера)запусціць VPN?</string>
@@ -258,7 +252,6 @@
     <string name="encryption_cipher">Алгарытм шыфравання</string>
     <string name="packet_auth">Пакет праверкі сапраўднасці</string>
     <string name="auth_dialog_title">Увядзіце метад праверкі сапраўднасці пакетаў</string>
-    <string name="built_by">стварыў(-ла) %s</string>
     <string name="debug_build">зборка для адладкі</string>
     <string name="official_build">афіцыйная зборка</string>
     <string name="make_selection_inline">Скапіяваць у профіль</string>
@@ -356,7 +349,6 @@
     <string name="ab_tethering_44">Рэжым мадэма працуе пакуль актыўнае злучэнне з VPN, але сам VPN выкарыстоўвацца НЕ будзе.</string>
     <string name="ab_kitkat_mss">Раннія версіі KitKat усталёўваюць памылковае значэнне MSS для злучэння па TCP (#61948). Паспрабуйце ўключыць параметр mssfix, каб выправіць гэту памылку.</string>
     <string name="ab_proxy">Android будзе працягваць выкарыстоўваць вашы налады проксі, якія азначаныя для мабільных даных або злучэння праз Wi-Fi, калі сервер DNS не прызначаны.  папярэдзіць вас пра гэта ў журнале.<p>Калі злучэнне па VPN прызначае сервер DNS, то Android не будзе выкарыстоўваць проксі. На дадзены момант не існуе API, каб прызначыць проксі для злучэння па VPN.</p></string>
-    <string name="ab_lollipop_reinstall">Праграмы VPN могуць спыніць сваю працу пасля выдалення або паўторнага ўсталявання. Больш падрабязна глядзіце #80074</string>
     <string name="ab_not_route_to_vpn">Сканфігураваны кліенцкі адрас IP і адрасы IP у гэтай сеткавай масцы не праходзяць праз VPN. OpenVPN абыходзіць гэту праблему яўна дадаючы маршрут, які адпавядае кліенту IP і яго сеткавай масцы</string>
     <string name="ab_persist_tun">Адкрыццё TUN на прыладзе, калі іншы TUN усё яшчэ актыўны і выкарыстоўвае падтрымку persist-TUN, прывядзе да аварыйнага завяршэння VPNServices. Вам неабходна будзе перазагрузіць прыладу, каб VPN зноў пачаў працаваць.  стараецца не дазваляць паўторна адкрываць TUN на прыладзе, а калі вам гэта сапраўды неабходна, то спачатку спыніце працу бягучага TUN\'а і толькі потым адкрывайце новы, каб прадухіліць аварыйнае завяршэнне праграмы.</string>
     <string name="ab_secondary_users">VPN не працуе для ўсіх астатніх карыстальнікаў.</string>
@@ -364,7 +356,6 @@
     <string name="ab_vpn_reachability_44">Некаторыя прызначэнні даступныя толькі праз VPN і доступ да іх нельга атрымаць без VPN. VPN у IPv6 не працуе ўвогуле.</string>
     <string name="ab_only_cidr_title">Не з\'яўляецца маршрутам CIDR</string>
     <string name="ab_proxy_title">Паводзіны проксі для VPN</string>
-    <string name="ab_lollipop_reinstall_title">Паўторнае ўсталяванне праграм VPN</string>
     <string name="version_upto">%s і больш раннія</string>
     <string name="copy_of_profile">Копія %s</string>
     <string name="ab_not_route_to_vpn_title">Маршрут для ўсталяванага адраса IP</string>

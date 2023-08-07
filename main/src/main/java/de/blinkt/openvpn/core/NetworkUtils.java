@@ -14,20 +14,28 @@ import android.text.TextUtils;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Vector;
+
+import de.blinkt.openvpn.R;
 
 public class NetworkUtils {
 
     public static Vector<String> getLocalNetworks(Context c, boolean ipv6) {
-        Vector<String> nets = new Vector<>();
         ConnectivityManager conn = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        Vector<String> nets = new Vector<>();
         Network[] networks = conn.getAllNetworks();
         for (Network network : networks) {
             NetworkInfo ni = conn.getNetworkInfo(network);
             LinkProperties li = conn.getLinkProperties(network);
 
             NetworkCapabilities nc = conn.getNetworkCapabilities(network);
+
+            // Ignore network if it has no capabilities
+            if (nc == null)
+                continue;
 
             // Skip VPN networks like ourselves
             if (nc.hasTransport(NetworkCapabilities.TRANSPORT_VPN))
@@ -40,8 +48,16 @@ public class NetworkUtils {
 
             for (LinkAddress la : li.getLinkAddresses()) {
                 if ((la.getAddress() instanceof Inet4Address && !ipv6) ||
-                        (la.getAddress() instanceof Inet6Address && ipv6))
-                    nets.add(la.toString());
+                        (la.getAddress() instanceof Inet6Address && ipv6)) {
+                        //nets.add(la.toString());
+                    NetworkSpace.IpAddress ipaddress;
+                    if (la.getAddress() instanceof Inet6Address)
+                        ipaddress = new NetworkSpace.IpAddress((Inet6Address) la.getAddress(), la.getPrefixLength(), true);
+                    else
+                        ipaddress = new NetworkSpace.IpAddress(new CIDRIP(la.getAddress().getHostAddress(), la.getPrefixLength()), true);
+
+                    nets.add(ipaddress.toString());
+                }
             }
         }
 

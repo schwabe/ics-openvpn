@@ -42,7 +42,6 @@ public class ExtAuthHelper {
 
     public static void setExternalAuthProviderSpinnerList(Spinner spinner, String selectedApp) {
         Context c = spinner.getContext();
-        final PackageManager pm = c.getPackageManager();
         ArrayList<ExternalAuthProvider> extProviders = getExternalAuthProviderList(c);
 
         int selectedPos = -1;

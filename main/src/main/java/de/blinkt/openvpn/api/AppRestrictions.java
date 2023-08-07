@@ -14,7 +14,7 @@ import android.text.TextUtils;
 
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
-import de.blinkt.openvpn.core.Connection;
+import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
@@ -22,6 +22,7 @@ import de.blinkt.openvpn.core.VpnStatus;
 import java.io.IOException;
 import java.io.StringReader;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -33,7 +34,6 @@ public class AppRestrictions {
     final static int CONFIG_VERSION = 1;
     static boolean alreadyChecked = false;
     private static AppRestrictions mInstance;
-    private RestrictionsManager mRestrictionsMgr;
     private BroadcastReceiver mRestrictionsReceiver;
 
     private AppRestrictions(Context c) {
@@ -62,11 +62,12 @@ public class AppRestrictions {
         c.unregisterReceiver(mRestrictionsReceiver);
     }
 
-    private String hashConfig(String config) {
+    private String hashConfig(String rawconfig) {
+        String config = prepare(rawconfig);
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("SHA1");
-            byte utf8_bytes[] = config.getBytes();
+            byte[] utf8_bytes = config.getBytes(StandardCharsets.UTF_8);
             digest.update(utf8_bytes, 0, utf8_bytes.length);
             return new BigInteger(1, digest.digest()).toString(16);
         } catch (NoSuchAlgorithmException e) {
@@ -76,10 +77,10 @@ public class AppRestrictions {
     }
 
     private void applyRestrictions(Context c) {
-        mRestrictionsMgr = (RestrictionsManager) c.getSystemService(Context.RESTRICTIONS_SERVICE);
-        if (mRestrictionsMgr == null)
+        RestrictionsManager restrictionsMgr = (RestrictionsManager) c.getSystemService(Context.RESTRICTIONS_SERVICE);
+        if (restrictionsMgr == null)
             return;
-        Bundle restrictions = mRestrictionsMgr.getApplicationRestrictions();
+        Bundle restrictions = restrictionsMgr.getApplicationRestrictions();
         if (restrictions == null)
             return;
 
@@ -94,12 +95,57 @@ public class AppRestrictions {
             VpnStatus.logError(String.format(Locale.US, "App restriction version %s does not match expected version %d", configVersion, CONFIG_VERSION));
             return;
         }
-        Parcelable[] profileList = restrictions.getParcelableArray(("vpn_configuration_list"));
+        Parcelable[] profileList = restrictions.getParcelableArray("vpn_configuration_list");
         if (profileList == null) {
             VpnStatus.logError("App restriction does not contain a profile list (vpn_configuration_list)");
             return;
         }
 
+        importVPNProfiles(c, restrictions, profileList);
+        setAllowedRemoteControl(c, restrictions);
+
+        setMiscSettings(c, restrictions);
+    }
+
+    private void setAllowedRemoteControl(Context c, Bundle restrictions) {
+        String allowedApps = restrictions.getString("allowed_remote_access", null);
+        ExternalAppDatabase extapps = new ExternalAppDatabase(c);
+
+        if (allowedApps == null)
+        {
+            extapps.setFlagManagedConfiguration(false);
+            return;
+        }
+
+        HashSet<String> restrictionApps = new HashSet<>();
+
+        for (String package_name:allowedApps.split("[, \n\r]")) {
+            if (!TextUtils.isEmpty(package_name)) {
+                restrictionApps.add(package_name);
+            }
+        }
+        extapps.setFlagManagedConfiguration(true);
+        extapps.clearAllApiApps();
+
+        if(!extapps.getExtAppList().equals(restrictionApps))
+        {
+            extapps.setAllowedApps(restrictionApps);
+        }
+    }
+
+    private static void setMiscSettings(Context c, Bundle restrictions) {
+        SharedPreferences defaultPrefs = Preferences.getDefaultSharedPreferences(c);
+
+        if(restrictions.containsKey("screenoffpausevpn"))
+        {
+            boolean pauseVPN = restrictions.getBoolean("screenoffpausevpn");
+            SharedPreferences.Editor editor = defaultPrefs.edit();
+            editor.putBoolean("screenoff", pauseVPN);
+            editor.apply();
+        }
+    }
+
+    private void importVPNProfiles(Context c, Bundle restrictions, Parcelable[] profileList) {
         Set<String> provisionedUuids = new HashSet<>();
 
         String defaultprofile = restrictions.getString("defaultprofile", null);
@@ -116,11 +162,18 @@ public class AppRestrictions {
             String uuid = p.getString("uuid");
             String ovpn = p.getString("ovpn");
             String name = p.getString("name");
+            String certAlias = p.getString("certificate_alias");
 
-            if (uuid == null || ovpn == null || name == null) {
+            if (TextUtils.isEmpty(uuid) || TextUtils.isEmpty(ovpn) || TextUtils.isEmpty(name)) {
                 VpnStatus.logError("App restriction profile misses uuid, ovpn or name key");
                 continue;
             }
+
+            /* we always use lower case uuid since Android UUID class will use present
+             * them that way */
+            uuid = uuid.toLowerCase(Locale.US);
+            if (defaultprofile != null)
+                defaultprofile = defaultprofile.toLowerCase(Locale.US);
 
             if (uuid.equals(defaultprofile))
                 defaultprofileProvisioned = true;
@@ -134,12 +187,15 @@ public class AppRestrictions {
 
             if (vpnProfile != null) {
                 // Profile exists, check if need to update it
-                if (ovpnHash.equals(vpnProfile.importedProfileHash))
+                if (ovpnHash.equals(vpnProfile.importedProfileHash)) {
+                    addCertificateAlias(vpnProfile, certAlias, c);
+
                     // not modified skip to next profile
                     continue;
-
+                }
             }
-            addProfile(c, ovpn, uuid, name, vpnProfile);
+            vpnProfile = addProfile(c, ovpn, uuid, name, vpnProfile);
+            addCertificateAlias(vpnProfile, certAlias, c);
         }
 
         Vector<VpnProfile> profilesToRemove = new Vector<>();
@@ -155,19 +211,76 @@ public class AppRestrictions {
             pm.removeProfile(c, vp);
         }
 
+        SharedPreferences defaultPrefs = Preferences.getDefaultSharedPreferences(c);
+
         if (!TextUtils.isEmpty(defaultprofile)) {
             if (!defaultprofileProvisioned) {
                 VpnStatus.logError("App restrictions: Setting a default profile UUID without providing a profile with that UUID");
             } else {
-                SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
-                String uuid = prefs.getString("alwaysOnVpn", null);
+                String uuid = defaultPrefs.getString("alwaysOnVpn", null);
                 if (!defaultprofile.equals(uuid))
                 {
-                    SharedPreferences.Editor editor = prefs.edit();
+                    SharedPreferences.Editor editor = defaultPrefs.edit();
                     editor.putString("alwaysOnVpn", defaultprofile);
                     editor.apply();
+
                 }
             }
+        }
+    }
+
+    /**
+     * If certAlias is non-null will modify the profile type to use the keystore variant of
+     * the authentication method and will also set the keystore alias
+     */
+    private void addCertificateAlias(VpnProfile vpnProfile, String certAlias, Context c) {
+        if (vpnProfile == null)
+            return;
+
+        if (certAlias == null)
+            certAlias = "";
+
+        int oldType = vpnProfile.mAuthenticationType;
+        String oldAlias = vpnProfile.mAlias;
+
+        if (!TextUtils.isEmpty(certAlias)) {
+            switch (vpnProfile.mAuthenticationType)
+            {
+                case VpnProfile.TYPE_PKCS12:
+                case VpnProfile.TYPE_CERTIFICATES:
+                    vpnProfile.mAuthenticationType = VpnProfile.TYPE_KEYSTORE;
+                    break;
+                case VpnProfile.TYPE_USERPASS_CERTIFICATES:
+                case VpnProfile.TYPE_USERPASS_PKCS12:
+                    vpnProfile.mAuthenticationType = VpnProfile.TYPE_USERPASS_KEYSTORE;
+                    break;
+            }
+
+        } else
+        {
+            /* Alias is null, return to non keystore method */
+            boolean pkcs12present = !TextUtils.isEmpty(vpnProfile.mPKCS12Filename);
+            switch (vpnProfile.mAuthenticationType) {
+                case VpnProfile.TYPE_USERPASS_KEYSTORE:
+                    if (pkcs12present)
+                        vpnProfile.mAuthenticationType = VpnProfile.TYPE_USERPASS_PKCS12;
+                    else
+                        vpnProfile.mAuthenticationType = VpnProfile.TYPE_USERPASS_CERTIFICATES;
+                    break;
+                case VpnProfile.TYPE_KEYSTORE:
+                    if (pkcs12present)
+                        vpnProfile.mAuthenticationType = VpnProfile.TYPE_PKCS12;
+                    else
+                        vpnProfile.mAuthenticationType = VpnProfile.TYPE_CERTIFICATES;
+                    break;
+             }
+        }
+        vpnProfile.mAlias = certAlias;
+
+        if (!certAlias.equals(oldAlias) || oldType != vpnProfile.mAuthenticationType)
+        {
+            ProfileManager pm = ProfileManager.getInstance(c);
+            pm.saveProfile(c, vpnProfile);
         }
     }
 
@@ -187,7 +300,7 @@ public class AppRestrictions {
 
     ;
 
-    private void addProfile(Context c, String config, String uuid, String name, VpnProfile vpnProfile) {
+    VpnProfile addProfile(Context c, String config, String uuid, String name, VpnProfile vpnProfile) {
         config = prepare(config);
         ConfigParser cp = new ConfigParser();
         try {
@@ -213,9 +326,11 @@ public class AppRestrictions {
             pm.addProfile(vp);
             pm.saveProfile(c, vp);
             pm.saveProfileList(c);
+            return vp;
 
         } catch (ConfigParser.ConfigParseError | IOException | IllegalArgumentException e) {
             VpnStatus.logException("Error during import of managed profile", e);
+            return null;
         }
     }
 

@@ -47,12 +47,12 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     private pauseReason lastPauseReason = pauseReason.noNetwork;
     private PausedStateCallback mPauseCallback;
     private boolean mShuttingDown;
-    private Runnable mResumeHoldRunnable = () -> {
+    private final Runnable mResumeHoldRunnable = () -> {
         if (shouldBeRunning()) {
             releaseHoldCmd();
         }
     };
-    private Runnable orbotStatusTimeOutRunnable = new Runnable() {
+    private final Runnable orbotStatusTimeOutRunnable = new Runnable() {
         @Override
         public void run() {
             sendProxyCMD(Connection.ProxyType.SOCKS5, "127.0.0.1", Integer.toString(OrbotHelper.SOCKS_PROXY_PORT_DEFAULT), false);
@@ -148,8 +148,6 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             VpnStatus.logException(e);
         }
         return false;
-
-
     }
 
     /**
@@ -402,7 +400,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             if (waittime > 1)
                 VpnStatus.updateStateString("CONNECTRETRY", String.valueOf(waittime),
                         R.string.state_waitconnectretry, ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
-            mResumeHandler.postDelayed(mResumeHoldRunnable, waittime * 1000);
+            mResumeHandler.postDelayed(mResumeHoldRunnable, waittime * 1000L);
             if (waittime > 5)
                 VpnStatus.logInfo(R.string.state_waitconnectretry, String.valueOf(waittime));
             else

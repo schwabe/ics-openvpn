@@ -30,16 +30,26 @@ public class NativeUtils {
 
     public static native String getOpenVPN3GitVersion();
 
-    static boolean rsspssloaded = false;
+    private static native String getOpenSSLVersionString();
+
+    public static String getOpenSSLVersion() {
+        loadOsslUtil();
+        return getOpenSSLVersionString();
+    }
+
+    static boolean osslutilloaded = false;
 
     public static byte[] addRssPssPadding(int hashtype, int MSBits, int rsa_size, byte[] from)
     {
-        if (!rsspssloaded) {
-            rsspssloaded = true;
-            System.loadLibrary("rsapss");
-        }
-
+        loadOsslUtil();
         return rsapss(hashtype, MSBits, rsa_size, from);
+    }
+
+    private static void loadOsslUtil() {
+        if (!osslutilloaded) {
+            osslutilloaded = true;
+            System.loadLibrary("osslutil");
+        }
     }
 
     private static native byte[] rsapss(int hashtype, int MSBits, int rsa_size, byte[] from);

@@ -37,7 +37,7 @@ android {
     }
 
 
-    testOptions.unitTests.isIncludeAndroidResources = true
+    //testOptions.unitTests.isIncludeAndroidResources = true
 
     externalNativeBuild {
         cmake {

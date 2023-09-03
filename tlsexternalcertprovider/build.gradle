@@ -7,13 +7,8 @@ plugins {
     alias libs.plugins.android.application
 }
 
-ext {
-    bouncycastleVersion = '1.49'
-}
-
 android {
     compileSdkVersion 34
-
 
     defaultConfig {
         applicationId "de.blinkt.externalcertprovider"
@@ -51,11 +46,11 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation (
-    //'org.bouncycastle:bcprov-jdk15on:'  + bouncycastleVersion,
-    //'org.bouncycastle:bcprov-ext-jdk15on:' + bouncycastleVersion,
-    //'org.bouncycastle:bcpkix-jdk15on:' + bouncycastleVersion,
-    'org.bouncycastle:bcmail-jdk15on:' + bouncycastleVersion,
-    //'org.bouncycastle:bcpg-jdk15on:' + bouncycastleVersion
+//            libs.org.bouncycastle.bcprov.jdk15on,
+//            libs.org.bouncycastle.bcprov.ext.jdk15on,
+//            libs.org.bouncycastle.bcpkix.jdk15on,
+            libs.org.bouncycastle.bcmail.jdk15on,
+//            libs.org.bouncycastle.bcpg.jdk15on,
     )
 
     testImplementation(libs.junit)

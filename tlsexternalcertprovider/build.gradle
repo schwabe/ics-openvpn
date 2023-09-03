@@ -3,7 +3,9 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 
-apply plugin: 'com.android.application'
+plugins {
+    alias libs.plugins.android.application
+}
 
 ext {
     bouncycastleVersion = '1.49'

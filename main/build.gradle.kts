@@ -231,29 +231,30 @@ android.applicationVariants.all(object : Action<ApplicationVariant> {
 
 dependencies {
     // https://maven.google.com/web/index.html
-
     implementation(libs.androidx.annotation)
 
-    // Is there a nicer way to do this?
-    dependencies.add("uiImplementation", libs.kotlin)
-    dependencies.add("uiImplementation", libs.androidx.appcompat)
-    dependencies.add("uiImplementation", libs.androidx.constraintlayout)
-    dependencies.add("uiImplementation", libs.androidx.cardview)
-    dependencies.add("uiImplementation", libs.androidx.recyclerview)
-    dependencies.add("uiImplementation", libs.androidx.core.ktx)
-    dependencies.add("uiImplementation", libs.androidx.fragment.ktx)
-    dependencies.add("uiImplementation", libs.androidx.preference.ktx)
-    dependencies.add("uiImplementation", libs.androidx.webkit)
-    dependencies.add("uiImplementation", libs.androidx.lifecycle.viewmodel.ktx)
-    dependencies.add("uiImplementation", libs.androidx.lifecycle.runtime.ktx)
-    dependencies.add("uiImplementation", libs.androidx.security.crypto)
-    dependencies.add("uiImplementation", libs.mpandroidchart)
-    dependencies.add("uiImplementation", libs.square.okhttp)
-    dependencies.add("uiImplementation", libs.material)
+    uiImplementation(libs.androidx.appcompat)
+    uiImplementation(libs.androidx.cardview)
+    uiImplementation(libs.androidx.constraintlayout)
+    uiImplementation(libs.androidx.core.ktx)
+    uiImplementation(libs.androidx.fragment.ktx)
+    uiImplementation(libs.androidx.lifecycle.runtime.ktx)
+    uiImplementation(libs.androidx.lifecycle.viewmodel.ktx)
+    uiImplementation(libs.androidx.preference.ktx)
+    uiImplementation(libs.androidx.recyclerview)
+    uiImplementation(libs.androidx.security.crypto)
+    uiImplementation(libs.androidx.webkit)
+    uiImplementation(libs.kotlin)
+    uiImplementation(libs.material)
+    uiImplementation(libs.mpandroidchart)
+    uiImplementation(libs.square.okhttp)
 
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
+    testImplementation("androidx.test:core:1.4.0")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
     testImplementation("org.mockito:mockito-core:3.9.0")
     testImplementation("org.robolectric:robolectric:4.10.2")
-    testImplementation("androidx.test:core:1.4.0")
 }
+
+fun DependencyHandler.uiImplementation(dependencyNotation: Any): Dependency? =
+    add("uiImplementation", dependencyNotation)

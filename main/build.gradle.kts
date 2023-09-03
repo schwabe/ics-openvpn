@@ -6,10 +6,9 @@ import com.android.build.gradle.api.ApplicationVariant
  */
 
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
     id("checkstyle")
-
-    id("kotlin-android")
 }
 
 android {
@@ -232,36 +231,25 @@ android.applicationVariants.all(object : Action<ApplicationVariant> {
 
 dependencies {
     // https://maven.google.com/web/index.html
-    // https://developer.android.com/jetpack/androidx/releases/core
-    val preferenceVersion = "1.2.0"
-    val coreVersion = "1.10.1"
-    val materialVersion = "1.7.0"
-    val fragment_version = "1.6.0"
 
-
-    implementation("androidx.annotation:annotation:1.6.0")
-    implementation("androidx.core:core:$coreVersion")
-
+    implementation(libs.androidx.annotation)
 
     // Is there a nicer way to do this?
-    dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:2.1.4")
-    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.22")
-    dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
-    dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.3.0")
-    dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.6.1")
-    dependencies.add("uiImplementation", "com.github.PhilJay:MPAndroidChart:v3.1.0")
-    dependencies.add("uiImplementation", "com.squareup.okhttp3:okhttp:4.10.0")
-    dependencies.add("uiImplementation", "androidx.core:core:$coreVersion")
-    dependencies.add("uiImplementation", "androidx.core:core-ktx:$coreVersion")
-    dependencies.add("uiImplementation", "androidx.fragment:fragment-ktx:$fragment_version")
-    dependencies.add("uiImplementation", "androidx.preference:preference:$preferenceVersion")
-    dependencies.add("uiImplementation", "androidx.preference:preference-ktx:$preferenceVersion")
-    dependencies.add("uiImplementation", "com.google.android.material:material:$materialVersion")
-    dependencies.add("uiImplementation", "androidx.webkit:webkit:1.7.0")
-    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    dependencies.add("uiImplementation","androidx.security:security-crypto:1.1.0-alpha06")
-
+    dependencies.add("uiImplementation", libs.kotlin)
+    dependencies.add("uiImplementation", libs.androidx.appcompat)
+    dependencies.add("uiImplementation", libs.androidx.constraintlayout)
+    dependencies.add("uiImplementation", libs.androidx.cardview)
+    dependencies.add("uiImplementation", libs.androidx.recyclerview)
+    dependencies.add("uiImplementation", libs.androidx.core.ktx)
+    dependencies.add("uiImplementation", libs.androidx.fragment.ktx)
+    dependencies.add("uiImplementation", libs.androidx.preference.ktx)
+    dependencies.add("uiImplementation", libs.androidx.webkit)
+    dependencies.add("uiImplementation", libs.androidx.lifecycle.viewmodel.ktx)
+    dependencies.add("uiImplementation", libs.androidx.lifecycle.runtime.ktx)
+    dependencies.add("uiImplementation", libs.androidx.security.crypto)
+    dependencies.add("uiImplementation", libs.mpandroidchart)
+    dependencies.add("uiImplementation", libs.square.okhttp)
+    dependencies.add("uiImplementation", libs.material)
 
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
     testImplementation("junit:junit:4.13.2")

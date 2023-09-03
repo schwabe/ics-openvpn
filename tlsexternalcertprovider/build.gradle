@@ -58,5 +58,5 @@ dependencies {
     //'org.bouncycastle:bcpg-jdk15on:' + bouncycastleVersion
     )
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation(libs.junit)
 }

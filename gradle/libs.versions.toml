@@ -1,39 +1,51 @@
 [versions]
-kotlin = "1.9.0"
-constraintlayout = "2.1.4"
-cardview = "1.0.0"
-recyclerview = "1.3.0"
-appcompat = "1.6.1"
-mpandroidchart = "v3.1.0"
-okhttp = "4.10.0"
-core-ktx = "1.10.1"
-fragment-ktx = "1.6.0"
-preference-ktx = "1.2.0"
-material = "1.7.0"
+android-gradle-plugin = "8.1.1"
+androidx-annotation = "1.6.0"
+androidx-appcompat = "1.6.1"
+android-view-material = "1.7.0"
+androidx-core-ktx = "1.10.1"
+androidx-fragment-ktx = "1.6.0"
+androidx-preference-ktx = "1.2.0"
 androidx-webkit = "1.7.0"
 androidx-lifecycle-viewmodel-ktx = "2.6.1"
 androidx-lifecycle-runtime-ktx = "2.6.1"
 androidx-security-crypto = "1.1.0-alpha06"
-androidx-annotation = "1.6.0"
-android-gradle-plugin = "8.1.1"
+androidx-constraintlayout = "2.1.4"
+androidx-cardview = "1.0.0"
+androidx-recyclerview = "1.3.0"
+mpandroidchart = "v3.1.0"
+kotlin = "1.9.0"
+square-okhttp = "4.10.0"
+
+# Test
+androidx-test-core = "1.4.0"
+junit = "4.13.2"
+mockito-core = "3.9.0"
+robolectric = "4.10.2"
 
 [libraries]
-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
-androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpandroidchart" }
-square-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
-androidx-core-ktx = { group = "androidx.core", name = "core", version.ref = "core-ktx" }
-androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment-ktx" }
-androidx-preference-ktx = { group = "androidx.preference", name = "preference-ktx", version.ref = "preference-ktx" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+android-view-material = { group = "com.google.android.material", name = "material", version.ref = "android-view-material" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidx-annotation" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
+androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "androidx-cardview" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-core-ktx = { group = "androidx.core", name = "core", version.ref = "androidx-core-ktx" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "androidx-fragment-ktx" }
+androidx-preference-ktx = { group = "androidx.preference", name = "preference-ktx", version.ref = "androidx-preference-ktx" }
 androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "androidx-webkit" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle-viewmodel-ktx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime-ktx" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "androidx-recyclerview" }
 androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "androidx-security-crypto" }
-androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidx-annotation" }
+mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpandroidchart" }
+kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+square-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "square-okhttp" }
+
+# Test
+androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidx-test-core" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito-core" }
+robolectric = { group = "org.robolectric:robolectric:4.10.2", name = "robolectric", version.ref = "robolectric" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }

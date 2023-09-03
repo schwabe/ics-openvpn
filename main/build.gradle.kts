@@ -232,6 +232,7 @@ android.applicationVariants.all(object : Action<ApplicationVariant> {
 dependencies {
     // https://maven.google.com/web/index.html
     implementation(libs.androidx.annotation)
+    implementation(libs.androidx.core.ktx)
 
     uiImplementation(libs.android.view.material)
     uiImplementation(libs.androidx.appcompat)
@@ -251,7 +252,7 @@ dependencies {
 
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.junit)
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
+    testImplementation(libs.kotlin)
     testImplementation(libs.mockito.core)
     testImplementation(libs.robolectric)
 }

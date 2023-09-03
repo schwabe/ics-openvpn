@@ -45,7 +45,7 @@ square-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref =
 androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidx-test-core" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito-core" }
-robolectric = { group = "org.robolectric:robolectric:4.10.2", name = "robolectric", version.ref = "robolectric" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }

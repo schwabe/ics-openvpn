@@ -616,14 +616,8 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         managmentCommand(cmd);
     }
 
-    private boolean sendTunFD(String needed, String extra) {
-        if (!extra.equals("tun")) {
-            // We only support tun
-            VpnStatus.logError(String.format("Device type %s requested, but only tun is possible with the Android API, sorry!", extra));
 
-            return false;
-        }
-        ParcelFileDescriptor pfd = mOpenVPNService.openTun();
+    private boolean sendCommandWithFd(String cmd, ParcelFileDescriptor pfd) {
         if (pfd == null)
             return false;
 
@@ -636,26 +630,38 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             setInt.invoke(fdtosend, fdint);
 
             FileDescriptor[] fds = {fdtosend};
-            mSocket.setFileDescriptorsForSend(fds);
 
             // Trigger a send so we can close the fd on our side of the channel
             // The API documentation fails to mention that it will not reset the file descriptor to
             // be send and will happily send the file descriptor on every write ...
-            String cmd = String.format("needok '%s' %s\n", needed, "ok");
+            mSocket.setFileDescriptorsForSend(fds);
+
             managmentCommand(cmd);
 
             // Set the FileDescriptor to null to stop this mad behavior
             mSocket.setFileDescriptorsForSend(null);
-
             pfd.close();
 
-            return true;
-        } catch (NoSuchMethodException | IllegalArgumentException | InvocationTargetException |
-                IOException | IllegalAccessException exp) {
-            VpnStatus.logException("Could not send fd over socket", exp);
-        }
 
-        return false;
+        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
+                 IOException exp) {
+            VpnStatus.logException("Could not send fd over socket", exp);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean sendTunFD(String needed, String extra) {
+        if (!extra.equals("tun")) {
+            // We only support tun
+            VpnStatus.logError(String.format("Device type %s requested, but only tun is possible with the Android API, sorry!", extra));
+
+            return false;
+        }
+        ParcelFileDescriptor pfd = mOpenVPNService.openTun();
+
+        String cmd = String.format("needok '%s' %s\n", needed, "ok");
+        return sendCommandWithFd(cmd, pfd);
     }
 
     private void processPWCommand(String argument) {

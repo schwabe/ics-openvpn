@@ -36,13 +36,13 @@ public class AppRestrictions {
     private static AppRestrictions mInstance;
     private BroadcastReceiver mRestrictionsReceiver;
 
-    private AppRestrictions(Context c) {
+    private AppRestrictions() {
 
     }
 
     public static AppRestrictions getInstance(Context c) {
         if (mInstance == null)
-            mInstance = new AppRestrictions(c);
+            mInstance = new AppRestrictions();
         return mInstance;
     }
 
@@ -81,6 +81,10 @@ public class AppRestrictions {
         if (restrictionsMgr == null)
             return;
         Bundle restrictions = restrictionsMgr.getApplicationRestrictions();
+        parseRestrictionsBundle(c, restrictions);
+    }
+    public void parseRestrictionsBundle(Context c, Bundle restrictions)
+    {
         if (restrictions == null)
             return;
 
@@ -97,8 +101,8 @@ public class AppRestrictions {
         }
         Parcelable[] profileList = restrictions.getParcelableArray("vpn_configuration_list");
         if (profileList == null) {
-            VpnStatus.logError("App restriction does not contain a profile list (vpn_configuration_list)");
-            return;
+            VpnStatus.logInfo("App restriction does not contain a profile list. Removing previously added profiles. (vpn_configuration_list)");
+            profileList = new Parcelable[]{};
         }
 
         importVPNProfiles(c, restrictions, profileList);

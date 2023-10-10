@@ -759,6 +759,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private static String getTunConfigString(TunConfig tc) {
         // The format of the string is not important, only that
         // two identical configurations produce the same result
+        if (tc == null)
+            return "NULL";
+        
         String cfg = "TUNCFG UNQIUE STRING ips:";
 
         if (tc.mLocalIP != null)
@@ -1323,7 +1326,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     public String getTunReopenStatus() {
-        String currentConfiguration = getTunConfigString(mLastTunCfg);
+        String currentConfiguration = getTunConfigString(tunConfig);
         if (currentConfiguration.equals(getTunConfigString(mLastTunCfg))) {
             return "NOACTION";
         } else {

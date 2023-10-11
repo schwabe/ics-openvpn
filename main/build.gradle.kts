@@ -21,7 +21,7 @@ android {
     //compileSdkPreview = "UpsideDownCake"
 
     // Also update runcoverity.sh
-    ndkVersion = "25.2.9519653"
+    ndkVersion = "26.1.10909125"
 
     defaultConfig {
         minSdk = 21
@@ -31,6 +31,7 @@ android {
         versionName = "0.7.49"
         externalNativeBuild {
             cmake {
+                //arguments+= "-DCMAKE_VERBOSE_MAKEFILE=1"
             }
         }
     }

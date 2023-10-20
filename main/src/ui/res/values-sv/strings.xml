@@ -27,13 +27,12 @@
     <string name="pkcs12pwquery">PKCS12 lösenord</string>
     <string name="file_select">Välj&#8230;</string>
     <string name="file_nothing_selected">Du måste välja en fil</string>
-    <string name="useTLSAuth">Använd TLS-autentisering</string>
-    <string name="tls_direction">TLS riktning</string>
     <string name="ipv6_dialog_tile">Ange IPv6-adress/Netmask i CIDR Format (t.ex. 2000:dd::23 / 64)</string>
     <string name="ipv4_dialog_title">Ange IPv4-adressen/Netmask i CIDR Format (t.ex. 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4-adress</string>
     <string name="ipv6_address">IPv6-adress</string>
     <string name="custom_option_warning">Ange anpassade OpenVPN alternativ. Använd med försiktighet! Tänk också på att många av de tun relaterade OpenVPN inställningarna inte kan stödjas genom utformningen av VPNSettings. Om du anser att ett viktigt alternativ saknas kontakta författaren</string>
+    <string name="auth_username">Användarnamn (lämna tomt för ingen autentisering)</string>
     <string name="auth_pwquery">Lösenord</string>
     <string name="static_keys_info">Vid statisk konfiguration används TLS Auth nycklarna som statiska nycklar</string>
     <string name="configure_the_vpn">Konfigurera VPN-anslutningen</string>
@@ -42,6 +41,7 @@
     <string name="duplicate_profile_name">Vänligen ange ett unikt Profilnamn</string>
     <string name="profilename">Profilnamn</string>
     <string name="no_keystore_cert_selected">Du måste välja ett användarcertifikat</string>
+    <string name="no_ca_cert_selected">Du måste välja ett CA-certifikat eller aktivera peer fingeravtryckskontroll</string>
     <string name="no_error_found">Inga fel hittades</string>
     <string name="config_error_found">Fel i konfigurationen</string>
     <string name="ipv4_format_error">Det går inte att tolka IPv4-adressen</string>
@@ -67,8 +67,6 @@
     <string name="remote_tlscn_check_title">Certifikat Hostname kontroll</string>
     <string name="enter_tlscn_dialog">Ange den kontroll som används för att verifiera Fjärrcertifikat DN (e.g. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nSpecificera en komplett DN eller RDN (openvpn.blinkt.de i exemplet) eller ett RDN prefix för verifiering.\n\nOm RDN prefix används matchar \"Server\" både \"Server-1\" och \"Server-2\" \n\nLämnas textfältet tomt matchas RDN mot server hostname.\n\nFor mer information se OpenVPN 2.3.1+ manpage under —verify-x509-name</string>
     <string name="enter_tlscn_title">Fjärrcertifikats ämne</string>
-    <string name="tls_key_auth">Aktiverar TLS Key Authetication</string>
-    <string name="tls_auth_file">TLS Auth fil</string>
     <string name="pull_on_summary">Begär IP-adresser, rutter och tidsalternativ från servern.</string>
     <string name="pull_off_summary">Ingen information begärs från servern. Inställningar behöver specificeras nedan.</string>
     <string name="use_pull">Hämta inställningar</string>
@@ -125,6 +123,7 @@
     <string name="no_vpn_support_image">Din ROM stöder inte VPNService API, ledsen :(</string>
     <string name="encryption">Kryptering</string>
     <string name="cipher_dialog_title">Ange krypteringsmetod</string>
+    <string name="chipher_dialog_message">Ange datakrypteringsalgoritmerna som används av OpenVPN separerade med: (--data-chiffer). Lämna tomt för att använda standarden för AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
     <string name="auth_dialog_message">Ange den autentiserings digest som används för OpenVPN. Lämna tom för att använda standard digest.</string>
     <string name="settings_auth">Autentisering/kryptering</string>
     <string name="file_explorer_tab">Filutforskare</string>
@@ -201,8 +200,6 @@
     <string name="using_proxy">Använder proxy %1$s %2$s</string>
     <string name="use_system_proxy">Använd system proxy</string>
     <string name="use_system_proxy_summary">Använda systemkonfigurationen för HTTP/HTTPS proxy för att ansluta.</string>
-    <string name="onbootrestartsummary">OpenVPN kommer att ansluta angiven VPN om den var aktivt vid systemets uppstart. Läs vanliga frågor för anslutningsvarning innan du använder det här alternativet på Android &lt; 5.0.</string>
-    <string name="onbootrestart">Anslut vid uppstart</string>
     <string name="ignore">Ignorera</string>
     <string name="restart">Starta om</string>
     <string name="restart_vpn_after_change">Konfigurationsändringar tillämpas efter omstart av VPN. Starta(om) VPN nu?</string>
@@ -258,7 +255,6 @@
     <string name="encryption_cipher">Krypteringschiffer</string>
     <string name="packet_auth">Paketautentisering</string>
     <string name="auth_dialog_title">Ange autentiseringsmetod för paket</string>
-    <string name="built_by">byggd av %s</string>
     <string name="debug_build">felsöknings bygge</string>
     <string name="official_build">officiellt bygge</string>
     <string name="make_selection_inline">Kopiera till profil</string>
@@ -433,6 +429,12 @@
     <string name="kbits_per_second">%.1f kbit/s</string>
     <string name="mbits_per_second">%.1f Mbit/s</string>
     <string name="gbits_per_second">%.1f Gbit/s</string>
+    <string name="weakmd">&lt;p&gt;Från och med OpenSSL version 1.1, avvisar OpenSSL svaga signaturer i certifikat som
+        MD5. Dessutom med OpenSSL 3.0 avvisas signaturer med SHA1.&lt;/p&gt;&lt;p&gt;
+        Du bör uppdatera VPN-certifikaten så snart som möjligt eftersom SHA1 inte heller längre kommer att fungera på andra plattformar inom den
+        närmaste framtiden.&lt;/p&gt;
+        &lt;p&gt;Om du verkligen vill använda gamla och trasiga certifikat väljer du \"osäker\" för TLS-säkerhetsprofilen under Autentisering/kryptering av profilen&lt;/p&gt;
+    </string>
     <string name="volume_byte">%.0f B</string>
     <string name="volume_kbyte">%.1f kB</string>
     <string name="volume_mbyte">%.1f MB</string>
@@ -466,8 +468,35 @@
         autentisering
     </string>
     <string name="openurl_requested">Öppna webbadressen för att fortsätta VPN-autentisering</string>
+    <string name="crtext_requested">Svara på utmaningen att fortsätta VPN-autentiseringen</string>
     <string name="state_auth_pending">Autentisering väntar</string>
     <string name="external_authenticator">Extern autentisering</string>
     <string name="configure">Konfigurera</string>
     <string name="extauth_not_configured">Extern autentiseringsapp inte konfigurerad</string>
+    <string name="faq_killswitch_title">Blockera icke-VPN-anslutning (\"Killswitch\")</string>
+    <string name="faq_killswitch">Det är ofta önskvärt att blockera anslutningar utan VPN. Andra appar använder ofta marknadsföringstermer som \"Killswitch\" eller \"Sömlös tunnel\" för den här funktionen. OpenVPN och denna app erbjuder persist-tun, en funktion för att implementera denna funktionalitet.&lt;p&gt;Problemet med alla dessa metoder som erbjuds av appar är att de bara kan ge bästa möjliga ansträngning och inte är några kompletta lösningar. Vid uppstart, appkraschar och andra hörnfall kan appen inte säkerställa att detta block av icke-VPN-anslutning fungerar. Detta ger användaren en falsk känsla av säkerhet.&lt;p&gt;Det &lt;b&gt;enda&lt;/b&gt; pålitliga sättet att säkerställa att icke-VPN-anslutningar blockeras är att använda Android 8.0 eller senare och använda inställningen \"blockera anslutningar utan VPN\" som finns under Inställningar &gt; Nätverk &amp; Internet &gt; Avancerat/VPN &gt; OpenVPN för Android &gt; Aktivera alltid PÅ VPN, Aktivera Blockera anslutningar utan VPN</string>
+    <string name="summary_block_address_families">Det här alternativet instruerar Android att inte tillåta protokoll (IPv4/IPv6) om VPN inte ställer in några IPv4- eller IPv6-adresser.</string>
+    <string name="title_block_address_families">Blockera IPv6 (eller IPv4) om det inte används av VPN</string>
+    <string name="install_keychain">Installera nytt certifikat</string>
+    <string name="as_servername">AS servernamn</string>
+    <string name="server_url">Server URL</string>
+    <string name="request_autologin">Begär autoinloggningsprofil</string>
+    <string name="import_from_as">Importera profil från fjärrserver</string>
+    <string name="no_default_vpn_set">Standard-VPN inte inställt. Ställ in standard-VPN innan du aktiverar det här alternativet.</string>
+    <string name="internal_web_view">Intern WebView</string>
+    <string name="faq_ncp">Det finns vissa variationer av detta meddelande beroende på den exakta situationen. De har alla gemensamt att server och klient inte kunde komma överens om ett gemensamt chiffer. De främsta anledningarna är: &lt;ul&gt;&lt;li&gt; Du förlitar dig fortfarande på det faktum att OpenVPN 2.4 och äldre tillät BF-CBC i standardkonfigurationen (om inget --chiffer var inställt). OpenVPN 2.5 tillåter inte det som standard längre eftersom det är ett &lt;a href=\"https://community.openvpn.net/openvpn/wiki/SWEET32\"&gt;trasigt/föråldrat chiffer&lt;/a&gt;.&lt;/li&gt;&lt;li&gt;Servern kör OpenVPN 2.3 (eller ännu äldre) med --enable-small (minst 4-5 år gammal OpenVPN)&lt;/li&gt;&lt;li&gt;&lt;/ul&gt;Trasig konfiguration (t.ex. felaktiga data-chiffer på klient och server)&lt;/li&gt; &lt;p&gt; The &lt;a href=\"https://github.com/OpenVPN/openvpn/blob/master/doc/man-sections/cipher-negotiation.rst\"&gt;OpenVPN manualavsnittet om chifferförhandling&lt;/a&gt; förklarar de olika scenarierna för chifferförhandling mycket väl och vad man ska göra i dessa situationer.&lt;p&gt;TP-Link-enheter använder en minst 5 år gammal OpenVPN 2.3.x-version (eventuellt äldre) på sina enheter, även i 2019/2020-modellerna.&lt;p&gt;Sist men inte minst finns det en populär VPN-leverantör som har en trasig server som alltid säger att den använder \'BF-CBC\' eftersom dess utvecklare tyckte att det skulle vara en bra idé att skapa en proprietär chifferförhandlingspatch som är inkompatibel med standarden OpenVPN.&lt;p&gt;Sammanfattningsvis: alla sunda konfigurationer bör inte få dessa fel. Men (bortsett från den trasiga VPN-leverantörens server) kan klienten övertalas att fortfarande ansluta (fixar symtomet och inte det verkliga problemet). När du ansluter till äldre servrar bör alternativet för kompatibilitetsläge i grundinställningarna för ett VPN kunna lösa de flesta vanliga kompatibilitetsproblem.</string>
+    <string name="check_peer_fingerprint">Kontrollera fingeravtryck för peer-certifikat</string>
+    <string name="fingerprint">(Ange SHA256-fingeravtrycket för servercertifikatet)</string>
+    <string name="proxy_info">HTTP-proxy: %1$s %2$d</string>
+    <string name="use_alwayson_vpn">Använd \"Alltid-På\" funktionen i Android för att aktivera VPN vid uppstart.</string>
+    <string name="open_vpn_settings">Öppna VPN-inställningar</string>
+    <string name="trigger_pending_auth_dialog">Tryck här öppna ett fönster för att ange ytterligare nödvändig autentisering</string>
+    <string name="compatmode">Kompatibilitetsläge</string>
+    <string name="compat_mode_label">Kompatibilitetsläge</string>
+    <string name="loadossllegacy">Ladda OpenSSL äldre leverantör</string>
+    <string name="bf_cbc_requires_legacy">Profiler använder BF-CBC som beror på OpenSSL legacy provider (ej aktiverat).</string>
+    <string name="allow_translations_title">Tillåt översättningar som bidragit från gemenskapen</string>
+    <string name="allow_translations_summary">Tillåter att appen översätts med översättningar från gemenskapen. Kräver en omstart av appen för att aktiveras.</string>
+    <string name="tls_profile">TLS säkerhetsprofil</string>
+    <string name="encrypt_profiles">Försök att kryptera profiler på lagring (om det stöds av Android OS)</string>
 </resources>

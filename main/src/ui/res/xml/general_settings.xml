@@ -39,8 +39,8 @@
         <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="restartvpnonboot"
-                android:summary="@string/onbootrestartsummary"
-                android:title="@string/onbootrestart"/>
+                android:summary="@string/keep_vpn_connected_summary"
+                android:title="@string/keep_vpn_connected"/>
 
         <CheckBoxPreference
                 android:defaultValue="true"

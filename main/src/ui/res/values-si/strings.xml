@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 මුරපදය</string>
     <string name="file_select">&#8230;</string>
     <string name="file_nothing_selected">ඔබ ගොනුවක් තෝරාගත යුතුය</string>
-    <string name="useTLSAuth">TLS සත්‍යාපනය භාවිතා කරන්න</string>
-    <string name="tls_direction">TLS දිශාව</string>
     <string name="ipv6_dialog_tile">CIDR ආකෘතියෙන් IPv6 ලිපිනය/Netmask ඇතුළු කරන්න (උදා: 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">CIDR ආකෘතියෙන් IPv4 ලිපිනය/Netmask ඇතුලත් කරන්න (උදා. 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4 ලිපිනය</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">සහතික සත්කාරක නාමය පරීක්ෂා කරන්න</string>
     <string name="enter_tlscn_dialog">දුරස්ථ සහතිකය DN සත්‍යාපනය කිරීමට භාවිතා කරන චෙක්පත සඳහන් කරන්න (උදා C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nසම්පූර්ණ DN හෝ RDN (openvpn.blinkt.de in) සඳහන් කරන්න. උදාහරණය) හෝ සත්‍යාපනය සඳහා RDN උපසර්ගයක්.\n\nRDN උපසර්ගය භාවිතා කරන විට \"Server\" ගැලපීම \"Server-1\" සහ \"Server-2\"\n\nපාඨ ක්ෂේත්‍රය හිස්ව තැබීමෙන් සේවාදායක සත්කාරක නාමයට එරෙහිව RDN පරීක්ෂා කරනු ඇත.\n\nවැඩි විස්තර සඳහා -verify-x509-name යටතේ OpenVPN 2.3.1+ manpage බලන්න</string>
     <string name="enter_tlscn_title">දුරස්ථ සහතික විෂය</string>
-    <string name="tls_key_auth">TLS යතුරු සත්‍යාපනය සක්‍රීය කරයි</string>
-    <string name="tls_auth_file">TLS Auth ගොනුව</string>
     <string name="pull_on_summary">සේවාදායකයෙන් IP ලිපින, මාර්ග සහ කාල විකල්ප ඉල්ලයි.</string>
     <string name="pull_off_summary">සේවාදායකයෙන් කිසිදු තොරතුරක් ඉල්ලා නැත. සැකසීම් පහත සඳහන් කළ යුතුය.</string>
     <string name="use_pull">අදින්න සැකසුම්</string>
@@ -202,8 +198,6 @@
     <string name="using_proxy">ප්‍රොක්සි %1$s %2$sභාවිතා කිරීම</string>
     <string name="use_system_proxy">පද්ධති ප්‍රොක්සි භාවිතා කරන්න</string>
     <string name="use_system_proxy_summary">සම්බන්ධ වීමට HTTP/HTTPS ප්‍රොක්සි සඳහා පද්ධති පුළුල් වින්‍යාසය භාවිතා කරන්න.</string>
-    <string name="onbootrestartsummary">OpenVPN එය පද්ධති ආරම්භයේදී සක්‍රිය නම් නිශ්චිත VPN සම්බන්ධ කරයි. Android &lt; 5.0 මත මෙම විකල්පය භාවිතා කිරීමට පෙර කරුණාකර සම්බන්ධතා අනතුරු ඇඟවීමේ නිතර අසන පැන කියවන්න.</string>
-    <string name="onbootrestart">ආරම්භයේදී සම්බන්ධ කරන්න</string>
     <string name="ignore">නොසලකන්න</string>
     <string name="restart">නැවත ආරම්භ කරන්න</string>
     <string name="restart_vpn_after_change">VPN නැවත ආරම්භ කිරීමෙන් පසු වින්‍යාස කිරීමේ වෙනස්කම් යොදනු ලැබේ. (නැවත) VPN දැන් ආරම්භ කරන්නද?</string>
@@ -259,7 +253,6 @@
     <string name="encryption_cipher">සංකේතාංකන කේතාංක</string>
     <string name="packet_auth">පැකට් සත්‍යාපනය</string>
     <string name="auth_dialog_title">පැකට් සත්‍යාපන ක්‍රමය ඇතුලත් කරන්න</string>
-    <string name="built_by">%sවිසින් ගොඩනගා ඇත</string>
     <string name="debug_build">නිදොස් ගොඩනැගීම</string>
     <string name="official_build">නිල ගොඩනැගීම</string>
     <string name="make_selection_inline">පැතිකඩට පිටපත් කරන්න</string>

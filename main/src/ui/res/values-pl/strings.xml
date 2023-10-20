@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Hasło PKCS12</string>
     <string name="file_select">Wybierz&#8230;</string>
     <string name="file_nothing_selected">Wybierz plik</string>
-    <string name="useTLSAuth">Użyj uwierzytelniania TLS</string>
-    <string name="tls_direction">Kierunek TLS</string>
     <string name="ipv6_dialog_tile">Wprowadź adres IPv6 w formacie CIDR (np. 2000:dd::23 / 64)</string>
     <string name="ipv4_dialog_title">Wprowadź adres IPv4 w formacie CIDR (np. 1.2.3.4/24)</string>
     <string name="ipv4_address">Adres IPv4</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">Weryfikuj nazwę domenową zawartą w certyfikacie</string>
     <string name="enter_tlscn_dialog">Określ czynność weryfikującą DN zdalnego certyfikatu (np. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nUżyj pełnego DN lub RDN (przykładowo penvpn.blinkt.de), lub prefiks RDN w celu weryfikacji\n\nUżywając prefiksu \"Serwer\", RDN będzie prawidłowy dla \"Serwer-1\" lub \"Serwer-Agaty\"\n\nPozostawiając pole puste RDN będzie sprawdzany pod kątem nazwy serwera.\n\nAby uzyskać więcej informacji, spójrz do podręcznika OpenVPN 2.3.1 w dziale —verify-x509-name</string>
     <string name="enter_tlscn_title">Podmiot zdalnego certyfikatu</string>
-    <string name="tls_key_auth">Włącza uwierzytelnianie kluczem TLS</string>
-    <string name="tls_auth_file">Plik TLS</string>
     <string name="pull_on_summary">Pobierz z serwera adresy IP, trasy oraz inne opcje.</string>
     <string name="pull_off_summary">Żadne opcje nie będą pobierane z serwera, należy je ustawić poniżej.</string>
     <string name="use_pull">Pobierz ustawienia</string>
@@ -204,8 +200,6 @@
     <string name="using_proxy">Korzystanie z serwera proxy %1$s %2$s</string>
     <string name="use_system_proxy">Użyj proxy systemowego</string>
     <string name="use_system_proxy_summary">Połącz używając systemowej konfiguracji proxy HTTP/HTTPS.</string>
-    <string name="onbootrestartsummary">OpenVPN połączy się z wybranym VPN jeżeli będzie aktywny podczas startu systemu. Przeczytaj FAQ dotyczący połączeń przed zastosowaniem tej opcji na Androidzie &lt; 5.0.</string>
-    <string name="onbootrestart">Połącz przy starcie</string>
     <string name="ignore">Ignoruj</string>
     <string name="restart">Uruchom ponownie</string>
     <string name="restart_vpn_after_change">Zmiany konfiguracji będą zatwierdzone po restarcie VPN. Uruchomić ponowie teraz?</string>
@@ -261,7 +255,6 @@
     <string name="encryption_cipher">Szyfr kodujący</string>
     <string name="packet_auth">Pakiety uwierzytelniania</string>
     <string name="auth_dialog_title">Wpisz metodę uwierzytelniania pakietów</string>
-    <string name="built_by">zbudowany przez %s</string>
     <string name="debug_build">Kompilacja z debugiem</string>
     <string name="official_build">Oficjalna kompilacja</string>
     <string name="make_selection_inline">Skopiuj do profilu</string>
@@ -484,8 +477,13 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="install_keychain">Zainstaluj nowy certyfikat</string>
     <string name="as_servername">JAKO nazwa_serwera</string>
     <string name="server_url">Serwer URL</string>
+    <string name="request_autologin">Poproś o automatyczne logowanie do profilu</string>
     <string name="import_from_as">Importuj profil ze zdalnego serwera</string>
     <string name="no_default_vpn_set">Domyślna sieć VPN nie jest ustawiona. Przed włączeniem tej opcji ustaw domyślną sieć VPN.</string>
+    <string name="internal_web_view">Wewnętrzny WebView</string>
+    <string name="check_peer_fingerprint">Sprawdź odcisk palca certyfikatu peera</string>
+    <string name="fingerprint">(Wprowadź odcisk palca SHA256 certyfikatu serwera)</string>
+    <string name="proxy_info">Proxy HTTP: %1$s %2$d</string>
     <string name="use_alwayson_vpn">Użyj funkcji Always-On Androida, aby umożliwić włączenie VPN wraz ze startem systemu.</string>
     <string name="open_vpn_settings">Otwórz ustawienia VPN</string>
     <string name="trigger_pending_auth_dialog">Kliknij tutaj, aby otworzyć okno, aby wprowadzić dodatkowe wymagane uwierzytelnienie</string>
@@ -496,4 +494,5 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="allow_translations_title">Zezwalaj na tłumaczenia współtworzone przez społeczność</string>
     <string name="allow_translations_summary">Zezwól na tłumaczenie aplikacji, wykorzystując propozycje użytkowników. Do aktywacji wymaga ponownego uruchomienie aplikacji.</string>
     <string name="tls_profile">Profil bezpieczeństwa TLS</string>
+    <string name="encrypt_profiles">Spróbuj zaszyfrować profile w pamięci masowej (jeśli jest to obsługiwane przez system operacyjny Android)</string>
 </resources>

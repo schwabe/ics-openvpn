@@ -17,9 +17,9 @@
         <item>외부 인증 공급자</item>
     </string-array>
     <string-array name="tls_directions_entries">
-        <item translatable="false">0</item>
-        <item translatable="false">1</item>
-        <item>미지정</item>
+        <item translatable="false">tls-auth - --direction 0</item>
+        <item translatable="false">tls-auth - --direction 1</item>
+        <item>tls-auth --direction not specified</item>
         <item>암호화 (--tls-crypt)</item>
         <item>TLS 암호화 V2</item>
     </string-array>

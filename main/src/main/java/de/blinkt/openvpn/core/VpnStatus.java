@@ -190,6 +190,7 @@ public class VpnStatus {
     static final byte[] officaldebugkey = {-99, -69, 45, 71, 114, -116, 82, 66, -99, -122, 50, -70, -56, -111, 98, -35, -65, 105, 82, 43};
     static final byte[] amazonkey = {-116, -115, -118, -89, -116, -112, 120, 55, 79, -8, -119, -23, 106, -114, -85, -56, -4, 105, 26, -57};
     static final byte[] fdroidkey = {-92, 111, -42, -46, 123, -96, -60, 79, -27, -31, 49, 103, 11, -54, -68, -27, 17, 2, 121, 104};
+    static final byte[] officialO2Key = {-50, -119, -11, 121, 121, 122, -115, 84, 90, -122, 27, -117, -14, 60, 54, 127, 41, -45, 27, 55, -14, 90, 31, 72, -26, -85, -85, 67, 35, 54, 100, 42};
 
 
     private static ConnectionStatus mLastLevel = ConnectionStatus.LEVEL_NOTCONNECTED;

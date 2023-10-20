@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 Wachtwoord</string>
     <string name="file_select">Selecteer&#8230;</string>
     <string name="file_nothing_selected">U moet een bestand selecteren</string>
-    <string name="useTLSAuth">Gebruik TLS autentificatie</string>
-    <string name="tls_direction">TLS Richting</string>
     <string name="ipv6_dialog_tile">Voer IPv6-adres/Netmask in CIDR-indeling in (bijv. 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Voer IPv4-adres/Netmask in CIDR-indeling in (bijv. 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4 Adres</string>
@@ -67,8 +65,6 @@
     <string name="remote_tlscn_check_title">Controleer Certificaat Hostname</string>
     <string name="enter_tlscn_dialog">Specificeer de controle die gebruikt wordt om het externe certificaat DN te verifiëren (bijv. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nSpecificeer de volledige DN of de RDN (openvpn.blinkt.de in het voorbeeld) of een RDN-voorvoegsel voor verificatie.\n\nWanneer het gebruikte RDN-voorvoegsel \"Server\" overeenkomt met \"Server-1\" en \"Server-2\"\n\nEen leeg tekstveld zorgt dat de RDN wordt gecontroleerd tegen de hostnaam van de server.\n\nVoor meer details zie de OpenVPN 2.3.1+ manpage onder --verify-x509-name</string>
     <string name="enter_tlscn_title">Externe certificaathouder</string>
-    <string name="tls_key_auth">Activeert TLS Key Authenticatie</string>
-    <string name="tls_auth_file">TLS Auth Bestand</string>
     <string name="pull_on_summary">Verzoek IP adres, routes en timing opties van de server.</string>
     <string name="pull_off_summary">Er wordt geen informatie gevraagd van de server. Instellingen moeten hieronder worden gespecificeerd.</string>
     <string name="use_pull">Verkrijg Instellingen</string>
@@ -201,8 +197,6 @@
     <string name="using_proxy">Proxy %1$s %2$s is in gebruik</string>
     <string name="use_system_proxy">Gebruik systeemproxy</string>
     <string name="use_system_proxy_summary">Gebruik de systeemconfiguratie voor HTTP/HTTPS proxies om te verbinden.</string>
-    <string name="onbootrestartsummary">OpenVPN verbindt met de opgegeven VPN als deze actief was bij het opstarten van het systeem. Lees de FAQ over verbindingswaarschuwingen voordat u deze optie gebruikt op Android &lt; 5.0.</string>
-    <string name="onbootrestart">Verbinden bij opstarten</string>
     <string name="ignore">Negeren</string>
     <string name="restart">Opnieuw starten</string>
     <string name="restart_vpn_after_change">Configuratiewijzigingen worden toegepast na het herstarten van de VPN. (Her)start het VPN nu?</string>
@@ -258,7 +252,6 @@
     <string name="encryption_cipher">Encryptiecijfer</string>
     <string name="packet_auth">Packet-authenticatie</string>
     <string name="auth_dialog_title">Voer de methode voor pakketauthenticatie in</string>
-    <string name="built_by">gebouwd door %s</string>
     <string name="debug_build">debug build</string>
     <string name="official_build">officiële build</string>
     <string name="make_selection_inline">Kopieer naar profiel</string>

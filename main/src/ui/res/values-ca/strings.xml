@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Contrasenya PKCS12</string>
     <string name="file_select">Selecciona&#8230;</string>
     <string name="file_nothing_selected">Has de seleccionar un fitxer</string>
-    <string name="useTLSAuth">Utiltiza autenticació TLS</string>
-    <string name="tls_direction">Direcció TLS</string>
     <string name="ipv6_dialog_tile">Introduïu l\'adreça/mascara de xarxa IPv6 en format CIDR Format (e.g. 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Introduïu l\'adreça/mascara de xarxa IPv4 en format CIDR  (e.g. 1.2.3.4/24)</string>
     <string name="ipv4_address">Adreça IPv4</string>
@@ -132,8 +130,6 @@
     <string name="advanced">Avançat</string>
     <string name="faq_howto_title">Inici rapid</string>
     <string name="use_system_proxy">Utiliza el proxy del sistema</string>
-    <string name="onbootrestartsummary">OpenVPN es conectarà a la VPN especificada si està actiu durant l\'inici del sistema. Si us plau, llegiu el FAQ de l\'advertència de conexió abans de fer servir aquesta opció en Android &lt; 5.0.</string>
-    <string name="onbootrestart">Conecta al reiniciar</string>
     <string name="ignore">Ignorar</string>
     <string name="restart">Reinicia</string>
     <string name="restart_vpn_after_change">Els canvis de configuració s\'apliquen desprès de reinicar la VPN. (Re)inicar la VPN ara?</string>
@@ -159,7 +155,6 @@
     <string name="encryption_cipher">Tipus de xifratge</string>
     <string name="packet_auth">Autentificació de paquet</string>
     <string name="auth_dialog_title">Introdueix el mètode de autentificació de paquet</string>
-    <string name="built_by">fet per %s</string>
     <string name="make_selection_inline">Copia al perfil</string>
     <string name="crashdump">Volcat de fallada</string>
     <string name="add">Afegeix</string>

@@ -341,7 +341,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
 
 
-    class UpdateMessage {
+    static class UpdateMessage {
         public String state;
         public String logmessage;
         public ConnectionStatus level;

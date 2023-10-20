@@ -14,10 +14,13 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.UiModeManager;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutManager;
 import android.content.res.Configuration;
@@ -34,12 +37,12 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
+import android.os.PersistableBundle;
 import android.os.RemoteException;
 import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
-import android.util.Pair;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -185,10 +188,14 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
     }
 
+
+
     @Override
     public void addAllowedExternalApp(String packagename) throws RemoteException {
         ExternalAppDatabase extapps = new ExternalAppDatabase(OpenVPNService.this);
-        extapps.addApp(packagename);
+        if(extapps.checkAllowingModifyingRemoteControl(this)) {
+            extapps.addApp(packagename);
+        }
     }
 
     @Override
@@ -218,7 +225,9 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     @Override
     public void onRevoke() {
         VpnStatus.logError(R.string.permission_revoked);
-        mManagement.stopVPN(false);
+        final OpenVPNManagement managment = mManagement;
+        mCommandHandler.post(() -> managment.stopVPN(false));
+
         endVpnService();
     }
 
@@ -227,7 +236,25 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         endVpnService();
     }
 
+    private boolean isAlwaysActiveEnabled()
+    {
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
+        return prefs.getBoolean("restartvpnonboot", false);
+    }
+
+    boolean isVpnAlwaysOnEnabled() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return isAlwaysOn();
+        }
+        return false;
+    }
+
+
     private void endVpnService() {
+        if (!isVpnAlwaysOnEnabled() && !isAlwaysActiveEnabled()) {
+            /* if we should be an always on VPN, keep the timer running */
+            keepVPNAlive.unscheduleKeepVPNAliveJobService(this);
+        }
         synchronized (mProcessLock) {
             mProcessThread = null;
         }
@@ -495,6 +522,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         ProfileManager.setConnectedVpnProfile(this, mProfile);
         VpnStatus.setConnectedVPNProfile(mProfile.getUUIDString());
+        keepVPNAlive.scheduleKeepVPNAliveJobService(this, vp);
 
         String nativeLibraryDirectory = getApplicationInfo().nativeLibraryDir;
         String tmpDir;
@@ -512,8 +540,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         // Set a flag that we are starting a new VPN
         mStarting = true;
         // Stop the previous session by interrupting the thread.
-
-        stopOldOpenVPNProcess();
+        stopOldOpenVPNProcess(mManagement, mOpenVPNThread);
         // An old running VPN should now be exited
         mStarting = false;
 
@@ -572,11 +599,12 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
 
-    private void stopOldOpenVPNProcess() {
-        if (mManagement != null) {
-            if (mOpenVPNThread != null)
-                ((OpenVPNThread) mOpenVPNThread).setReplaceConnection();
-            if (mManagement.stopVPN(true)) {
+    private void stopOldOpenVPNProcess(OpenVPNManagement management,
+                                       Runnable mamanagmentThread) {
+        if (management != null) {
+            if (mamanagmentThread != null)
+                ((OpenVPNThread) mamanagmentThread).setReplaceConnection();
+            if (management.stopVPN(true)) {
                 // an old was asked to exit, wait 1s
                 try {
                     Thread.sleep(1000);
@@ -798,6 +826,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             /* On Tiramisu we install the routes exactly like promised */
             VpnStatus.logDebug(R.string.routes_debug, TextUtils.join(", ", positiveIPv4Routes), TextUtils.join(", ", positiveIPv6Routes));
         }
+        //VpnStatus.logInfo(String.format("Always active %s", isAlwaysOn() ? "on" : "off"));
+
         setAllowedVpnPackages(builder);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             // VPN always uses the default network

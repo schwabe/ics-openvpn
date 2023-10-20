@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 κωδικός πρόσβασης</string>
     <string name="file_select">Επιλογή&#8230;</string>
     <string name="file_nothing_selected">Πρέπει να επιλέξετε ένα αρχείο</string>
-    <string name="useTLSAuth">Χρήση πιστοποίησης TLS</string>
-    <string name="tls_direction">Κατεύθυνση TLS</string>
     <string name="ipv6_dialog_tile">Εισάγετε τη διεύθυνση IPv6/μάσκα δικτύου σε μορφή CIDR (π.χ. 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Εισάγετε τη διεύθυνση IPv4/μάσκα δικτύου σε μορφή CIDR (π.χ. 1.2.3.4/24)</string>
     <string name="ipv4_address">Διεύθυνση IPv4</string>
@@ -67,8 +65,6 @@
     <string name="remote_tlscn_check_title">Έλεγχος Πιστοποιητικού ονόματος κεντρικού υπολογιστή</string>
     <string name="enter_tlscn_dialog">Καθορίστε τον έλεγχο που χρησιμοποιείται για την επαλήθευση του απομακρυσμένου πιστοποιητικού DN (π.χ. C = DE, L = Paderborn, OU = Avian IP Carriers, CN = openvpn.blinkt.de)\n\nΚαθορίστε το πλήρες DN ή το RDN (openvpn.blinkt.de στο παράδειγμα) ή ένα πρόθεμα RDN για επαλήθευση.\n\nΌταν χρησιμοποιείτε το πρόθεμα RDN \"Server\" ταιριάζει επίσης και στα \"Server-1\" και \"Server-2\"\n\nΑφήνοντας το πεδίο κειμένου κενό θα ελέγξει το RDN σε σχέση με το όνομα του κεντρικού υπολογιστή του διακομιστή.\n\nΓια περισσότερες λεπτομέρειες δείτε τη σελίδα τεκμηρίωσης του OpenVPN 2.3.1+ στο τμήμα —verify-x509-name</string>
     <string name="enter_tlscn_title">Θέμα απομακρυσμένου πιστοποιητικού</string>
-    <string name="tls_key_auth">Ενεργοποιεί το κλειδί πιστοποίησης TLS</string>
-    <string name="tls_auth_file">Αρχείο πιστοποίησης TLS</string>
     <string name="pull_on_summary">Αιτείται διευθύνσεις IP, routes και επιλογές συγχρονισμού από το διακομιστή.</string>
     <string name="pull_off_summary">Καμία πληροφορία δεν ζητήθηκε από το διακομιστή. Πρέπει να καθοριστούν ρυθμίσεις παρακάτω.</string>
     <string name="use_pull">Λήψη Ρυθμίσεων</string>
@@ -201,8 +197,6 @@
     <string name="using_proxy">Χρησιμοποιείται διακομιστής μεσολάβησης %1$s %2$s</string>
     <string name="use_system_proxy">Χρήστη διαμεσολαβητή του συστήματος</string>
     <string name="use_system_proxy_summary">Χρήση των καθολικών ρυθμίσεων για διαμεσολαβητές HTTP/HTTPS για σύνδεση.</string>
-    <string name="onbootrestartsummary">To OpenVPN θα συνδεθεί με το συγκεκριμένο VPN αν ήταν ενεργό κατά την εκκίνηση του συστήματος. Παρακαλώ διαβάστε το FAQ με τις προειδοποιήσεις σύνδεσης πριν χρησιμοποιήσετε αυτή την επιλογή σε συσκευή με Android &lt; 5.0.</string>
-    <string name="onbootrestart">Σύνδεση κατά την εκκίνηση</string>
     <string name="ignore">Αγνόηση</string>
     <string name="restart">Επανεκκίνηση</string>
     <string name="restart_vpn_after_change">Οι αλλαγές στις ρυθμίσεις εφαρμόζονται μετά την επανεκκίνηση του VPN. (Επαν)εκκίνηση τώρα;</string>
@@ -258,7 +252,6 @@
     <string name="encryption_cipher">Κρυπτογράφηση cipher</string>
     <string name="packet_auth">Πιστοποίηση πακέτων</string>
     <string name="auth_dialog_title">Εισάγετε τη μέθοδο πιστοποίησης πακέτων</string>
-    <string name="built_by">αναπτύχθηκε από %s</string>
     <string name="debug_build">build εντοπισμού σφαλμάτων</string>
     <string name="official_build">Επίσημη έκδοση</string>
     <string name="make_selection_inline">Αντιγραφή στο προφίλ</string>

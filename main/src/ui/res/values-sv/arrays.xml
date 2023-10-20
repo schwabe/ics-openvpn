@@ -17,15 +17,27 @@
         <item>Extern auktorisationsleverantör</item>
     </string-array>
     <string-array name="tls_directions_entries">
-        <item translatable="false">0</item>
-        <item translatable="false">1</item>
-        <item>Ospecificerad</item>
+        <item translatable="false">tls-auth - --direction 0</item>
+        <item translatable="false">tls-auth - --direction 1</item>
+        <item>tls-auth --direction not specified</item>
         <item>Encryption (tls-crypt)</item>
         <item>TLS Crypt V2</item>
     </string-array>
     <string-array name="auth_retry_type">
-        <item>Koppla bort, glöm lösenordet</item>
-        <item>Koppla bort, behåll lösenordet</item>
+        <item>Koppla ner, glöm lösenordet</item>
+        <item>Koppla ner, behåll lösenordet</item>
         <item>Ignorera, försök igen</item>
+    </string-array>
+    <string-array name="compat_mode">
+        <item>Moderna standardinställningar</item>
+        <item>OpenVPN 2.5.x peers</item>
+        <item>OpenVPN 2.4.x peers</item>
+        <item>OpenVPN 2.3.x och äldre peers</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>Ej säker (rekommenderas ej, tillåter osäker kryptering)</item>
+        <item>legacy (standard)</item>
+        <item>Föredraget (rekommenderas men begränsad kompatibilitet)</item>
+        <item>Svit B (endast NIST-godkända elliptiska kurvor)</item>
     </string-array>
 </resources>

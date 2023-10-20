@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">الكلمة السرية لـ PKCS12</string>
     <string name="file_select">إختر&#8230;</string>
     <string name="file_nothing_selected">يجب تحديد ملف</string>
-    <string name="useTLSAuth">استخدام مصادقة TLS</string>
-    <string name="tls_direction">إتجاه الـ TLS</string>
     <string name="ipv6_dialog_tile">أدخل عنوان IPv6/قناع الشبكة في شكل نظام CIDR (مثلاً 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">أدخل عنوان IPv4/قناع الشبكة في شكل نظام CIDR (مثلاً 1.2.3.4/24)</string>
     <string name="ipv4_address">عنوان IPv4</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">التحقق من شهادة اسم المضيف</string>
     <string name="enter_tlscn_dialog">تحديد الاختيار المستخدمة للتحقق من صحة الشهادة البعيدة DN (مثل C = دي، ل Paderborn، OU = = \"إنفلونزا الطيور الملكية الفكرية الناقلين\"، CN=openvpn.blinkt.de)\n\nSpecify DN الكامل أو RDN (openvpn.blinkt.de في المثال) أو بادئة RDN ليطابق verification.\n\nWhen RDN البادئة \"الملقم\" باستخدام \"خادم-1\" وسوف تحقق \n\nLeaving \"خادم-2\" إفراغ الحقل النص RDN ضد hostname.\n\nFor الخادم مزيد من التفاصيل، انظر استخدام 2.3.1+ المسنجر تحت — اسم x509 التحقق من</string>
     <string name="enter_tlscn_title">موضوع الشهادة البعيدة</string>
-    <string name="tls_key_auth">يُفعّل مفتاح TLS للمصادقة</string>
-    <string name="tls_auth_file">ملف المصادقة عبر TLS</string>
     <string name="pull_on_summary">تُطلب عناوين IP والمسارات وخيارات التوقيت من الخادم.</string>
     <string name="pull_off_summary">لا توجد معلومات مطلوبة من الخادم. يجب تحديد الإعدادات أدناه.</string>
     <string name="use_pull">إعدادات السحب</string>
@@ -204,8 +200,6 @@
     <string name="using_proxy">استخدام الخادم الوكيل البروكسي %1$s %2$s</string>
     <string name="use_system_proxy">استخدام بروكسي النظام</string>
     <string name="use_system_proxy_summary">استخدام تكوين النظام على نطاق واسع لوكلاء HTTP/HTTPS للاتصال.</string>
-    <string name="onbootrestartsummary">سيقوم OpenVPN بتوصيل VPN المحدد إذا كان نشطًا في تمهيد النظام. يرجى قراءة الأسئلة الشائعة الخاصة بتحذير الاتصال قبل استخدام هذا الخيار على Android &lt; 5.0.</string>
-    <string name="onbootrestart">الاتصال عند تشغيل الجهاز</string>
     <string name="ignore">تجاهل</string>
     <string name="restart">إعادة التشغيل</string>
     <string name="restart_vpn_after_change">يتم تطبيق تغييرات التكوين بعد إعادة تشغيل VPN. (إعادة) بدء VPN الآن؟</string>
@@ -261,7 +255,6 @@
     <string name="encryption_cipher">خوارزمية التشفير</string>
     <string name="packet_auth">حزمة المصادقة</string>
     <string name="auth_dialog_title">أدخل طريقة مصادقة الحزمة</string>
-    <string name="built_by">طوره %s</string>
     <string name="debug_build">بناء التصحيح</string>
     <string name="official_build">البنية الرسمية</string>
     <string name="make_selection_inline">نسخ إلى الملف الشخصي</string>
@@ -508,4 +501,5 @@
     <string name="allow_translations_title">السماح بالترجمات التي يساهم بها المجتمع</string>
     <string name="allow_translations_summary">للسماح للتطبيق بالترجمة مع الترجمات التي يساهم بها المجتمع. يتطلب إعادة تشغيل التطبيق للتفعيل.</string>
     <string name="tls_profile">ملف تعريف أمان TLS</string>
+    <string name="encrypt_profiles">Try to encrypt profiles on storage (if supported by Android OS)</string>
 </resources>

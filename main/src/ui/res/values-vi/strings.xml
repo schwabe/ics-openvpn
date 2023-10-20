@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Mật khẩu PKCS12</string>
     <string name="file_select">Chọn&#8230;</string>
     <string name="file_nothing_selected">Bạn phải chọn một tập tin</string>
-    <string name="useTLSAuth">Sử dụng xác thực TLS</string>
-    <string name="tls_direction">Hướng TLS</string>
     <string name="ipv6_dialog_tile">Nhập địa chỉ IPv6/Netmask trong định dạng CIDR (ví dụ 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Nhập địa chỉ IPv4/Netmask trong định dạng CIDR (ví dụ 1.2.3.4/24)</string>
     <string name="ipv4_address">Địa chỉ IPv4</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">Kiểm tra chứng chỉ tên miền</string>
     <string name="enter_tlscn_dialog">Xác định để kiểm tra sử dụng chứng nhận từ xa DN (e.g. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nHoàn chỉnh các DN hoặc RDN (openvpn.blinkt.de làm ví dụ) hoặc một tiền tố RDN để xác minh.\n\nKhi dùng tiền tố RDN phù hợp \"Server-1\" và \"Server-2\"\n\nĐể trường văn bản trống sẽ kiểm tra tiền tố RDN phản biện tên miền máy chủ. \n\nĐể biết thêm chi tiết xem tại phần quản lý OpenVPN 2.3.1+ bên dưới —xác minh-x509-tên</string>
     <string name="enter_tlscn_title">Chủ đề chứng chỉ từ xa</string>
-    <string name="tls_key_auth">Cho phép xác thực khóa TLS</string>
-    <string name="tls_auth_file">Tập tin chứng thực TLS</string>
     <string name="pull_on_summary">Yêu cầu các địa chỉ IP, định tuyến và tùy chọn thời gian từ máy chủ.</string>
     <string name="pull_off_summary">Không có thông tin được yêu cầu từ máy chủ. Thiết lập cần phải được xác định bên dưới.</string>
     <string name="use_pull">Cài đặt kéo</string>
@@ -204,8 +200,6 @@
     <string name="using_proxy">Đang sử dụng proxy %1$s %2$s</string>
     <string name="use_system_proxy">Sử dụng proxy hệ thống</string>
     <string name="use_system_proxy_summary">Sử dụng các cấu hình hệ thống rộng cho HTTP/HTTPS proxy để kết nối.</string>
-    <string name="onbootrestartsummary">OpenVPN sẽ kết nối VPN xác định nếu nó đã hoạt động trên hệ thống khởi động. Xin vui lòng đọc hướng dẫn cảnh báo kết nối trước khi sử dụng tùy chọn này trên Android &lt; 5.0.</string>
-    <string name="onbootrestart">Kết nối khi khởi động</string>
     <string name="ignore">Bỏ qua</string>
     <string name="restart">Khởi động lại</string>
     <string name="restart_vpn_after_change">Cấu hình sẽ được áp dụng sau khi khởi động lại VPN. (Khởi động) bắt đầu VPN lại ngay bây giờ?</string>
@@ -261,7 +255,6 @@
     <string name="encryption_cipher">Mã hóa mật mã</string>
     <string name="packet_auth">Gói xác thực</string>
     <string name="auth_dialog_title">Nhập phương thức xác thực gói</string>
-    <string name="built_by">được xây dựng bởi %s</string>
     <string name="debug_build">bản dựng gỡ lỗi</string>
     <string name="official_build">bản dựng chính thức</string>
     <string name="make_selection_inline">Sao chép vào hồ sơ</string>

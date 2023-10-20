@@ -17,9 +17,9 @@
         <item>外部認證提供者</item>
     </string-array>
     <string-array name="tls_directions_entries">
-        <item translatable="false">0</item>
-        <item translatable="false">1</item>
-        <item>不指定</item>
+        <item translatable="false">tls-auth - --direction 0</item>
+        <item translatable="false">tls-auth - --direction 1</item>
+        <item>tls-auth --direction not specified</item>
         <item>加密 (--tls-crypt)</item>
         <item>TLS 加密 第二版</item>
     </string-array>
@@ -38,6 +38,6 @@
         <item>不安全（不推薦，允許不安全的加密）</item>
         <item>legacy (default)</item>
         <item>preferred (recommended but limited compabbility)</item>
-        <item>Suite B (only NIST approved elliptic curves)</item>
+        <item>Suite B（僅 NIST 批准的橢圓曲線）</item>
     </string-array>
 </resources>

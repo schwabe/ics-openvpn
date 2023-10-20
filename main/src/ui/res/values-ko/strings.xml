@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">PKCS12 암호</string>
     <string name="file_select">선택&#8230;</string>
     <string name="file_nothing_selected">파일을 선택해야 합니다</string>
-    <string name="useTLSAuth">TLS 인증 사용</string>
-    <string name="tls_direction">TLS 방향</string>
     <string name="ipv6_dialog_tile">CIDR 형식의 IPv6 주소/넷마스크를 입력 (예: 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">CIDR 형식의 IPv4 주소/넷마스크를 입력 (예: 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4 주소</string>
@@ -67,8 +65,6 @@
     <string name="remote_tlscn_check_title">인증서 호스트 이름 확인</string>
     <string name="enter_tlscn_dialog">원격 인증서 DN을 확인하는 데 사용하는 검사를 지정 (예: C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\n확인을 위해 완전한 DN이나 RDN (예 openvpn.blinkt.de) 또는 RDN 접두사를 지정.\n\nRDN 접두사 \"Server\"를 사용하면 \"Server-1\" 및 \"Server-2\"와 일치합니다.\n\n텍스트 필드를 비워 두면 RDN을 서버의 호스트 이름과 비교합니다\n\n더 자세한 내용은 OpenVPN 2.3.1+ 맨페이지에서 --verify-x509-name 아래를 참조</string>
     <string name="enter_tlscn_title">원격 인증서 주체</string>
-    <string name="tls_key_auth">TLS 키 인증 사용</string>
-    <string name="tls_auth_file">TLS 인증 파일</string>
     <string name="pull_on_summary">서버에 IP 주소와 경로, 타이밍 옵션을 요구합니다.</string>
     <string name="pull_off_summary">서버에 어떤 정보도 요구하지 않습니다. 아래에 설정을 지정해야 합니다.</string>
     <string name="use_pull">설정 끌어오기</string>
@@ -201,8 +197,6 @@
     <string name="using_proxy">%1$s</string>
     <string name="use_system_proxy">시스템 프록시를 사용</string>
     <string name="use_system_proxy_summary">연결할 HTTP/HTTPS 프록시로 시스템 범위의 설정을 사용합니다.</string>
-    <string name="onbootrestartsummary">OpenVPN이 시스템 부팅시에 활성화되면 지정된 VPN에 연결합니다. 안드로이드 5.0 이전 버전에 이 옵션을 사용하기 전에 연결 경고 FAQ를 읽어 보시기 바랍니다.</string>
-    <string name="onbootrestart">부팅시 연결</string>
     <string name="ignore">무시</string>
     <string name="restart">다시 시작</string>
     <string name="restart_vpn_after_change">VPN을 다시 시작한 후 구성 변경 내용이 적용됩니다. VPN을 지금 (재)시작?</string>
@@ -258,7 +252,6 @@
     <string name="encryption_cipher">암호화 알고리즘</string>
     <string name="packet_auth">패킷 인증</string>
     <string name="auth_dialog_title">패킷 인증 방법 입력</string>
-    <string name="built_by">%s가 빌드</string>
     <string name="debug_build">디버그 빌드</string>
     <string name="official_build">공식 빌드</string>
     <string name="make_selection_inline">프로파일에 복사</string>

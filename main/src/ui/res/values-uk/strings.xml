@@ -27,8 +27,6 @@
     <string name="pkcs12pwquery">Пароль PKCS12</string>
     <string name="file_select">Виберіть&#8230;</string>
     <string name="file_nothing_selected">Слід вибрати файл</string>
-    <string name="useTLSAuth">Використовувати TLS аутентифікацію</string>
-    <string name="tls_direction">TLS напрямок</string>
     <string name="ipv6_dialog_tile">Введіть адресу IPv6/маску в CIDR форматі (напр., 2000:dd::23/64)</string>
     <string name="ipv4_dialog_title">Введіть адресу IPv4/маску в CIDR форматі (напр., 1.2.3.4/24)</string>
     <string name="ipv4_address">IPv4-адреси</string>
@@ -69,8 +67,6 @@
     <string name="remote_tlscn_check_title">Перевірка імені вузла сертифікату</string>
     <string name="enter_tlscn_dialog">Перемикач способу перевірки DN сертифікату (eg C = DE, L = Paderborn, OU = Avian IP Carriers, CN = openvpn.blinkt.de) \n \nМожливо значення: повний DN, RDN (для прикладу openvpn.blinkt.de) або тільки преффікс RDN для перевірки. \n \nПрі використанні преффікса RDN, наприклад \"Server\", значення будуть \"Server-1\", \"Server-2\" і т.д. \n \nПрі порожньому текстовому полі перевірка проводитиметься по імені хоста. \n \nДля подробиць дивіться керівництво для OpenVPN 2.3.1 +, розділ-verify-x509-name</string>
     <string name="enter_tlscn_title">Об\'єкт віддаленого сертифіката</string>
-    <string name="tls_key_auth">Увімкнути автентифікацію по TLS ключу</string>
-    <string name="tls_auth_file">Файл авторизації TLS</string>
     <string name="pull_on_summary">Запити IP адрес, маршрутів та параметрів часу від сервера.</string>
     <string name="pull_off_summary">Не запитувати інформацію від сервера. Параметри необхідно вказати нижче.</string>
     <string name="use_pull">Запитувати параметри</string>
@@ -204,8 +200,6 @@
     <string name="using_proxy">Використовується проксі-сервер %1$s %2$s</string>
     <string name="use_system_proxy">Використовувати системний проксі</string>
     <string name="use_system_proxy_summary">Використовувати системну конфігурацію HTTP/HTTPS проксі для з\'єднання.</string>
-    <string name="onbootrestartsummary">OpenVPN підключатиметься до вказаного VPN, якщо він був активний при завантаженні системи. Будь ласка, прочитайте FAQ про попередження при підключенні перед використанням цієї опції на Android &lt; 5.0.</string>
-    <string name="onbootrestart">Підключення при завантаженні</string>
     <string name="ignore">Ігнорувати</string>
     <string name="restart">Перезапустити</string>
     <string name="restart_vpn_after_change">Після перезапуску VPN застосувати зміни конфігурації. (Пере)запустити VPN тепер?</string>
@@ -261,7 +255,6 @@
     <string name="encryption_cipher">Алгоритм шифрування</string>
     <string name="packet_auth">Пакети автентифікації</string>
     <string name="auth_dialog_title">Введіть метод автентифікації пакетів</string>
-    <string name="built_by">побудована по %s</string>
     <string name="debug_build">відлагоджувальна збірка</string>
     <string name="official_build">Офіційна збірка</string>
     <string name="make_selection_inline">Скопіювати в профіль</string>
@@ -505,4 +498,5 @@
     <string name="allow_translations_title">Використовувати переклад (запропонований спільнотою)</string>
     <string name="allow_translations_summary">Використовувати переклад програми наданий спільнотою. Необхідний перезапуск програми.</string>
     <string name="tls_profile">Профіль безпеки TLS</string>
+    <string name="encrypt_profiles">Спробуйте зашифрувати профілі на сховищі (якщо підтримується Android)</string>
 </resources>

@@ -10,7 +10,7 @@
     </plurals>
     <plurals name="hours_left">
         <item quantity="one">یک ساعت باقی مانده</item>
-        <item quantity="other">یک ساعت باقی مانده</item>
+        <item quantity="other">%d saat kaldı</item>
     </plurals>
     <plurals name="minutes_left">
         <item quantity="one">یک دقیقه باقی مانده است</item>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <plurals name="months_left">
-        <item quantity="zero">%d</item>
+        <item quantity="zero">%d months left</item>
         <item quantity="one">شهر واحد متبقي</item>
         <item quantity="two">متبقي شهرين</item>
         <item quantity="few">%d شهر متبقي</item>

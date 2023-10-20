@@ -24,7 +24,7 @@
                 android:drawablePadding="@dimen/stdpadding"
                 tools:visibility="visible"
                 android:visibility="gone"
-                android:text="Notification permission missing. This is used to display the status of the VPN and go notify about required user interaction like multi factor authorisation.\n\nClick this message to give the app notification permissions" />
+                android:text="@string/missing_notification_permission" />
 
         <ListView
                 android:id="@android:id/list"

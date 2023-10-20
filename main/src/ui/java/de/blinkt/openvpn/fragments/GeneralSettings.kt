@@ -73,8 +73,10 @@ class GeneralSettings : PreferenceFragmentCompat(), Preference.OnPreferenceClick
             findPreference<Preference>("restartvpnonboot") as CheckBoxPreference
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val vpn:VpnService = VpnService()
-            startOnBoot.isChecked = vpn.isAlwaysOn
+            val vpn = VpnService()
+            if (vpn.isAlwaysOn)
+                /* This is not reliable when the VPN is not active */
+                startOnBoot.isChecked
         }
 
         startOnBoot.onPreferenceChangeListener =
@@ -176,6 +178,10 @@ class GeneralSettings : PreferenceFragmentCompat(), Preference.OnPreferenceClick
             File("/system/lib/modules/tun.ko").length() > 10
 
     override fun onPreferenceClick(preference: Preference): Boolean {
+        if (!mExtapp.checkAllowingModifyingRemoteControl(requireContext()))
+        {
+            return false;
+        }
         if (preference.key == "clearapi") {
             val builder = AlertDialog.Builder(
                 requireContext()

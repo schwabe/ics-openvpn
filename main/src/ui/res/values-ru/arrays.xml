@@ -17,9 +17,9 @@
         <item>Внешний провайдер аутентификации</item>
     </string-array>
     <string-array name="tls_directions_entries">
-        <item translatable="false">0</item>
-        <item translatable="false">1</item>
-        <item>Не указан</item>
+        <item translatable="false">tls-auth - --direction 0</item>
+        <item translatable="false">tls-auth - --direction 1</item>
+        <item>tls-auth --direction not specified</item>
         <item>Шифрование (--tls-crypt)</item>
         <item>TLS Crypt V2</item>
     </string-array>
@@ -29,13 +29,13 @@
         <item>Игнорировать, повторить</item>
     </string-array>
     <string-array name="compat_mode">
-        <item>Современные значения</item>
+        <item>Современные значения по умолчанию</item>
         <item>OpenVPN 2.5.x</item>
         <item>OpenVPN 2.4.x</item>
         <item>OpenVPN 2.3.x и старее</item>
     </string-array>
     <string-array name="tls_profile_entries">
-        <item>небезопасный (не рекомендуется, допускает небезопасное шифрование)</item>
+        <item>незащищённый (не рекомендуется, допускает небезопасное шифрование)</item>
         <item>традиционный (по умолчанию)</item>
         <item>предпочтительный (рекомендуется, но ограничивает совместимость)</item>
         <item>набор B (только эллиптические кривые, одобренные NIST)</item>

@@ -73,6 +73,11 @@
             android:restrictionType="bool"
             android:title="@string/restriction_pausevpn" />
     <restriction
+            android:key="restartvpnonboot"
+            android:restrictionType="bool"
+            android:title="@string/restriction_restartvpnonboot" />
+
+    <restriction
             android:description="@string/apprest_aidl_list"
             android:key="allowed_remote_access"
             android:restrictionType="string"

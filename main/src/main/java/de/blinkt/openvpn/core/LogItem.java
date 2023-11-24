@@ -15,6 +15,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import androidx.annotation.StringRes;
+
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
@@ -239,7 +241,7 @@ public class LogItem implements Parcelable {
         }
     };
 
-    public LogItem(VpnStatus.LogLevel loglevel, int ressourceId, Object... args) {
+    public LogItem(VpnStatus.LogLevel loglevel, @StringRes int ressourceId, Object... args) {
         mRessourceId = ressourceId;
         mArgs = args;
         mLevel = loglevel;

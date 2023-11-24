@@ -120,9 +120,10 @@ public class StatusListener implements VpnStatus.LogListener {
 
     };
     private Context mContext;
+    private String pkgName = "(packageName not yet set)";
 
     void init(Context c) {
-
+        pkgName = c.getPackageName();
         Intent intent = new Intent(c, OpenVPNStatusService.class);
         intent.setAction(OpenVPNService.START_SERVICE);
         mCacheDir = c.getCacheDir();
@@ -163,22 +164,23 @@ public class StatusListener implements VpnStatus.LogListener {
 
     @Override
     public void newLog(LogItem logItem) {
+        String tag = pkgName + "(OpenVPN)";
         switch (logItem.getLogLevel()) {
             case INFO:
-                Log.i("OpenVPN", logItem.getString(mContext));
+                Log.i(tag, logItem.getString(mContext));
                 break;
             case DEBUG:
-                Log.d("OpenVPN", logItem.getString(mContext));
+                Log.d(tag, logItem.getString(mContext));
                 break;
             case ERROR:
-                Log.e("OpenVPN", logItem.getString(mContext));
+                Log.e(tag, logItem.getString(mContext));
                 break;
             case VERBOSE:
-                Log.v("OpenVPN", logItem.getString(mContext));
+                Log.v(tag, logItem.getString(mContext));
                 break;
             case WARNING:
             default:
-                Log.w("OpenVPN", logItem.getString(mContext));
+                Log.w(tag, logItem.getString(mContext));
                 break;
         }
 

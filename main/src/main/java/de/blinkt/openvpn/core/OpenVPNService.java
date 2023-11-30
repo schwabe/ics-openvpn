@@ -13,6 +13,7 @@ import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INP
 import static de.blinkt.openvpn.core.NetworkSpace.IpAddress;
 
 import android.Manifest.permission;
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -39,6 +40,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.service.notification.StatusBarNotification;
 import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -112,7 +114,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private String lastChannel;
     private Thread mProcessThread = null;
     private VpnProfile mProfile;
-
 
     private DeviceStateReceiver mDeviceStateReceiver;
     private boolean mDisplayBytecount = false;
@@ -537,15 +538,26 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         // Always show notification here to avoid problem with startForeground timeout
         VpnStatus.logInfo(R.string.building_configration);
-        VpnStatus.updateStateString("VPN_GENERATE_CONFIG", "", R.string.building_configration, ConnectionStatus.LEVEL_START);
-        showNotification(VpnStatus.getLastCleanLogMessage(this),
-                VpnStatus.getLastCleanLogMessage(this), NOTIFICATION_CHANNEL_NEWSTATUS_ID, 0, ConnectionStatus.LEVEL_START, null);
 
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M  || (!foregroundNotificationVisible())) {
+
+            VpnStatus.updateStateString("VPN_GENERATE_CONFIG", "", R.string.building_configration, ConnectionStatus.LEVEL_START);
+            showNotification(VpnStatus.getLastCleanLogMessage(this),
+                    VpnStatus.getLastCleanLogMessage(this), NOTIFICATION_CHANNEL_NEWSTATUS_ID, 0, ConnectionStatus.LEVEL_START, null);
+        }
 
         /* start the OpenVPN process itself in a background thread */
         mCommandHandler.post(() -> startOpenVPN(intent, startId));
 
         return START_STICKY;
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private boolean foregroundNotificationVisible() {
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        StatusBarNotification[] notifications = mNotificationManager.getActiveNotifications();
+        /* Assume for simplicity that all our notifications are foreground */
+        return notifications.length > 0;
     }
 
     @RequiresApi(Build.VERSION_CODES.N_MR1)
@@ -652,7 +664,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (mProfile != null && mProfile == vp && (intent == null || noReplaceRequested))
         {
             /* we do not want to replace the running VPN */
-            VpnStatus.logInfo("VPN already running. Ignoring request to start VPN");
+            VpnStatus.logInfo(R.string.ignore_vpn_start_request, mProfile.getName());
             return;
         }
 

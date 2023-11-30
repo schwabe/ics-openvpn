@@ -68,6 +68,7 @@ import de.blinkt.openvpn.core.VpnStatus;
 import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
 import static de.blinkt.openvpn.core.OpenVPNService.DISCONNECT_VPN;
 import static de.blinkt.openvpn.core.OpenVPNService.EXTRA_CHALLENGE_TXT;
+import static de.blinkt.openvpn.core.OpenVPNService.EXTRA_START_REASON;
 
 
 public class VPNProfileList extends ListFragment implements OnClickListener, VpnStatus.StateListener {
@@ -242,7 +243,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         shortcutIntent.setClass(requireContext(), LaunchVPN.class);
         shortcutIntent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
         shortcutIntent.setAction(Intent.ACTION_MAIN);
-        shortcutIntent.putExtra(LaunchVPN.EXTRA_START_REASON, "shortcut");
+        shortcutIntent.putExtra(EXTRA_START_REASON, "shortcut");
         shortcutIntent.putExtra("EXTRA_HIDELOG", true);
 
         PersistableBundle versionExtras = new PersistableBundle();
@@ -563,7 +564,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
 
         Intent intent = new Intent(getActivity(), LaunchVPN.class);
         intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUID().toString());
-        intent.putExtra(LaunchVPN.EXTRA_START_REASON, "main profile list");
+        intent.putExtra(EXTRA_START_REASON, "main profile list");
         intent.setAction(Intent.ACTION_MAIN);
         startActivity(intent);
     }

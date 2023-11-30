@@ -6,7 +6,6 @@
 package de.blinkt.openvpn.api;
 
 import android.annotation.TargetApi;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -14,9 +13,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.VpnService;
 import android.os.Binder;
 import android.os.Build;
@@ -146,11 +142,11 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                 shortVPNIntent.setClass(getBaseContext(), de.blinkt.openvpn.LaunchVPN.class);
                 shortVPNIntent.putExtra(de.blinkt.openvpn.LaunchVPN.EXTRA_KEY, vp.getUUIDString());
                 shortVPNIntent.putExtra(de.blinkt.openvpn.LaunchVPN.EXTRA_HIDELOG, true);
-                shortVPNIntent.putExtra(de.blinkt.openvpn.LaunchVPN.EXTRA_START_REASON, startReason);
+                shortVPNIntent.putExtra(de.blinkt.openvpn.core.OpenVPNService.EXTRA_START_REASON, startReason);
                 shortVPNIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(shortVPNIntent);
             } else {
-                VPNLaunchHelper.startOpenVpn(vp, getBaseContext(), startReason);
+                VPNLaunchHelper.startOpenVpn(vp, getBaseContext(), startReason, true);
             }
 
         }

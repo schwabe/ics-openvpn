@@ -538,7 +538,7 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
                     (dialog1, which) -> {
                         Intent intent = new Intent(getActivity(), LaunchVPN.class);
                         intent.putExtra(LaunchVPN.EXTRA_KEY, profile.getUUIDString());
-                        intent.putExtra(LaunchVPN.EXTRA_START_REASON, "restart from logwindow");
+                        intent.putExtra(OpenVPNService.EXTRA_START_REASON, "restart from logwindow");
                         intent.setAction(Intent.ACTION_MAIN);
                         startActivity(intent);
                     });

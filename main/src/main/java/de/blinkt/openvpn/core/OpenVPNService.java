@@ -6,6 +6,8 @@
 package de.blinkt.openvpn.core;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static de.blinkt.openvpn.VpnProfile.EXTRA_PROFILEUUID;
+import static de.blinkt.openvpn.VpnProfile.EXTRA_PROFILE_VERSION;
 import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_CONNECTED;
 import static de.blinkt.openvpn.core.ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT;
 import static de.blinkt.openvpn.core.NetworkSpace.IpAddress;
@@ -70,6 +72,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     public static final String START_SERVICE = "de.blinkt.openvpn.START_SERVICE";
     public static final String START_SERVICE_STICKY = "de.blinkt.openvpn.START_SERVICE_STICKY";
     public static final String ALWAYS_SHOW_NOTIFICATION = "de.blinkt.openvpn.NOTIFICATION_ALWAYS_VISIBLE";
+
+    public static final String EXTRA_DO_NOT_REPLACE_RUNNING_VPN = "de.blinkt.openvpn.DO_NOT_REPLACE_RUNNING_VPN";
+
+    public static final String EXTRA_START_REASON = "de.blinkt.openvpn.startReason";
+
     public static final String DISCONNECT_VPN = "de.blinkt.openvpn.DISCONNECT_VPN";
     public static final String NOTIFICATION_CHANNEL_BG_ID = "openvpn_bg";
     public static final String NOTIFICATION_CHANNEL_NEWSTATUS_ID = "openvpn_newstat";
@@ -85,6 +92,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private static final int PRIORITY_DEFAULT = 0;
     private static final int PRIORITY_MAX = 2;
     private static boolean mNotificationAlwaysVisible = false;
+
 
     static class TunConfig {
         private final Vector<String> mDnslist = new Vector<>();
@@ -554,45 +562,46 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     private VpnProfile fetchVPNProfile(Intent intent)
     {
+        VpnProfile vpnProfile = null;
         String startReason;
-        if (intent != null && intent.hasExtra(getPackageName() + ".profileUUID")) {
-            String profileUUID = intent.getStringExtra(getPackageName() + ".profileUUID");
-            int profileVersion = intent.getIntExtra(getPackageName() + ".profileVersion", 0);
-            startReason = intent.getStringExtra(getPackageName() + ".startReason");
+        if (intent != null && intent.hasExtra(EXTRA_PROFILEUUID)) {
+            String profileUUID = intent.getStringExtra(EXTRA_PROFILEUUID);
+            int profileVersion = intent.getIntExtra(EXTRA_PROFILE_VERSION, 0);
+            startReason = intent.getStringExtra(EXTRA_START_REASON);
             if (startReason == null)
                 startReason = "(unknown)";
             // Try for 10s to get current version of the profile
-            mProfile = ProfileManager.get(this, profileUUID, profileVersion, 100);
+            vpnProfile = ProfileManager.get(this, profileUUID, profileVersion, 100);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                updateShortCutUsage(mProfile);
+                updateShortCutUsage(vpnProfile);
             }
 
         } else {
             /* The intent is null when we are set as always-on or the service has been restarted. */
-            mProfile = ProfileManager.getLastConnectedProfile(this);
+            vpnProfile = ProfileManager.getLastConnectedProfile(this);
             startReason = "Using last connected profile (started with null intent, always-on or restart after crash)";
             VpnStatus.logInfo(R.string.service_restarted);
 
             /* Got no profile, just stop */
-            if (mProfile == null) {
+            if (vpnProfile == null) {
                 startReason = "could not get last connected profile, using default (started with null intent, always-on or restart after crash)";
 
                 Log.d("OpenVPN", "Got no last connected profile on null intent. Assuming always on.");
-                mProfile = ProfileManager.getAlwaysOnVPN(this);
+                vpnProfile = ProfileManager.getAlwaysOnVPN(this);
 
 
-                if (mProfile == null) {
+                if (vpnProfile == null) {
                     return null;
                 }
             }
             /* Do the asynchronous keychain certificate stuff */
-            mProfile.checkForRestart(this);
+            vpnProfile.checkForRestart(this);
         }
         String name = "(null)";
-        if (mProfile != null)
-            name = mProfile.getName();
+        if (vpnProfile != null)
+            name = vpnProfile.getName();
         VpnStatus.logDebug(String.format("Fetched VPN profile (%s) triggered by %s", name, startReason));
-        return mProfile;
+        return vpnProfile;
     }
 
     private boolean checkVPNPermission(VpnProfile startprofile) {
@@ -608,7 +617,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         Intent launchVPNIntent = new Intent(this, LaunchVPN.class);
         launchVPNIntent.putExtra(LaunchVPN.EXTRA_KEY, startprofile.getUUIDString());
-        launchVPNIntent.putExtra(LaunchVPN.EXTRA_START_REASON, "OpenService lacks permission");
+        launchVPNIntent.putExtra(EXTRA_START_REASON, "OpenService lacks permission");
         launchVPNIntent.putExtra(de.blinkt.openvpn.LaunchVPN.EXTRA_HIDELOG, true);
         launchVPNIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         launchVPNIntent.setAction(Intent.ACTION_MAIN);
@@ -633,8 +642,23 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         if (!checkVPNPermission(vp))
             return;
 
-        ProfileManager.setConnectedVpnProfile(this, mProfile);
-        VpnStatus.setConnectedVPNProfile(mProfile.getUUIDString());
+        boolean noReplaceRequested =  (intent != null) && intent.getBooleanExtra(EXTRA_DO_NOT_REPLACE_RUNNING_VPN, false);
+
+
+        /* we get an empty start request or explicitly get told to not replace the VPN then ignore
+         * a start request. This avoids OnBootreciver, Always and user quickly clicking to have
+         * weird race conditions
+         */
+        if (mProfile != null && mProfile == vp && (intent == null || noReplaceRequested))
+        {
+            /* we do not want to replace the running VPN */
+            VpnStatus.logInfo("VPN already running. Ignoring request to start VPN");
+            return;
+        }
+
+        mProfile = vp;
+        ProfileManager.setConnectedVpnProfile(this, vp);
+        VpnStatus.setConnectedVPNProfile(vp.getUUIDString());
         keepVPNAlive.scheduleKeepVPNAliveJobService(this, vp);
 
         String nativeLibraryDirectory = getApplicationInfo().nativeLibraryDir;

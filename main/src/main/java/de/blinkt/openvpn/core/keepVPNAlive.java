@@ -49,7 +49,7 @@ public class keepVPNAlive extends JobService implements VpnStatus.StateListener 
                 unscheduleKeepVPNAliveJobService(this);
                 return false;
             }
-            VPNLaunchHelper.startOpenVpn(vp, getApplicationContext(), "VPN keep alive Job");
+            VPNLaunchHelper.startOpenVpn(vp, getApplicationContext(), "VPN keep alive Job", false);
         } else {
             VpnStatus.logDebug("Keepalive service called but VPN still connected.");
         }

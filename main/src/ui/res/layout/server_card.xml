@@ -327,6 +327,7 @@
                     android:layout_below="@+id/connect_timeout_label"
                     android:ems="3"
                     tools:text="232"
+                    android:labelFor="@id/connect_silder"
                     android:gravity="end"
                     android:inputType="numberDecimal"/>
 
@@ -364,6 +365,7 @@
                         android:id="@+id/warnung_custom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:labelFor="@id/customoptions"
                         android:text="@string/custom_connection_options_warng"/>
 
                 <EditText

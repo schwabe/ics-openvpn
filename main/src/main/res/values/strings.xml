@@ -511,4 +511,5 @@
     <string name="permission_requested">Permission to start a VPN connection is required</string>
     <string name="missing_vpn_permission_log">VPN Service is missing permission to connect a VPN. Requesting permission via notification.</string>
     <string name="ignore_vpn_start_request">VPN already running (%s). Ignoring request to start VPN.</string>
+    <string name="name_of_the_vpn_profile">Name of the VPN Profile</string>
 </resources>

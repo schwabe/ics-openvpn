@@ -239,6 +239,8 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             mExtAppDb.checkOpenVPNPermission(getPackageManager());
             ProfileManager pm = ProfileManager.getInstance(getBaseContext());
             VpnProfile vp = ProfileManager.get(getBaseContext(), profileUUID);
+            if (vp == null)
+                throw new RemoteException("Profile not found");
             pm.removeProfile(ExternalOpenVPNService.this, vp);
         }
 
@@ -246,7 +248,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         public boolean protectSocket(ParcelFileDescriptor pfd) throws RemoteException {
             mExtAppDb.checkOpenVPNPermission(getPackageManager());
             try {
-                boolean success= mService.protect(pfd.getFd());
+                boolean success = mService.protect(pfd.getFd());
                 pfd.close();
                 return success;
             } catch (IOException e) {

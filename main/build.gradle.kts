@@ -7,10 +7,9 @@ import com.android.build.gradle.api.LibraryVariant
  */
 
 plugins {
-    id("com.android.library")
+    alias(libVersions.plugins.android.library)
+    alias(libVersions.plugins.kotlin.android)
     id("checkstyle")
-
-    id("kotlin-android")
 }
 
 android {
@@ -23,13 +22,14 @@ android {
     //compileSdkPreview = "UpsideDownCake"
 
     // Also update runcoverity.sh
-    ndkVersion = "25.2.9519653"
+    ndkVersion = "26.1.10909125"
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         externalNativeBuild {
             cmake {
+                //arguments+= "-DCMAKE_VERBOSE_MAKEFILE=1"
             }
         }
     }
@@ -141,10 +141,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     // Ensure native build is run before assets, so assets are ready to be merged into the apk
     libraryVariants.configureEach {
         mergeAssetsProvider.get().dependsOn(externalNativeBuildProviders)
@@ -195,42 +191,31 @@ android.libraryVariants.all(object : Action<LibraryVariant> {
 
 dependencies {
     // https://maven.google.com/web/index.html
-    // https://developer.android.com/jetpack/androidx/releases/core
-    val preferenceVersion = "1.2.0"
-    val coreVersion = "1.10.1"
-    val materialVersion = "1.7.0"
-    val fragment_version = "1.6.0"
+    implementation(libVersions.androidx.annotation)
+    implementation(libVersions.androidx.core.ktx)
 
+    uiImplementation(libVersions.android.view.material)
+    uiImplementation(libVersions.androidx.appcompat)
+    uiImplementation(libVersions.androidx.cardview)
+    uiImplementation(libVersions.androidx.constraintlayout)
+    uiImplementation(libVersions.androidx.core.ktx)
+    uiImplementation(libVersions.androidx.fragment.ktx)
+    uiImplementation(libVersions.androidx.lifecycle.runtime.ktx)
+    uiImplementation(libVersions.androidx.lifecycle.viewmodel.ktx)
+    uiImplementation(libVersions.androidx.preference.ktx)
+    uiImplementation(libVersions.androidx.recyclerview)
+    uiImplementation(libVersions.androidx.security.crypto)
+    uiImplementation(libVersions.androidx.webkit)
+    uiImplementation(libVersions.kotlin)
+    uiImplementation(libVersions.mpandroidchart)
+    uiImplementation(libVersions.square.okhttp)
 
-    implementation("androidx.annotation:annotation:1.6.0")
-    implementation("androidx.core:core:$coreVersion")
-
-
-    // Is there a nicer way to do this?
-    dependencies.add("uiImplementation", "androidx.constraintlayout:constraintlayout:2.1.4")
-    dependencies.add("uiImplementation", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.22")
-    dependencies.add("uiImplementation", "androidx.cardview:cardview:1.0.0")
-    dependencies.add("uiImplementation", "androidx.recyclerview:recyclerview:1.3.0")
-    dependencies.add("uiImplementation", "androidx.appcompat:appcompat:1.6.1")
-    dependencies.add("uiImplementation", "com.github.PhilJay:MPAndroidChart:v3.1.0")
-    dependencies.add("uiImplementation", "com.squareup.okhttp3:okhttp:4.10.0")
-    dependencies.add("uiImplementation", "androidx.core:core:$coreVersion")
-    dependencies.add("uiImplementation", "androidx.core:core-ktx:$coreVersion")
-    dependencies.add("uiImplementation", "androidx.fragment:fragment-ktx:$fragment_version")
-    dependencies.add("uiImplementation", "androidx.preference:preference:$preferenceVersion")
-    dependencies.add("uiImplementation", "androidx.preference:preference-ktx:$preferenceVersion")
-    dependencies.add("uiImplementation", "com.google.android.material:material:$materialVersion")
-    dependencies.add("uiImplementation", "androidx.webkit:webkit:1.7.0")
-    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    dependencies.add("uiImplementation", "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    dependencies.add("uiImplementation","androidx.security:security-crypto:1.1.0-alpha06")
-
-
-    testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:3.9.0")
-    testImplementation("org.robolectric:robolectric:4.10.2")
-    testImplementation("androidx.test:core:1.4.0")
+    testImplementation(libVersions.androidx.test.core)
+    testImplementation(libVersions.junit)
+    testImplementation(libVersions.kotlin)
+    testImplementation(libVersions.mockito.core)
+    testImplementation(libVersions.robolectric)
 }
 
-
+fun DependencyHandler.uiImplementation(dependencyNotation: Any): Dependency? =
+    add("uiImplementation", dependencyNotation)

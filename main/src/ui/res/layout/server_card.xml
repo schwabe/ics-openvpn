@@ -254,7 +254,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="17dp"
                         android:layout_below="@id/enable_proxy_auth"
-                        android:text="@string/auth_username"
+                        android:text="@string/proxy_auth_username"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:layout_marginTop="12dp"
                         card_view:layout_constraintTop_toBottomOf="@+id/enable_proxy_auth"

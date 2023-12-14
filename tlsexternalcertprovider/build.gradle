@@ -3,15 +3,12 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 
-apply plugin: 'com.android.application'
-
-ext {
-    bouncycastleVersion = '1.49'
+plugins {
+    alias libs.plugins.android.application
 }
 
 android {
     compileSdkVersion 34
-
 
     defaultConfig {
         applicationId "de.blinkt.externalcertprovider"
@@ -49,12 +46,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation (
-    //'org.bouncycastle:bcprov-jdk15on:'  + bouncycastleVersion,
-    //'org.bouncycastle:bcprov-ext-jdk15on:' + bouncycastleVersion,
-    //'org.bouncycastle:bcpkix-jdk15on:' + bouncycastleVersion,
-    'org.bouncycastle:bcmail-jdk15on:' + bouncycastleVersion,
-    //'org.bouncycastle:bcpg-jdk15on:' + bouncycastleVersion
+//            libs.org.bouncycastle.bcprov.jdk15on,
+//            libs.org.bouncycastle.bcprov.ext.jdk15on,
+//            libs.org.bouncycastle.bcpkix.jdk15on,
+            libs.org.bouncycastle.bcmail.jdk15on,
+//            libs.org.bouncycastle.bcpg.jdk15on,
     )
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation(libs.junit)
 }

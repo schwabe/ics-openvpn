@@ -3,25 +3,7 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 
-
-buildscript {
-    var kotlin_version: String by extra
-
-    kotlin_version = "1.9.0"
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:8.1.1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven(url = "https://jitpack.io")
-    }
+plugins {
+    alias(libVersions.plugins.android.library) apply false
+    alias(libVersions.plugins.kotlin.android) apply false
 }

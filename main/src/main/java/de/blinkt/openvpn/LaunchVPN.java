@@ -5,6 +5,8 @@
 
 package de.blinkt.openvpn;
 
+import static de.blinkt.openvpn.core.OpenVPNService.EXTRA_START_REASON;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -73,7 +75,7 @@ public class LaunchVPN extends Activity {
     public static final String EXTRA_KEY = "de.blinkt.openvpn.shortcutProfileUUID";
     public static final String EXTRA_NAME = "de.blinkt.openvpn.shortcutProfileName";
     public static final String EXTRA_HIDELOG = "de.blinkt.openvpn.showNoLogWindow";
-    public static final String EXTRA_START_REASON = "de.blinkt.openvpn.start_reason";
+
     public static final String CLEARLOG = "clearlogconnect";
 
 
@@ -255,7 +257,7 @@ public class LaunchVPN extends Activity {
                     if (!mhideLog && showLogWindow)
                         showLogWindow();
                     ProfileManager.updateLRU(this, mSelectedProfile);
-                    VPNLaunchHelper.startOpenVpn(mSelectedProfile, getBaseContext(), mSelectedProfileReason);
+                    VPNLaunchHelper.startOpenVpn(mSelectedProfile, getBaseContext(), mSelectedProfileReason, true);
                     finish();
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {

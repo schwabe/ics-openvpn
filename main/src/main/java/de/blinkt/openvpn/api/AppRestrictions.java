@@ -147,6 +147,13 @@ public class AppRestrictions {
             editor.putBoolean("screenoff", pauseVPN);
             editor.apply();
         }
+        if (restrictions.containsKey("restartvpnonboot"))
+        {
+            boolean restartVPNonBoot = restrictions.getBoolean("restartvpnonboot");
+            SharedPreferences.Editor editor = defaultPrefs.edit();
+            editor.putBoolean("restartvpnonboot", restartVPNonBoot);
+            editor.apply();
+        }
     }
 
     private void importVPNProfiles(Context c, Bundle restrictions, Parcelable[] profileList) {
@@ -154,6 +161,7 @@ public class AppRestrictions {
 
         String defaultprofile = restrictions.getString("defaultprofile", null);
         boolean defaultprofileProvisioned = false;
+
 
         ProfileManager pm = ProfileManager.getInstance(c);
         for (Parcelable profile : profileList) {

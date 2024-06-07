@@ -26,6 +26,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by arne on 09.11.16.
@@ -120,9 +121,10 @@ public class StatusListener implements VpnStatus.LogListener {
 
     };
     private Context mContext;
+    private String pkgName = "(packageName not yet set)";
 
     void init(Context c) {
-
+        pkgName = c.getPackageName();
         Intent intent = new Intent(c, OpenVPNStatusService.class);
         intent.setAction(OpenVPNService.START_SERVICE);
         mCacheDir = c.getCacheDir();
@@ -163,23 +165,19 @@ public class StatusListener implements VpnStatus.LogListener {
 
     @Override
     public void newLog(LogItem logItem) {
+        String tag = pkgName + "(OpenVPN)";
+        long logAge = System.currentTimeMillis() - logItem.getLogtime();
+        if (logAge > 5000)
+        {
+            tag += String.format(Locale.US, "[%ds ago]", logAge/1000 );
+        }
+
         switch (logItem.getLogLevel()) {
-            case INFO:
-                Log.i("OpenVPN", logItem.getString(mContext));
-                break;
-            case DEBUG:
-                Log.d("OpenVPN", logItem.getString(mContext));
-                break;
-            case ERROR:
-                Log.e("OpenVPN", logItem.getString(mContext));
-                break;
-            case VERBOSE:
-                Log.v("OpenVPN", logItem.getString(mContext));
-                break;
-            case WARNING:
-            default:
-                Log.w("OpenVPN", logItem.getString(mContext));
-                break;
+            case INFO -> Log.i(tag, logItem.getString(mContext));
+            case DEBUG -> Log.d(tag, logItem.getString(mContext));
+            case ERROR -> Log.e(tag, logItem.getString(mContext));
+            case VERBOSE -> Log.v(tag, logItem.getString(mContext));
+            default -> Log.w(tag, logItem.getString(mContext));
         }
 
     }

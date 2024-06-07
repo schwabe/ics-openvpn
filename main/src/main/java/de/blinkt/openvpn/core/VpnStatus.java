@@ -11,6 +11,8 @@ import android.os.Build;
 import android.os.HandlerThread;
 import android.os.Message;
 
+import androidx.annotation.StringRes;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -408,11 +410,11 @@ public class VpnStatus {
         newLogItem(new LogItem(LogLevel.DEBUG, message));
     }
 
-    public static void logInfo(int resourceId, Object... args) {
+    public static void logInfo(@StringRes int resourceId, Object... args) {
         newLogItem(new LogItem(LogLevel.INFO, resourceId, args));
     }
 
-    public static void logDebug(int resourceId, Object... args) {
+    public static void logDebug(@StringRes int resourceId, Object... args) {
         newLogItem(new LogItem(LogLevel.DEBUG, resourceId, args));
     }
 
@@ -486,7 +488,7 @@ public class VpnStatus {
 
     }
 
-    public static void logWarning(int resourceId, Object... args) {
+    public static void logWarning(@StringRes int resourceId, Object... args) {
         newLogItem(new LogItem(LogLevel.WARNING, resourceId, args));
     }
 
@@ -495,11 +497,11 @@ public class VpnStatus {
     }
 
 
-    public static void logError(int resourceId) {
+    public static void logError(@StringRes int resourceId) {
         newLogItem(new LogItem(LogLevel.ERROR, resourceId));
     }
 
-    public static void logError(int resourceId, Object... args) {
+    public static void logError(@StringRes int resourceId, Object... args) {
         newLogItem(new LogItem(LogLevel.ERROR, resourceId, args));
     }
 

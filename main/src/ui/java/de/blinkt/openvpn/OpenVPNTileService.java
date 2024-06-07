@@ -85,7 +85,7 @@ public class OpenVPNTileService extends TileService implements VpnStatus.StateLi
     @SuppressLint("Override")
     @TargetApi(Build.VERSION_CODES.N)
     void launchVPN(VpnProfile profile, Context context) {
-          VPNLaunchHelper.startOpenVpn(profile, getBaseContext(), "QuickTile");
+          VPNLaunchHelper.startOpenVpn(profile, getBaseContext(), "QuickTile", true);
     }
 
     @TargetApi(Build.VERSION_CODES.N)

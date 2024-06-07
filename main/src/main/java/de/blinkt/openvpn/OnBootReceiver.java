@@ -36,6 +36,6 @@ public class OnBootReceiver extends BroadcastReceiver {
 	}
 
 	void launchVPN(VpnProfile profile, Context context) {
-		VPNLaunchHelper.startOpenVpn(profile, context.getApplicationContext(), "on Boot receiver");
+		VPNLaunchHelper.startOpenVpn(profile, context.getApplicationContext(), "on Boot receiver", false);
 	}
 }

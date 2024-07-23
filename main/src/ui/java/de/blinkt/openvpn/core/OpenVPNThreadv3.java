@@ -262,7 +262,6 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
     void setUserPW() {
         if (mVp.isUserPWAuth()) {
             ClientAPI_ProvideCreds creds = new ClientAPI_ProvideCreds();
-            creds.setCachePassword(true);
             creds.setPassword(mVp.getPasswordAuth());
             creds.setUsername(mVp.mUsername);
             provide_creds(creds);

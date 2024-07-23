@@ -12,7 +12,8 @@ cov-configure --config .coverity/cfg.xml --kotlin
 cov-configure --config .coverity/cfg.xml --java
 
 ./gradlew -b build.gradle.kts --no-daemon clean
-cov-build --dir .coverity/idir --config .coverity/cfg.xml  ./gradlew -b build.gradle.kts --no-daemon assembleUiOvpn23Release
+# Coverity needs the --fs-capture-search  for Kotlin according to https://community.synopsys.com/s/article/How-to-analyze-Kotlin-project
+cov-build --fs-capture-search main/src --dir .coverity/idir --config .coverity/cfg.xml  ./gradlew -b build.gradle.kts --no-daemon assembleUiOvpn23Release
 
 NDK_VER=${NDK_VER:-26.1.10909125}
 cov-analyze --dir .coverity/idir --all --strip-path ${PWD}/main/src/main/cpp --strip-path ${PWD}/main/src --strip-path ${PWD} --strip-path ${ANDROID_HOME}/ndk/${NDK_VER}/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/ --strip-path ${ANDROID_HOME}/ndk/${NDK_VER}/toolchains/llvm/prebuilt/linux-x86_64/sysroot

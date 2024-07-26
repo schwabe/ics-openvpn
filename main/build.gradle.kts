@@ -237,6 +237,7 @@ dependencies {
     uiImplementation(libs.android.view.material)
     uiImplementation(libs.androidx.appcompat)
     uiImplementation(libs.androidx.cardview)
+    uiImplementation(libs.androidx.viewpager2)
     uiImplementation(libs.androidx.constraintlayout)
     uiImplementation(libs.androidx.core.ktx)
     uiImplementation(libs.androidx.fragment.ktx)

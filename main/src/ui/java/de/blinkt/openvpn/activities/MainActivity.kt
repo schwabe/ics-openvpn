@@ -11,23 +11,26 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.fragments.*
 import de.blinkt.openvpn.fragments.ImportRemoteConfig.Companion.newInstance
 import de.blinkt.openvpn.views.ScreenSlidePagerAdapter
 
 class MainActivity : BaseActivity() {
-    private lateinit var mPager: ViewPager
+    private lateinit var mPager: ViewPager2
     private lateinit var mPagerAdapter: ScreenSlidePagerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = findViewById(R.id.pager)
-        mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager, this)
+        val tablayout: TabLayout = findViewById(R.id.tab_layout)
+
+        mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager, lifecycle, this)
 
         /* Toolbar and slider should have the same elevation */disableToolbarElevation()
         mPagerAdapter.addTab(R.string.vpn_list_title, VPNProfileList::class.java)
@@ -41,6 +44,11 @@ class MainActivity : BaseActivity() {
             mPagerAdapter.addTab(R.string.openvpn_log, LogFragment::class.java)
         mPagerAdapter.addTab(R.string.about, AboutFragment::class.java)
         mPager.setAdapter(mPagerAdapter)
+
+        TabLayoutMediator(tablayout, mPager) { tab, position ->
+            tab.text = mPagerAdapter.getPageTitle(position)
+        }.attach()
+
     }
 
     private fun disableToolbarElevation() {

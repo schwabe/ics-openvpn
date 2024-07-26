@@ -9,23 +9,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+    <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            style="@style/blinkt.tabLayout"
+            app:tabMaxWidth="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            app:tabMode="scrollable"
 
-    <androidx.viewpager.widget.ViewPager
+            />
+
+    <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="3"/>
 
-        <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                style="@style/blinkt.tabLayout"
-                app:tabMaxWidth="0dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                app:tabMode="scrollable"
-
-                />
-
-    </androidx.viewpager.widget.ViewPager>
 
 </LinearLayout>

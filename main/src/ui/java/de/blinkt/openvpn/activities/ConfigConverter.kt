@@ -618,7 +618,9 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.config_converter)
+        val v  = layoutInflater.inflate(R.layout.config_converter, null)
+        setUpEdgeEdgeInsetsListener(v, R.id.root_layout_config_converter)
+        setContentView(v)
 
         val fab_button = findViewById<ImageButton?>(R.id.fab_save)
         if (fab_button != null) {

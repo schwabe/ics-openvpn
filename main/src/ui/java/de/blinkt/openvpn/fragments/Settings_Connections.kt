@@ -40,12 +40,8 @@ class Settings_Connections : Settings_Fragment(), View.OnClickListener {
         val v = inflater.inflate(R.layout.connections, container, false)
         mWarning = v.findViewById<View>(R.id.noserver_active_warning) as TextView
         mRecyclerView = v.findViewById<View>(R.id.connection_recycler_view) as RecyclerView
-        val dpwidth = (container!!.width / resources.displayMetrics.density).toInt()
-        var columns = dpwidth / 290
-        columns = 1.coerceAtLeast(columns)
         mConnectionsAdapter = ConnectionsAdapter(activity, this, mProfile)
 
-        //mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(columns, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)

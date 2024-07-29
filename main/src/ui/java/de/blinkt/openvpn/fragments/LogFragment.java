@@ -9,11 +9,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.DataSetObserver;
@@ -38,8 +36,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -631,15 +627,25 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
         });
         if (mShowOptionsLayout)
             mOptionsLayout.setVisibility(View.VISIBLE);
+
+//        ViewCompat.setOnApplyWindowInsetsListener(v, (view, windowInsets) ->
+//                {
+//                    Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+//                    view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), insets.bottom);
+//                    return WindowInsetsCompat.CONSUMED;
+//                }
+//        );
+        Utils.applyInsetListener(v);
+
         return v;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Scroll to the end of the list end
-        //getListView().setSelection(getListView().getAdapter().getCount()-1);
     }
+
+
 
     @Override
     public void onAttach(@NonNull Context activity) {

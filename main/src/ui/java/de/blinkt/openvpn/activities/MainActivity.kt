@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -22,13 +21,14 @@ import de.blinkt.openvpn.views.ScreenSlidePagerAdapter
 class MainActivity : BaseActivity() {
     private lateinit var mPager: ViewPager2
     private lateinit var mPagerAdapter: ScreenSlidePagerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        val view = layoutInflater.inflate(R.layout.main_activity, null)
 
         // Instantiate a ViewPager and a PagerAdapter.
-        mPager = findViewById(R.id.pager)
-        val tablayout: TabLayout = findViewById(R.id.tab_layout)
+        mPager = view.findViewById(R.id.pager)
+        val tablayout: TabLayout = view.findViewById(R.id.tab_layout)
 
         mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager, lifecycle, this)
 
@@ -49,7 +49,10 @@ class MainActivity : BaseActivity() {
             tab.text = mPagerAdapter.getPageTitle(position)
         }.attach()
 
+        setUpEdgeEdgeInsetsListener(view, R.id.root_linear_layout)
+        setContentView(view)
     }
+
 
     private fun disableToolbarElevation() {
         supportActionBar?.elevation = 0f

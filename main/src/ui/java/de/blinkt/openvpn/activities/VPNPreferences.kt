@@ -104,13 +104,14 @@ class VPNPreferences : BaseActivity() {
         title = getString(R.string.edit_profile_title, mProfile!!.name)
 
 
-        setContentView(R.layout.main_activity)
+        val rootview = layoutInflater.inflate(R.layout.main_activity, null)
+        setUpEdgeEdgeInsetsListener(rootview, R.id.root_linear_layout)
 
         disableToolbarElevation()
 
         // Instantiate a ViewPager and a PagerAdapter.
-        mPager = findViewById(R.id.pager)
-        val tablayout: TabLayout = findViewById(R.id.tab_layout)
+        mPager = rootview.findViewById(R.id.pager)
+        val tablayout: TabLayout = rootview.findViewById(R.id.tab_layout)
         mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager, lifecycle, this)
 
 
@@ -143,6 +144,8 @@ class VPNPreferences : BaseActivity() {
         TabLayoutMediator(tablayout, mPager) { tab, position ->
             tab.text = mPagerAdapter.getPageTitle(position)
         }.attach()
+
+        setContentView(rootview)
     }
 
 

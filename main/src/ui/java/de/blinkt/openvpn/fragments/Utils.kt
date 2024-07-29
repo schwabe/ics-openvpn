@@ -13,12 +13,14 @@ import android.os.Build
 import android.provider.OpenableColumns
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.util.Base64
+import android.view.View
 import android.webkit.MimeTypeMap
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import de.blinkt.openvpn.R
-import kotlin.Throws
 import de.blinkt.openvpn.VpnProfile
 import de.blinkt.openvpn.core.Preferences
 import java.io.ByteArrayOutputStream
@@ -319,4 +321,37 @@ object Utils {
         }
     }
 
+    @JvmStatic
+    fun applyInsetListener(v:View)
+    {
+        ViewCompat.setOnApplyWindowInsetsListener(
+            v
+        ) { view: View, windowInsets: WindowInsetsCompat ->
+            val insets =
+                windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+            view.updatePadding(
+                bottom = insets.bottom
+            )
+            WindowInsetsCompat.CONSUMED
+        }
+        v.requestApplyInsetsWhenAttached()
+    }
+}
+
+fun View.requestApplyInsetsWhenAttached() {
+    if (isAttachedToWindow) {
+        // We're already attached, just request as normal
+        requestApplyInsets()
+    } else {
+        // We're not attached to the hierarchy, add a listener to
+        // request when we are
+        addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(v: View) {
+                v.removeOnAttachStateChangeListener(this)
+                v.requestApplyInsets()
+            }
+
+            override fun onViewDetachedFromWindow(v: View) = Unit
+        })
+    }
 }

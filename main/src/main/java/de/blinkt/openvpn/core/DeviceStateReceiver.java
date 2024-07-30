@@ -8,10 +8,12 @@ package de.blinkt.openvpn.core;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.RestrictionsManager;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
@@ -22,6 +24,8 @@ import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.StringTokenizer;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static de.blinkt.openvpn.core.OpenVPNManagement.pauseReason;
 
@@ -37,6 +41,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
     // Time to wait after network disconnect to pause the VPN
     private final int DISCONNECT_WAIT = 20;
+    private volatile Boolean ignoreNetworkState;
 
 
     connectState network = connectState.DISCONNECTED;
@@ -179,8 +184,39 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         return (a == null) ? (b == null) : a.equals(b);
     }
 
+    /**
+     * Load and return ignorenetworkstate restriction lazily, using double-checked locking.
+     * ignorenetworkstate is useful for cases such as a tunnel over USB (using adb reverse).
+     * @param context for reading restrictions Bundle
+     * @return whether OpenVPN for Android should ignore the network state and keep the tunnel active
+     *  even when a physical network is not detected
+     */
+    private boolean shouldIgnoreNetworkState(Context context) {
+        Boolean ignoreNetworkStateLocal = ignoreNetworkState;
+        if (ignoreNetworkStateLocal == null) {
+            synchronized (this) {
+                ignoreNetworkStateLocal = ignoreNetworkState;
+                if (ignoreNetworkStateLocal == null) {
+                    RestrictionsManager restrictionsMgr =
+                            (RestrictionsManager) context.getSystemService(Context.RESTRICTIONS_SERVICE);
+                    if (restrictionsMgr != null) {
+                        Bundle restrictions = restrictionsMgr.getApplicationRestrictions();
+                        ignoreNetworkState = ignoreNetworkStateLocal = restrictions.getBoolean("ignorenetworkstate", false);
+                    } else {
+                        ignoreNetworkState = ignoreNetworkStateLocal = false;
+                    }
+                }
+            }
+        }
+        return ignoreNetworkStateLocal;
+    }
 
     public void networkStateChange(Context context) {
+        if (shouldIgnoreNetworkState(context)) {
+            network = connectState.SHOULDBECONNECTED;
+            return;
+        }
+
         NetworkInfo networkInfo = getCurrentNetworkInfo(context);
         SharedPreferences prefs = Preferences.getDefaultSharedPreferences(context);
         boolean sendusr1 = prefs.getBoolean("netchangereconnect", true);

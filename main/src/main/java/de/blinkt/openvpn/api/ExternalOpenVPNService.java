@@ -151,6 +151,13 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
         }
 
+        private void updateProfileFromExtras(Bundle extras, VpnProfile vp) {
+            if (extras != null) {
+                vp.mAllowAppVpnBypass = extras.getBoolean(EXTRA_INLINE_PROFILE_ALLOW_VPN_BYPASS, false);
+                VpnStatus.logDebug("got extra " + EXTRA_INLINE_PROFILE_ALLOW_VPN_BYPASS + ", mAllowAppVpnBypass=" + vp.mAllowAppVpnBypass);
+            }
+        }
+
         @Override
         public void startProfile(String profileUUID) throws RemoteException {
             mExtAppDb.checkOpenVPNPermission(getPackageManager());
@@ -176,9 +183,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
                 vp.mProfileCreator = callingApp;
 
-                if (extras != null) {
-                    vp.mAllowAppVpnBypass = extras.getBoolean(EXTRA_INLINE_PROFILE_ALLOW_VPN_BYPASS, false);
-                }
+                updateProfileFromExtras(extras, vp);
 
                 /*int needpw = vp.needUserPWInput(false);
                 if(needpw !=0)
@@ -207,6 +212,11 @@ public class ExternalOpenVPNService extends Service implements StateListener {
 
         @Override
         public APIVpnProfile addNewVPNProfile(String name, boolean userEditable, String config) throws RemoteException {
+            return addNewVPNProfileWithExtras(name, userEditable, config, null);
+        }
+
+        @Override
+        public APIVpnProfile addNewVPNProfileWithExtras(String name, boolean userEditable, String config, Bundle extras) throws RemoteException {
             String callingPackage = mExtAppDb.checkOpenVPNPermission(getPackageManager());
 
             ConfigParser cp = new ConfigParser();
@@ -216,6 +226,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                 vp.mName = name;
                 vp.mProfileCreator = callingPackage;
                 vp.mUserEditable = userEditable;
+                updateProfileFromExtras(extras, vp);
                 ProfileManager pm = ProfileManager.getInstance(getBaseContext());
                 pm.addProfile(vp);
                 pm.saveProfile(ExternalOpenVPNService.this, vp);

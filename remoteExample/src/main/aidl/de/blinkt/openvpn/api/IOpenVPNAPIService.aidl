@@ -63,4 +63,10 @@ interface IOpenVPNAPIService {
 
     /** Use a profile with all certificates etc. embedded */
     APIVpnProfile addNewVPNProfile (String name, boolean userEditable, String config);
+
+    /** Same as addNewVPNProfile(String, boolean, String) but giving possibility to pass a Bundle like
+    * in startVPNwithExtras(String, Bundle) to apply e.g. "allow vpn bypass" to profile.
+    * up to now the only extra that can be put is a boolean "de.blinkt.openvpn.api.ALLOW_VPN_BYPASS"
+    */
+    APIVpnProfile addNewVPNProfileWithExtras (String name, boolean userEditable, String config, in Bundle extras);
 }

@@ -52,7 +52,10 @@ public abstract class OpenVpnPreferencesFragment extends PreferenceFragmentCompa
     @Override
 	public void onSaveInstanceState (Bundle outState) {
 		super.onSaveInstanceState(outState);
-		saveSettings();
+		if (getView() != null) {
+			//if we have no view, there is no point in trying to save anything.
+			saveSettings();
+		}
 		outState.putString(VpnProfile.EXTRA_PROFILEUUID, mProfile.getUUIDString());
 	}
 }

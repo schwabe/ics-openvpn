@@ -311,17 +311,22 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
     public void event(ClientAPI_Event event) {
         String name = event.getName();
         String info = event.getInfo();
-        if (name.equals("INFO")) {
-            if (info.startsWith("OPEN_URL:") || info.startsWith("CR_TEXT:")
-                || info.startsWith("WEB_AUTH:")) {
-                mService.trigger_sso(info);
-            } else {
-                VpnStatus.logInfo(R.string.info_from_server, info);
+        switch (name) {
+            case "INFO" -> {
+                if (info.startsWith("OPEN_URL:") || info.startsWith("CR_TEXT:")
+                        || info.startsWith("WEB_AUTH:")) {
+                    mService.trigger_sso(info);
+                } else {
+                    VpnStatus.logInfo(R.string.info_from_server, info);
+                }
             }
-        } else if (name.equals("COMPRESSION_ENABLED") || name.equals(("WARN"))) {
-            VpnStatus.logInfo(String.format(Locale.US, "%s: %s", name, info));
-        } else {
-            VpnStatus.updateStateString(name, info);
+            case "COMPRESSION_ENABLED", "WARN" ->
+                    VpnStatus.logInfo(String.format(Locale.US, "%s: %s", name, info));
+            case "PAUSE" ->
+                    VpnStatus.updateStateString(name, "VPN connection paused", R.string.state_userpause, ConnectionStatus.LEVEL_VPNPAUSED);
+            case "RESUME" ->
+                    VpnStatus.updateStateString(name, "VPN connection resumed", R.string.state_reconnecting, ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
+            default -> VpnStatus.updateStateString(name, info);
         }
 		/* if (event.name.equals("DYNAMIC_CHALLENGE")) {
 			ClientAPI_DynamicChallenge challenge = new ClientAPI_DynamicChallenge();

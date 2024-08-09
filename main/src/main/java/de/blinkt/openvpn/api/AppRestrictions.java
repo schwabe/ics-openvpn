@@ -14,7 +14,6 @@ import android.text.TextUtils;
 
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
-import de.blinkt.openvpn.core.OpenVPNService;
 import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
@@ -145,6 +144,13 @@ public class AppRestrictions {
             boolean pauseVPN = restrictions.getBoolean("screenoffpausevpn");
             SharedPreferences.Editor editor = defaultPrefs.edit();
             editor.putBoolean("screenoff", pauseVPN);
+            editor.apply();
+        }
+        if(restrictions.containsKey("ignorenetworkstate"))
+        {
+            boolean ignoreNetworkState = restrictions.getBoolean("ignorenetworkstate");
+            SharedPreferences.Editor editor = defaultPrefs.edit();
+            editor.putBoolean("ignorenetstate", ignoreNetworkState);
             editor.apply();
         }
         if (restrictions.containsKey("restartvpnonboot"))

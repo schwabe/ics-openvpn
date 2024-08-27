@@ -218,7 +218,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     @Override
     public void challengeResponse(String response) throws RemoteException {
         if (mManagement != null) {
-            String b64response = Base64.encodeToString(response.getBytes(Charset.forName("UTF-8")), Base64.DEFAULT);
+            String b64response = Base64.encodeToString(response.getBytes(Charset.forName("UTF-8")), Base64.NO_WRAP);
             mManagement.sendCRResponse(b64response);
         }
     }

@@ -293,7 +293,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
     @Override
     public void sendCRResponse(String response) {
         mHandler.post(() -> {
-            post_cc_msg("CR_RESPONSE," + response + "\n");
+            post_cc_msg("CR_RESPONSE," + response);
         });
     }
 
@@ -326,15 +326,15 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
                     VpnStatus.updateStateString(name, "VPN connection paused", R.string.state_userpause, ConnectionStatus.LEVEL_VPNPAUSED);
             case "RESUME" ->
                     VpnStatus.updateStateString(name, "VPN connection resumed", R.string.state_reconnecting, ConnectionStatus.LEVEL_CONNECTING_NO_SERVER_REPLY_YET);
-            default -> VpnStatus.updateStateString(name, info);
+            default ->
+            {
+                VpnStatus.updateStateString(name, info);
+                VpnStatus.logInfo(String.format("EVENT: %s: %s", name, info));
+            }
         }
-		/* if (event.name.equals("DYNAMIC_CHALLENGE")) {
-			ClientAPI_DynamicChallenge challenge = new ClientAPI_DynamicChallenge();
-			final boolean status = ClientAPI_OpenVPNClient.parse_dynamic_challenge(event.info, challenge);
-
-		} else */
         if (event.getError())
             VpnStatus.logError(String.format("EVENT(Error): %s: %s", name, info));
+
     }
 
     @Override

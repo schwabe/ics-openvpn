@@ -21,6 +21,7 @@
             style="@style/item"
             android:text="@string/profilename"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:labelFor="@id/profilename"
             />
 
         <EditText

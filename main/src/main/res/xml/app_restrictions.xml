@@ -76,6 +76,10 @@
             android:key="restartvpnonboot"
             android:restrictionType="bool"
             android:title="@string/restriction_restartvpnonboot" />
+    <restriction
+            android:key="ignorenetworkstate"
+            android:restrictionType="bool"
+            android:title="@string/restriction_ignorenetworkstate" />
 
     <restriction
             android:description="@string/apprest_aidl_list"

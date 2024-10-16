@@ -448,6 +448,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         if (context != null) {
             final EditText entry = new EditText(context);
             entry.setSingleLine();
+            entry.setContentDescription(getString(R.string.name_of_the_vpn_profile));
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             if (mCopyProfile == null)

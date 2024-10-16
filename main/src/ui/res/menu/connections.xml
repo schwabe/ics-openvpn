@@ -11,6 +11,7 @@
         android:title="@string/add_remote"
         android:id="@+id/add_new_remote"
         android:titleCondensed="@string/add"
+            android:contentDescription="@string/add_remote"
         app:showAsAction="always"
     />
 </menu>

@@ -10,6 +10,21 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="alertDialogTheme">@style/blinkt.alertDialog</item>
+
+
+        <item name="android:navigationBarColor">
+            @android:color/transparent
+        </item>
+
+        <!-- Optional: set to transparent if your app is drawing behind the status bar. -->
+        <item name="android:statusBarColor">
+            @android:color/transparent
+        </item>
+
+        <!-- Optional: set for a light status bar with dark content. -->
+        <item name="android:windowLightStatusBar">
+            true
+        </item>
     </style>
 
     <style name="blinkt.dialog" parent="Theme.AppCompat.DayNight.Dialog">
@@ -88,10 +103,6 @@
         <item name="tabBackground">@color/primary</item>
         <item name="tabTextAppearance">@style/AppTabTextAppearance</item>
         <item name="tabSelectedTextColor">@android:color/white</item>
-
-        <!--        <item name="tabPaddingStart">10dp</item>-->
-        <!--        <item name="tabPaddingEnd">10dp</item>-->
-
 
         <item name="tabGravity">fill</item>
         <item name="tabMaxWidth">0dp</item>

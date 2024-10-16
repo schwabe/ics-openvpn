@@ -2,114 +2,124 @@
   ~ Copyright (c) 2012-2016 Arne Schwabe
   ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
   -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ScrollView
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/root_layout_config_converter"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/stdpadding"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-
-        <LinearLayout
-                android:id="@+id/config_convert_root"
+        <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/stdpadding"
                 android:orientation="vertical">
 
-            <TextView
-                    android:id="@+id/profilename_label"
-                    style="@style/item"
-                    android:labelFor="@id/profilename"
-                    android:text="@string/profilename"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:visibility="gone" />
 
-            <EditText
-                    android:id="@+id/profilename"
-                    style="@style/item"
-                    android:inputType="text"
-                    android:visibility="gone" />
-
-            <TextView
-                    android:layout_marginTop="@dimen/stdpadding"
-                    android:id="@+id/compatmode_label"
-                    style="@style/item"
-                    android:text="@string/compat_mode_label"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-
-            <Spinner
-                    android:id="@+id/compatmode"
-                    style="@style/item"
-                    android:entries="@array/compat_mode"
-                    android:prompt="@string/compatmode"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-
-            <TextView
-                    android:layout_marginTop="@dimen/stdpadding"
-                    android:id="@+id/tls_profile_label"
-                    style="@style/item"
-                    android:text="@string/tls_profile"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-            <Spinner
-                    android:id="@+id/tls_profile"
-                    style="@style/item"
-                    android:entries="@array/tls_profile_entries"
-                    android:prompt="@string/compatmode"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-            <TextView
-                    android:id="@+id/files_missing_hint"
+            <LinearLayout
+                    android:id="@+id/config_convert_root"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/files_missing_hint"
-                    android:visibility="gone"
-                    tools:visibilty="visible" />
+                    android:orientation="vertical">
 
-            <TextView
-                    android:id="@+id/permssion_hint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="@string/query_permissions_sdcard"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                <TextView
+                        android:id="@+id/profilename_label"
+                        style="@style/item"
+                        android:labelFor="@id/profilename"
+                        android:text="@string/profilename"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:visibility="gone" />
 
-            <CheckBox
-                    android:layout_marginTop="@dimen/stdpadding"
-                    android:id="@+id/importpkcs12"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/importpkcs12fromconfig"
-                    android:visibility="gone"
-                    tools:visibilty="visible" />
+                <EditText
+                        android:id="@+id/profilename"
+                        style="@style/item"
+                        android:inputType="text"
+                        android:visibility="gone" />
 
-            <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/import_log"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <TextView
+                        android:id="@+id/compatmode_label"
+                        style="@style/item"
+                        android:layout_marginTop="@dimen/stdpadding"
+                        android:text="@string/compat_mode_label"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
 
-            <Space
-                    android:id="@+id/fab_footerspace"
-                    android:layout_width="40dp"
-                    android:layout_height="@dimen/round_button_diameter"
-                    android:visibility="gone" />
-        </LinearLayout>
+                <Spinner
+                        android:id="@+id/compatmode"
+                        style="@style/item"
+                        android:entries="@array/compat_mode"
+                        android:prompt="@string/compatmode"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
 
-    </ScrollView>
+                <TextView
+                        android:id="@+id/tls_profile_label"
+                        style="@style/item"
+                        android:layout_marginTop="@dimen/stdpadding"
+                        android:text="@string/tls_profile"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
 
-    <include layout="@layout/save_fab" />
-</RelativeLayout>
+                <Spinner
+                        android:id="@+id/tls_profile"
+                        style="@style/item"
+                        android:entries="@array/tls_profile_entries"
+                        android:prompt="@string/compatmode"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                <TextView
+                        android:id="@+id/files_missing_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/files_missing_hint"
+                        android:visibility="gone"
+                        tools:visibilty="visible" />
+
+                <TextView
+                        android:id="@+id/permssion_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/query_permissions_sdcard"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                <CheckBox
+                        android:id="@+id/importpkcs12"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/stdpadding"
+                        android:checked="true"
+                        android:text="@string/importpkcs12fromconfig"
+                        android:visibility="gone"
+                        tools:visibilty="visible" />
+
+                <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/import_log"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Space
+                        android:id="@+id/fab_footerspace"
+                        android:layout_width="40dp"
+                        android:layout_height="@dimen/round_button_diameter"
+                        android:visibility="gone" />
+            </LinearLayout>
+
+        </ScrollView>
+
+        <include layout="@layout/save_fab" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/status_bg" />
+</FrameLayout>

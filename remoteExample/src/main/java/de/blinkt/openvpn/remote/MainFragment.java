@@ -233,6 +233,10 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
 
     @Override
     public void onClick(View v) {
+        if (mService == null) {
+            Toast.makeText(getActivity(), "No service connection to OpenVPN for Android. App not installed?", Toast.LENGTH_LONG).show();
+            return;
+        }
         switch (v.getId()) {
             case R.id.startVPN:
                 try {

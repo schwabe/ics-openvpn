@@ -45,7 +45,7 @@
     <string-array name="tls_profile_entries">
         <item>insecure (not recommend, allows insecure crypto)</item>
         <item>legacy (default)</item>
-        <item>preferred (recommended but limited compabbility)</item>
+        <item>preferred (recommended but limited compatibility)</item>
         <item>Suite B (only NIST approved elliptic curves)</item>
     </string-array>
 </resources>

@@ -23,6 +23,8 @@ jobs:
           distribution: 'zulu'
           java-version: 17
           cache: 'gradle'
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
       - name: Build the app
         run: ./gradlew assemble${{ matrix.target }}Release
       - name: Run Unit tests

@@ -90,6 +90,10 @@ class Settings_IP : OpenVpnPreferencesFragment(), Preference.OnPreferenceChangeL
     }
 
     override fun saveSettings() {
+        // Since we maybe not have preferences bound yet, check if we actually have them bound.
+        if (!this::mUsePull.isInitialized) {
+            return;
+        }
         mProfile.mUsePull = mUsePull.isChecked
         mProfile.mIPv4Address = mIPv4.text
         mProfile.mIPv6Address = mIPv6.text

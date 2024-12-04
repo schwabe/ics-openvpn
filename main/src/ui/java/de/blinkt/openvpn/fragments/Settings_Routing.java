@@ -7,6 +7,7 @@ package de.blinkt.openvpn.fragments;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.lifecycle.Lifecycle;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
@@ -53,6 +54,7 @@ public class Settings_Routing extends OpenVpnPreferencesFragment implements Pref
 			getPreferenceScreen().removePreference(mBlockUnusedAF);
 
 		loadSettings();
+
 	}
 
 	@Override

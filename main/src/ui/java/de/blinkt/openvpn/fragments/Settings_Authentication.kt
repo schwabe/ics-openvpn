@@ -102,6 +102,9 @@ class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPrefe
     }
 
     override fun saveSettings() {
+        if (!this::mExpectTLSCert.isInitialized) {
+            return;
+        }
         mProfile.mExpectTLSCert = mExpectTLSCert.isChecked
         mProfile.mCheckRemoteCN = mCheckRemoteCN.isChecked
         mProfile.mRemoteCN = mRemoteCN.cnText

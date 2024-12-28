@@ -88,7 +88,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
                 try {
                     val b = ExtAuthHelper.getCertificateMetaData(context!!, mProfile.mExternalAuthenticator, mProfile.mAlias)
                     mProfile.mAlias = b.getString(ExtAuthHelper.EXTRA_ALIAS)
-                    requireActivity().runOnUiThread { setAlias() }
+                    activity?.runOnUiThread { setAlias() }
                 } catch (e: KeyChainException) {
                     e.printStackTrace()
                 }
@@ -138,7 +138,7 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
 
                 val certStringCopy = certstr
                 val finalMetadata = metadata
-                requireActivity().runOnUiThread {
+                activity?.runOnUiThread {
                     mAliasCertificate.text = certStringCopy
                     if (finalMetadata != null)
                         mExtAliasName.text = finalMetadata.getString(ExtAuthHelper.EXTRA_DESCRIPTION)

@@ -61,13 +61,22 @@ public class AppRestrictions {
         c.unregisterReceiver(mRestrictionsReceiver);
     }
 
-    private String hashConfig(String rawconfig) {
+    private String hashConfig(String rawconfig, String allowedApps) {
         String config = prepare(rawconfig);
         MessageDigest digest;
+
+        if (allowedApps == null)
+            allowedApps = "";
+
+
+
         try {
             digest = MessageDigest.getInstance("SHA1");
             byte[] utf8_bytes = config.getBytes(StandardCharsets.UTF_8);
             digest.update(utf8_bytes, 0, utf8_bytes.length);
+
+            byte[] apps_bytes = allowedApps.getBytes(StandardCharsets.UTF_8);
+            digest.update(apps_bytes, 0, apps_bytes.length);
             return new BigInteger(1, digest.digest()).toString(16);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -181,6 +190,7 @@ public class AppRestrictions {
             String ovpn = p.getString("ovpn");
             String name = p.getString("name");
             String certAlias = p.getString("certificate_alias");
+            String allowedApps = p.getString("allowed_apps");
 
             if (TextUtils.isEmpty(uuid) || TextUtils.isEmpty(ovpn) || TextUtils.isEmpty(name)) {
                 VpnStatus.logError("App restriction profile misses uuid, ovpn or name key");
@@ -196,13 +206,13 @@ public class AppRestrictions {
             if (uuid.equals(defaultprofile))
                 defaultprofileProvisioned = true;
 
-            String ovpnHash = hashConfig(ovpn);
+            String ovpnHash = hashConfig(ovpn, allowedApps);
 
             provisionedUuids.add(uuid.toLowerCase(Locale.ENGLISH));
             // Check if the profile already exists
             VpnProfile vpnProfile = ProfileManager.get(c, uuid);
 
-
+            HashSet<String> oldAllowedPackages = null;
             if (vpnProfile != null) {
                 // Profile exists, check if need to update it
                 if (ovpnHash.equals(vpnProfile.importedProfileHash)) {
@@ -211,9 +221,35 @@ public class AppRestrictions {
                     // not modified skip to next profile
                     continue;
                 }
+                oldAllowedPackages = vpnProfile.mAllowedAppsVpn;
             }
-            vpnProfile = addProfile(c, ovpn, uuid, name, vpnProfile);
+            vpnProfile = addProfile(c, ovpn, uuid, name, vpnProfile, ovpnHash);
+            if (vpnProfile == null)
+            {
+                continue;
+            }
+
             addCertificateAlias(vpnProfile, certAlias, c);
+            HashSet<String> allowedAppsSet = new HashSet<>();
+            if (allowedApps != null && vpnProfile != null){
+                for (String app:allowedApps.split("[,: \n\r]")){
+                    if (!TextUtils.isEmpty(app))
+                        allowedAppsSet.add(app);
+                }
+                if (!allowedAppsSet.equals(vpnProfile.mAllowedAppsVpn))
+                {
+                    vpnProfile.mAllowedAppsVpn = allowedAppsSet;
+                    vpnProfile.mAllowedAppsVpnAreDisallowed = false;
+                    pm.saveProfile(c, vpnProfile);
+                }
+
+            }
+            if (TextUtils.isEmpty(allowedApps) && oldAllowedPackages != null)
+            {
+                vpnProfile.mAllowedAppsVpn = oldAllowedPackages;
+                pm.saveProfile(c, vpnProfile);
+            }
+
         }
 
         Vector<VpnProfile> profilesToRemove = new Vector<>();
@@ -318,7 +354,7 @@ public class AppRestrictions {
 
     ;
 
-    VpnProfile addProfile(Context c, String config, String uuid, String name, VpnProfile vpnProfile) {
+    VpnProfile addProfile(Context c, String config, String uuid, String name, VpnProfile vpnProfile, String ovpnHash) {
         config = prepare(config);
         ConfigParser cp = new ConfigParser();
         try {
@@ -331,7 +367,7 @@ public class AppRestrictions {
 
             vp.mName = name;
             vp.setUUID(UUID.fromString(uuid));
-            vp.importedProfileHash = hashConfig(config);
+            vp.importedProfileHash = ovpnHash;
 
             ProfileManager pm = ProfileManager.getInstance(c);
 

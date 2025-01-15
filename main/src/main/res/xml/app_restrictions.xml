@@ -47,6 +47,11 @@
                     android:key="certificate_alias"
                     android:restrictionType="string"
                     android:title="@string/apprest_certalias" />
+            <restriction
+                    android:key="allowed_apps"
+                    android:title="@string/apprest_vpn_applist"
+                    android:description="@string/apprest_vpn_applist_desc"
+                    android:restrictionType="string" />
             <!--
             <restriction
                     android:key="ovpn_list"

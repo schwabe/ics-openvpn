@@ -215,6 +215,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
             ConfigParser.useEmbbedUserAuth(mResult, mEmbeddedPwFile)
 
         vpl.addProfile(mResult)
+        mResult?.addChangeLogEntry("Profile created via ConfigConverter")
         ProfileManager.saveProfile(this, mResult)
         vpl.saveProfileList(this)
         result.putExtra(VpnProfile.EXTRA_PROFILEUUID, mResult!!.uuid.toString())

@@ -99,6 +99,7 @@ public class ProfileManager {
     public static void setTemporaryProfile(Context c, VpnProfile tmp) {
         tmp.mTemporaryProfile = true;
         ProfileManager.tmpprofile = tmp;
+        tmp.addChangeLogEntry("temporary profile saved");
         saveProfile(c, tmp);
     }
 

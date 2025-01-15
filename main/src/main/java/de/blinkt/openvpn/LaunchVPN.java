@@ -201,29 +201,26 @@ public class LaunchVPN extends Activity {
         }
 
         AlertDialog.Builder builder = dialog.setPositiveButton(android.R.string.ok,
-                new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                (dialog1, which) -> {
 
-                        if (type == R.string.password) {
-                            mSelectedProfile.mUsername = ((EditText) userpwlayout.findViewById(R.id.username)).getText().toString();
+                    if (type == R.string.password) {
+                        mSelectedProfile.mUsername = ((EditText) userpwlayout.findViewById(R.id.username)).getText().toString();
 
-                            String pw = ((EditText) userpwlayout.findViewById(R.id.password)).getText().toString();
-                            if (((CheckBox) userpwlayout.findViewById(R.id.save_password)).isChecked()) {
-                                mSelectedProfile.mPassword = pw;
-                            } else {
-                                mSelectedProfile.mPassword = null;
-                                mTransientAuthPW = pw;
-                            }
-                            ProfileManager.saveProfile( LaunchVPN.this, mSelectedProfile);
-
+                        String pw = ((EditText) userpwlayout.findViewById(R.id.password)).getText().toString();
+                        if (((CheckBox) userpwlayout.findViewById(R.id.save_password)).isChecked()) {
+                            mSelectedProfile.mPassword = pw;
                         } else {
-                            mTransientCertOrPCKS12PW = entry.getText().toString();
+                            mSelectedProfile.mPassword = null;
+                            mTransientAuthPW = pw;
                         }
-                        Intent intent = new Intent(LaunchVPN.this, OpenVPNStatusService.class);
-                        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-                    }
+                        mSelectedProfile.addChangeLogEntry("saved password");
+                        ProfileManager.saveProfile( LaunchVPN.this, mSelectedProfile);
 
+                    } else {
+                        mTransientCertOrPCKS12PW = entry.getText().toString();
+                    }
+                    Intent intent = new Intent(LaunchVPN.this, OpenVPNStatusService.class);
+                    bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
                 });
         dialog.setNegativeButton(android.R.string.cancel,
                 new DialogInterface.OnClickListener() {

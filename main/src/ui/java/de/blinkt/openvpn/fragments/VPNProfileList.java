@@ -494,6 +494,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     private void addProfile(VpnProfile profile) {
         getPM().addProfile(profile);
         getPM().saveProfileList(getActivity());
+        profile.addChangeLogEntry("empty profile added via main profile list");
         getPM().saveProfile(getActivity(), profile);
         mArrayadapter.add(profile);
     }

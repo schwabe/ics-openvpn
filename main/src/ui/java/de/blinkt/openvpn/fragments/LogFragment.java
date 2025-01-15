@@ -522,10 +522,10 @@ public class LogFragment extends ListFragment implements StateListener, SeekBar.
             String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
 
             final VpnProfile profile = ProfileManager.get(getActivity(), configuredVPN);
-            ProfileManager.getInstance(getActivity()).saveProfile(getActivity(), profile);
+            ProfileManager.saveProfile(getActivity(), profile);
             // Name could be modified, reset List adapter
 
-            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder dialog = new AlertDialog.Builder(requireActivity());
             dialog.setTitle(R.string.configuration_changed);
             dialog.setMessage(R.string.restart_vpn_after_change);
 

@@ -240,12 +240,14 @@ public class AppRestrictions {
                 {
                     vpnProfile.mAllowedAppsVpn = allowedAppsSet;
                     vpnProfile.mAllowedAppsVpnAreDisallowed = false;
+                    vpnProfile.addChangeLogEntry("app restrictions updated allowed apps");
                     pm.saveProfile(c, vpnProfile);
                 }
 
             }
             if (TextUtils.isEmpty(allowedApps) && oldAllowedPackages != null)
             {
+                vpnProfile.addChangeLogEntry("app restrictions kept old allowed app (new ones empty)");
                 vpnProfile.mAllowedAppsVpn = oldAllowedPackages;
                 pm.saveProfile(c, vpnProfile);
             }
@@ -333,6 +335,7 @@ public class AppRestrictions {
 
         if (!certAlias.equals(oldAlias) || oldType != vpnProfile.mAuthenticationType)
         {
+            vpnProfile.addChangeLogEntry("app restrictions updated certificate alias");
             ProfileManager pm = ProfileManager.getInstance(c);
             pm.saveProfile(c, vpnProfile);
         }
@@ -374,10 +377,12 @@ public class AppRestrictions {
             if (vpnProfile != null) {
                 vp.mVersion = vpnProfile.mVersion + 1;
                 vp.mAlias = vpnProfile.mAlias;
+                vp.addChangeLogEntry("App restriction with hash " + ovpnHash);
             }
 
             // The add method will replace any older profiles with the same UUID
             pm.addProfile(vp);
+            vp.addChangeLogEntry("app restrictions created profile");
             pm.saveProfile(c, vp);
             pm.saveProfileList(c);
             return vp;

@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Pair;
 
 import de.blinkt.openvpn.core.*;
 
@@ -178,6 +179,18 @@ public class VpnProfile implements Serializable, Cloneable {
     public int mCompatMode = 0;
     public boolean mUseLegacyProvider = false;
     public String mTlSCertProfile = "";
+    public long mCreationDate = 0;
+
+
+    class ChangeLogEntry implements Serializable
+    {
+        private static final long serialVersionUID = 6032413096860917402L;
+
+        public long time;
+        public String message;
+    }
+    public Vector<ChangeLogEntry> changesLog = new Vector<>();
+
 
     private transient PrivateKey mPrivateKey;
     // Public attributes, since I got mad with getter/setter
@@ -193,6 +206,7 @@ public class VpnProfile implements Serializable, Cloneable {
         mConnections = new Connection[1];
         mConnections[0] = new Connection();
         mLastUsed = System.currentTimeMillis();
+        mCreationDate = System.currentTimeMillis();
     }
 
     public static String openVpnEscape(String unescaped) {
@@ -363,6 +377,20 @@ public class VpnProfile implements Serializable, Cloneable {
 
         mConnections[0] = conn;
 
+    }
+
+    /**
+     * Adds an changelog/audit entry to the profile. The date of the entry will be the current time
+     */
+    public void addChangeLogEntry(String message)
+    {
+        while (changesLog.size() > 50)
+            changesLog.removeElementAt(0);
+
+        ChangeLogEntry cle = new ChangeLogEntry();
+        cle.time = System.currentTimeMillis();
+        cle.message = message;
+        changesLog.add(cle);
     }
 
     public String getConfigFile(Context context, boolean configForOvpn3) {

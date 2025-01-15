@@ -229,6 +229,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
                 updateProfileFromExtras(extras, vp);
                 ProfileManager pm = ProfileManager.getInstance(getBaseContext());
                 pm.addProfile(vp);
+                vp.addChangeLogEntry("AIDL API created profile");
                 pm.saveProfile(ExternalOpenVPNService.this, vp);
                 pm.saveProfileList(ExternalOpenVPNService.this);
                 return new APIVpnProfile(vp.getUUIDString(), vp.mName, vp.mUserEditable, vp.mProfileCreator);

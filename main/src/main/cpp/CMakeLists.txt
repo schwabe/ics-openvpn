@@ -63,6 +63,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
             openvpn3/client/ovpncli.cpp
             openvpn3/openvpn/openssl/xkey/xkey_provider.c
             openvpn3/openvpn/openssl/xkey/xkey_helper.c
+            openvpn3/openvpn/crypto/data_epoch.cpp
             ovpncli_wrap.cxx)
 
     add_library(ovpn3 SHARED ${ovpn3_SRCS})

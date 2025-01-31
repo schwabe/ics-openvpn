@@ -10,11 +10,10 @@ import android.content.Intent;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
-import android.os.Build;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
+
 import android.system.Os;
 import android.util.Log;
 import de.blinkt.openvpn.R;
@@ -548,7 +547,7 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 mOpenVPNService.addDNS(extra);
                 break;
             case "DNSDOMAIN":
-                mOpenVPNService.setDomain(extra);
+                mOpenVPNService.addSearchDomain(extra);
                 break;
             case "ROUTE": {
                 String[] routeparts = extra.split(" ");

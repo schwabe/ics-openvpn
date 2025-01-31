@@ -512,4 +512,10 @@
     <string name="missing_vpn_permission_log">VPN Service is missing permission to connect a VPN. Requesting permission via notification.</string>
     <string name="ignore_vpn_start_request">VPN already running (%s). Ignoring request to start VPN.</string>
     <string name="name_of_the_vpn_profile">Name of the VPN Profile</string>
+    <string name="dnsserver_ignore_port">Note ignoring port %1$d for DNS server with address %2$s"</string>
+    <string name="dnsserver_ignore_dnnsec">Skipping DNS server entry %1$d as it requires DNSSEC: %2$s</string>
+    <string name="dnsserver_ignore_tls_doh"> Skipping DNS server entry %1$d as it requires DNS over TLS or DNS over HTTPS: %2$s</string>
+    <string name="dnsserver_ignore_dnsport">Skipping address %1$s:%2$d for DNS server entry %1$d as uses a non-default port: %2$s</string>
+    <string name="dnsserver_no_valid_server">No valid DNS server left. Terminating connection.</string>
+
 </resources>

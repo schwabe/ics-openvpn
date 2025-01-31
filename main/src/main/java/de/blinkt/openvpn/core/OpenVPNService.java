@@ -100,7 +100,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         private final Vector<String> mDnslist = new Vector<>();
         private final NetworkSpace mRoutes = new NetworkSpace();
         private final NetworkSpace mRoutesv6 = new NetworkSpace();
-        private String mDomain = null;
+        private Vector<String> mSearchDomainList = new Vector<>();
         private CIDRIP mLocalIP = null;
         private int mMtu;
         private String mLocalIPv6 = null;
@@ -839,7 +839,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         cfg += "routes: " + TextUtils.join("|", tc.mRoutes.getNetworks(true)) + TextUtils.join("|", tc.mRoutesv6.getNetworks(true));
         cfg += "excl. routes:" + TextUtils.join("|", tc.mRoutes.getNetworks(false)) + TextUtils.join("|", tc.mRoutesv6.getNetworks(false));
         cfg += "dns: " + TextUtils.join("|", tc.mDnslist);
-        cfg += "domain: " + tc.mDomain;
+        cfg += "domain: " + TextUtils.join("|", tc.mSearchDomainList);
         cfg += "mtu: " + tc.mMtu;
         cfg += "proxyInfo: " + tc.mProxyInfo;
         return cfg;
@@ -946,8 +946,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
 
-        if (tc.mDomain != null)
-            builder.addSearchDomain(tc.mDomain);
+        for (String domain: tc.mSearchDomainList)
+            builder.addSearchDomain(domain);
 
         String ipv4info;
         String ipv6info;
@@ -976,7 +976,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
         VpnStatus.logInfo(R.string.local_ip_info, ipv4info, ipv4len, ipv6info, tc.mMtu);
-        VpnStatus.logInfo(R.string.dns_server_info, TextUtils.join(", ", tc.mDnslist), tc.mDomain);
+        VpnStatus.logInfo(R.string.dns_server_info, TextUtils.join(", ", tc.mDnslist), tc.mSearchDomainList);
         VpnStatus.logInfo(R.string.routes_info_incl, TextUtils.join(", ", tc.mRoutes.getNetworks(true)), TextUtils.join(", ", tc.mRoutesv6.getNetworks(true)));
         VpnStatus.logInfo(R.string.routes_info_excl, TextUtils.join(", ", tc.mRoutes.getNetworks(false)), TextUtils.join(", ", tc.mRoutesv6.getNetworks(false)));
         if (tc.mProxyInfo != null) {
@@ -1181,10 +1181,17 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         tunConfig.mDnslist.add(dns);
     }
 
-    public void setDomain(String domain) {
-        if (tunConfig.mDomain == null) {
-            tunConfig.mDomain = domain;
+    public void addDNS(String dns, int port) {
+        if (port != 0 && port != 53)
+        {
+            VpnStatus.logInfo(R.string.dnsserver_ignore_port, port, dns);
         }
+        tunConfig.mDnslist.add(dns);
+    }
+
+
+    public void addSearchDomain(String domain) {
+        tunConfig.mSearchDomainList.add(domain);
     }
 
     /**

@@ -22,7 +22,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -78,7 +77,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
     // Shortcut version is increased to refresh all shortcuts
     final static int SHORTCUT_VERSION = 1;
     private static final int MENU_ADD_PROFILE = Menu.FIRST;
-    private static final int START_VPN_CONFIG = 92;
+    private static final int EDIT_VPN_CONFIG = 92;
     private static final int SELECT_PROFILE = 43;
     private static final int IMPORT_PROFILE = 231;
     private static final int FILE_PICKER_RESULT_KITKAT = 392;
@@ -520,10 +519,11 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         if (resultCode != Activity.RESULT_OK)
             return;
 
-        if (requestCode == START_VPN_CONFIG) {
+        if (requestCode == EDIT_VPN_CONFIG) {
             String configuredVPN = data.getStringExtra(VpnProfile.EXTRA_PROFILEUUID);
 
             VpnProfile profile = ProfileManager.get(getActivity(), configuredVPN);
+            profile.addChangeLogEntry("Profile edited by user");
             getPM().saveProfile(getActivity(), profile);
             // Name could be modified, reset List adapter
             setListAdapter();
@@ -557,7 +557,7 @@ public class VPNProfileList extends ListFragment implements OnClickListener, Vpn
         Intent vprefintent = new Intent(getActivity(), VPNPreferences.class)
                 .putExtra(getActivity().getPackageName() + ".profileUUID", profile.getUUID().toString());
 
-        startActivityForResult(vprefintent, START_VPN_CONFIG);
+        startActivityForResult(vprefintent, EDIT_VPN_CONFIG);
     }
 
     private void startVPN(VpnProfile profile) {

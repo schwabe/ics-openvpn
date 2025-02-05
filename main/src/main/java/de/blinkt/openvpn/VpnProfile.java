@@ -397,7 +397,6 @@ public class VpnProfile implements Serializable, Cloneable {
     }
 
     public String getConfigFile(Context context, boolean configForOvpn3) {
-
         File cacheDir = context.getCacheDir();
         StringBuilder cfg = new StringBuilder();
 

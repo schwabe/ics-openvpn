@@ -32,7 +32,7 @@ import java.util.Locale;
  * Created by arne on 09.11.16.
  */
 
-public class StatusListener implements VpnStatus.LogListener {
+public class StatusListener implements VpnStatus.LogListener, VpnStatus.ProfileNotifyListener {
     private final IStatusCallbacks mCallback = new IStatusCallbacks.Stub() {
         @Override
         public void newLogItem(LogItem item) throws RemoteException {
@@ -66,16 +66,23 @@ public class StatusListener implements VpnStatus.LogListener {
         public void connectedVPN(String uuid) throws RemoteException {
             VpnStatus.setConnectedVPNProfile(uuid);
         }
+
+        @Override
+        public void notifyProfileVersionChanged(String uuid, int version) throws RemoteException {
+            ProfileManager.notifyProfileVersionChanged(mContext, uuid, version);
+
+        }
     };
     private File mCacheDir;
-    private final ServiceConnection mConnection = new ServiceConnection() {
+    private final StatusServiceConnection mConnection = new StatusServiceConnection();
 
-
+    final class StatusServiceConnection implements ServiceConnection {
+        public IServiceStatus serviceStatus = null;
         @Override
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance
-            IServiceStatus serviceStatus = IServiceStatus.Stub.asInterface(service);
+            serviceStatus = IServiceStatus.Stub.asInterface(service);
             try {
                 /* Check if this a local service ... */
                 if (service.queryLocalInterface("de.blinkt.openvpn.core.IServiceStatus") == null) {
@@ -84,6 +91,9 @@ public class StatusListener implements VpnStatus.LogListener {
                     VpnStatus.setTrafficHistory(serviceStatus.getTrafficHistory());
                     ParcelFileDescriptor pfd = serviceStatus.registerStatusCallback(mCallback);
                     DataInputStream fd = new DataInputStream(new ParcelFileDescriptor.AutoCloseInputStream(pfd));
+
+                    /* notify the backend :openvpn process of chagnes in profiles */
+                    VpnStatus.addProfileStateListener(StatusListener.this);
 
                     short len = fd.readShort();
                     byte[] buf = new byte[65336];
@@ -104,8 +114,6 @@ public class StatusListener implements VpnStatus.LogListener {
                     if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equals("skeleton")) {
                         VpnStatus.addLogListener(StatusListener.this);
                     }
-
-
                 }
 
             } catch (RemoteException | IOException e) {
@@ -116,7 +124,9 @@ public class StatusListener implements VpnStatus.LogListener {
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
+            serviceStatus = null;
             VpnStatus.removeLogListener(StatusListener.this);
+            VpnStatus.removeProfileStateListener(StatusListener.this);
         }
 
     };
@@ -180,5 +190,17 @@ public class StatusListener implements VpnStatus.LogListener {
             default -> Log.w(tag, logItem.getString(mContext));
         }
 
+    }
+
+    @Override
+    public void notifyProfileVersionChanged(String uuid, int version, boolean changedInThisProcess) {
+        if(changedInThisProcess && mConnection.serviceStatus != null)
+        {
+            try {
+                mConnection.serviceStatus.notifyProfileVersionChanged(uuid, version);
+            } catch (RemoteException e) {
+                VpnStatus.logException(e);
+            }
+        }
     }
 }

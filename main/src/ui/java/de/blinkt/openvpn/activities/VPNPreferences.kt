@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.VpnProfile
 import de.blinkt.openvpn.core.ProfileManager
+import de.blinkt.openvpn.core.VpnStatus
 import de.blinkt.openvpn.fragments.Settings_Allowed_Apps
 import de.blinkt.openvpn.fragments.Settings_Authentication
 import de.blinkt.openvpn.fragments.Settings_Basic
@@ -32,7 +33,7 @@ import de.blinkt.openvpn.fragments.ShowConfigFragment
 import de.blinkt.openvpn.fragments.VPNProfileList
 import de.blinkt.openvpn.views.ScreenSlidePagerAdapter
 
-class VPNPreferences : BaseActivity() {
+class VPNPreferences : BaseActivity(), VpnStatus.ProfileNotifyListener {
     private var mProfileUUID: String? = null
     private var mProfile: VpnProfile? = null
     private lateinit var mPager: ViewPager2
@@ -55,7 +56,6 @@ class VPNPreferences : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        profile
         // When a profile is deleted from a category fragment in hadset mod we need to finish
         // this activity as well when returning
         if (mProfile == null || mProfile!!.profileDeleted) {
@@ -100,6 +100,7 @@ class VPNPreferences : BaseActivity() {
             finish()
             return
         }
+        VpnStatus.addProfileStateListener(this);
 
         title = getString(R.string.edit_profile_title, mProfile!!.name)
 
@@ -207,5 +208,21 @@ class VPNPreferences : BaseActivity() {
             Settings_Connections::class.java,
             Settings_Allowed_Apps::class.java,
         )
+    }
+
+    override fun notifyProfileVersionChanged(
+        uuid: String?,
+        version: Int,
+        changedInThisProcess: Boolean
+    ) {
+        if (mProfile?.uuidString != uuid)
+            return;
+
+        if ((mProfile?.mVersion?: 0) < version)
+        {
+            /* Profile has changed outside of our process. Most likely from the AIDL service.  */
+            Toast.makeText(this, R.string.editor_close_profile_changed, Toast.LENGTH_LONG).show();
+            finish();
+        }
     }
 }

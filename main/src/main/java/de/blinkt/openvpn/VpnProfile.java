@@ -363,7 +363,10 @@ public class VpnProfile implements Serializable, Cloneable {
         }
 
         mProfileVersion = CURRENT_PROFILE_VERSION;
-
+        if (changesLog == null)
+        {
+            changesLog = new Vector<>();
+        }
     }
 
     private void moveOptionsToConnection() {

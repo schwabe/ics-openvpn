@@ -1,6 +1,6 @@
 [versions]
-android-gradle-plugin = "8.5.2"
-androidx-activity = "1.9.3"
+android-gradle-plugin = "8.8.0"
+androidx-activity = "1.10.0"
 androidx-annotation = "1.9.1"
 androidx-appcompat = "1.7.0"
 android-view-material = "1.12.0"
@@ -13,11 +13,11 @@ androidx-lifecycle-runtime-ktx = "2.8.7"
 androidx-security-crypto = "1.1.0-alpha06"
 androidx-constraintlayout = "2.2.0"
 androidx-cardview = "1.0.0"
-androidx-recyclerview = "1.3.2"
+androidx-recyclerview = "1.4.0"
 androidx-viewpager2 = "1.1.0"
 bouncycastle = "1.69"
 mpandroidchart = "v3.1.0"
-kotlin = "1.9.22"
+kotlin = "1.9.24"
 square-okhttp = "4.10.0"
 
 # Test

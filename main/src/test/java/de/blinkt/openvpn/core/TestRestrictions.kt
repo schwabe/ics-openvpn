@@ -4,14 +4,19 @@
  */
 package de.blinkt.openvpn.core
 
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import androidx.test.core.app.ApplicationProvider
 import de.blinkt.openvpn.VpnProfile
 import de.blinkt.openvpn.api.AppRestrictions
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.Spy
 import org.robolectric.RobolectricTestRunner
 
 interface createTestBundle

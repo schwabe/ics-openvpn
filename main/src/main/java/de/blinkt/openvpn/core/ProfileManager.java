@@ -10,6 +10,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Build;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -115,7 +116,10 @@ public class ProfileManager {
             preferEncryption = false;
 
         profile.mVersion += 1;
-        profile.addChangeLogEntry("Saving from version " + profile.mVersion + " from process " + Application.getProcessName());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            profile.addChangeLogEntry("Saving from version " + profile.mVersion +
+                    " from process " + Application.getProcessName());
+        }
         ObjectOutputStream vpnFile;
 
         String filename = profile.getUUID().toString();

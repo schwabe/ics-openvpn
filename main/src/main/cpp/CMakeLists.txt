@@ -164,6 +164,7 @@ set(openvpn_srcs
         src/openvpn/mtu.c
         src/openvpn/mudp.c
         src/openvpn/multi.c
+        src/openvpn/multi_io.c
         src/openvpn/ntlm.c
         src/openvpn/occ.c
         src/openvpn/openvpn.c

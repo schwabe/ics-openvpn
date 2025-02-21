@@ -405,7 +405,7 @@
     <string name="reread_log">Reread (%d) log items from log cache file</string>
     <string name="samsung_broken">Even though Samsung phones are among the most selling Android phones, Samsung\'s firmware are also among the most buggy Android firmwares. The bugs are not limited to the VPN operation on these devices but many of them can be workarounded. In the following some of these bugs are described.\n\nDNS does not work unless the DNS server in the VPN range.\n\nOn many Samsung 5.x devices the allowed/disallowed apps feature does not work.\nOn Samsung 6.x VPN is reported not to work unless the VPN app is exempted from Powersave features.</string>
     <string name="samsung_broken_title">Samsung phones</string>
-    <string name="novpn_selected">No VPN selected.</string>
+    <string name="novpn_selected">No default VPN selected. Please set a default VPN in settings.</string>
     <string name="defaultvpn">Default VPN</string>
     <string name="defaultvpnsummary">VPN used in places where a default VPN needed. These are currently on boot, for Always-On and the Quick Settings Tile.</string>
     <string name="vpnselected">Currently selected VPN: \'%s\'</string>

@@ -1,4 +1,6 @@
-To make issues more manageable, I would appreciate it if you fill out the following details as applicable:
+<!-- To make issues more manageable, I would appreciate it if you fill out the following details as applicable: -->
+
+<!-- Note to other developers, please read the paragraph Note to developer in the README.md before opening an issue ->
 
 # General information
 1. Android Version

@@ -134,6 +134,7 @@ set(openvpn_srcs
         src/openvpn/console.c
         src/openvpn/console_builtin.c
         src/openvpn/crypto.c
+        src/openvpn/crypto_epoch.c
         src/openvpn/crypto_openssl.c
         src/openvpn/crypto_mbedtls.c
         src/openvpn/cryptoapi.c

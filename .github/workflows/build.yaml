@@ -1,5 +1,7 @@
 # The name of our workflow
 name: Build
+permissions:
+  contents: read
 on: [push, pull_request]
 
 jobs:

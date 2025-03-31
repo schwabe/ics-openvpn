@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.RemoteException;
 
@@ -19,6 +20,7 @@ import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.core.IOpenVPNServiceInternal;
 import de.blinkt.openvpn.core.OpenVPNService;
+import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
 
@@ -27,6 +29,7 @@ import de.blinkt.openvpn.core.VpnStatus;
  */
 public class DisconnectVPN extends Activity implements DialogInterface.OnClickListener, DialogInterface.OnCancelListener {
     private IOpenVPNServiceInternal mService;
+    private boolean disconnectPending = false;
     private final ServiceConnection mConnection = new ServiceConnection() {
 
 
@@ -36,6 +39,14 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
                                        IBinder service) {
 
             mService = IOpenVPNServiceInternal.Stub.asInterface(service);
+            if (disconnectPending) {
+                try {
+                    mService.stopVPN(false);
+                } catch (RemoteException e) {
+                    VpnStatus.logException(e);
+                }
+                finish();
+            }
         }
 
         @Override
@@ -50,8 +61,14 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
         super.onResume();
         Intent intent = new Intent(this, OpenVPNService.class);
         intent.setAction(OpenVPNService.START_SERVICE);
+        SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean("disableconfirmation", false)) {
+            disconnectPending = true;
+        }
+        else {
+            showDisconnectDialog();
+        }
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-        showDisconnectDialog();
     }
 
     @Override

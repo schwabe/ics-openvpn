@@ -15,6 +15,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.widget.Toast;
 
 import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
@@ -31,7 +32,6 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
     private IOpenVPNServiceInternal mService;
     private boolean disconnectPending = false;
     private final ServiceConnection mConnection = new ServiceConnection() {
-
 
 
         @Override
@@ -64,8 +64,8 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
         SharedPreferences prefs = Preferences.getDefaultSharedPreferences(this);
         if (prefs.getBoolean("disableconfirmation", false)) {
             disconnectPending = true;
-        }
-        else {
+            Toast.makeText(this, "Disconnecting VPN", Toast.LENGTH_LONG).show();
+        } else {
             showDisconnectDialog();
         }
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -99,6 +99,8 @@ public class DisconnectVPN extends Activity implements DialogInterface.OnClickLi
                 } catch (RemoteException e) {
                     VpnStatus.logException(e);
                 }
+            } else {
+                disconnectPending = true;
             }
         } else if (which == DialogInterface.BUTTON_NEUTRAL) {
             Intent intent = new Intent(this, LaunchVPN.class);

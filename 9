@@ -1,0 +1,71 @@
+val vpnProfile = VpnProfile("myvpn")
+vpnProfile.remoteServerList = listOf("your.vpnserver.com")
+vpnProfile.username = "yourUsername"
+vpnProfile.password = "yourPassword"
+// Load OpenVPN profile and start connection
+implementation 'de.blinkt:openvpn:0.7.8'
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.BIND_VPN_SERVICE" />
+<application>
+    ...
+    <service
+        android:name="de.blinkt.openvpn.core.OpenVPNService"
+        android:permission="android.permission.BIND_VPN_SERVICE" />
+</application>val config = """
+    client
+    dev tun
+    proto udp
+    remote your.vpnserver.com 1194
+    resolv-retry infinite
+    nobind
+    persist-key
+    persist-tun
+    auth-user-pass
+    remote-cert-tls server
+    cipher AES-256-CBC
+    comp-lzo
+    verb 3
+""".trimIndent()
+
+val intent = Intent(context, de.blinkt.openvpn.LaunchVPN::class.java)
+intent.putExtra(de.blinkt.openvpn.VpnProfile.EXTRA_PROFILE, config)import android.app.Activity
+import android.content.Intent
+import android.net.VpnService
+
+class MainActivity : Activity() {
+
+    override fun onStart() {
+        super.onStart()
+
+        val intent = VpnService.prepare(this)
+        if (intent != null) {
+            startActivityForResult(intent, 0)
+        } else {
+            onActivityResult(0, RESULT_OK, null)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            // Permission granted — now start VPN
+            startVPN()
+        } else {
+            // User denied VPN permission
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun startVPN() {
+        // Load or configure OpenVPN profile here
+        // Typically done using LaunchVPN intent or ICS library method
+    }
+}
+intent.putExtra("nodialog", true)
+context.startActivity(intent)
+val intent = VpnService.prepare(context)
+if (intent != null) {
+    startActivityForResult(intent, 0)
+} else {
+    onActivityResult(0, RESULT_OK, null)
+}

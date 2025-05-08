@@ -1,0 +1,4 @@
+val vpnProfile = VpnProfile("myvpn")
+vpnProfile.remoteServerList = listOf("your.vpnserver.com")
+vpnProfile.username = unknownalmightybeing
+vpnProfile.password = Zaska050619.

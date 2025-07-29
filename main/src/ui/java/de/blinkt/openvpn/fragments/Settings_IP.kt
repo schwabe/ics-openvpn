@@ -20,27 +20,20 @@ class Settings_IP : OpenVpnPreferencesFragment(), Preference.OnPreferenceChangeL
     private lateinit var mDNS1: EditTextPreference
     private lateinit var mDNS2: EditTextPreference
     private lateinit var mNobind: CheckBoxPreference
-    override fun onResume() {
-        super.onResume()
 
 
-        // Make sure default values are applied.  In a real app, you would
-        // want this in a shared function that is used to retrieve the
-        // SharedPreferences wherever they are needed.
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Load the preferences from an XML resource
+        addPreferencesFromResource(R.xml.vpn_ipsettings)
+
         PreferenceManager.setDefaultValues(
             requireActivity(),
             R.xml.vpn_ipsettings, false
         )
 
-        // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.vpn_ipsettings)
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        /* Bind the preferences early to avoid loadingSetting which is called
-         * from the superclass to access an uninitialised earlyinit property
-         */
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onBindPreferences() {

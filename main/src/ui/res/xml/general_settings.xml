@@ -11,12 +11,14 @@
         <CheckBoxPreference
                 android:defaultValue="true"
                 android:key="showlogwindow"
+                android:singleLineTitle="false"
                 android:summary="@string/show_log_summary"
                 android:title="@string/show_log_window" />
 
         <CheckBoxPreference
                 android:defaultValue="@bool/allowTranslationDefault"
                 android:key="allow_translation"
+                android:singleLineTitle="false"
                 android:summary="@string/allow_translations_summary"
                 android:title="@string/allow_translations_title" />
 
@@ -25,6 +27,7 @@
                 android:defaultValue="false"
                 android:disableDependentsState="true"
                 android:key="ovpn3"
+                android:singleLineTitle="false"
                 android:summaryOff="Use OpenVPN 2.x"
                 android:summaryOn="Use the C++ OpenVPN library (experimental)"
                 android:title="OpenVPN 3 Core" />
@@ -32,23 +35,29 @@
 
         <de.blinkt.openvpn.views.DefaultVPNListPreference
                 android:key="alwaysOnVpn"
+                android:singleLineTitle="false"
                 android:title="@string/defaultvpn"
                 tools:summary="@string/defaultvpnsummary" />
 
         <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="restartvpnonboot"
+                android:singleLineTitle="false"
                 android:summary="@string/keep_vpn_connected_summary"
                 android:title="@string/keep_vpn_connected" />
 
         <CheckBoxPreference
                 android:defaultValue="true"
+
                 android:key="preferencryption"
+                android:singleLineTitle="false"
+                android:summary="@string/encrypt_profiles_summary"
                 android:title="@string/encrypt_profiles" />
 
         <Preference
                 android:key="clearapi"
                 android:persistent="false"
+                android:singleLineTitle="false"
                 android:title="@string/clear_external_apps" />
     </PreferenceCategory>
 
@@ -57,11 +66,13 @@
                 android:defaultValue="true"
                 android:dependency="ovpn3"
                 android:key="usesystemproxy"
+                android:singleLineTitle="false"
                 android:summary="@string/use_system_proxy_summary"
                 android:title="@string/use_system_proxy" />
         <CheckBoxPreference
                 android:defaultValue="true"
                 android:key="netchangereconnect"
+                android:singleLineTitle="false"
                 android:summary="@string/netchange_summary"
                 android:title="@string/netchange" />
 
@@ -69,12 +80,14 @@
         <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="screenoff"
+                android:singleLineTitle="false"
                 android:summary="@string/screenoff_summary"
                 android:title="@string/screenoff_title" />
 
         <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="disableconfirmation"
+                android:singleLineTitle="false"
                 android:summary="@string/confirmations_summary"
                 android:title="@string/confirmations_title" />\
 

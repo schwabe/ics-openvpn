@@ -24,9 +24,10 @@ public class VPNLaunchHelper {
 
     private static String writeMiniVPN(Context context) {
         String nativeAPI = NativeUtils.getNativeAPI();
+        File libOvpnExec = new File(context.getApplicationInfo().nativeLibraryDir, "libovpnexec.so");
         /* Q does not allow executing binaries written in temp directory anymore */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-            return new File(context.getApplicationInfo().nativeLibraryDir, "libovpnexec.so").getPath();
+            return libOvpnExec.getPath();
 
         String[] abis = Build.SUPPORTED_ABIS;
 
@@ -41,6 +42,11 @@ public class VPNLaunchHelper {
             if ((vpnExecutable.exists() && vpnExecutable.canExecute()) || writeMiniVPNBinary(context, abi, vpnExecutable)) {
                 return vpnExecutable.getPath();
             }
+        }
+
+        // Fixed: java.lang.RuntimeException: Cannot find any executable for this device's ABIs [armeabi-v7a, armeabi] on Samsung SM-A310F(Galaxy A3(2016))
+        if (libOvpnExec.exists() && libOvpnExec.canExecute()) {
+            return libOvpnExec.getAbsolutePath();
         }
 
         throw new RuntimeException("Cannot find any executable for this device's ABIs " + Arrays.toString(abis));

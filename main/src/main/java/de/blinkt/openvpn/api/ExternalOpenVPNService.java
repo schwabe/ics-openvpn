@@ -154,6 +154,7 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         private void updateProfileFromExtras(Bundle extras, VpnProfile vp) {
             if (extras != null) {
                 vp.mAllowAppVpnBypass = extras.getBoolean(EXTRA_INLINE_PROFILE_ALLOW_VPN_BYPASS, false);
+                vp.mBlockUnusedAddressFamilies = !vp.mAllowAppVpnBypass;
                 VpnStatus.logDebug("got extra " + EXTRA_INLINE_PROFILE_ALLOW_VPN_BYPASS + ", mAllowAppVpnBypass=" + vp.mAllowAppVpnBypass);
             }
         }

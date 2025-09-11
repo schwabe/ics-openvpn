@@ -196,7 +196,7 @@ internal class PackageAdapter(c: Context, vp: VpnProfile) : RecyclerView.Adapter
     private inner class ItemFilter : Filter() {
         override fun performFiltering(constraint: CharSequence): FilterResults {
 
-            val filterString = constraint.toString().toLowerCase(Locale.getDefault())
+            val filterString = constraint.toString().lowercase(Locale.getDefault())
 
             val results = FilterResults()
 
@@ -212,10 +212,10 @@ internal class PackageAdapter(c: Context, vp: VpnProfile) : RecyclerView.Adapter
                     appName = pInfo.packageName
 
                 if (appName is String) {
-                    if (appName.toLowerCase(Locale.getDefault()).contains(filterString))
+                    if (appName.lowercase(Locale.getDefault()).contains(filterString))
                         nlist.add(pInfo)
                 } else {
-                    if (appName.toString().toLowerCase(Locale.getDefault()).contains(filterString))
+                    if (appName.toString().lowercase(Locale.getDefault()).contains(filterString))
                         nlist.add(pInfo)
                 }
             }

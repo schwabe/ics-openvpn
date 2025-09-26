@@ -18,14 +18,14 @@ interface IOpenVPNAPIService {
 	boolean addVPNProfile (String name, String config);
 	
 	/** start a profile using a config as inline string. Make sure that all needed data is inlined,
-	 * e.g., using <ca>...</ca> or <auth-user-data>...</auth-user-data>
+	 * e.g., using <ca>...</ca> or <auth-user-pass>...</auth-user-pass>
 	 * See the OpenVPN manual page for more on inlining files */
-	void startVPN (String inlineconfig);
+	void startVPN (in String inlineconfig);
 	
 	/** This permission framework is used  to avoid confused deputy style attack to the VPN
 	 * calling this will give null if the app is allowed to use the external API and an Intent
 	 * that can be launched to request permissions otherwise */
-	Intent prepare (String packagename);
+	Intent prepare (in String packagename);
 	
 	/** Used to trigger to the Android VPN permission dialog (VPNService.prepare()) in advance,
 	 * if this return null OpenVPN for ANdroid already has the permissions otherwise you can start the returned Intent
@@ -44,15 +44,15 @@ interface IOpenVPNAPIService {
     /**
       * Registers to receive OpenVPN Status Updates
       */
-    void registerStatusCallback(IOpenVPNStatusCallback cb);
+    void registerStatusCallback(in IOpenVPNStatusCallback cb);
     
     /**
      * Remove a previously registered callback interface.
      */
-    void unregisterStatusCallback(IOpenVPNStatusCallback cb);
+    void unregisterStatusCallback(in IOpenVPNStatusCallback cb);
 
 	/** Remove a profile by UUID */
-	void removeProfile (String profileUUID);
+	void removeProfile (in String profileUUID);
 
 	/** Request a socket to be protected as a VPN socket would be. Useful for creating
 	  * a helper socket for an app controlling OpenVPN
@@ -64,9 +64,19 @@ interface IOpenVPNAPIService {
     /** Use a profile with all certificates etc. embedded */
     APIVpnProfile addNewVPNProfile (String name, boolean userEditable, String config);
 
+    /** Same as startVPN(String), but also takes a Bundle with extra parameters,
+    * which will be applied to the created VPNProfile (e.g. allow vpn bypass). */
+    void startVPNwithExtras(in String inlineconfig, in Bundle extras);
+
     /** Same as addNewVPNProfile(String, boolean, String) but giving possibility to pass a Bundle like
     * in startVPNwithExtras(String, Bundle) to apply e.g. "allow vpn bypass" to profile.
     * up to now the only extra that can be put is a boolean "de.blinkt.openvpn.api.ALLOW_VPN_BYPASS"
     */
     APIVpnProfile addNewVPNProfileWithExtras (String name, boolean userEditable, String config, in Bundle extras);
+
+    /** Get the current default profile, or null if there is no default */
+    @nullable APIVpnProfile getDefaultProfile();
+
+    /** Set the default profile by UUID */
+    void setDefaultProfile (String profileUUID);
 }

@@ -21,14 +21,14 @@ android {
     //compileSdkPreview = "UpsideDownCake"
 
     // Also update runcoverity.sh
-    ndkVersion = "28.2.13676358"
+    ndkVersion = "29.0.14206865"
 
     defaultConfig {
         minSdk = 21
         targetSdk = 36
         //targetSdkPreview = "UpsideDownCake"
-        versionCode = 216
-        versionName = "0.7.61"
+        versionCode = 217
+        versionName = "0.7.62"
         externalNativeBuild {
             cmake {
                 //arguments+= "-DCMAKE_VERBOSE_MAKEFILE=1"

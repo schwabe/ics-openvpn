@@ -16,3 +16,6 @@
 [submodule "main/src/main/cpp/lz4"]
 	path = main/src/main/cpp/lz4
 	url = ../../lz4/lz4.git
+[submodule "main/src/main/cpp/fmt"]
+	path = main/src/main/cpp/fmt
+	url = https://github.com/fmtlib/fmt

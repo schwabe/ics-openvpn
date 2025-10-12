@@ -47,8 +47,8 @@ public class APIVpnProfile implements Parcelable {
         //dest.writeString(mProfileCreator);
     }
 
-    public static final Parcelable.Creator<APIVpnProfile> CREATOR
-            = new Parcelable.Creator<APIVpnProfile>() {
+    public static final Creator<APIVpnProfile> CREATOR
+            = new Creator<APIVpnProfile>() {
         public APIVpnProfile createFromParcel(Parcel in) {
             return new APIVpnProfile(in);
         }

@@ -14,6 +14,7 @@
     <string name="no_now">Not now</string>
     <string name="show_my_ip">Show my IP</string>
     <string name="disconnect">Disconnect</string>
+    <string name="set_default">Set Default</string>
     <string name="start_embedded">Start embedded profile</string>
     <string name="addNew">Add new Profile</string>
     <string name="addNewEdit">Add editable profile</string>

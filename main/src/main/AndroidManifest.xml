@@ -139,6 +139,10 @@
                 android:name=".api.ResumeVPN"
                 android:exported="true"
                 android:targetActivity=".api.RemoteAction" />
+        <activity-alias
+                android:name=".api.SetDefaultVPN"
+                android:exported="true"
+                android:targetActivity=".api.RemoteAction" />
 
     </application>
 

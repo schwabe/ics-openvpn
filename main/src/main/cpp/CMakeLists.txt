@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.4.1)
+
+add_link_options("LINKER:--build-id=none")
+
 project("ics-openvpn")
 # Git version string
 

@@ -14,6 +14,7 @@ import android.text.TextUtils;
 
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
+import de.blinkt.openvpn.core.GlobalPreferences;
 import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VpnStatus;
@@ -91,6 +92,7 @@ public class AppRestrictions {
         Bundle restrictions = restrictionsMgr.getApplicationRestrictions();
         parseRestrictionsBundle(c, restrictions);
     }
+
     public void parseRestrictionsBundle(Context c, Bundle restrictions)
     {
         if (restrictions == null)
@@ -169,6 +171,11 @@ public class AppRestrictions {
             editor.putBoolean("restartvpnonboot", restartVPNonBoot);
             editor.apply();
         }
+
+
+        boolean minimalUi = restrictions.getBoolean("minimal_ui", false);
+        boolean forceConnected = restrictions.getBoolean("always_connected", false);
+        GlobalPreferences.setInstance(minimalUi, forceConnected);
     }
 
     private void importVPNProfiles(Context c, Bundle restrictions, Parcelable[] profileList) {

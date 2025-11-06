@@ -91,6 +91,11 @@
     <string name="restriction_ignorenetworkstate">Keep the VPN connected even when no network is detected, e.g. when reverse tethering over USB using adb</string>
     <string name="apprest_aidl_list">List of apps that are allowed to use the remote AIDL. If this list is in the restrictions, the app will not allowed any changes to the list by the user. Package names of allowed apps separated by comma, space or newlines</string>
     <string name="apprest_remoteaidl">Remote API access</string>
+    <string name="apprest_minimal_ui">Only present a restricted UI that only allow connecting/disconnecting the default VPN. Most other functionality is is disabled as well</string>
+    <string name="apprest_minimal_ui_title">Minimal UI</string>
+    <string name="apprest_always_connected">When in the minimal UI mode, try to keep the default VPN always connected. Do not allow disconnecting it. Restarting the VPN is still allowed.</string>
+    <string name="apprest_always_connected_title">Disallow disconnecting default VPN</string>
+
 
     <string-array name="tls_profile_values" translatable="false">
         <item>insecure</item>

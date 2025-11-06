@@ -87,6 +87,8 @@ class VPNPreferences : BaseActivity(), VpnStatus.ProfileNotifyListener {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        checkMinimalUIDisabled()
+
         mProfileUUID = intent.getStringExtra("$packageName.profileUUID")
         if (savedInstanceState != null) {
             val savedUUID = savedInstanceState.getString("$packageName.profileUUID")

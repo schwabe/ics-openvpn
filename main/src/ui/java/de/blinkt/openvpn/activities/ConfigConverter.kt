@@ -32,6 +32,7 @@ import de.blinkt.openvpn.R
 import de.blinkt.openvpn.VpnProfile
 import de.blinkt.openvpn.core.ConfigParser
 import de.blinkt.openvpn.core.ConfigParser.ConfigParseError
+import de.blinkt.openvpn.core.GlobalPreferences
 import de.blinkt.openvpn.core.ProfileManager
 import de.blinkt.openvpn.fragments.Utils
 import de.blinkt.openvpn.views.FileSelectLayout
@@ -824,6 +825,7 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
     override fun onStart() {
         super.onStart()
+        checkMinimalUIDisabled()
     }
 
     private fun log(logmessage: String?) {

@@ -174,6 +174,12 @@ public class AppRestrictions {
 
 
         boolean minimalUi = restrictions.getBoolean("minimal_ui", false);
+        if (minimalUi && defaultPrefs.getBoolean("showlogwindow", true)){
+            SharedPreferences.Editor editor = defaultPrefs.edit();
+            editor.putBoolean("showlogwindow", false);
+            editor.apply();
+        }
+
         boolean forceConnected = restrictions.getBoolean("always_connected", false);
         GlobalPreferences.setInstance(minimalUi, forceConnected);
     }

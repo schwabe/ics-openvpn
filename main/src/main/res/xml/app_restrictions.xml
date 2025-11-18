@@ -48,10 +48,10 @@
                     android:restrictionType="string"
                     android:title="@string/apprest_certalias" />
             <restriction
-                    android:key="allowed_apps"
-                    android:title="@string/apprest_vpn_applist"
                     android:description="@string/apprest_vpn_applist_desc"
-                    android:restrictionType="string" />
+                    android:key="allowed_apps"
+                    android:restrictionType="string"
+                    android:title="@string/apprest_vpn_applist" />
             <!--
             <restriction
                     android:key="ovpn_list"
@@ -68,7 +68,6 @@
         </restriction>
     </restriction>
     <restriction
-
             android:defaultValue=""
             android:key="defaultprofile"
             android:restrictionType="string"
@@ -84,7 +83,7 @@
     <restriction
             android:key="ignorenetworkstate"
             android:restrictionType="bool"
-            android:title="@string/restriction_ignorenetworkstate" />
+            android:title="@string/apprest_ignorenetworkstate" />
 
     <restriction
             android:description="@string/apprest_aidl_list"
@@ -105,5 +104,18 @@
             android:key="always_connected"
             android:restrictionType="bool"
             android:title="@string/apprest_always_connected_title" />
+
+
+    <restriction
+            android:description="@string/apprest_encrypt_profiles"
+            android:key="preferencryption"
+            android:restrictionType="bool"
+            android:title="@string/apprest_encrypt_profiles_title" />
+
+    <restriction
+            android:description="@string/apprest_netchangereconnect"
+            android:key="netchangereconnect"
+            android:restrictionType="bool"
+            android:title="@string/apprest_netchangereconnect_title" />
 
 </restrictions>

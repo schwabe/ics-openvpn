@@ -32,11 +32,7 @@ import de.blinkt.openvpn.core.OpenVPNService
 import de.blinkt.openvpn.core.ProfileManager
 import de.blinkt.openvpn.core.VpnStatus
 
-class MinimalUI: Fragment(), View.OnClickListener, VpnStatus.StateListener {
-    override fun onClick(v: View?) {
-        TODO("Not yet implemented")
-    }
-
+class MinimalUI: Fragment(), VpnStatus.StateListener {
     private var mPermReceiver: ActivityResultLauncher<String>? = null
     private lateinit var profileManger: ProfileManager
     private var mService: IOpenVPNServiceInternal? = null
@@ -116,10 +112,10 @@ class MinimalUI: Fragment(), View.OnClickListener, VpnStatus.StateListener {
         level: ConnectionStatus?,
         Intent: Intent?
     ) {
-        val cleanLogMessage = VpnStatus.getLastCleanLogMessage(activity)
+        val cleanLogMessage = VpnStatus.getLastCleanLogMessage(activity, true)
 
         requireActivity().runOnUiThread {
-            vpnstatus.setText(localizedResId)
+            vpnstatus.setText(cleanLogMessage)
             val connected = level == ConnectionStatus.LEVEL_CONNECTED;
             vpntoggle.isChecked = connected
         }

@@ -161,7 +161,6 @@ set(openvpn_srcs
         src/openvpn/misc.c
         src/openvpn/mroute.c
         src/openvpn/mss.c
-        src/openvpn/mstats.c
         src/openvpn/mtcp.c
         src/openvpn/mtu.c
         src/openvpn/mudp.c
@@ -175,7 +174,6 @@ set(openvpn_srcs
         src/openvpn/options_util.c
         src/openvpn/otime.c
         src/openvpn/packet_id.c
-        src/openvpn/perf.c
         src/openvpn/ping.c
         src/openvpn/pkcs11.c
         src/openvpn/pkcs11_openssl.c

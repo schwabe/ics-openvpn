@@ -363,6 +363,7 @@ public class ProfileManager {
         profiles.remove(vpnentry);
         saveProfileList(context);
         context.deleteFile(vpnentry + ".vp");
+        context.deleteFile(vpnentry + ".cp");
         if (mLastConnectedVpn == profile)
             mLastConnectedVpn = null;
 

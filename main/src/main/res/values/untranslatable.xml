@@ -99,6 +99,8 @@
     <string name="apprest_encrypt_profiles_title">Encrypt profiles</string>
     <string name="apprest_netchangereconnect">Reconnect on network change</string>
     <string name="apprest_netchangereconnect_title">Trigger a reconnection of the OpenVPN connection if the change in the network connectivity is detected</string>
+    <string name="apprest_initial_import_title">Allow initial import in minimal UI</string>
+    <string name="apprest_initial_import">If minimal UI is enabled but no profile is provided, the app will allow an initial import of a profile that will become the default profile.</string>
 
     <string-array name="tls_profile_values" translatable="false">
         <item>insecure</item>

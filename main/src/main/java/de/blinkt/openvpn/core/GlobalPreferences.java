@@ -9,19 +9,21 @@ package de.blinkt.openvpn.core;
 public class GlobalPreferences {
     boolean minimalUi = false;
     boolean forceConnected = false;
+    boolean initialImport = false;
 
     /* will be set by AppRestrictions */
     static GlobalPreferences instance = null;
 
-    GlobalPreferences(boolean minimalUi, boolean forceConnected)
+    GlobalPreferences(boolean minimalUi, boolean forceConnected, boolean initialImport)
     {
         this.minimalUi = minimalUi;
         this.forceConnected = forceConnected;
+        this.initialImport = true;
     }
 
-    public static void setInstance(boolean minimalUi, boolean forceConnected)
+    public static void setInstance(boolean minimalUi, boolean forceConnected, boolean initialImport)
     {
-        instance = new GlobalPreferences(minimalUi, forceConnected);
+        instance = new GlobalPreferences(minimalUi, forceConnected, initialImport);
     }
 
     static public boolean getMinimalUi()
@@ -33,6 +35,8 @@ public class GlobalPreferences {
     {
         return getInstance().forceConnected;
     }
+
+    static public boolean getAllowInitialImport() { return getInstance().initialImport; }
 
     static GlobalPreferences getInstance()
     {

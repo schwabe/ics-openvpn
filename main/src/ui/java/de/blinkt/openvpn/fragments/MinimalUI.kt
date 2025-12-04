@@ -6,40 +6,53 @@
 package de.blinkt.openvpn.fragments
 
 import android.Manifest
+import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.fragment.app.Fragment
 import de.blinkt.openvpn.LaunchVPN
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.VpnProfile
+import de.blinkt.openvpn.activities.ConfigConverter
+import de.blinkt.openvpn.activities.FileSelect
 import de.blinkt.openvpn.core.ConnectionStatus
+import de.blinkt.openvpn.core.GlobalPreferences
 import de.blinkt.openvpn.core.IOpenVPNServiceInternal
 import de.blinkt.openvpn.core.OpenVPNService
 import de.blinkt.openvpn.core.ProfileManager
 import de.blinkt.openvpn.core.VpnStatus
+import de.blinkt.openvpn.fragments.ImportRemoteConfig.Companion.newInstance
 
 class MinimalUI: Fragment(), VpnStatus.StateListener {
     private var mPermReceiver: ActivityResultLauncher<String>? = null
+    private lateinit var mFileImportReceiver: ActivityResultLauncher<Intent?>
     private lateinit var profileManger: ProfileManager
     private var mService: IOpenVPNServiceInternal? = null
     private lateinit var vpnstatus: TextView
     private lateinit var vpntoggle: CompoundButton
 
     private lateinit var view: View
+    private var mImportMenuActive = false
 
     private val mConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(
@@ -64,11 +77,69 @@ class MinimalUI: Fragment(), VpnStatus.StateListener {
         }
     }
 
+    private fun registerStartFileImportReceiver()
+    {
+        mFileImportReceiver = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult())
+        {
+                result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val uri = result.data?.data
+                val startImport = Intent(getActivity(), ConfigConverter::class.java)
+                startImport.setAction(ConfigConverter.IMPORT_PROFILE)
+                startImport.setData(uri)
+                startActivity(startImport)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         registerPermissionReceiver()
+        registerStartFileImportReceiver()
+        setHasOptionsMenu(true)
 
         profileManger = ProfileManager.getInstance(requireContext());
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        if (GlobalPreferences.getAllowInitialImport() && ProfileManager.getAlwaysOnVPN(requireContext()) == null ) {
+            mImportMenuActive = true
+            menu.add(0, MENU_IMPORT_PROFILE, 0, R.string.menu_import)
+                .setIcon(R.drawable.ic_menu_import)
+                .setAlphabeticShortcut('i')
+                .setTitleCondensed(getActivity()!!.getString(R.string.menu_import_short))
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+
+            menu.add(0, MENU_IMPORT_AS, 0, R.string.import_from_as)
+                .setIcon(R.drawable.ic_menu_import_download)
+                .setAlphabeticShortcut('p')
+                .setTitleCondensed("Import AS")
+                .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+        }
+    }
+
+    private fun startASProfileImport(): Boolean {
+        val asImportFrag = newInstance(null)
+        asImportFrag.show(getParentFragmentManager(), "dialog")
+        invalidateOptionsMenu(activity)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.getItemId()
+
+         if (itemId == MENU_IMPORT_PROFILE) {
+            val intent =  Utils.getFilePickerIntent(getActivity()!!, Utils.FileType.OVPN_CONFIG)
+             mFileImportReceiver.launch(intent)
+             invalidateOptionsMenu(activity)
+
+        } else if (itemId == MENU_IMPORT_AS) {
+            return startASProfileImport()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
@@ -78,12 +149,8 @@ class MinimalUI: Fragment(), VpnStatus.StateListener {
         val intent = Intent(requireActivity(), OpenVPNService::class.java)
         intent.action = OpenVPNService.START_SERVICE
         requireActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
-
-        /* Check the default VPN */
-        val alwaysOnVPN: VpnProfile? = ProfileManager.getAlwaysOnVPN(requireContext())
-        if (alwaysOnVPN == null) {
-            vpnstatus.text = "Default VPN is not configured."
-        }
+        if (mImportMenuActive && ProfileManager.getAlwaysOnVPN(requireActivity()) != null )
+            invalidateOptionsMenu(requireActivity())
     }
 
     override fun onPause() {
@@ -161,4 +228,8 @@ class MinimalUI: Fragment(), VpnStatus.StateListener {
         startActivity(intent)
     }
 
+    companion object {
+        private val MENU_IMPORT_PROFILE = Menu.FIRST + 1
+        private val MENU_IMPORT_AS = Menu.FIRST + 3
+    }
 }

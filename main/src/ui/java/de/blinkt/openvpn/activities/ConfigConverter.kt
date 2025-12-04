@@ -33,6 +33,7 @@ import de.blinkt.openvpn.VpnProfile
 import de.blinkt.openvpn.core.ConfigParser
 import de.blinkt.openvpn.core.ConfigParser.ConfigParseError
 import de.blinkt.openvpn.core.GlobalPreferences
+import de.blinkt.openvpn.core.Preferences
 import de.blinkt.openvpn.core.ProfileManager
 import de.blinkt.openvpn.fragments.Utils
 import de.blinkt.openvpn.views.FileSelectLayout
@@ -46,6 +47,7 @@ import java.util.*
 
 class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener {
 
+    private var initialImportMode: Boolean = false
     private var mResult: VpnProfile? = null
 
     @Transient
@@ -65,13 +67,13 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
     private lateinit var mTLSProfileLabel: TextView
     private lateinit var mLogLayout: LinearLayout
     private lateinit var mProfilenameLabel: TextView
+    private lateinit var mMakeDefaultProfile: CheckBox
 
     override fun onClick(v: View) {
         if (v.id == R.id.fab_save)
             userActionSaveProfile()
         if (v.id == R.id.permssion_hint && Build.VERSION.SDK_INT == Build.VERSION_CODES.M)
             doRequestSDCardPermission(PERMISSION_REQUEST_EMBED_FILES)
-
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -153,6 +155,15 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
             startActivityForResult(intent, RESULT_INSTALLPKCS12)
         else
             saveProfile()
+
+        if(mMakeDefaultProfile.isChecked || initialImportMode)
+        {
+            val defaultPrefs = Preferences.getDefaultSharedPreferences(this)
+            val editor = defaultPrefs.edit()
+            editor.putString("alwaysOnVpn", mResult!!.uuidString)
+            editor.apply()
+        }
+
 
         return true
     }
@@ -642,6 +653,8 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
         mTLSProfile = findViewById(R.id.tls_profile) as Spinner
         mTLSProfileLabel = findViewById(R.id.tls_profile_label) as TextView
 
+        mMakeDefaultProfile = findViewById(R.id.make_default_profile ) as CheckBox
+
         if (savedInstanceState != null && savedInstanceState.containsKey(VPNPROFILE)) {
             mResult = savedInstanceState.getSerializable(VPNPROFILE) as VpnProfile?
             mAliasName = savedInstanceState.getString("mAliasName")
@@ -799,6 +812,11 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
 
                 mTLSProfile.visibility = View.VISIBLE
                 mTLSProfileLabel.visibility = View.VISIBLE
+                mMakeDefaultProfile.visibility = View.VISIBLE
+                if (initialImportMode) {
+                    mMakeDefaultProfile.isChecked = true
+                    mMakeDefaultProfile.isEnabled = false
+                }
                 mTLSProfile.setSelection(translateTLSProfileToSelection(result.mTlSCertProfile))
 
                 log(R.string.import_done)
@@ -819,13 +837,32 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
             log("An external app instructed OpenVPN for Android to open a file:// URI. This kind of URI have been deprecated since Android 7 and no longer work on modern Android versions at all.")
             doRequestSDCardPermission(PERMISSION_REQUEST_READ_URL)
         }
+    }
 
+
+    /**
+     * Checks whether we are in the special mode where we allow an initial profile to be imported but nothing after that
+      */
+    private fun checkInitialImportMode(): Boolean {
+        if (!GlobalPreferences.getMinimalUi())
+            return false
+
+        if (!GlobalPreferences.getAllowInitialImport())
+            return false
+
+        /* We might potentially allow the initial import but only if no profiles exist */
+
+        val defaultProfile = ProfileManager.getAlwaysOnVPN(this)
+
+        return defaultProfile == null
     }
 
 
     override fun onStart() {
         super.onStart()
-        checkMinimalUIDisabled()
+        initialImportMode = checkInitialImportMode()
+        if (!initialImportMode)
+            checkMinimalUIDisabled()
     }
 
     private fun log(logmessage: String?) {

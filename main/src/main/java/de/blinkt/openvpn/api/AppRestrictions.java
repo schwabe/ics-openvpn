@@ -96,7 +96,7 @@ public class AppRestrictions {
     public void parseRestrictionsBundle(Context c, Bundle restrictions)
     {
         if (restrictions == null) {
-            GlobalPreferences.setInstance(false, false);
+            GlobalPreferences.setInstance(false, false, false);
             return;
         }
 
@@ -167,7 +167,8 @@ public class AppRestrictions {
         }
 
         boolean forceConnected = restrictions.getBoolean("always_connected", false);
-        GlobalPreferences.setInstance(minimalUi, forceConnected);
+        boolean allowInitialImport = restrictions.getBoolean("minimal_ui_import", false);
+        GlobalPreferences.setInstance(minimalUi, forceConnected, allowInitialImport);
     }
 
     private static void applyBooleanDefaultPrefsRestriction(Bundle restrictions, String restriction_name, SharedPreferences defaultPrefs, String prefs_name) {

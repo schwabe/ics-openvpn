@@ -107,6 +107,14 @@
 
 
     <restriction
+            android:defaultValue="false"
+            android:description="@string/apprest_initial_import"
+            android:key="minimal_ui_import"
+            android:restrictionType="bool"
+            android:title="@string/apprest_initial_import_title" />
+
+
+    <restriction
             android:description="@string/apprest_encrypt_profiles"
             android:key="preferencryption"
             android:restrictionType="bool"

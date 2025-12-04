@@ -338,7 +338,7 @@ class VPNProfileList : ListFragment(), View.OnClickListener, StateListener {
             .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)
 
         menu.add(0, MENU_IMPORT_AS, 0, R.string.import_from_as)
-            .setIcon(R.drawable.ic_menu_import)
+            .setIcon(R.drawable.ic_menu_import_download)
             .setAlphabeticShortcut('p')
             .setTitleCondensed("Import AS")
             .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM)

@@ -137,8 +137,8 @@ For example `ca mycafile.pem` becomes
   </ca>
 ```
 
-Minimal UI mode/Managed mode
-----------------------------
+Minimal UI mode/Managed configuration
+-------------------------------------
 The app allows configuration via configuration that is provided by a central device management. See
 the [app_restrictions.xml](main/src/main/res/xml/app_restrictions.xml) for the available options to 
 configure app behaviour and configuration profiles.

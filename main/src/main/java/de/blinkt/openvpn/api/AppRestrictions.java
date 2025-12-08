@@ -88,7 +88,10 @@ public class AppRestrictions {
     private void applyRestrictions(Context c) {
         RestrictionsManager restrictionsMgr = (RestrictionsManager) c.getSystemService(Context.RESTRICTIONS_SERVICE);
         if (restrictionsMgr == null)
+        {
+            GlobalPreferences.setInstance(false, false, false);
             return;
+        }
         Bundle restrictions = restrictionsMgr.getApplicationRestrictions();
         parseRestrictionsBundle(c, restrictions);
     }

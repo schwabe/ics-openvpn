@@ -362,7 +362,13 @@ public class ProfileManager {
         String vpnentry = profile.getUUID().toString();
         profiles.remove(vpnentry);
         saveProfileList(context);
-        context.deleteFile(vpnentry + ".vp");
+
+
+        // delete both unencrypted and encrypted variants
+        String[] extensions = new String[]{".vp", ".cp", ".cpold"};
+        for (String ext: extensions)
+            context.deleteFile(vpnentry + ext);
+
         if (mLastConnectedVpn == profile)
             mLastConnectedVpn = null;
 

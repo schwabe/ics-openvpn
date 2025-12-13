@@ -8,6 +8,9 @@ git_describe(OPENVPN3_GIT "${CMAKE_CURRENT_SOURCE_DIR}/openvpn3" "--tags" "--alw
 message("OpenVPN 2.x version ${OPENVPN2_GIT}")
 message("OpenVPN 3.x version ${OPENVPN3_GIT}")
 
+# Make builds (like F-droid) happy that want reproducible builds
+add_link_options("LINKER:--build-id=none")
+
 # Set mbedtls options
 OPTION(ENABLE_PROGRAMS "" OFF)
 OPTION(USE_SHARED_MBEDTLS_LIBRARY "" OFF)

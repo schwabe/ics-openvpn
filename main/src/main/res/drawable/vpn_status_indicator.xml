@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2012-2025 Arne Schwabe
+  ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/ic_logo_bunt"
+            android:state_checked="true"/>
+    <item android:drawable="@drawable/ic_logo_sw"
+            android:state_checked="false"/>
+    <item android:drawable="@drawable/ic_stat_vpn_offline"/>
+</selector>

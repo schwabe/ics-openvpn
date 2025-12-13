@@ -88,9 +88,19 @@
     <string name="restriction_restartvpnonboot">Enable the workaround to use an on boot receiver to start the VPN if the Always On VPN functionality is not available</string>
     <string name="apprest_vpn_applist">Apps using the VPN</string>
     <string name="apprest_vpn_applist_desc">List of packages name (e.g. com.google.chrome) that are should be used with the VPN. Separated by comma, space or newlines</string>
-    <string name="restriction_ignorenetworkstate">Keep the VPN connected even when no network is detected, e.g. when reverse tethering over USB using adb</string>
+    <string name="apprest_ignorenetworkstate">Keep the VPN connected even when no network is detected, e.g. when reverse tethering over USB using adb</string>
     <string name="apprest_aidl_list">List of apps that are allowed to use the remote AIDL. If this list is in the restrictions, the app will not allowed any changes to the list by the user. Package names of allowed apps separated by comma, space or newlines</string>
     <string name="apprest_remoteaidl">Remote API access</string>
+    <string name="apprest_minimal_ui">Only present a restricted UI that only allow connecting/disconnecting the default VPN. Most other functionality is is disabled as well</string>
+    <string name="apprest_minimal_ui_title">Minimal UI</string>
+    <string name="apprest_always_connected">When in the minimal UI mode, try to keep the default VPN always connected. Do not allow disconnecting it. Restarting the VPN is still allowed.</string>
+    <string name="apprest_always_connected_title">Disallow disconnecting default VPN</string>
+    <string name="apprest_encrypt_profiles">Try to encrypt the profile on storage when supported by the Android OS</string>
+    <string name="apprest_encrypt_profiles_title">Encrypt profiles</string>
+    <string name="apprest_netchangereconnect">Reconnect on network change</string>
+    <string name="apprest_netchangereconnect_title">Trigger a reconnection of the OpenVPN connection if the change in the network connectivity is detected</string>
+    <string name="apprest_initial_import_title">Allow initial import in minimal UI</string>
+    <string name="apprest_initial_import">If minimal UI is enabled but no profile is provided, the app will allow an initial import of a profile that will become the default profile.</string>
 
     <string-array name="tls_profile_values" translatable="false">
         <item>insecure</item>

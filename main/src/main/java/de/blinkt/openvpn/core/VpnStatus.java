@@ -76,9 +76,16 @@ public class VpnStatus {
     }
 
     public static String getLastCleanLogMessage(Context c) {
+        return getLastCleanLogMessage(c, false);
+    }
+
+    public static String getLastCleanLogMessage(Context c, boolean shortversion) {
         String message = mLaststatemsg;
         switch (mLastLevel) {
             case LEVEL_CONNECTED:
+                if (shortversion)
+                    return c.getString(R.string.state_connected);
+
                 String[] parts = mLaststatemsg.split(",");
                 /*
                    (a) the integer unix date/time,

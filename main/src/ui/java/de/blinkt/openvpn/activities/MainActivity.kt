@@ -14,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import de.blinkt.openvpn.R
+import de.blinkt.openvpn.core.GlobalPreferences
 import de.blinkt.openvpn.fragments.*
 import de.blinkt.openvpn.fragments.ImportRemoteConfig.Companion.newInstance
 import de.blinkt.openvpn.views.ScreenSlidePagerAdapter
@@ -21,6 +22,7 @@ import de.blinkt.openvpn.views.ScreenSlidePagerAdapter
 class MainActivity : BaseActivity() {
     private lateinit var mPager: ViewPager2
     private lateinit var mPagerAdapter: ScreenSlidePagerAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,16 +34,26 @@ class MainActivity : BaseActivity() {
 
         mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager, lifecycle, this)
 
-        /* Toolbar and slider should have the same elevation */disableToolbarElevation()
-        mPagerAdapter.addTab(R.string.vpn_list_title, VPNProfileList::class.java)
-        mPagerAdapter.addTab(R.string.graph, GraphFragment::class.java)
-        mPagerAdapter.addTab(R.string.generalsettings, GeneralSettings::class.java)
-        mPagerAdapter.addTab(R.string.faq, FaqFragment::class.java)
-        if (SendDumpFragment.getLastestDump(this) != null) {
-            mPagerAdapter.addTab(R.string.crashdump, SendDumpFragment::class.java)
+        /* Toolbar and slider should have the same elevation */
+        disableToolbarElevation()
+
+        val minimalUi = GlobalPreferences.getMinimalUi();
+        if (minimalUi ) {
+            mPagerAdapter.addTab(R.string.minimal_ui, MinimalUI::class.java)
+        } else {
+
+            mPagerAdapter.addTab(R.string.vpn_list_title, VPNProfileList::class.java)
+            mPagerAdapter.addTab(R.string.graph, GraphFragment::class.java)
+            mPagerAdapter.addTab(R.string.generalsettings, GeneralSettings::class.java)
+            mPagerAdapter.addTab(R.string.faq, FaqFragment::class.java)
+            if (SendDumpFragment.getLastestDump(this) != null) {
+                mPagerAdapter.addTab(R.string.crashdump, SendDumpFragment::class.java)
+            }
+
         }
-        if (isAndroidTV)
+        if (isAndroidTV || minimalUi)
             mPagerAdapter.addTab(R.string.openvpn_log, LogFragment::class.java)
+
         mPagerAdapter.addTab(R.string.about, AboutFragment::class.java)
         mPager.setAdapter(mPagerAdapter)
 
@@ -97,7 +109,8 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
+        if (!GlobalPreferences.getMinimalUi())
+            menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

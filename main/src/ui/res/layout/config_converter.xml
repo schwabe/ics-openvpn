@@ -30,12 +30,14 @@
                         android:labelFor="@id/profilename"
                         android:text="@string/profilename"
                         android:textAppearance="?android:attr/textAppearanceSmall"
+                        tools:visibility="visible"
                         android:visibility="gone" />
 
                 <EditText
                         android:id="@+id/profilename"
                         style="@style/item"
                         android:inputType="text"
+                        tools:visibility="visible"
                         android:visibility="gone" />
 
                 <TextView
@@ -71,6 +73,15 @@
                         android:prompt="@string/compatmode"
                         android:visibility="gone"
                         tools:visibility="visible" />
+
+                <CheckBox
+                        android:id="@+id/make_default_profile"
+                        style="@style/item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:text="Make new profile default profile used in Quick Connect and VPN profile"/>
 
                 <TextView
                         android:id="@+id/files_missing_hint"

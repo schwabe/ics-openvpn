@@ -30,6 +30,7 @@ include(tools.cmake)
 include(lzo.cmake)
 include(lz4.cmake)
 include(openssl/openssl.cmake)
+add_subdirectory(fmt)
 
 if(NOT ${OPENVPN3OSSL} OR ${OPENVPN2MBED})
     add_subdirectory(mbedtls)
@@ -80,12 +81,12 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
         target_compile_definitions(ovpn3 PRIVATE
                 -DUSE_OPENSSL
                 )
-        target_link_libraries(ovpn3 crypto ssl lzo lz4)
+        target_link_libraries(ovpn3 crypto ssl lzo lz4 fmt)
     else ()
         target_compile_definitions(ovpn3 PRIVATE
                 -DUSE_MBEDTLS
                 )
-        target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo lz4)
+        target_link_libraries(ovpn3 mbedtls mbedx509 mbedcrypto lzo lz4 fmt)
     endif ()
 
     target_compile_definitions(ovpn3 PRIVATE
@@ -160,7 +161,6 @@ set(openvpn_srcs
         src/openvpn/misc.c
         src/openvpn/mroute.c
         src/openvpn/mss.c
-        src/openvpn/mstats.c
         src/openvpn/mtcp.c
         src/openvpn/mtu.c
         src/openvpn/mudp.c
@@ -170,10 +170,10 @@ set(openvpn_srcs
         src/openvpn/occ.c
         src/openvpn/openvpn.c
         src/openvpn/options.c
+        src/openvpn/options_parse.c
         src/openvpn/options_util.c
         src/openvpn/otime.c
         src/openvpn/packet_id.c
-        src/openvpn/perf.c
         src/openvpn/ping.c
         src/openvpn/pkcs11.c
         src/openvpn/pkcs11_openssl.c
@@ -184,6 +184,7 @@ set(openvpn_srcs
         src/openvpn/proxy.c
         src/openvpn/ps.c
         src/openvpn/push.c
+        src/openvpn/push_util.c
         src/openvpn/reflect_filter.c
         src/openvpn/reliable.c
         src/openvpn/route.c
@@ -193,6 +194,7 @@ set(openvpn_srcs
         src/openvpn/shaper.c
         src/openvpn/sig.c
         src/openvpn/socket.c
+        src/openvpn/socket_util.c
         src/openvpn/socks.c
         src/openvpn/ssl.c
         src/openvpn/ssl_openssl.c
@@ -234,6 +236,7 @@ target_compile_definitions(openvpn PRIVATE
         -DCONFIGURE_GIT_FLAGS=\"\"
         -DTARGET_ABI=\"${ANDROID_ABI}\"
         -DOPENSSL_API_COMPAT=0x11000000L
+        -DDEFAULT_DNS_UPDOWN=\"/not/supported/on/android\"
         )
 
 if (${OPENVPN2MBED})

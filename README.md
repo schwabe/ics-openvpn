@@ -136,6 +136,18 @@ For example `ca mycafile.pem` becomes
   -----END CERTIFICATE-----
   </ca>
 ```
+
+Minimal UI mode/Managed configuration
+-------------------------------------
+The app allows configuration via configuration that is provided by a central device management. See
+the [app_restrictions.xml](main/src/main/res/xml/app_restrictions.xml) for the available options to 
+configure app behaviour and configuration profiles.
+
+One particular thing that can be enabled is the minimal mode that restricts the app to a single default
+VPN Profile:
+
+![Screenshot of minimal mode](misc/minimal_ui_mode.png)
+
 Footnotes
 -----------
 Please note that OpenVPN used by this project is under GPLv2. 

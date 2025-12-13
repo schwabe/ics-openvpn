@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import de.blinkt.openvpn.R
+import de.blinkt.openvpn.core.GlobalPreferences
 import de.blinkt.openvpn.core.LocaleHelper
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -27,6 +29,13 @@ abstract class BaseActivity : AppCompatActivity() {
             val uiModeManager = getSystemService(UI_MODE_SERVICE) as UiModeManager
             return uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
         }
+
+    protected fun checkMinimalUIDisabled() {
+        if (GlobalPreferences.getMinimalUi()) {
+            Toast.makeText(this, R.string.minimal_ui_not_available, Toast.LENGTH_LONG).show()
+            finish()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (isAndroidTV) {

@@ -426,7 +426,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         PendingIntent disconnectPendingIntent = PendingIntent.getActivity(this, 0, disconnectVPN, PendingIntent.FLAG_IMMUTABLE);
 
         nbuilder.addAction(R.drawable.ic_menu_close_clear_cancel,
-                getString(R.string.cancel_connection), disconnectPendingIntent);
+                getString(GlobalPreferences.getForceConnected() ? R.string.reconnect : R.string.cancel_connection), disconnectPendingIntent);
+
+        /* do not allow to pause the VPN is force connection is enabled */
+        if (GlobalPreferences.getForceConnected())
+            return;
 
         Intent pauseVPN = new Intent(this, OpenVPNService.class);
         if (mDeviceStateReceiver == null || !mDeviceStateReceiver.isUserPaused()) {

@@ -25,5 +25,6 @@
     <drawable name="ic_menu_import_grey">@drawable/ic_baseline_archive_24</drawable>
     <drawable name="ic_receipt">@drawable/ic_baseline_receipt_long_24</drawable>
     <drawable name="ic_sort">@drawable/ic_baseline_sort_24</drawable>
+    <drawable name="ic_menu_import_download">@drawable/ic_download_24</drawable>
 
 </resources>

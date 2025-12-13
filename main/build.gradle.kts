@@ -17,18 +17,18 @@ android {
         buildConfig = true
     }
     namespace = "de.blinkt.openvpn"
-    compileSdk = 35
+    compileSdk = 36
     //compileSdkPreview = "UpsideDownCake"
 
     // Also update runcoverity.sh
-    ndkVersion = "28.0.13004108"
+    ndkVersion = "29.0.14206865"
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 35
+        targetSdk = 36
         //targetSdkPreview = "UpsideDownCake"
-        versionCode = 216
-        versionName = "0.7.61"
+        versionCode = 218
+        versionName = "0.7.63"
         externalNativeBuild {
             cmake {
                 //arguments+= "-DCMAKE_VERBOSE_MAKEFILE=1"

@@ -85,22 +85,23 @@ public class AppRestrictions {
         }
     }
 
-    private void applyRestrictions(Context c) {
+    private boolean applyRestrictions(Context c) {
         RestrictionsManager restrictionsMgr = (RestrictionsManager) c.getSystemService(Context.RESTRICTIONS_SERVICE);
         if (restrictionsMgr == null)
         {
-            GlobalPreferences.setInstance(false, false, false);
-            return;
+            return false;
         }
         Bundle restrictions = restrictionsMgr.getApplicationRestrictions();
-        parseRestrictionsBundle(c, restrictions);
+        return parseRestrictionsBundle(c, restrictions);
     }
 
-    public void parseRestrictionsBundle(Context c, Bundle restrictions)
+    /**
+     * @return true if the restrictions have been successfully imported
+     */
+    public boolean parseRestrictionsBundle(Context c, Bundle restrictions)
     {
         if (restrictions == null) {
-            GlobalPreferences.setInstance(false, false, false);
-            return;
+            return false;
         }
 
         String configVersion = restrictions.getString("version", "(not set)");
@@ -110,9 +111,9 @@ public class AppRestrictions {
         } catch (NumberFormatException nex) {
             if ("(not set)".equals(configVersion))
                 // Ignore error if no version present
-                return;
+                return false;
             VpnStatus.logError(String.format(Locale.US, "App restriction version %s does not match expected version %d", configVersion, CONFIG_VERSION));
-            return;
+            return false;
         }
         Parcelable[] profileList = restrictions.getParcelableArray("vpn_configuration_list");
         if (profileList == null) {
@@ -124,6 +125,7 @@ public class AppRestrictions {
         setAllowedRemoteControl(c, restrictions);
 
         setMiscSettings(c, restrictions);
+        return true;
     }
 
     private void setAllowedRemoteControl(Context c, Bundle restrictions) {
@@ -411,7 +413,9 @@ public class AppRestrictions {
         }
         alreadyChecked = true;
         addChangesListener(c);
-        applyRestrictions(c);
+        boolean applied = applyRestrictions(c);
+        if (!applied)
+            GlobalPreferences.setInstance(false, false, false);
     }
 
     public void pauseCheckRestrictions(Context c) {

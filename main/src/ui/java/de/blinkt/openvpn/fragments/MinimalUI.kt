@@ -34,6 +34,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import de.blinkt.openvpn.LaunchVPN
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.VpnProfile
@@ -47,6 +48,9 @@ import de.blinkt.openvpn.core.OpenVPNService
 import de.blinkt.openvpn.core.ProfileManager
 import de.blinkt.openvpn.core.VpnStatus
 import de.blinkt.openvpn.fragments.ImportRemoteConfig.Companion.newInstance
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MinimalUI: Fragment(), VpnStatus.StateListener {
     private var mPermReceiver: ActivityResultLauncher<String>? = null
@@ -180,12 +184,17 @@ class MinimalUI: Fragment(), VpnStatus.StateListener {
 
     }
 
-    private fun checkForKeychainPermission(v: View) {
+    private suspend fun checkForKeychainPermission(v: View) {
         val keychainView = v.findViewById<View>(R.id.keychain_notification)
 
         val profile = ProfileManager.getAlwaysOnVPN(context)
 
-        val permissionGranted = (profile == null || !checkKeychainAccessIsMissing(profile))
+        var permissionGranted = false
+        withContext(Dispatchers.IO)
+        {
+            permissionGranted = (profile == null || !checkKeychainAccessIsMissing(profile))
+        }
+
 
         keychainView.setVisibility(if (permissionGranted) View.GONE else View.VISIBLE)
         keychainView.setOnClickListener({
@@ -196,7 +205,9 @@ class MinimalUI: Fragment(), VpnStatus.StateListener {
                         // Credential alias selected.  Remember the alias selection for future use.
                         profile.mAlias = alias
                         ProfileManager.saveProfile(context, profile)
-                        checkForKeychainPermission(v)
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            checkForKeychainPermission(v)
+                        }
                     },
                     arrayOf("RSA", "EC"), null,
                     profile.mServerName,
@@ -248,7 +259,9 @@ class MinimalUI: Fragment(), VpnStatus.StateListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             checkForNotificationPermission(view)
 
+        viewLifecycleOwner.lifecycleScope.launch {
         checkForKeychainPermission(view)
+            }
         return view
     }
 
@@ -256,19 +269,13 @@ class MinimalUI: Fragment(), VpnStatus.StateListener {
         if ((vp.mAuthenticationType != TYPE_USERPASS_KEYSTORE) && (vp.mAuthenticationType != TYPE_KEYSTORE)) {
             return false
         }
-        try {
-            if (TextUtils.isEmpty(vp.mAlias))
-                return true
-            val certs = vp.getExternalCertificates(context)
-        }
-        catch (ncre: VpnProfile.NoCertReturnedException )
-        {
+
+        if (TextUtils.isEmpty(vp.mAlias))
             return true
-        }
-        catch (ake: KeyChainException)
-        {
+        val certs = vp.getExternalCertificates(context)
+        if (certs == null)
             return true
-        }
+
         return false
     }
 
@@ -296,8 +303,14 @@ class MinimalUI: Fragment(), VpnStatus.StateListener {
     }
 
     fun toggleSwitchPressed(view: CompoundButton) {
+        viewLifecycleOwner.lifecycleScope.launch {toggleSwitchPressedReal(view) }
+    }
 
-        val alwaysOnVPN = checkVpnConfigured()
+    suspend fun toggleSwitchPressedReal(view: CompoundButton) {
+        var alwaysOnVPN: VpnProfile? = null
+        withContext(Dispatchers.IO) {
+            alwaysOnVPN = checkVpnConfigured()
+        }
 
         if (alwaysOnVPN == null)
         {

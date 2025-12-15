@@ -7,15 +7,19 @@ package de.blinkt.openvpn.fragments
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.security.KeyChain
+import android.security.KeyChainException
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -33,8 +37,9 @@ import androidx.fragment.app.Fragment
 import de.blinkt.openvpn.LaunchVPN
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.VpnProfile
+import de.blinkt.openvpn.VpnProfile.TYPE_KEYSTORE
+import de.blinkt.openvpn.VpnProfile.TYPE_USERPASS_KEYSTORE
 import de.blinkt.openvpn.activities.ConfigConverter
-import de.blinkt.openvpn.activities.FileSelect
 import de.blinkt.openvpn.core.ConnectionStatus
 import de.blinkt.openvpn.core.GlobalPreferences
 import de.blinkt.openvpn.core.IOpenVPNServiceInternal
@@ -162,13 +167,49 @@ class MinimalUI: Fragment(), VpnStatus.StateListener {
 
     private fun checkForNotificationPermission(v: View) {
         val permissionView = v.findViewById<View>(R.id.notification_permission)
+
         val permissionGranted =
             requireActivity().checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+
         permissionView.setVisibility(if (permissionGranted) View.GONE else View.VISIBLE)
         permissionView.setOnClickListener({ view: View? ->
             mPermReceiver?.launch(
                 Manifest.permission.POST_NOTIFICATIONS
             )
+        })
+
+    }
+
+    private fun checkForKeychainPermission(v: View) {
+        val keychainView = v.findViewById<View>(R.id.keychain_notification)
+
+        val profile = ProfileManager.getAlwaysOnVPN(context)
+
+        val permissionGranted = (profile == null || !checkKeychainAccessIsMissing(profile))
+
+        keychainView.setVisibility(if (permissionGranted) View.GONE else View.VISIBLE)
+        keychainView.setOnClickListener({
+
+            try {
+                KeyChain.choosePrivateKeyAlias(requireActivity(),
+                    { alias ->
+                        // Credential alias selected.  Remember the alias selection for future use.
+                        profile.mAlias = alias
+                        ProfileManager.saveProfile(context, profile)
+                        checkForKeychainPermission(v)
+                    },
+                    arrayOf("RSA", "EC"), null,
+                    profile.mServerName,
+                    -1,
+                    profile.mAlias)
+                // alias to preselect, null if unavailable
+            } catch (anf: ActivityNotFoundException) {
+                val ab = AlertDialog.Builder(activity)
+                ab.setTitle(R.string.broken_image_cert_title)
+                ab.setMessage(R.string.broken_image_cert)
+                ab.setPositiveButton(android.R.string.ok, null)
+                ab.show()
+            }
         })
     }
 
@@ -206,11 +247,32 @@ class MinimalUI: Fragment(), VpnStatus.StateListener {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             checkForNotificationPermission(view)
+
+        checkForKeychainPermission(view)
         return view
     }
 
-    fun toggleSwitchPressed(view: CompoundButton) {
+    fun checkKeychainAccessIsMissing(vp: VpnProfile): Boolean {
+        if ((vp.mAuthenticationType != TYPE_USERPASS_KEYSTORE) && (vp.mAuthenticationType != TYPE_KEYSTORE)) {
+            return false
+        }
+        try {
+            if (TextUtils.isEmpty(vp.mAlias))
+                return true
+            val certs = vp.getExternalCertificates(context)
+        }
+        catch (ncre: VpnProfile.NoCertReturnedException )
+        {
+            return true
+        }
+        catch (ake: KeyChainException)
+        {
+            return true
+        }
+        return false
+    }
 
+    fun checkVpnConfigured(): VpnProfile? {
         val alwaysOnVPN = ProfileManager.getAlwaysOnVPN(requireContext())
         if (alwaysOnVPN == null) {
             Toast.makeText(
@@ -218,9 +280,31 @@ class MinimalUI: Fragment(), VpnStatus.StateListener {
                 R.string.cannot_start_vpn_not_configured,
                 Toast.LENGTH_SHORT
             ).show();
+            return null
+        }
+
+        if (checkKeychainAccessIsMissing(alwaysOnVPN))
+        {
+            Toast.makeText(
+                requireContext(),
+                R.string.keychain_access,
+                Toast.LENGTH_SHORT
+            ).show()
+            return null
+        }
+        return alwaysOnVPN
+    }
+
+    fun toggleSwitchPressed(view: CompoundButton) {
+
+        val alwaysOnVPN = checkVpnConfigured()
+
+        if (alwaysOnVPN == null)
+        {
             view.setChecked(false)
             return
         }
+
         val intent = Intent(requireContext(), LaunchVPN::class.java)
         intent.putExtra(LaunchVPN.EXTRA_KEY, alwaysOnVPN.uuidString)
         intent.putExtra(OpenVPNService.EXTRA_START_REASON, "VPN started from homescreen.")

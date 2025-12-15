@@ -25,6 +25,22 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
 
+    <TextView
+            android:id="@+id/keychain_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/stdpadding"
+            android:drawableStart="@drawable/key_chain_missing"
+            android:drawablePadding="@dimen/stdpadding"
+            android:text="@string/missing_keychain_access"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/notification_permission"
+
+            tools:visibility="visible" />
+
     <CheckBox
             android:id="@+id/vpntoggle"
             android:layout_width="wrap_content"
@@ -38,7 +54,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/notification_permission"
+            app:layout_constraintTop_toBottomOf="@+id/keychain_notification"
             app:switchMinWidth="80dp" />
 
     <TextView

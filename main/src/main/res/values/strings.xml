@@ -524,5 +524,6 @@
     <string name="confirmations_summary">(Not recommended) Disables confirmations when connecting/disconnecting VPN. This disables the safeguard to accidientially disconnect VPN connections</string>
     <string name="cannot_start_vpn_not_configured">Cannot start VPN. No default VPN has been configured.</string>
     <string name="minimal_ui_not_available">Functionality not available when minimal UI is enabled</string>
+    <string name="missing_keychain_access">Access to Android keychain certificate is missing. Tap this notification to select/import a certificate</string>
 
 </resources>

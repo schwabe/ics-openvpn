@@ -1409,7 +1409,7 @@ public class VpnProfile implements Serializable, Cloneable {
         RSAPSS_PADDING
     }
 
-    static class NoCertReturnedException extends Exception {
+    public static class NoCertReturnedException extends Exception {
         public NoCertReturnedException(String msg) {
             super(msg);
         }

@@ -64,6 +64,14 @@
             android:text="@string/disconnect" />
 
     <Button
+            android:id="@+id/setDefaultProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/disconnect"
+            android:layout_toRightOf="@+id/disconnect"
+            android:text="@string/set_default" />
+
+    <Button
             android:id="@+id/startembedded"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"

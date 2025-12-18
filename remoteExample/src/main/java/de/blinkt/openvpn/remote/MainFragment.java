@@ -52,6 +52,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
         v.findViewById(R.id.disconnect).setOnClickListener(this);
+        v.findViewById(R.id.setDefaultProfile).setOnClickListener(this);
         v.findViewById(R.id.getMyIP).setOnClickListener(this);
         v.findViewById(R.id.startembedded).setOnClickListener(this);
         v.findViewById(R.id.addNewProfile).setOnClickListener(this);
@@ -70,6 +71,7 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
     private static final int MSG_UPDATE_MYIP = 1;
     private static final int START_PROFILE_EMBEDDED = 2;
     private static final int START_PROFILE_BYUUID = 3;
+    private static final int SET_DEFAULT_PROFILE_BYUUID = 4;
     private static final int ICS_OPENVPN_PERMISSION = 7;
     private static final int PROFILE_ADD_NEW = 8;
     private static final int PROFILE_ADD_NEW_EDIT = 9;
@@ -195,9 +197,12 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
 
         try {
             List<APIVpnProfile> list = mService.getProfiles();
+            APIVpnProfile defaultProfile = mService.getDefaultProfile();
+            String defaultUUID = defaultProfile != null ? defaultProfile.mUUID : null;
             String all="List:";
             for(APIVpnProfile vp:list.subList(0, Math.min(5, list.size()))) {
-                all = all + vp.mName + ":" + vp.mUUID + "\n";
+                String suffix = (vp.mUUID.equals(defaultUUID)) ? " (default)" : "";
+                all = all + vp.mName + ":" + vp.mUUID + suffix + "\n";
             }
 
             if (list.size() > 5)
@@ -248,6 +253,14 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
             case R.id.disconnect:
                 try {
                     mService.disconnect();
+                } catch (RemoteException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.setDefaultProfile:
+                try {
+                    prepareStartProfile(SET_DEFAULT_PROFILE_BYUUID);
                 } catch (RemoteException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -314,6 +327,12 @@ public class MainFragment extends Fragment implements View.OnClickListener, Hand
             if(requestCode==START_PROFILE_BYUUID)
                 try {
                     mService.startProfile(mStartUUID);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            if(requestCode==SET_DEFAULT_PROFILE_BYUUID)
+                try {
+                    mService.setDefaultProfile(mStartUUID);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }

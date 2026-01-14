@@ -104,7 +104,7 @@ Controlling from external apps
 ------------------------------
 
 There is the AIDL API for real controlling (see developing section). Due to high demand also 
-acitvies to start/stop, pause/resume (like a user would with the notification)  exists
+activities to start/stop, pause/resume (like a user would with the notification)  exists
   
  - `de.blinkt.openvpn.api.DisconnectVPN`
  - `de.blinkt.openvpn.api.ConnectVPN`

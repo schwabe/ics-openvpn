@@ -44,7 +44,7 @@ Q: Why are you not answering my questions about modifying
    thought this is open source.
 
 A: There are many people building/wanting to build commercial VPN
-   clients on top of my of my client. These client often do not even
+   clients on top of my client. These client often do not even
    honour the license of my app or the license of OpenVPN. Even if
    these modified software do honour the license, I don't like doing
    unpaid work/giving advice for free to commercial software

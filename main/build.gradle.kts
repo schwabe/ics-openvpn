@@ -7,6 +7,7 @@ import com.android.build.gradle.api.ApplicationVariant
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
     id("checkstyle")
 }
 
@@ -143,6 +144,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
     splits {
         abi {
             isEnable = true
@@ -229,6 +234,7 @@ dependencies {
     // https://maven.google.com/web/index.html
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.kotlinx.coroutines.android)
 
     uiImplementation(libs.android.view.material)
     uiImplementation(libs.androidx.activity)

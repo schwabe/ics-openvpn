@@ -92,7 +92,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public static final boolean mIsOpenVPN22 = false;
     private static final long serialVersionUID = 7085688938959334563L;
     private static final int AUTH_RETRY_NONE_KEEP = 1;
-    private static final int AUTH_RETRY_INTERACT = 3;
+    public static final int AUTH_RETRY_INTERACT = 3;
     private static final String EXTRA_RSA_PADDING_TYPE = "de.blinkt.openvpn.api.RSA_PADDING_TYPE";
     private static final String EXTRA_SALTLEN = "de.blinkt.openvpn.api.SALTLEN";
     private static final String EXTRA_NEEDS_DIGEST = "de.blinkt.openvpn.api.NEEDS_DIGEST";
@@ -572,6 +572,8 @@ public class VpnProfile implements Serializable, Cloneable {
         if (isUserPWAuth()) {
             if (mAuthRetry == AUTH_RETRY_NOINTERACT)
                 cfg.append("auth-retry nointeract\n");
+            else if (mAuthRetry == AUTH_RETRY_INTERACT)
+                cfg.append("auth-retry interact\n");
         }
 
         if (!TextUtils.isEmpty(mCrlFilename))

@@ -340,6 +340,11 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
     }
 
     @Override
+    public void sendSamlCredentials(String username, String password) {
+        // OpenVPN 3 path — not used for AWS SAML (ovpn23 flavour uses ovpn2 management thread)
+    }
+
+    @Override
     public void log(ClientAPI_LogInfo arg0) {
         String logmsg = arg0.getText();
         while (logmsg.endsWith("\n"))

@@ -48,4 +48,11 @@ public interface OpenVPNManagement {
      * @param response  Base64 encoded response
      */
     void sendCRResponse(String response);
+
+    /**
+     * Called by AwsSamlAuthHandler once the SAMLResponse has been received.
+     * Sends the CRV1 phase-2 credentials directly to the waiting OpenVPN
+     * management interface (no SIGUSR1/restart needed).
+     */
+    void sendSamlCredentials(String username, String password);
 }

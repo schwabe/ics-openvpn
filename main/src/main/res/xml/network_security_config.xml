@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Allow cleartext HTTP to 127.0.0.1 only.
+  This is required for the AWS Client VPN SAML callback: after the user
+  authenticates at the IdP, the browser POSTs the SAMLResponse to
+  http://127.0.0.1:35001 — our local AwsSamlServer.
+  All other traffic remains encrypted.
+-->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">127.0.0.1</domain>
+    </domain-config>
+</network-security-config>

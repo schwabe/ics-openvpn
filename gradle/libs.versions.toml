@@ -1,5 +1,5 @@
 [versions]
-android-gradle-plugin = "9.0.0"
+android-gradle-plugin = "8.9.1"
 androidx-activity = "1.10.1"
 androidx-annotation = "1.9.1"
 androidx-appcompat = "1.7.1"
@@ -19,6 +19,8 @@ bouncycastle = "1.69"
 mpandroidchart = "v3.1.0"
 kotlin = "2.2.10"
 square-okhttp = "4.10.0"
+androidx-browser = "1.8.0"
+kotlinx-coroutines = "1.8.1"
 
 # Test
 androidx-test-core = "1.7.0"
@@ -51,6 +53,8 @@ org-bouncycastle-bcmail-jdk15on = { group = "org.bouncycastle", name = "bcmail-j
 org-bouncycastle-bcpg-jdk15on = { group = "org.bouncycastle", name = "bcpg-jdk15on", version.ref = "bouncycastle" }
 kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 square-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "square-okhttp" }
+androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "androidx-browser" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 
 # Test
 androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidx-test-core" }

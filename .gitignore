@@ -31,3 +31,6 @@ idir
 
 test.local.conf
 .kotlin
+
+# Java heap dumps
+*.hprof

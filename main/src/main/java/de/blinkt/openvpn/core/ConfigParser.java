@@ -729,6 +729,15 @@ public class ConfigParser {
             }
         }
 
+        // AWS Client VPN SAML: auth-federate means the real credentials are
+        // obtained via a browser-based SSO flow. Pre-populate the sentinel
+        // values so checkProfile() doesn't prompt for a password before connect.
+        Vector<String> authfederate = getOption("auth-federate", 0, 0);
+        if (authfederate != null) {
+            np.mUsername = "N/A";
+            np.mPassword = "ACS::35001";
+        }
+
         Vector<String> authretry = getOption("auth-retry", 1, 1);
         if (authretry != null) {
             if (authretry.get(1).equals("none"))
@@ -736,7 +745,7 @@ public class ConfigParser {
             else if (authretry.get(1).equals("nointeract"))
                 np.mAuthRetry = VpnProfile.AUTH_RETRY_NOINTERACT;
             else if (authretry.get(1).equals("interact"))
-                np.mAuthRetry = VpnProfile.AUTH_RETRY_NOINTERACT;
+                np.mAuthRetry = VpnProfile.AUTH_RETRY_INTERACT;
             else
                 throw new ConfigParseError("Unknown parameter to auth-retry: " + authretry.get(2));
         }

@@ -41,6 +41,10 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     private LocalServerSocket mServerSocket;
     private boolean mWaitingForRelease = false;
     private long mLastHoldRelease = 0;
+    // True while the AWS SAML browser flow is running (between the CRV1
+    // AUTH_FAILED and the reconnect triggered by AwsSamlAuthHandler).
+    // Prevents responding to auth-retry-interact re-requests during that window.
+    volatile boolean mAwsSamlInProgress = false;
     private LocalSocket mServerSocketLocal;
 
     private pauseReason lastPauseReason = pauseReason.noNetwork;
@@ -695,9 +699,29 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
                 pw = mProfile.getPasswordPrivateKey();
                 break;
             case "Auth":
-                pw = mProfile.getPasswordAuth();
-                username = mProfile.mUsername;
-
+                if (isAwsSamlEndpoint(mProfile)) {
+                    if (mProfile.mPassword.startsWith("CRV1::")) {
+                        // Phase 2: AwsSamlAuthHandler has written the CRV1
+                        // token; send it and clear the in-progress flag.
+                        mAwsSamlInProgress = false;
+                        username = mProfile.mUsername;
+                        pw = mProfile.getPasswordAuth();
+                    } else if (mAwsSamlInProgress) {
+                        // auth-retry interact re-asked while SAML browser flow
+                        // is still running. Don't respond — the reconnect()
+                        // SIGUSR1 from AwsSamlAuthHandler will interrupt this
+                        // wait and start a fresh connection cycle.
+                        return;
+                    } else {
+                        // Phase 1: sentinel credentials that tell the AWS
+                        // endpoint our local ACS port for the SAML callback.
+                        username = "N/A";
+                        pw = "ACS::35001";
+                    }
+                } else {
+                    pw = mProfile.getPasswordAuth();
+                    username = mProfile.mUsername;
+                }
                 break;
             case "HTTP Proxy":
                 if (mCurrentProxyConnection != null) {
@@ -722,7 +746,34 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     }
 
     private void proccessPWFailed(String needed, String args) {
+        // AWS Client VPN SAML flow: the server sends back AUTH_FAILED with a
+        // CRV1 challenge that contains a SAML redirect URL and a session ID.
+        // Hand off to our Kotlin handler which starts the local SAML server,
+        // opens the browser, waits for the IdP POST, then reconnects.
+        if (args != null && args.contains("CRV1:")) {
+            mAwsSamlInProgress = true;
+            de.blinkt.openvpn.aws.AwsSamlAuthHandler.handleCrv1(
+                    mOpenVPNService, this, mProfile, args);
+            return;
+        }
         VpnStatus.updateStateString("AUTH_FAILED", needed + args, R.string.state_auth_failed, ConnectionStatus.LEVEL_AUTH_FAILED);
+    }
+
+    /**
+     * Returns true when the VPN profile is an AWS Client VPN endpoint with
+     * SAML/federated authentication. Detected by the well-known AWS Client VPN
+     * hostname pattern: *.clientvpn.*.amazonaws.com
+     */
+    private static boolean isAwsSamlEndpoint(VpnProfile profile) {
+        if (profile == null || profile.mConnections == null) return false;
+        for (Connection conn : profile.mConnections) {
+            if (conn.mServerName != null
+                    && conn.mServerName.contains(".clientvpn.")
+                    && conn.mServerName.contains(".amazonaws.com")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -758,6 +809,18 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
     public void reconnect() {
         signalusr1();
         releaseHold();
+    }
+
+    @Override
+    public void sendSamlCredentials(String username, String password) {
+        // OpenVPN is already waiting for credentials on the open management
+        // socket (auth-retry interact re-asked >PASSWORD:Need 'Auth').
+        // Send them directly — no SIGUSR1/restart needed.
+        mAwsSamlInProgress = false;
+        String usercmd = String.format("username 'Auth' %s\n", VpnProfile.openVpnEscape(username));
+        managmentCommand(usercmd);
+        String pwcmd = String.format("password 'Auth' %s\n", VpnProfile.openVpnEscape(password));
+        managmentCommand(pwcmd);
     }
 
     private void processSignCommand(String argument) {

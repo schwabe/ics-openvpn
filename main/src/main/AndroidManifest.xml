@@ -25,6 +25,7 @@
         android:label="@string/app"
         android:supportsRtl="true"
         android:theme="@style/blinkt"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="UnusedAttribute">
         <meta-data
             android:name="android.content.APP_RESTRICTIONS"

@@ -1,4 +1,7 @@
+@file:Suppress("DEPRECATION")
+
 import com.android.build.gradle.api.ApplicationVariant
+import java.util.Locale
 
 /*
  * Copyright (c) 2012-2016 Arne Schwabe
@@ -10,10 +13,31 @@ plugins {
     id("checkstyle")
 }
 
+fun normalizeBranchForApplicationId(branch: String): String {
+    var normalized = branch.lowercase(Locale.ROOT)
+        .replace(Regex("[^a-z0-9_]"), "_")
+        .replace(Regex("_+"), "_")
+        .trim('_')
+
+    if (normalized.isEmpty())
+        normalized = "branch"
+
+    if (normalized.first().isDigit())
+        normalized = "b$normalized"
+
+    return normalized.take(40)
+}
+
+val ciBranchName = providers.gradleProperty("ciBranchName").orNull
+val isSideBySideCiBuild = !ciBranchName.isNullOrBlank() && ciBranchName != "master"
+val ciBranchApplicationIdSuffix = if (isSideBySideCiBuild) ".ci.${normalizeBranchForApplicationId(ciBranchName!!)}" else null
+val ciBranchLabelSuffix = if (isSideBySideCiBuild) " [${ciBranchName}]" else ""
+
 android {
     buildFeatures {
         aidl = true
         buildConfig = true
+        resValues = true
     }
     namespace = "de.blinkt.openvpn"
     compileSdk = 36
@@ -23,11 +47,15 @@ android {
     ndkVersion = "29.0.14206865"
 
     defaultConfig {
+        applicationId = "de.blinkt.openvpn"
         minSdk = 21
         targetSdk = 36
         //targetSdkPreview = "UpsideDownCake"
         versionCode = 219
         versionName = "0.7.64"
+        if (isSideBySideCiBuild) {
+            resValue("string", "app", "\"OpenVPN for Android${ciBranchLabelSuffix}\"")
+        }
         externalNativeBuild {
             cmake {
                 //arguments+= "-DCMAKE_VERBOSE_MAKEFILE=1"
@@ -127,6 +155,12 @@ android {
     }
 
     buildTypes {
+        all {
+            if (isSideBySideCiBuild) {
+                applicationIdSuffix = ciBranchApplicationIdSuffix
+                versionNameSuffix = "${versionNameSuffix ?: ""}-${normalizeBranchForApplicationId(ciBranchName!!)}"
+            }
+        }
         getByName("release") {
             if (project.hasProperty("icsopenvpnDebugSign")) {
                 logger.warn("property icsopenvpnDebugSign set, using debug signing for release")

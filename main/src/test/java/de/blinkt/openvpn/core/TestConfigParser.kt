@@ -9,6 +9,7 @@ import android.content.Context
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider
 import de.blinkt.openvpn.R
+import de.blinkt.openvpn.VpnProfile
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -168,6 +169,55 @@ class TestConfigParser {
 
 
 
+    }
+
+    @Test
+    fun testStaticChallengeImportAndExport() {
+        val config = miniconfig +
+                "auth-user-pass\n" +
+                "static-challenge \"Enter OTP\" 1\n"
+
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(config))
+        val vp = cp.convertProfile()
+
+        Assert.assertTrue(vp.mUseStaticChallenge)
+        Assert.assertEquals("Enter OTP", vp.mStaticChallenge)
+
+        val exported = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
+        Assert.assertTrue(exported.contains("static-challenge \"Enter OTP\" 1"))
+    }
+
+    @Test
+    fun testScrv1Encoding() {
+        val password = VpnProfile.getStaticChallengePassword("secret", "123456")
+        Assert.assertEquals("SCRV1:c2VjcmV0:MTIzNDU2", password)
+    }
+
+    @Test
+    fun testStaticChallengeRequiresUserInput() {
+        val vp = VpnProfile("test")
+        vp.mAuthenticationType = VpnProfile.TYPE_USERPASS
+        vp.mUsername = "user"
+        vp.mPassword = "secret"
+        vp.mUseStaticChallenge = true
+        vp.mStaticChallenge = "Enter OTP"
+
+        Assert.assertEquals(R.string.password, vp.needUserPWInput(null, null))
+        Assert.assertEquals(0, vp.needUserPWInput(null, "SCRV1:c2VjcmV0:MTIzNDU2"))
+    }
+
+    @Test
+    fun testStaticChallengeWithoutPromptTextStillRequiresUserInput() {
+        val vp = VpnProfile("test")
+        vp.mAuthenticationType = VpnProfile.TYPE_USERPASS
+        vp.mUsername = "user"
+        vp.mPassword = "secret"
+        vp.mUseStaticChallenge = true
+        vp.mStaticChallenge = ""
+
+        Assert.assertTrue(vp.hasStaticChallenge())
+        Assert.assertEquals(R.string.password, vp.needUserPWInput(null, null))
     }
 
 

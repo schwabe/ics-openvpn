@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="challenge_response">Challenge response</string>
+    <string name="use_static_challenge">Use static challenge</string>
+    <string name="static_challenge_text">Challenge code</string>
+</resources>

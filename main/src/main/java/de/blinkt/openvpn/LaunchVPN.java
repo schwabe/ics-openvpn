@@ -273,7 +273,7 @@ public class LaunchVPN extends Activity {
     void showLogWindow() {
 
         Intent startLW = new Intent();
-        startLW.setComponent(new ComponentName(this, getPackageName() + ".activities.LogWindow"));
+        startLW.setComponent(new ComponentName(this, "de.blinkt.openvpn.activities.LogWindow"));
         startLW.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(startLW);
 

@@ -2,10 +2,15 @@
 name: Build
 permissions:
   contents: read
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
+    env:
+      CI_BRANCH_NAME: ${{ github.ref_name }}
     strategy:
       fail-fast: false
       matrix:
@@ -28,9 +33,9 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
       - name: Build the app
-        run: ./gradlew assemble${{ matrix.target }}Release
+        run: ./gradlew :main:assemble${{ matrix.target }}Release -PciBranchName="${CI_BRANCH_NAME}"
       - name: Run Unit tests
-        run: ./gradlew test${{ matrix.target }}ReleaseUnitTest
+        run: ./gradlew :main:test${{ matrix.target }}DebugUnitTest --info --stacktrace -PciBranchName="${CI_BRANCH_NAME}"
 
       - name: Archive apk artifact
         uses: actions/upload-artifact@v4

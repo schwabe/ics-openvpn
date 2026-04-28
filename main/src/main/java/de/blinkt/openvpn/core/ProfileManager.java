@@ -259,7 +259,9 @@ public class ProfileManager {
     public void saveProfileList(Context context) {
         SharedPreferences sharedprefs = Preferences.getSharedPreferencesMulti(PREFS_NAME, context);
         Editor editor = sharedprefs.edit();
-        editor.putStringSet("vpnlist", profiles.keySet());
+        /* preference saving might be asynchronous*/
+        final HashSet<String> vpn_list = new HashSet<>(profiles.keySet());
+        editor.putStringSet("vpnlist", vpn_list);
 
         // For reasing I do not understand at all
         // Android saves my prefs file only one time

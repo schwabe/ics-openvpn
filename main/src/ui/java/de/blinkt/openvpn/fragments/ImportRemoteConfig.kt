@@ -171,7 +171,7 @@ class ImportRemoteConfig : DialogFragment() {
     internal fun addPinnedCert(c: Context, host: String, fp: String) {
         val prefs = c.getSharedPreferences("pinnedCerts", Context.MODE_PRIVATE)
         val pedit = prefs.edit()
-        val pinnedHosts: MutableSet<String> = prefs.getStringSet("pinnedHosts", mutableSetOf<String>())!!
+        val pinnedHosts: MutableSet<String?> = prefs.getStringSet("pinnedHosts", mutableSetOf<String>())!!
             .toMutableSet()
 
         pinnedHosts.add(host)
@@ -186,7 +186,7 @@ class ImportRemoteConfig : DialogFragment() {
     internal fun removedPinnedCert(c: Context, host: String) {
         val prefs = c.getSharedPreferences("pinnedCerts", Context.MODE_PRIVATE)
         val pedit = prefs.edit()
-        val pinnedHosts: MutableSet<String> = prefs.getStringSet("pinnedHosts", mutableSetOf<String>())!!.toMutableSet()
+        val pinnedHosts: MutableSet<String> = prefs.getStringSet("pinnedHosts", setOf<String>())!!.toMutableSet()
 
         pinnedHosts.remove(host)
 

@@ -51,7 +51,9 @@ public class ExternalAppDatabase {
 	}
 
 	private static void increaseWorkaroundCounter(SharedPreferences prefs, Editor prefedit) {
-		// Workaround for bug
+		// Workaround for bug in early Android versions like 4.0/4.1 that would not save the
+        // preferences if only a dict/array key has been
+        // TODO: check if this has now been fixed.
 		int counter = prefs.getInt("counter", 0);
 		prefedit.putInt("counter", counter + 1);
 	}

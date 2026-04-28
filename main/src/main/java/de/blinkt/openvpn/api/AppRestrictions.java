@@ -178,9 +178,9 @@ public class AppRestrictions {
 
     private static void applyBooleanDefaultPrefsRestriction(Bundle restrictions, String restriction_name, SharedPreferences defaultPrefs, String prefs_name) {
         if (restrictions.containsKey(restriction_name)) {
-            boolean pauseVPN = restrictions.getBoolean(restriction_name);
+            boolean restriction_value = restrictions.getBoolean(restriction_name);
             SharedPreferences.Editor editor = defaultPrefs.edit();
-            editor.putBoolean(prefs_name, pauseVPN);
+            editor.putBoolean(prefs_name, restriction_value);
             editor.apply();
         }
     }

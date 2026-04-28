@@ -358,7 +358,6 @@ public class ExternalOpenVPNService extends Service implements StateListener {
         @Override
         public void setDefaultProfile(String profileUUID) throws RemoteException {
             mExtAppDb.checkOpenVPNPermission(getPackageManager());
-            ProfileManager pm = ProfileManager.getInstance(getBaseContext());
             VpnProfile vp = ProfileManager.get(getBaseContext(), profileUUID);
             if (vp.checkProfile(getApplicationContext()) != R.string.no_error_found)
                 throw new RemoteException(getString(vp.checkProfile(getApplicationContext())));

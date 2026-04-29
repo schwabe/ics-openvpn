@@ -717,7 +717,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         }
 
-        if (!TextUtils.isEmpty(mCipher)) {
+        if (!TextUtils.isEmpty(mCipher) && mCompatMode > 0) {
             cfg.append("cipher ").append(mCipher).append("\n");
         }
 

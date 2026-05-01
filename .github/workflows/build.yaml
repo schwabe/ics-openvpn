@@ -30,7 +30,7 @@ jobs:
       - name: Build the app
         run: ./gradlew assemble${{ matrix.target }}Release
       - name: Run Unit tests
-        run: ./gradlew test${{ matrix.target }}ReleaseUnitTest
+        run: ./gradlew -PtestBuildType=release test${{ matrix.target }}ReleaseUnitTest
 
       - name: Archive apk artifact
         uses: actions/upload-artifact@v4

@@ -10,6 +10,16 @@ plugins {
     id("checkstyle")
 }
 
+
+fun obtainTestBuildType(): String {
+    var result = "debug";
+
+    if (project.hasProperty("testBuildType")) {
+        result = project.property("testBuildType").toString()
+    }
+    return result
+}
+
 android {
     buildFeatures {
         aidl = true
@@ -35,9 +45,6 @@ android {
         }
     }
 
-
-    //testOptions.unitTests.isIncludeAndroidResources = true
-
     externalNativeBuild {
         cmake {
             path = File("${projectDir}/src/main/cpp/CMakeLists.txt")
@@ -50,17 +57,13 @@ android {
 
         }
 
-        create("ui") {
-        }
+        create("ui") {}
 
-        create("skeleton") {
-        }
+        create("skeleton") {}
 
-        getByName("debug") {
-        }
+        getByName("debug") {}
 
-        getByName("release") {
-        }
+        getByName("release") {}
     }
 
     signingConfigs {
@@ -95,7 +98,14 @@ android {
     }
 
     lint {
-        enable += setOf("BackButton", "EasterEgg", "StopShip", "IconExpectedSize", "GradleDynamicVersion", "NewerVersionAvailable")
+        enable += setOf(
+            "BackButton",
+            "EasterEgg",
+            "StopShip",
+            "IconExpectedSize",
+            "GradleDynamicVersion",
+            "NewerVersionAvailable"
+        )
         checkOnly += setOf("ImpliedQuantity", "MissingQuantity")
         disable += setOf("MissingTranslation", "UnsafeNativeCodeLocation")
     }
@@ -112,14 +122,12 @@ android {
             dimension = "implementation"
         }
 
-        create("ovpn23")
-        {
+        create("ovpn23") {
             dimension = "ovpnimpl"
             buildConfigField("boolean", "openvpn3", "true")
         }
 
-        create("ovpn2")
-        {
+        create("ovpn2") {
             dimension = "ovpnimpl"
             versionNameSuffix = "-o2"
             buildConfigField("boolean", "openvpn3", "false")
@@ -137,6 +145,8 @@ android {
             }
         }
     }
+
+    testBuildType = obtainTestBuildType()
 
     compileOptions {
         targetCompatibility = JavaVersion.VERSION_17
@@ -170,14 +180,18 @@ android {
                 val keystoreTPAlias: String? by project
                 keyAlias = keystoreTPAlias
 
-                if (keystoreTPFile?.isEmpty() ?: true)
-                    println("keystoreTPFile not set, disabling transparency signing")
-                if (keystoreTPPassword?.isEmpty() ?: true)
-                    println("keystoreTPPassword not set, disabling transparency signing")
-                if (keystoreTPAliasPassword?.isEmpty() ?: true)
-                    println("keystoreTPAliasPassword not set, disabling transparency signing")
-                if (keystoreTPAlias?.isEmpty() ?: true)
-                    println("keyAlias not set, disabling transparency signing")
+                if (keystoreTPFile?.isEmpty()
+                        ?: true
+                ) println("keystoreTPFile not set, disabling transparency signing")
+                if (keystoreTPPassword?.isEmpty()
+                        ?: true
+                ) println("keystoreTPPassword not set, disabling transparency signing")
+                if (keystoreTPAliasPassword?.isEmpty()
+                        ?: true
+                ) println("keystoreTPAliasPassword not set, disabling transparency signing")
+                if (keystoreTPAlias?.isEmpty()
+                        ?: true
+                ) println("keyAlias not set, disabling transparency signing")
 
             }
         }
@@ -187,29 +201,42 @@ android {
 var swigcmd = "swig"
 // Workaround for macOS(arm64) and macOS(intel) since it otherwise does not find swig and
 // I cannot get the Exec task to respect the PATH environment :(
-if (file("/opt/homebrew/bin/swig").exists())
-    swigcmd = "/opt/homebrew/bin/swig"
-else if (file("/usr/local/bin/swig").exists())
-    swigcmd = "/usr/local/bin/swig"
+if (file("/opt/homebrew/bin/swig").exists()) swigcmd = "/opt/homebrew/bin/swig"
+else if (file("/usr/local/bin/swig").exists()) swigcmd = "/usr/local/bin/swig"
 
 
 fun registerGenTask(variantName: String, variantDirName: String): File {
-    val baseDir = File(buildDir, "generated/source/ovpn3swig/${variantDirName}")
+    val baseDir =
+        layout.buildDirectory.file("generated/source/ovpn3swig/${variantDirName}").get().asFile
     val genDir = File(baseDir, "net/openvpn/ovpn3")
 
-    tasks.register<Exec>("generateOpenVPN3Swig${variantName}")
-    {
+    tasks.register<Exec>("generateOpenVPN3Swig${variantName}") {
 
         doFirst {
             mkdir(genDir)
         }
-        commandLine(listOf(swigcmd, "-outdir", genDir, "-outcurrentdir", "-c++", "-java", "-package", "net.openvpn.ovpn3",
-                "-Isrc/main/cpp/openvpn3/client", "-Isrc/main/cpp/openvpn3/",
+        commandLine(
+            listOf(
+                swigcmd,
+                "-outdir",
+                genDir,
+                "-outcurrentdir",
+                "-c++",
+                "-java",
+                "-package",
+                "net.openvpn.ovpn3",
+                "-Isrc/main/cpp/openvpn3/client",
+                "-Isrc/main/cpp/openvpn3/",
                 "-DOPENVPN_PLATFORM_ANDROID",
-                "-o", "${genDir}/ovpncli_wrap.cxx", "-oh", "${genDir}/ovpncli_wrap.h",
-                "src/main/cpp/openvpn3/client/ovpncli.i"))
-        inputs.files( "src/main/cpp/openvpn3/client/ovpncli.i")
-        outputs.dir( genDir)
+                "-o",
+                "${genDir}/ovpncli_wrap.cxx",
+                "-oh",
+                "${genDir}/ovpncli_wrap.h",
+                "src/main/cpp/openvpn3/client/ovpncli.i"
+            )
+        )
+        inputs.files("src/main/cpp/openvpn3/client/ovpncli.i")
+        outputs.dir(genDir)
 
     }
     return baseDir

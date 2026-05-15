@@ -63,32 +63,34 @@ class InternalWebView : BaseActivity() {
 
     }
 
-    @JavascriptInterface
-    fun postMessage(json: String?, transferList: String?): Boolean {
-        val jObejct = JSONObject(json)
+    private inner class AppEventBridge {
+        @JavascriptInterface
+        fun postMessage(json: String?, transferList: String?): Boolean {
+            val jObejct = JSONObject(json)
 
-        val action = jObejct.getString("type")
-        Log.i("OpenVPN,InternalWebview", json + " ---- " + transferList)
+            val action = jObejct.getString("type")
+            Log.i("OpenVPN,InternalWebview", json + " ---- " + transferList)
 
-        if (action == "ACTION_REQUIRED") {
-            // Should show the hidden webview, nothing for us to do
+            if (action == "ACTION_REQUIRED") {
+                // Should show the hidden webview, nothing for us to do
+                return true
+            }
+
+            if (action == "CONNECT_SUCCESS" || action == "CONNECT_FAILED") {
+                runOnUiThread({ finish() })
+            }
+
+            /* runOnUiThread({
+                Toast.makeText(this, json + " ---- " + transferList, Toast.LENGTH_LONG).show()
+            }) */
             return true
         }
-
-        if (action == "CONNECT_SUCCESS" || action == "CONNECT_FAILED") {
-            runOnUiThread({finish()})
-        }
-
-        /* runOnUiThread({
-            Toast.makeText(this, json + " ---- " + transferList, Toast.LENGTH_LONG).show()
-        }) */
-        return true
     }
 
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private fun attachMessageHandler() {
-        webView.addJavascriptInterface(this, "appEvent")
+        webView.addJavascriptInterface(AppEventBridge(), "appEvent")
     }
 
     override fun onResume() {

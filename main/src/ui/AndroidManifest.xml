@@ -40,7 +40,6 @@
                 <data android:host="import-profile" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.InternalWebView" />
         <activity
                 android:name=".activities.CredentialsPopup"
                 android:theme="@style/blinkt.dialog" />

@@ -35,7 +35,7 @@ android {
     ndkVersion = "30.0.14904198"
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 23
         targetSdk = 36
         //targetSdkPreview = "UpsideDownCake"
         versionCode = 219
@@ -247,15 +247,6 @@ fun registerGenSwigTask(variantName: String, variantDirName: String): TaskProvid
     return genTask
 }
 
-//android.applicationVariants.all(object : Action<ApplicationVariant> {
-//    override fun execute(variant: ApplicationVariant) {
-//        val sourceDir = registerGenTask(variant.name, variant.baseName.replace("-", "/"))
-//        val task = tasks.named("generateOpenVPN3Swig${variant.name}").get()
-//
-//        variant.registerJavaGeneratingTask(task, sourceDir)
-//    }
-//})
-
 androidComponents {
     onVariants(selector().all()) { variant ->
         val execTask = registerGenSwigTask(variant.name, variant.name.replace("-", "/"))
@@ -282,7 +273,6 @@ dependencies {
     uiImplementation(libs.androidx.preference.ktx)
     uiImplementation(libs.androidx.recyclerview)
     uiImplementation(libs.androidx.security.crypto)
-    uiImplementation(libs.androidx.webkit)
     uiImplementation(libs.kotlin)
     uiImplementation(libs.mpandroidchart)
     uiImplementation(libs.square.okhttp)

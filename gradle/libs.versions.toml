@@ -1,30 +1,29 @@
 [versions]
 android-gradle-plugin = "9.2.1"
-androidx-activity = "1.10.1"
-androidx-annotation = "1.9.1"
+androidx-activity = "1.13.0"
+androidx-annotation = "1.10.0"
 androidx-appcompat = "1.7.1"
-android-view-material = "1.12.0"
-androidx-core-ktx = "1.17.0"
+android-view-material = "1.14.0"
+androidx-core-ktx = "1.18.0"
 androidx-fragment-ktx = "1.8.9"
 androidx-preference-ktx = "1.2.1"
-androidx-webkit = "1.14.0"
-androidx-lifecycle-viewmodel-ktx = "2.9.3"
-androidx-lifecycle-runtime-ktx = "2.9.3"
+androidx-lifecycle-viewmodel-ktx = "2.10.0"
+androidx-lifecycle-runtime-ktx = "2.10.0"
 androidx-security-crypto = "1.1.0"
 androidx-constraintlayout = "2.2.1"
 androidx-cardview = "1.0.0"
 androidx-recyclerview = "1.4.0"
 androidx-viewpager2 = "1.1.0"
-bouncycastle = "1.69"
-mpandroidchart = "v3.1.0"
-kotlin = "2.2.10"
-square-okhttp = "4.10.0"
+bouncycastle = "1.70"
+mpandroidchart = "3.1.0"
+kotlin = "2.3.21"
+square-okhttp = "5.3.2"
 
 # Test
 androidx-test-core = "1.7.0"
 junit = "4.13.2"
-mockito-core = "4.8.1"
-robolectric = "4.10.2"
+mockito-core = "5.23.0"
+robolectric = "4.16.1"
 
 [libraries]
 android-view-material = { group = "com.google.android.material", name = "material", version.ref = "android-view-material" }
@@ -38,7 +37,6 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-core-ktx = { group = "androidx.core", name = "core", version.ref = "androidx-core-ktx" }
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "androidx-fragment-ktx" }
 androidx-preference-ktx = { group = "androidx.preference", name = "preference-ktx", version.ref = "androidx-preference-ktx" }
-androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "androidx-webkit" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle-viewmodel-ktx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime-ktx" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "androidx-recyclerview" }

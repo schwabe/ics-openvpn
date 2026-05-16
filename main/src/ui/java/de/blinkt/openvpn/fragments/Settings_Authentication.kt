@@ -176,7 +176,7 @@ class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPrefe
 
     fun startFileDialog() {
         var startFC: Intent? = null
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !alwaysUseOldFileChooser(activity)) {
+        if (!alwaysUseOldFileChooser(activity)) {
             startFC = getFilePickerIntent(requireContext(), Utils.FileType.TLS_AUTH_FILE)
             if (startFC != null)
                 handleSystemChooserResult.launch(startFC)

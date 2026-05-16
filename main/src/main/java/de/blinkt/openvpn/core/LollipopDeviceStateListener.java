@@ -5,12 +5,10 @@
 
 package de.blinkt.openvpn.core;
 
-import android.annotation.TargetApi;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.os.Build;
 
 public class LollipopDeviceStateListener extends ConnectivityManager.NetworkCallback {
 

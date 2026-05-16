@@ -58,8 +58,7 @@ public class FileSelect extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.file_dialog);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            checkPermission();
+		checkPermission();
 
         mData = getIntent().getStringExtra(START_DATA);
 		if(mData==null)
@@ -96,8 +95,6 @@ public class FileSelect extends BaseActivity {
 
 	}
 
-
-	@TargetApi(Build.VERSION_CODES.M)
 	private void checkPermission() {
 		if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST);

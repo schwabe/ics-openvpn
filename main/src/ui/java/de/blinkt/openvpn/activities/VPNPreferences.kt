@@ -4,7 +4,6 @@
  */
 package de.blinkt.openvpn.activities
 
-import android.annotation.TargetApi
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -39,7 +38,6 @@ class VPNPreferences : BaseActivity(), VpnStatus.ProfileNotifyListener {
     private lateinit var mPager: ViewPager2
     private lateinit var mPagerAdapter: ScreenSlidePagerAdapter
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     protected fun isValidFragment(fragmentName: String): Boolean {
         for (c in validFragments) if (c.name == fragmentName) return true
         return false

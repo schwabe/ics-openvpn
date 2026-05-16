@@ -5,7 +5,6 @@
 
 package de.blinkt.openvpn.fragments
 
-import android.annotation.TargetApi
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
@@ -43,7 +42,6 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
     private lateinit var mExtAuthSpinner: Spinner
 
     private val isInHardwareKeystore: Boolean
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
         @Throws(KeyChainException::class, InterruptedException::class)
         get() {
             val key: PrivateKey = KeyChain.getPrivateKey(requireActivity().applicationContext, mProfile.mAlias) ?: return false
@@ -118,11 +116,9 @@ internal abstract class KeyChainSettingsFragment : Settings_Fragment(), View.OnC
                         val certChain = KeyChain.getCertificateChain(requireActivity().applicationContext, mProfile.mAlias)
                         if (certChain != null) {
                             cert = certChain[0]
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                                run {
-                                    if (isInHardwareKeystore)
-                                        certstr += getString(R.string.hwkeychain)
-                                }
+                            run {
+                                if (isInHardwareKeystore)
+                                    certstr += getString(R.string.hwkeychain)
                             }
                         }
                     }

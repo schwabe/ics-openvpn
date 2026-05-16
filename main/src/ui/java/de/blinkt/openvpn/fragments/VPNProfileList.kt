@@ -5,7 +5,6 @@
 package de.blinkt.openvpn.fragments
 
 import android.Manifest
-import android.annotation.TargetApi
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
@@ -403,7 +402,6 @@ class VPNProfileList : ListFragment(), View.OnClickListener, StateListener {
         return true
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     private fun startFilePicker(): Boolean {
         val i = Utils.getFilePickerIntent(getActivity()!!, Utils.FileType.OVPN_CONFIG)
         if (i != null) {

@@ -556,7 +556,6 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         return START_STICKY;
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     private boolean foregroundNotificationVisible() {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         StatusBarNotification[] notifications = mNotificationManager.getActiveNotifications();

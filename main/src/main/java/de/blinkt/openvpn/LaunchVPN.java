@@ -8,7 +8,6 @@ package de.blinkt.openvpn;
 import static de.blinkt.openvpn.core.OpenVPNService.EXTRA_START_REASON;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -301,7 +300,6 @@ public class LaunchVPN extends Activity {
         d.show();
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void setOnDismissListener(AlertDialog.Builder d) {
         d.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override

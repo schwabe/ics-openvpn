@@ -667,6 +667,6 @@ int res_init();
 
 #define HAVE_OPENSSL_VERSION 1
 #define HAVE_EVP_CIPHER_CTX_RESET
-
+#define HAVE_BASENAME 1
 
 #define _SOCKLEN_T_DECLARED 1

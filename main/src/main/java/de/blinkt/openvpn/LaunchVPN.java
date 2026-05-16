@@ -24,7 +24,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
@@ -44,6 +43,7 @@ import de.blinkt.openvpn.core.Preferences;
 import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 import de.blinkt.openvpn.core.VpnStatus;
+import de.blinkt.openvpn.activities.LogWindow;
 
 /**
  * This Activity actually handles two stages of a launcher shortcut's life cycle.
@@ -271,9 +271,8 @@ public class LaunchVPN extends Activity {
     }
 
     void showLogWindow() {
-
         Intent startLW = new Intent();
-        startLW.setComponent(new ComponentName(this, getPackageName() + ".activities.LogWindow"));
+        startLW.setComponent(new ComponentName(this, LogWindow.class));
         startLW.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(startLW);
 

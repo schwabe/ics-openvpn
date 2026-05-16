@@ -231,6 +231,30 @@
                 android:hint="@string/pw_query_hint"
                 android:inputType="textPassword" />
 
+            <CheckBox
+                android:id="@+id/use_static_challenge"
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:text="@string/use_static_challenge" />
+
+            <TextView
+                android:id="@+id/static_challenge_label"
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:text="@string/static_challenge_text"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/static_challenge"
+                style="@style/item"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:inputType="text"
+                android:visibility="gone" />
+
             <TextView
                 style="@style/item"
                 android:layout_marginLeft="8dip"

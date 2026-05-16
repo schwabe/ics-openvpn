@@ -30,6 +30,17 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
             android:hint="@string/password"/>
+    <EditText
+            android:id="@+id/challenge_response"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:hint="@string/challenge_response"
+            android:visibility="gone" />
     <CheckBox
             android:id="@+id/show_password"
             android:layout_width="match_parent"

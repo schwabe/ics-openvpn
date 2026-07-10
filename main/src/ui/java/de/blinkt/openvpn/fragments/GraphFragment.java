@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -293,23 +292,21 @@ public class GraphFragment extends Fragment implements VpnStatus.ByteCountListen
             switch (timeperiod) {
                 case TIME_PERIOD_HOURS:
                     list = VpnStatus.trafficHistory.getHours();
-                    interval = TrafficHistory.TIME_PERIOD_HOURS;
+                    interval = TrafficHistory.TIME_PERIOD_HOUR;
                     totalInterval = 0;
                     break;
                 case TIME_PERIOD_MINUTES:
                     list = VpnStatus.trafficHistory.getMinutes();
-                    interval = TrafficHistory.TIME_PERIOD_MINTUES;
-                    totalInterval = TrafficHistory.TIME_PERIOD_HOURS * TrafficHistory.PERIODS_TO_KEEP;
-                    ;
-
+                    interval = TrafficHistory.TIME_PERIOD_MINUTE;
+                    totalInterval = TrafficHistory.TIME_PERIOD_HOUR * TrafficHistory.PERIODS_TO_KEEP;
                     break;
                 default:
                     list = VpnStatus.trafficHistory.getSeconds();
                     interval = OpenVPNManagement.mBytecountInterval * 1000;
-                    totalInterval = TrafficHistory.TIME_PERIOD_MINTUES * TrafficHistory.PERIODS_TO_KEEP;
+                    totalInterval = TrafficHistory.TIME_PERIOD_MINUTE * TrafficHistory.PERIODS_TO_KEEP;
                     break;
             }
-            if (list.size() == 0) {
+            if (list.isEmpty()) {
                 list = TrafficHistory.getDummyList();
             }
 

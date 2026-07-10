@@ -10,9 +10,10 @@ import android.os.Parcelable;
 
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Vector;
 
 import static java.lang.Math.max;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by arne on 23.05.17.
@@ -21,14 +22,13 @@ import static java.lang.Math.max;
 public class TrafficHistory implements Parcelable {
 
     public static final long PERIODS_TO_KEEP = 5;
-    public static final int TIME_PERIOD_MINTUES = 60 * 1000;
-    public static final int TIME_PERIOD_HOURS = 3600 * 1000;
+    public static final int TIME_PERIOD_MINUTE = 60 * 1000;
+    public static final int TIME_PERIOD_HOUR = 3600 * 1000;
+    public static final int TIME_PERIOD_DAY = 24 * 3600 * 1000;
     private final LinkedList<TrafficDatapoint> trafficHistorySeconds = new LinkedList<>();
     private final LinkedList<TrafficDatapoint> trafficHistoryMinutes = new LinkedList<>();
     private final LinkedList<TrafficDatapoint> trafficHistoryHours = new LinkedList<>();
 
-    private TrafficDatapoint lastSecondUsedForMinute;
-    private TrafficDatapoint lastMinuteUsedForHours;
 
     public TrafficHistory() {
 
@@ -38,8 +38,6 @@ public class TrafficHistory implements Parcelable {
         in.readList(trafficHistorySeconds, getClass().getClassLoader());
         in.readList(trafficHistoryMinutes, getClass().getClassLoader());
         in.readList(trafficHistoryHours, getClass().getClassLoader());
-        lastSecondUsedForMinute = in.readParcelable(getClass().getClassLoader());
-        lastMinuteUsedForHours = in.readParcelable(getClass().getClassLoader());
     }
 
     public static final Creator<TrafficHistory> CREATOR = new Creator<TrafficHistory>() {
@@ -54,14 +52,14 @@ public class TrafficHistory implements Parcelable {
         }
     };
 
+    @NonNull
     public LastDiff getLastDiff(TrafficDatapoint tdp) {
 
         TrafficDatapoint lasttdp;
 
 
-        if (trafficHistorySeconds.size() == 0)
+        if (trafficHistorySeconds.isEmpty())
             lasttdp = new TrafficDatapoint(0, 0, System.currentTimeMillis());
-
         else
             lasttdp = trafficHistorySeconds.getLast();
 
@@ -88,19 +86,19 @@ public class TrafficHistory implements Parcelable {
         dest.writeList(trafficHistorySeconds);
         dest.writeList(trafficHistoryMinutes);
         dest.writeList(trafficHistoryHours);
-        dest.writeParcelable(lastSecondUsedForMinute, 0);
-        dest.writeParcelable(lastMinuteUsedForHours, 0);
-
     }
 
+    @NonNull
     public synchronized LinkedList<TrafficDatapoint> getHours() {
         return new LinkedList<>(trafficHistoryHours);
     }
 
+    @NonNull
     public synchronized LinkedList<TrafficDatapoint> getMinutes() {
         return new LinkedList<>(trafficHistoryMinutes);
     }
 
+    @NonNull
     public synchronized LinkedList<TrafficDatapoint> getSeconds() {
         return new LinkedList<>(trafficHistorySeconds);
     }
@@ -113,7 +111,7 @@ public class TrafficHistory implements Parcelable {
 
 
     public static class TrafficDatapoint implements Parcelable {
-        private TrafficDatapoint(long inBytes, long outBytes, long timestamp) {
+        protected TrafficDatapoint(long inBytes, long outBytes, long timestamp) {
             this.in = inBytes;
             this.out = outBytes;
             this.timestamp = timestamp;
@@ -155,7 +153,12 @@ public class TrafficHistory implements Parcelable {
     }
 
     LastDiff add(long in, long out) {
-        TrafficDatapoint tdp = new TrafficDatapoint(in, out, System.currentTimeMillis());
+        long time = System.currentTimeMillis();
+        return add(in, out, time);
+    }
+
+    LastDiff add(long in, long out, long time) {
+        TrafficDatapoint tdp = new TrafficDatapoint(in, out, time);
 
         LastDiff diff = getLastDiff(tdp);
         addDataPoint(tdp);
@@ -164,51 +167,38 @@ public class TrafficHistory implements Parcelable {
 
     private synchronized void addDataPoint(TrafficDatapoint tdp) {
         trafficHistorySeconds.add(tdp);
+        removeExcessDataPoints(trafficHistorySeconds, tdp, TIME_PERIOD_MINUTE);
 
-        if (lastSecondUsedForMinute == null) {
-            lastSecondUsedForMinute = new TrafficDatapoint(0, 0, 0);
-            lastMinuteUsedForHours = new TrafficDatapoint(0, 0, 0);
+
+        if (trafficHistoryMinutes.isEmpty() || trafficHistoryMinutes.getLast().timestamp + TIME_PERIOD_MINUTE < tdp.timestamp)
+        {
+            trafficHistoryMinutes.add(tdp);
+            removeExcessDataPoints(trafficHistoryMinutes, tdp, TIME_PERIOD_HOUR);
         }
 
-        removeAndAverage(tdp, true);
+        if (trafficHistoryHours.isEmpty() || trafficHistoryHours.getLast().timestamp + TIME_PERIOD_HOUR < tdp.timestamp)
+        {
+            trafficHistoryHours.add(tdp);
+            removeExcessDataPoints(trafficHistoryHours, tdp, TIME_PERIOD_DAY);
+        }
+
     }
 
-    private void removeAndAverage(TrafficDatapoint newTdp, boolean seconds) {
+    private void removeExcessDataPoints(LinkedList<TrafficDatapoint> tpList, TrafficDatapoint newTdp, long timePeriod) {
         HashSet<TrafficDatapoint> toRemove = new HashSet<>();
-        Vector<TrafficDatapoint> toAverage = new Vector<>();
 
-        long timePeriod;
-        LinkedList<TrafficDatapoint> tpList, nextList;
-        TrafficDatapoint lastTsPeriod;
+        // Check if the first and last time point have more than PERIODS_TO_KEEP, so we
+        // only hit this condition when we reach a full period more, e.g. reduce seconds
+        // from 360 to 300 again
+        if ((newTdp.timestamp - tpList.getFirst().timestamp) / timePeriod < (PERIODS_TO_KEEP + 1))
+            return;
 
-        if (seconds) {
-            timePeriod = TIME_PERIOD_MINTUES;
-            tpList = trafficHistorySeconds;
-            nextList = trafficHistoryMinutes;
-            lastTsPeriod = lastSecondUsedForMinute;
-        } else {
-            timePeriod = TIME_PERIOD_HOURS;
-            tpList = trafficHistoryMinutes;
-            nextList = trafficHistoryHours;
-            lastTsPeriod = lastMinuteUsedForHours;
+        for (TrafficDatapoint tph : tpList) {
+            // List is iterated from oldest to newest, remember first one that we did not
+            if ((newTdp.timestamp - tph.timestamp) / timePeriod >= PERIODS_TO_KEEP)
+                toRemove.add(tph);
         }
-
-        if (newTdp.timestamp / timePeriod > (lastTsPeriod.timestamp / timePeriod)) {
-            nextList.add(newTdp);
-
-            if (seconds) {
-                lastSecondUsedForMinute = newTdp;
-                removeAndAverage(newTdp, false);
-            } else
-                lastMinuteUsedForHours = newTdp;
-
-            for (TrafficDatapoint tph : tpList) {
-                // List is iteratered from oldest to newest, remembert first one that we did not
-                if ((newTdp.timestamp - tph.timestamp) / timePeriod >= PERIODS_TO_KEEP)
-                    toRemove.add(tph);
-            }
-            tpList.removeAll(toRemove);
-        }
+        tpList.removeAll(toRemove);
     }
 
     static class LastDiff {

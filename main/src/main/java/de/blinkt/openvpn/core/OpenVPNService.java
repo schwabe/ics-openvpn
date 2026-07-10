@@ -820,6 +820,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             unregisterDeviceStateReceiver(mDeviceStateReceiver);
             mDeviceStateReceiver = null;
         }
+        mCommandHandlerThread.quit();
         // Just in case unregister for state
         VpnStatus.removeStateListener(this);
         VpnStatus.flushLog();

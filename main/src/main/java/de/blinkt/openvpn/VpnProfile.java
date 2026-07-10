@@ -92,7 +92,7 @@ public class VpnProfile implements Serializable, Cloneable {
     public static final boolean mIsOpenVPN22 = false;
     private static final long serialVersionUID = 7085688938959334563L;
     private static final int AUTH_RETRY_NONE_KEEP = 1;
-    private static final int AUTH_RETRY_INTERACT = 3;
+    public static final int AUTH_RETRY_INTERACT = 3;
     private static final String EXTRA_RSA_PADDING_TYPE = "de.blinkt.openvpn.api.RSA_PADDING_TYPE";
     private static final String EXTRA_SALTLEN = "de.blinkt.openvpn.api.SALTLEN";
     private static final String EXTRA_NEEDS_DIGEST = "de.blinkt.openvpn.api.NEEDS_DIGEST";
@@ -182,13 +182,13 @@ public class VpnProfile implements Serializable, Cloneable {
     public long mCreationDate = 0;
 
 
-    class ChangeLogEntry implements Serializable
-    {
+    class ChangeLogEntry implements Serializable {
         private static final long serialVersionUID = 6032413096860917402L;
 
         public long time;
         public String message;
     }
+
     public Vector<ChangeLogEntry> changesLog = new Vector<>();
 
 
@@ -218,7 +218,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         if (escapedString.equals(unescaped) && !escapedString.contains(" ") &&
                 !escapedString.contains("#") && !escapedString.contains(";")
-                && !escapedString.equals("")  && !escapedString.contains("'"))
+                && !escapedString.equals("") && !escapedString.contains("'"))
             return unescaped;
         else
             return '"' + escapedString + '"';
@@ -363,8 +363,7 @@ public class VpnProfile implements Serializable, Cloneable {
         }
 
         mProfileVersion = CURRENT_PROFILE_VERSION;
-        if (changesLog == null)
-        {
+        if (changesLog == null) {
             changesLog = new Vector<>();
         }
     }
@@ -385,8 +384,7 @@ public class VpnProfile implements Serializable, Cloneable {
     /**
      * Adds an changelog/audit entry to the profile. The date of the entry will be the current time
      */
-    public void addChangeLogEntry(String message)
-    {
+    public void addChangeLogEntry(String message) {
         while (changesLog.size() > 50)
             changesLog.removeElementAt(0);
 
@@ -988,8 +986,9 @@ public class VpnProfile implements Serializable, Cloneable {
             }
 
             return new String[]{ca, extra, user};
-        } catch (InterruptedException | IOException | KeyChainException | NoCertReturnedException | IllegalArgumentException
-                | CertificateException e) {
+        } catch (InterruptedException | IOException | KeyChainException | NoCertReturnedException |
+                 IllegalArgumentException
+                 | CertificateException e) {
             e.printStackTrace();
             VpnStatus.logError(R.string.keyChainAccessError, e.getLocalizedMessage());
 
@@ -1233,8 +1232,7 @@ public class VpnProfile implements Serializable, Cloneable {
             return null;
     }
 
-    private byte[] getExtAppSignedData(Context c, byte[] data, OpenVPNManagement.SignaturePadding padding, String saltlen, String hashalg, boolean needDigest)
-    {
+    private byte[] getExtAppSignedData(Context c, byte[] data, OpenVPNManagement.SignaturePadding padding, String saltlen, String hashalg, boolean needDigest) {
 
         Bundle extra = new Bundle();
         RsaPaddingType paddingType;
@@ -1300,7 +1298,9 @@ public class VpnProfile implements Serializable, Cloneable {
                 return signed_bytes;
             }
         } catch
-        (NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchPaddingException | SignatureException | InvalidAlgorithmParameterException
+        (NoSuchAlgorithmException | InvalidKeyException | IllegalBlockSizeException |
+         BadPaddingException | NoSuchPaddingException | SignatureException |
+         InvalidAlgorithmParameterException
                         e) {
             VpnStatus.logError(R.string.error_rsa_sign, e.getClass().toString(), e.getLocalizedMessage());
             return null;
@@ -1319,7 +1319,7 @@ public class VpnProfile implements Serializable, Cloneable {
 
         int MSBits = (numbits - 1) & 0x7;
 
-        return NativeUtils.addRssPssPadding(hashtype, MSBits, numbits/8, hash);
+        return NativeUtils.addRssPssPadding(hashtype, MSBits, numbits / 8, hash);
     }
 
     private int getHashtype(String digest) throws NoSuchAlgorithmException {

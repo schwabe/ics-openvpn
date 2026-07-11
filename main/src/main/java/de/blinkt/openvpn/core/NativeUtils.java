@@ -11,8 +11,6 @@ import de.blinkt.openvpn.BuildConfig;
 import java.security.InvalidKeyException;
 
 public class NativeUtils {
-    public static native byte[] rsasign(byte[] input, int pkey, boolean pkcs1padding) throws InvalidKeyException;
-
     public static native String[] getIfconfig() throws IllegalArgumentException;
 
     static native void jniclose(int fdint);
@@ -39,20 +37,12 @@ public class NativeUtils {
 
     static boolean osslutilloaded = false;
 
-    public static byte[] addRssPssPadding(int hashtype, int MSBits, int rsa_size, byte[] from)
-    {
-        loadOsslUtil();
-        return rsapss(hashtype, MSBits, rsa_size, from);
-    }
-
     private static void loadOsslUtil() {
         if (!osslutilloaded) {
             osslutilloaded = true;
             System.loadLibrary("osslutil");
         }
     }
-
-    private static native byte[] rsapss(int hashtype, int MSBits, int rsa_size, byte[] from);
 
     public final static int[] openSSLlengths = {
         16, 64, 256, 1024, 1500, 8 * 1024, 16 * 1024

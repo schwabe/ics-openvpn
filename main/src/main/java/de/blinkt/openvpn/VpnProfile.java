@@ -1307,21 +1307,6 @@ public class VpnProfile implements Serializable, Cloneable {
         }
     }
 
-    private byte[] addPSSPadding(PrivateKey privkey, String digest, byte[] data) throws NoSuchAlgorithmException {
-        /* For < API 23, add padding ourselves */
-        int hashtype = getHashtype(digest);
-
-        MessageDigest msgDigest = MessageDigest.getInstance(digest);
-        byte[] hash = msgDigest.digest(data);
-
-        /*  MSBits = (BN_num_bits(rsa->n) - 1) & 0x7; */
-        int numbits = ((RSAPrivateKey) privkey).getModulus().bitLength();
-
-        int MSBits = (numbits - 1) & 0x7;
-
-        return NativeUtils.addRssPssPadding(hashtype, MSBits, numbits / 8, hash);
-    }
-
     private int getHashtype(String digest) throws NoSuchAlgorithmException {
         int hashtype = 0;
         switch (digest) {
@@ -1360,11 +1345,6 @@ public class VpnProfile implements Serializable, Cloneable {
             /* https://developer.android.com/training/articles/keystore#SupportedSignatures */
             if (!"digest".equals(saltlen))
                 throw new SignatureException("PSS signing requires saltlen=digest");
-
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                data = addPSSPadding(privkey, hashalg, data);
-                return getKeyChainSignedData(data, OpenVPNManagement.SignaturePadding.NO_PADDING, "none", "none", false);
-            }
 
             sig = Signature.getInstance(hashalg + "withRSA/PSS");
 

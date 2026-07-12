@@ -7,6 +7,8 @@ package de.blinkt.openvpn.core;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
@@ -456,8 +458,10 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
             VpnStatus.logError(String.format(Locale.ENGLISH, "OpenVPN is asking for a proxy of an unknown connection entry (%d)", connectionEntryNumber));
         }
 
-        // atuo detection of proxy
-        if (proxyType == Connection.ProxyType.NONE && mProfile != null) {
+        // auto detection of proxy
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mOpenVPNService);
+        boolean usesystemproxy = prefs.getBoolean("usesystemproxy", true);
+        if (usesystemproxy && proxyType == Connection.ProxyType.NONE && mProfile != null) {
             SocketAddress proxyaddr = ProxyDetection.detectProxy(mProfile);
             if (proxyaddr instanceof InetSocketAddress) {
                 InetSocketAddress isa = (InetSocketAddress) proxyaddr;

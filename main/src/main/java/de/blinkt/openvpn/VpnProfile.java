@@ -740,9 +740,7 @@ public class VpnProfile implements Serializable, Cloneable {
         if (mPushPeerInfo)
             cfg.append("push-peer-info\n");
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean usesystemproxy = prefs.getBoolean("usesystemproxy", true);
-        if (usesystemproxy && !mIsOpenVPN22 && !configForOvpn3 && !usesExtraProxyOptions()) {
+        if (!mIsOpenVPN22 && !configForOvpn3 && !usesExtraProxyOptions()) {
             cfg.append("# Use system proxy setting\n");
             cfg.append("management-query-proxy\n");
         }

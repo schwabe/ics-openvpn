@@ -442,8 +442,18 @@ public class OpenVpnManagementThread implements Runnable, OpenVPNManagement {
         String proxyname = null;
         boolean proxyUseAuth = false;
 
-        if (mProfile != null && mProfile.mConnections != null && mProfile.mConnections.length > connectionEntryNumber) {
-            Connection connection = mProfile.mConnections[connectionEntryNumber];
+        if (mProfile != null && mProfile.mConnections != null) {
+            Connection connection = null;
+            int enabledIndex = 0;
+            for (Connection c : mProfile.mConnections) {
+                if (c.mEnabled) {
+                    if (enabledIndex == connectionEntryNumber) {
+                        connection = c;
+                        break;
+                    }
+                    enabledIndex++;
+                }
+            }
             proxyType = connection.mProxyType;
             proxyname = connection.mProxyName;
             proxyport = connection.mProxyPort;

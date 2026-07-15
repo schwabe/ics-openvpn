@@ -39,6 +39,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
@@ -129,6 +130,8 @@ public class VpnProfile implements Serializable, Cloneable {
     public String mRemoteCN = "";
     public String mPassword = "";
     public String mUsername = "";
+    public boolean mUseStaticChallenge = false;
+    public String mStaticChallenge = "";
     public boolean mRoutenopull = false;
     public boolean mUseRandomHostname = false;
     public boolean mUseFloat = false;
@@ -568,6 +571,12 @@ public class VpnProfile implements Serializable, Cloneable {
         }
 
         if (isUserPWAuth()) {
+            if (hasStaticChallenge()) {
+                cfg.append("static-challenge ");
+                cfg.append(openVpnEscape(mStaticChallenge));
+                cfg.append(" 1");
+                cfg.append("\n");
+            }
             if (mAuthRetry == AUTH_RETRY_NOINTERACT)
                 cfg.append("auth-retry nointeract\n");
         }
@@ -1185,6 +1194,10 @@ public class VpnProfile implements Serializable, Cloneable {
                 }
         }
 
+        if (isUserPWAuth() && hasStaticChallenge() && mTransientAuthPW == null) {
+            return R.string.password;
+        }
+
         if (isUserPWAuth() &&
                 (TextUtils.isEmpty(mUsername) ||
                         (TextUtils.isEmpty(mPassword) && mTransientAuthPW == null))) {
@@ -1200,6 +1213,19 @@ public class VpnProfile implements Serializable, Cloneable {
         } else {
             return mPassword;
         }
+    }
+
+    public boolean hasStaticChallenge() {
+        return mUseStaticChallenge;
+    }
+
+    public static String getStaticChallengePassword(String password, String response) {
+        if (password == null || response == null)
+            return null;
+
+        String passwordBase64 = Base64.encodeToString(password.getBytes(StandardCharsets.UTF_8), Base64.NO_WRAP);
+        String responseBase64 = Base64.encodeToString(response.getBytes(StandardCharsets.UTF_8), Base64.NO_WRAP);
+        return "SCRV1:" + passwordBase64 + ":" + responseBase64;
     }
 
     // Used by the Array Adapter
@@ -1395,7 +1421,3 @@ public class VpnProfile implements Serializable, Cloneable {
         }
     }
 }
-
-
-
-

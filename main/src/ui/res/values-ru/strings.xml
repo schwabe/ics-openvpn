@@ -34,6 +34,9 @@
     <string name="custom_option_warning">Введите пользовательские параметры OpenVPN. Используйте осторожно. Также обратите внимание, что многие настройки OpenVPN, связанные с туннелированием (tun), могут не поддерживаться данной реализацией VPNSettings. Если вы считаете, что не хватает важных параметров, свяжитесь с автором</string>
     <string name="auth_username">Имя пользователя (пустое - без авторизации)</string>
     <string name="auth_pwquery">Пароль</string>
+    <string name="challenge_response">Ответ на challenge</string>
+    <string name="use_static_challenge">Использовать static challenge</string>
+    <string name="static_challenge_text">Код challenge</string>
     <string name="static_keys_info">Для статической конфигурации ключи TLS аутентификации будут использоваться как статические  </string>
     <string name="configure_the_vpn">Настройка VPN</string>
     <string name="menu_add_profile">Добавить конфигурацию</string>

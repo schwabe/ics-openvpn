@@ -34,6 +34,9 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
     private TextView mPKCS12Password;
     private EditText mUserName;
     private EditText mPassword;
+    private CheckBox mUseStaticChallenge;
+    private TextView mStaticChallengeLabel;
+    private EditText mStaticChallenge;
     private View mView;
     private EditText mProfileName;
     private EditText mKeyPassword;
@@ -78,6 +81,9 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
 
         mUserName = mView.findViewById(id.auth_username);
         mPassword = mView.findViewById(id.auth_password);
+        mUseStaticChallenge = mView.findViewById(id.use_static_challenge);
+        mStaticChallengeLabel = mView.findViewById(id.static_challenge_label);
+        mStaticChallenge = mView.findViewById(id.static_challenge);
         mKeyPassword = mView.findViewById(id.key_password);
         mAuthRetry = mView.findViewById(id.auth_retry);
 
@@ -92,6 +98,7 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mType.setOnItemSelectedListener(this);
         mAuthRetry.setOnItemSelectedListener(this);
         mEnablePeerFingerprint.setOnCheckedChangeListener(this);
+        mUseStaticChallenge.setOnCheckedChangeListener(this);
 
         initKeychainViews(mView);
 
@@ -181,6 +188,8 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
                 break;
         }
 
+        updateStaticChallengeVisibility();
+
 
     }
 
@@ -200,10 +209,13 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
         mPKCS12Password.setText(mProfile.mPKCS12Password);
         mUserName.setText(mProfile.mUsername);
         mPassword.setText(mProfile.mPassword);
+        mUseStaticChallenge.setChecked(mProfile.mUseStaticChallenge);
+        mStaticChallenge.setText(mProfile.mStaticChallenge);
         mKeyPassword.setText(mProfile.mKeyPassword);
         mAuthRetry.setSelection(mProfile.mAuthRetry);
         mEnablePeerFingerprint.setChecked(mProfile.mCheckPeerFingerprint);
         mPeerFingerprints.setText(mProfile.mPeerFingerPrints);
+        updateStaticChallengeVisibility();
     }
 
     protected void savePreferences() {
@@ -222,6 +234,8 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
 
         mProfile.mPassword = mPassword.getText().toString();
         mProfile.mUsername = mUserName.getText().toString();
+        mProfile.mUseStaticChallenge = mUseStaticChallenge.isChecked();
+        mProfile.mStaticChallenge = mStaticChallenge.getText().toString();
         mProfile.mKeyPassword = mKeyPassword.getText().toString();
         mProfile.mAuthRetry = mAuthRetry.getSelectedItemPosition();
         mProfile.mCheckPeerFingerprint = mEnablePeerFingerprint.isChecked();
@@ -245,10 +259,17 @@ public class Settings_Basic extends KeyChainSettingsFragment implements OnItemSe
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (buttonView == mEnablePeerFingerprint)
-        {
+        if (buttonView == mEnablePeerFingerprint) {
             mPeerFingerprints.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-
+        } else if (buttonView == mUseStaticChallenge) {
+            updateStaticChallengeVisibility();
         }
+    }
+
+    private void updateStaticChallengeVisibility() {
+        boolean showChallenge = mUseStaticChallenge.isChecked() &&
+                mView.findViewById(R.id.userpassword).getVisibility() == View.VISIBLE;
+        mStaticChallengeLabel.setVisibility(showChallenge ? View.VISIBLE : View.GONE);
+        mStaticChallenge.setVisibility(showChallenge ? View.VISIBLE : View.GONE);
     }
 }

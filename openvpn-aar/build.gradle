@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.library'
+}
+android {
+    compileSdkVersion 36
+    ndkVersion "28.0.13004108"
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 36
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "${projectDir}/../main/src/main/cpp/CMakeLists.txt"
+        }
+    }
+
+    sourceSets {
+        getByName("main") {
+            assets.srcDirs("${projectDir}/../main/build/ovpnassets")
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        exclude 'lib/**/libovpn3.so'
+        exclude 'lib/**/libosslspeedtest.so'
+    }
+    namespace 'com.pango.openvpn'
+}
+
+dependencies {
+
+}

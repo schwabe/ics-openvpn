@@ -18,8 +18,8 @@ dependencyResolutionManagement {
         maven(url = "https://jitpack.io")
     }
 }
-
-include(":main")
-include(":tlsexternalcertprovider")
-include(":remoteExample")
+include(":openvpn-aar")
+//include(":main")
+//include(":tlsexternalcertprovider")
+//include(":remoteExample")
 //include(":yubikeyplugin")

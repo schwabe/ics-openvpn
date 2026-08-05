@@ -12,6 +12,15 @@ plugins {
     id("checkstyle")
 }
 
+/**
+ * Pick the preferred NDK if it is installed, otherwise fall back to a known available version.
+ * This lets the build succeed on machines that do not have the exact upstream NDK revision.
+ */
+fun resolveNdkVersion(preferred: String, fallback: String): String {
+    val sdkRoot = System.getenv("ANDROID_HOME") ?: System.getenv("ANDROID_SDK_ROOT") ?: return preferred
+    return if (file("$sdkRoot/ndk/$preferred").exists()) preferred else fallback
+}
+
 
 fun obtainTestBuildType(): String {
     var result = "debug";
@@ -32,7 +41,7 @@ android {
     //compileSdkPreview = "UpsideDownCake"
 
     // Also update runcoverity.sh
-    ndkVersion = "30.0.14904198"
+    ndkVersion = resolveNdkVersion("30.0.14904198", "29.0.14206865")
 
     defaultConfig {
         minSdk = 23
@@ -63,9 +72,10 @@ android {
         create("skeleton") {}
 
         create("sargo") {
-            java.srcDirs("src/ui/java", "src/sargo/java")
-            res.srcDirs("src/ui/res", "src/sargo/res")
-            manifest.srcFile("src/ui/AndroidManifest.xml")
+            java.setSrcDirs(listOf("src/ui/java", "src/sargo/java"))
+            kotlin.setSrcDirs(listOf("src/ui/java", "src/sargo/java"))
+            res.setSrcDirs(listOf("src/ui/res", "src/sargo/res"))
+            manifest.srcFile("src/sargo/AndroidManifest.xml")
         }
 
         getByName("debug") {}
@@ -289,9 +299,8 @@ dependencies {
     uiImplementation(libs.mpandroidchart)
     uiImplementation(libs.square.okhttp)
 
-    // SargO MDM client library.
-    // TODO: provide the actual SargO lib artifact (.aar) and uncomment:
-    // sargoImplementation(files("libs/sargo-mdm-lib.aar"))
+    // SargO MDM client library (built from SargO/sargo/launcher/lib).
+    sargoImplementation(files("src/sargo/libs/sargo-mdm-lib-debug.aar"))
 
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.junit)
@@ -300,5 +309,10 @@ dependencies {
     testImplementation(libs.robolectric)
 }
 
-fun DependencyHandler.uiImplementation(dependencyNotation: Any): Dependency? =
+fun DependencyHandler.uiImplementation(dependencyNotation: Any): Dependency? {
     add("uiImplementation", dependencyNotation)
+    return add("sargoImplementation", dependencyNotation)
+}
+
+fun DependencyHandler.sargoImplementation(dependencyNotation: Any): Dependency? =
+    add("sargoImplementation", dependencyNotation)

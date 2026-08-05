@@ -9,20 +9,34 @@ import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
+import android.widget.TextView
+import de.blinkt.openvpn.R
 import de.blinkt.openvpn.activities.MainActivity
 import de.blinkt.openvpn.api.IOpenVPNAPIService
+import pro.sargo.SargoMDM
 import pro.sargo.openvpn.SargoVpnController
 
 /**
  * SargO-managed entry point for OpenVPN.
  *
- * This activity binds to the ics-openvpn AIDL service, applies the remote
- * SargO configuration, and then forwards the user to the standard MainActivity.
+ * This activity:
+ * 1. Connects to the SargO MDM service and waits for it to be ready.
+ * 2. Binds to the ics-openvpn AIDL service and requests API permission.
+ * 3. Applies the remote SargO VPN configuration.
+ * 4. Forwards the user to the standard MainActivity.
  */
 class SargoLauncherActivity : Activity() {
 
     private var vpnService: IOpenVPNAPIService? = null
     private val controller by lazy { SargoVpnController(this) }
+
+    private lateinit var progressBar: ProgressBar
+    private lateinit var statusText: TextView
+
+    private var isSargoConnected = false
+    private var isOpenVpnBound = false
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
@@ -40,17 +54,48 @@ class SargoLauncherActivity : Activity() {
         }
     }
 
+    private val mdmEventHandler = object : SargoMDM.EventHandler {
+        override fun onSargoMDMConnected() {
+            Log.i(TAG, "Connected to SargO MDM")
+            isSargoConnected = true
+            runOnUiThread { bindOpenVpnService() }
+        }
+
+        override fun onSargoMDMDisconnected() {
+            Log.w(TAG, "Disconnected from SargO MDM")
+            isSargoConnected = false
+        }
+
+        override fun onSargoMDMConfigChanged() {
+            Log.i(TAG, "SargO config changed")
+            vpnService?.let { applyConfiguration() }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bindOpenVpnService()
+        setContentView(R.layout.activity_sargo_launcher)
+
+        progressBar = findViewById(R.id.sargo_progress)
+        statusText = findViewById(R.id.sargo_status_text)
+
+        setStatus("Connecting to SargO MDM...")
+        connectSargo()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        try {
-            unbindService(serviceConnection)
-        } catch (e: IllegalArgumentException) {
-            // Service was not bound
+        if (isSargoConnected) {
+            SargoMDM.getInstance().disconnect(this)
+            isSargoConnected = false
+        }
+        if (isOpenVpnBound) {
+            try {
+                unbindService(serviceConnection)
+            } catch (e: IllegalArgumentException) {
+                // Service was not bound
+            }
+            isOpenVpnBound = false
         }
     }
 
@@ -61,8 +106,24 @@ class SargoLauncherActivity : Activity() {
                 applyConfiguration()
             } else {
                 Log.w(TAG, "OpenVPN API permission denied")
+                setStatus("VPN API permission denied")
                 openMainActivity()
             }
+        }
+    }
+
+    private fun connectSargo() {
+        val connected = try {
+            SargoMDM.getInstance().connect(this, mdmEventHandler)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to connect to SargO MDM", e)
+            false
+        }
+
+        if (!connected) {
+            Log.w(TAG, "SargO MDM not available; opening standard UI")
+            setStatus("SargO MDM not available")
+            openMainActivity()
         }
     }
 
@@ -70,7 +131,12 @@ class SargoLauncherActivity : Activity() {
         val intent = Intent(IOpenVPNAPIService::class.java.name).apply {
             setPackage(packageName)
         }
-        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        isOpenVpnBound = bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        if (!isOpenVpnBound) {
+            Log.w(TAG, "Failed to bind OpenVPN API service")
+            setStatus("Failed to bind OpenVPN service")
+            openMainActivity()
+        }
     }
 
     private fun requestApiPermission(): Boolean {
@@ -97,8 +163,26 @@ class SargoLauncherActivity : Activity() {
             return
         }
 
-        controller.applyConfiguration(service)
-        openMainActivity()
+        controller.applyConfiguration(service, object : SargoVpnController.ControllerListener {
+            override fun onStatus(message: String) {
+                setStatus(message)
+            }
+
+            override fun onError(message: String) {
+                setStatus(message)
+            }
+
+            override fun onCompleted() {
+                openMainActivity()
+            }
+        })
+    }
+
+    private fun setStatus(message: String) {
+        statusText.text = message
+        statusText.visibility = View.VISIBLE
+        progressBar.visibility = View.VISIBLE
+        Log.i(TAG, "Status: $message")
     }
 
     private fun openMainActivity() {

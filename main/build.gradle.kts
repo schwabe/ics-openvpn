@@ -62,6 +62,12 @@ android {
 
         create("skeleton") {}
 
+        create("sargo") {
+            java.srcDirs("src/ui/java", "src/sargo/java")
+            res.srcDirs("src/ui/res", "src/sargo/res")
+            manifest.srcFile("src/ui/AndroidManifest.xml")
+        }
+
         getByName("debug") {}
 
         getByName("release") {}
@@ -121,6 +127,12 @@ android {
 
         create("skeleton") {
             dimension = "implementation"
+        }
+
+        create("sargo") {
+            dimension = "implementation"
+            applicationId = "de.blinkt.openvpn"
+            versionNameSuffix = "-sargo"
         }
 
         create("ovpn23") {
@@ -276,6 +288,10 @@ dependencies {
     uiImplementation(libs.kotlin)
     uiImplementation(libs.mpandroidchart)
     uiImplementation(libs.square.okhttp)
+
+    // SargO MDM client library.
+    // TODO: provide the actual SargO lib artifact (.aar) and uncomment:
+    // sargoImplementation(files("libs/sargo-mdm-lib.aar"))
 
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.junit)

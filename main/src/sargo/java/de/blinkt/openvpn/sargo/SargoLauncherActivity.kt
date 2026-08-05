@@ -144,6 +144,9 @@ class SargoLauncherActivity : Activity() {
         return try {
             val intent = service.prepare(packageName)
             if (intent != null) {
+                // Make the intent explicit to avoid StrictMode UnsafeIntentLaunchViolation
+                // on Android 12+ when the returned intent only carries a component.
+                intent.setPackage(packageName)
                 startActivityForResult(intent, REQUEST_API_PERMISSION)
                 false
             } else {

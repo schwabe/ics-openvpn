@@ -54,6 +54,15 @@ class SargoVpnController(private val context: Context) {
         config: SargoVpnConfig,
         listener: ControllerListener?
     ) {
+        if (config.disconnectOnConfigChange) {
+            listener?.onStatus("Disconnecting active VPN before applying new configuration...")
+            try {
+                service.disconnect()
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to disconnect active VPN", e)
+            }
+        }
+
         // Remove requested profiles first
         removeProfiles(service, config, listener)
 
@@ -75,12 +84,14 @@ class SargoVpnController(private val context: Context) {
         config: SargoVpnConfig,
         listener: ControllerListener?
     ) {
+        val inlineConfig = config.vpnConfigContent.ifBlank { config.vpnConfig }
+
         when {
-            config.vpnConfig.startsWith("content://") -> {
+            inlineConfig.startsWith("content://") -> {
                 importer.importFromUri(
                     service,
                     config.vpnName,
-                    Uri.parse(config.vpnConfig),
+                    Uri.parse(inlineConfig),
                     object : VpnProfileImporter.ImportProgressListener {
                         override fun onImportStarted() {
                             listener?.onStatus("Importing profile '${config.vpnName}'...")
@@ -108,7 +119,7 @@ class SargoVpnController(private val context: Context) {
             else -> {
                 // Treat as inline config content
                 listener?.onStatus("Importing profile '${config.vpnName}'...")
-                val result = importer.importFromString(service, config.vpnName, config.vpnConfig)
+                val result = importer.importFromString(service, config.vpnName, inlineConfig)
                 when (result) {
                     is VpnProfileImporter.ImportResult.Success -> {
                         finalizeProfile(service, config, result.profile, listener)

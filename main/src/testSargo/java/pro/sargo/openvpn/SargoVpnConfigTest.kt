@@ -97,18 +97,109 @@ class SargoVpnConfigTest {
 
     @Test
     fun fromPreferences_alwaysOnValues() {
-        assertTrue(SargoVpnConfig.fromPreferences("A", "c", "0", "1", "", "0")?.alwaysOn == true)
-        assertFalse(SargoVpnConfig.fromPreferences("A", "c", "0", "0", "", "0")?.alwaysOn == true)
-        assertNull(SargoVpnConfig.fromPreferences("A", "c", "0", "", "", "0")?.alwaysOn)
-        assertNull(SargoVpnConfig.fromPreferences("A", "c", "0", "yes", "", "0")?.alwaysOn)
+        assertTrue(SargoVpnConfig.fromPreferences("A", "c", null, "0", "1", "", "0")?.alwaysOn == true)
+        assertFalse(SargoVpnConfig.fromPreferences("A", "c", null, "0", "0", "", "0")?.alwaysOn == true)
+        assertNull(SargoVpnConfig.fromPreferences("A", "c", null, "0", "", "", "0")?.alwaysOn)
+        assertNull(SargoVpnConfig.fromPreferences("A", "c", null, "0", "yes", "", "0")?.alwaysOn)
     }
 
     @Test
     fun fromPreferences_booleanParsing() {
-        assertTrue(SargoVpnConfig.fromPreferences("A", "c", "1", null, "", "")?.connect == true)
-        assertFalse(SargoVpnConfig.fromPreferences("A", "c", "0", null, "", "")?.connect == true)
-        assertFalse(SargoVpnConfig.fromPreferences("A", "c", "yes", null, "", "")?.connect == true)
-        assertTrue(SargoVpnConfig.fromPreferences("A", "c", "", "", "", "1")?.removeAll == true)
-        assertFalse(SargoVpnConfig.fromPreferences("A", "c", "", "", "", "0")?.removeAll == true)
+        assertTrue(SargoVpnConfig.fromPreferences("A", "c", null, "1", null, "", "")?.connect == true)
+        assertFalse(SargoVpnConfig.fromPreferences("A", "c", null, "0", null, "", "")?.connect == true)
+        assertFalse(SargoVpnConfig.fromPreferences("A", "c", null, "yes", null, "", "")?.connect == true)
+        assertTrue(SargoVpnConfig.fromPreferences("A", "c", null, "", "", "", "1")?.removeAll == true)
+        assertFalse(SargoVpnConfig.fromPreferences("A", "c", null, "", "", "", "0")?.removeAll == true)
+    }
+
+    @Test
+    fun fromPreferences_usesVpnConfigContentWhenProvided() {
+        val config = SargoVpnConfig.fromPreferences(
+            vpnName = "Content VPN",
+            vpnConfig = "",
+            vpnConfigContent = "client\ndev tun\nremote 1.2.3.4",
+            connect = "0",
+            alwaysOn = null,
+            remove = "",
+            removeAll = "0"
+        )
+
+        assertNotNull(config)
+        assertEquals("Content VPN", config?.vpnName)
+        assertEquals("", config?.vpnConfig)
+        assertEquals("client\ndev tun\nremote 1.2.3.4", config?.vpnConfigContent)
+    }
+
+    @Test
+    fun fromPreferences_vpnConfigContentTakesPrecedenceOverVpnConfig() {
+        val config = SargoVpnConfig.fromPreferences(
+            vpnName = "Precedence VPN",
+            vpnConfig = "content://ignored",
+            vpnConfigContent = "inline-content",
+            connect = "0",
+            alwaysOn = null,
+            remove = "",
+            removeAll = "0"
+        )
+
+        assertNotNull(config)
+        assertEquals("inline-content", config?.vpnConfigContent)
+        assertEquals("content://ignored", config?.vpnConfig)
+    }
+
+    @Test
+    fun fromPreferences_acceptsConfigWhenOnlyVpnConfigContentProvided() {
+        val config = SargoVpnConfig.fromPreferences(
+            vpnName = "Only Content",
+            vpnConfig = "",
+            vpnConfigContent = "inline",
+            connect = null,
+            alwaysOn = null,
+            remove = null,
+            removeAll = null
+        )
+
+        assertNotNull(config)
+    }
+
+    @Test
+    fun fromPreferences_parsesAdditionalBooleanFields() {
+        val config = SargoVpnConfig.fromPreferences(
+            vpnName = "Full",
+            vpnConfig = "inline",
+            vpnConfigContent = null,
+            connect = "1",
+            alwaysOn = "1",
+            remove = "",
+            removeAll = "0",
+            disconnectOnConfigChange = "1",
+            allowUserDisconnect = "0",
+            autoReconnect = "1"
+        )
+
+        assertNotNull(config)
+        assertTrue(config?.disconnectOnConfigChange == true)
+        assertFalse(config?.allowUserDisconnect == true)
+        assertTrue(config?.autoReconnect == true)
+    }
+
+    @Test
+    fun fromPreferences_allowUserDisconnectNullWhenUnrecognized() {
+        val config = SargoVpnConfig.fromPreferences(
+            vpnName = "Partial",
+            vpnConfig = "inline",
+            disconnectOnConfigChange = "0",
+            allowUserDisconnect = "maybe",
+            autoReconnect = "0",
+            connect = null,
+            alwaysOn = null,
+            remove = null,
+            removeAll = null
+        )
+
+        assertNotNull(config)
+        assertNull(config?.allowUserDisconnect)
+        assertFalse(config?.disconnectOnConfigChange == true)
+        assertFalse(config?.autoReconnect == true)
     }
 }

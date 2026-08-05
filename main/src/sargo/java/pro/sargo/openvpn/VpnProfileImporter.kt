@@ -8,6 +8,7 @@ import android.util.Log
 import de.blinkt.openvpn.api.APIVpnProfile
 import de.blinkt.openvpn.api.IOpenVPNAPIService
 import java.io.InputStream
+import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 /**
@@ -18,11 +19,15 @@ import java.util.concurrent.Executors
  *  - a `content://` URI read through [ContentResolver.openInputStream]
  *
  * No deprecated storage APIs are used.
+ *
+ * @param executor Executor used for background URI reads. Defaults to a single-thread executor.
+ * @param mainHandler Handler used to deliver progress callbacks. Defaults to the main looper.
  */
-class VpnProfileImporter(private val context: Context) {
-
-    private val executor = Executors.newSingleThreadExecutor()
-    private val mainHandler = Handler(Looper.getMainLooper())
+class VpnProfileImporter(
+    private val context: Context,
+    private val executor: Executor = Executors.newSingleThreadExecutor(),
+    private val mainHandler: Handler = Handler(Looper.getMainLooper())
+) {
 
     sealed class ImportResult {
         data class Success(val profile: APIVpnProfile) : ImportResult()

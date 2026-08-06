@@ -34,12 +34,13 @@
 ### 2. Release signing
 
 - Pašalinti testiniai signing credentials iš `~/.gradle/gradle.properties`.
-- `main/build.gradle.kts` papildytas `signingProperty()` helperiu, kuris skaito
-  iš project properties arba environment variables (uppercase snake_case).
+- `main/build.gradle.kts` pakeistas naudoti SargO launcher signing secret
+  pavadinimus (`ANDROID_KEYSTORE_PATH`, `ANDROID_KEYSTORE_PASSWORD`,
+  `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`).
 - `.github/workflows/build.yaml` pakeistas: vietoj debug signing naudojamas
-  realus CI raktas per secrets (`KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`,
-  `KEYSTORE_ALIAS`, `KEYSTORE_ALIAS_PASSWORD`), su fallback į debug signing
-  kai secrets nėra pasiekiami.
+  tas pats SargO launcher raktas per secrets (`LAUNCHER_KEYSTORE_BASE64`,
+  `LAUNCHER_KEYSTORE_PASSWORD`, `LAUNCHER_KEY_ALIAS`, `LAUNCHER_KEY_PASSWORD`),
+  su fallback į debug signing kai secrets nėra pasiekiami.
 - Pridėtas `SargoOvpn23` į CI build matrix.
 
 ### 3. Papildomi konfigūracijos laukai

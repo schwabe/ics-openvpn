@@ -49,26 +49,35 @@ sargoImplementation(files("src/sargo/libs/sargo-mdm-lib-release.aar"))
 
 ## Release signing
 
-Release buildas pasirašomas CI aplinkos paslaptimis. `main/build.gradle.kts`
-skaitymo tvarka:
+Release buildas pasirašomas **tuo pačiu SargO launcher raktu**, kurį CI laiko
+GitHub Actions secrets. `main/build.gradle.kts` skaito šiuos pavadinimus:
 
-1. Gradle project properties (`~/.gradle/gradle.properties`)
-2. Environment variables (uppercase snake_case vardai)
+- `androidKeystorePath` / `ANDROID_KEYSTORE_PATH`
+- `androidKeystorePassword` / `ANDROID_KEYSTORE_PASSWORD`
+- `androidKeyAlias` / `ANDROID_KEY_ALIAS`
+- `androidKeyPassword` / `ANDROID_KEY_PASSWORD`
 
 ### GitHub Actions
 
-`.github/workflows/build.yaml` tikisi šių repository secrets:
+`.github/workflows/build.yaml` tikisi tų pačių paslapčių kaip SargO launcher
+workflow (`launcher-apk.yml`):
 
 | Secret | Reikšmė |
 |---|---|
-| `KEYSTORE_BASE64` | base64-encoded release keystore turinys |
-| `KEYSTORE_PASSWORD` | Keystore slaptažodis |
-| `KEYSTORE_ALIAS` | Rakto alias |
-| `KEYSTORE_ALIAS_PASSWORD` | Rakto slaptažodis |
+| `LAUNCHER_KEYSTORE_BASE64` | base64-encoded SargO launcher release keystore |
+| `LAUNCHER_KEYSTORE_PASSWORD` | Keystore slaptažodis |
+| `LAUNCHER_KEY_ALIAS` | Rakto alias |
+| `LAUNCHER_KEY_PASSWORD` | Rakto slaptažodis |
 
 Workflow dekoduoja keystore į `~/.sargo-release.keystore` ir sukuria
-`~/.gradle/gradle.properties` su signing nustatymais. Jei secrets nėra
-nustatyti (pvz., pull request iš fork), naudojamas debug signing.
+`~/.gradle/gradle.properties` su `androidKeystorePath` ir kitais nustatymais.
+Jei secrets nėra pasiekiami (pvz., pull request iš fork), naudojamas debug
+signing.
+
+> **Rekomendacija:** gamyboje apsvarstykite `launcher-release` GitHub
+> Environment naudojimą `main` branch builds, kaip daro SargO launcher
+> workflow. Šis workflow jo nenaudoja, kad galėtų buildinti ir PR/fork
+> atvejais su debug fallback.
 
 ### Lokalus testing
 
@@ -81,10 +90,10 @@ Kol CI secrets nėra nustatyti, galima naudoti debug signing:
 Arba perduoti env vars (tik testavimui, never commitinkite credentials):
 
 ```bash
-export KEYSTORE_FILE=/path/to/release.keystore
-export KEYSTORE_PASSWORD=...
-export KEYSTORE_ALIAS=...
-export KEYSTORE_ALIAS_PASSWORD=...
+export ANDROID_KEYSTORE_PATH=/path/to/release.keystore
+export ANDROID_KEYSTORE_PASSWORD=...
+export ANDROID_KEY_ALIAS=...
+export ANDROID_KEY_PASSWORD=...
 ./gradlew :main:assembleSargoOvpn23Release
 ```
 

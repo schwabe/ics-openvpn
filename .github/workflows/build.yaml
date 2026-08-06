@@ -19,20 +19,20 @@ jobs:
           submodules: true
       - name: Setup release signing
         env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
-          KEYSTORE_ALIAS_PASSWORD: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
+          KEYSTORE_B64: ${{ secrets.LAUNCHER_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.LAUNCHER_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.LAUNCHER_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.LAUNCHER_KEY_PASSWORD }}
         run: |
           mkdir -p ~/.gradle
-          if [ -n "$KEYSTORE_BASE64" ]; then
-            echo "$KEYSTORE_BASE64" | base64 -d > "$HOME/.sargo-release.keystore"
+          if [ -n "$KEYSTORE_B64" ]; then
+            printf '%s' "$KEYSTORE_B64" | base64 -d > "$HOME/.sargo-release.keystore"
             cat > ~/.gradle/gradle.properties <<EOF
           org.gradle.jvmargs=-Xmx2048M
-          keystoreFile=$HOME/.sargo-release.keystore
-          keystorePassword=$KEYSTORE_PASSWORD
-          keystoreAlias=$KEYSTORE_ALIAS
-          keystoreAliasPassword=$KEYSTORE_ALIAS_PASSWORD
+          androidKeystorePath=$HOME/.sargo-release.keystore
+          androidKeystorePassword=$KEYSTORE_PASSWORD
+          androidKeyAlias=$KEY_ALIAS
+          androidKeyPassword=$KEY_PASSWORD
           EOF
           else
             echo -e "icsopenvpnDebugSign=true\norg.gradle.jvmargs=-Xmx2048M" > ~/.gradle/gradle.properties

@@ -35,16 +35,10 @@ fun obtainTestBuildType(): String {
  * Resolve a signing configuration value.
  * First checks Gradle project properties (e.g. ~/.gradle/gradle.properties),
  * then falls back to environment variables so CI secrets can be used.
- * Property names are converted to UPPER_SNAKE_CASE for env lookups,
- * e.g. "keystoreFile" -> "KEYSTORE_FILE".
+ *
+ * CI passes the SargO launcher signing secrets as ANDROID_KEYSTORE_* env vars
+ * (matching the SargO launcher app/build.gradle signingConfig naming).
  */
-fun signingProperty(name: String): String? {
-    val projectValue = project.findProperty(name) as? String
-    if (projectValue != null) return projectValue
-
-    val envName = name.replace(Regex("([A-Z])"), "_$1").uppercase()
-    return System.getenv(envName)
-}
 
 android {
     buildFeatures {
@@ -100,24 +94,40 @@ android {
 
     signingConfigs {
         create("release") {
-            // Values may come from ~/.gradle/gradle.properties or CI environment variables.
-            val keystoreFile = signingProperty("keystoreFile")
-            storeFile = keystoreFile?.let { file(it) }
-            storePassword = signingProperty("keystorePassword")
-            keyPassword = signingProperty("keystoreAliasPassword")
-            keyAlias = signingProperty("keystoreAlias")
+            // CI provides the SargO launcher signing key via ANDROID_KEYSTORE_* env vars.
+            // Local builds can also set these in ~/.gradle/gradle.properties.
+            val keystorePath = project.findProperty("androidKeystorePath") as? String
+                ?: System.getenv("ANDROID_KEYSTORE_PATH")
+            storeFile = keystorePath?.let { file(it) }
+            storePassword = project.findProperty("androidKeystorePassword") as? String
+                ?: System.getenv("ANDROID_KEYSTORE_PASSWORD")
+            keyPassword = project.findProperty("androidKeyPassword") as? String
+                ?: System.getenv("ANDROID_KEY_PASSWORD")
+            keyAlias = project.findProperty("androidKeyAlias") as? String
+                ?: System.getenv("ANDROID_KEY_ALIAS")
             enableV1Signing = true
             enableV2Signing = true
         }
 
         create("releaseOvpn2") {
-            // Values may come from ~/.gradle/gradle.properties or CI environment variables.
-            // Fall back to the main release keystore if ovpn2-specific values are not set.
-            val keystoreO2File = signingProperty("keystoreO2File") ?: signingProperty("keystoreFile")
-            storeFile = keystoreO2File?.let { file(it) }
-            storePassword = signingProperty("keystoreO2Password") ?: signingProperty("keystorePassword")
-            keyPassword = signingProperty("keystoreO2AliasPassword") ?: signingProperty("keystoreAliasPassword")
-            keyAlias = signingProperty("keystoreO2Alias") ?: signingProperty("keystoreAlias")
+            // Use the same SargO launcher signing key unless ovpn2-specific values are provided.
+            val keystoreO2Path = project.findProperty("androidKeystoreO2Path") as? String
+                ?: System.getenv("ANDROID_KEYSTORE_O2_PATH")
+                ?: project.findProperty("androidKeystorePath") as? String
+                ?: System.getenv("ANDROID_KEYSTORE_PATH")
+            storeFile = keystoreO2Path?.let { file(it) }
+            storePassword = (project.findProperty("androidKeystoreO2Password") as? String
+                ?: System.getenv("ANDROID_KEYSTORE_O2_PASSWORD")
+                ?: project.findProperty("androidKeystorePassword") as? String
+                ?: System.getenv("ANDROID_KEYSTORE_PASSWORD"))
+            keyPassword = (project.findProperty("androidKeyO2Password") as? String
+                ?: System.getenv("ANDROID_KEY_O2_PASSWORD")
+                ?: project.findProperty("androidKeyPassword") as? String
+                ?: System.getenv("ANDROID_KEY_PASSWORD"))
+            keyAlias = (project.findProperty("androidKeyO2Alias") as? String
+                ?: System.getenv("ANDROID_KEY_O2_ALIAS")
+                ?: project.findProperty("androidKeyAlias") as? String
+                ?: System.getenv("ANDROID_KEY_ALIAS"))
             enableV1Signing = true
             enableV2Signing = true
         }

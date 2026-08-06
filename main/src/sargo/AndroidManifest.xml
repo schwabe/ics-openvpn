@@ -77,9 +77,16 @@
 
         <activity android:name=".activities.FileSelect" />
 
+        <!--
+            Quick Settings tile is disabled in the SargO flavor. The VPN is managed
+            remotely and, when allow_user_disconnect=false, kept connected by
+            always-on VPN lockdown. Allowing the tile would let the user toggle
+            the connection independently of the MDM policy.
+        -->
         <service
             android:exported="true"
             android:name=".OpenVPNTileService"
+            android:enabled="false"
             android:icon="@drawable/ic_quick"
             android:label="@string/qs_title"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"

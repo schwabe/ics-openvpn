@@ -17,6 +17,7 @@
 | 4 | `allow_user_disconnect` / `auto_reconnect` | Atlikta |
 | 5 | README-SARGO.md ir plan.md atnaujinimas | Atlikta |
 | 6 | Build/test patikra | Atlikta |
+| 7 | UI-level disconnect blokavimo įvertinimas | Atlikta |
 
 ## Atlikti veiksmai
 
@@ -88,4 +89,6 @@
 - Išbandyti `vpn_username`/`vpn_password` su realiu OpenVPN serveriu.
 - Įvertinti ar reikia blokuoti `OpenVPNTileService` / `MainActivity` disconnect
   UI lygmeniu, jei always-on lockdown nepakankamai riboja tam tikruose OEM
-  Android variantuose.
+  Android variantuose. Atlikta dalinė implementacija: `OpenVPNTileService`
+  išjungtas SargO flavor manifeste. `MainActivity` disconnect paliekamas
+  always-on lockdown apsaugai.

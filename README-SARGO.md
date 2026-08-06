@@ -148,10 +148,15 @@ realų log lygį. Jei `log_level` nenurodytas, konfigo `verb` direktyvos nekeič
 
 Kai `allow_user_disconnect=0` ir `always_on` nėra aiškiai išjungtas (`0`),
 `SargoVpnController` automatiškai įjungia always-on VPN su lockdown režimu.
-Tai neleidžia vartotojui atjungti VPN per Android nustatymus. Greitų nustatymų
-plytelė (`OpenVPNTileService`) ir `MainActivity` atsijungimo mygtukas lieka
-standartiniai, bet Android always-on lockdown užkerta kelią faktiniam
-atsijungimui.
+Tai neleidžia vartotojui atjungti VPN per Android nustatymus.
+
+Papildomai SargO flavor manifeste `OpenVPNTileService` yra išjungtas
+(`android:enabled="false"`), todėl vartotojas negali naudoti greitų nustatymų
+plytelės VPN valdymui. `MainActivity` atsijungimo mygtukas lieka pasiekiamas,
+bet faktinis atsijungimas yra blokuojamas always-on VPN lockdown. Jei
+konkrečiame įrenginyje / OEM Android variante lockdown neblokuoja aplikacijos
+lygmens disconnect, reikėtų papildomo core pakeitimo (šiuo metu neįtraukta
+į apribojimus).
 
 ### `auto_reconnect=true`
 

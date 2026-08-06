@@ -9,6 +9,7 @@ import de.blinkt.openvpn.api.APIVpnProfile
 import de.blinkt.openvpn.api.IOpenVPNAPIService
 import java.io.InputStream
 import java.util.concurrent.Executor
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 /**
@@ -129,6 +130,14 @@ class VpnProfileImporter(
 
     private fun post(action: () -> Unit) {
         mainHandler.post(action)
+    }
+
+    /**
+     * Shut down the internal executor. Should be called when the importer is no longer
+     * needed (e.g. from the owning Activity's onDestroy) to avoid leaking threads.
+     */
+    fun shutdown() {
+        (executor as? ExecutorService)?.shutdown()
     }
 
     companion object {

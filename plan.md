@@ -63,6 +63,22 @@
 - `auto_reconnect=true` → `OpenVpnConfigPostProcessor` prideda `persist-tun`
   ir `persist-key`.
 
+### 5. Code review pataisymai (`src/sargo` sluoksnyje)
+
+- Pašalintas nepanaudotas `sargo-mdm-lib-debug.aar`.
+- `SargoConfigReceiver` apsaugotas su `pro.sargo.permission.PUSH_CONFIG`
+  permission.
+- `FileProvider` SargO flavor manifeste nustatytas `exported="false"`.
+- `OpenVpnConfigPostProcessor` dabar pašalina esamą inline
+  `<auth-user-pass>` bloką prieš injekuojant naują.
+- `VpnProfileImporter` gavo `shutdown()` metodą; `SargoVpnController` ir
+  `SargoLauncherActivity` jį kviečia `onDestroy`.
+- `SargoVpnController` profile sąrašą gauna vieną kartą ir naudoja tiek
+  profilių šalinimui, tiek egzistuojančio profilio paieškai.
+- `vpnConfigContent` visada traktuojamas kaip inline turinys, net jei
+  atsitiktinai prasideda `content://`.
+- Atnaujinti `OpenVpnConfigPostProcessorTest` ir `VpnProfileImporterTest`.
+
 ## Patikros komandos
 
 ```bash
@@ -87,6 +103,9 @@
 
 - Pakeisti testinį release raktą į realų CI pasirašymo raktą.
 - Išbandyti `vpn_username`/`vpn_password` su realiu OpenVPN serveriu.
+- SargO launcher pusėje deklaruoti `pro.sargo.permission.PUSH_CONFIG` kaip
+  `signature` / `signatureOrSystem` permission, kad tik SargO launcher galėtų
+  siųsti `pro.sargo.push.configUpdated` broadcast.
 - Įvertinti ar reikia blokuoti `OpenVPNTileService` / `MainActivity` disconnect
   UI lygmeniu, jei always-on lockdown nepakankamai riboja tam tikruose OEM
   Android variantuose. Atlikta dalinė implementacija: `OpenVPNTileService`

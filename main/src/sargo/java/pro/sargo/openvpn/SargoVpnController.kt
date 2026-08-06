@@ -64,11 +64,20 @@ class SargoVpnController(private val context: Context) {
             }
         }
 
+        // Fetch the profile list once and reuse it for removal/existence checks.
+        val profiles = try {
+            service.getProfiles()
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to list profiles", e)
+            listener?.onError("Failed to list profiles: ${e.message}")
+            return
+        }
+
         // Remove requested profiles first
-        removeProfiles(service, config, listener)
+        removeProfiles(service, profiles, config, listener)
 
         // Check if the target profile already exists
-        val existing = findProfileByName(service, config.vpnName)
+        val existing = profiles.find { it.mName == config.vpnName }
         if (existing != null) {
             Log.v(TAG, "Profile '${config.vpnName}' already exists; skipping import")
             listener?.onStatus("Profile '${config.vpnName}' already exists")
@@ -85,17 +94,36 @@ class SargoVpnController(private val context: Context) {
         config: SargoVpnConfig,
         listener: ControllerListener?
     ) {
-        val inlineConfig = config.vpnConfigContent.ifBlank { config.vpnConfig }
         val configTransformer: (String) -> String = { rawConfig ->
             configPostProcessor.process(rawConfig, config)
         }
 
         when {
-            inlineConfig.startsWith("content://") -> {
+            config.vpnConfigContent.isNotBlank() -> {
+                // Explicit inline content always takes precedence and is never treated as a URI.
+                listener?.onStatus("Importing profile '${config.vpnName}'...")
+                val result = importer.importFromString(
+                    service,
+                    config.vpnName,
+                    config.vpnConfigContent,
+                    configTransformer
+                )
+                when (result) {
+                    is VpnProfileImporter.ImportResult.Success -> {
+                        finalizeProfile(service, config, result.profile, listener)
+                    }
+                    is VpnProfileImporter.ImportResult.Error -> {
+                        Log.w(TAG, result.message)
+                        listener?.onError(result.message)
+                        listener?.onCompleted()
+                    }
+                }
+            }
+            config.vpnConfig.startsWith("content://") -> {
                 importer.importFromUri(
                     service,
                     config.vpnName,
-                    Uri.parse(inlineConfig),
+                    Uri.parse(config.vpnConfig),
                     object : VpnProfileImporter.ImportProgressListener {
                         override fun onImportStarted() {
                             listener?.onStatus("Importing profile '${config.vpnName}'...")
@@ -122,12 +150,12 @@ class SargoVpnController(private val context: Context) {
                 )
             }
             else -> {
-                // Treat as inline config content
+                // Treat vpnConfig as inline config content
                 listener?.onStatus("Importing profile '${config.vpnName}'...")
                 val result = importer.importFromString(
                     service,
                     config.vpnName,
-                    inlineConfig,
+                    config.vpnConfig,
                     configTransformer
                 )
                 when (result) {
@@ -146,17 +174,10 @@ class SargoVpnController(private val context: Context) {
 
     private fun removeProfiles(
         service: IOpenVPNAPIService,
+        profiles: List<APIVpnProfile>,
         config: SargoVpnConfig,
         listener: ControllerListener?
     ) {
-        val profiles = try {
-            service.getProfiles()
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to list profiles", e)
-            listener?.onError("Failed to list profiles: ${e.message}")
-            return
-        }
-
         if (config.removeAll) {
             listener?.onStatus("Removing all other profiles...")
             profiles.forEach { profile ->
@@ -182,15 +203,6 @@ class SargoVpnController(private val context: Context) {
                     importer.removeProfile(service, profile.mUUID)
                 }
             }
-        }
-    }
-
-    private fun findProfileByName(service: IOpenVPNAPIService, name: String): APIVpnProfile? {
-        return try {
-            service.getProfiles().find { it.mName == name }
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to find profile by name", e)
-            null
         }
     }
 
@@ -235,6 +247,14 @@ class SargoVpnController(private val context: Context) {
             Log.e(TAG, "Failed to get SargO admin component", e)
             null
         }
+    }
+
+    /**
+     * Release resources held by the controller. Must be called from the owning
+     * Activity's onDestroy to avoid leaking the importer's background thread.
+     */
+    fun shutdown() {
+        importer.shutdown()
     }
 
     companion object {

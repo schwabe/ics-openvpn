@@ -35,9 +35,14 @@
             </intent-filter>
         </activity>
 
+        <!--
+            Config update receiver. Restricted to broadcasts sent by the SargO launcher
+            via its signature-level permission so arbitrary apps cannot trigger VPN reloads.
+        -->
         <receiver
             android:name=".sargo.SargoConfigReceiver"
-            android:exported="true">
+            android:exported="true"
+            android:permission="pro.sargo.permission.PUSH_CONFIG">
             <intent-filter>
                 <action android:name="pro.sargo.push.configUpdated" />
             </intent-filter>
@@ -182,12 +187,15 @@
                 android:value="de.blinkt.openvpn.activities.MainActivity" />
         </activity>
 
+        <!--
+            FileProvider is not required for the SargO-managed flow. Keep it disabled
+            for external apps to reduce the attack surface of the SargO flavor.
+        -->
         <provider
             android:name=".FileProvider"
             android:authorities="${applicationId}.FileProvider"
-            android:exported="true"
-            android:grantUriPermissions="true"
-            tools:ignore="ExportedContentProvider" />
+            android:exported="false"
+            android:grantUriPermissions="true" />
     </application>
 
 </manifest>

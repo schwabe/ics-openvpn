@@ -185,3 +185,7 @@ Atliktas emuliatoriuje:
   logika nekeičiama.
 - Nenaudojamas `AsyncTask` ir `Environment.getExternalStorageDirectory()`.
 - Admin komponentas gaunamas per `SargoMDM.getAdminComponent(context)`.
+- `SargoConfigReceiver` priima `pro.sargo.push.configUpdated` broadcast tik iš
+  siuntėjo, turinčio `pro.sargo.permission.PUSH_CONFIG` permission. Šią
+  permission turi deklaruoti SargO launcher (`signature` arba
+  `signatureOrSystem` lygyje).

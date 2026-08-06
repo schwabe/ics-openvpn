@@ -106,6 +106,11 @@ class VpnProfileImporterTest {
     }
 
     @Test
+    fun shutdown_canBeCalledSafely() {
+        importer.shutdown()
+    }
+
+    @Test
     fun removeProfile_returnsTrueOnSuccess() {
         assertTrue(importer.removeProfile(service, "uuid-1"))
         verify(service).removeProfile("uuid-1")

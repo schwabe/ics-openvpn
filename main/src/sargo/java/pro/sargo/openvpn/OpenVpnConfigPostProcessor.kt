@@ -21,6 +21,7 @@ class OpenVpnConfigPostProcessor {
     fun process(config: String, sargoConfig: SargoVpnConfig): String {
         val lines = config.lines().toMutableList()
 
+        removeExistingInlineAuthUserPass(lines)
         injectCredentials(lines, sargoConfig)
         injectLogLevel(lines, sargoConfig)
         injectReconnectHints(lines, sargoConfig)
@@ -62,6 +63,28 @@ class OpenVpnConfigPostProcessor {
         if (lines.none { it.isStandaloneDirective("persist-key") }) {
             lines.add("")
             lines.add("persist-key")
+        }
+    }
+
+    /**
+     * Remove any existing inline `<auth-user-pass>..</auth-user-pass>` block so the
+     * credentials injected by [injectCredentials] are unambiguous.
+     */
+    private fun removeExistingInlineAuthUserPass(lines: MutableList<String>) {
+        var inside = false
+        lines.removeAll { line ->
+            val trimmed = line.trim()
+            when {
+                trimmed.equals("<auth-user-pass>", ignoreCase = true) -> {
+                    inside = true
+                    true
+                }
+                trimmed.equals("</auth-user-pass>", ignoreCase = true) -> {
+                    inside = false
+                    true
+                }
+                else -> inside
+            }
         }
     }
 

@@ -97,6 +97,7 @@ class SargoLauncherActivity : Activity() {
             }
             isOpenVpnBound = false
         }
+        controller.shutdown()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

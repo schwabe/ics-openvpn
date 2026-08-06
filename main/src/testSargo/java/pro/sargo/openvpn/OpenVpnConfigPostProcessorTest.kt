@@ -43,6 +43,32 @@ class OpenVpnConfigPostProcessorTest {
     }
 
     @Test
+    fun process_replacesExistingInlineAuthUserPassBlock() {
+        val config = baseConfig().copy(
+            vpnUsername = "alice",
+            vpnPassword = "wonderland"
+        )
+
+        val result = processor.process(
+            "client\n<auth-user-pass>\nold-user\nold-pass\n</auth-user-pass>\nremote 1.2.3.4",
+            config
+        )
+
+        assertFalse(result.contains("old-user"))
+        assertFalse(result.contains("old-pass"))
+        assertEquals(
+            1,
+            result.lines().count { it.trim().equals("<auth-user-pass>", ignoreCase = true) }
+        )
+        assertEquals(
+            1,
+            result.lines().count { it.trim().equals("</auth-user-pass>", ignoreCase = true) }
+        )
+        assertTrue(result.contains("alice"))
+        assertTrue(result.contains("wonderland"))
+    }
+
+    @Test
     fun process_doesNotTouchAuthUserPassVerify() {
         val config = baseConfig().copy(vpnUsername = "u", vpnPassword = "p")
 

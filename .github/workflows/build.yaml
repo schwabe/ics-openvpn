@@ -9,16 +9,34 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-          target: [UiOvpn23, SkeletonOvpn2, UiOvpn2]
+          target: [UiOvpn23, SkeletonOvpn2, UiOvpn2, SargoOvpn23]
     name: "Release ${{ matrix.target }}"
     runs-on: ubuntu-latest
     steps:
-      - name: Use debug signing
-        run: mkdir -p ~/.gradle && echo -e "icsopenvpnDebugSign=true\norg.gradle.jvmargs=-Xmx2048M" > ~/.gradle/gradle.properties
       - name: Checkout the code
         uses: actions/checkout@v4
         with:
           submodules: true
+      - name: Setup release signing
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+          KEYSTORE_ALIAS_PASSWORD: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
+        run: |
+          mkdir -p ~/.gradle
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$HOME/.sargo-release.keystore"
+            cat > ~/.gradle/gradle.properties <<EOF
+          org.gradle.jvmargs=-Xmx2048M
+          keystoreFile=$HOME/.sargo-release.keystore
+          keystorePassword=$KEYSTORE_PASSWORD
+          keystoreAlias=$KEYSTORE_ALIAS
+          keystoreAliasPassword=$KEYSTORE_ALIAS_PASSWORD
+          EOF
+          else
+            echo -e "icsopenvpnDebugSign=true\norg.gradle.jvmargs=-Xmx2048M" > ~/.gradle/gradle.properties
+          fi
       - name: set up JDK 17
         uses: actions/setup-java@v4
         with:

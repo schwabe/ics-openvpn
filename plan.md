@@ -33,9 +33,14 @@
 
 ### 2. Release signing
 
-- Sukurtas testinis release keystore `~/.sargo-release.keystore`.
-- Signing nustatymai įrašyti į `~/.gradle/gradle.properties`.
-- Release buildas pasirašomas be `-PicsopenvpnDebugSign`.
+- Pašalinti testiniai signing credentials iš `~/.gradle/gradle.properties`.
+- `main/build.gradle.kts` papildytas `signingProperty()` helperiu, kuris skaito
+  iš project properties arba environment variables (uppercase snake_case).
+- `.github/workflows/build.yaml` pakeistas: vietoj debug signing naudojamas
+  realus CI raktas per secrets (`KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`,
+  `KEYSTORE_ALIAS`, `KEYSTORE_ALIAS_PASSWORD`), su fallback į debug signing
+  kai secrets nėra pasiekiami.
+- Pridėtas `SargoOvpn23` į CI build matrix.
 
 ### 3. Papildomi konfigūracijos laukai
 

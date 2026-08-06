@@ -31,6 +31,21 @@ fun obtainTestBuildType(): String {
     return result
 }
 
+/**
+ * Resolve a signing configuration value.
+ * First checks Gradle project properties (e.g. ~/.gradle/gradle.properties),
+ * then falls back to environment variables so CI secrets can be used.
+ * Property names are converted to UPPER_SNAKE_CASE for env lookups,
+ * e.g. "keystoreFile" -> "KEYSTORE_FILE".
+ */
+fun signingProperty(name: String): String? {
+    val projectValue = project.findProperty(name) as? String
+    if (projectValue != null) return projectValue
+
+    val envName = name.replace(Regex("([A-Z])"), "_$1").uppercase()
+    return System.getenv(envName)
+}
+
 android {
     buildFeatures {
         aidl = true
@@ -85,29 +100,24 @@ android {
 
     signingConfigs {
         create("release") {
-            // ~/.gradle/gradle.properties
-            val keystoreFile: String? by project
+            // Values may come from ~/.gradle/gradle.properties or CI environment variables.
+            val keystoreFile = signingProperty("keystoreFile")
             storeFile = keystoreFile?.let { file(it) }
-            val keystorePassword: String? by project
-            storePassword = keystorePassword
-            val keystoreAliasPassword: String? by project
-            keyPassword = keystoreAliasPassword
-            val keystoreAlias: String? by project
-            keyAlias = keystoreAlias
+            storePassword = signingProperty("keystorePassword")
+            keyPassword = signingProperty("keystoreAliasPassword")
+            keyAlias = signingProperty("keystoreAlias")
             enableV1Signing = true
             enableV2Signing = true
         }
 
         create("releaseOvpn2") {
-            // ~/.gradle/gradle.properties
-            val keystoreO2File: String? by project
+            // Values may come from ~/.gradle/gradle.properties or CI environment variables.
+            // Fall back to the main release keystore if ovpn2-specific values are not set.
+            val keystoreO2File = signingProperty("keystoreO2File") ?: signingProperty("keystoreFile")
             storeFile = keystoreO2File?.let { file(it) }
-            val keystoreO2Password: String? by project
-            storePassword = keystoreO2Password
-            val keystoreO2AliasPassword: String? by project
-            keyPassword = keystoreO2AliasPassword
-            val keystoreO2Alias: String? by project
-            keyAlias = keystoreO2Alias
+            storePassword = signingProperty("keystoreO2Password") ?: signingProperty("keystorePassword")
+            keyPassword = signingProperty("keystoreO2AliasPassword") ?: signingProperty("keystoreAliasPassword")
+            keyAlias = signingProperty("keystoreO2Alias") ?: signingProperty("keystoreAlias")
             enableV1Signing = true
             enableV2Signing = true
         }

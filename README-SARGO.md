@@ -49,29 +49,44 @@ sargoImplementation(files("src/sargo/libs/sargo-mdm-lib-release.aar"))
 
 ## Release signing
 
-Release buildas pasirašomas testiniu raktu, kurio duomenys saugomi
-`~/.gradle/gradle.properties`:
+Release buildas pasirašomas CI aplinkos paslaptimis. `main/build.gradle.kts`
+skaitymo tvarka:
 
-```properties
-keystoreFile=/Users/eduardas/.sargo-release.keystore
-keystorePassword=sargorelease
-keystoreAlias=sargoreleasekey
-keystoreAliasPassword=sargorelease
-```
+1. Gradle project properties (`~/.gradle/gradle.properties`)
+2. Environment variables (uppercase snake_case vardai)
 
-Keystore sukurtas komanda:
+### GitHub Actions
+
+`.github/workflows/build.yaml` tikisi šių repository secrets:
+
+| Secret | Reikšmė |
+|---|---|
+| `KEYSTORE_BASE64` | base64-encoded release keystore turinys |
+| `KEYSTORE_PASSWORD` | Keystore slaptažodis |
+| `KEYSTORE_ALIAS` | Rakto alias |
+| `KEYSTORE_ALIAS_PASSWORD` | Rakto slaptažodis |
+
+Workflow dekoduoja keystore į `~/.sargo-release.keystore` ir sukuria
+`~/.gradle/gradle.properties` su signing nustatymais. Jei secrets nėra
+nustatyti (pvz., pull request iš fork), naudojamas debug signing.
+
+### Lokalus testing
+
+Kol CI secrets nėra nustatyti, galima naudoti debug signing:
 
 ```bash
-keytool -genkey -v \
-  -keystore /Users/eduardas/.sargo-release.keystore \
-  -alias sargoreleasekey \
-  -keyalg RSA -keysize 2048 -validity 36500 \
-  -storepass sargorelease -keypass sargorelease \
-  -dname "CN=SargO Release Test, OU=SargO, O=SargO, L=Vilnius, C=LT"
+./gradlew :main:assembleSargoOvpn23Release -PicsopenvpnDebugSign
 ```
 
-> **Dėmesio:** šis raktas yra testinis. Realioje gamyboje naudoti CI aplinkos
-> paslaptis (GitHub Actions secrets) ir atskirą gamybos raktą.
+Arba perduoti env vars (tik testavimui, never commitinkite credentials):
+
+```bash
+export KEYSTORE_FILE=/path/to/release.keystore
+export KEYSTORE_PASSWORD=...
+export KEYSTORE_ALIAS=...
+export KEYSTORE_ALIAS_PASSWORD=...
+./gradlew :main:assembleSargoOvpn23Release
+```
 
 ## SargO konfigūracijos raktai
 

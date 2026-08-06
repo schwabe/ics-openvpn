@@ -8,9 +8,11 @@ import android.util.Log
 import de.blinkt.openvpn.api.APIVpnProfile
 import de.blinkt.openvpn.api.IOpenVPNAPIService
 import java.io.InputStream
+import java.util.Collections
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.Future
 
 /**
  * Imports an OpenVPN profile into ics-openvpn through its AIDL API.
@@ -29,6 +31,8 @@ class VpnProfileImporter(
     private val executor: Executor = Executors.newSingleThreadExecutor(),
     private val mainHandler: Handler = Handler(Looper.getMainLooper())
 ) {
+
+    private val activeFutures = Collections.synchronizedList(mutableListOf<Future<*>>())
 
     sealed class ImportResult {
         data class Success(val profile: APIVpnProfile) : ImportResult()
@@ -81,24 +85,35 @@ class VpnProfileImporter(
         listener: ImportProgressListener,
         configTransformer: (String) -> String = { it }
     ) {
-        executor.execute {
-            post { listener.onImportStarted() }
-            post { listener.onImportProgress("Reading configuration from $uri...") }
-
-            val config = readConfigContent(uri)
-            if (config == null) {
-                post {
-                    listener.onImportCompleted(
-                        ImportResult.Error("Could not read config from URI: $uri")
-                    )
+        var futureRef: Future<*>? = null
+        val task = Runnable {
+            try {
+                if (Thread.currentThread().isInterrupted) {
+                    return@Runnable
                 }
-                return@execute
-            }
+                post { listener.onImportStarted() }
+                post { listener.onImportProgress("Reading configuration from $uri...") }
 
-            post { listener.onImportProgress("Importing profile '$name'...") }
-            val result = importFromString(service, name, config, configTransformer)
-            post { listener.onImportCompleted(result) }
+                val config = readConfigContent(uri)
+                if (config == null) {
+                    post {
+                        listener.onImportCompleted(
+                            ImportResult.Error("Could not read config from URI: $uri")
+                        )
+                    }
+                    return@Runnable
+                }
+
+                post { listener.onImportProgress("Importing profile '$name'...") }
+                val result = importFromString(service, name, config, configTransformer)
+                post { listener.onImportCompleted(result) }
+            } finally {
+                futureRef?.let { activeFutures.remove(it) }
+            }
         }
+
+        futureRef = (executor as? ExecutorService)?.submit(task)
+        futureRef?.let { activeFutures.add(it) } ?: executor.execute(task)
     }
 
     /**
@@ -133,10 +148,22 @@ class VpnProfileImporter(
     }
 
     /**
+     * Cancel any URI imports that are still running. This should be called when the owning
+     * component is destroyed (e.g. from an Activity's onDestroy) so callbacks cannot fire
+     * after the UI has been torn down.
+     */
+    fun cancelActiveImports() {
+        val copy = activeFutures.toList()
+        activeFutures.clear()
+        copy.forEach { it.cancel(true) }
+    }
+
+    /**
      * Shut down the internal executor. Should be called when the importer is no longer
      * needed (e.g. from the owning Activity's onDestroy) to avoid leaking threads.
      */
     fun shutdown() {
+        cancelActiveImports()
         (executor as? ExecutorService)?.shutdown()
     }
 

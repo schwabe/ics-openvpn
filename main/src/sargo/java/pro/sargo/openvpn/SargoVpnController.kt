@@ -251,9 +251,11 @@ class SargoVpnController(private val context: Context) {
 
     /**
      * Release resources held by the controller. Must be called from the owning
-     * Activity's onDestroy to avoid leaking the importer's background thread.
+     * Activity's onDestroy to avoid leaking the importer's background thread or
+     * delivering callbacks after the Activity has been destroyed.
      */
     fun shutdown() {
+        importer.cancelActiveImports()
         importer.shutdown()
     }
 

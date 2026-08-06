@@ -27,6 +27,7 @@ import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import java.io.ByteArrayInputStream
 import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = Config.NONE)
@@ -108,6 +109,16 @@ class VpnProfileImporterTest {
     @Test
     fun shutdown_canBeCalledSafely() {
         importer.shutdown()
+    }
+
+    @Test
+    fun shutdown_cancelsActiveImportsAndShutsDownExecutor() {
+        val executorService = Executors.newSingleThreadExecutor()
+        val importerWithExecutor = VpnProfileImporter(context, executor = executorService)
+
+        importerWithExecutor.shutdown()
+
+        assertTrue(executorService.isShutdown)
     }
 
     @Test

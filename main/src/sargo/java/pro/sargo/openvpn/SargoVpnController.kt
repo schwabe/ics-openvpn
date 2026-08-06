@@ -21,6 +21,7 @@ class SargoVpnController(private val context: Context) {
     private val configProvider = SargoVpnConfigProvider(context)
     private val importer = VpnProfileImporter(context)
     private val alwaysOnManager = AlwaysOnVpnManager(context)
+    private val configPostProcessor = OpenVpnConfigPostProcessor()
 
     interface ControllerListener {
         fun onStatus(message: String)
@@ -85,6 +86,9 @@ class SargoVpnController(private val context: Context) {
         listener: ControllerListener?
     ) {
         val inlineConfig = config.vpnConfigContent.ifBlank { config.vpnConfig }
+        val configTransformer: (String) -> String = { rawConfig ->
+            configPostProcessor.process(rawConfig, config)
+        }
 
         when {
             inlineConfig.startsWith("content://") -> {
@@ -113,13 +117,19 @@ class SargoVpnController(private val context: Context) {
                                 }
                             }
                         }
-                    }
+                    },
+                    configTransformer
                 )
             }
             else -> {
                 // Treat as inline config content
                 listener?.onStatus("Importing profile '${config.vpnName}'...")
-                val result = importer.importFromString(service, config.vpnName, inlineConfig)
+                val result = importer.importFromString(
+                    service,
+                    config.vpnName,
+                    inlineConfig,
+                    configTransformer
+                )
                 when (result) {
                     is VpnProfileImporter.ImportResult.Success -> {
                         finalizeProfile(service, config, result.profile, listener)
@@ -200,7 +210,12 @@ class SargoVpnController(private val context: Context) {
             }
         }
 
-        config.alwaysOn?.let { enabled ->
+        val effectiveAlwaysOn = config.alwaysOn ?: when (config.allowUserDisconnect) {
+            false -> true
+            else -> null
+        }
+
+        effectiveAlwaysOn?.let { enabled ->
             listener?.onStatus(
                 if (enabled) "Enabling always-on VPN..." else "Disabling always-on VPN..."
             )

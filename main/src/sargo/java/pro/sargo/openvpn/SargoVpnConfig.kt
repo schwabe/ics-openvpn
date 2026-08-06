@@ -13,6 +13,9 @@ package pro.sargo.openvpn
  * @property disconnectOnConfigChange Whether to disconnect the active VPN before applying a new configuration.
  * @property allowUserDisconnect Whether the user is allowed to manually disconnect the VPN (null = leave unchanged).
  * @property autoReconnect Whether to automatically reconnect after a network change or disconnect.
+ * @property vpnUsername Optional username for OpenVPN user-password authentication.
+ * @property vpnPassword Optional password for OpenVPN user-password authentication.
+ * @property logLevel Optional OpenVPN log verbosity level (verb 0..11). Null leaves the config unchanged.
  */
 data class SargoVpnConfig(
     val vpnName: String,
@@ -24,7 +27,10 @@ data class SargoVpnConfig(
     val removeAll: Boolean = false,
     val disconnectOnConfigChange: Boolean = false,
     val allowUserDisconnect: Boolean? = null,
-    val autoReconnect: Boolean = false
+    val autoReconnect: Boolean = false,
+    val vpnUsername: String? = null,
+    val vpnPassword: String? = null,
+    val logLevel: Int? = null
 ) {
     companion object {
         /**
@@ -44,7 +50,10 @@ data class SargoVpnConfig(
             removeAll: String?,
             disconnectOnConfigChange: String? = null,
             allowUserDisconnect: String? = null,
-            autoReconnect: String? = null
+            autoReconnect: String? = null,
+            vpnUsername: String? = null,
+            vpnPassword: String? = null,
+            logLevel: String? = null
         ): SargoVpnConfig? {
             val trimmedName = vpnName?.trim()
             val trimmedConfig = vpnConfig?.trim() ?: ""
@@ -72,7 +81,10 @@ data class SargoVpnConfig(
                     "0" -> false
                     else -> null
                 },
-                autoReconnect = "1" == autoReconnect?.trim()
+                autoReconnect = "1" == autoReconnect?.trim(),
+                vpnUsername = vpnUsername?.trim()?.takeIf { it.isNotBlank() },
+                vpnPassword = vpnPassword?.trim()?.takeIf { it.isNotBlank() },
+                logLevel = logLevel?.trim()?.toIntOrNull()?.takeIf { it in 0..11 }
             )
         }
     }

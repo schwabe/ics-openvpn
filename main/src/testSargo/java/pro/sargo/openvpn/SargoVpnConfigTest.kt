@@ -202,4 +202,60 @@ class SargoVpnConfigTest {
         assertFalse(config?.disconnectOnConfigChange == true)
         assertFalse(config?.autoReconnect == true)
     }
+
+    @Test
+    fun fromPreferences_parsesCredentialsAndLogLevel() {
+        val config = SargoVpnConfig.fromPreferences(
+            vpnName = "Auth VPN",
+            vpnConfig = "inline",
+            connect = null,
+            alwaysOn = null,
+            remove = null,
+            removeAll = null,
+            vpnUsername = "  user  ",
+            vpnPassword = "  secret  ",
+            logLevel = " 5 "
+        )
+
+        assertNotNull(config)
+        assertEquals("user", config?.vpnUsername)
+        assertEquals("secret", config?.vpnPassword)
+        assertEquals(5, config?.logLevel)
+    }
+
+    @Test
+    fun fromPreferences_rejectsInvalidLogLevel() {
+        val tooHigh = SargoVpnConfig.fromPreferences(
+            vpnName = "A", vpnConfig = "c", connect = null, alwaysOn = null,
+            remove = null, removeAll = null, logLevel = "12"
+        )
+        val notNumber = SargoVpnConfig.fromPreferences(
+            vpnName = "A", vpnConfig = "c", connect = null, alwaysOn = null,
+            remove = null, removeAll = null, logLevel = "verbose"
+        )
+
+        assertNotNull(tooHigh)
+        assertNull(tooHigh?.logLevel)
+        assertNotNull(notNumber)
+        assertNull(notNumber?.logLevel)
+    }
+
+    @Test
+    fun fromPreferences_nullCredentialsWhenBlank() {
+        val config = SargoVpnConfig.fromPreferences(
+            vpnName = "A",
+            vpnConfig = "c",
+            connect = null,
+            alwaysOn = null,
+            remove = null,
+            removeAll = null,
+            vpnUsername = "   ",
+            vpnPassword = "",
+            logLevel = null
+        )
+
+        assertNotNull(config)
+        assertNull(config?.vpnUsername)
+        assertNull(config?.vpnPassword)
+    }
 }

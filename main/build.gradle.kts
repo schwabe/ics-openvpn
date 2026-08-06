@@ -299,8 +299,8 @@ dependencies {
     uiImplementation(libs.mpandroidchart)
     uiImplementation(libs.square.okhttp)
 
-    // SargO MDM client library (built from SargO/sargo/launcher/lib).
-    sargoImplementation(files("src/sargo/libs/sargo-mdm-lib-debug.aar"))
+    // SargO MDM client library (release AAR built from SargO/sargo/launcher/lib).
+    sargoImplementation(files("src/sargo/libs/sargo-mdm-lib-release.aar"))
 
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.junit)

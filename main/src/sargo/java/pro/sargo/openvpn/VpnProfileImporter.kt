@@ -46,15 +46,18 @@ class VpnProfileImporter(
      * @param service Bound IOpenVPNAPIService.
      * @param name Profile display name.
      * @param config Inline .ovpn configuration.
+     * @param configTransformer Optional transform applied to the config before import.
      * @return [ImportResult.Success] with the imported profile, or [ImportResult.Error].
      */
     fun importFromString(
         service: IOpenVPNAPIService,
         name: String,
-        config: String
+        config: String,
+        configTransformer: (String) -> String = { it }
     ): ImportResult {
+        val processedConfig = configTransformer(config)
         return try {
-            val profile = service.addNewVPNProfile(name, false, config)
+            val profile = service.addNewVPNProfile(name, false, processedConfig)
                 ?: return ImportResult.Error("OpenVPN API returned null profile")
             ImportResult.Success(profile)
         } catch (e: Exception) {
@@ -67,12 +70,15 @@ class VpnProfileImporter(
      * Import a profile from a content:// URI asynchronously.
      *
      * Progress and result callbacks are delivered on the main thread.
+     *
+     * @param configTransformer Optional transform applied to the config after it is read from the URI.
      */
     fun importFromUri(
         service: IOpenVPNAPIService,
         name: String,
         uri: Uri,
-        listener: ImportProgressListener
+        listener: ImportProgressListener,
+        configTransformer: (String) -> String = { it }
     ) {
         executor.execute {
             post { listener.onImportStarted() }
@@ -89,7 +95,7 @@ class VpnProfileImporter(
             }
 
             post { listener.onImportProgress("Importing profile '$name'...") }
-            val result = importFromString(service, name, config)
+            val result = importFromString(service, name, config, configTransformer)
             post { listener.onImportCompleted(result) }
         }
     }

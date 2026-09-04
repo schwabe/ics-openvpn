@@ -162,7 +162,7 @@
     <string name="owner_fix">Выправіць уласніка для /dev/tun</string>
     <string name="generated_config_summary">Паказаць згенераваны файл канфігурацыі OpenVPN</string>
     <string name="edit_profile_title">Змяненне \"%s\"</string>
-    <string name="building_configration">Пабудова канфігурацыі&#8230;</string>
+    <string name="building_configuration">Пабудова канфігурацыі&#8230;</string>
     <string name="netchange_summary">Уключэнне гэтага параметра прымусова перападлучаць сетку пры змяненні яе стану (напрыклад, прылада пераходзіць з WiFi у 3G і наадварот)</string>
     <string name="netchange">Перападлучыцца пры змяненні сеткі</string>
     <string name="netstatus">Статус сеткі: %s</string>
@@ -211,7 +211,7 @@
     <string name="openvpn_log">Журнал OpenVPN</string>
     <string name="import_config">Імпарт канфігурацыі OpenVPN</string>
     <string name="battery_consumption_title">Спажыванне акумулятара</string>
-    <string name="baterry_consumption">У маіх тэстах галоўнай прычынай высокага спажывання акумулятара праграмай з\'яўляліся пакеты keepalive. Большасць сервераў OpenVPN сканфігуравана пад дырэктыву \'keepalive 10 60\', якая абавязвае абменьвацца пакетамі keepalive кожныя дзесяць секунд. &lt;p&gt; Пакеты маюць маленькі памер і не выдаткоўваюць шмат трафіку, аднак яны ўвесь час прымушаюць радыёмодуль прылады заставацца ў актыўным стане і павялічваюць разрад батарэі (глядзіце таксама, &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt;. Налады абмену пакетаў keepalive нельга змяніць на кліенце. Толькі адміністратар сервера OpenVPN можа зрабіць гэта. &lt;p&gt; На жаль, калі зрабіць час абмену пакетамі keepalive больш за 60 секунд з UDP, то з\'явяцца праблемы з некаторымі шлюзамі NAT, якія разрываюць злучэнне не актыўнае больш за 60 секунд. Выкарыстанне TCP з доўгімі затрымкамі будзе працаваць, але прадукцыйнасць тунэліравання TCP праз TCP у сетках з высокай верагоднасцю страты пакетаў будзе вельмі нізкая (глядзіце, &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
+    <string name="battery_consumption">У маіх тэстах галоўнай прычынай высокага спажывання акумулятара праграмай з\'яўляліся пакеты keepalive. Большасць сервераў OpenVPN сканфігуравана пад дырэктыву \'keepalive 10 60\', якая абавязвае абменьвацца пакетамі keepalive кожныя дзесяць секунд. &lt;p&gt; Пакеты маюць маленькі памер і не выдаткоўваюць шмат трафіку, аднак яны ўвесь час прымушаюць радыёмодуль прылады заставацца ў актыўным стане і павялічваюць разрад батарэі (глядзіце таксама, &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt;. Налады абмену пакетаў keepalive нельга змяніць на кліенце. Толькі адміністратар сервера OpenVPN можа зрабіць гэта. &lt;p&gt; На жаль, калі зрабіць час абмену пакетамі keepalive больш за 60 секунд з UDP, то з\'явяцца праблемы з некаторымі шлюзамі NAT, якія разрываюць злучэнне не актыўнае больш за 60 секунд. Выкарыстанне TCP з доўгімі затрымкамі будзе працаваць, але прадукцыйнасць тунэліравання TCP праз TCP у сетках з высокай верагоднасцю страты пакетаў будзе вельмі нізкая (глядзіце, &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
     <string name="connection_retries">Спроб падлучэння</string>
     <string name="reconnection_settings">Налады перападлучэння</string>
     <string name="connectretrymessage">Прамежак чакання ў секундах паміж спробамі злучэння.</string>
@@ -219,7 +219,7 @@
     <string name="minidump_generated">OpenVPN нечакана завяршыла сваю працу. Мы будзем вельмі ўдзячныя, калі вы скарыстаецеся параметрам \"Адправіць мінідамп распрацоўшчыку\" ў галоўным меню праграмы</string>
     <string name="send_minidump">Адправіць мінідамп распрацоўшчыку</string>
     <string name="send_minidump_summary">Адпраўляе адладачную інфармацыю распрацоўшчыку пра апошняе аварыйнае завяршэнне праграмы</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Падлучэнне</string>
@@ -239,7 +239,7 @@
     <string name="state_nonetwork">Чаканне выкарыстання сеткі</string>
     <string name="state_waitorbot">Чаканне запуску Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Не злучаны</string>
+    <string name="notification_title_notconnect">Не злучаны</string>
     <string name="start_vpn_title">Падлучэнне да VPN %s</string>
     <string name="start_vpn_ticker">Падлучэнне да VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Некаторыя версіі Android 4.1 маюць праблемы, калі сертыфікат са сховішча ключоў змяшчае сімвалы, якія не належаць да дыяпазону літар і лічбаў (напрыклад, прабелы, знак падкрэслівання або працяжнік). Паспрабуйце выдаліць спецыяльныя сімвалы з сертыфіката і імпартаваць яго яшчэ раз</string>
@@ -344,7 +344,7 @@
     <string name="version_upto">%s і больш раннія</string>
     <string name="copy_of_profile">Копія %s</string>
     <string name="ab_not_route_to_vpn_title">Маршрут для ўсталяванага адраса IP</string>
-    <string name="custom_connection_options_warng">Азначце ўласныя параметры злучэння. Карыстайцеся з асцярожнасцю</string>
+    <string name="custom_connection_options_warning">Азначце ўласныя параметры злучэння. Карыстайцеся з асцярожнасцю</string>
     <string name="custom_connection_options">Уласныя параметры</string>
     <string name="remove_connection_entry">Выдаліць запіс падлучэння</string>
     <string name="version_and_later">%s і больш познія</string>
@@ -420,7 +420,7 @@
     <string name="osslspeedtest">Тэст хуткасці OpenSSL Crypto</string>
     <string name="openssl_error">OpenSSL вярнуў памылку</string>
     <string name="running_test">Тэставанне&#8230;</string>
-    <string name="test_algoirhtms">Тэставанне выбраных алгарытмаў</string>
+    <string name="test_algorithms">Тэставанне выбраных алгарытмаў</string>
     <string name="all_app_prompt">Знешняя праграма спрабуе кантраляваць %s. Праграма, якая запытала доступ не вызначана. УСЕ астатнія праграмы атрымаюць доступ, калі вы ўхваліце доступ гэтай праграме.</string>
     <string name="openvpn3_nostatickeys">Рэалізацыя OpenVPN 3 на C++ не падтрымлівае статычныя ключы. Калі ласка, змяніце на OpenVPN 2.x у агульных наладах.</string>
     <string name="openvpn3_pkcs12">Выкарыстанне файлаў PKCS12 напрамую з дапамогай рэалізацыі OpenVPN 3 на С++ не падтрымліваецца. Імпартуйце файлы PKCS12 у сховішча ключоў Android або змяніце на OpenVPN 2.x у агульных наладах.</string>
@@ -430,7 +430,7 @@
     <string name="openvpn3_socksproxy">Рэалізацыя OpenVPN 3 на C++ не падтрымлівае падлучэнне праз проксі Socks</string>
     <string name="no_orbotfound">Праграма Orbot не знойдзеная. Калі ласка, усталюйце яе ўручную або зрабіце інтэграцыю Socks v5.</string>
     <string name="faq_remote_api_title">Аддалены API</string>
-    <string name="faq_remote_api"> падтрымлівае два аддаленых API: складаны, які выкарыстоўвае AIDL (remoteEXample у рэпазіторыі git) і просты, які выкарыстоўвае Intents. &lt;p&gt;Прыклады выкарыстання абалонкі adb і intents. Замяніце назву профілю на сваю ўласную&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api"> падтрымлівае два аддаленых API: складаны, які выкарыстоўвае AIDL (remoteExample у рэпазіторыі git) і просты, які выкарыстоўвае Intents. &lt;p&gt;Прыклады выкарыстання абалонкі adb і intents. Замяніце назву профілю на сваю ўласную&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Уключыць праверку сапраўднасці проксі</string>
     <string name="error_orbot_and_proxy_options">Дадатковы аператар http-proxy-option і інтэграцыю Orbot нельга выкарыстоўваць адначасова</string>
     <string name="info_from_server">Інфармацыя з сервера: \'%s\'</string>

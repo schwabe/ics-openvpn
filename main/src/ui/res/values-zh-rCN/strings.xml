@@ -61,7 +61,7 @@
     <string name="title_cancel">确认取消?</string>
     <string name="cancel_connection_query">断开连接的VPN/取消连接尝试？</string>
     <string name="remove_vpn">删除VPN</string>
-    <string name="check_remote_tlscert">检查服务器是否使用 TLS 服务器端扩展 (--remote-cert-tlsserver server)</string>
+    <string name="check_remote_tlscert">检查服务器是否使用 TLS 服务器端扩展 (--remote-cert-tls server)</string>
     <string name="check_remote_tlscert_title">需要 TLS 服务器证书</string>
     <string name="remote_tlscn_check_summary">检查远程服务器证书的 DN 属性</string>
     <string name="remote_tlscn_check_title">证书主机名检查</string>
@@ -123,7 +123,7 @@
     <string name="no_vpn_support_image">很遗憾，您目前的系统不支持 VPNService API， 抱歉:(</string>
     <string name="encryption">加密</string>
     <string name="cipher_dialog_title">输入加密方式</string>
-    <string name="chipher_dialog_message">输入 OpenVPN 使用的数据加密密码算法，以 : (--data-ciphers) 分隔。留空以使用默认值 AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305。</string>
+    <string name="cipher_dialog_message">输入 OpenVPN 使用的数据加密密码算法，以 : (--data-ciphers) 分隔。留空以使用默认值 AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305。</string>
     <string name="auth_dialog_message">输入 OpenVPN 使用的认证摘要。留空则使用默认的摘要。</string>
     <string name="settings_auth">认证/加密</string>
     <string name="file_explorer_tab">文件浏览器</string>
@@ -165,7 +165,7 @@
     <string name="owner_fix">修复 /dev/tun 的所有权</string>
     <string name="generated_config_summary">显示生成的OpenVPN配置文件</string>
     <string name="edit_profile_title">正在编辑 \"%s\"</string>
-    <string name="building_configration">构建配置中...</string>
+    <string name="building_configuration">构建配置中...</string>
     <string name="netchange_summary">打开此选项将在网络状态改变(例如从WiFi到移动数据/从移动数据到WiFi)情形下强制重新连接</string>
     <string name="netchange">当网络更改时重新连接</string>
     <string name="netstatus">网络状态：%s</string>
@@ -216,7 +216,7 @@
     <string name="openvpn_log">OpenVPN 日志</string>
     <string name="import_config">导入 OpenVPN 配置文件</string>
     <string name="battery_consumption_title">电池消耗</string>
-    <string name="baterry_consumption">在我的个人测试中，OpenVPN高电量消耗的主要原因是keepalive包。大多数OpenVPN服务器都有一个像“keepalive 10 60”这样的配置指令，它会导致客户端和服务器每隔10秒钟交换keepalive包。&lt;p&gt;虽然这些数据包很小，不占用太多流量，但它们使移动无线网络保持繁忙，增加了电量消耗。(参见&lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt;此keepalive设置不能在客户端上更改。只有OpenVPN的系统管理员才能更改设置。&lt;p&gt;不幸的是，在UDP协议上使用大于60秒的keepalive会导致一些NAT网关由于不活动超时而关闭连接。使用具有长时间保持活动超时的TCP可以解决问题，但会因具有高包丢失的连接造成TCP隧穿TCP的性能非常差。(见&lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
+    <string name="battery_consumption">在我的个人测试中，OpenVPN高电量消耗的主要原因是keepalive包。大多数OpenVPN服务器都有一个像“keepalive 10 60”这样的配置指令，它会导致客户端和服务器每隔10秒钟交换keepalive包。&lt;p&gt;虽然这些数据包很小，不占用太多流量，但它们使移动无线网络保持繁忙，增加了电量消耗。(参见&lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt;此keepalive设置不能在客户端上更改。只有OpenVPN的系统管理员才能更改设置。&lt;p&gt;不幸的是，在UDP协议上使用大于60秒的keepalive会导致一些NAT网关由于不活动超时而关闭连接。使用具有长时间保持活动超时的TCP可以解决问题，但会因具有高包丢失的连接造成TCP隧穿TCP的性能非常差。(见&lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
     <string name="connection_retries">连接重试次数</string>
     <string name="reconnection_settings">重新连接设置</string>
     <string name="connectretrymessage">连接尝试间隔 (秒)。</string>
@@ -224,7 +224,7 @@
     <string name="minidump_generated">OpenVPN 意外崩溃。建议您使用主菜单中的发送转储文件功能</string>
     <string name="send_minidump">向开发者发送转储信息</string>
     <string name="send_minidump_summary">向开发人员发送上次崩溃的调试信息</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">连接中</string>
@@ -244,7 +244,7 @@
     <string name="state_nonetwork">等待可用网络</string>
     <string name="state_waitorbot">等待Orbot启动</string>
     <string name="statusline_bytecount">↓%2$s %1$s-↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">未连接</string>
+    <string name="notification_title_notconnect">未连接</string>
     <string name="start_vpn_title">正在连接至 VPN %s</string>
     <string name="start_vpn_ticker">正在连接至 VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">某些版本的 Android 4.1 存在问题，如果密钥库证书的名称包含非字母和数字字符(如空格、 下划线或短划线)。请尝试重新导入不包含特殊字符的证书</string>
@@ -350,7 +350,7 @@
     <string name="version_upto">%s及更早版本</string>
     <string name="copy_of_profile">%s 的副本</string>
     <string name="ab_not_route_to_vpn_title">到已配置IP地址的路由</string>
-    <string name="custom_connection_options_warng">指定自定义连接的特定选项。请谨慎使用</string>
+    <string name="custom_connection_options_warning">指定自定义连接的特定选项。请谨慎使用</string>
     <string name="custom_connection_options">自定义选项</string>
     <string name="remove_connection_entry">删除连接条目</string>
     <string name="version_and_later">%s 及更高版本</string>
@@ -433,7 +433,7 @@
     <string name="osslspeedtest">OpenSSL Crypto速度测试</string>
     <string name="openssl_error">OpenSSL 返回错误</string>
     <string name="running_test">正在运行测试&#8230;</string>
-    <string name="test_algoirhtms">测试选定的算法</string>
+    <string name="test_algorithms">测试选定的算法</string>
     <string name="all_app_prompt">一个外部应用试图控制 %s。无法确定请求权限的应用程序是否安全。允许这个应用程序将授予所有应用程序权限。</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C ++实现不支持静态密钥。请在常规设置下更改为OpenVPN 2.x.</string>
     <string name="openvpn3_pkcs12">不支持OpenVPN 3 的C++ 实现直接使用pkcs 12 文件。请将 pkcs12 文件导入 Android 密钥库, 或在常规设置下更改为 OpenVPN 2.x。</string>
@@ -443,7 +443,7 @@
     <string name="openvpn3_socksproxy">OpenVPN 3 C ++实现不支持通过Socks代理进行连接</string>
     <string name="no_orbotfound">无法找到Orbot应用程序。请安装Orbot或使用手动Socks v5集成。</string>
     <string name="faq_remote_api_title">远程API</string>
-    <string name="faq_remote_api">OpenVPN for Android支持两个远程API，一个使用AIDL的复杂API（git存储库中的remoteEXample）和一个使用Intents的简单API。 &lt;p&gt;使用adb shell和意图的示例。用您的个人资料名称替换profilname&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn /.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -电子邮件地址:.</string>
+    <string name="faq_remote_api">OpenVPN for Android支持两个远程API，一个使用AIDL的复杂API（git存储库中的remoteExample）和一个使用Intents的简单API。 &lt;p&gt;使用adb shell和意图的示例。用您的个人资料名称替换profilename&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn /.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -电子邮件地址:.</string>
     <string name="enableproxyauth">启用代理验证</string>
     <string name="error_orbot_and_proxy_options">无法在同一时间使用额外的http-proxy-option语句和Orbot集成</string>
     <string name="info_from_server">来自服务器的信息：\'%s\'</string>

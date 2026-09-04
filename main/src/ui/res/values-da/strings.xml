@@ -123,7 +123,7 @@
     <string name="no_vpn_support_image">Dit billede understøtter ikke VPNService API\'en, beklager :(</string>
     <string name="encryption">Kryptering</string>
     <string name="cipher_dialog_title">Angiv krypterings metode</string>
-    <string name="chipher_dialog_message">Angiv datakrypteringschifferalgoritmerne brugt af OpenVPN adskilt af: (--data-ciphers). Lad stå tomt for at bruge standarden AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
+    <string name="cipher_dialog_message">Angiv datakrypteringschifferalgoritmerne brugt af OpenVPN adskilt af: (--data-ciphers). Lad stå tomt for at bruge standarden AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
     <string name="auth_dialog_message">Angiv autentificeringsdigest til brug af OpenVPN. Efterlad tom for at anvende standard digest.</string>
     <string name="settings_auth">Autentificering/kryptering</string>
     <string name="file_explorer_tab">Stifinder</string>
@@ -165,7 +165,7 @@
     <string name="owner_fix">Ret ejerskab af /dev/tun</string>
     <string name="generated_config_summary">Vis den generede OpenVPN konfigurationsfil</string>
     <string name="edit_profile_title">Redigerer \"%s\"</string>
-    <string name="building_configration">Bygger konfiguration&#8230;</string>
+    <string name="building_configuration">Bygger konfiguration&#8230;</string>
     <string name="netchange_summary">Hvis dette tilvalg slåes til vil det gennemtvinge en genopretning af forbindelsen hvis netværkstilstanden ændres (f.eks. WIFI til/fra mobildata)</string>
     <string name="netchange">Genopret forbindelse ved ændring i netværkstilstand</string>
     <string name="netstatus">Netværks status: %s</string>
@@ -214,7 +214,7 @@
     <string name="openvpn_log">OpenVPN log</string>
     <string name="import_config">Importér OpenVPN konfiguration</string>
     <string name="battery_consumption_title">Batteriforbrug</string>
-    <string name="baterry_consumption">I mine personlige tests er hovedårsagen til OpenVPNs høje batteriforbrug keepalive-pakker. De fleste OpenVPN-servere har en konfigurationsregel såsom \'keepalive 10 60\', som får klienten og serveren til at udveksle keepalive-pakker hvert tiende sekund. &lt;p&gt; Selvom disse pakker er små og ikke udgør megen trafik, holder de mobilradioenetværk beskæftiget og øger dermed strømforbruget (se evt. &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt; Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt;. Denne keepalive-indstilling kan ikke ændres på klienten, men kun systemadministratoren for OpenVPN kan ændre denne. &lt;p&gt; Ved at benytte et keepalive-niveau længere end 60 sekunder med UDP kan visse NAT-gateways droppe forbindelsen grundet en inaktivitets-timeout. Brug af TCP med en høj keepalive-tid fungerer, men tunnelering af TCP over TCP udviser en ekstrem ringe ydelse på forbindelser med højt pakketab (se &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP over TCP is a bad idea&lt;/a&gt;).</string>
+    <string name="battery_consumption">I mine personlige tests er hovedårsagen til OpenVPNs høje batteriforbrug keepalive-pakker. De fleste OpenVPN-servere har en konfigurationsregel såsom \'keepalive 10 60\', som får klienten og serveren til at udveksle keepalive-pakker hvert tiende sekund. &lt;p&gt; Selvom disse pakker er små og ikke udgør megen trafik, holder de mobilradioenetværk beskæftiget og øger dermed strømforbruget (se evt. &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt; Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt;. Denne keepalive-indstilling kan ikke ændres på klienten, men kun systemadministratoren for OpenVPN kan ændre denne. &lt;p&gt; Ved at benytte et keepalive-niveau længere end 60 sekunder med UDP kan visse NAT-gateways droppe forbindelsen grundet en inaktivitets-timeout. Brug af TCP med en høj keepalive-tid fungerer, men tunnelering af TCP over TCP udviser en ekstrem ringe ydelse på forbindelser med højt pakketab (se &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP over TCP is a bad idea&lt;/a&gt;).</string>
     <string name="connection_retries">Forbindelses-forsøg</string>
     <string name="reconnection_settings">Gentilslutningindstillinger</string>
     <string name="connectretrymessage">Antal sekunder at vente mellem forbindelsesforsøg.</string>
@@ -222,7 +222,7 @@
     <string name="minidump_generated">OpenVPN gik uventet ned. Overvej venligst at benytte muligheden Send Minidump i hovedmenuen</string>
     <string name="send_minidump">Send Minidump til udvikler</string>
     <string name="send_minidump_summary">Sender fejlsøgningsinfo om seneste nedbrud til udvikler</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Tilslutning</string>
@@ -242,7 +242,7 @@
     <string name="state_nonetwork">Afventer anvendeligt netværk</string>
     <string name="state_waitorbot">Venter på at Orbot skal starte</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Ikke tilsluttet</string>
+    <string name="notification_title_notconnect">Ikke tilsluttet</string>
     <string name="start_vpn_title">Forbinder til VPN %s</string>
     <string name="start_vpn_ticker">Forbinder til VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Nogle versioner af Android 4.1 har problemer, hvis navnet på keystore-certifikatet indeholder ikke-alfanumeriske tegn (som mellemrum, understregninger eller bindestreger). Prøv at genimportere certifikatet uden specialtegn</string>
@@ -347,12 +347,12 @@
     <string name="version_upto">%s og tidligere</string>
     <string name="copy_of_profile">Kopi af %s</string>
     <string name="ab_not_route_to_vpn_title">Rute til den konfigurerede IP-adresse</string>
-    <string name="custom_connection_options_warng">Angiv tilpassede tilslutningsspecifikke indstillinger. Brug med omtanke</string>
+    <string name="custom_connection_options_warning">Angiv tilpassede tilslutningsspecifikke indstillinger. Brug med omtanke</string>
     <string name="custom_connection_options">Tilpassede indstillinger</string>
     <string name="remove_connection_entry">Fjern forbindelsesindgang</string>
     <string name="version_and_later">%s og senere</string>
     <string name="tls_cipher_alert_title">Forbindelser fejler SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure</string>
-    <string name="tls_cipher_alert">Nyere OpenVPN for Android-versioner (0.6.29/marts 2015) benytter en mere sikker standard for de tilladte chiffer-pakker (tls-chiffer \"DEFAULT:! EXP:! PSK:! SRP:! KRSA\"). Uheldigvis afstedkommer udeladelse af de mindre sikre chiffer-pakker og eksportchiffer-pakker, især udeladelsen af ​​chiffer-pakker, som ikke understøtter Perfect Forward Secrecy (Diffie-Hellman), visse problemer. Dette skyldes normalt et velment, men dårligt udført, forsøg på at styrke TLS-sikkerhed ved at opsætte tls-chiffer på serveren eller nogle indlejrede operativsystemer med fjernet SSL (f.eks. MikroTik).\nFor at løse dette problem bør tls-cipher-indstillinger på serverensættes til en rimelig standard såsom tls-chiffer \"DEFAULT:! EXP:! PSK:! SRP:! kRSA\". For at løse problemet på klienten kan den tilpassede indstilling tls-chiffer DEFAULT tilføjes på Android-klienten.</string>
+    <string name="tls_cipher_alert">Nyere OpenVPN for Android-versioner (0.6.29/marts 2015) benytter en mere sikker standard for de tilladte chiffer-pakker (tls-chiffer \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Uheldigvis afstedkommer udeladelse af de mindre sikre chiffer-pakker og eksportchiffer-pakker, især udeladelsen af ​​chiffer-pakker, som ikke understøtter Perfect Forward Secrecy (Diffie-Hellman), visse problemer. Dette skyldes normalt et velment, men dårligt udført, forsøg på at styrke TLS-sikkerhed ved at opsætte tls-chiffer på serveren eller nogle indlejrede operativsystemer med fjernet SSL (f.eks. MikroTik).\nFor at løse dette problem bør tls-cipher-indstillinger på serverensættes til en rimelig standard såsom tls-chiffer \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". For at løse problemet på klienten kan den tilpassede indstilling tls-chiffer DEFAULT tilføjes på Android-klienten.</string>
     <string name="message_no_user_edit">Denne profil er tilføjet fra en ekstern app (%s) og er blevet markeret som ikke-bruger-redigerbar.</string>
     <string name="crl_file">Liste over tilbagekaldte certifikater</string>
     <string name="service_restarted">Genstarter OpenVPN Service (App\'en crashede, den crashede sandsynligvis eller blev stoppet på grund a RAM overbelastning)</string>
@@ -374,7 +374,7 @@
     <string name="export_config_chooser_title">Eksporter konfigurationsfil</string>
     <string name="missing_tlsauth">tls-auth-filen mangler</string>
     <string name="missing_certificates">Manglende brugercertifikat eller brugercertifikat nøglefil</string>
-    <string name="crl_title">Certifcate Revoke List (valgfrit)</string>
+    <string name="crl_title">Certificate Revoke List (valgfrit)</string>
     <string name="reread_log">Genlæse (%d) log-linier fra cache</string>
     <string name="samsung_broken">Selv om Samsung-telefoner er blandt de mest solgte Android-telefoner, er Samsungs firmware også blandt de mest fejlagtige Android-implementationer. Fejlene er ikke begrænset til VPN-operationer på disse enheder, men mange af dem kan løses. I det følgende beskrives nogle af disse fejl. \n\nDNS virker ikke, medmindre DNS-serveren er i samme VPN-område. \n\nMed mange Samsung 5.x-enheder virker funktionen for tilladte/afviste apps ikke. \nMed Samsung 6.x rapporteres at VPN ikke fungere, medmindre VPN-appen er undtaget fra Powersave-funktioner.</string>
     <string name="samsung_broken_title">Samsung telefoner</string>
@@ -428,7 +428,7 @@
     <string name="osslspeedtest">OpenSSL Crypto Speed ​​test</string>
     <string name="openssl_error">OpenSSL returnerede en fejl</string>
     <string name="running_test">Tester ...</string>
-    <string name="test_algoirhtms">Test valgte algoritmer</string>
+    <string name="test_algorithms">Test valgte algoritmer</string>
     <string name="all_app_prompt">En ekstern app forsøger at styre %s. Appen, der anmoder om adgang, kan ikke bestemmes. Tillad, at denne app giver ALLE apps adgang.</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C ++ implementeringen understøtter ikke statiske nøgler. Venligst skift til OpenVPN 2.x under generelle indstillinger.</string>
     <string name="openvpn3_pkcs12">Brug af PKCS12 filer direkte med OpenVPN 3 C ++ implementering understøttes ikke. Indtast venligst pkcs12-filerne i Android-keystore eller skift til OpenVPN 2.x under generelle indstillinger.</string>
@@ -438,7 +438,7 @@
     <string name="openvpn3_socksproxy">OpenVPN 3 C++ implementering understøtter ikke tilslutning via Socks proxy</string>
     <string name="no_orbotfound">Orbot-applikationen kan ikke findes. Venligst installer Orbot eller brug manuel Sock v5-integrering.</string>
     <string name="faq_remote_api_title">Fjern-API</string>
-    <string name="faq_remote_api">OpenVPN til Android understøtter to eksterne API\'er, en sofistikeret API vha. AIDL (remoteEXample i git repository) og en enkel én vha. Intents.&lt;p&gt;Eksempler på brug af adb-shell og intents. Udskift profilnavn med dit profilnavn&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN til Android understøtter to eksterne API\'er, en sofistikeret API vha. AIDL (remoteExample i git repository) og en enkel én vha. Intents.&lt;p&gt;Eksempler på brug af adb-shell og intents. Udskift profilnavn med dit profilnavn&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Aktivér proxy-godkendelse</string>
     <string name="error_orbot_and_proxy_options">Kan ikke bruge ekstra http-proxy-muligheden sammen med Orbot-integration</string>
     <string name="info_from_server">Info fra server: \'%s\'</string>

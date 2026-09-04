@@ -165,7 +165,7 @@
     <string name="owner_fix">Corrijir a propriedade de /dev/tun</string>
     <string name="generated_config_summary">Mostra o arquivo de configuração do OpenVPN gerado</string>
     <string name="edit_profile_title">A editar \"%s\"</string>
-    <string name="building_configration">A preparar a configuração</string>
+    <string name="building_configuration">A preparar a configuração</string>
     <string name="netchange_summary">A ativação desta opção forçará uma reconexão se o estado da rede é alterado (por exemplo, WiFi de / para móvel)</string>
     <string name="netchange">Reconectar-se na mudança de rede</string>
     <string name="netstatus">Status da rede: %s</string>
@@ -214,7 +214,7 @@
     <string name="openvpn_log">OpenVPN Log</string>
     <string name="import_config">Importar configuração OpenVPN</string>
     <string name="battery_consumption_title">Consumo de bateria</string>
-    <string name="baterry_consumption">Em meus testes pessoais, a principal razão para o consumo de bateria alta do OpenVPN são os pacotes keepalive. A maioria dos servidores de OpenVPN tem um como a Directiva de configuração \' keepalive 10 60\', que faz com que o cliente e o servidor trocar pacotes keepalive em 10 segundos. &lt;p&gt; enquanto estes pacotes são pequenos e não use muito tráfego, manter a rede de rádio móvel ocupado e aumentar o consumo de energia. (Veja também a máquina de estado de rádio &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The | Android Developers&lt;/a&gt;) &lt;p&gt; que essa configuração keepalive não pode ser alterada no cliente. Somente o administrador de sistema do OpenVPN pode alterar a configuração. &lt;p&gt; infelizmente, usando um keepalive maior do que 60 segundos com UDP pode causar alguns gateways NAT para soltar a conexão devido a um tempo limite de inatividade. Usando TCP com uma longa manter vivo timeout funciona, mas encapsulamento TCP sobre TCP executa extremamente mal em conexões com alta perda de pacotes. (Veja &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP sobre TCP é um Idea&lt;/a&gt; ruim)</string>
+    <string name="battery_consumption">Em meus testes pessoais, a principal razão para o consumo de bateria alta do OpenVPN são os pacotes keepalive. A maioria dos servidores de OpenVPN tem um como a Directiva de configuração \' keepalive 10 60\', que faz com que o cliente e o servidor trocar pacotes keepalive em 10 segundos. &lt;p&gt; enquanto estes pacotes são pequenos e não use muito tráfego, manter a rede de rádio móvel ocupado e aumentar o consumo de energia. (Veja também a máquina de estado de rádio &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The | Android Developers&lt;/a&gt;) &lt;p&gt; que essa configuração keepalive não pode ser alterada no cliente. Somente o administrador de sistema do OpenVPN pode alterar a configuração. &lt;p&gt; infelizmente, usando um keepalive maior do que 60 segundos com UDP pode causar alguns gateways NAT para soltar a conexão devido a um tempo limite de inatividade. Usando TCP com uma longa manter vivo timeout funciona, mas encapsulamento TCP sobre TCP executa extremamente mal em conexões com alta perda de pacotes. (Veja &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP sobre TCP é um Idea&lt;/a&gt; ruim)</string>
     <string name="connection_retries">Tentativas de ligação</string>
     <string name="reconnection_settings">Configurações de religação</string>
     <string name="connectretrymessage">Número de segundos de espera entre tentativas de conexão.</string>
@@ -429,7 +429,7 @@
     <string name="osslspeedtest">Teste de velocidade do OpenSSL Crypto</string>
     <string name="openssl_error">OpenSSL retornou um erro</string>
     <string name="running_test">Executando teste&#8230;</string>
-    <string name="test_algoirhtms">Testar os algoritmos selecionados</string>
+    <string name="test_algorithms">Testar os algoritmos selecionados</string>
     <string name="all_app_prompt">Um aplicativo externo tenta controlar %s. O aplicativo que solicita o acesso não pode ser determinado. Permitir que este aplicativo concede TODOS os aplicativos de acesso.a.3 </string>
     <string name="openvpn3_nostatickeys">A implementação OpenVPN 3 C++ não suporta chaves estáticas. Altere para OpenVPN 2.x nas configurações gerais.</string>
     <string name="openvpn3_pkcs12">Usar diretamente arquivos PKCS12 com a implementação do OpenVPN 3 C++ não é suportado. Importe os arquivos PKCS12 para o armazenamento de chaves do Android ou mude para OpenVPN 2.x nas configurações gerais.</string>

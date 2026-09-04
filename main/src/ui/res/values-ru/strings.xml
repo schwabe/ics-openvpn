@@ -123,7 +123,7 @@
     <string name="no_vpn_support_image">Ваша прошивка не поддерживает VPNService API, извините :(</string>
     <string name="encryption">Шифрование</string>
     <string name="cipher_dialog_title">Укажите метод шифрования</string>
-    <string name="chipher_dialog_message">Укажите алгоритмы шифрования для OpenVPN, разделяя их двоеточием (--data-ciphers). Для шифрования по умолчанию (AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305) оставьте пустым.</string>
+    <string name="cipher_dialog_message">Укажите алгоритмы шифрования для OpenVPN, разделяя их двоеточием (--data-ciphers). Для шифрования по умолчанию (AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305) оставьте пустым.</string>
     <string name="auth_dialog_message">Введите дайджест аутентификации, используемый для OpenVPN. Оставьте поле пустым, чтобы использовать дайджест по умолчанию.</string>
     <string name="settings_auth">Аутентификация/шифрование</string>
     <string name="file_explorer_tab">Обзор файлов</string>
@@ -165,7 +165,7 @@
     <string name="owner_fix">Исправить права доступа к /dev/tun</string>
     <string name="generated_config_summary">Показывает сгенерированный файл конфигурации OpenVPN</string>
     <string name="edit_profile_title">Правка «%s»</string>
-    <string name="building_configration">Сборка конфигурации&#8230;</string>
+    <string name="building_configuration">Сборка конфигурации&#8230;</string>
     <string name="netchange_summary">Повторное подключение, если изменяется состояние сети (например, при переключении с WiFi на мобильную и наоборот).</string>
     <string name="netchange">Повторное подключение при смене сети</string>
     <string name="netstatus">Статус сети: %s</string>
@@ -219,7 +219,7 @@ API VPNService не позволяет указывать сети, которы
     <string name="openvpn_log">Журнал OpenVPN</string>
     <string name="import_config">Импортировать конфигурацию OpenVPN</string>
     <string name="battery_consumption_title">Потребление батареи</string>
-    <string name="baterry_consumption">В моих тестах главным источником высокого потребления электроэнергии батареи были пакеты keepalive. Большинство OpenVPN-серверов содержат директиву вроде «keepalive 10 60», которая заставляет клиент и сервер обмениваться keepalive-пакетами каждые 10 секунд. &lt;p&gt; Хоть эти пакеты и маленькие, и не расходуют много трафика, они заставляют радиомодуль всё время работать, что повышает расход энергии. (см. &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Настройки keepalive не могут быть изменены на клиенте, это может сделать только системный администратор OpenVPN. &lt;p&gt; К сожалению, использование keepalive более, чем 60 секунд с UDP, может привести к тому, что некоторые шлюзы NAT будут обрывать соединение из-за отсутствия активности. Использование TCP с большим keepalive-таймаутом будет работать, но производительность туннелирования TCP через TCP в сетях с высокими потерями пакетов крайне низкая (см. &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
+    <string name="battery_consumption">В моих тестах главным источником высокого потребления электроэнергии батареи были пакеты keepalive. Большинство OpenVPN-серверов содержат директиву вроде «keepalive 10 60», которая заставляет клиент и сервер обмениваться keepalive-пакетами каждые 10 секунд. &lt;p&gt; Хоть эти пакеты и маленькие, и не расходуют много трафика, они заставляют радиомодуль всё время работать, что повышает расход энергии. (см. &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Настройки keepalive не могут быть изменены на клиенте, это может сделать только системный администратор OpenVPN. &lt;p&gt; К сожалению, использование keepalive более, чем 60 секунд с UDP, может привести к тому, что некоторые шлюзы NAT будут обрывать соединение из-за отсутствия активности. Использование TCP с большим keepalive-таймаутом будет работать, но производительность туннелирования TCP через TCP в сетях с высокими потерями пакетов крайне низкая (см. &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
     <string name="connection_retries">Попытки переподключения</string>
     <string name="reconnection_settings">Настройки переподключения</string>
     <string name="connectretrymessage">Количество секунд между попытками подключения.</string>
@@ -227,7 +227,7 @@ API VPNService не позволяет указывать сети, которы
     <string name="minidump_generated">Приложение «OpenVPN для Android» завершилось неожиданно. Рассмотрите возможность отправить минидамп разработчику из главного меню.</string>
     <string name="send_minidump">Отправить мини-дамп разработчику</string>
     <string name="send_minidump_summary">Отправляет отладочную информацию о последнем сбое разработчику</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Подключение</string>
@@ -247,7 +247,7 @@ API VPNService не позволяет указывать сети, которы
     <string name="state_nonetwork">Ожидание доступной к сети</string>
     <string name="state_waitorbot">Ожидание запуска Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Не подключено</string>
+    <string name="notification_title_notconnect">Не подключено</string>
     <string name="start_vpn_title">Подключение к VPN %s</string>
     <string name="start_vpn_ticker">Подключение к VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">В некоторых версиях Android 4.1 возникают проблемы, если имя сертификата хранилища ключей содержит не буквенно-цифровые символы (например, пробелы, подчеркивания или дефисы). Попробуйте повторно импортировать сертификат без специальных символов</string>
@@ -354,7 +354,7 @@ API VPNService не позволяет указывать сети, которы
     <string name="version_upto">%s и ранее</string>
     <string name="copy_of_profile">Копия %s</string>
     <string name="ab_not_route_to_vpn_title">Маршрутизация на настроенный IP-адрес</string>
-    <string name="custom_connection_options_warng">Укажите индивидуальные параметры подключения. Используйте с осторожностью</string>
+    <string name="custom_connection_options_warning">Укажите индивидуальные параметры подключения. Используйте с осторожностью</string>
     <string name="custom_connection_options">Пользовательские параметры</string>
     <string name="remove_connection_entry">Удалить запись о подключении</string>
     <string name="version_and_later">%s и позднее</string>
@@ -437,7 +437,7 @@ DNS не работает, если сервер DNS не в диапазоне 
     <string name="osslspeedtest">Тест скорости шифрования OpenSSL</string>
     <string name="openssl_error">OpenSSL возвратил ошибку</string>
     <string name="running_test">Тестирование&#8230;</string>
-    <string name="test_algoirhtms">Тест выбранных алгоритмов</string>
+    <string name="test_algorithms">Тест выбранных алгоритмов</string>
     <string name="all_app_prompt">Внешнее приложение пытается управлять %s. Приложение, запрашивающее доступ, не может быть определено. Разрешение этого приложения предоставляет доступ ко ВСЕМ приложениям.</string>
     <string name="openvpn3_nostatickeys">Реализация OpenVPN 3 на C ++ не поддерживает статические ключи. Переключитесь на OpenVPN 2.x в общих настройках.</string>
     <string name="openvpn3_pkcs12">Использование файлов PKCS12 напрямую с помощью OpenVPN 3 C ++ не поддерживается. Импортируйте файлы PKCS12 в хранилище ключей Android или переключитесь на OpenVPN 2.x в общих настройках.</string>
@@ -447,7 +447,7 @@ DNS не работает, если сервер DNS не в диапазоне 
     <string name="openvpn3_socksproxy">Реализация OpenVPN 3 на C++ не поддерживает подключение через Socks-прокси</string>
     <string name="no_orbotfound">Приложение Orbot не найдено. Установите Orbot или настройте Socks v5 вручную.</string>
     <string name="faq_remote_api_title">Удалённый API</string>
-    <string name="faq_remote_api">OpenVPN для Android поддерживает два удалённых API: сложный API с использованием AIDL (remoteEXample в репозитории git) и простой с использованием Intents.&lt;p&gt;Примеры использования оболочки adb и intents. Замените profileName на название своей конфигурации&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN для Android поддерживает два удалённых API: сложный API с использованием AIDL (remoteExample в репозитории git) и простой с использованием Intents.&lt;p&gt;Примеры использования оболочки adb и intents. Замените profileName на название своей конфигурации&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Использовать аутентификацию прокси</string>
     <string name="error_orbot_and_proxy_options">Невозможно одновременно использовать дополнительную инструкцию http-proxy-option и интеграцию с Orbot</string>
     <string name="info_from_server">Информация от сервера: «%s»</string>

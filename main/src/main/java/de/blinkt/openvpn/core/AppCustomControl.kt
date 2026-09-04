@@ -40,7 +40,7 @@ class DPC1Protocol {
     var pendingMessage: String = ""
 
     /**
-     * receives a dpc1 message and returns an appropiate response.
+     * receives a dpc1 message and returns an appropriate response.
      *
      * This currently is a synchronous process as the current iteration
      * of the protocol does not require anything more advanced.

@@ -117,7 +117,7 @@ public class OrbotHelper {
         return intent;
     }
 
-    public static boolean checkTorReceier(Context c) {
+    public static boolean checkTorReceiver(Context c) {
         Intent startOrbot = getOrbotStartIntent(c);
         PackageManager pm = c.getPackageManager();
         Intent result = null;
@@ -142,7 +142,7 @@ public class OrbotHelper {
                     new IntentFilter(OrbotHelper.ACTION_STATUS));
             mContext = c.getApplicationContext();
         }
-        if (!checkTorReceier(c))
+        if (!checkTorReceiver(c))
             cb.onNotYetInstalled();
         statusCallbacks.add(cb);
         return (this);

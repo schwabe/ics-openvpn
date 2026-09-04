@@ -3,7 +3,7 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 
-/* DISABLE PERSISTEN TUN */
+/* DISABLE PERSISTENT TUN */
 #undef TUNSETPERSIST
 
 /* Enable deferred authentication */
@@ -615,7 +615,7 @@
 #define HAVE_SA_FAMILY_T 1
 
 
-// Workaround for bionc
+// Workaround for bionic
 #define IPPROTO_IP IPPROTO_IP
 #define IPPROTO_TCP IPPROTO_TCP
 

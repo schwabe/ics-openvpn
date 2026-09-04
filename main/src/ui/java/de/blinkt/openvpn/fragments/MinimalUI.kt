@@ -339,7 +339,7 @@ class MinimalUI: Fragment(), VpnStatus.StateListener {
 
         // Figure out if we should disconnect
         if (!GlobalPreferences.getForceConnected() && mLastConnectionLevel != ConnectionStatus.LEVEL_NOTCONNECTED) {
-            ProfileManager.setConntectedVpnProfileDisconnected(requireContext())
+            ProfileManager.setConnectedVpnProfileDisconnected(requireContext())
             val service = mService;
             if (service != null) {
                 try {

@@ -208,7 +208,7 @@ public class AppRestrictions {
                 continue;
             }
 
-            /* we always use lower case uuid since Android UUID class will use present
+            /* we always use lowercase uuid since Android UUID class will use present
              * them that way */
             uuid = uuid.toLowerCase(Locale.US);
             if (defaultprofile != null)

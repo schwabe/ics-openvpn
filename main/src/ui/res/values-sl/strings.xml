@@ -162,7 +162,7 @@
     <string name="owner_fix">Popravi lastništvo mape /dev/tun</string>
     <string name="generated_config_summary">Prikaže ustvarjeno nastavitveno datoteko OpenVPN</string>
     <string name="edit_profile_title">Urejanje \"%s\"</string>
-    <string name="building_configration">Izgrajevanje nastavitev &#8230;</string>
+    <string name="building_configuration">Izgrajevanje nastavitev &#8230;</string>
     <string name="netchange_summary">Vklop te storitve bo vsilil ponovno povezavo, če se stanje omrežja spremeni (npr. Wi-Fi v/iz mobilnega omrežja)</string>
     <string name="netchange">Pon. povez. ob spr. omr.</string>
     <string name="netstatus">Stanje omrežja: %s</string>
@@ -210,7 +210,7 @@
     <string name="openvpn_log">Dnevnik OpenVPN</string>
     <string name="import_config">Uvozi nastavitve OpenVPN</string>
     <string name="battery_consumption_title">Poraba baterije</string>
-    <string name="baterry_consumption">V mojih osebnih preizkusih so bili glaven vzrok za visoko porabo baterije OpenVPN-a dejavni paketi. Večina strežnikov OpenVPN ima smernico nastavitev, kot je \'ohrani dejavnost 10 60\', ki povzroči, da si odjemalec in strežnik izmenjata dejavne pakete vsakih 10 sekund. &lt;p&gt;Medtem, ko so ti paketi majhni in ne uporabijo veliko prometa, ohranijo mobilno radijsko omrežje dejavno in povečajo porabo energije (glejte tudi &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Razvijalci Androida&lt;/a&gt;).&lt;p&gt; Te nastavitve ohranjanja dejavnosti odjemalec ne more spremeniti. Spremeni jo lahko samo sistemski skrbnik OpenVPN-a.&lt;p&gt; Na žalost uporaba ohranjanja dejavnosti večje od 60-ih sekund z UDP-jem lahko povzroči, da nekatera vrata NAT prekinejo povezavo zaradi časovne omejitve nedejavnosti. Uporaba TCP-ja z dolgo časovno omejitvijo ohranjanja dejavnosti deluje, vendar se tuneliranje TCP-ja preko TCP-ja izkaže za zelo neučinkovito ob povezavah z visoko izgubo paketov (glejte &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;).</string>
+    <string name="battery_consumption">V mojih osebnih preizkusih so bili glaven vzrok za visoko porabo baterije OpenVPN-a dejavni paketi. Večina strežnikov OpenVPN ima smernico nastavitev, kot je \'ohrani dejavnost 10 60\', ki povzroči, da si odjemalec in strežnik izmenjata dejavne pakete vsakih 10 sekund. &lt;p&gt;Medtem, ko so ti paketi majhni in ne uporabijo veliko prometa, ohranijo mobilno radijsko omrežje dejavno in povečajo porabo energije (glejte tudi &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Razvijalci Androida&lt;/a&gt;).&lt;p&gt; Te nastavitve ohranjanja dejavnosti odjemalec ne more spremeniti. Spremeni jo lahko samo sistemski skrbnik OpenVPN-a.&lt;p&gt; Na žalost uporaba ohranjanja dejavnosti večje od 60-ih sekund z UDP-jem lahko povzroči, da nekatera vrata NAT prekinejo povezavo zaradi časovne omejitve nedejavnosti. Uporaba TCP-ja z dolgo časovno omejitvijo ohranjanja dejavnosti deluje, vendar se tuneliranje TCP-ja preko TCP-ja izkaže za zelo neučinkovito ob povezavah z visoko izgubo paketov (glejte &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;).</string>
     <string name="connection_retries">Ponovni poizkusi povezave</string>
     <string name="reconnection_settings">Nastavitve ponovne povezave</string>
     <string name="connectretrymessage">Št. sekund čakanja med poizkusi povezave.</string>
@@ -218,7 +218,7 @@
     <string name="minidump_generated">OpenVPN se je nepričakovano sesul. Razmislite o uporabi možnosti pošiljanja mini izpisa v glavnem meniju.</string>
     <string name="send_minidump">Pošlji mini izpis razvijalcu</string>
     <string name="send_minidump_summary">Pošlje podatke razhroščevanja o zadnjem sesutju razvijalcu</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Povezovanje</string>
@@ -237,7 +237,7 @@
     <string name="state_auth_failed">Overitev je spodletela</string>
     <string name="state_nonetwork">Čakanje na uporabno omrežje</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Ni povezan</string>
+    <string name="notification_title_notconnect">Ni povezan</string>
     <string name="start_vpn_title">Povezovanje v VPN %s</string>
     <string name="start_vpn_ticker">Povezovanje v VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Nekatere različice Androida 4.1 imajo težave, če ime potrdila shrambe ključev vsebuje posebne znake (presledke, podčrtaje ali pomišljaje). Poizkusite ponovno uvoziti potrdilo brez posebnih znakov.</string>
@@ -342,7 +342,7 @@
     <string name="version_upto">%s in prejšnji</string>
     <string name="copy_of_profile">Kopija %s</string>
     <string name="ab_not_route_to_vpn_title">Pot do nastavljenega naslova IP</string>
-    <string name="custom_connection_options_warng">Določite možnosti za povezave po meri. Uporabljajte previdno.</string>
+    <string name="custom_connection_options_warning">Določite možnosti za povezave po meri. Uporabljajte previdno.</string>
     <string name="custom_connection_options">Možnosti po meri</string>
     <string name="remove_connection_entry">Odstrani vnos povezave</string>
     <string name="version_and_later">%s in kasnejši</string>

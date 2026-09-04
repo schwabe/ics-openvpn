@@ -165,7 +165,7 @@
     <string name="owner_fix">إصلاح ملكية/dev/tun</string>
     <string name="generated_config_summary">emad</string>
     <string name="edit_profile_title">تعديل \"%s\"</string>
-    <string name="building_configration">جار إنشاء الإعدادات&#8230;</string>
+    <string name="building_configuration">جار إنشاء الإعدادات&#8230;</string>
     <string name="netchange_summary">سيؤدي تشغيل هذا الخيار إلى إعادة الاتصال في حالة تغيير حالة الشبكة (مثل WiFi من / إلى الهاتف المحمول)</string>
     <string name="netchange">إعادة الاتصال عند تبديل الشبكة</string>
     <string name="netstatus">حالة الشبكة: %s</string>
@@ -214,7 +214,7 @@
     <string name="openvpn_log">سِجلّ أوبن فيبي آن</string>
     <string name="import_config">إستيراد إعدادات لأوبن فيبي آن</string>
     <string name="battery_consumption_title">استهلاك البطارية</string>
-    <string name="baterry_consumption">In my personal tests the main reason for high battery consumption of OpenVPN are the keepalive packets. Most OpenVPN servers have a configuration directive like \'keepalive 10 60\' which causes the client and server to exchange keepalive packets every ten seconds. &lt;p&gt; While these packets are small and do not use much traffic, they keep the mobile radio network busy and increase the energy consumption. (See also &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; This keepalive setting cannot be changed on the client. Only the system administrator of the OpenVPN can change the setting. &lt;p&gt; Unfortunately using a keepalive larger than 60 seconds with UDP can cause some NAT gateways to drop the connection due to an inactivity timeout. Using TCP with a long keep alive timeout works, but tunneling TCP over TCP performs extremely poorly on connections with high packet loss. (See &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
+    <string name="battery_consumption">In my personal tests the main reason for high battery consumption of OpenVPN are the keepalive packets. Most OpenVPN servers have a configuration directive like \'keepalive 10 60\' which causes the client and server to exchange keepalive packets every ten seconds. &lt;p&gt; While these packets are small and do not use much traffic, they keep the mobile radio network busy and increase the energy consumption. (See also &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; This keepalive setting cannot be changed on the client. Only the system administrator of the OpenVPN can change the setting. &lt;p&gt; Unfortunately using a keepalive larger than 60 seconds with UDP can cause some NAT gateways to drop the connection due to an inactivity timeout. Using TCP with a long keep alive timeout works, but tunneling TCP over TCP performs extremely poorly on connections with high packet loss. (See &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
     <string name="connection_retries">إعادات محاولة الاتصال</string>
     <string name="reconnection_settings">إعدادات إعادة الاتصال</string>
     <string name="connectretrymessage">عدد الثواني التي يجب فيها الإنتظار بين محاولات الاتصال.</string>
@@ -352,7 +352,7 @@
     <string name="remove_connection_entry">إزالة إدخال الاتصال</string>
     <string name="version_and_later">%s وما بعدها</string>
     <string name="tls_cipher_alert_title">فشل الاتصالات مع SSL23_GET_SERVER_HELLO: فشل مصافحة تنبيه sslv3</string>
-    <string name="tls_cipher_alert">تستخدم إصدارات OpenVPN الأحدث لنظام Android (0.6.29 / مارس 2015) افتراضيًا أكثر أمانًا لمجموعات التشفير المسموح بها (tls-cipher \"DEFAULT:! EXP:! PSK:! SRP:! kRSA\"). لسوء الحظ ، فإن حذف مجموعات التشفير الأقل أمانًا ومجموعات التشفير ، لا سيما حذف مجموعات التشفير التي لا تدعم Perfect Forward Secrecy (Diffie-Hellman) يسبب بعض المشكلات. يحدث هذا عادةً بسبب محاولة حسنة النية ولكنها سيئة التنفيذ لتعزيز أمان TLS من خلال تعيين tls-cipher على الخادم أو بعض أنظمة التشغيل المدمجة مع SSL (مثل MikroTik).\nلحل هذه المشكلة ، قم بتعيين إعدادات tls-cipher على الخادم على افتراض افتراضي مثل tls-cipher \"DEFAULT:! EXP:! PSK:! SRP:! kRSA\". لحل المشكلة على العميل ، قم بإضافة الخيار الافتراضي tls-cipher DEFAULT على عميل Android.</string>
+    <string name="tls_cipher_alert">تستخدم إصدارات OpenVPN الأحدث لنظام Android (0.6.29 / مارس 2015) افتراضيًا أكثر أمانًا لمجموعات التشفير المسموح بها (tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). لسوء الحظ ، فإن حذف مجموعات التشفير الأقل أمانًا ومجموعات التشفير ، لا سيما حذف مجموعات التشفير التي لا تدعم Perfect Forward Secrecy (Diffie-Hellman) يسبب بعض المشكلات. يحدث هذا عادةً بسبب محاولة حسنة النية ولكنها سيئة التنفيذ لتعزيز أمان TLS من خلال تعيين tls-cipher على الخادم أو بعض أنظمة التشغيل المدمجة مع SSL (مثل MikroTik).\nلحل هذه المشكلة ، قم بتعيين إعدادات tls-cipher على الخادم على افتراض افتراضي مثل tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". لحل المشكلة على العميل ، قم بإضافة الخيار الافتراضي tls-cipher DEFAULT على عميل Android.</string>
     <string name="message_no_user_edit">تمت إضافة هذا الملف من تطبيق خارجي (%s) وتم وضع علامة على أنه غير قابل للتعديل بواسطة المستخدم.</string>
     <string name="crl_file">قائمة إبطال الشهادات</string>
     <string name="service_restarted">إعادة تشغيل خدمة OpenVPN (فشل التطبيق على الأرجح أو تم ايقافه بسبب انخفاض الذاكرة)</string>
@@ -429,7 +429,7 @@
     <string name="osslspeedtest">اختبار سرعة خوارزمية OpenSSL</string>
     <string name="openssl_error">قام OpenSSL بإرجاع خطأ</string>
     <string name="running_test">الإختبار جارٍ&#8230;</string>
-    <string name="test_algoirhtms">اختبار الخوارزميات التي تم اختيارها</string>
+    <string name="test_algorithms">اختبار الخوارزميات التي تم اختيارها</string>
     <string name="all_app_prompt">يحاول تطبيق خارجي التحكم في %s. لا يمكن تحديد التطبيق الذي يطلب الوصول. السماح لهذا التطبيق يمنح الوصول إلى جميع التطبيقات.</string>
     <string name="openvpn3_nostatickeys">لا يدعم تطبيق OpenVPN 3 C ++ المفاتيح الثابتة. يرجى التغيير إلى OpenVPN 2.x ضمن الإعدادات العامة.</string>
     <string name="openvpn3_pkcs12">استخدام ملفات PKCS12 مباشرة مع تطبيق OpenVPN 3 C ++ غير مدعوم. يرجى استيراد ملفات pkcs12 إلى ملف تخزين مفاتيح Android أو التغيير إلى OpenVPN 2.x ضمن الإعدادات العامة.</string>

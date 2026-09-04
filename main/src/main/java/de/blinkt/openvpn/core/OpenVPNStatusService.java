@@ -84,7 +84,7 @@ public class OpenVPNStatusService extends Service implements VpnStatus.LogListen
                         try {
 
                             for (LogItem logItem : logbuffer) {
-                                byte[] bytes = logItem.getMarschaledBytes();
+                                byte[] bytes = logItem.getMarshaledBytes();
                                 fd.writeShort(bytes.length);
                                 fd.write(bytes);
                             }

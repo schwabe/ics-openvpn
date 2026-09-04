@@ -138,10 +138,10 @@ public class ExternalOpenVPNService extends Service implements StateListener {
             /* Check if we need to show the confirmation dialog,
              * Check if we need to ask for username/password */
 
-            int neddPassword = vp.needUserPWInput(null, null);
+            int needPassword = vp.needUserPWInput(null, null);
             String startReason = "external OpenVPN service by uid: " + Binder.getCallingUid();
 
-            if(vpnPermissionIntent != null || neddPassword != 0){
+            if(vpnPermissionIntent != null || needPassword != 0){
                 Intent shortVPNIntent = new Intent(Intent.ACTION_MAIN);
                 shortVPNIntent.setClass(getBaseContext(), de.blinkt.openvpn.LaunchVPN.class);
                 shortVPNIntent.putExtra(de.blinkt.openvpn.LaunchVPN.EXTRA_KEY, vp.getUUIDString());

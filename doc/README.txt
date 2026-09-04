@@ -25,7 +25,7 @@ long as the main repo url is on github):
   git submodule update
 
 Build the project using "gradle build" (Or use Android Studio). Ensure that
-the swig executable is the path, otherwise the build will fail.
+the swig executable is the path; otherwise, the build will fail.
 
 Android studio tends to the whole build of binaries in its sync gradle
 phase to 15 minutes for initial gradle sync are completely normal.
@@ -61,7 +61,7 @@ A: OpenVPN for Android uses a OpenVPN  master branch + dual stack
 
 Q: What is minivpn?
 
-A: minivpn is only a executable that links against libopenvpn, which
+A: minivpn is only an executable that links against libopenvpn, which
    is the normal openvpn built as a library. It is done this way so
    the Android Play/Store apk will treat the library as a normal
    library and update it on updates of the application. Also, the

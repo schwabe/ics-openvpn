@@ -163,7 +163,7 @@
     <string name="owner_fix">修正 /dev/tun 的擁有者權限</string>
     <string name="generated_config_summary">顯示產生的 OpenVPN 設定檔</string>
     <string name="edit_profile_title">正在編輯「%s」</string>
-    <string name="building_configration">正在產生設定檔&#8230;</string>
+    <string name="building_configuration">正在產生設定檔&#8230;</string>
     <string name="netchange_summary">啟用此選項以在網路狀況變更時強制重新連線（例如從 WiFi 變成行動網路，反之亦然）</string>
     <string name="netchange">網路異動時重新連線</string>
     <string name="netstatus">網路狀態：%s</string>
@@ -212,7 +212,7 @@
     <string name="openvpn_log">OpenVPN 運作記錄</string>
     <string name="import_config">匯入 OpenVPN 設定</string>
     <string name="battery_consumption_title">電池消耗</string>
-    <string name="baterry_consumption">在我個人的測試中，OpenVPN 造成高耗電的主要原因是 keepalive 封包。大多數的 OpenVPN 伺服器都會有一個類似「keepalive 10 60」的設定，這會導致用戶端和伺服器每十秒交流一次 keepalive 封包。&lt;p&gt; 這些封包雖然都很小且不太占用流量，但它們會令行動網路持續忙碌，並增加耗電。（參見 &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;）&lt;p&gt; 這個 keepalive 設定不能從用戶端上更改。只有 OpenVPN 的系統管理員可以更改這個設定。&lt;p&gt; 不幸的是，在 UDP 下將 keepalive 設定為大於 60 秒，可能會導致一些 NAT 閘道由於連線不活躍時間過長而將其中斷。在 TCP 下使用較長的 keepalive 逾時設定可以運作，但 TCP over TCP tunneling 在高封包丟失率的連線上表現很差。（參見  &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;）</string>
+    <string name="battery_consumption">在我個人的測試中，OpenVPN 造成高耗電的主要原因是 keepalive 封包。大多數的 OpenVPN 伺服器都會有一個類似「keepalive 10 60」的設定，這會導致用戶端和伺服器每十秒交流一次 keepalive 封包。&lt;p&gt; 這些封包雖然都很小且不太占用流量，但它們會令行動網路持續忙碌，並增加耗電。（參見 &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;）&lt;p&gt; 這個 keepalive 設定不能從用戶端上更改。只有 OpenVPN 的系統管理員可以更改這個設定。&lt;p&gt; 不幸的是，在 UDP 下將 keepalive 設定為大於 60 秒，可能會導致一些 NAT 閘道由於連線不活躍時間過長而將其中斷。在 TCP 下使用較長的 keepalive 逾時設定可以運作，但 TCP over TCP tunneling 在高封包丟失率的連線上表現很差。（參見  &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;）</string>
     <string name="connection_retries">連線重試次數</string>
     <string name="reconnection_settings">重新連線設定</string>
     <string name="connectretrymessage">連線重試間的等待秒數。</string>
@@ -220,7 +220,7 @@
     <string name="minidump_generated">OpenVPN 異常中止，建議使用主選單中的「傳送異常傾印」選項。</string>
     <string name="send_minidump">傳送異常傾印給開發人員</string>
     <string name="send_minidump_summary">傳送上一次異常停止的除錯資訊給開發人員</string>
-    <string name="notifcation_title">OpenVPN－%s</string>
+    <string name="notification_title">OpenVPN－%s</string>
     <string name="session_ipv4string">%1$s－%2$s</string>
     <string name="session_ipv6string">%1$s－%3$s，%2$s</string>
     <string name="state_connecting">正在連線</string>
@@ -240,7 +240,7 @@
     <string name="state_nonetwork">正在等待可使用的網路</string>
     <string name="state_waitorbot">正在等待 Orbot 啟動</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">未連線</string>
+    <string name="notification_title_notconnect">未連線</string>
     <string name="start_vpn_title">正在連線至 VPN %s</string>
     <string name="start_vpn_ticker">正在連線至 VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">如果密鑰庫憑證包含非字母或數字字元（如空白、底線、破折號），在某些 Android 4.1 版本可能會出現問題。請嘗試重新匯入不含特殊字元的憑證。</string>
@@ -345,7 +345,7 @@
     <string name="version_upto">%s 及更早版本</string>
     <string name="copy_of_profile">%s 的副本</string>
     <string name="ab_not_route_to_vpn_title">路由到設定的 IP 位址</string>
-    <string name="custom_connection_options_warng">指定自訂連線的特定選項，請小心使用</string>
+    <string name="custom_connection_options_warning">指定自訂連線的特定選項，請小心使用</string>
     <string name="custom_connection_options">自訂選項</string>
     <string name="remove_connection_entry">刪除連線項目</string>
     <string name="version_and_later">%s 及更高版本</string>
@@ -421,7 +421,7 @@
     <string name="osslspeedtest">OpenSSL Crypto 速度測試</string>
     <string name="openssl_error">OpenSSL 回傳了錯誤</string>
     <string name="running_test">正在執行測試...</string>
-    <string name="test_algoirhtms">測試已選擇的演算法</string>
+    <string name="test_algorithms">測試已選擇的演算法</string>
     <string name="all_app_prompt">一個外部應用程式嘗試控制 %s。無法確認提出請求的應用程式。允許該應用程式將授予所有應用程式權限。</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C ++ 實作不支援靜態金鑰。請在「一般設定」下將其更改為 OpenVPN 2.x。</string>
     <string name="openvpn3_pkcs12">OpenVPN 3 C ++ 實作不支援直接使用 PKCS12 檔。請將 PKCS12 檔匯入 Android 金鑰庫，或在「一般設定」下將其更改為 OpenVPN 2.x。</string>
@@ -431,7 +431,7 @@
     <string name="openvpn3_socksproxy">OpenVPN 3 C++ 實作並不支援使用 Socks proxy 的連線方式</string>
     <string name="no_orbotfound">找不到 Orbot 應用程式。請安裝 Orbot 或使用手動 Socks v5 整合。</string>
     <string name="faq_remote_api_title">遠端 API</string>
-    <string name="faq_remote_api">OpenVPN for Android 支援兩種遠端 API，一種是使用 AIDL（Git 中的 remoteEXample）的複雜 API，和一種使用 Intent 的簡單 API。&lt;p&gt;以 adb shell 及 Intent 為例。將 profilname 替換為你的設定值名稱&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN for Android 支援兩種遠端 API，一種是使用 AIDL（Git 中的 remoteExample）的複雜 API，和一種使用 Intent 的簡單 API。&lt;p&gt;以 adb shell 及 Intent 為例。將 profilname 替換為你的設定值名稱&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">啟用 Proxy 驗證</string>
     <string name="error_orbot_and_proxy_options">無法在同個時間複雜度底下同時使用額外的 http-proxy-option 以及 Orbot 整合</string>
     <string name="info_from_server">來自伺服器的訊息：「%s」</string>

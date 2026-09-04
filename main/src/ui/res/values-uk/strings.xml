@@ -123,7 +123,7 @@
     <string name="no_vpn_support_image">Ваша прошивка не підтримує VPNService API, вибачте :(</string>
     <string name="encryption">Шифрування</string>
     <string name="cipher_dialog_title">Введіть метод шифрування</string>
-    <string name="chipher_dialog_message">Введіть алгоритми шифрування, що використовуються OpenVPN, розділяючи їх двокрапкою (--data-ciphers). Залиште порожнім, щоб використовувати шифри за замовчуванням (AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305).</string>
+    <string name="cipher_dialog_message">Введіть алгоритми шифрування, що використовуються OpenVPN, розділяючи їх двокрапкою (--data-ciphers). Залиште порожнім, щоб використовувати шифри за замовчуванням (AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305).</string>
     <string name="auth_dialog_message">Введіть the authentication digest для OpenVPN. Залиште порожнім для використання стандартних значень.</string>
     <string name="settings_auth">Автентифікація/Шифрування</string>
     <string name="file_explorer_tab">Провідник файлів</string>
@@ -165,7 +165,7 @@
     <string name="owner_fix">Виправити власника /dev/tun</string>
     <string name="generated_config_summary">Показує згенерований файл конфігурації OpenVPN</string>
     <string name="edit_profile_title">Редагується \"%s\"</string>
-    <string name="building_configration">Побудова конфігурації&#8230;</string>
+    <string name="building_configuration">Побудова конфігурації&#8230;</string>
     <string name="netchange_summary">Вмикання цього параметру примусить перепідключитися, якщо стан мережі змінився (напр. Wi-Fi/мобільний інтернет)</string>
     <string name="netchange">Перепідключатися при зміні мережі</string>
     <string name="netstatus">Статус мережі: %s</string>
@@ -214,7 +214,7 @@
     <string name="openvpn_log">Журнал OpenVPN</string>
     <string name="import_config">Імпорт конфігурації OpenVPN</string>
     <string name="battery_consumption_title">Споживання акумулятора</string>
-    <string name="baterry_consumption">У моїх особистих тестах основна причина високого споживання батареї OpenVPN є підтримуючі пакети. Більшість OpenVPN сервера мають директиви конфігурації, як \"залишайся в живих 10 60\", які перекладаються як підтримуючий пакет від клієнта до сервера і від сервера до клієнта кожні десять секунд. &lt;p&gt; Хоча ці пакети є невеликими і не використовують багато трафіку, вони тримають мережі мобільного радіозв\'язку зайнятими і збільшвють споживання енергії. (Див. також &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;Радіо State Machine | Android Developers &lt;/a&gt;) &lt;p&gt; Цей параметр надсилання пакетів не може бути змінений на клієнті. Тільки системний адміністратор OpenVPN може змінити настройки. &lt;p&gt; На жаль, використання цього параметру більше 60 секунд з UDP має проблеми з деякими шлюзами NAT, які закінчуються стан підключення після короткого тайм-ауту (60 с в моїх тестах). Використання TCP з довгими затримками працює, але має проблему TCP над TCP. (Див. &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt; Чому TCP над TCP є поганим середовищем&lt;/a&gt;)</string>
+    <string name="battery_consumption">У моїх особистих тестах основна причина високого споживання батареї OpenVPN є підтримуючі пакети. Більшість OpenVPN сервера мають директиви конфігурації, як \"залишайся в живих 10 60\", які перекладаються як підтримуючий пакет від клієнта до сервера і від сервера до клієнта кожні десять секунд. &lt;p&gt; Хоча ці пакети є невеликими і не використовують багато трафіку, вони тримають мережі мобільного радіозв\'язку зайнятими і збільшвють споживання енергії. (Див. також &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;Радіо State Machine | Android Developers &lt;/a&gt;) &lt;p&gt; Цей параметр надсилання пакетів не може бути змінений на клієнті. Тільки системний адміністратор OpenVPN може змінити настройки. &lt;p&gt; На жаль, використання цього параметру більше 60 секунд з UDP має проблеми з деякими шлюзами NAT, які закінчуються стан підключення після короткого тайм-ауту (60 с в моїх тестах). Використання TCP з довгими затримками працює, але має проблему TCP над TCP. (Див. &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt; Чому TCP над TCP є поганим середовищем&lt;/a&gt;)</string>
     <string name="connection_retries">Спроб підключення</string>
     <string name="reconnection_settings">Налаштування перепідключення</string>
     <string name="connectretrymessage">Кількість секунд очікування між спробами підключення.</string>
@@ -222,7 +222,7 @@
     <string name="minidump_generated">OpenVPN впав несподівано. Будь ласка, розгляньте використання параметру \"Надіслати Мінідамп\" в головному меню</string>
     <string name="send_minidump">Надіслати мінідамп розробнику</string>
     <string name="send_minidump_summary">Відправляє налагоджувальну інформацію розробнику про останнє аварійне завершення</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Підключення</string>
@@ -242,7 +242,7 @@
     <string name="state_nonetwork">Очікування на використання мережі</string>
     <string name="state_waitorbot">Очікування запуску Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Не підключено</string>
+    <string name="notification_title_notconnect">Не підключено</string>
     <string name="start_vpn_title">Підключення до VPN %s</string>
     <string name="start_vpn_ticker">Підключення до VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">У деяких версіях Android 4.1 є проблеми, якщо ім\'я сертифікату містить не буквено-цифрові символи (наприклад, пробіли, підкреслення або тире). Спробуйте перевстановити сертифікат без використання спеціальних символів.</string>
@@ -347,12 +347,12 @@
     <string name="version_upto">%s і раніше</string>
     <string name="copy_of_profile">Копія %s</string>
     <string name="ab_not_route_to_vpn_title">Шлях до налаштованого VPN IP адреса</string>
-    <string name="custom_connection_options_warng">Визначені параметри користувача при з\'єднанні. Будьте обережні!</string>
+    <string name="custom_connection_options_warning">Визначені параметри користувача при з\'єднанні. Будьте обережні!</string>
     <string name="custom_connection_options">Власні налаштовування</string>
     <string name="remove_connection_entry">Видалити запис підключення</string>
     <string name="version_and_later">%s і подальше</string>
     <string name="tls_cipher_alert_title">Підключення не вдається з \"SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure\"</string>
-    <string name="tls_cipher_alert">Новіші версії OpenVPN для Android (0.6.29 / березень 2015 р.) використовують більш безпечниі налаштування за промовчанням для дозволених шифрованих наборів (tls-шифр \"DEFAULT:! EXP:! PSK:! SRP:! KRSA\"). На жаль, виключення менш безпечних та експортних наборів шифрів, особливо тих, які не підтримують Perfect Forward Secrecy (Diffie-Hellman), викликають певні проблеми. Це, як правило, зумовлене добромисною, але погано виконаною спробою посилити захист TLS встановленням tls-cipher на сервері або деяких вбудованих ОС із урізаним SSL (наприклад, MikroTik).\nЩоб вирішити цю проблему, встановіть tls-cipher налаштування на сервері на розумні за промовчанням, як tls-cipher \"DEFAULT:! EXP:! PSK:! SRP:! kRSA\". Щоб вирішити проблему у клієнта, додайте користувацький параметр tls-cipher DEFAULT на клієнті Android.</string>
+    <string name="tls_cipher_alert">Новіші версії OpenVPN для Android (0.6.29 / березень 2015 р.) використовують більш безпечниі налаштування за промовчанням для дозволених шифрованих наборів (tls-шифр \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). На жаль, виключення менш безпечних та експортних наборів шифрів, особливо тих, які не підтримують Perfect Forward Secrecy (Diffie-Hellman), викликають певні проблеми. Це, як правило, зумовлене добромисною, але погано виконаною спробою посилити захист TLS встановленням tls-cipher на сервері або деяких вбудованих ОС із урізаним SSL (наприклад, MikroTik).\nЩоб вирішити цю проблему, встановіть tls-cipher налаштування на сервері на розумні за промовчанням, як tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". Щоб вирішити проблему у клієнта, додайте користувацький параметр tls-cipher DEFAULT на клієнті Android.</string>
     <string name="message_no_user_edit">Цей профіль був доданий з зовнішнього додатку (%s) і був відзначений як таким, що не керується користувачем.</string>
     <string name="crl_file">Список відкликаних сертифікатів</string>
     <string name="service_restarted">Перезапуск OpenVPN Service (Додаток зупинився або закрився через нестачу пам\'яті)</string>
@@ -429,7 +429,7 @@
     <string name="osslspeedtest">Тест швидкості OpenSSL Crypto</string>
     <string name="openssl_error">OpenSSL повернув помилку</string>
     <string name="running_test">Запуск тесту&#8230;</string>
-    <string name="test_algoirhtms">Тестування вибраних алгоритмів</string>
+    <string name="test_algorithms">Тестування вибраних алгоритмів</string>
     <string name="all_app_prompt">Зовнішній застосунок намагається контролювати %s. Застосунок, що запитує про доступ, не може бути визначений. Дозвіл цьому застосунку надає доступ всім додаткам.</string>
     <string name="openvpn3_nostatickeys">Реалізація OpenVPN 3 C ++ не підтримує статичні ключи. Перейдіть в OpenVPN 2.x під загальними налаштуваннями.</string>
     <string name="openvpn3_pkcs12">Використання файлів PKCS12 напряму за допомогою OpenVPN 3 C ++ не підтримується. Імпортуйте файли pkcs12 в сховище ключів Android або замініть OpenVPN 2.x на загальні налаштування.</string>
@@ -439,7 +439,7 @@
     <string name="openvpn3_socksproxy">OpenVPN 3 C++ implementation does not support connecting via Socks proxy</string>
     <string name="no_orbotfound">Неможливо знайти програму Orbot. Будь ласка, встановіть Orbot або скористайтеся ручною інтеграцією Socks v5.</string>
     <string name="faq_remote_api_title">Віддалений API</string>
-    <string name="faq_remote_api">OpenVPN для Android підтримує два віддалені API: складний API що використовує AIDL (remoteEXample в репозиторії git) та простий з використанням Intents.&lt;p&gt;Приклади використання оболонки adb и intents. Замініть profileName на назву вашої конфігурації&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN для Android підтримує два віддалені API: складний API що використовує AIDL (remoteExample в репозиторії git) та простий з використанням Intents.&lt;p&gt;Приклади використання оболонки adb и intents. Замініть profileName на назву вашої конфігурації&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Увімкнути аутентифікацію проксі</string>
     <string name="error_orbot_and_proxy_options">Неможливо використовувати додаткові оператори http-proxy-option та інтеграцію Orbot одночасноO</string>
     <string name="info_from_server">Інформація з сервера: \'%s\'</string>

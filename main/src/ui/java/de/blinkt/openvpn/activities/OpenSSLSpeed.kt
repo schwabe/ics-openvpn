@@ -150,7 +150,7 @@ class OpenSSLSpeed : BaseActivity() {
             val mResult = Vector<SpeedResult>()
 
             for (algorithm in algorithms.split(" ")) {
-                // Skip 16b and 16k as they are not relevevant for VPN
+                // Skip 16b and 16k as they are not relevant for VPN
                 var i = 1
                 while (i < NativeUtils.openSSLlengths.size - 1) {
                     val result = SpeedResult(algorithm)

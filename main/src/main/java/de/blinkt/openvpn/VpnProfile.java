@@ -97,8 +97,8 @@ public class VpnProfile implements Serializable, Cloneable {
     private static final String EXTRA_DIGEST = "de.blinkt.openvpn.api.DIGEST";
     public static String DEFAULT_DNS1 = "9.9.9.9";
     public static String DEFAULT_DNS2 = "2620:fe::fe";
-    // variable named wrong and should haven beeen transient
-    // but needs to keep wrong name to guarante loading of old
+    // variable named wrong and should have been transient
+    // but needs to keep wrong name to guarantee loading of old
     // profiles
     public transient boolean profileDeleted = false;
     public int mAuthenticationType = TYPE_KEYSTORE;
@@ -382,7 +382,7 @@ public class VpnProfile implements Serializable, Cloneable {
     }
 
     /**
-     * Adds an changelog/audit entry to the profile. The date of the entry will be the current time
+     * Adds a changelog/audit entry to the profile. The date of the entry will be the current time
      */
     public void addChangeLogEntry(String message) {
         while (changesLog.size() > 50)
@@ -420,7 +420,7 @@ public class VpnProfile implements Serializable, Cloneable {
             }
             String versionString = getPlatformVersionEnvString();
             cfg.append(String.format("setenv IV_PLAT_VER %s\n", openVpnEscape(versionString)));
-            String hwaddr = NetworkUtils.getFakeMacAddrFromSAAID(context);
+            String hwaddr = NetworkUtils.getFakeMacAddrFromSSAID(context);
             if (hwaddr != null)
                 cfg.append(String.format("setenv IV_HWADDR %s\n", hwaddr));
 
@@ -1098,7 +1098,7 @@ public class VpnProfile implements Serializable, Cloneable {
             if (c.mProxyType == Connection.ProxyType.ORBOT) {
                 if (usesExtraProxyOptions())
                     return R.string.error_orbot_and_proxy_options;
-                if (!OrbotHelper.checkTorReceier(context))
+                if (!OrbotHelper.checkTorReceiver(context))
                     return R.string.no_orbotfound;
             }
         }

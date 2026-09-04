@@ -93,7 +93,7 @@ issues or emailing me.
 
 Also, please note that before contributing to the project that I would like to retain 
 my ability to relicense the project for different third parties and therefore probably 
-need a contributer's agreement from any contributing party. To get started, 
+need a contributor's agreement from any contributing party. To get started, 
 [sign the Contributor License Agreement](doc/CLA.md).
 
 You can help
@@ -125,11 +125,11 @@ You can use `adb` to test these intents:
 Note to administrators
 ------------------------
 
-You make your life and that of your users easier if you embed the certificates into the .ovpn file. You or the users can mail the .ovpn as a attachment to the phone and directly import and use it. Also downloading and importing the file works. The MIME Type should be application/x-openvpn-profile. 
+You make your life and that of your users easier if you embed the certificates into the .ovpn file. You or the users can mail the .ovpn as an attachment to the phone and directly import and use it. Also downloading and importing the file works. The MIME Type should be application/x-openvpn-profile. 
 
 Inline files are supported since OpenVPN 2.1rc1 and documented in the  [OpenVPN man page](https://openvpn.net/community-docs/community-articles/openvpn-2-7-manual.html) (under INLINE FILE SUPPORT) 
 
-(Using inline certifaces can also make your life on non-Android platforms easier since you only have one file.)
+(Using inline certificates can also make your life on non-Android platforms easier since you only have one file.)
 
 For example `ca mycafile.pem` becomes
 ```

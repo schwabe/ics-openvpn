@@ -165,7 +165,7 @@
     <string name="owner_fix">مالکیت / dev / tun را رفع کنید</string>
     <string name="generated_config_summary">فایل پیکربندی OpenVPN تولید شده را نشان می دهد</string>
     <string name="edit_profile_title">ویرایش \"%s\"</string>
-    <string name="building_configration">در حال ساخت پیکربندی&#8230;</string>
+    <string name="building_configuration">در حال ساخت پیکربندی&#8230;</string>
     <string name="netchange_summary">روشن کردن این گزینه در صورت تغییر حالت اتصال شبکه مجبور خواهد شد (به عنوان مثال WiFi به / از تلفن همراه)</string>
     <string name="netchange">مجددا به تغییر شبکه متصل شوید</string>
     <string name="netstatus">وضعیت شبکه: %s</string>
@@ -216,7 +216,7 @@
     <string name="openvpn_log">ورودی OpenVPN</string>
     <string name="import_config">وارد کردن پیکربندی OpenVPN</string>
     <string name="battery_consumption_title">مصرف باتری</string>
-    <string name="baterry_consumption">در آزمایش های شخصی من دلیل اصلی مصرف باتری بالا از OpenVPN بسته های نگهدارنده هستند. اکثر سرورهای OpenVPN دارای یک دستورالعمل پیکربندی مانند \"keepalive 10 60\" هستند که باعث می شود مشتری و سرور هر 10 ثانیه یک بار بسته های نگهداری را تغییر دهند. &lt;p&gt; در حالیکه این بسته ها کوچک هستند و از ترافیک زیادی استفاده نمی کنند، شبکه رادیویی تلفن همراه را مشغول می کنند و مصرف انرژی را افزایش می دهند. (همچنین نگاه کنید به &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt; دستگاه دستگاه رادیویی | Android Developers&lt;/a&gt;) &lt;p&gt; این تنظیم Keepalive را نمی توان در سرویس گیرنده تغییر داد. فقط مدیر سیستم OpenVPN می تواند تنظیمات را تغییر دهد. &lt;p&gt; متاسفانه با استفاده از keepalive بزرگتر از 60 ثانیه با UDP می تواند بعضی از دروازه های NAT را به علت زمان وقوع غیرفعال، قطع کند. با استفاده از TCP با زمان طولانی نگه داشتن زنده کار می کند، اما تونل زدن TCP بیش از TCP در اتصالات با از دست دادن بسته بندی بسیار ضعیف است. (به &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt; چرا TCP بیش از TCP یک Idea&lt;/a&gt; بد است)</string>
+    <string name="battery_consumption">در آزمایش های شخصی من دلیل اصلی مصرف باتری بالا از OpenVPN بسته های نگهدارنده هستند. اکثر سرورهای OpenVPN دارای یک دستورالعمل پیکربندی مانند \"keepalive 10 60\" هستند که باعث می شود مشتری و سرور هر 10 ثانیه یک بار بسته های نگهداری را تغییر دهند. &lt;p&gt; در حالیکه این بسته ها کوچک هستند و از ترافیک زیادی استفاده نمی کنند، شبکه رادیویی تلفن همراه را مشغول می کنند و مصرف انرژی را افزایش می دهند. (همچنین نگاه کنید به &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt; دستگاه دستگاه رادیویی | Android Developers&lt;/a&gt;) &lt;p&gt; این تنظیم Keepalive را نمی توان در سرویس گیرنده تغییر داد. فقط مدیر سیستم OpenVPN می تواند تنظیمات را تغییر دهد. &lt;p&gt; متاسفانه با استفاده از keepalive بزرگتر از 60 ثانیه با UDP می تواند بعضی از دروازه های NAT را به علت زمان وقوع غیرفعال، قطع کند. با استفاده از TCP با زمان طولانی نگه داشتن زنده کار می کند، اما تونل زدن TCP بیش از TCP در اتصالات با از دست دادن بسته بندی بسیار ضعیف است. (به &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt; چرا TCP بیش از TCP یک Idea&lt;/a&gt; بد است)</string>
     <string name="connection_retries">اتصال دوباره انجام می شود</string>
     <string name="reconnection_settings">تنظیمات اتصال مجدد</string>
     <string name="connectretrymessage">تعداد ثانیه ها برای متوقف کردن تلاش اتصال.</string>
@@ -354,7 +354,7 @@
     <string name="remove_connection_entry">حذف اتصال ورودی</string>
     <string name="version_and_later">%s و بعدا</string>
     <string name="tls_cipher_alert_title">اتصالات با SSL23_GET_SERVER_HELLO: sslv3 هشدار شکست خوردن دستکاری</string>
-    <string name="tls_cipher_alert">جدیدتر OpenVPN برای نسخه های آندروید (0.6.29 / مارس 2015) از پیش فرض امن تر برای سوئیت های مجاز رمز (tls-cipher \"DEFAULT:! EXP:! PSK:! SRP:! kRSA\") استفاده می شود. متأسفانه، حذف کردن سوئیت های امنیتی کمتری و صادر کردن سوئیت های سری، به ویژه حذف مجموعه سوپرمارکت هایی که از تضعیف کامل Perfect Forward پشتیبانی نمی کنند (Diffie-Hellman) باعث مشکلات خاصی می شود. این معمولا توسط تلاش خوبی انجام شده اما به اجرا گذاشته شده به منظور تقویت امنیت TLS با تنظیم tls-cipher در سرور یا برخی از سیستم عامل های جاسازی شده با SSL خالی شده (به عنوان مثال MikroTik) ناشی می شود. \n برای حل این مشکل مشکل، تنظیم tls-رمز تنظیمات سرور به صورت پیش فرض معقول مانند tls-cipher \"DEFAULT:! EXP!! PSK:! SRP:! kRSA\". برای کنار آمدن با مشکل در سرویس گیرنده، گزینه tls-cipher DEFAULT سفارشی را در سرویس گیرنده Android اضافه کنید.</string>
+    <string name="tls_cipher_alert">جدیدتر OpenVPN برای نسخه های آندروید (0.6.29 / مارس 2015) از پیش فرض امن تر برای سوئیت های مجاز رمز (tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\") استفاده می شود. متأسفانه، حذف کردن سوئیت های امنیتی کمتری و صادر کردن سوئیت های سری، به ویژه حذف مجموعه سوپرمارکت هایی که از تضعیف کامل Perfect Forward پشتیبانی نمی کنند (Diffie-Hellman) باعث مشکلات خاصی می شود. این معمولا توسط تلاش خوبی انجام شده اما به اجرا گذاشته شده به منظور تقویت امنیت TLS با تنظیم tls-cipher در سرور یا برخی از سیستم عامل های جاسازی شده با SSL خالی شده (به عنوان مثال MikroTik) ناشی می شود. \n برای حل این مشکل مشکل، تنظیم tls-رمز تنظیمات سرور به صورت پیش فرض معقول مانند tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". برای کنار آمدن با مشکل در سرویس گیرنده، گزینه tls-cipher DEFAULT سفارشی را در سرویس گیرنده Android اضافه کنید.</string>
     <string name="message_no_user_edit">این نمایه از یک برنامه خارجی (%s) اضافه شده است و به عنوان قابل ویرایش کاربر مشخص نشده است.</string>
     <string name="crl_file">فهرست لغو گواهینامه</string>
     <string name="service_restarted">راه اندازی مجدد سرویس OpenVPN (احتمالا سقوط برنامه ممکن است برای فشار حافظه کشته یا کشته شود)</string>
@@ -431,7 +431,7 @@
     <string name="osslspeedtest">آزمون سریع رمز عبور OpenSSL</string>
     <string name="openssl_error">رمزنگاشته های SSL دچار خطا شده است.</string>
     <string name="running_test">در حال تست کردن</string>
-    <string name="test_algoirhtms">الگوریتم های انتخاب شده آزمایش</string>
+    <string name="test_algorithms">الگوریتم های انتخاب شده آزمایش</string>
     <string name="all_app_prompt">یک برنامه بیگانه در حال تلاش برای دسترسی به %s است. درخواست دسترسی برنامه لغو شد ، مجاز نمودن این برنامه موجب دسترسی کلی به تمام برنامه هاست .</string>
     <string name="openvpn3_nostatickeys">کلیدهای وضعیت  را پشتیبانی کنید .لطفا در زیر قسمت تنظیمات عمومی به OpenVPN 2.x تغییر یابد .</string>
     <string name="openvpn3_pkcs12">استفاده از فایلهای PKCS12 مستقیما با اجرا   VPN 3 سی پلاس (++) پشتیبانی نمی شود. لطفا فایل های pkcs12 را به کلیدهای ذخیره اندروید افزوده یا در قسمت زیر تنظیمات عمومی به OpenVPN 2.x تغییر دهید.</string>
@@ -441,7 +441,7 @@
     <string name="openvpn3_socksproxy">C ++ 3 OpenVPN اجرای حمایت نمی اتصال از طریق پراکسی پراکسی</string>
     <string name="no_orbotfound">Orbot application cannot be found. Please install Orbot or use manual Socks v5 integration.</string>
     <string name="faq_remote_api_title">API راه دور</string>
-    <string name="faq_remote_api">Openvpn نیاز برای آندروید APIs دو از راه دور، API پیچیده با استفاده از AIDL (remoteEXample در مخزن دستگاه گوارش) و یکی ساده با استفاده از مفاهیم را پشتیبانی می کند. &lt;p&gt;نمونه با استفاده از پوسته های بانک انکشاف آسیایی و مفاهیم. جایگزینی profilname با شما مشخصات نام&lt;p&gt;&lt;p&gt; بانک انکشاف آسیایی پوسته هستم شروع فعالیت - android.intent.action.MAIN de.blinkt.openvpn/.api. DisconnectVPN&lt;p&gt; پوسته بانک انکشاف آسیایی در شروع فعالیت - android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api. ConnectVPN</string>
+    <string name="faq_remote_api">Openvpn نیاز برای آندروید APIs دو از راه دور، API پیچیده با استفاده از AIDL (remoteExample در مخزن دستگاه گوارش) و یکی ساده با استفاده از مفاهیم را پشتیبانی می کند. &lt;p&gt;نمونه با استفاده از پوسته های بانک انکشاف آسیایی و مفاهیم. جایگزینی profilname با شما مشخصات نام&lt;p&gt;&lt;p&gt; بانک انکشاف آسیایی پوسته هستم شروع فعالیت - android.intent.action.MAIN de.blinkt.openvpn/.api. DisconnectVPN&lt;p&gt; پوسته بانک انکشاف آسیایی در شروع فعالیت - android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">فعال کردن تأیید اعتبار پراکسی</string>
     <string name="error_orbot_and_proxy_options">نمیتوان از بیانیه اضافی http-proxy-option یا Integration Orbot در همان زمان استفاده کرد</string>
     <string name="info_from_server">اطلاعات از سرور: \'%s\'</string>

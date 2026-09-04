@@ -53,7 +53,7 @@ class PasswordDialogFragment : DialogFragment() {
             input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
 
         return AlertDialog.Builder(activity)
-                .setTitle("Challenge/Response Authentification")
+                .setTitle("Challenge/Response Authentication")
                 .setMessage(title)
                 .setView(input)
                 .setPositiveButton(android.R.string.ok) { _, _ ->

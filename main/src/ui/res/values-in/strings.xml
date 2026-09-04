@@ -123,7 +123,7 @@
     <string name="no_vpn_support_image">Gambar Anda tidak mendukung VPNService API, maaf:(</string>
     <string name="encryption">Enkripsi</string>
     <string name="cipher_dialog_title">Masukkan metode enkripsi</string>
-    <string name="chipher_dialog_message">Masukkan algoritma enkripsi data cipher yang digunakan oleh OpenVPN dipisahkan dengan : (--data-ciphers). Biarkan kosong untuk menggunakan default AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
+    <string name="cipher_dialog_message">Masukkan algoritma enkripsi data cipher yang digunakan oleh OpenVPN dipisahkan dengan : (--data-ciphers). Biarkan kosong untuk menggunakan default AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
     <string name="auth_dialog_message">Masukkan digest otentikasi yang digunakan OpenVPN. Biarkan kosong untuk menggunakan standar digest.</string>
     <string name="settings_auth">Otentikasi/Enkripsi</string>
     <string name="file_explorer_tab">Penjelajah berkas</string>
@@ -165,7 +165,7 @@
     <string name="owner_fix">Perbaiki kepemilikan /dev/tun</string>
     <string name="generated_config_summary">Tunjukkan berkas konfigurasi OpenVPN yang dibuat</string>
     <string name="edit_profile_title">Mengubah \"%s\"</string>
-    <string name="building_configration">Membuat konfigurasi&#8230;</string>
+    <string name="building_configuration">Membuat konfigurasi&#8230;</string>
     <string name="netchange_summary">Menyalakan pilihan ini akan memaksa menyambung kembali jika keadaan jaringan berubah (misalnya WiFi dari mobile)</string>
     <string name="netchange">Koneksi ulang saat ganti jaringan</string>
     <string name="netstatus">Status jaringan: %s</string>
@@ -214,7 +214,7 @@
     <string name="openvpn_log">Catatan OpenVPN</string>
     <string name="import_config">Ambil konfigurasi VPN</string>
     <string name="battery_consumption_title">Konsumsi baterai</string>
-    <string name="baterry_consumption">Berdasarkan tes pribadi, alasan utama tingginya konsumsi baterai oleh OpenVPN adalah paket keepalive. Sebagian besar server OpenVPN memiliki parameter konfigurasi seperti \'keepalive 10 60\' yang membuat klien dan server bertukar paket keepalive setiap 10 detik. &lt;p&gt; Dengan kecilnya paket ini dan tidak memakai trafik terlalu banyak, mereka menjaga jaringan radio mobile tetap sibuk dan meningkatkan konsumsi energi.  (See also &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Seting keepalive ini tidak bisa dirubah di klien. Hanya Admin sistem OpenVPN yang dapat merubah seting ini. &lt;p&gt;  Sayangnya membuat keepalive lebih besar dari 60 detik tanpa UDP dapat membuat beberapa gateway NAT memutus koneksi karena anggapan tidak ada aktifitas pada periode tertentu (timeout). Memakai TCP dengan waktu timeout lebih lama dapat bekerja, tapi membuat tunnel TCP di jalur TCP menyebabkan koneksi yang buruk dan tingginya angka kehilangan paket data ((See &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
+    <string name="battery_consumption">Berdasarkan tes pribadi, alasan utama tingginya konsumsi baterai oleh OpenVPN adalah paket keepalive. Sebagian besar server OpenVPN memiliki parameter konfigurasi seperti \'keepalive 10 60\' yang membuat klien dan server bertukar paket keepalive setiap 10 detik. &lt;p&gt; Dengan kecilnya paket ini dan tidak memakai trafik terlalu banyak, mereka menjaga jaringan radio mobile tetap sibuk dan meningkatkan konsumsi energi.  (See also &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Seting keepalive ini tidak bisa dirubah di klien. Hanya Admin sistem OpenVPN yang dapat merubah seting ini. &lt;p&gt;  Sayangnya membuat keepalive lebih besar dari 60 detik tanpa UDP dapat membuat beberapa gateway NAT memutus koneksi karena anggapan tidak ada aktifitas pada periode tertentu (timeout). Memakai TCP dengan waktu timeout lebih lama dapat bekerja, tapi membuat tunnel TCP di jalur TCP menyebabkan koneksi yang buruk dan tingginya angka kehilangan paket data ((See &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
     <string name="connection_retries">Mengulang koneksi</string>
     <string name="reconnection_settings">Pengaturan rekoneksi</string>
     <string name="connectretrymessage">Jumlah detik untuk menunggu antar usaha koneksi</string>
@@ -222,7 +222,7 @@
     <string name="minidump_generated">OpenVPN crash tak terduga. Silakan mempertimbangkan mengirim menggunakan pilihan Minidump di Menu Utama</string>
     <string name="send_minidump">Mengirim MiniDump untuk pengembang</string>
     <string name="send_minidump_summary">Mengirim informasi debug tentang kegagalan aplikasi yang terakhir ke pengembang</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Menghubungkan</string>
@@ -242,7 +242,7 @@
     <string name="state_nonetwork">Menunggu jaringan yang dapat dipakai</string>
     <string name="state_waitorbot">Menunggu Orbot dimulai</string>
     <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
-    <string name="notifcation_title_notconnect">Tidak terhubung</string>
+    <string name="notification_title_notconnect">Tidak terhubung</string>
     <string name="start_vpn_title">Menghubungkan ke VPN %s</string>
     <string name="start_vpn_ticker">Menghubungkan ke VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Beberapa versi Android 4.1 memiliki masalah jika nama sertifikat keystore berisi karakter non alfanumerik (seperti spasi, garis bawah atau tanda hubung). Cobalah import ulang sertifikat tanpa karakter khusus</string>
@@ -341,13 +341,13 @@
     <string name="ignore_multicast_route">Mengabaikan rute multicast: %s</string>
     <string name="ab_only_cidr">Android hanya mendukung rute CIDR ke VPN. Sejak non-CIDR rute yang hampir tidak pernah digunakan, OpenVPN untuk Android akan menggunakan / 32 untuk rute yang tidak CIDR dan mengeluarkan peringatan.</string>
     <string name="ab_proxy">Android akan tetap menggunakan pengaturan proxy Anda ditentukan untuk mobile koneksi / Wi-Fi ketika tidak ada server DNS diatur. OpenVPN untuk Android akan memperingatkan Anda tentang hal ini dalam log. <p> Ketika VPN menetapkan server DNS Android tidak akan proxy. Tidak ada API untuk mengatur proxy untuk koneksi VPN. </p></string>
-    <string name="ab_not_route_to_vpn">IP klien dikonfigurasi dan IP di topeng jaringan tidak diteruskan ke VPN. OpenVPN bekerja di sekitar bug ini dengan secara eksplisit menambahkan rute yang corrosponds ke IP klien dan netmask nya</string>
+    <string name="ab_not_route_to_vpn">IP klien dikonfigurasi dan IP di topeng jaringan tidak diteruskan ke VPN. OpenVPN bekerja di sekitar bug ini dengan secara eksplisit menambahkan rute yang corresponds ke IP klien dan netmask nya</string>
     <string name="ab_only_cidr_title">Rute non CIDR</string>
     <string name="ab_proxy_title">Tindakan Proxy untuk VPN</string>
     <string name="version_upto">%s dan sebelumnya</string>
     <string name="copy_of_profile">Salinan dari %s</string>
     <string name="ab_not_route_to_vpn_title">Alihkan ke alamat IP yang telah ditentukan</string>
-    <string name="custom_connection_options_warng">Tentukan pengaturan untuk koneksi khusus . Gunakan dengan hati-hati</string>
+    <string name="custom_connection_options_warning">Tentukan pengaturan untuk koneksi khusus . Gunakan dengan hati-hati</string>
     <string name="custom_connection_options">Pilihan buatan</string>
     <string name="remove_connection_entry">Hapus entri koneksi</string>
     <string name="version_and_later">%s dan yang lebih baru</string>
@@ -374,7 +374,7 @@
     <string name="export_config_chooser_title">Ambil berkas konfigurasi</string>
     <string name="missing_tlsauth">File tls-auth hilang</string>
     <string name="missing_certificates">Sertifikat pengguna atau file kunci pengguna certifcate hilang</string>
-    <string name="crl_title">Daftar Pencabutan Certifcate (opsional)</string>
+    <string name="crl_title">Daftar Pencabutan Certificate (opsional)</string>
     <string name="reread_log">Baca ulang (%d) item log dari file cache log</string>
     <string name="samsung_broken">Jjj</string>
     <string name="samsung_broken_title">Ponsel Samsung</string>
@@ -429,7 +429,7 @@
     <string name="osslspeedtest">OpenSSL Crypto Speed test</string>
     <string name="openssl_error">OpenSSL returned an error</string>
     <string name="running_test">Menjalankan tes&#8230;</string>
-    <string name="test_algoirhtms">Uji algoritma yang dipilih</string>
+    <string name="test_algorithms">Uji algoritma yang dipilih</string>
     <string name="all_app_prompt">Aplikasi eksternal berusaha mengendalikan %s. Aplikasi yang meminta akses tidak dapat ditentukan. Mengizinkan aplikasi ini memberi SEMUA akses aplikasi.</string>
     <string name="openvpn3_nostatickeys">Implementasi OpenVPN 3 C ++ tidak mendukung kunci statis. Silakan ubah ke OpenVPN 2.x di bagian pengaturan umum.</string>
     <string name="openvpn3_pkcs12">Penggunaan file PKCS12 secara langsung dengan implementasi OpenVPN 3 C ++ tidak didukung. Silakan impor file pkcs12 ke Android keystore atau ubah ke OpenVPN 2.x di bagian pengaturan umum.</string>

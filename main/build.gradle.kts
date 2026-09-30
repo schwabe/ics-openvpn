@@ -139,6 +139,9 @@ android {
                 productFlavors["ovpn23"].signingConfig = signingConfigs.getByName("release")
                 productFlavors["ovpn2"].signingConfig = signingConfigs.getByName("releaseOvpn2")
             }
+            optimization {
+                enable = true
+            }
         }
     }
 

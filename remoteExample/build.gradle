@@ -9,19 +9,19 @@ plugins {
 
 android {
     buildFeatures {
-        buildConfig true
+        buildConfig = true
     }
-    compileSdkVersion 33
+    compileSdkVersion = 37
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 33
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion 16
+        targetSdkVersion 37
+        versionCode = 1
+        versionName = "1.0"
     }
-    namespace 'de.blinkt.openvpn.remote'
+    namespace = 'de.blinkt.openvpn.remote'
     buildFeatures {
-        aidl true
+        aidl = true
     }
 }
 

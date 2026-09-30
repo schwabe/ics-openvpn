@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 34
+    compileSdkVersion 37
 
     defaultConfig {
         applicationId "de.blinkt.externalcertprovider"
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 37
         versionCode 1
         versionName "1.0"
 
@@ -33,11 +33,11 @@ android {
         sourceCompatibility 1.8
     }
     lint {
-        abortOnError false
+        abortOnError = false
     }
-    namespace 'de.blinkt.externalcertprovider'
+    namespace = 'de.blinkt.externalcertprovider'
     buildFeatures {
-        aidl true
+        aidl = true
     }
 
     // This is just a demo package, don't care about it being perfect

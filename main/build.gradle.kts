@@ -140,7 +140,7 @@ android {
                 productFlavors["ovpn2"].signingConfig = signingConfigs.getByName("releaseOvpn2")
             }
             optimization {
-                enable = true
+                enable = false
             }
         }
     }

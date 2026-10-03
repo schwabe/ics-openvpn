@@ -36,8 +36,8 @@ android {
         minSdk = 23
         targetSdk = 37
         //targetSdkPreview = "UpsideDownCake"
-        versionCode = 221
-        versionName = "0.7.66"
+        versionCode = 224
+        versionName = "0.7.68"
         externalNativeBuild {
             cmake {
                 //arguments+= "-DCMAKE_VERBOSE_MAKEFILE=1"
@@ -139,6 +139,13 @@ android {
                 productFlavors["ovpn23"].signingConfig = signingConfigs.getByName("release")
                 productFlavors["ovpn2"].signingConfig = signingConfigs.getByName("releaseOvpn2")
             }
+
+            optimization {
+                enable = false
+            }
+        }
+        getByName("debug")
+        {
             optimization {
                 enable = false
             }

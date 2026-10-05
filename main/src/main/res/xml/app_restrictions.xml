@@ -126,4 +126,10 @@
             android:restrictionType="bool"
             android:title="@string/apprest_netchangereconnect_title" />
 
+    <restriction
+            android:description="@string/apprest_ovpn3"
+            android:key="ovpn3"
+            android:restrictionType="bool"
+            android:title="@string/apprest_ovpn3_title" />
+
 </restrictions>

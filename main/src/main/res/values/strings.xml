@@ -144,6 +144,7 @@
     <string name="import_could_not_open">Could not find file %1$s mentioned in the imported config file</string>
     <string name="importing_config">Importing config file from source %1$s</string>
     <string name="import_warning_custom_options">Your configuration had a few configuration options that are not mapped to UI configurations. These options were added as custom configuration options. The custom configuration is displayed below:</string>
+    <string name="import_warning_auth_retry_interact">Your configuration included the option auth-retry interact. This is often done for non-standard/hacky MFA implementation. This is not supported by this app.</string>
     <string name="import_done">Done reading config file.</string>
     <string name="nobind_summary">Do not bind to local address and port</string>
     <string name="no_bind">No local binding</string>
@@ -508,5 +509,6 @@
     <string name="local_network_permission">Local network permission</string>
     <string name="local_network_permission_summary">Allows to connect to a VPN server on the local network.</string>
     <string name="openvpn3_different_proxy">OpenVPN 3 C++ implementation does not support different proxy settings per remote</string>
+    <string name="auth_retry_interact_not_supported">The configuration uses auth-retry interact is not supported.</string>
 
 </resources>

@@ -35,6 +35,7 @@
         <item>Disconnect, forget password</item>
         <item>Disconnect, keep password</item>
         <item>Ignore, retry</item>
+        <item>Retry, interactive (not supported)</item>
     </string-array>
     <string-array name="compat_mode">
         <item>Modern defaults</item>

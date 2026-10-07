@@ -1123,6 +1123,11 @@ public class VpnProfile implements Serializable, Cloneable {
             return R.string.openvpn3_different_proxy;
         }
 
+        if (mAuthRetry == AUTH_RETRY_INTERACT)
+        {
+            return R.string.auth_retry_interact_not_supported;
+        }
+
         // Everything okay
         return R.string.no_error_found;
 

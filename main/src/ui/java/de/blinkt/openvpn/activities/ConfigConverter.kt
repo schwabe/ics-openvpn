@@ -912,6 +912,12 @@ class ConfigConverter : BaseActivity(), FileSelectCallback, View.OnClickListener
             findViewById<View>(R.id.importpkcs12).visibility = View.VISIBLE
         }
 
+        if (mResult!!.mAuthRetry == VpnProfile.AUTH_RETRY_INTERACT)
+        {
+            mResult!!.mAuthRetry = VpnProfile.AUTH_RETRY_NOINTERACT
+            log(R.string.import_warning_auth_retry_interact)
+        }
+
     }
 
     private fun log(ressourceId: Int, vararg formatArgs: Any) {

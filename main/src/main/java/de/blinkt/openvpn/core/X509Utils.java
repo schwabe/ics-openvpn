@@ -39,7 +39,7 @@ public class X509Utils {
 		if(VpnProfile.isEmbedded(certfilename)) {
             int subIndex = certfilename.indexOf("-----BEGIN CERTIFICATE-----");
             do {
-                // The java certifcate reader is ... kind of stupid
+                // The java certificate reader is ... kind of stupid
                 // It does NOT ignore chars before the --BEGIN ...
 
                 subIndex = Math.max(0, subIndex);

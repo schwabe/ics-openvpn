@@ -25,5 +25,5 @@ interface IOpenVPNServiceInternal {
 
     boolean isAllowedExternalApp(String packagename);
 
-    void challengeResponse(String repsonse);
+    void challengeResponse(String response);
 }

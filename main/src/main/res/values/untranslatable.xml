@@ -11,7 +11,7 @@
         &lt;helbeierling@t-online.de>
     </string>
 
-    <string name="opevpn_copyright" translatable="false">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net>\n
+    <string name="openvpn_copyright" translatable="false">Copyright © 2002–2010 OpenVPN Technologies, Inc. &lt;sales@openvpn.net>\n
 
         "OpenVPN" is a trademark of OpenVPN Technologies, Inc.\n
     </string>
@@ -99,6 +99,8 @@
     <string name="apprest_encrypt_profiles_title">Encrypt profiles</string>
     <string name="apprest_netchangereconnect">Reconnect on network change</string>
     <string name="apprest_netchangereconnect_title">Trigger a reconnection of the OpenVPN connection if the change in the network connectivity is detected</string>
+    <string name="apprest_ovpn3_title">Use OpenVPN 3 core</string>
+    <string name="apprest_ovpn3">Use the OpenVPN 3 C++ library instead of OpenVPN 2.x for all connections. Ignored if this build does not include OpenVPN 3.</string>
     <string name="apprest_initial_import_title">Allow initial import in minimal UI</string>
     <string name="apprest_initial_import">If minimal UI is enabled but no profile is provided, the app will allow an initial import of a profile that will become the default profile.</string>
 

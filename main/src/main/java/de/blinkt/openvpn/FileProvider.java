@@ -121,7 +121,7 @@ implements PipeDataWriter<InputStream> {
 	@Override
 	public void writeDataToPipe(ParcelFileDescriptor output, Uri uri, String mimeType,
 			Bundle opts, InputStream args) {
-		// Transfer data from the asset to the pipe the client is reading.
+		// Transfer data from the asset to the pipe that the client is reading.
 		byte[] buffer = new byte[8192];
 		int n;
 		FileOutputStream fout = new FileOutputStream(output.getFileDescriptor());

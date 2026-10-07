@@ -67,8 +67,8 @@
     <string name="remote_tlscn_check_title">Comprobación del certificado de nombre de host</string>
     <string name="enter_tlscn_dialog">Especifica el chequeo usado para verificar el certificado remoto DN (ej. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de)\n\nEspecifica el DN completo o el RDN (openvpn.blinkt.de en el ejemplo) o un prefijo RDN para la verificación.\n\nCuando se usa un prefijo RDN como \"Server\" este coincide también con \"Server-1\" y \"Server-2\"\n\nDejando el campo de texto vacío verificara el RDN contra el nombre host del servidor.\n\nPara más detalles ve la página de manual (manpage) de OpenVPN 2.3.1+ en --verify-x509-name</string>
     <string name="enter_tlscn_title">Sujeto del Certificado Remoto</string>
-    <string name="pull_on_summary">Obtener Direcciones IP, rutas y opciones de sincronizacion del servidor.</string>
-    <string name="pull_off_summary">No se pedira informacion del servidor. Necesita especifiar la configuracion abajo.</string>
+    <string name="pull_on_summary">Obtener Direcciones IP, rutas y opciones de sincronización del servidor.</string>
+    <string name="pull_off_summary">No se pedira informacion del servidor. Necesita especifiar la configuración abajo.</string>
     <string name="use_pull">Obtener Configuracion</string>
     <string name="dns">DNS</string>
     <string name="override_dns">Reemplazar la configuración DNS del Servidor</string>
@@ -102,7 +102,7 @@
     <string name="routes_info_incl">Rutas: %1$s %2$s</string>
     <string name="routes_info_excl">Rutas excluidas: %1$s %2$s</string>
     <string name="routes_debug">Rutas instaladas por VpnService: %1$s %2$s</string>
-    <string name="ip_not_cidr">Información de la interfaz obtenida %1$s and %2$s, asumiendo que la segunda dirección es una dirección equivalente del remoto. Usando una máscara de red /32 para la IP local. El modo dado por OpenVPN es \"%3$s\".</string>
+    <string name="ip_not_cidr">Información de la interfaz obtenida %1$s y %2$s, asumiendo que la segunda dirección es una dirección equivalente del remoto. Usando una máscara de red /32 para la IP local. El modo dado por OpenVPN es \"%3$s\".</string>
     <string name="route_not_cidr">No tienen sentido %1$s y %2$s como ruta IP con máscara de red CIDR, usando /32 como máscara de red.</string>
     <string name="route_not_netip">Ruta conectada de %1$s/%2$s a %3$s/%2$s</string>
     <string name="keychain_access">No se puede acceder a los certificados de Android. Puede ser causado por una actualización de firmware o por restaurar una copia de seguridad de la aplicación/configuración de la aplicación. Por favor edite la VPN y vuelva a seleccionar el certificado bajo meltdownajustes básicos para recrear los permisos para acceder al certificado.</string>
@@ -112,7 +112,7 @@
     <string name="ics_openvpn_log_file">Archivo de registro de OpenVPN de ICS</string>
     <string name="copied_entry">Entrada de registro copiada al Portapapeles</string>
     <string name="tap_mode">Modo Tap</string>
-    <string name="faq_tap_mode">El Modo tap no es posible sin la API VPN de root. Por lo tanto la aplicacion no puede dar soporte a tap</string>
+    <string name="faq_tap_mode">El Modo tap no es posible sin la API VPN de root. Por lo tanto la aplicación no puede dar soporte a tap</string>
     <string name="tap_faq2">¿Otra vez? ¿Estás bromeando? No, el modo tap realmente no está soportado y enviar más correos preguntando si será soportado no ayudará.</string>
     <string name="tap_faq3">¿Una tercera vez? En realidad se podría escribir un emulador de tap basado en tun que podria agregar información layer2 al enviar y obtener información layer2 al recibir. Pero este emulador tap tendría que implementar también ARP y posiblemente un cliente DHCP. No sé de alguien que este realizando trabajo en esa dirección. Ponte en contacto conmigo si deseas iniciar la codificación de esto.</string>
     <string name="faq">P+F</string>
@@ -123,8 +123,8 @@
     <string name="no_vpn_support_image">Su imagen no es compatible con la API de VPNService, lo siento :(</string>
     <string name="encryption">Cifrado</string>
     <string name="cipher_dialog_title">Especifique el método de cifrado</string>
-    <string name="chipher_dialog_message">Introduce los datos de cifrado implementados por el algoritmo criptográfico que usa OpenVPN separados de esta manera: (DATOS-DE-CIFRADO). Dejar vació para usar de manera predeterminada el valor: AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
-    <string name="auth_dialog_message">Introduce la autenticacion digest usada por OpenVPN. Deja en blanco para usar el digest predeterminado.</string>
+    <string name="cipher_dialog_message">Introduce los datos de cifrado implementados por el algoritmo criptográfico que usa OpenVPN separados de esta manera: (DATOS-DE-CIFRADO). Dejar vació para usar de manera predeterminada el valor: AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
+    <string name="auth_dialog_message">Introduce la autenticación digest usada por OpenVPN. Deja en blanco para usar el digest predeterminado.</string>
     <string name="settings_auth">Autenticación/Cifrado</string>
     <string name="file_explorer_tab">Administrador de archivos</string>
     <string name="inline_file_tab">Archivo en línea</string>
@@ -137,7 +137,7 @@
     <string name="import_content_resolve_error">No se pudo leer el perfil a importar</string>
     <string name="error_reading_config_file">Error al leer el archivo de configuración</string>
     <string name="add_profile">Añadir perfil</string>
-    <string name="import_could_not_open">No se pudo encontrar el archivo %1$s mencionado en el archivo de configuracion importado</string>
+    <string name="import_could_not_open">No se pudo encontrar el archivo %1$s mencionado en el archivo de configuración importado</string>
     <string name="importing_config">Importando archivo de configuración del origen %1$s</string>
     <string name="import_warning_custom_options">Su configuración tiene algunas opciones de configuración que no están establecidas en la interfaz de usuario . Estas opciones fueron agregadas como opciones de configuración personalizadas. A continuación se muestra la configuración personalizada:</string>
     <string name="import_done">Se termino de leer el archivo de configuración.</string>
@@ -147,7 +147,7 @@
     <string name="faq_security_title">Consideraciones de seguridad</string>
     <string name="faq_security">"Como OpenVPN es sensible a la seguridad, son razonables algunas notas acerca de seguridad. Todos los datos en la tarjeta SD son inherentemente inseguros. Cualquier aplicación puede leerla (por ejemplo, esta aplicación no requiere ningún permiso especial sobre la tarjeta SD). Los datos de esta aplicación sólo pueden ser leidos por la misma aplicación. Al utilizar la opción importar para el certificado de la CA/certificado/llave, en la ventana de diálogo para selección de archivos, los datos se almacenan en el perfil de la VPN. Los perfiles de VPN sólo son accesibles por esta aplicación. (No olvide después borrar las copias de la tarjeta SD). Aunque sólo sea accesible por esta aplicación, los datos aún están sin encriptar. Al acceder el dispositivo portátil como root u otro medio, es posible recuperar estos datos. Las contraseñas guardadas son almacenadas también en texto plano. Para archivos pkcs12 es muy recomendable que los importe al repositorio de llaves de Android."</string>
     <string name="import_vpn">Importar</string>
-    <string name="broken_image_cert_title">Error mostrando la seleccion de certificados</string>
+    <string name="broken_image_cert_title">Error mostrando la selección de certificados</string>
     <string name="broken_image_cert">Se obtuvo una excepción al intentar mostrar el diálogo de selección de certificado de Android 4.0+. Esto nunca debería ocurrir por ser una funcionalidad estándar de Android 4.0+. Quizás el respaldo ROM para almacenamiento de certificados de su Android está arruinado</string>
     <string name="ipv4">IPv4</string>
     <string name="ipv6">IPv6</string>
@@ -165,8 +165,8 @@
     <string name="owner_fix">Arreglar la propiedad de /dev/tun</string>
     <string name="generated_config_summary">Muestra el archivo de configuración OpenVPN generado</string>
     <string name="edit_profile_title">Editando \"%s\"</string>
-    <string name="building_configration">Construyendo configuracion&#8230;</string>
-    <string name="netchange_summary">Activando esta opción forzara una reconexión si el estado de la red es cambiado (Ej. De/hacia WIFi
+    <string name="building_configuration">Construyendo configuracion&#8230;</string>
+    <string name="netchange_summary">Activando esta opción forzara una reconexión si el estado de la red es cambiado (Ej. De/hacia WiFi
 hacia/de Móvil)</string>
     <string name="netchange">Reconectar en cambio de red</string>
     <string name="netstatus">Estado de la red: %s</string>
@@ -215,7 +215,7 @@ hacia/de Móvil)</string>
     <string name="openvpn_log">Registro de OpenVPN</string>
     <string name="import_config">Importar configuración de OpenVPN</string>
     <string name="battery_consumption_title">Consumo de batería</string>
-    <string name="baterry_consumption">En mis pruebas personales, la mayor razón de el alto consumo de batería de OpenVPN son los paquetes keepalive. La mayoría de los servidores OpenVPN tienen una directiva de configuración como \'keepalive 10 60\' la cual causa que el cliente y el servidor intercambien paquetes cada diez segundos. &lt;p&gt; Mientras estos paquetes sean pequeños y no utilicen mucho tráfico, mantienen la red móvil de radio ocupada e incrementan el consumo de energía. (Ver también &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Dicha configuración keepalive no puede ser cambiada en el cliente. Solo el administrador de OpenVPN puede hacerlo. &lt;p&gt; Infortunadamente, usar un keepalive mayor a 60 segundos con UDP puede causar que algunas puertas de enlace NAT cierren la conexión debido a inactividad. Usar TCP con largos periodos de inactividad keepalive funciona, pero el tuneleo TCP sobre TCP resulta en conexiones extremadamente pobres con alta pérdida de paquetes. (Ver &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
+    <string name="battery_consumption">En mis pruebas personales, la mayor razón de el alto consumo de batería de OpenVPN son los paquetes keepalive. La mayoría de los servidores OpenVPN tienen una directiva de configuración como \'keepalive 10 60\' la cual causa que el cliente y el servidor intercambien paquetes cada diez segundos. &lt;p&gt; Mientras estos paquetes sean pequeños y no utilicen mucho tráfico, mantienen la red móvil de radio ocupada e incrementan el consumo de energía. (Ver también &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Dicha configuración keepalive no puede ser cambiada en el cliente. Solo el administrador de OpenVPN puede hacerlo. &lt;p&gt; Infortunadamente, usar un keepalive mayor a 60 segundos con UDP puede causar que algunas puertas de enlace NAT cierren la conexión debido a inactividad. Usar TCP con largos periodos de inactividad keepalive funciona, pero el tuneleo TCP sobre TCP resulta en conexiones extremadamente pobres con alta pérdida de paquetes. (Ver &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
     <string name="connection_retries">Reintentos de conexión</string>
     <string name="reconnection_settings">Configuración de reconexión</string>
     <string name="connectretrymessage">Número de segundos de espera entre intentos de conexión.</string>
@@ -223,7 +223,7 @@ hacia/de Móvil)</string>
     <string name="minidump_generated">OpenVPN falló inesperadamente. Por favor considere usar la opción envío de minivolcado en el menú principal</string>
     <string name="send_minidump">Enviar minivolcado al desarrollador</string>
     <string name="send_minidump_summary">Enviar información de depuración sobre último fallo al desarrollador</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Conectando</string>
@@ -243,7 +243,7 @@ hacia/de Móvil)</string>
     <string name="state_nonetwork">Esperando por una red que se pueda usar</string>
     <string name="state_waitorbot">Esperando a que Orbot inicie</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">No conectado</string>
+    <string name="notification_title_notconnect">No conectado</string>
     <string name="start_vpn_title">Conectando a VPN %s</string>
     <string name="start_vpn_ticker">Conectando a VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Algunas versiones de Android 4.1 experimentan problemas si el nombre del almacén de certificados contiene caracteres no alfanuméricos (como espacios, subrayados o barras). Intente volver a importar el certificado sin caracteres especiales</string>
@@ -257,7 +257,7 @@ hacia/de Móvil)</string>
     <string name="add">Añadir</string>
     <string name="send_config">Enviar el archivo de configuración</string>
     <string name="complete_dn">DN Completo</string>
-    <string name="remotetlsnote">La configuracion que importaste usa la opcion OBSOLETA tls-remote que usa un formato diferente para DN.</string>
+    <string name="remotetlsnote">La configuración que importaste usa la opcion OBSOLETA tls-remote que usa un formato diferente para DN.</string>
     <string name="rdn">RDN (nombre comun)</string>
     <string name="rdn_prefix">Prefijo RDN</string>
     <string name="tls_remote_deprecated">tls-remote (OBSOLETO)</string>
@@ -297,7 +297,7 @@ hacia/de Móvil)</string>
     <string name="downloaded_data">Descargar</string>
     <string name="vpn_status">Estado de VPN</string>
     <string name="logview_options">Opciones de visualización</string>
-    <string name="unhandled_exception">Excepcion no controlada: %1$s\n\n%2$s</string>
+    <string name="unhandled_exception">Excepción no controlada: %1$s\n\n%2$s</string>
     <string name="unhandled_exception_context">%3$s: %1$s\n\n%2$s</string>
     <string name="full_licenses">Licencias completas</string>
     <string name="blocklocal_summary">Las redes conectadas directamente a los interfaces locales no serán enrutadas a través de la VPN. Al desmarcar esta opción, todo el tráfico previsto para las redes locales será redirigido a la VPN.</string>
@@ -342,18 +342,18 @@ hacia/de Móvil)</string>
     <string name="ignore_multicast_route">Haciendo caso omiso de ruta multidifusión: %s</string>
     <string name="ab_only_cidr">Android sólo admite rutas CIDR a la VPN. Desde rutas no CIDR casi nunca se usan, OpenVPN para Android utilizará un / 32 para las rutas que no son CIDR y emitir una advertencia.</string>
     <string name="ab_proxy">Android seguirá utilizando la configuración del proxy especificados para la conexión / Wi-Fi móvil cuando no están definidos los servidores DNS. OpenVPN para Android le advertirá sobre esto en el registro.<p>Cuando una VPN establece un servidor DNS Android no lo hará un proxy. No hay ninguna API para configurar un proxy para una conexión VPN.</p></string>
-    <string name="ab_not_route_to_vpn">La IP del cliente configurado y las IPs en su máscara de red no se enrutan a la VPN. OpenVPN soluciona este error al agregar explícitamente una ruta que corrosponds a la IP del cliente y su máscara de red</string>
+    <string name="ab_not_route_to_vpn">La IP del cliente configurado y las IPs en su máscara de red no se enrutan a la VPN. OpenVPN soluciona este error al agregar explícitamente una ruta que corresponds a la IP del cliente y su máscara de red</string>
     <string name="ab_only_cidr_title">Rutas no CIDR</string>
     <string name="ab_proxy_title">Comportamiento Proxy para VPN</string>
     <string name="version_upto">%s y anteriores</string>
     <string name="copy_of_profile">copia de %s</string>
     <string name="ab_not_route_to_vpn_title">Ruta a la dirección IP configurada</string>
-    <string name="custom_connection_options_warng">Especifique las opciones específicas de conexión personalizada. Úselo con cuidado</string>
+    <string name="custom_connection_options_warning">Especifique las opciones específicas de conexión personalizada. Úselo con cuidado</string>
     <string name="custom_connection_options">Opciones personalizadas</string>
     <string name="remove_connection_entry">Eliminar entrada de conexión</string>
     <string name="version_and_later">%s y siguientes</string>
-    <string name="tls_cipher_alert_title">Falló la conexion con SSL23_GET_SERVER_HELLO: sslv3 alerta de falla de handshake</string>
-    <string name="tls_cipher_alert">OpenVPN más reciente de las versiones de Android (0.6.29 / marzo de 2015) utilizan un defecto más seguro para los conjuntos de cifrado permitidos (TLS-cifrado \"DEFAULT: EXP: PSK: SRP: KRSA\"). Por desgracia, omitiendo el cifrado y la exportación de cifrado menos seguro, especialmente la omisión de conjuntos de cifrado que no admiten la confidencialidad directa perfecta (Diffie-Hellman) causa algunos problemas. Esto suele deberse a un intento bien intencionado pero mal ejecutada para reforzar la seguridad TLS configurando TLS-cifrado en el servidor o algunos sistemas operativos embebidos con simplificada SSL (por ejemplo MikroTik). \ N Para resolver este problema el problema, establezca el TLS-cifrado configuración en el servidor a los valores razonables como TLS-cifrado \"dEFAULT: EXP: PSK: SRP: KRSA\". Para solucionar el problema en el cliente agregar la omisión de las opciones de encargo-TLS cifrado en el cliente Android.</string>
+    <string name="tls_cipher_alert_title">Falló la conexión con SSL23_GET_SERVER_HELLO: sslv3 alerta de falla de handshake</string>
+    <string name="tls_cipher_alert">OpenVPN más reciente de las versiones de Android (0.6.29 / marzo de 2015) utilizan un defecto más seguro para los conjuntos de cifrado permitidos (TLS-cifrado \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Por desgracia, omitiendo el cifrado y la exportación de cifrado menos seguro, especialmente la omisión de conjuntos de cifrado que no admiten la confidencialidad directa perfecta (Diffie-Hellman) causa algunos problemas. Esto suele deberse a un intento bien intencionado pero mal ejecutada para reforzar la seguridad TLS configurando TLS-cifrado en el servidor o algunos sistemas operativos embebidos con simplificada SSL (por ejemplo MikroTik). \ N Para resolver este problema el problema, establezca el TLS-cifrado configuración en el servidor a los valores razonables como TLS-cifrado \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". Para solucionar el problema en el cliente agregar la omisión de las opciones de encargo-TLS cifrado en el cliente Android.</string>
     <string name="message_no_user_edit">Este perfil ha sido añadido desde una aplicación externa (%s) y se ha marcado como no editable por el usuario.</string>
     <string name="crl_file">Lista de revocación de certificados</string>
     <string name="service_restarted">Servicio OpenVPN reinicio (App estrelló probablemente se estrelló o muerto por la presión de memoria)</string>
@@ -374,7 +374,7 @@ hacia/de Móvil)</string>
     <string name="menu_use_inline_data">Utilizar datos en línea</string>
     <string name="export_config_chooser_title">Exportar archivo de configuración</string>
     <string name="missing_tlsauth">falta el archivo tls-auth</string>
-    <string name="missing_certificates">Falta el certificado de usuario o el archivo de clave de certifcación del usuario</string>
+    <string name="missing_certificates">Falta el certificado de usuario o el archivo de clave de certificación del usuario</string>
     <string name="crl_title">Lista de revocación de certificados (opcional)</string>
     <string name="reread_log">Vuelva a leer (%d) artículos de archivo de caché de registro log</string>
     <string name="samsung_broken">A pesar de que los teléfonos Samsung son algunos de los teléfonos Android más vendidos, el firmware de Samsung se encuentran entre los firmware con más errores. Los errores no se limitan a la operación del VPN en estos dispositivos, pero muchos de ellos se pueden solucionar. A continuación de describen algunos errores. \n\n El DNS no funciona a menos que el servidor DNS en el rango del VPN. \n \n En muchos dispositivos Samsung 5.x la funcionalidad de aplicaciones permitidas y no permitidas no funciona. \n En Samsung 6.x Se reporta que VPN no funcionará a menos que la aplicación de VPN se encuentre por fuera de la funcionalidad de ahorro de energía.</string>
@@ -429,7 +429,7 @@ hacia/de Móvil)</string>
     <string name="osslspeedtest">Prueba de velocidad de Crypto OpenSSL</string>
     <string name="openssl_error">OpenSSL devolvió un error</string>
     <string name="running_test">Ejecutando prueba...</string>
-    <string name="test_algoirhtms">Pruebe los algoritmos seleccionados</string>
+    <string name="test_algorithms">Pruebe los algoritmos seleccionados</string>
     <string name="all_app_prompt">Una aplicación externa intenta controlar %s. La aplicación que solicita acceso no puede determinarse. Permitir que esta aplicación otorgue acceso a TODAS las aplicaciones.</string>
     <string name="openvpn3_nostatickeys">La implementación OpenVPN 3 C ++ no admite claves estáticas. Cambie a OpenVPN 2.x en la configuración general.</string>
     <string name="openvpn3_pkcs12">Usar archivos PKCS12 directamente con la implementación OpenVPN 3 C++ no esta soportada. Por favor, importe los ficheros pkcs12 en el almacén de claves de Android o cambie a OpenVPN 2.x en configuración general.</string>
@@ -439,7 +439,7 @@ hacia/de Móvil)</string>
     <string name="openvpn3_socksproxy">La implementación OpenVPN 3 C++ no admite la conexión mediante Socks</string>
     <string name="no_orbotfound">No se encuentra la aplicación Orbot. Instale Orbot o use la integración manual de Socks v5.</string>
     <string name="faq_remote_api_title">API remota</string>
-    <string name="faq_remote_api">OpenVPN para Android es compatible con dos API remotas, una API sofisticada que usa AIDL (remoteEXample en el repositorio de git), y una simple que usa Intents. &lt;p&gt;Ejemplos usando adb shell y los intents. Reemplace profilname con su nombre de perfil&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN para Android es compatible con dos API remotas, una API sofisticada que usa AIDL (remoteExample en el repositorio de git), y una simple que usa Intents. &lt;p&gt;Ejemplos usando adb shell y los intents. Reemplace profilename con su nombre de perfil&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Habilitar autenticación de proxy</string>
     <string name="error_orbot_and_proxy_options">No se puede usar la declaración adicional http-proxy-option y la integración Orbot al mismo tiempo</string>
     <string name="info_from_server">Información del servidor: \'%s\'</string>

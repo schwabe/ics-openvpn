@@ -47,7 +47,7 @@ class MainActivity : BaseActivity() {
             mPagerAdapter.addTab(R.string.graph, GraphFragment::class.java)
             mPagerAdapter.addTab(R.string.generalsettings, GeneralSettings::class.java)
             mPagerAdapter.addTab(R.string.faq, FaqFragment::class.java)
-            if (SendDumpFragment.getLastestDump(this) != null) {
+            if (SendDumpFragment.getLatestDump(this) != null) {
                 mPagerAdapter.addTab(R.string.crashdump, SendDumpFragment::class.java)
             }
 

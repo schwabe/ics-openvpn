@@ -60,7 +60,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
     #INCLUDE(${SWIG_USE_FILE})
     #SET_SOURCE_FILES_PROPERTIES(openvpn3/javacli/ovpncli.i PROPERTIES SWIG_FLAGS "-package net.openvpn.ovpn3")
     #SET_SOURCE_FILES_PROPERTIES(openvpn3/javacli/ovpncli.i PROPERTIES CPLUSPLUS ON)
-    #SWIG_ADD_MODULE(ovpen3cli java openvpn3/javacli/ovpncli.i)
+    #SWIG_ADD_MODULE(ovpn3cli java openvpn3/javacli/ovpncli.i)
 
 
     set(ovpn3_SRCS
@@ -105,7 +105,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
              -DENABLE_EXTERNAL_PKI
             )
 else ()
-    message("Not budiling OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+    message("Not building OpenVPN for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 endif ()
 
 add_library(ovpnutil SHARED ovpnutil/jniglue.c)
@@ -122,7 +122,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
     add_library(osslspeedtest SHARED ovpnutil/sslspeed.c)
     target_link_libraries(osslspeedtest log crypto ssl)
 else ()
-    message("Not budiling SSLSpeedTest for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+    message("Not building SSLSpeedTest for output dir ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 endif ()
 
 set(openvpn_srcs

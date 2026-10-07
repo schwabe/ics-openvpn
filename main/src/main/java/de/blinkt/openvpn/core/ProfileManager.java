@@ -66,7 +66,7 @@ public class ProfileManager {
         return instance;
     }
 
-    public static void setConntectedVpnProfileDisconnected(Context c) {
+    public static void setConnectedVpnProfileDisconnected(Context c) {
         SharedPreferences prefs = Preferences.getDefaultSharedPreferences(c);
         Editor prefsedit = prefs.edit();
         prefsedit.putString(LAST_CONNECTED_PROFILE, null);
@@ -263,7 +263,7 @@ public class ProfileManager {
         final HashSet<String> vpn_list = new HashSet<>(profiles.keySet());
         editor.putStringSet("vpnlist", vpn_list);
 
-        // For reasing I do not understand at all
+        // For reasons I do not understand at all
         // Android saves my prefs file only one time
         // if I remove the debug code below :(
         int counter = sharedprefs.getInt("counter", 0);
@@ -317,6 +317,26 @@ public class ProfileManager {
         for (String vpnentry : vlist) {
             loadVpnEntry(context, vpnentry);
         }
+
+        recoverProfiles(context);
+    }
+
+    private void recoverProfiles(Context context) {
+        /* Recover profiles that were removed from the list by the 0.7.66 update that removed all of them because
+         * of a broken optimisation */
+        for (String file: context.fileList())
+        {
+            if (file.endsWith(".cp") || file.endsWith(".vp"))
+            {
+                String profileName = file.split("\\.")[0];
+
+                if (!profiles.containsKey(profileName)) {
+                    loadVpnEntry(context, profileName);
+                }
+            }
+
+        }
+
     }
 
     private synchronized void loadVpnEntry(Context context, String vpnentry) {

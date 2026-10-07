@@ -16,7 +16,7 @@
     >
 
         <!--
-             OpenVPN for android will search for all application that have a activity that fulfils this
+             OpenVPN for android will search for all application that have an activity that fulfils this
              intent. It will be called when the user presses the select button and should return the selected
              alias in the android.security.extra.KEY_ALIAS extra on setResult.
 

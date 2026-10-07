@@ -47,7 +47,7 @@ class Settings_Authentication : OpenVpnPreferencesFragment(), Preference.OnPrefe
         super.onCreate(savedInstanceState)
 
         // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.vpn_authentification)
+        addPreferencesFromResource(R.xml.vpn_authentication)
         mExpectTLSCert = findPreference("remoteServerTLS")!!
         mCheckRemoteCN = findPreference("checkRemoteCN")!!
         mRemoteCN = findPreference("remotecn")!!

@@ -86,7 +86,7 @@ public class LaunchVPN extends Activity {
 
     private boolean mCmfixed = false;
     private String mTransientAuthPW;
-    private String mTransientCertOrPCKS12PW;
+    private String mTransientCertOrPKCS12PW;
     private String mSelectedProfileReason;
 
     @Override
@@ -103,8 +103,8 @@ public class LaunchVPN extends Activity {
             try {
                 if (mTransientAuthPW != null)
                     service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.AUTHPASSWORD, mTransientAuthPW);
-                if (mTransientCertOrPCKS12PW != null)
-                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.PCKS12ORCERTPASSWORD, mTransientCertOrPCKS12PW);
+                if (mTransientCertOrPKCS12PW != null)
+                    service.setCachedPassword(mSelectedProfile.getUUIDString(), PasswordCache.PKCS12ORCERTPASSWORD, mTransientCertOrPKCS12PW);
 
                 onActivityResult(START_VPN_PROFILE, Activity.RESULT_OK, null);
 
@@ -216,7 +216,7 @@ public class LaunchVPN extends Activity {
                         ProfileManager.saveProfile( LaunchVPN.this, mSelectedProfile);
 
                     } else {
-                        mTransientCertOrPCKS12PW = entry.getText().toString();
+                        mTransientCertOrPKCS12PW = entry.getText().toString();
                     }
                     Intent intent = new Intent(LaunchVPN.this, OpenVPNStatusService.class);
                     bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -241,7 +241,7 @@ public class LaunchVPN extends Activity {
 
         if (requestCode == START_VPN_PROFILE) {
             if (resultCode == Activity.RESULT_OK) {
-                int needpw = mSelectedProfile.needUserPWInput(mTransientCertOrPCKS12PW, mTransientAuthPW);
+                int needpw = mSelectedProfile.needUserPWInput(mTransientCertOrPKCS12PW, mTransientAuthPW);
                 if (needpw != 0) {
                     VpnStatus.updateStateString("USER_VPN_PASSWORD", "", R.string.state_user_vpn_password,
                             ConnectionStatus.LEVEL_WAITING_FOR_USER_INPUT);
@@ -336,7 +336,7 @@ public class LaunchVPN extends Activity {
 
     }
 
-    private void execeuteSUcmd(String command) {
+    private void executeSUcmd(String command) {
         try {
             ProcessBuilder pb = new ProcessBuilder("su", "-c", command);
             Process p = pb.start();

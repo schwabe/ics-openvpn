@@ -123,7 +123,7 @@
     <string name="no_vpn_support_image">Kalıbınız VPNService API\'sini desteklemiyor, üzgünüm :(</string>
     <string name="encryption">Şifreleme</string>
     <string name="cipher_dialog_title">Şifreleme yöntemini gir</string>
-    <string name="chipher_dialog_message">OpenVPN tarafından kullanılan veri şifreleme şifreleme algoritmalarını : (--data-ciphers) ile ayırarak girin. AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305 varsayılanını kullanmak için boş bırakın.</string>
+    <string name="cipher_dialog_message">OpenVPN tarafından kullanılan veri şifreleme şifreleme algoritmalarını : (--data-ciphers) ile ayırarak girin. AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305 varsayılanını kullanmak için boş bırakın.</string>
     <string name="auth_dialog_message">OpenVPN için kullanılan kimlik doğrulama özetini girin. Varsayılan özeti kullanmak için boş bırakın.</string>
     <string name="settings_auth">Kimlik Doğrulama/Şifreleme</string>
     <string name="file_explorer_tab">Dosya Gezgini</string>
@@ -165,7 +165,7 @@
     <string name="owner_fix">/dev/tun sahipliğini düzeltmek</string>
     <string name="generated_config_summary">Oluşturulan OpenVPN Yapılandırma Dosyasını gösterir</string>
     <string name="edit_profile_title">\"%s\" düzenleme</string>
-    <string name="building_configration">Yapılandırma derleniyor&#8230;</string>
+    <string name="building_configuration">Yapılandırma derleniyor&#8230;</string>
     <string name="netchange_summary">Bu seçeneği açmak, bir ağ durumu değiştiğinde yeniden bağlanmaya zorlayacaktır (örn. Kablosuz / Mobil ağ geçişi)</string>
     <string name="netchange">Ağ değişikliği durumunda yeniden bağlan</string>
     <string name="netstatus">Ağ Durumu: %s</string>
@@ -215,7 +215,7 @@
     <string name="openvpn_log">OpenVPN Günlüğü</string>
     <string name="import_config">OpenVPN yapılandırmasını içe aktar</string>
     <string name="battery_consumption_title">Pil tüketimi</string>
-    <string name="baterry_consumption">Şahsi testlerimde, OpenVPN\'in yüksek pil tüketiminin sebebi canlı tutma (keepalive) paketleri. Çoğu OpenVPN sunucuları, istemci ve sunucu arasında canlı tutma paketlerini her on saniyede değiştiren \'keepalive 10 60\' benzeri yönergeler bulundurur.&lt;p&gt; Bu paketler çok küçük olduğundan ve çok trafik kullanmadıklarından mobil anten ağını meşgul tutar ve enerji tüketimini arttırırlar. (ayrıca bkz. &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Bu canlı tutma ayarı istemci tarafından değiştirilemez. Ayarı sadece OpenVPN sistem yöneticisi değiştirebilir. &lt;p&gt; Ne yazık ki, canlı tutma ayarını 60 saniyeden daha fazla tutmak UDP\'nin durağan durum zaman aşımına takıldığından bazı NAT ağ geçitlerinde bağlantıyı bırakmalarına sebep olmaktadır. Uzun canlı tutma zaman aşımları TCP kullanarak mümkün, ancak TCP üzerinden TCP tünelleme, yüksek paket kaybı ile bağlantılarda düşük kalitededir (Bkz. &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
+    <string name="battery_consumption">Şahsi testlerimde, OpenVPN\'in yüksek pil tüketiminin sebebi canlı tutma (keepalive) paketleri. Çoğu OpenVPN sunucuları, istemci ve sunucu arasında canlı tutma paketlerini her on saniyede değiştiren \'keepalive 10 60\' benzeri yönergeler bulundurur.&lt;p&gt; Bu paketler çok küçük olduğundan ve çok trafik kullanmadıklarından mobil anten ağını meşgul tutar ve enerji tüketimini arttırırlar. (ayrıca bkz. &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Bu canlı tutma ayarı istemci tarafından değiştirilemez. Ayarı sadece OpenVPN sistem yöneticisi değiştirebilir. &lt;p&gt; Ne yazık ki, canlı tutma ayarını 60 saniyeden daha fazla tutmak UDP\'nin durağan durum zaman aşımına takıldığından bazı NAT ağ geçitlerinde bağlantıyı bırakmalarına sebep olmaktadır. Uzun canlı tutma zaman aşımları TCP kullanarak mümkün, ancak TCP üzerinden TCP tünelleme, yüksek paket kaybı ile bağlantılarda düşük kalitededir (Bkz. &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
     <string name="connection_retries">Yeniden bağlantı denemesi</string>
     <string name="reconnection_settings">Yeniden bağlanma ayarları</string>
     <string name="connectretrymessage">Bağlantı girişimleri arasında beklenecek saniye sayısı.</string>
@@ -223,7 +223,7 @@
     <string name="minidump_generated">OpenVPN beklenmedik biçimde çöktü. Lütfen ana menüdedeki mini döküm gönder seçeneğini kullanmayı düşünün</string>
     <string name="send_minidump">Geliştiriciye mini döküm gönder</string>
     <string name="send_minidump_summary">Son çökme hakkındaki hata ayıklama bilgisini geliştiriciye gönder</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Bağlanıyor</string>
@@ -243,7 +243,7 @@
     <string name="state_nonetwork">Kullanılabilir ağ için bekleniyor</string>
     <string name="state_waitorbot">Orbot\'un başlaması bekleniyor</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Bağlı değil</string>
+    <string name="notification_title_notconnect">Bağlı değil</string>
     <string name="start_vpn_title">VPN %s bağlanıyor</string>
     <string name="start_vpn_ticker">VPN %s bağlanıyor</string>
     <string name="jelly_keystore_alphanumeric_bug">Android 4.1\'in bazı sürümleri anahtar deposu alfanümerik olmayan karakterler içeriyorsa (boşluk, alt çizgi veya eksi işareti) sorunlar yaşamaktadır. Sertifikayı özel karakterler olmadan yeniden içe aktarmayı deneyin</string>
@@ -348,7 +348,7 @@
     <string name="version_upto">%s ve önceki</string>
     <string name="copy_of_profile">%s kopyası</string>
     <string name="ab_not_route_to_vpn_title">Yapılandırılmış IP adresine yönlendir</string>
-    <string name="custom_connection_options_warng">Özel bağlantı seçeneklerini belirtin. Dikkatli kullanın</string>
+    <string name="custom_connection_options_warning">Özel bağlantı seçeneklerini belirtin. Dikkatli kullanın</string>
     <string name="custom_connection_options">Özel Seçenekler</string>
     <string name="remove_connection_entry">Bağlantı girdisini kaldır</string>
     <string name="version_and_later">%s ve daha sonrası</string>
@@ -432,7 +432,7 @@
     <string name="osslspeedtest">OpenSSL Kripto Hız testi</string>
     <string name="openssl_error">OpenSSL bir hata döndürdü</string>
     <string name="running_test">Test çalışıyor&#8230;</string>
-    <string name="test_algoirhtms">Seçilen algoritmaları test edin</string>
+    <string name="test_algorithms">Seçilen algoritmaları test edin</string>
     <string name="all_app_prompt">Harici bir uygulama, %s denetlemeyi deniyor. Erişim isteyen uygulama belirlenemedi. Uygulamaya TÜM uygulamalara erişim izni veriliyor.</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C++ uygulaması statik anahtarları desteklemez. Lütfen genel ayarlar altında 
         OpenVPN 2.x\'e geçin.
@@ -446,7 +446,7 @@
     <string name="openvpn3_socksproxy">OpenVPN 3 C ++ uygulaması, Socks vekil sunucusu üzerinden bağlanmayı desteklemiyor</string>
     <string name="no_orbotfound">Orbot uygulaması bulunamadı. Lütfen Orbot\'u kurun veya elle Socks v5 bütünleştirmesini kullanın.</string>
     <string name="faq_remote_api_title">Uzak API</string>
-    <string name="faq_remote_api">Android için OpenVPN iki uzak API\'yi destekler: AIDL kullanan gelişmiş bir API (git deposundaki remoteEXample) ve Intent kullanan basit API.&lt;p&gt; Örnekler adb kabuğunu ve \"intent\"leri kullanıyor. \"profilname\" kısmını kendi profil isminizle değiştirin&lt;p&gt;&lt;p&gt;adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">Android için OpenVPN iki uzak API\'yi destekler: AIDL kullanan gelişmiş bir API (git deposundaki remoteExample) ve Intent kullanan basit API.&lt;p&gt; Örnekler adb kabuğunu ve \"intent\"leri kullanıyor. \"profilname\" kısmını kendi profil isminizle değiştirin&lt;p&gt;&lt;p&gt;adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Vekil Sunucu Kimlik Doğrulamasını Etkinleştir</string>
     <string name="error_orbot_and_proxy_options">Ek http-proxy-option ifadesi ve Orbot tümleşimi aynı anda kullanılamaz</string>
     <string name="info_from_server">Sunucudan gelen bilgi: \'%s\'</string>

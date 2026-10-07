@@ -12,8 +12,8 @@
         <item>Utente/Password</item>
         <item>Chiavi statiche</item>
         <item>Utente/password + Certificati</item>
-        <item>Utente/Passowrd + PKCS12 </item>
-        <item>Utente/Passsword + Android</item>
+        <item>Utente/Password + PKCS12 </item>
+        <item>Utente/Password + Android</item>
         <item>Provider di autenticazione esterno</item>
     </string-array>
     <string-array name="tls_directions_entries">

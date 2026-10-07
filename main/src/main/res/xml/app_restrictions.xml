@@ -56,7 +56,7 @@
             <restriction
                     android:key="ovpn_list"
                     android:title="@string/apprest_ovpn_list"
-                    android:describition="@string/apprest_ovpn_list_esc"
+                    android:description="@string/apprest_ovpn_list_esc"
                     android:restrictionType="bundle_array">
                 <restriction
                         android:key="ovpn_configline"
@@ -125,5 +125,11 @@
             android:key="netchangereconnect"
             android:restrictionType="bool"
             android:title="@string/apprest_netchangereconnect_title" />
+
+    <restriction
+            android:description="@string/apprest_ovpn3"
+            android:key="ovpn3"
+            android:restrictionType="bool"
+            android:title="@string/apprest_ovpn3_title" />
 
 </restrictions>

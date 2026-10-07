@@ -67,7 +67,7 @@
     <string name="check_remote_tlscert_title">TLS-Serverzertifikat erwarten</string>
     <string name="remote_tlscn_check_summary">Subjekt-DN des Serverzertifikats überprüfen</string>
     <string name="remote_tlscn_check_title">Hostnamen überprüfen</string>
-    <string name="enter_tlscn_dialog">Geben Sie hier die Methode an, mit welcher der DN des Serverzertifikates (z. B. C=DE, L=Paderborn, OU=Avian IP-Carrier, CN=openvpn.blinkt.de) überprüft wird.\n\nSie können den vollständigen DN, den RDN (openvpn.blinkt.de im Beispiel) oder ein RDN-Präfix angeben.\n\nDer RDN-Präfix \"Server\" erlaubt z.B. \"Server-1\" und \"Server-2\".\n\nWenn Sie das Eingabefeld leer lassen, wird der RDN gegen den Servernamen geprüft.\n\n Weitere Details finden Sie in der Manpage von OpenVPN 2.3.1+ unter —verify-x509-name</string>
+    <string name="enter_tlscn_dialog">Geben Sie hier die Methode an, mit welcher der DN des Serverzertifikates (z. B. C=DE, L=Paderborn, OU=Avian IP Carriers, CN=openvpn.blinkt.de) überprüft wird.\n\nSie können den vollständigen DN, den RDN (openvpn.blinkt.de im Beispiel) oder ein RDN-Präfix angeben.\n\nDer RDN-Präfix \"Server\" erlaubt z.B. \"Server-1\" und \"Server-2\".\n\nWenn Sie das Eingabefeld leer lassen, wird der RDN gegen den Servernamen geprüft.\n\n Weitere Details finden Sie in der Manpage von OpenVPN 2.3.1+ unter —verify-x509-name</string>
     <string name="enter_tlscn_title">Subject des Serverzertifikats</string>
     <string name="tls_key_auth">Aktiviert zusätzliche Authentifizierung/Verschlüsselung für den OpenVPN control channel</string>
     <string name="tls_auth_file">TLS-Auth/TLS-Crypt Datei</string>
@@ -127,7 +127,7 @@
     <string name="no_vpn_support_image">Ihre Gerätefirmwäre unterstützt die VPNService-API nicht. Tut uns leid :(</string>
     <string name="encryption">Verschlüsselung</string>
     <string name="cipher_dialog_title">Geben Sie die Verschlüsselungsmethode an</string>
-    <string name="chipher_dialog_message">Von OpenVPN verwendete Verschlüsselungsalgorithmen für die Datenverschlüsselung, getrennt durch: (--data-cipher). Feld leer lassen, um den Standardwert AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305 zu verwenden.</string>
+    <string name="cipher_dialog_message">Von OpenVPN verwendete Verschlüsselungsalgorithmen für die Datenverschlüsselung, getrennt durch: (--data-ciphers). Feld leer lassen, um den Standardwert AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305 zu verwenden.</string>
     <string name="auth_dialog_message">Geben Sie den Hashalgorithmus, der zur Nachrichtenauthentifizierung benutzt wird, an. Lassen Sie das Feld frei, um den Standard-Algorithmus zu nutzen.</string>
     <string name="settings_auth">Authentifizierung/Verschlüsselung</string>
     <string name="file_explorer_tab">Datei auswählen…</string>
@@ -169,7 +169,7 @@
     <string name="owner_fix">Eigentümer von /dev/tun setzen</string>
     <string name="generated_config_summary">Generierte Konfigurationsdatei anzeigen</string>
     <string name="edit_profile_title">Bearbeiten von \"%s\"</string>
-    <string name="building_configration">Generiere OpenVPN-Konfiguration&#8230;</string>
+    <string name="building_configuration">Generiere OpenVPN-Konfiguration&#8230;</string>
     <string name="netchange_summary">VPN bei jedem Wechsel des verwendeten Netzwerktyps (WLAN zu Mobilfunk und umgekehrt) neu verbinden</string>
     <string name="netchange">Netzwerkänderungen beachten</string>
     <string name="netstatus">Netzwerkstatus: %s</string>
@@ -220,7 +220,7 @@
     <string name="openvpn_log">OpenVPN-Protokoll</string>
     <string name="import_config">OpenVPN-Konfiguration importieren</string>
     <string name="battery_consumption_title">Energieverbrauch</string>
-    <string name="baterry_consumption">Nach meinen eigenen Tests ist der Hauptgrund für den hohen Stromverbrauch von OpenVPN das Senden und Empfangen der Keep-Alive-Pakete. Die meisten OpenVPN-Server haben eine Konfigurationsoption wie \'keepalive 10 60\', was bedeutet, dass vom Client an den Server und vom Server an den Client alle zehn Sekunden ein Paket geschickt wird. &lt;p&gt; Diese Pakete sind klein und erzeugen keine große Datenmenge. Sie sorgen allerdings dafür, dass permanent Daten übertragen werden und somit auch die Mobilfunk- bzw. WLAN-Einheit aktiv ist und steigern damit den Energieverbrauch. (Siehe auch &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt; Diese Keep-Alive-Einstellung kann nicht auf dem Client geändert werden. Nur der Systemadministrator des VPN-Servers kann die Einstellung ändern. &lt;p&gt; Leider hat eine Keep-Alive-Einstellung von mehr als 60 Sekunden unter UDP Probleme mit einigen NAT-Gateways, die für inaktive Verbindungen nur eine sehr kurze Haltezeit haben und danach verwerfen (60s in meinen Tests). Benutzen von TCP mit langen Keep-Alive-Timeouts funktioniert, hat aber das TCP-über-TCP-Problem. (Siehe &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\" &gt; Why TCP Over TCP Is A Bad Idea &lt;/a&gt;)</string>
+    <string name="battery_consumption">Nach meinen eigenen Tests ist der Hauptgrund für den hohen Stromverbrauch von OpenVPN das Senden und Empfangen der Keep-Alive-Pakete. Die meisten OpenVPN-Server haben eine Konfigurationsoption wie \'keepalive 10 60\', was bedeutet, dass vom Client an den Server und vom Server an den Client alle zehn Sekunden ein Paket geschickt wird. &lt;p&gt; Diese Pakete sind klein und erzeugen keine große Datenmenge. Sie sorgen allerdings dafür, dass permanent Daten übertragen werden und somit auch die Mobilfunk- bzw. WLAN-Einheit aktiv ist und steigern damit den Energieverbrauch. (Siehe auch &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt; Diese Keep-Alive-Einstellung kann nicht auf dem Client geändert werden. Nur der Systemadministrator des VPN-Servers kann die Einstellung ändern. &lt;p&gt; Leider hat eine Keep-Alive-Einstellung von mehr als 60 Sekunden unter UDP Probleme mit einigen NAT-Gateways, die für inaktive Verbindungen nur eine sehr kurze Haltezeit haben und danach verwerfen (60s in meinen Tests). Benutzen von TCP mit langen Keep-Alive-Timeouts funktioniert, hat aber das TCP-über-TCP-Problem. (Siehe &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\" &gt; Why TCP Over TCP Is A Bad Idea &lt;/a&gt;)</string>
     <string name="connection_retries">Verbindungsversuche</string>
     <string name="reconnection_settings">Verbindungseinstellungen</string>
     <string name="connectretrymessage">Zeit, die zwischen zwei Verbindungsversuchen gewartet wird.</string>
@@ -228,7 +228,7 @@
     <string name="minidump_generated">Der OpenVPN-Prozess ist unerwartet abgestürzt. Bitte erwägen Sie die Option \"Minidump an Entwickler senden\" im Hauptmenü</string>
     <string name="send_minidump">Minidump an Entwickler senden</string>
     <string name="send_minidump_summary">Informationen über den letzten Absturz zur Fehlersuche an den Entwickler senden</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Verbinde</string>
@@ -248,7 +248,7 @@
     <string name="state_nonetwork">Warte auf Internetverbindung</string>
     <string name="state_waitorbot">Warte auf den Start von Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Nicht verbunden</string>
+    <string name="notification_title_notconnect">Nicht verbunden</string>
     <string name="start_vpn_title">Verbinde mit VPN %s</string>
     <string name="start_vpn_ticker">Verbinde mit VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Einige Versionen von Android 4.1 haben Probleme, wenn der Name des im Zertifikatsspeicher gespeicherten Zertifikates nicht alphanumerische Zeichen (wie Leerzeichen, Unterstriche oder Bindestriche) enthält. Probieren Sie, das Zertifikat mit einem Namen ohne Sonderzeichen zu importieren</string>
@@ -355,12 +355,12 @@
     <string name="version_upto">%s und früher</string>
     <string name="copy_of_profile">Kopie von %s</string>
     <string name="ab_not_route_to_vpn_title">Route zur konfigurierten VPN-IP-Adresse</string>
-    <string name="custom_connection_options_warng">Hier können Sie eigene verbindungsspezifische Optionen festlegen. Seien Sie vorsichtig!</string>
+    <string name="custom_connection_options_warning">Hier können Sie eigene verbindungsspezifische Optionen festlegen. Seien Sie vorsichtig!</string>
     <string name="custom_connection_options">Eigene Optionen</string>
     <string name="remove_connection_entry">Verbindung entfernen</string>
     <string name="version_and_later">%s und neuer</string>
     <string name="tls_cipher_alert_title">Verbindung schlägt mit \"SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure\" fehl</string>
-    <string name="tls_cipher_alert">OpenVPN für Android verwendet seit Version 0.6.29 (März 2015) einen sicheren Standardwert für die zulässigen TLS-Chiffren (\"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Leider hat das Weglassen der weniger sicheren Verschlüsselungschiffren und Exportchiffren, vor allem aber der Wegfall der Cipher Suites ohne Unterstützung für Perfect-Forward-Secrecy (Diffie-Hellman), einige Probleme verursacht. Diese Probleme werden in der Regel durch gut gemeinte, aber schlecht ausgeführte Versuche, die TLS-Sicherheit durch eine händische Wahl zu verbessern oder durch einige eingebettete Betriebssysteme mit abgespecktem OpenSSL (z.B. MikroTik) verursacht.\n Um dieses Problem zu lösen, setzen Sie die TLS-Verschlüsselungs-Einstellungen auf dem Server auf einen sinnvollen Standardwert wie z.B. tls-cipher \"DEFAULT: EXP: PSK: SRP: KRSA\". Falls diese nicht möglich ist, können Sie als clientseitigen Workaround dem VPN-Profil die benutzerdefinierte Option tls-cipher DEFAULT hinzufügen, um die weniger sicheren Chiffren wieder zuzulassen.</string>
+    <string name="tls_cipher_alert">OpenVPN für Android verwendet seit Version 0.6.29 (März 2015) einen sicheren Standardwert für die zulässigen TLS-Chiffren (\"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Leider hat das Weglassen der weniger sicheren Verschlüsselungschiffren und Exportchiffren, vor allem aber der Wegfall der Cipher Suites ohne Unterstützung für Perfect-Forward-Secrecy (Diffie-Hellman), einige Probleme verursacht. Diese Probleme werden in der Regel durch gut gemeinte, aber schlecht ausgeführte Versuche, die TLS-Sicherheit durch eine händische Wahl zu verbessern oder durch einige eingebettete Betriebssysteme mit abgespecktem OpenSSL (z.B. MikroTik) verursacht.\n Um dieses Problem zu lösen, setzen Sie die TLS-Verschlüsselungs-Einstellungen auf dem Server auf einen sinnvollen Standardwert wie z.B. tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". Falls diese nicht möglich ist, können Sie als clientseitigen Workaround dem VPN-Profil die benutzerdefinierte Option tls-cipher DEFAULT hinzufügen, um die weniger sicheren Chiffren wieder zuzulassen.</string>
     <string name="message_no_user_edit">Dieses Profil wurde von einer externen Anwendung (%s) hinzugefügt und als nicht vom Benutzer bearbeitbar markiert.</string>
     <string name="crl_file">Zertifikats-Sperrliste</string>
     <string name="service_restarted">OpenVPN-Dienst wird neu gestartet (App vermutlich abgestürzt oder wegen Speichermangels beendet)</string>
@@ -432,7 +432,7 @@
     <string name="osslspeedtest">OpenSSL Crypto Geschwindigkeitstest</string>
     <string name="openssl_error">OpenSSL hat einen Fehler gemeldet</string>
     <string name="running_test">Test läuft&#8230;</string>
-    <string name="test_algoirhtms">Ausgewählte Algorithmen testen</string>
+    <string name="test_algorithms">Ausgewählte Algorithmen testen</string>
     <string name="all_app_prompt">Eine andere App versucht, %s zu steuern. Die anforderne App kann nicht bestimmt werden. Wenn Sie diesen Zugriff zulassen, erhalten ALLE Apps Zugriff.</string>
     <string name="openvpn3_nostatickeys">Die OpenVPN 3 C ++ - Implementierung unterstützt keine statischen Schlüssel. Bitte wechseln Sie zu OpenVPN 2.x unter den allgemeinen Einstellungen.</string>
     <string name="openvpn3_pkcs12">Die Benutzung von PKCS12 Dateien mit der OpenVPN 3 C++ Implementierung wird nicht unterstützt. Bitte importieren Sie entweder die PKCS12 Datei in den Android Keystore oder wählen Sie die Option OpenVPN 2.x in den allgemeinen Einstellungen aus.</string>

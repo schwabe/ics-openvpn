@@ -27,6 +27,6 @@ Tap support:
    - generate random mac
    - strip macs header on receive
    - append mac header on send
-   - implement arp, just discrad real packet and lets Android/other site retry later, "Cisco style"
+   - implement arp, just discard real packet and lets Android/other site retry later, "Cisco style"
    
 

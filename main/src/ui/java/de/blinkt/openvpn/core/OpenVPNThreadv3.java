@@ -107,7 +107,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
 
             if (DnsServer.Security.Yes.equals(server.getDnssec()))
             {
-                VpnStatus.logInfo(R.string.dnsserver_ignore_dnnsec, prio, server.to_string().trim());
+                VpnStatus.logInfo(R.string.dnsserver_ignore_dnssec, prio, server.to_string().trim());
                 continue;
             }
 
@@ -236,7 +236,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
         if (mVp.mDpc1protocol)
             config.setAppCustomProtocols("dpc1");
         
-        config.setHwAddrOverride(NetworkUtils.getFakeMacAddrFromSAAID(mService));
+        config.setHwAddrOverride(NetworkUtils.getFakeMacAddrFromSSAID(mService));
         config.setInfo(true);
         config.setAllowLocalLanAccess(mVp.mAllowLocalLAN);
         boolean retryOnAuthFailed = mVp.mAuthRetry == AUTH_RETRY_NOINTERACT;
@@ -344,7 +344,7 @@ public class OpenVPNThreadv3 extends ClientAPI_OpenVPNClient implements Runnable
     @Override
     public void sendAccMessage(AccMessage accMessage) {
         mHandler.post(() -> {
-            /* The C++ API here is a bit special in allowing a std::string with arbitary binary content */
+            /* The C++ API here is a bit special in allowing a std::string with arbitrary binary content */
             String message = new  String(accMessage.getMessage());
             send_app_control_channel_msg(accMessage.getProtocol(), message);
         });

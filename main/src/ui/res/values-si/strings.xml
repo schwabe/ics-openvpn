@@ -163,7 +163,7 @@
     <string name="owner_fix">/dev/tun හි හිමිකම නිවැරදි කරන්න</string>
     <string name="generated_config_summary">ජනනය කරන ලද OpenVPN වින්‍යාස ගොනුව පෙන්වයි</string>
     <string name="edit_profile_title">\"%s\" සංස්කරණය කිරීම</string>
-    <string name="building_configration">ගොඩනැගිලි වින්‍යාසය&#8230;</string>
+    <string name="building_configuration">ගොඩනැගිලි වින්‍යාසය&#8230;</string>
     <string name="netchange_summary">මෙම විකල්පය ක්‍රියාත්මක කිරීමෙන් ජාල තත්ත්වය වෙනස් වුවහොත් නැවත සම්බන්ධ වීමට බල කෙරෙනු ඇත (උදා. WiFi වෙත/ජංගමයෙන්)</string>
     <string name="netchange">ජාල වෙනස් කිරීමේදී නැවත සම්බන්ධ වන්න</string>
     <string name="netstatus">ජාලයේ තත්ත්වය: %s</string>
@@ -212,7 +212,7 @@
     <string name="openvpn_log">OpenVPN ලොගය</string>
     <string name="import_config">අනුමත කරන්න</string>
     <string name="battery_consumption_title">විදුලි කෝෂය</string>
-    <string name="baterry_consumption">මගේ පුද්ගලික පරීක්ෂණ වලදී OpenVPN හි අධික බැටරි පරිභෝජනයට ප්‍රධාන හේතුව වන්නේ Keepalive පැකට් ය. බොහෝ OpenVPN සේවාදායකයන් සතුව \'keepalive 10 60\' වැනි වින්‍යාස විධානයක් ඇති අතර එමඟින් සේවාදායකයා සහ සේවාදායකයා සෑම තත්පර දහයකට වරක් තබා ගැනීමේ පැකට් හුවමාරු කර ගනී. &lt;p&gt; මෙම පැකට් කුඩා වන අතර වැඩි තදබදයක් භාවිතා නොකරන අතර, ඒවා ජංගම ගුවන්විදුලි ජාලය කාර්යබහුල කර බලශක්ති පරිභෝජනය වැඩි කරයි. ( &lt;a href=\"https://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;ද බලන්න) &lt;p&gt; මෙම Keepalive සැකසුම සේවාලාභියා මත වෙනස් කළ නොහැක. OpenVPN හි පද්ධති පරිපාලකයාට පමණක් සැකසුම වෙනස් කළ හැක. &lt;p&gt; අවාසනාවන්ත ලෙස UDP සමඟ තත්පර 60කට වඩා විශාල තබාගැනීමක් භාවිතා කිරීම අක්‍රිය කල් ඉකුත්වීම හේතුවෙන් සමහර NAT ද්වාරවල සම්බන්ධතාවය අත්හැරීමට හේතු විය හැක. TCP භාවිතා කිරීම දිගු කාලයක් සජීවී කාල සීමාවක් සමඟ ක්‍රියා කරයි, නමුත් TCP හරහා TCP උමං කිරීම ඉහළ පැකට් අලාභයක් සහිත සම්බන්ධතා මත අතිශයින් දුර්වල ලෙස ක්‍රියා කරයි. ( &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;බලන්න TCP හරහා TCP නරක අදහසක්&lt;/a&gt;)</string>
+    <string name="battery_consumption">මගේ පුද්ගලික පරීක්ෂණ වලදී OpenVPN හි අධික බැටරි පරිභෝජනයට ප්‍රධාන හේතුව වන්නේ Keepalive පැකට් ය. බොහෝ OpenVPN සේවාදායකයන් සතුව \'keepalive 10 60\' වැනි වින්‍යාස විධානයක් ඇති අතර එමඟින් සේවාදායකයා සහ සේවාදායකයා සෑම තත්පර දහයකට වරක් තබා ගැනීමේ පැකට් හුවමාරු කර ගනී. &lt;p&gt; මෙම පැකට් කුඩා වන අතර වැඩි තදබදයක් භාවිතා නොකරන අතර, ඒවා ජංගම ගුවන්විදුලි ජාලය කාර්යබහුල කර බලශක්ති පරිභෝජනය වැඩි කරයි. ( &lt;a href=\"https://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;ද බලන්න) &lt;p&gt; මෙම Keepalive සැකසුම සේවාලාභියා මත වෙනස් කළ නොහැක. OpenVPN හි පද්ධති පරිපාලකයාට පමණක් සැකසුම වෙනස් කළ හැක. &lt;p&gt; අවාසනාවන්ත ලෙස UDP සමඟ තත්පර 60කට වඩා විශාල තබාගැනීමක් භාවිතා කිරීම අක්‍රිය කල් ඉකුත්වීම හේතුවෙන් සමහර NAT ද්වාරවල සම්බන්ධතාවය අත්හැරීමට හේතු විය හැක. TCP භාවිතා කිරීම දිගු කාලයක් සජීවී කාල සීමාවක් සමඟ ක්‍රියා කරයි, නමුත් TCP හරහා TCP උමං කිරීම ඉහළ පැකට් අලාභයක් සහිත සම්බන්ධතා මත අතිශයින් දුර්වල ලෙස ක්‍රියා කරයි. ( &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;බලන්න TCP හරහා TCP නරක අදහසක්&lt;/a&gt;)</string>
     <string name="connection_retries">සම්බන්ධවීමට නැවත උත්සාහයන්</string>
     <string name="reconnection_settings">නැවත සම්බන්ධ වීමේ සැකසුම්</string>
     <string name="connectretrymessage">සම්බන්ධතා උත්සාහයන් අතර රැඳී සිටීමට තත්පර ගණන.</string>
@@ -425,7 +425,7 @@
     <string name="osslspeedtest">OpenSSL Crypto වේග පරීක්ෂණය</string>
     <string name="openssl_error">OpenSSL දෝෂයක් ලබා දුන්නේය</string>
     <string name="running_test">අත්හදාබැලීම සිදුවෙමින්&#8230;</string>
-    <string name="test_algoirhtms">තෝරාගත් ඇල්ගොරිතම පරීක්ෂා කරන්න</string>
+    <string name="test_algorithms">තෝරාගත් ඇල්ගොරිතම පරීක්ෂා කරන්න</string>
     <string name="all_app_prompt">බාහිර යෙදුමක් %sපාලනය කිරීමට උත්සාහ කරයි. ප්‍රවේශය ඉල්ලන යෙදුම නිර්ණය කළ නොහැක. මෙම යෙදුමට ඉඩ දීමෙන් සියලුම යෙදුම් වලට ප්‍රවේශය ලබා දේ.</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C++ ක්‍රියාත්මක කිරීම ස්ථිතික යතුරු සඳහා සහය නොදක්වයි. කරුණාකර සාමාන්‍ය සැකසුම් යටතේ OpenVPN 2.x වෙත වෙනස් කරන්න.</string>
     <string name="openvpn3_pkcs12">OpenVPN 3 C++ ක්‍රියාත්මක කිරීම සමඟ සෘජුවම PKCS12 ගොනු භාවිතා කිරීම සහය නොදක්වයි. කරුණාකර pkcs12 ගොනු Android යතුරු ගබඩාව වෙත ආයාත කරන්න හෝ සාමාන්‍ය සැකසුම් යටතේ OpenVPN 2.x වෙත වෙනස් කරන්න.</string>
@@ -435,7 +435,7 @@
     <string name="openvpn3_socksproxy">OpenVPN 3 C++ ක්‍රියාත්මක කිරීම Socks proxy හරහා සම්බන්ධ වීමට සහාය නොදක්වයි</string>
     <string name="no_orbotfound">Orbot යෙදුම සොයාගත නොහැක. කරුණාකර Orbot ස්ථාපනය කරන්න හෝ අතින් Socks v5 ඒකාබද්ධ කිරීම භාවිතා කරන්න.</string>
     <string name="faq_remote_api_title">දුරස්ථ යෙ.ක්‍ර. අ.මු.</string>
-    <string name="faq_remote_api">Android සඳහා OpenVPN දුරස්ථ API දෙකක් සඳහා සහය දක්වයි, AIDL භාවිතා කරන නවීන API (git repository හි remoteEXample) සහ Intents භාවිතා කරන සරල එකක්. &lt;p&gt;adb shell සහ අභිප්‍රායන් භාවිතා කරන උදාහරණ. ඔබේ පැතිකඩ නම&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - සමඟ පැතිකඩ නාමය ප්‍රතිස්ථාපනය කරන්න. e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">Android සඳහා OpenVPN දුරස්ථ API දෙකක් සඳහා සහය දක්වයි, AIDL භාවිතා කරන නවීන API (git repository හි remoteExample) සහ Intents භාවිතා කරන සරල එකක්. &lt;p&gt;adb shell සහ අභිප්‍රායන් භාවිතා කරන උදාහරණ. ඔබේ පැතිකඩ නම&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - සමඟ පැතිකඩ නාමය ප්‍රතිස්ථාපනය කරන්න. e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Proxy Authentication සබල කරන්න</string>
     <string name="error_orbot_and_proxy_options">අමතර http-proxy-option ප්‍රකාශය සහ Orbot ඒකාබද්ධ කිරීම එකවර භාවිතා කළ නොහැක</string>
     <string name="info_from_server">සේවාදායකයෙන් තොරතුරු: \'%s\'</string>

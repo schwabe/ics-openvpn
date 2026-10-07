@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
-        <include layout="@layout/log_silders"/>
+        <include layout="@layout/log_sliders"/>
 
         <TextView
             android:text="@string/speed_waiting"

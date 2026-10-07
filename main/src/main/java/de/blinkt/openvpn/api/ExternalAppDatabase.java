@@ -78,8 +78,8 @@ public class ExternalAppDatabase {
 
 	public boolean checkAllowingModifyingRemoteControl(Context c) {
 		if (isManagedConfiguration()) {
-			Toast.makeText(c, "Remote control apps are manged by managed configuration, cannot change", Toast.LENGTH_LONG).show();
-			VpnStatus.logError("Remote control apps are manged by managed configuration, cannot change");
+			Toast.makeText(c, "Remote control apps are managed by managed configuration, cannot change", Toast.LENGTH_LONG).show();
+			VpnStatus.logError("Remote control apps are managed by managed configuration, cannot change");
 			return false;
 		}
 		return true;

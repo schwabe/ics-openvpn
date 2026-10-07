@@ -13,7 +13,7 @@ assignees: ''
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is
 
-**Describe the solution you wouldd like ot see in the app**
+**Describe the solution you would like to see in the app**
 A clear and concise description of what you want to happen.
 
 **Describe alternatives you've considered**

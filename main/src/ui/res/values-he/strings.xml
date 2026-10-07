@@ -166,7 +166,7 @@
     <string name="owner_fix">תקן בעלות על /dev/tun</string>
     <string name="generated_config_summary">מציג את קובץ התצורה של OpenVPN שנוצר</string>
     <string name="edit_profile_title">„%s” בעריכה</string>
-    <string name="building_configration">יוצר תצורה&#8230;</string>
+    <string name="building_configuration">יוצר תצורה&#8230;</string>
     <string name="netchange_summary">הפעלת אפשרות זו תאלץ חיבור מחדש אם ישתנה מצב הרשת (למשל WiFi לנייד)</string>
     <string name="netchange">התחבר מחדש בשינוי רשת</string>
     <string name="netstatus">מצב הרשת: %s</string>
@@ -215,7 +215,7 @@
     <string name="openvpn_log">יומן OpenVPN</string>
     <string name="import_config">ייבא הגדרות של OpenVPN</string>
     <string name="battery_consumption_title">צריכת סוללה</string>
-    <string name="baterry_consumption">בבדיקות האישיות שלי הסיבה העיקרית לצריכת סוללה גבוהה של OpenVPN הן מנות Keepalive. לרוב שרתי OpenVPN יש הנחיית תצורה כמו \'keepalive 10 60\' שגורמת ללקוח ולשרת להחליף מנות Keepalive כל עשר שניות. &lt;p&gt; מנות אלו אמנם קטנות ואינן משתמשות בתעבורה רבה, אך הן מעסיקות את רשת הרדיו הנייד ומגדילות את צריכת האנרגיה. (ראה גם &lt;a href=\"https://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | מפתחי אנדרואיד&lt;/a&gt;) &lt;p&gt; לא ניתן לשנות את ההגדרה Keepalive זו בלקוח. רק מנהל המערכת של OpenVPN יכול לשנות את ההגדרה. &lt;p&gt; לרוע המזל, שימוש ב-Keealive של יותר מ-60 שניות עם UDP עלול לגרום לשערי NAT מסוימים להפסיק את החיבור עקב פסק זמן של חוסר פעילות. השימוש ב-TCP עם פסק זמן ארוך של שמירה על החיים עובד, אבל ביצוע מנהור של TCP על TCP מתפקד בצורה גרועה ביותר בחיבורים עם אובדן מנות גבוה. (ראה &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;מדוע TCP מעל TCP הוא רעיון רע&lt;/a&gt;)</string>
+    <string name="battery_consumption">בבדיקות האישיות שלי הסיבה העיקרית לצריכת סוללה גבוהה של OpenVPN הן מנות Keepalive. לרוב שרתי OpenVPN יש הנחיית תצורה כמו \'keepalive 10 60\' שגורמת ללקוח ולשרת להחליף מנות Keepalive כל עשר שניות. &lt;p&gt; מנות אלו אמנם קטנות ואינן משתמשות בתעבורה רבה, אך הן מעסיקות את רשת הרדיו הנייד ומגדילות את צריכת האנרגיה. (ראה גם &lt;a href=\"https://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | מפתחי אנדרואיד&lt;/a&gt;) &lt;p&gt; לא ניתן לשנות את ההגדרה Keepalive זו בלקוח. רק מנהל המערכת של OpenVPN יכול לשנות את ההגדרה. &lt;p&gt; לרוע המזל, שימוש ב-Keealive של יותר מ-60 שניות עם UDP עלול לגרום לשערי NAT מסוימים להפסיק את החיבור עקב פסק זמן של חוסר פעילות. השימוש ב-TCP עם פסק זמן ארוך של שמירה על החיים עובד, אבל ביצוע מנהור של TCP על TCP מתפקד בצורה גרועה ביותר בחיבורים עם אובדן מנות גבוה. (ראה &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;מדוע TCP מעל TCP הוא רעיון רע&lt;/a&gt;)</string>
     <string name="connection_retries">ניסיונות חיבור מחדש</string>
     <string name="reconnection_settings">הגדרות חיבור מחדש</string>
     <string name="connectretrymessage">מספר השניות להמתנה בין ניסיונות החיבור.</string>
@@ -429,7 +429,7 @@
     <string name="osslspeedtest">בדיקת מהירות קריפטו של OpenSSL</string>
     <string name="openssl_error">OpenSSL החזיר שגיאה</string>
     <string name="running_test">מבחן ריצה&#8230;</string>
-    <string name="test_algoirhtms">בדוק אלגוריתמים נבחרים</string>
+    <string name="test_algorithms">בדוק אלגוריתמים נבחרים</string>
     <string name="all_app_prompt">אפליקציה חיצונית מנסה לשלוט ב %s. לא ניתן לקבוע את האפליקציה המבקשת גישה. מתן אישור לאפליקציה זו מעניק לכל האפליקציות גישה.</string>
     <string name="openvpn3_nostatickeys">היישום OpenVPN 3 C++ אינו תומך במפתחות סטטיים. אנא שנה ל-OpenVPN 2.x תחת הגדרות כלליות.</string>
     <string name="openvpn3_pkcs12">שימוש בקבצי PKCS12 ישירות עם יישום OpenVPN 3 C++ אינו נתמך. נא לייבא את קבצי pkcs12 למאגר המפתחות של אנדרואיד או שנה ל-OpenVPN 2.x תחת הגדרות כלליות.</string>
@@ -439,7 +439,7 @@
     <string name="openvpn3_socksproxy">יישום OpenVPN 3 C++ אינו תומך בחיבור באמצעות Proxy Socks</string>
     <string name="no_orbotfound">לא ניתן למצוא את אפליקציית Orbot. אנא התקן את Orbot או השתמש באינטגרציה ידנית של Socks v5.</string>
     <string name="faq_remote_api_title">API מרוחק</string>
-    <string name="faq_remote_api">OpenVPN לאנדרואיד תומך בשני ממשקי API מרוחקים, API מתוחכם המשתמש ב-AIDL (remoteEXample במאגר git) ואחד פשוט באמצעות Intents. &lt;p&gt;דוגמאות לשימוש ב-adb shell והכוונות. החלף את שם הפרופיל שלך בשם הפרופיל שלך&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN לאנדרואיד תומך בשני ממשקי API מרוחקים, API מתוחכם המשתמש ב-AIDL (remoteExample במאגר git) ואחד פשוט באמצעות Intents. &lt;p&gt;דוגמאות לשימוש ב-adb shell והכוונות. החלף את שם הפרופיל שלך בשם הפרופיל שלך&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">אפשר אימות פרוקסי</string>
     <string name="error_orbot_and_proxy_options">לא ניתן להשתמש בהצהרת http-proxy-option נוספת ובשילוב Orbot בו-זמנית</string>
     <string name="info_from_server">מידע מהשרת: ‚%s’</string>

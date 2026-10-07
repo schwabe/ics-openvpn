@@ -148,4 +148,25 @@ class TestRestrictions : createTestBundle {
         )
 
     }
+
+    @Test
+    fun testOpenVPN3Restriction() {
+        val context: Context = ApplicationProvider.getApplicationContext()
+        val appr = AppRestrictions.getInstance(context)
+        val prefs = Preferences.getDefaultSharedPreferences(context)
+
+        val b: Bundle = createTestBundle()
+        b.putBoolean("ovpn3", true)
+        appr.parseRestrictionsBundle(context, b)
+        Assert.assertTrue(prefs.getBoolean("ovpn3", false))
+
+        b.putBoolean("ovpn3", false)
+        appr.parseRestrictionsBundle(context, b)
+        Assert.assertFalse(prefs.getBoolean("ovpn3", true))
+
+        /* a bundle without the key must leave the user setting untouched */
+        prefs.edit().putBoolean("ovpn3", true).commit()
+        appr.parseRestrictionsBundle(context, createTestBundle())
+        Assert.assertTrue(prefs.getBoolean("ovpn3", false))
+    }
 }

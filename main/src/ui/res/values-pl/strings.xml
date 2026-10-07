@@ -123,7 +123,7 @@
     <string name="no_vpn_support_image">Twój obraz nie wspiera API VPN, przepraszamy ;(</string>
     <string name="encryption">Szyfrowanie</string>
     <string name="cipher_dialog_title">Wprowadź metodę szyfrowania</string>
-    <string name="chipher_dialog_message">Enter the data encryption cipher algorithms used by OpenVPN separated by : (--data-ciphers). Leave empty to use the default of AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
+    <string name="cipher_dialog_message">Enter the data encryption cipher algorithms used by OpenVPN separated by : (--data-ciphers). Leave empty to use the default of AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305.</string>
     <string name="auth_dialog_message">Wprowadź tryb autoryzacji używany z OpenVPN. Pozostaw puste, aby skorzystać z ustawień domyślnych.</string>
     <string name="settings_auth">Uwierzytelnianie/Szyfrowanie</string>
     <string name="file_explorer_tab">Przeglądanie plików</string>
@@ -165,7 +165,7 @@
     <string name="owner_fix">Popraw uprawnienia do /dev/tun</string>
     <string name="generated_config_summary">Pokazuje wygenerowany plik konfiguracji OpenVPN</string>
     <string name="edit_profile_title">Edytujesz \"%s\"</string>
-    <string name="building_configration">Tworzenie konfiguracji...</string>
+    <string name="building_configuration">Tworzenie konfiguracji...</string>
     <string name="netchange_summary">Włączenie tej opcji spowoduje ponowne połączenie jeśli stan sieci się zmienił (np. z WiFi na GSM)</string>
     <string name="netchange">Połącz ponownie przy zmianie sieci</string>
     <string name="netstatus">Stan sieci: %s</string>
@@ -214,7 +214,7 @@
     <string name="openvpn_log">Log OpenVPN</string>
     <string name="import_config">Importuj konfigurację OpenVPN</string>
     <string name="battery_consumption_title">Zużycie baterii</string>
-    <string name="baterry_consumption">Podczas osobistych testów odkryłem, iż głównym powodem sporego zużycia baterii przez OpenVPN są pakiety keepalive. Większość serwerów OpenVPN ma ustawienie \'keepalive 10 60\', które narzuca klientowi oraz serwerowi wymianę pakietów keepalive co 10 sekund. &lt;p&gt; Podczas, gdy te pakiety są małe i nie zużywają wiele pasma, utrzymują one radio komórkowe w trybie pracy i zwiększają zużycie energii. (Sprawdź także &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Ustawienie keepalive nie może być zmienione po stronie klienta. Tylko administrator serwera OpenVPN jest w stanie zmienić to ustawienie. &lt;p&gt; Niestety, w przypadku UDP niektóre konfiguracje NAT źle tolerują ustawienie keepalive większe niż 60 sekund powodując odrzucanie pakietów z powodu nieaktywności połączenia.  Używanie protokółu TCP z większym timeout działa, jednak tunelowanie TCP-po-TCP bardzo źle się sprawuje przy połączeniach z dużą stratnością pakietów. (See &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
+    <string name="battery_consumption">Podczas osobistych testów odkryłem, iż głównym powodem sporego zużycia baterii przez OpenVPN są pakiety keepalive. Większość serwerów OpenVPN ma ustawienie \'keepalive 10 60\', które narzuca klientowi oraz serwerowi wymianę pakietów keepalive co 10 sekund. &lt;p&gt; Podczas, gdy te pakiety są małe i nie zużywają wiele pasma, utrzymują one radio komórkowe w trybie pracy i zwiększają zużycie energii. (Sprawdź także &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Ustawienie keepalive nie może być zmienione po stronie klienta. Tylko administrator serwera OpenVPN jest w stanie zmienić to ustawienie. &lt;p&gt; Niestety, w przypadku UDP niektóre konfiguracje NAT źle tolerują ustawienie keepalive większe niż 60 sekund powodując odrzucanie pakietów z powodu nieaktywności połączenia.  Używanie protokółu TCP z większym timeout działa, jednak tunelowanie TCP-po-TCP bardzo źle się sprawuje przy połączeniach z dużą stratnością pakietów. (See &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
     <string name="connection_retries">Próby połączenia</string>
     <string name="reconnection_settings">Ustawienia ponownego połączenia</string>
     <string name="connectretrymessage">Liczba sekund oczekiwania między próbami połączenia.</string>
@@ -222,7 +222,7 @@
     <string name="minidump_generated">OpenVPN niespodziewanie uległ awarii. Proszę rozważ użycie opcji wyślij Minidump w głównym menu</string>
     <string name="send_minidump">Wyślij minidump do autora</string>
     <string name="send_minidump_summary">Wysyłam informacje debuggera o ostatniej awarii aplikacji do twórcy</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s-%2$s</string>
     <string name="session_ipv6string">%1$s-%3$s,%2$s</string>
     <string name="state_connecting">Łączę</string>
@@ -242,7 +242,7 @@
     <string name="state_nonetwork">Czekam na sieć</string>
     <string name="state_waitorbot">Oczekiwanie na uruchomienie Orbot</string>
     <string name="statusline_bytecount">↓%2$s/s %1$s - ↑%4$s/s %3$s</string>
-    <string name="notifcation_title_notconnect">Niepołączony</string>
+    <string name="notification_title_notconnect">Niepołączony</string>
     <string name="start_vpn_title">Łączę z VPN %s</string>
     <string name="start_vpn_ticker">Łączę z VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Niektóre wersje Androida 4.1 mają problemy, jeśli nazwa certyfikatu zawiera niealfanumeryczne znaki (spacje, podkreślenia, myślniki). Spróbuj zaimportować certyfikat bez znaków specjalnych</string>
@@ -348,7 +348,7 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="version_upto">%s i wcześniejsze</string>
     <string name="copy_of_profile">Kopia %s</string>
     <string name="ab_not_route_to_vpn_title">Trasa do skonfigurowanego adresu IP</string>
-    <string name="custom_connection_options_warng">Określ własne opcje dla połączenia. Używaj z rozwagą</string>
+    <string name="custom_connection_options_warning">Określ własne opcje dla połączenia. Używaj z rozwagą</string>
     <string name="custom_connection_options">Opcje niestandardowe</string>
     <string name="remove_connection_entry">Usuń wpis połączenia</string>
     <string name="version_and_later">%s i późniejsze</string>
@@ -426,7 +426,7 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="osslspeedtest">OpenSSL Test Szybkości Crypto</string>
     <string name="openssl_error">OpenSSL zwrócił błąd</string>
     <string name="running_test">Testowanie&#8230;</string>
-    <string name="test_algoirhtms">Test wybranych algorytmów</string>
+    <string name="test_algorithms">Test wybranych algorytmów</string>
     <string name="all_app_prompt">Zewnętrzna aplikacja próbuje przejąć kontrolę %s. Prośba o dostęp nie może być zweryfikowana. Zezwolenie da jej dostęp do WSZYSTKICH aplikacji.</string>
     <string name="openvpn3_nostatickeys">Implementacja OpenVPN 3 C++ nie wspiera kluczy statycznych. Proszę zmienić na OpenVPN 2.x pod głównymi ustawieniami.</string>
     <string name="openvpn3_pkcs12">Używanie plików PKCS22 bezpośrednio z implementacją OpenVPN 3 C++ nie jest wspierane. Proszę zaimportować pliki PKCS12 do magazynu kluczy Androida lub przejść na OpenVPN 2.x pod głównymi ustawieniami.</string>
@@ -436,7 +436,7 @@ OpenVPN dla Androida ostrzeże Cię o tym w logu.<p>Kiedy VPN ustawi serwer DNS 
     <string name="openvpn3_socksproxy">Implementacja OpenVPN 3 C ++ nie obsługuje łączenia przez proxy Socks</string>
     <string name="no_orbotfound">Nie można odnaleźć aplikacji Orbot. Zainstaluj Orbot lub skorzystaj z ręcznej integracji Socks v5.</string>
     <string name="faq_remote_api_title">Zdalny interfejs API</string>
-    <string name="faq_remote_api">OpenVPN dla systemu Android obsługuje dwa zdalne interfejsy API, zaawansowany interfejs API wykorzystujący AIDL (remoteEXample w repozytorium git) i prosty interfejs wykorzystujący Intents. &lt;p&gt;Przykłady użycia powłoki adb i jej Intents. Zastąp nazwę profilu twoją nazwą profilu&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn / .api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn / .api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN dla systemu Android obsługuje dwa zdalne interfejsy API, zaawansowany interfejs API wykorzystujący AIDL (remoteExample w repozytorium git) i prosty interfejs wykorzystujący Intents. &lt;p&gt;Przykłady użycia powłoki adb i jej Intents. Zastąp nazwę profilu twoją nazwą profilu&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn / .api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn / .api.ConnectVPN</string>
     <string name="enableproxyauth">Włącz uwierzytelnianie proxy</string>
     <string name="error_orbot_and_proxy_options">Nie można użyć jednocześnie dodatkowego oświadczenia http-proxy-option oraz integracji Orbot w tym samym czasie</string>
     <string name="info_from_server">Informacja z serwera: \"%s\"</string>

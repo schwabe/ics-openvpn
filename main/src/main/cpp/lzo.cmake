@@ -1,4 +1,4 @@
-# Lzo's own cmake is rather throublesome
+# Lzo's own cmake is rather troublesome
 
 set(lzo_srcs
   lzo1.c

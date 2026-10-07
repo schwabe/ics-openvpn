@@ -295,7 +295,7 @@ public class NetworkSpace {
                 // This network is smaller or equal to the next but has the same base address
                 if (currentNet.getFirstAddress().equals(nextNet.getFirstAddress()) && currentNet.networkMask >= nextNet.networkMask) {
                     if (currentNet.included == nextNet.included) {
-                        // Included in the next next and same type
+                        // Included in the next net and same type
                         // Simply forget our current network
                         currentNet = nextNet;
                     } else {

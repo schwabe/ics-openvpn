@@ -162,7 +162,7 @@
     <string name="owner_fix">Fiks eierskap av /dev/tun</string>
     <string name="generated_config_summary">Viser den genererte OpenVPN konfigurasjonsfilen</string>
     <string name="edit_profile_title">Rediger \"%s\"</string>
-    <string name="building_configration">Lager konfigurasjon&#8230;</string>
+    <string name="building_configuration">Lager konfigurasjon&#8230;</string>
     <string name="netchange_summary">Å slå dette alternativet på vil tvinge en tilkobling på nytt hvis nettverksstatusen endres (f.eks. WiFi til / fra mobil)</string>
     <string name="netchange">Koble til på nytt ved nettverks endring</string>
     <string name="netstatus">Nettverksstatus: %s</string>
@@ -205,7 +205,7 @@
     <string name="minidump_generated">OpenVPN krasjet uventet. Vennligst vurder bruk av Minidump-alternativet i hovedmenyen</string>
     <string name="send_minidump">Send Minidump til utvikler</string>
     <string name="send_minidump_summary">Sender feilsøkingsinformasjon om siste krasj til utvikler</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Kobler til</string>
@@ -224,7 +224,7 @@
     <string name="state_auth_failed">Autentisering mislyktes</string>
     <string name="state_nonetwork">Venter på et brukbart nettverk</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Ikke tilkoblet</string>
+    <string name="notification_title_notconnect">Ikke tilkoblet</string>
     <string name="start_vpn_title">Kobler til VPN %s</string>
     <string name="start_vpn_ticker">Kobler til VPN %s</string>
     <string name="encryption_cipher">Kryptering chiffer</string>
@@ -315,7 +315,7 @@
     <string name="channel_name_background">Tilkoblingsstatistikk</string>
     <string name="channel_name_status">Endring i tilkoblingsstatusen</string>
     <string name="running_test">Kjører test &#8230;</string>
-    <string name="test_algoirhtms">Test ut de valgte algoritmene</string>
+    <string name="test_algorithms">Test ut de valgte algoritmene</string>
     <string name="proxy">Mellomtjener</string>
     <string name="Use_no_proxy">Ingen</string>
     <string name="tor_orbot">Tor (Orbot)</string>

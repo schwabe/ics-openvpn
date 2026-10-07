@@ -162,7 +162,7 @@
     <string name="owner_fix">Opravit vlastnictví /dev/tun</string>
     <string name="generated_config_summary">Zobrazí vygenerované nastavení OpenVPN</string>
     <string name="edit_profile_title">Úprava \"%s\"</string>
-    <string name="building_configration">Vytvářím konfiguraci&#8230;</string>
+    <string name="building_configuration">Vytvářím konfiguraci&#8230;</string>
     <string name="netchange_summary">Zapnutím této volby bude vynuceno opětovné připojení, pokud se změní stav sítě (např. z WiFi na mobilní síť a zpět)</string>
     <string name="netchange">Opětovně připojit při změně sítě</string>
     <string name="netstatus">Stav sítě: %s</string>
@@ -211,7 +211,7 @@
     <string name="openvpn_log">OpenVPN Log</string>
     <string name="import_config">Importovat OpenVPN nastavení</string>
     <string name="battery_consumption_title">Spotřeba baterie</string>
-    <string name="baterry_consumption">V testech se jako hlavní důvod vysoké spotřeby baterie ukázaly keepalive pakety. Většina OpenVPN serverů má v konfiguraci něco jako \'keepalive 10 60\', což znamená posílání paketů každých deset vteřin. &lt;p&gt; Tyto pakety jsou malé a neznamenají velký provoz, ale udržují mobilní síť aktivní a zvyšují spotřebu energie. (Viz také &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt; Toto nastavení nelze změnit na klientské straně. Jen administrátor OpenVPN může toto nastavení změnit. &lt;p&gt; Bohužel používání keepalive hodnot větších než 60 vteřin spolu s UDP může způsobovat problémy s některými NATy, které ukončují po krátkém čase spojení. Použití TCP s dlouhým keepalive funguje, ale má problém \"TCP přes TCP\" (Viz &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Proč je TCP přes TCP špatný nápad&lt;/a&gt;)</string>
+    <string name="battery_consumption">V testech se jako hlavní důvod vysoké spotřeby baterie ukázaly keepalive pakety. Většina OpenVPN serverů má v konfiguraci něco jako \'keepalive 10 60\', což znamená posílání paketů každých deset vteřin. &lt;p&gt; Tyto pakety jsou malé a neznamenají velký provoz, ale udržují mobilní síť aktivní a zvyšují spotřebu energie. (Viz také &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt; Toto nastavení nelze změnit na klientské straně. Jen administrátor OpenVPN může toto nastavení změnit. &lt;p&gt; Bohužel používání keepalive hodnot větších než 60 vteřin spolu s UDP může způsobovat problémy s některými NATy, které ukončují po krátkém čase spojení. Použití TCP s dlouhým keepalive funguje, ale má problém \"TCP přes TCP\" (Viz &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Proč je TCP přes TCP špatný nápad&lt;/a&gt;)</string>
     <string name="connection_retries">Opakování připojení</string>
     <string name="reconnection_settings">Nastavení obnovení</string>
     <string name="connectretrymessage">Počet vteřin mezi pokusy o připojení.</string>
@@ -219,7 +219,7 @@
     <string name="minidump_generated">OpenVPN neočekávaně havarovalo. Zvaž možnost použití volby poslat Minidump z hlavního menu</string>
     <string name="send_minidump">Poslat Minidump vývojáři</string>
     <string name="send_minidump_summary">Poslat ladící informace o poslední havárii vývojáři</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Připojuji se</string>
@@ -239,7 +239,7 @@
     <string name="state_nonetwork">Čekání na použitelnou síť</string>
     <string name="state_waitorbot">Čekám, až se spustí Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Nepřipojeno</string>
+    <string name="notification_title_notconnect">Nepřipojeno</string>
     <string name="start_vpn_title">Připojování k VPN %s</string>
     <string name="start_vpn_ticker">Připojování k VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Některé verze Androidu 4.1 mají problém, pokud je ve jméně certifikátu obsažen jiný než alfanumerický znak (mezera, podtržítko, mínus). Zkus reimportovat certifikát bez speciálních znaků</string>
@@ -341,7 +341,7 @@
     <string name="version_upto">%s a starší</string>
     <string name="copy_of_profile">Kopie %s</string>
     <string name="ab_not_route_to_vpn_title">Trasa k nastavené IP adrese</string>
-    <string name="custom_connection_options_warng">Zadejte vlastní specifické možnosti k připojení. Používejte opatrně</string>
+    <string name="custom_connection_options_warning">Zadejte vlastní specifické možnosti k připojení. Používejte opatrně</string>
     <string name="custom_connection_options">Vlastní možnosti</string>
     <string name="remove_connection_entry">Odstranit položku připojení</string>
     <string name="version_and_later">%s a později</string>
@@ -410,7 +410,7 @@
     <string name="osslspeedtest">Rychlostní krypto test OpnSSL</string>
     <string name="openssl_error">OpenSSL vrátilo chybu</string>
     <string name="running_test">Test běží&#8230;</string>
-    <string name="test_algoirhtms">Testuj vybrané algoritmy</string>
+    <string name="test_algorithms">Testuj vybrané algoritmy</string>
     <string name="proxy">Proxy</string>
     <string name="Use_no_proxy">Bez</string>
     <string name="tor_orbot">Tor (Orbot)</string>

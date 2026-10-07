@@ -112,9 +112,9 @@
     <string name="generated_config">Configuració generada</string>
     <string name="generalsettings">Preferències</string>
     <string name="owner_fix">Corregir els permisos de /dev/tun</string>
-    <string name="generated_config_summary">Mostra el fitxer de configuració d\'OpenVPN generat</string>
+    <string name="generated_config_summary">Mostra el fitxer de configuració d\'OpenVPN generate</string>
     <string name="edit_profile_title">Editant \"%s\"</string>
-    <string name="building_configration">Construint la configuració&#8230;</string>
+    <string name="building_configuration">Construint la configuració&#8230;</string>
     <string name="netchange_summary">Si activeu aquesta opció, es forçarà una reconexió si es canvia l\'estat de la xarxa (per exemple, WiFi a / dades mòbils)</string>
     <string name="netchange">Reconecta al canviar de xarxa</string>
     <string name="netstatus">Estat de la xarxa %s</string>

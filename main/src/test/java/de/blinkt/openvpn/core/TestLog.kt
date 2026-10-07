@@ -11,7 +11,7 @@ import org.junit.Test
 class TestLog {
 
     @Test
-    fun testMarschTooLong()
+    fun testMarshTooLong()
     {
         /* generate a string that is 16k long */
         var longtsring = "";
@@ -22,7 +22,7 @@ class TestLog {
         }
         val li = LogItem(VpnStatus.LogLevel.VERBOSE, longtsring)
 
-        val libytes = li.marschaledBytes;
+        val libytes = li.marshaledBytes;
 
         Assert.assertTrue(libytes.size > 2000);
         Assert.assertTrue(libytes.size < 12000);

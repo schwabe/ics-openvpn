@@ -89,10 +89,10 @@
                         android:layout_height="wrap_content"
                         android:text="@string/files_missing_hint"
                         android:visibility="gone"
-                        tools:visibilty="visible" />
+                        tools:visibility="visible" />
 
                 <TextView
-                        android:id="@+id/permssion_hint"
+                        android:id="@+id/permission_hint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -109,7 +109,7 @@
                         android:checked="true"
                         android:text="@string/importpkcs12fromconfig"
                         android:visibility="gone"
-                        tools:visibilty="visible" />
+                        tools:visibility="visible" />
 
                 <TextView
                         android:id="@+id/textView"

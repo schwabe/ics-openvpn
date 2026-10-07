@@ -65,18 +65,18 @@ public class NetworkUtils {
     }
 
     @SuppressLint("HardwareIds")
-    public static String getFakeMacAddrFromSAAID(Context c) {
+    public static String getFakeMacAddrFromSSAID(Context c) {
         char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
-        String saaid = Settings.Secure.getString(c.getContentResolver(),
+        String ssaid = Settings.Secure.getString(c.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
 
-        if (saaid == null)
+        if (ssaid == null)
             return null;
 
         StringBuilder ret = new StringBuilder();
-        if (saaid.length() >= 6) {
-            byte[] sb = saaid.getBytes();
+        if (ssaid.length() >= 6) {
+            byte[] sb = ssaid.getBytes();
             for (int b = 0; b <= 6; b++) {
                 if (b != 0)
                     ret.append(":");

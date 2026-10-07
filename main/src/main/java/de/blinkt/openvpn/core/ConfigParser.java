@@ -131,7 +131,7 @@ public class ConfigParser {
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
     private String auth_user_pass_file;
 
-    static public void useEmbbedUserAuth(VpnProfile np, String inlinedata) {
+    static public void useEmbedUserAuth(VpnProfile np, String inlinedata) {
         String data = VpnProfile.getEmbeddedContent(inlinedata);
         String[] parts = data.split("\n");
         if (parts.length >= 2) {
@@ -140,7 +140,7 @@ public class ConfigParser {
         }
     }
 
-    static public void useEmbbedHttpAuth(Connection c, String inlinedata) {
+    static public void useEmbedHttpAuth(Connection c, String inlinedata) {
         String data = VpnProfile.getEmbeddedContent(inlinedata);
         String[] parts = data.split("\n");
         if (parts.length >= 2) {
@@ -252,7 +252,7 @@ public class ConfigParser {
 
     private boolean space(char c) {
         // I really hope nobody is using zero bytes inside his/her config file
-        // to sperate parameter but here we go:
+        // to separate parameter but here we go:
         return Character.isWhitespace(c) || c == '\0';
 
     }
@@ -280,7 +280,7 @@ public class ConfigParser {
             else
                 in = '\0';
 
-            if (!backslash && in == '\\' && state != linestate.readin_single_quote) {
+            if (!backslash && in == '\\' && state != linestate.reading_single_quote) {
                 backslash = true;
             } else {
                 if (state == linestate.initial) {
@@ -290,7 +290,7 @@ public class ConfigParser {
                         if (!backslash && in == '\"')
                             state = linestate.reading_quoted;
                         else if (!backslash && in == '\'')
-                            state = linestate.readin_single_quote;
+                            state = linestate.reading_single_quote;
                         else {
                             out = in;
                             state = linestate.reading_unquoted;
@@ -306,7 +306,7 @@ public class ConfigParser {
                         state = linestate.done;
                     else
                         out = in;
-                } else if (state == linestate.readin_single_quote) {
+                } else if (state == linestate.reading_single_quote) {
                     if (in == '\'')
                         state = linestate.done;
                     else
@@ -472,7 +472,7 @@ public class ConfigParser {
             }
             // Ignore mtu argument of OpenVPN3 and report error otherwise
             if (mssfix.size() >= 3 && !(mssfix.get(2).equals("mtu"))) {
-                throw new ConfigParseError("Second argument to --mssfix unkonwn");
+                throw new ConfigParseError("Second argument to --mssfix unknown");
             }
         }
 
@@ -520,7 +520,7 @@ public class ConfigParser {
                 CIDRIP cidr = new CIDRIP(ifconfig.get(1), ifconfig.get(2));
                 np.mIPv4Address = cidr.toString();
             } catch (NumberFormatException nfe) {
-                throw new ConfigParseError("Could not pase ifconfig IP address: " + nfe.getLocalizedMessage());
+                throw new ConfigParseError("Could not parse ifconfig IP address: " + nfe.getLocalizedMessage());
             }
 
         }
@@ -726,7 +726,7 @@ public class ConfigParser {
                 if (!authuser.get(1).startsWith(VpnProfile.INLINE_TAG))
                     auth_user_pass_file = authuser.get(1);
                 np.mUsername = null;
-                useEmbbedUserAuth(np, authuser.get(1));
+                useEmbedUserAuth(np, authuser.get(1));
             }
         }
 
@@ -893,7 +893,7 @@ public class ConfigParser {
 
         Vector<String> httpproxyauthhttp = getOption("http-proxy-user-pass", 1, 1);
         if (httpproxyauthhttp != null)
-            useEmbbedHttpAuth(conn, httpproxyauthhttp.get(1));
+            useEmbedHttpAuth(conn, httpproxyauthhttp.get(1));
 
 
         // Parse remote config
@@ -1082,7 +1082,7 @@ public class ConfigParser {
 
     enum linestate {
         initial,
-        readin_single_quote, reading_quoted, reading_unquoted, done
+        reading_single_quote, reading_quoted, reading_unquoted, done
     }
 
     public static class ConfigParseError extends Exception {

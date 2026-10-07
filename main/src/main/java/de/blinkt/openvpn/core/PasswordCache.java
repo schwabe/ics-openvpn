@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 
 public class PasswordCache {
-    public static final int PCKS12ORCERTPASSWORD = 2;
+    public static final int PKCS12ORCERTPASSWORD = 2;
     public static final int AUTHPASSWORD = 3;
     private static PasswordCache mInstance;
     final private UUID mUuid;
@@ -48,7 +48,7 @@ public class PasswordCache {
     public static void setCachedPassword(String uuid, int type, String password) {
         PasswordCache instance = getInstance(UUID.fromString(uuid));
         switch (type) {
-            case PCKS12ORCERTPASSWORD:
+            case PKCS12ORCERTPASSWORD:
                 instance.mKeyOrPkcs12Password = password;
                 break;
             case AUTHPASSWORD:

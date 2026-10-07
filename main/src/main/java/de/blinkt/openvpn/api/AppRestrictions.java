@@ -159,6 +159,7 @@ public class AppRestrictions {
         applyBooleanDefaultPrefsRestriction(restrictions, "restartvpnonboot", defaultPrefs, "restartvpnonboot");
         applyBooleanDefaultPrefsRestriction(restrictions,"preferencryption", defaultPrefs, "preferencryption" );
         applyBooleanDefaultPrefsRestriction(restrictions, "netchangereconnect", defaultPrefs, "netchangereconnect");
+        applyBooleanDefaultPrefsRestriction(restrictions, "ovpn3", defaultPrefs, "ovpn3");
 
         boolean minimalUi = restrictions.getBoolean("minimal_ui", false);
         if (minimalUi && defaultPrefs.getBoolean("showlogwindow", true)){
@@ -208,7 +209,7 @@ public class AppRestrictions {
                 continue;
             }
 
-            /* we always use lower case uuid since Android UUID class will use present
+            /* we always use lowercase uuid since Android UUID class will use present
              * them that way */
             uuid = uuid.toLowerCase(Locale.US);
             if (defaultprofile != null)

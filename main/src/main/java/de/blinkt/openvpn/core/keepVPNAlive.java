@@ -87,7 +87,7 @@ public class keepVPNAlive extends JobService implements VpnStatus.StateListener 
         /* periodic timing */
         /* The current limits are 15 minutes and 5 minutes for flex and periodic timer
          * but we use a minimum of 5 minutes and 2 minutes to avoid problems if there is some
-         * strange Android build that allows lower lmits.
+         * strange Android build that allows lower limits.
          */
         long initervalMillis = Math.max(getMinPeriodMillis(), 5 * 60 * 1000L);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

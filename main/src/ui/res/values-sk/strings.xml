@@ -162,7 +162,7 @@
     <string name="owner_fix">Opraviť vlastníctvo /dev/ton</string>
     <string name="generated_config_summary">Zobrazí vygenerované nastavenia OpenVPN</string>
     <string name="edit_profile_title">Úprava \"%s\"</string>
-    <string name="building_configration">Vytváram konfiguráciu ...</string>
+    <string name="building_configuration">Vytváram konfiguráciu ...</string>
     <string name="netchange_summary">Zapnutím tejto voľby bude vynútené opätovné pripojenie, ak sa zmení stav siete (napr. Z WiFi na mobilnú sieť a späť)</string>
     <string name="netchange">Opätovne pripojiť pri zmene siete</string>
     <string name="netstatus">Stav siete: %s</string>
@@ -211,7 +211,7 @@
     <string name="openvpn_log">OpenVPN Log</string>
     <string name="import_config">Importovať OpenVPN nastavenia</string>
     <string name="battery_consumption_title">Spotreba batérie</string>
-    <string name="baterry_consumption">V testoch sa ako hlavný dôvod vysokej spotreby batérie ukázali keepalive pakety. Väčšina OpenVPN serverov má v konfigurácii niečo ako \'keepalive 10 60\', čo znamená posielanie paketov každých desať sekúnd. &lt;p&gt; Tieto pakety sú malé a neznamenajú veľký prevádzku, ale udržujú mobilnú sieť aktívna a zvyšujú spotrebu energie. (Pozri tiež &lt;ahref=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt; Toto nastavenie sa nedá zmeniť na klientskej strane. Len administrátor OpenVPN môže toto nastavenie zmeniť. &lt;p&gt; Bohužiaľ používanie keepalive hodnôt väčších ako 60 sekúnd spolu s UDP môže spôsobovať problémy s niektorými Naty, ktoré ukončujú po krátkom čase spojenia. Použitie TCP s dlhým keepalive funguje, ale má problém \"TCP cez TCP\" (Pozri &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Prečo je TCP cez TCP zlý nápad&lt;/a&gt;)</string>
+    <string name="battery_consumption">V testoch sa ako hlavný dôvod vysokej spotreby batérie ukázali keepalive pakety. Väčšina OpenVPN serverov má v konfigurácii niečo ako \'keepalive 10 60\', čo znamená posielanie paketov každých desať sekúnd. &lt;p&gt; Tieto pakety sú malé a neznamenajú veľký prevádzku, ale udržujú mobilnú sieť aktívna a zvyšujú spotrebu energie. (Pozri tiež &lt;ahref=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt; Toto nastavenie sa nedá zmeniť na klientskej strane. Len administrátor OpenVPN môže toto nastavenie zmeniť. &lt;p&gt; Bohužiaľ používanie keepalive hodnôt väčších ako 60 sekúnd spolu s UDP môže spôsobovať problémy s niektorými Naty, ktoré ukončujú po krátkom čase spojenia. Použitie TCP s dlhým keepalive funguje, ale má problém \"TCP cez TCP\" (Pozri &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Prečo je TCP cez TCP zlý nápad&lt;/a&gt;)</string>
     <string name="connection_retries">Opakované pripojenie</string>
     <string name="reconnection_settings">Nastavenie obnovenia</string>
     <string name="connectretrymessage">Počet sekúnd medzi pokusmi o pripojenie.</string>
@@ -350,7 +350,7 @@
     <string name="remove_connection_entry">Odstrániť položku pripojenie</string>
     <string name="version_and_later">%s a neskôr</string>
     <string name="tls_cipher_alert_title">Pripojenie zlyhalo SSL23_GET_SERVER_HELLO:sslv3 upozorniť na zlyhanie handshake</string>
-    <string name="tls_cipher_alert">Novšie verzie OpenVPN pre verzie systému Android (0.6.29 / marec 2015) používajú bezpečnejšie predvolené nastavenia povolených šifrovacích balíkov (tls-cipher \"DEFAULT:! EXP:! PSK:! SRP:! KRSA\"). Bohužiaľ, vynechanie menej bezpečných šifrovacích súborov a export šifrovacích súborov, najmä vynechanie šifrovacích súborov, ktoré nepodporujú Perfect Forward Secrecy (Diffie-Hellman), spôsobuje určité problémy. Toto je zvyčajne spôsobené dobre mieneným, ale zle vykonaným pokusom o posilnenie bezpečnosti TLS nastavením tls-šifry na serveri alebo v niektorých zabudovaných OS s odstráneným SSL (napr. MikroTik).\nAk chcete vyriešiť tento problém, nastavte nastavenia tls-šifry na serveri na predvolené predvolené hodnoty, napríklad tls-šifra \"DEFAULT:! EXP:! PSK:! SRP:! KRSA\". Na vyriešenie problému na klientovi pridajte na klientovi Android vlastnú voľbu tls-cipher DEFAULT.</string>
+    <string name="tls_cipher_alert">Novšie verzie OpenVPN pre verzie systému Android (0.6.29 / marec 2015) používajú bezpečnejšie predvolené nastavenia povolených šifrovacích balíkov (tls-cipher \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\"). Bohužiaľ, vynechanie menej bezpečných šifrovacích súborov a export šifrovacích súborov, najmä vynechanie šifrovacích súborov, ktoré nepodporujú Perfect Forward Secrecy (Diffie-Hellman), spôsobuje určité problémy. Toto je zvyčajne spôsobené dobre mieneným, ale zle vykonaným pokusom o posilnenie bezpečnosti TLS nastavením tls-šifry na serveri alebo v niektorých zabudovaných OS s odstráneným SSL (napr. MikroTik).\nAk chcete vyriešiť tento problém, nastavte nastavenia tls-šifry na serveri na predvolené predvolené hodnoty, napríklad tls-šifra \"DEFAULT:!EXP:!PSK:!SRP:!kRSA\". Na vyriešenie problému na klientovi pridajte na klientovi Android vlastnú voľbu tls-cipher DEFAULT.</string>
     <string name="message_no_user_edit">Tento profil bol pridaný z externej aplikácie (%s) a bol označený ako užívateľsky nezmeniteľný.</string>
     <string name="crl_file">Zoznam zrušených certifikátov</string>
     <string name="service_restarted">Reštartovanie služby OpenVPN (aplikácia pravdepodobne havarovala, alebo bola ukončená kvôli nedostatku pamäte)</string>
@@ -421,7 +421,7 @@
     <string name="osslspeedtest">Rýchlostný krypto test OpnSSL</string>
     <string name="openssl_error">OpenSSL vrátilo chybu</string>
     <string name="running_test">Test beží...</string>
-    <string name="test_algoirhtms">Testuj vybrané algoritmy</string>
+    <string name="test_algorithms">Testuj vybrané algoritmy</string>
     <string name="all_app_prompt">Externá aplikácia sa pokúša ovládať %s. Aplikáciu požadujúcu prístup nie je možné určiť. Povolením tejto aplikácie získate prístup k VŠETKÝM aplikáciám.</string>
     <string name="openvpn3_nostatickeys">Implementácia OpenVPN 3 C ++ nepodporuje statické kľúče. V rámci všeobecných nastavení zmeňte na OpenVPN 2.x.</string>
     <string name="openvpn3_pkcs12">Priame použitie súborov PKCS12 s implementáciou OpenVPN 3 C ++ nie je podporované. Importujte súbory pkcs12 do úložiska kľúčov Android alebo ich zmeňte na OpenVPN 2.x v rámci všeobecných nastavení.</string>
@@ -431,7 +431,7 @@
     <string name="openvpn3_socksproxy">Implementácia OpenVPN 3 C ++ nepodporuje pripojenie cez proxy Socks</string>
     <string name="no_orbotfound">Aplikácia Orbot sa nedá nájsť. Nainštalujte si Orbot alebo použite manuálnu integráciu Socks v5.</string>
     <string name="faq_remote_api_title">Vzdialené API</string>
-    <string name="faq_remote_api">OpenVPN pre Android podporuje dve vzdialené API, sofistikované API využívajúce AIDL (remoteEXample v úložisku git) a jednoduché pomocou Intents. &lt;p&gt;Príklady použitia škrupiny adb a zámerov. Nahraďte profilovým menom profilové meno&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn / .api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn / .api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN pre Android podporuje dve vzdialené API, sofistikované API využívajúce AIDL (remoteExample v úložisku git) a jednoduché pomocou Intents. &lt;p&gt;Príklady použitia škrupiny adb a zámerov. Nahraďte profilovým menom profilové meno&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn / .api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn / .api.ConnectVPN</string>
     <string name="enableproxyauth">Zapni overenie s proxy</string>
     <string name="error_orbot_and_proxy_options">Nie je možné použiť dodatočný príkaz http-proxy-option a integráciu Orbotu súčasneO</string>
     <string name="info_from_server">Informácie zo servera: \'%s\'</string>

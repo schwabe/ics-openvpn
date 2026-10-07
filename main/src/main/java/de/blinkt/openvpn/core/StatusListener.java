@@ -92,7 +92,7 @@ public class StatusListener implements VpnStatus.LogListener, VpnStatus.ProfileN
                     ParcelFileDescriptor pfd = serviceStatus.registerStatusCallback(mCallback);
                     DataInputStream fd = new DataInputStream(new ParcelFileDescriptor.AutoCloseInputStream(pfd));
 
-                    /* notify the backend :openvpn process of chagnes in profiles */
+                    /* notify the backend :openvpn process of changes in profiles */
                     VpnStatus.addProfileStateListener(StatusListener.this);
 
                     short len = fd.readShort();

@@ -36,8 +36,8 @@ android {
         minSdk = 23
         targetSdk = 37
         //targetSdkPreview = "UpsideDownCake"
-        versionCode = 220
-        versionName = "0.7.66"
+        versionCode = 224
+        versionName = "0.7.68"
         externalNativeBuild {
             cmake {
                 //arguments+= "-DCMAKE_VERBOSE_MAKEFILE=1"
@@ -139,8 +139,15 @@ android {
                 productFlavors["ovpn23"].signingConfig = signingConfigs.getByName("release")
                 productFlavors["ovpn2"].signingConfig = signingConfigs.getByName("releaseOvpn2")
             }
+
             optimization {
-                enable = true
+                enable = false
+            }
+        }
+        getByName("debug")
+        {
+            optimization {
+                enable = false
             }
         }
     }
@@ -152,9 +159,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
     }
 
+    /* Disable due to https://issuetracker.google.com/issues/402800800 */
     splits {
         abi {
-            isEnable = true
+            isEnable = false
             reset()
             include("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
             isUniversalApk = true

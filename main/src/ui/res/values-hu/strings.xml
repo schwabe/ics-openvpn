@@ -123,7 +123,7 @@
     <string name="no_vpn_support_image">Az image-ed nem támogatja a VPNService API-t, elnézést :(</string>
     <string name="encryption">Titkosítás</string>
     <string name="cipher_dialog_title">Adja meg a titkosítási módszert</string>
-    <string name="chipher_dialog_message">Adja meg az OpenVPN által használt adattitkosítási titkosítási algoritmusokat, a következővel elválasztva: (--data-ciphers). Hagyja üresen az alapértelmezett AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305 használatához.</string>
+    <string name="cipher_dialog_message">Adja meg az OpenVPN által használt adattitkosítási titkosítási algoritmusokat, a következővel elválasztva: (--data-ciphers). Hagyja üresen az alapértelmezett AES-256-GCM:AES-128-GCM:CHACHA20-POLY1305 használatához.</string>
     <string name="auth_dialog_message">Adja meg az OpenVPN által használt authentication digest-et. Hagyja üresen az alapértelmezett digest-hez.</string>
     <string name="settings_auth">Hitelesítés/Titkosítás</string>
     <string name="file_explorer_tab">Fájlkezelő</string>
@@ -165,7 +165,7 @@
     <string name="owner_fix">/dev/tun tulajdonos javítása</string>
     <string name="generated_config_summary">Generált OpenVPN konfigurációs fájl megmutatása</string>
     <string name="edit_profile_title">\"%s\" szerkesztése</string>
-    <string name="building_configration">Konfiguráció felépítése&#8230;</string>
+    <string name="building_configuration">Konfiguráció felépítése&#8230;</string>
     <string name="netchange_summary">Ennek az opciónak a bekapcsolása erőlteti az újracsatlakozást ha a hálózati állapot megváltozik (pl.: WiFi-re/ről mobil-ra/ról)</string>
     <string name="netchange">Újracsatlakozás hálózatváltáskor</string>
     <string name="netstatus">Hálózati állapot: %s</string>
@@ -214,7 +214,7 @@
     <string name="openvpn_log">OpenVPN Napló</string>
     <string name="import_config">OpenVPN konfiguráció importálása</string>
     <string name="battery_consumption_title">Akkumulátor használat</string>
-    <string name="baterry_consumption">Személyes tesztjeim alapján a magas akkuhasználatot az OpenVPN keepalive csomagjai okozzák. A legtöbb OpenVPN szerver tartalmaz egy konfigurációs direktívát, mint \'keepalive 10 60\' ami a kliens és a szerver között minden 10 másodpercben keepalive csomagok cseréjét eredményezi. &lt;p&gt; Ezek ugyan kis csomagok és nem okoznak nagy adatforgalmat, de lefoglalják a mobil rádiós részét és ezáltal növelik az energia fogyasztást. (Lásd még &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Ez a keepalive küldés nem változtatható a kliensben. Csak az OpenVPN rendszer adminisztrátor tudja megváltoztatni ezt a beállítást. &lt;p&gt; Sajnos 60 másodpercnél nagyobb keepalive használata UDP kapcsolatnál néhány NAT átjárónál a kapcsolat eldobását okozza inaktivitási időtúllépés miatt. Hosszú keepalive timeout működőképes lehet TCP kapcsolat esetén, de TCP csomagok TCP kapcsolatban tunnel-ezése extrém rossz minőségű kapcsolatot eredményezhet magas csomagvesztésű hálózatokon. (Lásd &lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
+    <string name="battery_consumption">Személyes tesztjeim alapján a magas akkuhasználatot az OpenVPN keepalive csomagjai okozzák. A legtöbb OpenVPN szerver tartalmaz egy konfigurációs direktívát, mint \'keepalive 10 60\' ami a kliens és a szerver között minden 10 másodpercben keepalive csomagok cseréjét eredményezi. &lt;p&gt; Ezek ugyan kis csomagok és nem okoznak nagy adatforgalmat, de lefoglalják a mobil rádiós részét és ezáltal növelik az energia fogyasztást. (Lásd még &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;) &lt;p&gt; Ez a keepalive küldés nem változtatható a kliensben. Csak az OpenVPN rendszer adminisztrátor tudja megváltoztatni ezt a beállítást. &lt;p&gt; Sajnos 60 másodpercnél nagyobb keepalive használata UDP kapcsolatnál néhány NAT átjárónál a kapcsolat eldobását okozza inaktivitási időtúllépés miatt. Hosszú keepalive timeout működőképes lehet TCP kapcsolat esetén, de TCP csomagok TCP kapcsolatban tunnel-ezése extrém rossz minőségű kapcsolatot eredményezhet magas csomagvesztésű hálózatokon. (Lásd &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
     <string name="connection_retries">Csatlakozás újrapróbálkozások</string>
     <string name="reconnection_settings">Újracsatlakozás beállítások</string>
     <string name="connectretrymessage">Csatlakozási próbálkozások közötti várakozási idő másodpercben.</string>
@@ -222,7 +222,7 @@
     <string name="minidump_generated">Az OpenVPN váratlanul összeomlott. Kérem, gondolja meg a főmenüben levő Minidump elküldése opció használatát</string>
     <string name="send_minidump">Minidump elküldése a fejlesztőnek</string>
     <string name="send_minidump_summary">Hibakeresési információkat küld a fejlesztőnek a legutóbbi összeomlásról</string>
-    <string name="notifcation_title">OpenVPN - %s</string>
+    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Csatlakozás</string>
@@ -242,7 +242,7 @@
     <string name="state_nonetwork">Várakozás használható hálózatra</string>
     <string name="state_waitorbot">Várakozás az Orbot indítására</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notifcation_title_notconnect">Nincs kapcsolat</string>
+    <string name="notification_title_notconnect">Nincs kapcsolat</string>
     <string name="start_vpn_title">Csatlakozás a %s VPN-hez</string>
     <string name="start_vpn_ticker">Csatlakozás a %s VPN-hez</string>
     <string name="jelly_keystore_alphanumeric_bug">Néhány Android 4.1-es verzió alatt problémába ütközhet ha a hitelesítési tanúsítvány nevében nem csak alfanumerikus karakterek szerepelnek (mint pl szóköz, alulvonás vagy kötőjel). Speciális karakterek nélkül próbálja újra importálni</string>
@@ -347,7 +347,7 @@
     <string name="version_upto">%s és korábbi</string>
     <string name="copy_of_profile">%s másolata</string>
     <string name="ab_not_route_to_vpn_title">Útvonal a konfigurált IP címhez</string>
-    <string name="custom_connection_options_warng">Határozzon meg egyedi kapcsolat specifikus opciókat. Elővigyázatosan használja</string>
+    <string name="custom_connection_options_warning">Határozzon meg egyedi kapcsolat specifikus opciókat. Elővigyázatosan használja</string>
     <string name="custom_connection_options">Egyéni beállítások</string>
     <string name="remove_connection_entry">Kapcsolat bejegyzés eltávolítása</string>
     <string name="version_and_later">%s і больш познія</string>
@@ -431,7 +431,7 @@
     <string name="osslspeedtest">OpenSSL Titkosítás Sebesség teszt</string>
     <string name="openssl_error">Az OpenSSL hibával tért vissza</string>
     <string name="running_test">A teszt fut&#8230;</string>
-    <string name="test_algoirhtms">Kijelölt algoritmusok tesztelése</string>
+    <string name="test_algorithms">Kijelölt algoritmusok tesztelése</string>
     <string name="all_app_prompt">Egy külső alkalmazás megpróbálja vezérelni a(z) %s-t. Az alkalmazást nem lehet felismerni, a hozzáférés megadása
         MINDEN alkalmazás számára elérhetőséget biztosít.
     </string>
@@ -447,7 +447,7 @@
     <string name="openvpn3_socksproxy">Az OpenVPN 3 C ++ implementációja nem támogatja a Socks proxyn keresztül történő csatlakozást</string>
     <string name="no_orbotfound">Az Orbot alkalmazás nem található. Kérjük, telepítse az Orbot-ot, vagy használja a kézi Socks v5 integrációt.</string>
     <string name="faq_remote_api_title">Távoli API</string>
-    <string name="faq_remote_api">Az OpenVPN Androidhoz két távoli API-t támogat, egy kifinomult AIDL-t használó API-t (remoteEXample a git repository-ban), és egy egyszerűt az Intents használatával. &lt;p&gt;A példák az adb shell-t és az Intents-t használják. Cserélje le a profilnevet a saját profilnevével&lt;p&gt;&lt;p&gt; adb shell am start -activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start -activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">Az OpenVPN Androidhoz két távoli API-t támogat, egy kifinomult AIDL-t használó API-t (remoteExample a git repository-ban), és egy egyszerűt az Intents használatával. &lt;p&gt;A példák az adb shell-t és az Intents-t használják. Cserélje le a profilnevet a saját profilnevével&lt;p&gt;&lt;p&gt; adb shell am start -activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start -activity -a android.intent.action.MAIN - e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Proxy Hitelesítés Engedélyezése</string>
     <string name="error_orbot_and_proxy_options">Nem használható egyidejűleg egy extra http-proxy-option utasítás és az Orbot integráció</string>
     <string name="info_from_server">Információ a szervertől: \'%s\'</string>

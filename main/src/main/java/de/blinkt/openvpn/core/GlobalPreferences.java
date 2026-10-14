@@ -18,6 +18,7 @@ public class GlobalPreferences {
     {
         this.forceConnected = forceConnected;
         this.initialImport = initialImport;
+        this.minimalUi = minimalUi;
     }
 
     public static void setInstance(boolean minimalUi, boolean forceConnected, boolean initialImport)

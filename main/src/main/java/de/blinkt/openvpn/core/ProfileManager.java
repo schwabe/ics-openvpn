@@ -318,7 +318,13 @@ public class ProfileManager {
             loadVpnEntry(context, vpnentry);
         }
 
-        recoverProfiles(context);
+        if (!listpref.getBoolean("didrecover", false))
+        {
+            recoverProfiles(context);
+            Editor listprefedit = listpref.edit();
+            listprefedit.putBoolean("didrecover", true);
+            listprefedit.apply();
+        }
     }
 
     private void recoverProfiles(Context context) {
@@ -368,7 +374,7 @@ public class ProfileManager {
             }
         } catch (IOException | ClassNotFoundException | GeneralSecurityException e) {
             if (!vpnentry.equals(TEMPORARY_PROFILE_FILENAME))
-                VpnStatus.logException("Loading VPN List", e);
+                VpnStatus.logException("Loading VPN List:" + vpnentry, e);
         } finally {
             if (vpnfile != null) {
                 try {

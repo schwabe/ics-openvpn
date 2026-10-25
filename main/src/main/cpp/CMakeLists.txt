@@ -196,6 +196,7 @@ set(openvpn_srcs
         src/openvpn/push_util.c
         src/openvpn/reflect_filter.c
         src/openvpn/reliable.c
+        src/openvpn/resolve.c
         src/openvpn/route.c
         src/openvpn/run_command.c
         src/openvpn/schedule.c

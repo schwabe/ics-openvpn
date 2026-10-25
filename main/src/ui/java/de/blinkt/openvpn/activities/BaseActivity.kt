@@ -21,7 +21,6 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import de.blinkt.openvpn.R
 import de.blinkt.openvpn.core.GlobalPreferences
-import de.blinkt.openvpn.core.LocaleHelper
 
 abstract class BaseActivity : AppCompatActivity() {
     val isAndroidTV: Boolean
@@ -79,12 +78,8 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(LocaleHelper.updateResources(base))
-    }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        LocaleHelper.onConfigurationChange(this)
     }
 }

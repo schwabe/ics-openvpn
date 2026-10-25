@@ -45,6 +45,10 @@ android {
         }
     }
 
+    androidResources {
+        generateLocaleConfig = true
+    }
+
     externalNativeBuild {
         cmake {
             path = File("${projectDir}/src/main/cpp/CMakeLists.txt")

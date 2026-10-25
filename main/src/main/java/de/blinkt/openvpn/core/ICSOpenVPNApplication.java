@@ -38,7 +38,6 @@ public class ICSOpenVPNApplication extends Application {
         if("robolectric".equals(Build.FINGERPRINT))
             return;
 
-        LocaleHelper.setDesiredLocale(this);
         super.onCreate();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -60,11 +59,6 @@ public class ICSOpenVPNApplication extends Application {
             pedit.putLong("firstStart", System.currentTimeMillis());
             pedit.apply();
         }
-    }
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LocaleHelper.updateResources(base));
     }
 
     private void enableStrictModes() {
@@ -94,7 +88,6 @@ public class ICSOpenVPNApplication extends Application {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        LocaleHelper.onConfigurationChange(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)

@@ -158,11 +158,8 @@
     <string name="tls_authentication">Праверка сапраўднасці TLS/Шыфраванне</string>
     <string name="generated_config">Згенераваная канфігурацыя</string>
     <string name="generalsettings">Налады</string>
-    <string name="owner_fix_summary">Паспрабуйце прызначыць уласніка ў сістэме для dev/tun. Некаторым прашыўкам CM9 гэта неабходна для карэктнай працы VPNService API. Патрабуюцца правы адміністратара.</string>
-    <string name="owner_fix">Выправіць уласніка для /dev/tun</string>
     <string name="generated_config_summary">Паказаць згенераваны файл канфігурацыі OpenVPN</string>
     <string name="edit_profile_title">Змяненне \"%s\"</string>
-    <string name="building_configuration">Пабудова канфігурацыі&#8230;</string>
     <string name="netchange_summary">Уключэнне гэтага параметра прымусова перападлучаць сетку пры змяненні яе стану (напрыклад, прылада пераходзіць з WiFi у 3G і наадварот)</string>
     <string name="netchange">Перападлучыцца пры змяненні сеткі</string>
     <string name="netstatus">Статус сеткі: %s</string>
@@ -186,8 +183,6 @@
     <string name="ip_add_error">Не атрымалася сканфігураваць адрас IP \"%1$s\", адхілена сістэмай: %2$s</string>
     <string name="faq_howto">&lt;p&gt;Скарыстайцеся гатовай канфігурацыяй (якая пратэставаная на вашым камп\'ютары, якую вы атрымалі ад вашага правайдара або арганізацыі)&lt;/p&gt;&lt;p&gt;Калі гэта асобны файл без дадатковых файлаў pem/pkcs12, то вы можаце адправіць яго сабе на электронную пошту і адкрыць далучэнне. Калі гэта некалькі файлаў, то іх можна перамясціць на картку памяці.&lt;/p&gt;&lt;p&gt;Адкрыйце файл *.conf, які далучаны да ліста або скарыстайцеся спісам меню праграмы для імпарту файлаў з канфігурацыямі&lt;/p&gt;&lt;p&gt;Калі некаторых файлаў будзе не хапаць, то вам неабходна будзе перамясціць іх на картку памяці.&lt;/p&gt;&lt;p&gt;Націсніце кнопку \"Захаваць\" для дадання імпартаванай канфігурацыі ў спіс VPN&lt;/p&gt;&lt;p&gt;Падлучыцеся праз VPN націснуўшы на яго назву ў спісе&lt;/p&gt;&lt;p&gt;Калі падчас усталявання злучэння ўзнікла памылка, паспрабуйце разабрацца чаму яна адбылася і пастарайцеся выправіць яе&lt;/p&gt; </string>
     <string name="faq_howto_title">Хуткі пачатак</string>
-    <string name="setting_loadtun_summary">Паспрабуйце запампаваць модуль ядра tun.ko перад тым, як паспрабаваць злучыцца. Вы павінны мець правы адміністратара.</string>
-    <string name="setting_loadtun">Запампаваць модуль TUN</string>
     <string name="importpkcs12fromconfig">Імпарт PKCS12 з канфігурацыі ў сховішча ключоў Android</string>
     <string name="getproxy_error">Памылка атрымання наладаў проксі: %s</string>
     <string name="using_proxy">Выкарыстоўваецца проксі-сервер %1$s %2$s</string>
@@ -206,12 +201,10 @@
     <string name="faq_hint">Не забудзьцеся зазірнуць у раздзел \"Пытанні і адказы\". Там ёсць кароткае кіраўніцтва карыстальніка.</string>
     <string name="faq_routing_title">Канфігурацыя маршрутызацыі/інтэрфейсу</string>
     <string name="faq_routing">Канфігурацыя маршрутызацыі робіцца з дапамогай VPNService API, а не праз традыцыйныя каманды ifconfig/route. Гэта становіцца вынікам стварэння іншай канфігурацыі, якая адрозніваецца ад канфігурацыі, што выкарыстоўваюцца на іншых АС.\nКанфігурацыя тунэлю VPN складаецца з адрасоў IP і сетак, якія павінны маршрутызавацца праз гэты інтэрфейс. Ніякіх адмысловых партнёрскіх маршрутаў або адрасоў шлюза не патрабуецца. Таксама не патрабуюцца маршруты для аб\'яднання з серверам VPN (напрыклад, дабаўленне пры выкарыстанні redirect-gateway). Таму, праграма будзе ігнараваць гэтыя налады падчас імпарту канфігурацыі. Праграма з дапамогай VPNService API гарантуе, што злучэнне да сервера не будзе маршрутызавацца праз тунэль VPN.\nVPNService API не дазваляе азначаць сеткі, якія не маршрутызуюцца праз VPN. Праграма спрабуе вызначыць сетку, якая не павінна быць накіраваная праз тунэль (напрыклад, маршрут x.x.x.x y.y.y.y net_gateway) і вылічае спіс маршрутаў, якія не належыць гэтаму маршруту, каб эмуляваць паводзіны іншых платформаў. Акно журнала паказвае журнал VPNService падчас усталявання злучэння.\nТое, што засталося па-за кадрам: у Andorid 4.4+ выкарыстоўваецца палітыка маршрутызацыі. Выкарыстанне route/ifconfig не будзе паказваць усталяваныя маршруты. Замест гэтага выкарыстоўвайце правілы ip, iptables -t mangle -L</string>
-    <string name="persisttun_summary">Не вяртацца да звычайнага злучэння, пакуль OpenVPN перападлучаецца.</string>
     <string name="persistent_tun_title">Пастаянны TUN</string>
     <string name="openvpn_log">Журнал OpenVPN</string>
     <string name="import_config">Імпарт канфігурацыі OpenVPN</string>
     <string name="battery_consumption_title">Спажыванне акумулятара</string>
-    <string name="battery_consumption">У маіх тэстах галоўнай прычынай высокага спажывання акумулятара праграмай з\'яўляліся пакеты keepalive. Большасць сервераў OpenVPN сканфігуравана пад дырэктыву \'keepalive 10 60\', якая абавязвае абменьвацца пакетамі keepalive кожныя дзесяць секунд. &lt;p&gt; Пакеты маюць маленькі памер і не выдаткоўваюць шмат трафіку, аднак яны ўвесь час прымушаюць радыёмодуль прылады заставацца ў актыўным стане і павялічваюць разрад батарэі (глядзіце таксама, &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt;. Налады абмену пакетаў keepalive нельга змяніць на кліенце. Толькі адміністратар сервера OpenVPN можа зрабіць гэта. &lt;p&gt; На жаль, калі зрабіць час абмену пакетамі keepalive больш за 60 секунд з UDP, то з\'явяцца праблемы з некаторымі шлюзамі NAT, якія разрываюць злучэнне не актыўнае больш за 60 секунд. Выкарыстанне TCP з доўгімі затрымкамі будзе працаваць, але прадукцыйнасць тунэліравання TCP праз TCP у сетках з высокай верагоднасцю страты пакетаў будзе вельмі нізкая (глядзіце, &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;)</string>
     <string name="connection_retries">Спроб падлучэння</string>
     <string name="reconnection_settings">Налады перападлучэння</string>
     <string name="connectretrymessage">Прамежак чакання ў секундах паміж спробамі злучэння.</string>
@@ -219,7 +212,6 @@
     <string name="minidump_generated">OpenVPN нечакана завяршыла сваю працу. Мы будзем вельмі ўдзячныя, калі вы скарыстаецеся параметрам \"Адправіць мінідамп распрацоўшчыку\" ў галоўным меню праграмы</string>
     <string name="send_minidump">Адправіць мінідамп распрацоўшчыку</string>
     <string name="send_minidump_summary">Адпраўляе адладачную інфармацыю распрацоўшчыку пра апошняе аварыйнае завяршэнне праграмы</string>
-    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">Падлучэнне</string>
@@ -239,7 +231,6 @@
     <string name="state_nonetwork">Чаканне выкарыстання сеткі</string>
     <string name="state_waitorbot">Чаканне запуску Orbot</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notification_title_notconnect">Не злучаны</string>
     <string name="start_vpn_title">Падлучэнне да VPN %s</string>
     <string name="start_vpn_ticker">Падлучэнне да VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">Некаторыя версіі Android 4.1 маюць праблемы, калі сертыфікат са сховішча ключоў змяшчае сімвалы, якія не належаць да дыяпазону літар і лічбаў (напрыклад, прабелы, знак падкрэслівання або працяжнік). Паспрабуйце выдаліць спецыяльныя сімвалы з сертыфіката і імпартаваць яго яшчэ раз</string>
@@ -257,7 +248,6 @@
     <string name="rdn">RDN (агульная назва)</string>
     <string name="rdn_prefix">Прэфікс RDN</string>
     <string name="tls_remote_deprecated">tls-remote (САСТАРЭЛЫ)</string>
-    <string name="help_translate">Вы можаце дапамагчы з перакладам праграмы на беларускую мову, наведаўшы https://crowdin.com/project/ics-openvpn/be#</string>
     <string name="prompt">%1$s спрабуе кантраляваць %2$s</string>
     <string name="remote_warning">Калі вы працягніце, то праграма атрымае поўны кантроль над  у тым ліку, магчымасць перахопу ўсяго сеткавага трафіку.<b>НЕ ДАВАЙЦЕ дазвол, калі вы не давяраеце гэтай праграме.</b> У адваротным выпадку вы рызыкуеце, што ўсе вашы даныя могуць быць перахопленыя злачынцамі</string>
     <string name="remote_trust">Я давяраю гэтай праграме.</string>
@@ -344,7 +334,6 @@
     <string name="version_upto">%s і больш раннія</string>
     <string name="copy_of_profile">Копія %s</string>
     <string name="ab_not_route_to_vpn_title">Маршрут для ўсталяванага адраса IP</string>
-    <string name="custom_connection_options_warning">Азначце ўласныя параметры злучэння. Карыстайцеся з асцярожнасцю</string>
     <string name="custom_connection_options">Уласныя параметры</string>
     <string name="remove_connection_entry">Выдаліць запіс падлучэння</string>
     <string name="version_and_later">%s і больш познія</string>
@@ -375,7 +364,6 @@
     <string name="reread_log">Паўторна прачытаць з кэш-файла журнала. Колькасць элементаў: %d</string>
     <string name="samsung_broken">Не гледзячы на тое, што прылады кампаніі Samsung на аперацыйнай сістэме Android маюць вельмі высокія рэйтынгі продажаў, прашыўкі ад гэтага вытворцы з\'яўляюцца аднымі з самых праблемных па частцы хібаў у праграмным кодзе. Гэта тычыцца не толькі хібаў у працы з VPN на гэтых прыладах большасць з якіх, можна паспяхова вырашыць. Ніжэй прыводзіцца апісанне некаторых з гэтых хібаў. \n\n DNS не будзе працаваць, калі сервер DNS знаходзіцца ў дыяпазоне сеткі VPN. \n\n На большасці прыладаў Samsung з Android 5.x магчымасць дазволеных/забароненых праграм не працуе. \nПа некаторай інфармацыі на прыладах Samsung з Android 6.x злучэнне з VPN можа не працаваць у рэжыме актыўнай эканоміі энергіі.</string>
     <string name="samsung_broken_title">Тэлефоны Samsung</string>
-    <string name="novpn_selected">Профіль VPN не выбраны.</string>
     <string name="defaultvpn">VPN па змаўчанні</string>
     <string name="defaultvpnsummary">VPN, які будзе выкарыстоўвацца па змаўчанні ў тых месцах, калі гэта неабходна. У наступных сітуацыях: загрузка сістэмы, у рэжыме \"Пастаянны VPN\" і пераключальніка ў хуткіх наладах.</string>
     <string name="vpnselected">Зараз выбраны VPN: \'%s\'</string>
@@ -420,7 +408,6 @@
     <string name="osslspeedtest">Тэст хуткасці OpenSSL Crypto</string>
     <string name="openssl_error">OpenSSL вярнуў памылку</string>
     <string name="running_test">Тэставанне&#8230;</string>
-    <string name="test_algorithms">Тэставанне выбраных алгарытмаў</string>
     <string name="all_app_prompt">Знешняя праграма спрабуе кантраляваць %s. Праграма, якая запытала доступ не вызначана. УСЕ астатнія праграмы атрымаюць доступ, калі вы ўхваліце доступ гэтай праграме.</string>
     <string name="openvpn3_nostatickeys">Рэалізацыя OpenVPN 3 на C++ не падтрымлівае статычныя ключы. Калі ласка, змяніце на OpenVPN 2.x у агульных наладах.</string>
     <string name="openvpn3_pkcs12">Выкарыстанне файлаў PKCS12 напрамую з дапамогай рэалізацыі OpenVPN 3 на С++ не падтрымліваецца. Імпартуйце файлы PKCS12 у сховішча ключоў Android або змяніце на OpenVPN 2.x у агульных наладах.</string>
@@ -430,7 +417,7 @@
     <string name="openvpn3_socksproxy">Рэалізацыя OpenVPN 3 на C++ не падтрымлівае падлучэнне праз проксі Socks</string>
     <string name="no_orbotfound">Праграма Orbot не знойдзеная. Калі ласка, усталюйце яе ўручную або зрабіце інтэграцыю Socks v5.</string>
     <string name="faq_remote_api_title">Аддалены API</string>
-    <string name="faq_remote_api"> падтрымлівае два аддаленых API: складаны, які выкарыстоўвае AIDL (remoteExample у рэпазіторыі git) і просты, які выкарыстоўвае Intents. &lt;p&gt;Прыклады выкарыстання абалонкі adb і intents. Замяніце назву профілю на сваю ўласную&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api"> падтрымлівае два аддаленых API: складаны, які выкарыстоўвае AIDL (remoteEXample у рэпазіторыі git) і просты, які выкарыстоўвае Intents. &lt;p&gt;Прыклады выкарыстання абалонкі adb і intents. Замяніце назву профілю на сваю ўласную&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">Уключыць праверку сапраўднасці проксі</string>
     <string name="error_orbot_and_proxy_options">Дадатковы аператар http-proxy-option і інтэграцыю Orbot нельга выкарыстоўваць адначасова</string>
     <string name="info_from_server">Інфармацыя з сервера: \'%s\'</string>

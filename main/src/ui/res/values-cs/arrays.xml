@@ -11,10 +11,10 @@
         <item>Android Certifikát</item>
         <item>Jméno/Heslo</item>
         <item>Statické klíče</item>
-        <item>Jméno/Heslo + Certifikát</item>
-        <item>Jméno/Heslo + PKCS12 </item>
-        <item>Jméno/Heslo + Android</item>
-        <item>Externí zprostředkovatel autentizace</item>
+        <item>User/PW + Certificates</item>
+        <item>User/PW + PKCS12 </item>
+        <item>User/PW + Android</item>
+        <item>External Auth Provider</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">tls-auth - --direction 0</item>
@@ -34,5 +34,18 @@
         <item>Odpojit, zapomenout heslo</item>
         <item>Odpojit, zachovat heslo</item>
         <item>Ignorovat, zkusit znovu</item>
+        <item>Retry, interactive (not supported)</item>
+    </string-array>
+    <string-array name="compat_mode">
+        <item>Moderní výchozí hodnoty</item>
+        <item>OpenVPN 2.5.x peers</item>
+        <item>OpenVPN 2.4.x peers</item>
+        <item>OpenVPN 2.3.x and older peers</item>
+    </string-array>
+    <string-array name="tls_profile_entries">
+        <item>insecure (not recommend, allows insecure crypto)</item>
+        <item>legacy (default)</item>
+        <item>preferováno (doporučeno, ale omezená kompatibilita)</item>
+        <item>Suite B (pouze eliptické křivky schválené NIST)</item>
     </string-array>
 </resources>

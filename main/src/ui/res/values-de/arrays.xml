@@ -11,17 +11,17 @@
         <item>Android-Zertifikatsspeicher</item>
         <item>Benutzername/Passwort</item>
         <item>Statische Schlüssel</item>
-        <item>Nutzer/PW + Zertifikate</item>
-        <item>Nutzer/PW + PKCS12 </item>
-        <item>Nutzer/PW + Android</item>
-        <item>Externer Authentifizierungsanbieter</item>
+        <item>Username/Password + Zertifikate</item>
+        <item>Benutzername/Passwort + PKCS12 </item>
+        <item>Benutzername/Passwort + Android</item>
+        <item>External Auth Provider</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">tls-auth - --direction 0</item>
         <item translatable="false">tls-auth - --direction 1</item>
         <item>tls-auth --direction nicht spezifiziert</item>
         <item>Verschlüsselung (--tls-crypt)</item>
-        <item>TLS Crypt V2</item>
+        <item>tls-crypt v2</item>
     </string-array>
     <string-array name="crm_entries">
         <item>Keine erneuter Verbindungsversuch</item>
@@ -34,6 +34,7 @@
         <item>Trennen, Passwort vergessen</item>
         <item>Trennen, Passwort merken</item>
         <item>Fehler Ignorieren, erneut versuchen</item>
+        <item>Retry, interactive (not unterstützt)</item>
     </string-array>
     <string-array name="compat_mode">
         <item>Moderne Voreinstellungen</item>

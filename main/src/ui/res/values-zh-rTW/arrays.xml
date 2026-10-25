@@ -11,10 +11,10 @@
         <item>Android 憑證</item>
         <item>使用者名稱/密碼</item>
         <item>靜態金鑰（Static Keys）</item>
-        <item>使用者名稱/密碼 + 憑證</item>
-        <item>使用者名稱/密碼 + PKCS12 </item>
-        <item>用戶名稱/密碼 + Android</item>
-        <item>外部認證提供者</item>
+        <item>User/PW + Certificates</item>
+        <item>User/PW + PKCS12 </item>
+        <item>User/PW + Android</item>
+        <item>External Auth Provider</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">tls-auth - --direction 0</item>
@@ -27,17 +27,6 @@
         <item>中斷連接，不記住密碼</item>
         <item>中斷連接，記住密碼</item>
         <item>忽略，然後重試</item>
-    </string-array>
-    <string-array name="compat_mode">
-        <item>現代默認值</item>
-        <item>OpenVPN 2.5.x peers</item>
-        <item>OpenVPN 2.4.x 對等體</item>
-        <item>OpenVPN 2.3.x and older peers</item>
-    </string-array>
-    <string-array name="tls_profile_entries">
-        <item>不安全（不推薦，允許不安全的加密）</item>
-        <item>legacy (default)</item>
-        <item>preferred (recommended but limited compabbility)</item>
-        <item>Suite B（僅 NIST 批准的橢圓曲線）</item>
+        <item>Retry, interactive (not supported)</item>
     </string-array>
 </resources>

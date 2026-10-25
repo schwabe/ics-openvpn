@@ -32,7 +32,6 @@
     <string name="ipv4_address">IPv4アドレス</string>
     <string name="ipv6_address">IPv6アドレス</string>
     <string name="custom_option_warning">OpenVPNのカスタムオプションを入力します。利用には細心の注意が必要です。設定画面ではTUNモジュールの多くの設定がサポートされていません。もしほかに重要と思う設定があれば作者に連絡してください。</string>
-    <string name="auth_username">ユーザ名(認証なしの場合は空欄)</string>
     <string name="auth_pwquery">パスワード</string>
     <string name="static_keys_info">TLS認証鍵の設定は、静的キーとして使用されます。</string>
     <string name="configure_the_vpn">VPNの設定</string>
@@ -123,7 +122,6 @@
     <string name="no_vpn_support_image">申し訳ありませんが、お使いの環境ではVPNサービスがサポートされていません</string>
     <string name="encryption">暗号化</string>
     <string name="cipher_dialog_title">暗号化方式を入力</string>
-    <string name="cipher_dialog_message">OpenVPNで使用されるデータ暗号化アルゴリズム(-data-ciphers)を「:」で区切って入力します。デフォルトのAES-256-GCM:AES-128-GCM:CHACHA20-POLY1305を使用するには、空のままにします。</string>
     <string name="auth_dialog_message">OpenVPNが使用する認証ダイジェストを入力します。空欄にするとデフォルトのダイジェストを使用します。</string>
     <string name="settings_auth">認証/暗号化</string>
     <string name="file_explorer_tab">ファイルを選択</string>
@@ -166,11 +164,8 @@ SDカード上のデータは本質的に無防備です。すべてのアプリ
     <string name="tls_authentication">TLS認証/暗号化</string>
     <string name="generated_config">生成された設定</string>
     <string name="generalsettings">設定</string>
-    <string name="owner_fix_summary">システムに/dev/tunの所有者を設定します。いくつかのCM9のイメージでVPNService APIを動作させるために必要です。root権限が必要です。</string>
-    <string name="owner_fix">/dev/tun の所有権を修正</string>
     <string name="generated_config_summary">生成された OpenVPN の設定ファイルを表示します</string>
     <string name="edit_profile_title">\"%s\"の編集</string>
-    <string name="building_configuration">設定を構成中・・・</string>
     <string name="netchange_summary">この設定を有効にすると、ネットワークの状態変化時(WiFi／モバイル)に再接続を行います。</string>
     <string name="netchange">ネットワーク変化時に再接続する</string>
     <string name="netstatus">ネットワーク状態： %s</string>
@@ -198,10 +193,9 @@ SDカード上のデータは本質的に無防備です。すべてのアプリ
 &lt;p&gt;もしファイルが足りないというエラーが表示されたら、足りなかったファイルをSDカード上に格納してください。&lt;/p&gt;
 &lt;p&gt;インポートされたVPN設定をリストに追加するには、保存アイコンをクリックします。&lt;/p&gt;
 &lt;p&gt;VPNを接続するには、VPNの名称をクリックします。&lt;/p&gt;
-&lt;p&gt;もし警告やエラーがログエントリに表示されたら、それらを調べて解決してください。&lt;/p&gt;</string>
+&lt;p&gt;もし警告やエラーがログエントリに表示されたら、それらを調べて解決してください。&lt;/p&gt;
+</string>
     <string name="faq_howto_title">クイックスタート</string>
-    <string name="setting_loadtun_summary">接続の試行前にTUNデバイスモジュール(tun.ko)を読み込みます。デバイスのroot化が必要です。</string>
-    <string name="setting_loadtun">TUNモジュールをロード</string>
     <string name="importpkcs12fromconfig">PKCS12の設定をAndroidのキーストアにインポートします</string>
     <string name="getproxy_error">プロキシ設定でエラー： %s</string>
     <string name="using_proxy">プロキシを使用します %1$s %2$s</string>
@@ -211,7 +205,8 @@ SDカード上のデータは本質的に無防備です。すべてのアプリ
     <string name="restart">再起動</string>
     <string name="restart_vpn_after_change">設定の変更はVPNの再起動後に反映されます。VPNを(再)起動しますか？</string>
     <string name="configuration_changed">設定が変更されました</string>
-    <string name="log_no_last_vpn">編集されたため、最後に接続したプロファイルを確認できませんでした</string>
+    <string name="log_no_last_vpn">編集されたため、最後に接続したプロファイルを確認できませんでした
+</string>
     <string name="faq_duplicate_notification_title">重複した通知</string>
     <string name="faq_duplicate_notification">もしAndroidがメモリ不足に陥った場合、その時点で必要とされないアプリケーションやサービスはアクティブなメモリから排除されます。
 この処理に伴い、VPN接続は終了されます。
@@ -240,14 +235,10 @@ VPNService APIはVPNを経由すべきでないネットワークの指定を許
 
 こっそり:
 Android 4.4以上はポリシールーティングを使用します。route/ifconfigコマンドは設定された経路を表示しません。代わりにip ruleまたはiptables -t mangle -Lを使用します。</string>
-    <string name="persisttun_summary">OpenVPNが再接続試行中は、VPN接続なしとして報告しません。</string>
     <string name="persistent_tun_title">永続的なTUNデバイス</string>
     <string name="openvpn_log">OpenVPNログ</string>
     <string name="import_config">OpenVPN の設定のインポート</string>
     <string name="battery_consumption_title">バッテリー消費量</string>
-    <string name="battery_consumption">個人的な検証では、OpenVPNがバッテリを多く消費する主な原因はkeepaliveパケットです。 
-大部分のOpenVPNサーバは\'keepalive 10 60\'のような設定を持っており、これは10秒ごとにサーバとクライアントで相互にkeepaliveパケットを送信しあうことを意味します。 &lt;p&gt;これらのパケットは小さく多くの帯域は使用しませんが、モバイル回線機能を常に稼動させ続け電力消費を増大させます。 &lt;p&gt;
-(参考 &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;)&lt;p&gt;このkeepalive設定はクライアント側からは変更できません。OpenVPNのシステム管理者のみが変更可能です。 &lt;p&gt; 残念なことに、60秒より大きな間隔のUDP keepaliveはいくつかのNATゲートウェイにおいては接続状態が維持できず、それより短い時間でタイムアウトします(検証では60秒)。 TCP keepaliveと長いタイムアウト時間の使用は、動作はしますがTCP over TCP問題を引き起こします。(詳細は&lt;a href=\"http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;なぜTCP over TCPは悪いアイディアなのか&lt;/a&gt;を参照)</string>
     <string name="connection_retries">接続の再試行回数</string>
     <string name="reconnection_settings">再接続の設定</string>
     <string name="connectretrymessage">再接続を試行する際の間隔(秒)</string>
@@ -255,7 +246,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="minidump_generated">OpenVPN は予期せず終了しました。メイン メニューでミニダンプの送信オプションを検討してください。</string>
     <string name="send_minidump">ミニダンプを開発者に送信</string>
     <string name="send_minidump_summary">最後にクラッシュした時のデバッグ情報を作者に送信します。</string>
-    <string name="notification_title">OpenVPN - %s</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
     <string name="state_connecting">接続しています</string>
@@ -275,7 +265,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="state_nonetwork">使用可能なネットワークを待機中</string>
     <string name="state_waitorbot">Orbotの起動を待っています</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notification_title_notconnect">未接続</string>
     <string name="start_vpn_title">VPN %sに接続中</string>
     <string name="start_vpn_ticker">VPN %sに接続中</string>
     <string name="jelly_keystore_alphanumeric_bug">Android 4.1の一部のバージョンで、キーストアの証明書の名前にアルファベット以外の特殊な文字(スペース、アンダーバー、ダッシュ等)を含む場合に問題が発生します。証明書の名前から特殊な文字を外して再度インポートを試みてください。</string>
@@ -293,7 +282,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="rdn">相対識別名(RDN／共通名)</string>
     <string name="rdn_prefix">相対識別名(RDN)プリフィクス</string>
     <string name="tls_remote_deprecated"> tls-remote (非推奨)</string>
-    <string name="help_translate">次のURLにアクセスすると、翻訳作業を手伝うことができます http://crowdin.net/project/ics-openvpn/invite</string>
     <string name="prompt">%1$s は %2$s を制御しようとしています。</string>
     <string name="remote_warning">このまま進むと、あなたはOpenVPN for Androidの完全な制御とすべての通信を傍受する権限をアプリケーションに対し与えることになります。<b>アプリケーションが信頼できない限り、承諾しないでください。</b>さもないと、あなたのデータがマルウェアにより漏洩させられる危険があります。</string>
     <string name="remote_trust">私はこのアプリケーションを信頼します</string>
@@ -381,7 +369,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="version_upto">%sおよびそれ以前</string>
     <string name="copy_of_profile">%sのコピー</string>
     <string name="ab_not_route_to_vpn_title">設定されたIPアドレスへの経路</string>
-    <string name="custom_connection_options_warning">カスタム指定の接続オプションを設定します。慎重に利用してください</string>
     <string name="custom_connection_options">カスタムオプション</string>
     <string name="remove_connection_entry">接続先設定を削除します</string>
     <string name="version_and_later">%s以降</string>
@@ -412,7 +399,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="reread_log">ログキャッシュからログ(%d個)を再読み込みしました</string>
     <string name="samsung_broken">サムスン製の携帯電話は最も販売されているAndroid機ですが、サムスン製のファームウェアは最もバグを引き起こすAndroidファームウェアです。これらのデバイスのバグはVPN操作に限ったことではありませんが、それらの多くは回避可能です。以下にいくつかのバグを記載します。\n\nDNSサーバがVPNの範囲内にないとDNSが動作しません。\n\nサムスン製Android 5.0の多くの機種では、アプリの許可／不許可機能が動作しません。\nサムスン製Android 6.0機種のVPNは、VPNアプリを省電力機能から除外しない限り動作しないことが報告されています。</string>
     <string name="samsung_broken_title">サムスン製の機種</string>
-    <string name="novpn_selected">VPNが選択されていません</string>
     <string name="defaultvpn">既定のVPN</string>
     <string name="defaultvpnsummary">既定のVPNが必要な場面で使用されます。現在のところ、起動時、常時接続、クイック設定タイルで使用されます。</string>
     <string name="vpnselected">現在選択されているVPN： \'%s\'</string>
@@ -457,7 +443,6 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="osslspeedtest">OpenSSLの暗号化スピードテスト</string>
     <string name="openssl_error">OpenSSLがエラーを返しました</string>
     <string name="running_test">テストを実行中...</string>
-    <string name="test_algorithms">選択したアルゴリズムをテストする</string>
     <string name="all_app_prompt">外部アプリが%sを制御しようとしています。アクセスをリクエストしているアプリは特定できません。このアプリを許可すると、すべてのアプリがアクセス許可されます。</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C ++実装は静的キーをサポートしていません。設定でOpenVPN 2.xに変更してください。</string>
     <string name="openvpn3_pkcs12">OpenVPN 3 C++実装ではPKCS12ファイルを直接使用することはサポートされていません。 PKCS12ファイルをAndroidキーストアにインポートするか、設定でOpenVPN 2.xに変更してください。</string>
@@ -467,46 +452,15 @@ Android 4.4以上はポリシールーティングを使用します。route/ifc
     <string name="openvpn3_socksproxy">OpenVPN 3 C++実装は、Socksプロキシ経由の接続をサポートしません</string>
     <string name="no_orbotfound">Orbotアプリが見つかりません。Orbotをインストールするか手動Socks v5統合を使用してください</string>
     <string name="faq_remote_api_title">リモートAPI</string>
-    <string name="faq_remote_api">OpenVPN for Androidは2つのリモートAPIをサポートします。AIDLによる洗練されたAPI(gitリポジトリのremoteExample)およびIntentを使用したシンプルなものです。&lt;p&gt;adbシェルとIntentを使用した例です。profilenameをあなたのプロファイル名に置き換えてください。&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN for Androidは2つのリモートAPIをサポートします。AIDLによる洗練されたAPI(gitリポジトリのremoteEXample)およびIntentを使用したシンプルなものです。&lt;p&gt;adbシェルとIntentを使用した例です。profilenameをあなたのプロファイル名に置き換えてください。&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">プロキシ認証を有効にする</string>
     <string name="error_orbot_and_proxy_options">http-proxy-option設定とOrbot統合は同時に使用できません</string>
     <string name="info_from_server">サーバからの情報: \'%s\'</string>
     <string name="channel_name_userreq">ユーザー操作が必要</string>
     <string name="channel_description_userreq">OpenVPN接続にはユーザー入力が必要です (例：2要素認証)</string>
     <string name="openurl_requested">URLを開いてVPN認証を続行する</string>
-    <string name="crtext_requested">VPN認証を継続するための課題に答える</string>
     <string name="state_auth_pending">認証は保留中です</string>
     <string name="external_authenticator">外部認証</string>
     <string name="configure">設定</string>
     <string name="extauth_not_configured">外部認証が設定されていません</string>
-    <string name="faq_killswitch_title">VPN以外の接続をブロックする(\"Killswitch\")</string>
-    <string name="faq_killswitch">VPNなしでの接続をブロックすることがしばしば望まれます。ほかのアプリではこの機能に「killswitch」または「Seamless tunnel」などのマーケティング用語をよく使います。OpenVPNとこのアプリではこの機能の実装としてpersist-tun(永続的なTUN)を提供します。&lt;p&gt;アプリが提供するこれらすべての方法の問題は、ベストエフォートでしか提供できず完全な解決策はないことです。起動時やアプリのクラッシュ、厄介な問題の発生時ではアプリはVPNなし通信のブロックは保証できません。そうして利用者に誤った安心感を与えています。&lt;p&gt;VPNなしの接続をブロックするために&lt;b&gt;唯一&lt;/b&gt;確実で信頼できる方法は、Android 8.0以降で「VPNのない接続をブロックする」設定を使うことです。設定 &gt; ネットワーク &gt; インターネット &gt; 高度/VPN &gt; OpenVPN for Android &gt; 「VPN常時接続」を有効、かつ「VPNのない接続をブロックする」を有効にします。</string>
-    <string name="summary_block_address_families">このオプションは、VPNがIPv4またはIPv6アドレスを設定しない場合、プロトコル（IPv4 / IPv6）を許可しないようにAndroidに指示します。</string>
-    <string name="title_block_address_families">VPNで使用されていない場合は、IPv6（またはIPv4）をブロックします</string>
-    <string name="install_keychain">新しい証明書をインストール</string>
-    <string name="as_servername">ASサーバー名</string>
-    <string name="server_url">サーバURL</string>
-    <string name="request_autologin">自動ログインプロファイルをリクエストする</string>
-    <string name="import_from_as">リモートサーバーからプロファイルをインポートする</string>
-    <string name="no_default_vpn_set">デフォルトのVPNが設定されていません。このオプションを有効にする前に、デフォルトVPNを設定してください。</string>
-    <string name="internal_web_view">内蔵WebView</string>
-    <string name="faq_ncp">このメッセージには、状況によっていくつかのバリエーションがあります。それらに共通するのはサーバとクライアントで共通の暗号の合意が取れなかったということです。主だった理由としては&lt;ul&gt;&lt;li&gt;あなたがデフォルト設定(--cipherを使っていない場合)でBF-CBCを許容するOpenVPN 2.4かそれ以前に頼っているという事実です。OpenVPN 2.5はもはや&lt;a href=\"https://community.openvpn.net/openvpn/wiki/SWEET32\"&gt;壊れた/廃止された暗号&lt;/a&gt;としてデフォルトでそれを許容しなくなっています。&lt;/li&gt;
-&lt;li&gt;サーバがOpenVPN 2.3(あるいはそれ以前)を--enable-smallオプションで稼働している。(4～5年前のOpenVPN)&lt;/li&gt;&lt;li&gt;間違った設定(例: data-ciphersがサーバとクライアントで一致していない)&lt;/li&gt;&lt;p&gt;OpenVPNのマニュアルの&lt;a href=\"https://github.com/OpenVPN/openvpn/blob/master/doc/man-sections/cipher-negotiation.rst\"&gt;暗号ネゴシエーションについてのセクション&lt;/a&gt;は、暗号ネゴシエーションの様々な状況と何をすべきかについてよく説明されています。
-&lt;p&gt;TP-Link製のデバイスは2019/2020年のモデルであっても、少なくとも5年は経っているOpenVPN 2.3.x(あるいはもっと古いかも)を使用しています。&lt;p&gt;最後になりますが、サーバが壊れていて常に\'BF-CBC\'を使用するという人気VPNプロバイダがあります。これは開発者が一般的なOpenVPNと互換性のないパッチで独自の暗号ネゴシエーションをすることを推奨するためです。&lt;p&gt;要約すると、通常の構成でこれらのエラーが出ることはありません。しかし(VPNプロバイダの壊れたサーバは別として)クライアントは接続し続けるように説得することができます。(症状の修正は真の問題ではない)
-
- 
- </string>
-    <string name="check_peer_fingerprint">ピア証明書のフィンガープリントを確認する</string>
-    <string name="fingerprint">（サーバー証明書のSHA256フィンガープリントを入力してください）</string>
-    <string name="proxy_info">HTTPプロキシ: %1$s %2$d</string>
-    <string name="use_alwayson_vpn">起動時にVPNを有効にするには、Androidの常時接続機能を使用してください。</string>
-    <string name="open_vpn_settings">VPN設定の編集</string>
-    <string name="trigger_pending_auth_dialog">ここを押してウィンドウを開き、追加の必要な認証を入力します</string>
-    <string name="compatmode">互換モード</string>
-    <string name="compat_mode_label">互換モード</string>
-    <string name="loadossllegacy">OpenSSLレガシープロバイダーを読み込む</string>
-    <string name="bf_cbc_requires_legacy">プロファイルは、OpenSSLレガシープロバイダー(有効化されていません)に依存するBF-CBCを使用します。</string>
-    <string name="allow_translations_title">コミュニティが投稿した翻訳を許可する</string>
-    <string name="allow_translations_summary">コミュニティから提供された翻訳を使用してアプリを翻訳できるようにします。有効にするには、アプリを再起動する必要があります。</string>
-    <string name="tls_profile">TLSセキュリティプロファイル</string>
 </resources>

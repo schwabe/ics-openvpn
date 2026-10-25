@@ -11,10 +11,10 @@
         <item>Android Sertifikası</item>
         <item>Kullanıcı Adı/Parola</item>
         <item>Sabit Anahtarlar</item>
-        <item>Kullanıcı/Parola + Sertifikalar</item>
-        <item>Kullanıcı/Parola + PKCS12 </item>
-        <item>Kullanıcı/Parola + Android</item>
-        <item>Harici Kimlik Doğrulama Sağlayıcısı</item>
+        <item>User/PW + Certificates</item>
+        <item>User/PW + PKCS12 </item>
+        <item>User/PW + Android</item>
+        <item>External Auth Provider</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">tls-auth - --direction 0</item>
@@ -34,6 +34,7 @@
         <item>Bağlantıyı kes, parolayı unut</item>
         <item>Bağlantıyı kes, parolayı sakla</item>
         <item>Yoksay, yeniden dene</item>
+        <item>Retry, interactive (not supported)</item>
     </string-array>
     <string-array name="compat_mode">
         <item>Modern varsayılanlar</item>

@@ -32,7 +32,6 @@
     <string name="ipv4_address">IPv4 位址</string>
     <string name="ipv6_address">IPv6 位址</string>
     <string name="custom_option_warning">輸入自訂 OpenVPN 選項。請謹慎使用。另外請注意，VPNSettings 設計上無法支援許多 TUN 通道相關的 OpenVPN 設定 。如果您認為有遺漏重要的設定選項，請聯絡作者。</string>
-    <string name="auth_username">使用者名稱（留空表示不登入）</string>
     <string name="auth_pwquery">密碼</string>
     <string name="static_keys_info">對於靜態設定，TLS 認證金鑰將會用作靜態金鑰。</string>
     <string name="configure_the_vpn">設定 VPN</string>
@@ -159,11 +158,8 @@
     <string name="tls_authentication">TLS 驗證/加密</string>
     <string name="generated_config">生成的設定檔</string>
     <string name="generalsettings">設定</string>
-    <string name="owner_fix_summary">嘗試修正 /dev/tun 擁有者權限。部分 CM9 系統需要透過這個來才能使 VPNService API 正常運作。本功能需要 Root。</string>
-    <string name="owner_fix">修正 /dev/tun 的擁有者權限</string>
     <string name="generated_config_summary">顯示產生的 OpenVPN 設定檔</string>
     <string name="edit_profile_title">正在編輯「%s」</string>
-    <string name="building_configuration">正在產生設定檔&#8230;</string>
     <string name="netchange_summary">啟用此選項以在網路狀況變更時強制重新連線（例如從 WiFi 變成行動網路，反之亦然）</string>
     <string name="netchange">網路異動時重新連線</string>
     <string name="netstatus">網路狀態：%s</string>
@@ -187,8 +183,6 @@
     <string name="ip_add_error">無法設定 IP 位址「%1$s」，被系統拒絕：%2$s</string>
     <string name="faq_howto">&lt;p&gt;取得可以運作的設定值（在電腦測試過或從提供商/組織下載的）&lt;/p&gt;&lt;p&gt;如果它是單一的檔案且沒有沒有額外的 PEM/PKCS12 檔案，您可以 Email 給你自己並打開附件。如果您有多個檔案，可以放在 SD 卡裡。&lt;/p&gt;&lt;p&gt;從 Email 附件點擊或使用 VPN 列表中的資料夾圖示以匯入設定值檔案。&lt;/p&gt;&lt;p&gt;如果有找不到檔案的錯誤，請將缺少的檔案放到您的 SD 卡裡。&lt;/p&gt;&lt;p&gt;點擊儲存，以將匯入的 VPN 加入您的 VPN 列表。&lt;/p&gt;&lt;p&gt;點擊 VPN 的名稱即可連接至該 VPN。&lt;/p&gt;&lt;p&gt;如果紀錄裡出現錯誤或警告，請嘗試將其理解並修復。&lt;/p&gt; </string>
     <string name="faq_howto_title">快速入門</string>
-    <string name="setting_loadtun_summary">嘗試在連線前載入 TUN 模組，需要 Root。</string>
-    <string name="setting_loadtun">載入 TUN 模組</string>
     <string name="importpkcs12fromconfig">將 PKCS12 從設定檔匯入至 Android 金鑰庫</string>
     <string name="getproxy_error">取得 proxy 設定值時發生錯誤：%s</string>
     <string name="using_proxy">使用 Proxy %1$s %2$s</string>
@@ -207,12 +201,10 @@
     <string name="faq_hint">請務必查看常見問題。有一個快速入門指南。</string>
     <string name="faq_routing_title">路由/網路介面設定</string>
     <string name="faq_routing">路由和網路介面並不是透過傳統 ifconfig/route 設定，而是使用 VPNService API，這會導致路由設定值與其它 OS 相異。\nVPN 通道的設定包含 IP 位址以及應該要被它路由的網路。其中特別的是，並不需要 Peer partner 位址或是 Gateway 位址，也不需要能連接到 VPN 伺服器的特殊路由（例如使用 redirect-gateway 時加入的），本應用程式會在匯入設定值時忽略這些設定。應用程式透過 VPNService API 確保到伺服器的連線不會被導向至 VPN 通道。\nVPNService API 無法指定哪些網路不被導到 VPN。為了讓它運作，本應用程式嘗試偵測哪些網路不應該被導向（例如 route x.x.x.x y.y.y.y net_gateway），並計算出應該被排除的路由，以模擬出其它平台上的行為。紀錄視窗顯示 VPNService 建立連線時的配置。\n背後設計：Android 4.4+ 確實有使用策略路由（policy routing）。用 route/ifconfig 不會顯示已經套用的路由，要改用 IP 規則，iptables -t mangle -L</string>
-    <string name="persisttun_summary">當 OpenVPN 重新連線時，不要回到沒有 VPN 連線的狀態。</string>
     <string name="persistent_tun_title">保持 TUN 通道</string>
     <string name="openvpn_log">OpenVPN 運作記錄</string>
     <string name="import_config">匯入 OpenVPN 設定</string>
     <string name="battery_consumption_title">電池消耗</string>
-    <string name="battery_consumption">在我個人的測試中，OpenVPN 造成高耗電的主要原因是 keepalive 封包。大多數的 OpenVPN 伺服器都會有一個類似「keepalive 10 60」的設定，這會導致用戶端和伺服器每十秒交流一次 keepalive 封包。&lt;p&gt; 這些封包雖然都很小且不太占用流量，但它們會令行動網路持續忙碌，並增加耗電。（參見 &lt;a href=\"http://developer.android.com/training/efficient-downloads/efficient-network-access.html#RadioStateMachine\"&gt;The Radio State Machine | Android Developers&lt;/a&gt;）&lt;p&gt; 這個 keepalive 設定不能從用戶端上更改。只有 OpenVPN 的系統管理員可以更改這個設定。&lt;p&gt; 不幸的是，在 UDP 下將 keepalive 設定為大於 60 秒，可能會導致一些 NAT 閘道由於連線不活躍時間過長而將其中斷。在 TCP 下使用較長的 keepalive 逾時設定可以運作，但 TCP over TCP tunneling 在高封包丟失率的連線上表現很差。（參見  &lt;a href=\"https://web.archive.org/web/20010619133844/http://sites.inka.de/bigred/devel/tcp-tcp.html\"&gt;Why TCP Over TCP Is A Bad Idea&lt;/a&gt;）</string>
     <string name="connection_retries">連線重試次數</string>
     <string name="reconnection_settings">重新連線設定</string>
     <string name="connectretrymessage">連線重試間的等待秒數。</string>
@@ -220,7 +212,6 @@
     <string name="minidump_generated">OpenVPN 異常中止，建議使用主選單中的「傳送異常傾印」選項。</string>
     <string name="send_minidump">傳送異常傾印給開發人員</string>
     <string name="send_minidump_summary">傳送上一次異常停止的除錯資訊給開發人員</string>
-    <string name="notification_title">OpenVPN－%s</string>
     <string name="session_ipv4string">%1$s－%2$s</string>
     <string name="session_ipv6string">%1$s－%3$s，%2$s</string>
     <string name="state_connecting">正在連線</string>
@@ -240,7 +231,6 @@
     <string name="state_nonetwork">正在等待可使用的網路</string>
     <string name="state_waitorbot">正在等待 Orbot 啟動</string>
     <string name="statusline_bytecount">↓%2$s %1$s - ↑%4$s %3$s</string>
-    <string name="notification_title_notconnect">未連線</string>
     <string name="start_vpn_title">正在連線至 VPN %s</string>
     <string name="start_vpn_ticker">正在連線至 VPN %s</string>
     <string name="jelly_keystore_alphanumeric_bug">如果密鑰庫憑證包含非字母或數字字元（如空白、底線、破折號），在某些 Android 4.1 版本可能會出現問題。請嘗試重新匯入不含特殊字元的憑證。</string>
@@ -258,7 +248,6 @@
     <string name="rdn">RDN (common name)</string>
     <string name="rdn_prefix">RDN 前綴</string>
     <string name="tls_remote_deprecated">tls-remote（不建議使用）</string>
-    <string name="help_translate">您可以至 http://crowdin.net/project/ics-openvpn/invite 來協助翻譯</string>
     <string name="prompt">%1$s 嘗試控制 %2$s</string>
     <string name="remote_warning">如果繼續，您將給予這個應用程式完全控制 OpenVPN for Android 並擷取所有網路流量的權限。<b>除非你信任該應用程式，否則請勿接受。</b>否則，您的資料將有遭惡意軟體洩漏的風險。</string>
     <string name="remote_trust">我信任此應用程式</string>
@@ -345,7 +334,6 @@
     <string name="version_upto">%s 及更早版本</string>
     <string name="copy_of_profile">%s 的副本</string>
     <string name="ab_not_route_to_vpn_title">路由到設定的 IP 位址</string>
-    <string name="custom_connection_options_warning">指定自訂連線的特定選項，請小心使用</string>
     <string name="custom_connection_options">自訂選項</string>
     <string name="remove_connection_entry">刪除連線項目</string>
     <string name="version_and_later">%s 及更高版本</string>
@@ -376,7 +364,6 @@
     <string name="reread_log">從記錄快取檔案中重新讀取（%d）紀錄項目</string>
     <string name="samsung_broken">儘管 Samsung 手機是最暢銷的 Android 手機，Samsung 的韌體也是 bug 最多的 Android 韌體。這些 bug 並不僅限於 VPN 的操作，但其大多數都是有方法可以避開的。以下列出其中的幾個 bug：\n\n除非 DNS 伺服器在 VPN 範圍內，否則 DNS 無法運作。\n\n在許多 Samsung 5.x 裝置中，允許/排除應用程式的功能無法運作。\n有回報表示，在 Samsung 6.x 上，除非 VPN 應用程式被加入到 Powersave 功能的排除清單，否則 VPN 無法運作。</string>
     <string name="samsung_broken_title">三星手機</string>
-    <string name="novpn_selected">沒有選擇 VPN</string>
     <string name="defaultvpn">預設 VPN</string>
     <string name="defaultvpnsummary">用於需要預設 VPN 的地方，通常是用在開機時、Alway-On 以及快速設定動態磚。</string>
     <string name="vpnselected">目前選擇的 VPN：「%s」</string>
@@ -421,7 +408,6 @@
     <string name="osslspeedtest">OpenSSL Crypto 速度測試</string>
     <string name="openssl_error">OpenSSL 回傳了錯誤</string>
     <string name="running_test">正在執行測試...</string>
-    <string name="test_algorithms">測試已選擇的演算法</string>
     <string name="all_app_prompt">一個外部應用程式嘗試控制 %s。無法確認提出請求的應用程式。允許該應用程式將授予所有應用程式權限。</string>
     <string name="openvpn3_nostatickeys">OpenVPN 3 C ++ 實作不支援靜態金鑰。請在「一般設定」下將其更改為 OpenVPN 2.x。</string>
     <string name="openvpn3_pkcs12">OpenVPN 3 C ++ 實作不支援直接使用 PKCS12 檔。請將 PKCS12 檔匯入 Android 金鑰庫，或在「一般設定」下將其更改為 OpenVPN 2.x。</string>
@@ -431,7 +417,7 @@
     <string name="openvpn3_socksproxy">OpenVPN 3 C++ 實作並不支援使用 Socks proxy 的連線方式</string>
     <string name="no_orbotfound">找不到 Orbot 應用程式。請安裝 Orbot 或使用手動 Socks v5 整合。</string>
     <string name="faq_remote_api_title">遠端 API</string>
-    <string name="faq_remote_api">OpenVPN for Android 支援兩種遠端 API，一種是使用 AIDL（Git 中的 remoteExample）的複雜 API，和一種使用 Intent 的簡單 API。&lt;p&gt;以 adb shell 及 Intent 為例。將 profilname 替換為你的設定值名稱&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
+    <string name="faq_remote_api">OpenVPN for Android 支援兩種遠端 API，一種是使用 AIDL（Git 中的 remoteEXample）的複雜 API，和一種使用 Intent 的簡單 API。&lt;p&gt;以 adb shell 及 Intent 為例。將 profilname 替換為你的設定值名稱&lt;p&gt;&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN de.blinkt.openvpn/.api.DisconnectVPN&lt;p&gt; adb shell am start-activity -a android.intent.action.MAIN -e de.blinkt.openvpn.api.profileName Blinkt de.blinkt.openvpn/.api.ConnectVPN</string>
     <string name="enableproxyauth">啟用 Proxy 驗證</string>
     <string name="error_orbot_and_proxy_options">無法在同個時間複雜度底下同時使用額外的 http-proxy-option 以及 Orbot 整合</string>
     <string name="info_from_server">來自伺服器的訊息：「%s」</string>
@@ -444,10 +430,4 @@
     <string name="external_authenticator">外部身份驗證器</string>
     <string name="configure">設定</string>
     <string name="extauth_not_configured">未設定外部身份驗證器</string>
-    <string name="faq_killswitch">通常希望在沒有 VPN 的情況下阻止連接。其他應用程序通常為此功能使用“Killswitch”或“無縫隧道”等標記術語。 OpenVPN 和這個應用程序提供了persist-tun，一個實現這個功能的特性。&lt;p&gt;應用程序提供的所有這些方法的問題在於它們只能提供最大的努力，而不是完整的解決方案。在啟動、應用程序崩潰和其他極端情況下，應用程序無法確保此非 VPN 連接塊正常工作。從而給用戶一種虛假的安全感。&lt;p&gt;確保非 VPN 連接被阻止的唯一 &lt;b&gt;&lt;/b&gt; 可靠方法是使用 Android 8.0 或更高版本，並使用可在設置下找到的“阻止沒有 VPN 的連接”設置 &gt; 網絡 &amp; 互聯網 &gt; 高級/VPN &gt; 適用於 Android &gt; 的 OpenVPN啟用始終開啟 VPN，啟用沒有 VPN 的阻止連接Translate all</string>
-    <string name="compatmode">相容性模式</string>
-    <string name="compat_mode_label">相容性模式</string>
-    <string name="allow_translations_title">允許社群貢獻的翻譯</string>
-    <string name="allow_translations_summary">允許使用社群貢獻的翻譯。需要重新啟動應用程式。</string>
-    <string name="encrypt_profiles">嘗試加密儲存空間中的設定檔（如果 Android 作業系統支持）</string>
 </resources>

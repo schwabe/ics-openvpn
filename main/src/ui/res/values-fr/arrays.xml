@@ -11,33 +11,22 @@
         <item>Certificat Android</item>
         <item>Nom d\'utilisateur/Mot de passe</item>
         <item>Clés statiques</item>
-        <item>Nom/MDP + Certificats</item>
-        <item>Nom/MDP + PKCS12</item>
-        <item>Nom/MDP + Android</item>
-        <item>Fournisseur d\'authentification externe</item>
+        <item>User/PW + Certificates</item>
+        <item>User/PW + PKCS12 </item>
+        <item>User/PW + Android</item>
+        <item>External Auth Provider</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">tls-auth - --direction 0</item>
         <item translatable="false">tls-auth - --direction 1</item>
         <item>tls-auth --direction not specified</item>
         <item>Chiffrement (tls-crypt)</item>
-        <item>Chiffrement TLS V2</item>
+        <item>TLS Crypt V2</item>
     </string-array>
     <string-array name="auth_retry_type">
         <item>Déconnecter, oublier le mot de passe</item>
         <item>Déconnecter, garder le mot de passe</item>
         <item>Ignorer, réessayer</item>
-    </string-array>
-    <string-array name="compat_mode">
-        <item>Paramètres par défaut modernes</item>
-        <item>Pairs OpenVPN 2.5.x</item>
-        <item>Pairs OpenVPN 2.4.x</item>
-        <item>OpenVPN 2.3.x et anciens pairs</item>
-    </string-array>
-    <string-array name="tls_profile_entries">
-        <item>insecure (not recommend, allows insecure crypto)</item>
-        <item>Légats (défaut)</item>
-        <item>Préfère (recommandé but l\' imiter commuabilités)</item>
-        <item>Suite B (uniquement les courbes elliptiques approuvées par le NIST)</item>
+        <item>Retry, interactive (not supported)</item>
     </string-array>
 </resources>

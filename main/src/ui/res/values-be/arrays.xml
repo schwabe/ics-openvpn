@@ -11,10 +11,10 @@
         <item>Сертыфікат Android</item>
         <item>Лагін/Пароль</item>
         <item>Статычныя ключы</item>
-        <item>Лагін/Пароль + Сертыфікаты</item>
-        <item>Лагін/Пароль + PKCS12 </item>
-        <item>Карыстальнік/Пароль + Android</item>
-        <item>Знешняя праверка сапраўднасці правайдара</item>
+        <item>User/PW + Certificates</item>
+        <item>User/PW + PKCS12 </item>
+        <item>User/PW + Android</item>
+        <item>External Auth Provider</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">tls-auth - --direction 0</item>
@@ -27,17 +27,6 @@
         <item>Адлучыцца і выдаліць пароль</item>
         <item>Адлучыцца і захаваць пароль</item>
         <item>Ігнараваць і паўтарыць</item>
-    </string-array>
-    <string-array name="compat_mode">
-        <item>Сучасныя стандарты</item>
-        <item>Версія OpenVPN 2.5.x</item>
-        <item>Версія OpenVPN 2.4.x</item>
-        <item>Версіі OpenVPN 2.3.x і больш старыя</item>
-    </string-array>
-    <string-array name="tls_profile_entries">
-        <item>небяспечны (не рэкамендуецца, дазваляе небяспечная шыфраванне)</item>
-        <item>традыцыйны (прадвызначана)</item>
-        <item>пажадана (рэкамендавана, але абмяжоўвае сумяшчальнасць)</item>
-        <item>Suite B (толькі эліптычныя крывыя, якія ўхваленыя NIST)</item>
+        <item>Retry, interactive (not supported)</item>
     </string-array>
 </resources>

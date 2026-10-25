@@ -11,10 +11,10 @@
         <item>Androidの証明書管理</item>
         <item>User/PW</item>
         <item>静的鍵</item>
-        <item>User/PWと証明書</item>
-        <item>User/PWとPKCS12ファイル</item>
-        <item>User/PWとAndroidの証明書管理</item>
-        <item>外部認証プロバイダ</item>
+        <item>User/PW + Certificates</item>
+        <item>User/PW + PKCS12 </item>
+        <item>User/PW + Android</item>
+        <item>External Auth Provider</item>
     </string-array>
     <string-array name="tls_directions_entries">
         <item translatable="false">tls-auth - --direction 0</item>
@@ -23,28 +23,10 @@
         <item>暗号化(tls-crypt)</item>
         <item>TLS 暗号化 V2</item>
     </string-array>
-    <string-array name="crm_entries">
-        <item>再接続を試行しない</item>
-        <item>1回再接続を試行する</item>
-        <item>5回再接続を試行する</item>
-        <item>50回再接続を試行する</item>
-        <item>無制限に再接続を試行する</item>
-    </string-array>
     <string-array name="auth_retry_type">
         <item>パスワードを破棄して切断</item>
         <item>パスワードを維持して切断</item>
         <item>無視して再試行</item>
-    </string-array>
-    <string-array name="compat_mode">
-        <item>最新のデフォルト</item>
-        <item>OpenVPN 2.5.x peers</item>
-        <item>OpenVPN 2.4.xピア</item>
-        <item>OpenVPN 2.3.x以前のピア</item>
-    </string-array>
-    <string-array name="tls_profile_entries">
-        <item>安全でない(非推奨、安全でない暗号を許可します)</item>
-        <item>レガシー(デフォルト)</item>
-        <item>おすすめ(推奨、ただし互換性が制限されます）</item>
-        <item>Suite B (only NIST approved elliptic curves)</item>
+        <item>Retry, interactive (not supported)</item>
     </string-array>
 </resources>

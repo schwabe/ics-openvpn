@@ -27,6 +27,13 @@ public class TestIpParser {
         testAddress("2a02:2e0:3fe:1001:302::70", 128, "2a02:2e0:3fe:1001:302:0:0:70/128");
     }
 
+    @Test
+    public void parseIPv6LeadingZeros() throws UnknownHostException {
+        testAddress("::1", 128, "0:0:0:0:0:0:0:1/128");
+        testAddress("::2:0", 112, "0:0:0:0:0:0:2::/112");
+        testAddress("0:0:0:1::", 64, "0:0:0:1::/64");
+    }
+
     void testAddress(String input, int mask, String output) throws UnknownHostException {
         Inet6Address ip = (Inet6Address) InetAddress.getByName(input);
 

@@ -177,7 +177,7 @@ public class NetworkSpace {
             String ipv6str = null;
             boolean lastPart = true;
 
-            while (r.compareTo(BigInteger.ZERO) == 1) {
+            for (int group = 0; group < 8; group++) {
 
                 long part = r.mod(BigInteger.valueOf(0x10000)).longValue();
                 if (ipv6str != null || part != 0) {

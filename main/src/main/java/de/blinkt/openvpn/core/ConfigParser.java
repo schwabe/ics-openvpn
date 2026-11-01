@@ -519,8 +519,8 @@ public class ConfigParser {
             try {
                 CIDRIP cidr = new CIDRIP(ifconfig.get(1), ifconfig.get(2));
                 np.mIPv4Address = cidr.toString();
-            } catch (NumberFormatException nfe) {
-                throw new ConfigParseError("Could not parse ifconfig IP address: " + nfe.getLocalizedMessage());
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                throw new ConfigParseError("Could not parse ifconfig IP address: " + e.getLocalizedMessage());
             }
 
         }
@@ -587,11 +587,15 @@ public class ConfigParser {
         {
             Scanner versionScanner = new Scanner(compatmode.get(1));
             versionScanner.useDelimiter("\\.");
-            int major = versionScanner.nextInt();
-            int minor = versionScanner.nextInt();
-            int patch = versionScanner.nextInt();
+            try {
+                int major = versionScanner.nextInt();
+                int minor = versionScanner.nextInt();
+                int patch = versionScanner.nextInt();
 
-            np.mCompatMode = major * 10000 + minor * 100 + patch;
+                np.mCompatMode = major * 10000 + minor * 100 + patch;
+            } catch (NoSuchElementException e) {
+                throw new ConfigParseError("Could not parse compat-mode version: " + compatmode.get(1));
+            }
         }
 
         Vector<String> auth = getOption("auth", 1, 1);
@@ -739,7 +743,7 @@ public class ConfigParser {
             else if (authretry.get(1).equals("interact"))
                 np.mAuthRetry = VpnProfile.AUTH_RETRY_INTERACT;
             else
-                throw new ConfigParseError("Unknown parameter to auth-retry: " + authretry.get(2));
+                throw new ConfigParseError("Unknown parameter to auth-retry: " + authretry.get(1));
         }
 
 

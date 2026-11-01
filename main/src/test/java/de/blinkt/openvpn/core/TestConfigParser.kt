@@ -107,6 +107,22 @@ class TestConfigParser {
     }
 
     @Test
+    @Throws(IOException::class, ConfigParser.ConfigParseError::class)
+    fun testMalformedOptionsGiveParseError() {
+        val lines = arrayOf("auth-retry foo", "compat-mode 2.5", "compat-mode abc", "ifconfig 10.8.0.2 10.8")
+        for (line in lines) {
+            val cp = ConfigParser()
+            cp.parseConfig(StringReader(miniconfig + line + "\n"))
+            try {
+                cp.convertProfile()
+                Assert.fail("no ConfigParseError for: " + line)
+            } catch (e: ConfigParser.ConfigParseError) {
+                // expected
+            }
+        }
+    }
+
+    @Test
     fun testOneDNSImport()
     {
         val config = "client\n" +

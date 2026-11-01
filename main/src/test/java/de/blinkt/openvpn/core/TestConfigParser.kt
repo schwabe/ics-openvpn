@@ -107,6 +107,18 @@ class TestConfigParser {
     }
 
     @Test
+    @Throws(IOException::class, ConfigParser.ConfigParseError::class)
+    fun testBackslashInArgument() {
+        var cp = ConfigParser()
+        cp.parseConfig(StringReader(miniconfig + "ca foo\\ bar.crt\n"))
+        Assert.assertEquals("foo bar.crt", cp.convertProfile().mCaFilename)
+
+        cp = ConfigParser()
+        cp.parseConfig(StringReader(miniconfig + "ca \"c:\\\\dir\\\\ca.crt\"\n"))
+        Assert.assertEquals("c:\\dir\\ca.crt", cp.convertProfile().mCaFilename)
+    }
+
+    @Test
     fun testOneDNSImport()
     {
         val config = "client\n" +

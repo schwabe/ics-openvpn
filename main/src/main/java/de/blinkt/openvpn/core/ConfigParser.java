@@ -275,6 +275,7 @@ public class ConfigParser {
         do {
             // Emulate the c parsing ...
             char in;
+            out = 0;
             if (pos < line.length())
                 in = line.charAt(pos);
             else

@@ -830,6 +830,11 @@ public class ConfigParser {
         StringReader reader = new StringReader(connection.substring(VpnProfile.INLINE_TAG.length()));
         connectionParser.parseConfig(reader);
 
+        // Options in a connection block are filtered like the options of the main config,
+        // otherwise everything left over ends up unfiltered in mCustomConfiguration
+        connectionParser.rejectUnsupportedOptions();
+        connectionParser.dropIgnoredOptions();
+
         Pair<Connection, Connection[]> conn = connectionParser.parseConnectionOptions(defaultValues);
 
         return conn;
@@ -981,14 +986,8 @@ public class ConfigParser {
     }
 
     private void checkIgnoreAndInvalidOptions(VpnProfile np) throws ConfigParseError {
-        for (String option : unsupportedOptions)
-            if (options.containsKey(option))
-                throw new ConfigParseError(String.format("Unsupported Option %s encountered in config file. Aborting", option));
-
-        for (String option : ignoreOptions)
-            // removing an item which is not in the map is no error
-            options.remove(option);
-
+        rejectUnsupportedOptions();
+        dropIgnoredOptions();
 
         boolean customOptions=false;
         for (Vector<Vector<String>>  option: options.values())
@@ -1011,6 +1010,20 @@ public class ConfigParser {
             np.mUseCustomConfig = true;
 
         }
+    }
+
+    //! Throws if one of the parsed options is not supported
+    private void rejectUnsupportedOptions() throws ConfigParseError {
+        for (String option : unsupportedOptions)
+            if (options.containsKey(option))
+                throw new ConfigParseError(String.format("Unsupported Option %s encountered in config file. Aborting", option));
+    }
+
+    //! Removes the parsed options that are ignored on import
+    private void dropIgnoredOptions() {
+        for (String option : ignoreOptions)
+            // removing an item which is not in the map is no error
+            options.remove(option);
     }
 
     boolean ignoreThisOption(Vector<String> option) {

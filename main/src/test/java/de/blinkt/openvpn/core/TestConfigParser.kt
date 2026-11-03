@@ -107,6 +107,67 @@ class TestConfigParser {
     }
 
     @Test
+    @Throws(IOException::class, ConfigParser.ConfigParseError::class)
+    fun testConnectionBlockIgnoredOptions() {
+        // Options that are ignored in the main config must be ignored in a <connection> block too
+        val ignored = "script-security 2\n" +
+                "up ./marker.sh\n" +
+                "down ./marker.sh\n" +
+                "plugin foo.so\n" +
+                "setenv IV_GUI_VER foo\n"
+        val block = "remote foo.bar 1194 udp\n" +
+                "connect-timeout 30\n" +
+                "http-proxy 1.2.3.4 8080\n" +
+                "mssfix 1400\n"
+        val c: Context = ApplicationProvider.getApplicationContext()
+
+        var cp = ConfigParser()
+        cp.parseConfig(StringReader("client\n" +
+                "<connection>\n" + block + ignored + "</connection>\n"))
+        val vp = cp.convertProfile()
+
+        Assert.assertEquals(1, vp.mConnections.size)
+        val conn = vp.mConnections[0]
+        Assert.assertEquals(30, conn.mConnectTimeout.toLong())
+        Assert.assertEquals("1.2.3.4", conn.mProxyName)
+        Assert.assertEquals("8080", conn.mProxyPort)
+        // options that are not ignored are still kept
+        Assert.assertTrue(conn.mUseCustomConfig)
+        Assert.assertTrue(conn.mCustomConfiguration.contains("mssfix 1400"))
+        Assert.assertFalse(conn.mCustomConfiguration.contains("script-security"))
+        Assert.assertFalse(conn.mCustomConfiguration.contains("marker.sh"))
+        Assert.assertFalse(conn.mCustomConfiguration.contains("plugin"))
+        Assert.assertFalse(conn.mCustomConfiguration.contains("IV_GUI_VER"))
+
+        val config = vp.getConfigFile(c, false)
+        Assert.assertFalse(config.contains("script-security"))
+        Assert.assertFalse(config.contains("marker.sh"))
+        Assert.assertFalse(config.contains("plugin foo.so"))
+        Assert.assertTrue(config.contains("mssfix 1400"))
+
+        // ... and the result is the same as without the ignored lines
+        cp = ConfigParser()
+        cp.parseConfig(StringReader("client\n" +
+                "<connection>\n" + block + "</connection>\n"))
+        Assert.assertEquals(cp.convertProfile().getConfigFile(c, false), config)
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun testConnectionBlockUnsupportedOption() {
+        for (option in arrayOf("config foo.conf", "tls-server")) {
+            val cp = ConfigParser()
+            cp.parseConfig(StringReader("client\n<connection>\nremote foo.bar\n$option\n</connection>\n"))
+            try {
+                cp.convertProfile()
+                Assert.fail("Unsupported option '$option' in a <connection> block was accepted")
+            } catch (e: ConfigParser.ConfigParseError) {
+                Assert.assertTrue(e.message!!.contains("Unsupported Option"))
+            }
+        }
+    }
+
+    @Test
     fun testOneDNSImport()
     {
         val config = "client\n" +

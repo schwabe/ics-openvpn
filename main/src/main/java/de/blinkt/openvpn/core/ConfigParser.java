@@ -27,6 +27,9 @@ public class ConfigParser {
 
 
     public static final String CONVERTED_PROFILE = "converted Profile";
+    // Re-inline these options: OpenVPN 2.x rejects escaped inline keys in [CONNECTION-OPTIONS] (issue #1947).
+    private static final Set<String> INLINE_FILE_OPTIONS = Collections.unmodifiableSet(new HashSet<>(
+            Arrays.asList("extra-certs", "tls-crypt", "tls-crypt-v2", "tls-auth")));
     final String[] unsupportedOptions = {"config",
             "tls-server"
 
@@ -902,13 +905,19 @@ public class ConfigParser {
 
 
         Vector <String> optionsToRemove = new Vector<>();
+        String keyDirection = "";
         // Assume that we need custom options if connectionDefault are set or in the connection specific set
         for (Map.Entry<String, Vector<Vector<String>>> option : options.entrySet()) {
             if (connDefault != null || connectionOptionsSet.contains(option.getKey())) {
-                conn.mCustomConfiguration += getOptionStrings(option.getValue());
+                if ("key-direction".equals(option.getKey()))
+                    keyDirection = getOptionStrings(option.getValue());
+                else
+                    conn.mCustomConfiguration += getOptionStrings(option.getValue());
                 optionsToRemove.add(option.getKey());
             }
         }
+        // OpenVPN needs key-direction after the inline tls-auth key, regardless of map iteration order.
+        conn.mCustomConfiguration += keyDirection;
         for (String o: optionsToRemove)
             options.remove(o);
 
@@ -1038,7 +1047,8 @@ public class ConfigParser {
             if (!ignoreThisOption(optionsline)) {
                 // Check if option had been inlined and inline again
                 if (optionsline.size() == 2 &&
-                        "extra-certs".equals(optionsline.get(0))) {
+                        INLINE_FILE_OPTIONS.contains(optionsline.get(0)) &&
+                        ("extra-certs".equals(optionsline.get(0)) || VpnProfile.isEmbedded(optionsline.get(1)))) {
                     custom += VpnProfile.insertFileData(optionsline.get(0), optionsline.get(1));
                 } else {
                     for (String arg : optionsline)

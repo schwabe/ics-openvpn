@@ -45,6 +45,18 @@ const val fakeCerts = "<ca>\n" +
         "</key>"
 
 
+const val fakeTlsCryptV2Key = "-----BEGIN OpenVPN tls-crypt-v2 client key-----\n" +
+        "V22FAKEV2KEYLINE1\n" +
+        "V22FAKEV2KEYLINE2\n" +
+        "-----END OpenVPN tls-crypt-v2 client key-----"
+const val fakeTlsCryptKey = "-----BEGIN OpenVPN Static key V1-----\n" +
+        "V22FAKEV1KEYLINE1\n" +
+        "-----END OpenVPN Static key V1-----"
+const val fakeTlsAuthKey = "-----BEGIN OpenVPN Static key V1-----\n" +
+        "V22FAKETAKEYLINE1\n" +
+        "-----END OpenVPN Static key V1-----"
+
+
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
 class TestConfigParser {
@@ -443,6 +455,108 @@ remote home.evil.cloud 65443 udp
         Assert.assertEquals((fps + "\n" + fpSingle).trim(), vp2.mPeerFingerPrints.trim())
 
 
+    }
+
+
+    // Preserve inline tls-crypt keys inside their connection blocks (issue #1947).
+    @Test
+    @Throws(IOException::class, ConfigParser.ConfigParseError::class)
+    fun testTlsCryptInConnectionBlocks() {
+        val tlsCryptV2 = "<tls-crypt-v2>\n" + fakeTlsCryptV2Key + "\n</tls-crypt-v2>"
+        val tlsCrypt = "<tls-crypt>\n" + fakeTlsCryptKey + "\n</tls-crypt>"
+        val conf = "client\ndev tun\n" + fakeCerts + "\n" +
+                "<connection>\nremote a.example 443 tcp-client\n" +
+                tlsCryptV2 + "\n</connection>\n" +
+                "<connection>\nremote a.example 443 tcp-client\n" +
+                tlsCrypt + "\n</connection>\n"
+
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(conf))
+        val vp = cp.convertProfile()
+        val config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
+
+        Assert.assertEquals(2, vp.mConnections.size)
+        Assert.assertTrue(config.contains(tlsCryptV2))
+        Assert.assertTrue(config.contains(tlsCrypt))
+
+        val firstStart = config.indexOf("<connection>")
+        val firstEnd = config.indexOf("</connection>", firstStart)
+        val secondStart = config.indexOf("<connection>", firstEnd)
+        val secondEnd = config.indexOf("</connection>", secondStart)
+        Assert.assertTrue(firstStart >= 0 && firstEnd > firstStart)
+        Assert.assertTrue(secondStart > firstEnd && secondEnd > secondStart)
+        Assert.assertTrue(config.indexOf(tlsCryptV2) > firstStart)
+        Assert.assertTrue(config.indexOf(tlsCryptV2) + tlsCryptV2.length <= firstEnd)
+        Assert.assertTrue(config.indexOf(tlsCrypt) > secondStart)
+        Assert.assertTrue(config.indexOf(tlsCrypt) + tlsCrypt.length <= secondEnd)
+        Assert.assertFalse(config.lineSequence().any { it.contains("V22FAKE") && it.contains("\\n") })
+    }
+
+    // Keep key-direction after the inline tls-auth key for either input order (issue #1947).
+    @Test
+    @Throws(IOException::class, ConfigParser.ConfigParseError::class)
+    fun testTlsAuthKeyDirectionInConnectionBlock() {
+        val tlsAuth = "<tls-auth>\n" + fakeTlsAuthKey + "\n</tls-auth>"
+        for (directionBeforeKey in listOf(false, true)) {
+            val options = if (directionBeforeKey)
+                "key-direction 1\n" + tlsAuth + "\n"
+            else
+                tlsAuth + "\nkey-direction 1\n"
+            val conf = "client\ndev tun\n" + fakeCerts + "\n" +
+                    "<connection>\nremote a.example 443 tcp-client\n" +
+                    options + "</connection>\n"
+
+            val cp = ConfigParser()
+            cp.parseConfig(StringReader(conf))
+            val vp = cp.convertProfile()
+            val config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
+
+            Assert.assertEquals(1, vp.mConnections.size)
+            Assert.assertTrue("Inline tls-auth, directionBeforeKey=$directionBeforeKey", config.contains(tlsAuth))
+            val keyEnd = config.indexOf("</tls-auth>")
+            val direction = config.indexOf("key-direction 1")
+            Assert.assertTrue("key-direction must follow tls-auth, directionBeforeKey=$directionBeforeKey",
+                    direction >= keyEnd + "</tls-auth>".length)
+            Assert.assertFalse(config.lineSequence().any { it.contains("V22FAKE") && it.contains("\\n") })
+        }
+    }
+
+    // Keep global inline tls-crypt handling unchanged (issue #1947).
+    @Test
+    @Throws(IOException::class, ConfigParser.ConfigParseError::class)
+    fun testGlobalTlsCryptUnchanged() {
+        val conf = miniconfig + fakeCerts + "\n" +
+                "<tls-crypt>\n" + fakeTlsCryptKey + "\n</tls-crypt>\n"
+
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(conf))
+        val vp = cp.convertProfile()
+        val config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
+
+        Assert.assertTrue(vp.mUseTLSAuth)
+        Assert.assertEquals("tls-crypt", vp.mTLSAuthDirection)
+        Assert.assertTrue(config.contains("<tls-crypt>"))
+        Assert.assertTrue(config.contains("V22FAKEV1KEYLINE1"))
+        Assert.assertFalse(config.lineSequence().any { it.contains("V22FAKE") && it.contains("\\n") })
+    }
+
+    // Preserve inline tls-crypt-v2 when a single connection loses its wrapper (issue #1947).
+    @Test
+    @Throws(IOException::class, ConfigParser.ConfigParseError::class)
+    fun testTlsCryptV2SingleConnectionBlock() {
+        val tlsCryptV2 = "<tls-crypt-v2>\n" + fakeTlsCryptV2Key + "\n</tls-crypt-v2>"
+        val conf = "client\ndev tun\n" + fakeCerts + "\n" +
+                "<connection>\nremote a.example 443 tcp-client\n" +
+                tlsCryptV2 + "\n</connection>\n"
+
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(conf))
+        val vp = cp.convertProfile()
+        val config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
+
+        Assert.assertEquals(1, vp.mConnections.size)
+        Assert.assertTrue(config.contains(tlsCryptV2))
+        Assert.assertFalse(config.contains("\\n"))
     }
 
 }

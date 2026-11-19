@@ -130,7 +130,8 @@ public class ConfigParser {
     };
     private HashSet<String>  connectionOptionsSet = new HashSet<>(Arrays.asList(connectionOptions));
 
-    private HashMap<String, Vector<Vector<String>>> options = new HashMap<>();
+    // Preserve insertion order: OpenVPN applies tls-auth/key-direction in line order (issue #1947).
+    private HashMap<String, Vector<Vector<String>>> options = new LinkedHashMap<>();
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
     private String auth_user_pass_file;
 
@@ -905,19 +906,13 @@ public class ConfigParser {
 
 
         Vector <String> optionsToRemove = new Vector<>();
-        String keyDirection = "";
         // Assume that we need custom options if connectionDefault are set or in the connection specific set
         for (Map.Entry<String, Vector<Vector<String>>> option : options.entrySet()) {
             if (connDefault != null || connectionOptionsSet.contains(option.getKey())) {
-                if ("key-direction".equals(option.getKey()))
-                    keyDirection = getOptionStrings(option.getValue());
-                else
-                    conn.mCustomConfiguration += getOptionStrings(option.getValue());
+                conn.mCustomConfiguration += getOptionStrings(option.getValue());
                 optionsToRemove.add(option.getKey());
             }
         }
-        // OpenVPN needs key-direction after the inline tls-auth key, regardless of map iteration order.
-        conn.mCustomConfiguration += keyDirection;
         for (String o: optionsToRemove)
             options.remove(o);
 

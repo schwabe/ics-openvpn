@@ -623,6 +623,25 @@ remote home.evil.cloud 65443 udp
 
     @Test
     @Throws(IOException::class, ConfigParser.ConfigParseError::class)
+    fun testSingleConnectionTlsKeyStaysPlainForOvpn3() {
+        val globalKey = "<tls-crypt>\n" + fakeTlsCryptKey + "\n</tls-crypt>"
+        val connectionKey = "<tls-crypt>\n" + fakeTlsCryptKeyB + "\n</tls-crypt>"
+        val conf = "client\ndev tun\n" + fakeCerts + "\n" + globalKey + "\n" +
+                "<connection>\nremote a.example 443 tcp-client\n" +
+                connectionKey + "\n</connection>\n"
+
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(conf))
+        val vp = cp.convertProfile()
+        val config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), true)
+
+        Assert.assertEquals(1, vp.mConnections.size)
+        Assert.assertFalse(config.contains("<connection>"))
+        Assert.assertTrue(config.contains(connectionKey))
+    }
+
+    @Test
+    @Throws(IOException::class, ConfigParser.ConfigParseError::class)
     fun testSingleConnectionWithoutTlsKeyStaysPlain() {
         val conf = "client\ndev tun\n" + fakeCerts + "\n" +
                 "<connection>\nremote a.example 443 tcp-client\n" +

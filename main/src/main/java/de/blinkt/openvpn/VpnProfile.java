@@ -486,7 +486,8 @@ public class VpnProfile implements Serializable, Cloneable {
         if (mConnections.length == 1) {
             // Global profile tls-auth/tls-crypt options are written later and would override
             // the connection key without a connection wrapper (issue #1947).
-            if (hasConnectionTlsKey(mConnections[0]))
+            // OpenVPN 3 ignores options inside <connection> blocks, so keep the old plain output there.
+            if (!configForOvpn3 && hasConnectionTlsKey(mConnections[0]))
                 canUsePlainRemotes = false;
             else
                 cfg.append(mConnections[0].getConnectionBlock(configForOvpn3));

@@ -597,6 +597,29 @@ remote home.evil.cloud 65443 udp
 
     @Test
     @Throws(IOException::class, ConfigParser.ConfigParseError::class)
+    fun testTlsAuthSingleConnectionBlock() {
+        val tlsAuth = "<tls-auth>\n" + fakeTlsAuthKey + "\n</tls-auth>"
+        val conf = "client\ndev tun\n" + fakeCerts + "\n" +
+                "<connection>\nremote a.example 443 tcp-client\n" +
+                tlsAuth + "\n</connection>\n"
+
+        val cp = ConfigParser()
+        cp.parseConfig(StringReader(conf))
+        val vp = cp.convertProfile()
+        val config = vp.getConfigFile(ApplicationProvider.getApplicationContext(), false)
+
+        Assert.assertEquals(1, vp.mConnections.size)
+        Assert.assertTrue(config.contains(tlsAuth))
+        Assert.assertFalse(config.contains("\\n"))
+        val start = config.indexOf("<connection>")
+        val end = config.indexOf("</connection>", start)
+        Assert.assertTrue(start >= 0 && end > start)
+        Assert.assertTrue(config.indexOf(tlsAuth) > start)
+        Assert.assertTrue(config.indexOf(tlsAuth) + tlsAuth.length <= end)
+    }
+
+    @Test
+    @Throws(IOException::class, ConfigParser.ConfigParseError::class)
     fun testSingleConnectionTlsCryptOverridesGlobal() {
         val globalKey = "<tls-crypt>\n" + fakeTlsCryptKey + "\n</tls-crypt>"
         val connectionKey = "<tls-crypt>\n" + fakeTlsCryptKeyB + "\n</tls-crypt>"

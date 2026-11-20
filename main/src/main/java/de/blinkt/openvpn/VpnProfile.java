@@ -69,6 +69,10 @@ public class VpnProfile implements Serializable, Cloneable {
 
     public static final String INLINE_TAG = "[[INLINE]]";
     public static final String DISPLAYNAME_TAG = "[[NAME]]";
+    private static final String[] CONNECTION_TLS_KEY_PREFIXES = {
+            "<tls-auth>", "<tls-crypt>", "<tls-crypt-v2>",
+            "tls-auth ", "tls-crypt ", "tls-crypt-v2 "
+    };
     public static final int MAXLOGLEVEL = 4;
     public static final int CURRENT_PROFILE_VERSION = 10;
     public static final int DEFAULT_MSSFIX_SIZE = 1280;
@@ -480,7 +484,13 @@ public class VpnProfile implements Serializable, Cloneable {
         boolean canUsePlainRemotes = true;
 
         if (mConnections.length == 1) {
-            cfg.append(mConnections[0].getConnectionBlock(configForOvpn3));
+            // Global profile tls-auth/tls-crypt options are written later and would override
+            // the connection key without a connection wrapper (issue #1947).
+            // OpenVPN 3 ignores options inside <connection> blocks, so keep the old plain output there.
+            if (!configForOvpn3 && hasConnectionTlsKey(mConnections[0]))
+                canUsePlainRemotes = false;
+            else
+                cfg.append(mConnections[0].getConnectionBlock(configForOvpn3));
         } else {
             for (Connection conn : mConnections) {
                 canUsePlainRemotes = canUsePlainRemotes && conn.isOnlyRemote(configForOvpn3);
@@ -771,6 +781,20 @@ public class VpnProfile implements Serializable, Cloneable {
         }
 
         return cfg.toString();
+    }
+
+    private static boolean hasConnectionTlsKey(Connection connection) {
+        if (!connection.mUseCustomConfig || connection.mCustomConfiguration == null)
+            return false;
+
+        for (String line : connection.mCustomConfiguration.split("\n")) {
+            String trimmedLine = line.trim();
+            for (String prefix : CONNECTION_TLS_KEY_PREFIXES) {
+                if (trimmedLine.startsWith(prefix))
+                    return true;
+            }
+        }
+        return false;
     }
 
     public String getPlatformVersionEnvString() {

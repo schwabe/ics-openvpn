@@ -27,6 +27,9 @@ public class ConfigParser {
 
 
     public static final String CONVERTED_PROFILE = "converted Profile";
+    // Re-inline these options: OpenVPN 2.x rejects escaped inline keys in [CONNECTION-OPTIONS] (issue #1947).
+    private static final Set<String> INLINE_FILE_OPTIONS = Collections.unmodifiableSet(new HashSet<>(
+            Arrays.asList("extra-certs", "tls-crypt", "tls-crypt-v2", "tls-auth")));
     final String[] unsupportedOptions = {"config",
             "tls-server"
 
@@ -127,7 +130,8 @@ public class ConfigParser {
     };
     private HashSet<String>  connectionOptionsSet = new HashSet<>(Arrays.asList(connectionOptions));
 
-    private HashMap<String, Vector<Vector<String>>> options = new HashMap<>();
+    // Preserve insertion order: OpenVPN applies tls-auth/key-direction in line order (issue #1947).
+    private HashMap<String, Vector<Vector<String>>> options = new LinkedHashMap<>();
     private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
     private String auth_user_pass_file;
 
@@ -1038,7 +1042,8 @@ public class ConfigParser {
             if (!ignoreThisOption(optionsline)) {
                 // Check if option had been inlined and inline again
                 if (optionsline.size() == 2 &&
-                        "extra-certs".equals(optionsline.get(0))) {
+                        INLINE_FILE_OPTIONS.contains(optionsline.get(0)) &&
+                        ("extra-certs".equals(optionsline.get(0)) || VpnProfile.isEmbedded(optionsline.get(1)))) {
                     custom += VpnProfile.insertFileData(optionsline.get(0), optionsline.get(1));
                 } else {
                     for (String arg : optionsline)

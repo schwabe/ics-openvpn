@@ -1,0 +1,28 @@
+name: APK
+permissions:
+  contents: read
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build UiOvpn23
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug signing
+        run: mkdir -p ~/.gradle && echo -e "icsopenvpnDebugSign=true\norg.gradle.jvmargs=-Xmx2048M" > ~/.gradle/gradle.properties
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+      - uses: actions/setup-java@v6
+        with:
+          java-version: 25
+          cache: gradle
+          distribution: temurin
+      - uses: android-actions/setup-android@v4
+      - name: Build
+        run: ./gradlew assembleUiOvpn23Release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: main/build/outputs/apk/**/*.apk

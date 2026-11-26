@@ -121,49 +121,6 @@ android {
     }
 
     /* Disable due to https://issuetracker.google.com/issues/402800800 */
-    splits {
-        abi {
-            isEnable = false
-            reset()
-            include("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
-            isUniversalApk = true
-        }
-    }
-
-    packaging {
-        jniLibs {
-            useLegacyPackaging = true
-        }
-    }
-
-    bundle {
-        codeTransparency {
-            signing {
-                val keystoreTPFile: String? = project.findProperty("keystoreTPFile")?.toString()
-                storeFile = keystoreTPFile?.let { file(it) }
-                val keystoreTPPassword: String? = project.findProperty("keystoreTPPassword")?.toString()
-                storePassword = keystoreTPPassword
-                val keystoreTPAliasPassword: String? = project.findProperty("keystoreTPAliasPassword")?.toString()
-                keyPassword = keystoreTPAliasPassword
-                val keystoreTPAlias: String?= project.findProperty("keystoreTPAlias")?.toString()
-                keyAlias = keystoreTPAlias
-
-                if (keystoreTPFile?.isEmpty()
-                        ?: true
-                ) println("keystoreTPFile not set, disabling transparency signing")
-                if (keystoreTPPassword?.isEmpty()
-                        ?: true
-                ) println("keystoreTPPassword not set, disabling transparency signing")
-                if (keystoreTPAliasPassword?.isEmpty()
-                        ?: true
-                ) println("keystoreTPAliasPassword not set, disabling transparency signing")
-                if (keystoreTPAlias?.isEmpty()
-                        ?: true
-                ) println("keyAlias not set, disabling transparency signing")
-
-            }
-        }
-    }
 }
 
 var swigcmd = "swig"

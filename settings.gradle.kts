@@ -23,4 +23,4 @@ plugins {
 }
 
 include(":main")
-//include(":yubikeyplugin")
+//include(":yubikeyplugin")include(":app")

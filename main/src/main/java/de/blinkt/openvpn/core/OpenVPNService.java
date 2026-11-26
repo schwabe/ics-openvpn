@@ -65,7 +65,6 @@ import java.util.concurrent.ExecutionException;
 import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.activities.DisconnectVPN;
 import de.blinkt.openvpn.api.ExternalAppDatabase;
 import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 import de.blinkt.openvpn.core.VpnStatus.StateListener;
@@ -464,7 +463,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
 
         Intent intent = new Intent();
-        intent.setComponent(new ComponentName(this, getPackageName() + ".activities.MainActivity"));
+        intent.setComponent(new ComponentName(this, getPackageName() + ".MainActivity"));
 
         intent.putExtra("PAGE", "graph");
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -1478,7 +1477,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 nbuilder.setContentText(challenge);
 
                 intent = new Intent();
-                intent.setComponent(new ComponentName(this, getPackageName() + ".activities.CredentialsPopup"));
+                intent.setComponent(new ComponentName(this, getPackageName() + ".MainActivity"));
 
                 intent.putExtra(EXTRA_CHALLENGE_TXT, challenge);
 

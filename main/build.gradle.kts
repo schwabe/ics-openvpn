@@ -34,8 +34,6 @@ android {
 
     defaultConfig {
         minSdk = 23
-        targetSdk = 37
-        //targetSdkPreview = "UpsideDownCake"
         externalNativeBuild {
             cmake {
                 //arguments+= "-DCMAKE_VERBOSE_MAKEFILE=1"
@@ -66,33 +64,6 @@ android {
         getByName("release") {}
     }
 
-    signingConfigs {
-        create("release") {
-            // ~/.gradle/gradle.properties
-            val keystoreFile: String? = project.findProperty("keystoreFile")?.toString()
-            storeFile = keystoreFile?.let { file(it) }
-            storePassword = project.findProperty("keystorePassword")?.toString()
-            keyPassword = project.findProperty("keystoreAliasPassword")?.toString()
-            keyAlias = project.findProperty("keystoreAlias")?.toString()
-            enableV1Signing = true
-            enableV2Signing = true
-        }
-
-        create("releaseOvpn2") {
-            // ~/.gradle/gradle.properties
-            val keystoreO2File: String? = project.findProperty("keystoreO2File")?.toString()
-            storeFile = keystoreO2File?.let { file(it) }
-            val keystoreO2Password: String? = project.findProperty("keystoreO2Password")?.toString()
-            storePassword = keystoreO2Password
-            val keystoreO2AliasPassword: String? = project.findProperty("keystoreO2AliasPassword")?.toString()
-            keyPassword = keystoreO2AliasPassword
-            val keystoreO2Alias: String? = project.findProperty("keystoreO2Alias")?.toString()
-            keyAlias = keystoreO2Alias
-            enableV1Signing = true
-            enableV2Signing = true
-        }
-
-    }
 
     lint {
         enable += setOf(
@@ -123,20 +94,12 @@ android {
 
         create("ovpn2") {
             dimension = "ovpnimpl"
-            versionNameSuffix = "-o2"
             buildConfigField("boolean", "openvpn3", "false")
         }
     }
 
     buildTypes {
         getByName("release") {
-            if (project.hasProperty("icsopenvpnDebugSign")) {
-                logger.warn("property icsopenvpnDebugSign set, using debug signing for release")
-                signingConfig = android.signingConfigs.getByName("debug")
-            } else {
-                productFlavors["ovpn23"].signingConfig = signingConfigs.getByName("release")
-                productFlavors["ovpn2"].signingConfig = signingConfigs.getByName("releaseOvpn2")
-            }
 
             optimization {
                 enable = false

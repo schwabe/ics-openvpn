@@ -11,10 +11,11 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - uses: android-actions/setup-android@v3
       - run: sudo apt-get update && sudo apt-get install -y swig cmake
+      - run: yes | sdkmanager --licenses > /dev/null || true
       - run: chmod +x gradlew && ./gradlew :app:assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: apk
           path: app/build/outputs/apk/debug/*.apk

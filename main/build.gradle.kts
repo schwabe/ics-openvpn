@@ -60,7 +60,6 @@ android {
             assets.directories.add("build/ovpnassets")
         }
 
-        create("ui") {}
 
         create("skeleton") {}
 
@@ -114,9 +113,6 @@ android {
     flavorDimensions += listOf("implementation", "ovpnimpl")
 
     productFlavors {
-        create("ui") {
-            dimension = "implementation"
-        }
 
         create("skeleton") {
             dimension = "implementation"

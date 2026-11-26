@@ -8,7 +8,7 @@ import org.gradle.api.tasks.TaskProvider
  */
 
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
 }
 
 fun obtainTestBuildType(): String {
@@ -36,8 +36,6 @@ android {
         minSdk = 23
         targetSdk = 37
         //targetSdkPreview = "UpsideDownCake"
-        versionCode = 225
-        versionName = "0.7.69"
         externalNativeBuild {
             cmake {
                 //arguments+= "-DCMAKE_VERBOSE_MAKEFILE=1"
@@ -265,23 +263,6 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.core.ktx)
 
-    uiImplementation(libs.android.view.material)
-    uiImplementation(libs.androidx.activity)
-    uiImplementation(libs.androidx.activity.ktx)
-    uiImplementation(libs.androidx.appcompat)
-    uiImplementation(libs.androidx.cardview)
-    uiImplementation(libs.androidx.viewpager2)
-    uiImplementation(libs.androidx.constraintlayout)
-    uiImplementation(libs.androidx.core.ktx)
-    uiImplementation(libs.androidx.fragment.ktx)
-    uiImplementation(libs.androidx.lifecycle.runtime.ktx)
-    uiImplementation(libs.androidx.lifecycle.viewmodel.ktx)
-    uiImplementation(libs.androidx.preference.ktx)
-    uiImplementation(libs.androidx.recyclerview)
-    uiImplementation(libs.androidx.security.crypto)
-    uiImplementation(libs.kotlin)
-    uiImplementation(libs.mpandroidchart)
-    uiImplementation(libs.square.okhttp)
 
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.junit)
@@ -291,5 +272,3 @@ dependencies {
     testImplementation(libs.json)
 }
 
-fun DependencyHandler.uiImplementation(dependencyNotation: Any): Dependency? =
-    add("uiImplementation", dependencyNotation)

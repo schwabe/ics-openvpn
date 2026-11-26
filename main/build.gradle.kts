@@ -41,9 +41,6 @@ android {
         }
     }
 
-    androidResources {
-        generateLocaleConfig = true
-    }
 
     externalNativeBuild {
         cmake {
@@ -101,15 +98,9 @@ android {
     buildTypes {
         getByName("release") {
 
-            optimization {
-                enable = false
-            }
         }
         getByName("debug")
         {
-            optimization {
-                enable = false
-            }
         }
     }
 

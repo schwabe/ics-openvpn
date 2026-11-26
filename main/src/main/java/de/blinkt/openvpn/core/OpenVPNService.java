@@ -62,10 +62,8 @@ import java.util.Locale;
 import java.util.Vector;
 import java.util.concurrent.ExecutionException;
 
-import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.R;
 import de.blinkt.openvpn.VpnProfile;
-import de.blinkt.openvpn.api.ExternalAppDatabase;
 import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 import de.blinkt.openvpn.core.VpnStatus.StateListener;
 
@@ -204,16 +202,12 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     @Override
     public void addAllowedExternalApp(String packagename) throws RemoteException {
-        ExternalAppDatabase extapps = new ExternalAppDatabase(OpenVPNService.this);
-        if(extapps.checkAllowingModifyingRemoteControl(this)) {
-            extapps.addApp(packagename);
-        }
+        
     }
 
     @Override
     public boolean isAllowedExternalApp(String packagename) throws RemoteException {
-        ExternalAppDatabase extapps = new ExternalAppDatabase(OpenVPNService.this);
-        return extapps.checkRemoteActionPermission(this, packagename);
+        return false;
     }
 
     @Override
@@ -449,7 +443,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     PendingIntent getUserInputIntent(String needed) {
-        Intent intent = new Intent(getApplicationContext(), LaunchVPN.class);
+        Intent intent = getPackageManager().getLaunchIntentForPackage(getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra("need", needed);
         Bundle b = new Bundle();
@@ -640,10 +634,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         int icon = android.R.drawable.ic_dialog_info;
         nbuilder.setSmallIcon(icon);
 
-        Intent launchVPNIntent = new Intent(this, LaunchVPN.class);
-        launchVPNIntent.putExtra(LaunchVPN.EXTRA_KEY, startprofile.getUUIDString());
+        Intent launchVPNIntent = getPackageManager().getLaunchIntentForPackage(getPackageName());
+        launchVPNIntent.putExtra("de.blinkt.openvpn.shortcutProfileUUID", startprofile.getUUIDString());
         launchVPNIntent.putExtra(EXTRA_START_REASON, "OpenService lacks permission");
-        launchVPNIntent.putExtra(de.blinkt.openvpn.LaunchVPN.EXTRA_HIDELOG, true);
+        launchVPNIntent.putExtra("de.blinkt.openvpn.showNoLogWindow", true);
         launchVPNIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         launchVPNIntent.setAction(Intent.ACTION_MAIN);
 

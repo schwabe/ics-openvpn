@@ -16,7 +16,6 @@ import android.net.VpnService;
 import android.os.Build;
 import android.os.PersistableBundle;
 
-import de.blinkt.openvpn.LaunchVPN;
 import de.blinkt.openvpn.VpnProfile;
 
 /**
@@ -42,7 +41,7 @@ public class keepVPNAlive extends JobService implements VpnStatus.StateListener 
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
         if (mLevel == ConnectionStatus.UNKNOWN_LEVEL || mLevel == ConnectionStatus.LEVEL_NOTCONNECTED) {
-            String vpnUUID = jobParameters.getExtras().getString(LaunchVPN.EXTRA_KEY);
+            String vpnUUID = jobParameters.getExtras().getString("de.blinkt.openvpn.shortcutProfileUUID");
             VpnProfile vp = ProfileManager.get(this, vpnUUID);
             if (vp == null) {
                 VpnStatus.logError("Keepalive service cannot find VPN");
@@ -81,7 +80,7 @@ public class keepVPNAlive extends JobService implements VpnStatus.StateListener 
 
         /* set the VPN that should be restarted if we get killed */
         PersistableBundle extraBundle = new PersistableBundle();
-        extraBundle.putString(de.blinkt.openvpn.LaunchVPN.EXTRA_KEY, vp.getUUIDString());
+        extraBundle.putString("de.blinkt.openvpn.shortcutProfileUUID", vp.getUUIDString());
         jib.setExtras(extraBundle);
 
         /* periodic timing */

@@ -12,7 +12,10 @@ jobs:
           distribution: temurin
           java-version: 17
       - run: sudo apt-get update && sudo apt-get install -y swig cmake
-      - run: yes | sdkmanager --licenses > /dev/null || true
+      - name: Install NDK
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;30.0.14904198"
       - run: chmod +x gradlew && ./gradlew :app:assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
         if: always()
